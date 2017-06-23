@@ -4,14 +4,13 @@
 \alias{dropdown}
 \title{Dropdown Menu}
 \usage{
-dropdown(button = NULL, links = NULL, ...)
+dropdown(button = NULL, ...)
 }
 \arguments{
-\item{button}{A button to trigger the dropdown, see \code{button}.}
+\item{button}{A button element used to trigger the dropdown, see \code{button}.}
 
-\item{links}{A list of \code{tags$a} elements.}
-
-\item{...}{Additional named arguments passed on as HTML attributes.}
+\item{...}{\code{dropdownItem}s passed to \code{dropdown} or additional named arguments
+passed as HTML attributes to the parent element.}
 }
 \description{
 A Bootstrap dropdown menu.
@@ -20,25 +19,20 @@ A Bootstrap dropdown menu.
 # A dropdown without `id` attribute
 #   - standard `tags$a` utility
 dropdown(
-  button("Secondary"),
-  list(
-    tags$a(href = "#", "Option 1"),
-    tags$a(href = "3", "Option 2")
-  )
+  button = button("Secondary"),
+  dropdownItem("Option 1", href = "#"),
+  dropdownItem("Option 2", href = "#")
 )
 
 # A dropdown with `id` attribute
-#   - `tags$a` now act similar `shiny::actionButton`
-#   - when `tags$a` clicked `input$flavor` will have `href` value
-#   - default `tags$a` behavior suppressed
+#   - now `dropdownItem`s similar to `shiny::actionButton`
+#   - when clicked `dropdownItem` will have `href` value
 dropdown(
   id = "flavor",
-  button("Ice cream flavors"),
-  list(
-    tags$a(href = "vanilla", "Vanilla"),
-    tags$a(href = "chocolate", "Chocolate"),
-    tags$a(href = "mint", "Mint")
-  )
+  button = button("Ice cream flavors"),
+  dropdownItem("Vanilla", href = "vanilla"),
+  dropdownItem("Chocolate", href = "chocolate"),
+  dropdownItem("Mint", href = "mint")
 )
 
 }

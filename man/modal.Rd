@@ -2,17 +2,20 @@
 % Please edit documentation in R/modal.R
 \name{modal}
 \alias{modal}
+\alias{toggleModal}
 \title{Modal dialogs}
 \usage{
 modal(header = NULL, body = NULL, footer = NULL, ...)
+
+toggleModal(id, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{header}{A character vector specifying a title for the modal or custom
-tags to use as a header, defaults to \code{NULL}. When creating a custom header
-title elements may need to include the \code{"modal-title"} HTML class.}
+\item{header}{A character vector specifying a title for the modal or a custom
+element to use as a header, defaults to \code{NULL}. The default heading tag is
+\code{h5}.}
 
 \item{body}{A character vectory specifying the main text of the modal or
-custom tags to use as for the body of the modal, defaults to \code{NULL}.}
+custom elements to use as the body of the modal, defaults to \code{NULL}.}
 
 \item{footer}{Custom tags to include at the bottom of the modal, defaults to
 \code{NULL}.}
@@ -21,11 +24,11 @@ custom tags to use as for the body of the modal, defaults to \code{NULL}.}
 element.}
 }
 \description{
-Create a modal that can by shown or hidden by \code{toggleModal}. Modals may be
-built and included anywhere on the page. Unlike shiny modals, dull modals
-must be defined ahead of time, but may be dynamically updated during the life
-cycle of the shiny app by passing, for example, a \code{textOutput} as part of the
-modal body.
+Modals are a flexible alert window, which disable interaction with the page
+behind them. Modals may include inputs or buttons or simply include text.
+Create a modal that can by shown or hidden by \code{toggleModal}. Unlike shiny
+modals, dull modals must be built ahead of time, but may include dynamically
+updated components. Modal elements may be included anywhere on a web page.
 }
 \examples{
 if (interactive()) {
@@ -35,16 +38,54 @@ if (interactive()) {
     ui = container(
       button(id = "toggle", "Click to show modal"),
       modal(
-        id = "hello",
-        header = "Hello, world!",
-        body = "A simple modal."
+        id = "simple",
+        header = "A simple modal",
+        body = paste(
+          "Cras mattis consectetur purus sit amet fermentum.",
+          "Cras justo odio, dapibus ac facilisis in, egestas",
+          "eget quam. Morbi leo risus, porta ac consectetur",
+          "ac, vestibulum at eros."
+        )
       )
     ),
     server = function(input, output) {
       observeEvent(input$toggle, {
-        toggleModal("hello")
+        toggleModal("simple")
+      })
+    }
+  )
+
+  shinyApp(
+    ui = container(
+      button(id = "toggle", "Demo login"),
+      modal(
+        id = "login",
+        header = "Please login",
+        body = tagList(
+          inputs$text(
+            id = "name",
+            label = "Name",
+            placeholder = "yourname@email.com"
+          ),
+          inputs$text(
+            id = "password",
+            label = "Password"
+          )
+        ),
+        footer = button(id = "process", "Submit")
+      )
+    ),
+    server = function(input, output) {
+      observeEvent(input$toggle, {
+        toggleModal("login")
+      })
+
+      observeEvent(input$process, {
+        print(isolate(input$name))
+        print(isolate(input$password))
       })
     }
   )
 }
+
 }

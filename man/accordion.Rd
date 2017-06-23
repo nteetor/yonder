@@ -3,53 +3,92 @@
 \name{accordion}
 \alias{accordion}
 \alias{panel}
-\title{Accordions}
+\title{Accordion panels}
 \usage{
 accordion(...)
 
-panel(heading, body)
+panel(header, body = NULL, collapsed = TRUE)
 }
 \arguments{
-\item{...}{\code{panel}s converted into accordion panels or named arguments passed
-as HTML attributes to the accordion parent element.
+\item{...}{Any number of \code{panel}s, converted into accordion panels, or named
+arguments passed as HTML attributes to the parent element.}
 
-\strong{Note}, a \code{panel} or custom panel named \code{show} will render in an open
-state rather than the default collapsed state.}
+\item{header}{A character string specifying the header of the panel.}
 
-\item{heading}{A panel heading, character string or tag element(s).}
+\item{body}{A character string or tag element(s) specifying the body content
+of the panel, defaults to \code{NULL}.}
 
-\item{body}{Body content for the panel, character string or tag element(s).}
+\item{collapsed}{If \code{TRUE}, the panel renders in the collapsed state,
+defaults to \code{TRUE}.}
 }
 \description{
-Accordion collapsible content. \code{panel} is a helper function to facilitate
-building accordion panels, see details for more information.
+Similar to \code{collapse}, \code{accordion} is a way to hide content. An accordion
+is made up of multiple panels and at most one panel is open. There is one
+exception, when the page renders multiple panels may start in the open state,
+however once the user interacts with accordion the default behavior returns.
+
+\code{panel} is a helper function to facilitate building accordion panels and does
+not have an explicit corresponding bootstrap class, see details for more
+information.
 }
 \details{
-\code{panel} is little more than a thin wrapper around \code{list} to ensure each
-accordion panel has a heading and a body. If you want more customization over
-accordion panels you may ignore \code{panel} and pass unnamed tag elements. When
-creating custom panels be sure to follow the \code{data-target}, \code{data-toggle}
-conventions, for more on how to build custom accordions check out the
-Bootstrap
+\code{panel} is only a thin wrapper around \code{list} to ensure each accordion panel
+has a heading and a body and to make other rendering options clearer. If you
+want more customization over accordion panels you may ignore \code{panel} and pass
+unnamed tag elements. When creating custom panels be sure to follow the
+\code{data-target}, \code{data-toggle} conventions, for more on how to build custom
+accordions check out the Bootstrap
 \href{https://v4-alpha.getbootstrap.com/components/collapse/}{collapse reference}.
 
-\code{accordion} will generate an HTML id if one is not specified and child panels
-are assigned IDs based on the id of the accordion parent.
+\code{accordion} will generate an HTML id if an \code{id} argument is not passed in
+\code{...} and child panels are assigned IDs based on the id of the accordion
+parent.
 }
 \examples{
 accordion(
   panel(
-    "Heading 1",
-    "Body text"
+    heading = "Group 1",
+    "Body text of the first group."
   ),
   panel(
-    "Heading 2",
-    "Body text"
+    heading = "Group 2",
+    "Body text of the second group."
   ),
   panel(
-    "Heading 3",
-    "Body text"
+    heading = "Group 3",
+    "Body text of the third group."
   )
 )
 
+if (interactive()) {
+  library(shiny)
+
+  shinyApp(
+    ui = container(
+      accordion(
+        panel(
+          heading = "Option 1",
+          "What do you think of option 1?",
+          collapse = FALSE
+        ),
+        panel(
+          heading = "Option 2",
+          "What do you think of option 2?"
+        ),
+        panel(
+          heading = "Option 3",
+          "What do you think of option 3?"
+        )
+      )
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
+
+}
+\seealso{
+For more information on accordion's, please refer to the bootstrap
+\href{https://v4-alpha.getbootstrap.com/components/collapse/}{reference page}.
 }

@@ -2,36 +2,47 @@
 % Please edit documentation in R/nav.R
 \name{nav}
 \alias{nav}
+\alias{navItem}
+\alias{navDropdown}
 \title{Page Navigation}
 \usage{
-nav(content = NULL, align = "left", width = NULL, column = FALSE,
-  tabs = FALSE, pills = FALSE)
+nav(..., align = "left", width = NULL, vertical = FALSE, tabs = FALSE,
+  pills = FALSE)
+
+navItem(label = NULL, active = FALSE, disabled = FALSE, ...)
+
+navDropdown(label = NULL, ...)
 }
 \arguments{
-\item{content}{A list of links, where links are constructed using \code{tags$a}.
+\item{...}{\code{navItem}s or \code{navDropdown}s passed to \code{nav}, \code{dropdownItem}s
+passed to \code{navDropdown}, or named arguments passed as HTML attributes to
+the respective parent element.}
 
-To render a link in a disabled state name the corresponding list element(s)
-\code{disabled}, see examples below.
+\item{align}{One of \code{"left"}, \code{"right"}, \code{"center"}, or \code{"horizontal"}
+specifying the alignment of the nav, defaults to \code{"left"}.}
 
-When building a tabbed interface with \code{nav} a default tab may be specified
-by naming an element \code{active}, see examples below.}
-
-\item{align}{Alignment of the nav, one of \code{"left"}, \code{"right"}, \code{"center"}, or
-\code{"horizontal"}, defaults to \code{"left"}.}
-
-\item{width}{Used to indicate the nav should fill the width of its parent
-element, one of \code{"fill"} or \code{"justify"}, defaults to \code{NULL}. If \code{"justify"}
-all nav links have equal width, when \code{"fill"} nav links are only equally
+\item{width}{If specified, one of \code{"fill"} or \code{"justify"} specifying how the
+nav will fill its parent element, defaults to \code{NULL}. If \code{"justify"} all
+nav links have equal width, when \code{"fill"} nav links are only equally
 spaced.}
 
-\item{column}{If \code{TRUE}, the nav is rendered as a horizontal stack instead
-of vertically, defaults to \code{FALSE}.}
+\item{vertical}{If \code{TRUE}, the nav is rendered vertically, defaults to
+\code{FALSE}.}
 
 \item{tabs}{If \code{TRUE}, the nav is rendered as a set of tabs for a tabbed
-interface, defaults to \code{FALSE}. Specifying \code{TRUE} will also add a
-\code{data-toggle} HTML attribute to the nav links allowing them to toggle tabs.}
+interface, defaults to \code{FALSE}.}
 
-\item{pills}{If \code{TRUE}, the nav is rendered as pills, defaults to \code{FALSE}.}
+\item{pills}{If \code{TRUE}, \code{navItem}s are rendered as pills, defaults to
+\code{FALSE}.}
+
+\item{label}{A character vector specifying the label of a nav item,
+defaults to \code{NULL}.}
+
+\item{active}{If \code{TRUE}, the nav item renders in a an active state, defaults
+to \code{FALSE}.}
+
+\item{disabled}{If \code{TRUE}, the nav item renders in a disabled state and
+will not receive click events, defaults to \code{FALSE}.}
 }
 \description{
 Create a nav.
@@ -41,28 +52,22 @@ To center a horizontal nav specify \code{align = "horiztonal"} and \code{width =
 }
 \examples{
 nav(
-  list(
-    tags$a(href = "#home", "Home"),
-    tags$a(href = "#about", "About")
-  )
+  navItem("Home", href = "#home"),
+  navItem("About", href = "#about")
 )
 
 # active link
 nav(
-  list(
-    active = tags$a(href = "#home", "Home"),
-    tags$a(href = "#about", "About")
-  )
+  navItem("Home", href = "#home", active = TRUE),
+  navItem("About", href = "#about")
 )
 
 # active tab
 nav(
   tabs = TRUE,
-  list(
-    active = tags$a(href = "#home", "Home"),
-    tags$a(href = "#about", "About"),
-    tags$a(href = "#blog", "Blog")
-  )
+  navItem("Home", href = "#home", active = TRUE),
+  navItem("About", href = "#about"),
+  navItem("Blog", href = "#blog")
 )
 
 }

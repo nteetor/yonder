@@ -5,10 +5,41 @@
 \alias{dull}
 \alias{dull-package}
 \alias{dull-package}
-\title{A new approach to shiny}
+\title{A new approach to shiny applications}
 \description{
 More freedom to the programmer, more to come.
 }
+\section{Q and A}{
+
+
+\strong{Where are the input functions?}
+
+Unlike shiny, dull does not include explicit input functions. Instead an \code{id}
+argument must be specified as an HTML attribute, passed to a function through
+\code{...}. Once an \code{id} attribute is specified a reactive input value is
+available.
+
+For example, a \link{listGroup} may be used to display series of items, but by
+passing an \code{id} attribute the \code{listGroup} still displays a series of items
+can function similar to shiny \code{checkboxGroupInput}.
+
+\strong{What is the \code{inputs} object?}
+
+Similar to the \code{tags} object in \code{htmltools}, the \code{inputs} object bundles
+together many HTML form input elements. Functions like \code{inputs$text} and
+\code{inputs$select} are similar to shiny's \code{textInput} and \code{selectInput}. Additionally,
+there are new, specific inputs like \code{inputs$datetime}, \code{inputs$color}, and
+more.
+
+\strong{Is there a checkboxGroupInput equivalent?}
+
+There is no dull equivalent of shiny's \code{checkboxGroupInput}.
+\code{inputs$checkbox} is available and performs like \code{checkboxInput}. This choice
+was made to increase the accessibility of shiny applications.
+
+An alternative to \code{checkboxGroupInput} is \code{listGroup}.
+}
+
 \author{
 \strong{Maintainer}: Nathan Teetor \email{nathanteetor@gmail.com}
 

@@ -39,7 +39,7 @@ inputs <- list()
 #'
 #' @name text
 inputs$text <- function(label = NULL, value = NULL, placeholder = NULL, ...) {
-  textualInput("text", label, value, placeholder, ...)
+  textualInput("text", label, value, placeholder, ..., class = "dull-text")
 }
 
 inputs$search <- function(label = NULL, value = NULL, placeholder = NULL, ...) {
@@ -305,8 +305,6 @@ inputs$select <- function(labels, values) {
     )
   )
 }
-
-
 
 updateFormGroup <- function(id, context = NULL, session = getDefaultReactiveDomain()) {
   if (!(context %in% c("success", "warning", "danger"))) {

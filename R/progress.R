@@ -1,9 +1,8 @@
 #' Progress bars
 #'
-#' Create progress bars. A single progress bar may be compososed of multiple
-#' progress bar components. These components may have individual values, labels,
-#' and contexts. To create a composite progress bar pass multiple calls to `bar`
-#' to `progress`. Each `bar` component may have its own HTML id.
+#' Create simple or composite progress bars. To create a composite progress bar
+#' pass multiple calls to `bar` to `progress`. Each `bar` component may have its
+#' own `id` argument, value, label, and context.
 #'
 #' @param ... `bar` elements passed to progress or named arguments passed as
 #'   HTML attributes to the respective parent element.
@@ -27,7 +26,6 @@
 #'
 #' @export
 #' @examples
-#'
 #' if (interactive()) {
 #'   library(shiny)
 #'
@@ -39,9 +37,18 @@
 #'       button(id = "inc", "inc progress")
 #'     ),
 #'     server = function(input, output, session) {
+#'       clickPercentage <- reactive({
+#'          min(input$inc$count, 10) / 10 * 100
+#'       })
+#'
 #'       output$clicks <- renderBar(
-#'         min(input$inc$count, 10) / 10 * 100,
-#'         min(input$inc$count, 10) / 10 * 100
+#'         value = clickPercentage(),
+#'         label = {
+#'           cp <- clickPercentage()
+#'           if (cp > 0) {
+#'             paste0(cp, "%")
+#'           }
+#'         }
 #'       )
 #'     }
 #'   )
@@ -82,30 +89,11 @@ bar <- function(value = 0, label = NULL, context = NULL, striped = FALSE,
   )
 }
 
-barCondition <- function(message, call = NULL) {
-  structure(
-    class = c("barUpdate", "condition"),
-    list(
-      message = message,
-      call = call
-    )
-  )
-}
-
 #' @rdname progress
 #' @export
 renderBar <- function(value, label = NULL, env = parent.frame(), quoted = FALSE) {
   progressFun <- shiny::exprToFunction(value, env, quoted)
   labelFun <- shiny::exprToFunction(label, env, quoted)
-
-  # signalFun <- function() {
-  #   withCallingHandlers(
-  #     progressFun(),
-  #     barUpdate = function(e) {
-  #       session$sendInput
-  #     }
-  #   )
-  # }
 
   function() {
     list(
@@ -114,4 +102,3 @@ renderBar <- function(value, label = NULL, env = parent.frame(), quoted = FALSE)
     )
   }
 }
-

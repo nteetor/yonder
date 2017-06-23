@@ -1,17 +1,17 @@
 #' Modal dialogs
 #'
-#' Create a modal that can by shown or hidden by `toggleModal`. Modals may be
-#' built and included anywhere on the page. Unlike shiny modals, dull modals
-#' must be defined ahead of time, but may be dynamically updated during the life
-#' cycle of the shiny app by passing, for example, a `textOutput` as part of the
-#' modal body.
+#' Modals are a flexible alert window, which disable interaction with the page
+#' behind them. Modals may include inputs or buttons or simply include text.
+#' Create a modal that can by shown or hidden by `toggleModal`. Unlike shiny
+#' modals, dull modals must be built ahead of time, but may include dynamically
+#' updated components. Modal elements may be included anywhere on a web page.
 #'
-#' @param header A character vector specifying a title for the modal or custom
-#'   tags to use as a header, defaults to `NULL`. When creating a custom header
-#'   title elements may need to include the `"modal-title"` HTML class.
+#' @param header A character vector specifying a title for the modal or a custom
+#'   element to use as a header, defaults to `NULL`. The default heading tag is
+#'   `h5`.
 #'
 #' @param body A character vectory specifying the main text of the modal or
-#'   custom tags to use as for the body of the modal, defaults to `NULL`.
+#'   custom elements to use as the body of the modal, defaults to `NULL`.
 #'
 #' @param footer Custom tags to include at the bottom of the modal, defaults to
 #'   `NULL`.
@@ -28,18 +28,56 @@
 #'     ui = container(
 #'       button(id = "toggle", "Click to show modal"),
 #'       modal(
-#'         id = "hello",
-#'         header = "Hello, world!",
-#'         body = "A simple modal."
+#'         id = "simple",
+#'         header = "A simple modal",
+#'         body = paste(
+#'           "Cras mattis consectetur purus sit amet fermentum.",
+#'           "Cras justo odio, dapibus ac facilisis in, egestas",
+#'           "eget quam. Morbi leo risus, porta ac consectetur",
+#'           "ac, vestibulum at eros."
+#'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
 #'       observeEvent(input$toggle, {
-#'         toggleModal("hello")
+#'         toggleModal("simple")
+#'       })
+#'     }
+#'   )
+#'
+#'   shinyApp(
+#'     ui = container(
+#'       button(id = "toggle", "Demo login"),
+#'       modal(
+#'         id = "login",
+#'         header = "Please login",
+#'         body = tagList(
+#'           inputs$text(
+#'             id = "name",
+#'             label = "Name",
+#'             placeholder = "yourname@@email.com"
+#'           ),
+#'           inputs$text(
+#'             id = "password",
+#'             label = "Password"
+#'           )
+#'         ),
+#'         footer = button(id = "process", "Submit")
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observeEvent(input$toggle, {
+#'         toggleModal("login")
+#'       })
+#'
+#'       observeEvent(input$process, {
+#'         print(isolate(input$name))
+#'         print(isolate(input$password))
 #'       })
 #'     }
 #'   )
 #' }
+#'
 modal <- function(header = NULL, body = NULL, footer = NULL, ...) {
   tags$div(
     class = "dull-modal modal fade",
@@ -50,7 +88,8 @@ modal <- function(header = NULL, body = NULL, footer = NULL, ...) {
         class = "modal-content",
         tags$div(
           class = "modal-header",
-          if (is.character(header)) tags$h5(class = "modal-title", header) else header,
+          if (is.character(header)) tags$h5(class = "modal-title", header) else
+            tagEnsureClass(header, "modal-title"),
           tags$button(
             type = "button",
             class = "close",
@@ -77,6 +116,8 @@ modal <- function(header = NULL, body = NULL, footer = NULL, ...) {
   )
 }
 
+#' @rdname modal
+#' @export
 toggleModal <- function(id, session = getDefaultReactiveDomain()) {
   session$sendCustomMessage(
     "dull.modal.toggle",

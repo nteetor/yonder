@@ -34,13 +34,11 @@ to \code{FALSE}.}
 to \code{TRUE}, defaults to \code{FALSE}.}
 }
 \description{
-Create progress bars. A single progress bar may be compososed of multiple
-progress bar components. These components may have individual values, labels,
-and contexts. To create a composite progress bar pass multiple calls to \code{bar}
-to \code{progress}. Each \code{bar} component may have its own HTML id.
+Create simple or composite progress bars. To create a composite progress bar
+pass multiple calls to \code{bar} to \code{progress}. Each \code{bar} component may have its
+own \code{id} argument, value, label, and context.
 }
 \examples{
-
 if (interactive()) {
   library(shiny)
 
@@ -52,9 +50,18 @@ if (interactive()) {
       button(id = "inc", "inc progress")
     ),
     server = function(input, output, session) {
+      clickPercentage <- reactive({
+         min(input$inc$count, 10) / 10 * 100
+      })
+
       output$clicks <- renderBar(
-        min(input$inc$count, 10) / 10 * 100,
-        min(input$inc$count, 10) / 10 * 100
+        value = clickPercentage(),
+        label = {
+          cp <- clickPercentage()
+          if (cp > 0) {
+            paste0(cp, "\%")
+          }
+        }
       )
     }
   )
