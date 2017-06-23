@@ -1,0 +1,16 @@
+Package: dull
+Type: Package
+Title: A New Approach to Shiny
+Version: 0.1.0
+Authors@R: person(given = "Nathan", family = "Teetor", email = "nathanteetor@gmail.com", role = c("aut", "cre"))
+Description: A new way to build shiny applications.
+License: What license is it under?
+Encoding: UTF-8
+LazyData: true
+Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate"))
+RoxygenNote: 6.0.1
+Imports:
+    htmltools,
+    shiny
+Suggests: 
+    testthat
