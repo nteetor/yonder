@@ -11,20 +11,21 @@ alert(text = NULL, heading = NULL, context = NULL, hidden = TRUE,
 renderAlert(show = NULL, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{text}{A character string or tagList}
+\item{text}{A character string or tag element(s) specifying the body content
+of the alert, defaults to \code{NULL}.}
 
-\item{heading}{A character vector specifying text to use as a heading for the
+\item{heading}{A character string specifying text to use as a heading for the
 alert, defaults to \code{NULL}.
 
-\code{h4} is the default heading tag. To use a different heading level tag one
-may specify custom HTML. Be sure to include the HTML class \code{alert-heading},
-e.g. \code{tags$h3(class = "alert-heading", "Level 3 Heading")}.}
+\code{h4} is the default heading tag. To use a different heading level tag
+specify custom HTML. Be sure to include the HTML class \code{alert-heading},
+e.g. \code{tags$h3(class = "alert-heading", "My alert heading")}.}
 
-\item{context}{Used to specify the visual context of the alert, one of
-\code{"success"}, \code{"info"}, \code{"warning"}, or \code{"danger"}, defaults to \code{NULL}.
+\item{context}{One of \code{"success"}, \code{"info"}, \code{"warning"}, or \code{"danger"}
+specifying the visual context of the alert, defaults to \code{NULL}.
 
-Alerts for success are green, informative alerts are blue, warning alerts
-are yellow, and alerts for danger are red.}
+By default, success alerts are green, informative alerts are blue, warning
+alerts are yellow, and danger alerts are red.}
 
 \item{hidden}{If \code{TRUE}, the alert renders in an invisible state and may be
 toggled into a visible state using \code{renderAlert}, defaults to \code{TRUE}.}
@@ -35,21 +36,27 @@ alert, defaults to \code{TRUE}.}
 \item{icon}{An optional alternate icon to use as the dismiss button, see
 \code{\link{icons}}, defaults to \code{NULL}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the alert
+\item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
 \item{show}{An expression which returns \code{TRUE}, \code{FALSE}, or \code{NULL}. When
 \code{TRUE} the alert toggles to a shown state, when \code{FALSE} the alert toggles
-to a invisible state, and finally a return value of \code{NULL} holds the
-alert in its current state.
+to an invisible state, and a return value of \code{NULL} leaves the state as is.
 
-It is important to note that once an alert is dismissed the alert element
-is removed from the page. Thus, the rendering function, no matter the
-return value, no longer has an effect. To avoid this funcationality set
+It is important to note, once an alert is dismissed the alert element is
+removed from the page. Thus, the rendering function, no matter the return
+value, will no longer have an effect. To avoid this functionality set
 \code{dismissible} to \code{FALSE}.}
 }
 \description{
-Provide the user with feedback with custom alert dialogs.
+Contextual notifications. Alerts are defined in the UI of an application.
+They are rendered and shown using the \code{renderAlert} function. Alerts
+optionally include a dismiss button. For fully programmatic control over
+the state of the alert the dismiss button may be excluded.
+
+It is important to remember alerts are both outputs and inputs, albeit very
+simple inputs. The input value of an alert becomes \code{TRUE} when the alert is
+dismissed, otherwise the value is \code{NULL}.
 }
 \details{
 As an input, an alert will return \code{TRUE} when it is dismissed, otherwise its
@@ -58,7 +65,6 @@ input value remains \code{NULL}.
 As an ouput, an alert may be hidden or shown using \code{renderAlert}.
 }
 \examples{
-
 if (interactive()) {
   library(shiny)
 
@@ -78,10 +84,6 @@ if (interactive()) {
       })
     }
   )
-}
-
-if (interactive()) {
-  library(shiny)
 
   shinyApp(
     ui = container(
@@ -90,13 +92,15 @@ if (interactive()) {
     server = function(input, output) {
       output$alert <- renderAlert(TRUE)
 
-      output$alert2 <- renderAlert(TRUE)
-
       observeEvent(input$alert, {
-        print(input$alert)
+        print("User dismissed the alert")
       })
     }
   )
 }
 
+}
+\seealso{
+For more information on bootstrap alerts please refer to the
+\href{https://v4-alpha.getbootstrap.com/components/alerts/}{reference page}.
 }
