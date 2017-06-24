@@ -323,7 +323,7 @@ $.extend(textInputBinding, {
   }
 });
 
-Shiny.register.inputBindings(textInputBinding, "dull.textInput");
+Shiny.inputBindings.register(textInputBinding, "dull.textInput");
 
 var textualInputBinding = new Shiny.InputBinding();
 
@@ -354,7 +354,6 @@ $.extend(textualInputBinding, {
 });
 
 Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");
-
 
 Shiny.addCustomMessageHandler("dull.modal.toggle", function(msg) {
   var $modal = $(msg.id);
@@ -474,12 +473,17 @@ $.extend(barOutputBinding, {
 
 Shiny.outputBindings.register(barOutputBinding, "dull.barOutput");
 
-
-/*
 $.extend(Shiny.progressHandlers, {
   dull: function(message) {
-    console.log("this worked?");
     console.log(message);
+    $el = $(message.id);
+
+    if ($el.children().length === 0) {
+      $el.html("<p>" + message.content + "</p>");
+    } else {
+      $el.children().last().after("<p>" + message.content + "</p>");
+    }
+
+    return false;
   }
 });
-*/

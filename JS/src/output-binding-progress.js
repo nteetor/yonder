@@ -27,13 +27,3 @@ $.extend(barOutputBinding, {
 });
 
 Shiny.outputBindings.register(barOutputBinding, "dull.barOutput");
-
-
-/*
-$.extend(Shiny.progressHandlers, {
-  dull: function(message) {
-    console.log("this worked?");
-    console.log(message);
-  }
-});
-*/

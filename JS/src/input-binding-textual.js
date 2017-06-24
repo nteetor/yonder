@@ -26,7 +26,7 @@ $.extend(textInputBinding, {
   }
 });
 
-Shiny.register.inputBindings(textInputBinding, "dull.textInput");
+Shiny.inputBindings.register(textInputBinding, "dull.textInput");
 
 var textualInputBinding = new Shiny.InputBinding();
 
@@ -57,4 +57,3 @@ $.extend(textualInputBinding, {
 });
 
 Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");
-
