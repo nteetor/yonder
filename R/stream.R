@@ -30,6 +30,22 @@
 #'   )
 #' }
 #'
+streamOutput <- function(...) {
+  if (!("id" %in% elodin(list(...)))) {
+    warning(
+      "`streamOutput` doesn't do much without an `id` argument",
+      call. = FALSE
+    )
+  }
+
+  tags$ul(
+    class = "list-group",
+    ...
+  )
+}
+
+#' @rdname streamOuput
+#' @export
 updateStream <- function(id, msg, session = getDefaultReactiveDomain()) {
   session$sendProgress(
     "dull",
