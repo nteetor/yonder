@@ -65,6 +65,10 @@ tagHasClass <- function(x, class) {
 }
 
 tagEnsureClass <- function(x, class) {
+  if (is.null(x)) {
+    return(NULL)
+  }
+
   if (is.null(x$attribs$class)) {
     x$attribs$class <- class
     return(x)
