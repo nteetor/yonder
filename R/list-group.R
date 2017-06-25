@@ -105,7 +105,7 @@
 #'     server = function(input, output) {
 #'       observe({
 #'         if ("noheights" %in% input$preferences) {
-#'           updateListItem("optSkydive", context = "warning")
+#'           updateListGroupItem("optSkydive", context = "warning")
 #'         }
 #'       })
 #'
@@ -133,7 +133,7 @@ listGroup <- function(...) {
 
 #' @rdname listGroup
 #' @export
-listItem <- function(label = NULL, value = NULL, context = NULL, active = FALSE,
+listGroupItem <- function(label = NULL, value = NULL, context = NULL, active = FALSE,
                      disabled = FALSE, hover = FALSE, badge = NULL, ...) {
   if (bad_context(context)) {
     stop(
@@ -165,13 +165,15 @@ listItem <- function(label = NULL, value = NULL, context = NULL, active = FALSE,
   item
 }
 
-updateListItem <- function(id, label = NULL, value = NULL, context = NULL,
+#' @rdname listGroup
+#' @export
+updateListGroupItem <- function(id, label = NULL, value = NULL, context = NULL,
                            active = NULL, disabled = NULL,
                            session = getDefaultReactiveDomain()) {
   if (bad_context(context)) {
     stop(
-      '`updateListItem` argument `context` must be one of "success", "info", ',
-      '"warning" and "danger"', call. = FALSE
+      '`updateListGroupItem` argument `context` must be one of "success", ',
+      '"info", "warning" and "danger"', call. = FALSE
     )
   }
 
@@ -186,5 +188,3 @@ updateListItem <- function(id, label = NULL, value = NULL, context = NULL,
     )
   )
 }
-
-# renderListItem <- function(label = )

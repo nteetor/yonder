@@ -2,13 +2,17 @@
 % Please edit documentation in R/list-group.R
 \name{listGroup}
 \alias{listGroup}
-\alias{listItem}
+\alias{listGroupItem}
+\alias{updateListGroupItem}
 \title{List Group}
 \usage{
 listGroup(...)
 
-listItem(label = NULL, value = NULL, context = NULL, active = FALSE,
-  disabled = FALSE, hover = FALSE, badge = NULL, ...)
+listGroupItem(label = NULL, value = NULL, context = NULL,
+  active = FALSE, disabled = FALSE, hover = FALSE, badge = NULL, ...)
+
+updateListGroupItem(id, label = NULL, value = NULL, context = NULL,
+  active = NULL, disabled = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{...}{List items, built with \code{listItem}, character strings, custom HTML
@@ -110,7 +114,7 @@ if (interactive()) {
     server = function(input, output) {
       observe({
         if ("noheights" \%in\% input$preferences) {
-          updateListItem("optSkydive", context = "warning")
+          updateListGroupItem("optSkydive", context = "warning")
         }
       })
 
