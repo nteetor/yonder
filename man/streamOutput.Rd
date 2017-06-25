@@ -43,7 +43,7 @@ if (interactive()) {
             id = "myStream",
             message = paste("Update:", i),
             template = listGroupItem(
-              context =
+              context = if (i \%\% 2) "warning" else "info"
             )
           )
           Sys.sleep(1);

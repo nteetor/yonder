@@ -60,7 +60,7 @@ streamOutput <- function(...) {
 #' @export
 updateStream <- function(id, message, template = listGroupItem(),
                          session = getDefaultReactiveDomain()) {
-  if (!is.null(template) && !tagHasClass(template, "list-group-item")) {
+  if (!tagHasClass(template, "list-group-item")) {
     warning(
       "unconventional `updateStream` argument value, `template` usually is a ",
       "call to `listGroupItem`",
