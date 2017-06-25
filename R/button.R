@@ -137,10 +137,23 @@
 #'       })
 #'     }
 #'   )
+#'
+#'   shinyApp(
+#'     ui = container(
+#'       inputs$text(id = "value", "A value", placeholder = "enter your value"),
+#'       button("Click me", id = "doSubmit", type = "submit")
+#'     ),
+#'     server = function(input, output) {
+#'       observe({
+#'         print(input$value)
+#'       })
+#'     }
+#'   )
 #' }
 #'
 button <- function(label = NULL, context = "secondary", outline = FALSE,
-                   block = FALSE, disabled = FALSE, textual = NULL, ...) {
+                   block = FALSE, disabled = FALSE, textual = NULL,
+                   type = "button", ...) {
   if (!(context %in% c("primary", "secondary", "link")) &&
       bad_context(context)) {
     stop(
@@ -151,13 +164,14 @@ button <- function(label = NULL, context = "secondary", outline = FALSE,
   }
 
   btn <- tags$button(
-    type = "button",
     class = collate(
       "btn",
       paste0("btn-", if (outline) "outline-", context),
       if (block) "btn-block"
     ),
     disabled = if (disabled) NA,
+    type = "button",
+    `data-type` = if (type == "submit") "submit",
     role = "button",
     label,
     bootstrap()

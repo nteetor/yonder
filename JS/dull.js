@@ -1,9 +1,13 @@
-$(function () {
+$(function() {
   $('[data-toggle="tooltip"]').tooltip();
 });
 
-$(function () {
+$(function() {
   $('[data-toggle="popover"]').popover();
+});
+
+$(document).on("shiny:connected", function() {
+  $('button[data-type="submit"]').attr("type", "submit");
 });
 
 var alertInputBinding = new Shiny.InputBinding();
@@ -140,16 +144,19 @@ $.extend(checkboxInputBinding, {
   },
   unsubscribe: function(el) {
     $(el).off(".checkboxInputBinding");
-  }
-/*  receiveMessage: function(el, data) {
-    if (data.hasOwnProperty("context")) {
-      $(el).attr("class", function(i, c) {
-        return c.replace(/has-(success|warning|danger)/, data.context);
+  },
+  receiveMessage: function(el, data) {
+    var $el = $(el);
+
+    if (data.context) {
+      $el.attr("class", function(i, c) {
+        return c.replace(/has-(success|warning|danger)/g, "");
       });
+      $el.addClass(data.context);
     }
 
-    $(el).trigger("change");
-  } */
+    $el.trigger("change");
+  }
 });
 
 Shiny.inputBindings.register(checkboxInputBinding, "dull.checkboxInput");

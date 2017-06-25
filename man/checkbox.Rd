@@ -4,12 +4,15 @@
 \alias{checkbox}
 \alias{checkboxBar}
 \alias{checkbox}
+\alias{updateCheckbox}
 \title{Checkbox, checkbox bars and groups}
 \usage{
 checkbox(label = NULL, value = NULL, inline = FALSE, check = FALSE,
   disable = FALSE, ...)
 
 checkboxBar(labels = NULL, context = "secondary", ...)
+
+updateCheckbox(id, context, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{label, labels}{A character vector or list of tag elements used as the
@@ -30,11 +33,17 @@ parent element.}
 \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"},
 or \code{"link"}, defaults to \code{"secondary"}.}
 
+\item{id}{A character string specifying the HTML id of a checkbox input to
+update.}
+
 \item{name}{Checkbox name.}
 
 \item{value}{The checkbox value.}
 
-\item{label}{}
+\item{label}{The checkbox label.}
+
+\item{context}{One of \code{"success"}, \code{"warning"}, or \code{"danger"}, specifying
+a visual context for the checkbox.}
 }
 \description{
 Checkbox inputs, be sure to include an \code{id} argument to register the checkbox
@@ -42,10 +51,6 @@ as a reactive input. Checkbox bars are checkboxes group and styled as a
 button bar, but still act as a checkbox group.
 
 Checkbox input.
-}
-\details{
-This section needs to illuminate how to join multiple checkboxes into a
-checkbox group.
 }
 \examples{
 

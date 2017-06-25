@@ -6,7 +6,7 @@
 \title{Buttons, button groups and toolbars}
 \usage{
 button(label = NULL, context = "secondary", outline = FALSE,
-  block = FALSE, disabled = FALSE, textual = NULL, ...)
+  block = FALSE, disabled = FALSE, textual = NULL, type = "button", ...)
 
 updateButton(id, count = NULL, context = NULL,
   session = getDefaultReactiveDomain())
@@ -135,6 +135,18 @@ if (interactive()) {
       observeEvent(input$reset, ignoreInit = TRUE, {
         updateButton("simple", count = 0)
         updateButton("textual", count = 0)
+      })
+    }
+  )
+
+  shinyApp(
+    ui = container(
+      inputs$text(id = "value", "A value", placeholder = "enter your value"),
+      button(id = "doSubmit", type = "submit")
+    ),
+    server = function(input, output) {
+      observe({
+        print(input$value)
       })
     }
   )

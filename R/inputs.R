@@ -90,7 +90,6 @@ inputs$color <- function(label = NULL, ...) {
   textualInput("color", ...)
 }
 
-
 textualInput <- function(type, label, value, placeholder, ...) {
   args <- list(...)
 
@@ -110,17 +109,6 @@ textualInput <- function(type, label, value, placeholder, ...) {
     )
   )
 }
-
-# #
-# #' @param side A character vector specifying on which side of the input to place
-# #'   the addon.
-# #'
-# #' @param
-# #' @rdname textual
-# #' @export
-# addon <- function(side = "left", ) {
-#
-# }
 
 #' Fieldset, grouping inputs
 #'
@@ -162,30 +150,53 @@ inputs$fieldset <- function(..., legend = NULL, disabled = FALSE) {
 #'
 #' @param label The checkbox label.
 #'
-#' @details
+#' @param id A character string specifying the HTML id of a checkbox input to
+#'   update.
 #'
-#' Explain textual checkbox.
+#' @param context One of `"success"`, `"warning"`, or `"danger"`, specifying
+#'   a visual context for the checkbox.
 #'
 #' @name checkbox
 #' @examples
 #'
 #'
 inputs$checkbox <- function(name = NULL, value = NULL, label = NULL, ...) {
-  tags$label(
-    class = "dull-checkbox custom-control custom-checkbox",
-    tags$input(
-      class = "custom-control-input",
-      type = "checkbox",
-      name = name,
-      value = value
-    ),
-    tags$span(class = "custom-control-indicator"),
-    tags$span(
-      class = "custom-control-description",
-      label
-    ),
-    ...,
-    bootstrap()
+  tags$div(
+    class = "form-group",
+    tags$label(
+      class = "dull-checkbox custom-control custom-checkbox",
+      tags$input(
+        class = "custom-control-input",
+        type = "checkbox",
+        name = name,
+        value = value
+      ),
+      tags$span(class = "custom-control-indicator"),
+      tags$span(
+        class = "custom-control-description",
+        label
+      ),
+      ...,
+      bootstrap()
+    )
+  )
+}
+
+#' @rdname checkbox
+updateCheckbox <- function(id, context, session = getDefaultReactiveDomain()) {
+  if (!(context %in% c("success", "warning", "danger"))) {
+    stop(
+      'invalid `updateCheckbox` argument, `context` must be one "success", ',
+      '"warning", or "danger"',
+      call. = FALSE
+    )
+  }
+
+  session$sendInputMessage(
+    id,
+    list(
+      context = paste0("has-", context)
+    )
   )
 }
 
@@ -289,15 +300,4 @@ inputs$select <- function(labels, values) {
   )
 }
 
-updateFormGroup <- function(id, context = NULL, session = getDefaultReactiveDomain()) {
-  if (!(context %in% c("success", "warning", "danger"))) {
-    stop(
-      '`updateCheckbox` argument `context` must be one "success", "warning", or "danger"',
-      call. = FALSE
-    )
-  }
 
-  if (!is.null(context)) {
-    session$sendInputMessage(id, list(context = paste0("has-", context)))
-  }
-}
