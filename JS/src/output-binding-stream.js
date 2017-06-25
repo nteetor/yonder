@@ -1,8 +1,11 @@
 $.extend(Shiny.progressHandlers, {
-  dull: function(message) {
-    $('<li class="list-group-item">' + message.content + "</li>")
+  dull: function(data) {
+    console.log(data.template);
+
+    $(data.template)
+      .text(data.content)
       .hide()
-      .appendTo($(message.id))
+      .appendTo($(data.id))
       .fadeIn(300);
 
     return false;

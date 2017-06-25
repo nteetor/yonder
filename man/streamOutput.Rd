@@ -2,14 +2,22 @@
 % Please edit documentation in R/stream.R
 \name{streamOutput}
 \alias{streamOutput}
+\alias{updateStream}
 \title{Stream notifications}
 \usage{
 streamOutput(...)
+
+updateStream(id, message, template = listGroupItem(),
+  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the stream output.}
 
-\item{msg}{A character string specifying an update message.}
+\item{message}{A character string specifying an update message.}
+
+\item{template}{A call \code{listGroupItem} which is used as a template for the
+message sent, any body element(s) or text of the item are replaced by
+\code{message}, defaults to \code{listGroupItem()}.}
 
 \item{session}{The shiny session, defaults to the default reactive domain.}
 }
@@ -19,6 +27,8 @@ to the user during long running processes.
 }
 \examples{
 if (interactive()) {
+  library(shiny)
+
   shinyApp(
     ui = container(
       button(id = "trigger", "Go!"),
@@ -29,7 +39,13 @@ if (interactive()) {
     server = function(input, output, session) {
       observeEvent(input$trigger, {
         for (i in seq_len(5)) {
-          updateStream("myStream", paste("Update:", i))
+          updateStream(
+            id = "myStream",
+            message = paste("Update:", i),
+            template = listGroupItem(
+              context =
+            )
+          )
           Sys.sleep(1);
         }
       })
