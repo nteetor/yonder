@@ -160,18 +160,17 @@ inputs$fieldset <- function(..., legend = NULL, disabled = FALSE) {
 #'
 #' @param value The checkbox value.
 #'
-#' @param label
+#' @param label The checkbox label.
 #'
 #' @details
 #'
-#' This section needs to illuminate how to join multiple checkboxes into a
-#' checkbox group.
+#' Explain textual checkbox.
 #'
 #' @name checkbox
 #' @examples
 #'
 #'
-inputs$checkboxes <- function(name = NULL, value = NULL, label = NULL, ...) {
+inputs$checkbox <- function(name = NULL, value = NULL, label = NULL, ...) {
   tags$label(
     class = "dull-checkbox custom-control custom-checkbox",
     tags$input(
@@ -188,22 +187,6 @@ inputs$checkboxes <- function(name = NULL, value = NULL, label = NULL, ...) {
     ...,
     bootstrap()
   )
-
-  # tags$div(
-  #   class = "dull-checkbox form-check form-check-inline",
-  #   tags$label(
-  #     class = "form-check-label",
-  #     tags$input(
-  #       class = "form-check-input",
-  #       type = "checkbox",
-  #       name = name,
-  #       value = value
-  #     ),
-  #     label
-  #   ),
-  #   ...,
-  #   bootstrap()
-  # )
 }
 
 #' Radios
