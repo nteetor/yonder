@@ -7,7 +7,7 @@ $.extend(radiosInputBinding, {
   getValue: function(el) {
     return $(document).find(".dull-radios input:radio:checked").val();
   },
-  getState: function(el) {
+  getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function(el, callback) {

@@ -10,7 +10,7 @@ $.extend(checkboxInputBinding, {
   _getLabel: function(el) {
     return $(el).find(".custom-control-description").text();
   },
-  getState: function(el) {
+  getState: function(el, data) {
     return {
       label: this._getLabel(el),
       value: this.getValue(el)

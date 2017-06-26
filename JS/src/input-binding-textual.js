@@ -7,7 +7,7 @@ $.extend(textInputBinding, {
   getValue: function(el) {
     return $(el).val();
   },
-  getState: function(el) {
+  getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   getRatePolicy: function() {
@@ -37,7 +37,7 @@ $.extend(textualInputBinding, {
   getValue: function(el) {
     return $el.find("input").val();
   },
-  getState: function(el) {
+  getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function(el, callback) {

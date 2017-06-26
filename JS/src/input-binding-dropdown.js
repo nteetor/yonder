@@ -20,7 +20,7 @@ $.extend(dropdownInputBinding, {
   getValue: function(el) {
     return $(el).data("value");
   },
-  getState: function(el) {
+  getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function(el, callback) {

@@ -23,7 +23,7 @@ $.extend(listGroupBinding, {
       })
       .get();
   },
-  getState: function(el) {
+  getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function(el, callback) {

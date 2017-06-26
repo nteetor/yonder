@@ -18,7 +18,7 @@ $.extend(buttonInputBinding, {
       value: textValue
     };
   },
-  getState: function(el) {
+  getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   getType: function(el) {
