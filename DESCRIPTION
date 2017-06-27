@@ -9,6 +9,7 @@ Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate"))
 RoxygenNote: 6.0.1
+VignetteBuilder: knitr
 Imports:
     htmltools,
     shiny
@@ -16,4 +17,28 @@ Suggests:
     testthat,
     knitr,
     rmarkdown
-VignetteBuilder: knitr
+Collate:
+    dull.R
+    utils.R
+    includes.R
+    tags.R
+    icons.R
+    inputs.R
+    accordion.R
+    alerts.R
+    badge.R
+    breadcrumb.R
+    button.R
+    card.R
+    checkbox.R
+    collapse.R
+    container.R
+    dropdown.R
+    forms.R
+    list-group.R
+    modal.R
+    nav.R
+    progress.R
+    stream.R
+    tooltip.R
+    typography.R

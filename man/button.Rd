@@ -3,18 +3,17 @@
 \name{button}
 \alias{button}
 \alias{updateButton}
-\title{Buttons, button groups and toolbars}
+\title{Buttons and button groups}
 \usage{
-button(label = NULL, context = "secondary", outline = FALSE,
-  block = FALSE, disabled = FALSE, textual = NULL, type = "button", ...)
+inputs$button(label = NULL, value = NULL, context = "secondary", outline =
+  FALSE, block = FALSE, disabled = FALSE, ...)
+
+inputs$submit(label = NULL, outline = FALSE, block = FALSE, ...)
 
 updateButton(id, count = NULL, context = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{label}{A character vector or tag elements to use as the button label,
-defaults to \code{NULL}.}
-
 \item{context}{Used to specify the visual context of the button, one of
 \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"},
 or \code{"link"}, defaults to \code{"secondary"}.
@@ -24,59 +23,50 @@ success are green, informative buttons are a lighter blue, warning buttons
 are yellow, and buttons for danger are red. Specifying \code{"link"} makes the
 button render with the appearance of a link.}
 
+\item{label}{\strong{\code{*}} A character vector or tag elements to use as the button
+label or button group labels, defaults to \code{NULL}.}
+
+\item{value}{\strong{\code{*}} A character vector specifying a value for the button or
+values for the button group, defaults to \code{NULL}.}
+
 \item{outline}{If \code{TRUE}, the button's background is transparent, \code{context}
 is preserved, defaults to \code{FALSE}.}
 
 \item{block}{If \code{TRUE}, the button is block-level instead of inline, defaults
-to \code{FALSE}.
+to \code{FALSE}. A block-level element will occupy the entire space of its
+parent element, thereby creating a "block."}
 
-A block-level element will occupy the entire space of its parent element,
-thereby creating a "block."}
+\item{disabled}{\strong{\code{*}} If \code{TRUE}, the button renders in a disabled state,
+defaults to \code{FALSE}.}
 
-\item{disabled}{If \code{TRUE}, the button renders in a disabled state, defaults
-to \code{FALSE}.}
-
-\item{textual}{Optional textual input, see \code{\link{text}}, to include as part of
-the button, defaults to \code{NULL}. If specified, the value of the button is
-the value of the text field.}
-
-\item{...}{Named arguments passed as HTML attributes to the button parent
-element.}
+\item{...}{Named arguments passed as HTML attributes to the parent element.}
 }
 \description{
-Button controls. \code{buttonGroup} and \code{buttonToolbar} are a means of grouping
-buttons aesthetically.
-}
-\details{
-When adding a textual component to a button it is recommended to use
-placeholder text instead of a label.
+Buttons, submit and reset buttons. A button's reactive value is a list of two
+items. The first item is \code{count}, the number of clicks on the button. The
+second item is \code{value}, the HTML data-value attribute of the button which may
+be set with the \code{value} argument.
+
+\strong{\code{inputs$button}}, arguments marked with a \strong{\code{*}} may have length greater
+than 1 in order to create a composite set of buttons or button group. A
+button group event is triggered by a click on any of its buttons and the
+value will change depending on which of its buttons is clicked. A button
+group's \code{count} value is the sum of the number clicks on its child buttons.
+
+\strong{\code{inputs$submit}}, does not support arguments with length greater than 1.
 }
 \examples{
+inputs$button("Primary", context = "primary")
 
-button("Primary", context = "primary")
+inputs$button("Secondary")
 
-button("Secondary")
+inputs$button("Success", context = "success")
 
-button("Success", context = "success")
+inputs$button("Info", context = "info", outline = TRUE)
 
-button("Info", context = "info", outline = TRUE)
+inputs$button("\\u2715", context = "warning")
 
-button("\\u2715", context = "warning")
-
-button("Danger!", context = "danger", disable = TRUE)
-
-button(
-  id = "search",
-  "Go!",
-  textual = inputs$text(
-    placeholder = "search terms"
-  )
-)
-
-button(
-  "Check date",
-  textual = inputs$date()
-)
+inputs$button("Danger!", context = "danger", disable = TRUE)
 
 if (interactive()) {
   library(shiny)
@@ -85,30 +75,25 @@ if (interactive()) {
     ui = container(
       listGroup(
         listItem(
-          tags$form(
-            class = "form-inline",
-          button(
-            id = "simple",
-            "Simple button"
-          )
-          ),
-          badge = badge(id = "simpleClicks", 0)
-        ),
-        listItem(
-          tags$form(
-            class = "form-inline",
-          button(
-             id = "textual",
-             label = "Textual button",
-             textual = inputs$text(
-               placeholder = "hello, world!"
-             )
+          forms$inline(
+            inputs$button(
+              id = "clicker1",
+              "Simple button"
             )
           ),
-          badge = badge(id = "textualClicks", 0)
+          badge = badge(id = "badge1", 0)
         ),
         listItem(
-          button(
+          forms$inline(
+            inputs$button(
+              id = "clicker2",
+              label = "Click me!",
+            )
+          ),
+          badge = badge(id = "badge2", 0)
+        ),
+        listItem(
+          inputs$button(
             id = "reset",
             label = "Reset",
             context = "primary"
@@ -117,14 +102,14 @@ if (interactive()) {
       )
     ),
     server = function(input, output) {
-      output$simpleClicks <- renderBadge(input$simple$count)
+      output$badge1 <- renderBadge(input$clicker1$count)
 
-      output$textualClicks <- renderBadge(
+      output$badge2 <- renderBadge(
         value = {
-          input$textual$count
+          input$clicker2$count
         },
         context = {
-          if (input$textual$count > 5) {
+          if (input$clicker2$count > 5) {
             "warning"
           } else {
             "default"
@@ -132,21 +117,24 @@ if (interactive()) {
         }
       )
 
-      observeEvent(input$reset, ignoreInit = TRUE, {
-        updateButton("simple", count = 0)
-        updateButton("textual", count = 0)
+      observeEvent(input$reset, {
+        updateButton("clicker1", count = 0)
+        updateButton("clicker2", count = 0)
       })
     }
   )
 
   shinyApp(
     ui = container(
-      inputs$text(id = "value", "A value", placeholder = "enter your value"),
-      button("Click me", id = "doSubmit", type = "submit")
+      inputs$button(
+        id = "group",
+        label = c("First", "Second", "Third"),
+        value = c("first", "second", "third")
+      )
     ),
     server = function(input, output) {
       observe({
-        print(input$value)
+        print(input$group)
       })
     }
   )
@@ -154,11 +142,10 @@ if (interactive()) {
 
 }
 \seealso{
-For more about block-level elements please refer to the
-\href{https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements}{block-level elements}
-MDN reference section.
+For more about block-level elements please refer to the block-level elements
+MDN
+\href{https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements}{reference section}.
 
-For more about input groups or buttons with text fields please refer to the
-\href{https://v4-alpha.getbootstrap.com/components/input-group/#button-addons}{button addons}
-Bootstrap reference section.
+For more about buttons and button groups please refer to the bootstrap
+\href{https://v4-alpha.getbootstrap.com/components/input-group/#button-addons}{reference section}.
 }

@@ -54,8 +54,8 @@ inputs$url <- function(label = NULL, ...) {
   textualInput("url", ...)
 }
 
-inputs$telephone <- function(label = NULL, ...) {
-  textualInput("tel", ...)
+inputs$telephone <- function(label = NULL, value = NULL, placeholder = NULL, ...) {
+  textualInput("tel", label, value, placeholder, ...)
 }
 
 inputs$password <- function(label = NULL, ...) {

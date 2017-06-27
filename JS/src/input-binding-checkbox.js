@@ -5,7 +5,7 @@ $.extend(checkboxInputBinding, {
     return $(scope).find(".dull-checkbox[id]");
   },
   getValue: function(el) {
-    return $(el).find("input:checkbox:checked").val() || null;
+    return $(el).find("input[type=\"checkbox\"]:checked").val() || null;
   },
   _getLabel: function(el) {
     return $(el).find(".custom-control-description").text();

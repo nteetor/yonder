@@ -5,67 +5,109 @@
 \alias{forms}
 \alias{form}
 \alias{inline}
-\alias{forms}
-\alias{forms}
-\alias{updateFormGroup}
-\alias{forms}
-\alias{forms}
 \title{Forms}
 \usage{
-forms
+forms$form(...)
+
+forms$inline(...)
 
 forms$group(..., state = NULL, fieldset = FALSE, label = NULL)
-
-updateFormGroup(id, state, session = getDefaultReactiveDomain())
-
-forms$form(..., submit = TRUE)
-
-forms$inline(..., submit = TRUE)
 }
 \arguments{
-\item{id}{A character string specifying the HTML id of the element to update.}
-
 \item{state}{What is the state of the group of form elements? One of
 \code{"success"}, \code{"warning"}, or \code{"danger"}, specifying the state of the
 form group.}
-
-\item{session}{A \code{ShinySession} object, defaults to the default reactive
-domain, see \link{getDefaultReactiveDomain}.}
 
 \item{fieldset}{If \code{TRUE}, the form group is rendered inside a \code{<fieldset>}
 instead of a \code{<div>}, defaults to \code{FALSE}. When building a form group
 multiple inputs it is recommended to set \code{fieldset} to \code{TRUE} so that
 \code{label} properly renders as a \code{<legend>}.}
 
-\item{label}{A character vector specifying a label for the form group,
-if \code{fieldset} is \code{TRUE}, the label is rendered inside a \code{<legend>} element
+\item{label}{A character vector specifying a label for the form group, if
+\code{fieldset} is \code{TRUE}, the label is rendered inside a \code{<legend>} element
 instead of a \code{<label>} element, defaults to \code{NULL}.}
 
-\item{submit}{If \code{TRUE}, a submit button is added to the form, the reactive
-value of the form will only trigger and update when the submit button is
-clicked, otherwise the reactive value of the form triggers each time one
-of its child inputs changes, defaults to \code{TRUE}.}
+\item{...}{Named arguments passed as HTML attributes to the parent element.
+
+\strong{\code{forms$group}}, argument is any number of form inputs, labels, form
+text.
+
+\strong{\code{forms$form}} and \strong{\code{forms$inline}}, any number of inputs, form
+groups, labels, or other elements to include in the form.}
+
+\item{id}{A character string specifying the HTML id of a button to update.}
+
+\item{session}{A \code{ShinySession} object, defaults to the default reactive
+domain, see \link{getDefaultReactiveDomain}.}
 }
 \description{
-A forms description stub.
+A forms description stub. A form's reactive value is a list of all the
+reactive inputs within it. Form groups within a form and \emph{which have an ID}
+cause the form's value to take on a nested structure. See details for more
+information.
 
 \strong{\code{forms$group}} helps visually organization and structure a form. On the
 server side, a \code{forms$group} with an \code{id} argument becomes a composite
 reactive value comprised of its underlying reactive inputs.
-
-\strong{\code{forms$form}}
 }
 \details{
-\strong{\code{forms$group}}, \code{...} argument is any number of form inputs, labels, form
-text. or named arguments passed as HTML attributes to the parent element.
+\strong{The value of a form}
 
-\strong{\code{forms$form}} and \strong{\code{forms$inline}}, \code{...} any number of inputs, form
-groups, labels, or other elements to include in the form or named arguments
-passed as HTML attributes to the parent element.
+Below is a small sample form,\preformatted{forms$form(
+  id = "register",
+  forms$group(
+    id = "names",
+    inputs$text(
+      id = "first",
+      label = "First name"
+    ),
+    inputs$text(
+      id = "last",
+      label = "Last name"
+    )
+  )
+)
+}
+
+The initial value of this form, given \code{input} is the object passed to
+the shiny server would be,\preformatted{input
+input$register
+input$register$names
+input$register$names$first
+NULL
+
+input$register$names$last
+NULL
+}
+
+An expanded form example,\preformatted{forms$form(
+  id = "register",
+  forms$group(
+    id = "names",
+    inputs$text(
+      id = "first",
+      label = "First name"
+    ),
+    inputs$text(
+      id = "last",
+      label = "Last name"
+    )
+  ),
+  forms$group(
+    id = "contact",
+    inputs$telephone(
+      id = "mobile",
+      label = "Cell phone"
+    ),
+    inputs$telephone(
+      id = "home",
+      label = "Home phone"
+    )
+  )
+)
+}
 }
 \examples{
-
-
 if (interactive()) {
   library(shiny)
 
@@ -73,6 +115,7 @@ if (interactive()) {
     ui = container(
       forms$form(
         id = "user",
+        submit = TRUE,
         forms$group(
           id = "names",
           label = "Form group",

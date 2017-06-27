@@ -7,8 +7,6 @@ $.extend(formInputBinding, {
   getValue: function(el) {
     var $inputs = $(el).find(".dull-input[id]");
 
-    console.log($inputs);
-
     if (!$inputs.length) {
       return null;
     }
@@ -43,6 +41,9 @@ $.extend(formInputBinding, {
     $(el).on("dull:formchange.formInputBinding", function(e) {
       callback();
     });
+    $(el).on("dull:formsubmit.formInputBinding", function(e) {
+      callback();
+    });
   },
   unsubscribe: function(el) {
     $(el).off(".formInputBinding");
@@ -50,3 +51,10 @@ $.extend(formInputBinding, {
 });
 
 Shiny.inputBindings.register(formInputBinding, "dull.formInput");
+
+$(document).ready(function() {
+  $(".dull-form[id]").on("submit", function(e) {
+    e.preventDefault();
+    $(e.target).trigger("dull:formsubmit");
+  });
+});

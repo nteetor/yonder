@@ -7,5 +7,5 @@ $(function() {
 });
 
 $(document).on("shiny:connected", function() {
-  $("button[data-type=\"submit\"]").attr("type", "submit");
+  $(".dull-submit[data-type=\"submit\"]").attr("type", "submit");
 });

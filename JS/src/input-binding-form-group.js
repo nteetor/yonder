@@ -45,12 +45,13 @@ $(document).on("shiny:inputchanged", function(e) {
   var $el = $(e.el);
 
   if ($el.parents(".dull-form[id]").length) {
-    e.preventDefault();
+    var $parent = $el.parents(".dull-form[id]").first();
 
-    $el
-      .parents(".dull-form[id]")
-      .first()
-      .trigger("dull:formchange");
+    if (!$parent.find(".dull-submit[type=\"submit\"]").length) {
+      e.preventDefault();
+
+      $parent.trigger("dull:formchange");
+    }
   } else if ($el.parents(".dull-form-group[id]").length) {
     e.preventDefault();
 

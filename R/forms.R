@@ -1,21 +1,23 @@
 #' Forms
 #'
-#' A forms description stub.
-#'
-#' @aliases form inline
-#' @format NULL
-#' @export
-#' @examples
-#'
-forms <- list()
-
 #' @description
+#'
+#' A forms description stub. A form's reactive value is a list of all the
+#' reactive inputs within it. Form groups within a form and *which have an ID*
+#' cause the form's value to take on a nested structure. See details for more
+#' information.
 #'
 #' **`forms$group`** helps visually organization and structure a form. On the
 #' server side, a `forms$group` with an `id` argument becomes a composite
 #' reactive value comprised of its underlying reactive inputs.
 #'
-#' @usage forms$group(..., state = NULL, fieldset = FALSE, label = NULL)
+#' @usage
+#'
+#' forms$form(...)
+#'
+#' forms$inline(...)
+#'
+#' forms$group(..., state = NULL, fieldset = FALSE, label = NULL)
 #'
 #' @param state What is the state of the group of form elements? One of
 #'   `"success"`, `"warning"`, or `"danger"`, specifying the state of the
@@ -26,18 +28,95 @@ forms <- list()
 #'   multiple inputs it is recommended to set `fieldset` to `TRUE` so that
 #'   `label` properly renders as a `<legend>`.
 #'
-#' @param label A character vector specifying a label for the form group,
-#'   if `fieldset` is `TRUE`, the label is rendered inside a `<legend>` element
+#' @param label A character vector specifying a label for the form group, if
+#'   `fieldset` is `TRUE`, the label is rendered inside a `<legend>` element
 #'   instead of a `<label>` element, defaults to `NULL`.
+#'
+#' @param ... Named arguments passed as HTML attributes to the parent element.
+#'
+#' **`forms$group`**, argument is any number of form inputs, labels, form
+#' text.
+#'
+#' **`forms$form`** and **`forms$inline`**, any number of inputs, form
+#' groups, labels, or other elements to include in the form.
+#'
+#' @param id A character string specifying the HTML id of a button to update.
+#'
+#' @param session A `ShinySession` object, defaults to the default reactive
+#'   domain, see [getDefaultReactiveDomain].
 #'
 #' @details
 #'
-#' **`forms$group`**, `...` argument is any number of form inputs, labels, form
-#' text. or named arguments passed as HTML attributes to the parent element.
+#' **The value of a form**
 #'
+#' Below is a small sample form,
+#'
+#' ```
+#' forms$form(
+#'   id = "register",
+#'   forms$group(
+#'     id = "names",
+#'     inputs$text(
+#'       id = "first",
+#'       label = "First name"
+#'     ),
+#'     inputs$text(
+#'       id = "last",
+#'       label = "Last name"
+#'     )
+#'   )
+#' )
+#' ```
+#'
+#' The initial value of this form, given `input` is the object passed to
+#' the shiny server would be,
+#'
+#' ```
+#' input
+#' input$register
+#' input$register$names
+#' input$register$names$first
+#' NULL
+#'
+#' input$register$names$last
+#' NULL
+#' ```
+#'
+#' An expanded form example,
+#'
+#' ```
+#' forms$form(
+#'   id = "register",
+#'   forms$group(
+#'     id = "names",
+#'     inputs$text(
+#'       id = "first",
+#'       label = "First name"
+#'     ),
+#'     inputs$text(
+#'       id = "last",
+#'       label = "Last name"
+#'     )
+#'   ),
+#'   forms$group(
+#'     id = "contact",
+#'     inputs$telephone(
+#'       id = "mobile",
+#'       label = "Cell phone"
+#'     ),
+#'     inputs$telephone(
+#'       id = "home",
+#'       label = "Home phone"
+#'     )
+#'   )
+#' )
+#' ```
+#'
+#' @aliases form inline
+#' @format NULL
 #' @name forms
+#' @export
 #' @examples
-#'
 #' if (interactive()) {
 #'   library(shiny)
 #'
@@ -45,6 +124,7 @@ forms <- list()
 #'     ui = container(
 #'       forms$form(
 #'         id = "user",
+#'         submit = TRUE,
 #'         forms$group(
 #'           id = "names",
 #'           label = "Form group",
@@ -61,6 +141,8 @@ forms <- list()
 #'   )
 #' }
 #'
+forms <- list()
+
 forms$group <- function(..., state = NULL, fieldset = FALSE, label = NULL) {
   if (!is.null(state) && !(state %in% c("success", "warning", "danger"))) {
     stop(
@@ -91,12 +173,6 @@ forms$group <- function(..., state = NULL, fieldset = FALSE, label = NULL) {
   )
 }
 
-#' @param id A character string specifying the HTML id of the element to update.
-#'
-#' @param session A `ShinySession` object, defaults to the default reactive
-#'   domain, see [getDefaultReactiveDomain].
-#'
-#' @name forms
 updateFormGroup <- function(id, state, session = getDefaultReactiveDomain()) {
   if (!(state %in% c("success", "warning", "danger"))) {
     stop(
@@ -114,24 +190,6 @@ updateFormGroup <- function(id, state, session = getDefaultReactiveDomain()) {
   )
 }
 
-#' @description
-#'
-#' **`forms$form`**
-#'
-#' @usage forms$form(..., submit = TRUE)
-#'
-#' @param submit If `TRUE`, a submit button is added to the form, the reactive
-#'   value of the form will only trigger and update when the submit button is
-#'   clicked, otherwise the reactive value of the form triggers each time one
-#'   of its child inputs changes, defaults to `TRUE`.
-#'
-#' @details
-#'
-#' **`forms$form`** and **`forms$inline`**, `...` any number of inputs, form
-#' groups, labels, or other elements to include in the form or named arguments
-#' passed as HTML attributes to the parent element.
-#'
-#' @name forms
 forms$form <- function(..., submit = TRUE) {
   tags$form(
     class = "dull-form",
@@ -140,10 +198,7 @@ forms$form <- function(..., submit = TRUE) {
   )
 }
 
-#' @usage forms$inline(..., submit = TRUE)
-#'
-#' @name forms
-forms$inline <- function(..., submit = TRUE) {
+forms$inline <- function(...) {
   # note this is `forms$form`, not `tags$form`
   forms$form(
     class = "form-inline",
