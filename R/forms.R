@@ -36,6 +36,31 @@ forms <- list()
 #' text. or named arguments passed as HTML attributes to the parent element.
 #'
 #' @name forms
+#' @examples
+#'
+#' if (interactive()) {
+#'   library(shiny)
+#'
+#'   shinyApp(
+#'     ui = container(
+#'       forms$form(
+#'         id = "user",
+#'         forms$group(
+#'           id = "names",
+#'           label = "Form group",
+#'           inputs$text(id = "first", placeholder = "first name"),
+#'           inputs$text(id = "last", placeholder = "last name")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observe({
+#'         print(input$user)
+#'       })
+#'     }
+#'   )
+#' }
+#'
 forms$group <- function(..., state = NULL, fieldset = FALSE, label = NULL) {
   if (!is.null(state) && !(state %in% c("success", "warning", "danger"))) {
     stop(
