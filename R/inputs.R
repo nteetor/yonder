@@ -39,7 +39,7 @@ inputs <- list()
 #'
 #' @name text
 inputs$text <- function(label = NULL, value = NULL, placeholder = NULL, ...) {
-  textualInput("text", label, value, placeholder, ..., class = "dull-text")
+  textualInput("text", label, value, placeholder, ...)
 }
 
 inputs$search <- function(label = NULL, value = NULL, placeholder = NULL, ...) {
@@ -101,7 +101,10 @@ textualInput <- function(type, label, value, placeholder, ...) {
       )
     },
     tags$input(
-      class = "form-control",
+      class = collate(
+        paste0("dull-", type),
+        "dull-input form-control"
+      ),
       type = type,
       value = value,
       placeholder = placeholder,
@@ -164,7 +167,7 @@ inputs$checkbox <- function(name = NULL, value = NULL, label = NULL, ...) {
   tags$div(
     class = "form-group",
     tags$label(
-      class = "dull-checkbox custom-control custom-checkbox",
+      class = "dull-checkbox dull-input custom-control custom-checkbox",
       tags$input(
         class = "custom-control-input",
         type = "checkbox",
@@ -241,7 +244,7 @@ inputs$radios <- function(labels = NULL, values = NULL, stacked = FALSE, ...) {
 
   ir <- tags$div(
     class = collate(
-      "dull-radios form-group",
+      "dull-radios dull-input form-group",
       if (stacked) "custom-controls-stacked"
     ),
     lapply(
@@ -272,7 +275,6 @@ inputs$radios <- function(labels = NULL, values = NULL, stacked = FALSE, ...) {
   ir
 }
 
-
 # Name an argument "selected" otherwise the first item is the default value.
 inputs$select <- function(labels, values) {
   if (length(labels) != length(values)) {
@@ -283,7 +285,7 @@ inputs$select <- function(labels, values) {
   }
 
   tags$select(
-    class = "custom-select",
+    class = "dull-select dull-input custom-select",
     lapply(
       seq_along(labels),
       function(i) {

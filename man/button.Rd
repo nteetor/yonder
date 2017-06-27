@@ -142,7 +142,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       inputs$text(id = "value", "A value", placeholder = "enter your value"),
-      button(id = "doSubmit", type = "submit")
+      button("Click me", id = "doSubmit", type = "submit")
     ),
     server = function(input, output) {
       observe({

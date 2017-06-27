@@ -3,10 +3,12 @@ var gulp = require("gulp");
 
 /* PLUGINS */
 var jslint = require("gulp-jshint"),
+    eslint = require("gulp-eslint"),
     concat = require("gulp-concat"),
     rename = require("gulp-rename"),
     uglify = require("gulp-uglify"),
-    watch = require("gulp-watch");
+    watch = require("gulp-watch"),
+    babel = require('gulp-babel');
 
 /* FILE LOCATIONS */
 var jsFiles = "src/*.js",
@@ -14,17 +16,26 @@ var jsFiles = "src/*.js",
 
 /* TASKS */
 
-// lint
-gulp.task("lint", function() {
+// jslint
+gulp.task("jslint", function() {
     return gulp.src(jsFiles)
 	.pipe(jslint())
 	.pipe(jslint.reporter("fail"));
 });
 
+// eslint
+gulp.task("eslint", function() {
+    return gulp.src(jsFiles)
+	.pipe(eslint())
+	.pipe(eslint.format());
+//	.pipe(eslint.failAfterError());
+})
+
 // concat & minify
 gulp.task("scripts", function() {
     return gulp.src(jsFiles)
 	.pipe(concat("dull.js"))
+	.pipe(babel({ presets: ["es2015"] }))
 	.pipe(gulp.dest("."))
 	.pipe(rename("dull.min.js"))
 	.pipe(uglify())
@@ -32,5 +43,5 @@ gulp.task("scripts", function() {
 });
 
 // default
-gulp.task("default", ["lint", "scripts"]);
+gulp.task("default", ["eslint", "scripts"]);
 

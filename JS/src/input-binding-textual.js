@@ -5,7 +5,7 @@ $.extend(textInputBinding, {
     return $(scope).find(".dull-text[id]");
   },
   getValue: function(el) {
-    return $(el).val();
+    return $(el).val() || null;
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
@@ -22,38 +22,8 @@ $.extend(textInputBinding, {
     });
   },
   unsubscribe: function(el) {
-    $(el).off(".textualInputBinding");
+    $(el).off(".textInputBinding");
   }
 });
 
 Shiny.inputBindings.register(textInputBinding, "dull.textInput");
-
-var textualInputBinding = new Shiny.InputBinding();
-
-$.extend(textualInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-textual[id]");
-  },
-  getValue: function(el) {
-    return $el.find("input").val();
-  },
-  getState: function(el, data) {
-    return { value: this.getValue(el) };
-  },
-  subscribe: function(el, callback) {
-    $(el).on("change.textualInputBinding", function(e) {
-      callback(false);
-    });
-  },
-  unsubscribe: function(el) {
-    $(el).off(".textualInputBinding");
-  },
-  getRatePolicy: function() {
-    return {
-      policy: 'debounce',
-      delay: 250
-    };
-  }
-});
-
-Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");
