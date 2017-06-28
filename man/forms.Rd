@@ -5,6 +5,7 @@
 \alias{forms}
 \alias{form}
 \alias{inline}
+\alias{updateFormGroup}
 \title{Forms}
 \usage{
 forms$form(...)
@@ -12,11 +13,18 @@ forms$form(...)
 forms$inline(...)
 
 forms$group(..., state = NULL, fieldset = FALSE, label = NULL)
+
+updateFormGroup(id, state, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{state}{What is the state of the group of form elements? One of
-\code{"success"}, \code{"warning"}, or \code{"danger"}, specifying the state of the
-form group.}
+\item{id}{A character string specifying the HTML id of a button to update.}
+
+\item{state}{One of \code{"success"}, \code{"warning"}, or \code{"danger"}, specifying the
+state of the form group, defaults to \code{NULL} in \code{forms$group}, is required
+for \code{updateFormGroup}.}
+
+\item{session}{A \code{ShinySession} object, defaults to the default reactive
+domain, see \link{getDefaultReactiveDomain}.}
 
 \item{fieldset}{If \code{TRUE}, the form group is rendered inside a \code{<fieldset>}
 instead of a \code{<div>}, defaults to \code{FALSE}. When building a form group
@@ -34,21 +42,19 @@ text.
 
 \strong{\code{forms$form}} and \strong{\code{forms$inline}}, any number of inputs, form
 groups, labels, or other elements to include in the form.}
-
-\item{id}{A character string specifying the HTML id of a button to update.}
-
-\item{session}{A \code{ShinySession} object, defaults to the default reactive
-domain, see \link{getDefaultReactiveDomain}.}
 }
 \description{
-A forms description stub. A form's reactive value is a list of all the
-reactive inputs within it. Form groups within a form and \emph{which have an ID}
-cause the form's value to take on a nested structure. See details for more
-information.
+A reactive \code{forms$form} is a new reactive input. A form's reactive value is a
+list of all the reactive inputs within it. Reactive form groups within a
+form, those form groups \emph{which have an ID}, cause the form's value to take on
+a nested structure. See details for more information.
 
-\strong{\code{forms$group}} helps visually organization and structure a form. On the
-server side, a \code{forms$group} with an \code{id} argument becomes a composite
-reactive value comprised of its underlying reactive inputs.
+\code{forms$inline} is an inline equivalent of \code{forms$form}. Inline forms are
+handy for rendering small, compact forms.
+
+\code{forms$group} helps visually organization and structure a form. On the
+server side, a \code{forms$group} with an \code{id} argument becomes a reactive list
+value comprised of its underlying reactive inputs.
 }
 \details{
 \strong{The value of a form}
@@ -69,8 +75,8 @@ Below is a small sample form,\preformatted{forms$form(
 )
 }
 
-The initial value of this form, given \code{input} is the object passed to
-the shiny server would be,\preformatted{input
+The initial value of this form, as would be printed from a shiny server
+function.\preformatted{input
 input$register
 input$register$names
 input$register$names$first
@@ -80,7 +86,7 @@ input$register$names$last
 NULL
 }
 
-An expanded form example,\preformatted{forms$form(
+Here is a longer form based on the one above,\preformatted{forms$form(
   id = "register",
   forms$group(
     id = "names",
@@ -106,6 +112,29 @@ An expanded form example,\preformatted{forms$form(
   )
 )
 }
+
+Below is the initial value of this larger form,\preformatted{input
+input$register
+input$register$names
+input$register$names$first
+NULL
+
+input$register$names$last
+NULL
+
+input$register$contact
+input$register$contact$mobile
+NULL
+
+input$register$contact$home
+NULL
+}
+
+** Inputs within a form **
+
+Any reactive inputs within a \strong{reactive} form, a form with an \code{id}, will not
+trigger an obesrver or reactive expression nor do they take a value other
+than \code{NULL}.
 }
 \examples{
 if (interactive()) {
@@ -128,9 +157,20 @@ if (interactive()) {
       observe({
         print(input$user)
       })
+
+      # Note the observer triggers on application startup,
+      # value is NULL, and then does not trigger again.
+      observe({
+        print(inputs$first)
+      })
     }
   )
 }
 
+}
+\seealso{
+For more information on forms and form groups please refer to the online
+bootstrap
+\href{https://v4-alpha.getbootstrap.com/components/forms/}{reference page}.
 }
 \keyword{datasets}

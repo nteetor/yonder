@@ -2,14 +2,17 @@
 #'
 #' @description
 #'
-#' A forms description stub. A form's reactive value is a list of all the
-#' reactive inputs within it. Form groups within a form and *which have an ID*
-#' cause the form's value to take on a nested structure. See details for more
-#' information.
+#' A reactive `forms$form` is a new reactive input. A form's reactive value is a
+#' list of all the reactive inputs within it. Reactive form groups within a
+#' form, those form groups *which have an ID*, cause the form's value to take on
+#' a nested structure. See details for more information.
 #'
-#' **`forms$group`** helps visually organization and structure a form. On the
-#' server side, a `forms$group` with an `id` argument becomes a composite
-#' reactive value comprised of its underlying reactive inputs.
+#' `forms$inline` is an inline equivalent of `forms$form`. Inline forms are
+#' handy for rendering small, compact forms.
+#'
+#' `forms$group` helps visually organization and structure a form. On the
+#' server side, a `forms$group` with an `id` argument becomes a reactive list
+#' value comprised of its underlying reactive inputs.
 #'
 #' @usage
 #'
@@ -19,9 +22,9 @@
 #'
 #' forms$group(..., state = NULL, fieldset = FALSE, label = NULL)
 #'
-#' @param state What is the state of the group of form elements? One of
-#'   `"success"`, `"warning"`, or `"danger"`, specifying the state of the
-#'   form group.
+#' @param state One of `"success"`, `"warning"`, or `"danger"`, specifying the
+#'   state of the form group, defaults to `NULL` in `forms$group`, is required
+#'   for `updateFormGroup`.
 #'
 #' @param fieldset If `TRUE`, the form group is rendered inside a `<fieldset>`
 #'   instead of a `<div>`, defaults to `FALSE`. When building a form group
@@ -68,8 +71,8 @@
 #' )
 #' ```
 #'
-#' The initial value of this form, given `input` is the object passed to
-#' the shiny server would be,
+#' The initial value of this form, as would be printed from a shiny server
+#' function.
 #'
 #' ```
 #' input
@@ -82,7 +85,7 @@
 #' NULL
 #' ```
 #'
-#' An expanded form example,
+#' Here is a longer form based on the one above,
 #'
 #' ```
 #' forms$form(
@@ -112,6 +115,38 @@
 #' )
 #' ```
 #'
+#' Below is the initial value of this larger form,
+#'
+#' ```
+#' input
+#' input$register
+#' input$register$names
+#' input$register$names$first
+#' NULL
+#'
+#' input$register$names$last
+#' NULL
+#'
+#' input$register$contact
+#' input$register$contact$mobile
+#' NULL
+#'
+#' input$register$contact$home
+#' NULL
+#' ```
+#'
+#' ** Inputs within a form **
+#'
+#' Any reactive inputs within a **reactive** form, a form with an `id`, will not
+#' trigger an obesrver or reactive expression nor do they take a value other
+#' than `NULL`.
+#'
+#' @seealso
+#'
+#' For more information on forms and form groups please refer to the online
+#' bootstrap
+#' [reference page](https://v4-alpha.getbootstrap.com/components/forms/).
+#'
 #' @aliases form inline
 #' @format NULL
 #' @name forms
@@ -137,13 +172,35 @@
 #'       observe({
 #'         print(input$user)
 #'       })
+#'
+#'       # Note the observer triggers on application startup,
+#'       # value is NULL, and then does not trigger again.
+#'       observe({
+#'         print(inputs$first)
+#'       })
 #'     }
 #'   )
 #' }
 #'
 forms <- list()
 
-forms$group <- function(..., state = NULL, fieldset = FALSE, label = NULL) {
+forms$form <- function(..., submit = TRUE) {
+  tags$form(
+    class = "dull-form",
+    ...,
+    bootstrap()
+  )
+}
+
+forms$inline <- function(...) {
+  # note this is `forms$form`, not `tags$form`
+  forms$form(
+    class = "form-inline",
+    ...
+  )
+}
+
+forms$group <- function(..., state = NULL, fieldset = FALSE, legend = NULL) {
   if (!is.null(state) && !(state %in% c("success", "warning", "danger"))) {
     stop(
       'invalid `forms$group` argument, `state` must be one of "success", ',
@@ -152,27 +209,28 @@ forms$group <- function(..., state = NULL, fieldset = FALSE, label = NULL) {
     )
   }
 
-  args <- list(...)
-  eles <- args[elodin(args) == ""]
+  if (!fieldset && !is.null(legend)) {
+    warning(
+      "if `forms$group` argument `fieldset` is FALSE, `legend` has no effect",
+      call. = FALSE
+    )
+  }
 
-  eleID <- if (length(eles) == 1) eles[[1]]$attribs$id else NULL
-
-  parent <- if (fieldset) tags$fieldset else tags$div
-
-  parent(
+  (if (fieldset) tags$fieldset else tags$div)(
     class = collate(
       "dull-form-group form-group",
       if (!is.null(state)) paste0("has-", state)
     ),
-    if (!is.null(label)) {
-      if (fieldset) tags$legend(class = "col-form-legend", label) else
-        tags$label(class = "col-form-label", `for` = eleID, label)
+    if (fieldset && !is.null(legend)) {
+      tags$legend(class = "col-form-legend", legend)
     },
     ...,
     bootstrap()
   )
 }
 
+#' @rdname forms
+#' @export
 updateFormGroup <- function(id, state, session = getDefaultReactiveDomain()) {
   if (!(state %in% c("success", "warning", "danger"))) {
     stop(
@@ -190,18 +248,4 @@ updateFormGroup <- function(id, state, session = getDefaultReactiveDomain()) {
   )
 }
 
-forms$form <- function(..., submit = TRUE) {
-  tags$form(
-    class = "dull-form",
-    ...,
-    bootstrap()
-  )
-}
 
-forms$inline <- function(...) {
-  # note this is `forms$form`, not `tags$form`
-  forms$form(
-    class = "form-inline",
-    ...
-  )
-}
