@@ -24,6 +24,7 @@ Collate:
     tags.R
     icons.R
     inputs.R
+    utilities.R
     accordion.R
     alerts.R
     badge.R
@@ -42,3 +43,4 @@ Collate:
     stream.R
     tooltip.R
     typography.R
+    zzz.R
