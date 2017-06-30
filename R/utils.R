@@ -2,12 +2,14 @@
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
-re <- function(string, pattern) {
+re <- function(string, pattern, match = TRUE) {
   if (length(string) == 0) {
-    return(FALSE)
+    # because grepl("", <regex>) returns TRUE, extend this to
+    # handle character(0) or NULL
+    return(TRUE)
   }
 
-  grepl(pattern, string)
+  grepl(pattern, if (match) paste0("^", string, "$") else string)
 }
 
 ID <- function(x) {
@@ -26,23 +28,53 @@ is_tag <- function(x) {
   inherits(x, "shiny.tag")
 }
 
+#' Join HTML attribute values
+#'
+#' A function to join HTML attribute values with `htmltools` in mind. If all
+#' arguments are `NULL`, `NULL` is returned so the attribute can be dropped. If
+#' all arguments are the empty string, `NULL` is returned so the attribute can
+#' be dropped. If all arguments are `NA`, then `NA` is returned to preserve a
+#' boolean attribute. Otherwise, all arguments are collapsed together into a
+#' single string suitable for an HTML attribute.
+#'
+#' @param ... Any number of arguments to combine together as a single HTML
+#'   attribute value.
+#'
+#' @param collapse A character string specifying how the arguments are pasted
+#'   together, passed to `paste`, defaults to `" "`.
+#'
+#' @keywords internal
+#' @export
+#' @examples
+#' collate(
+#'   "container",
+#'   "my-custom-class"
+#' )
+#'
+#' collate(
+#'   "container",
+#'   utils$border(round = "all")
+#' )
+#'
 collate <- function(..., collapse = " ") {
-  paste(c(...), collapse = collapse)
+  args <- unique(c(...))
+
+  if (is.null(args)) {
+    NULL
+  } else if (all(args == "")) {
+    NULL
+  } else if (all(is.na(args))) {
+    NA_character_
+  } else {
+    paste(args, collapse = collapse)
+  }
 }
 
 bad_context <- function(x, extra = NULL) {
-  if (is.null(x)) {
-    return(FALSE)
-  }
-
-  !(x %in% c("success", "info", "warning", "danger", extra))
+  !re(x, paste0("success|info|warning|danger", paste0(c("", extra), collapse = "|")))
 }
 
 # shiny utils ----
-
-getShinyDefaultReactiveDomain <- function() {
-  shiny:::.globals$domain
-}
 
 dropNulls <- function(x) {
   x[!vapply(x, is.null, logical(1))]
