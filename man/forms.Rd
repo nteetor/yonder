@@ -23,8 +23,8 @@ updateFormGroup(id, state, session = getDefaultReactiveDomain())
 state of the form group, defaults to \code{NULL} in \code{forms$group}, is required
 for \code{updateFormGroup}.}
 
-\item{session}{A \code{ShinySession} object, defaults to the default reactive
-domain, see \link{getDefaultReactiveDomain}.}
+\item{session}{The \code{session} object passed to a shiny server function,
+defaults to \code{\link[shiny:getDefaultReactiveDomain]{shiny::getDefaultReactiveDomain()}}.}
 
 \item{fieldset}{If \code{TRUE}, the form group is rendered inside a \code{<fieldset>}
 instead of a \code{<div>}, defaults to \code{FALSE}. When building a form group
@@ -35,13 +35,8 @@ multiple inputs it is recommended to set \code{fieldset} to \code{TRUE} so that
 \code{fieldset} is \code{TRUE}, the label is rendered inside a \code{<legend>} element
 instead of a \code{<label>} element, defaults to \code{NULL}.}
 
-\item{...}{Named arguments passed as HTML attributes to the parent element.
-
-\strong{\code{forms$group}}, argument is any number of form inputs, labels, form
-text.
-
-\strong{\code{forms$form}} and \strong{\code{forms$inline}}, any number of inputs, form
-groups, labels, or other elements to include in the form.}
+\item{...}{Input elements, labels, or other tag elements or named arguments
+passed as HTML attributes to the parent element.}
 }
 \description{
 A reactive \code{forms$form} is a new reactive input. A form's reactive value is a
@@ -57,7 +52,7 @@ server side, a \code{forms$group} with an \code{id} argument becomes a reactive 
 value comprised of its underlying reactive inputs.
 }
 \details{
-\strong{The value of a form}
+** The value of a form **
 
 Below is a small sample form,\preformatted{forms$form(
   id = "register",

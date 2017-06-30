@@ -35,22 +35,17 @@
 #'   `fieldset` is `TRUE`, the label is rendered inside a `<legend>` element
 #'   instead of a `<label>` element, defaults to `NULL`.
 #'
-#' @param ... Named arguments passed as HTML attributes to the parent element.
-#'
-#' **`forms$group`**, argument is any number of form inputs, labels, form
-#' text.
-#'
-#' **`forms$form`** and **`forms$inline`**, any number of inputs, form
-#' groups, labels, or other elements to include in the form.
+#' @param ... Input elements, labels, or other tag elements or named arguments
+#'   passed as HTML attributes to the parent element.
 #'
 #' @param id A character string specifying the HTML id of a button to update.
 #'
-#' @param session A `ShinySession` object, defaults to the default reactive
-#'   domain, see [getDefaultReactiveDomain].
+#' @param session The `session` object passed to a shiny server function,
+#'   defaults to [shiny::getDefaultReactiveDomain()].
 #'
 #' @details
 #'
-#' **The value of a form**
+#' ** The value of a form **
 #'
 #' Below is a small sample form,
 #'
