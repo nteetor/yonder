@@ -2,45 +2,59 @@
 #'
 #' A Bootstrap dropdown menu.
 #'
-#' @param ... `dropdownItem`s passed to `dropdown` or additional named arguments
-#'   passed as HTML attributes to the parent element.
+#' @param ... Any number of `dropdownItem`s passed to `dropdown` or additional
+#'   named arguments passed as HTML attributes to the respective parent element.
 #'
-#' @param button A button element used to trigger the dropdown, see `button`.
+#' @param label A character string labelling the dropdown or dropdown item,
+#'   defaults to `NULL`.
+#'
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`
+#'
+#' @param split If `TRUE`, the dropdown is changed aesthetically such that the
+#'   dropdown icon is split into a separate, smaller button, defaults to
+#'   `FALSE`.
 #'
 #' @export
 #' @examples
-#' # A dropdown without `id` attribute
-#' #   - standard `tags$a` utility
 #' dropdown(
-#'   button = button("Secondary"),
+#'   label = "Secondary",
 #'   dropdownItem("Option 1", href = "#"),
 #'   dropdownItem("Option 2", href = "#")
 #' )
 #'
-#' # A dropdown with `id` attribute
-#' #   - now `dropdownItem`s similar to `shiny::actionButton`
-#' #   - when clicked `dropdownItem` will have `href` value
 #' dropdown(
 #'   id = "flavor",
-#'   button = button("Ice cream flavors"),
+#'   label = "Ice cream flavors",
 #'   dropdownItem("Vanilla", href = "vanilla"),
 #'   dropdownItem("Chocolate", href = "chocolate"),
 #'   dropdownItem("Mint", href = "mint")
 #' )
 #'
-dropdown <- function(button = NULL, ...) {
+dropdown <- function(..., label = NULL, context = "secondary", split = FALSE) {
+  browser()
   tags$div(
     class = "dropdown dull-dropdown",
-    if (!is.null(button)) {
-      button <- tagEnsureClass(button, "dropdown-toggle")
-      button$attribs$`data-toggle` <- "dropdown"
-      button
-    },
+    if (split) inputs$button(context = context, label = label),
+    inputs$button(
+      class = collate(
+        "dropdown-toggle",
+        if (split) "dropdown-toggle-split"
+      ),
+      label = label,
+      context = context,
+      `data-toggle` = "dropdown",
+      if (split) tags$span(class = "sr-only", "Toggle Dropdown")
+    ),
     ...,
     bootstrap()
   )
 }
 
-dropdownItem <- function() {
-  stop("not implemented")
+#' @rdname dropdown
+dropdownItem <- function(label = NULL, href = NULL, ...) {
+  tags$a(
+    class = "dropdown-item",
+    href = href,
+    ...
+  )
 }

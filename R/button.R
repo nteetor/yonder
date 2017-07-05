@@ -188,35 +188,35 @@ inputs$button <- function(label = NULL, value = NULL, context = "secondary",
     role = "button"
   )
 
-  set <- lapply(
-    seq_along(label),
-    function(i) {
-      temp <- btn
-      temp$children <- c(temp$children, label[[i]])
-      temp$attribs$`data-value` <- value[[i]]
-      temp$attribs$`data-count` <- 0
-      temp$attribs$disabled <- if (disabled[[i]]) NA
-      temp
-    }
-  )
-
-  if (length(set) == 1) {
-    set <- set[[1]]
-    set$attribs <- c(set$attribs, list(...))
-    set$attribs$class <- collate("dull-button dull-input", set$attribs$class)
-    set$children <- c(set$children, list(bootstrap()))
-    set
-  } else {
-    tags$div(
-      class = "dull-button-group dull-input btn-group",
-      role = "group",
-      `data-count` = 0,
-      `data-value` = NULL,
-      set,
-      ...,
-      bootstrap()
+  if (length(value) > 1 || length(label) > 1) {
+    return(
+      tags$div(
+        class = "dull-button-group dull-input btn-group",
+        role = "group",
+        `data-count` = 0,
+        `data-value` = NULL,
+        lapply(
+          seq_along(label),
+          function(i) {
+            temp <- btn
+            temp$children <- c(temp$children, label[[i]])
+            temp$attribs$`data-value` <- value[[i]]
+            temp$attribs$`data-count` <- 0
+            temp$attribs$disabled <- if (disabled[[i]]) NA
+            temp
+          }
+        ),
+        ...,
+        bootstrap()
+      )
     )
   }
+
+  btn$attribs <- c(btn$attribs, `data-count` = 0, list(...))
+  btn$attribs$class <- collate("dull-button dull-input", btn$attribs$class)
+  btn$children <- c(btn$children, list(bootstrap()))
+
+  btn
 }
 
 inputs$submit <- function(label = NULL, outline = FALSE, block = FALSE, ...) {

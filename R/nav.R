@@ -63,6 +63,33 @@
 #'   navItem("Blog", href = "#blog")
 #' )
 #'
+#' if (interactive()) {
+#'   library(shiny)
+#'
+#'   shinyApp(
+#'     ui = container(
+#'       nav(
+#'         navItem(
+#'           label = "Home",
+#'           active = TRUE
+#'         ),
+#'         navItem(
+#'           label = "Posts"
+#'         ),
+#'         navItem(
+#'           label = "About"
+#'         ),
+#'         navDropdown(
+#'           dropdownItem()
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
 nav <- function(..., align = "left", width = NULL, vertical = FALSE,
                 tabs = FALSE, pills = FALSE) {
   if (!(align %in% c("right", "left", "center"))) {

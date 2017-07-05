@@ -70,6 +70,33 @@ nav(
   navItem("Blog", href = "#blog")
 )
 
+if (interactive()) {
+  library(shiny)
+
+  shinyApp(
+    ui = container(
+      nav(
+        navItem(
+          label = "Home",
+          active = TRUE
+        ),
+        navItem(
+          label = "Posts"
+        ),
+        navItem(
+          label = "About"
+        ),
+        navDropdown(
+          dropdownItem()
+        )
+      )
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
+
 }
 \seealso{
 For more information about the Bootstrap nav please follow this

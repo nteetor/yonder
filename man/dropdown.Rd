@@ -2,34 +2,39 @@
 % Please edit documentation in R/dropdown.R
 \name{dropdown}
 \alias{dropdown}
+\alias{dropdownItem}
 \title{Dropdown Menu}
 \usage{
-dropdown(button = NULL, ...)
+dropdown(..., label = NULL, context = "secondary", split = FALSE)
+
+dropdownItem(label = NULL, href = NULL, ...)
 }
 \arguments{
-\item{button}{A button element used to trigger the dropdown, see \code{button}.}
+\item{...}{Any number of \code{dropdownItem}s passed to \code{dropdown} or additional
+named arguments passed as HTML attributes to the respective parent element.}
 
-\item{...}{\code{dropdownItem}s passed to \code{dropdown} or additional named arguments
-passed as HTML attributes to the parent element.}
+\item{label}{A character string labelling the dropdown or dropdown item,
+defaults to \code{NULL}.}
+
+\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}}
+
+\item{split}{If \code{TRUE}, the dropdown is changed aesthetically such that the
+dropdown icon is split into a separate, smaller button, defaults to
+\code{FALSE}.}
 }
 \description{
 A Bootstrap dropdown menu.
 }
 \examples{
-# A dropdown without `id` attribute
-#   - standard `tags$a` utility
 dropdown(
-  button = button("Secondary"),
+  label = "Secondary",
   dropdownItem("Option 1", href = "#"),
   dropdownItem("Option 2", href = "#")
 )
 
-# A dropdown with `id` attribute
-#   - now `dropdownItem`s similar to `shiny::actionButton`
-#   - when clicked `dropdownItem` will have `href` value
 dropdown(
   id = "flavor",
-  button = button("Ice cream flavors"),
+  label = "Ice cream flavors",
   dropdownItem("Vanilla", href = "vanilla"),
   dropdownItem("Chocolate", href = "chocolate"),
   dropdownItem("Mint", href = "mint")
