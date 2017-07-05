@@ -2,8 +2,9 @@
 #'
 #' A way of handling and outlining content as a list.
 #'
-#' @param ... List items, built with `listItem`, character strings, custom HTML
-#'   content, or named arguments passed as HTML attributes to the parent `div`.
+#' @param ... List items, built with `listGroupItem`, character strings, custom
+#'   HTML content, or named arguments passed as HTML attributes to the parent
+#'   `div`.
 #'
 #' @param label List item label, defaults to `NULL`.
 #'
@@ -49,15 +50,15 @@
 #' # highlight list item
 #' listGroup(
 #'   "Item 1",
-#'   listItem("Item 2", active = TRUE),
+#'   listGroupItem("Item 2", active = TRUE),
 #'   "Item 3"
 #' )
 #'
 #' # disable list items
 #' listGroup(
-#'   listItem("Item 1", disabled = TRUE),
+#'   listGroupItem("Item 1", disabled = TRUE),
 #'   "Item 2",
-#'   listItem("Item 3", disabled = TRUE)
+#'   listGroupItem("Item 3", disabled = TRUE)
 #' )
 #'
 #' # HTML list items
@@ -79,22 +80,22 @@
 #'           tags$h4("Any preferences?"),
 #'           listGroup(
 #'             id = "preferences",
-#'             listItem("No heights", "noheights"),
-#'             listItem("No animals", "noanimals")
+#'             listGroupItem("No heights", "noheights"),
+#'             listGroupItem("No animals", "noanimals")
 #'           )
 #'         ),
 #'         col(
 #'           tags$h4("Possible outings"),
 #'           listGroup(
-#'             listItem(
+#'             listGroupItem(
 #'               id = "optZoo",
 #'               "Zoo visit!"
 #'             ),
-#'             listItem(
+#'             listGroupItem(
 #'               id = "optSkydive",
 #'               "Sky diving!"
 #'             ),
-#'             listItem(
+#'             listGroupItem(
 #'               id = "optPern",
 #'               "Visit Pern"
 #'             )
@@ -122,7 +123,7 @@ listGroup <- function(...) {
     class = "dull-list-group list-group list-group-flush",
     lapply(
       content,
-      function(el) if (is_tag(el)) el else listItem(el, value = el)
+      function(el) if (is_tag(el)) el else listGroupItem(el, value = el)
     ),
     bootstrap()
   )

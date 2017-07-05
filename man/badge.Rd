@@ -32,7 +32,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       listGroup(
-        listItem(
+        listGroupItem(
           label = "Button clicks",
           badge = badge(
             id = "buttonClicks",

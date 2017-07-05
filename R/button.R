@@ -78,7 +78,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       listGroup(
-#'         listItem(
+#'         listGroupItem(
 #'           forms$inline(
 #'             inputs$button(
 #'               id = "clicker1",
@@ -87,7 +87,7 @@
 #'           ),
 #'           badge = badge(id = "badge1", 0)
 #'         ),
-#'         listItem(
+#'         listGroupItem(
 #'           forms$inline(
 #'             inputs$button(
 #'               id = "clicker2",
@@ -96,7 +96,7 @@
 #'           ),
 #'           badge = badge(id = "badge2", 0)
 #'         ),
-#'         listItem(
+#'         listGroupItem(
 #'           inputs$button(
 #'             id = "reset",
 #'             label = "Reset",

@@ -15,8 +15,9 @@ updateListGroupItem(id, label = NULL, value = NULL, context = NULL,
   active = NULL, disabled = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{...}{List items, built with \code{listItem}, character strings, custom HTML
-content, or named arguments passed as HTML attributes to the parent \code{div}.}
+\item{...}{List items, built with \code{listGroupItem}, character strings, custom
+HTML content, or named arguments passed as HTML attributes to the parent
+\code{div}.}
 
 \item{label}{List item label, defaults to \code{NULL}.}
 
@@ -58,15 +59,15 @@ listGroup(
 # highlight list item
 listGroup(
   "Item 1",
-  listItem("Item 2", active = TRUE),
+  listGroupItem("Item 2", active = TRUE),
   "Item 3"
 )
 
 # disable list items
 listGroup(
-  listItem("Item 1", disabled = TRUE),
+  listGroupItem("Item 1", disabled = TRUE),
   "Item 2",
-  listItem("Item 3", disabled = TRUE)
+  listGroupItem("Item 3", disabled = TRUE)
 )
 
 # HTML list items
@@ -88,22 +89,22 @@ if (interactive()) {
           tags$h4("Any preferences?"),
           listGroup(
             id = "preferences",
-            listItem("No heights", "noheights"),
-            listItem("No animals", "noanimals")
+            listGroupItem("No heights", "noheights"),
+            listGroupItem("No animals", "noanimals")
           )
         ),
         col(
           tags$h4("Possible outings"),
           listGroup(
-            listItem(
+            listGroupItem(
               id = "optZoo",
               "Zoo visit!"
             ),
-            listItem(
+            listGroupItem(
               id = "optSkydive",
               "Sky diving!"
             ),
-            listItem(
+            listGroupItem(
               id = "optPern",
               "Visit Pern"
             )
