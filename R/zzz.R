@@ -15,7 +15,7 @@
 }
 
 .onUnload <- function(path) {
-  attached <- grep("^dull:", search(), value = TRUE)
+  attached <- grep("^dull:[a-z]+$", search(), value = TRUE)
 
   for (att in attached) {
     detach(att, unload = TRUE, character.only = TRUE)
