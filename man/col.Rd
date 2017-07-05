@@ -10,7 +10,7 @@ col(..., width = NULL, offset = NULL, align = NULL, order = NULL)
 
 row(..., align = NULL, justify = NULL, gutters = TRUE)
 
-container(...)
+container(..., fluid = TRUE)
 }
 \arguments{
 \item{...}{Child elements of the \code{container}, \code{row}, or \code{col} parent element
@@ -71,6 +71,9 @@ container, padding is added between columns and the edges of the parent row.}
 \item{gutters}{Defaults to \code{TRUE}, children columns receive horizontal
 padding for aesthetic spacing, to remove this padding specify \code{gutters} as
 \code{FALSE}.}
+
+\item{fluid}{If \code{TRUE}, the container is a fluid container and fits to the
+entire width of the viewport, defaults to \code{TRUE}.}
 }
 \description{
 Flexbox, grid layout, containers, rows, and columns (oh my). Arguments \code{width} and

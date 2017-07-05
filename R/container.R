@@ -42,6 +42,9 @@
 #'   as the first column in its row. A column marked as `"last"` is *visually*
 #'   rearranged and appears as the last column in its row.
 #'
+#' @param fluid If `TRUE`, the container is a fluid container and fits to the
+#'   entire width of the viewport, defaults to `TRUE`.
+#'
 #' @details
 #'
 #' One can specify alternate column offsets or widths for different viewports by
@@ -196,9 +199,9 @@ row <- function(..., align = NULL, justify = NULL, gutters = TRUE) {
 
 #' @rdname col
 #' @export
-container <- function(...) {
+container <- function(..., fluid = TRUE) {
   tags$div(
-    class = "container",
+    class = if (fluid) "container-fluid" else "container",
     ...,
     bootstrap()
   )
