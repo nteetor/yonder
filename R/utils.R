@@ -2,8 +2,8 @@
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
-re <- function(string, pattern, match = TRUE) {
-  if (length(string) == 0) {
+re <- function(string, pattern, match = TRUE, len0 = TRUE) {
+  if (length(string) == 0 && len0) {
     # because grepl("", <regex>) returns TRUE, extend this to
     # handle character(0) or NULL
     return(TRUE)
@@ -18,10 +18,6 @@ ID <- function(x) {
 
 elodin <- function(x) {
   names(x) %||% rep.int("", length(x))
-}
-
-is_named <- function(x) {
-  all(elodin(x) != "")
 }
 
 is_tag <- function(x) {
