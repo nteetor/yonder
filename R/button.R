@@ -263,34 +263,6 @@ updateButton <- function(id, count = NULL, context = NULL,
   )
 }
 
-# removed / no longer exported
-buttonToolbar <- function(..., margins = TRUE) {
-  args <- list(...)
-  groups <- args[elodin(args) == ""]
-  attrs <- args[elodin(args) != ""]
-
-  groups <- c(
-    lapply(
-      groups[-length(groups)],
-      function(x) {
-        x$attribs$class <- collate(x$attribs$class, "mr-2")
-        x
-      }
-    ),
-    groups[[length(groups)]]
-  )
-
-  bar <- tags$div(
-    class = "btn-toolbar",
-    role = "toolbar",
-    groups,
-    bootstrap()
-  )
-
-  bar$attribs <- c(bar$attribs, attrs)
-  bar
-}
-
 shiny::registerInputHandler(
   type = "dull.button",
   force = TRUE,
