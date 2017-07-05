@@ -308,7 +308,7 @@ seehaven <- function(x) {
 #' online [reference page](https://v4-alpha.getbootstrap.com/utilities/).
 #'
 #' @format NULL
-#' @name utils
+#' @name utilities
 #' @export
 #' @examples
 #'
@@ -518,10 +518,6 @@ utils$flexitem <- function(align = NULL, margin = NULL, order = NULL,
   )
 }
 
-utils$display <- function() {
-
-}
-
 utils$hidden <- function(above = NULL, below = NULL) {
   if (!re(above, "small|medium|large|extra-large")) {
     stop(
@@ -557,8 +553,14 @@ utils$hidden <- function(above = NULL, below = NULL) {
   )
 }
 
-utils$position <- function(fixed = NULL) {
-  if (!re(fixed, "top|bottom|sticky")) {
+#' @param fixed One of `"top"`, `"bottom"`, or `"sticky"` positioning and
+#'  fixing an element to the top or bottom of the viewport. If `"sticky"`,
+#'  the element is only fixed to the top of the viewport after scrolling past
+#'  it. Note that the CSS used in the sticky functionality is not fully
+#'  supported by all browsers.
+
+utils$position <- function(fixed) {
+  if (!re(fixed, "top|bottom|sticky", len0 = FALSE)) {
     stop(
       'invalid `utils$position` argument, `fixed` must be one of "top", ',
       '"bottom", or "sticky"',
@@ -566,17 +568,18 @@ utils$position <- function(fixed = NULL) {
     )
   }
 
-  if (!is.null(fixed)) {
-   if (fixed == "sticky") {
-     "sticky-top"
-   } else {
-     paste0("fixed-", fixed)
-   }
+  if (fixed == "sticky") {
+    "sticky-top"
+  } else {
+    paste0("fixed-", fixed)
   }
 }
 
-utils$float <- function(side = NULL, viewport = NULL) {
-  if (!re(side, "left|right|none")) {
+#' @param side One of `"left"`, `"right"`, or `"none"`, Which side of the parent
+#'   element to float the text on or if `"none"` the element cannot be floated.
+
+utils$float <- function(side, viewport = NULL) {
+  if (!re(side, "left|right|none", len0 = FALSE)) {
     stop(
       'invalid `utils$float` argument, `side` must be one of "left", "right", ',
       '"none"',
@@ -598,6 +601,27 @@ utils$float <- function(side = NULL, viewport = NULL) {
     collate("float", viewport, side, collapse = "-")
   }
 }
+
+#' Element Sizing
+#'
+#' Construct utility classes to modify an element's width or height. The width
+#' and height of a child element are controlled relative to their parent's
+#' width and height, respectively.
+#'
+#' @param percentage One of 25, 50, 75, or 100 specifying an element's width or
+#'   height of an element as a percentage of its parent's width or height,
+#'   respectively, defaults to `NULL`.
+#'
+#' @param max One of 25, 50, 75, or 100 specifying an element's maximum width or
+#'   height as a percentage of its parent's width or height, respectively,
+#'   defaults to `NULL`.
+#'
+#' @seealso
+#'
+#' [utilities] for the complete list of utilities.
+#'
+#' @name sizing
+NULL
 
 utils$width <- function(percentage = NULL, max = NULL) {
   if (!re(percentage, "25|50|75|100")) {
@@ -643,8 +667,34 @@ utils$height <- function(percentage = NULL, max = NULL) {
   )
 }
 
+#' Element Spacing
+#'
+#' Use these utilities to add responsive padding or margins to a tag element.
+#' Both `margin` and `padding` are viewport responsive. Margin and padding sizes
+#' are specified relative to the font size of a page's root `<html>` element.
+#'
+#' @param size An integer, 0 through 5, specifying the relative adjustment of an
+#'   element's margin or padding, where 3 is the default amount of spacing, 1 is
+#'   0.25 times the default, and 5 is 3 times the default. 0 removes margins or
+#'   padding.
+#'
+#' @param side One of `"top"`, `"left"`, `"bottom"`, `"right"`, or `"all"`
+#'   specifying which side(s) to apply spacing to, defaults to `"all"`.
+#'
+#' @param viewport One of `"small"`, `"medium"`, `"large"`, or `"extra-large"`,
+#'   specifying the screen size at which the style is applied, defaults
+#'   to `NULL`.
+#'
+#' @seealso
+#'
+#' The complete list of [utilities][utilities]. For more on viewport
+#' responsiveness see [viewport].
+#'
+#' @name spacing
+NULL
+
 utils$margin <- function(size, side = "all", viewport = NULL) {
-  if (!re(size, "[012345]")) {
+  if (!re(size, "[0-5]")) {
     stop(
       "invalid `utils$margin` argument, `size` must be one of 0, 1, 2, 3, 4, ",
       "or 5",
@@ -662,11 +712,11 @@ utils$margin <- function(size, side = "all", viewport = NULL) {
 
   prefix <- paste0("m", if (side != "all") substr(side, 1, 1))
 
-  collate(prefix, viewport, size, collapse = "-")
+  collate(prefix, seehaven(viewport), size, collapse = "-")
 }
 
 utils$padding <- function(size, side = "all", viewport = NULL) {
-  if (!re(size, "[012345]")) {
+  if (!re(size, "[0-5]")) {
     stop(
       "invalid `utils$padding` argument, `size` must be one of 0, 1, 2, 3, 4, ",
       "or 5",
@@ -684,5 +734,50 @@ utils$padding <- function(size, side = "all", viewport = NULL) {
 
   prefix <- paste0("p", if (side != "all") substr(side, 1, 1))
 
-  collate(prefix, viewport, size, collapse = "-")
+  collate(prefix, seehaven(viewport), size, collapse = "-")
 }
+
+#' Viewport
+#'
+#' @description
+#'
+#' Many styles are viewport responsive. These styles change depending on the
+#' size of the viewing application. This allows the programmer to build content
+#' which can adapt to laptop screens, mobile devices, and more.
+#'
+#' Responsive styles are applied depending on the width of the viewport. Extra
+#' small screens are 0 px and up. Small screens are 576 px and up. Medium
+#' screens are 768 px and up. Large screens are 992 px and up. Extra large
+#' screens are 1200 px and up.
+#'
+#' @name viewport
+#' @examples
+#' if (interactive()) {
+#'   library(shiny)
+#'
+#'   shinyApp(
+#'     ui = container(
+#'       listGroup(
+#'         class = collate(
+#'           utils$margin(0),
+#'           utils$margin(5, "left", "medium"),
+#'           utils$margin(5, "right", "medium")
+#'         ),
+#'         listGroupItem(
+#'           class = utils$bg("info"),
+#'           label = "Hello, world!"
+#'         ),
+#'         listGroupItem(
+#'           class = utils$bg("info"),
+#'           label = "Goodnight, moon!"
+#'         )
+#'       )
+#'
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+NULL
