@@ -31,7 +31,6 @@
 #' )
 #'
 dropdown <- function(..., label = NULL, context = "secondary", split = FALSE) {
-  browser()
   tags$div(
     class = "dropdown dull-dropdown",
     if (split) inputs$button(context = context, label = label),
