@@ -36,11 +36,11 @@ tooltip(
 
 listGroup(
   tooltip(
-    listItem("Item 1"),
+    listGroupItem("Item 1"),
     "This is the first item"
   ),
   tooltip(
-    listItem("Item 2"),
+    listGroupItem("Item 2"),
     "This is the second item"
   )
 )
@@ -53,15 +53,15 @@ popover(
 # list items with popovers
 listGroup(
   popover(
-    listItem("Some text"),
+    listGroupItem("Some text"),
     "The first list item"
   ),
   popover(
-    listItem("More text"),
+    listGroupItem("More text"),
     "The second list item"
   ),
   popover(
-    listItem("Final text"),
+    listGroupItem("Final text"),
     "Did you find this text?"
   )
 )
