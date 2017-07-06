@@ -58,6 +58,7 @@
 #' For more about buttons and button groups please refer to the bootstrap
 #' [reference section](https://v4-alpha.getbootstrap.com/components/input-group/#button-addons).
 #'
+#' @aliases inputs$button inputs$submit
 #' @name button
 #' @examples
 #' inputs$button("Primary", context = "primary")

@@ -14,6 +14,16 @@ $(document).on("shiny:connected", function () {
   $(".dull-submit[data-type=\"submit\"]").attr("type", "submit");
 });
 
+Shiny.addCustomMessageHandler("dull:updatecollapse", function (msg) {
+  var $el = $(msg.id);
+
+  if ($el.length === 0 || !msg.action) {
+    return false;
+  }
+
+  $el.collapse(msg.action);
+});
+
 var alertInputBinding = new Shiny.InputBinding();
 
 $.extend(alertInputBinding, {
@@ -221,7 +231,9 @@ $(document).ready(function () {
   $(".dull-dropdown-item").on("click", function (e) {
     e.preventDefault();
     var $target = $(e.target);
-    $target.trigger("dull:itemclick", { value: $target.data("value") || null });
+    $target.trigger("dull:itemclick", {
+      value: $target.data("value") || null
+    });
   });
 });
 var formGroupInputBinding = new Shiny.InputBinding();

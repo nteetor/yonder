@@ -2,6 +2,8 @@
 % Please edit documentation in R/button.R
 \name{button}
 \alias{button}
+\alias{inputs$button}
+\alias{inputs$submit}
 \alias{updateButton}
 \title{Buttons and button groups}
 \usage{

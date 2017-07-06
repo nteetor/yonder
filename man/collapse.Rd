@@ -2,14 +2,90 @@
 % Please edit documentation in R/collapse.R
 \name{collapse}
 \alias{collapse}
-\title{Collapse Content}
+\alias{showCollapse}
+\alias{hideCollapse}
+\alias{toggleCollapse}
+\title{Collapsible sections}
 \usage{
-collapse(...)
+collapse(..., label = NULL, context = "secondary")
+
+showCollapse(id, session = getDefaultReactiveDomain())
+
+hideCollapse(id, session = getDefaultReactiveDomain())
+
+toggleCollapse(id, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{...}{Tag elements to build into a collapsible \code{div} or additional named
-arguments passed as attributes to the top-level \code{div}.}
+\item{...}{Any number of tag elements to include in the collapsible section
+or additional named arguments passed as attributes to the parent element.}
+
+\item{label}{A character string specifying the label of the collapse, passed
+to \code{\link{inputs$button}}, defaults to \code{NULL}.}
+
+\item{context}{A character string specifying the visual context of the
+toggle button, passed to \code{\link{inputs$button}}, defaults to \code{"secondary"}.}
+
+\item{id}{A character string specifying the id of a collapse section.}
+
+\item{session}{A \code{session} object passed to the shiny server function,
+defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-Build HTML content into a collapsible \code{<div>}.
+\code{collapse} allows content to be hidden and toggled into a shown state.
+The collapsed content is toggled by a button. A collapsed section may be
+toggled using \code{toggleCollapse}, shown with \code{showCollapse}, and hidden with
+\code{hideCollapse}.
+}
+\details{
+The \code{showCollapse}, \code{hideCollapse}, and \code{toggleCollapse} functions can be
+used very similarly to the \code{update*} functions found in shiny. Because
+collapse is not a reactive input a single \code{updateCollapse} function is not
+included with dull nor did it make sense to create a \code{renderCollapse}
+function as a collapse is not a reactive output.
+}
+\examples{
+if (interactive()) {
+  library(shiny)
+
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          collapse(
+            id = "book",
+            label = "The Time Machine",
+            tags$div(
+              class  = "card card-block",
+              "\\"The Time Traveller (for so it will be convenient to speak
+              of him) was expounding a recondite matter to us. His grey eyes
+              shone and twinkled, and his usually pale face was flushed and
+              animated. The fire burned brightly, and the soft radiance of
+              the incandescent lights in the lilies of silver caught the
+              bubbles that flashed and passed in our glasses.\\""
+            )
+          )
+        ),
+        col(
+          inputs$button(id = "toggle", "Toggle collapse"),
+          inputs$button(id = "hide", "Only hide", context = "warning"),
+          inputs$button(id = "show", "Only show", context = "info")
+        )
+      )
+    ),
+    server = function(input, output) {
+      observeEvent(input$toggle, {
+        toggleCollapse("book")
+      })
+
+      observeEvent(input$hide, {
+        hideCollapse("book")
+      })
+
+      observeEvent(input$show, {
+        showCollapse("book")
+      })
+    }
+  )
+}
+
 }
