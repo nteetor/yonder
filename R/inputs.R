@@ -241,37 +241,37 @@ inputs$radios <- function(labels = NULL, values = NULL, stacked = FALSE, ...) {
   args <- list(...)
   attrs <- attribs(args)
 
-  ir <- tags$div(
-    class = collate(
-      "dull-radios dull-input form-group",
-      if (stacked) "custom-controls-stacked"
-    ),
-    lapply(
-      seq_along(labels),
-      function(i) {
-        tags$label(
-          class = "custom-control custom-radio",
-          tags$input(
-            class = "custom-control-input",
-            type = "radio",
-            name = attrs$id,
-            value = values[[i]],
-          ),
-          tags$span(class = "custom-control-indicator"),
-          tags$span(
-            class = "custom-control-description",
-            labels[[i]]
+  tagConcatAttributes(
+    tags$div(
+      class = collate(
+        "dull-radios dull-input form-group",
+        if (stacked) "custom-controls-stacked"
+      ),
+      lapply(
+        seq_along(labels),
+        function(i) {
+          tags$label(
+            class = "custom-control custom-radio",
+            tags$input(
+              class = "custom-control-input",
+              type = "radio",
+              name = attrs$id,
+              value = values[[i]],
               checked = if (names2(values[i]) == "checked") NA
+            ),
+            tags$span(class = "custom-control-indicator"),
+            tags$span(
+              class = "custom-control-description",
+              labels[[i]]
+            )
           )
-        )
-      }
+        }
+      ),
+      ...,
+      bootstrap()
     ),
-    content,
-    bootstrap()
+    attrs
   )
-
-  ir$attribs <- c(ir$attribs, attrs)
-  ir
 }
 
 # Name an argument "selected" otherwise the first item is the default value.
