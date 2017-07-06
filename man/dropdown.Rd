@@ -3,27 +3,53 @@
 \name{dropdown}
 \alias{dropdown}
 \alias{dropdownItem}
+\alias{dropdownDivider}
+\alias{dropdownHeader}
 \title{Dropdown Menu}
 \usage{
-dropdown(..., label = NULL, context = "secondary", split = FALSE)
+dropdown(..., label = NULL, context = "secondary", split = FALSE,
+  align = "left", dropup = FALSE)
 
-dropdownItem(label = NULL, value = NULL, ...)
+dropdownItem(label = NULL, value = NULL, disabled = FALSE, ...)
+
+dropdownDivider()
+
+dropdownHeader(label)
 }
 \arguments{
-\item{...}{Any number of \code{dropdownItem}s passed to \code{dropdown} or additional
+\item{...}{Any number of dropdown items passed to \code{dropdown} or additional
 named arguments passed as HTML attributes to the respective parent element.}
 
-\item{label}{A character string labelling the dropdown or dropdown item,
-defaults to \code{NULL}.}
+\item{label}{A character string specifying the label for a dropdown, dropdown
+item, or dropdown header, defaults to \code{NULL}, but is required for a
+dropdown header.}
 
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}}
+\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
+\code{"warning"}, or \code{"danger"} specifying the visual context of the dropdown,
+defaults to \code{"secondary"}.}
 
 \item{split}{If \code{TRUE}, the dropdown is changed aesthetically such that the
 dropdown icon is split into a separate, smaller button, defaults to
 \code{FALSE}.}
+
+\item{align}{One of \code{"left"} or \code{"right"} specifying which side of the
+dropdown button the menu aligns to, defaults to \code{"left"}.}
+
+\item{dropup}{If \code{TRUE}, the dropdown menu extends upwards, defaults to
+\code{FALSE}.}
+
+\item{value}{A character string specifying the value of a dropdown item,
+defaults to \code{NULL}.}
+
+\item{disabled}{If \code{TRUE}, the dropdown item renders in a disabled state and
+will not trigger a reactive event, defaults to \code{FALSE}. The state of a
+dropdown item may be toggled with \code{updateDropdownItem}.}
 }
 \description{
-A Bootstrap dropdown menu.
+Dropdown menus function similar to a set of buttons. The initial dropdown
+open does not trigger a reactive event, but a subsequent click on one of the
+menu choices triggers a reactive event. The value of a dropdown item may
+be specified in \code{dropdownItem}, otherwise the default value is \code{NULL}.
 }
 \examples{
 dropdown(
@@ -49,8 +75,12 @@ if (interactive()) {
         col(
           dropdown(
             id = "desserts",
-            label = "Pick a dessert!",
+            label = "Pick a dessert to learn more",
+            align = "right",
+            dropdownHeader("Frozen"),
             dropdownItem("Ice cream", "icecream"),
+            dropdownItem("Gelato", "gelato"),
+            dropdownHeader("Baked goods"),
             dropdownItem("Cake", "cake"),
             dropdownItem("Pie", "pie")
           )
