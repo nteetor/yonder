@@ -16,12 +16,22 @@ ID <- function(x) {
   paste0(x, "-", paste0(sample(seq_len(1000), 2, TRUE), collapse = "-"))
 }
 
-elodin <- function(x) {
+names2 <- function(x) {
   names(x) %||% rep.int("", length(x))
 }
 
-is_tag <- function(x) {
-  inherits(x, "shiny.tag")
+attribs <- function(x) {
+  if (is.null(x)) {
+    return(NULL)
+  }
+  x[names2(x) != ""]
+}
+
+elements <- function(x) {
+  if (is.null(x)) {
+    return(NULL)
+  }
+  x[names2(x) == ""]
 }
 
 #' Join HTML attribute values
@@ -77,6 +87,15 @@ dropNulls <- function(x) {
 }
 
 # tag utils ----
+
+is_tag <- function(x) {
+  inherits(x, "shiny.tag")
+}
+
+tagConcatAttributes <- function(x, attrs) {
+  x$attribs <- c(x$attribs, attrs)
+  x
+}
 
 tagHasClass <- function(x, class) {
   if (is.null(x$attribs$class)) {

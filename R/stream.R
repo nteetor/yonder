@@ -43,7 +43,7 @@
 #' }
 #'
 streamOutput <- function(...) {
-  if (!("id" %in% elodin(list(...)))) {
+  if (!("id" %in% names2(list(...)))) {
     warning(
       "`streamOutput` doesn't do much without an `id` argument",
       call. = FALSE
@@ -51,7 +51,7 @@ streamOutput <- function(...) {
   }
 
   tags$ul(
-    class = "list-group",
+    class = "dull-stream-output list-group",
     ...
   )
 }

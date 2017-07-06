@@ -116,8 +116,8 @@
 #'
 listGroup <- function(...) {
   args <- list(...)
-  attrs <- args[elodin(args) != ""]
-  content <- args[elodin(args) == ""]
+  attrs <- args[names2(args) != ""]
+  content <- args[names2(args) == ""]
 
   lg <- tags$ul(
     class = "dull-list-group list-group list-group-flush",

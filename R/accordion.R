@@ -87,9 +87,8 @@
 #'
 accordion <- function(...) {
   args <- list(...)
-
-  panels <- args[elodin(args) %in% c("show", "")]
-  attrs <- args[!(elodin(args) %in% c("show", ""))]
+  panels <- elements(args)
+  attrs <- attribs(args)
 
   if (is.null(attrs$id)) {
     attrs$id <- ID("accordion")

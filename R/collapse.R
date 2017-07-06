@@ -8,8 +8,8 @@
 #' @export
 collapse <- function(...) {
   args <- list(...)
-  content <- args[elodin(args) == ""]
-  attrs <- args[elodin(args) != ""]
+  content <- elements(args)
+  attrs <- attribs(args)
 
   id <- ID("collapse")
 

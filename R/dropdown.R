@@ -109,8 +109,8 @@ dropdown <- function(..., label = NULL, context = "secondary", split = FALSE,
   }
 
   args <- list(...)
-  attrs <- args[elodin(args) != ""]
-  items <- args[elodin(args) == ""]
+  attrs <- attribs(args)
+  items <- elements(args)
 
   tagConcatAttributes(
     tags$div(

@@ -112,7 +112,7 @@ col <- function(..., width = NULL, offset = NULL, align = NULL, order = NULL) {
       vapply(
         seq_along(width),
         function(i) {
-          nm <- elodin(width[i])
+          nm <- names2(width[i])
           when <- if (nm %in% c("", "xs")) NULL else nm
 
           collate("col", when, width[[i]], collapse = "-")
@@ -122,7 +122,7 @@ col <- function(..., width = NULL, offset = NULL, align = NULL, order = NULL) {
       vapply(
         seq_along(offset),
         function(i) {
-          nm <- elodin(offset[i])
+          nm <- names2(offset[i])
           when <- if (nm %in% c("", "xs")) NULL else nm
 
           collate("offset", when, offset[[i]], collapse = "-")

@@ -239,8 +239,7 @@ inputs$radios <- function(labels = NULL, values = NULL, stacked = FALSE, ...) {
   }
 
   args <- list(...)
-  attrs <- args[elodin(args) != ""]
-  content <- args[elodin(args) == ""]
+  attrs <- attribs(args)
 
   ir <- tags$div(
     class = collate(
@@ -257,12 +256,12 @@ inputs$radios <- function(labels = NULL, values = NULL, stacked = FALSE, ...) {
             type = "radio",
             name = attrs$id,
             value = values[[i]],
-            checked = if (elodin(values[i]) == "checked") NA
           ),
           tags$span(class = "custom-control-indicator"),
           tags$span(
             class = "custom-control-description",
             labels[[i]]
+              checked = if (names2(values[i]) == "checked") NA
           )
         )
       }
@@ -294,7 +293,7 @@ inputs$select <- function(labels, values) {
 
         tags$option(
           value = val,
-          selected = if ("selected" %in% c(elodin(lab), elodin(val))) NA,
+          selected = if ("selected" %in% c(names2(lab), names2(val))) NA,
           lab
         )
       }
