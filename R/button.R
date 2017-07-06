@@ -214,7 +214,7 @@ inputs$button <- function(label = NULL, value = NULL, context = "secondary",
 
   btn$attribs <- c(btn$attribs, `data-count` = 0, list(...))
   btn$attribs$class <- collate("dull-button dull-input", btn$attribs$class)
-  btn$children <- c(btn$children, list(bootstrap()))
+  btn$children <- c(btn$children, list(label, bootstrap()))
 
   btn
 }
