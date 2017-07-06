@@ -7,7 +7,7 @@
 \usage{
 dropdown(..., label = NULL, context = "secondary", split = FALSE)
 
-dropdownItem(label = NULL, href = NULL, ...)
+dropdownItem(label = NULL, value = NULL, ...)
 }
 \arguments{
 \item{...}{Any number of \code{dropdownItem}s passed to \code{dropdown} or additional
@@ -28,16 +28,54 @@ A Bootstrap dropdown menu.
 \examples{
 dropdown(
   label = "Secondary",
-  dropdownItem("Option 1", href = "#"),
-  dropdownItem("Option 2", href = "#")
+  dropdownItem("Option 1"),
+  dropdownItem("Option 2")
 )
 
 dropdown(
   id = "flavor",
   label = "Ice cream flavors",
-  dropdownItem("Vanilla", href = "vanilla"),
-  dropdownItem("Chocolate", href = "chocolate"),
-  dropdownItem("Mint", href = "mint")
+  dropdownItem("Vanilla", "vanilla"),
+  dropdownItem("Chocolate", "chocolate"),
+  dropdownItem("Mint", "mint")
 )
+
+if (interactive()) {
+  library(shiny)
+
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          dropdown(
+            id = "desserts",
+            label = "Pick a dessert!",
+            dropdownItem("Ice cream", "icecream"),
+            dropdownItem("Cake", "cake"),
+            dropdownItem("Pie", "pie")
+          )
+        ),
+        col(
+          dropdown(
+            id = "spices",
+            label = "Check for a spice",
+            dropdownItem("Cardamom", "cardamom"),
+            dropdownItem("Nutmeg", "nutmeg"),
+            dropdownItem("Vanilla", "vanilla")
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      observe({
+        print(input$desserts)
+      })
+
+      observe({
+        print(input$spices)
+      })
+    }
+  )
+}
 
 }

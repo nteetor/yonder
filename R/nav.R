@@ -37,7 +37,6 @@
 #' To center a horizontal nav specify `align = "horiztonal"` and `width =
 #' "fill"` or `width = "justify"`.
 #'
-#'
 #' @seealso
 #'
 #' For more information about the Bootstrap nav please follow this

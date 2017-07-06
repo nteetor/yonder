@@ -18,20 +18,62 @@
 #' @examples
 #' dropdown(
 #'   label = "Secondary",
-#'   dropdownItem("Option 1", href = "#"),
-#'   dropdownItem("Option 2", href = "#")
+#'   dropdownItem("Option 1"),
+#'   dropdownItem("Option 2")
 #' )
 #'
 #' dropdown(
 #'   id = "flavor",
 #'   label = "Ice cream flavors",
-#'   dropdownItem("Vanilla", href = "vanilla"),
-#'   dropdownItem("Chocolate", href = "chocolate"),
-#'   dropdownItem("Mint", href = "mint")
+#'   dropdownItem("Vanilla", "vanilla"),
+#'   dropdownItem("Chocolate", "chocolate"),
+#'   dropdownItem("Mint", "mint")
 #' )
 #'
+#' if (interactive()) {
+#'   library(shiny)
+#'
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           dropdown(
+#'             id = "desserts",
+#'             label = "Pick a dessert!",
+#'             dropdownItem("Ice cream", "icecream"),
+#'             dropdownItem("Cake", "cake"),
+#'             dropdownItem("Pie", "pie")
+#'           )
+#'         ),
+#'         col(
+#'           dropdown(
+#'             id = "spices",
+#'             label = "Check for a spice",
+#'             dropdownItem("Cardamom", "cardamom"),
+#'             dropdownItem("Nutmeg", "nutmeg"),
+#'             dropdownItem("Vanilla", "vanilla")
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observe({
+#'         print(input$desserts)
+#'       })
+#'
+#'       observe({
+#'         print(input$spices)
+#'       })
+#'     }
+#'   )
+#' }
+#'
 dropdown <- function(..., label = NULL, context = "secondary", split = FALSE) {
-  tags$div(
+  args <- list(...)
+  attrs <- args[elodin(args) != ""]
+  items <- args[elodin(args) == ""]
+
+  drpdwn <- tags$div(
     class = "dropdown dull-dropdown",
     if (split) inputs$button(context = context, label = label),
     inputs$button(
@@ -44,16 +86,23 @@ dropdown <- function(..., label = NULL, context = "secondary", split = FALSE) {
       `data-toggle` = "dropdown",
       if (split) tags$span(class = "sr-only", "Toggle Dropdown")
     ),
-    ...,
+    tags$div(
+      class = "dropdown-menu",
+      items
+    ),
     bootstrap()
   )
+
+  drpdwn$attribs <- c(drpdwn$attribs, attrs)
+  drpdwn
 }
 
 #' @rdname dropdown
-dropdownItem <- function(label = NULL, href = NULL, ...) {
+dropdownItem <- function(label = NULL, value = NULL, ...) {
   tags$a(
     class = "dropdown-item",
-    href = href,
+    `data-value` = value,
+    label,
     ...
   )
 }

@@ -197,9 +197,9 @@ $(document).ready(function () {
     e.preventDefault();
 
     var el = $(e.target);
-    var p = el.parent().parent();
+    var p = el.parents(".dull-dropdown[id]").first();
 
-    p.data("value", el.attr("href") || 0);
+    p.data("value", el.data("value") || null);
 
     p.trigger("child:click");
   });
