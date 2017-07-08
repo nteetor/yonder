@@ -7,6 +7,10 @@ $.extend(buttonInputBinding, {
   getValue: function(el) {
     var $el = $(el);
 
+    if ($el.data("count") === "0") {
+      return null;
+    }
+
     return {
       count: parseInt($el.data("count"), 10),
       value: $el.data("value")
@@ -87,7 +91,7 @@ Shiny.inputBindings.register(buttonGroupInputBinding, "dull.buttonGroupInput");
 
 $(document).ready(function() {
   $(".dull-button-group[id] button").on("click", function(e) {
-    var $child = $(e.target);
+    var $child = $(this);
     var $parent = $child.parent(".dull-button-group");
 
     $parent

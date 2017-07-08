@@ -26,9 +26,9 @@ Shiny.inputBindings.register(dropdownInputBinding, "dull.dropdownInput");
 $(document).ready(function() {
   $(".dull-dropdown-item").on("click", function(e) {
     e.preventDefault();
-    var $target = $(e.target);
-    $target.trigger("dull:itemclick", {
-      value: $target.data("value") || null
+    var $this = $(this);
+    $this.trigger("dull:itemclick", {
+      value: $this.data("value") || null
     });
   });
 });

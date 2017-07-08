@@ -55,6 +55,6 @@ Shiny.inputBindings.register(formInputBinding, "dull.formInput");
 $(document).ready(function() {
   $(".dull-form[id]").on("submit", function(e) {
     e.preventDefault();
-    $(e.target).trigger("dull:formsubmit");
+    $(this).trigger("dull:formsubmit");
   });
 });
