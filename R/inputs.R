@@ -301,4 +301,158 @@ inputs$select <- function(labels, values) {
   )
 }
 
+#' Input group, buttons and text
+#'
+#' An input group is composite reactive input which may consist of one or two
+#' buttons, dropdowns, character addons, or any combination of these elements.
+#' Character addons, specified with `left` and `right` may be used to ensure an
+#' input group's value always has a certain prefix or suffix and render a
+#' visual cue to indicate this behavior. Buttons and dropdowns may be included
+#' to control when the input group's reactive value updates. See below for more
+#' information and examples.
+#'
+#' @param placeholder A character string specifying placeholder text for the
+#'   input group, defaults to `NULL`.
+#'
+#' @param value A character string specifying an initial value for the input
+#'   group, defaults to `NULL`.
+#'
+#' @param left,right A character string, [inputs$button] element, or [dropdown]
+#'   element, used as the left or right addon, respectively, of the input group,
+#'   both default to `NULL`. Addon's affect the reactive events and value of the
+#'   input group, see the details section below for more information.
+#'
+#' @details
+#'
+#' **reactive event**
+#'
+#' If either `left` or `right` is a button or a dropdown the reactive value of
+#' the input group is changed when either button or a dropdown item is clicked.
+#' If either `left` and `right` are character strings or `NULL` the reactive
+#' value of the input group will update each time the text input is changed by
+#' the user.
+#'
+#' **input value**
+#'
+#' An input group's value is `NULL` when its text input is empty and neither,
+#' if any, buttons or dropdown item's have been clicked. Otherwise, a input
+#' group's value is list of two named elements. The first element is `value`
+#' which is the concatenation of `left`, *if a character string*, the text input
+#' value, and `right`, *if a character string*. The second element is `click`
+#' and is indicates which button or dropdown item was clicked. The value of
+#' `click` depends on the value of the button or dropdown item, see
+#' [inputs$button] or [dropdownItem].
+#'
+#' @aliases inputs$group
+#' @name group
+#' @examples
+#' if (interactive()) {
+#'   library(shiny)
+#'
+#'   shinyApp(
+#'     ui = container(
+#'       inputs$group(
+#'         id = "nearlytext"
+#'       ),
+#'       inputs$group(
+#'         id = "username",
+#'         placeholder = "username",
+#'         left = "@@",
+#'         right = inputs$button(
+#'           label = "Go!",
+#'           value = "go"
+#'         )
+#'       ),
+#'       inputs$group(
+#'         id = "github",
+#'         left = "https://github.com/"
+#'       ),
+#'       inputs$group(
+#'         id = "preference",
+#'         left = inputs$button(
+#'           label = icons$fa("thumbs-up"),
+#'           value = "up"
+#'         ),
+#'         right = inputs$button(
+#'           label = "^", #icons$fa("thumbs-down"),
+#'           value = "down"
+#'         )
+#'       ),
+#'       inputs$group(
+#'         id = "options",
+#'         placeholder = "",
+#'         left = dropdown(
+#'           label = "Action",
+#'           dropdownItem("Action", "action"),
+#'           dropdownItem("Another action", "another"),
+#'           dropdownItem("Something else", "something"),
+#'           dropdownDivider(),
+#'           dropdownItem("Final", "final")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observe({
+#'         print(input$nearlytext)
+#'       })
+#'
+#'       observe({
+#'         print(input$username)
+#'       })
+#'
+#'       observe({
+#'         print(input$github)
+#'       })
+#'
+#'       observe({
+#'         print(input$preference)
+#'       })
+#'
+#'       observe({
+#'         print(input$options)
+#'       })
+#'     }
+#'   )
+#' }
+#'
+inputs$group <- function(placeholder = NULL, value = NULL, left = NULL,
+                         right = NULL, ...) {
+  if (!is.null(left) && !is.character(left) && !tagIs(left, "button") &&
+      !tagHasClass(left, "dull-dropdown")) {
+    stop(
+      "invalid `inputs$group` argument, `left` must be a character string, ",
+      "button element, or dropdown element",
+      call. = FALSE
+    )
+  }
 
+  if (!is.null(right) && !is.character(right) && !tagIs(right, "button") &&
+      !tagHasClass(right, "dull-dropdown")) {
+    stop(
+      "invalid `inputs$group` argument, `right` must be a character string, ",
+      "button element, or dropdown element",
+      call. = FALSE
+    )
+  }
+
+  tags$div(
+    class = "dull-input-group input-group",
+    if (!is.null(left)) {
+      tags$span(
+        class = if (is_tag(left)) "input-group-btn" else "input-group-addon",
+        left
+      )
+    },
+    inputs$text(
+      value = value,
+      placeholder = placeholder
+    ),
+    if (!is.null(right)) {
+      tags$span(
+        class = if (is_tag(right)) "input-group-btn" else "input-group-addon",
+        right
+      )
+    },
+    ...
+  )
+}

@@ -73,6 +73,10 @@ $.extend(buttonInputBinding, {
   getValue: function getValue(el) {
     var $el = $(el);
 
+    if ($el.data("count") === "0") {
+      return null;
+    }
+
     return {
       count: parseInt($el.data("count"), 10),
       value: $el.data("value")
@@ -153,7 +157,7 @@ Shiny.inputBindings.register(buttonGroupInputBinding, "dull.buttonGroupInput");
 
 $(document).ready(function () {
   $(".dull-button-group[id] button").on("click", function (e) {
-    var $child = $(e.target);
+    var $child = $(this);
     var $parent = $child.parent(".dull-button-group");
 
     $parent.data("value", $child.data("value")).data("count", parseInt($parent.data("count"), 10) + 1).trigger("change");
@@ -230,9 +234,9 @@ Shiny.inputBindings.register(dropdownInputBinding, "dull.dropdownInput");
 $(document).ready(function () {
   $(".dull-dropdown-item").on("click", function (e) {
     e.preventDefault();
-    var $target = $(e.target);
-    $target.trigger("dull:itemclick", {
-      value: $target.data("value") || null
+    var $this = $(this);
+    $this.trigger("dull:itemclick", {
+      value: $this.data("value") || null
     });
   });
 });
@@ -353,7 +357,72 @@ Shiny.inputBindings.register(formInputBinding, "dull.formInput");
 $(document).ready(function () {
   $(".dull-form[id]").on("submit", function (e) {
     e.preventDefault();
-    $(e.target).trigger("dull:formsubmit");
+    $(this).trigger("dull:formsubmit");
+  });
+});
+
+var inputGroupInputBinding = new Shiny.InputBinding();
+
+$.extend(inputGroupInputBinding, {
+  find: function find(scope) {
+    return $(scope).find(".dull-input-group[id]");
+  },
+  getValue: function getValue(el) {
+    var $el = $(el);
+
+    var text = $el.find("input[type=\"text\"]").val() || "";
+
+    if (!text) {
+      return null;
+    }
+
+    var left = $el.find(".input-group-addon:first-child").text();
+    var right = $el.find(".input-group-addon:last-child").text();
+
+    return {
+      value: left + text + right,
+      click: $el.data("value") || null
+    };
+  },
+  getState: function getState(el) {
+    return { value: this.getValue(el) };
+  },
+  subscribe: function subscribe(el, callback) {
+    var $el = $(el);
+    if ($el.find("button").length) {
+      $el.on("dull:click.inputGroupInputBinding", function (e, data) {
+        if (data.value !== null) {
+          $el.data("value", data.value);
+        }
+        callback();
+      });
+    } else {
+      $el.on("dull:textchange.inputGroupInputBinding", function (e) {
+        callback();
+      });
+    }
+  },
+  unsubscribe: function unsubscribe(el) {
+    $(el).off(".inputGroupInputBinding");
+  }
+});
+
+Shiny.inputBindings.register(inputGroupInputBinding, "dull.inputGroupInput");
+
+$(document).ready(function () {
+  $(".dull-input-group[id] input[type=\"text\"]").on("change", function (e) {
+    e.preventDefault();
+    $(this).trigger("dull:textchange");
+  });
+  $(".dull-input-group[id] button:not(.dropdown-toggle)").on("click", function (e) {
+    e.preventDefault();
+    var $this = $(this);
+    $this.trigger("dull:click", { value: $this.data("value") || null });
+  });
+  $(".dull-input-group[id] .dull-dropdown-item").on("click", function (e) {
+    e.preventDefault();
+    var $this = $(this);
+    $this.trigger("dull:click", { value: $this.data("value") || null });
   });
 });
 
