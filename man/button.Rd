@@ -25,11 +25,11 @@ success are green, informative buttons are a lighter blue, warning buttons
 are yellow, and buttons for danger are red. Specifying \code{"link"} makes the
 button render with the appearance of a link.}
 
-\item{label}{\strong{\code{*}} A character vector or tag elements to use as the button
-label or button group labels, defaults to \code{NULL}.}
+\item{label}{A character vector or tag elements to use as the button label or
+button group labels, defaults to \code{NULL}.}
 
-\item{value}{\strong{\code{*}} A character vector specifying a value for the button or
-values for the button group, defaults to \code{NULL}.}
+\item{value}{A character vector specifying a value for the button or values
+for the button group, defaults to \code{NULL}.}
 
 \item{outline}{If \code{TRUE}, the button's background is transparent, \code{context}
 is preserved, defaults to \code{FALSE}.}
@@ -38,8 +38,8 @@ is preserved, defaults to \code{FALSE}.}
 to \code{FALSE}. A block-level element will occupy the entire space of its
 parent element, thereby creating a "block."}
 
-\item{disabled}{\strong{\code{*}} If \code{TRUE}, the button renders in a disabled state,
-defaults to \code{FALSE}.}
+\item{disabled}{If \code{TRUE}, the button renders in a disabled state, defaults
+to \code{FALSE}.}
 
 \item{...}{Named arguments passed as HTML attributes to the parent element.}
 }
@@ -48,14 +48,6 @@ Buttons, submit and reset buttons. A button's reactive value is a list of two
 items. The first item is \code{count}, the number of clicks on the button. The
 second item is \code{value}, the HTML data-value attribute of the button which may
 be set with the \code{value} argument.
-
-\strong{\code{inputs$button}}, arguments marked with a \strong{\code{*}} may have length greater
-than 1 in order to create a composite set of buttons or button group. A
-button group event is triggered by a click on any of its buttons and the
-value will change depending on which of its buttons is clicked. A button
-group's \code{count} value is the sum of the number clicks on its child buttons.
-
-\strong{\code{inputs$submit}}, does not support arguments with length greater than 1.
 }
 \examples{
 inputs$button("Primary", context = "primary")

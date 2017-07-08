@@ -7,14 +7,6 @@
 #' second item is `value`, the HTML data-value attribute of the button which may
 #' be set with the `value` argument.
 #'
-#' **`inputs$button`**, arguments marked with a **`*`** may have length greater
-#' than 1 in order to create a composite set of buttons or button group. A
-#' button group event is triggered by a click on any of its buttons and the
-#' value will change depending on which of its buttons is clicked. A button
-#' group's `count` value is the sum of the number clicks on its child buttons.
-#'
-#' **`inputs$submit`**, does not support arguments with length greater than 1.
-#'
 #' @usage
 #'
 #' inputs$button(label = NULL, value = NULL, context = "secondary", outline =
@@ -22,11 +14,11 @@
 #'
 #' inputs$submit(label = NULL, outline = FALSE, block = FALSE, ...)
 #'
-#' @param label **`*`** A character vector or tag elements to use as the button
-#'   label or button group labels, defaults to `NULL`.
+#' @param label A character vector or tag elements to use as the button label or
+#'   button group labels, defaults to `NULL`.
 #'
-#' @param value **`*`** A character vector specifying a value for the button or
-#'   values for the button group, defaults to `NULL`.
+#' @param value A character vector specifying a value for the button or values
+#'   for the button group, defaults to `NULL`.
 #'
 #' @param context Used to specify the visual context of the button, one of
 #'   `"primary"`, `"secondary"`, `"success"`, `"info"`, `"warning"`, `"danger"`,
@@ -44,8 +36,8 @@
 #'   to `FALSE`. A block-level element will occupy the entire space of its
 #'   parent element, thereby creating a "block."
 #'
-#' @param disabled **`*`** If `TRUE`, the button renders in a disabled state,
-#'   defaults to `FALSE`.
+#' @param disabled If `TRUE`, the button renders in a disabled state, defaults
+#'   to `FALSE`.
 #'
 #' @param ... Named arguments passed as HTML attributes to the parent element.
 #'
@@ -157,67 +149,21 @@ inputs$button <- function(label = NULL, value = NULL, context = "secondary",
     )
   }
 
-  if ((!is.null(label) && !is.null(value)) && length(label) != length(value)) {
-    stop(
-      "if not NULL, `inputs$button` arguments `label` and `value` must have ",
-      "the same length",
-      call. = FALSE
-    )
-  }
-
-  label <- label %||% vector("list", length(value))
-  value <- value %||% vector("list", length(label))
-
-  if ((length(disabled) == 1 && disabled && length(label) > 1) ||
-      (length(disabled) > 1 && length(disabled) != length(label))) {
-    stop(
-      "if `inputs$button` argument `disabled` is not FALSE, `disabled` must ",
-      "be same length as non-NULL `label` or `value`",
-      call. = FALSE
-    )
-  }
-
-  disabled <- rep.int(disabled, length(label))
-
-  btn <- tags$button(
+  tags$button(
     class = collate(
+      "dull-button",
+      "dull-input",
       "btn",
       paste0("btn-", if (outline) "outline-", context),
       if (block) "btn-block"
     ),
     type = "button",
-    role = "button"
+    role = "button",
+    `data-count` = 0,
+    `data-value` = value,
+    label,
+    ...
   )
-
-  if (length(value) > 1 || length(label) > 1) {
-    return(
-      tags$div(
-        class = "dull-button-group dull-input btn-group",
-        role = "group",
-        `data-count` = 0,
-        `data-value` = NULL,
-        lapply(
-          seq_along(label),
-          function(i) {
-            temp <- btn
-            temp$children <- c(temp$children, label[[i]])
-            temp$attribs$`data-value` <- value[[i]]
-            temp$attribs$`data-count` <- 0
-            temp$attribs$disabled <- if (disabled[[i]]) NA
-            temp
-          }
-        ),
-        ...,
-        bootstrap()
-      )
-    )
-  }
-
-  btn$attribs <- c(btn$attribs, `data-count` = 0, list(...))
-  btn$attribs$class <- collate("dull-button dull-input", btn$attribs$class)
-  btn$children <- c(btn$children, list(label, bootstrap()))
-
-  btn
 }
 
 inputs$submit <- function(label = NULL, outline = FALSE, block = FALSE, ...) {
@@ -274,12 +220,12 @@ shiny::registerInputHandler(
   }
 )
 
-assignInNamespace(
-  "isNullEvent",
-  function(value) {
-    is.null(value) ||
-      (inherits(value, "shinyActionButtonValue") && value == 0) ||
-      (inherits(value, "dullButtonValue") && value$count == 0)
-  },
-  ns = "shiny"
-)
+# assignInNamespace(
+#   "isNullEvent",
+#   function(value) {
+#     is.null(value) ||
+#       (inherits(value, "shinyActionButtonValue") && value == 0) ||
+#       (inherits(value, "dullButtonValue") && value$count == 0)
+#   },
+#   ns = "shiny"
+# )
