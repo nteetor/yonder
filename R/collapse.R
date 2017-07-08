@@ -2,8 +2,8 @@
 #'
 #' `collapse` allows content to be hidden and toggled into a shown state.
 #' The collapsed content is toggled by a button. A collapsed section may be
-#' toggled using `toggleCollapse`, shown with `showCollapse`, and hidden with
-#' `hideCollapse`.
+#' toggled between hidden and shown using `toggleCollapse`, shown with
+#' `showCollapse`, and hidden with `hideCollapse`.
 #'
 #' @param ... Any number of tag elements to include in the collapsible section
 #'   or additional named arguments passed as attributes to the parent element.

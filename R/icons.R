@@ -40,7 +40,7 @@ icons$fa <- function(name, ...) {
       "fa",
       paste0("fa-", name)
     ),
-    `aria-hidden` = TRUE,
+    `aria-hidden` = "true",
     ...,
     `font-awesome`()
   )

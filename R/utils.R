@@ -93,12 +93,16 @@ is_tag <- function(x) {
 }
 
 tagConcatAttributes <- function(x, attrs) {
+  if (!is_tag(x)) {
+    return(NULL)
+  }
+
   x$attribs <- c(x$attribs, attrs)
   x
 }
 
 tagHasClass <- function(x, class) {
-  if (is.null(x$attribs$class)) {
+  if (!is_tag(x) || is.null(x$attribs$class)) {
     return(FALSE)
   }
 
@@ -112,7 +116,7 @@ tagHasClass <- function(x, class) {
 }
 
 tagEnsureClass <- function(x, class) {
-  if (is.null(x)) {
+  if (!is_tag(x)) {
     return(NULL)
   }
 
@@ -127,4 +131,11 @@ tagEnsureClass <- function(x, class) {
   }
 
   x
+}
+
+tagIs <- function(x, name) {
+  if (!is_tag(x)) {
+    return(NULL)
+  }
+  x$name == name
 }

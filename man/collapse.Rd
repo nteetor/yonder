@@ -33,8 +33,8 @@ defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.
 \description{
 \code{collapse} allows content to be hidden and toggled into a shown state.
 The collapsed content is toggled by a button. A collapsed section may be
-toggled using \code{toggleCollapse}, shown with \code{showCollapse}, and hidden with
-\code{hideCollapse}.
+toggled between hidden and shown using \code{toggleCollapse}, shown with
+\code{showCollapse}, and hidden with \code{hideCollapse}.
 }
 \details{
 The \code{showCollapse}, \code{hideCollapse}, and \code{toggleCollapse} functions can be
