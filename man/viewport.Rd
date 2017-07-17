@@ -43,3 +43,9 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other utilities: \code{\link{colors}},
+  \code{\link{flexbox}}, \code{\link{float}},
+  \code{\link{hidden}}, \code{\link{position}},
+  \code{\link{sizing}}, \code{\link{spacing}}
+}

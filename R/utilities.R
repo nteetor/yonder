@@ -1,5 +1,4 @@
-# or is it sea haven?
-seehaven <- function(x) {
+convertViewport <- function(x) {
   if (is.null(x)) {
     return(NULL)
   }
@@ -8,26 +7,24 @@ seehaven <- function(x) {
   )
 }
 
-#' Bootstrap utilities
+#' Element utilities
+#'
+#' Utility functions.
+#'
+#' @keywords internal
+#' @format NULL
+#' @name utils
+#' @export
+utils <- list()
+
+#' Flex box and flex item utilities
 #'
 #' @description
 #'
-#' Include these in builder function `...` arguments to apply a style using
-#' bootstrap's HTML utility classes.
+#' These utility functions are used to build flex layouts and are viewport
+#' responsive.
 #'
 #' @usage
-#'
-#' utils$border(remove = NULL, round = NULL)
-#'
-#' utils$clearfix()
-#'
-#' utils$close()
-#'
-#' utils$text(context = NULL, align = NULL)
-#'
-#' utils$background(context)
-#'
-#' utils$bg(context)
 #'
 #' utils$flexitem(align = NULL, margin = NULL, order = NULL, viewport = NULL)
 #'
@@ -40,16 +37,6 @@ seehaven <- function(x) {
 #'   specify different layouts for element(s) depending on screen size. When
 #'   `viewport` is `NULL` specified styles will apply to the smallest screens on
 #'   up. Not all styles have this functionality.
-#'
-#' @param above,below One of `"small"`, `"medium"`, `"large"`, or
-#'   `"extra-large"`, specifying a screen size, defaults to `NULL`. Used by
-#'   `utils$hidden` to indicate a screen size at which content is hidden. If
-#'   `above` and `below` are the same value then an element will only appear that
-#'   particular screen size.
-#'
-#' @param context One of `"muted"`, `"primary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, for backgrounds only `"inverse"` and `"faded"` and
-#'   for text only `"white"`, specifying a visual context for a block of text.
 #'
 #' @param direction One of `"row"` or `"column"` specifying the direction of a
 #'   flex container's items, defaults to `"row"`.
@@ -94,7 +81,7 @@ seehaven <- function(x) {
 #'   justified axis, a flex item with an auto margin will push itself away from
 #'   siblings.
 #'
-#' @section Visuals:
+#' @section How it all works:
 #'
 #' **reverse**
 #'
@@ -307,91 +294,14 @@ seehaven <- function(x) {
 #' For more information about bootstrap HTML utility classes please refer to the
 #' online [reference page](https://v4-alpha.getbootstrap.com/utilities/).
 #'
-#' @format NULL
-#' @name utilities
-#' @export
+#' @family utilities
+#' @aliases flexitem
+#' @name flexbox
 #' @examples
 #'
 #' # stub
 #'
-utils <- list()
-
-utils$border <- function(remove = NULL, round = NULL) {
-  if (!re(remove, "all|left|top|right|bottom")) {
-    stop(
-      'invalid `utils$border` argument, `remove` must be one of "all", ',
-      '"left", "top", "right", or "bottom"',
-      call. = FALSE
-    )
-  }
-
-  if (!re(round, "all|none|left|top|right|bottom|circle")) {
-    stop(
-      'invalid `utils$border` argument, `round` must be one of "all", "none", ',
-      '"left", "top", "right", "bottom", or "circle"',
-      call. = FALSE
-    )
-  }
-
-  remove <- unique(remove)
-  round <- unique(round)
-
-  c(
-    ifelse(remove == "all", "border-0", paste0("border-", remove)),
-    vapply(
-      round,
-      function(r) paste0("rounded", if (r == "none") "-0" else if (r == "all")
-        "" else paste0("-", r)),
-      character(1)
-    )
-  )
-}
-
-utils$clearfix <- function() {
-  "clearfix"
-}
-
-utils$close <- function() {
-  "close"
-}
-
-utils$text <- function(context = NULL, align = NULL) {
-  if (!re(context, "muted|primary|success|info|warning|danger|white")) {
-    stop(
-      'invalid `utils$text` argument, `context` must be one of "muted", ',
-      '"primary", "success", "info", "warning", "danger", or "white"',
-      call. = FALSE
-    )
-  }
-
-  paste0("text-", context)
-}
-
-utils$background <- function(context) {
-  if (!re(context, "primary|success|info|warning|danger|inverse|faded")) {
-    stop(
-      'invalid `utils$background` argument, `context` must be one of ',
-      '"primary", "success", "info", "warning", "danger", "inverse", or ',
-      '"faded"',
-      call. = FALSE
-    )
-  }
-
-  paste0("bg-", context)
-}
-
-utils$bg <- function(context) {
-  if (!re(context, "primary|success|info|warning|danger|inverse|faded")) {
-    stop(
-      'invalid `utils$bg` argument, `context` must be one of "primary", ',
-      '"success", "info", "warning", "danger", "inverse", or "faded"',
-      call. = FALSE
-    )
-  }
-
-  utils$background(context)
-}
-
+NULL
 
 # great SO post on the distinction between align-start and baseline
 # https://stackoverflow.com/questions/34606879/whats-the-difference-between-flex-start-and-baseline
@@ -439,7 +349,7 @@ utils$flexbox <- function(direction = NULL, reverse = FALSE, justify = NULL,
     )
   }
 
-  viewport <- seehaven(viewport)
+  viewport <- convertViewport(viewport)
 
   c(
     "d-flex",
@@ -503,7 +413,7 @@ utils$flexitem <- function(align = NULL, margin = NULL, order = NULL,
     )
   }
 
-  viewport <- seehaven(viewport)
+  viewport <- convertViewport(viewport)
 
   c(
     if (!is.null(align)) {
@@ -517,6 +427,131 @@ utils$flexitem <- function(align = NULL, margin = NULL, order = NULL,
     }
   )
 }
+
+utils$border <- function(remove = NULL, round = NULL) {
+  if (!re(remove, "all|left|top|right|bottom")) {
+    stop(
+      'invalid `utils$border` argument, `remove` must be one of "all", ',
+      '"left", "top", "right", or "bottom"',
+      call. = FALSE
+    )
+  }
+
+  if (!re(round, "all|none|left|top|right|bottom|circle")) {
+    stop(
+      'invalid `utils$border` argument, `round` must be one of "all", "none", ',
+      '"left", "top", "right", "bottom", or "circle"',
+      call. = FALSE
+    )
+  }
+
+  remove <- unique(remove)
+  round <- unique(round)
+
+  c(
+    ifelse(remove == "all", "border-0", paste0("border-", remove)),
+    vapply(
+      round,
+      function(r) paste0("rounded", if (r == "none") "-0" else if (r == "all")
+        "" else paste0("-", r)),
+      character(1)
+    )
+  )
+}
+
+utils$clearfix <- function() {
+  "clearfix"
+}
+
+utils$close <- function() {
+  "close"
+}
+
+#' Color text and backgrounds
+#'
+#' Utilities functions to change element text or background color. These
+#' utilities are intended to give visual context to blocks of text or elements.
+#' When using a dark background one may want to specify a lighter color for
+#' any element text.
+#'
+#' @usage
+#'
+#' utils$text(context)
+#'
+#' utils$background(context)
+#'
+#' @param context A character string specifying the visual context of a block of
+#'   text or background color of an element.
+#'
+#'   For **`utils$text`**, one of `"muted"`, `"primary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, or `"white"`.
+#'
+#'   For **`utils$background`**, one of `"muted"`, `"primary"`, `"success"`,
+#'   `"info"`, `"warning"`, `"danger"`, `"inverse"` or `"faded"`.
+#'
+#' @family utilities
+#' @name colors
+NULL
+
+utils$text <- function(context) {
+  if (!re(context, "muted|primary|success|info|warning|danger|white")) {
+    stop(
+      'invalid `utils$text` argument, `context` must be one of "muted", ',
+      '"primary", "success", "info", "warning", "danger", or "white"',
+      call. = FALSE
+    )
+  }
+
+  paste0("text-", context)
+}
+
+utils$background <- function(context) {
+  if (!re(context, "primary|success|info|warning|danger|inverse|faded")) {
+    stop(
+      'invalid `utils$background` argument, `context` must be one of ',
+      '"primary", "success", "info", "warning", "danger", "inverse", or ',
+      '"faded"',
+      call. = FALSE
+    )
+  }
+
+  paste0("bg-", context)
+}
+
+# utils$bg <- function(context) {
+#   if (!re(context, "primary|success|info|warning|danger|inverse|faded")) {
+#     stop(
+#       'invalid `utils$bg` argument, `context` must be one of "primary", ',
+#       '"success", "info", "warning", "danger", "inverse", or "faded"',
+#       call. = FALSE
+#     )
+#   }
+#
+#   utils$background(context)
+# }
+
+#' Responsive hidden elements
+#'
+#' These utility functions allow elements to hide responsively depending on the
+#' viewport size.
+#'
+#' @usage
+#'
+#' utils$hidden(above = NULL, below = NULL)
+#'
+#' @param above One of `"small"`, `"medium"`, `"large"`, or `"extra-large"`
+#'   specifying the minimum viewport size at which to start hiding the element,
+#'   e.g. if `above = "medium"` an element is hidden on medium, large, and
+#'   extra large viewports.
+#'
+#' @param below One of `"small"`, `"medium"`, `"large"`, or `"extra-large"`
+#'   specifying the maximum viewport size at which an element is hidden,
+#'   e.g. if `below = "medium"` an element is hidden on extra small, small,
+#'   and medium viewports.
+#'
+#' @family utilities
+#' @name hidden
+NULL
 
 utils$hidden <- function(above = NULL, below = NULL) {
   if (!re(above, "small|medium|large|extra-large")) {
@@ -553,11 +588,26 @@ utils$hidden <- function(above = NULL, below = NULL) {
   )
 }
 
+#' Affix elements
+#'
+#' These utility functions are used to affix elements to the top or bottom of
+#' a page. When the page is scrolled affixed elements will remain on the top
+#' or bottom. A sticky element is affixed to the top of the page once the page
+#' scrolls past it. Note that the CSS used in the sticky functionality is not
+#' fully supported by all browsers.
+#'
+#' @usage
+#'
+#' utils$position(fixed)
+#'
 #' @param fixed One of `"top"`, `"bottom"`, or `"sticky"` positioning and
 #'  fixing an element to the top or bottom of the viewport. If `"sticky"`,
 #'  the element is only fixed to the top of the viewport after scrolling past
-#'  it. Note that the CSS used in the sticky functionality is not fully
-#'  supported by all browsers.
+#'  it.
+#'
+#' @family utilities
+#' @name position
+NULL
 
 utils$position <- function(fixed) {
   if (!re(fixed, "top|bottom|sticky", len0 = FALSE)) {
@@ -575,8 +625,21 @@ utils$position <- function(fixed) {
   }
 }
 
+#' Responsive floated elements
+#'
+#' These utility functions float an element to the left or right of its parent.
+#' Alternatively, one can specify `"none"` to disable an element's float.
+#'
+#' @usage
+#'
+#' utils$float(side, viewport = NULL)
+#'
 #' @param side One of `"left"`, `"right"`, or `"none"`, Which side of the parent
 #'   element to float the text on or if `"none"` the element cannot be floated.
+#'
+#' @family utilities
+#' @name float
+NULL
 
 utils$float <- function(side, viewport = NULL) {
   if (!re(side, "left|right|none", len0 = FALSE)) {
@@ -595,18 +658,24 @@ utils$float <- function(side, viewport = NULL) {
     )
   }
 
-  viewport <- seehaven(viewport)
+  viewport <- convertViewport(viewport)
 
   if (!is.null(side)) {
     collate("float", viewport, side, collapse = "-")
   }
 }
 
-#' Element Sizing
+#' Element sizing
 #'
 #' Construct utility classes to modify an element's width or height. The width
 #' and height of a child element are controlled relative to their parent's
 #' width and height, respectively.
+#'
+#' @usage
+#'
+#' utils$width(percentage = NULL, max = NULL)
+#'
+#' utils$height(percentage = NULL, max = NULL)
 #'
 #' @param percentage One of 25, 50, 75, or 100 specifying an element's width or
 #'   height of an element as a percentage of its parent's width or height,
@@ -616,10 +685,7 @@ utils$float <- function(side, viewport = NULL) {
 #'   height as a percentage of its parent's width or height, respectively,
 #'   defaults to `NULL`.
 #'
-#' @seealso
-#'
-#' [utilities] for the complete list of utilities.
-#'
+#' @family utilities
 #' @name sizing
 NULL
 
@@ -673,6 +739,12 @@ utils$height <- function(percentage = NULL, max = NULL) {
 #' Both `margin` and `padding` are viewport responsive. Margin and padding sizes
 #' are specified relative to the font size of a page's root `<html>` element.
 #'
+#' @usage
+#'
+#' utils$margin(size, side = "all", viewport = NULL)
+#'
+#' utils$padding(size, side = "all", viewport = NULL)
+#'
 #' @param size An integer, 0 through 5, specifying the relative adjustment of an
 #'   element's margin or padding, where 3 is the default amount of spacing, 1 is
 #'   0.25 times the default, and 5 is 3 times the default. 0 removes margins or
@@ -690,6 +762,7 @@ utils$height <- function(percentage = NULL, max = NULL) {
 #' The complete list of [utilities][utilities]. For more on viewport
 #' responsiveness see [viewport].
 #'
+#' @family utilities
 #' @name spacing
 NULL
 
@@ -712,7 +785,7 @@ utils$margin <- function(size, side = "all", viewport = NULL) {
 
   prefix <- paste0("m", if (side != "all") substr(side, 1, 1))
 
-  collate(prefix, seehaven(viewport), size, collapse = "-")
+  collate(prefix, convertViewport(viewport), size, collapse = "-")
 }
 
 utils$padding <- function(size, side = "all", viewport = NULL) {
@@ -734,7 +807,7 @@ utils$padding <- function(size, side = "all", viewport = NULL) {
 
   prefix <- paste0("p", if (side != "all") substr(side, 1, 1))
 
-  collate(prefix, seehaven(viewport), size, collapse = "-")
+  collate(prefix, convertViewport(viewport), size, collapse = "-")
 }
 
 #' Viewport
@@ -750,6 +823,7 @@ utils$padding <- function(size, side = "all", viewport = NULL) {
 #' screens are 768 px and up. Large screens are 992 px and up. Extra large
 #' screens are 1200 px and up.
 #'
+#' @family utilities
 #' @name viewport
 #' @examples
 #' if (interactive()) {

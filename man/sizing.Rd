@@ -2,7 +2,12 @@
 % Please edit documentation in R/utilities.R
 \name{sizing}
 \alias{sizing}
-\title{Element Sizing}
+\title{Element sizing}
+\usage{
+utils$width(percentage = NULL, max = NULL)
+
+utils$height(percentage = NULL, max = NULL)
+}
 \arguments{
 \item{percentage}{One of 25, 50, 75, or 100 specifying an element's width or
 height of an element as a percentage of its parent's width or height,
@@ -18,5 +23,8 @@ and height of a child element are controlled relative to their parent's
 width and height, respectively.
 }
 \seealso{
-\link{utilities} for the complete list of utilities.
+Other utilities: \code{\link{colors}},
+  \code{\link{flexbox}}, \code{\link{float}},
+  \code{\link{hidden}}, \code{\link{position}},
+  \code{\link{spacing}}, \code{\link{viewport}}
 }

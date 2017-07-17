@@ -3,6 +3,11 @@
 \name{spacing}
 \alias{spacing}
 \title{Element Spacing}
+\usage{
+utils$margin(size, side = "all", viewport = NULL)
+
+utils$padding(size, side = "all", viewport = NULL)
+}
 \arguments{
 \item{size}{An integer, 0 through 5, specifying the relative adjustment of an
 element's margin or padding, where 3 is the default amount of spacing, 1 is
@@ -24,4 +29,9 @@ are specified relative to the font size of a page's root \code{<html>} element.
 \seealso{
 The complete list of \link{utilities}. For more on viewport
 responsiveness see \link{viewport}.
+
+Other utilities: \code{\link{colors}},
+  \code{\link{flexbox}}, \code{\link{float}},
+  \code{\link{hidden}}, \code{\link{position}},
+  \code{\link{sizing}}, \code{\link{viewport}}
 }
