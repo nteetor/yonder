@@ -1,3 +1,12 @@
+#' Form inputs
+#'
+#' Reactive inputs.
+#'
+#' @format NULL
+#' @name inputs
+#' @export
+inputs <- list()
+
 #' Inputs
 #'
 #' Form control inputs.
@@ -10,106 +19,56 @@
 #'   `value` to give the input a default value. Specify `placeholder` to give
 #'   the input hint text about the expected value of the input.
 #'
-#' @format NULL
-#' @export
-#' @examples
+#' @param placeholder A character string specifying placeholder text for the
+#'   input, defaults to `NULL`.
 #'
-inputs <- list()
-
-#' Textual Inputs
-#'
-#' description
-#'
-#' @usage
-#'
-#' inputs$text(label = NULL, ...)
-#'
-#' @param label Input label.
-#'
-#' @param value Input value.
-#'
-#' @param placeholder Input placeholder text.
-#'
-#' @param toggleable If `TRUE`, a checkbox is included as part of the input,
-#'   when unchecked the value of the input is always `NULL`, defaults to
-#'   `FALSE`.
+#' @param type A character string specifying the type of the text input, a
+#'   specific type may be used when appropriate, e.g. when `type = "password"`
+#'   the input's value is obscured, displays as asterisks. See `Details` for
+#'   possible `type` values.
 #'
 #' @aliases search email url telephone password number datetime date month week
 #'   time color
 #'
+#' @details
+#'
+#' ** `text` values **
+#'
+#' * text - Single-line text input, linebreaks are removed.
+#' * search - Single-line text input for search strings, linebreaks are removed.
+#' * email - Single-line text input for email addresses, validated to contain
+#'   the empty string or a valid email address.
+#' * url - Single-line text input for URLs, validated to contain the empty
+#'   string or valid absolute URL.
+#' * tel - Single-line text input for telephone numbers, syntax is not enforced.
+#' * password - Single-line text input for password, value is obscured.
+#' * number - Number picker.
+#' * datetime - Date and time picker, no time zone.
+#' * date - Year, month, and day picker, no time.
+#' * month - Month and year picker, no time zone.
+#' * week - Week of year picker.
+#' * time - Time picker.
+#' * color - Color picker.
+#'
+#' @family inputs
 #' @name text
-inputs$text <- function(label = NULL, value = NULL, placeholder = NULL, ...) {
-  textualInput("text", label, value, placeholder, ...)
-}
-
-inputs$search <- function(label = NULL, value = NULL, placeholder = NULL, ...) {
-  textualInput("search", ...)
-}
-
-inputs$email <- function(label = NULL, ...) {
-  textualInput("email", ...)
-}
-
-inputs$url <- function(label = NULL, ...) {
-  textualInput("url", ...)
-}
-
-inputs$telephone <- function(label = NULL, value = NULL, placeholder = NULL, ...) {
-  textualInput("tel", label, value, placeholder, ...)
-}
-
-inputs$password <- function(label = NULL, ...) {
-  textualInput("password", ...)
-}
-
-inputs$number <- function(label = NULL, ...) {
-  textualInput("number", ...)
-}
-
-inputs$datetime <- function(label = NULL, ...) {
-  textualInput("datetime-local", ...)
-}
-
-inputs$date <- function(label = NULL, ...) {
-  textualInput("date", label, NULL, NULL, ...)
-}
-
-inputs$month <- function(label = NULL, ...) {
-  textualInput("month", ...)
-}
-
-inputs$week <- function(label = NULL, ...) {
-  textualInput("week", ...)
-}
-
-inputs$time <- function(label = NULL, ...) {
-  textualInput("time", ...)
-}
-
-inputs$color <- function(label = NULL, ...) {
-  textualInput("color", ...)
-}
-
-textualInput <- function(type, label, value, placeholder, ...) {
-  args <- list(...)
-
-  htmltools::tagList(
-    if (!is.null(label)) {
-      tags$label(
-        `for` = args$id,
-        label
-      )
-    },
-    tags$input(
-      class = collate(
-        paste0("dull-", type),
-        "dull-input form-control"
-      ),
-      type = type,
-      value = value,
-      placeholder = placeholder,
-      ...
+inputs$text <- function(value = NULL, placeholder = NULL, type = "text", ...) {
+  if (!re(type, "text|search|email|url|tel|password|number|datetime|date|month|week|time|color")) {
+    stop(
+      'invalid `inputs$text` argument, see ?text for valid `type` values',
+      call. = FALSE
     )
+  }
+
+  tags$input(
+    class = collate(
+      paste0("dull-", type),
+      "dull-input form-control"
+    ),
+    type = type,
+    value = value,
+    placeholder = placeholder,
+    ...
   )
 }
 

@@ -3,23 +3,11 @@
 \docType{data}
 \name{inputs}
 \alias{inputs}
-\title{Inputs}
+\title{Form inputs}
 \usage{
 inputs
 }
-\arguments{
-\item{label}{A character vector specifying a label for the input, defaults to
-\code{NULL}. If a label is specified it is advised, though not necessary, to
-also specify an \code{id} for the input.}
-
-\item{...}{Named arguments passed as HTML attributes to the input. Specify
-\code{value} to give the input a default value. Specify \code{placeholder} to give
-the input hint text about the expected value of the input.}
-}
 \description{
-Form control inputs.
-}
-\examples{
-
+Reactive inputs.
 }
 \keyword{datasets}
