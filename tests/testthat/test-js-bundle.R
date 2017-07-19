@@ -6,7 +6,7 @@ test_that("files pass linting", {
   expect_silent(
     withr::with_dir(
       file.path("..", "..", "JS"),
-      system("gulp lint", intern = TRUE)
+      system("gulp eslint", intern = TRUE)
     )
   )
 })
