@@ -1,7 +1,5 @@
 "use strict";
 
-function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
-
 $(function () {
   $("[data-toggle=\"tooltip\"]").tooltip();
 });
@@ -254,7 +252,9 @@ $.extend(formGroupInputBinding, {
     }
 
     return $children.map(function (i, e) {
-      return _defineProperty({}, e.id, $(e).val() || null);
+      var ret = {};
+      ret[e.id] = $(e).val() || null;
+      return ret;
     }).get().reduce(function (acc, obj) {
       return Object.assign(acc, obj);
     });
@@ -324,7 +324,9 @@ $.extend(formInputBinding, {
       ids.reverse();
 
       return ids.reduce(function (acc, obj) {
-        return _defineProperty({}, obj, acc);
+        var ret = {};
+        ret[obj] = acc;
+        return ret;
       }, $(e).val() || null);
     }).get().reduce(function (acc, obj) {
       var key = Object.keys(obj);
@@ -332,7 +334,9 @@ $.extend(formInputBinding, {
       if (!acc.hasOwnProperty(key)) {
         return Object.assign(acc, obj);
       } else {
-        return Object.assign(acc, _defineProperty({}, key, Object.assign(acc[key], obj[key])));
+        var nested = {};
+        nested[key] = Object.assign(acc[key], obj[key]);
+        return Object.assign(acc, nested);
       }
     }, {});
   },
