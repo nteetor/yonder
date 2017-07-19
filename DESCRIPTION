@@ -20,6 +20,7 @@ Suggests:
 Collate:
     dull.R
     utils.R
+    module.R
     includes.R
     tags.R
     icons.R
@@ -35,6 +36,7 @@ Collate:
     collapse.R
     container.R
     dropdown.R
+    flex.R
     forms.R
     list-group.R
     modal.R
