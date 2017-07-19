@@ -9,8 +9,8 @@
 #'   named arguments passed as HTML attributes to the respective parent element.
 #'
 #' @param label A character string specifying the label for a dropdown, dropdown
-#'   item, or dropdown header, defaults to `NULL`, but is required for a
-#'   dropdown header.
+#'   item, or dropdown header, defaults to `NULL` for dropdowns and dropdown
+#'   items, but is required for a dropdown header.
 #'
 #' @param value A character string specifying the value of a dropdown item,
 #'   defaults to `NULL`.

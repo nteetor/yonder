@@ -2,24 +2,24 @@
 % Please edit documentation in R/accordion.R
 \name{accordion}
 \alias{accordion}
-\alias{panel}
+\alias{accordionPanel}
 \title{Accordion panels}
 \usage{
 accordion(...)
 
-panel(header, body = NULL, collapsed = TRUE)
+accordionPanel(header, body = NULL, collapsed = TRUE, ...)
 }
 \arguments{
-\item{...}{Any number of \code{panel}s, converted into accordion panels, or named
-arguments passed as HTML attributes to the parent element.}
+\item{...}{Any number of \code{accordionPanel}s or named arguments passed as HTML
+attributes to the parent element.}
 
-\item{header}{A character string specifying the header of the panel.}
+\item{header}{A character string specifying the header of an accordion panel.}
 
 \item{body}{A character string or tag element(s) specifying the body content
 of the panel, defaults to \code{NULL}.}
 
-\item{collapsed}{If \code{TRUE}, the panel renders in the collapsed state,
-defaults to \code{TRUE}.}
+\item{collapsed}{If \code{TRUE}, the accordion panel renders in the collapsed
+state, defaults to \code{TRUE}.}
 }
 \description{
 Similar to \code{collapse}, \code{accordion} is a way to hide content. An accordion
@@ -32,14 +32,6 @@ not have an explicit corresponding bootstrap class, see details for more
 information.
 }
 \details{
-\code{panel} is only a thin wrapper around \code{list} to ensure each accordion panel
-has a heading and a body and to make other rendering options clearer. If you
-want more customization over accordion panels you may ignore \code{panel} and pass
-unnamed tag elements. When creating custom panels be sure to follow the
-\code{data-target}, \code{data-toggle} conventions, for more on how to build custom
-accordions check out the Bootstrap
-\href{https://v4-alpha.getbootstrap.com/components/collapse/}{collapse reference}.
-
 \code{accordion} will generate an HTML id if an \code{id} argument is not passed in
 \code{...} and child panels are assigned IDs based on the id of the accordion
 parent.
@@ -66,17 +58,17 @@ if (interactive()) {
   shinyApp(
     ui = container(
       accordion(
-        panel(
-          heading = "Option 1",
+        accordionPanel(
+          "Option 1",
           "What do you think of option 1?",
           collapse = FALSE
         ),
-        panel(
-          heading = "Option 2",
+        accordionPanel(
+          "Option 2",
           "What do you think of option 2?"
         ),
-        panel(
-          heading = "Option 3",
+        accordionPanel(
+          "Option 3",
           "What do you think of option 3?"
         )
       )
@@ -89,6 +81,6 @@ if (interactive()) {
 
 }
 \seealso{
-For more information on accordion's, please refer to the bootstrap
-\href{https://v4-alpha.getbootstrap.com/components/collapse/}{reference page}.
+For more information on accordion's, please refer to
+\url{https://v4-alpha.getbootstrap.com/components/collapse/}.
 }

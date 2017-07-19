@@ -2,7 +2,7 @@
 % Please edit documentation in R/inputs.R
 \name{fieldset}
 \alias{fieldset}
-\title{Fieldset, grouping inputs}
+\title{Visually group and label inputs}
 \usage{
 inputs$fieldset(legend = NULL, ...)
 }

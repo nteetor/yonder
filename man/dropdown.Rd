@@ -21,8 +21,8 @@ dropdownHeader(label)
 named arguments passed as HTML attributes to the respective parent element.}
 
 \item{label}{A character string specifying the label for a dropdown, dropdown
-item, or dropdown header, defaults to \code{NULL}, but is required for a
-dropdown header.}
+item, or dropdown header, defaults to \code{NULL} for dropdowns and dropdown
+items, but is required for a dropdown header.}
 
 \item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
 \code{"warning"}, or \code{"danger"} specifying the visual context of the dropdown,

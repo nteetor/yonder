@@ -116,20 +116,20 @@
 #'
 listGroup <- function(...) {
   args <- list(...)
-  attrs <- args[names2(args) != ""]
-  content <- args[names2(args) == ""]
+  attrs <- attribs(args)
+  items <- elements(args)
 
-  lg <- tags$ul(
-    class = "dull-list-group list-group list-group-flush",
-    lapply(
-      content,
-      function(el) if (is_tag(el)) el else listGroupItem(el, value = el)
+  tagConcatAttributes(
+    tags$ul(
+      class = "dull-list-group list-group list-group-flush",
+      lapply(
+        items,
+        function(el) if (is_tag(el)) el else listGroupItem(el, value = el)
+      ),
+      bootstrap()
     ),
-    bootstrap()
+    attrs
   )
-
-  lg$attribs <- c(lg$attribs, attrs)
-  lg
 }
 
 #' @rdname listGroup
@@ -143,7 +143,7 @@ listGroupItem <- function(label = NULL, value = NULL, context = NULL, active = F
       )
   }
 
-  item <- tags$li(
+  (if (hover) tags$a else tags$li)(
     class = collate(
       "dull-list-group-item",
       "list-group-item",
@@ -158,12 +158,6 @@ listGroupItem <- function(label = NULL, value = NULL, context = NULL, active = F
     badge,
     ...
   )
-
-  if (hover) {
-    item$name <- "a"
-  }
-
-  item
 }
 
 #' @rdname listGroup
