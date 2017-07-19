@@ -2,30 +2,73 @@
 % Please edit documentation in R/card.R
 \name{card}
 \alias{card}
-\title{Cards}
+\alias{cardBlock}
+\alias{cardList}
+\title{Cards, highly variable blocks of content}
 \usage{
-card(header = NULL, block = NULL, footer = NULL, text = "left",
-  context = NULL, outline = FALSE, inverse = FALSE)
+card(..., context = NULL, outline = FALSE, align = "left")
+
+cardBlock(..., header = NULL, title = NULL, subtitle = NULL,
+  text = NULL, footer = NULL, context = NULL, outline = FALSE)
+
+cardList(...)
 }
 \arguments{
-\item{header}{Card header, a character vector or tag, defaults to \code{NULL}.}
-
-\item{block}{The card body, a character vector or tag(s), defaults to \code{NULL}.}
-
-\item{footer}{Card footer, a character vector or tag, defaults to \code{NULL}.}
-
-\item{text}{One of \code{"left"}, \code{"right"}, or \code{"center"}, specifying the text
-alignment of the card, defaults to \code{"left"}.}
-
 \item{context}{One of \code{"primary"}, \code{"success"}, \code{"info"}, \code{"warning"}, or
 \code{"danger"}, used to add a visual context to the card, defaults to \code{NULL}.}
 
-\item{outline}{If \code{TRUE}, the card context is styled as the card outline
-rather than the card background, defaults to \code{FALSE}.}
+\item{outline}{If \code{TRUE}, the card context is styled as an outline
+rather than the background of the card, defaults to \code{FALSE}.}
+
+\item{header}{A character string specifying a header for the card, defaults
+to \code{NULL}.}
+
+\item{title}{A character string specifying a title for the card, defaults
+to \code{NULL}.}
+
+\item{subtitle}{A character string specifying a subtitle for the card,
+defaults to \code{NULL}.}
+
+\item{text}{A character string specifying a body of the card, defaults to
+\code{NULL}.}
 
 \item{inverse}{If \code{TRUE}, the card has a dark background and light text as
 opposed to the default dark text on light background, defaults to \code{FALSE}.}
 }
 \description{
-Handy card tools.
+Create cards. Use \code{cardBlock}, \code{cardList} to add components to a card.
+}
+\examples{
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          card(
+            align = "center",
+            cardBlock(
+              title = "Card One",
+              text = "Hello, world!",
+              inputs$button("Click me")
+            )
+          )
+        ),
+        col(
+          card(
+            align = "center",
+            cardBlock(
+              title = "Card Two",
+              text = "Goodnight, moon!",
+              inputs$button("Click me")
+            )
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
+
 }
