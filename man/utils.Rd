@@ -10,4 +10,4 @@ utils
 \description{
 Utility functions.
 }
-\keyword{internal}
+\keyword{datasets}

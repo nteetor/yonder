@@ -3,22 +3,43 @@
 \docType{data}
 \name{icons}
 \alias{icons}
-\title{Icons}
+\alias{fa}
+\title{Include icons in applications}
 \usage{
-icons$na(name, ...)
+icons$fa(name, ...)
 }
 \arguments{
 \item{name}{A character string specifying the icon name, leading prefixes
 unique to the icon set are not required.}
 
-\item{...}{Named arguments passed to the icon element as HTML attributes.}
+\item{...}{Named arguments passed as HTML attributes to the parent element.}
 }
 \description{
-Currently only FontAwesome icons.
+Currently only FontAwesome icons are available.
 }
 \examples{
+if (interactive()) {
+  library(shiny)
 
-icons$fa("thumbs-up")
+  shinyApp(
+    ui = container(
+      icons$fa("thumbs-up"),
+      icons$fa("bathtub"),
+      icons$fa("cog"),
+      icons$fa("clock-o"),
+      icons$fa("microphone"),
+      icons$fa("print")
+      # and more!
+    ),
+    server = function(input, output) {
 
+    }
+  )
+}
+
+}
+\seealso{
+For a complete list of possible FontAwesome icons please refer to
+\url{http://fontawesome.io/icons/}.
 }
 \keyword{datasets}

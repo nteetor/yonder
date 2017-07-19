@@ -11,11 +11,14 @@ convertViewport <- function(x) {
 #'
 #' Utility functions.
 #'
-#' @keywords internal
 #' @format NULL
 #' @name utils
 #' @export
-utils <- list()
+utils <- structure(
+  list(),
+  name = "utils",
+  class = c("module", "list")
+)
 
 #' Flex box and flex item utilities
 #'

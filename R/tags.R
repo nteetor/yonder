@@ -24,10 +24,13 @@ htmltools::tags
 #' @usage bs
 #'
 #' @format NULL
-#'
 #' @name bs
 #' @export
-bs <- list()
+bs <- structure(
+  list(),
+  name = "bs",
+  class = c("module", "list")
+)
 
 #' Responsive Images and Figures
 #'

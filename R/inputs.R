@@ -5,7 +5,11 @@
 #' @format NULL
 #' @name inputs
 #' @export
-inputs <- list()
+inputs <- structure(
+  list(),
+  name = "inputs",
+  class = c("module", "list")
+)
 
 #' Inputs
 #'
@@ -72,7 +76,7 @@ inputs$text <- function(value = NULL, placeholder = NULL, type = "text", ...) {
   )
 }
 
-#' Fieldset, grouping inputs
+#' Visually group and label inputs
 #'
 #' Use `input$fieldset` to associate inputs. Good for screen readers and other
 #' assitive technologies.

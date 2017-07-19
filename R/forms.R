@@ -177,7 +177,11 @@
 #'   )
 #' }
 #'
-forms <- list()
+forms <- structure(
+  list(),
+  name = "forms",
+  class = c("module", "list")
+)
 
 forms$form <- function(..., submit = TRUE) {
   tags$form(
