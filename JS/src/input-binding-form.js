@@ -12,25 +12,31 @@ $.extend(formInputBinding, {
     }
 
     return $inputs
-      .map((i, e) => {
+      .map(function(i, e) {
         var ids = $(e)
           .parentsUntil(".dull-form", "[id]")
-          .map((j, a) => a.id)
+          .map(function(j, a) { return a.id; })
           .get();
 
         ids.push(e.id);
         ids.reverse();
 
-        return ids.reduce((acc, obj) => ({ [obj]: acc }), $(e).val() || null);
+        return ids.reduce(function(acc, obj) {
+          var ret = {};
+          ret[obj] = acc;
+          return ret;
+        }, $(e).val() || null);
       })
       .get()
-      .reduce((acc, obj) => {
-        let key = Object.keys(obj);
+      .reduce(function(acc, obj) {
+        var key = Object.keys(obj);
 
         if (!acc.hasOwnProperty(key)) {
           return Object.assign(acc, obj);
         } else {
-          return Object.assign(acc, { [key]: Object.assign(acc[key], obj[key]) });
+          var nested = {};
+          nested[key] = Object.assign(acc[key], obj[key]);
+          return Object.assign(acc, nested);
         }
       }, {});
   },

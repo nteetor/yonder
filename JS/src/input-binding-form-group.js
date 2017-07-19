@@ -12,9 +12,15 @@ $.extend(formGroupInputBinding, {
     }
 
     return $children
-      .map((i, e) => ({ [e.id]: $(e).val() || null }))
+      .map(function(i, e) {
+        var ret = {};
+        ret[e.id] = $(e).val() || null;
+        return ret;
+      })
       .get()
-      .reduce((acc, obj) => Object.assign(acc, obj));
+      .reduce(function(acc, obj) {
+        return Object.assign(acc, obj);
+      });
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
