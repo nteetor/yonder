@@ -530,6 +530,42 @@ $.extend(radiosInputBinding, {
 
 Shiny.inputBindings.register(radiosInputBinding, "dull.radiosInput");
 
+var tableInputBinding = new Shiny.InputBinding();
+
+$.extend(tableInputBinding, {
+  find: function find(scope) {
+    return $(scope).find(".dull-table[id]");
+  },
+  getValue: function getValue(el) {
+    var arr = $(el).find('thead tr,.dull-row').get().map(function (row) {
+      return $(row).find('th:not([scope]),td').get().map(function (cell) {
+        return $(cell).html();
+      });
+    });
+
+    return arr.reduce(function (acc, obj, i) {
+      acc[i] = obj;
+      return acc;
+    }, {});
+  },
+  getType: function getType(el) {
+    return "dull.table";
+  },
+  getState: function getState(el, data) {
+    return { value: this.getValue(el) };
+  },
+  subscribe: function subscribe(el, callback) {
+    $(el).on("click.tableInputBinding", function (e) {
+      callback();
+    });
+  },
+  unsubscribe: function unsubscribe(el) {
+    $(el).off(".tableInputBinding");
+  }
+});
+
+Shiny.inputBindings.register(tableInputBinding, "dull.tableInput");
+
 var textInputBinding = new Shiny.InputBinding();
 
 $.extend(textInputBinding, {
@@ -683,4 +719,31 @@ $.extend(Shiny.progressHandlers, {
 
     return false;
   }
+});
+
+var tableOutputBinding = new Shiny.OutputBinding();
+
+$.extend(tableOutputBinding, {
+  find: function find(scope) {
+    return $(scope).find(".dull-table[id]");
+  },
+  getId: function getId(el) {
+    return el.id;
+  },
+  renderValue: function renderValue(el, data) {
+    if (data.content) {
+      $(el).html(data.content);
+    }
+  }
+});
+
+Shiny.outputBindings.register(tableOutputBinding, "dull.tableOutput");
+
+$(document).ready(function () {
+  $(".dull-table").delegate("tbody tr", "click", function (e) {
+    var $this = $(this);
+    var context = $this.parents(".dull-table").first().data("context");
+    $this.toggleClass("table-" + context);
+    $this.toggleClass("dull-row");
+  });
 });
