@@ -1,3 +1,17 @@
+textualInput <- function(value, placeholder, id, type, ...) {
+  tags$input(
+    class = collate(
+      paste0("dull-", type),
+      "dull-input form-control"
+    ),
+    type = type,
+    value = value,
+    placeholder = placeholder,
+    ...,
+    id = id
+  )
+}
+
 #' Inputs
 #'
 #' Form control inputs.
@@ -46,39 +60,91 @@
 #' * color - Color picker.
 #'
 #' @family inputs
-#' @name text
+#' @export
+#' @examples
+#'
+#' stub
+#'
 textInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  # searchInput
-  # emailInput
-  # urlInput
-  # telephoneInput
-  # passwordInput
-  # numberInput
-  # datetimeInput
-  # dateInput
-  # monthInput
-  # weekInput
-  # timeInput
-  # colorInput
-
   # if (!re(type, "text|search|email|url|tel|password|number|datetime|date|month|week|time|color")) {
   #   stop(
   #     'invalid `` argument, see ?text for valid `type` values',
   #     call. = FALSE
   #   )
   # }
+  textualInput(value, placeholder, id, "text", ...)
+}
 
-  tags$input(
-    class = collate(
-      paste0("dull-", type),
-      "dull-input form-control"
-    ),
-    type = "text",
-    value = value,
-    placeholder = placeholder,
-    ...,
-    id = id
-  )
+#' @rdname textInput
+#' @export
+searchInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placeholder, id, "search", ...)
+}
+
+#' @rdname textInput
+#' @export
+emailInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placeholder, id, "email", ...)
+}
+
+#' @rdname textInput
+#' @export
+urlInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placeholder, id, "url", ...)
+}
+
+#' @rdname textInput
+#' @export
+telephoneInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placholder, id, "tel", ...)
+}
+
+#' @rdname textInput
+#' @export
+passwordInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placeholder, id, "password", ...)
+}
+
+#' @rdname textInput
+#' @export
+numberInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placeholder, id, "number", ...)
+}
+
+#' @rdname textInput
+#' @export
+datetimeInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placeholder, id, "datetime-local", ...)
+}
+
+#' @rdname textInput
+#' @export
+dateInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placeholder, id, "date", ...)
+}
+
+#' @rdname textInput
+#' @export
+monthInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placeholder, id, "month", ...)
+}
+
+#' @rdname textInput
+#' @export
+weekInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placeholder, id, "week", ...)
+}
+
+#' @rdname textInput
+#' @export
+timeInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placeholder, id, "time", ...)
+}
+
+#' @rdname textInput
+#' @export
+colorInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placeholder, id, "color", ...)
 }
 
 #' Visually group and label inputs

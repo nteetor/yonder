@@ -23,6 +23,10 @@
 #'   parent element.
 #'
 #' @export
+#' @examples
+#'
+#' stub
+#'
 checkbox <- function(label = NULL, value = NULL, inline = FALSE, check = FALSE,
                      disable = FALSE, ...) {
   tags$div(

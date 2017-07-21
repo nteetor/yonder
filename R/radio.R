@@ -26,7 +26,7 @@
 radiosInput <- function(labels = NULL, values = NULL, stacked = FALSE, ...) {
   if (length(labels) != length(values)) {
     stop(
-      "`radios` arguments `labels` and `values` must be the same length",
+      "`radiosInput` arguments `labels` and `values` must be the same length",
       call. = FALSE
     )
   }

@@ -37,3 +37,8 @@ Checkbox inputs, be sure to include an \code{id} argument to register the checkb
 as a reactive input. Checkbox bars are checkboxes group and styled as a
 button bar, but still act as a checkbox group.
 }
+\examples{
+
+stub
+
+}

@@ -149,5 +149,5 @@ For more about buttons and button groups please refer to the bootstrap
 
 Other inputs: \code{\link{groupInput}},
   \code{\link{radiosInput}}, \code{\link{selectInput}},
-  \code{\link{text}}
+  \code{\link{textInput}}
 }

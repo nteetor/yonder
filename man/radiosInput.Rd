@@ -33,5 +33,5 @@ stub
 \seealso{
 Other inputs: \code{\link{button}},
   \code{\link{groupInput}}, \code{\link{selectInput}},
-  \code{\link{text}}
+  \code{\link{textInput}}
 }
