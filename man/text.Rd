@@ -2,6 +2,7 @@
 % Please edit documentation in R/inputs.R
 \name{text}
 \alias{text}
+\alias{textInput}
 \alias{search}
 \alias{email}
 \alias{url}
@@ -15,17 +16,24 @@
 \alias{time}
 \alias{color}
 \title{Inputs}
+\usage{
+textInput(value = NULL, placeholder = NULL, ..., id = NULL)
+}
 \arguments{
-\item{label}{A character vector specifying a label for the input, defaults to
-\code{NULL}. If a label is specified it is advised, though not necessary, to
-also specify an \code{id} for the input.}
+\item{placeholder}{A character string specifying placeholder text for the
+input, defaults to \code{NULL}.}
 
 \item{...}{Named arguments passed as HTML attributes to the input. Specify
 \code{value} to give the input a default value. Specify \code{placeholder} to give
 the input hint text about the expected value of the input.}
 
-\item{placeholder}{A character string specifying placeholder text for the
-input, defaults to \code{NULL}.}
+\item{id}{A character string specifying the id of the textual input, defaults
+to \code{NULL}. If specified, a reactive value is available to the shiny server
+function.}
+
+\item{label}{A character vector specifying a label for the input, defaults to
+\code{NULL}. If a label is specified it is advised, though not necessary, to
+also specify an \code{id} for the input.}
 
 \item{type}{A character string specifying the type of the text input, a
 specific type may be used when appropriate, e.g. when \code{type = "password"}
@@ -54,4 +62,9 @@ string or valid absolute URL.
 \item time - Time picker.
 \item color - Color picker.
 }
+}
+\seealso{
+Other inputs: \code{\link{button}},
+  \code{\link{groupInput}}, \code{\link{radiosInput}},
+  \code{\link{selectInput}}
 }

@@ -2,34 +2,34 @@
 % Please edit documentation in R/button.R
 \name{button}
 \alias{button}
-\alias{inputs$button}
-\alias{inputs$submit}
+\alias{submit}
 \alias{updateButton}
 \title{Buttons and button groups}
 \usage{
-inputs$button(label = NULL, value = NULL, context = "secondary", outline =
-  FALSE, block = FALSE, disabled = FALSE, ...)
+button(label = NULL, value = NULL, context = "secondary",
+  outline = FALSE, block = FALSE, disabled = FALSE, ..., id = NULL)
 
-inputs$submit(label = NULL, outline = FALSE, block = FALSE, ...)
+submit(label = NULL, outline = FALSE, block = FALSE, ...)
 
 updateButton(id, count = NULL, context = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
+\item{label}{A character string or tag elements to use as a button label or a
+character vector specifying labels for a button group, defaults to \code{NULL}.}
+
+\item{value}{A character string specifying a value for the button or a
+character vector specifying values for a button group, defaults to
+\code{NULL}.}
+
 \item{context}{Used to specify the visual context of the button, one of
 \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"},
 or \code{"link"}, defaults to \code{"secondary"}.
 
 Primary buttons are blue, secondary buttons are white and grey, buttons for
 success are green, informative buttons are a lighter blue, warning buttons
-are yellow, and buttons for danger are red. Specifying \code{"link"} makes the
+are yellow, and buttons for danger are red. Specifying \code{"link"} makes a
 button render with the appearance of a link.}
-
-\item{label}{A character vector or tag elements to use as the button label or
-button group labels, defaults to \code{NULL}.}
-
-\item{value}{A character vector specifying a value for the button or values
-for the button group, defaults to \code{NULL}.}
 
 \item{outline}{If \code{TRUE}, the button's background is transparent, \code{context}
 is preserved, defaults to \code{FALSE}.}
@@ -42,6 +42,10 @@ parent element, thereby creating a "block."}
 to \code{FALSE}.}
 
 \item{...}{Named arguments passed as HTML attributes to the parent element.}
+
+\item{id}{A character string specifying the id of the button, button group,
+or submit button, defaults to \code{NULL}. If specified, a reactive value is
+available to the shiny server function.}
 }
 \description{
 Buttons, submit and reset buttons. A button's reactive value is a list of two
@@ -50,17 +54,17 @@ second item is \code{value}, the HTML data-value attribute of the button which m
 be set with the \code{value} argument.
 }
 \examples{
-inputs$button("Primary", context = "primary")
+button("Primary", context = "primary")
 
-inputs$button("Secondary")
+button("Secondary")
 
-inputs$button("Success", context = "success")
+button("Success", context = "success")
 
-inputs$button("Info", context = "info", outline = TRUE)
+button("Info", context = "info", outline = TRUE)
 
-inputs$button("\\u2715", context = "warning")
+button("\\u2715", context = "warning")
 
-inputs$button("Danger!", context = "danger", disable = TRUE)
+button("Danger!", context = "danger", disable = TRUE)
 
 if (interactive()) {
   library(shiny)
@@ -69,8 +73,8 @@ if (interactive()) {
     ui = container(
       listGroup(
         listGroupItem(
-          forms$inline(
-            inputs$button(
+          inlineForm(
+            button(
               id = "clicker1",
               "Simple button"
             )
@@ -78,8 +82,8 @@ if (interactive()) {
           badge = badge(id = "badge1", 0)
         ),
         listGroupItem(
-          forms$inline(
-            inputs$button(
+          inlineForm(
+            button(
               id = "clicker2",
               label = "Click me!",
             )
@@ -87,7 +91,7 @@ if (interactive()) {
           badge = badge(id = "badge2", 0)
         ),
         listGroupItem(
-          inputs$button(
+          button(
             id = "reset",
             label = "Reset",
             context = "primary"
@@ -120,7 +124,7 @@ if (interactive()) {
 
   shinyApp(
     ui = container(
-      inputs$button(
+      button(
         id = "group",
         label = c("First", "Second", "Third"),
         value = c("first", "second", "third")
@@ -142,4 +146,8 @@ MDN
 
 For more about buttons and button groups please refer to the bootstrap
 \href{https://v4-alpha.getbootstrap.com/components/input-group/#button-addons}{reference section}.
+
+Other inputs: \code{\link{groupInput}},
+  \code{\link{radiosInput}}, \code{\link{selectInput}},
+  \code{\link{text}}
 }

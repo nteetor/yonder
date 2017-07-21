@@ -5,7 +5,7 @@
 \alias{updateStream}
 \title{Stream notifications}
 \usage{
-streamOutput(...)
+streamOutput(id, ...)
 
 updateStream(id, message, template = listGroupItem(),
   session = getDefaultReactiveDomain())

@@ -21,28 +21,14 @@ htmltools::tags
 #' - [img, figure][img]
 #' - [blockquote][blockquote]
 #'
-#' @usage bs
-#'
-#' @format NULL
 #' @name bs
-#' @export
-bs <- structure(
-  list(),
-  name = "bs",
-  class = c("module", "list")
-)
+NULL
 
 #' Responsive Images and Figures
 #'
 #' A small update to `<img>` and `<figure>`. Additional arguments has been added
 #' to the `img` builder function. Figures have specific arguments for an `img`
 #' child element and caption.
-#'
-#' @usage
-#'
-#' bs$img(..., fluid = TRUE, align = NULL, thumbnail = FALSE)
-#'
-#' bs$figure(..., image = NULL, caption = NULL, align = "left")
 #'
 #' @param fluid If `TRUE`, the image will scale with its parent element,
 #'   defaults to `TRUE`.
@@ -63,36 +49,47 @@ bs <- structure(
 #' @param caption A character vector specifying a caption for the image,
 #'   defaults to `NULL`.
 #'
-#' @aliases figure
+#' @family content
+#' @aliases figure image
 #' @name img
 #' @examples
+#' if (interactive()) {
+#'   library(shiny)
 #'
-#' # A figure with a,
-#' #   - fluid image
-#' #   - left-aligned caption
-#' bs$figure(
-#'   image = bs$img(src = "http://bit.ly/2qchbEB"),
-#'   caption = "Stock cat photo."
-#' )
+#'   shinyApp(
+#'     ui = container(
+#'       # A figure with a,
+#'       #   - fluid image
+#'       #   - left-aligned caption
+#'       figure(
+#'         image = img(src = "http://bit.ly/2qchbEB"),
+#'         caption = "Stock cat photo."
+#'       )
+#'     ),
+#'     server = function(input, output) {
 #'
-bs$img <- function(..., fluid = TRUE, align = NULL, thumbnail = FALSE) {
-  htmltools::tag(
-    "img",
-    list(
+#'     }
+#'   )
+#' }
+#'
+img <- function(..., fluid = TRUE, align = NULL, thumbnail = FALSE) {
+  tags$img(
+    class = collate(
       if (fluid) "img-fluid",
       if (thumbnail) "img-thumbnail",
-      if (!is.null(align)) paste0("float-", align),
-      ...,
-      bootstrap()
-    )
+      if (!is.null(align)) paste0("float-", align)
+    ),
+    ...,
+    bootstrap()
   )
 }
 
-bs$figure <- function(..., image = NULL, caption = NULL, align = "left") {
-  htmltools::tag(
-    "figure",
-    list(
-      ...,
+#' @rdname img
+#' @export
+figure <- function(..., image = NULL, caption = NULL, align = "left") {
+  tags$figure(
+    ...,
+    class = collate(
       if (!is.null(image)) tagEnsureClass(image, "figure-img"),
       if (!is.null(caption)) {
         tags$figcaption(
@@ -102,9 +99,9 @@ bs$figure <- function(..., image = NULL, caption = NULL, align = "left") {
           ),
           caption
         )
-      },
-      bootstrap()
-    )
+      }
+    ),
+    bootstrap()
   )
 }
 
@@ -117,9 +114,9 @@ bs$figure <- function(..., image = NULL, caption = NULL, align = "left") {
 #'
 #' @param align One of `"left"` or `"right"`, defaults to `"left"`.
 #'
-#' @name blockquote
+#' @family content
 #' @examples
-#' bs$blockquote(
+#' blockquote(
 #'   "Anyone can love a thing because.",
 #'   "That's as easy as putting a penny in your pocket.",
 #'   "But to love something despite.",
@@ -130,19 +127,16 @@ bs$figure <- function(..., image = NULL, caption = NULL, align = "left") {
 #'   )
 #' )
 #'
-bs$blockquote <- function(..., source = NULL, align = "left") {
-  htmltools::tag(
-    "blockquote",
-    list(
-      class = collate(
-        "blockquote",
-        if (align == "right") "blockquote-reverse"
-      ),
-      ...,
-      if (!is.null(source)) {
-        tags$footer(class = "blockquote-footer", source)
-      }
+blockquote <- function(..., source = NULL, align = "left") {
+  tags$blockquote(
+    class = collate(
+      "blockquote",
+      if (align == "right") "blockquote-reverse"
     ),
+    ...,
+    if (!is.null(source)) {
+      tags$footer(class = "blockquote-footer", source)
+    },
     bootstrap()
   )
 }
@@ -150,27 +144,11 @@ bs$blockquote <- function(..., source = NULL, align = "left") {
 #' List Styling and Unstyling
 #'
 #' Rebooted builder functions for `<ul>`, `<ol>`, `<dl>`, `<dt>`, and `<dd>`.
-#' Ordered and unordered lists can now be unstyled, removing bullets and some
-#' margins. Description lists make use of the container system.
+#' Unstyled lists remove bullets from their direct children and remove some
+#' margins. Inline lists render inline as opposed to one or more rows per item.
+#' Description lists make use of the container system.
 #'
-#' @usage
-#'
-#' bs$ul(..., styled = TRUE, inline = FALSE)
-#'
-#' bs$ol(..., styled = TRUE, inline = FALSE)
-#'
-#' bs$dl(...)
-#'
-#' bs$dt(..., width = NULL, truncate = FALSE)
-#'
-#' bs$dd(..., width = NULL)
-#'
-#' @param styled When `FALSE` the default list style is removed and left margins
-#'   are removed, but this applies only to the *direct children elements*,
-#'   defaults to `TRUE`.
-#'
-#' @param inline When `TRUE`, list bullets are removed and the list is rendered
-#'   inline, defaults to `FALSE`.
+#' @param ... Any number of list items
 #'
 #' @param width Description lists can make use of the row, column grid system. 1
 #'   through 12, defaults to `NULL`, alternate widths for different viewports
@@ -198,30 +176,41 @@ bs$blockquote <- function(..., source = NULL, align = "left") {
 #'
 #' See examples for more on how to make use of this functionality.
 #'
-#' @aliases ul ol dl dt dd
-#' @name lists
 #' @examples
+#' if (interactive()) {
+#'   library(shiny)
 #'
-bs$ul <- function(..., styled = TRUE, inline = FALSE) {
-  htmltools::tag(
-    "ul",
-    c(
-      list(
-        class = collate(
-          if (!styled) "list-unstyled",
-          if (inline) "list-inline"
-        )
-      ),
-      lapply(
-        list(...),
-        function(i) if (is_tag(i)) tagEnsureClass(i, "list-inline-item") else i
-      ),
-      bootstrap()
-    )
+#'   shinyApp(
+#'     ui = container(
+#'
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+listUnstyled <- function(...) {
+  tags$ul(
+    class = "list-unstyled",
+    ...,
+    bootstrap()
   )
 }
 
-bs$ol <- function(..., styled = TRUE, inline = FALSE) {
+#' @rdname listUnstyled
+listInline <- function(...) {
+  tags$ul(
+    class = "list-inline",
+    lapply(
+      list(...),
+      function(i) if (is_tag(i)) tagEnsureClass(i, "list-inline-item") else i
+    ),
+    bootstrap()
+  )
+}
+
+ol <- function(..., styled = TRUE, inline = FALSE) {
   htmltools::tag(
     "ol",
     c(
@@ -240,51 +229,20 @@ bs$ol <- function(..., styled = TRUE, inline = FALSE) {
   )
 }
 
-bs$dl <- function(...) {
-  htmltools::tag(
-    "dl",
-    list(
-      class = collate(
-        "row"
-      ),
-      ...,
-      bootstrap()
-    )
+dl <- function(...) {
+  tags$dl(
+    class = collate(
+      "row"
+    ),
+    ...,
+    bootstrap()
   )
 }
 
-bs$dt <- function(..., width = NULL, truncate = FALSE) {
-  htmltools::tag(
-    "dt",
-    list(
-      class = collate(
-        vapply(
-          seq_along(width),
-          function(i) {
-            nm <- names(width[i])
-
-            collate(
-              "col",
-              if (nm %in% c("", "xs")) NULL else nm,
-              width[[i]],
-              collapse = "-"
-            )
-          },
-          character(1)
-        ),
-        if (truncate) "text-truncate"
-      ),
-      ...,
-      bootstrap()
-    )
-  )
-}
-
-bs$dd <- function(..., width = NULL) {
-  htmltools::tag(
-    "dd",
-    list(
-      class = vapply(
+dt <- function(..., width = NULL, truncate = FALSE) {
+  tags$dt(
+    class = collate(
+      vapply(
         seq_along(width),
         function(i) {
           nm <- names(width[i])
@@ -298,9 +256,31 @@ bs$dd <- function(..., width = NULL) {
         },
         character(1)
       ),
-      ...,
-      bootstrap()
-    )
+      if (truncate) "text-truncate"
+    ),
+    ...,
+    bootstrap()
+  )
+}
+
+dd <- function(..., width = NULL) {
+  tags$dd(
+    class = vapply(
+      seq_along(width),
+      function(i) {
+        nm <- names(width[i])
+
+        collate(
+          "col",
+          if (nm %in% c("", "xs")) NULL else nm,
+          width[[i]],
+          collapse = "-"
+        )
+      },
+      character(1)
+    ),
+    ...,
+    bootstrap()
   )
 }
 
@@ -310,19 +290,6 @@ bs$dd <- function(..., width = NULL) {
 #' New and improved tables, table headers, and table rows. Additional arguments
 #' have been added to help indicate and add shortcuts for possible Bootstrap
 #' stylizations.
-#'
-#' @usage
-#'
-#' bs$table(..., inverse = FALSE, striped = FALSE, borders = FALSE,
-#'   hover = FALSE, compact = FALSE, scrollable = FALSE)
-#'
-#' bs$thead(..., inverse = FALSE)
-#'
-#' bs$tr(..., context = NULL, inverse = FALSE)
-#'
-#' bs$th(..., context = NULL, inverse = FALSE)
-#'
-#' bs$td(..., context = NULL, inverse = FALSE)
 #'
 #' @param context One of `"active"`, `"primary"`, `"success"`, `"info"`,
 #'   `"warning"`, or `"danger"`, applies contextual styling to table rows or
@@ -346,11 +313,11 @@ bs$dd <- function(..., width = NULL) {
 #' @param scrollable If `TRUE`, the table has horizontal scroll on small
 #'   viewports, defaults to `FALSE`.
 #'
-#' @aliases thead
-#' @name table
 #' @examples
 #'
-bs$table <- function(..., inverse = FALSE, striped = FALSE, borders = FALSE,
+#' stub
+#'
+table <- function(..., inverse = FALSE, striped = FALSE, borders = FALSE,
                      hover = FALSE, compact = FALSE, scrollable = FALSE) {
   htmltools::tag(
     "table",
@@ -367,7 +334,7 @@ bs$table <- function(..., inverse = FALSE, striped = FALSE, borders = FALSE,
   )
 }
 
-bs$thead <- function(..., inverse = FALSE) {
+thead <- function(..., inverse = FALSE) {
   htmltools::tag(
     "th",
     list(
@@ -378,7 +345,7 @@ bs$thead <- function(..., inverse = FALSE) {
   )
 }
 
-bs$tr <- function(..., context = NULL, inverse = FALSE) {
+tr <- function(..., context = NULL, inverse = FALSE) {
   htmltools::tag(
     "tr",
     list(
@@ -393,7 +360,7 @@ bs$tr <- function(..., context = NULL, inverse = FALSE) {
   )
 }
 
-bs$th <- function(..., context = NULL, inverse = FALSE) {
+th <- function(..., context = NULL, inverse = FALSE) {
   htmltools::tag(
     "th",
     list(
@@ -408,7 +375,7 @@ bs$th <- function(..., context = NULL, inverse = FALSE) {
   )
 }
 
-bs$td <- function(..., context = NULL, inverse = FALSE) {
+td <- function(..., context = NULL, inverse = FALSE) {
   htmltools::tag(
     "td",
     list(

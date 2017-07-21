@@ -4,19 +4,28 @@
 \alias{fieldset}
 \title{Visually group and label inputs}
 \usage{
-inputs$fieldset(legend = NULL, ...)
+fieldset(..., legend = NULL, disabled = FALSE, id = NULL)
 }
 \arguments{
+\item{...}{Inputs to group or additional named arguments passed as HTML
+attributes to the parent \code{<fieldset>} element.}
+
 \item{legend}{A label for the associated inputs or a custom tag, defaults to
 \code{NULL}.}
 
-\item{disabeld}{If \code{TRUE}, all inputs within the fieldset are rendered in a
+\item{disabled}{If \code{TRUE}, all inputs within the fieldset are rendered in a
 disabled state, defaults to \code{FALSE}.}
 
-\item{...}{Inputs to group or additional named arguments passed as HTML
-attributes to the parent \code{<fieldset>} element.}
+\item{id}{A character string specifying the id of the fieldset, defaults to
+\code{NULL}. Specifying an id is only necessary when using \code{updateFieldset} to
+disable or enable the inputs contained in the fieldset.}
 }
 \description{
 Use \code{input$fieldset} to associate inputs. Good for screen readers and other
 assitive technologies.
+}
+\examples{
+
+stub
+
 }

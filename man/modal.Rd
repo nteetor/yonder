@@ -62,12 +62,12 @@ if (interactive()) {
         id = "login",
         header = "Please login",
         body = tagList(
-          inputs$text(
+          textInput(
             id = "name",
             label = "Name",
             placeholder = "yourname@email.com"
           ),
-          inputs$text(
+          textInput(
             id = "password",
             label = "Password"
           )

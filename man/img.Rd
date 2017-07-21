@@ -3,11 +3,13 @@
 \name{img}
 \alias{img}
 \alias{figure}
+\alias{image}
+\alias{figure}
 \title{Responsive Images and Figures}
 \usage{
-bs$img(..., fluid = TRUE, align = NULL, thumbnail = FALSE)
+img(..., fluid = TRUE, align = NULL, thumbnail = FALSE)
 
-bs$figure(..., image = NULL, caption = NULL, align = "left")
+figure(..., image = NULL, caption = NULL, align = "left")
 }
 \arguments{
 \item{fluid}{If \code{TRUE}, the image will scale with its parent element,
@@ -35,13 +37,26 @@ to the \code{img} builder function. Figures have specific arguments for an \code
 child element and caption.
 }
 \examples{
+if (interactive()) {
+  library(shiny)
 
-# A figure with a,
-#   - fluid image
-#   - left-aligned caption
-bs$figure(
-  image = bs$img(src = "http://bit.ly/2qchbEB"),
-  caption = "Stock cat photo."
-)
+  shinyApp(
+    ui = container(
+      # A figure with a,
+      #   - fluid image
+      #   - left-aligned caption
+      figure(
+        image = img(src = "http://bit.ly/2qchbEB"),
+        caption = "Stock cat photo."
+      )
+    ),
+    server = function(input, output) {
 
+    }
+  )
+}
+
+}
+\seealso{
+Other content: \code{\link{blockquote}}
 }

@@ -20,15 +20,15 @@ toggleCollapse(id, session = getDefaultReactiveDomain())
 or additional named arguments passed as attributes to the parent element.}
 
 \item{label}{A character string specifying the label of the collapse, passed
-to \code{\link{inputs$button}}, defaults to \code{NULL}.}
+to \link{button}, defaults to \code{NULL}.}
 
 \item{context}{A character string specifying the visual context of the
-toggle button, passed to \code{\link{inputs$button}}, defaults to \code{"secondary"}.}
+toggle button, passed to \link{button}, defaults to \code{"secondary"}.}
 
 \item{id}{A character string specifying the id of a collapse section.}
 
 \item{session}{A \code{session} object passed to the shiny server function,
-defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
+defaults to \code{\link[shiny:getDefaultReactiveDomain]{shiny::getDefaultReactiveDomain()}}.}
 }
 \description{
 \code{collapse} allows content to be hidden and toggled into a shown state.
@@ -66,9 +66,9 @@ if (interactive()) {
           )
         ),
         col(
-          inputs$button(id = "toggle", "Toggle collapse"),
-          inputs$button(id = "hide", "Only hide", context = "warning"),
-          inputs$button(id = "show", "Only show", context = "info")
+          button(id = "toggle", "Toggle collapse"),
+          button(id = "hide", "Only hide", context = "warning"),
+          button(id = "show", "Only show", context = "info")
         )
       )
     ),

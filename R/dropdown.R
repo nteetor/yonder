@@ -119,7 +119,7 @@ dropdown <- function(..., label = NULL, context = "secondary", split = FALSE,
         "btn-group",
         if (dropup) "dropup" else "dropdown"
       ),
-      if (split) inputs$button(context = context, label = label),
+      if (split) button(context = context, label = label),
       inputs$button(
         class = collate(
           "dropdown-toggle",

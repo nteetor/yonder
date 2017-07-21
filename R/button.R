@@ -7,18 +7,16 @@
 #' second item is `value`, the HTML data-value attribute of the button which may
 #' be set with the `value` argument.
 #'
-#' @usage
+#' @param id A character string specifying the id of the button, button group,
+#'  or submit button, defaults to `NULL`. If specified, a reactive value is
+#'  available to the shiny server function.
 #'
-#' inputs$button(label = NULL, value = NULL, context = "secondary", outline =
-#'   FALSE, block = FALSE, disabled = FALSE, ...)
+#' @param label A character string or tag elements to use as a button label or a
+#'   character vector specifying labels for a button group, defaults to `NULL`.
 #'
-#' inputs$submit(label = NULL, outline = FALSE, block = FALSE, ...)
-#'
-#' @param label A character vector or tag elements to use as the button label or
-#'   button group labels, defaults to `NULL`.
-#'
-#' @param value A character vector specifying a value for the button or values
-#'   for the button group, defaults to `NULL`.
+#' @param value A character string specifying a value for the button or a
+#'   character vector specifying values for a button group, defaults to
+#'   `NULL`.
 #'
 #' @param context Used to specify the visual context of the button, one of
 #'   `"primary"`, `"secondary"`, `"success"`, `"info"`, `"warning"`, `"danger"`,
@@ -26,7 +24,7 @@
 #'
 #'   Primary buttons are blue, secondary buttons are white and grey, buttons for
 #'   success are green, informative buttons are a lighter blue, warning buttons
-#'   are yellow, and buttons for danger are red. Specifying `"link"` makes the
+#'   are yellow, and buttons for danger are red. Specifying `"link"` makes a
 #'   button render with the appearance of a link.
 #'
 #' @param outline If `TRUE`, the button's background is transparent, `context`
@@ -50,20 +48,20 @@
 #' For more about buttons and button groups please refer to the bootstrap
 #' [reference section](https://v4-alpha.getbootstrap.com/components/input-group/#button-addons).
 #'
-#' @aliases inputs$button inputs$submit
-#' @name button
+#' @family inputs
+#' @export
 #' @examples
-#' inputs$button("Primary", context = "primary")
+#' button("Primary", context = "primary")
 #'
-#' inputs$button("Secondary")
+#' button("Secondary")
 #'
-#' inputs$button("Success", context = "success")
+#' button("Success", context = "success")
 #'
-#' inputs$button("Info", context = "info", outline = TRUE)
+#' button("Info", context = "info", outline = TRUE)
 #'
-#' inputs$button("\u2715", context = "warning")
+#' button("\u2715", context = "warning")
 #'
-#' inputs$button("Danger!", context = "danger", disable = TRUE)
+#' button("Danger!", context = "danger", disable = TRUE)
 #'
 #' if (interactive()) {
 #'   library(shiny)
@@ -72,8 +70,8 @@
 #'     ui = container(
 #'       listGroup(
 #'         listGroupItem(
-#'           forms$inline(
-#'             inputs$button(
+#'           inlineForm(
+#'             button(
 #'               id = "clicker1",
 #'               "Simple button"
 #'             )
@@ -81,8 +79,8 @@
 #'           badge = badge(id = "badge1", 0)
 #'         ),
 #'         listGroupItem(
-#'           forms$inline(
-#'             inputs$button(
+#'           inlineForm(
+#'             button(
 #'               id = "clicker2",
 #'               label = "Click me!",
 #'             )
@@ -90,7 +88,7 @@
 #'           badge = badge(id = "badge2", 0)
 #'         ),
 #'         listGroupItem(
-#'           inputs$button(
+#'           button(
 #'             id = "reset",
 #'             label = "Reset",
 #'             context = "primary"
@@ -123,7 +121,7 @@
 #'
 #'   shinyApp(
 #'     ui = container(
-#'       inputs$button(
+#'       button(
 #'         id = "group",
 #'         label = c("First", "Second", "Third"),
 #'         value = c("first", "second", "third")
@@ -137,9 +135,9 @@
 #'   )
 #' }
 #'
-inputs$button <- function(label = NULL, value = NULL, context = "secondary",
-                          outline = FALSE, block = FALSE, disabled = FALSE,
-                          ...) {
+button <- function(label = NULL, value = NULL, context = "secondary",
+                   outline = FALSE, block = FALSE, disabled = FALSE, ...,
+                   id = NULL) {
   if (!(context %in% c("primary", "secondary", "link")) &&
       bad_context(context)) {
     stop(
@@ -162,13 +160,17 @@ inputs$button <- function(label = NULL, value = NULL, context = "secondary",
     `data-count` = 0,
     `data-value` = value,
     label,
-    ...
+    ...,
+    id = id
   )
 }
 
-inputs$submit <- function(label = NULL, outline = FALSE, block = FALSE, ...) {
+#' @rdname button
+#' @export
+submit <- function(label = NULL, outline = FALSE, block = FALSE, ...) {
   tags$button(
     class = collate(
+      "dull-submit",
       "btn",
       paste0("btn-", if (outline) "outline-", context),
       if (block) "btn-block"
@@ -210,15 +212,15 @@ updateButton <- function(id, count = NULL, context = NULL,
   )
 }
 
-shiny::registerInputHandler(
-  type = "dull.button",
-  force = TRUE,
-  fun = function(val, shinysession, name) {
-    # hacky way around the initial 0 value of `button`
-    class(val) <- c(class(val), "dullButtonValue")
-    val
-  }
-)
+# shiny::registerInputHandler(
+#   type = "dull.button",
+#   force = TRUE,
+#   fun = function(val, shinysession, name) {
+#     # hacky way around the initial 0 value of `button`
+#     class(val) <- c(class(val), "dullButtonValue")
+#     val
+#   }
+# )
 
 # assignInNamespace(
 #   "isNullEvent",

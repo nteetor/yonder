@@ -20,7 +20,6 @@ Suggests:
 Collate:
     dull.R
     utils.R
-    module.R
     includes.R
     tags.R
     icons.R
@@ -41,8 +40,9 @@ Collate:
     list-group.R
     modal.R
     nav.R
+    radio.R
+    table.R
     progress.R
     stream.R
     tooltip.R
     typography.R
-    zzz.R

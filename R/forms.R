@@ -2,28 +2,27 @@
 #'
 #' @description
 #'
-#' A reactive `forms$form` is a new reactive input. A form's reactive value is a
-#' list of all the reactive inputs within it. Reactive form groups within a
-#' form, those form groups *which have an ID*, cause the form's value to take on
-#' a nested structure. See details for more information.
+#' Forms are a new reactive input. A form's reactive value is a list of all the
+#' reactive inputs within it. Reactive form groups, when `id` is specified,
+#' within a form cause the form's value to take on a nested structure. See
+#' details for more information.
 #'
-#' `forms$inline` is an inline equivalent of `forms$form`. Inline forms are
-#' handy for rendering small, compact forms.
-#'
-#' `forms$group` helps visually organization and structure a form. On the
-#' server side, a `forms$group` with an `id` argument becomes a reactive list
+#' `formGroup` helps visually organization and structure a form. On the
+#' server side, a `formGroup` with an `id` argument becomes a reactive list
 #' value comprised of its underlying reactive inputs.
 #'
-#' @usage
+#' @param id A character string specifying an id for the form or form group,
+#'   defaults to `NULL`. If specified a form or form group becomes a reactive
+#'   input. A reactive form group will modify its parent form's input.
 #'
-#' forms$form(...)
+#'   For `updateFormGroup`, a character string specifying the id of a form
+#'   group to update.
 #'
-#' forms$inline(...)
-#'
-#' forms$group(..., state = NULL, fieldset = FALSE, label = NULL)
+#' @param inline If `TRUE`, the form is rendered inline, inline forms are handy
+#'   for rendering small, compact forms, defaults to `FALSE`.
 #'
 #' @param state One of `"success"`, `"warning"`, or `"danger"`, specifying the
-#'   state of the form group, defaults to `NULL` in `forms$group`, is required
+#'   state of the form group, defaults to `NULL` in `formGroup`, is required
 #'   for `updateFormGroup`.
 #'
 #' @param fieldset If `TRUE`, the form group is rendered inside a `<fieldset>`
@@ -38,8 +37,6 @@
 #' @param ... Input elements, labels, or other tag elements or named arguments
 #'   passed as HTML attributes to the parent element.
 #'
-#' @param id A character string specifying the HTML id of a button to update.
-#'
 #' @param session The `session` object passed to a shiny server function,
 #'   defaults to [shiny::getDefaultReactiveDomain()].
 #'
@@ -50,15 +47,15 @@
 #' Below is a small sample form,
 #'
 #' ```
-#' forms$form(
+#' form(
 #'   id = "register",
-#'   forms$group(
+#'   formGroup(
 #'     id = "names",
-#'     inputs$text(
+#'     textInput(
 #'       id = "first",
 #'       label = "First name"
 #'     ),
-#'     inputs$text(
+#'     textInput(
 #'       id = "last",
 #'       label = "Last name"
 #'     )
@@ -83,26 +80,26 @@
 #' Here is a longer form based on the one above,
 #'
 #' ```
-#' forms$form(
+#' form(
 #'   id = "register",
-#'   forms$group(
+#'   formGroup(
 #'     id = "names",
-#'     inputs$text(
+#'     textInput(
 #'       id = "first",
 #'       label = "First name"
 #'     ),
-#'     inputs$text(
+#'     textInput(
 #'       id = "last",
 #'       label = "Last name"
 #'     )
 #'   ),
-#'   forms$group(
+#'   formGroup(
 #'     id = "contact",
-#'     inputs$telephone(
+#'     telephoneInput(
 #'       id = "mobile",
 #'       label = "Cell phone"
 #'     ),
-#'     inputs$telephone(
+#'     telephoneInput(
 #'       id = "home",
 #'       label = "Home phone"
 #'     )
@@ -142,9 +139,7 @@
 #' bootstrap
 #' [reference page](https://v4-alpha.getbootstrap.com/components/forms/).
 #'
-#' @aliases form inline
-#' @format NULL
-#' @name forms
+#' @family forms
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -152,14 +147,14 @@
 #'
 #'   shinyApp(
 #'     ui = container(
-#'       forms$form(
+#'       form(
 #'         id = "user",
 #'         submit = TRUE,
-#'         forms$group(
+#'         formGroup(
 #'           id = "names",
 #'           label = "Form group",
-#'           inputs$text(id = "first", placeholder = "first name"),
-#'           inputs$text(id = "last", placeholder = "last name")
+#'           textInput(id = "first", placeholder = "first name"),
+#'           textInput(id = "last", placeholder = "last name")
 #'         )
 #'       )
 #'     ),
@@ -171,38 +166,29 @@
 #'       # Note the observer triggers on application startup,
 #'       # value is NULL, and then does not trigger again.
 #'       observe({
-#'         print(inputs$first)
+#'         print(input$first)
 #'       })
 #'     }
 #'   )
 #' }
 #'
-forms <- structure(
-  list(),
-  name = "forms",
-  class = c("module", "list")
-)
-
-forms$form <- function(..., submit = TRUE) {
+form <- function(..., inline = FALSE) {
   tags$form(
-    class = "dull-form",
+    class = collate(
+      "dull-form",
+      if (inline) "form-inline"
+    ),
     ...,
     bootstrap()
   )
 }
 
-forms$inline <- function(...) {
-  # note this is `forms$form`, not `tags$form`
-  forms$form(
-    class = "form-inline",
-    ...
-  )
-}
-
-forms$group <- function(..., state = NULL, fieldset = FALSE, legend = NULL) {
+#' @rdname form
+#' @export
+formGroup <- function(..., state = NULL, fieldset = FALSE, legend = NULL) {
   if (!is.null(state) && !(state %in% c("success", "warning", "danger"))) {
     stop(
-      'invalid `forms$group` argument, `state` must be one of "success", ',
+      'invalid `formGroup` argument, `state` must be one of "success", ',
       '"warning", or "danger"',
       call. = FALSE
     )
@@ -210,14 +196,15 @@ forms$group <- function(..., state = NULL, fieldset = FALSE, legend = NULL) {
 
   if (!fieldset && !is.null(legend)) {
     warning(
-      "if `forms$group` argument `fieldset` is FALSE, `legend` has no effect",
+      "if `formGroup` argument `fieldset` is FALSE, `legend` has no effect",
       call. = FALSE
     )
   }
 
   (if (fieldset) tags$fieldset else tags$div)(
     class = collate(
-      "dull-form-group form-group",
+      "dull-form-group",
+      "form-group",
       if (!is.null(state)) paste0("has-", state)
     ),
     if (fieldset && !is.null(legend)) {
@@ -228,7 +215,7 @@ forms$group <- function(..., state = NULL, fieldset = FALSE, legend = NULL) {
   )
 }
 
-#' @rdname forms
+#' @rdname form
 #' @export
 updateFormGroup <- function(id, state, session = getDefaultReactiveDomain()) {
   if (!(state %in% c("success", "warning", "danger"))) {
@@ -246,5 +233,3 @@ updateFormGroup <- function(id, state, session = getDefaultReactiveDomain()) {
     )
   )
 }
-
-

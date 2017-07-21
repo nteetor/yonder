@@ -2,28 +2,12 @@
 % Please edit documentation in R/tags.R
 \name{table}
 \alias{table}
-\alias{thead}
 \title{Bootstrap Tables}
 \usage{
-bs$table(..., inverse = FALSE, striped = FALSE, borders = FALSE,
+table(..., inverse = FALSE, striped = FALSE, borders = FALSE,
   hover = FALSE, compact = FALSE, scrollable = FALSE)
-
-bs$thead(..., inverse = FALSE)
-
-bs$tr(..., context = NULL, inverse = FALSE)
-
-bs$th(..., context = NULL, inverse = FALSE)
-
-bs$td(..., context = NULL, inverse = FALSE)
 }
 \arguments{
-\item{context}{One of \code{"active"}, \code{"primary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, or \code{"danger"}, applies contextual styling to table rows or
-cells, defaults to \code{NULL}.
-
-Please be aware that \code{"active"} will not work when \code{inverse} is \code{TRUE} and
-\code{"primary"} only works when \code{inverse} is \code{TRUE}.}
-
 \item{inverse}{Table or table header renders with light text on a dark
 background, defaults to \code{FALSE}.}
 
@@ -38,6 +22,13 @@ background, defaults to \code{FALSE}.}
 
 \item{scrollable}{If \code{TRUE}, the table has horizontal scroll on small
 viewports, defaults to \code{FALSE}.}
+
+\item{context}{One of \code{"active"}, \code{"primary"}, \code{"success"}, \code{"info"},
+\code{"warning"}, or \code{"danger"}, applies contextual styling to table rows or
+cells, defaults to \code{NULL}.
+
+Please be aware that \code{"active"} will not work when \code{inverse} is \code{TRUE} and
+\code{"primary"} only works when \code{inverse} is \code{TRUE}.}
 }
 \description{
 New and improved tables, table headers, and table rows. Additional arguments
@@ -45,5 +36,7 @@ have been added to help indicate and add shortcuts for possible Bootstrap
 stylizations.
 }
 \examples{
+
+stub
 
 }

@@ -1,19 +1,10 @@
-#' Form inputs
-#'
-#' Reactive inputs.
-#'
-#' @format NULL
-#' @name inputs
-#' @export
-inputs <- structure(
-  list(),
-  name = "inputs",
-  class = c("module", "list")
-)
-
 #' Inputs
 #'
 #' Form control inputs.
+#'
+#' @param id A character string specifying the id of the textual input, defaults
+#'   to `NULL`. If specified, a reactive value is available to the shiny server
+#'   function.
 #'
 #' @param label A character vector specifying a label for the input, defaults to
 #'   `NULL`. If a label is specified it is advised, though not necessary, to
@@ -56,23 +47,37 @@ inputs <- structure(
 #'
 #' @family inputs
 #' @name text
-inputs$text <- function(value = NULL, placeholder = NULL, type = "text", ...) {
-  if (!re(type, "text|search|email|url|tel|password|number|datetime|date|month|week|time|color")) {
-    stop(
-      'invalid `inputs$text` argument, see ?text for valid `type` values',
-      call. = FALSE
-    )
-  }
+textInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  # searchInput
+  # emailInput
+  # urlInput
+  # telephoneInput
+  # passwordInput
+  # numberInput
+  # datetimeInput
+  # dateInput
+  # monthInput
+  # weekInput
+  # timeInput
+  # colorInput
+
+  # if (!re(type, "text|search|email|url|tel|password|number|datetime|date|month|week|time|color")) {
+  #   stop(
+  #     'invalid `` argument, see ?text for valid `type` values',
+  #     call. = FALSE
+  #   )
+  # }
 
   tags$input(
     class = collate(
       paste0("dull-", type),
       "dull-input form-control"
     ),
-    type = type,
+    type = "text",
     value = value,
     placeholder = placeholder,
-    ...
+    ...,
+    id = id
   )
 }
 
@@ -81,190 +86,105 @@ inputs$text <- function(value = NULL, placeholder = NULL, type = "text", ...) {
 #' Use `input$fieldset` to associate inputs. Good for screen readers and other
 #' assitive technologies.
 #'
-#' @usage
-#'
-#' inputs$fieldset(legend = NULL, ...)
+#' @param id A character string specifying the id of the fieldset, defaults to
+#'  `NULL`. Specifying an id is only necessary when using `updateFieldset` to
+#'  disable or enable the inputs contained in the fieldset.
 #'
 #' @param legend A label for the associated inputs or a custom tag, defaults to
 #'   `NULL`.
 #'
-#' @param disabeld If `TRUE`, all inputs within the fieldset are rendered in a
+#' @param disabled If `TRUE`, all inputs within the fieldset are rendered in a
 #'   disabled state, defaults to `FALSE`.
 #'
 #' @param ... Inputs to group or additional named arguments passed as HTML
 #'   attributes to the parent `<fieldset>` element.
 #'
-#' @name fieldset
-inputs$fieldset <- function(..., legend = NULL, disabled = FALSE) {
+#' @export
+#' @examples
+#'
+#' stub
+#'
+fieldset <- function(..., legend = NULL, disabled = FALSE, id = NULL) {
   tags$fieldset(
     if (is_tag(legend)) {
       legend
     } else if (!is.null(legend)) {
       tags$legend(legend)
     },
+    ...,
+    id = id
+  )
+}
+
+#' Select input
+#'
+#' A select input.
+#'
+#' @param id A character string specifying an id for the select input, defaults
+#'   to `NULL`. When specified, a reactive value is available to the shiny
+#'   server.
+#'
+#' @param label A character string specifying a label for the select input
+#'   option, defaults to `NULL`.
+#'
+#' @param value A character string specifying a value for the select input
+#'   option, defaults to `NULL`.
+#'
+#' @param selected If `TRUE`, the select option is selected when the page
+#'   renders, defaults to `FALSE`.
+#'
+#' @family inputs
+#' @export
+#' @examples
+#' if (interactive()) {
+#'   library(shiny)
+#'
+#'   shinyApp(
+#'     ui = container(
+#'       formInline(
+#'         label("Preference"),
+#'         selectInput(
+#'           id = "mySelect",
+#'           option("Choose...", selected = TRUE),
+#'           option("One", 1),
+#'           option("Two", 2),
+#'           option("Three", 3)
+#'         ),
+#'         checkboxInput(
+#'           label = "Remember my preference"
+#'         ),
+#'         button(
+#'           "Go!",
+#'           context = "secondary"
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#'
+#' }
+#'
+#'
+selectInput <- function(..., id = NULL) {
+  tags$select(
+    class = "dull-select dull-input custom-select",
     ...
   )
 }
 
-#' Checkboxes
-#'
-#' Checkbox input.
-#'
-#' @param name Checkbox name.
-#'
-#' @param value The checkbox value.
-#'
-#' @param label The checkbox label.
-#'
-#' @param id A character string specifying the HTML id of a checkbox input to
-#'   update.
-#'
-#' @param context One of `"success"`, `"warning"`, or `"danger"`, specifying
-#'   a visual context for the checkbox.
-#'
-#' @name checkbox
-#' @examples
-#'
-#'
-inputs$checkbox <- function(name = NULL, value = NULL, label = NULL, ...) {
-  tags$div(
-    class = "form-group",
-    tags$label(
-      class = "dull-checkbox dull-input custom-control custom-checkbox",
-      tags$input(
-        class = "custom-control-input",
-        type = "checkbox",
-        name = name,
-        value = value
-      ),
-      tags$span(class = "custom-control-indicator"),
-      tags$span(
-        class = "custom-control-description",
-        label
-      ),
-      ...,
-      bootstrap()
-    )
+#' @rdname selectInput
+#' @export
+option <- function(label = NULL, value = NULL, selected = FALSE) {
+  tags$option(
+    value = value,
+    selected = if (selected) NA,
+    label
   )
 }
 
-#' @rdname checkbox
-updateCheckbox <- function(id, context, session = getDefaultReactiveDomain()) {
-  if (!(context %in% c("success", "warning", "danger"))) {
-    stop(
-      'invalid `updateCheckbox` argument, `context` must be one "success", ',
-      '"warning", or "danger"',
-      call. = FALSE
-    )
-  }
-
-  session$sendInputMessage(
-    id,
-    list(
-      context = paste0("has-", context)
-    )
-  )
-}
-
-#' Radios
-#'
-#' Create an input of one or more radio inputs. If an `id` parameter is
-#' specified the `name` attribute of each child radio element is given this
-#' value.
-#'
-#' @usage
-#'
-#' inputs$radios(labels = NULL, values = NULL, ...)
-#'
-#' @param labels A list or character vectors of labels for each of the
-#'   individual radio elements, defaults to `NULL`.
-#'
-#' @param values A list or vector of values for each of the individual radio
-#'   elements, one value may be named `checked` to indicate a default value for
-#'   the element, defaults to `NULL`.
-#'
-#' @param stacked If `TRUE` the radio elements appear on sepearate lines,
-#'   defaults to `FALSE`, in which case the radio elements are rendered inline.
-#'
-#' @param ... Additional named arguments passed on to the parent element as
-#'   HTML attributes.
-#'
-#' @aliases radio
-#' @name radios
-#' @examples
-#'
-inputs$radios <- function(labels = NULL, values = NULL, stacked = FALSE, ...) {
-  if (length(labels) != length(values)) {
-    stop(
-      "`inputs$radios` arguments `labels` and `values` must be the same length",
-      call. = FALSE
-    )
-  }
-
-  args <- list(...)
-  attrs <- attribs(args)
-
-  tagConcatAttributes(
-    tags$div(
-      class = collate(
-        "dull-radios dull-input form-group",
-        if (stacked) "custom-controls-stacked"
-      ),
-      lapply(
-        seq_along(labels),
-        function(i) {
-          tags$label(
-            class = "custom-control custom-radio",
-            tags$input(
-              class = "custom-control-input",
-              type = "radio",
-              name = attrs$id,
-              value = values[[i]],
-              checked = if (names2(values[i]) == "checked") NA
-            ),
-            tags$span(class = "custom-control-indicator"),
-            tags$span(
-              class = "custom-control-description",
-              labels[[i]]
-            )
-          )
-        }
-      ),
-      ...,
-      bootstrap()
-    ),
-    attrs
-  )
-}
-
-# Name an argument "selected" otherwise the first item is the default value.
-inputs$select <- function(labels, values) {
-  if (length(labels) != length(values)) {
-    stop(
-      "`inputs$select` arguments `labels` and `value` must have the same length",
-      call. = FALSE
-    )
-  }
-
-  tags$select(
-    class = "dull-select dull-input custom-select",
-    lapply(
-      seq_along(labels),
-      function(i) {
-        lab <- labels[i]
-        val <- values[i]
-
-        tags$option(
-          value = val,
-          selected = if ("selected" %in% c(names2(lab), names2(val))) NA,
-          lab
-        )
-      }
-    )
-  )
-}
-
-#' Input group, buttons and text
+#' Group inputs, combination buttons and text
 #'
 #' An input group is composite reactive input which may consist of one or two
 #' buttons, dropdowns, character addons, or any combination of these elements.
@@ -274,13 +194,17 @@ inputs$select <- function(labels, values) {
 #' to control when the input group's reactive value updates. See below for more
 #' information and examples.
 #'
+#' @param id A character string specifying an id for the input, defaults to
+#'   `NULL`. When specified, a reactive value, `input$<id>`, is available to the
+#'   shiny server function.
+#'
 #' @param placeholder A character string specifying placeholder text for the
 #'   input group, defaults to `NULL`.
 #'
 #' @param value A character string specifying an initial value for the input
 #'   group, defaults to `NULL`.
 #'
-#' @param left,right A character string, [inputs$button] element, or [dropdown]
+#' @param left,right A character string, [button] element, or [dropdown]
 #'   element, used as the left or right addon, respectively, of the input group,
 #'   both default to `NULL`. Addon's affect the reactive events and value of the
 #'   input group, see the details section below for more information.
@@ -304,44 +228,44 @@ inputs$select <- function(labels, values) {
 #' value, and `right`, *if a character string*. The second element is `click`
 #' and is indicates which button or dropdown item was clicked. The value of
 #' `click` depends on the value of the button or dropdown item, see
-#' [inputs$button] or [dropdownItem].
+#' [button] or [dropdownItem].
 #'
-#' @aliases inputs$group
-#' @name group
+#' @family inputs
+#' @export
 #' @examples
 #' if (interactive()) {
 #'   library(shiny)
 #'
 #'   shinyApp(
 #'     ui = container(
-#'       inputs$group(
+#'       groupInput(
 #'         id = "nearlytext"
 #'       ),
-#'       inputs$group(
+#'       groupInput(
 #'         id = "username",
 #'         placeholder = "username",
 #'         left = "@@",
-#'         right = inputs$button(
+#'         right = button(
 #'           label = "Go!",
 #'           value = "go"
 #'         )
 #'       ),
-#'       inputs$group(
+#'       groupInput(
 #'         id = "github",
 #'         left = "https://github.com/"
 #'       ),
-#'       inputs$group(
+#'       groupInput(
 #'         id = "preference",
-#'         left = inputs$button(
-#'           label = icons$fa("thumbs-up"),
+#'         left = button(
+#'           label = fontAwesome("thumbs-up"),
 #'           value = "up"
 #'         ),
-#'         right = inputs$button(
-#'           label = "^", #icons$fa("thumbs-down"),
+#'         right = button(
+#'           label = fontAwesome("thumbs-down"),
 #'           value = "down"
 #'         )
 #'       ),
-#'       inputs$group(
+#'       groupInput(
 #'         id = "options",
 #'         placeholder = "",
 #'         left = dropdown(
@@ -378,12 +302,12 @@ inputs$select <- function(labels, values) {
 #'   )
 #' }
 #'
-inputs$group <- function(placeholder = NULL, value = NULL, left = NULL,
-                         right = NULL, ...) {
+groupInput <- function(placeholder = NULL, value = NULL, left = NULL,
+                       right = NULL, ..., id = NULL) {
   if (!is.null(left) && !is.character(left) && !tagIs(left, "button") &&
       !tagHasClass(left, "dull-dropdown")) {
     stop(
-      "invalid `inputs$group` argument, `left` must be a character string, ",
+      "invalid `groupInput` argument, `left` must be a character string, ",
       "button element, or dropdown element",
       call. = FALSE
     )
@@ -392,7 +316,7 @@ inputs$group <- function(placeholder = NULL, value = NULL, left = NULL,
   if (!is.null(right) && !is.character(right) && !tagIs(right, "button") &&
       !tagHasClass(right, "dull-dropdown")) {
     stop(
-      "invalid `inputs$group` argument, `right` must be a character string, ",
+      "invalid `groupInput` argument, `right` must be a character string, ",
       "button element, or dropdown element",
       call. = FALSE
     )
@@ -406,7 +330,7 @@ inputs$group <- function(placeholder = NULL, value = NULL, left = NULL,
         left
       )
     },
-    inputs$text(
+    textInput(
       value = value,
       placeholder = placeholder
     ),
@@ -416,6 +340,7 @@ inputs$group <- function(placeholder = NULL, value = NULL, left = NULL,
         right
       )
     },
-    ...
+    ...,
+    id = id
   )
 }
