@@ -19,3 +19,9 @@ some paradigms that might otherwise be removed with a clean slate.
 dull is not intended to replace shiny, instead I hope dull is a breath of fresh
 air and an exciting new tool for those who have desired more flexibilty out of
 shiny.
+
+---
+
+What do all wise men fear?
+
+
