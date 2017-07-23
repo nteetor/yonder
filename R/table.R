@@ -69,7 +69,7 @@
 #' }
 #'
 #'
-tableOutput <- function(id, borders = FALSE, compact = FALSE, invert = FALSE,
+tableThruput <- function(id, borders = FALSE, compact = FALSE, invert = FALSE,
                         striped = FALSE, hoverable = FALSE, context = NULL,
                         responsive = TRUE, ...) {
   if (!re(context, "success|info|warning|danger")) {
@@ -96,7 +96,7 @@ tableOutput <- function(id, borders = FALSE, compact = FALSE, invert = FALSE,
   )
 }
 
-#' @rdname tableOutput
+#' @rdname tableThruput
 #' @export
 renderTable <- function(expr, numbered = FALSE, env = parent.frame(),
                         quoted = FALSE) {

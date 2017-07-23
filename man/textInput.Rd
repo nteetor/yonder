@@ -2,26 +2,13 @@
 % Please edit documentation in R/inputs.R
 \name{textInput}
 \alias{textInput}
-\alias{search}
-\alias{email}
-\alias{url}
-\alias{telephone}
-\alias{password}
-\alias{number}
-\alias{datetime}
-\alias{date}
-\alias{month}
-\alias{week}
-\alias{time}
-\alias{color}
 \alias{searchInput}
 \alias{emailInput}
 \alias{urlInput}
 \alias{telephoneInput}
-\alias{passwordInput}
+\alias{obscuredInput}
 \alias{numberInput}
 \alias{datetimeInput}
-\alias{dateInput}
 \alias{monthInput}
 \alias{weekInput}
 \alias{timeInput}
@@ -38,13 +25,12 @@ urlInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
 telephoneInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
-passwordInput(value = NULL, placeholder = NULL, ..., id = NULL)
+obscuredInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
 numberInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
-datetimeInput(value = NULL, placeholder = NULL, ..., id = NULL)
-
-dateInput(value = NULL, placeholder = NULL, ..., id = NULL)
+datetimeInput(value = NULL, placeholder = NULL, time = TRUE, ...,
+  id = NULL)
 
 monthInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
@@ -66,20 +52,16 @@ the input hint text about the expected value of the input.}
 to \code{NULL}. If specified, a reactive value is available to the shiny server
 function.}
 
+\item{time}{If \code{TRUE}, the}
+
 \item{label}{A character vector specifying a label for the input, defaults to
 \code{NULL}. If a label is specified it is advised, though not necessary, to
 also specify an \code{id} for the input.}
-
-\item{type}{A character string specifying the type of the text input, a
-specific type may be used when appropriate, e.g. when \code{type = "password"}
-the input's value is obscured, displays as asterisks. See \code{Details} for
-possible \code{type} values.}
 }
 \description{
 Form control inputs.
 }
 \details{
-** \code{text} values **
 \itemize{
 \item text - Single-line text input, linebreaks are removed.
 \item search - Single-line text input for search strings, linebreaks are removed.
@@ -88,7 +70,7 @@ the empty string or a valid email address.
 \item url - Single-line text input for URLs, validated to contain the empty
 string or valid absolute URL.
 \item tel - Single-line text input for telephone numbers, syntax is not enforced.
-\item password - Single-line text input for password, value is obscured.
+\item obscured (password) - Single-line text input for password, value is obscured.
 \item number - Number picker.
 \item datetime - Date and time picker, no time zone.
 \item date - Year, month, and day picker, no time.
@@ -106,5 +88,5 @@ stub
 \seealso{
 Other inputs: \code{\link{button}},
   \code{\link{groupInput}}, \code{\link{radiosInput}},
-  \code{\link{selectInput}}
+  \code{\link{selectMenuInput}}
 }

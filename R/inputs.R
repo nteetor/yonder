@@ -31,17 +31,9 @@ textualInput <- function(value, placeholder, id, type, ...) {
 #' @param placeholder A character string specifying placeholder text for the
 #'   input, defaults to `NULL`.
 #'
-#' @param type A character string specifying the type of the text input, a
-#'   specific type may be used when appropriate, e.g. when `type = "password"`
-#'   the input's value is obscured, displays as asterisks. See `Details` for
-#'   possible `type` values.
-#'
-#' @aliases search email url telephone password number datetime date month week
-#'   time color
+#' @param time If `TRUE`, the
 #'
 #' @details
-#'
-#' ** `text` values **
 #'
 #' * text - Single-line text input, linebreaks are removed.
 #' * search - Single-line text input for search strings, linebreaks are removed.
@@ -50,7 +42,7 @@ textualInput <- function(value, placeholder, id, type, ...) {
 #' * url - Single-line text input for URLs, validated to contain the empty
 #'   string or valid absolute URL.
 #' * tel - Single-line text input for telephone numbers, syntax is not enforced.
-#' * password - Single-line text input for password, value is obscured.
+#' * obscured (password) - Single-line text input for password, value is obscured.
 #' * number - Number picker.
 #' * datetime - Date and time picker, no time zone.
 #' * date - Year, month, and day picker, no time.
@@ -101,7 +93,7 @@ telephoneInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
 
 #' @rdname textInput
 #' @export
-passwordInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+obscuredInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
   textualInput(value, placeholder, id, "password", ...)
 }
 
@@ -113,14 +105,11 @@ numberInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
 
 #' @rdname textInput
 #' @export
-datetimeInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "datetime-local", ...)
-}
-
-#' @rdname textInput
-#' @export
-dateInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "date", ...)
+datetimeInput <- function(value = NULL, placeholder = NULL, time = TRUE, ...,
+                          id = NULL) {
+  textualInput(
+    value, placeholder, id, if (time) "datetime-local" else "date", ...
+  )
 }
 
 #' @rdname textInput
@@ -233,14 +222,14 @@ fieldset <- function(..., legend = NULL, disabled = FALSE, id = NULL) {
 #' }
 #'
 #'
-selectInput <- function(..., id = NULL) {
+selectMenuInput <- function(..., id = NULL) {
   tags$select(
     class = "dull-select dull-input custom-select",
     ...
   )
 }
 
-#' @rdname selectInput
+#' @rdname selectMenuInput
 #' @export
 option <- function(label = NULL, value = NULL, selected = FALSE) {
   tags$option(
