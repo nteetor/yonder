@@ -141,16 +141,16 @@ colorInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
 #'
 #' @param id A character string specifying the id of the fieldset, defaults to
 #'  `NULL`. Specifying an id is only necessary when using `updateFieldset` to
-#'  disable or enable the inputs contained in the fieldset.
+#'  disable or enable the inputs within the fieldset.
 #'
-#' @param legend A label for the associated inputs or a custom tag, defaults to
+#' @param legend A character string specifying a label for fieldset, defaults to
 #'   `NULL`.
 #'
 #' @param disabled If `TRUE`, all inputs within the fieldset are rendered in a
 #'   disabled state, defaults to `FALSE`.
 #'
-#' @param ... Inputs to group or additional named arguments passed as HTML
-#'   attributes to the parent `<fieldset>` element.
+#' @param ... Inputs to put within the fieldset or additional named arguments
+#'   passed as HTML attributes to the parent element.
 #'
 #' @export
 #' @examples
@@ -159,14 +159,15 @@ colorInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
 #'
 fieldset <- function(..., legend = NULL, disabled = FALSE, id = NULL) {
   tags$fieldset(
-    if (is_tag(legend)) {
-      legend
-    } else if (!is.null(legend)) {
-      tags$legend(legend)
-    },
+    class = "dull-fieldset",
+    tags$legend(legend),
     ...,
     id = id
   )
+}
+
+updateFieldset <- function() {
+  # STUB, needs to be worked on
 }
 
 #' Select input
@@ -361,7 +362,7 @@ groupInput <- function(placeholder = NULL, value = NULL, left = NULL,
       !tagHasClass(left, "dull-dropdown")) {
     stop(
       "invalid `groupInput` argument, `left` must be a character string, ",
-      "button element, or dropdown element",
+      "button(), or dropdown()",
       call. = FALSE
     )
   }
@@ -370,7 +371,7 @@ groupInput <- function(placeholder = NULL, value = NULL, left = NULL,
       !tagHasClass(right, "dull-dropdown")) {
     stop(
       "invalid `groupInput` argument, `right` must be a character string, ",
-      "button element, or dropdown element",
+      "button(), or dropdown()",
       call. = FALSE
     )
   }
