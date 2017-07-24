@@ -135,7 +135,7 @@ colorInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
 
 #' Visually group and label inputs
 #'
-#' Use `input$fieldset` to associate inputs. Good for screen readers and other
+#' Use `fieldset` to associate inputs. Good for screen readers and other
 #' assitive technologies.
 #'
 #' @param id A character string specifying the id of the fieldset, defaults to
