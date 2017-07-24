@@ -118,7 +118,7 @@ dropdown <- function(..., label = NULL, context = "secondary", split = FALSE,
         if (dropup) "dropup" else "dropdown"
       ),
       if (split) button(context = context, label = label),
-      inputs$button(
+      button(
         class = collate(
           "dropdown-toggle",
           if (split) "dropdown-toggle-split"
