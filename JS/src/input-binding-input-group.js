@@ -1,6 +1,6 @@
-var inputGroupInputBinding = new Shiny.InputBinding();
+var groupInputBinding = new Shiny.InputBinding();
 
-$.extend(inputGroupInputBinding, {
+$.extend(groupInputBinding, {
   find: function(scope) {
     return $(scope).find(".dull-input-group[id]");
   },
@@ -27,24 +27,24 @@ $.extend(inputGroupInputBinding, {
   subscribe: function(el, callback) {
     var $el = $(el);
     if ($el.find("button").length) {
-      $el.on("dull:click.inputGroupInputBinding", function(e, data) {
+      $el.on("dull:click.groupInputBinding", function(e, data) {
         if (data.value !== null) {
           $el.data("value", data.value);
         }
         callback();
       });
     } else {
-      $el.on("dull:textchange.inputGroupInputBinding", function(e) {
+      $el.on("dull:textchange.groupInputBinding", function(e) {
         callback();
       });
     }
   },
   unsubscribe: function(el) {
-    $(el).off(".inputGroupInputBinding");
+    $(el).off(".groupInputBinding");
   }
 });
 
-Shiny.inputBindings.register(inputGroupInputBinding, "dull.inputGroupInput");
+Shiny.inputBindings.register(groupInputBinding, "dull.groupInput");
 
 $(document).ready(function() {
   $(".dull-input-group[id] input[type=\"text\"]").on("change", function(e) {
