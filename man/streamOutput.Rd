@@ -5,7 +5,7 @@
 \alias{updateStream}
 \title{Stream notifications}
 \usage{
-streamOutput(...)
+streamOutput(id, ...)
 
 updateStream(id, message, template = listGroupItem(),
   session = getDefaultReactiveDomain())
@@ -27,8 +27,6 @@ to the user during long running processes.
 }
 \examples{
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       button(id = "trigger", "Go!"),

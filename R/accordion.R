@@ -51,8 +51,6 @@
 #' )
 #'
 #' if (interactive()) {
-#'   library(shiny)
-#'
 #'   shinyApp(
 #'     ui = container(
 #'       accordion(

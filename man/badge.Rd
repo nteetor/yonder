@@ -27,8 +27,6 @@ A badge is a useful means of highlighting text.
 \examples{
 
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       listGroup(

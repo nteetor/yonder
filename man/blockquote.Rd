@@ -3,6 +3,9 @@
 \name{blockquote}
 \alias{blockquote}
 \title{Cleaner Blockquotes}
+\usage{
+blockquote(..., source = NULL, align = "left")
+}
 \arguments{
 \item{source}{The quote source, use \code{tags$cite} to format the source title,
 defaults to \code{NULL}.}
@@ -13,7 +16,7 @@ defaults to \code{NULL}.}
 Stylized blockquotes, an updated builder function for \code{<blockquote>}.
 }
 \examples{
-bs$blockquote(
+blockquote(
   "Anyone can love a thing because.",
   "That's as easy as putting a penny in your pocket.",
   "But to love something despite.",
@@ -24,4 +27,7 @@ bs$blockquote(
   )
 )
 
+}
+\seealso{
+Other content: \code{\link{img}}
 }

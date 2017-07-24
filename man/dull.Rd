@@ -23,23 +23,19 @@ For example, a \link{listGroup} may be used to display series of items, but by
 passing an \code{id} attribute the \code{listGroup} still displays a series of items
 can function similar to shiny \code{checkboxGroupInput}.
 
-\strong{What are the \code{inputs}, \code{bs}, and \code{icons} objects?}
+\strong{What is the \code{bs} object?}
 
 Similar to the \code{tags} object in \code{htmltools}, the \code{inputs} object bundles
-together many HTML form input elements. Functions like \code{inputs$text} and
-\code{inputs$select} are similar to shiny's \code{textInput} and \code{selectInput}.
-Additionally, there are new, specific inputs like \code{inputs$datetime},
-\code{inputs$color}, and more.
+together many HTML form input elements. Functions like \code{textInput} and
+\code{selectInput} are similar to shiny's \code{textInput} and \code{selectInput}.
+Additionally, there are new, specific inputs like \code{datetimeInput},
+\code{colorInput}, and more.
 
 The \code{bs} object bundles together builder functions, like those found in
 \code{tags}, which have received distinct parameters corresponding to
 functionality provided by the bootstrap library.
 
-The \code{icons} object bundles different icon sets together and provides shortcut
-functions to help include these icons in an application. Currently only
-\code{icons$fa} for FontAwesome is implemented.
-
-\strong{Is there a checkboxGroupInput equivalent?}
+\strong{Is there a \code{checkboxGroupInput} equivalent?}
 
 There is no dull equivalent of shiny's \code{checkboxGroupInput}.
 \code{inputs$checkbox} is available and performs like \code{checkboxInput}. This choice

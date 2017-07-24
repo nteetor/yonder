@@ -23,10 +23,15 @@
 #'   parent element.
 #'
 #' @export
+#' @examples
+#'
+#' stub
+#'
 checkbox <- function(label = NULL, value = NULL, inline = FALSE, check = FALSE,
                      disable = FALSE, ...) {
   tags$div(
     class = collate(
+      "dull-checkbox",
       "form-check",
       if (inline) "form-check-inline",
       if (disable) disabled = NA
@@ -39,7 +44,6 @@ checkbox <- function(label = NULL, value = NULL, inline = FALSE, check = FALSE,
           if (disable) disabled = NA
         ),
         type = "checkbox",
-        id = id,
         value = value,
         label
       )
@@ -50,7 +54,26 @@ checkbox <- function(label = NULL, value = NULL, inline = FALSE, check = FALSE,
 
 #' @rdname checkbox
 #' @export
-checkboxBar <- function(labels = NULL, context = "secondary", ...) {
+updateCheckbox <- function(id, context, session = getDefaultReactiveDomain()) {
+  if (!(context %in% c("success", "warning", "danger"))) {
+    stop(
+      'invalid `updateCheckbox` argument, `context` must be one "success", ',
+      '"warning", or "danger"',
+      call. = FALSE
+    )
+  }
+
+  session$sendInputMessage(
+    id,
+    list(
+      context = paste0("has-", context)
+    )
+  )
+}
+
+#' @rdname checkbox
+#' @export
+checkboxBar <- function(labels = NULL, context = "secondary", ..., id = NULL) {
   if (bad_context(context, extra = c("primary", "secondary", "link"))) {
     stop(
       'invalid checkboxBar `context`, expecting one of "primary", "secondary", ',
@@ -79,6 +102,7 @@ checkboxBar <- function(labels = NULL, context = "secondary", ...) {
       }
     ),
     ...,
+    id = id,
     bootstrap()
   )
 }

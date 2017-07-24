@@ -61,17 +61,7 @@
 #'   listGroupItem("Item 3", disabled = TRUE)
 #' )
 #'
-#' # HTML list items
-#' listGroup(
-#'   tags$h4(class = "list-group-item", "Heading 1"),
-#'   tags$h4(class = "list-group-item", "Heading 2"),
-#'   tags$h4(class = "list-group-item", "Heading 3")
-#' )
-#'
 #' if (interactive()) {
-#'   library(shiny)
-#'   library(ggplot2)
-#'
 #'   shinyApp(
 #'     ui = container(
 #'       row(

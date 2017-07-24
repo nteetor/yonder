@@ -32,8 +32,6 @@ updated components. Modal elements may be included anywhere on a web page.
 }
 \examples{
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       button(id = "toggle", "Click to show modal"),
@@ -62,12 +60,12 @@ if (interactive()) {
         id = "login",
         header = "Please login",
         body = tagList(
-          inputs$text(
+          textInput(
             id = "name",
             label = "Name",
             placeholder = "yourname@email.com"
           ),
-          inputs$text(
+          textInput(
             id = "password",
             label = "Password"
           )

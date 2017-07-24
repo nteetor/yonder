@@ -40,8 +40,6 @@ own \code{id} argument, value, label, and context.
 }
 \examples{
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       progress(

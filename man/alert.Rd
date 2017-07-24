@@ -66,15 +66,13 @@ As an ouput, an alert may be hidden or shown using \code{renderAlert}.
 }
 \examples{
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       alert(
         id = "popup",
         text = "Hey! We even asked nicely.",
         context = "info",
-        icon = icons$fa("check")
+        icon = fontAwesome("check")
       ),
       button(id = "show", "Don't click me, please")
     ),

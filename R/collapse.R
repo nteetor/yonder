@@ -9,15 +9,15 @@
 #'   or additional named arguments passed as attributes to the parent element.
 #'
 #' @param label A character string specifying the label of the collapse, passed
-#'   to [`inputs$button`], defaults to `NULL`.
+#'   to [button], defaults to `NULL`.
 #'
 #' @param context A character string specifying the visual context of the
-#'   toggle button, passed to [`inputs$button`], defaults to `"secondary"`.
+#'   toggle button, passed to [button], defaults to `"secondary"`.
 #'
 #' @param id A character string specifying the id of a collapse section.
 #'
 #' @param session A `session` object passed to the shiny server function,
-#'   defaults to [getDefaultReactiveDomain()].
+#'   defaults to [shiny::getDefaultReactiveDomain()].
 #'
 #' @details
 #'
@@ -30,8 +30,6 @@
 #' @export
 #' @examples
 #' if (interactive()) {
-#'   library(shiny)
-#'
 #'   shinyApp(
 #'     ui = container(
 #'       row(
@@ -51,9 +49,9 @@
 #'           )
 #'         ),
 #'         col(
-#'           inputs$button(id = "toggle", "Toggle collapse"),
-#'           inputs$button(id = "hide", "Only hide", context = "warning"),
-#'           inputs$button(id = "show", "Only show", context = "info")
+#'           button(id = "toggle", "Toggle collapse"),
+#'           button(id = "hide", "Only hide", context = "warning"),
+#'           button(id = "show", "Only show", context = "info")
 #'         )
 #'       )
 #'     ),
@@ -85,7 +83,7 @@ collapse <- function(..., label = NULL, context = "secondary") {
     tags$div(
       `aria-expanded` = "false",
       tags$p(
-        inputs$button(
+        button(
           label = label,
           context = context,
           `data-toggle` = "collapse",

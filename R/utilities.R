@@ -830,8 +830,6 @@ utils$padding <- function(size, side = "all", viewport = NULL) {
 #' @name viewport
 #' @examples
 #' if (interactive()) {
-#'   library(shiny)
-#'
 #'   shinyApp(
 #'     ui = container(
 #'       listGroup(

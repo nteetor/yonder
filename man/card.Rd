@@ -49,7 +49,7 @@ if (interactive()) {
             cardBlock(
               title = "Card One",
               text = "Hello, world!",
-              inputs$button("Click me")
+              button("Click me")
             )
           )
         ),
@@ -59,7 +59,7 @@ if (interactive()) {
             cardBlock(
               title = "Card Two",
               text = "Goodnight, moon!",
-              inputs$button("Click me")
+              button("Click me")
             )
           )
         )

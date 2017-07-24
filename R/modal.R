@@ -22,8 +22,6 @@
 #' @export
 #' @examples
 #' if (interactive()) {
-#'   library(shiny)
-#'
 #'   shinyApp(
 #'     ui = container(
 #'       button(id = "toggle", "Click to show modal"),
@@ -52,12 +50,12 @@
 #'         id = "login",
 #'         header = "Please login",
 #'         body = tagList(
-#'           inputs$text(
+#'           textInput(
 #'             id = "name",
 #'             label = "Name",
 #'             placeholder = "yourname@@email.com"
 #'           ),
-#'           inputs$text(
+#'           textInput(
 #'             id = "password",
 #'             label = "Password"
 #'           )
@@ -95,7 +93,7 @@ modal <- function(header = NULL, body = NULL, footer = NULL, ...) {
             class = "close",
             `data-dismiss` = "modal",
             `aria-label` = "Close",
-            icons$fa("times-rectangle")
+            fontAwesome("times-rectangle")
           )
         ),
         if (!is.null(body)) {

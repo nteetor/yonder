@@ -6,13 +6,14 @@ Authors@R: person(given = "Nathan", family = "Teetor", email = "nathanteetor@gma
 Description: A new way to build shiny applications.
 License: What license is it under?
 Encoding: UTF-8
-LazyData: true
 Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate"))
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
-Imports:
-    htmltools,
+Depends:
+    R (>= 3.0.0),
     shiny
+Imports:
+    htmltools
 Suggests:
     testthat,
     knitr,
@@ -20,7 +21,6 @@ Suggests:
 Collate:
     dull.R
     utils.R
-    module.R
     includes.R
     tags.R
     icons.R
@@ -41,8 +41,9 @@ Collate:
     list-group.R
     modal.R
     nav.R
+    radio.R
+    table.R
     progress.R
     stream.R
     tooltip.R
     typography.R
-    zzz.R

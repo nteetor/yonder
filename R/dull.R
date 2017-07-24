@@ -15,23 +15,19 @@
 #' passing an `id` attribute the `listGroup` still displays a series of items
 #' can function similar to shiny `checkboxGroupInput`.
 #'
-#' **What are the `inputs`, `bs`, and `icons` objects?**
+#' **What is the `bs` object?**
 #'
 #' Similar to the `tags` object in `htmltools`, the `inputs` object bundles
-#' together many HTML form input elements. Functions like `inputs$text` and
-#' `inputs$select` are similar to shiny's `textInput` and `selectInput`.
-#' Additionally, there are new, specific inputs like `inputs$datetime`,
-#' `inputs$color`, and more.
+#' together many HTML form input elements. Functions like `textInput` and
+#' `selectInput` are similar to shiny's `textInput` and `selectInput`.
+#' Additionally, there are new, specific inputs like `datetimeInput`,
+#' `colorInput`, and more.
 #'
 #' The `bs` object bundles together builder functions, like those found in
 #' `tags`, which have received distinct parameters corresponding to
 #' functionality provided by the bootstrap library.
 #'
-#' The `icons` object bundles different icon sets together and provides shortcut
-#' functions to help include these icons in an application. Currently only
-#' `icons$fa` for FontAwesome is implemented.
-#'
-#' **Is there a checkboxGroupInput equivalent?**
+#' **Is there a `checkboxGroupInput` equivalent?**
 #'
 #' There is no dull equivalent of shiny's `checkboxGroupInput`.
 #' `inputs$checkbox` is available and performs like `checkboxInput`. This choice

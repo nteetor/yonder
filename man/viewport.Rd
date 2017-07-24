@@ -15,8 +15,6 @@ screens are 1200 px and up.
 }
 \examples{
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       listGroup(
