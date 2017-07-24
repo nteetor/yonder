@@ -71,20 +71,17 @@ $.extend(buttonInputBinding, {
   getValue: function getValue(el) {
     var $el = $(el);
 
-    if ($el.data("count") === "0") {
+    if ($el.data("count") === 0) {
       return null;
     }
 
     return {
       count: parseInt($el.data("count"), 10),
-      value: $el.data("value")
+      value: $el.data("value") || null
     };
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };
-  },
-  getType: function getType(el) {
-    return "dull.button";
   },
   subscribe: function subscribe(el, callback) {
     $(el).on("click.buttonInputBinding", function (e) {
@@ -162,6 +159,32 @@ $(document).ready(function () {
   });
 });
 
+var checkboxBarInputBinding = new Shiny.InputBinding();
+
+$.extend(checkboxBarInputBinding, {
+  find: function find(scope) {
+    return $(scope).find(".dull-checkbox-bar[id]");
+  },
+  getValue: function getValue(el) {
+    return $(el).find("input[type=\"checkbox\"]:checked").map(function (i, e) {
+      return $(e).data("value");
+    }).get();
+  },
+  getState: function getState(el) {
+    return { value: this.getValue(el) };
+  },
+  subscribe: function subscribe(el, callback) {
+    $(el).on("change.checkboxBarInputBinding", function (e) {
+      callback();
+    });
+  },
+  unsubscribe: function unsubscribe(el) {
+    $(el).off(".checkboxBarInputBinding");
+  }
+});
+
+Shiny.inputBindings.register(checkboxBarInputBinding, "checkboxBarInput");
+
 var checkboxInputBinding = new Shiny.InputBinding();
 
 $.extend(checkboxInputBinding, {
@@ -169,7 +192,10 @@ $.extend(checkboxInputBinding, {
     return $(scope).find(".dull-checkbox[id]");
   },
   getValue: function getValue(el) {
-    return $(el).find("input[type=\"checkbox\"]:checked").val() || null;
+    var $val = $(el).find("input[type=\"checkbox\"]:checked").map(function (i, e) {
+      return $(e).data("value");
+    }).get();
+    return $val === undefined ? null : $val;
   },
   _getLabel: function _getLabel(el) {
     return $(el).find(".custom-control-description").text();
@@ -570,10 +596,21 @@ var textInputBinding = new Shiny.InputBinding();
 
 $.extend(textInputBinding, {
   find: function find(scope) {
-    return $(scope).find(".dull-text[id]");
+    return $(scope).find(".dull-textual[id]");
   },
   getValue: function getValue(el) {
-    return $(el).val() || null;
+    var $el = $(el);
+    var $val = $el.val() || null;
+
+    if ($val === null) {
+      return null;
+    }
+
+    if ($el.attr("type") === "number") {
+      return parseInt($val, 10);
+    }
+
+    return $val;
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };
