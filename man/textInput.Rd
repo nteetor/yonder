@@ -8,11 +8,6 @@
 \alias{telephoneInput}
 \alias{passwordInput}
 \alias{numberInput}
-\alias{dateInput}
-\alias{datetimeInput}
-\alias{monthInput}
-\alias{weekInput}
-\alias{timeInput}
 \alias{colorInput}
 \title{Inputs}
 \usage{
@@ -29,16 +24,6 @@ telephoneInput(value = NULL, placeholder = NULL, ..., id = NULL)
 passwordInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
 numberInput(value = NULL, placeholder = NULL, ..., id = NULL)
-
-dateInput(value = NULL, placeholder = NULL, ..., id = NULL)
-
-datetimeInput(value = NULL, placeholder = NULL, ..., id = NULL)
-
-monthInput(value = NULL, placeholder = NULL, ..., id = NULL)
-
-weekInput(value = NULL, placeholder = NULL, ..., id = NULL)
-
-timeInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
 colorInput(value = NULL, placeholder = NULL, ..., id = NULL)
 }

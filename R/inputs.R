@@ -1,8 +1,9 @@
 textualInput <- function(value, placeholder, id, type, ...) {
   tags$input(
     class = collate(
-      paste0("dull-", type),
-      "dull-input form-control"
+      "dull-textual",
+      "dull-input",
+      "form-control"
     ),
     type = type,
     value = value,
@@ -95,34 +96,34 @@ numberInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
   textualInput(value, placeholder, id, "number", ...)
 }
 
-#' @rdname textInput
-#' @export
+# @rdname textInput
+# @export
 dateInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
   textualInput(value, placeholder, id, "date", ...)
 }
 
-#' @rdname textInput
-#' @export
+# @rdname textInput
+# @export
 datetimeInput <- function(value = NULL, placeholder = NULL,  ..., id = NULL) {
   textualInput(
     value, placeholder, id, if (time) "datetime-local" else "date", ...
   )
 }
 
-#' @rdname textInput
-#' @export
+# @rdname textInput
+# @export
 monthInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
   textualInput(value, placeholder, id, "month", ...)
 }
 
-#' @rdname textInput
-#' @export
+# @rdname textInput
+# @export
 weekInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
   textualInput(value, placeholder, id, "week", ...)
 }
 
-#' @rdname textInput
-#' @export
+# @rdname textInput
+# @export
 timeInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
   textualInput(value, placeholder, id, "time", ...)
 }
