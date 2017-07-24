@@ -42,7 +42,7 @@ direction <- function(dir, rev) {
   names(dir) <- ifelse(names2(dir) == "", "-", names2(dir))
 
   paste0(
-    mapply(
+    Map(
       function(v, d, r) paste0("flex-", v, if (v != "") "-"),
       NULL
     )
@@ -63,7 +63,7 @@ alignment <- function(align) {
   }
 
   paste0(
-    mapply(
+    Map(
       function(v, a) paste0("align-items-", viewport(v), if (v != "") "-", a),
       names2(align),
       align
