@@ -27,14 +27,6 @@
 #' `tags`, which have received distinct parameters corresponding to
 #' functionality provided by the bootstrap library.
 #'
-#' **Is there a `checkboxGroupInput` equivalent?**
-#'
-#' There is no dull equivalent of shiny's `checkboxGroupInput`.
-#' `inputs$checkbox` is available and performs like `checkboxInput`. This choice
-#' was made to increase the accessibility of shiny applications.
-#'
-#' An alternative to `checkboxGroupInput` is `listGroup`.
-#'
 #' @importFrom shiny getDefaultReactiveDomain
 #'
 #' @name dull
