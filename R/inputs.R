@@ -218,14 +218,18 @@ fieldset <- function(..., legend = NULL, disabled = FALSE, id = NULL) {
 #' }
 #'
 #'
-selectMenuInput <- function(..., id = NULL) {
+selectInput <- function(..., id = NULL) {
   tags$select(
-    class = "dull-select dull-input custom-select",
+    class = collate(
+      "dull-select",
+      "dull-input",
+      "custom-select"
+    ),
     ...
   )
 }
 
-#' @rdname selectMenuInput
+#' @rdname selectInput
 #' @export
 option <- function(label = NULL, value = NULL, selected = FALSE) {
   tags$option(

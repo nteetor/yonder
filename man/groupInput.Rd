@@ -123,6 +123,6 @@ if (interactive()) {
 }
 \seealso{
 Other inputs: \code{\link{button}},
-  \code{\link{radiosInput}}, \code{\link{selectMenuInput}},
+  \code{\link{radioInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }

@@ -146,6 +146,6 @@ For more about buttons and button groups please refer to the bootstrap
 \href{https://v4-alpha.getbootstrap.com/components/input-group/#button-addons}{reference section}.
 
 Other inputs: \code{\link{groupInput}},
-  \code{\link{radiosInput}}, \code{\link{selectMenuInput}},
+  \code{\link{radioInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }

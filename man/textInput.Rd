@@ -72,6 +72,6 @@ stub
 }
 \seealso{
 Other inputs: \code{\link{button}},
-  \code{\link{groupInput}}, \code{\link{radiosInput}},
-  \code{\link{selectMenuInput}}
+  \code{\link{groupInput}}, \code{\link{radioInput}},
+  \code{\link{selectInput}}
 }
