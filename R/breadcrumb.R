@@ -4,7 +4,6 @@
 #'
 #' @param location Initial nav location, defaults to `NULL`.
 #'
-#' @export
 #' @examples
 #'
 breadcrumbs <- function(location = NULL) {
