@@ -142,6 +142,7 @@ dropdown <- function(..., label = NULL, context = "secondary", split = FALSE,
 }
 
 #' @rdname dropdown
+#' @export
 dropdownItem <- function(label = NULL, value = NULL, disabled = FALSE, ...) {
   tags$a(
     class = collate(
@@ -156,11 +157,13 @@ dropdownItem <- function(label = NULL, value = NULL, disabled = FALSE, ...) {
 }
 
 #' @rdname dropdown
+#' @export
 dropdownDivider <- function() {
   tags$div(class = "dropdown-divider")
 }
 
 #' @rdname dropdown
+#' @export
 dropdownHeader <- function(label) {
   tags$h6(class = "dropdown-header", label)
 }
