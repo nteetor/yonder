@@ -7,10 +7,10 @@
 fieldset(..., legend = NULL, disabled = FALSE, id = NULL)
 }
 \arguments{
-\item{...}{Inputs to group or additional named arguments passed as HTML
-attributes to the parent \code{<fieldset>} element.}
+\item{...}{Inputs to put within the fieldset or additional named arguments
+passed as HTML attributes to the parent element.}
 
-\item{legend}{A label for the associated inputs or a custom tag, defaults to
+\item{legend}{A character string specifying a label for fieldset, defaults to
 \code{NULL}.}
 
 \item{disabled}{If \code{TRUE}, all inputs within the fieldset are rendered in a
@@ -18,10 +18,10 @@ disabled state, defaults to \code{FALSE}.}
 
 \item{id}{A character string specifying the id of the fieldset, defaults to
 \code{NULL}. Specifying an id is only necessary when using \code{updateFieldset} to
-disable or enable the inputs contained in the fieldset.}
+disable or enable the inputs within the fieldset.}
 }
 \description{
-Use \code{input$fieldset} to associate inputs. Good for screen readers and other
+Use \code{fieldset} to associate inputs. Good for screen readers and other
 assitive technologies.
 }
 \examples{
