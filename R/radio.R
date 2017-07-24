@@ -4,15 +4,20 @@
 #' specified the `name` attribute of each child radio element is given this
 #' value.
 #'
+#' @param id A character string specifying the id of the radio input,
+#'
 #' @param labels A list or character vectors of labels for each of the
 #'   individual radio elements, defaults to `NULL`.
 #'
 #' @param values A list or vector of values for each of the individual radio
-#'   elements, one value may be named `checked` to indicate a default value for
-#'   the element, defaults to `NULL`.
+#'   elements, defaults to `NULL`.
 #'
-#' @param stacked If `TRUE` the radio elements appear on sepearate lines,
-#'   defaults to `FALSE`, in which case the radio elements are rendered inline.
+#' @param selected A logical vector specifying which of the radio choices
+#'   renders in the selected state, defaults to `NULL`. If unspecified the first
+#'   value is selected by default.
+#'
+#' @param inline If `TRUE`, the radio options render inline, otherwise the
+#'   options appear on individual lines, defaults to `FALSE`.
 #'
 #' @param ... Additional named arguments passed on to the parent element as
 #'   HTML attributes.
@@ -23,47 +28,81 @@
 #'
 #' stub
 #'
-radiosInput <- function(labels = NULL, values = NULL, stacked = FALSE, ...) {
+radioInput <- function(labels = NULL, values = NULL, selected = NULL,
+                       inline = FALSE, ..., id = NULL) {
   if (length(labels) != length(values)) {
     stop(
-      "`radiosInput` arguments `labels` and `values` must be the same length",
+      "invalid `radioInput` arguments, `labels` and `values` must be the ",
+      "same length",
       call. = FALSE
     )
   }
 
-  args <- list(...)
-  attrs <- attribs(args)
+  if (!is.null(selected)) {
+    if (!is.logical(selected)) {
+      stop(
+        "invalid `radioInput` argument, `selected` must be a logical vector",
+        call. = FALSE
+      )
+    }
 
-  tagConcatAttributes(
-    tags$div(
-      class = collate(
-        "dull-radios dull-input form-group",
-        if (stacked) "custom-controls-stacked"
-      ),
-      lapply(
-        seq_along(labels),
-        function(i) {
+    if (sum(selected) != 1) {
+      stop(
+        "invalid `radioInput` argument, `selected` must contain only one TRUE ",
+        "value",
+        call. = FALSE
+      )
+    }
+
+    if (length(selected) != length(labels)) {
+      stop(
+        "invalid `radioInput` argument, `selected` and `labels` must be the ",
+        "same length",
+        call. = FALSE
+      )
+    }
+  }
+
+  selected <- selected %||% c(TRUE, vector("logical", length(labels) - 1))
+
+  tags$div(
+    class = collate(
+      "dull-radios",
+      "dull-input",
+      "form-group",
+      if (!inline) "custom-controls-stacked"
+    ),
+    if (!is.null(labels)) {
+      Map(
+        function(label, value, check) {
           tags$label(
-            class = "custom-control custom-radio",
+            class = collate(
+              "custom-control",
+              "custom-radio"
+            ),
             tags$input(
               class = "custom-control-input",
               type = "radio",
-              name = attrs$id,
-              value = values[[i]],
-              checked = if (names2(values[i]) == "checked") NA
+              name = id,
+              value = value,
+              checked = if (check) NA
             ),
-            tags$span(class = "custom-control-indicator"),
+            tags$span(
+              class = "custom-control-indicator"
+            ),
             tags$span(
               class = "custom-control-description",
-              labels[[i]]
+              label
             )
           )
-        }
-      ),
-      ...,
-      id = id,
-      bootstrap()
-    ),
-    attrs
+        },
+        labels,
+        values,
+        selected
+      )
+    },
+    ...,
+    id = id,
+    bootstrap()
   )
 }
