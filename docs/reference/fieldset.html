@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Fieldset, grouping inputs — fieldset • buckle</title>
+<title>Visually group and label inputs — fieldset • dull</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -47,7 +47,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">buckle</a>
+      <a class="navbar-brand" href="../index.html">dull</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -59,6 +59,21 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/intro.html">A dull Introduction</a>
+    </li>
+    <li>
+      <a href="../articles/widgets.html">Widgets</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -75,43 +90,55 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Fieldset, grouping inputs</h1>
+    <h1>Visually group and label inputs</h1>
     </div>
 
     
-    <p>Use <code>input$fieldset</code> to associate inputs. Good for screen readers and other
+    <p>Use <code>fieldset</code> to associate inputs. Good for screen readers and other
 assitive technologies.</p>
     
 
-    <pre class="usage"><span class='no'>inputs</span>$<span class='fu'>fieldset</span>(<span class='kw'>legend</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>fieldset</span>(<span class='no'>...</span>, <span class='kw'>legend</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disabled</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
+      <th>...</th>
+      <td><p>Inputs to put within the fieldset or additional named arguments
+passed as HTML attributes to the parent element.</p></td>
+    </tr>
+    <tr>
       <th>legend</th>
-      <td><p>A label for the associated inputs or a custom tag, defaults to
+      <td><p>A character string specifying a label for fieldset, defaults to
 <code>NULL</code>.</p></td>
     </tr>
     <tr>
-      <th>disabeld</th>
+      <th>disabled</th>
       <td><p>If <code>TRUE</code>, all inputs within the fieldset are rendered in a
 disabled state, defaults to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Inputs to group or additional named arguments passed as HTML
-attributes to the parent <code>&lt;fieldset&gt;</code> element.</p></td>
+      <th>id</th>
+      <td><p>A character string specifying the id of the fieldset, defaults to
+<code>NULL</code>. Specifying an id is only necessary when using <code>updateFieldset</code> to
+disable or enable the inputs within the fieldset.</p></td>
     </tr>
     </table>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'>
+<span class='no'>stub</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'stub' not found</span></div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
-                </ul>
+            
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
   </div>
 </div>

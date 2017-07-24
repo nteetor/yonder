@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Badges, tags — badge • buckle</title>
+<title>Badges, tags — badge • dull</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -47,7 +47,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">buckle</a>
+      <a class="navbar-brand" href="../index.html">dull</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -59,6 +59,21 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/intro.html">A dull Introduction</a>
+    </li>
+    <li>
+      <a href="../articles/widgets.html">Widgets</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -114,12 +129,10 @@ element.</p></td>
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
 <span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
-  <span class='fu'>library</span>(<span class='no'>shiny</span>)
-
-  <span class='fu'><a href='http://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(
+  <span class='fu'>shinyApp</span>(
     <span class='kw'>ui</span> <span class='kw'>=</span> <span class='fu'><a href='col.html'>container</a></span>(
       <span class='fu'><a href='listGroup.html'>listGroup</a></span>(
-        <span class='fu'><a href='listGroup.html'>listItem</a></span>(
+        <span class='fu'><a href='listGroup.html'>listGroupItem</a></span>(
           <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Button clicks"</span>,
           <span class='kw'>badge</span> <span class='kw'>=</span> <span class='fu'>badge</span>(
             <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"buttonClicks"</span>,
@@ -135,7 +148,7 @@ element.</p></td>
     <span class='kw'>server</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>) {
       <span class='no'>numClicks</span> <span class='kw'>&lt;-</span> <span class='fl'>0</span>
       <span class='no'>output</span>$<span class='no'>buttonClicks</span> <span class='kw'>&lt;-</span> <span class='fu'>renderBadge</span>({
-        <span class='fu'><a href='http://www.rdocumentation.org/packages/shiny/topics/req'>req</a></span>(<span class='no'>input</span>$<span class='no'>myButton</span>)
+        <span class='fu'>req</span>(<span class='no'>input</span>$<span class='no'>myButton</span>)
         <span class='no'>numClicks</span> <span class='kw'>&lt;&lt;-</span> <span class='no'>numClicks</span> + <span class='fl'>1</span>
         <span class='no'>numClicks</span>
       }, {

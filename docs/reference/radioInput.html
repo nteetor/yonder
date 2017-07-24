@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cleaner Blockquotes — blockquote • dull</title>
+<title>Radios — radioInput • dull</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -90,57 +90,63 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cleaner Blockquotes</h1>
+    <h1>Radios</h1>
     </div>
 
     
-    <p>Stylized blockquotes, an updated builder function for <code>&lt;blockquote&gt;</code>.</p>
+    <p>Create an input of one or more radio inputs. If an <code>id</code> parameter is
+specified the <code>name</code> attribute of each child radio element is given this
+value.</p>
     
 
-    <pre class="usage"><span class='fu'>blockquote</span>(<span class='no'>...</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>align</span> <span class='kw'>=</span> <span class='st'>"left"</span>)</pre>
+    <pre class="usage"><span class='fu'>radioInput</span>(<span class='kw'>labels</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>selected</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>inline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>source</th>
-      <td><p>The quote source, use <code>tags$cite</code> to format the source title,
-defaults to <code>NULL</code>.</p></td>
+      <th>labels</th>
+      <td><p>A list or character vectors of labels for each of the
+individual radio elements, defaults to <code>NULL</code>.</p></td>
     </tr>
     <tr>
-      <th>align</th>
-      <td><p>One of <code>"left"</code> or <code>"right"</code>, defaults to <code>"left"</code>.</p></td>
+      <th>values</th>
+      <td><p>A list or vector of values for each of the individual radio
+elements, defaults to <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>selected</th>
+      <td><p>A logical vector specifying which of the radio choices
+renders in the selected state, defaults to <code>NULL</code>. If unspecified the first
+value is selected by default.</p></td>
+    </tr>
+    <tr>
+      <th>inline</th>
+      <td><p>If <code>TRUE</code>, the radio options render inline, otherwise the
+options appear on individual lines, defaults to <code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>...</th>
+      <td><p>Additional named arguments passed on to the parent element as
+HTML attributes.</p></td>
+    </tr>
+    <tr>
+      <th>id</th>
+      <td><p>A character string specifying the id of the radio input,</p></td>
     </tr>
     </table>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other content: <code><a href='img.html'>img</a></code></p>
+    <p>Other inputs: <code><a href='button.html'>button</a></code>,
+  <code><a href='groupInput.html'>groupInput</a></code>, <code><a href='selectInput.html'>selectInput</a></code>,
+  <code><a href='textInput.html'>textInput</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>blockquote</span>(
-  <span class='st'>"Anyone can love a thing because."</span>,
-  <span class='st'>"That's as easy as putting a penny in your pocket."</span>,
-  <span class='st'>"But to love something despite."</span>,
-  <span class='st'>"To know the flaws and love them too."</span>,
-  <span class='st'>"That is rare and pure and perfect."</span>,
-  <span class='kw'>source</span> <span class='kw'>=</span> <span class='no'>tags</span>$<span class='fu'>span</span>(
-    <span class='st'>"Patrick Rothfuss,"</span>, <span class='no'>tags</span>$<span class='fu'>cite</span>(<span class='st'>"The Wise Man's Fear"</span>)
-  )
-)</div><div class='output co'>#&gt; &lt;blockquote class="blockquote"&gt;
-#&gt;   Anyone can love a thing because.
-#&gt;   That's as easy as putting a penny in your pocket.
-#&gt;   But to love something despite.
-#&gt;   To know the flaws and love them too.
-#&gt;   That is rare and pure and perfect.
-#&gt;   &lt;footer class="blockquote-footer"&gt;
-#&gt;     &lt;span&gt;
-#&gt;       Patrick Rothfuss,
-#&gt;       &lt;cite&gt;The Wise Man's Fear&lt;/cite&gt;
-#&gt;     &lt;/span&gt;
-#&gt;   &lt;/footer&gt;
-#&gt; &lt;/blockquote&gt;</div><div class='input'>
+    <pre class="examples"><div class='input'>
+<span class='no'>stub</span></div><div class='output co'>#&gt; <span class='error'>Error in eval(expr, envir, enclos): object 'stub' not found</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

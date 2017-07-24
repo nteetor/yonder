@@ -13,7 +13,11 @@ vignette: >
 
 Here is the widgets shiny example reworked using dull,
 
-```{R}
+```{R message=FALSE, warning=FALSE, include=FALSE}
+library(dull)
+```
+
+```R
 shinyApp(
   ui = container(
     row(

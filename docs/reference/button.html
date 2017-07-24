@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Buttons, button groups and toolbars — button • buckle</title>
+<title>Buttons and button groups — button • dull</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -47,7 +47,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">buckle</a>
+      <a class="navbar-brand" href="../index.html">dull</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -59,6 +59,21 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/intro.html">A dull Introduction</a>
+    </li>
+    <li>
+      <a href="../articles/widgets.html">Widgets</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -75,16 +90,20 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Buttons, button groups and toolbars</h1>
+    <h1>Buttons and button groups</h1>
     </div>
 
     
-    <p>Button controls. <code>buttonGroup</code> and <code>buttonToolbar</code> are a means of grouping
-buttons aesthetically.</p>
+    <p>Buttons, submit and reset buttons. A button's reactive value is a list of two
+items. The first item is <code>count</code>, the number of clicks on the button. The
+second item is <code>value</code>, the HTML data-value attribute of the button which may
+be set with the <code>value</code> argument.</p>
     
 
-    <pre class="usage"><span class='fu'>button</span>(<span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"secondary"</span>, <span class='kw'>outline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
-  <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>disabled</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>textual</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>button</span>(<span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"secondary"</span>,
+  <span class='kw'>outline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>disabled</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>, <span class='kw'>id</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+
+<span class='fu'>submit</span>(<span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>outline</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='kw'>block</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
 
 <span class='fu'>updateButton</span>(<span class='no'>id</span>, <span class='kw'>count</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>())</pre>
@@ -94,8 +113,14 @@ buttons aesthetically.</p>
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>label</th>
-      <td><p>A character vector or tag elements to use as the button label,
-defaults to <code>NULL</code>.</p></td>
+      <td><p>A character string or tag elements to use as a button label or a
+character vector specifying labels for a button group, defaults to <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>value</th>
+      <td><p>A character string specifying a value for the button or a
+character vector specifying values for a button group, defaults to
+<code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>context</th>
@@ -104,7 +129,7 @@ defaults to <code>NULL</code>.</p></td>
 or <code>"link"</code>, defaults to <code>"secondary"</code>.</p>
 <p>Primary buttons are blue, secondary buttons are white and grey, buttons for
 success are green, informative buttons are a lighter blue, warning buttons
-are yellow, and buttons for danger are red. Specifying <code>"link"</code> makes the
+are yellow, and buttons for danger are red. Specifying <code>"link"</code> makes a
 button render with the appearance of a link.</p></td>
     </tr>
     <tr>
@@ -115,9 +140,8 @@ is preserved, defaults to <code>FALSE</code>.</p></td>
     <tr>
       <th>block</th>
       <td><p>If <code>TRUE</code>, the button is block-level instead of inline, defaults
-to <code>FALSE</code>.</p>
-<p>A block-level element will occupy the entire space of its parent element,
-thereby creating a "block."</p></td>
+to <code>FALSE</code>. A block-level element will occupy the entire space of its
+parent element, thereby creating a "block."</p></td>
     </tr>
     <tr>
       <th>disabled</th>
@@ -125,104 +149,59 @@ thereby creating a "block."</p></td>
 to <code>FALSE</code>.</p></td>
     </tr>
     <tr>
-      <th>textual</th>
-      <td><p>Optional textual input, see <code><a href='text.html'>text</a></code>, to include as part of
-the button, defaults to <code>NULL</code>. If specified, the value of the button is
-the value of the text field.</p></td>
+      <th>...</th>
+      <td><p>Named arguments passed as HTML attributes to the parent element.</p></td>
     </tr>
     <tr>
-      <th>...</th>
-      <td><p>Named arguments passed as HTML attributes to the button parent
-element.</p></td>
+      <th>id</th>
+      <td><p>A character string specifying the id of the button, button group,
+or submit button, defaults to <code>NULL</code>. If specified, a reactive value is
+available to the shiny server function.</p></td>
     </tr>
     </table>
     
-    <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
-
-    <p>When adding a textual component to a button it is recommended to use
-placeholder text instead of a label.</p>
-    
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>For more about block-level elements please refer to the
-<a href='https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements'>block-level elements</a>
-MDN reference section.</p>
-<p>For more about input groups or buttons with text fields please refer to the
-<a href='https://v4-alpha.getbootstrap.com/components/input-group/#button-addons'>button addons</a>
-Bootstrap reference section.</p>
+    <p>For more about block-level elements please refer to the block-level elements
+MDN
+<a href='https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements'>reference section</a>.</p>
+<p>For more about buttons and button groups please refer to the bootstrap
+<a href='https://v4-alpha.getbootstrap.com/components/input-group/#button-addons'>reference section</a>.</p>
+<p>Other inputs: <code><a href='groupInput.html'>groupInput</a></code>,
+  <code><a href='radioInput.html'>radioInput</a></code>, <code><a href='selectInput.html'>selectInput</a></code>,
+  <code><a href='textInput.html'>textInput</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='fu'>button</span>(<span class='st'>"Primary"</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"primary"</span>)</div><div class='output co'>#&gt; &lt;div class="buckle-button input-group" data-count="0"&gt;
-#&gt;   &lt;button type="button" class="btn btn-primary" role="button"&gt;Primary&lt;/button&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='fu'>button</span>(<span class='st'>"Secondary"</span>)</div><div class='output co'>#&gt; &lt;div class="buckle-button input-group" data-count="0"&gt;
-#&gt;   &lt;button type="button" class="btn btn-secondary" role="button"&gt;Secondary&lt;/button&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='fu'>button</span>(<span class='st'>"Success"</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"success"</span>)</div><div class='output co'>#&gt; &lt;div class="buckle-button input-group" data-count="0"&gt;
-#&gt;   &lt;button type="button" class="btn btn-success" role="button"&gt;Success&lt;/button&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='fu'>button</span>(<span class='st'>"Info"</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"info"</span>, <span class='kw'>outline</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; &lt;div class="buckle-button input-group" data-count="0"&gt;
-#&gt;   &lt;button type="button" class="btn btn-outline-info" role="button"&gt;Info&lt;/button&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='fu'>button</span>(<span class='st'>"\u2715"</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"warning"</span>)</div><div class='output co'>#&gt; &lt;div class="buckle-button input-group" data-count="0"&gt;
-#&gt;   &lt;button type="button" class="btn btn-warning" role="button"&gt;✕&lt;/button&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='fu'>button</span>(<span class='st'>"Danger!"</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"danger"</span>, <span class='kw'>disable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; &lt;div class="buckle-button input-group" data-count="0"&gt;
-#&gt;   &lt;button type="button" class="btn btn-danger" disabled role="button"&gt;Danger!&lt;/button&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='fu'>button</span>(
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"search"</span>,
-  <span class='st'>"Go!"</span>,
-  <span class='kw'>textual</span> <span class='kw'>=</span> <span class='no'>inputs</span>$<span class='fu'><a href='text.html'>text</a></span>(
-    <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='st'>"search terms"</span>
-  )
-)</div><div class='output co'>#&gt; &lt;div class="buckle-button input-group" data-count="0" id="search"&gt;
-#&gt;   &lt;span class="input-group-btn"&gt;
-#&gt;     &lt;button type="button" class="btn btn-secondary" role="button"&gt;Go!&lt;/button&gt;
-#&gt;   &lt;/span&gt;
-#&gt;   &lt;input class="form-control" type="text" placeholder="search terms"/&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='fu'>button</span>(
-  <span class='st'>"Check date"</span>,
-  <span class='kw'>textual</span> <span class='kw'>=</span> <span class='no'>inputs</span>$<span class='fu'><a href='text.html'>date</a></span>()
-)</div><div class='output co'>#&gt; &lt;div class="buckle-button input-group" data-count="0"&gt;
-#&gt;   &lt;span class="input-group-btn"&gt;
-#&gt;     &lt;button type="button" class="btn btn-secondary" role="button"&gt;Check date&lt;/button&gt;
-#&gt;   &lt;/span&gt;
-#&gt;   &lt;input class="form-control" type="date"/&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
+    <pre class="examples"><div class='input'><span class='fu'>button</span>(<span class='st'>"Primary"</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"primary"</span>)</div><div class='output co'>#&gt; &lt;button class="dull-button dull-input btn btn-primary" type="button" role="button" data-count="0"&gt;Primary&lt;/button&gt;</div><div class='input'>
+<span class='fu'>button</span>(<span class='st'>"Secondary"</span>)</div><div class='output co'>#&gt; &lt;button class="dull-button dull-input btn btn-secondary" type="button" role="button" data-count="0"&gt;Secondary&lt;/button&gt;</div><div class='input'>
+<span class='fu'>button</span>(<span class='st'>"Success"</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"success"</span>)</div><div class='output co'>#&gt; &lt;button class="dull-button dull-input btn btn-success" type="button" role="button" data-count="0"&gt;Success&lt;/button&gt;</div><div class='input'>
+<span class='fu'>button</span>(<span class='st'>"Info"</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"info"</span>, <span class='kw'>outline</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; &lt;button class="dull-button dull-input btn btn-outline-info" type="button" role="button" data-count="0"&gt;Info&lt;/button&gt;</div><div class='input'>
+<span class='fu'>button</span>(<span class='st'>"\u2715"</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"warning"</span>)</div><div class='output co'>#&gt; &lt;button class="dull-button dull-input btn btn-warning" type="button" role="button" data-count="0"&gt;✕&lt;/button&gt;</div><div class='input'>
+<span class='fu'>button</span>(<span class='st'>"Danger!"</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"danger"</span>, <span class='kw'>disable</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>)</div><div class='output co'>#&gt; &lt;button class="dull-button dull-input btn btn-danger" type="button" role="button" data-count="0"&gt;Danger!&lt;/button&gt;</div><div class='input'>
 <span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
-  <span class='fu'>library</span>(<span class='no'>shiny</span>)
-
-  <span class='fu'><a href='http://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(
+  <span class='fu'>shinyApp</span>(
     <span class='kw'>ui</span> <span class='kw'>=</span> <span class='fu'><a href='col.html'>container</a></span>(
       <span class='fu'><a href='listGroup.html'>listGroup</a></span>(
-        <span class='fu'><a href='listGroup.html'>listItem</a></span>(
-          <span class='no'>tags</span>$<span class='fu'>form</span>(
-            <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"form-inline"</span>,
-          <span class='fu'>button</span>(
-            <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"simple"</span>,
-            <span class='st'>"Simple button"</span>
-          )
-          ),
-          <span class='kw'>badge</span> <span class='kw'>=</span> <span class='fu'><a href='badge.html'>badge</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"simpleClicks"</span>, <span class='fl'>0</span>)
-        ),
-        <span class='fu'><a href='listGroup.html'>listItem</a></span>(
-          <span class='no'>tags</span>$<span class='fu'>form</span>(
-            <span class='kw'>class</span> <span class='kw'>=</span> <span class='st'>"form-inline"</span>,
-          <span class='fu'>button</span>(
-             <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"textual"</span>,
-             <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Textual button"</span>,
-             <span class='kw'>textual</span> <span class='kw'>=</span> <span class='no'>inputs</span>$<span class='fu'><a href='text.html'>text</a></span>(
-               <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='st'>"hello, world!"</span>
-             )
+        <span class='fu'><a href='listGroup.html'>listGroupItem</a></span>(
+          <span class='fu'>inlineForm</span>(
+            <span class='fu'>button</span>(
+              <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"clicker1"</span>,
+              <span class='st'>"Simple button"</span>
             )
           ),
-          <span class='kw'>badge</span> <span class='kw'>=</span> <span class='fu'><a href='badge.html'>badge</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"textualClicks"</span>, <span class='fl'>0</span>)
+          <span class='kw'>badge</span> <span class='kw'>=</span> <span class='fu'><a href='badge.html'>badge</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"badge1"</span>, <span class='fl'>0</span>)
         ),
-        <span class='fu'><a href='listGroup.html'>listItem</a></span>(
+        <span class='fu'><a href='listGroup.html'>listGroupItem</a></span>(
+          <span class='fu'>inlineForm</span>(
+            <span class='fu'>button</span>(
+              <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"clicker2"</span>,
+              <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Click me!"</span>,
+            )
+          ),
+          <span class='kw'>badge</span> <span class='kw'>=</span> <span class='fu'><a href='badge.html'>badge</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"badge2"</span>, <span class='fl'>0</span>)
+        ),
+        <span class='fu'><a href='listGroup.html'>listGroupItem</a></span>(
           <span class='fu'>button</span>(
             <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"reset"</span>,
             <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Reset"</span>,
@@ -232,14 +211,14 @@ Bootstrap reference section.</p>
       )
     ),
     <span class='kw'>server</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>) {
-      <span class='no'>output</span>$<span class='no'>simpleClicks</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='badge.html'>renderBadge</a></span>(<span class='no'>input</span>$<span class='no'>simple</span>$<span class='no'>count</span>)
+      <span class='no'>output</span>$<span class='no'>badge1</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='badge.html'>renderBadge</a></span>(<span class='no'>input</span>$<span class='no'>clicker1</span>$<span class='no'>count</span>)
 
-      <span class='no'>output</span>$<span class='no'>textualClicks</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='badge.html'>renderBadge</a></span>(
+      <span class='no'>output</span>$<span class='no'>badge2</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='badge.html'>renderBadge</a></span>(
         <span class='kw'>value</span> <span class='kw'>=</span> {
-          <span class='no'>input</span>$<span class='no'>textual</span>$<span class='no'>count</span>
+          <span class='no'>input</span>$<span class='no'>clicker2</span>$<span class='no'>count</span>
         },
         <span class='kw'>context</span> <span class='kw'>=</span> {
-          <span class='kw'>if</span> (<span class='no'>input</span>$<span class='no'>textual</span>$<span class='no'>count</span> <span class='kw'>&gt;</span> <span class='fl'>5</span>) {
+          <span class='kw'>if</span> (<span class='no'>input</span>$<span class='no'>clicker2</span>$<span class='no'>count</span> <span class='kw'>&gt;</span> <span class='fl'>5</span>) {
             <span class='st'>"warning"</span>
           } <span class='kw'>else</span> {
             <span class='st'>"default"</span>
@@ -247,9 +226,24 @@ Bootstrap reference section.</p>
         }
       )
 
-      <span class='fu'><a href='http://www.rdocumentation.org/packages/shiny/topics/observeEvent'>observeEvent</a></span>(<span class='no'>input</span>$<span class='no'>reset</span>, <span class='kw'>ignoreInit</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>, {
-        <span class='fu'>updateButton</span>(<span class='st'>"simple"</span>, <span class='kw'>count</span> <span class='kw'>=</span> <span class='fl'>0</span>)
-        <span class='fu'>updateButton</span>(<span class='st'>"textual"</span>, <span class='kw'>count</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+      <span class='fu'>observeEvent</span>(<span class='no'>input</span>$<span class='no'>reset</span>, {
+        <span class='fu'>updateButton</span>(<span class='st'>"clicker1"</span>, <span class='kw'>count</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+        <span class='fu'>updateButton</span>(<span class='st'>"clicker2"</span>, <span class='kw'>count</span> <span class='kw'>=</span> <span class='fl'>0</span>)
+      })
+    }
+  )
+
+  <span class='fu'>shinyApp</span>(
+    <span class='kw'>ui</span> <span class='kw'>=</span> <span class='fu'><a href='col.html'>container</a></span>(
+      <span class='fu'>button</span>(
+        <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"group"</span>,
+        <span class='kw'>label</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"First"</span>, <span class='st'>"Second"</span>, <span class='st'>"Third"</span>),
+        <span class='kw'>value</span> <span class='kw'>=</span> <span class='fu'>c</span>(<span class='st'>"first"</span>, <span class='st'>"second"</span>, <span class='st'>"third"</span>)
+      )
+    ),
+    <span class='kw'>server</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>) {
+      <span class='fu'>observe</span>({
+        <span class='fu'>print</span>(<span class='no'>input</span>$<span class='no'>group</span>)
       })
     }
   )
@@ -260,8 +254,6 @@ Bootstrap reference section.</p>
     <ul class="nav nav-pills nav-stacked">
       <li><a href="#arguments">Arguments</a></li>
       
-      <li><a href="#details">Details</a></li>
-
       <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>

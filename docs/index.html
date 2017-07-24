@@ -5,7 +5,7 @@
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>What the Package Does (Title Case) • buckle</title>
+<title>A New Approach to Shiny • dull</title>
 <!-- jquery --><script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script><!-- Bootstrap --><link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script><!-- Font Awesome icons --><link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet" integrity="sha384-T8Gy5hrqNKT+hzMclPo118YTQO6cYprQmhrYwIiQ/3axmI1hQomh7Ud2hPOy8SP1" crossorigin="anonymous">
 <!-- pkgdown --><link href="pkgdown.css" rel="stylesheet">
@@ -24,7 +24,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">buckle</a>
+      <a class="navbar-brand" href="index.html">dull</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -36,6 +36,21 @@
 </li>
 <li>
   <a href="reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+<li>
+      <a href="articles/intro.html">A dull Introduction</a>
+    </li>
+    <li>
+      <a href="articles/widgets.html">Widgets</a>
+    </li>
+  </ul>
 </li>
       </ul>
 <ul class="nav navbar-nav navbar-right"></ul>
@@ -53,9 +68,10 @@
 <div class="page-header"><h1 class="hasAnchor">
 <a href="#dull" class="anchor"></a>dull</h1></div>
 <p>A new approach to building Shiny applications.</p>
-<p>dull is built on top of shiny and bootstrap 4 among other icon and javascript libraries. This package provides new takes on many of the functionalities found in shiny. The user may find some aspects of the provided functions frustrating to begin with, for example there are no explict <code>*Input</code> functions as there are in shiny. Instead, all UI functions include a <code>...</code> argument, thus by passing an <code>id</code> argument many elements may be transformed into reactive inputs.</p>
-<p>While shiny has, in my opinion and rightfully so, remained accessible to new users as new capabilities were added, dull is an effort to provide the user more flexibility and open up new creative possibilities for shiny based applications. Additionally, I believe shiny’s evolution over time has locked in some paradigms that might otherwise be removed with a clean slate.</p>
-<p>dull is not intended to replace shiny, instead I hope dull is a breath of fresh air and an exciting new tool for those who have desired more flexibilty out of shiny.</p>
+<p>dull is built on top of shiny and bootstrap 4 among other icon and javascript libraries. This package provides new takes on many of the functionalities found in shiny. The user may find some aspects of the provided functions frustrating to begin with, for example there are some explict <code>*Input</code> functions, but some reactive inputs are built into <code>Thruputs</code>. All UI functions include a <code>...</code> argument to allow HTML attributes to be added to all parent elements, however an explicit <code>id</code> argument is available for all reactive input, output, update, or render functions.</p>
+<p>While shiny has, in my opinion and rightfully so, remained accessible to new users as new capabilities were added, dull is an effort to provide the user more flexibility and open up new creative possibilities for shiny based applications. Additionally, I believe shiny’s evolution over time has locked in some paradigms that might otherwise be removed with a clean slate. dull hopes to be that clean slate and much of what I sought to build into dull I later found mirrored in the issues and requests raised under the shiny GitHub repo.</p>
+<p>dull is not intended to replace shiny, dull builds upon shiny, and I hope dull is a breath of fresh air and an exciting new tool for those who have loved working shiny thus far.</p>
+<hr>
 </div>
   </div>
 

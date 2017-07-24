@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Dropdown Menu — dropdown • buckle</title>
+<title>Dropdown Menu — dropdown • dull</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -47,7 +47,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">buckle</a>
+      <a class="navbar-brand" href="../index.html">dull</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -59,6 +59,21 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/intro.html">A dull Introduction</a>
+    </li>
+    <li>
+      <a href="../articles/widgets.html">Widgets</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -79,70 +94,136 @@
     </div>
 
     
-    <p>A Bootstrap dropdown menu.</p>
+    <p>Dropdown menus function similar to a set of buttons. The initial dropdown
+open does not trigger a reactive event, but a subsequent click on one of the
+menu choices triggers a reactive event. The value of a dropdown item may
+be specified in <code>dropdownItem</code>, otherwise the default value is <code>NULL</code>.</p>
     
 
-    <pre class="usage"><span class='fu'>dropdown</span>(<span class='kw'>button</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>links</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)</pre>
+    <pre class="usage"><span class='fu'>dropdown</span>(<span class='no'>...</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"secondary"</span>, <span class='kw'>split</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>,
+  <span class='kw'>align</span> <span class='kw'>=</span> <span class='st'>"left"</span>, <span class='kw'>dropup</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>)
+
+<span class='fu'>dropdownItem</span>(<span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disabled</span> <span class='kw'>=</span> <span class='fl'>FALSE</span>, <span class='no'>...</span>)
+
+<span class='fu'>dropdownDivider</span>()
+
+<span class='fu'>dropdownHeader</span>(<span class='no'>label</span>)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
-      <th>button</th>
-      <td><p>A button to trigger the dropdown, see <code>button</code>.</p></td>
-    </tr>
-    <tr>
-      <th>links</th>
-      <td><p>A list of <code>tags$a</code> elements.</p></td>
-    </tr>
-    <tr>
       <th>...</th>
-      <td><p>Additional named arguments passed on as HTML attributes.</p></td>
+      <td><p>Any number of dropdown items passed to <code>dropdown</code> or additional
+named arguments passed as HTML attributes to the respective parent element.</p></td>
+    </tr>
+    <tr>
+      <th>label</th>
+      <td><p>A character string specifying the label for a dropdown, dropdown
+item, or dropdown header, defaults to <code>NULL</code> for dropdowns and dropdown
+items, but is required for a dropdown header.</p></td>
+    </tr>
+    <tr>
+      <th>context</th>
+      <td><p>One of <code>"primary"</code>, <code>"secondary"</code>, <code>"success"</code>, <code>"info"</code>,
+<code>"warning"</code>, or <code>"danger"</code> specifying the visual context of the dropdown,
+defaults to <code>"secondary"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>split</th>
+      <td><p>If <code>TRUE</code>, the dropdown is changed aesthetically such that the
+dropdown icon is split into a separate, smaller button, defaults to
+<code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>align</th>
+      <td><p>One of <code>"left"</code> or <code>"right"</code> specifying which side of the
+dropdown button the menu aligns to, defaults to <code>"left"</code>.</p></td>
+    </tr>
+    <tr>
+      <th>dropup</th>
+      <td><p>If <code>TRUE</code>, the dropdown menu extends upwards, defaults to
+<code>FALSE</code>.</p></td>
+    </tr>
+    <tr>
+      <th>value</th>
+      <td><p>A character string specifying the value of a dropdown item,
+defaults to <code>NULL</code>.</p></td>
+    </tr>
+    <tr>
+      <th>disabled</th>
+      <td><p>If <code>TRUE</code>, the dropdown item renders in a disabled state and
+will not trigger a reactive event, defaults to <code>FALSE</code>. The state of a
+dropdown item may be toggled with <code>updateDropdownItem</code>.</p></td>
     </tr>
     </table>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='co'># A dropdown without `id` attribute</span>
-<span class='co'>#   - standard `tags$a` utility</span>
-<span class='fu'>dropdown</span>(
-  <span class='fu'><a href='button.html'>button</a></span>(<span class='st'>"Secondary"</span>),
-  <span class='fu'>list</span>(
-    <span class='no'>tags</span>$<span class='fu'>a</span>(<span class='kw'>href</span> <span class='kw'>=</span> <span class='st'>"#"</span>, <span class='st'>"Option 1"</span>),
-    <span class='no'>tags</span>$<span class='fu'>a</span>(<span class='kw'>href</span> <span class='kw'>=</span> <span class='st'>"3"</span>, <span class='st'>"Option 2"</span>)
-  )
-)</div><div class='output co'>#&gt; &lt;div class="dropdown buckle-dropdown"&gt;
-#&gt;   &lt;div class="buckle-button input-group dropdown-toggle" data-count="0" data-toggle="dropdown"&gt;
-#&gt;     &lt;button type="button" class="btn btn-secondary" role="button"&gt;Secondary&lt;/button&gt;
-#&gt;   &lt;/div&gt;
+    <pre class="examples"><div class='input'><span class='fu'>dropdown</span>(
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Secondary"</span>,
+  <span class='fu'>dropdownItem</span>(<span class='st'>"Option 1"</span>),
+  <span class='fu'>dropdownItem</span>(<span class='st'>"Option 2"</span>)
+)</div><div class='output co'>#&gt; &lt;div class="dull-dropdown btn-group dropdown"&gt;
+#&gt;   &lt;button class="dull-button dull-input btn btn-secondary dropdown-toggle" data-count="0" data-toggle="dropdown" role="button" type="button"&gt;Secondary&lt;/button&gt;
 #&gt;   &lt;div class="dropdown-menu"&gt;
-#&gt;     &lt;a href="#" class="dropdown-item"&gt;Option 1&lt;/a&gt;
-#&gt;     &lt;a href="3" class="dropdown-item"&gt;Option 2&lt;/a&gt;
+#&gt;     &lt;a class="dull-dropdown-item dropdown-item"&gt;Option 1&lt;/a&gt;
+#&gt;     &lt;a class="dull-dropdown-item dropdown-item"&gt;Option 2&lt;/a&gt;
 #&gt;   &lt;/div&gt;
 #&gt; &lt;/div&gt;</div><div class='input'>
-<span class='co'># A dropdown with `id` attribute</span>
-<span class='co'>#   - `tags$a` now act similar `shiny::actionButton`</span>
-<span class='co'>#   - when `tags$a` clicked `input$flavor` will have `href` value</span>
-<span class='co'>#   - default `tags$a` behavior suppressed</span>
 <span class='fu'>dropdown</span>(
   <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"flavor"</span>,
-  <span class='fu'><a href='button.html'>button</a></span>(<span class='st'>"Ice cream flavors"</span>),
-  <span class='fu'>list</span>(
-    <span class='no'>tags</span>$<span class='fu'>a</span>(<span class='kw'>href</span> <span class='kw'>=</span> <span class='st'>"vanilla"</span>, <span class='st'>"Vanilla"</span>),
-    <span class='no'>tags</span>$<span class='fu'>a</span>(<span class='kw'>href</span> <span class='kw'>=</span> <span class='st'>"chocolate"</span>, <span class='st'>"Chocolate"</span>),
-    <span class='no'>tags</span>$<span class='fu'>a</span>(<span class='kw'>href</span> <span class='kw'>=</span> <span class='st'>"mint"</span>, <span class='st'>"Mint"</span>)
-  )
-)</div><div class='output co'>#&gt; &lt;div class="dropdown buckle-dropdown" id="flavor"&gt;
-#&gt;   &lt;div class="buckle-button input-group dropdown-toggle" data-count="0" data-toggle="dropdown"&gt;
-#&gt;     &lt;button type="button" class="btn btn-secondary" role="button"&gt;Ice cream flavors&lt;/button&gt;
-#&gt;   &lt;/div&gt;
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Ice cream flavors"</span>,
+  <span class='fu'>dropdownItem</span>(<span class='st'>"Vanilla"</span>, <span class='st'>"vanilla"</span>),
+  <span class='fu'>dropdownItem</span>(<span class='st'>"Chocolate"</span>, <span class='st'>"chocolate"</span>),
+  <span class='fu'>dropdownItem</span>(<span class='st'>"Mint"</span>, <span class='st'>"mint"</span>)
+)</div><div class='output co'>#&gt; &lt;div class="dull-dropdown btn-group dropdown" id="flavor"&gt;
+#&gt;   &lt;button class="dull-button dull-input btn btn-secondary dropdown-toggle" data-count="0" data-toggle="dropdown" role="button" type="button"&gt;Ice cream flavors&lt;/button&gt;
 #&gt;   &lt;div class="dropdown-menu"&gt;
-#&gt;     &lt;a href="vanilla" class="dropdown-item"&gt;Vanilla&lt;/a&gt;
-#&gt;     &lt;a href="chocolate" class="dropdown-item"&gt;Chocolate&lt;/a&gt;
-#&gt;     &lt;a href="mint" class="dropdown-item"&gt;Mint&lt;/a&gt;
+#&gt;     &lt;a class="dull-dropdown-item dropdown-item" data-value="vanilla"&gt;Vanilla&lt;/a&gt;
+#&gt;     &lt;a class="dull-dropdown-item dropdown-item" data-value="chocolate"&gt;Chocolate&lt;/a&gt;
+#&gt;     &lt;a class="dull-dropdown-item dropdown-item" data-value="mint"&gt;Mint&lt;/a&gt;
 #&gt;   &lt;/div&gt;
 #&gt; &lt;/div&gt;</div><div class='input'>
-</div></pre>
+<span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
+  <span class='fu'>shinyApp</span>(
+    <span class='kw'>ui</span> <span class='kw'>=</span> <span class='fu'><a href='col.html'>container</a></span>(
+      <span class='fu'><a href='col.html'>row</a></span>(
+        <span class='fu'><a href='col.html'>col</a></span>(
+          <span class='fu'>dropdown</span>(
+            <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"desserts"</span>,
+            <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Pick a dessert to learn more"</span>,
+            <span class='kw'>align</span> <span class='kw'>=</span> <span class='st'>"right"</span>,
+            <span class='fu'>dropdownHeader</span>(<span class='st'>"Frozen"</span>),
+            <span class='fu'>dropdownItem</span>(<span class='st'>"Ice cream"</span>, <span class='st'>"icecream"</span>),
+            <span class='fu'>dropdownItem</span>(<span class='st'>"Gelato"</span>, <span class='st'>"gelato"</span>),
+            <span class='fu'>dropdownHeader</span>(<span class='st'>"Baked goods"</span>),
+            <span class='fu'>dropdownItem</span>(<span class='st'>"Cake"</span>, <span class='st'>"cake"</span>),
+            <span class='fu'>dropdownItem</span>(<span class='st'>"Pie"</span>, <span class='st'>"pie"</span>)
+          )
+        ),
+        <span class='fu'><a href='col.html'>col</a></span>(
+          <span class='fu'>dropdown</span>(
+            <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"spices"</span>,
+            <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Check for a spice"</span>,
+            <span class='fu'>dropdownItem</span>(<span class='st'>"Cardamom"</span>, <span class='st'>"cardamom"</span>),
+            <span class='fu'>dropdownItem</span>(<span class='st'>"Nutmeg"</span>, <span class='st'>"nutmeg"</span>),
+            <span class='fu'>dropdownItem</span>(<span class='st'>"Vanilla"</span>, <span class='st'>"vanilla"</span>)
+          )
+        )
+      )
+    ),
+    <span class='kw'>server</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>) {
+      <span class='fu'>observe</span>({
+        <span class='fu'>print</span>(<span class='no'>input</span>$<span class='no'>desserts</span>)
+      })
+
+      <span class='fu'>observe</span>({
+        <span class='fu'>print</span>(<span class='no'>input</span>$<span class='no'>spices</span>)
+      })
+    }
+  )
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>

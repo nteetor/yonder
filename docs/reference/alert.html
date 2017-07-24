@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Alerts — alert • buckle</title>
+<title>Alerts — alert • dull</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -47,7 +47,7 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="../index.html">buckle</a>
+      <a class="navbar-brand" href="../index.html">dull</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
@@ -59,6 +59,21 @@
 </li>
 <li>
   <a href="../reference/index.html">Reference</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/intro.html">A dull Introduction</a>
+    </li>
+    <li>
+      <a href="../articles/widgets.html">Widgets</a>
+    </li>
+  </ul>
 </li>
       </ul>
       
@@ -79,7 +94,13 @@
     </div>
 
     
-    <p>Provide the user with feedback with custom alert dialogs.</p>
+    <p>Contextual notifications. Alerts are defined in the UI of an application.
+They are rendered and shown using the <code>renderAlert</code> function. Alerts
+optionally include a dismiss button. For fully programmatic control over
+the state of the alert the dismiss button may be excluded.</p>
+<p>It is important to remember alerts are both outputs and inputs, albeit very
+simple inputs. The input value of an alert becomes <code>TRUE</code> when the alert is
+dismissed, otherwise the value is <code>NULL</code>.</p>
     
 
     <pre class="usage"><span class='fu'>alert</span>(<span class='kw'>text</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>heading</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>context</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>hidden</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
@@ -92,23 +113,24 @@
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>text</th>
-      <td><p>A character string or tagList</p></td>
+      <td><p>A character string or tag element(s) specifying the body content
+of the alert, defaults to <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>heading</th>
-      <td><p>A character vector specifying text to use as a heading for the
+      <td><p>A character string specifying text to use as a heading for the
 alert, defaults to <code>NULL</code>.
 
-<code>h4</code> is the default heading tag. To use a different heading level tag one
-may specify custom HTML. Be sure to include the HTML class <code>alert-heading</code>,
-e.g. <code>tags$h3(class = "alert-heading", "Level 3 Heading")</code>.</p></td>
+<code>h4</code> is the default heading tag. To use a different heading level tag
+specify custom HTML. Be sure to include the HTML class <code>alert-heading</code>,
+e.g. <code>tags$h3(class = "alert-heading", "My alert heading")</code>.</p></td>
     </tr>
     <tr>
       <th>context</th>
-      <td><p>Used to specify the visual context of the alert, one of
-<code>"success"</code>, <code>"info"</code>, <code>"warning"</code>, or <code>"danger"</code>, defaults to <code>NULL</code>.</p>
-<p>Alerts for success are green, informative alerts are blue, warning alerts
-are yellow, and alerts for danger are red.</p></td>
+      <td><p>One of <code>"success"</code>, <code>"info"</code>, <code>"warning"</code>, or <code>"danger"</code>
+specifying the visual context of the alert, defaults to <code>NULL</code>.</p>
+<p>By default, success alerts are green, informative alerts are blue, warning
+alerts are yellow, and danger alerts are red.</p></td>
     </tr>
     <tr>
       <th>hidden</th>
@@ -123,22 +145,21 @@ alert, defaults to <code>TRUE</code>.</p></td>
     <tr>
       <th>icon</th>
       <td><p>An optional alternate icon to use as the dismiss button, see
-<code><a href='icons.html'>icons</a></code>, defaults to <code>NULL</code>.</p></td>
+<code>icons</code>, defaults to <code>NULL</code>.</p></td>
     </tr>
     <tr>
       <th>...</th>
-      <td><p>Additional named arguments passed as HTML attributes to the alert
+      <td><p>Additional named arguments passed as HTML attributes to the parent
 element.</p></td>
     </tr>
     <tr>
       <th>show</th>
       <td><p>An expression which returns <code>TRUE</code>, <code>FALSE</code>, or <code>NULL</code>. When
 <code>TRUE</code> the alert toggles to a shown state, when <code>FALSE</code> the alert toggles
-to a invisible state, and finally a return value of <code>NULL</code> holds the
-alert in its current state.</p>
-<p>It is important to note that once an alert is dismissed the alert element
-is removed from the page. Thus, the rendering function, no matter the
-return value, no longer has an effect. To avoid this funcationality set
+to an invisible state, and a return value of <code>NULL</code> leaves the state as is.</p>
+<p>It is important to note, once an alert is dismissed the alert element is
+removed from the page. Thus, the rendering function, no matter the return
+value, will no longer have an effect. To avoid this functionality set
 <code>dismissible</code> to <code>FALSE</code>.</p></td>
     </tr>
     </table>
@@ -149,19 +170,21 @@ return value, no longer has an effect. To avoid this funcationality set
 input value remains <code>NULL</code>.</p>
 <p>As an ouput, an alert may be hidden or shown using <code>renderAlert</code>.</p>
     
+    <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
+
+    <p>For more information on bootstrap alerts please refer to the
+<a href='https://v4-alpha.getbootstrap.com/components/alerts/'>reference page</a>.</p>
+    
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'>
-<span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
-  <span class='fu'>library</span>(<span class='no'>shiny</span>)
-
-  <span class='fu'><a href='http://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
+  <span class='fu'>shinyApp</span>(
     <span class='kw'>ui</span> <span class='kw'>=</span> <span class='fu'><a href='col.html'>container</a></span>(
       <span class='fu'>alert</span>(
         <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"popup"</span>,
         <span class='kw'>text</span> <span class='kw'>=</span> <span class='st'>"Hey! We even asked nicely."</span>,
         <span class='kw'>context</span> <span class='kw'>=</span> <span class='st'>"info"</span>,
-        <span class='kw'>icon</span> <span class='kw'>=</span> <span class='no'>icons</span>$<span class='fu'>fa</span>(<span class='st'>"check"</span>)
+        <span class='kw'>icon</span> <span class='kw'>=</span> <span class='fu'><a href='fontAwesome.html'>fontAwesome</a></span>(<span class='st'>"check"</span>)
       ),
       <span class='fu'><a href='button.html'>button</a></span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"show"</span>, <span class='st'>"Don't click me, please"</span>)
     ),
@@ -171,22 +194,16 @@ input value remains <code>NULL</code>.</p>
       })
     }
   )
-}
 
-<span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
-  <span class='fu'>library</span>(<span class='no'>shiny</span>)
-
-  <span class='fu'><a href='http://www.rdocumentation.org/packages/shiny/topics/shinyApp'>shinyApp</a></span>(
+  <span class='fu'>shinyApp</span>(
     <span class='kw'>ui</span> <span class='kw'>=</span> <span class='fu'><a href='col.html'>container</a></span>(
       <span class='fu'>alert</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"alert"</span>, <span class='st'>"Test alert"</span>)
     ),
     <span class='kw'>server</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>) {
       <span class='no'>output</span>$<span class='no'>alert</span> <span class='kw'>&lt;-</span> <span class='fu'>renderAlert</span>(<span class='fl'>TRUE</span>)
 
-      <span class='no'>output</span>$<span class='no'>alert2</span> <span class='kw'>&lt;-</span> <span class='fu'>renderAlert</span>(<span class='fl'>TRUE</span>)
-
-      <span class='fu'><a href='http://www.rdocumentation.org/packages/shiny/topics/observeEvent'>observeEvent</a></span>(<span class='no'>input</span>$<span class='no'>alert</span>, {
-        <span class='fu'>print</span>(<span class='no'>input</span>$<span class='no'>alert</span>)
+      <span class='fu'>observeEvent</span>(<span class='no'>input</span>$<span class='no'>alert</span>, {
+        <span class='fu'>print</span>(<span class='st'>"User dismissed the alert"</span>)
       })
     }
   )
@@ -198,6 +215,8 @@ input value remains <code>NULL</code>.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#see-also">See also</a></li>
       
       <li><a href="#examples">Examples</a></li>
     </ul>

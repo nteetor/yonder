@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Authors • dull</title>
+<title>A new approach to shiny applications — dull • dull</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -20,9 +20,9 @@
 
 
 <!-- pkgdown -->
-<link href="pkgdown.css" rel="stylesheet">
-<script src="jquery.sticky-kit.min.js"></script>
-<script src="pkgdown.js"></script>
+<link href="../pkgdown.css" rel="stylesheet">
+<script src="../jquery.sticky-kit.min.js"></script>
+<script src="../pkgdown.js"></script>
   
   
 <!-- mathjax -->
@@ -37,7 +37,7 @@
   </head>
 
   <body>
-    <div class="container template-authors">
+    <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
   <div class="container">
@@ -47,18 +47,18 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <a class="navbar-brand" href="index.html">dull</a>
+      <a class="navbar-brand" href="../index.html">dull</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <li>
-  <a href="/index.html">
+  <a href="..//index.html">
     <span class="fa fa-home fa-lg"></span>
      
   </a>
 </li>
 <li>
-  <a href="reference/index.html">Reference</a>
+  <a href="../reference/index.html">Reference</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -68,10 +68,10 @@
   </a>
   <ul class="dropdown-menu" role="menu">
     <li>
-      <a href="articles/intro.html">A dull Introduction</a>
+      <a href="../articles/intro.html">A dull Introduction</a>
     </li>
     <li>
-      <a href="articles/widgets.html">Widgets</a>
+      <a href="../articles/widgets.html">Widgets</a>
     </li>
   </ul>
 </li>
@@ -88,22 +88,53 @@
       </header>
 
       <div class="row">
-  <div class="contents col-md-12">
+  <div class="col-md-9 contents">
     <div class="page-header">
-      <h1>Authors</h1>
+    <h1>A new approach to shiny applications</h1>
     </div>
 
-    <ul class="list-unstyled">
-      <li>
-        <p><strong>Nathan Teetor</strong>. Author, maintainer.
-        </p>
-      </li>
-    </ul>
+    
+    <p>More freedom to the programmer, more to come.</p>
+    
+
+        
+    <h2 class="hasAnchor" id="q-and-a"><a class="anchor" href="#q-and-a"></a>Q and A</h2>
+
+    
+    <p><strong>Where are the input functions?</strong></p>
+<p>Unlike shiny, dull does not include explicit input functions. Instead an <code>id</code>
+argument must be specified as an HTML attribute, passed to a function through
+<code>...</code>. Once an <code>id</code> attribute is specified a reactive input value is
+available.</p>
+<p>For example, a <a href='listGroup.html'>listGroup</a> may be used to display series of items, but by
+passing an <code>id</code> attribute the <code>listGroup</code> still displays a series of items
+can function similar to shiny <code>checkboxGroupInput</code>.
+    <strong>What is the <code>bs</code> object?</strong></p>
+<p>Similar to the <code>tags</code> object in <code>htmltools</code>, the <code>inputs</code> object bundles
+together many HTML form input elements. Functions like <code>textInput</code> and
+<code>selectInput</code> are similar to shiny's <code>textInput</code> and <code>selectInput</code>.
+Additionally, there are new, specific inputs like <code>datetimeInput</code>,
+<code>colorInput</code>, and more.</p>
+<p>The <code>bs</code> object bundles together builder functions, like those found in
+<code>tags</code>, which have received distinct parameters corresponding to
+functionality provided by the bootstrap library.</p>
+    
 
   </div>
+  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+    <h2>Contents</h2>
+    <ul class="nav nav-pills nav-stacked">
+      
+      <li><a href="#q-and-a">Q and A</a></li>
+          </ul>
 
+    <h2>Author</h2>
+    
+<strong>Maintainer</strong>: Nathan Teetor <a href='mailto:nathanteetor@gmail.com'>nathanteetor@gmail.com</a>
+
+
+  </div>
 </div>
-
 
       <footer>
       <div class="copyright">

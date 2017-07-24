@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Cleaner Blockquotes — blockquote • dull</title>
+<title>Viewport — viewport • dull</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -90,63 +90,58 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Cleaner Blockquotes</h1>
+    <h1>Viewport</h1>
     </div>
 
     
-    <p>Stylized blockquotes, an updated builder function for <code>&lt;blockquote&gt;</code>.</p>
+    <p>Many styles are viewport responsive. These styles change depending on the
+size of the viewing application. This allows the programmer to build content
+which can adapt to laptop screens, mobile devices, and more.</p>
+<p>Responsive styles are applied depending on the width of the viewport. Extra
+small screens are 0 px and up. Small screens are 576 px and up. Medium
+screens are 768 px and up. Large screens are 992 px and up. Extra large
+screens are 1200 px and up.</p>
     
 
-    <pre class="usage"><span class='fu'>blockquote</span>(<span class='no'>...</span>, <span class='kw'>source</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>align</span> <span class='kw'>=</span> <span class='st'>"left"</span>)</pre>
-    
-    <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a> Arguments</h2>
-    <table class="ref-arguments">
-    <colgroup><col class="name" /><col class="desc" /></colgroup>
-    <tr>
-      <th>source</th>
-      <td><p>The quote source, use <code>tags$cite</code> to format the source title,
-defaults to <code>NULL</code>.</p></td>
-    </tr>
-    <tr>
-      <th>align</th>
-      <td><p>One of <code>"left"</code> or <code>"right"</code>, defaults to <code>"left"</code>.</p></td>
-    </tr>
-    </table>
-    
+        
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <p>Other content: <code><a href='img.html'>img</a></code></p>
+    <p>Other utilities: <code><a href='colors.html'>colors</a></code>,
+  <code>flexbox</code>, <code><a href='float.html'>float</a></code>,
+  <code><a href='hidden.html'>hidden</a></code>, <code><a href='position.html'>position</a></code>,
+  <code><a href='sizing.html'>sizing</a></code>, <code><a href='spacing.html'>spacing</a></code></p>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
-    <pre class="examples"><div class='input'><span class='fu'>blockquote</span>(
-  <span class='st'>"Anyone can love a thing because."</span>,
-  <span class='st'>"That's as easy as putting a penny in your pocket."</span>,
-  <span class='st'>"But to love something despite."</span>,
-  <span class='st'>"To know the flaws and love them too."</span>,
-  <span class='st'>"That is rare and pure and perfect."</span>,
-  <span class='kw'>source</span> <span class='kw'>=</span> <span class='no'>tags</span>$<span class='fu'>span</span>(
-    <span class='st'>"Patrick Rothfuss,"</span>, <span class='no'>tags</span>$<span class='fu'>cite</span>(<span class='st'>"The Wise Man's Fear"</span>)
+    <pre class="examples"><div class='input'><span class='kw'>if</span> (<span class='fu'>interactive</span>()) {
+  <span class='fu'>shinyApp</span>(
+    <span class='kw'>ui</span> <span class='kw'>=</span> <span class='fu'><a href='col.html'>container</a></span>(
+      <span class='fu'><a href='listGroup.html'>listGroup</a></span>(
+        <span class='kw'>class</span> <span class='kw'>=</span> <span class='fu'><a href='collate.html'>collate</a></span>(
+          <span class='no'>utils</span>$<span class='fu'>margin</span>(<span class='fl'>0</span>),
+          <span class='no'>utils</span>$<span class='fu'>margin</span>(<span class='fl'>5</span>, <span class='st'>"left"</span>, <span class='st'>"medium"</span>),
+          <span class='no'>utils</span>$<span class='fu'>margin</span>(<span class='fl'>5</span>, <span class='st'>"right"</span>, <span class='st'>"medium"</span>)
+        ),
+        <span class='fu'><a href='listGroup.html'>listGroupItem</a></span>(
+          <span class='kw'>class</span> <span class='kw'>=</span> <span class='no'>utils</span>$<span class='fu'>bg</span>(<span class='st'>"info"</span>),
+          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Hello, world!"</span>
+        ),
+        <span class='fu'><a href='listGroup.html'>listGroupItem</a></span>(
+          <span class='kw'>class</span> <span class='kw'>=</span> <span class='no'>utils</span>$<span class='fu'>bg</span>(<span class='st'>"info"</span>),
+          <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Goodnight, moon!"</span>
+        )
+      )
+
+    ),
+    <span class='kw'>server</span> <span class='kw'>=</span> <span class='kw'>function</span>(<span class='no'>input</span>, <span class='no'>output</span>) {
+
+    }
   )
-)</div><div class='output co'>#&gt; &lt;blockquote class="blockquote"&gt;
-#&gt;   Anyone can love a thing because.
-#&gt;   That's as easy as putting a penny in your pocket.
-#&gt;   But to love something despite.
-#&gt;   To know the flaws and love them too.
-#&gt;   That is rare and pure and perfect.
-#&gt;   &lt;footer class="blockquote-footer"&gt;
-#&gt;     &lt;span&gt;
-#&gt;       Patrick Rothfuss,
-#&gt;       &lt;cite&gt;The Wise Man's Fear&lt;/cite&gt;
-#&gt;     &lt;/span&gt;
-#&gt;   &lt;/footer&gt;
-#&gt; &lt;/blockquote&gt;</div><div class='input'>
-</div></pre>
+}</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#see-also">See also</a></li>
       
