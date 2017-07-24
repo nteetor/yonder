@@ -34,14 +34,6 @@ Additionally, there are new, specific inputs like \code{datetimeInput},
 The \code{bs} object bundles together builder functions, like those found in
 \code{tags}, which have received distinct parameters corresponding to
 functionality provided by the bootstrap library.
-
-\strong{Is there a \code{checkboxGroupInput} equivalent?}
-
-There is no dull equivalent of shiny's \code{checkboxGroupInput}.
-\code{inputs$checkbox} is available and performs like \code{checkboxInput}. This choice
-was made to increase the accessibility of shiny applications.
-
-An alternative to \code{checkboxGroupInput} is \code{listGroup}.
 }
 
 \author{
