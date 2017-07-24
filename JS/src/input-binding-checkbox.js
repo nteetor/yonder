@@ -5,7 +5,13 @@ $.extend(checkboxInputBinding, {
     return $(scope).find(".dull-checkbox[id]");
   },
   getValue: function(el) {
-    return $(el).find("input[type=\"checkbox\"]:checked").val() || null;
+    var $val = $(el)
+      .find("input[type=\"checkbox\"]:checked")
+      .map(function(i, e) {
+        return $(e).data("value");
+      })
+      .get();
+    return $val === undefined ? null : $val;
   },
   _getLabel: function(el) {
     return $(el).find(".custom-control-description").text();
