@@ -63,8 +63,6 @@
 #' @export
 #' @examples
 #' if (interactive()) {
-#'   library(shiny)
-#'
 #'   shinyApp(
 #'     ui = container(
 #'       alert(

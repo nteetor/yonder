@@ -6,8 +6,9 @@
 \alias{emailInput}
 \alias{urlInput}
 \alias{telephoneInput}
-\alias{obscuredInput}
+\alias{passwordInput}
 \alias{numberInput}
+\alias{dateInput}
 \alias{datetimeInput}
 \alias{monthInput}
 \alias{weekInput}
@@ -25,12 +26,13 @@ urlInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
 telephoneInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
-obscuredInput(value = NULL, placeholder = NULL, ..., id = NULL)
+passwordInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
 numberInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
-datetimeInput(value = NULL, placeholder = NULL, time = TRUE, ...,
-  id = NULL)
+dateInput(value = NULL, placeholder = NULL, ..., id = NULL)
+
+datetimeInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
 monthInput(value = NULL, placeholder = NULL, ..., id = NULL)
 
@@ -52,8 +54,6 @@ the input hint text about the expected value of the input.}
 to \code{NULL}. If specified, a reactive value is available to the shiny server
 function.}
 
-\item{time}{If \code{TRUE}, the}
-
 \item{label}{A character vector specifying a label for the input, defaults to
 \code{NULL}. If a label is specified it is advised, though not necessary, to
 also specify an \code{id} for the input.}
@@ -70,7 +70,7 @@ the empty string or a valid email address.
 \item url - Single-line text input for URLs, validated to contain the empty
 string or valid absolute URL.
 \item tel - Single-line text input for telephone numbers, syntax is not enforced.
-\item obscured (password) - Single-line text input for password, value is obscured.
+\item password - Single-line text input for password, value is obscured.
 \item number - Number picker.
 \item datetime - Date and time picker, no time zone.
 \item date - Year, month, and day picker, no time.

@@ -17,8 +17,6 @@ Currently only FontAwesome icons are available.
 }
 \examples{
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       fontAwesome("thumbs-up"),

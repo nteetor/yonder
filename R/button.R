@@ -64,8 +64,6 @@
 #' button("Danger!", context = "danger", disable = TRUE)
 #'
 #' if (interactive()) {
-#'   library(shiny)
-#'
 #'   shinyApp(
 #'     ui = container(
 #'       listGroup(

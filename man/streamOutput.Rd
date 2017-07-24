@@ -27,8 +27,6 @@ to the user during long running processes.
 }
 \examples{
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       button(id = "trigger", "Go!"),

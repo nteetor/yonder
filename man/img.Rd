@@ -38,8 +38,6 @@ child element and caption.
 }
 \examples{
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       # A figure with a,

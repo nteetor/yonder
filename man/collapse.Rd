@@ -45,8 +45,6 @@ function as a collapse is not a reactive output.
 }
 \examples{
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       row(

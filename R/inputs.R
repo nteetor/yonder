@@ -31,8 +31,6 @@ textualInput <- function(value, placeholder, id, type, ...) {
 #' @param placeholder A character string specifying placeholder text for the
 #'   input, defaults to `NULL`.
 #'
-#' @param time If `TRUE`, the
-#'
 #' @details
 #'
 #' * text - Single-line text input, linebreaks are removed.
@@ -42,7 +40,7 @@ textualInput <- function(value, placeholder, id, type, ...) {
 #' * url - Single-line text input for URLs, validated to contain the empty
 #'   string or valid absolute URL.
 #' * tel - Single-line text input for telephone numbers, syntax is not enforced.
-#' * obscured (password) - Single-line text input for password, value is obscured.
+#' * password - Single-line text input for password, value is obscured.
 #' * number - Number picker.
 #' * datetime - Date and time picker, no time zone.
 #' * date - Year, month, and day picker, no time.
@@ -58,12 +56,6 @@ textualInput <- function(value, placeholder, id, type, ...) {
 #' stub
 #'
 textInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  # if (!re(type, "text|search|email|url|tel|password|number|datetime|date|month|week|time|color")) {
-  #   stop(
-  #     'invalid `` argument, see ?text for valid `type` values',
-  #     call. = FALSE
-  #   )
-  # }
   textualInput(value, placeholder, id, "text", ...)
 }
 
@@ -93,7 +85,7 @@ telephoneInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
 
 #' @rdname textInput
 #' @export
-obscuredInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+passwordInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
   textualInput(value, placeholder, id, "password", ...)
 }
 
@@ -105,8 +97,13 @@ numberInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
 
 #' @rdname textInput
 #' @export
-datetimeInput <- function(value = NULL, placeholder = NULL, time = TRUE, ...,
-                          id = NULL) {
+dateInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
+  textualInput(value, placeholder, id, "date", ...)
+}
+
+#' @rdname textInput
+#' @export
+datetimeInput <- function(value = NULL, placeholder = NULL,  ..., id = NULL) {
   textualInput(
     value, placeholder, id, if (time) "datetime-local" else "date", ...
   )
@@ -192,8 +189,6 @@ fieldset <- function(..., legend = NULL, disabled = FALSE, id = NULL) {
 #' @export
 #' @examples
 #' if (interactive()) {
-#'   library(shiny)
-#'
 #'   shinyApp(
 #'     ui = container(
 #'       formInline(
@@ -289,8 +284,6 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #' @export
 #' @examples
 #' if (interactive()) {
-#'   library(shiny)
-#'
 #'   shinyApp(
 #'     ui = container(
 #'       groupInput(

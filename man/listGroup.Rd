@@ -71,9 +71,6 @@ listGroup(
 )
 
 if (interactive()) {
-  library(shiny)
-  library(ggplot2)
-
   shinyApp(
     ui = container(
       row(

@@ -28,8 +28,6 @@ A select input.
 }
 \examples{
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       formInline(

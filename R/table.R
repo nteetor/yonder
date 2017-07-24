@@ -33,13 +33,11 @@
 #' @export
 #' @examples
 #' if (interactive()) {
-#'   library(shiny)
-#'
 #'   shinyApp(
 #'     ui = container(
 #'       row(
 #'         col(
-#'           dull::tableOutput(
+#'           tableThruput(
 #'             id = "tbl",
 #'             hoverable = TRUE,
 #'             context = "warning",
@@ -47,7 +45,7 @@
 #'           )
 #'         ),
 #'         col(
-#'           dull::tableOutput(
+#'           tableThruput(
 #'             id = "subset",
 #'             borders = TRUE
 #'           )
@@ -55,12 +53,12 @@
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$tbl <- dull::renderTable(
+#'       output$tbl <- renderTable(
 #'         numbered = TRUE,
 #'         iris[1:10, ]
 #'       )
 #'
-#'       output$subset <- dull::renderTable(
+#'       output$subset <- renderTable(
 #'         numbered = TRUE,
 #'         input$tbl
 #'       )

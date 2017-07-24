@@ -22,8 +22,6 @@
 #' @export
 #' @examples
 #' if (interactive()) {
-#'   library(shiny)
-#'
 #'   shinyApp(
 #'     ui = container(
 #'       button(id = "toggle", "Click to show modal"),

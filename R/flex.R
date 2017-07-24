@@ -345,8 +345,6 @@ alignment <- function(align) {
 #' @name flexbox
 #' @examples
 #' if (interactive()) {
-#'   library(shiny)
-#'
 #'   shinyApp(
 #'     ui = container(
 #'

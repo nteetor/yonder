@@ -54,8 +54,6 @@ and is indicates which button or dropdown item was clicked. The value of
 }
 \examples{
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       groupInput(

@@ -528,8 +528,6 @@ Parent flex container with \code{wrap = "reverse"}
 # stub
 
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
 

@@ -134,8 +134,6 @@ than \code{NULL}.
 }
 \examples{
 if (interactive()) {
-  library(shiny)
-
   shinyApp(
     ui = container(
       form(
