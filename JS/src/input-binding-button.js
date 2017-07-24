@@ -7,20 +7,17 @@ $.extend(buttonInputBinding, {
   getValue: function(el) {
     var $el = $(el);
 
-    if ($el.data("count") === "0") {
+    if ($el.data("count") === 0) {
       return null;
     }
 
     return {
       count: parseInt($el.data("count"), 10),
-      value: $el.data("value")
+      value: $el.data("value") || null
     };
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
-  },
-  getType: function(el) {
-    return "dull.button";
   },
   subscribe: function(el, callback) {
     $(el).on("click.buttonInputBinding", function(e) {

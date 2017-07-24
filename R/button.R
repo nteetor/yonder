@@ -209,23 +209,3 @@ updateButton <- function(id, count = NULL, context = NULL,
     )
   )
 }
-
-# shiny::registerInputHandler(
-#   type = "dull.button",
-#   force = TRUE,
-#   fun = function(val, shinysession, name) {
-#     # hacky way around the initial 0 value of `button`
-#     class(val) <- c(class(val), "dullButtonValue")
-#     val
-#   }
-# )
-
-# assignInNamespace(
-#   "isNullEvent",
-#   function(value) {
-#     is.null(value) ||
-#       (inherits(value, "shinyActionButtonValue") && value == 0) ||
-#       (inherits(value, "dullButtonValue") && value$count == 0)
-#   },
-#   ns = "shiny"
-# )
