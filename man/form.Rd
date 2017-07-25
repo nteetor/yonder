@@ -36,7 +36,7 @@ For \code{updateFormGroup}, a character string specifying the id of a form
 group to update.}
 
 \item{session}{The \code{session} object passed to a shiny server function,
-defaults to \code{\link[shiny:getDefaultReactiveDomain]{shiny::getDefaultReactiveDomain()}}.}
+defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 
 \item{label}{A character vector specifying a label for the form group, if
 \code{fieldset} is \code{TRUE}, the label is rendered inside a \code{<legend>} element

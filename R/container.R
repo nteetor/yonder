@@ -1,4 +1,4 @@
-#' Grid System and Responsive Layout
+#' Grid ystem and esponsive layout
 #'
 #' Flexbox, grid layout, containers, rows, and columns (oh my). Arguments `width` and
 #' `order` can be applied depending on the width of the page, see the details

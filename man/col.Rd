@@ -4,7 +4,7 @@
 \alias{col}
 \alias{row}
 \alias{container}
-\title{Grid System and Responsive Layout}
+\title{Grid ystem and esponsive layout}
 \usage{
 col(..., width = NULL, offset = NULL, align = NULL, order = NULL)
 

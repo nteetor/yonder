@@ -5,12 +5,21 @@
 \alias{updateCheckbox}
 \title{Checkbox inputs and checkbox bars}
 \usage{
-checkboxInput(labels = NULL, values = NULL, checked = NULL,
-  inline = FALSE, bar = FALSE, context = "secondary", ..., id = NULL)
+checkboxInput(..., inline = FALSE, id = NULL)
 
-updateCheckbox(id, context, session = getDefaultReactiveDomain())
+updateCheckbox(id, disable = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
+\item{...}{Additional named arguments passed on as HTML attributes to the
+parent element.}
+
+\item{inline}{If \code{TRUE}, the checkbox options are rendered inline, otherwise
+the checkbox options appear on individual lines, defaults to \code{FALSE}.}
+
+\item{id}{A character string specifying the id of the checkbox bar, if
+specified a reactive input is available to the shiny server function,
+defaults to \code{NULL}.}
+
 \item{labels}{A character vector specifying the labels of the checkboxes,
 defaults to \code{NULL}.}
 
@@ -21,9 +30,6 @@ must be the same length as \code{labels}, defaults to \code{NULL}.}
 a checked state, if specified must be the same length as \code{labels}, defaults
 to \code{NULL}. If unspecified all checkboxes render in an unchecked state.}
 
-\item{inline}{If \code{TRUE}, the checkbox options are rendered inline, otherwise
-the checkbox options appear on individual lines, defaults to \code{FALSE}.}
-
 \item{bar}{If \code{TRUE}, changes only the visual appearance of a group of
 checkboxes, checkboxes are rendered as a button bar or set of buttons,
 defaults to \code{FALSE}.}
@@ -31,13 +37,6 @@ defaults to \code{FALSE}.}
 \item{context}{Applied only when \code{bar = TRUE}, one of \code{"primary"},
 \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, or \code{"danger"} specifying
 the visual context of the checkbox bar, defaults to \code{"secondary"}.}
-
-\item{...}{Additional named arguments passed on as HTML attributes to the
-parent element.}
-
-\item{id}{A character string specifying the id of the checkbox bar, if
-specified a reactive input is available to the shiny server function,
-defaults to \code{NULL}.}
 }
 \description{
 A reactive input for selecting one or more values. A checkbox bar is a
@@ -46,7 +45,37 @@ of buttons, but still acts as a checkbox group. Because checkbox bars are
 pseudo-buttons a visual context may be specified.
 }
 \examples{
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          width = 4,
+          formGroup(
+            legend = "",
+            checkboxInput(
+              checkbox("Vegetarian", "veg"),
+              checkbox("Vegan", "vegan")
+            )
+          ),
+          fieldset(
+            legend = "Course selection",
+            formGroup(
 
-stub
+            checkboxInput(
+              checkbox("")
+            )
+          )
+        )
+      ),
+      col(
+        width = 8,
+        tableThruput(
+
+        )
+      )
+    )
+  )
+}
 
 }

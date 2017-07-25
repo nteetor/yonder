@@ -2,7 +2,7 @@ var checkboxInputBinding = new Shiny.InputBinding();
 
 $.extend(checkboxInputBinding, {
   find: function(scope){
-    return $(scope).find(".dull-checkbox[id]");
+    return $(scope).find(".dull-checkbox-input[id]");
   },
   getValue: function(el) {
     var $val = $(el)
@@ -45,3 +45,25 @@ $.extend(checkboxInputBinding, {
 });
 
 Shiny.inputBindings.register(checkboxInputBinding, "dull.checkboxInput");
+
+// Not to be confused with checkbox*Input*Binding
+var checkboxBinding = new Shiny.InputBinding();
+
+$.extend(checkboxBinding, {
+  find: function(scope) {
+    return $(scope).find(".dull-checkbox[id]");
+  },
+  getValue: function(el) {
+    return null;
+  },
+  getState: function(el, data) {
+    return { value: this.getValue(el) };
+  },
+  receiveMessage: function(el, data) {
+    if (data.disable !== null) {
+      $(el).find("input[type=\"checkbox\"]").prop("disabled", data.disable);
+    }
+  }
+});
+
+Shiny.inputBindings.register(checkboxBinding);

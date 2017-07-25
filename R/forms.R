@@ -38,7 +38,7 @@
 #'   passed as HTML attributes to the parent element.
 #'
 #' @param session The `session` object passed to a shiny server function,
-#'   defaults to [shiny::getDefaultReactiveDomain()].
+#'   defaults to [getDefaultReactiveDomain()].
 #'
 #' @details
 #'

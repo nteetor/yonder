@@ -35,125 +35,92 @@
 #'
 #' @export
 #' @examples
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           width = 4,
+#'           formGroup(
+#'             legend = "",
+#'             checkboxInput(
+#'               checkbox("Vegetarian", "veg"),
+#'               checkbox("Vegan", "vegan")
+#'             )
+#'           ),
+#'           fieldset(
+#'             legend = "Course selection",
+#'             formGroup(
 #'
-#' stub
+#'             checkboxInput(
+#'               checkbox("")
+#'             )
+#'           )
+#'         )
+#'       ),
+#'       col(
+#'         width = 8,
+#'         tableThruput(
 #'
-checkboxInput <- function(labels = NULL, values = NULL, checked = NULL,
-                          inline = FALSE, bar = FALSE, context = "secondary",
-                          ..., id = NULL) {
-  if (length(labels) != length(values)) {
-    stop(
-      "invalid `checkboxInput` arguments, `labels` and `values` must be the ",
-      "same length",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(checked) && length(checked) != length(labels)) {
-    stop(
-      "invalid `checkboxInput` arguments, `checked` and `labels` must be the ",
-      "same length",
-      call. = FALSE
-    )
-  }
-
-
-  #
-  # checkbox bar
-  #
-  if (bar) {
-    if (!re(context, "primary|secondary|success|info|warning|danger", len0 = FALSE)) {
-      stop(
-        "invalid `checkboxBarInput` argument, `context` must be one of ",
-        '"primary", "secondary", "success", "info", "warning", or "danger"',
-        call. = FALSE
-      )
-    }
-
-    return(
-      tags$div(
-        class = collate(
-          "dull-checkbox",
-          "form-check",
-          "btn-group"
-        ),
-        `data-toggle` = "buttons",
-        if (length(labels) > 0) {
-          Map(
-            function(label, value, check) {
-              tags$label(
-                class = collate(
-                  "btn",
-                  paste0("btn-", context)
-                ),
-                tags$input(
-                  type = "checkbox",
-                  autocomplete = "off",
-                  `data-value` = value,
-                  checked = if (check) NA,
-                  label
-                )
-              )
-            },
-            labels,
-            values,
-            checked %||% FALSE
-          )
-        },
-        ...,
-        id = id,
-        bootstrap()
-      )
-    )
-  }
-
+#'         )
+#'       )
+#'     )
+#'   )
+#' }
+#'
+checkboxInput <- function(..., inline = FALSE, id = NULL) {
   tags$div(
     class = collate(
-      "dull-checkbox",
+      "dull-checkbox-input",
       "form-check",
       if (!inline) "custom-controls-stacked"
     ),
-    if (length(labels) > 0) {
-      Map(
-        function(label, value, check) {
-          tags$label(
-            class = collate(
-              "custom-control",
-              "custom-checkbox"
-            ),
-            tags$input(
-              class = "custom-control-input",
-              type = "checkbox",
-              `data-value` = value,
-              checked = if (check) NA,
-              tags$span(
-                class = "custom-control-indicator"
-              ),
-              tags$span(
-                class = "custom-control-description",
-                label
-              )
-            )
-          )
-        },
-        labels,
-        values,
-        checked %||% FALSE
-      )
-    },
     ...,
     id = id,
     bootstrap()
   )
 }
 
+checkbox <- function(label = NULL, value = NULL, checked = FALSE, ...,
+                     id = NULL) {
+  tags$label(
+    class = collate(
+      "dull-checkbox",
+      "custom-control",
+      "custom-checkbox"
+    ),
+    tags$input(
+      class = "custom-control-input",
+      type = "checkbox",
+      id = id,
+      `data-value` = value,
+      checked = if (checked) NA
+    ),
+    tags$span(
+      class = "custom-control-indicator"
+    ),
+    tags$span(
+      class = "custom-control-description",
+      label
+    )
+  )
+}
+
 #' @rdname checkboxInput
 #' @export
-updateCheckbox <- function(id, context, session = getDefaultReactiveDomain()) {
-  if (!(context %in% c("success", "warning", "danger"))) {
+updateCheckbox <- function(id, disable = NULL, session = getDefaultReactiveDomain()) {
+  # if (!(context %in% c("success", "warning", "danger"))) {
+  #   stop(
+  #     'invalid `updateCheckbox` argument, `context` must be one "success", ',
+  #     '"warning", or "danger"',
+  #     call. = FALSE
+  #   )
+  # }
+
+  if (!is.null(disable) && (!is.logical(disable) || !length(disable))) {
     stop(
-      'invalid `updateCheckbox` argument, `context` must be one "success", ',
-      '"warning", or "danger"',
+      "invalid `updateCheckbox` argument, `disable` must be TRUE, FALSE, or ",
+      "NULL",
       call. = FALSE
     )
   }
@@ -161,7 +128,57 @@ updateCheckbox <- function(id, context, session = getDefaultReactiveDomain()) {
   session$sendInputMessage(
     id,
     list(
-      context = paste0("has-", context)
+      disable = disable
     )
   )
 }
+
+
+#
+# checkbox bar
+#
+# if (bar) {
+#   if (!re(context, "primary|secondary|success|info|warning|danger", len0 = FALSE)) {
+#     stop(
+#       "invalid `checkboxBarInput` argument, `context` must be one of ",
+#       '"primary", "secondary", "success", "info", "warning", or "danger"',
+#       call. = FALSE
+#     )
+#   }
+#
+#   return(
+#     tags$div(
+#       class = collate(
+#         "dull-checkbox",
+#         "form-check",
+#         "btn-group"
+#       ),
+#       `data-toggle` = "buttons",
+#       if (length(labels) > 0) {
+#         Map(
+#           function(label, value, check) {
+#             tags$label(
+#               class = collate(
+#                 "btn",
+#                 paste0("btn-", context)
+#               ),
+#               tags$input(
+#                 type = "checkbox",
+#                 autocomplete = "off",
+#                 `data-value` = value,
+#                 checked = if (check) NA,
+#                 label
+#               )
+#             )
+#           },
+#           labels,
+#           values,
+#           checked %||% FALSE
+#         )
+#       },
+#       ...,
+#       id = id,
+#       bootstrap()
+#     )
+#   )
+# }

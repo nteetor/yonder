@@ -222,11 +222,13 @@ updateFieldset <- function() {
 selectInput <- function(..., id = NULL) {
   tags$select(
     class = collate(
-      "dull-select",
+      "dull-select-input",
       "dull-input",
       "custom-select"
     ),
-    ...
+    ...,
+    id = id,
+    bootstrap()
   )
 }
 
