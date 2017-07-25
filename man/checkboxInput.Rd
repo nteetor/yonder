@@ -2,41 +2,46 @@
 % Please edit documentation in R/checkbox.R
 \name{checkboxInput}
 \alias{checkboxInput}
-\alias{updateCheckbox}
+\alias{checkbox}
+\alias{updateCheckboxInput}
 \title{Checkbox inputs and checkbox bars}
 \usage{
 checkboxInput(..., inline = FALSE, id = NULL)
 
-updateCheckbox(id, disable = NULL, session = getDefaultReactiveDomain())
+checkbox(label = NULL, value = NULL, checked = FALSE, ...)
+
+updateCheckboxInput(id, context = NULL, disable = NULL,
+  session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{...}{Additional named arguments passed on as HTML attributes to the
-parent element.}
+\item{...}{Checkboxes passed to a checkbox input or additional named
+arguments passed on as HTML attributes to the respective parent element.}
 
-\item{inline}{If \code{TRUE}, the checkbox options are rendered inline, otherwise
-the checkbox options appear on individual lines, defaults to \code{FALSE}.}
+\item{inline}{If \code{TRUE}, the checkbox input is rendered inline, otherwise
+individual checkboxes are put on separate lines, defaults to \code{FALSE}.}
 
-\item{id}{A character string specifying the id of the checkbox bar, if
-specified a reactive input is available to the shiny server function,
-defaults to \code{NULL}.}
+\item{id}{A character string specifying the id of the checkbox input,
+defaults to \code{NULL}, in which case the checkbox element is rendered, but a
+reactive value is not passed to the shiny server function.}
 
-\item{labels}{A character vector specifying the labels of the checkboxes,
-defaults to \code{NULL}.}
+\item{label}{A character string specifying a label for the checkbox, defaults
+to \code{NULL}, in which case a label is not added.}
 
-\item{values}{A character vector specifying the values of the checkboxes,
-must be the same length as \code{labels}, defaults to \code{NULL}.}
+\item{checked}{One of \code{TRUE} or \code{FALSE} specifying if the checkbox renders in
+the checked state, defaults to \code{FALSE}.}
 
-\item{checked}{A logical vector specifying which of the checkboxes render in
-a checked state, if specified must be the same length as \code{labels}, defaults
-to \code{NULL}. If unspecified all checkboxes render in an unchecked state.}
+\item{context}{One of \code{"success"}, \code{"warning"}, or \code{"danger"} specifying a
+visual context to add to a checkbox input, specifying \code{"none"} will remove
+any context on the checkbox, defaults to \code{NULL}. Whenever \code{NULL} the
+current checkbox context remains unchanged.}
 
-\item{bar}{If \code{TRUE}, changes only the visual appearance of a group of
-checkboxes, checkboxes are rendered as a button bar or set of buttons,
-defaults to \code{FALSE}.}
+\item{disable}{One of \code{TRUE}, \code{FALSE}, or a value coercible to either
+specifying whether to disable or enable a checkbox input, by default
+checkbox inputs render in an enabled state, defaults to \code{NULL}. Whenever
+\code{NULL} the current state of the checkbox remains unchanged.}
 
-\item{context}{Applied only when \code{bar = TRUE}, one of \code{"primary"},
-\code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, or \code{"danger"} specifying
-the visual context of the checkbox bar, defaults to \code{"secondary"}.}
+\item{values}{A character string specifying a value for the checkbox,
+defaults to \code{NULL}, in which case the value of the checkbox is \code{NULL}.}
 }
 \description{
 A reactive input for selecting one or more values. A checkbox bar is a
@@ -50,31 +55,48 @@ if (interactive()) {
     ui = container(
       row(
         col(
-          width = 4,
-          formGroup(
-            legend = "",
-            checkboxInput(
-              checkbox("Vegetarian", "veg"),
-              checkbox("Vegan", "vegan")
-            )
+          checkboxInput(
+            id = "choices",
+            checkbox("Choice 1", 1),
+            checkbox("Choice 2", 2),
+            checkbox("Choice 3", 3)
           ),
-          fieldset(
-            legend = "Course selection",
-            formGroup(
-
-            checkboxInput(
-              checkbox("")
-            )
+          button(
+            id = "disable",
+            label = "Disable / Enable"
+          )
+        ),
+        col(
+          checkboxInput(
+            id = "options",
+            checkbox("Option 1", 1),
+            checkbox("Option 2", 2),
+            checkbox("Option 3", 3)
+          ),
+          dropdownInput(
+            id = "context",
+            label = "Apply a context",
+            dropdownItem("success", "success"),
+            dropdownItem("warning", "warning"),
+            dropdownItem("danger", "danger"),
+            dropdownItem("none", "none")
           )
         )
-      ),
-      col(
-        width = 8,
-        tableThruput(
-
-        )
       )
-    )
+    ),
+    server = function(input, output) {
+      observe({
+        req(input$disable)
+
+        updateCheckbox("choices", disable = input$disable$count \%\% 2)
+      })
+
+      observe({
+        req(input$context)
+
+        updateCheckbox("options", context = input$context)
+      })
+    }
   )
 }
 

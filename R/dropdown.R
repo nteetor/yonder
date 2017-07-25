@@ -1,9 +1,11 @@
-#' Dropdown Menu
+#' Dropdown input
 #'
-#' Dropdown menus function similar to a set of buttons. The initial dropdown
-#' open does not trigger a reactive event, but a subsequent click on one of the
-#' menu choices triggers a reactive event. The value of a dropdown item may
-#' be specified in `dropdownItem`, otherwise the default value is `NULL`.
+#' Dropdown inputs, dropdown menus, function similar to a set of buttons. The
+#' initial dropdown open does not trigger a reactive event, but a subsequent
+#' click on one of the menu choices triggers a reactive event. The value of a
+#' dropdown item may be specified in `dropdownItem`, otherwise the default value
+#' is `NULL`. The reactive value of the dropdown input is the value of the
+#' clicked dropdown item.
 #'
 #' @param ... Any number of dropdown items passed to `dropdown` or additional
 #'   named arguments passed as HTML attributes to the respective parent element.
@@ -35,13 +37,13 @@
 #'
 #' @export
 #' @examples
-#' dropdown(
+#' dropdownInput(
 #'   label = "Secondary",
 #'   dropdownItem("Option 1"),
 #'   dropdownItem("Option 2")
 #' )
 #'
-#' dropdown(
+#' dropdownInput(
 #'   id = "flavor",
 #'   label = "Ice cream flavors",
 #'   dropdownItem("Vanilla", "vanilla"),
@@ -54,7 +56,7 @@
 #'     ui = container(
 #'       row(
 #'         col(
-#'           dropdown(
+#'           dropdownInput(
 #'             id = "desserts",
 #'             label = "Pick a dessert to learn more",
 #'             align = "right",
@@ -67,7 +69,7 @@
 #'           )
 #'         ),
 #'         col(
-#'           dropdown(
+#'           dropdownInput(
 #'             id = "spices",
 #'             label = "Check for a spice",
 #'             dropdownItem("Cardamom", "cardamom"),
@@ -89,11 +91,11 @@
 #'   )
 #' }
 #'
-dropdown <- function(..., label = NULL, context = "secondary", split = FALSE,
-                     align = "left", dropup = FALSE) {
+dropdownInput <- function(..., label = NULL, context = "secondary",
+                          split = FALSE, align = "left", dropup = FALSE) {
   if (!re(context, "primary|secondary|success|info|warning|danger", len0 = FALSE)) {
     stop(
-      'invalid `dropdown` argument, `context` must be one of "primary", ',
+      'invalid `dropdownInput` argument, `context` must be one of "primary", ',
       '"secondary", "success", "info", "warning", or "danger"',
       call. = FALSE
     )
@@ -101,7 +103,8 @@ dropdown <- function(..., label = NULL, context = "secondary", split = FALSE,
 
   if (!re(align, "left|right", len0 = FALSE)) {
     stop(
-      'invalid `dropdown` argument, `align` must be one of "left" or "right"',
+      'invalid `dropdownInput` argument, `align` must be one of "left" or ',
+      '"right"',
       call. = FALSE
     )
   }
@@ -113,7 +116,7 @@ dropdown <- function(..., label = NULL, context = "secondary", split = FALSE,
   tagConcatAttributes(
     tags$div(
       class = collate(
-        "dull-dropdown",
+        "dull-dropdown-input",
         "btn-group",
         if (dropup) "dropup" else "dropdown"
       ),
@@ -141,7 +144,7 @@ dropdown <- function(..., label = NULL, context = "secondary", split = FALSE,
   )
 }
 
-#' @rdname dropdown
+#' @rdname dropdownInput
 #' @export
 dropdownItem <- function(label = NULL, value = NULL, disabled = FALSE, ...) {
   tags$a(
@@ -156,13 +159,13 @@ dropdownItem <- function(label = NULL, value = NULL, disabled = FALSE, ...) {
   )
 }
 
-#' @rdname dropdown
+#' @rdname dropdownInput
 #' @export
 dropdownDivider <- function() {
   tags$div(class = "dropdown-divider")
 }
 
-#' @rdname dropdown
+#' @rdname dropdownInput
 #' @export
 dropdownHeader <- function(label) {
   tags$h6(class = "dropdown-header", label)

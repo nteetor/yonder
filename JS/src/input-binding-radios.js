@@ -1,23 +1,47 @@
-var radiosInputBinding = new Shiny.InputBinding();
+var radioInputBinding = new Shiny.InputBinding();
 
-$.extend(radiosInputBinding, {
+$.extend(radioInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-radios[id]");
+    return $(scope).find(".dull-radio-input[id]");
   },
   getValue: function(el) {
-    return $(document).find(".dull-radios input:radio:checked").val();
+    var $val = $(el)
+      .find("input[type=\"radio\"]:checked:not(:disabled)")
+      .data("value");
+    return $val === undefined ? null : $val;
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function(el, callback) {
-    $(el).on("change.radiosInputBinding", function(e) {
+    $(el).on("change.radioInputBinding", function(e) {
       callback();
     });
   },
   unsubscribe: function(el) {
-    $(el).off(".radiosInputBinding");
+    $(el).off(".radioInputBinding");
+  },
+  receiveMessage: function(el, data) {
+    var $el = $(el);
+
+    if (data.context) {
+      $el.attr("class", function(i, c) {
+        return c.replace(/has-(success|warning|danger)/g, "");
+      });
+
+      if (data.context !== "none") {
+        $el.addClass("has-" + data.context);
+      }
+    }
+
+    if (data.disable !== null) {
+      $el.find("input[type=\"radio\"]").each(function(i, e) {
+        $(e).prop("disabled", data.disable);
+      });
+    }
+
+    $el.trigger("change");
   }
 });
 
-Shiny.inputBindings.register(radiosInputBinding, "dull.radiosInput");
+Shiny.inputBindings.register(radioInputBinding, "dull.radioInput");

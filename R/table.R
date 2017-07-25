@@ -111,6 +111,14 @@ renderTable <- function(expr, numbered = FALSE, env = parent.frame(),
       )
     }
 
+    if (!is.data.frame(tbl)) {
+      stop(
+        "invalid `renderTable` `expr` return value, expecting a data frame, ",
+        "but got ", class(tbl),
+        call. = FALSE
+      )
+    }
+
     headers <- as.character(
       tags$thead(
         tags$tr(

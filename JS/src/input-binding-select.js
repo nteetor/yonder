@@ -5,7 +5,13 @@ $.extend(selectInputBinding, {
     return $(scope).find(".dull-select-input");
   },
   getValue: function(el) {
-    return $(el).val();
+    return $(el)
+      .find(":checked")
+      .map(function(i, e) {
+        var $val = $(e).data("value");
+        return $val === undefined ? null : $val;
+      })
+      .get();
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };

@@ -2,7 +2,7 @@ var dropdownInputBinding = new Shiny.InputBinding();
 
 $.extend(dropdownInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-dropdown[id]");
+    return $(scope).find(".dull-dropdown-input[id]");
   },
   getValue: function(el) {
     return $(el).data("value") || null;

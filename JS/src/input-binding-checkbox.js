@@ -6,7 +6,7 @@ $.extend(checkboxInputBinding, {
   },
   getValue: function(el) {
     var $val = $(el)
-      .find("input[type=\"checkbox\"]:checked")
+      .find("input[type=\"checkbox\"]:checked:not(:disabled)")
       .map(function(i, e) {
         return $(e).data("value");
       })
@@ -37,7 +37,16 @@ $.extend(checkboxInputBinding, {
       $el.attr("class", function(i, c) {
         return c.replace(/has-(success|warning|danger)/g, "");
       });
-      $el.addClass(data.context);
+
+      if (data.context !== "none") {
+        $el.addClass("has-" + data.context);
+      }
+    }
+
+    if (data.disable !== null) {
+      $el.find("input[type=\"checkbox\"]").each(function(i, e) {
+        $(e).prop("disabled", data.disable);
+      });
     }
 
     $el.trigger("change");
@@ -45,25 +54,3 @@ $.extend(checkboxInputBinding, {
 });
 
 Shiny.inputBindings.register(checkboxInputBinding, "dull.checkboxInput");
-
-// Not to be confused with checkbox*Input*Binding
-var checkboxBinding = new Shiny.InputBinding();
-
-$.extend(checkboxBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-checkbox[id]");
-  },
-  getValue: function(el) {
-    return null;
-  },
-  getState: function(el, data) {
-    return { value: this.getValue(el) };
-  },
-  receiveMessage: function(el, data) {
-    if (data.disable !== null) {
-      $(el).find("input[type=\"checkbox\"]").prop("disabled", data.disable);
-    }
-  }
-});
-
-Shiny.inputBindings.register(checkboxBinding);

@@ -192,7 +192,7 @@ $.extend(checkboxInputBinding, {
     return $(scope).find(".dull-checkbox-input[id]");
   },
   getValue: function getValue(el) {
-    var $val = $(el).find("input[type=\"checkbox\"]:checked").map(function (i, e) {
+    var $val = $(el).find("input[type=\"checkbox\"]:checked:not(:disabled)").map(function (i, e) {
       return $(e).data("value");
     }).get();
     return $val === undefined ? null : $val;
@@ -221,7 +221,16 @@ $.extend(checkboxInputBinding, {
       $el.attr("class", function (i, c) {
         return c.replace(/has-(success|warning|danger)/g, "");
       });
-      $el.addClass(data.context);
+
+      if (data.context !== "none") {
+        $el.addClass("has-" + data.context);
+      }
+    }
+
+    if (data.disable !== null) {
+      $el.find("input[type=\"checkbox\"]").each(function (i, e) {
+        $(e).prop("disabled", data.disable);
+      });
     }
 
     $el.trigger("change");
@@ -230,33 +239,11 @@ $.extend(checkboxInputBinding, {
 
 Shiny.inputBindings.register(checkboxInputBinding, "dull.checkboxInput");
 
-// Not to be confused with checkbox*Input*Binding
-var checkboxBinding = new Shiny.InputBinding();
-
-$.extend(checkboxBinding, {
-  find: function find(scope) {
-    return $(scope).find(".dull-checkbox[id]");
-  },
-  getValue: function getValue(el) {
-    return null;
-  },
-  getState: function getState(el, data) {
-    return { value: this.getValue(el) };
-  },
-  receiveMessage: function receiveMessage(el, data) {
-    if (data.disable !== null) {
-      $(el).find("input[type=\"checkbox\"]").prop("disabled", data.disable);
-    }
-  }
-});
-
-Shiny.inputBindings.register(checkboxBinding);
-
 var dropdownInputBinding = new Shiny.InputBinding();
 
 $.extend(dropdownInputBinding, {
   find: function find(scope) {
-    return $(scope).find(".dull-dropdown[id]");
+    return $(scope).find(".dull-dropdown-input[id]");
   },
   getValue: function getValue(el) {
     return $(el).data("value") || null;
@@ -554,29 +541,30 @@ $.extend(listGroupItemBinding, {
 
 Shiny.inputBindings.register(listGroupItemBinding, "dull.listGroupItem");
 
-var radiosInputBinding = new Shiny.InputBinding();
+var radioInputBinding = new Shiny.InputBinding();
 
-$.extend(radiosInputBinding, {
+$.extend(radioInputBinding, {
   find: function find(scope) {
-    return $(scope).find(".dull-radios[id]");
+    return $(scope).find(".dull-radio-input[id]");
   },
   getValue: function getValue(el) {
-    return $(document).find(".dull-radios input:radio:checked").val();
+    var $val = $(el).find("input[type=\"radio\"]:checked:not(:disabled)").data("value");
+    return $val === undefined ? null : $val;
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function subscribe(el, callback) {
-    $(el).on("change.radiosInputBinding", function (e) {
+    $(el).on("change.radioInputBinding", function (e) {
       callback();
     });
   },
   unsubscribe: function unsubscribe(el) {
-    $(el).off(".radiosInputBinding");
+    $(el).off(".radioInputBinding");
   }
 });
 
-Shiny.inputBindings.register(radiosInputBinding, "dull.radiosInput");
+Shiny.inputBindings.register(radioInputBinding, "dull.radioInput");
 
 var selectInputBinding = new Shiny.InputBinding();
 
@@ -585,7 +573,10 @@ $.extend(selectInputBinding, {
     return $(scope).find(".dull-select-input");
   },
   getValue: function getValue(el) {
-    return $(el).val();
+    return $(el).find(":checked").map(function (i, e) {
+      var $val = $(e).data("value");
+      return $val === undefined ? null : $val;
+    }).get();
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };

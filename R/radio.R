@@ -1,108 +1,90 @@
-#' Radios
+#' Radio inputs
 #'
-#' Create an input of one or more radio inputs. If an `id` parameter is
-#' specified the `name` attribute of each child radio element is given this
-#' value.
+#' Create a reactive radio input of one or more radio controls.
 #'
-#' @param id A character string specifying the id of the radio input,
+#' @param id A character string specifying the id of the radio input, defaults
+#'   to `NULL`, in which case the radio element is rendered, but a reactive
+#'   value is not passed to the shiny server function.
 #'
-#' @param labels A list or character vectors of labels for each of the
-#'   individual radio elements, defaults to `NULL`.
+#' @param label A character string specifying a label for the radio control,
+#'   defaults to `NULL`, in which case a label is not added.
 #'
-#' @param values A list or vector of values for each of the individual radio
-#'   elements, defaults to `NULL`.
+#' @param value A character string specifying a value for the radio control,
+#'   defaults to `NULL`, in which case the value of the radio is also `NULL`.
 #'
-#' @param selected A logical vector specifying which of the radio choices
-#'   renders in the selected state, defaults to `NULL`. If unspecified the first
-#'   value is selected by default.
+#' @param checked One of `TRUE` or `FALSE` specifying if the radio control
+#'   renders in a checked state, defaults to `FALSE`.
 #'
-#' @param inline If `TRUE`, the radio options render inline, otherwise the
-#'   options appear on individual lines, defaults to `FALSE`.
+#' @param inline If `TRUE`, the radio input renders inline, otherwise the
+#'   radio controls render on separate lines, defaults to `FALSE`.
 #'
-#' @param ... Additional named arguments passed on to the parent element as
-#'   HTML attributes.
+#' @param ... Radio controls passed to a radio input or additional named
+#'   arguments passed on to the respective parent element as HTML attributes.
 #'
 #' @family inputs
 #' @export
 #' @examples
+#' if (interactive()) {
 #'
-#' stub
 #'
-radioInput <- function(labels = NULL, values = NULL, selected = NULL,
-                       inline = FALSE, ..., id = NULL) {
-  if (length(labels) != length(values)) {
-    stop(
-      "invalid `radioInput` arguments, `labels` and `values` must be the ",
-      "same length",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(selected)) {
-    if (!is.logical(selected)) {
-      stop(
-        "invalid `radioInput` argument, `selected` must be a logical vector",
-        call. = FALSE
-      )
-    }
-
-    if (sum(selected) != 1) {
-      stop(
-        "invalid `radioInput` argument, `selected` must contain only one TRUE ",
-        "value",
-        call. = FALSE
-      )
-    }
-
-    if (length(selected) != length(labels)) {
-      stop(
-        "invalid `radioInput` argument, `selected` and `labels` must be the ",
-        "same length",
-        call. = FALSE
-      )
-    }
-  }
-
-  selected <- selected %||% c(TRUE, vector("logical", length(labels) - 1))
-
+#' }
+#'
+radioInput <- function(..., inline = FALSE, id = NULL) {
   tags$div(
     class = collate(
-      "dull-radios",
+      "dull-radio-input",
       "dull-input",
       "form-group",
       if (!inline) "custom-controls-stacked"
     ),
-    if (!is.null(labels)) {
-      Map(
-        function(label, value, check) {
-          tags$label(
-            class = collate(
-              "custom-control",
-              "custom-radio"
-            ),
-            tags$input(
-              class = "custom-control-input",
-              type = "radio",
-              name = id,
-              value = value,
-              checked = if (check) NA
-            ),
-            tags$span(
-              class = "custom-control-indicator"
-            ),
-            tags$span(
-              class = "custom-control-description",
-              label
-            )
-          )
-        },
-        labels,
-        values,
-        selected
-      )
-    },
     ...,
     id = id,
     bootstrap()
+  )
+}
+
+#' @rdname radioInput
+#' @export
+radio <- function(label = NULL, value = NULL, checked = FALSE, ...) {
+  tags$label(
+    class = collate(
+      "custom-control",
+      "custom-radio"
+    ),
+    tags$input(
+      class = "custom-control-input",
+      type = "radio",
+      name = id,
+      `data-value` = value,
+      checked = if (checked) NA
+    ),
+    tags$span(
+      class = "custom-control-indicator"
+    ),
+    tags$span(
+      class = "custom-control-description",
+      label
+    )
+  )
+}
+
+#' @rdname radioInput
+#' @export
+updateRadioInput <- function(id, context = NULL, disable = NULL,
+                             session = getDefaultReactiveDomain()) {
+  if (!re(context, "success|warning|danger|none")) {
+    stop(
+      "invalid `updateRadioInput` argument, `context` must be one of ",
+      '"success", "warning", "danger", or "none"',
+      call. = FALSE
+    )
+  }
+
+  session$sendInputMessage(
+    id,
+    list(
+      disable = disable,
+      context = context
+    )
   )
 }

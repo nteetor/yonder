@@ -236,7 +236,7 @@ selectInput <- function(..., id = NULL) {
 #' @export
 option <- function(label = NULL, value = NULL, selected = FALSE) {
   tags$option(
-    value = value,
+    `data-value` = value,
     selected = if (selected) NA,
     label
   )
