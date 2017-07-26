@@ -24,7 +24,7 @@ $.extend(checkboxInputBinding, {
   },
   subscribe: function(el, callback) {
     $(el).on("change.checkboxInputBinding", function(e) {
-      callback(true);
+      callback();
     });
   },
   unsubscribe: function(el) {

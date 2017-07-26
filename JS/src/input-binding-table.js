@@ -5,8 +5,8 @@ $.extend(tableInputBinding, {
     return $(scope).find(".dull-table[id]");
   },
   getValue: function(el) {
-    var arr = $(el).find('thead tr,.dull-row').get().map(function(row) {
-      return $(row).find('th:not([scope]),td').get().map(function(cell) {
+    var arr = $(el).find("thead tr,.dull-row").get().map(function(row) {
+      return $(row).find("th:not([scope]),td").get().map(function(cell) {
         return $(cell).html();
       });
     });

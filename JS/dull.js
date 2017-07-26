@@ -208,7 +208,7 @@ $.extend(checkboxInputBinding, {
   },
   subscribe: function subscribe(el, callback) {
     $(el).on("change.checkboxInputBinding", function (e) {
-      callback(true);
+      callback();
     });
   },
   unsubscribe: function unsubscribe(el) {
@@ -561,6 +561,27 @@ $.extend(radioInputBinding, {
   },
   unsubscribe: function unsubscribe(el) {
     $(el).off(".radioInputBinding");
+  },
+  receiveMessage: function receiveMessage(el, data) {
+    var $el = $(el);
+
+    if (data.context) {
+      $el.attr("class", function (i, c) {
+        return c.replace(/has-(success|warning|danger)/g, "");
+      });
+
+      if (data.context !== "none") {
+        $el.addClass("has-" + data.context);
+      }
+    }
+
+    if (data.disable !== null) {
+      $el.find("input[type=\"radio\"]").each(function (i, e) {
+        $(e).prop("disabled", data.disable);
+      });
+    }
+
+    $el.trigger("change");
   }
 });
 
@@ -600,8 +621,8 @@ $.extend(tableInputBinding, {
     return $(scope).find(".dull-table[id]");
   },
   getValue: function getValue(el) {
-    var arr = $(el).find('thead tr,.dull-row').get().map(function (row) {
-      return $(row).find('th:not([scope]),td').get().map(function (cell) {
+    var arr = $(el).find("thead tr,.dull-row").get().map(function (row) {
+      return $(row).find("th:not([scope]),td").get().map(function (cell) {
         return $(cell).html();
       });
     });
@@ -629,9 +650,9 @@ $.extend(tableInputBinding, {
 
 Shiny.inputBindings.register(tableInputBinding, "dull.tableInput");
 
-var textInputBinding = new Shiny.InputBinding();
+var textualInputBinding = new Shiny.InputBinding();
 
-$.extend(textInputBinding, {
+$.extend(textualInputBinding, {
   find: function find(scope) {
     return $(scope).find(".dull-textual[id]");
   },
@@ -659,16 +680,16 @@ $.extend(textInputBinding, {
     };
   },
   subscribe: function subscribe(el, callback) {
-    $(el).on("change.textInputBinding", function (e) {
+    $(el).on("change.textualInputBinding", function (e) {
       callback(true);
     });
   },
   unsubscribe: function unsubscribe(el) {
-    $(el).off(".textInputBinding");
+    $(el).off(".textualInputBinding");
   }
 });
 
-Shiny.inputBindings.register(textInputBinding, "dull.textInput");
+Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");
 
 Shiny.addCustomMessageHandler("dull.modal.toggle", function (msg) {
   var $modal = $(msg.id);

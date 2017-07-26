@@ -1,6 +1,6 @@
-var textInputBinding = new Shiny.InputBinding();
+var textualInputBinding = new Shiny.InputBinding();
 
-$.extend(textInputBinding, {
+$.extend(textualInputBinding, {
   find: function(scope) {
     return $(scope).find(".dull-textual[id]");
   },
@@ -28,13 +28,13 @@ $.extend(textInputBinding, {
     };
   },
   subscribe: function(el, callback) {
-    $(el).on("change.textInputBinding", function(e) {
+    $(el).on("change.textualInputBinding", function(e) {
       callback(true);
     });
   },
   unsubscribe: function(el) {
-    $(el).off(".textInputBinding");
+    $(el).off(".textualInputBinding");
   }
 });
 
-Shiny.inputBindings.register(textInputBinding, "dull.textInput");
+Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");
