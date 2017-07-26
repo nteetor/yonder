@@ -25,21 +25,78 @@
 #' @export
 #' @examples
 #' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           tags$h4("Select a context"),
+#'           radioInput(
+#'             id = "context",
+#'             radio("success", "success"),
+#'             radio("warning", "warning"),
+#'             radio("danger", "danger"),
+#'             radio("none", "none", checked = TRUE)
+#'           )
+#'         ),
+#'         col(
+#'           tags$h4("Pick a number"),
+#'           numberInput(id = "threshold"),
+#'           tags$span(
+#'             class = "text-muted",
+#'             "Numbers greater than 5 may cause problems (try it!)"
+#'           ),
+#'           tags$h4("More choices"),
+#'           radioInput(
+#'             id = "choices",
+#'             radio("Choice 1", 1),
+#'             radio("Choice 2", 2),
+#'             radio("Choice 3", 3),
+#'             radio("Choice 4", 4)
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observe({
+#'         req(input$context)
 #'
+#'         updateRadioInput("choices", context = input$context)
+#'       })
+#'
+#'       observe({
+#'         req(input$threshold)
+#'
+#'         updateRadioInput("choices", disable = input$threshold > 5)
+#'       })
+#'     }
+#'   )
 #'
 #' }
 #'
 radioInput <- function(..., inline = FALSE, id = NULL) {
-  tags$div(
-    class = collate(
-      "dull-radio-input",
-      "dull-input",
-      "form-group",
-      if (!inline) "custom-controls-stacked"
+  args <- list(...)
+  radios <- elements(args)
+  attrs <- attribs(args)
+
+  tagConcatAttributes(
+    tags$div(
+      class = collate(
+        "dull-radio-input",
+        "dull-input",
+        "form-group",
+        if (!inline) "custom-controls-stacked"
+      ),
+      lapply(
+        radios,
+        function(r) {
+          r$children[[1]]$attribs$name <- id
+          r
+        }
+      ),
+      id = id,
+      bootstrap()
     ),
-    ...,
-    id = id,
-    bootstrap()
+    attrs
   )
 }
 
@@ -54,7 +111,6 @@ radio <- function(label = NULL, value = NULL, checked = FALSE, ...) {
     tags$input(
       class = "custom-control-input",
       type = "radio",
-      name = id,
       `data-value` = value,
       checked = if (checked) NA
     ),
