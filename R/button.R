@@ -51,17 +51,17 @@
 #' @family inputs
 #' @export
 #' @examples
-#' button("Primary", context = "primary")
+#' buttonInput("Primary", context = "primary")
 #'
-#' button("Secondary")
+#' buttonInput("Secondary")
 #'
-#' button("Success", context = "success")
+#' buttonInput("Success", context = "success")
 #'
-#' button("Info", context = "info", outline = TRUE)
+#' buttonInput("Info", context = "info", outline = TRUE)
 #'
-#' button("\u2715", context = "warning")
+#' buttonInput("\u2715", context = "warning")
 #'
-#' button("Danger!", context = "danger", disable = TRUE)
+#' buttonInput("Danger!", context = "danger", disable = TRUE)
 #'
 #' if (interactive()) {
 #'   shinyApp(
@@ -133,14 +133,15 @@
 #'   )
 #' }
 #'
-button <- function(label = NULL, value = NULL, context = "secondary",
+buttonInput <- function(label = NULL, value = NULL, context = "secondary",
                    outline = FALSE, block = FALSE, disabled = FALSE, ...,
                    id = NULL) {
   if (!(context %in% c("primary", "secondary", "link")) &&
       bad_context(context)) {
     stop(
-      'invalid `button` `context`, expecting one of "primary", "secondary", ',
-      '"success", "info", "warning", "danger", or "link"',
+      "invalid `buttonInput` `context`, expecting one of ",
+      '"primary", "secondary", "success", "info", "warning", ',
+      '"danger", or "link"',
       call. = FALSE
     )
   }

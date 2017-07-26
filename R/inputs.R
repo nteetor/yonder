@@ -324,7 +324,7 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #'       groupInput(
 #'         id = "options",
 #'         placeholder = "",
-#'         left = dropdown(
+#'         left = dropdownInput(
 #'           label = "Action",
 #'           dropdownItem("Action", "action"),
 #'           dropdownItem("Another action", "another"),
@@ -364,7 +364,7 @@ groupInput <- function(placeholder = NULL, value = NULL, left = NULL,
       !tagHasClass(left, "dull-dropdown")) {
     stop(
       "invalid `groupInput` argument, `left` must be a character string, ",
-      "button(), or dropdown()",
+      "buttonInput(), or dropdownInput()",
       call. = FALSE
     )
   }
@@ -373,7 +373,7 @@ groupInput <- function(placeholder = NULL, value = NULL, left = NULL,
       !tagHasClass(right, "dull-dropdown")) {
     stop(
       "invalid `groupInput` argument, `right` must be a character string, ",
-      "button(), or dropdown()",
+      "buttonInput(), or dropdownInput()",
       call. = FALSE
     )
   }
