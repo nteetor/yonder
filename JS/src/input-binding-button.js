@@ -2,7 +2,7 @@ var buttonInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-button[id]");
+    return $(scope).find(".dull-button-input[id]");
   },
   getValue: function(el) {
     var $el = $(el);

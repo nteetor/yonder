@@ -66,7 +66,7 @@ var buttonInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonInputBinding, {
   find: function find(scope) {
-    return $(scope).find(".dull-button[id]");
+    return $(scope).find(".dull-button-input[id]");
   },
   getValue: function getValue(el) {
     var $el = $(el);
@@ -466,41 +466,41 @@ $(document).ready(function () {
 });
 
 $(document).ready(function () {
-  $(".dull-list-group[id] .list-group-item:not(.disabled)").click(function (e) {
+  $(".dull-list-group-input[id] .list-group-item:not(.disabled)").click(function (e) {
     e.preventDefault();
 
-    var el = $(e.target);
-    el.toggleClass("active");
-
-    el.parent().trigger("change");
+    var $this = $(this);
+    $this.toggleClass("active");
+    $this.trigger("dull:change");
   });
 });
 
-var listGroupBinding = new Shiny.InputBinding();
+var listGroupInputBinding = new Shiny.InputBinding();
 
-$.extend(listGroupBinding, {
+$.extend(listGroupInputBinding, {
   find: function find(scope) {
-    return $(scope).find(".dull-list-group[id]");
+    return $(scope).find(".dull-list-group-input[id]");
   },
   getValue: function getValue(el) {
-    return $(el).children(".list-group-item.active").map(function () {
-      return $(this).data("value");
+    var $val = $(el).children(".list-group-item.active:not(:disabled)").map(function (i, e) {
+      return $(e).data("value");
     }).get();
+    return $val === undefined ? null : $val;
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function subscribe(el, callback) {
-    $(el).on("change.listGroupBinding", function (e) {
+    $(el).on("dull:change.listGroupInputBinding", function (e) {
       callback();
     });
   },
   unsubscribe: function unsubscribe(el) {
-    $(el).off(".listGroupBinding");
+    $(el).off(".listGroupInputBinding");
   }
 });
 
-Shiny.inputBindings.register(listGroupBinding, "dull.listGroup");
+Shiny.inputBindings.register(listGroupInputBinding, "dull.listGroupInput");
 
 var listGroupItemBinding = new Shiny.InputBinding();
 
@@ -509,24 +509,21 @@ $.extend(listGroupItemBinding, {
     return $(scope).find(".dull-list-group-item[id]");
   },
   getValue: function getValue(el) {
-    return $(el).data("value");
+    return null;
+  },
+  getState: function getState(el, data) {
+    return { value: this.getValue(el) };
   },
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
-
-    if (data.label) {
-      $el.text(data.label);
-    }
-
-    if (data.value) {
-      $el.data("value", data.value);
-    }
 
     if (data.context) {
       $el.attr("class", function (i, c) {
         return c.replace(/list-group-item-(success|info|warning|danger)/, "");
       });
-      $el.addClass(data.context);
+      if (data.context !== "none") {
+        $el.addClass("list-group-item-" + data.context);
+      }
     }
 
     if (data.active) {
@@ -536,6 +533,8 @@ $.extend(listGroupItemBinding, {
     if (data.disabled) {
       $el.prop("disabled", data.disabled);
     }
+
+    $el.trigger("dull:change");
   }
 });
 
@@ -618,7 +617,7 @@ var tableInputBinding = new Shiny.InputBinding();
 
 $.extend(tableInputBinding, {
   find: function find(scope) {
-    return $(scope).find(".dull-table[id]");
+    return $(scope).find(".dull-table-thruput[id]");
   },
   getValue: function getValue(el) {
     var arr = $(el).find("thead tr,.dull-row").get().map(function (row) {
@@ -820,7 +819,7 @@ var tableOutputBinding = new Shiny.OutputBinding();
 
 $.extend(tableOutputBinding, {
   find: function find(scope) {
-    return $(scope).find(".dull-table[id]");
+    return $(scope).find(".dull-table-thruput[id]");
   },
   getId: function getId(el) {
     return el.id;
@@ -842,3 +841,33 @@ $(document).ready(function () {
     $this.toggleClass("dull-row");
   });
 });
+
+/**
+ * WORK IN PROGRESS
+ */
+
+var tooltipBinding = new Shiny.OutputBinding();
+
+$.extend(tooltipBinding, {
+  find: function find(scope) {
+    return null;
+  },
+  getId: function getId(el) {
+    return null;
+  },
+  renderValue: function renderValue(el, data) {
+    var $el = $(el);
+
+    if (data.remove) {
+      $el.removeAttr("data-toggle");
+      $el.removeAttr("data-placement");
+      $el.removeAttr("title");
+
+      return false;
+    }
+
+    if (data.show) {}
+  }
+});
+
+//Shiny.outputBindings.register(tooltipBinding, "dull.tooltip");

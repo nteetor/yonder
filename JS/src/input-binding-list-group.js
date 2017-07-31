@@ -1,42 +1,42 @@
 $(document).ready(function() {
-  $(".dull-list-group[id] .list-group-item:not(.disabled)").click(function(e) {
+  $(".dull-list-group-input[id] .list-group-item:not(.disabled)").click(function(e) {
     e.preventDefault();
 
-    var el = $(e.target);
-    el.toggleClass("active");
-
-    el.parent().trigger("change");
+    var $this = $(this);
+    $this.toggleClass("active");
+    $this.trigger("dull:change");
   });
 });
 
-var listGroupBinding = new Shiny.InputBinding();
+var listGroupInputBinding = new Shiny.InputBinding();
 
-$.extend(listGroupBinding, {
+$.extend(listGroupInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-list-group[id]");
+    return $(scope).find(".dull-list-group-input[id]");
   },
   getValue: function(el) {
-    return $(el)
-      .children(".list-group-item.active")
-      .map(function() {
-        return $(this).data("value");
+    var $val = $(el)
+      .children(".list-group-item.active:not(:disabled)")
+      .map(function(i, e) {
+        return $(e).data("value");
       })
       .get();
+    return $val === undefined ? null : $val;
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function(el, callback) {
-    $(el).on("change.listGroupBinding", function(e) {
+    $(el).on("dull:change.listGroupInputBinding", function(e) {
       callback();
     });
   },
   unsubscribe: function(el) {
-    $(el).off(".listGroupBinding");
+    $(el).off(".listGroupInputBinding");
   }
 });
 
-Shiny.inputBindings.register(listGroupBinding, "dull.listGroup");
+Shiny.inputBindings.register(listGroupInputBinding, "dull.listGroupInput");
 
 var listGroupItemBinding = new Shiny.InputBinding();
 
@@ -45,24 +45,21 @@ $.extend(listGroupItemBinding, {
     return $(scope).find(".dull-list-group-item[id]");
   },
   getValue: function(el) {
-    return $(el).data("value");
+    return null;
+  },
+  getState: function(el, data) {
+    return { value: this.getValue(el) };
   },
   receiveMessage: function(el, data) {
     var $el = $(el);
-
-    if (data.label) {
-      $el.text(data.label);
-    }
-
-    if (data.value) {
-      $el.data("value", data.value);
-    }
 
     if (data.context) {
       $el.attr("class", function(i, c) {
         return c.replace(/list-group-item-(success|info|warning|danger)/, "");
       });
-      $el.addClass(data.context);
+      if (data.context !== "none") {
+        $el.addClass("list-group-item-" + data.context);
+      }
     }
 
     if (data.active) {
@@ -73,6 +70,7 @@ $.extend(listGroupItemBinding, {
       $el.prop("disabled", data.disabled);
     }
 
+    $el.trigger("dull:change");
   }
 });
 
