@@ -2,24 +2,23 @@
 % Please edit documentation in R/checkbox.R
 \name{checkboxInput}
 \alias{checkboxInput}
-\alias{checkbox}
 \alias{updateCheckboxInput}
+\alias{validateCheckboxInput}
+\alias{disableCheckboxInput}
+\alias{enableCheckboxInput}
 \title{Checkbox inputs and checkbox bars}
 \usage{
-checkboxInput(..., inline = FALSE, id = NULL)
+checkboxInput(id, label, value, checked = FALSE, ...)
 
-checkbox(label = NULL, value = NULL, checked = FALSE, ...)
+updateCheckboxInput(id, label, session = getDefaultReactiveDomain())
 
-updateCheckboxInput(id, context = NULL, disable = NULL,
-  session = getDefaultReactiveDomain())
+validateCheckboxInput(id, state, session = getDefaultReactiveDomain())
+
+disableCheckboxInput(id, session = getDefaultReactiveDomain())
+
+enableCheckboxInput(id, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{...}{Checkboxes passed to a checkbox input or additional named
-arguments passed on as HTML attributes to the respective parent element.}
-
-\item{inline}{If \code{TRUE}, the checkbox input is rendered inline, otherwise
-individual checkboxes are put on separate lines, defaults to \code{FALSE}.}
-
 \item{id}{A character string specifying the id of the checkbox input,
 defaults to \code{NULL}, in which case the checkbox element is rendered, but a
 reactive value is not passed to the shiny server function.}
@@ -30,6 +29,15 @@ to \code{NULL}, in which case a label is not added.}
 \item{checked}{One of \code{TRUE} or \code{FALSE} specifying if the checkbox renders in
 the checked state, defaults to \code{FALSE}.}
 
+\item{...}{Checkboxes passed to a checkbox input or additional named
+arguments passed on as HTML attributes to the respective parent element.}
+
+\item{values}{A character string specifying a value for the checkbox,
+defaults to \code{NULL}, in which case the value of the checkbox is \code{NULL}.}
+
+\item{inline}{If \code{TRUE}, the checkbox input is rendered inline, otherwise
+individual checkboxes are put on separate lines, defaults to \code{FALSE}.}
+
 \item{context}{One of \code{"success"}, \code{"warning"}, or \code{"danger"} specifying a
 visual context to add to a checkbox input, specifying \code{"none"} will remove
 any context on the checkbox, defaults to \code{NULL}. Whenever \code{NULL} the
@@ -39,9 +47,6 @@ current checkbox context remains unchanged.}
 specifying whether to disable or enable a checkbox input, by default
 checkbox inputs render in an enabled state, defaults to \code{NULL}. Whenever
 \code{NULL} the current state of the checkbox remains unchanged.}
-
-\item{values}{A character string specifying a value for the checkbox,
-defaults to \code{NULL}, in which case the value of the checkbox is \code{NULL}.}
 }
 \description{
 A reactive input for selecting one or more values. A checkbox bar is a
@@ -61,7 +66,7 @@ if (interactive()) {
             checkbox("Choice 2", 2),
             checkbox("Choice 3", 3)
           ),
-          button(
+          buttonInput(
             id = "disable",
             label = "Disable / Enable"
           )

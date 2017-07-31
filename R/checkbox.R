@@ -47,7 +47,7 @@
 #'             checkbox("Choice 2", 2),
 #'             checkbox("Choice 3", 3)
 #'           ),
-#'           button(
+#'           buttonInput(
 #'             id = "disable",
 #'             label = "Disable / Enable"
 #'           )
@@ -86,13 +86,32 @@
 #'   )
 #' }
 #'
-checkboxInput <- function(..., inline = FALSE, id = NULL) {
+checkboxInput <- function(id, label, value, checked = FALSE, ...) {
   tags$div(
     class = collate(
       "dull-checkbox-input",
       "dull-input",
       "form-group",
       if (!inline) "custom-controls-stacked"
+    ),
+    tags$label(
+      class = collate(
+        "custom-control",
+        "custom-checkbox"
+      ),
+      tags$input(
+        class = "custom-control-input",
+        type = "checkbox",
+        `data-value` = value,
+        checked = if (checked) NA
+      ),
+      tags$span(
+        class = "custom-control-indicator"
+      ),
+      tags$span(
+        class = "custom-control-description",
+        label
+      )
     ),
     ...,
     id = id,
@@ -102,37 +121,27 @@ checkboxInput <- function(..., inline = FALSE, id = NULL) {
 
 #' @rdname checkboxInput
 #' @export
-checkbox <- function(label = NULL, value = NULL, checked = FALSE, ...) {
-  tags$label(
-    class = collate(
-      "custom-control",
-      "custom-checkbox"
-    ),
-    tags$input(
-      class = "custom-control-input",
-      type = "checkbox",
-      `data-value` = value,
-      checked = if (checked) NA
-    ),
-    tags$span(
-      class = "custom-control-indicator"
-    ),
-    tags$span(
-      class = "custom-control-description",
-      label
-    ),
-    ...
+updateCheckboxInput <- function(id, label,
+                                session = getDefaultReactiveDomain()) {
+
+  label <- as.character(label)
+
+  session$sendInputMessage(
+    id,
+    list(
+      label = label
+    )
   )
 }
 
 #' @rdname checkboxInput
 #' @export
-updateCheckboxInput <- function(id, context = NULL, disable = NULL,
-                           session = getDefaultReactiveDomain()) {
-  if (!re(context, "success|warning|danger|none")) {
+validateCheckboxInput <- function(id, state,
+                                  session = getDefaultReactiveDomain()) {
+  if (!re(state, "success|warning|danger|none")) {
     stop(
-      "invalid `updateCheckboxInput` argument, `context` must be one ",
-      '"success", "warning", "danger", "none"',
+      "invalid `validateCheckboxInput` argument, `state` must be one ",
+      '"success", "warning", or "danger"',
       call. = FALSE
     )
   }
@@ -140,8 +149,28 @@ updateCheckboxInput <- function(id, context = NULL, disable = NULL,
   session$sendInputMessage(
     id,
     list(
-      disable = disable,
-      context = context
+      state = state
+    )
+  )
+}
+
+#' @rdname checkboxInput
+#' @export
+disableCheckboxInput <- function(id, session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(
+    id,
+    list(
+      disable = TRUE
+    )
+  )
+}
+
+#' @rdname checkboxInput
+enableCheckboxInput <- function(id, session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(
+    id,
+    list(
+      enable = TRUE
     )
   )
 }
