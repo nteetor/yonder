@@ -122,7 +122,7 @@ alert <- function(text = NULL, heading = NULL, context = NULL, hidden = TRUE,
         type = "button",
         class = "close",
         `data-dismiss` = "alert",
-        if (is.null(icon)) icons$fa("times-rectangle") else icon
+        if (is.null(icon)) fontAwesome("times-rectangle") else icon
       )
     },
     ...,
