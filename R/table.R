@@ -79,7 +79,7 @@ tableThruput <- function(id, borders = FALSE, compact = FALSE, invert = FALSE,
   }
   tags$table(
     class = collate(
-      "dull-table",
+      "dull-table-thruput",
       "table",
       if (invert) "table-invert",
       if (striped) "table-striped",

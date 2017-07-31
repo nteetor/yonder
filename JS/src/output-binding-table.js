@@ -2,7 +2,7 @@ var tableOutputBinding = new Shiny.OutputBinding();
 
 $.extend(tableOutputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-table[id]");
+    return $(scope).find(".dull-table-thruput[id]");
   },
   getId: function(el) {
     return el.id;

@@ -2,7 +2,7 @@ var tableInputBinding = new Shiny.InputBinding();
 
 $.extend(tableInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-table[id]");
+    return $(scope).find(".dull-table-thruput[id]");
   },
   getValue: function(el) {
     var arr = $(el).find("thead tr,.dull-row").get().map(function(row) {
