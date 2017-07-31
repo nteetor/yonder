@@ -74,7 +74,7 @@ if (interactive()) {
         context = "info",
         icon = fontAwesome("check")
       ),
-      button(id = "show", "Don't click me, please")
+      buttonInput(id = "show", "Don't click me, please")
     ),
     server = function(input, output) {
       output$popup <- renderAlert({

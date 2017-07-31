@@ -49,9 +49,9 @@
 #'           )
 #'         ),
 #'         col(
-#'           button(id = "toggle", "Toggle collapse"),
-#'           button(id = "hide", "Only hide", context = "warning"),
-#'           button(id = "show", "Only show", context = "info")
+#'           buttonInput(id = "toggle", "Toggle collapse"),
+#'           buttonInput(id = "hide", "Only hide", context = "warning"),
+#'           buttonInput(id = "show", "Only show", context = "info")
 #'         )
 #'       )
 #'     ),

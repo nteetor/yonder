@@ -133,6 +133,15 @@ tagEnsureClass <- function(x, class) {
   x
 }
 
+tagRename <- function(tag, name) {
+  if (!is_tag(tag)) {
+    return(NULL)
+  }
+
+  tag$name <- name
+  tag
+}
+
 tagIs <- function(x, name) {
   if (!is_tag(x)) {
     return(NULL)

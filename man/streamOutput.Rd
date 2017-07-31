@@ -29,7 +29,7 @@ to the user during long running processes.
 if (interactive()) {
   shinyApp(
     ui = container(
-      button(id = "trigger", "Go!"),
+      buttonInput(id = "trigger", "Go!"),
       tags$div(
         id = "myStream"
       )

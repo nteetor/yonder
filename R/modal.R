@@ -24,7 +24,7 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       button(id = "toggle", "Click to show modal"),
+#'       buttonInput(id = "toggle", "Click to show modal"),
 #'       modal(
 #'         id = "simple",
 #'         header = "A simple modal",
@@ -45,7 +45,7 @@
 #'
 #'   shinyApp(
 #'     ui = container(
-#'       button(id = "toggle", "Demo login"),
+#'       buttonInput(id = "toggle", "Demo login"),
 #'       modal(
 #'         id = "login",
 #'         header = "Please login",
@@ -55,12 +55,12 @@
 #'             label = "Name",
 #'             placeholder = "yourname@@email.com"
 #'           ),
-#'           textInput(
+#'           passwordInput(
 #'             id = "password",
 #'             label = "Password"
 #'           )
 #'         ),
-#'         footer = button(id = "process", "Submit")
+#'         footer = buttonInput(id = "process", "Submit")
 #'       )
 #'     ),
 #'     server = function(input, output) {

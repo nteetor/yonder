@@ -13,27 +13,26 @@
 #'
 #' @export
 #' @examples
-#' tooltip(
-#'   button("My button!"),
-#'   text = "This is my button",
-#' )
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       listGroupInput(
+#'         tooltip(
+#'           listGroupItem("Item 1"),
+#'           "This is the first item",
+#'           placement = "bottom"
+#'         ),
+#'         tooltip(
+#'           listGroupItem("Item 2"),
+#'           "This is the second item"
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
 #'
-#' tooltip(
-#'   button("Another button"),
-#'   text = "I won't do much when clicked, sorry",
-#'   placement = "bottom"
-#' )
-#'
-#' listGroup(
-#'   tooltip(
-#'     listGroupItem("Item 1"),
-#'     "This is the first item"
-#'   ),
-#'   tooltip(
-#'     listGroupItem("Item 2"),
-#'     "This is the second item"
+#'     }
 #'   )
-#' )
+#' }
 #'
 tooltip <- function(content, text, placement = "top") {
   if (!(placement %in% c("top", "left", "bottom", "right"))) {
@@ -50,7 +49,7 @@ tooltip <- function(content, text, placement = "top") {
   content$attribs$`data-toggle` <- "tooltip"
   content$attribs$`data-placement` <- placement
   content$attribs$title <- as.character(text)
-  content$children <- c(content$children, bootstrap())
+  content$children <- append(content$children, list(bootstrap()))
 
   content
 }
@@ -59,7 +58,7 @@ tooltip <- function(content, text, placement = "top") {
 #' @export
 #' @examples
 #' popover(
-#'   button("Click me!"),
+#'   buttonInput("Click me!"),
 #'   "This text appears on click"
 #' )
 #'

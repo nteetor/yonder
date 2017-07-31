@@ -32,7 +32,7 @@
 #'       progress(
 #'         bar(id = "clicks", value = 0)
 #'       ),
-#'       button(id = "inc", "inc progress")
+#'       buttonInput(id = "inc", "Increment progress")
 #'     ),
 #'     server = function(input, output, session) {
 #'       clickPercentage <- reactive({

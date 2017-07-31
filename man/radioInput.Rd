@@ -88,7 +88,7 @@ if (interactive()) {
 
 }
 \seealso{
-Other inputs: \code{\link{button}},
+Other inputs: \code{\link{buttonInput}},
   \code{\link{groupInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }

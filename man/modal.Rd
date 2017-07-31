@@ -34,7 +34,7 @@ updated components. Modal elements may be included anywhere on a web page.
 if (interactive()) {
   shinyApp(
     ui = container(
-      button(id = "toggle", "Click to show modal"),
+      buttonInput(id = "toggle", "Click to show modal"),
       modal(
         id = "simple",
         header = "A simple modal",
@@ -55,7 +55,7 @@ if (interactive()) {
 
   shinyApp(
     ui = container(
-      button(id = "toggle", "Demo login"),
+      buttonInput(id = "toggle", "Demo login"),
       modal(
         id = "login",
         header = "Please login",
@@ -65,12 +65,12 @@ if (interactive()) {
             label = "Name",
             placeholder = "yourname@email.com"
           ),
-          textInput(
+          passwordInput(
             id = "password",
             label = "Password"
           )
         ),
-        footer = button(id = "process", "Submit")
+        footer = buttonInput(id = "process", "Submit")
       )
     ),
     server = function(input, output) {

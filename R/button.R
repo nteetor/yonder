@@ -1,7 +1,5 @@
 #' Buttons and button groups
 #'
-#' @description
-#'
 #' Buttons, submit and reset buttons. A button's reactive value is a list of two
 #' items. The first item is `count`, the number of clicks on the button. The
 #' second item is `value`, the HTML data-value attribute of the button which may
@@ -66,27 +64,27 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       listGroup(
+#'       listGroupInput(
 #'         listGroupItem(
 #'           inlineForm(
-#'             button(
+#'             buttonInput(
 #'               id = "clicker1",
 #'               "Simple button"
 #'             )
 #'           ),
-#'           badge = badge(id = "badge1", 0)
+#'           badge = badgeOutput(id = "badge1", 0)
 #'         ),
 #'         listGroupItem(
 #'           inlineForm(
-#'             button(
+#'             buttonInput(
 #'               id = "clicker2",
 #'               label = "Click me!",
 #'             )
 #'           ),
-#'           badge = badge(id = "badge2", 0)
+#'           badge = badgeOutput(id = "badge2", 0)
 #'         ),
 #'         listGroupItem(
-#'           button(
+#'           buttonInput(
 #'             id = "reset",
 #'             label = "Reset",
 #'             context = "primary"
@@ -119,7 +117,7 @@
 #'
 #'   shinyApp(
 #'     ui = container(
-#'       button(
+#'       buttonInput(
 #'         id = "group",
 #'         label = c("First", "Second", "Third"),
 #'         value = c("first", "second", "third")
@@ -148,7 +146,7 @@ buttonInput <- function(label = NULL, value = NULL, context = "secondary",
 
   tags$button(
     class = collate(
-      "dull-button",
+      "dull-button-input",
       "dull-input",
       "btn",
       paste0("btn-", if (outline) "outline-", context),
@@ -164,7 +162,7 @@ buttonInput <- function(label = NULL, value = NULL, context = "secondary",
   )
 }
 
-#' @rdname button
+#' @rdname buttonInput
 #' @export
 submit <- function(label = NULL, outline = FALSE, block = FALSE, ...) {
   tags$button(
@@ -182,24 +180,31 @@ submit <- function(label = NULL, outline = FALSE, block = FALSE, ...) {
   )
 }
 
-#' @rdname button
+#' @rdname buttonInput
 #' @export
-updateButton <- function(id, count = NULL, context = NULL,
-                         session = getDefaultReactiveDomain()) {
+updateButtonInput <- function(id, count = NULL, context = NULL,
+                              session = getDefaultReactiveDomain()) {
   if (bad_context(context, extra = c("primary", "secondary", "link"))) {
     stop(
-      'invalid `updateButton` `context`, expecting one of "primary", "secondary", ',
-      '"success", "info", "warning", "danger", or "link"',
+      "invalid `updateButtonInput` `context`, expecting one of ",
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      'or "link"',
       call. = FALSE
     )
   }
 
   if (!(is.null(count) || is.numeric(count))) {
-    stop("invalid `updateButton` `count`, must be NULL or numeric", call. = FALSE)
+    stop(
+      "invalid `updateButtonInput` `count`, must be NULL or numeric",
+      call. = FALSE
+    )
   }
 
   if (!is.null(count) && count < 0) {
-    stop("invalid `updateButton` `count`, must be greater than 0", call. = FALSE)
+    stop(
+      "invalid `updateButtonInput` `count`, must be greater than 0",
+      call. = FALSE
+    )
   }
 
   session$sendInputMessage(

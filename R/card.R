@@ -35,7 +35,7 @@
 #'             cardBlock(
 #'               title = "Card One",
 #'               text = "Hello, world!",
-#'               button("Click me")
+#'               buttonInput("Click me")
 #'             )
 #'           )
 #'         ),
@@ -45,7 +45,7 @@
 #'             cardBlock(
 #'               title = "Card Two",
 #'               text = "Goodnight, moon!",
-#'               button("Click me")
+#'               buttonInput("Click me")
 #'             )
 #'           )
 #'         )
@@ -123,7 +123,7 @@ cardBlock <- function(..., header = NULL, title = NULL, subtitle = NULL,
 #' @rdname card
 #' @export
 cardList <- function(...) {
-  listGroup(..., class = "list-group-flush")
+  listGroupInput(..., class = "list-group-flush")
 }
 
 #' Card groups and decks

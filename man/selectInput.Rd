@@ -42,7 +42,7 @@ if (interactive()) {
         checkboxInput(
           label = "Remember my preference"
         ),
-        button(
+        buttonInput(
           "Go!",
           context = "secondary"
         )
@@ -58,7 +58,7 @@ if (interactive()) {
 
 }
 \seealso{
-Other inputs: \code{\link{button}},
+Other inputs: \code{\link{buttonInput}},
   \code{\link{groupInput}}, \code{\link{radioInput}},
   \code{\link{textInput}}
 }

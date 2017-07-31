@@ -205,7 +205,7 @@ updateFieldset <- function() {
 #'         checkboxInput(
 #'           label = "Remember my preference"
 #'         ),
-#'         button(
+#'         buttonInput(
 #'           "Go!",
 #'           context = "secondary"
 #'         )
@@ -262,10 +262,11 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #' @param value A character string specifying an initial value for the input
 #'   group, defaults to `NULL`.
 #'
-#' @param left,right A character string, [button] element, or [dropdown]
-#'   element, used as the left or right addon, respectively, of the input group,
-#'   both default to `NULL`. Addon's affect the reactive events and value of the
-#'   input group, see the details section below for more information.
+#' @param left,right A character string, [buttonInput] element, or
+#'   [dropdownInput] element, used as the left or right addon, respectively, of
+#'   the input group, both default to `NULL`. Addon's affect the reactive events
+#'   and value of the input group, see the details section below for more
+#'   information.
 #'
 #' @details
 #'
@@ -286,7 +287,7 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #' value, and `right`, *if a character string*. The second element is `click`
 #' and is indicates which button or dropdown item was clicked. The value of
 #' `click` depends on the value of the button or dropdown item, see
-#' [button] or [dropdownItem].
+#' [buttonInput] or [dropdownItem].
 #'
 #' @family inputs
 #' @export
@@ -301,7 +302,7 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #'         id = "username",
 #'         placeholder = "username",
 #'         left = "@@",
-#'         right = button(
+#'         right = buttonInput(
 #'           label = "Go!",
 #'           value = "go"
 #'         )
@@ -312,11 +313,11 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #'       ),
 #'       groupInput(
 #'         id = "preference",
-#'         left = button(
+#'         left = buttonInput(
 #'           label = fontAwesome("thumbs-up"),
 #'           value = "up"
 #'         ),
-#'         right = button(
+#'         right = buttonInput(
 #'           label = fontAwesome("thumbs-down"),
 #'           value = "down"
 #'         )

@@ -14,10 +14,11 @@ input group, defaults to \code{NULL}.}
 \item{value}{A character string specifying an initial value for the input
 group, defaults to \code{NULL}.}
 
-\item{left, right}{A character string, \link{button} element, or \link{dropdown}
-element, used as the left or right addon, respectively, of the input group,
-both default to \code{NULL}. Addon's affect the reactive events and value of the
-input group, see the details section below for more information.}
+\item{left, right}{A character string, \link{buttonInput} element, or
+\link{dropdownInput} element, used as the left or right addon, respectively, of
+the input group, both default to \code{NULL}. Addon's affect the reactive events
+and value of the input group, see the details section below for more
+information.}
 
 \item{id}{A character string specifying an id for the input, defaults to
 \code{NULL}. When specified, a reactive value, \code{input$<id>}, is available to the
@@ -50,7 +51,7 @@ which is the concatenation of \code{left}, \emph{if a character string}, the tex
 value, and \code{right}, \emph{if a character string}. The second element is \code{click}
 and is indicates which button or dropdown item was clicked. The value of
 \code{click} depends on the value of the button or dropdown item, see
-\link{button} or \link{dropdownItem}.
+\link{buttonInput} or \link{dropdownItem}.
 }
 \examples{
 if (interactive()) {
@@ -63,7 +64,7 @@ if (interactive()) {
         id = "username",
         placeholder = "username",
         left = "@",
-        right = button(
+        right = buttonInput(
           label = "Go!",
           value = "go"
         )
@@ -74,11 +75,11 @@ if (interactive()) {
       ),
       groupInput(
         id = "preference",
-        left = button(
+        left = buttonInput(
           label = fontAwesome("thumbs-up"),
           value = "up"
         ),
-        right = button(
+        right = buttonInput(
           label = fontAwesome("thumbs-down"),
           value = "down"
         )
@@ -86,7 +87,7 @@ if (interactive()) {
       groupInput(
         id = "options",
         placeholder = "",
-        left = dropdown(
+        left = dropdownInput(
           label = "Action",
           dropdownItem("Action", "action"),
           dropdownItem("Another action", "another"),
@@ -122,7 +123,7 @@ if (interactive()) {
 
 }
 \seealso{
-Other inputs: \code{\link{button}},
+Other inputs: \code{\link{buttonInput}},
   \code{\link{radioInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }
