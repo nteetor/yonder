@@ -19,7 +19,7 @@ argument must be specified as an HTML attribute, passed to a function through
 \code{...}. Once an \code{id} attribute is specified a reactive input value is
 available.
 
-For example, a \link{listGroupInpu} may be used to display series of items, but by
+For example, a \link{listGroupInput} may be used to display series of items, but by
 passing an \code{id} attribute the \code{listGroup} still displays a series of items
 can function similar to shiny \code{checkboxGroupInput}.
 
