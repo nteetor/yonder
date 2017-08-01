@@ -1,38 +1,34 @@
-#' Checkbox inputs and checkbox bars
+#' Checkbox inputs
 #'
-#' A reactive input for selecting one or more values. A checkbox bar is a
-#' visually re-styling of a group of checkboxes. A checkbox bar appears as a set
-#' of buttons, but still acts as a checkbox group. Because checkbox bars are
-#' pseudo-buttons a visual context may be specified.
+#' A reactive checkbox input. When a checkbox input is unchecked the reactive
+#' value is `NULL`. When checked the checkbox input reactive value is `value`.
 #'
-#' @param id A character string specifying the id of the checkbox input,
-#'   defaults to `NULL`, in which case the checkbox element is rendered, but a
-#'   reactive value is not passed to the shiny server function.
+#' @param id A character string specifying the id of the checkbox input, the
+#'   reactive value of the checkbox input is available to the shiny server
+#'   function as part of the `input` object.
 #'
-#' @param label A character string specifying a label for the checkbox, defaults
-#'   to `NULL`, in which case a label is not added.
+#' @param label A character string specifying a label for the checkbox.
 #'
-#' @param values A character string specifying a value for the checkbox,
-#'   defaults to `NULL`, in which case the value of the checkbox is `NULL`.
+#' @param value A character string, object to coerce to a character string, or
+#'   `NULL` specifying the value of the checkbox or a new value for the
+#'   checkbox.
 #'
-#' @param checked One of `TRUE` or `FALSE` specifying if the checkbox renders in
-#'   the checked state, defaults to `FALSE`.
+#' @param header A character string specifying a header for the checkbox input,
+#'   defaults to `NULL`, in which case a header is not added.
 #'
-#' @param inline If `TRUE`, the checkbox input is rendered inline, otherwise
-#'   individual checkboxes are put on separate lines, defaults to `FALSE`.
+#' @param checked If `TRUE` the checkbox renders in a checked state, defaults
+#'   to `FALSE`.
 #'
-#' @param context One of `"success"`, `"warning"`, or `"danger"` specifying a
-#'   visual context to add to a checkbox input, specifying `"none"` will remove
-#'   any context on the checkbox, defaults to `NULL`. Whenever `NULL` the
-#'   current checkbox context remains unchanged.
+#' @param inline If `TRUE`, the padding and margins of the checkbox input are
+#'   adjusted to better suit an inline form, defaults to `FALSE`.
 #'
-#' @param disable One of `TRUE`, `FALSE`, or a value coercible to either
-#'   specifying whether to disable or enable a checkbox input, by default
-#'   checkbox inputs render in an enabled state, defaults to `NULL`. Whenever
-#'   `NULL` the current state of the checkbox remains unchanged.
+#' @param state An expression whose return value is used to update the visual
+#'   context of the checkbox input. If the expression returns one of
+#'   `"success"`, `"warning"`, `"danger"` the visual context is updated
+#'   accordingly. If the return value is `NULL` any visual context is removed.
 #'
-#' @param ... Checkboxes passed to a checkbox input or additional named
-#'   arguments passed on as HTML attributes to the respective parent element.
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
 #'
 #' @export
 #' @examples
@@ -42,57 +38,34 @@
 #'       row(
 #'         col(
 #'           checkboxInput(
-#'             id = "choices",
-#'             checkbox("Choice 1", 1),
-#'             checkbox("Choice 2", 2),
-#'             checkbox("Choice 3", 3)
-#'           ),
-#'           buttonInput(
-#'             id = "disable",
-#'             label = "Disable / Enable"
+#'             id = "checkbox",
+#'             label = "Are you there?",
+#'             value = "yes"
 #'           )
 #'         ),
 #'         col(
-#'           checkboxInput(
-#'             id = "options",
-#'             checkbox("Option 1", 1),
-#'             checkbox("Option 2", 2),
-#'             checkbox("Option 3", 3)
-#'           ),
-#'           dropdownInput(
-#'             id = "context",
-#'             label = "Apply a context",
-#'             dropdownItem("success", "success"),
-#'             dropdownItem("warning", "warning"),
-#'             dropdownItem("danger", "danger"),
-#'             dropdownItem("none", "none")
-#'           )
+#'
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       observe({
-#'         req(input$disable)
-#'
-#'         updateCheckbox("choices", disable = input$disable$count %% 2)
-#'       })
-#'
-#'       observe({
-#'         req(input$context)
-#'
-#'         updateCheckbox("options", context = input$context)
+#'       observeEvent(input$checkbox, {
+#'         print(input$checkbox)
 #'       })
 #'     }
 #'   )
 #' }
 #'
-checkboxInput <- function(id, label, value, checked = FALSE, ...) {
+checkboxInput <- function(id, label, value, title = NULL, checked = FALSE,
+                          inline = FALSE, ...) {
+  value <- as.character(value)
+
   tags$div(
     class = collate(
       "dull-checkbox-input",
       "dull-input",
       "form-group",
-      if (!inline) "custom-controls-stacked"
+      if (inline) "mb-2 mr-sm-2 mb-sm-0"
     ),
     tags$label(
       class = collate(
@@ -121,15 +94,14 @@ checkboxInput <- function(id, label, value, checked = FALSE, ...) {
 
 #' @rdname checkboxInput
 #' @export
-updateCheckboxInput <- function(id, label,
+updateCheckboxInput <- function(id, value,
                                 session = getDefaultReactiveDomain()) {
-
-  label <- as.character(label)
+  value <- as.character(value)
 
   session$sendInputMessage(
     id,
     list(
-      label = label
+      value = value
     )
   )
 }
@@ -138,10 +110,10 @@ updateCheckboxInput <- function(id, label,
 #' @export
 validateCheckboxInput <- function(id, state,
                                   session = getDefaultReactiveDomain()) {
-  if (!re(state, "success|warning|danger|none")) {
+  if (!re(state, "success|warning|danger")) {
     stop(
       "invalid `validateCheckboxInput` argument, `state` must be one ",
-      '"success", "warning", or "danger"',
+      '"success", "warning", "danger", or NULL',
       call. = FALSE
     )
   }
@@ -166,6 +138,7 @@ disableCheckboxInput <- function(id, session = getDefaultReactiveDomain()) {
 }
 
 #' @rdname checkboxInput
+#' @export
 enableCheckboxInput <- function(id, session = getDefaultReactiveDomain()) {
   session$sendInputMessage(
     id,

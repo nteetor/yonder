@@ -192,9 +192,7 @@ $.extend(checkboxInputBinding, {
     return $(scope).find(".dull-checkbox-input[id]");
   },
   getValue: function getValue(el) {
-    var $val = $(el).find("input[type=\"checkbox\"]:checked:not(:disabled)").map(function (i, e) {
-      return $(e).data("value");
-    }).get();
+    var $val = $(el).find("input[type=\"checkbox\"]:checked:not(:disabled)").data("value");
     return $val === undefined ? null : $val;
   },
   _getLabel: function _getLabel(el) {
@@ -217,20 +215,30 @@ $.extend(checkboxInputBinding, {
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
 
-    if (data.context) {
+    if (data.value !== undefined) {
+      $el.data("value", data.value);
+    }
+
+    if (data.state !== undefined) {
       $el.attr("class", function (i, c) {
         return c.replace(/has-(success|warning|danger)/g, "");
       });
 
-      if (data.context !== "none") {
-        $el.addClass("has-" + data.context);
+      if (data.context) {
+        $el.addClass("has-" + data.state);
       }
     }
 
-    if (data.disable !== null) {
-      $el.find("input[type=\"checkbox\"]").each(function (i, e) {
-        $(e).prop("disabled", data.disable);
-      });
+    if (data.disable === true) {
+      $el.find("input[type=\"checkbox\"]").prop("disabled", true);
+    }
+
+    if (data.enable === true) {
+      $el.find("input[type=\"checkbox\"]").prop("disabled", false);
+    }
+
+    if (data.remove === true) {
+      $el.remove();
     }
 
     $el.trigger("change");
