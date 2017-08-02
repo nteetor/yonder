@@ -19,13 +19,9 @@
 #' @param checked If `TRUE` the checkbox renders in a checked state, defaults
 #'   to `FALSE`.
 #'
-#' @param inline If `TRUE`, the padding and margins of the checkbox input are
-#'   adjusted to better suit an inline form, defaults to `FALSE`.
-#'
-#' @param state An expression whose return value is used to update the visual
-#'   context of the checkbox input. If the expression returns one of
-#'   `"success"`, `"warning"`, `"danger"` the visual context is updated
-#'   accordingly. If the return value is `NULL` any visual context is removed.
+#' @param state One of `"success"`, `"warning"`, or `"danger"` indicating the
+#'   state of the checkbox input. If the return value is `NULL` any visual
+#'   context is removed.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
@@ -57,15 +53,15 @@
 #' }
 #'
 checkboxInput <- function(id, label, value, title = NULL, checked = FALSE,
-                          inline = FALSE, ...) {
+                          ...) {
   value <- as.character(value)
 
   tags$div(
     class = collate(
       "dull-checkbox-input",
       "dull-input",
-      "form-group",
-      if (inline) "mb-2 mr-sm-2 mb-sm-0"
+      "form-group"
+      # if (inline) "mb-2 mr-sm-2 mb-sm-0"
     ),
     tags$label(
       class = collate(

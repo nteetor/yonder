@@ -8,8 +8,7 @@
 \alias{enableCheckboxInput}
 \title{Checkbox inputs}
 \usage{
-checkboxInput(id, label, value, title = NULL, checked = FALSE,
-  inline = FALSE, ...)
+checkboxInput(id, label, value, title = NULL, checked = FALSE, ...)
 
 updateCheckboxInput(id, value, session = getDefaultReactiveDomain())
 
@@ -33,16 +32,12 @@ checkbox.}
 \item{checked}{If \code{TRUE} the checkbox renders in a checked state, defaults
 to \code{FALSE}.}
 
-\item{inline}{If \code{TRUE}, the padding and margins of the checkbox input are
-adjusted to better suit an inline form, defaults to \code{FALSE}.}
-
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{state}{An expression whose return value is used to update the visual
-context of the checkbox input. If the expression returns one of
-\code{"success"}, \code{"warning"}, \code{"danger"} the visual context is updated
-accordingly. If the return value is \code{NULL} any visual context is removed.}
+\item{state}{One of \code{"success"}, \code{"warning"}, or \code{"danger"} indicating the
+state of the checkbox input. If the return value is \code{NULL} any visual
+context is removed.}
 
 \item{header}{A character string specifying a header for the checkbox input,
 defaults to \code{NULL}, in which case a header is not added.}
@@ -57,7 +52,11 @@ if (interactive()) {
     ui = container(
       row(
         col(
-
+          checkboxInput(
+            id = "checkbox",
+            label = "Are you there?",
+            value = "yes"
+          )
         ),
         col(
 
@@ -65,7 +64,9 @@ if (interactive()) {
       )
     ),
     server = function(input, output) {
-
+      observeEvent(input$checkbox, {
+        print(input$checkbox)
+      })
     }
   )
 }
