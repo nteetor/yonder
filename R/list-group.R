@@ -7,39 +7,37 @@
 #' reactive inputs they may also be used to simply display content, in which
 #' case do not specify a list group id.
 #'
-#' @param id A character string specifying the id of the list group or list
-#'   group item, defaults to `NULL`.
+#' @param id A character string specifying the id of the list group input, the
+#'   reactive value of the list group input is available to the shiny server
+#'   function as part of the `input` object. When creating a list group to
+#'   only display information pass `NULL` as the `id`, in this case an id is not
+#'   added and a reactive input is not created.
 #'
-#'   If a **list group** id is specified then a reactive value is available to
-#'   the shiny server.
+#' @param labels A character vector or list of character strings specifying the
+#'   labels of the list group items, defaults to `labels`.
 #'
-#'   Specifying a **list group item** id is only necessary to use
-#'   `updateListGroupItem`.
+#' @param values A character string or list of character strings specifying the
+#'   values of the list group items.
 #'
-#' @param ... List group items or named arguments passed as HTML attributes to
-#'   the parent element.
+#' @param selected One or more of `values` indicating the default list group
+#'   items selected, defaults to `NULL`, in which case no items are selected and
+#'   the default value of the list group input is `NULL`.
 #'
-#' @param label A character string specifying the label of the list group item,
-#'   defaults to `NULL`.
+#' @param state One of `"success"`, `"info"`, `"warning"`, or `"danger"`
+#'   indicating the state of the list group items. If the return value is `NULL`
+#'   any visual context is removed.
 #'
-#' @param value A character string specifying the value of the list group item,
-#'   defaults to `NULL`.
+#' @param validate One or more of `values` indicating which list group items
+#'   to mark with `state`, defaults to `NULL`. If `NULL` then the all list group
+#'   items are updated.
 #'
-#' @param context A character string specifying the visual context of the list
-#'   group item, one of `"success"`, `"info"`, `"warning"`, or `"danger"`,
-#'   defaults to `NULL`. Use `"none"` to remove a list group item's context with
-#'   `updateListGroupItem`.
+#' @param disabled,enabled One or more of `values` indicating which list group
+#'   items to disable or enable, defaults to `NULL`. If `NULL` then
+#'   `disableListGroup` and `enableListGroup` will disable or enable all the
+#'   list group items, respectively.
 #'
-#' @param active If `TRUE` the list group item is rendered in an active state,
-#'   defaults to `FALSE`.
-#'
-#' @param disabled If `TRUE` the list group item is rendered in a disabled
-#'   state, a disabled list group item will not receive click events, defaults
-#'   to `FALSE`. A list group item may be enabled using `updateListGroupItem`.
-#'
-#' @param badge A `badgeOutput` which is right aligned inside the list group
-#'   item, see [`renderBadge`] for more on how to work with badges, defaults to
-#'   `NULL`.
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
 #'
 #' @seealso
 #'
@@ -52,131 +50,216 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         tags$h3("Find something to do!"),
-#'         br()
-#'       ),
+#'         col(
+#'           listGroupInput(
+#'             id = "listgroup",
+#'             labels = paste("Item", 1:5),
+#'             values = 1:5,
+#'             selected = 2
+#'           )
+#'         ),
+#'         col(
+#'           textOutput("selected")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$selected <- renderText({
+#'         paste0(input$listgroup, collapse = ", ")
+#'       })
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
 #'       row(
 #'         col(
-#'           width = 4,
-#'           tags$h4("Any preferences?"),
 #'           listGroupInput(
-#'             id = "preferences",
-#'             listGroupItem(
-#'               label = "No heights",
-#'               value = "noheights"
-#'             ),
-#'             listGroupItem(
-#'               label = "No animals",
-#'               value = "noanimals"
+#'             id = "sets",
+#'             labels = c(
+#'               "red, blue, yellow",
+#'               "silver, gold, crystal",
+#'               "sapphire, ruby, emerald"
 #'             )
 #'           )
 #'         ),
 #'         col(
-#'           tags$h4("Possible outings"),
 #'           listGroupInput(
-#'             hover = FALSE,
-#'             listGroupItem(
-#'               id = "optZoo",
-#'               "Zoo visit!"
-#'             ),
-#'             listGroupItem(
-#'               id = "optSkydive",
-#'               "Sky diving!"
-#'             ),
-#'             listGroupItem(
-#'               id = "optPern",
-#'               "Visit Pern"
-#'             )
+#'             id = "stub",
+#'             labels = NULL
 #'           )
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
 #'       observe({
-#'         prefs <- input$preferences
-#'
-#'         updateListGroupItem(
-#'           id = "optSkydive",
-#'           context = if ("noheights" %in% prefs) "danger" else "none"
-#'         )
-#'
-#'         updateListGroupItem(
-#'           id = "optZoo",
-#'           context = if ("noanimals" %in% prefs) "danger" else "none"
-#'         )
-#'
-#'         updateListGroupItem(
-#'           id = "optPern",
-#'           context = if ("noanimals" %in% prefs) "danger" else "none"
-#'         )
+#'         updateListGroupInput("stub", input$sets)
 #'       })
 #'     }
 #'   )
 #' }
 #'
-listGroupInput <- function(..., id = NULL) {
+#' if (interactive()) {
+#'   teams <- c(
+#'     `avengers` = "iron man, thor, hulk, ant-man, wasp",
+#'     `west coast avengers` = "hawkeye, mockingbird, wonder man, tigra, iron man",
+#'     `new avengers` = "luke cage, captain america, iron man, spider-man, spider-woman"
+#'   )
+#'
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           listGroupInput(
+#'             id = "state",
+#'             labels = c("none", "success", "info", "warning", "danger"),
+#'             values = list(NULL, "success", "info", "warning", "danger")
+#'           )
+#'         ),
+#'         col(
+#'           listGroupInput(
+#'             id = "filter",
+#'             labels = c("iron man", "wonder man", "spider-woman")
+#'           )
+#'         ),
+#'         col(
+#'           listGroupInput(
+#'             id = "teams",
+#'             labels = names(teams),
+#'             values = teams
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'      observe({
+#'        req(input$filter)
+#'
+#'        validateListGroupInput(
+#'          id = "teams",
+#'          state = input$state,
+#'          validate = grep(
+#'            paste0(input$filter, collapse = "|"), teams, value = TRUE
+#'          )
+#'        )
+#'      })
+#'     }
+#'   )
+#' }
+#'
+listGroupInput <- function(id, labels, values = labels, selected = NULL,
+                           disabled = NULL, ...) {
+  if (length(labels) != length(values)) {
+    stop(
+      "invalid `listGroupInput` arguments, `labels` and `values` must be the ",
+      "same length",
+      call. = FALSE
+    )
+  }
+
+  selected <- match2(selected, values)
+  disabled <- match2(disabled, values)
+
   tags$ul(
     class = collate(
       "dull-list-group-input",
       "list-group",
       "list-group-flush"
     ),
-    ...,
     id = id,
-    bootstrap()
-  )
-}
-
-#' @rdname listGroupInput
-#' @export
-listGroupItem <- function(label = NULL, value = NULL, context = NULL,
-                          active = FALSE, disabled = FALSE, badge = NULL, ...,
-                          id = NULL) {
-  if (bad_context(context)) {
-    stop(
-      '`listGroupItem` argument `context` must be one of "success", "info", ',
-      '"warning" and "danger"', call. = FALSE
+    if (!is.null(labels)) {
+      lapply(
+        seq_along(labels),
+        function(i) {
+          tags$button(
+            class = collate(
+              "list-group-item",
+              "list-group-item-action",
+              if (selected[[i]]) "active"
+              # if (!is.null(badge)) "justify-content-between"
+            ),
+            `data-value` = values[[i]],
+            disabled = if (disabled[[i]]) NA,
+            labels[[i]]
+            # badge
+          )
+        }
       )
-  }
-
-  tags$button(
-    class = collate(
-      "dull-list-group-item",
-      "list-group-item",
-      "list-group-item-action",
-      if (!is.null(context)) paste0("list-group-item-", context),
-      if (active) "active",
-      if (!is.null(badge)) "justify-content-between"
-    ),
-    `data-value` = value,
-    disabled = if (disabled) NA,
-    label,
-    badge,
+    },
     ...,
-    id = id,
     bootstrap()
   )
 }
 
 #' @rdname listGroupInput
 #' @export
-updateListGroupItem <- function(id, context = NULL, active = NULL,
-                                disable = NULL,
-                                session = getDefaultReactiveDomain()) {
-  if (!re(context, "none|success|info|warning|danger")) {
+updateListGroupInput <- function(id, labels, values = labels, selected = NULL,
+                                 disabled = NULL,
+                                 session = getDefaultReactiveDomain()) {
+  if (length(labels) != length(values)) {
     stop(
-      "`invalid `updateListGroupItem` argument, `context` must be one of ",
-      '"success", "info", "warning", "danger", or "none"',
+      "invalid `updateListGroupInput` arguments, `labels` and `values` must ",
+      "be the same length",
       call. = FALSE
     )
   }
 
+  if (is.null(labels)) {
+    return(NULL)
+  }
+
+  selected <- match2(selected, values)
+  disabled <- match2(disabled, values)
+
+  items <- htmltools::tagList(
+    lapply(
+      seq_along(labels),
+      function(i) {
+        tags$button(
+          class = collate(
+            "list-group-item",
+            "list-group-item-action",
+            if (selected[[i]]) "active"
+            # if (!is.null(badge)) "justify-content-between"
+          ),
+          `data-value` = values[[i]],
+          disabled = if (disabled[[i]]) NA,
+          labels[[i]]
+          # badge
+        )
+      }
+    )
+  )
+
   session$sendInputMessage(
     id,
     list(
-      context = context, #if (!is.null(context)) paste0("list-group-item-", context),
-      active = active,
-      disable = disable
+      items = as.character(items)
+    )
+  )
+}
+
+#' @rdname listGroupInput
+#' @export
+validateListGroupInput <- function(id, state, validate = NULL,
+                                   session = getDefaultReactiveDomain()) {
+  if (!re(state, "success|info|warning|danger")) {
+    stop(
+      "`invalid `updateListGroupItem` argument, `state` must be one of ",
+      '"success", "info", "warning", "danger", or NULL',
+      call. = FALSE
+    )
+  }
+
+  validate <- unname(validate)
+
+  session$sendInputMessage(
+    id,
+    list(
+      state = state,
+      filter = if (!is.null(validate)) as.list(validate)
     )
   )
 }

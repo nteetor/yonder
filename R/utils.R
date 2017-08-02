@@ -20,6 +20,23 @@ names2 <- function(x) {
   names(x) %||% rep.int("", length(x))
 }
 
+match2 <- function(x, values) {
+  if (is.null(x)) {
+    return(vector("logical", length(values)))
+  }
+
+  vapply(
+    values,
+    function(v) {
+      if (is.null(v)) {
+        return(FALSE)
+      }
+      v %in% x
+    },
+    logical(1)
+  )
+}
+
 attribs <- function(x) {
   if (is.null(x)) {
     return(NULL)

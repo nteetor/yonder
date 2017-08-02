@@ -2,52 +2,51 @@
 % Please edit documentation in R/list-group.R
 \name{listGroupInput}
 \alias{listGroupInput}
-\alias{listGroupItem}
-\alias{updateListGroupItem}
+\alias{updateListGroupInput}
+\alias{validateListGroupInput}
 \title{List group inputs}
 \usage{
-listGroupInput(..., id = NULL)
+listGroupInput(id, labels, values = labels, selected = NULL,
+  disabled = NULL, ...)
 
-listGroupItem(label = NULL, value = NULL, context = NULL,
-  active = FALSE, disabled = FALSE, badge = NULL, ..., id = NULL)
+updateListGroupInput(id, labels, values = labels, selected = NULL,
+  disabled = NULL, session = getDefaultReactiveDomain())
 
-updateListGroupItem(id, context = NULL, active = NULL, disable = NULL,
+validateListGroupInput(id, state, validate = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{...}{List group items or named arguments passed as HTML attributes to
-the parent element.}
+\item{id}{A character string specifying the id of the list group input, the
+reactive value of the list group input is available to the shiny server
+function as part of the \code{input} object. When creating a list group to
+only display information pass \code{NULL} as the \code{id}, in this case an id is not
+added and a reactive input is not created.}
 
-\item{id}{A character string specifying the id of the list group or list
-group item, defaults to \code{NULL}.
+\item{labels}{A character vector or list of character strings specifying the
+labels of the list group items, defaults to \code{labels}.}
 
-If a \strong{list group} id is specified then a reactive value is available to
-the shiny server.
+\item{values}{A character string or list of character strings specifying the
+values of the list group items.}
 
-Specifying a \strong{list group item} id is only necessary to use
-\code{updateListGroupItem}.}
+\item{selected}{One or more of \code{values} indicating the default list group
+items selected, defaults to \code{NULL}, in which case no items are selected and
+the default value of the list group input is \code{NULL}.}
 
-\item{label}{A character string specifying the label of the list group item,
-defaults to \code{NULL}.}
+\item{disabled, enabled}{One or more of \code{values} indicating which list group
+items to disable or enable, defaults to \code{NULL}. If \code{NULL} then
+\code{disableListGroup} and \code{enableListGroup} will disable or enable all the
+list group items, respectively.}
 
-\item{value}{A character string specifying the value of the list group item,
-defaults to \code{NULL}.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
-\item{context}{A character string specifying the visual context of the list
-group item, one of \code{"success"}, \code{"info"}, \code{"warning"}, or \code{"danger"},
-defaults to \code{NULL}. Use \code{"none"} to remove a list group item's context with
-\code{updateListGroupItem}.}
+\item{state}{One of \code{"success"}, \code{"info"}, \code{"warning"}, or \code{"danger"}
+indicating the state of the list group items. If the return value is \code{NULL}
+any visual context is removed.}
 
-\item{active}{If \code{TRUE} the list group item is rendered in an active state,
-defaults to \code{FALSE}.}
-
-\item{disabled}{If \code{TRUE} the list group item is rendered in a disabled
-state, a disabled list group item will not receive click events, defaults
-to \code{FALSE}. A list group item may be enabled using \code{updateListGroupItem}.}
-
-\item{badge}{A \code{badgeOutput} which is right aligned inside the list group
-item, see \code{\link{renderBadge}} for more on how to work with badges, defaults to
-\code{NULL}.}
+\item{validate}{One or more of \code{values} indicating which list group items
+to mark with \code{state}, defaults to \code{NULL}. If \code{NULL} then the all list group
+items are updated.}
 }
 \description{
 A way of handling and outlining content as a list. List groups function
@@ -62,64 +61,101 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        tags$h3("Find something to do!"),
-        br()
-      ),
+        col(
+          listGroupInput(
+            id = "listgroup",
+            labels = paste("Item", 1:5),
+            values = 1:5,
+            selected = 2
+          )
+        ),
+        col(
+          textOutput("selected")
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$selected <- renderText({
+        paste0(input$listgroup, collapse = ", ")
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
       row(
         col(
-          width = 4,
-          tags$h4("Any preferences?"),
           listGroupInput(
-            id = "preferences",
-            listGroupItem(
-              label = "No heights",
-              value = "noheights"
-            ),
-            listGroupItem(
-              label = "No animals",
-              value = "noanimals"
+            id = "sets",
+            labels = c(
+              "red, blue, yellow",
+              "silver, gold, crystal",
+              "sapphire, ruby, emerald"
             )
           )
         ),
         col(
-          tags$h4("Possible outings"),
           listGroupInput(
-            hover = FALSE,
-            listGroupItem(
-              id = "optZoo",
-              "Zoo visit!"
-            ),
-            listGroupItem(
-              id = "optSkydive",
-              "Sky diving!"
-            ),
-            listGroupItem(
-              id = "optPern",
-              "Visit Pern"
-            )
+            id = "stub",
+            labels = NULL
           )
         )
       )
     ),
     server = function(input, output) {
       observe({
-        prefs <- input$preferences
-
-        updateListGroupItem(
-          id = "optSkydive",
-          context = if ("noheights" \%in\% prefs) "danger" else "none"
-        )
-
-        updateListGroupItem(
-          id = "optZoo",
-          context = if ("noanimals" \%in\% prefs) "danger" else "none"
-        )
-
-        updateListGroupItem(
-          id = "optPern",
-          context = if ("noanimals" \%in\% prefs) "danger" else "none"
-        )
+        updateListGroupInput("stub", input$sets)
       })
+    }
+  )
+}
+
+if (interactive()) {
+  teams <- c(
+    `avengers` = "iron man, thor, hulk, ant-man, wasp",
+    `west coast avengers` = "hawkeye, mockingbird, wonder man, tigra, iron man",
+    `new avengers` = "luke cage, captain america, iron man, spider-man, spider-woman"
+  )
+
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          listGroupInput(
+            id = "state",
+            labels = c("none", "success", "info", "warning", "danger"),
+            values = list(NULL, "success", "info", "warning", "danger")
+          )
+        ),
+        col(
+          listGroupInput(
+            id = "filter",
+            labels = c("iron man", "wonder man", "spider-woman")
+          )
+        ),
+        col(
+          listGroupInput(
+            id = "teams",
+            labels = names(teams),
+            values = teams
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+     observe({
+       req(input$filter)
+
+       validateListGroupInput(
+         id = "teams",
+         state = input$state,
+         validate = grep(
+           paste0(input$filter, collapse = "|"), teams, value = TRUE
+         )
+       )
+     })
     }
   )
 }
