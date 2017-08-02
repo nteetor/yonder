@@ -24,9 +24,9 @@ $.extend(radioInputBinding, {
   receiveMessage: function(el, data) {
     var $el = $(el);
 
-    if (data.value !== undefined) {
+    if (data.values !== undefined) {
       $el.find("input[type=\"radio\"]").each(function(i, e) {
-        $(e).data("value", data.value);
+        $(e).data("value", data.values[i]);
       });
     }
 

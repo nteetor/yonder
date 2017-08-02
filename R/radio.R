@@ -158,7 +158,7 @@ updateRadioInput <- function(id, values,
   session$sendInputMessage(
     id,
     list(
-      value = value
+      values = values
     )
   )
 }
