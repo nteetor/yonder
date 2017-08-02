@@ -24,19 +24,37 @@ $.extend(radioInputBinding, {
   receiveMessage: function(el, data) {
     var $el = $(el);
 
-    if (data.context) {
+    if (data.value !== undefined) {
+      $el.find("input[type=\"radio\"]").each(function(i, e) {
+        $(e).data("value", data.value);
+      });
+    }
+
+    if (data.state !== undefined) {
       $el.attr("class", function(i, c) {
         return c.replace(/has-(success|warning|danger)/g, "");
       });
 
-      if (data.context !== "none") {
-        $el.addClass("has-" + data.context);
+      $el.find(".form-control-feedback").empty();
+
+      if (data.state !== null) {
+        $el.addClass("has-" + data.state);
+      }
+
+      if (data.hint !== null) {
+        $el.find(".form-control-feedback").html(data.hint);
       }
     }
 
-    if (data.disable !== null) {
+    if (data.disable === true) {
       $el.find("input[type=\"radio\"]").each(function(i, e) {
-        $(e).prop("disabled", data.disable);
+        $(e).prop("disabled", true);
+      });
+    }
+
+    if (data.enable === true) {
+      $el.find("input[type=\"radio\"]").each(function(i, e) {
+        $(e).prop("enabled", false);
       });
     }
 

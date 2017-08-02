@@ -2,36 +2,56 @@
 % Please edit documentation in R/radio.R
 \name{radioInput}
 \alias{radioInput}
-\alias{radio}
 \alias{updateRadioInput}
+\alias{validateRadioInput}
+\alias{disableRadioInput}
+\alias{enableRadioInput}
 \title{Radio inputs}
 \usage{
-radioInput(..., inline = FALSE, id = NULL)
+radioInput(id, labels, values, selected = NULL, header = NULL,
+  footer = NULL, inline = FALSE)
 
-radio(label = NULL, value = NULL, checked = FALSE, ...)
+updateRadioInput(id, values, session = getDefaultReactiveDomain())
 
-updateRadioInput(id, context = NULL, disable = NULL,
+validateRadioInput(id, state, hint = NULL,
   session = getDefaultReactiveDomain())
+
+disableRadioInput(id, session = getDefaultReactiveDomain())
+
+enableRadioInput(id, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{...}{Radio controls passed to a radio input or additional named
-arguments passed on to the respective parent element as HTML attributes.}
+\item{id}{A character string specifying the id of the radio input, the
+reactive value of the radio input is available to the shiny server
+function as part of the \code{input} object.}
 
-\item{inline}{If \code{TRUE}, the radio input renders inline, otherwise the
-radio controls render on separate lines, defaults to \code{FALSE}.}
+\item{labels}{A character vector specifying labels for the radio input's
+choices.}
 
-\item{id}{A character string specifying the id of the radio input, defaults
-to \code{NULL}, in which case the radio element is rendered, but a reactive
-value is not passed to the shiny server function.}
+\item{values}{A character vector, list of character strings, vector of values
+to coerce to character strings, or list of values to coerce to character
+strings specifying the values of the radio input's choices.}
 
-\item{label}{A character string specifying a label for the radio control,
-defaults to \code{NULL}, in which case a label is not added.}
+\item{selected}{One of \code{values} indicating the default selected value of the
+radio input, defaults to \code{NULL}, in which case the first choice is
+selected by default.}
 
-\item{value}{A character string specifying a value for the radio control,
-defaults to \code{NULL}, in which case the value of the radio is also \code{NULL}.}
+\item{header}{A character string specifying a header for the radio input,
+defaults to \code{NULL}, in which case a header is not added.}
 
-\item{checked}{One of \code{TRUE} or \code{FALSE} specifying if the radio control
-renders in a checked state, defaults to \code{FALSE}.}
+\item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
+in which case the radio controls render on separate lines.}
+
+\item{state}{One of \code{"success"}, \code{"warning"}, or \code{"danger"} indicating the
+state of the radio input. If the return value is \code{NULL} any visual context
+is removed.}
+
+\item{hint}{A character string specifying hint text to accompany a change in
+the input's state, defaults to \code{NULL}. If \code{state} is \code{NULL} then \code{hint}
+is ignored.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 }
 \description{
 Create a reactive radio input of one or more radio controls.
@@ -42,48 +62,35 @@ if (interactive()) {
     ui = container(
       row(
         col(
-          tags$h4("Select a context"),
           radioInput(
-            id = "context",
-            radio("success", "success"),
-            radio("warning", "warning"),
-            radio("danger", "danger"),
-            radio("none", "none", checked = TRUE)
+            id = "state",
+            header = "Pick a state",
+            labels = list("none", "success", "danger", "warning"),
+            values = list(NULL, "success", "danger", "warning"),
+            footer = "change the state of the other radio input"
           )
         ),
         col(
-          tags$h4("Pick a number"),
-          numberInput(id = "threshold"),
-          tags$span(
-            class = "text-muted",
-            "Numbers greater than 5 may cause problems (try it!)"
-          ),
-          tags$h4("More choices"),
           radioInput(
             id = "choices",
-            radio("Choice 1", 1),
-            radio("Choice 2", 2),
-            radio("Choice 3", 3),
-            radio("Choice 4", 4)
+            header = "More choices",
+            labels = paste("Choice", 1:4),
+            values = 1:4,
+            footer = "These choices won't do anything yet"
           )
         )
       )
     ),
     server = function(input, output) {
       observe({
-        req(input$context)
-
-        updateRadioInput("choices", context = input$context)
-      })
-
-      observe({
-        req(input$threshold)
-
-        updateRadioInput("choices", disable = input$threshold > 5)
+        validateRadioInput(
+          id = "choices",
+          state = input$state,
+          hint = paste("visual", input$state)
+        )
       })
     }
   )
-
 }
 
 }
