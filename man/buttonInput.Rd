@@ -2,17 +2,17 @@
 % Please edit documentation in R/button.R
 \name{buttonInput}
 \alias{buttonInput}
-\alias{submit}
 \alias{updateButtonInput}
+\alias{submit}
 \title{Buttons and button groups}
 \usage{
 buttonInput(label = NULL, value = NULL, context = "secondary",
   outline = FALSE, block = FALSE, disabled = FALSE, ..., id = NULL)
 
-submit(label = NULL, outline = FALSE, block = FALSE, ...)
-
 updateButtonInput(id, count = NULL, context = NULL,
   session = getDefaultReactiveDomain())
+
+submit(label = NULL, outline = FALSE, block = FALSE, ...)
 }
 \arguments{
 \item{label}{A character string or tag elements to use as a button label or a

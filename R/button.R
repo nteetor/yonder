@@ -164,24 +164,6 @@ buttonInput <- function(label = NULL, value = NULL, context = "secondary",
 
 #' @rdname buttonInput
 #' @export
-submit <- function(label = NULL, outline = FALSE, block = FALSE, ...) {
-  tags$button(
-    class = collate(
-      "dull-submit",
-      "btn",
-      paste0("btn-", if (outline) "outline-", context),
-      if (block) "btn-block"
-    ),
-    # done to avoid the way Shiny handles submit buttons, will be
-    # moved to HTML attribute `type` once shiny app is connected
-    `data-type` = "submit",
-    role = "button",
-    label
-  )
-}
-
-#' @rdname buttonInput
-#' @export
 updateButtonInput <- function(id, count = NULL, context = NULL,
                               session = getDefaultReactiveDomain()) {
   if (bad_context(context, extra = c("primary", "secondary", "link"))) {
@@ -213,5 +195,24 @@ updateButtonInput <- function(id, count = NULL, context = NULL,
       count = count,
       context = if (!is.null(context)) paste0("btn-", context)
     )
+  )
+}
+
+
+#' @rdname buttonInput
+#' @export
+submit <- function(label = NULL, outline = FALSE, block = FALSE, ...) {
+  tags$button(
+    class = collate(
+      "dull-submit",
+      "btn",
+      paste0("btn-", if (outline) "outline-", context),
+      if (block) "btn-block"
+    ),
+    # done to avoid the way Shiny handles submit buttons, will be
+    # moved to HTML attribute `type` once shiny app is connected
+    `data-type` = "submit",
+    role = "button",
+    label
   )
 }
