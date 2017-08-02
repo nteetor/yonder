@@ -16,9 +16,9 @@ updateRadioInput(id, values, session = getDefaultReactiveDomain())
 validateRadioInput(id, state, hint = NULL,
   session = getDefaultReactiveDomain())
 
-disableRadioInput(id, session = getDefaultReactiveDomain())
+disableRadioInput(id, disabled = NULL, session = getDefaultReactiveDomain())
 
-enableRadioInput(id, session = getDefaultReactiveDomain())
+enableRadioInput(id, enabled = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the radio input, the
@@ -49,6 +49,11 @@ is removed.}
 \item{hint}{A character string specifying hint text to accompany a change in
 the input's state, defaults to \code{NULL}. If \code{state} is \code{NULL} then \code{hint}
 is ignored.}
+
+\item{disabled, enabled}{One or more of \code{values} indicating which radio
+choices to disable or enable, defaults to \code{NULL}. If \code{NULL} then
+\code{disableRadioInput} and \code{enableRadioInput} will disable or enable all
+the radio input's choices, respectively.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}

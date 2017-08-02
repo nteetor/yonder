@@ -31,6 +31,11 @@
 #'   the input's state, defaults to `NULL`. If `state` is `NULL` then `hint`
 #'   is ignored.
 #'
+#' @param disabled,enabled One or more of `values` indicating which radio
+#'   choices to disable or enable, defaults to `NULL`. If `NULL` then
+#'   `disableRadioInput` and `enableRadioInput` will disable or enable all
+#'   the radio input's choices, respectively.
+#'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
 #'
@@ -186,22 +191,24 @@ validateRadioInput <- function(id, state, hint = NULL,
 
 #' @rdname radioInput
 #' @export
-disableRadioInput <- function(id, session = getDefaultReactiveDomain()) {
+disableRadioInput <- function(id, disabled = NULL,
+                              session = getDefaultReactiveDomain()) {
   session$sendInputMessage(
     id,
     list(
-      disable = TRUE
+      disable = disabled %||% TRUE
     )
   )
 }
 
 #' @rdname radioInput
 #' @export
-enableRadioInput <- function(id, session = getDefaultReactiveDomain()) {
+enableRadioInput <- function(id, enabled = NULL,
+                             session = getDefaultReactiveDomain()) {
   session$sendInputMessage(
     id,
     list(
-      enable = TRUE
+      enable = enabled %||% TRUE
     )
   )
 }
