@@ -131,9 +131,9 @@
 #'   )
 #' }
 #'
-buttonInput <- function(label = NULL, value = NULL, context = "secondary",
-                   outline = FALSE, block = FALSE, disabled = FALSE, ...,
-                   id = NULL) {
+buttonInput <- function(id, label, value = label, context = "secondary",
+                        outline = FALSE, block = FALSE, disabled = FALSE,
+                        ...) {
   if (!(context %in% c("primary", "secondary", "link")) &&
       bad_context(context)) {
     stop(
@@ -154,7 +154,7 @@ buttonInput <- function(label = NULL, value = NULL, context = "secondary",
     ),
     type = "button",
     role = "button",
-    `data-count` = 0,
+    `data-clicks` = 0,
     `data-value` = value,
     label,
     ...,
@@ -164,7 +164,7 @@ buttonInput <- function(label = NULL, value = NULL, context = "secondary",
 
 #' @rdname buttonInput
 #' @export
-updateButtonInput <- function(id, count = NULL, context = NULL,
+updateButtonInput <- function(id, clicks = NULL, context = NULL,
                               session = getDefaultReactiveDomain()) {
   if (bad_context(context, extra = c("primary", "secondary", "link"))) {
     stop(
@@ -175,16 +175,16 @@ updateButtonInput <- function(id, count = NULL, context = NULL,
     )
   }
 
-  if (!(is.null(count) || is.numeric(count))) {
+  if (!(is.null(clicks) || is.numeric(clicks))) {
     stop(
-      "invalid `updateButtonInput` `count`, must be NULL or numeric",
+      "invalid `updateButtonInput` `clicks`, must be NULL or numeric",
       call. = FALSE
     )
   }
 
-  if (!is.null(count) && count < 0) {
+  if (!is.null(clicks) && clicks < 0) {
     stop(
-      "invalid `updateButtonInput` `count`, must be greater than 0",
+      "invalid `updateButtonInput` `clicks`, must be greater than 0",
       call. = FALSE
     )
   }
@@ -192,8 +192,8 @@ updateButtonInput <- function(id, count = NULL, context = NULL,
   session$sendInputMessage(
     id,
     list(
-      count = count,
-      context = if (!is.null(context)) paste0("btn-", context)
+      clicks = clicks,
+      context = context
     )
   )
 }

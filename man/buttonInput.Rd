@@ -6,15 +6,19 @@
 \alias{submit}
 \title{Buttons and button groups}
 \usage{
-buttonInput(label = NULL, value = NULL, context = "secondary",
-  outline = FALSE, block = FALSE, disabled = FALSE, ..., id = NULL)
+buttonInput(id, label, value = label, context = "secondary",
+  outline = FALSE, block = FALSE, disabled = FALSE, ...)
 
-updateButtonInput(id, count = NULL, context = NULL,
+updateButtonInput(id, clicks = NULL, context = NULL,
   session = getDefaultReactiveDomain())
 
 submit(label = NULL, outline = FALSE, block = FALSE, ...)
 }
 \arguments{
+\item{id}{A character string specifying the id of the button, button group,
+or submit button, defaults to \code{NULL}. If specified, a reactive value is
+available to the shiny server function.}
+
 \item{label}{A character string or tag elements to use as a button label or a
 character vector specifying labels for a button group, defaults to \code{NULL}.}
 
@@ -42,10 +46,6 @@ parent element, thereby creating a "block."}
 to \code{FALSE}.}
 
 \item{...}{Named arguments passed as HTML attributes to the parent element.}
-
-\item{id}{A character string specifying the id of the button, button group,
-or submit button, defaults to \code{NULL}. If specified, a reactive value is
-available to the shiny server function.}
 }
 \description{
 Buttons, submit and reset buttons. A button's reactive value is a list of two

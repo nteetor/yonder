@@ -71,12 +71,12 @@ $.extend(buttonInputBinding, {
   getValue: function getValue(el) {
     var $el = $(el);
 
-    if ($el.data("count") === 0) {
+    if ($el.data("clicks") === 0) {
       return null;
     }
 
     return {
-      count: parseInt($el.data("count"), 10),
+      clicks: parseInt($el.data("clicks"), 10),
       value: $el.data("value") || null
     };
   },
@@ -86,7 +86,7 @@ $.extend(buttonInputBinding, {
   subscribe: function subscribe(el, callback) {
     $(el).on("click.buttonInputBinding", function (e) {
       var $el = $(el);
-      $el.data("count", parseInt($el.data("count"), 10) + 1);
+      $el.data("clicks", parseInt($el.data("clicks"), 10) + 1);
 
       callback();
     });
@@ -100,64 +100,21 @@ $.extend(buttonInputBinding, {
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
 
-    if (data.count !== null) {
-      $el.data("count", data.count);
+    if (data.clicks !== null) {
+      $el.data("clicks", data.clicks);
     }
 
     if (data.context) {
       $el.attr("class", function (i, c) {
         return c.replace(/btn-(?:outline-)?(?:primary|secondary|link|success|info|warning|danger)/, "");
-      });
-      $el.addClass(data.context);
+      }).addClass("btn-" + data.context);
     }
 
-    if (data.count !== null || data.context) {
-      $el.trigger("change");
-    }
+    $el.trigger("change");
   }
 });
 
 Shiny.inputBindings.register(buttonInputBinding, "dull.buttonInput");
-
-var buttonGroupInputBinding = new Shiny.InputBinding();
-
-$.extend(buttonGroupInputBinding, {
-  find: function find(scope) {
-    return $(scope).find(".dull-button-group[id]");
-  },
-  getValue: function getValue(el) {
-    var $el = $(el);
-    return {
-      count: $el.data("count") || null,
-      value: $el.data("value") || null
-    };
-  },
-  getState: function getState(el, data) {
-    return { value: this.getValue(el) };
-  },
-  subscribe: function subscribe(el, callback) {
-    $(el).on("click.buttonGroupInputBinding", function (e) {
-      callback();
-    });
-    $(el).on("change.buttonGroupInputBinding", function (e) {
-      callback();
-    });
-  },
-  unsubscribe: function unsubscribe(el) {
-    $(el).off(".buttonGroupInputBinding");
-  }
-});
-
-Shiny.inputBindings.register(buttonGroupInputBinding, "dull.buttonGroupInput");
-
-$(document).ready(function () {
-  $(".dull-button-group[id] button").on("click", function (e) {
-    var $child = $(this);
-    var $parent = $child.parent(".dull-button-group");
-
-    $parent.data("value", $child.data("value")).data("count", parseInt($parent.data("count"), 10) + 1).trigger("change");
-  });
-});
 
 var checkboxBarInputBinding = new Shiny.InputBinding();
 
@@ -519,21 +476,18 @@ $.extend(listGroupInputBinding, {
     }
 
     if (data.state !== undefined) {
+      var state = data.state === "valid" ? null : "list-group-item-" + data.state;
+
       if (data.filter !== null) {
-        console.log(data.filter);
         $.each(data.filter, function (i, v) {
           $el.find(".list-group-item[data-value=\"" + v + "\"]").attr("class", function (i, c) {
-            c.replace(/list-group-item-(success|info|warning|danger)/g, "");
-          }).addClass("list-group-item-" + data.state);
+            return c.replace(/list-group-item-(success|info|warning|danger)/g, "");
+          }).addClass(state);
         });
       } else {
         $el.find(".list-group-item").attr("class", function (i, c) {
-          c.replace(/list-group-item-(success|info|warning|danger)/g, "");
-        });
-
-        if (data.state) {
-          $el.find(".list-group-item").addClass("list-group-item-" + data.state);
-        }
+          return c.replace(/list-group-item-(success|info|warning|danger)/g, "");
+        }).addClass(state);
       }
     }
 
