@@ -23,6 +23,10 @@
 #'   items selected, defaults to `NULL`, in which case no items are selected and
 #'   the default value of the list group input is `NULL`.
 #'
+#' @param badges If `TRUE`, badges are added to the list group's items, see
+#'   [`badgeOutput`] for more information, these badges may be incremented
+#'   with `incrementListGroupInput`, defaults to `FALSE`.
+#'
 #' @param state One of `"valid"`, `"warning"`, or `"danger"` indicating the
 #'   state of the list group items. If the return value is `"valid"` any visual
 #'   context is removed.
@@ -35,6 +39,11 @@
 #'   items to disable or enable, defaults to `NULL`. If `NULL` then
 #'   `disableListGroup` and `enableListGroup` will disable or enable all the
 #'   list group items, respectively.
+#'
+#' @param increment One or more of `values` indicating which list group items to
+#'   increment, defaults to `NULL`. If `NULL` then all list group items are
+#'   incremented. If the list group items do not include badges there is no
+#'   effect.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
@@ -223,8 +232,40 @@
 #'   )
 #' }
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           listGroupInput(
+#'             id = "listgroup",
+#'             labels = paste("Topic", 1:4),
+#'             badges = TRUE
+#'           )
+#'         ),
+#'         col(
+#'           buttonInput(
+#'             id = "increment",
+#'             label = "Increment active items"
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observeEvent(input$increment, {
+#'         req(input$listgroup)
+#'
+#'         incrementListGroupInput(
+#'           id = "listgroup",
+#'           increment = input$listgroup
+#'         )
+#'       })
+#'     }
+#'   )
+#' }
+#'
 listGroupInput <- function(id, labels, values = labels, selected = NULL,
-                           disabled = NULL, ...) {
+                           disabled = NULL, badges = FALSE, ...) {
   if (length(labels) != length(values)) {
     stop(
       "invalid `listGroupInput` arguments, `labels` and `values` must be the ",
@@ -251,13 +292,18 @@ listGroupInput <- function(id, labels, values = labels, selected = NULL,
             class = collate(
               "list-group-item",
               "list-group-item-action",
-              if (selected[[i]]) "active"
-              # if (!is.null(badge)) "justify-content-between"
+              if (selected[[i]]) "active",
+              if (badges) "justify-content-between"
             ),
             `data-value` = values[[i]],
             disabled = if (disabled[[i]]) NA,
-            labels[[i]]
-            # badge
+            labels[[i]],
+            if (badges) {
+              tags$span(
+                class = "badge badge-default badge-pill",
+                0
+              )
+            }
           )
         }
       )
@@ -295,12 +341,18 @@ updateListGroupInput <- function(id, labels, values = labels, selected = NULL,
           class = collate(
             "list-group-item",
             "list-group-item-action",
-            if (selected[[i]]) "active"
-            # if (!is.null(badge)) "justify-content-between"
+            if (selected[[i]]) "active",
+            if (badges) "justify-content-between"
           ),
           `data-value` = values[[i]],
           disabled = if (disabled[[i]]) NA,
-          labels[[i]]
+          labels[[i]],
+          if (badges) {
+            tags$span(
+              class = "badge badge-default badge-pill",
+              0
+            )
+          }
         )
       }
     )
@@ -357,6 +409,18 @@ enableListGroupInput <- function(id, enabled = NULL,
     id,
     list(
       enable = if (is.null(enabled)) TRUE else as.list(enabled)
+    )
+  )
+}
+
+#' @rdname listGroupInput
+#' @export
+incrementListGroupInput <- function(id, increment = NULL,
+                                    session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(
+    id,
+    list(
+      increment = if (is.null(increment)) TRUE else as.list(increment)
     )
   )
 }

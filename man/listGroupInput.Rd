@@ -6,10 +6,11 @@
 \alias{validateListGroupInput}
 \alias{disableListGroupInput}
 \alias{enableListGroupInput}
+\alias{incrementListGroupInput}
 \title{List group inputs}
 \usage{
 listGroupInput(id, labels, values = labels, selected = NULL,
-  disabled = NULL, ...)
+  disabled = NULL, badges = FALSE, ...)
 
 updateListGroupInput(id, labels, values = labels, selected = NULL,
   disabled = NULL, session = getDefaultReactiveDomain())
@@ -21,6 +22,9 @@ disableListGroupInput(id, disabled = NULL,
   session = getDefaultReactiveDomain())
 
 enableListGroupInput(id, enabled = NULL,
+  session = getDefaultReactiveDomain())
+
+incrementListGroupInput(id, increment = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
@@ -45,6 +49,10 @@ items to disable or enable, defaults to \code{NULL}. If \code{NULL} then
 \code{disableListGroup} and \code{enableListGroup} will disable or enable all the
 list group items, respectively.}
 
+\item{badges}{If \code{TRUE}, badges are added to the list group's items, see
+\code{\link{badgeOutput}} for more information, these badges may be incremented
+with \code{incrementListGroupInput}, defaults to \code{FALSE}.}
+
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
@@ -55,6 +63,11 @@ context is removed.}
 \item{validate}{One or more of \code{values} indicating which list group items
 to mark with \code{state}, defaults to \code{NULL}. If \code{NULL} then the all list group
 items are updated.}
+
+\item{increment}{One or more of \code{values} indicating which list group items to
+increment, defaults to \code{NULL}. If \code{NULL} then all list group items are
+incremented. If the list group items do not include badges there is no
+effect.}
 }
 \description{
 A way of handling and outlining content as a list. List groups function
@@ -237,6 +250,38 @@ if (interactive()) {
 
       output$value <- renderText({
         paste0(input$listgroup, collapse = ", ")
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          listGroupInput(
+            id = "listgroup",
+            labels = paste("Topic", 1:4),
+            badges = TRUE
+          )
+        ),
+        col(
+          buttonInput(
+            id = "increment",
+            label = "Increment active items"
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      observeEvent(input$increment, {
+        req(input$listgroup)
+
+        incrementListGroupInput(
+          id = "listgroup",
+          increment = input$listgroup
+        )
       })
     }
   )

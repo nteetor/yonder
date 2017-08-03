@@ -512,6 +512,26 @@ $.extend(listGroupInputBinding, {
       }
     }
 
+    if (data.increment) {
+      if (data.increment === true) {
+        var $badge = $el.find(".list-group-item .badge");
+
+        if ($badge.length !== 0) {
+          $badge.each(function (i, e) {
+            $(e).text(parseInt($(e).text(), 10) + 1);
+          });
+        }
+      } else {
+        $.each(data.increment, function (i, v) {
+          var $badge = $el.find(".list-group-item[data-value=\"" + v + "\"] .badge");
+
+          if ($badge.length !== 0) {
+            $badge.text(parseInt($badge.text(), 10) + 1);
+          }
+        });
+      }
+    }
+
     $el.trigger("change");
   }
 });
