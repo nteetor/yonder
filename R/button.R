@@ -5,16 +5,14 @@
 #' second item is `value`, the HTML data-value attribute of the button which may
 #' be set with the `value` argument.
 #'
-#' @param id A character string specifying the id of the button, button group,
-#'  or submit button, defaults to `NULL`. If specified, a reactive value is
-#'  available to the shiny server function.
+#' @param id A character string specifying the id of the button.
 #'
 #' @param label A character string or tag elements to use as a button label or a
-#'   character vector specifying labels for a button group, defaults to `NULL`.
+#'   character vector specifying labels for a button group.
 #'
 #' @param value A character string specifying a value for the button or a
 #'   character vector specifying values for a button group, defaults to
-#'   `NULL`.
+#'   `label`.
 #'
 #' @param context Used to specify the visual context of the button, one of
 #'   `"primary"`, `"secondary"`, `"success"`, `"info"`, `"warning"`, `"danger"`,

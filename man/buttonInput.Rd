@@ -15,16 +15,14 @@ updateButtonInput(id, clicks = NULL, context = NULL,
 submit(label = NULL, outline = FALSE, block = FALSE, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the button, button group,
-or submit button, defaults to \code{NULL}. If specified, a reactive value is
-available to the shiny server function.}
+\item{id}{A character string specifying the id of the button.}
 
 \item{label}{A character string or tag elements to use as a button label or a
-character vector specifying labels for a button group, defaults to \code{NULL}.}
+character vector specifying labels for a button group.}
 
 \item{value}{A character string specifying a value for the button or a
 character vector specifying values for a button group, defaults to
-\code{NULL}.}
+\code{label}.}
 
 \item{context}{Used to specify the visual context of the button, one of
 \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"},

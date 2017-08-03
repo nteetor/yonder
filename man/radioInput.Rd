@@ -8,7 +8,7 @@
 \alias{enableRadioInput}
 \title{Radio inputs}
 \usage{
-radioInput(id, labels, values, selected = NULL, header = NULL,
+radioInput(id, labels, values = labels, selected = NULL, header = NULL,
   footer = NULL, inline = FALSE)
 
 updateRadioInput(id, values, session = getDefaultReactiveDomain())
@@ -30,7 +30,8 @@ choices.}
 
 \item{values}{A character vector, list of character strings, vector of values
 to coerce to character strings, or list of values to coerce to character
-strings specifying the values of the radio input's choices.}
+strings specifying the values of the radio input's choices, defaults to
+\code{labels}.}
 
 \item{selected}{One of \code{values} indicating the default selected value of the
 radio input, defaults to \code{NULL}, in which case the first choice is

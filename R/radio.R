@@ -11,7 +11,8 @@
 #'
 #' @param values A character vector, list of character strings, vector of values
 #'   to coerce to character strings, or list of values to coerce to character
-#'   strings specifying the values of the radio input's choices.
+#'   strings specifying the values of the radio input's choices, defaults to
+#'   `labels`.
 #'
 #' @param selected One of `values` indicating the default selected value of the
 #'   radio input, defaults to `NULL`, in which case the first choice is
@@ -78,8 +79,8 @@
 #'   )
 #' }
 #'
-radioInput <- function(id, labels, values, selected = NULL, header = NULL,
-                       footer = NULL, inline = FALSE) {
+radioInput <- function(id, labels, values = labels, selected = NULL,
+                       header = NULL, footer = NULL, inline = FALSE) {
   if (!is.null(selected) && !(selected %in% values)) {
     stop(
       "invalid `radioInput` argument, `selected` must be one of `values`",
