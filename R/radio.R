@@ -49,11 +49,77 @@
 #'       row(
 #'         col(
 #'           radioInput(
+#'             id = "radio",
+#'             labels = c(
+#'               "(A) Ice cream", "(B) A small frigate",
+#'               "(C) A length of rope", "(D) (A) and (C)",
+#'               "(E) All of the above"
+#'             ),
+#'             values = LETTERS[1:5]
+#'           )
+#'         ),
+#'         col(
+#'           display1(
+#'             textOutput("selected")
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$selected <- renderText({
+#'         input$radio
+#'       })
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           tags$h2("Stacked"),
+#'           radioInput(
+#'             id = "groups",
+#'             labels = c("le guin", "rothfuss", "traviss"),
+#'             values = c(
+#'               "rocannon, exile, illusion",
+#'               "wind, fear",
+#'               "contact, zero, colors"
+#'             )
+#'           )
+#'         ),
+#'         col(
+#'           tags$h2("Inline"),
+#'           radioInput(
+#'             id = "choices",
+#'             labels = NULL,
+#'             inline = TRUE
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observe({
+#'         updateRadioInput(
+#'           id = "choices",
+#'           labels = strsplit(input$groups, ", ", fixed = TRUE)[[1]]
+#'         )
+#'       })
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           radioInput(
 #'             id = "state",
 #'             header = "Pick a state",
-#'             labels = list("none", "success", "danger", "warning"),
-#'             values = list(NULL, "success", "danger", "warning"),
-#'             footer = "change the state of the other radio input"
+#'             labels = list("valid", "danger", "warning"),
+#'             footer = "(changes the state of the other radio input)"
 #'           )
 #'         ),
 #'         col(
@@ -72,18 +138,90 @@
 #'         validateRadioInput(
 #'           id = "choices",
 #'           state = input$state,
-#'           hint = paste("visual", input$state)
+#'           hint = "(something doesn't look right)"
 #'         )
 #'       })
 #'     }
 #'   )
 #' }
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           tags$h2("Disable inputs"),
+#'           radioInput(
+#'             id = "disabled",
+#'             labels = c("one & three", "two", "two & three")
+#'           )
+#'         ),
+#'         col(
+#'           tags$h2("The inputs"),
+#'           radioInput(
+#'             id = "other",
+#'             labels = c("one", "two", "three")
+#'           )
+#'         ),
+#'         col(
+#'           tags$h2("Input value"),
+#'           textOutput("value")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observe({
+#'         req(input$disabled)
+#'
+#'         disableRadioInput(
+#'           id = "other",
+#'           disabled = switch(
+#'             input$disabled,
+#'             `one & three` = c("one", "three"),
+#'             `two` = "two",
+#'             `two & three` = c("two", "three")
+#'           )
+#'         )
+#'       })
+#'
+#'       observe({
+#'         req(input$disabled)
+#'
+#'         enableRadioInput(
+#'           id = "other",
+#'           enabled = switch(
+#'             input$disabled,
+#'             `one & three` = "two",
+#'             `two` = c("one", "three"),
+#'             `two & three` = "one"
+#'           )
+#'         )
+#'       })
+#'
+#'       output$value <- renderText({
+#'         if (is.null(input$other)) {
+#'           "<NULL>"
+#'         } else {
+#'           input$other
+#'         }
+#'       })
+#'     }
+#'   )
+#' }
+#'
 radioInput <- function(id, labels, values = labels, selected = NULL,
-                       header = NULL, footer = NULL, inline = FALSE) {
+                       disabled = NULL, header = NULL, footer = NULL,
+                       inline = FALSE) {
   if (!is.null(selected) && !(selected %in% values)) {
     stop(
       "invalid `radioInput` argument, `selected` must be one of `values`",
+      call. = FALSE
+    )
+  }
+
+  if (!is.null(disabled) && !(disabled %in% values)) {
+    stop(
+      "invalid `radioInput` argument, `disabled` must be one of `values`",
       call. = FALSE
     )
   }
@@ -96,13 +234,8 @@ radioInput <- function(id, labels, values = labels, selected = NULL,
     )
   }
 
-  if (is.null(selected)) {
-    selected <- c(TRUE, vector("logical", length(labels) - 1))
-  } else {
-    selected <- vapply(
-      values, function(v) if (is.null(v)) FALSE else (v == selected), logical(1)
-    )
-  }
+  selected <- match2(selected, values, default = TRUE)
+  disabled <- match2(disabled, values)
 
   tags$div(
     class = collate(
@@ -119,34 +252,37 @@ radioInput <- function(id, labels, values = labels, selected = NULL,
         header
       )
     },
-    lapply(
-      seq_along(labels),
-      FUN = function(i) {
-        tags$label(
-          class = collate(
-            "custom-control",
-            "custom-radio"
-          ),
-          tags$input(
-            class = "custom-control-input",
-            type = "radio",
-            name = id,
-            `data-value` = values[[i]],
-            checked = if (selected[[i]]) NA
-          ),
-          tags$span(
-            class = "custom-control-indicator"
-          ),
-          tags$span(
-            class = "custom-control-description",
-            labels[[i]]
+    if (!is.null(labels)) {
+      lapply(
+        seq_along(labels),
+        function(i) {
+          tags$label(
+            class = collate(
+              "custom-control",
+              "custom-radio"
+            ),
+            tags$input(
+              class = "custom-control-input",
+              type = "radio",
+              name = id,
+              `data-value` = values[[i]],
+              checked = if (selected[[i]]) NA,
+              disabled = if (disabled[[i]]) NA
+            ),
+            tags$span(
+              class = "custom-control-indicator"
+            ),
+            tags$span(
+              class = "custom-control-description",
+              labels[[i]]
+            )
           )
-        )
-      }
-    ),
+        }
+      )
+    },
     tags$div(class = "form-control-feedback"),
     if (!is.null(footer)) {
-      tags$small(
+      small(
         class = "form-text text-muted",
         footer
       )
@@ -157,14 +293,60 @@ radioInput <- function(id, labels, values = labels, selected = NULL,
 
 #' @rdname radioInput
 #' @export
-updateRadioInput <- function(id, values,
+updateRadioInput <- function(id, labels, values = labels, selected = NULL,
+                             disabled = NULL,
                              session = getDefaultReactiveDomain()) {
-  values <- vapply(values, as.character, character(1))
+  if (!is.null(selected) && !(selected %in% values)) {
+    stop(
+      "invalid `updateRadioInput` argument, `selected` must be one of `values`",
+      call. = FALSE
+    )
+  }
+
+  if (length(labels) != length(values)) {
+    stop(
+      "invalid `updateRadioInput` arguments, `labels` and `values` must be ",
+      "the same length",
+      call. = FALSE
+    )
+  }
+
+  selected <- match2(selected, values)
+  disabled <- match2(disabled, values, default = FALSE)
+
+  choices <- htmltools::tagList(
+    lapply(
+      seq_along(labels),
+      function(i) {
+        tags$label(
+          class = collate(
+            "custom-control",
+            "custom-radio"
+          ),
+          tags$input(
+            class = "custom-control-input",
+            type = "radio",
+            name = id,
+            `data-value` = values[[i]],
+            checked = if (selected[[i]]) NA,
+            disabled = if (disabled[[i]]) NA
+          ),
+          tags$span(
+            class = "custom-control-indicator"
+          ),
+          tags$span(
+            class = "custom-control-description",
+            labels[[i]]
+          )
+        )
+      }
+    )
+  )
 
   session$sendInputMessage(
     id,
     list(
-      values = values
+      choices = as.character(choices)
     )
   )
 }
@@ -173,10 +355,10 @@ updateRadioInput <- function(id, values,
 #' @export
 validateRadioInput <- function(id, state, hint = NULL,
                                session = getDefaultReactiveDomain()) {
-  if (!re(state, "success|warning|danger")) {
+  if (!re(state, "valid|success|warning|danger")) {
     stop(
       "invalid `validateRadioInput` argument, `state` must be one of ",
-      '"success", "warning", or "danger"',
+      '"valid", "warning", or "danger"',
       call. = FALSE
     )
   }
@@ -185,7 +367,7 @@ validateRadioInput <- function(id, state, hint = NULL,
     id,
     list(
       state = state,
-      hint = if (!is.null(state)) hint
+      hint = hint
     )
   )
 }
@@ -197,7 +379,7 @@ disableRadioInput <- function(id, disabled = NULL,
   session$sendInputMessage(
     id,
     list(
-      disable = disabled %||% TRUE
+      disable = if (is.null(disabled)) TRUE else as.list(disabled)
     )
   )
 }
@@ -209,7 +391,7 @@ enableRadioInput <- function(id, enabled = NULL,
   session$sendInputMessage(
     id,
     list(
-      enable = enabled %||% TRUE
+      enable = if (is.null(enabled)) TRUE else as.list(enabled)
     )
   )
 }
