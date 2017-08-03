@@ -521,38 +521,49 @@ $.extend(radioInputBinding, {
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
 
-    if (data.values !== undefined) {
-      $el.find("input[type=\"radio\"]").each(function (i, e) {
-        $(e).data("value", data.values[i]);
-      });
+    if (data.choices !== undefined) {
+      $el.find(".custom-radio").remove();
+      $el.find(".form-control-feedback").before(data.choices);
     }
 
-    if (data.state !== undefined) {
+    if (data.state) {
       $el.attr("class", function (i, c) {
         return c.replace(/has-(success|warning|danger)/g, "");
       });
 
       $el.find(".form-control-feedback").empty();
 
-      if (data.state !== null) {
+      if (data.state !== "valid") {
         $el.addClass("has-" + data.state);
-      }
 
-      if (data.hint !== null) {
-        $el.find(".form-control-feedback").html(data.hint);
+        if (data.hint) {
+          $el.find(".form-control-feedback").html(data.hint);
+        }
       }
     }
 
-    if (data.disable === true) {
-      $el.find("input[type=\"radio\"]").each(function (i, e) {
-        $(e).prop("disabled", true);
-      });
+    if (data.disable) {
+      if (data.disable === true) {
+        $el.find("input[type=\"radio\"]").each(function (i, e) {
+          $(e).prop("disabled", true);
+        });
+      } else {
+        $.each(data.disable, function (i, v) {
+          $el.find("input[type=\"radio\"][data-value=\"" + v + "\"]").prop("disabled", true);
+        });
+      }
     }
 
-    if (data.enable === true) {
-      $el.find("input[type=\"radio\"]").each(function (i, e) {
-        $(e).prop("enabled", false);
-      });
+    if (data.enable) {
+      if (data.enable === true) {
+        $el.find("input[type=\"radio\"]").each(function (i, e) {
+          $(e).prop("disabled", false);
+        });
+      } else {
+        $.each(data.enable, function (i, v) {
+          $el.find("input[type=\"radio\"][data-value=\"" + v + "\"]").prop("disabled", false);
+        });
+      }
     }
 
     $el.trigger("change");

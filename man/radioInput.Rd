@@ -8,10 +8,11 @@
 \alias{enableRadioInput}
 \title{Radio inputs}
 \usage{
-radioInput(id, labels, values = labels, selected = NULL, header = NULL,
-  footer = NULL, inline = FALSE)
+radioInput(id, labels, values = labels, selected = NULL, disabled = NULL,
+  header = NULL, footer = NULL, inline = FALSE)
 
-updateRadioInput(id, values, session = getDefaultReactiveDomain())
+updateRadioInput(id, labels, values = labels, selected = NULL,
+  disabled = NULL, session = getDefaultReactiveDomain())
 
 validateRadioInput(id, state, hint = NULL,
   session = getDefaultReactiveDomain())
@@ -37,6 +38,11 @@ strings specifying the values of the radio input's choices, defaults to
 radio input, defaults to \code{NULL}, in which case the first choice is
 selected by default.}
 
+\item{disabled, enabled}{One or more of \code{values} indicating which radio
+choices to disable or enable, defaults to \code{NULL}. If \code{NULL} then
+\code{disableRadioInput} and \code{enableRadioInput} will disable or enable all
+the radio input's choices, respectively.}
+
 \item{header}{A character string specifying a header for the radio input,
 defaults to \code{NULL}, in which case a header is not added.}
 
@@ -51,11 +57,6 @@ is removed.}
 the input's state, defaults to \code{NULL}. If \code{state} is \code{NULL} then \code{hint}
 is ignored.}
 
-\item{disabled, enabled}{One or more of \code{values} indicating which radio
-choices to disable or enable, defaults to \code{NULL}. If \code{NULL} then
-\code{disableRadioInput} and \code{enableRadioInput} will disable or enable all
-the radio input's choices, respectively.}
-
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 }
@@ -69,11 +70,77 @@ if (interactive()) {
       row(
         col(
           radioInput(
+            id = "radio",
+            labels = c(
+              "(A) Ice cream", "(B) A small frigate",
+              "(C) A length of rope", "(D) (A) and (C)",
+              "(E) All of the above"
+            ),
+            values = LETTERS[1:5]
+          )
+        ),
+        col(
+          display1(
+            textOutput("selected")
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$selected <- renderText({
+        input$radio
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          tags$h2("Stacked"),
+          radioInput(
+            id = "groups",
+            labels = c("le guin", "rothfuss", "traviss"),
+            values = c(
+              "rocannon, exile, illusion",
+              "wind, fear",
+              "contact, zero, colors"
+            )
+          )
+        ),
+        col(
+          tags$h2("Inline"),
+          radioInput(
+            id = "choices",
+            labels = NULL,
+            inline = TRUE
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      observe({
+        updateRadioInput(
+          id = "choices",
+          labels = strsplit(input$groups, ", ", fixed = TRUE)[[1]]
+        )
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          radioInput(
             id = "state",
             header = "Pick a state",
-            labels = list("none", "success", "danger", "warning"),
-            values = list(NULL, "success", "danger", "warning"),
-            footer = "change the state of the other radio input"
+            labels = list("valid", "danger", "warning"),
+            footer = "(changes the state of the other radio input)"
           )
         ),
         col(
@@ -92,8 +159,72 @@ if (interactive()) {
         validateRadioInput(
           id = "choices",
           state = input$state,
-          hint = paste("visual", input$state)
+          hint = "(something doesn't look right)"
         )
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          tags$h2("Disable inputs"),
+          radioInput(
+            id = "disabled",
+            labels = c("one & three", "two", "two & three")
+          )
+        ),
+        col(
+          tags$h2("The inputs"),
+          radioInput(
+            id = "other",
+            labels = c("one", "two", "three")
+          )
+        ),
+        col(
+          tags$h2("Input value"),
+          textOutput("value")
+        )
+      )
+    ),
+    server = function(input, output) {
+      observe({
+        req(input$disabled)
+
+        disableRadioInput(
+          id = "other",
+          disabled = switch(
+            input$disabled,
+            `one & three` = c("one", "three"),
+            `two` = "two",
+            `two & three` = c("two", "three")
+          )
+        )
+      })
+
+      observe({
+        req(input$disabled)
+
+        enableRadioInput(
+          id = "other",
+          enabled = switch(
+            input$disabled,
+            `one & three` = "two",
+            `two` = c("one", "three"),
+            `two & three` = "one"
+          )
+        )
+      })
+
+      output$value <- renderText({
+        if (is.null(input$other)) {
+          "<NULL>"
+        } else {
+         input$other
+        }
       })
     }
   )
