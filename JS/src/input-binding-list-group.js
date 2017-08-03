@@ -47,24 +47,22 @@ $.extend(listGroupInputBinding, {
     }
 
     if (data.state !== undefined) {
+      var state = data.state === "valid" ? null : "list-group-item-" + data.state;
+
       if (data.filter !== null) {
-        console.log(data.filter);
         $.each(data.filter, function(i, v) {
           $el.find(".list-group-item[data-value=\"" + v + "\"]")
             .attr("class", function(i, c) {
-              c.replace(/list-group-item-(success|info|warning|danger)/g, "");
+              return c.replace(/list-group-item-(success|info|warning|danger)/g, "");
             })
-            .addClass("list-group-item-" + data.state);
+            .addClass(state);
         });
       } else {
         $el.find(".list-group-item")
           .attr("class", function(i, c) {
-            c.replace(/list-group-item-(success|info|warning|danger)/g, "");
-          });
-
-        if (data.state) {
-          $el.find(".list-group-item").addClass("list-group-item-" + data.state);
-        }
+            return c.replace(/list-group-item-(success|info|warning|danger)/g, "");
+          })
+          .addClass(state);
       }
     }
 

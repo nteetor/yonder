@@ -40,9 +40,9 @@ list group items, respectively.}
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{state}{One of \code{"success"}, \code{"info"}, \code{"warning"}, or \code{"danger"}
-indicating the state of the list group items. If the return value is \code{NULL}
-any visual context is removed.}
+\item{state}{One of \code{"valid"}, \code{"warning"}, or \code{"danger"} indicating the
+state of the list group items. If the return value is \code{"valid"} any visual
+context is removed.}
 
 \item{validate}{One or more of \code{values} indicating which list group items
 to mark with \code{state}, defaults to \code{NULL}. If \code{NULL} then the all list group
@@ -123,39 +123,57 @@ if (interactive()) {
     ui = container(
       row(
         col(
-          listGroupInput(
-            id = "state",
-            labels = c("none", "success", "info", "warning", "danger"),
-            values = list(NULL, "success", "info", "warning", "danger")
+          tags$p(
+            "Select teams and click a button to highlight them or remove ",
+            "the highlighting from them"
           )
-        ),
-        col(
-          listGroupInput(
-            id = "filter",
-            labels = c("iron man", "wonder man", "spider-woman")
-          )
-        ),
+        )
+      ),
+      row(
         col(
           listGroupInput(
             id = "teams",
             labels = names(teams),
             values = teams
           )
+        ),
+        col(
+          row(
+            buttonInput("clear", "valid", block = TRUE)
+          ),
+          row(
+            buttonInput("warning", "warning", block = TRUE)
+          ),
+          row(
+            buttonInput("danger", "danger", block = TRUE)
+          )
         )
       )
     ),
     server = function(input, output) {
-     observe({
-       req(input$filter)
+      observeEvent(input$clear, {
+        validateListGroupInput(
+          id = "teams",
+          state = input$clear$value,
+          validate = input$teams
+        )
+      })
 
-       validateListGroupInput(
-         id = "teams",
-         state = input$state,
-         validate = grep(
-           paste0(input$filter, collapse = "|"), teams, value = TRUE
-         )
-       )
-     })
+      observeEvent(input$warning, {
+        validateListGroupInput(
+          id = "teams",
+          state = input$warning$value,
+          validate = input$teams
+        )
+      })
+
+      observeEvent(input$danger, {
+        validateListGroupInput(
+          id = "teams",
+          state = input$danger$value,
+          validate = input$teams
+        )
+      })
     }
   )
 }

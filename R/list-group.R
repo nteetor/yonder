@@ -23,9 +23,9 @@
 #'   items selected, defaults to `NULL`, in which case no items are selected and
 #'   the default value of the list group input is `NULL`.
 #'
-#' @param state One of `"success"`, `"info"`, `"warning"`, or `"danger"`
-#'   indicating the state of the list group items. If the return value is `NULL`
-#'   any visual context is removed.
+#' @param state One of `"valid"`, `"warning"`, or `"danger"` indicating the
+#'   state of the list group items. If the return value is `"valid"` any visual
+#'   context is removed.
 #'
 #' @param validate One or more of `values` indicating which list group items
 #'   to mark with `state`, defaults to `NULL`. If `NULL` then the all list group
@@ -112,39 +112,57 @@
 #'     ui = container(
 #'       row(
 #'         col(
-#'           listGroupInput(
-#'             id = "state",
-#'             labels = c("none", "success", "info", "warning", "danger"),
-#'             values = list(NULL, "success", "info", "warning", "danger")
+#'           tags$p(
+#'             "Select teams and click a button to highlight them or remove ",
+#'             "the highlighting from them"
 #'           )
-#'         ),
-#'         col(
-#'           listGroupInput(
-#'             id = "filter",
-#'             labels = c("iron man", "wonder man", "spider-woman")
-#'           )
-#'         ),
+#'         )
+#'       ),
+#'       row(
 #'         col(
 #'           listGroupInput(
 #'             id = "teams",
 #'             labels = names(teams),
 #'             values = teams
 #'           )
+#'         ),
+#'         col(
+#'           row(
+#'             buttonInput("clear", "valid", block = TRUE)
+#'           ),
+#'           row(
+#'             buttonInput("warning", "warning", block = TRUE)
+#'           ),
+#'           row(
+#'             buttonInput("danger", "danger", block = TRUE)
+#'           )
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'      observe({
-#'        req(input$filter)
+#'       observeEvent(input$clear, {
+#'         validateListGroupInput(
+#'           id = "teams",
+#'           state = input$clear$value,
+#'           validate = input$teams
+#'         )
+#'       })
 #'
-#'        validateListGroupInput(
-#'          id = "teams",
-#'          state = input$state,
-#'          validate = grep(
-#'            paste0(input$filter, collapse = "|"), teams, value = TRUE
-#'          )
-#'        )
-#'      })
+#'       observeEvent(input$warning, {
+#'         validateListGroupInput(
+#'           id = "teams",
+#'           state = input$warning$value,
+#'           validate = input$teams
+#'         )
+#'       })
+#'
+#'       observeEvent(input$danger, {
+#'         validateListGroupInput(
+#'           id = "teams",
+#'           state = input$danger$value,
+#'           validate = input$teams
+#'         )
+#'       })
 #'     }
 #'   )
 #' }
@@ -245,10 +263,10 @@ updateListGroupInput <- function(id, labels, values = labels, selected = NULL,
 #' @export
 validateListGroupInput <- function(id, state, validate = NULL,
                                    session = getDefaultReactiveDomain()) {
-  if (!re(state, "success|info|warning|danger")) {
+  if (!re(state, "valid|success|info|warning|danger", len0 = FALSE)) {
     stop(
-      "`invalid `updateListGroupItem` argument, `state` must be one of ",
-      '"success", "info", "warning", "danger", or NULL',
+      "`invalid `validateListGroupItem` argument, `state` must be one of ",
+      '"valid", "warning", or "danger"',
       call. = FALSE
     )
   }
