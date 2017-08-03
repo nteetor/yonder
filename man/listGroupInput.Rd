@@ -4,6 +4,8 @@
 \alias{listGroupInput}
 \alias{updateListGroupInput}
 \alias{validateListGroupInput}
+\alias{disableListGroupInput}
+\alias{enableListGroupInput}
 \title{List group inputs}
 \usage{
 listGroupInput(id, labels, values = labels, selected = NULL,
@@ -13,6 +15,12 @@ updateListGroupInput(id, labels, values = labels, selected = NULL,
   disabled = NULL, session = getDefaultReactiveDomain())
 
 validateListGroupInput(id, state, validate = NULL,
+  session = getDefaultReactiveDomain())
+
+disableListGroupInput(id, disabled = NULL,
+  session = getDefaultReactiveDomain())
+
+enableListGroupInput(id, enabled = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
@@ -173,6 +181,62 @@ if (interactive()) {
           state = input$danger$value,
           validate = input$teams
         )
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          width = 2,
+          buttonInput(
+            id = "enable",
+            label = "Enable",
+            block = TRUE
+          )
+        ),
+        col(
+          row(
+            col(
+              listGroupInput(
+                id = "listgroup",
+                labels = c(
+                  "One fish", "Two fish",
+                  "Red fish", "Blue fish"
+                )
+              )
+            ),
+            col(
+              display4(
+                textOutput("value")
+              )
+            )
+          )
+        ),
+        col(
+          width = 2,
+          buttonInput(
+            id = "disable",
+            label = "Disable",
+            block = TRUE
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      observeEvent(input$enable, {
+        enableListGroupInput("listgroup")
+      })
+
+      observeEvent(input$disable, {
+        disableListGroupInput("listgroup")
+      })
+
+      output$value <- renderText({
+        paste0(input$listgroup, collapse = ", ")
       })
     }
   )

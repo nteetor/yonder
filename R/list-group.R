@@ -167,6 +167,62 @@
 #'   )
 #' }
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           width = 2,
+#'           buttonInput(
+#'             id = "enable",
+#'             label = "Enable",
+#'             block = TRUE
+#'           )
+#'         ),
+#'         col(
+#'           row(
+#'             col(
+#'               listGroupInput(
+#'                 id = "listgroup",
+#'                 labels = c(
+#'                   "One fish", "Two fish",
+#'                   "Red fish", "Blue fish"
+#'                 )
+#'               )
+#'             ),
+#'             col(
+#'               display4(
+#'                 textOutput("value")
+#'               )
+#'             )
+#'           )
+#'         ),
+#'         col(
+#'           width = 2,
+#'           buttonInput(
+#'             id = "disable",
+#'             label = "Disable",
+#'             block = TRUE
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observeEvent(input$enable, {
+#'         enableListGroupInput("listgroup")
+#'       })
+#'
+#'       observeEvent(input$disable, {
+#'         disableListGroupInput("listgroup")
+#'       })
+#'
+#'       output$value <- renderText({
+#'         paste0(input$listgroup, collapse = ", ")
+#'       })
+#'     }
+#'   )
+#' }
+#'
 listGroupInput <- function(id, labels, values = labels, selected = NULL,
                            disabled = NULL, ...) {
   if (length(labels) != length(values)) {
@@ -245,7 +301,6 @@ updateListGroupInput <- function(id, labels, values = labels, selected = NULL,
           `data-value` = values[[i]],
           disabled = if (disabled[[i]]) NA,
           labels[[i]]
-          # badge
         )
       }
     )
@@ -278,6 +333,30 @@ validateListGroupInput <- function(id, state, validate = NULL,
     list(
       state = state,
       filter = if (!is.null(validate)) as.list(validate)
+    )
+  )
+}
+
+#' @rdname listGroupInput
+#' @export
+disableListGroupInput <- function(id, disabled = NULL,
+                                  session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(
+    id,
+    list(
+      disable = if (is.null(disabled)) TRUE else as.list(disabled)
+    )
+  )
+}
+
+#' @rdname listGroupInput
+#' @export
+enableListGroupInput <- function(id, enabled = NULL,
+                                 session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(
+    id,
+    list(
+      enable = if (is.null(enabled)) TRUE else as.list(enabled)
     )
   )
 }

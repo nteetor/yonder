@@ -466,7 +466,7 @@ $.extend(listGroupInputBinding, {
     if (data.items !== undefined) {
       $el.find(".list-group-item").remove();
       if ($el.children().length !== 0) {
-        $el.children().first().prepend(data.items);
+        $el.children().first().before(data.items);
       } else {
         $el.html(data.items);
       }
@@ -485,6 +485,30 @@ $.extend(listGroupInputBinding, {
         $el.find(".list-group-item").attr("class", function (i, c) {
           return c.replace(/list-group-item-(success|info|warning|danger)/g, "");
         }).addClass(state);
+      }
+    }
+
+    if (data.disable) {
+      if (data.disable === true) {
+        $el.find(".list-group-item").each(function (i, e) {
+          $(e).prop("disabled", true);
+        });
+      } else {
+        $.each(data.disable, function (i, v) {
+          $el.find(".list-group-item[data-value=\"" + v + "\"]").prop("disabled", true);
+        });
+      }
+    }
+
+    if (data.enable) {
+      if (data.enable === true) {
+        $el.find(".list-group-item").each(function (i, e) {
+          $(e).prop("disabled", false);
+        });
+      } else {
+        $.each(data.enable, function (i, v) {
+          $el.find(".list-group-item[data-value=\"" + v + "\"]").prop("disabled", false);
+        });
       }
     }
 
