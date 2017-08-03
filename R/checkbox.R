@@ -11,7 +11,7 @@
 #'
 #' @param value A character string, object to coerce to a character string, or
 #'   `NULL` specifying the value of the checkbox or a new value for the
-#'   checkbox.
+#'   checkbox, defaults to `label`.
 #'
 #' @param header A character string specifying a header for the checkbox input,
 #'   defaults to `NULL`, in which case a header is not added.
@@ -19,8 +19,8 @@
 #' @param checked If `TRUE` the checkbox renders in a checked state, defaults
 #'   to `FALSE`.
 #'
-#' @param state One of `"success"`, `"warning"`, or `"danger"` indicating the
-#'   state of the checkbox input. If the return value is `NULL` any visual
+#' @param state One of `"valid"`, `"warning"`, or `"danger"` indicating the
+#'   state of the checkbox input. If the return value is `"valid"` any visual
 #'   context is removed.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
@@ -40,20 +40,62 @@
 #'           )
 #'         ),
 #'         col(
-#'
+#'           display1(
+#'             textOutput("value")
+#'           )
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       observeEvent(input$checkbox, {
-#'         print(input$checkbox)
+#'       output$value <- renderText({
+#'         input$checkbox
 #'       })
 #'     }
 #'   )
 #' }
 #'
-checkboxInput <- function(id, label, value, title = NULL, checked = FALSE,
-                          ...) {
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           checkboxInput(
+#'             id = "caps",
+#'             label = "Capslock?",
+#'             value = "capslock"
+#'           )
+#'         ),
+#'         col(
+#'           checkboxInput(
+#'             id = "question",
+#'             label = "Please check this box",
+#'             value = "checked"
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observe({
+#'         if (isTruthy(input$caps)) {
+#'           updateCheckboxInput(
+#'             id = "question",
+#'             label = "PLEASE CHECK THIS BOX",
+#'             value = "checked"
+#'           )
+#'         } else {
+#'           updateCheckboxInput(
+#'             id = "question",
+#'             label = "Please check this box",
+#'             value = "checked"
+#'           )
+#'         }
+#'       })
+#'     }
+#'   )
+#' }
+#'
+checkboxInput <- function(id, label, value = label, title = NULL,
+                          checked = FALSE, ...) {
   value <- as.character(value)
 
   tags$div(
@@ -61,7 +103,6 @@ checkboxInput <- function(id, label, value, title = NULL, checked = FALSE,
       "dull-checkbox-input",
       "dull-input",
       "form-group"
-      # if (inline) "mb-2 mr-sm-2 mb-sm-0"
     ),
     tags$label(
       class = collate(
@@ -90,14 +131,32 @@ checkboxInput <- function(id, label, value, title = NULL, checked = FALSE,
 
 #' @rdname checkboxInput
 #' @export
-updateCheckboxInput <- function(id, value,
+updateCheckboxInput <- function(id, label, value = label, checked = FALSE,
                                 session = getDefaultReactiveDomain()) {
-  value <- as.character(value)
+  this <- tags$label(
+    class = collate(
+      "custom-control",
+      "custom-checkbox"
+    ),
+    tags$input(
+      class = "custom-control-input",
+      type = "checkbox",
+      `data-value` = value,
+      checked = if (checked) NA
+    ),
+    tags$span(
+      class = "custom-control-indicator"
+    ),
+    tags$span(
+      class = "custom-control-description",
+      label
+    )
+  )
 
   session$sendInputMessage(
     id,
     list(
-      value = value
+      choice = as.character(this)
     )
   )
 }
@@ -106,10 +165,10 @@ updateCheckboxInput <- function(id, value,
 #' @export
 validateCheckboxInput <- function(id, state,
                                   session = getDefaultReactiveDomain()) {
-  if (!re(state, "success|warning|danger")) {
+  if (!re(state, "valid|success|warning|danger", len0 = FALSE)) {
     stop(
       "invalid `validateCheckboxInput` argument, `state` must be one ",
-      '"success", "warning", "danger", or NULL',
+      '"valid", "warning", or "danger"',
       call. = FALSE
     )
   }

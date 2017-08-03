@@ -172,16 +172,17 @@ $.extend(checkboxInputBinding, {
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
 
-    if (data.value !== undefined) {
-      $el.data("value", data.value);
+    if (data.choice !== undefined) {
+      $el.find("label").remove();
+      $el.html(data.choice);
     }
 
-    if (data.state !== undefined) {
+    if (data.state) {
       $el.attr("class", function (i, c) {
         return c.replace(/has-(success|warning|danger)/g, "");
       });
 
-      if (data.context) {
+      if (data.context !== "valid") {
         $el.addClass("has-" + data.state);
       }
     }
@@ -192,10 +193,6 @@ $.extend(checkboxInputBinding, {
 
     if (data.enable === true) {
       $el.find("input[type=\"checkbox\"]").prop("disabled", false);
-    }
-
-    if (data.remove === true) {
-      $el.remove();
     }
 
     $el.trigger("change");

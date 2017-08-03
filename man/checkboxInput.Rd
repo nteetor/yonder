@@ -8,9 +8,11 @@
 \alias{enableCheckboxInput}
 \title{Checkbox inputs}
 \usage{
-checkboxInput(id, label, value, title = NULL, checked = FALSE, ...)
+checkboxInput(id, label, value = label, title = NULL, checked = FALSE,
+  ...)
 
-updateCheckboxInput(id, value, session = getDefaultReactiveDomain())
+updateCheckboxInput(id, label, value = label, checked = FALSE,
+  session = getDefaultReactiveDomain())
 
 validateCheckboxInput(id, state, session = getDefaultReactiveDomain())
 
@@ -27,7 +29,7 @@ function as part of the \code{input} object.}
 
 \item{value}{A character string, object to coerce to a character string, or
 \code{NULL} specifying the value of the checkbox or a new value for the
-checkbox.}
+checkbox, defaults to \code{label}.}
 
 \item{checked}{If \code{TRUE} the checkbox renders in a checked state, defaults
 to \code{FALSE}.}
@@ -35,8 +37,8 @@ to \code{FALSE}.}
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{state}{One of \code{"success"}, \code{"warning"}, or \code{"danger"} indicating the
-state of the checkbox input. If the return value is \code{NULL} any visual
+\item{state}{One of \code{"valid"}, \code{"warning"}, or \code{"danger"} indicating the
+state of the checkbox input. If the return value is \code{"valid"} any visual
 context is removed.}
 
 \item{header}{A character string specifying a header for the checkbox input,
@@ -59,13 +61,55 @@ if (interactive()) {
           )
         ),
         col(
-
+          display1(
+            textOutput("value")
+          )
         )
       )
     ),
     server = function(input, output) {
-      observeEvent(input$checkbox, {
-        print(input$checkbox)
+      output$value <- renderText({
+        input$checkbox
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          checkboxInput(
+            id = "caps",
+            label = "Capslock?",
+            value = "capslock"
+          )
+        ),
+        col(
+          checkboxInput(
+            id = "question",
+            label = "Please check this box",
+            value = "checked"
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      observe({
+        if (isTruthy(input$caps)) {
+          updateCheckboxInput(
+            id = "question",
+            label = "PLEASE CHECK THIS BOX",
+            value = "checked"
+          )
+        } else {
+          updateCheckboxInput(
+            id = "question",
+            label = "Please check this box",
+            value = "checked"
+          )
+        }
       })
     }
   )
