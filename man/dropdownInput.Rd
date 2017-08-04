@@ -24,9 +24,10 @@ to coerce to character strings, or list of values to coerce to character
 strings specifying the values of the dropdown input's choices, defaults to
 \code{labels}.}
 
-\item{disabled}{One or more of \code{values} indicating which dropdown menu items
-to disable, defaults to \code{NULL}. If \code{NULL}, \code{disableDropdownInput} will
-disable the menu toggle and the dropdown cannot be opened.}
+\item{disabled, enabled}{One or more of \code{values} indicating which dropdown
+menu items to disable or enable, defaults to \code{NULL}. If \code{NULL} then
+\code{disableDropdownInput} and \code{enableDropdownInput} will disable or enable all
+the dropdown input's items, respectively.}
 
 \item{dividers}{One or more of \code{values} indicating which dropdown menu items
 are the start of a new section, defaults to \code{NULL}. Divider lines will be
@@ -40,11 +41,12 @@ downwards, defaults to \code{FALSE}.}
 element.}
 }
 \description{
-Dropdown inputs, or dropdown menus, functions similar to a set of buttons.
+Dropdown inputs, or dropdown menus, function similar to a set of buttons.
 The initial click to open a dropdown menu does not trigger a reactive event,
-but a click on one of the menu choices triggers a reactive event. The
+but a click on one of the dropdown items triggers a reactive event. The
 reactive value of a dropdown input is the value of the most recently clicked
-dropdown menu item.
+dropdown menu item. Disabling a dropdown menu triggers a reactive event and
+resets the reactive value to \code{NULL}.
 }
 \examples{
 if (interactive()) {
@@ -79,17 +81,25 @@ if (interactive()) {
     ui = container(
       row(
         col(
+          offset = 1,
           dropdownInput(
             id = "actions",
             title = "Actions",
-            labels = c("disable", "enable")
+            labels = c("disable", "enable", "disable some", "enable some"),
+            dividers = "disable some"
           )
         ),
         col(
           dropdownInput(
             id = "dropdown",
             title = "Other actions",
-            labels = paste("Action", 1:5)
+            labels = paste("Action", 1:5),
+            disabled = "Action 3"
+          )
+        ),
+        col(
+          display4(
+            textOutput("value")
           )
         )
       )
@@ -98,9 +108,17 @@ if (interactive()) {
       observeEvent(input$actions, {
         if (input$actions == "disable") {
           disableDropdownInput("dropdown")
-        } else {
+        } else if (input$actions == "enable") {
           enableDropdownInput("dropdown")
+        } else if (input$actions == "disable some") {
+          disableDropdownInput("dropdown", paste("Action", c(2, 3, 5)))
+        } else if (input$actions == "enable some") {
+          enableDropdownInput("dropdown", paste("Action", c(2, 3, 5)))
         }
+      })
+
+      output$value <- renderText({
+        input$dropdown
       })
     }
   )

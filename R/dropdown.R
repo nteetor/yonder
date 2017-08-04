@@ -1,10 +1,11 @@
 #' Dropdown input
 #'
-#' Dropdown inputs, or dropdown menus, functions similar to a set of buttons.
+#' Dropdown inputs, or dropdown menus, function similar to a set of buttons.
 #' The initial click to open a dropdown menu does not trigger a reactive event,
-#' but a click on one of the menu choices triggers a reactive event. The
+#' but a click on one of the dropdown items triggers a reactive event. The
 #' reactive value of a dropdown input is the value of the most recently clicked
-#' dropdown menu item.
+#' dropdown menu item. Disabling a dropdown menu triggers a reactive event and
+#' resets the reactive value to `NULL`.
 #'
 #' @param labels A character vector specifying the labels of the dropdown menu
 #'   choices.
