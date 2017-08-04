@@ -1,53 +1,33 @@
+$(document).ready(function() {
+  $(".dull-form-input[id]").on("click", ".dull-submit", function(e) {
+    console.log("wat");
+    e.preventDefault();
+    $(this).trigger("dull:submit");
+  });
+});
+
 var formInputBinding = new Shiny.InputBinding();
 
 $.extend(formInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-form[id]");
+    return $(scope).find(".dull-form-input[id]");
   },
   getValue: function(el) {
-    var $inputs = $(el).find(".dull-input[id]");
-
-    if (!$inputs.length) {
-      return null;
-    }
-
-    return $inputs
-      .map(function(i, e) {
-        var ids = $(e)
-          .parentsUntil(".dull-form", "[id]")
-          .map(function(j, a) { return a.id; })
-          .get();
-
-        ids.push(e.id);
-        ids.reverse();
-
-        return ids.reduce(function(acc, obj) {
-          var ret = {};
-          ret[obj] = acc;
-          return ret;
-        }, $(e).val() || null);
+    return $(el).find(".dull-input[id]")
+      .map(function() {
+        return this.id;
       })
       .get()
       .reduce(function(acc, obj) {
-        var key = Object.keys(obj);
-
-        if (!acc.hasOwnProperty(key)) {
-          return Object.assign(acc, obj);
-        } else {
-          var nested = {};
-          nested[key] = Object.assign(acc[key], obj[key]);
-          return Object.assign(acc, nested);
-        }
+        acc[obj] = Shiny.shinyapp.$inputValues[obj];
+        return acc;
       }, {});
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function(el, callback) {
-    $(el).on("dull:formchange.formInputBinding", function(e) {
-      callback();
-    });
-    $(el).on("dull:formsubmit.formInputBinding", function(e) {
+    $(el).on("dull:submit.formInputBinding", function(e) {
       callback();
     });
   },
@@ -58,9 +38,3 @@ $.extend(formInputBinding, {
 
 Shiny.inputBindings.register(formInputBinding, "dull.formInput");
 
-$(document).ready(function() {
-  $(".dull-form[id]").on("submit", function(e) {
-    e.preventDefault();
-    $(this).trigger("dull:formsubmit");
-  });
-});
