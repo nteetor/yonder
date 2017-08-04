@@ -36,6 +36,7 @@
 #'         col(
 #'           checkboxInput(
 #'             id = "checkbox",
+#'             title = "[ TITLE ]",
 #'             label = "Are you there?",
 #'             value = "yes"
 #'           )
@@ -103,29 +104,39 @@ checkboxInput <- function(id, label, value = label, title = NULL,
     class = collate(
       "dull-checkbox-input",
       "dull-input",
-      "form-group"
+      "form-group",
+      "row"
     ),
-    tags$label(
-      class = collate(
-        "custom-control",
-        "custom-checkbox"
-      ),
-      tags$input(
-        class = "custom-control-input",
-        type = "checkbox",
-        `data-value` = value,
-        checked = if (checked) NA
-      ),
-      tags$span(
-        class = "custom-control-indicator"
-      ),
-      tags$span(
-        class = "custom-control-description",
-        label
+    id = id,
+    if (!is.null(title)) {
+      tags$label(
+        class = "col-sm-2",
+        title
+      )
+    },
+    tags$div(
+      class = if (!is.null(title)) "col-sm-10",
+      tags$label(
+        class = collate(
+          "custom-control",
+          "custom-checkbox"
+        ),
+        tags$input(
+          class = "custom-control-input",
+          type = "checkbox",
+          `data-value` = value,
+          checked = if (checked) NA
+        ),
+        tags$span(
+          class = "custom-control-indicator"
+        ),
+        tags$span(
+          class = "custom-control-description",
+          label
+        )
       )
     ),
     ...,
-    id = id,
     bootstrap()
   )
 }

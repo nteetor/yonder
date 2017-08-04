@@ -2,21 +2,21 @@ var textualInputBinding = new Shiny.InputBinding();
 
 $.extend(textualInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-textual[id]");
+    return $(scope).find(".dull-textual-input[id]");
   },
   getValue: function(el) {
-    var $el = $(el);
-    var $val = $el.val() || null;
+    var $input = $(el).find("input");
+    var val = $input.val() === undefined ? null : $input.val();
 
-    if ($val === null) {
+    if (val === null) {
       return null;
     }
 
-    if ($el.attr("type") === "number") {
-      return parseInt($val, 10);
+    if ($input.attr("type") === "number") {
+      return parseInt(val, 10);
     }
 
-    return $val;
+    return val;
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };

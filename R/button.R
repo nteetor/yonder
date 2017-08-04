@@ -197,18 +197,19 @@ resetButtonInput <- function(id, session = getDefaultReactiveDomain()) {
 
 #' @rdname buttonInput
 #' @export
-submit <- function(label = NULL, outline = FALSE, block = FALSE, ...) {
+submit <- function(label = "Submit", outline = FALSE, block = FALSE, ...) {
   tags$button(
     class = collate(
       "dull-submit",
       "btn",
-      paste0("btn-", if (outline) "outline-", context),
+      paste0("btn-", if (outline) "outline-", "primary"),
       if (block) "btn-block"
     ),
     # done to avoid the way Shiny handles submit buttons, will be
     # moved to HTML attribute `type` once shiny app is connected
     `data-type` = "submit",
     role = "button",
-    label
+    label,
+    ...
   )
 }

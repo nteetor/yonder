@@ -47,10 +47,14 @@ $.extend(checkboxInputBinding, {
 
     if (data.disable === true) {
       $el.find("input[type=\"checkbox\"]").prop("disabled", true);
+      if ($el.find(".form-gruop").hasClass("disabled")) {
+        $el.find(".form-group").addClass("disabled");
+      }
     }
 
     if (data.enable === true) {
       $el.find("input[type=\"checkbox\"]").prop("disabled", false);
+      $el.find(".form-group").removeClass("disabled");
     }
 
     $el.trigger("change");

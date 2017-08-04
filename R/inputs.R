@@ -1,15 +1,21 @@
-textualInput <- function(value, placeholder, id, type, ...) {
-  tags$input(
-    class = collate(
-      "dull-textual",
-      "dull-input",
-      "form-control"
+textualInput <- function(id, label, value, placeholder, type, ...) {
+  tags$div(
+    class = "dull-textual-input dull-input form-group row",
+    id = id,
+    tags$label(
+      class = "col-sm-2 col-form-label",
+      label
     ),
-    type = type,
-    value = value,
-    placeholder = placeholder,
-    ...,
-    id = id
+    tags$div(
+      class = "col-sm-10",
+      tags$input(
+        class = "form-control",
+        type = type,
+        value = value,
+        placeholder = placeholder
+      )
+    ),
+    ...
   )
 }
 
@@ -56,118 +62,123 @@ textualInput <- function(value, placeholder, id, type, ...) {
 #'
 #' stub
 #'
-textInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "text", ...)
+textInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placeholder, "text", ...)
 }
 
 #' @rdname textInput
 #' @export
-searchInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "search", ...)
+searchInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placeholder, "search", ...)
 }
 
 #' @rdname textInput
 #' @export
-emailInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "email", ...)
+emailInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placeholder, "email", ...)
 }
 
 #' @rdname textInput
 #' @export
-urlInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "url", ...)
+urlInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placeholder, "url", ...)
 }
 
 #' @rdname textInput
 #' @export
-telephoneInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placholder, id, "tel", ...)
+telephoneInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placholder, "tel", ...)
 }
 
 #' @rdname textInput
 #' @export
-passwordInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "password", ...)
+passwordInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placeholder, "password", ...)
 }
 
 #' @rdname textInput
 #' @export
-numberInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "number", ...)
+numberInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placeholder, "number", ...)
 }
 
 # @rdname textInput
 # @export
-dateInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "date", ...)
+dateInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placeholder, "date", ...)
 }
 
 # @rdname textInput
 # @export
-datetimeInput <- function(value = NULL, placeholder = NULL,  ..., id = NULL) {
-  textualInput(
-    value, placeholder, id, if (time) "datetime-local" else "date", ...
-  )
+datetimeInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placeholder, "datetime-local", ...)
 }
 
 # @rdname textInput
 # @export
-monthInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "month", ...)
+monthInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placeholder, "month", ...)
 }
 
 # @rdname textInput
 # @export
-weekInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "week", ...)
+weekInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placeholder, "week", ...)
 }
 
 # @rdname textInput
 # @export
-timeInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "time", ...)
+timeInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placeholder, "time", ...)
 }
 
 #' @rdname textInput
 #' @export
-colorInput <- function(value = NULL, placeholder = NULL, ..., id = NULL) {
-  textualInput(value, placeholder, id, "color", ...)
+colorInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
+  textualInput(id, label, value, placeholder, "color", ...)
 }
 
-#' Visually group and label inputs
+#' Group and label multiple inputs
 #'
-#' Use `fieldset` to associate inputs. Good for screen readers and other
-#' assitive technologies.
+#' Use `fieldset` to associate and label inputs. Good for screen readers and
+#' other assitive technologies.
 #'
-#' @param id A character string specifying the id of the fieldset, defaults to
-#'  `NULL`. Specifying an id is only necessary when using `updateFieldset` to
-#'  disable or enable the inputs within the fieldset.
+#' @param legend A character string specifying the fieldset's legend.
 #'
-#' @param legend A character string specifying a label for fieldset, defaults to
-#'   `NULL`.
-#'
-#' @param disabled If `TRUE`, all inputs within the fieldset are rendered in a
-#'   disabled state, defaults to `FALSE`.
-#'
-#' @param ... Inputs to put within the fieldset or additional named arguments
-#'   passed as HTML attributes to the parent element.
+#' @param ... Any number of inputs to group or named arguments passed as HTML
+#'   attributes to the parent element.
 #'
 #' @export
 #' @examples
 #'
 #' stub
 #'
-fieldset <- function(..., legend = NULL, disabled = FALSE, id = NULL) {
-  tags$fieldset(
-    class = "dull-fieldset",
-    tags$legend(legend),
-    ...,
-    id = id
-  )
-}
+fieldset <- function(legend, ...) {
+  if (!is.character(legend)) {
+    stop(
+      "invalid `fieldset` argument, `legend` must be a character string",
+      call. = FALSE
+    )
+  }
 
-updateFieldset <- function() {
-  # STUB, needs to be worked on
+  args <- list(...)
+  attrs <- attribs(args)
+  inputs <- elements(args)
+
+  tagConcatAttributes(
+    tags$fieldset(
+      class = "form-group row",
+      tags$legend(
+        class = "col-form-legend col-sm-2",
+        legend
+      ),
+      tags$div(
+        class = "col-sm-10",
+        inputs
+      )
+    ),
+    attrs
+  )
 }
 
 #' Select input

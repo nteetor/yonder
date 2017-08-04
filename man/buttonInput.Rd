@@ -23,7 +23,7 @@ enableButtonInput(id, session = getDefaultReactiveDomain())
 
 resetButtonInput(id, session = getDefaultReactiveDomain())
 
-submit(label = NULL, outline = FALSE, block = FALSE, ...)
+submit(label = "Submit", outline = FALSE, block = FALSE, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the button input, the
@@ -129,6 +129,7 @@ For more about buttons and button groups please refer to the bootstrap
 \href{https://v4-alpha.getbootstrap.com/components/input-group/#button-addons}{reference section}.
 
 Other inputs: \code{\link{checkboxInput}},
-  \code{\link{groupInput}}, \code{\link{radioInput}},
-  \code{\link{selectInput}}, \code{\link{textInput}}
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{radioInput}}, \code{\link{selectInput}},
+  \code{\link{textInput}}
 }

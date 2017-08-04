@@ -56,6 +56,7 @@ if (interactive()) {
         col(
           checkboxInput(
             id = "checkbox",
+            title = "[ TITLE ]",
             label = "Are you there?",
             value = "yes"
           )
@@ -118,6 +119,7 @@ if (interactive()) {
 }
 \seealso{
 Other inputs: \code{\link{buttonInput}},
-  \code{\link{groupInput}}, \code{\link{radioInput}},
-  \code{\link{selectInput}}, \code{\link{textInput}}
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{radioInput}}, \code{\link{selectInput}},
+  \code{\link{textInput}}
 }
