@@ -26,6 +26,7 @@
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
 #'
+#' @family inputs
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -156,7 +157,7 @@ updateCheckboxInput <- function(id, label, value = label, checked = FALSE,
   session$sendInputMessage(
     id,
     list(
-      choice = as.character(this)
+      content = as.character(this)
     )
   )
 }

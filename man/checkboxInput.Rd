@@ -116,3 +116,8 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other inputs: \code{\link{buttonInput}},
+  \code{\link{groupInput}}, \code{\link{radioInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
+}

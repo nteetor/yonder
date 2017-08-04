@@ -59,6 +59,6 @@ if (interactive()) {
 }
 \seealso{
 Other inputs: \code{\link{buttonInput}},
-  \code{\link{groupInput}}, \code{\link{radioInput}},
-  \code{\link{textInput}}
+  \code{\link{checkboxInput}}, \code{\link{groupInput}},
+  \code{\link{radioInput}}, \code{\link{textInput}}
 }
