@@ -3,132 +3,76 @@
 \name{buttonInput}
 \alias{buttonInput}
 \alias{updateButtonInput}
+\alias{validateButtonInput}
+\alias{disableButtonInput}
+\alias{enableButtonInput}
+\alias{resetButtonInput}
 \alias{submit}
-\title{Buttons and button groups}
+\title{Button inputs and submit buttons}
 \usage{
-buttonInput(id, label, value = label, context = "secondary",
-  outline = FALSE, block = FALSE, disabled = FALSE, ...)
+buttonInput(id, label, context = "secondary", outline = FALSE,
+  block = FALSE, ...)
 
-updateButtonInput(id, clicks = NULL, context = NULL,
-  session = getDefaultReactiveDomain())
+updateButtonInput(id, label, context = "secondary", outline = FALSE,
+  block = FALSE, session = getDefaultReactiveDomain())
+
+validateButtonInput(id, state, session = getDefaultReactiveDomain())
+
+disableButtonInput(id, session = getDefaultReactiveDomain())
+
+enableButtonInput(id, session = getDefaultReactiveDomain())
+
+resetButtonInput(id, session = getDefaultReactiveDomain())
 
 submit(label = NULL, outline = FALSE, block = FALSE, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the button.}
+\item{id}{A character string specifying the id of the button input, the
+reactive value of the button input is available to the shiny server
+function as part of the \code{input} object.}
 
-\item{label}{A character string or tag elements to use as a button label or a
-character vector specifying labels for a button group.}
+\item{label}{A character string specifying a label for the button input.}
 
-\item{value}{A character string specifying a value for the button or a
-character vector specifying values for a button group, defaults to
-\code{label}.}
+\item{context}{One of \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, or
+\code{"danger"} specifying the visual context of the button input, defaults to
+\code{"secondary"}.}
 
-\item{context}{Used to specify the visual context of the button, one of
-\code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"},
-or \code{"link"}, defaults to \code{"secondary"}.
-
-Primary buttons are blue, secondary buttons are white and grey, buttons for
-success are green, informative buttons are a lighter blue, warning buttons
-are yellow, and buttons for danger are red. Specifying \code{"link"} makes a
-button render with the appearance of a link.}
-
-\item{outline}{If \code{TRUE}, the button's background is transparent, \code{context}
-is preserved, defaults to \code{FALSE}.}
+\item{outline}{If \code{TRUE}, the button's visual context is applied to the
+border of the button instead of the background, defaults to \code{FALSE}.}
 
 \item{block}{If \code{TRUE}, the button is block-level instead of inline, defaults
-to \code{FALSE}. A block-level element will occupy the entire space of its
+to \code{FALSE}. A block-level element will occupy the entire width of its
 parent element, thereby creating a "block."}
+
+\item{...}{Named arguments passed as HTML attributes to the parent element.}
 
 \item{disabled}{If \code{TRUE}, the button renders in a disabled state, defaults
 to \code{FALSE}.}
-
-\item{...}{Named arguments passed as HTML attributes to the parent element.}
 }
 \description{
-Buttons, submit and reset buttons. A button's reactive value is a list of two
-items. The first item is \code{count}, the number of clicks on the button. The
-second item is \code{value}, the HTML data-value attribute of the button which may
-be set with the \code{value} argument.
+Button inputs and submit buttons.
 }
 \examples{
-buttonInput("Primary", context = "primary")
-
-buttonInput("Secondary")
-
-buttonInput("Success", context = "success")
-
-buttonInput("Info", context = "info", outline = TRUE)
-
-buttonInput("\\u2715", context = "warning")
-
-buttonInput("Danger!", context = "danger", disable = TRUE)
-
 if (interactive()) {
   shinyApp(
     ui = container(
-      listGroupInput(
-        listGroupItem(
-          inlineForm(
-            buttonInput(
-              id = "clicker1",
-              "Simple button"
-            )
-          ),
-          badge = badgeOutput(id = "badge1", 0)
-        ),
-        listGroupItem(
-          inlineForm(
-            buttonInput(
-              id = "clicker2",
-              label = "Click me!",
-            )
-          ),
-          badge = badgeOutput(id = "badge2", 0)
-        ),
-        listGroupItem(
+      row(
+        col(
           buttonInput(
-            id = "reset",
-            label = "Reset",
-            context = "primary"
+            id = "button",
+            label = "C-c-c-click me!"
+          )
+        ),
+        col(
+          display4(
+            textOutput("clicks")
           )
         )
       )
     ),
     server = function(input, output) {
-      output$badge1 <- renderBadge(input$clicker1$count)
-
-      output$badge2 <- renderBadge(
-        value = {
-          input$clicker2$count
-        },
-        context = {
-          if (input$clicker2$count > 5) {
-            "warning"
-          } else {
-            "default"
-          }
-        }
-      )
-
-      observeEvent(input$reset, {
-        updateButton("clicker1", count = 0)
-        updateButton("clicker2", count = 0)
-      })
-    }
-  )
-
-  shinyApp(
-    ui = container(
-      buttonInput(
-        id = "group",
-        label = c("First", "Second", "Third"),
-        value = c("first", "second", "third")
-      )
-    ),
-    server = function(input, output) {
-      observe({
-        print(input$group)
+      output$clicks <- renderText({
+        input$button
       })
     }
   )
@@ -143,7 +87,7 @@ MDN
 For more about buttons and button groups please refer to the bootstrap
 \href{https://v4-alpha.getbootstrap.com/components/input-group/#button-addons}{reference section}.
 
-Other inputs: \code{\link{groupInput}},
-  \code{\link{radioInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: \code{\link{checkboxInput}},
+  \code{\link{groupInput}}, \code{\link{radioInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
 }

@@ -30,7 +30,7 @@ $.extend(checkboxInputBinding, {
   receiveMessage: function(el, data) {
     var $el = $(el);
 
-    if (data.choice !== undefined) {
+    if (data.content !== undefined) {
       $el.find("label").remove();
       $el.html(data.choice);
     }
@@ -40,7 +40,7 @@ $.extend(checkboxInputBinding, {
         return c.replace(/has-(success|warning|danger)/g, "");
       });
 
-      if (data.context !== "valid") {
+      if (data.state !== "valid") {
         $el.addClass("has-" + data.state);
       }
     }

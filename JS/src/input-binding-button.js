@@ -11,10 +11,7 @@ $.extend(buttonInputBinding, {
       return null;
     }
 
-    return {
-      clicks: parseInt($el.data("clicks"), 10),
-      value: $el.data("value") || null
-    };
+    return parseInt($el.data("clicks"), 10);
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
@@ -36,15 +33,28 @@ $.extend(buttonInputBinding, {
   receiveMessage: function(el, data) {
     var $el = $(el);
 
-    if (data.clicks !== null) {
-      $el.data("clicks", data.clicks);
+    if (data.content) {
+      $el.replaceWith(data.content);
     }
 
-    if (data.context) {
-      $el.attr("class", function(i, c) {
-        return c.replace(/btn-(?:outline-)?(?:primary|secondary|link|success|info|warning|danger)/, "");
-      })
-      .addClass("btn-" + data.context);
+    if (data.reset === true) {
+      $el.data("clicks", 0);
+    }
+
+    if (data.state) {
+      $el
+        .attr("class", function(i, c) {
+          return c.replace(/btn-(?:outline-)?(?:primary|secondary|link|success|info|warning|danger)/, "");
+        })
+        .addClass(data.state === "valid" ? null : "btn-" + data.state);
+    }
+
+    if (data.disable === true) {
+      $el.prop("disabled", true);
+    }
+
+    if (data.enable === true) {
+      $el.prop("disabled", false);
     }
 
     $el.trigger("change");

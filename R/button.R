@@ -1,33 +1,22 @@
-#' Buttons and button groups
+#' Button inputs and submit buttons
 #'
-#' Buttons, submit and reset buttons. A button's reactive value is a list of two
-#' items. The first item is `count`, the number of clicks on the button. The
-#' second item is `value`, the HTML data-value attribute of the button which may
-#' be set with the `value` argument.
+#' Button inputs and submit buttons.
 #'
-#' @param id A character string specifying the id of the button.
+#' @param id A character string specifying the id of the button input, the
+#'   reactive value of the button input is available to the shiny server
+#'   function as part of the `input` object.
 #'
-#' @param label A character string or tag elements to use as a button label or a
-#'   character vector specifying labels for a button group.
+#' @param label A character string specifying a label for the button input.
 #'
-#' @param value A character string specifying a value for the button or a
-#'   character vector specifying values for a button group, defaults to
-#'   `label`.
+#' @param context One of `"secondary"`, `"success"`, `"info"`, `"warning"`, or
+#'   `"danger"` specifying the visual context of the button input, defaults to
+#'   `"secondary"`.
 #'
-#' @param context Used to specify the visual context of the button, one of
-#'   `"primary"`, `"secondary"`, `"success"`, `"info"`, `"warning"`, `"danger"`,
-#'   or `"link"`, defaults to `"secondary"`.
-#'
-#'   Primary buttons are blue, secondary buttons are white and grey, buttons for
-#'   success are green, informative buttons are a lighter blue, warning buttons
-#'   are yellow, and buttons for danger are red. Specifying `"link"` makes a
-#'   button render with the appearance of a link.
-#'
-#' @param outline If `TRUE`, the button's background is transparent, `context`
-#'   is preserved, defaults to `FALSE`.
+#' @param outline If `TRUE`, the button's visual context is applied to the
+#'   border of the button instead of the background, defaults to `FALSE`.
 #'
 #' @param block If `TRUE`, the button is block-level instead of inline, defaults
-#'   to `FALSE`. A block-level element will occupy the entire space of its
+#'   to `FALSE`. A block-level element will occupy the entire width of its
 #'   parent element, thereby creating a "block."
 #'
 #' @param disabled If `TRUE`, the button renders in a disabled state, defaults
@@ -47,97 +36,37 @@
 #' @family inputs
 #' @export
 #' @examples
-#' buttonInput("Primary", context = "primary")
-#'
-#' buttonInput("Secondary")
-#'
-#' buttonInput("Success", context = "success")
-#'
-#' buttonInput("Info", context = "info", outline = TRUE)
-#'
-#' buttonInput("\u2715", context = "warning")
-#'
-#' buttonInput("Danger!", context = "danger", disable = TRUE)
-#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       listGroupInput(
-#'         listGroupItem(
-#'           inlineForm(
-#'             buttonInput(
-#'               id = "clicker1",
-#'               "Simple button"
-#'             )
-#'           ),
-#'           badge = badgeOutput(id = "badge1", 0)
-#'         ),
-#'         listGroupItem(
-#'           inlineForm(
-#'             buttonInput(
-#'               id = "clicker2",
-#'               label = "Click me!",
-#'             )
-#'           ),
-#'           badge = badgeOutput(id = "badge2", 0)
-#'         ),
-#'         listGroupItem(
+#'       row(
+#'         col(
 #'           buttonInput(
-#'             id = "reset",
-#'             label = "Reset",
-#'             context = "primary"
+#'             id = "button",
+#'             label = "C-c-c-click me!"
+#'           )
+#'         ),
+#'         col(
+#'           display4(
+#'             textOutput("clicks")
 #'           )
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$badge1 <- renderBadge(input$clicker1$count)
-#'
-#'       output$badge2 <- renderBadge(
-#'         value = {
-#'           input$clicker2$count
-#'         },
-#'         context = {
-#'           if (input$clicker2$count > 5) {
-#'             "warning"
-#'           } else {
-#'             "default"
-#'           }
-#'         }
-#'       )
-#'
-#'       observeEvent(input$reset, {
-#'         updateButton("clicker1", count = 0)
-#'         updateButton("clicker2", count = 0)
-#'       })
-#'     }
-#'   )
-#'
-#'   shinyApp(
-#'     ui = container(
-#'       buttonInput(
-#'         id = "group",
-#'         label = c("First", "Second", "Third"),
-#'         value = c("first", "second", "third")
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observe({
-#'         print(input$group)
+#'       output$clicks <- renderText({
+#'         input$button
 #'       })
 #'     }
 #'   )
 #' }
 #'
-buttonInput <- function(id, label, value = label, context = "secondary",
-                        outline = FALSE, block = FALSE, disabled = FALSE,
-                        ...) {
-  if (!(context %in% c("primary", "secondary", "link")) &&
-      bad_context(context)) {
+buttonInput <- function(id, label, context = "secondary", outline = FALSE,
+                        block = FALSE, ...) {
+  if (!re(context, "secondary|success|info|warning|danger|link|primary", len0 = FALSE)) {
     stop(
-      "invalid `buttonInput` `context`, expecting one of ",
-      '"primary", "secondary", "success", "info", "warning", ',
-      '"danger", or "link"',
+      "invalid `buttonInput` argument, `context` must be one of ",
+      '"secondary", "success", "info", "warning", or "danger"',
       call. = FALSE
     )
   }
@@ -153,36 +82,57 @@ buttonInput <- function(id, label, value = label, context = "secondary",
     type = "button",
     role = "button",
     `data-clicks` = 0,
-    `data-value` = value,
     label,
-    ...,
-    id = id
+    id = id,
+    ...
   )
 }
 
 #' @rdname buttonInput
 #' @export
-updateButtonInput <- function(id, clicks = NULL, context = NULL,
+updateButtonInput <- function(id, label, context = "secondary", outline = FALSE,
+                              block = FALSE,
                               session = getDefaultReactiveDomain()) {
-  if (bad_context(context, extra = c("primary", "secondary", "link"))) {
+  if (!re(context, "secondary|success|info|warning|danger", len0 = FALSE)) {
     stop(
-      "invalid `updateButtonInput` `context`, expecting one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      'or "link"',
+      "invalid `updateButtonInput` argument, `context` must be one of ",
+      '"secondary", "success", "info", "warning", or "danger"',
       call. = FALSE
     )
   }
 
-  if (!(is.null(clicks) || is.numeric(clicks))) {
-    stop(
-      "invalid `updateButtonInput` `clicks`, must be NULL or numeric",
-      call. = FALSE
-    )
-  }
+  this <- tags$button(
+    class = collate(
+      "dull-button-input",
+      "dull-input",
+      "btn",
+      paste0("btn-", if (outline) "outline-", context),
+      if (block) "btn-block"
+    ),
+    type = "button",
+    role = "button",
+    `data-clicks` = 0,
+    id = id,
+    label,
+    ...
+  )
 
-  if (!is.null(clicks) && clicks < 0) {
+  session$sendInputMessage(
+    id,
+    list(
+      content = as.character(this)
+    )
+  )
+}
+
+#' @rdname buttonInput
+#' @export
+validateButtonInput <- function(id, state,
+                                session = getDefaultReactiveDomain()) {
+  if (!re(state, "valid|secondary|success|info|warning|danger", len0 = FALSE)) {
     stop(
-      "invalid `updateButtonInput` `clicks`, must be greater than 0",
+      "invalid `validateButtonInput` argument, `state` expecting one of ",
+      '"valid", "success", "warning", or "danger"',
       call. = FALSE
     )
   }
@@ -190,8 +140,40 @@ updateButtonInput <- function(id, clicks = NULL, context = NULL,
   session$sendInputMessage(
     id,
     list(
-      clicks = clicks,
-      context = context
+      state = state
+    )
+  )
+}
+
+#' @rdname buttonInput
+#' @export
+disableButtonInput <- function(id, session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(
+    id,
+    list(
+      disable = TRUE
+    )
+  )
+}
+
+#' @rdname buttonInput
+#' @export
+enableButtonInput <- function(id, session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(
+    id,
+    list(
+      enable = TRUE
+    )
+  )
+}
+
+#' @rdname buttonInput
+#' @export
+resetButtonInput <- function(id, session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(
+    id,
+    list(
+      reset = TRUE
     )
   )
 }

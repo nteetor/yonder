@@ -75,10 +75,7 @@ $.extend(buttonInputBinding, {
       return null;
     }
 
-    return {
-      clicks: parseInt($el.data("clicks"), 10),
-      value: $el.data("value") || null
-    };
+    return parseInt($el.data("clicks"), 10);
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };
@@ -100,14 +97,26 @@ $.extend(buttonInputBinding, {
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
 
-    if (data.clicks !== null) {
-      $el.data("clicks", data.clicks);
+    if (data.content) {
+      $el.replaceWith(data.content);
     }
 
-    if (data.context) {
+    if (data.reset === true) {
+      $el.data("clicks", 0);
+    }
+
+    if (data.state) {
       $el.attr("class", function (i, c) {
         return c.replace(/btn-(?:outline-)?(?:primary|secondary|link|success|info|warning|danger)/, "");
-      }).addClass("btn-" + data.context);
+      }).addClass(data.state === "valid" ? null : "btn-" + data.state);
+    }
+
+    if (data.disable === true) {
+      $el.prop("disabled", true);
+    }
+
+    if (data.enable === true) {
+      $el.prop("disabled", false);
     }
 
     $el.trigger("change");
@@ -172,7 +181,7 @@ $.extend(checkboxInputBinding, {
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
 
-    if (data.choice !== undefined) {
+    if (data.content !== undefined) {
       $el.find("label").remove();
       $el.html(data.choice);
     }
@@ -182,7 +191,7 @@ $.extend(checkboxInputBinding, {
         return c.replace(/has-(success|warning|danger)/g, "");
       });
 
-      if (data.context !== "valid") {
+      if (data.state !== "valid") {
         $el.addClass("has-" + data.state);
       }
     }
