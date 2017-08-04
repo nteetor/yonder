@@ -1,3 +1,13 @@
+$(document).ready(function() {
+  $(".dull-dropdown-input").on("click", ".dropdown-item:not(.disabled)", function(e) {
+    var $this = $(this);
+
+    $this.trigger("click", {
+      value: $this.data("value") === undefined ? null : $this.data("value")
+    });
+  });
+});
+
 var dropdownInputBinding = new Shiny.InputBinding();
 
 $.extend(dropdownInputBinding, {
@@ -5,13 +15,14 @@ $.extend(dropdownInputBinding, {
     return $(scope).find(".dull-dropdown-input[id]");
   },
   getValue: function(el) {
-    return $(el).data("value") || null;
+    var $el = $(el);
+    return $el.data("value") === undefined ? null : $el.data("value");
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function(el, callback) {
-    $(el).on("dull:itemclick.dropdownInputBinding", function(e, data) {
+    $(el).on("click.dropdownInputBinding", function(e, data) {
       $(el).data("value", data.value);
       callback();
     });
@@ -22,13 +33,3 @@ $.extend(dropdownInputBinding, {
 });
 
 Shiny.inputBindings.register(dropdownInputBinding, "dull.dropdownInput");
-
-$(document).ready(function() {
-  $(".dull-dropdown-item").on("click", function(e) {
-    e.preventDefault();
-    var $this = $(this);
-    $this.trigger("dull:itemclick", {
-      value: $this.data("value") || null
-    });
-  });
-});

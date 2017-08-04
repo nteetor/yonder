@@ -7,166 +7,106 @@
 #' is `NULL`. The reactive value of the dropdown input is the value of the
 #' clicked dropdown item.
 #'
-#' @param ... Any number of dropdown items passed to `dropdown` or additional
-#'   named arguments passed as HTML attributes to the respective parent element.
+#' @param labels A character vector specifying the labels of the dropdown menu
+#'   choices.
 #'
-#' @param label A character string specifying the label for a dropdown, dropdown
-#'   item, or dropdown header, defaults to `NULL` for dropdowns and dropdown
-#'   items, but is required for a dropdown header.
+#' @param values A character vector specifying the values of the dropdown menu
+#'   choices, defaults to `values`.
 #'
-#' @param value A character string specifying the value of a dropdown item,
-#'   defaults to `NULL`.
+#' @param disabled One or more of `values` indicating which dropdown menu items
+#'   to disable, defaults to `NULL`.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, or `"danger"` specifying the visual context of the dropdown,
-#'   defaults to `"secondary"`.
+#' @param dividers One or more of `values` indicating which dropdown menu items
+#'   are the start of a new section, defaults to `NULL`. Divider lines will be
+#'   placed above the indicated values separating the dropdown menu items into
+#'   sections.
 #'
-#' @param align One of `"left"` or `"right"` specifying which side of the
-#'   dropdown button the menu aligns to, defaults to `"left"`.
+#' @param dropup If `TRUE`, the dropdown menu extends upwards instead of
+#'   downwards, defaults to `FALSE`.
 #'
-#' @param split If `TRUE`, the dropdown is changed aesthetically such that the
-#'   dropdown icon is split into a separate, smaller button, defaults to
-#'   `FALSE`.
-#'
-#' @param dropup If `TRUE`, the dropdown menu extends upwards, defaults to
-#'   `FALSE`.
-#'
-#' @param disabled If `TRUE`, the dropdown item renders in a disabled state and
-#'   will not trigger a reactive event, defaults to `FALSE`. The state of a
-#'   dropdown item may be toggled with `updateDropdownItem`.
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
 #'
 #' @export
 #' @examples
-#' dropdownInput(
-#'   label = "Secondary",
-#'   dropdownItem("Option 1"),
-#'   dropdownItem("Option 2")
-#' )
-#'
-#' dropdownInput(
-#'   id = "flavor",
-#'   label = "Ice cream flavors",
-#'   dropdownItem("Vanilla", "vanilla"),
-#'   dropdownItem("Chocolate", "chocolate"),
-#'   dropdownItem("Mint", "mint")
-#' )
-#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
 #'       row(
 #'         col(
 #'           dropdownInput(
-#'             id = "desserts",
-#'             label = "Pick a dessert to learn more",
-#'             align = "right",
-#'             dropdownHeader("Frozen"),
-#'             dropdownItem("Ice cream", "icecream"),
-#'             dropdownItem("Gelato", "gelato"),
-#'             dropdownHeader("Baked goods"),
-#'             dropdownItem("Cake", "cake"),
-#'             dropdownItem("Pie", "pie")
+#'             id = "dropdown",
+#'             labels = paste("Action", 1:5),
+#'             dividers = "Action 4"
 #'           )
 #'         ),
 #'         col(
-#'           dropdownInput(
-#'             id = "spices",
-#'             label = "Check for a spice",
-#'             dropdownItem("Cardamom", "cardamom"),
-#'             dropdownItem("Nutmeg", "nutmeg"),
-#'             dropdownItem("Vanilla", "vanilla")
+#'           display4(
+#'             textOutput("value")
 #'           )
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       observe({
-#'         print(input$desserts)
-#'       })
-#'
-#'       observe({
-#'         print(input$spices)
+#'       output$value <- renderText({
+#'         input$dropdown
 #'       })
 #'     }
 #'   )
 #' }
 #'
-dropdownInput <- function(..., label = NULL, context = "secondary",
-                          split = FALSE, align = "left", dropup = FALSE) {
-  if (!re(context, "primary|secondary|success|info|warning|danger", len0 = FALSE)) {
+dropdownInput <- function(id, labels, values = labels, disabled = NULL,
+                          dividers = NULL, dropup = FALSE, ...) {
+  if (length(labels) != length(values)) {
     stop(
-      'invalid `dropdownInput` argument, `context` must be one of "primary", ',
-      '"secondary", "success", "info", "warning", or "danger"',
+      "invalid `dropdownInput` arguments, `labels` and `values` must be the ",
+      "same length",
       call. = FALSE
     )
   }
 
-  if (!re(align, "left|right", len0 = FALSE)) {
-    stop(
-      'invalid `dropdownInput` argument, `align` must be one of "left" or ',
-      '"right"',
-      call. = FALSE
-    )
-  }
+  disabled <- match2(disabled, values)
+  dividers <- match2(dividers, values)
 
-  args <- list(...)
-  attrs <- attribs(args)
-  items <- elements(args)
-
-  tagConcatAttributes(
+  tags$div(
+    class = collate(
+      "dull-dropdown-input",
+      "btn-group",
+      if (dropup) "dropup" else "dropdown"
+    ),
+    id = id,
+    tags$button(
+      class = "btn btn-secondary dropdown-toggle",
+      type = "button",
+      `data-toggle` = "dropdown",
+      `aria-haspop` = "true",
+      `aria-expanded` = "false"
+    ),
     tags$div(
       class = collate(
-        "dull-dropdown-input",
-        "btn-group",
-        if (dropup) "dropup" else "dropdown"
+        "dropdown-menu",
+        "dropdown-menu-right"
       ),
-      if (split) buttonInput(context = context, label = label),
-      buttonInput(
-        class = collate(
-          "dropdown-toggle",
-          if (split) "dropdown-toggle-split"
-        ),
-        label = label,
-        context = context,
-        `data-toggle` = "dropdown",
-        if (split) tags$span(class = "sr-only", "Toggle Dropdown")
-      ),
-      tags$div(
-        class = collate(
-          "dropdown-menu",
-          if (align == "right") "dropdown-menu-right"
-        ),
-        items
-      ),
-      bootstrap()
+      lapply(
+        seq_along(labels),
+        function(i) {
+          list(
+            if (dividers[[i]]) {
+              tags$div(class = "dropdown-divider")
+            },
+            tags$a(
+              class = collate(
+                "dropdown-item",
+                if (disabled[[i]]) "disabled"
+              ),
+              `data-value` = values[[i]],
+              labels[[i]]
+            )
+          )
+        }
+      )
     ),
-    attrs
+    ...,
+    bootstrap()
   )
-}
-
-#' @rdname dropdownInput
-#' @export
-dropdownItem <- function(label = NULL, value = NULL, disabled = FALSE, ...) {
-  tags$a(
-    class = collate(
-      "dull-dropdown-item",
-      "dropdown-item",
-      if (disabled) "disabled"
-    ),
-    `data-value` = value,
-    label,
-    ...
-  )
-}
-
-#' @rdname dropdownInput
-#' @export
-dropdownDivider <- function() {
-  tags$div(class = "dropdown-divider")
-}
-
-#' @rdname dropdownInput
-#' @export
-dropdownHeader <- function(label) {
-  tags$h6(class = "dropdown-header", label)
 }

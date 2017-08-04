@@ -2,48 +2,31 @@
 % Please edit documentation in R/dropdown.R
 \name{dropdownInput}
 \alias{dropdownInput}
-\alias{dropdownItem}
-\alias{dropdownDivider}
-\alias{dropdownHeader}
 \title{Dropdown input}
 \usage{
-dropdownInput(..., label = NULL, context = "secondary", split = FALSE,
-  align = "left", dropup = FALSE)
-
-dropdownItem(label = NULL, value = NULL, disabled = FALSE, ...)
-
-dropdownDivider()
-
-dropdownHeader(label)
+dropdownInput(id, labels, values = labels, disabled = NULL,
+  dividers = NULL, dropup = FALSE, ...)
 }
 \arguments{
-\item{...}{Any number of dropdown items passed to \code{dropdown} or additional
-named arguments passed as HTML attributes to the respective parent element.}
+\item{labels}{A character vector specifying the labels of the dropdown menu
+choices.}
 
-\item{label}{A character string specifying the label for a dropdown, dropdown
-item, or dropdown header, defaults to \code{NULL} for dropdowns and dropdown
-items, but is required for a dropdown header.}
+\item{values}{A character vector specifying the values of the dropdown menu
+choices, defaults to \code{values}.}
 
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, or \code{"danger"} specifying the visual context of the dropdown,
-defaults to \code{"secondary"}.}
+\item{disabled}{One or more of \code{values} indicating which dropdown menu items
+to disable, defaults to \code{NULL}.}
 
-\item{split}{If \code{TRUE}, the dropdown is changed aesthetically such that the
-dropdown icon is split into a separate, smaller button, defaults to
-\code{FALSE}.}
+\item{dividers}{One or more of \code{values} indicating which dropdown menu items
+are the start of a new section, defaults to \code{NULL}. Divider lines will be
+placed above the indicated values separating the dropdown menu items into
+sections.}
 
-\item{align}{One of \code{"left"} or \code{"right"} specifying which side of the
-dropdown button the menu aligns to, defaults to \code{"left"}.}
+\item{dropup}{If \code{TRUE}, the dropdown menu extends upwards instead of
+downwards, defaults to \code{FALSE}.}
 
-\item{dropup}{If \code{TRUE}, the dropdown menu extends upwards, defaults to
-\code{FALSE}.}
-
-\item{value}{A character string specifying the value of a dropdown item,
-defaults to \code{NULL}.}
-
-\item{disabled}{If \code{TRUE}, the dropdown item renders in a disabled state and
-will not trigger a reactive event, defaults to \code{FALSE}. The state of a
-dropdown item may be toggled with \code{updateDropdownItem}.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 }
 \description{
 Dropdown inputs, dropdown menus, function similar to a set of buttons. The
@@ -54,55 +37,27 @@ is \code{NULL}. The reactive value of the dropdown input is the value of the
 clicked dropdown item.
 }
 \examples{
-dropdownInput(
-  label = "Secondary",
-  dropdownItem("Option 1"),
-  dropdownItem("Option 2")
-)
-
-dropdownInput(
-  id = "flavor",
-  label = "Ice cream flavors",
-  dropdownItem("Vanilla", "vanilla"),
-  dropdownItem("Chocolate", "chocolate"),
-  dropdownItem("Mint", "mint")
-)
-
 if (interactive()) {
   shinyApp(
     ui = container(
       row(
         col(
           dropdownInput(
-            id = "desserts",
-            label = "Pick a dessert to learn more",
-            align = "right",
-            dropdownHeader("Frozen"),
-            dropdownItem("Ice cream", "icecream"),
-            dropdownItem("Gelato", "gelato"),
-            dropdownHeader("Baked goods"),
-            dropdownItem("Cake", "cake"),
-            dropdownItem("Pie", "pie")
+            id = "dropdown",
+            labels = paste("Action", 1:5),
+            dividers = "Action 4"
           )
         ),
         col(
-          dropdownInput(
-            id = "spices",
-            label = "Check for a spice",
-            dropdownItem("Cardamom", "cardamom"),
-            dropdownItem("Nutmeg", "nutmeg"),
-            dropdownItem("Vanilla", "vanilla")
+          display4(
+            textOutput("value")
           )
         )
       )
     ),
     server = function(input, output) {
-      observe({
-        print(input$desserts)
-      })
-
-      observe({
-        print(input$spices)
+      output$value <- renderText({
+        input$dropdown
       })
     }
   )
