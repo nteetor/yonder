@@ -97,8 +97,8 @@ $.extend(buttonInputBinding, {
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
 
-    if (data.content) {
-      $el.replaceWith(data.content);
+    if (data.label) {
+      $el.html(data.label);
     }
 
     if (data.reset === true) {
@@ -106,9 +106,19 @@ $.extend(buttonInputBinding, {
     }
 
     if (data.state) {
+      var state = data.state === "valid" ? null : data.state;
+
+      if (state) {
+        if ($el.attr("class").search(/btn-outline-/)) {
+          state = "btn-outline-" + data.state;
+        } else {
+          state = "btn-" + data.state;
+        }
+      }
+
       $el.attr("class", function (i, c) {
-        return c.replace(/btn-(?:outline-)?(?:primary|secondary|link|success|info|warning|danger)/, "");
-      }).addClass(data.state === "valid" ? null : "btn-" + data.state);
+        return c.replace(/btn-(?:outline-)?(?:primary|secondary|link|success|info|warning|danger)/g, "");
+      }).addClass(data.state === "valid" ? null : state);
     }
 
     if (data.disable === true) {
@@ -210,6 +220,16 @@ $.extend(checkboxInputBinding, {
 
 Shiny.inputBindings.register(checkboxInputBinding, "dull.checkboxInput");
 
+$(document).ready(function () {
+  $(".dull-dropdown-input").on("click", ".dropdown-item:not(.disabled)", function (e) {
+    var $this = $(this);
+
+    $this.trigger("click", {
+      value: $this.data("value") === undefined ? null : $this.data("value")
+    });
+  });
+});
+
 var dropdownInputBinding = new Shiny.InputBinding();
 
 $.extend(dropdownInputBinding, {
@@ -217,13 +237,14 @@ $.extend(dropdownInputBinding, {
     return $(scope).find(".dull-dropdown-input[id]");
   },
   getValue: function getValue(el) {
-    return $(el).data("value") || null;
+    var $el = $(el);
+    return $el.data("value") === undefined ? null : $el.data("value");
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function subscribe(el, callback) {
-    $(el).on("dull:itemclick.dropdownInputBinding", function (e, data) {
+    $(el).on("click.dropdownInputBinding", function (e, data) {
       $(el).data("value", data.value);
       callback();
     });
@@ -235,15 +256,6 @@ $.extend(dropdownInputBinding, {
 
 Shiny.inputBindings.register(dropdownInputBinding, "dull.dropdownInput");
 
-$(document).ready(function () {
-  $(".dull-dropdown-item").on("click", function (e) {
-    e.preventDefault();
-    var $this = $(this);
-    $this.trigger("dull:itemclick", {
-      value: $this.data("value") || null
-    });
-  });
-});
 var formGroupInputBinding = new Shiny.InputBinding();
 
 $.extend(formGroupInputBinding, {

@@ -61,6 +61,48 @@
 #'   )
 #' }
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           buttonInput(
+#'             id = "change",
+#'             label = "Change other button",
+#'             context = "success"
+#'           )
+#'         ),
+#'         col(
+#'           buttonInput(
+#'             id = "button",
+#'             label = "Button",
+#'             outline = TRUE
+#'           )
+#'         ),
+#'         col(
+#'           display4(
+#'             textOutput("value")
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observeEvent(input$change, {
+#'         updateButtonInput(
+#'           id = "button",
+#'           label = paste("Button", input$change)
+#'         )
+#'
+#'         resetButtonInput("button")
+#'       })
+#'
+#'       output$value <- renderText({
+#'         input$button
+#'       })
+#'     }
+#'   )
+#' }
+#'
 buttonInput <- function(id, label, context = "secondary", outline = FALSE,
                         block = FALSE, ...) {
   if (!re(context, "secondary|success|info|warning|danger|link|primary", len0 = FALSE)) {
@@ -90,37 +132,12 @@ buttonInput <- function(id, label, context = "secondary", outline = FALSE,
 
 #' @rdname buttonInput
 #' @export
-updateButtonInput <- function(id, label, context = "secondary", outline = FALSE,
-                              block = FALSE,
+updateButtonInput <- function(id, label,
                               session = getDefaultReactiveDomain()) {
-  if (!re(context, "secondary|success|info|warning|danger", len0 = FALSE)) {
-    stop(
-      "invalid `updateButtonInput` argument, `context` must be one of ",
-      '"secondary", "success", "info", "warning", or "danger"',
-      call. = FALSE
-    )
-  }
-
-  this <- tags$button(
-    class = collate(
-      "dull-button-input",
-      "dull-input",
-      "btn",
-      paste0("btn-", if (outline) "outline-", context),
-      if (block) "btn-block"
-    ),
-    type = "button",
-    role = "button",
-    `data-clicks` = 0,
-    id = id,
-    label,
-    ...
-  )
-
   session$sendInputMessage(
     id,
     list(
-      content = as.character(this)
+      label = label
     )
   )
 }
@@ -177,7 +194,6 @@ resetButtonInput <- function(id, session = getDefaultReactiveDomain()) {
     )
   )
 }
-
 
 #' @rdname buttonInput
 #' @export

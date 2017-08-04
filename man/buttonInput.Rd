@@ -13,8 +13,7 @@
 buttonInput(id, label, context = "secondary", outline = FALSE,
   block = FALSE, ...)
 
-updateButtonInput(id, label, context = "secondary", outline = FALSE,
-  block = FALSE, session = getDefaultReactiveDomain())
+updateButtonInput(id, label, session = getDefaultReactiveDomain())
 
 validateButtonInput(id, state, session = getDefaultReactiveDomain())
 
@@ -72,6 +71,48 @@ if (interactive()) {
     ),
     server = function(input, output) {
       output$clicks <- renderText({
+        input$button
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          buttonInput(
+            id = "change",
+            label = "Change other button",
+            context = "success"
+          )
+        ),
+        col(
+          buttonInput(
+            id = "button",
+            label = "Button",
+            outline = TRUE
+          )
+        ),
+        col(
+          display4(
+            textOutput("value")
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      observeEvent(input$change, {
+        updateButtonInput(
+          id = "button",
+          label = paste("Button", input$change)
+        )
+
+        resetButtonInput("button")
+      })
+
+      output$value <- renderText({
         input$button
       })
     }
