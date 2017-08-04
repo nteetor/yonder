@@ -1,27 +1,29 @@
 #' Dropdown input
 #'
-#' Dropdown inputs, dropdown menus, function similar to a set of buttons. The
-#' initial dropdown open does not trigger a reactive event, but a subsequent
-#' click on one of the menu choices triggers a reactive event. The value of a
-#' dropdown item may be specified in `dropdownItem`, otherwise the default value
-#' is `NULL`. The reactive value of the dropdown input is the value of the
-#' clicked dropdown item.
+#' Dropdown inputs, or dropdown menus, functions similar to a set of buttons.
+#' The initial click to open a dropdown menu does not trigger a reactive event,
+#' but a click on one of the menu choices triggers a reactive event. The
+#' reactive value of a dropdown input is the value of the most recently clicked
+#' dropdown menu item.
 #'
 #' @param labels A character vector specifying the labels of the dropdown menu
 #'   choices.
 #'
-#' @param values A character vector specifying the values of the dropdown menu
-#'   choices, defaults to `values`.
+#' @param values A character vector, list of character strings, vector of values
+#'   to coerce to character strings, or list of values to coerce to character
+#'   strings specifying the values of the dropdown input's choices, defaults to
+#'   `labels`.
 #'
 #' @param disabled One or more of `values` indicating which dropdown menu items
-#'   to disable, defaults to `NULL`.
+#'   to disable, defaults to `NULL`. If `NULL`, `disableDropdownInput` will
+#'   disable the menu toggle and the dropdown cannot be opened.
 #'
 #' @param dividers One or more of `values` indicating which dropdown menu items
 #'   are the start of a new section, defaults to `NULL`. Divider lines will be
 #'   placed above the indicated values separating the dropdown menu items into
 #'   sections.
 #'
-#' @param dropup If `TRUE`, the dropdown menu extends upwards instead of
+#' @param dropup If `TRUE`, the dropdown menu opens upwards instead of
 #'   downwards, defaults to `FALSE`.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
@@ -36,6 +38,7 @@
 #'         col(
 #'           dropdownInput(
 #'             id = "dropdown",
+#'             title = "do not like `title`",
 #'             labels = paste("Action", 1:5),
 #'             dividers = "Action 4"
 #'           )
@@ -55,7 +58,37 @@
 #'   )
 #' }
 #'
-dropdownInput <- function(id, labels, values = labels, disabled = NULL,
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           dropdownInput(
+#'             id = "actions",
+#'             title = "Actions",
+#'             labels = c("disable", "enable")
+#'           )
+#'         ),
+#'         col(
+#'           dropdownInput(
+#'             id = "dropdown",
+#'             title = "Other actions",
+#'             labels = paste("Action", 1:5)
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observeEvent(input$actions, {
+#'         if (input$actions == "disable") {
+#'           disableDropdownInput("dropdown")
+#'         }
+#'       })
+#'     }
+#'   )
+#' }
+#'
+dropdownInput <- function(id, title, labels, values = labels, disabled = NULL,
                           dividers = NULL, dropup = FALSE, ...) {
   if (length(labels) != length(values)) {
     stop(
@@ -75,12 +108,14 @@ dropdownInput <- function(id, labels, values = labels, disabled = NULL,
       if (dropup) "dropup" else "dropdown"
     ),
     id = id,
+    `data-value` = NULL,
     tags$button(
       class = "btn btn-secondary dropdown-toggle",
       type = "button",
       `data-toggle` = "dropdown",
       `aria-haspop` = "true",
-      `aria-expanded` = "false"
+      `aria-expanded` = "false",
+      title
     ),
     tags$div(
       class = collate(
@@ -108,5 +143,17 @@ dropdownInput <- function(id, labels, values = labels, disabled = NULL,
     ),
     ...,
     bootstrap()
+  )
+}
+
+#' @rdname dropdownInput
+#' @export
+disableDropdownInput <- function(id, disabled = NULL,
+                                 session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(
+    id,
+    list(
+      disable = if (is.null(disabled)) TRUE else disabled
+    )
   )
 }

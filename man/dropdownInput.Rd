@@ -2,39 +2,45 @@
 % Please edit documentation in R/dropdown.R
 \name{dropdownInput}
 \alias{dropdownInput}
+\alias{disableDropdownInput}
 \title{Dropdown input}
 \usage{
-dropdownInput(id, labels, values = labels, disabled = NULL,
+dropdownInput(id, title, labels, values = labels, disabled = NULL,
   dividers = NULL, dropup = FALSE, ...)
+
+disableDropdownInput(id, disabled = NULL,
+  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{labels}{A character vector specifying the labels of the dropdown menu
 choices.}
 
-\item{values}{A character vector specifying the values of the dropdown menu
-choices, defaults to \code{values}.}
+\item{values}{A character vector, list of character strings, vector of values
+to coerce to character strings, or list of values to coerce to character
+strings specifying the values of the dropdown input's choices, defaults to
+\code{labels}.}
 
 \item{disabled}{One or more of \code{values} indicating which dropdown menu items
-to disable, defaults to \code{NULL}.}
+to disable, defaults to \code{NULL}. If \code{NULL}, \code{disableDropdownInput} will
+disable the menu toggle and the dropdown cannot be opened.}
 
 \item{dividers}{One or more of \code{values} indicating which dropdown menu items
 are the start of a new section, defaults to \code{NULL}. Divider lines will be
 placed above the indicated values separating the dropdown menu items into
 sections.}
 
-\item{dropup}{If \code{TRUE}, the dropdown menu extends upwards instead of
+\item{dropup}{If \code{TRUE}, the dropdown menu opens upwards instead of
 downwards, defaults to \code{FALSE}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 }
 \description{
-Dropdown inputs, dropdown menus, function similar to a set of buttons. The
-initial dropdown open does not trigger a reactive event, but a subsequent
-click on one of the menu choices triggers a reactive event. The value of a
-dropdown item may be specified in \code{dropdownItem}, otherwise the default value
-is \code{NULL}. The reactive value of the dropdown input is the value of the
-clicked dropdown item.
+Dropdown inputs, or dropdown menus, functions similar to a set of buttons.
+The initial click to open a dropdown menu does not trigger a reactive event,
+but a click on one of the menu choices triggers a reactive event. The
+reactive value of a dropdown input is the value of the most recently clicked
+dropdown menu item.
 }
 \examples{
 if (interactive()) {
@@ -44,6 +50,7 @@ if (interactive()) {
         col(
           dropdownInput(
             id = "dropdown",
+            title = "do not like `title`",
             labels = paste("Action", 1:5),
             dividers = "Action 4"
           )
@@ -58,6 +65,36 @@ if (interactive()) {
     server = function(input, output) {
       output$value <- renderText({
         input$dropdown
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          dropdownInput(
+            id = "actions",
+            title = "Actions",
+            labels = c("disable", "enable")
+          )
+        ),
+        col(
+          dropdownInput(
+            id = "dropdown",
+            title = "Other actions",
+            labels = paste("Action", 1:5)
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      observeEvent(input$actions, {
+        if (input$actions == "disable") {
+          disableDropdownInput("dropdown")
+        }
       })
     }
   )

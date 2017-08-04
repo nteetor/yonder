@@ -1,9 +1,7 @@
 $(document).ready(function() {
-  $(".dull-dropdown-input").on("click", ".dropdown-item:not(.disabled)", function(e) {
-    var $this = $(this);
-
-    $this.trigger("click", {
-      value: $this.data("value") === undefined ? null : $this.data("value")
+  $(".dull-dropdown-input[id]").on("click", ".dropdown-item:not(.disabled)", function(e) {
+    $(this).trigger("click:item", {
+      value: $(this).data("value")
     });
   });
 });
@@ -15,20 +13,37 @@ $.extend(dropdownInputBinding, {
     return $(scope).find(".dull-dropdown-input[id]");
   },
   getValue: function(el) {
-    var $el = $(el);
-    return $el.data("value") === undefined ? null : $el.data("value");
+    var $value = $(el).data("value");
+
+    return $value === undefined ? null : $value;
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function(el, callback) {
-    $(el).on("click.dropdownInputBinding", function(e, data) {
+    $(el).on("click:item.dropdownInputBinding", function(e, data) {
       $(el).data("value", data.value);
       callback();
     });
   },
   unsubscribe: function(el) {
     $(el).off(".dropdownInputBinding");
+  },
+  receiveMessage: function(el, data) {
+    var $el = $(el);
+
+    if (data.disable) {
+      if (data.disable === true) {
+        $el.find(".dropdown-toggle").prop("disabled", true);
+      } else {
+        $.each(data.disable, function(i, v) {
+          var $item = $el.find(".dropdown-item[data-value=\"" + v + "\"]");
+          if ($item.length !== 0 && !$item.hasClass("disabled")) {
+            $item.addClass("disabled");
+          }
+        });
+      }
+    }
   }
 });
 
