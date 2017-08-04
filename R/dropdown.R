@@ -14,9 +14,10 @@
 #'   strings specifying the values of the dropdown input's choices, defaults to
 #'   `labels`.
 #'
-#' @param disabled One or more of `values` indicating which dropdown menu items
-#'   to disable, defaults to `NULL`. If `NULL`, `disableDropdownInput` will
-#'   disable the menu toggle and the dropdown cannot be opened.
+#' @param disabled,enabled One or more of `values` indicating which dropdown
+#'   menu items to disable or enable, defaults to `NULL`. If `NULL` then
+#'   `disableDropdownInput` and `enableDropdownInput` will disable or enable all
+#'   the dropdown input's items, respectively.
 #'
 #' @param dividers One or more of `values` indicating which dropdown menu items
 #'   are the start of a new section, defaults to `NULL`. Divider lines will be
@@ -63,17 +64,25 @@
 #'     ui = container(
 #'       row(
 #'         col(
+#'           offset = 1,
 #'           dropdownInput(
 #'             id = "actions",
 #'             title = "Actions",
-#'             labels = c("disable", "enable")
+#'             labels = c("disable", "enable", "disable some", "enable some"),
+#'             dividers = "disable some"
 #'           )
 #'         ),
 #'         col(
 #'           dropdownInput(
 #'             id = "dropdown",
 #'             title = "Other actions",
-#'             labels = paste("Action", 1:5)
+#'             labels = paste("Action", 1:5),
+#'             disabled = "Action 3"
+#'           )
+#'         ),
+#'         col(
+#'           display4(
+#'             textOutput("value")
 #'           )
 #'         )
 #'       )
@@ -82,7 +91,17 @@
 #'       observeEvent(input$actions, {
 #'         if (input$actions == "disable") {
 #'           disableDropdownInput("dropdown")
+#'         } else if (input$actions == "enable") {
+#'           enableDropdownInput("dropdown")
+#'         } else if (input$actions == "disable some") {
+#'           disableDropdownInput("dropdown", paste("Action", c(2, 3, 5)))
+#'         } else if (input$actions == "enable some") {
+#'           enableDropdownInput("dropdown", paste("Action", c(2, 3, 5)))
 #'         }
+#'       })
+#'
+#'       output$value <- renderText({
+#'         input$dropdown
 #'       })
 #'     }
 #'   )
@@ -134,6 +153,7 @@ dropdownInput <- function(id, title, labels, values = labels, disabled = NULL,
                 "dropdown-item",
                 if (disabled[[i]]) "disabled"
               ),
+              href = NA,
               `data-value` = values[[i]],
               labels[[i]]
             )
@@ -153,7 +173,19 @@ disableDropdownInput <- function(id, disabled = NULL,
   session$sendInputMessage(
     id,
     list(
-      disable = if (is.null(disabled)) TRUE else disabled
+      disable = if (is.null(disabled)) TRUE else as.list(disabled)
+    )
+  )
+}
+
+#' @rdname dropdownInput
+#' @export
+enableDropdownInput <- function(id, enabled = NULL,
+                                session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(
+    id,
+    list(
+      enable = if (is.null(enabled)) TRUE else as.list(enabled)
     )
   )
 }

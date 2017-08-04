@@ -3,12 +3,16 @@
 \name{dropdownInput}
 \alias{dropdownInput}
 \alias{disableDropdownInput}
+\alias{enableDropdownInput}
 \title{Dropdown input}
 \usage{
 dropdownInput(id, title, labels, values = labels, disabled = NULL,
   dividers = NULL, dropup = FALSE, ...)
 
 disableDropdownInput(id, disabled = NULL,
+  session = getDefaultReactiveDomain())
+
+enableDropdownInput(id, enabled = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
@@ -94,6 +98,8 @@ if (interactive()) {
       observeEvent(input$actions, {
         if (input$actions == "disable") {
           disableDropdownInput("dropdown")
+        } else {
+          enableDropdownInput("dropdown")
         }
       })
     }
