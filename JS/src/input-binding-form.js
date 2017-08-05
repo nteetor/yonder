@@ -1,4 +1,9 @@
 $(document).ready(function() {
+  $(".dull-form-input[id]").on("shiny:inputchanged", ".dull-input[id]", function(e, data) {
+    if (!data.submit) {
+      e.preventDefeault();
+    }
+  });
   $(".dull-form-input[id]").on("click", ".dull-submit", function(e) {
     console.log("wat");
     e.preventDefault();
@@ -28,6 +33,9 @@ $.extend(formInputBinding, {
   },
   subscribe: function(el, callback) {
     $(el).on("dull:submit.formInputBinding", function(e) {
+      $(el).find(".dull-input[id]").trigger("shiny:inputchanged", {
+        submit: true
+      });
       callback();
     });
   },
@@ -37,4 +45,3 @@ $.extend(formInputBinding, {
 });
 
 Shiny.inputBindings.register(formInputBinding, "dull.formInput");
-

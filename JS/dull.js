@@ -367,6 +367,19 @@ $(document).on("shiny:inputchanged", function (e) {
   }
 });
 
+$(document).ready(function () {
+  $(".dull-form-input[id]").on("shiny:inputchanged", ".dull-input[id]", function (e, data) {
+    if (!data.submit) {
+      e.preventDefeault();
+    }
+  });
+  $(".dull-form-input[id]").on("click", ".dull-submit", function (e) {
+    console.log("wat");
+    e.preventDefault();
+    $(this).trigger("dull:submit");
+  });
+});
+
 var formInputBinding = new Shiny.InputBinding();
 
 $.extend(formInputBinding, {
@@ -380,41 +393,15 @@ $.extend(formInputBinding, {
       acc[obj] = Shiny.shinyapp.$inputValues[obj];
       return acc;
     }, {});
-
-    /*    return $inputs
-          .map(function(i, e) {
-            var ids = $(e)
-              .parentsUntil(".dull-form", "[id]")
-              .map(function(j, a) { return a.id; })
-              .get();
-    
-            ids.push(e.id);
-            ids.reverse();
-    
-            return ids.reduce(function(acc, obj) {
-              var ret = {};
-              ret[obj] = acc;
-              return ret;
-            }, $(e).val() || null);
-          })
-          .get()
-          .reduce(function(acc, obj) {
-            var key = Object.keys(obj);
-    
-            if (!acc.hasOwnProperty(key)) {
-              return Object.assign(acc, obj);
-            } else {
-              var nested = {};
-              nested[key] = Object.assign(acc[key], obj[key]);
-              return Object.assign(acc, nested);
-            }
-          }, {});*/
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function subscribe(el, callback) {
     $(el).on("dull:submit.formInputBinding", function (e) {
+      $(el).find(".dull-input[id]").trigger("shiny:inputchanged", {
+        submit: true
+      });
       callback();
     });
   },
@@ -424,14 +411,6 @@ $.extend(formInputBinding, {
 });
 
 Shiny.inputBindings.register(formInputBinding, "dull.formInput");
-
-$(document).ready(function () {
-  $(".dull-form-input[id]").on("click", ".dull-submit", function (e) {
-    console.log("wat");
-    e.preventDefault();
-    $(this).trigger("dull:submit");
-  });
-});
 
 var groupInputBinding = new Shiny.InputBinding();
 
