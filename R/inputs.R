@@ -253,19 +253,17 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
   )
 }
 
-#' Group inputs, combination buttons and text
+#' Group inputs, combination button, dropdown, and text input
 #'
-#' An input group is composite reactive input which may consist of one or two
-#' buttons, dropdowns, character addons, or any combination of these elements.
-#' Character addons, specified with `left` and `right` may be used to ensure an
-#' input group's value always has a certain prefix or suffix and render a
-#' visual cue to indicate this behavior. Buttons and dropdowns may be included
-#' to control when the input group's reactive value updates. See below for more
-#' information and examples.
+#' A group input is a combination reactive input which may consist of one or two
+#' buttons, dropdowns, static addons, or any combination of these elements.
+#' Static addons, specified with `left` and `right` may be used to ensure an
+#' group input's reactive value always has a certain prefix or suffix. These
+#' static addons render with a shaded background to help indicated this behavior to the user.
+#' Buttons and dropdowns may be included to control when the group input's
+#' reactive value updates. See Details for more information.
 #'
-#' @param id A character string specifying an id for the input, defaults to
-#'   `NULL`. When specified, a reactive value, `input$<id>`, is available to the
-#'   shiny server function.
+#' @param id A character string specifying the id of the group input.
 #'
 #' @param placeholder A character string specifying placeholder text for the
 #'   input group, defaults to `NULL`.
@@ -273,32 +271,36 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #' @param value A character string specifying an initial value for the input
 #'   group, defaults to `NULL`.
 #'
-#' @param left,right A character string, [buttonInput] element, or
-#'   [dropdownInput] element, used as the left or right addon, respectively, of
-#'   the input group, both default to `NULL`. Addon's affect the reactive events
-#'   and value of the input group, see the details section below for more
-#'   information.
+#' @param left,right A character vector specifying static addons or
+#'   [buttonInput] or [dropdownInput] elements specifying dynamic addons.
+#'   Addon's affect the reactive value of the group input, see the Details
+#'   section below for more information.
+#'
+#' @param ... Additional named arguments passed as HTML attributes to the
+#'   parent element.
 #'
 #' @details
 #'
-#' **reactive event**
+#' ** `left` is character or `right` is character **
 #'
-#' If either `left` or `right` is a button or a dropdown the reactive value of
-#' the input group is changed when either button or a dropdown item is clicked.
-#' If either `left` and `right` are character strings or `NULL` the reactive
-#' value of the input group will update each time the text input is changed by
-#' the user.
+#' If `left` or `right` are character vectors, then the group input functions
+#' like a text input. The value will update and trigger a reactive event when
+#' the text box is modified. The group input's reactive value is the
+#' concatention of the static addons specified by `left` or `right` and the
+#' value of the text input.
 #'
-#' **input value**
+#' ** `left` is button or `right` is button **
 #'
-#' An input group's value is `NULL` when its text input is empty and neither,
-#' if any, buttons or dropdown item's have been clicked. Otherwise, a input
-#' group's value is list of two named elements. The first element is `value`
-#' which is the concatenation of `left`, *if a character string*, the text input
-#' value, and `right`, *if a character string*. The second element is `click`
-#' and is indicates which button or dropdown item was clicked. The value of
-#' `click` depends on the value of the button or dropdown item, see
-#' [buttonInput] or [dropdownItem].
+#' The button does not change the value of the group input. However, the input
+#' no longer triggers event when the text box is updated. Instead the value
+#' is updated when a button is clicked. Static addons are still applied to the
+#' group input value.
+#'
+#' ** `left` is a dropdown or `right` is a dropdown **
+#'
+#' The value of the group input does chance depending on the clicked dropdown
+#' menu item. The value of the input group is the concatentation of the
+#' dropdown input value, the value of the text input, and any static addons.
 #'
 #' @family inputs
 #' @export
@@ -309,10 +311,18 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #'       row(
 #'         col(
 #'           groupInput(
-#'             id = "groupinput",
+#'             id = "textgroup",
 #'             left = "@",
-#'             placeholder = "Username",
-#'             class = "input-group-lg"
+#'             placeholder = "Username"
+#'           ),
+#'           tags$p("What do you think of frozen yogurt?"),
+#'           groupInput(
+#'             id = "buttongroup",
+#'             placeholder = "Answer here",
+#'             right = buttonInput(
+#'               id = "answer",
+#'               label = "Go!"
+#'             )
 #'           )
 #'         ),
 #'         col(
@@ -324,7 +334,11 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #'     ),
 #'     server = function(input, output) {
 #'       output$value <- renderText({
-#'         input$groupinput
+#'         input$buttongroup
+#'       })
+#'
+#'       output$value <- renderText({
+#'         input$textgroup
 #'       })
 #'     }
 #'   )
@@ -394,10 +408,11 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #'             id = "groupinput",
 #'             left = dropdownInput(
 #'               id = "dropdown",
-#'               title = "Choose",
-#'               labels = c("One", "Two")
+#'               title = "Title",
+#'               labels = c("Mrs.", "Miss", "Mr.", "none"),
+#'               values = c("Mrs. ", "Miss ", "Mr. ", "")
 #'             ),
-#'             placeholder = "Username",
+#'             placeholder = "First name",
 #'             right = "!"
 #'           )
 #'         ),
@@ -441,10 +456,10 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
     id = id,
     if (!is.null(left)) {
       if (is.character(left)) {
-        lapply(left, function(l) tags$span(class = "input-group-addon", l))
+        lapply(left, function(l) tags$span(class = "input-group-addon left-addon", l))
       } else {
         tags$span(
-          class = "input-group-btn",
+          class = "input-group-btn left-group",
           left
         )
       }
@@ -458,10 +473,10 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
     ),
     if (!is.null(right)) {
       if (is.character(right)) {
-        lapply(right, function(r) tags$span(class = "input-group-addon", r))
+        lapply(right, function(r) tags$span(class = "input-group-addon right-addon", r))
       } else {
         tags$span(
-          class = "input-group-btn",
+          class = "input-group-btn right-group",
           right
         )
       }

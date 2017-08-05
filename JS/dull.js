@@ -418,26 +418,30 @@ $.extend(groupInputBinding, {
   find: function find(scope) {
     return $(scope).find(".dull-group-input[id]");
   },
-  _getAddonText: function _getAddonText(el, selector) {
-    return $(el).find(selector).map(function () {
-      return $(this).text();
-    }).get().reduce(function (acc, txt) {
-      return acc + txt;
-    }, "");
+  initialize: function initialize(el) {
+    var $el = $(el);
+
+    $el.data("prefix", $el.find(".left-addon").map(function (i, e) {
+      return $(e).text();
+    }).get().join(""));
+
+    $el.data("suffix", $el.find(".right-addon").map(function (i, e) {
+      return $(e).text();
+    }).get().join(""));
   },
   getValue: function getValue(el) {
     var $el = $(el);
 
-    var text = $el.find(".form-control[type=\"text\"]").val();
-
-    var leftText = this._getAddonText(el, ".input-group-addon:first-child, .input-group-addon ~ .input-group-addon");
-    var right = this._getAddonText(el, ".input-group-addon:last-child");
+    var text = $el.find("input[type=\"text\"]").val();
 
     if (text === "") {
       return null;
     }
 
-    return leftText + leftDrop + text + right;
+    var left = $el.find(".left-group .dull-dropdown-input[id]").data("value") || "";
+    var right = $el.find(".right-group .dull-dropdown-input[id]").data("value") || "";
+
+    return left + $el.data("prefix") + text + $el.data("suffix") + right;
   },
   getState: function getState(el) {
     return { value: this.getValue(el) };
@@ -445,7 +449,10 @@ $.extend(groupInputBinding, {
   subscribe: function subscribe(el, callback) {
     var $el = $(el);
     if ($el.find("button").length) {
-      $el.on("click.groupInputBinding", function (e, data) {
+      $el.on("click.groupInputBinding", ".dull-button-input[id]", function (e) {
+        callback();
+      });
+      $el.on("click.groupInputBinding", ".dull-dropdown-input[id] .dropdown-item", function (e) {
         callback();
       });
     } else {
