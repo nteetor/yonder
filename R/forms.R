@@ -78,9 +78,7 @@ formInput <- function(id, ...) {
   }
 
   tags$form(
-    class = collate(
-      "dull-form-input"
-    ),
+    class = "dull-form-input",
     id = id,
     ...,
     tags$div(
