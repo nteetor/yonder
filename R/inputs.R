@@ -311,18 +311,9 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #'       row(
 #'         col(
 #'           groupInput(
-#'             id = "textgroup",
+#'             id = "buttongroup",
 #'             left = "@",
 #'             placeholder = "Username"
-#'           ),
-#'           tags$p("What do you think of frozen yogurt?"),
-#'           groupInput(
-#'             id = "buttongroup",
-#'             placeholder = "Answer here",
-#'             right = buttonInput(
-#'               id = "answer",
-#'               label = "Go!"
-#'             )
 #'           )
 #'         ),
 #'         col(
@@ -336,9 +327,34 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #'       output$value <- renderText({
 #'         input$buttongroup
 #'       })
+#'     }
+#'   )
+#' }
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           groupInput(
+#'             id = "groupinput",
+#'             placeholder = "Search terms",
+#'             right = buttonInput(
+#'               id = "button",
+#'               label = "Go!"
+#'             )
+#'           )
+#'         ),
+#'         col(
+#'           display4(
+#'             textOutput("value")
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
 #'       output$value <- renderText({
-#'         input$textgroup
+#'         input$groupinput
 #'       })
 #'     }
 #'   )
