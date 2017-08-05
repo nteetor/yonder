@@ -306,74 +306,120 @@ option <- function(label = NULL, value = NULL, selected = FALSE) {
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       groupInput(
-#'         id = "nearlytext"
-#'       ),
-#'       groupInput(
-#'         id = "username",
-#'         placeholder = "username",
-#'         left = "@@",
-#'         right = buttonInput(
-#'           label = "Go!",
-#'           value = "go"
-#'         )
-#'       ),
-#'       groupInput(
-#'         id = "github",
-#'         left = "https://github.com/"
-#'       ),
-#'       groupInput(
-#'         id = "preference",
-#'         left = buttonInput(
-#'           label = fontAwesome("thumbs-up"),
-#'           value = "up"
+#'       row(
+#'         col(
+#'           groupInput(
+#'             id = "groupinput",
+#'             left = "@",
+#'             placeholder = "Username",
+#'             class = "input-group-lg"
+#'           )
 #'         ),
-#'         right = buttonInput(
-#'           label = fontAwesome("thumbs-down"),
-#'           value = "down"
-#'         )
-#'       ),
-#'       groupInput(
-#'         id = "options",
-#'         placeholder = "",
-#'         left = dropdownInput(
-#'           label = "Action",
-#'           dropdownItem("Action", "action"),
-#'           dropdownItem("Another action", "another"),
-#'           dropdownItem("Something else", "something"),
-#'           dropdownDivider(),
-#'           dropdownItem("Final", "final")
+#'         col(
+#'           display4(
+#'             textOutput("value")
+#'           )
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       observe({
-#'         print(input$nearlytext)
-#'       })
-#'
-#'       observe({
-#'         print(input$username)
-#'       })
-#'
-#'       observe({
-#'         print(input$github)
-#'       })
-#'
-#'       observe({
-#'         print(input$preference)
-#'       })
-#'
-#'       observe({
-#'         print(input$options)
+#'       output$value <- renderText({
+#'         input$groupinput
 #'       })
 #'     }
 #'   )
 #' }
 #'
-groupInput <- function(placeholder = NULL, value = NULL, left = NULL,
-                       right = NULL, ..., id = NULL) {
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           groupInput(
+#'             id = "groupinput",
+#'             left = c("$", "0.00")
+#'           )
+#'         ),
+#'         col(
+#'           display4(
+#'             textOutput("value")
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$value <- renderText({
+#'         input$groupinput
+#'       })
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           groupInput(
+#'             id = "groupinput",
+#'             left = "@",
+#'             placeholder = "Username",
+#'             right = buttonInput(
+#'               id = "right",
+#'               label = "Search"
+#'             )
+#'           )
+#'         ),
+#'         col(
+#'           display4(
+#'             textOutput("value")
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$value <- renderText({
+#'         input$groupinput
+#'       })
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           groupInput(
+#'             id = "groupinput",
+#'             left = dropdownInput(
+#'               id = "dropdown",
+#'               title = "Choose",
+#'               labels = c("One", "Two")
+#'             ),
+#'             placeholder = "Username",
+#'             right = "!"
+#'           )
+#'         ),
+#'         col(
+#'           display4(
+#'             textOutput("value")
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$value <- renderText({
+#'         input$groupinput
+#'       })
+#'     }
+#'   )
+#' }
+#'
+groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
+                       right = NULL, ...) {
   if (!is.null(left) && !is.character(left) && !tagIs(left, "button") &&
-      !tagHasClass(left, "dull-dropdown")) {
+      !tagHasClass(left, "dull-dropdown-input")) {
     stop(
       "invalid `groupInput` argument, `left` must be a character string, ",
       "buttonInput(), or dropdownInput()",
@@ -382,7 +428,7 @@ groupInput <- function(placeholder = NULL, value = NULL, left = NULL,
   }
 
   if (!is.null(right) && !is.character(right) && !tagIs(right, "button") &&
-      !tagHasClass(right, "dull-dropdown")) {
+      !tagHasClass(right, "dull-dropdown-input")) {
     stop(
       "invalid `groupInput` argument, `right` must be a character string, ",
       "buttonInput(), or dropdownInput()",
@@ -391,24 +437,34 @@ groupInput <- function(placeholder = NULL, value = NULL, left = NULL,
   }
 
   tags$div(
-    class = "dull-input-group input-group",
+    class = "dull-group-input input-group",
+    id = id,
     if (!is.null(left)) {
-      tags$span(
-        class = if (is_tag(left)) "input-group-btn" else "input-group-addon",
-        left
-      )
-    },
-    textInput(
-      value = value,
-      placeholder = placeholder
-    ),
-    if (!is.null(right)) {
-      tags$span(
-        class = if (is_tag(right)) "input-group-btn" else "input-group-addon",
-        right
-      )
+      if (is.character(left)) {
+        lapply(left, function(l) tags$span(class = "input-group-addon", l))
+      } else {
+        tags$span(
+          class = "input-group-btn",
+          left
+        )
+      }
     },
     ...,
-    id = id
+    tags$input(
+      type = "text",
+      class = "form-control",
+      placeholder = placeholder,
+      value = value
+    ),
+    if (!is.null(right)) {
+      if (is.character(right)) {
+        lapply(right, function(r) tags$span(class = "input-group-addon", r))
+      } else {
+        tags$span(
+          class = "input-group-btn",
+          right
+        )
+      }
+    }
   )
 }

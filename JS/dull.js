@@ -416,24 +416,28 @@ var groupInputBinding = new Shiny.InputBinding();
 
 $.extend(groupInputBinding, {
   find: function find(scope) {
-    return $(scope).find(".dull-input-group[id]");
+    return $(scope).find(".dull-group-input[id]");
+  },
+  _getAddonText: function _getAddonText(el, selector) {
+    return $(el).find(selector).map(function () {
+      return $(this).text();
+    }).get().reduce(function (acc, txt) {
+      return acc + txt;
+    }, "");
   },
   getValue: function getValue(el) {
     var $el = $(el);
 
-    var text = $el.find("input[type=\"text\"]").val() || "";
+    var text = $el.find(".form-control[type=\"text\"]").val();
 
-    if (!text) {
+    var leftText = this._getAddonText(el, ".input-group-addon:first-child, .input-group-addon ~ .input-group-addon");
+    var right = this._getAddonText(el, ".input-group-addon:last-child");
+
+    if (text === "") {
       return null;
     }
 
-    var left = $el.find(".input-group-addon:first-child").text();
-    var right = $el.find(".input-group-addon:last-child").text();
-
-    return {
-      value: left + text + right,
-      click: $el.data("value") || null
-    };
+    return leftText + leftDrop + text + right;
   },
   getState: function getState(el) {
     return { value: this.getValue(el) };
@@ -441,14 +445,11 @@ $.extend(groupInputBinding, {
   subscribe: function subscribe(el, callback) {
     var $el = $(el);
     if ($el.find("button").length) {
-      $el.on("dull:click.groupInputBinding", function (e, data) {
-        if (data.value !== null) {
-          $el.data("value", data.value);
-        }
+      $el.on("click.groupInputBinding", function (e, data) {
         callback();
       });
     } else {
-      $el.on("dull:textchange.groupInputBinding", function (e) {
+      $el.on("change.groupInputBinding", function (e) {
         callback();
       });
     }
@@ -459,23 +460,6 @@ $.extend(groupInputBinding, {
 });
 
 Shiny.inputBindings.register(groupInputBinding, "dull.groupInput");
-
-$(document).ready(function () {
-  $(".dull-input-group[id] input[type=\"text\"]").on("change", function (e) {
-    e.preventDefault();
-    $(this).trigger("dull:textchange");
-  });
-  $(".dull-input-group[id] button:not(.dropdown-toggle)").on("click", function (e) {
-    e.preventDefault();
-    var $this = $(this);
-    $this.trigger("dull:click", { value: $this.data("value") || null });
-  });
-  $(".dull-input-group[id] .dull-dropdown-item").on("click", function (e) {
-    e.preventDefault();
-    var $this = $(this);
-    $this.trigger("dull:click", { value: $this.data("value") || null });
-  });
-});
 
 $(document).ready(function () {
   $(".dull-list-group-input[id]").on("click", ".list-group-item:not(.disabled)", function (e) {
