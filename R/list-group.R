@@ -13,8 +13,8 @@
 #'   only display information pass `NULL` as the `id`, in this case an id is not
 #'   added and a reactive input is not created.
 #'
-#' @param labels A character vector or list of character strings specifying the
-#'   labels of the list group items, defaults to `labels`.
+#' @param items A character vector or list of character strings specifying the
+#'   text of the list group items, defaults to `items`.
 #'
 #' @param values A character string or list of character strings specifying the
 #'   values of the list group items.
@@ -23,9 +23,9 @@
 #'   items selected, defaults to `NULL`, in which case no items are selected and
 #'   the default value of the list group input is `NULL`.
 #'
-#' @param badges If `TRUE`, badges are added to the list group's items, see
-#'   [`badgeOutput`] for more information, these badges may be incremented
-#'   with `incrementListGroupInput`, defaults to `FALSE`.
+#' @param badges A list of [`badgeOutput`]s added to the list group's items,
+#'   defaults to `NULL`. See `badgeOutput` for more information on rendering
+#'   badges.
 #'
 #' @param state One of `"valid"`, `"warning"`, or `"danger"` indicating the
 #'   state of the list group items. If the return value is `"valid"` any visual
@@ -62,7 +62,7 @@
 #'         col(
 #'           listGroupInput(
 #'             id = "listgroup",
-#'             labels = paste("Item", 1:5),
+#'             items = paste("Item", 1:5),
 #'             values = 1:5,
 #'             selected = 2
 #'           )
@@ -87,7 +87,7 @@
 #'         col(
 #'           listGroupInput(
 #'             id = "sets",
-#'             labels = c(
+#'             items = c(
 #'               "red, blue, yellow",
 #'               "silver, gold, crystal",
 #'               "sapphire, ruby, emerald"
@@ -97,7 +97,7 @@
 #'         col(
 #'           listGroupInput(
 #'             id = "stub",
-#'             labels = NULL
+#'             items = NULL
 #'           )
 #'         )
 #'       )
@@ -131,7 +131,7 @@
 #'         col(
 #'           listGroupInput(
 #'             id = "teams",
-#'             labels = names(teams),
+#'             items = names(teams),
 #'             values = teams
 #'           )
 #'         ),
@@ -193,7 +193,7 @@
 #'             col(
 #'               listGroupInput(
 #'                 id = "listgroup",
-#'                 labels = c(
+#'                 items = c(
 #'                   "One fish", "Two fish",
 #'                   "Red fish", "Blue fish"
 #'                 )
@@ -232,46 +232,31 @@
 #'   )
 #' }
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         col(
-#'           listGroupInput(
-#'             id = "listgroup",
-#'             labels = paste("Topic", 1:4),
-#'             badges = TRUE
-#'           )
-#'         ),
-#'         col(
-#'           buttonInput(
-#'             id = "increment",
-#'             label = "Increment active items"
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$increment, {
-#'         req(input$listgroup)
-#'
-#'         incrementListGroupInput(
-#'           id = "listgroup",
-#'           increment = input$listgroup
-#'         )
-#'       })
-#'     }
-#'   )
-#' }
-#'
-listGroupInput <- function(id, labels, values = labels, selected = NULL,
-                           disabled = NULL, badges = FALSE, ...) {
-  if (length(labels) != length(values)) {
+listGroupInput <- function(id, items, values = items, selected = NULL,
+                           disabled = NULL, badges = NULL, ...) {
+  if (length(items) != length(values)) {
     stop(
-      "invalid `listGroupInput` arguments, `labels` and `values` must be the ",
+      "invalid `listGroupInput` arguments, `items` and `values` must be the ",
       "same length",
       call. = FALSE
     )
+  }
+
+  if (!is.null(badges)) {
+    if (any(class(badges) != "list")) {
+      stop(
+        "invalid `listGroupInput` argument, `badges` must be a list",
+        call. = FALSE
+      )
+    }
+
+    if (length(badges) != length(items)) {
+      stop(
+        "invalid `listGroupInput` argument, `badges` must be the same length ",
+        "as `items`",
+        call. = FALSE
+      )
+    }
   }
 
   selected <- match2(selected, values)
@@ -284,25 +269,22 @@ listGroupInput <- function(id, labels, values = labels, selected = NULL,
       "list-group-flush"
     ),
     id = id,
-    if (!is.null(labels)) {
+    if (!is.null(items)) {
       lapply(
-        seq_along(labels),
+        seq_along(items),
         function(i) {
           tags$button(
             class = collate(
               "list-group-item",
               "list-group-item-action",
               if (selected[[i]]) "active",
-              if (badges) "justify-content-between"
+              if (!is.null(badges)) "justify-content-between"
             ),
             `data-value` = values[[i]],
             disabled = if (disabled[[i]]) NA,
-            labels[[i]],
-            if (badges) {
-              tags$span(
-                class = "badge badge-default badge-pill",
-                0
-              )
+            items[[i]],
+            if (!is.null(badges)) {
+              badges[[i]]
             }
           )
         }
@@ -315,18 +297,18 @@ listGroupInput <- function(id, labels, values = labels, selected = NULL,
 
 #' @rdname listGroupInput
 #' @export
-updateListGroupInput <- function(id, labels, values = labels, selected = NULL,
+updateListGroupInput <- function(id, items, values = items, selected = NULL,
                                  disabled = NULL,
                                  session = getDefaultReactiveDomain()) {
-  if (length(labels) != length(values)) {
+  if (length(items) != length(values)) {
     stop(
-      "invalid `updateListGroupInput` arguments, `labels` and `values` must ",
+      "invalid `updateListGroupInput` arguments, `items` and `values` must ",
       "be the same length",
       call. = FALSE
     )
   }
 
-  if (is.null(labels)) {
+  if (is.null(items)) {
     return(NULL)
   }
 
@@ -335,7 +317,7 @@ updateListGroupInput <- function(id, labels, values = labels, selected = NULL,
 
   items <- htmltools::tagList(
     lapply(
-      seq_along(labels),
+      seq_along(items),
       function(i) {
         tags$button(
           class = collate(
@@ -346,7 +328,7 @@ updateListGroupInput <- function(id, labels, values = labels, selected = NULL,
           ),
           `data-value` = values[[i]],
           disabled = if (disabled[[i]]) NA,
-          labels[[i]],
+          items[[i]],
           if (badges) {
             tags$span(
               class = "badge badge-default badge-pill",
