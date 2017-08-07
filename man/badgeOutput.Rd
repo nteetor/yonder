@@ -5,28 +5,25 @@
 \alias{renderBadge}
 \title{Badge outputs}
 \usage{
-badgeOutput(content = NULL, context = "default", rounded = FALSE, ...,
-  id = NULL)
+badgeOutput(id, content, rounded = FALSE, ...)
 
-renderBadge(value, context = NULL, env = parent.frame(), quoted = FALSE)
+renderBadge(content, context = NULL, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{content}{A character string specifying the text or label of the badge,
-defaults to \code{NULL}.}
+\item{id}{A character string specifying the id of the badge output.}
 
-\item{context}{A character string specifying the visual context of the badge,
-one of \code{"default"}, \code{"primary"}, \code{"success"}, \code{"info"}, \code{"warning"}, or
-\code{"danger"}, defaults to \code{"default"}.}
+\item{content}{A character string specifying the content of the badge or an
+expression which returns a character string.}
 
-\item{rounded}{If \code{TRUE} the badge has more rounded corners, defaults to
-\code{FALSE}.}
+\item{rounded}{If \code{TRUE} the badge appears in a pill instead of a rectangular
+shape, defaults to \code{FALSE}.}
 
-\item{...}{Additional named argument passed on as HTML attributes to the
-parent element.}
+\item{...}{Additional named argument passed as HTML attributes to the parent
+element.}
 
-\item{id}{A character string specifying the id of the badge, defaults to
-\code{NULL}. An id must be specified in order to use \code{renderBadge} in the shiny
-server function.}
+\item{context}{An expression which returns one of \code{"default"}, \code{"success"},
+\code{"info"}, \code{"warning"}, or \code{"danger"}. The expression may contain reactive
+values.}
 }
 \description{
 Small highlighted content which scales to its parent's size. Useful for
@@ -37,33 +34,40 @@ options, or tagging content.
 if (interactive()) {
   shinyApp(
     ui = container(
-      listGroupInput(
-        listGroupItem(
-          label = "Button clicks",
-          badge = badgeOutput(
-            id = "clicks",
-            content = 0
+      row(
+        col(
+          offset = 3,
+          listGroupInput(
+            id = NULL,
+            items = "Button clicks",
+            badges = list(
+              badgeOutput(
+                id = "clicks",
+                content = 0
+              )
+            )
+          )
+        ),
+        col(
+          buttonInput(
+            id = "clicker",
+            "Click here!"
           )
         )
-      ),
-      buttonInput(
-        id = "clicker",
-        "Click here!"
       )
     ),
     server = function(input, output) {
-      count <- 0
-
       output$clicks <- renderBadge(
         content = {
-          req(input$clicker)
-          count <<- count + 1
-          count
+          input$clicker
         },
         context = {
-          if (count > 19) {
+          req(input$clicker)
+          clicks <- input$clicker
+
+          if (clicks > 19) {
             "danger"
-          } else if (count > 9) {
+          } else if (clicks > 9) {
             "warning"
           } else {
             "info"

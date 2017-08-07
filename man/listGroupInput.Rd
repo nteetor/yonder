@@ -9,10 +9,10 @@
 \alias{incrementListGroupInput}
 \title{List group inputs}
 \usage{
-listGroupInput(id, labels, values = labels, selected = NULL,
-  disabled = NULL, badges = FALSE, ...)
+listGroupInput(id, items, values = items, selected = NULL,
+  disabled = NULL, badges = NULL, ...)
 
-updateListGroupInput(id, labels, values = labels, selected = NULL,
+updateListGroupInput(id, items, values = items, selected = NULL,
   disabled = NULL, session = getDefaultReactiveDomain())
 
 validateListGroupInput(id, state, validate = NULL,
@@ -34,8 +34,8 @@ function as part of the \code{input} object. When creating a list group to
 only display information pass \code{NULL} as the \code{id}, in this case an id is not
 added and a reactive input is not created.}
 
-\item{labels}{A character vector or list of character strings specifying the
-labels of the list group items, defaults to \code{labels}.}
+\item{items}{A character vector or list of character strings specifying the
+text of the list group items, defaults to \code{items}.}
 
 \item{values}{A character string or list of character strings specifying the
 values of the list group items.}
@@ -49,9 +49,9 @@ items to disable or enable, defaults to \code{NULL}. If \code{NULL} then
 \code{disableListGroup} and \code{enableListGroup} will disable or enable all the
 list group items, respectively.}
 
-\item{badges}{If \code{TRUE}, badges are added to the list group's items, see
-\code{\link{badgeOutput}} for more information, these badges may be incremented
-with \code{incrementListGroupInput}, defaults to \code{FALSE}.}
+\item{badges}{A list of \code{\link{badgeOutput}}s added to the list group's items,
+defaults to \code{NULL}. See \code{badgeOutput} for more information on rendering
+badges.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
@@ -85,7 +85,7 @@ if (interactive()) {
         col(
           listGroupInput(
             id = "listgroup",
-            labels = paste("Item", 1:5),
+            items = paste("Item", 1:5),
             values = 1:5,
             selected = 2
           )
@@ -110,7 +110,7 @@ if (interactive()) {
         col(
           listGroupInput(
             id = "sets",
-            labels = c(
+            items = c(
               "red, blue, yellow",
               "silver, gold, crystal",
               "sapphire, ruby, emerald"
@@ -120,7 +120,7 @@ if (interactive()) {
         col(
           listGroupInput(
             id = "stub",
-            labels = NULL
+            items = NULL
           )
         )
       )
@@ -154,7 +154,7 @@ if (interactive()) {
         col(
           listGroupInput(
             id = "teams",
-            labels = names(teams),
+            items = names(teams),
             values = teams
           )
         ),
@@ -216,7 +216,7 @@ if (interactive()) {
             col(
               listGroupInput(
                 id = "listgroup",
-                labels = c(
+                items = c(
                   "One fish", "Two fish",
                   "Red fish", "Blue fish"
                 )
@@ -250,38 +250,6 @@ if (interactive()) {
 
       output$value <- renderText({
         paste0(input$listgroup, collapse = ", ")
-      })
-    }
-  )
-}
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        col(
-          listGroupInput(
-            id = "listgroup",
-            labels = paste("Topic", 1:4),
-            badges = TRUE
-          )
-        ),
-        col(
-          buttonInput(
-            id = "increment",
-            label = "Increment active items"
-          )
-        )
-      )
-    ),
-    server = function(input, output) {
-      observeEvent(input$increment, {
-        req(input$listgroup)
-
-        incrementListGroupInput(
-          id = "listgroup",
-          increment = input$listgroup
-        )
       })
     }
   )
