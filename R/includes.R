@@ -7,9 +7,9 @@ bootstrap <- function() {
       tags$script(src = "dull/tether/tether.min.js"),
       tags$link(
         rel = "stylesheet",
-        href = "dull/bootstrap/css/bootstrap.min.css"
+        href = "dull/bootstrap/bootstrap.min.css"
       ),
-      tags$script(src = "dull/bootstrap/js/bootstrap.min.js"),
+      tags$script(src = "dull/bootstrap/bootstrap.min.js"),
       tags$script(src = "dull/js/dull.min.js"),
       tags$link(rel = "stylesheet", href = "dull/css/dull.css")
     )
@@ -21,7 +21,7 @@ bootstrap <- function() {
     tags$head(
       tags$link(
         rel = "stylesheet",
-        href = "dull/font-awesome/css/font-awesome.min.css"
+        href = "dull/font-awesome/font-awesome.min.css"
       )
     )
   )
