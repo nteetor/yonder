@@ -2,7 +2,7 @@ var selectInputBinding = new Shiny.InputBinding();
 
 $.extend(selectInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-select-input");
+    return $(scope).find(".dull-select-input[id]");
   },
   getValue: function(el) {
     return $(el)

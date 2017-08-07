@@ -185,18 +185,20 @@ fieldset <- function(legend, ...) {
 #'
 #' A select input.
 #'
-#' @param id A character string specifying an id for the select input, defaults
-#'   to `NULL`. When specified, a reactive value is available to the shiny
-#'   server.
+#' @param id A character string specifying the id of the select input.
 #'
-#' @param label A character string specifying a label for the select input
-#'   option, defaults to `NULL`.
+#' @param labels A character vector specifying the labels of the select input
+#'   options.
 #'
-#' @param value A character string specifying a value for the select input
-#'   option, defaults to `NULL`.
+#' @param choices A character vector specifying the values of the select input
+#'   options, defaults to `labels`.
 #'
-#' @param selected If `TRUE`, the select option is selected when the page
-#'   renders, defaults to `FALSE`.
+#' @param selected One of `choices` indicating the default value of the select
+#'   input, defaults to `NULL`. If `NULL` the first value is selected by
+#'   default.
+#'
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
 #'
 #' @family inputs
 #' @export
@@ -204,41 +206,82 @@ fieldset <- function(legend, ...) {
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       formInline(
-#'         label("Preference"),
-#'         selectInput(
-#'           id = "mySelect",
-#'           option("Choose...", selected = TRUE),
-#'           option("One", 1),
-#'           option("Two", 2),
-#'           option("Three", 3)
+#'       row(
+#'         col(
+#'           selectInput(
+#'             id = "select",
+#'             c("Choose one", "One", "Two", "Three"),
+#'             list(NULL, 1, 2, 3)
+#'           )
 #'         ),
-#'         checkboxInput(
-#'           label = "Remember my preference"
-#'         ),
-#'         buttonInput(
-#'           "Go!",
-#'           context = "secondary"
+#'         col(
+#'           display4(
+#'             textOutput("value")
+#'           )
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'
+#'       output$value <- renderText({
+#'         input$select
+#'       })
 #'     }
 #'   )
-#'
 #' }
 #'
 #'
-selectInput <- function(..., id = NULL) {
+selectInput <- function(id, labels, choices = labels, selected = NULL, ...) {
+  if (!is.null(id) && !is.character(id)) {
+    stop(
+      "invalid `selectInput` argument, `id` must be a character string or NULL",
+      call. = FALSE
+    )
+  }
+
+  if (length(labels) != length(choices)) {
+    stop(
+      "invalid `selectInput` arguments, `labels` and `choices` must be the ",
+      "same length",
+      call. = FALSE
+    )
+  }
+
+  if (!is.null(selected)) {
+    if (length(selected) > 1) {
+      stop(
+        "invalid `selectInput` argument, `selected` must be of length 1",
+        call. = FALSE
+      )
+    }
+
+    if (!(selected %in% labels)) {
+      stop(
+        "invalid `selectInput` argument, `selected` must be one of `choices`",
+        call. = FALSE
+      )
+    }
+  }
+
+  selected <- match2(selected, choices, default = TRUE)
+
   tags$select(
     class = collate(
       "dull-select-input",
       "dull-input",
       "custom-select"
     ),
-    ...,
     id = id,
+    lapply(
+      seq_along(labels),
+      function(i) {
+        tags$option(
+          `data-value` = choices[[i]],
+          labels[[i]],
+          selected = if (selected[[i]]) NA
+        )
+      }
+    ),
+    ...,
     bootstrap()
   )
 }

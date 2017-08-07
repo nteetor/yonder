@@ -5,23 +5,25 @@
 \alias{option}
 \title{Select input}
 \usage{
-selectInput(..., id = NULL)
+selectInput(id, labels, choices = labels, selected = NULL, ...)
 
 option(label = NULL, value = NULL, selected = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying an id for the select input, defaults
-to \code{NULL}. When specified, a reactive value is available to the shiny
-server.}
+\item{id}{A character string specifying the id of the select input.}
 
-\item{label}{A character string specifying a label for the select input
-option, defaults to \code{NULL}.}
+\item{labels}{A character vector specifying the labels of the select input
+options.}
 
-\item{value}{A character string specifying a value for the select input
-option, defaults to \code{NULL}.}
+\item{choices}{A character vector specifying the values of the select input
+options, defaults to \code{labels}.}
 
-\item{selected}{If \code{TRUE}, the select option is selected when the page
-renders, defaults to \code{FALSE}.}
+\item{selected}{One of \code{choices} indicating the default value of the select
+input, defaults to \code{NULL}. If \code{NULL} the first value is selected by
+default.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 }
 \description{
 A select input.
@@ -30,29 +32,27 @@ A select input.
 if (interactive()) {
   shinyApp(
     ui = container(
-      formInline(
-        label("Preference"),
-        selectInput(
-          id = "mySelect",
-          option("Choose...", selected = TRUE),
-          option("One", 1),
-          option("Two", 2),
-          option("Three", 3)
+      row(
+        col(
+          selectInput(
+            id = "select",
+            c("Choose one", "One", "Two", "Three"),
+            list(NULL, 1, 2, 3)
+          )
         ),
-        checkboxInput(
-          label = "Remember my preference"
-        ),
-        buttonInput(
-          "Go!",
-          context = "secondary"
+        col(
+          display4(
+            textOutput("value")
+          )
         )
       )
     ),
     server = function(input, output) {
-
+      output$value <- renderText({
+        input$select
+      })
     }
   )
-
 }
 
 
