@@ -1,11 +1,10 @@
 $(document).ready(function() {
   $(".dull-form-input[id]").on("shiny:inputchanged", ".dull-input[id]", function(e, data) {
-    if (!data.submit) {
+    if (!data.dullsubmit) {
       e.preventDefeault();
     }
   });
   $(".dull-form-input[id]").on("click", ".dull-submit", function(e) {
-    console.log("wat");
     e.preventDefault();
     $(this).trigger("dull:submit");
   });
@@ -34,7 +33,7 @@ $.extend(formInputBinding, {
   subscribe: function(el, callback) {
     $(el).on("dull:submit.formInputBinding", function(e) {
       $(el).find(".dull-input[id]").trigger("shiny:inputchanged", {
-        submit: true
+        dullsubmit: true
       });
       callback();
     });
