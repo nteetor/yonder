@@ -26,6 +26,7 @@
 #'     ui = container(
 #'       row(
 #'         col(
+#'           offset = 3,
 #'           listGroupInput(
 #'             id = NULL,
 #'             items = "Button clicks",
@@ -52,7 +53,6 @@
 #'         },
 #'         context = {
 #'           req(input$clicker)
-#'
 #'           clicks <- input$clicker
 #'
 #'           if (clicks > 19) {
@@ -101,7 +101,8 @@ renderBadge <- function(content, context = NULL, env = parent.frame(),
 
     if (!re(con, "default|primary|success|info|warning|danger")) {
       stop(
-        "invalid `renderBadge` argument, `context` expression must return one of ",
+        "invalid `renderBadge` argument, `context` expression must return ",
+        "one of ",
         '"default", "success", "info", "warning", or "danger"',
         call. = FALSE
       )

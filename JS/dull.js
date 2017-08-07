@@ -815,7 +815,9 @@ $.extend(badgeOutputBinding, {
         $el.addClass(context);
       }
     }
-  }
+  },
+  renderError: function renderError(el, data) {},
+  clearError: function clearError(el) {}
 });
 
 Shiny.outputBindings.register(badgeOutputBinding, "dull.badgeOutput");

@@ -19,11 +19,17 @@ $.extend(badgeOutputBinding, {
 
       if (!$el.hasClass(context)) {
         $el.attr("class", function(i, c) {
-          return c.replace(/badge-(default|primary|success|info|warning|danger)/g,         "");
+          return c.replace(/badge-(default|primary|success|info|warning|danger)/g, "");
         });
         $el.addClass(context);
       }
     }
+  },
+  renderError: function(el, data) {
+
+  },
+  clearError: function(el) {
+
   }
 });
 
