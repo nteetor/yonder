@@ -22,6 +22,16 @@ Shiny.addCustomMessageHandler("dull:updatecollapse", function (msg) {
   $el.collapse(msg.action);
 });
 
+//var InputBinding = Shiny.InputBinding;
+
+(function () {
+  this.getType = function (el) {
+    if ($(el).parents(".dull-form-input[id]").length) {
+      return "dull.form.element";
+    }
+  };
+}).call(Shiny.InputBinding.prototype);
+
 var alertInputBinding = new Shiny.InputBinding();
 
 $.extend(alertInputBinding, {
@@ -134,32 +144,6 @@ $.extend(buttonInputBinding, {
 });
 
 Shiny.inputBindings.register(buttonInputBinding, "dull.buttonInput");
-
-var checkboxBarInputBinding = new Shiny.InputBinding();
-
-$.extend(checkboxBarInputBinding, {
-  find: function find(scope) {
-    return $(scope).find(".dull-checkbox-bar[id]");
-  },
-  getValue: function getValue(el) {
-    return $(el).find("input[type=\"checkbox\"]:checked").map(function (i, e) {
-      return $(e).data("value");
-    }).get();
-  },
-  getState: function getState(el) {
-    return { value: this.getValue(el) };
-  },
-  subscribe: function subscribe(el, callback) {
-    $(el).on("change.checkboxBarInputBinding", function (e) {
-      callback();
-    });
-  },
-  unsubscribe: function unsubscribe(el) {
-    $(el).off(".checkboxBarInputBinding");
-  }
-});
-
-Shiny.inputBindings.register(checkboxBarInputBinding, "checkboxBarInput");
 
 var checkboxInputBinding = new Shiny.InputBinding();
 
@@ -367,40 +351,47 @@ $(document).on("shiny:inputchanged", function (e) {
   }
 });
 
+var formInputBinding = new Shiny.InputBinding();
+
 $(document).ready(function () {
-  $(".dull-form-input[id]").on("shiny:inputchanged", ".dull-input[id]", function (e, data) {
-    if (!data.dullsubmit) {
-      e.preventDefeault();
-    }
-  });
-  $(".dull-form-input[id]").on("click", ".dull-submit", function (e) {
-    e.preventDefault();
-    $(this).trigger("dull:submit");
+  $(".dull-form-input[id]").each(function (i, el) {
+    $(el).find(".dull-input[id]").each(function (j, e) {
+      var newid = $(el).attr("id") + "__" + $(e).attr("id");
+      console.log(newid);
+      $(e).attr("id", newid);
+    });
   });
 });
-
-var formInputBinding = new Shiny.InputBinding();
 
 $.extend(formInputBinding, {
   find: function find(scope) {
     return $(scope).find(".dull-form-input[id]");
   },
   getValue: function getValue(el) {
-    return $(el).find(".dull-input[id]").map(function () {
+    var value = $(el).find(".dull-input[id]").map(function () {
       return this.id;
     }).get().reduce(function (acc, obj) {
-      acc[obj] = Shiny.shinyapp.$inputValues[obj];
+      var key = obj + ":dull.form.element";
+      var name = obj.substring(obj.indexOf("__") + 2);
+
+      if (Shiny.shinyapp.$inputValues[key] !== undefined) {
+        acc[name] = Shiny.shinyapp.$inputValues[key];
+      }
+
       return acc;
     }, {});
+
+    if (Object.keys(value).length === 0) {
+      return null;
+    }
+
+    return value;
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function subscribe(el, callback) {
-    $(el).on("dull:submit.formInputBinding", function (e) {
-      $(el).find(".dull-input[id]").trigger("shiny:inputchanged", {
-        dullsubmit: true
-      });
+    $(el).on("submit.formInputBinding", function (e) {
       callback();
     });
   },
@@ -657,7 +648,7 @@ var selectInputBinding = new Shiny.InputBinding();
 
 $.extend(selectInputBinding, {
   find: function find(scope) {
-    return $(scope).find(".dull-select-input");
+    return $(scope).find(".dull-select-input[id]");
   },
   getValue: function getValue(el) {
     return $(el).find(":checked").map(function (i, e) {

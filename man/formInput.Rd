@@ -62,7 +62,59 @@ if (interactive()) {
     ),
     server = function(input, output) {
       output$value <- renderPrint({
-        input$form
+        str(input$form)
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          formInput(
+            id = "real",
+            tags$label("Real name"),
+            textInput(
+              id = "first",
+              label = "First name"
+            ),
+            textInput(
+              id = "last",
+              label = "Last name"
+            )
+          )
+        ),
+        col(
+          verbatimTextOutput("realvalue")
+        ),
+        col(
+          formInput(
+            id = "nickname",
+            tags$label("Nickname"),
+            textInput(
+              id = "first",
+              label = "First name"
+            ),
+            textInput(
+              id = "last",
+              label = "Last name"
+            )
+          )
+        ),
+        col(
+          verbatimTextOutput("nickvalue")
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$realvalue <- renderPrint({
+        str(input$real)
+      })
+
+      output$nickvalue <- renderPrint({
+        str(input$nickname)
       })
     }
   )
