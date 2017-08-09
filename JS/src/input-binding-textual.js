@@ -31,6 +31,9 @@ $.extend(textualInputBinding, {
     $(el).on("change.textualInputBinding", function(e) {
       callback(true);
     });
+    $(el).on("input.textualInputBinding", function(e) {
+      callback(true);
+    });
   },
   unsubscribe: function(el) {
     $(el).off(".textualInputBinding");

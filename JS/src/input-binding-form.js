@@ -3,9 +3,9 @@ var formInputBinding = new Shiny.InputBinding();
 $(document).ready(function() {
   $(".dull-form-input[id]").each(function(i, el) {
     $(el).find(".dull-input[id]").each(function(j, e) {
-      var newid = $(el).attr("id") + "__" + $(e).attr("id");
-      console.log(newid);
-      $(e).attr("id", newid);
+      $(e).data("id", e.id)
+        .attr("id", el.id + "__" + e.id)
+        .data("parent-form", el.id);
     });
   });
 });
@@ -17,19 +17,19 @@ $.extend(formInputBinding, {
   getValue: function(el) {
     var value = $(el).find(".dull-input[id]")
       .map(function() {
-        return this.id;
-      })
-      .get()
-      .reduce(function(acc, obj) {
-        var key = obj + ":dull.form.element";
-        var name = obj.substring(obj.indexOf("__") + 2);
+        let obj = {};
 
-        if (Shiny.shinyapp.$inputValues[key] !== undefined) {
-          acc[name] = Shiny.shinyapp.$inputValues[key];
+        let v = Shiny.shinyapp.$inputValues[this.id + ":dull.form.element"];
+        if (v === undefined) {
+          return obj;
         }
 
-        return acc;
-      }, {});
+        obj[$(this).data("id")] = v;
+
+        return obj;
+      })
+      .get()
+      .reduce((acc, obj) => Object.assign(acc, obj));
 
     if (Object.keys(value).length === 0) {
       return null;
