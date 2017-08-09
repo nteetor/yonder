@@ -8,10 +8,10 @@
 \alias{enableCheckboxInput}
 \title{Checkbox inputs}
 \usage{
-checkboxInput(id, label, value = label, title = NULL, checked = FALSE,
+checkboxInput(id, choice, value = choice, label = NULL, checked = FALSE,
   ...)
 
-updateCheckboxInput(id, label, value = label, checked = FALSE,
+updateCheckboxInput(id, choice, value = choice, checked = FALSE,
   session = getDefaultReactiveDomain())
 
 validateCheckboxInput(id, state, session = getDefaultReactiveDomain())
@@ -25,11 +25,14 @@ enableCheckboxInput(id, session = getDefaultReactiveDomain())
 reactive value of the checkbox input is available to the shiny server
 function as part of the \code{input} object.}
 
-\item{label}{A character string specifying a label for the checkbox.}
+\item{choice}{A character string specifying a label for the checkbox.}
 
 \item{value}{A character string, object to coerce to a character string, or
 \code{NULL} specifying the value of the checkbox or a new value for the
-checkbox, defaults to \code{label}.}
+checkbox, defaults to \code{choice}.}
+
+\item{label}{A character string specifying a label for the checkbox input,
+defaults to \code{NULL}, in which case a label is not added.}
 
 \item{checked}{If \code{TRUE} the checkbox renders in a checked state, defaults
 to \code{FALSE}.}
@@ -40,9 +43,6 @@ element.}
 \item{state}{One of \code{"valid"}, \code{"warning"}, or \code{"danger"} indicating the
 state of the checkbox input. If the return value is \code{"valid"} any visual
 context is removed.}
-
-\item{header}{A character string specifying a header for the checkbox input,
-defaults to \code{NULL}, in which case a header is not added.}
 }
 \description{
 A reactive checkbox input. When a checkbox input is unchecked the reactive
@@ -56,8 +56,8 @@ if (interactive()) {
         col(
           checkboxInput(
             id = "checkbox",
-            title = "[ TITLE ]",
-            label = "Are you there?",
+            label = "A checkbox",
+            choice = "Are you there?",
             value = "yes"
           )
         ),
@@ -83,14 +83,14 @@ if (interactive()) {
         col(
           checkboxInput(
             id = "caps",
-            label = "Capslock?",
+            choice = "Capslock?",
             value = "capslock"
           )
         ),
         col(
           checkboxInput(
             id = "question",
-            label = "Please check this box",
+            choice = "Please check this box",
             value = "checked"
           )
         )
@@ -101,13 +101,13 @@ if (interactive()) {
         if (isTruthy(input$caps)) {
           updateCheckboxInput(
             id = "question",
-            label = "PLEASE CHECK THIS BOX",
+            choice = "PLEASE CHECK THIS BOX",
             value = "checked"
           )
         } else {
           updateCheckboxInput(
             id = "question",
-            label = "Please check this box",
+            choice = "Please check this box",
             value = "checked"
           )
         }

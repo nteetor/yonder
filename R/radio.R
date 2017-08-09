@@ -6,20 +6,20 @@
 #'   reactive value of the radio input is available to the shiny server
 #'   function as part of the `input` object.
 #'
-#' @param labels A character vector specifying labels for the radio input's
+#' @param choices A character vector specifying labels for the radio input's
 #'   choices.
 #'
 #' @param values A character vector, list of character strings, vector of values
 #'   to coerce to character strings, or list of values to coerce to character
 #'   strings specifying the values of the radio input's choices, defaults to
-#'   `labels`.
+#'   `choices`.
 #'
 #' @param selected One of `values` indicating the default selected value of the
 #'   radio input, defaults to `NULL`, in which case the first choice is
 #'   selected by default.
 #'
-#' @param header A character string specifying a header for the radio input,
-#'   defaults to `NULL`, in which case a header is not added.
+#' @param label A character string specifying a label for the radio input,
+#'   defaults to `NULL`, in which case a label is not added.
 #'
 #' @param inline If `TRUE`, the radio input renders inline, defaults to `FALSE`,
 #'   in which case the radio controls render on separate lines.
@@ -50,7 +50,7 @@
 #'         col(
 #'           radioInput(
 #'             id = "radio",
-#'             labels = c(
+#'             choices = c(
 #'               "(A) Ice cream", "(B) A small frigate",
 #'               "(C) A length of rope", "(D) (A) and (C)",
 #'               "(E) All of the above"
@@ -81,7 +81,7 @@
 #'           tags$h2("Stacked"),
 #'           radioInput(
 #'             id = "groups",
-#'             labels = c("le guin", "rothfuss", "traviss"),
+#'             choices = c("le guin", "rothfuss", "traviss"),
 #'             values = c(
 #'               "rocannon, exile, illusion",
 #'               "wind, fear",
@@ -93,7 +93,7 @@
 #'           tags$h2("Inline"),
 #'           radioInput(
 #'             id = "choices",
-#'             labels = NULL,
+#'             choices = NULL,
 #'             inline = TRUE
 #'           )
 #'         )
@@ -103,7 +103,7 @@
 #'       observe({
 #'         updateRadioInput(
 #'           id = "choices",
-#'           labels = strsplit(input$groups, ", ", fixed = TRUE)[[1]]
+#'           choices = strsplit(input$groups, ", ", fixed = TRUE)[[1]]
 #'         )
 #'       })
 #'     }
@@ -117,16 +117,16 @@
 #'         col(
 #'           radioInput(
 #'             id = "state",
-#'             header = "Pick a state",
-#'             labels = list("valid", "danger", "warning"),
+#'             label = "Pick a state",
+#'             choices = list("valid", "danger", "warning"),
 #'             footer = "(changes the state of the other radio input)"
 #'           )
 #'         ),
 #'         col(
 #'           radioInput(
 #'             id = "choices",
-#'             header = "More choices",
-#'             labels = paste("Choice", 1:4),
+#'             label = "More choices",
+#'             choices = paste("Choice", 1:4),
 #'             values = 1:4,
 #'             footer = "These choices won't do anything yet"
 #'           )
@@ -153,14 +153,14 @@
 #'           tags$h2("Disable inputs"),
 #'           radioInput(
 #'             id = "disabled",
-#'             labels = c("one & three", "two", "two & three")
+#'             choices = c("one & three", "two", "two & three")
 #'           )
 #'         ),
 #'         col(
 #'           tags$h2("The inputs"),
 #'           radioInput(
 #'             id = "other",
-#'             labels = c("one", "two", "three")
+#'             choices = c("one", "two", "three")
 #'           )
 #'         ),
 #'         col(
@@ -209,8 +209,8 @@
 #'   )
 #' }
 #'
-radioInput <- function(id, labels, values = labels, selected = NULL,
-                       disabled = NULL, header = NULL, footer = NULL,
+radioInput <- function(id, choices, values = choices, selected = NULL,
+                       disabled = NULL, label = NULL, footer = NULL,
                        inline = FALSE) {
   if (!is.null(selected) && !(selected %in% values)) {
     stop(
@@ -226,9 +226,9 @@ radioInput <- function(id, labels, values = labels, selected = NULL,
     )
   }
 
-  if (length(labels) != length(values)) {
+  if (length(choices) != length(values)) {
     stop(
-      "invalid `radioInput` arguments, `labels` and `values` must be the same ",
+      "invalid `radioInput` arguments, `choices` and `values` must be the same ",
       "length",
       call. = FALSE
     )
@@ -245,16 +245,16 @@ radioInput <- function(id, labels, values = labels, selected = NULL,
       if (!inline) "custom-controls-stacked"
     ),
     id = id,
-    if (!is.null(header)) {
+    if (!is.null(label)) {
       tags$label(
         class = "form-control-label",
         `for` = id,
-        header
+        label
       )
     },
-    if (!is.null(labels)) {
+    if (!is.null(choices)) {
       lapply(
-        seq_along(labels),
+        seq_along(choices),
         function(i) {
           tags$label(
             class = collate(
@@ -274,7 +274,7 @@ radioInput <- function(id, labels, values = labels, selected = NULL,
             ),
             tags$span(
               class = "custom-control-description",
-              labels[[i]]
+              choices[[i]]
             )
           )
         }
@@ -293,7 +293,7 @@ radioInput <- function(id, labels, values = labels, selected = NULL,
 
 #' @rdname radioInput
 #' @export
-updateRadioInput <- function(id, labels, values = labels, selected = NULL,
+updateRadioInput <- function(id, choices, values = choices, selected = NULL,
                              disabled = NULL,
                              session = getDefaultReactiveDomain()) {
   if (!is.null(selected) && !(selected %in% values)) {
@@ -303,9 +303,9 @@ updateRadioInput <- function(id, labels, values = labels, selected = NULL,
     )
   }
 
-  if (length(labels) != length(values)) {
+  if (length(choices) != length(values)) {
     stop(
-      "invalid `updateRadioInput` arguments, `labels` and `values` must be ",
+      "invalid `updateRadioInput` arguments, `choices` and `values` must be ",
       "the same length",
       call. = FALSE
     )
@@ -316,7 +316,7 @@ updateRadioInput <- function(id, labels, values = labels, selected = NULL,
 
   choices <- htmltools::tagList(
     lapply(
-      seq_along(labels),
+      seq_along(choices),
       function(i) {
         tags$label(
           class = collate(
@@ -336,7 +336,7 @@ updateRadioInput <- function(id, labels, values = labels, selected = NULL,
           ),
           tags$span(
             class = "custom-control-description",
-            labels[[i]]
+            choices[[i]]
           )
         )
       }

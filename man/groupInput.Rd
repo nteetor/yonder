@@ -175,8 +175,8 @@ if (interactive()) {
             id = "groupinput",
             left = dropdownInput(
               id = "dropdown",
-              title = "Title",
-              labels = c("Mrs.", "Miss", "Mr.", "none"),
+              label = "Title",
+              choices = c("Mrs.", "Miss", "Mr.", "none"),
               values = c("Mrs. ", "Miss ", "Mr. ", "")
             ),
             placeholder = "First name",

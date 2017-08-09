@@ -6,7 +6,7 @@ $.extend(selectInputBinding, {
   },
   getValue: function(el) {
     return $(el)
-      .find(":checked")
+      .find("option:checked")
       .map(function(i, e) {
         var $val = $(e).data("value");
         return $val === undefined ? null : $val;

@@ -7,14 +7,14 @@
 #'   reactive value of the checkbox input is available to the shiny server
 #'   function as part of the `input` object.
 #'
-#' @param label A character string specifying a label for the checkbox.
+#' @param choice A character string specifying a label for the checkbox.
 #'
 #' @param value A character string, object to coerce to a character string, or
 #'   `NULL` specifying the value of the checkbox or a new value for the
-#'   checkbox, defaults to `label`.
+#'   checkbox, defaults to `choice`.
 #'
-#' @param header A character string specifying a header for the checkbox input,
-#'   defaults to `NULL`, in which case a header is not added.
+#' @param label A character string specifying a label for the checkbox input,
+#'   defaults to `NULL`, in which case a label is not added.
 #'
 #' @param checked If `TRUE` the checkbox renders in a checked state, defaults
 #'   to `FALSE`.
@@ -36,8 +36,8 @@
 #'         col(
 #'           checkboxInput(
 #'             id = "checkbox",
-#'             title = "[ TITLE ]",
-#'             label = "Are you there?",
+#'             label = "A checkbox",
+#'             choice = "Are you there?",
 #'             value = "yes"
 #'           )
 #'         ),
@@ -63,14 +63,14 @@
 #'         col(
 #'           checkboxInput(
 #'             id = "caps",
-#'             label = "Capslock?",
+#'             choice = "Capslock?",
 #'             value = "capslock"
 #'           )
 #'         ),
 #'         col(
 #'           checkboxInput(
 #'             id = "question",
-#'             label = "Please check this box",
+#'             choice = "Please check this box",
 #'             value = "checked"
 #'           )
 #'         )
@@ -81,13 +81,13 @@
 #'         if (isTruthy(input$caps)) {
 #'           updateCheckboxInput(
 #'             id = "question",
-#'             label = "PLEASE CHECK THIS BOX",
+#'             choice = "PLEASE CHECK THIS BOX",
 #'             value = "checked"
 #'           )
 #'         } else {
 #'           updateCheckboxInput(
 #'             id = "question",
-#'             label = "Please check this box",
+#'             choice = "Please check this box",
 #'             value = "checked"
 #'           )
 #'         }
@@ -96,7 +96,7 @@
 #'   )
 #' }
 #'
-checkboxInput <- function(id, label, value = label, title = NULL,
+checkboxInput <- function(id, choice, value = choice, label = NULL,
                           checked = FALSE, ...) {
   value <- as.character(value)
 
@@ -108,14 +108,14 @@ checkboxInput <- function(id, label, value = label, title = NULL,
       "row"
     ),
     id = id,
-    if (!is.null(title)) {
+    if (!is.null(label)) {
       tags$label(
         class = "col-sm-2",
-        title
+        label
       )
     },
     tags$div(
-      class = if (!is.null(title)) "col-sm-10",
+      class = if (!is.null(label)) "col-sm-10",
       tags$label(
         class = collate(
           "custom-control",
@@ -132,7 +132,7 @@ checkboxInput <- function(id, label, value = label, title = NULL,
         ),
         tags$span(
           class = "custom-control-description",
-          label
+          choice
         )
       )
     ),
@@ -143,7 +143,7 @@ checkboxInput <- function(id, label, value = label, title = NULL,
 
 #' @rdname checkboxInput
 #' @export
-updateCheckboxInput <- function(id, label, value = label, checked = FALSE,
+updateCheckboxInput <- function(id, choice, value = choice, checked = FALSE,
                                 session = getDefaultReactiveDomain()) {
   this <- tags$label(
     class = collate(
@@ -161,7 +161,7 @@ updateCheckboxInput <- function(id, label, value = label, checked = FALSE,
     ),
     tags$span(
       class = "custom-control-description",
-      label
+      choice
     )
   )
 

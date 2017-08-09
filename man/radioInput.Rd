@@ -8,10 +8,10 @@
 \alias{enableRadioInput}
 \title{Radio inputs}
 \usage{
-radioInput(id, labels, values = labels, selected = NULL, disabled = NULL,
-  header = NULL, footer = NULL, inline = FALSE)
+radioInput(id, choices, values = choices, selected = NULL,
+  disabled = NULL, label = NULL, footer = NULL, inline = FALSE)
 
-updateRadioInput(id, labels, values = labels, selected = NULL,
+updateRadioInput(id, choices, values = choices, selected = NULL,
   disabled = NULL, session = getDefaultReactiveDomain())
 
 validateRadioInput(id, state, hint = NULL,
@@ -26,13 +26,13 @@ enableRadioInput(id, enabled = NULL, session = getDefaultReactiveDomain())
 reactive value of the radio input is available to the shiny server
 function as part of the \code{input} object.}
 
-\item{labels}{A character vector specifying labels for the radio input's
+\item{choices}{A character vector specifying labels for the radio input's
 choices.}
 
 \item{values}{A character vector, list of character strings, vector of values
 to coerce to character strings, or list of values to coerce to character
 strings specifying the values of the radio input's choices, defaults to
-\code{labels}.}
+\code{choices}.}
 
 \item{selected}{One of \code{values} indicating the default selected value of the
 radio input, defaults to \code{NULL}, in which case the first choice is
@@ -43,8 +43,8 @@ choices to disable or enable, defaults to \code{NULL}. If \code{NULL} then
 \code{disableRadioInput} and \code{enableRadioInput} will disable or enable all
 the radio input's choices, respectively.}
 
-\item{header}{A character string specifying a header for the radio input,
-defaults to \code{NULL}, in which case a header is not added.}
+\item{label}{A character string specifying a label for the radio input,
+defaults to \code{NULL}, in which case a label is not added.}
 
 \item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
 in which case the radio controls render on separate lines.}
@@ -71,7 +71,7 @@ if (interactive()) {
         col(
           radioInput(
             id = "radio",
-            labels = c(
+            choices = c(
               "(A) Ice cream", "(B) A small frigate",
               "(C) A length of rope", "(D) (A) and (C)",
               "(E) All of the above"
@@ -102,7 +102,7 @@ if (interactive()) {
           tags$h2("Stacked"),
           radioInput(
             id = "groups",
-            labels = c("le guin", "rothfuss", "traviss"),
+            choices = c("le guin", "rothfuss", "traviss"),
             values = c(
               "rocannon, exile, illusion",
               "wind, fear",
@@ -114,7 +114,7 @@ if (interactive()) {
           tags$h2("Inline"),
           radioInput(
             id = "choices",
-            labels = NULL,
+            choices = NULL,
             inline = TRUE
           )
         )
@@ -124,7 +124,7 @@ if (interactive()) {
       observe({
         updateRadioInput(
           id = "choices",
-          labels = strsplit(input$groups, ", ", fixed = TRUE)[[1]]
+          choices = strsplit(input$groups, ", ", fixed = TRUE)[[1]]
         )
       })
     }
@@ -138,16 +138,16 @@ if (interactive()) {
         col(
           radioInput(
             id = "state",
-            header = "Pick a state",
-            labels = list("valid", "danger", "warning"),
+            label = "Pick a state",
+            choices = list("valid", "danger", "warning"),
             footer = "(changes the state of the other radio input)"
           )
         ),
         col(
           radioInput(
             id = "choices",
-            header = "More choices",
-            labels = paste("Choice", 1:4),
+            label = "More choices",
+            choices = paste("Choice", 1:4),
             values = 1:4,
             footer = "These choices won't do anything yet"
           )
@@ -174,14 +174,14 @@ if (interactive()) {
           tags$h2("Disable inputs"),
           radioInput(
             id = "disabled",
-            labels = c("one & three", "two", "two & three")
+            choices = c("one & three", "two", "two & three")
           )
         ),
         col(
           tags$h2("The inputs"),
           radioInput(
             id = "other",
-            labels = c("one", "two", "three")
+            choices = c("one", "two", "three")
           )
         ),
         col(

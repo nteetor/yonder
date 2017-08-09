@@ -7,13 +7,13 @@
 #' dropdown menu item. Disabling a dropdown menu triggers a reactive event and
 #' resets the reactive value to `NULL`.
 #'
-#' @param labels A character vector specifying the labels of the dropdown menu
-#'   choices.
+#' @param items A character vector specifying the labels of the dropdown menu
+#'   items.
 #'
 #' @param values A character vector, list of character strings, vector of values
 #'   to coerce to character strings, or list of values to coerce to character
 #'   strings specifying the values of the dropdown input's choices, defaults to
-#'   `labels`.
+#'   `items`.
 #'
 #' @param disabled,enabled One or more of `values` indicating which dropdown
 #'   menu items to disable or enable, defaults to `NULL`. If `NULL` then
@@ -40,8 +40,8 @@
 #'         col(
 #'           dropdownInput(
 #'             id = "dropdown",
-#'             title = "do not like `title`",
-#'             labels = paste("Action", 1:5),
+#'             label = "A dropdown"
+#'             items = paste("Action", 1:5),
 #'             dividers = "Action 4"
 #'           )
 #'         ),
@@ -68,16 +68,16 @@
 #'           offset = 1,
 #'           dropdownInput(
 #'             id = "actions",
-#'             title = "Actions",
-#'             labels = c("disable", "enable", "disable some", "enable some"),
+#'             label = "Actions",
+#'             items = c("disable", "enable", "disable some", "enable some"),
 #'             dividers = "disable some"
 #'           )
 #'         ),
 #'         col(
 #'           dropdownInput(
 #'             id = "dropdown",
-#'             title = "Other actions",
-#'             labels = paste("Action", 1:5),
+#'             label = "Other actions",
+#'             items = paste("Action", 1:5),
 #'             disabled = "Action 3"
 #'           )
 #'         ),
@@ -108,11 +108,11 @@
 #'   )
 #' }
 #'
-dropdownInput <- function(id, title, labels, values = labels, disabled = NULL,
+dropdownInput <- function(id, label, items, values = items, disabled = NULL,
                           dividers = NULL, dropup = FALSE, ...) {
-  if (length(labels) != length(values)) {
+  if (length(items) != length(values)) {
     stop(
-      "invalid `dropdownInput` arguments, `labels` and `values` must be the ",
+      "invalid `dropdownInput` arguments, `items` and `values` must be the ",
       "same length",
       call. = FALSE
     )
@@ -135,7 +135,7 @@ dropdownInput <- function(id, title, labels, values = labels, disabled = NULL,
       `data-toggle` = "dropdown",
       `aria-haspop` = "true",
       `aria-expanded` = "false",
-      title
+      label
     ),
     tags$div(
       class = collate(
@@ -143,7 +143,7 @@ dropdownInput <- function(id, title, labels, values = labels, disabled = NULL,
         "dropdown-menu-right"
       ),
       lapply(
-        seq_along(labels),
+        seq_along(items),
         function(i) {
           list(
             if (dividers[[i]]) {
@@ -156,7 +156,7 @@ dropdownInput <- function(id, title, labels, values = labels, disabled = NULL,
               ),
               href = NA,
               `data-value` = values[[i]],
-              labels[[i]]
+              items[[i]]
             )
           )
         }

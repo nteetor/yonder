@@ -649,7 +649,7 @@ $.extend(selectInputBinding, {
     return $(scope).find(".dull-select-input[id]");
   },
   getValue: function getValue(el) {
-    return $(el).find(":checked").map(function (i, e) {
+    return $(el).find("option:checked").map(function (i, e) {
       var $val = $(e).data("value");
       return $val === undefined ? null : $val;
     }).get();

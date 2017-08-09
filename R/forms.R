@@ -50,8 +50,8 @@
 #'             ),
 #'             checkboxInput(
 #'               id = "checkbox",
-#'               title = "Checkbox",
-#'               label = "Check me out"
+#'               label = "Checkbox",
+#'               choice = "Check me out"
 #'             )
 #'           )
 #'         ),
