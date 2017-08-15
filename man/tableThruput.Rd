@@ -55,9 +55,7 @@ if (interactive()) {
           )
         ),
         col(
-          display4(
-            verbatimTextOutput("value")
-          )
+          verbatimTextOutput("value")
         )
       )
     ),
@@ -67,7 +65,7 @@ if (interactive()) {
         iris[1:10, ]
       )
 
-      output$value <- renderText({
+      output$value <- renderPrint({
         input$table
       })
     }
@@ -102,7 +100,7 @@ if (interactive()) {
 
       output$subset <- renderTable(
         numbered = TRUE,
-        input$table
+        input$tbl
       )
     }
   )

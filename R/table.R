@@ -43,9 +43,7 @@
 #'           )
 #'         ),
 #'         col(
-#'           display4(
-#'             verbatimTextOutput("value")
-#'           )
+#'           verbatimTextOutput("value")
 #'         )
 #'       )
 #'     ),
@@ -55,7 +53,7 @@
 #'         iris[1:10, ]
 #'       )
 #'
-#'       output$value <- renderText({
+#'       output$value <- renderPrint({
 #'         input$table
 #'       })
 #'     }
@@ -156,7 +154,9 @@ renderTable <- function(expr, numbered = FALSE, env = parent.frame(),
         lapply(
           colnames(tbl),
           function(col) tags$th(
-            col, fontAwesome(class = "column-selector", "plus"),
+            class = "column-header",
+            col,
+            fontAwesome(class = "column-selector", "plus"),
             fontAwesome(class = "column-deselector", "minus")
           )
         )
@@ -166,11 +166,21 @@ renderTable <- function(expr, numbered = FALSE, env = parent.frame(),
     body <- tags$tbody(
       lapply(
         seq_len(NROW(tbl)),
-        function(i) {
+        function(row) {
           tags$tr(
-            if (numbered) tags$th(class = "row-selector", scope = "row", i),
+            if (numbered) tags$th(
+              class = "row-selector",
+              scope = "row",
+              row
+            ),
             lapply(
-              tbl[i, , drop = TRUE], tags$td
+              colnames(tbl),
+              function(col) {
+                tags$td(
+                  `data-col` = col,
+                  tbl[row, col, drop = FALSE]
+                )
+              }
             )
           )
         }
@@ -183,17 +193,16 @@ renderTable <- function(expr, numbered = FALSE, env = parent.frame(),
   }
 }
 
-# shiny::registerInputHandler(
-#   type = "dull.table",
-#   fun = function(x, session, name) {
-#     if (NROW(x) <= 1) {
-#       return(NULL)
-#     }
-#
-#     x <- do.call(rbind, x)
-#     colnames(x) <- x[1, ]
-#     x <- x[-1, ]
-#     as.data.frame(x)
-#   },
-#   force = TRUE
-# )
+shiny::registerInputHandler(
+  type = "dull.table.input",
+  fun = function(x, session, name) {
+    frame <- jsonlite::fromJSON(x)
+
+    if (NROW(frame) == 0 || NCOL(frame) == 0) {
+      return(NULL)
+    }
+
+    frame
+  },
+  force = TRUE
+)
