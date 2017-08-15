@@ -38,6 +38,37 @@
 #'       row(
 #'         col(
 #'           tableThruput(
+#'             id = "table",
+#'             context = "danger"
+#'           )
+#'         ),
+#'         col(
+#'           display4(
+#'             verbatimTextOutput("value")
+#'           )
+#'
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$table <- renderTable(
+#'         numbered = TRUE,
+#'         iris[1:10, ]
+#'       )
+#'
+#'       output$value <- renderText({
+#'         input$table
+#'       })
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           tableThruput(
 #'             id = "tbl",
 #'             hoverable = TRUE,
 #'             context = "warning",
@@ -72,7 +103,7 @@ tableThruput <- function(id, borders = FALSE, compact = FALSE, invert = FALSE,
                         responsive = TRUE, ...) {
   if (!re(context, "success|info|warning|danger")) {
     stop(
-      "invalid `tableOutput` argument, `context` must be one of ",
+      "invalid `tableThruput` argument, `context` must be one of ",
       '"success", "info", "warning", or "danger"',
       call. = FALSE
     )
@@ -150,17 +181,17 @@ renderTable <- function(expr, numbered = FALSE, env = parent.frame(),
   }
 }
 
-shiny::registerInputHandler(
-  type = "dull.table",
-  fun = function(x, session, name) {
-    if (NROW(x) <= 1) {
-      return(NULL)
-    }
-
-    x <- do.call(rbind, x)
-    colnames(x) <- x[1, ]
-    x <- x[-1, ]
-    as.data.frame(x)
-  },
-  force = TRUE
-)
+# shiny::registerInputHandler(
+#   type = "dull.table",
+#   fun = function(x, session, name) {
+#     if (NROW(x) <= 1) {
+#       return(NULL)
+#     }
+#
+#     x <- do.call(rbind, x)
+#     colnames(x) <- x[1, ]
+#     x <- x[-1, ]
+#     as.data.frame(x)
+#   },
+#   force = TRUE
+# )

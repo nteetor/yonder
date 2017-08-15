@@ -29,7 +29,6 @@ Collate:
     accordion.R
     alerts.R
     badge.R
-    breadcrumb.R
     button.R
     card.R
     checkbox.R

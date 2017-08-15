@@ -15,12 +15,3 @@ $.extend(tableOutputBinding, {
 });
 
 Shiny.outputBindings.register(tableOutputBinding, "dull.tableOutput");
-
-$(document).ready(function() {
-  $(".dull-table").delegate("tbody tr", "click", function(e) {
-    var $this = $(this);
-    var context = $this.parents(".dull-table").first().data("context");
-    $this.toggleClass("table-" + context);
-    $this.toggleClass("dull-row");
-  });
-});

@@ -10,8 +10,8 @@ $(document).on("shiny:connected", function() {
   $(".dull-submit[data-type=\"submit\"]").attr("type", "submit");
 });
 
-Shiny.addCustomMessageHandler("dull:updatecollapse", function(msg) {
-  var $el = $(msg.id);
+Shiny.addCustomMessageHandler("dull:collapse", function(msg) {
+  var $el = $("#" + msg.id);
 
   if ($el.length === 0 || !msg.action) {
     return false;

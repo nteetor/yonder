@@ -12,8 +12,8 @@ $(document).on("shiny:connected", function () {
   $(".dull-submit[data-type=\"submit\"]").attr("type", "submit");
 });
 
-Shiny.addCustomMessageHandler("dull:updatecollapse", function (msg) {
-  var $el = $(msg.id);
+Shiny.addCustomMessageHandler("dull:collapse", function (msg) {
+  var $el = $("#" + msg.id);
 
   if ($el.length === 0 || !msg.action) {
     return false;
@@ -676,25 +676,25 @@ $.extend(tableInputBinding, {
     return $(scope).find(".dull-table-thruput[id]");
   },
   getValue: function getValue(el) {
-    var arr = $(el).find("thead tr,.dull-row").get().map(function (row) {
-      return $(row).find("th:not([scope]),td").get().map(function (cell) {
-        return $(cell).html();
-      });
-    });
-
-    return arr.reduce(function (acc, obj, i) {
-      acc[i] = obj;
-      return acc;
-    }, {});
+    return $(el).find(".dull-selected-cell").get();
+    //    return $(el).find("thead tr, .dull-selected-cell").get().map(function(row) {
+    //      return $(row).find("th:not([scope]),td").get().map(function(cell) {
+    //        return $(cell).html();
+    //      });
+    //    })
+    //      .reduce(function(acc, obj, i) {
+    //        acc[i] = obj;
+    //        return acc;
+    //      }, {});
   },
-  getType: function getType(el) {
-    return "dull.table";
-  },
+  //  getType: function(el) {
+  //    return "dull.table";
+  //  },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function subscribe(el, callback) {
-    $(el).on("click.tableInputBinding", function (e) {
+    $(el).on("change.tableInputBinding", function (e) {
       callback();
     });
   },
@@ -704,6 +704,24 @@ $.extend(tableInputBinding, {
 });
 
 Shiny.inputBindings.register(tableInputBinding, "dull.tableInput");
+
+$(document).ready(function () {
+  $(".dull-table-thruput[id]").on("click", "td", function (e) {
+    var context = $(this).closest(".dull-table-thruput[id]").data("context");
+    $(this).toggleClass("dull-selected-cell").toggleClass("table-" + context).trigger("change");
+  });
+  $(".dull-table-thruput[id]").on("click", "tbody th", function (e) {
+    var context = $(this).closest(".dull-table-thruput[id]").data("context");
+    $(this).siblings("td").toggleClass("dull-selected-cell").toggleClass("table-" + context).trigger("change");
+  });
+  $(".dull-table-thruput[id]").on("click", "thead th", function () {
+    var $this = $(this);
+    var $table = $this.closest(".dull-table-thruput[id]");
+    var column = $this.index() + 1;
+    var context = $table.data("context");
+    $table.find("tbody tr :nth-child(" + column + ")").toggleClass("table-" + context).toggleClass("dull-selected-cell").trigger("change");
+  });
+});
 
 var textualInputBinding = new Shiny.InputBinding();
 
@@ -871,15 +889,6 @@ $.extend(tableOutputBinding, {
 });
 
 Shiny.outputBindings.register(tableOutputBinding, "dull.tableOutput");
-
-$(document).ready(function () {
-  $(".dull-table").delegate("tbody tr", "click", function (e) {
-    var $this = $(this);
-    var context = $this.parents(".dull-table").first().data("context");
-    $this.toggleClass("table-" + context);
-    $this.toggleClass("dull-row");
-  });
-});
 
 /**
  * WORK IN PROGRESS

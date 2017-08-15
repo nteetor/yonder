@@ -112,25 +112,28 @@ updateCollapse <- function(id, action, session) {
   }
 
   session$sendCustomMessage(
-    "dull:updatecollapse",
+    "dull:collapse",
     list(
-      id = paste0("#", id),
+      id = id,
       action = action
     )
   )
 }
 
 #' @rdname collapse
+#' @export
 showCollapse <- function(id, session = getDefaultReactiveDomain()) {
   updateCollapse(id, "show", session)
 }
 
 #' @rdname collapse
+#' @export
 hideCollapse <- function(id, session = getDefaultReactiveDomain()) {
   updateCollapse(id, "hide", session)
 }
 
 #' @rdname collapse
+#' @export
 toggleCollapse <- function(id, session = getDefaultReactiveDomain()) {
   updateCollapse(id, "toggle", session)
 }

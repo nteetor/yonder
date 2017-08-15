@@ -50,6 +50,37 @@ if (interactive()) {
       row(
         col(
           tableThruput(
+            id = "table",
+            context = "danger"
+          )
+        ),
+        col(
+          display4(
+            verbatimTextOutput("value")
+          )
+
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$table <- renderTable(
+        numbered = TRUE,
+        iris[1:10, ]
+      )
+
+      output$value <- renderText({
+        input$table
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          tableThruput(
             id = "tbl",
             hoverable = TRUE,
             context = "warning",
