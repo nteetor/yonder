@@ -1,14 +1,12 @@
-context("* bundle js files")
+context("* bundle css files")
 
-test_that("js files bundled", {
+test_that("css files bundled", {
   skip_on_cran()
 
   expect_silent(
     withr::with_dir(
-      file.path("..", "..", "JS"),
+      file.path("..", "..", "CSS"),
       system("gulp", intern = TRUE)
     )
   )
 })
-
-
