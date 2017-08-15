@@ -121,7 +121,8 @@ tableThruput <- function(id, borders = FALSE, compact = FALSE, invert = FALSE,
     ),
     `data-context` = context %||% "active",
     id = id,
-    ...
+    ...,
+    `font-awesome`()
   )
 }
 
@@ -144,8 +145,8 @@ renderTable <- function(expr, numbered = FALSE, env = parent.frame(),
 
     if (!is.data.frame(tbl)) {
       stop(
-        "invalid `renderTable` `expr` return value, expecting a data frame, ",
-        "but got ", class(tbl),
+        "invalid `renderTable` return value, `expr` returned " + class(tbl) +
+        ", expecting a data frame",
         call. = FALSE
       )
     }
@@ -154,7 +155,13 @@ renderTable <- function(expr, numbered = FALSE, env = parent.frame(),
       tags$thead(
         tags$tr(
           if (numbered) tags$th(scope = "col", "#"),
-          lapply(colnames(tbl), function(col) tags$th(col))
+          lapply(
+            colnames(tbl),
+            function(col) tags$th(
+              col, fontAwesome(class = "column-selector", "plus"),
+              fontAwesome(class = "column-deselector", "minus")
+            )
+          )
         )
       )
     )

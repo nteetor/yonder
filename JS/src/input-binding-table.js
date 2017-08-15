@@ -47,14 +47,24 @@ $(document).ready(function() {
       .toggleClass("table-" + context)
       .trigger("change");
   });
-  $(".dull-table-thruput[id]").on("click", "thead th", function() {
-    var $this = $(this);
+  $(".dull-table-thruput[id]").on("click", ".column-selector", function() {
+    var $this = $(this).closest("th");
     var $table = $this.closest(".dull-table-thruput[id]");
     var column = $this.index() + 1;
     var context = $table.data("context");
     $table.find("tbody tr :nth-child(" + column + ")")
-      .toggleClass("table-" + context)
-      .toggleClass("dull-selected-cell")
+      .addClass("table-" + context)
+      .addClass("dull-selected-cell")
+      .trigger("change");
+  });
+  $(".dull-table-thruput[id]").on("click", ".column-deselector", function() {
+    var $this = $(this).closest("th");
+    var $table = $this.closest(".dull-table-thruput[id]");
+    var column = $this.index() + 1;
+    var context = $table.data("context");
+    $table.find("tbody tr :nth-child(" + column + ")")
+      .removeClass("table-" + context)
+      .removeClass("dull-selected-cell")
       .trigger("change");
   });
 });
