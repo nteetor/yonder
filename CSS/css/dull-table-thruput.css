@@ -3,3 +3,6 @@
 
 .dull-table-thruput .column-deselector {
   cursor: pointer; }
+
+.dull-table-thruput .row-selector {
+  cursor: pointer; }

@@ -24,6 +24,7 @@ $.extend(tableInputBinding, {
   },
   subscribe: function(el, callback) {
     $(el).on("change.tableInputBinding", function(e) {
+      console.log("change?");
       callback();
     });
   },
@@ -35,17 +36,11 @@ $.extend(tableInputBinding, {
 Shiny.inputBindings.register(tableInputBinding, "dull.tableInput");
 
 $(document).ready(function() {
-  $(".dull-table-thruput[id]").on("click", "td", function(e) {
-    var context = $(this).closest(".dull-table-thruput[id]").data("context");
-    $(this).toggleClass("dull-selected-cell")
-      .toggleClass("table-" + context)
-      .trigger("change");
-  });
-  $(".dull-table-thruput[id]").on("click", "tbody th", function(e) {
+  $(".dull-table-thruput[id]").on("click", ".row-selector", function(e) {
     var context = $(this).closest(".dull-table-thruput[id]").data("context");
     $(this).siblings("td").toggleClass("dull-selected-cell")
-      .toggleClass("table-" + context)
-      .trigger("change");
+      .toggleClass("table-" + context);
+    $(this).trigger("change");
   });
   $(".dull-table-thruput[id]").on("click", ".column-selector", function() {
     var $this = $(this).closest("th");

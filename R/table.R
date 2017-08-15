@@ -46,7 +46,6 @@
 #'           display4(
 #'             verbatimTextOutput("value")
 #'           )
-#'
 #'         )
 #'       )
 #'     ),
@@ -151,34 +150,30 @@ renderTable <- function(expr, numbered = FALSE, env = parent.frame(),
       )
     }
 
-    headers <- as.character(
-      tags$thead(
-        tags$tr(
-          if (numbered) tags$th(scope = "col", "#"),
-          lapply(
-            colnames(tbl),
-            function(col) tags$th(
-              col, fontAwesome(class = "column-selector", "plus"),
-              fontAwesome(class = "column-deselector", "minus")
-            )
+    headers <- tags$thead(
+      tags$tr(
+        if (numbered) tags$th(scope = "col", "#"),
+        lapply(
+          colnames(tbl),
+          function(col) tags$th(
+            col, fontAwesome(class = "column-selector", "plus"),
+            fontAwesome(class = "column-deselector", "minus")
           )
         )
       )
     )
 
-    body <- as.character(
-      tags$tbody(
-        lapply(
-          seq_len(NROW(tbl)),
-          function(i) {
-            tags$tr(
-              if (numbered) tags$th(scope = "row", i),
-              lapply(
-                tbl[i, , drop = TRUE], tags$td
-              )
+    body <- tags$tbody(
+      lapply(
+        seq_len(NROW(tbl)),
+        function(i) {
+          tags$tr(
+            if (numbered) tags$th(class = "row-selector", scope = "row", i),
+            lapply(
+              tbl[i, , drop = TRUE], tags$td
             )
-          }
-        )
+          )
+        }
       )
     )
 

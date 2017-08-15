@@ -58,7 +58,6 @@ if (interactive()) {
           display4(
             verbatimTextOutput("value")
           )
-
         )
       )
     ),
@@ -103,7 +102,7 @@ if (interactive()) {
 
       output$subset <- renderTable(
         numbered = TRUE,
-        input$tbl
+        input$table
       )
     }
   )
