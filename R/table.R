@@ -127,68 +127,27 @@ tableThruput <- function(id, borders = FALSE, compact = FALSE, invert = FALSE,
 #' @export
 renderTable <- function(expr, numbered = FALSE, env = parent.frame(),
                         quoted = FALSE) {
-  tableFunc <- shiny::exprToFunction(expr, env, quoted)
+  dfFunc <- shiny::exprToFunction(expr, env, quoted)
 
   function() {
-    tbl <- tableFunc()
+    df <- dfFunc()
 
-    if (is.null(tbl)) {
+    if (is.null(df)) {
       return(
-        list(
-          content = NULL
-        )
+        list(data = NULL)
       )
     }
 
-    if (!is.data.frame(tbl)) {
+    if (!is.data.frame(df)) {
       stop(
-        "invalid `renderTable` return value, `expr` returned " + class(tbl) +
-        ", expecting a data frame",
+        "invalid `renderTable` return value, `expr` returned " + class(df) +
+        ", expecting data frame",
         call. = FALSE
       )
     }
 
-    headers <- tags$thead(
-      tags$tr(
-        if (numbered) tags$th(scope = "col", "#"),
-        lapply(
-          colnames(tbl),
-          function(col) tags$th(
-            class = "column-header",
-            col,
-            fontAwesome(class = "column-selector", "plus"),
-            fontAwesome(class = "column-deselector", "minus")
-          )
-        )
-      )
-    )
-
-    body <- tags$tbody(
-      lapply(
-        seq_len(NROW(tbl)),
-        function(row) {
-          tags$tr(
-            if (numbered) tags$th(
-              class = "row-selector",
-              scope = "row",
-              row
-            ),
-            lapply(
-              colnames(tbl),
-              function(col) {
-                tags$td(
-                  `data-col` = col,
-                  tbl[row, col, drop = FALSE]
-                )
-              }
-            )
-          )
-        }
-      )
-    )
-
-    list(
-      content = paste0(headers, body)
+    return(
+      list(data = jsonlite::toJSON(df))
     )
   }
 }

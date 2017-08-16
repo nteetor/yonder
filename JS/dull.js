@@ -1,5 +1,7 @@
 "use strict";
 
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
 $(function () {
   $("[data-toggle=\"tooltip\"]").tooltip();
 });
@@ -680,14 +682,13 @@ $.extend(tableInputBinding, {
   },
   getValue: function getValue(el) {
     var $el = $(el);
-    var value = $el.find(".row-selector").map(function (i, e) {
+    var value = $el.find(".data-row").map(function (i, e) {
       var obj = {};
-      $(e).siblings(".dull-selected-cell").each(function (j, f) {
+      $(e).find(".dull-selected-cell").each(function (j, f) {
         obj[$(f).data("col")] = $(f).text();
       });
       return obj;
     }).get();
-    console.log(value);
     return JSON.stringify(value);
   },
   getState: function getState(el, data) {
@@ -706,26 +707,39 @@ $.extend(tableInputBinding, {
 Shiny.inputBindings.register(tableInputBinding, "dull.tableInput");
 
 $(document).ready(function () {
-  $(".dull-table-thruput[id]").on("click", ".row-selector", function (e) {
+  $(".dull-table-thruput[id]").on("click", ".table-toggle", function (e) {
     var $this = $(this);
+    var $table = $this.closest(".dull-table-thruput[id]");
+
+    $table.find(".data-cell").addClass("dull-selected-cell table-" + $table.data("context"));
+    $this.trigger("change");
+  });
+  $(".dull-table-thruput[id]").on("click", ".row-selector", function (e) {
+    var $this = $(this).closest("td");
     var context = $this.closest(".dull-table-thruput[id]").data("context");
-    $this.siblings("td").toggleClass("dull-selected-cell").toggleClass("table-" + context);
+    $this.siblings(".data-cell").addClass("dull-selected-cell").addClass("table-" + context);
+    $this.trigger("change");
+  });
+  $(".dull-table-thruput[id]").on("click", ".row-deselector", function (e) {
+    var $this = $(this).closest("td");
+    var context = $this.closest(".dull-table-thruput[id]").data("context");
+    $this.siblings(".data-cell").removeClass("dull-selected-cell").removeClass("table-" + context);
     $this.trigger("change");
   });
   $(".dull-table-thruput[id]").on("click", ".column-selector", function () {
-    var $this = $(this).closest("th");
+    var $this = $(this).closest("td");
     var $table = $this.closest(".dull-table-thruput[id]");
     var column = $this.index() + 1;
     var context = $table.data("context");
-    $table.find("tbody tr :nth-child(" + column + ")").addClass("table-" + context).addClass("dull-selected-cell");
+    $table.find(".data-cell:nth-child(" + column + ")").addClass("table-" + context).addClass("dull-selected-cell");
     $this.trigger("change");
   });
   $(".dull-table-thruput[id]").on("click", ".column-deselector", function () {
-    var $this = $(this).closest("th");
+    var $this = $(this).closest("td");
     var $table = $this.closest(".dull-table-thruput[id]");
     var column = $this.index() + 1;
     var context = $table.data("context");
-    $table.find("tbody tr :nth-child(" + column + ")").removeClass("table-" + context).removeClass("dull-selected-cell");
+    $table.find(".data-cell:nth-child(" + column + ")").removeClass("table-" + context).removeClass("dull-selected-cell");
     $this.trigger("change");
   });
 });
@@ -889,8 +903,28 @@ $.extend(tableOutputBinding, {
     return el.id;
   },
   renderValue: function renderValue(el, data) {
-    if (data.content) {
-      $(el).html(data.content);
+    var $el = $(el);
+
+    if (data.data) {
+      $el.empty();
+
+      $el.append($("<thead>").append($("<tr>").append($("<th>").text("#"), $.map(Object.keys(data.data[1]), function (header, i) {
+        return $("<th>").text(header);
+      }))), $("<tbody>").append($.map(data.data, function (row, i) {
+        return $("<tr>").addClass("data-row").append($("<th>").text(i + 1).attr("scope", "row").addClass("util-cell"), $.map(Object.entries(row), function (_ref, i) {
+          var _ref2 = _slicedToArray(_ref, 2),
+              key = _ref2[0],
+              value = _ref2[1];
+
+          return $("<td>").addClass("data-cell").text(value).data("col", key);
+        }), $("<td>").addClass("selector-cell").append($("<i>").addClass("px-1 fa fa-plus row-selector"), $("<i>").addClass("px-1 fa fa-minus row-deselector")));
+      }), $("<tr>").addClass("selector-row").append($("<th>"), $.map(data.data[1], function () {
+        return $("<td>").addClass("selector-cell").append($("<i>").addClass("px-1 fa fa-plus column-selector"), $("<i>").addClass("px-1 fa fa-minus column-deselector"));
+      }), $("<td>")
+      //            .addClass("centered").append(
+      //              $("<i>").addClass("fa fa-table table-toggle").data("on", true)
+      //            )
+      )));
     }
   }
 });
