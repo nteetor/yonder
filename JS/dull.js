@@ -24,6 +24,23 @@ Shiny.addCustomMessageHandler("dull:collapse", function (msg) {
   $el.collapse(msg.action);
 });
 
+Shiny.addCustomMessageHandler("dull:alert", function (msg) {
+  console.log(msg.id);
+  var ids = msg.id.map(function (v) {
+    return "#" + v;
+  }).join(",");
+
+  $("<div>").addClass("alert alert-dismissible alert-" + msg.context + " fade show").html(msg.content).append($("<button>", {
+    "type": "button",
+    "class": "close",
+    "data-dismiss": "alert",
+    "aria-label": "Close"
+  }).append($("<span>", {
+    "class": "fa fa-times-rectangle",
+    "aria-hidden": true
+  }))).insertBefore($(ids));
+});
+
 (function () {
   this.getType = function (el) {
     if ($(el).parents(".dull-form-input[id]").length) {
@@ -772,37 +789,35 @@ $.extend(textualInputBinding, {
 
 Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");
 
-Shiny.addCustomMessageHandler("dull.modal.toggle", function (msg) {
-  var $modal = $(msg.id);
+Shiny.addCustomMessageHandler("dull:modal", function (msg) {
+  var modal = $("<div>", {
+    "class": "modal fade",
+    "tabindex": -1,
+    "role": "dialog"
+  }).append($("<div>", {
+    "class": "modal-dialog",
+    "role": "document"
+  }).append($("<div>", {
+    "class": "modal-content"
+  }).append($("<div>", {
+    "class": "modal-header"
+  }).append($("<h5>", { "class": "modal-title" }).html(msg.title), $("<button>", {
+    "type": "button",
+    "class": "close",
+    "data-dismiss": "modal",
+    "aria-label": "Close"
+  }).append($("span", {
+    "class": "fa fa-times-rectangle"
+  }))), $("<div>", { "class": "modal-body" }).html(msg.body))));
 
-  if ($modal.length === 0) {
-    return false;
+  if (msg.footer) {
+    modal.find(".modal-content").append($("<div>", {
+      "class": "modal-footer"
+    }).html(msg.footer));
   }
 
-  $modal.modal("toggle");
+  modal.modal("toggle");
 });
-
-var alertOutputBinding = new Shiny.OutputBinding();
-
-$.extend(alertOutputBinding, {
-  find: function find(scope) {
-    return $(scope).find(".dull-alert[id]");
-  },
-  getId: function getId(el) {
-    return el.id;
-  },
-  renderValue: function renderValue(el, data) {
-    var $el = $(el);
-
-    if (data.show) {
-      $el.removeClass("invisible").show();
-    } else if (data.show !== null) {
-      $el.hide();
-    }
-  }
-});
-
-Shiny.outputBindings.register(alertOutputBinding, "dull.alertOutput");
 
 var badgeOutputBinding = new Shiny.OutputBinding();
 
@@ -891,7 +906,7 @@ $.extend(tableOutputBinding, {
       $el.empty();
 
       $el.append($("<thead>").append($("<tr>").append($("<th>").text("#"), $.map(data.columns, function (col, i) {
-        return $("<th>").text(col);
+        return $("<th>").addClass("thead-default").text(col);
       }))), $("<tbody>").append($.map(data.data, function (row, i) {
         return $("<tr>").append($("<th>").text(i + 1).attr("scope", "row"), $.map(Object.entries(row), function (_ref, i) {
           var _ref2 = _slicedToArray(_ref, 2),

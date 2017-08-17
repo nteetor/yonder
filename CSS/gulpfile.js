@@ -3,7 +3,7 @@ var gulp = require("gulp");
 
 /* PACKAGES */
 var css = require("gulp-clean-css"),
-    clean = require("gulp-clean"),
+    del = require("del"),
     sass = require("gulp-sass"),
     concat = require("gulp-concat");
 
@@ -15,8 +15,7 @@ var scssFiles = "scss/*.scss",
 
 /* TASKS */
 gulp.task("clean", function() {
-  return gulp.src(cssFiles, {read: false})
-    .pipe(clean());
+  return del.sync([cssFiles]);
 });
   
 gulp.task("sass", function() {
