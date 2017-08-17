@@ -2,14 +2,14 @@
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
-re <- function(string, pattern, match = TRUE, len0 = TRUE) {
+re <- function(string, pattern, len0 = TRUE) {
   if (length(string) == 0 && len0) {
     # because grepl("", <regex>) returns TRUE, extend this to
     # handle character(0) or NULL
     return(TRUE)
   }
 
-  grepl(pattern, if (match) paste0("^", string, "$") else string)
+  grepl(pattern, paste0("^", string, "$"))
 }
 
 ID <- function(x) {
