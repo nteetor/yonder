@@ -1,39 +1,45 @@
 #' Stream notifications
 #'
-#' These functionalities allow an application to convey text progress updates
-#' to the user during long running processes.
+#' The stream output is used to send updates to the user during long-running
+#' processes. Unlike conventional reactive outputs, the stream output does not
+#' have a render function instead messages are sent with `sendStreamMessage`.
 #'
 #' @param id A character string specifying the id of the stream output.
 #'
 #' @param message A character string specifying an update message.
 #'
-#' @param template A call `listGroupItem` which is used as a template for the
-#'   message sent, any body element(s) or text of the item are replaced by
-#'   `message`, defaults to `listGroupItem()`.
+#' @param context One of `"secondary"`, `"success"`, `"info"`, `"warning"`, or
+#'   `"danger"` specifying the visual context of the button input, defaults to
+#'   `"secondary"`.
 #'
-#' @param session The shiny session, defaults to the default reactive domain.
+#' @param session A `session` object passed to the shiny server function,
+#'   defaults to [`getDefaultReactiveDomain()`].
 #'
 #' @export
 #' @examples
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       buttonInput(id = "trigger", "Go!"),
-#'       tags$div(
-#'         id = "myStream"
+#'       row(
+#'         col(
+#'           buttonInput(id = "trigger", "Go!")
+#'         ),
+#'         col(
+#'           streamOutput(
+#'             id = "stream"
+#'           )
+#'         )
 #'       )
 #'     ),
 #'     server = function(input, output, session) {
 #'       observeEvent(input$trigger, {
 #'         for (i in seq_len(5)) {
 #'           updateStream(
-#'             id = "myStream",
+#'             id = "stream",
 #'             message = paste("Update:", i),
-#'             template = listGroupItem(
-#'               context = if (i %% 2) "warning" else "info"
-#'             )
+#'             context = if (i %% 2) "warning" else "info"
 #'           )
-#'           Sys.sleep(1);
+#'           Sys.sleep(1)
 #'         }
 #'       })
 #'     }
@@ -53,12 +59,19 @@ streamOutput <- function(id, ...) {
 
 #' @rdname streamOutput
 #' @export
-updateStream <- function(id, message, template = listGroupItem(),
-                         session = getDefaultReactiveDomain()) {
-  if (!tagHasClass(template, "list-group-item")) {
-    warning(
-      "unconventional `updateStream` argument value, `template` usually is a ",
-      "call to `listGroupItem`",
+sendStreamMessage <- function(id, message, context = NULL,
+                              session = getDefaultReactiveDomain()) {
+  if (!is.character(id)) {
+    stop(
+      "invalid `sendStreamMessage` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
+  if (!re(context, "secondary|success|info|warning|danger|link|primary", len0 = FALSE)) {
+    stop(
+      "invalid `sendStreamMessage` argument, `context` must be one of ",
+      '"secondary", "success", "info", "warning", or "danger"',
       call. = FALSE
     )
   }
@@ -67,8 +80,8 @@ updateStream <- function(id, message, template = listGroupItem(),
     "dull",
     list(
       id = paste0("#", id),
-      content = message,
-      template = HTML(as.character(template %||% listGroupItem()))
+      message = message,
+      context = context
     )
   )
 }

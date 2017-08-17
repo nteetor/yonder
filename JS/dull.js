@@ -869,9 +869,7 @@ Shiny.outputBindings.register(barOutputBinding, "dull.barOutput");
 
 $.extend(Shiny.progressHandlers, {
   dull: function dull(data) {
-    console.log(data.template);
-
-    $(data.template).text(data.content).hide().appendTo($(data.id)).fadeIn(300);
+    $("<li>").addClass("list-group-item").addClass(data.context ? "list-group-item-" + data.context : "").text(data.message).hide().appendTo($(data.id)).fadeIn(300);
 
     return false;
   }

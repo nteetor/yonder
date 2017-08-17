@@ -2,12 +2,12 @@
 % Please edit documentation in R/stream.R
 \name{streamOutput}
 \alias{streamOutput}
-\alias{updateStream}
+\alias{sendStreamMessage}
 \title{Stream notifications}
 \usage{
 streamOutput(id, ...)
 
-updateStream(id, message, template = listGroupItem(),
+sendStreamMessage(id, message, context = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
@@ -15,36 +15,42 @@ updateStream(id, message, template = listGroupItem(),
 
 \item{message}{A character string specifying an update message.}
 
-\item{template}{A call \code{listGroupItem} which is used as a template for the
-message sent, any body element(s) or text of the item are replaced by
-\code{message}, defaults to \code{listGroupItem()}.}
+\item{context}{One of \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, or
+\code{"danger"} specifying the visual context of the button input, defaults to
+\code{"secondary"}.}
 
-\item{session}{The shiny session, defaults to the default reactive domain.}
+\item{session}{A \code{session} object passed to the shiny server function,
+defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-These functionalities allow an application to convey text progress updates
-to the user during long running processes.
+The stream output is used to send updates to the user during long-running
+processes. Unlike conventional reactive outputs, the stream output does not
+have a render function instead messages are sent with \code{sendStreamMessage}.
 }
 \examples{
 if (interactive()) {
   shinyApp(
     ui = container(
-      buttonInput(id = "trigger", "Go!"),
-      tags$div(
-        id = "myStream"
+      row(
+        col(
+          buttonInput(id = "trigger", "Go!")
+        ),
+        col(
+          streamOutput(
+            id = "stream"
+          )
+        )
       )
     ),
     server = function(input, output, session) {
       observeEvent(input$trigger, {
         for (i in seq_len(5)) {
           updateStream(
-            id = "myStream",
+            id = "stream",
             message = paste("Update:", i),
-            template = listGroupItem(
-              context = if (i \%\% 2) "warning" else "info"
-            )
+            context = if (i \%\% 2) "warning" else "info"
           )
-          Sys.sleep(1);
+          Sys.sleep(1)
         }
       })
     }
