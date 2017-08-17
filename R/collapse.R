@@ -1,31 +1,26 @@
 #' Collapsible sections
 #'
 #' `collapse` allows content to be hidden and toggled into a shown state.
-#' The collapsed content is toggled by a button. A collapsed section may be
-#' toggled between hidden and shown using `toggleCollapse`, shown with
-#' `showCollapse`, and hidden with `hideCollapse`.
+#' The collapsed content is toggled by a button or may be toggled between hidden
+#' and shown states using `toggleCollapse`. `showCollapse` and `hideCollapse`
+#' are alternatives to `toggleCollapse` to change the state of collapsed content
+#' to shown or hidden, respectively.
 #'
-#' @param ... Any number of tag elements to include in the collapsible section
-#'   or additional named arguments passed as attributes to the parent element.
+#' @param id A character string specifying the id of the collapse.
 #'
-#' @param label A character string specifying the label of the collapse, passed
-#'   to [button], defaults to `NULL`.
+#' @param label A character string specifying the label of the collapse toggle.
 #'
-#' @param context A character string specifying the visual context of the
-#'   toggle button, passed to [button], defaults to `"secondary"`.
+#' @param context One of `"secondary"`, `"success"`, `"info"`, `"warning"`, or
+#'   `"danger"` specifying the visual context of the collapse toggle, defaults
+#'   to `"secondary"`.
+#'
+#' @param ... Additional named arguments passed as attributes to the parent
+#'   element.
 #'
 #' @param id A character string specifying the id of a collapse section.
 #'
 #' @param session A `session` object passed to the shiny server function,
-#'   defaults to [shiny::getDefaultReactiveDomain()].
-#'
-#' @details
-#'
-#' The `showCollapse`, `hideCollapse`, and `toggleCollapse` functions can be
-#' used very similarly to the `update*` functions found in shiny. Because
-#' collapse is not a reactive input a single `updateCollapse` function is not
-#' included with dull nor did it make sense to create a `renderCollapse`
-#' function as a collapse is not a reactive output.
+#'   defaults to [`getDefaultReactiveDomain()`].
 #'
 #' @export
 #' @examples
@@ -49,9 +44,9 @@
 #'           )
 #'         ),
 #'         col(
-#'           buttonInput(id = "toggle", "Toggle collapse"),
-#'           buttonInput(id = "hide", "Only hide", context = "warning"),
-#'           buttonInput(id = "show", "Only show", context = "info")
+#'           buttonInput(id = "toggle", "Toggle"),
+#'           buttonInput(id = "hide", "Hide"),
+#'           buttonInput(id = "show", "Show")
 #'         )
 #'       )
 #'     ),
@@ -71,52 +66,26 @@
 #'   )
 #' }
 #'
-collapse <- function(..., label = NULL, context = "secondary") {
-  args <- list(...)
-  content <- elements(args)
-  attrs <- attribs(args)
-
-  id <- attrs$id %||% ID("collapse")
-  attrs$id <- NULL
-
-  tagConcatAttributes(
-    tags$div(
-      `aria-expanded` = "false",
-      tags$p(
-        button(
-          label = label,
-          context = context,
-          `data-toggle` = "collapse",
-          `data-target` = paste0("#", id),
-          `aria-controls` = id
-        )
-      ),
-      tags$div(
-        class = "collapse",
-        id = id,
-        content
-      ),
-      bootstrap()
+collapse <- function(id, label, content, context = "secondary", ...) {
+  tags$div(
+    `aria-expanded` = "false",
+    tags$p(
+      buttonInput(
+        id = NULL,
+        label = label,
+        context = context,
+        `data-toggle` = "collapse",
+        `data-target` = paste0("#", id),
+        `aria-controls` = id
+      )
     ),
-    attrs
-  )
-}
-
-updateCollapse <- function(id, action, session) {
-  if (!re(action, "show|hide|toggle", len0 = FALSE)) {
-    stop(
-      'invalid `updateCollapse` argument, `action` must be one "show", ',
-      '"hide", or "toggle"',
-      call. = FALSE
-    )
-  }
-
-  session$sendCustomMessage(
-    "dull:collapse",
-    list(
+    tags$div(
+      class = "collapse",
       id = id,
-      action = action
-    )
+      content
+    ),
+    ...,
+    bootstrap()
   )
 }
 
@@ -136,4 +105,23 @@ hideCollapse <- function(id, session = getDefaultReactiveDomain()) {
 #' @export
 toggleCollapse <- function(id, session = getDefaultReactiveDomain()) {
   updateCollapse(id, "toggle", session)
+}
+
+# internal
+updateCollapse <- function(id, action, session) {
+  if (!re(action, "show|hide|toggle", len0 = FALSE)) {
+    stop(
+      'invalid `updateCollapse` argument, `action` must be one "show", ',
+      '"hide", or "toggle"',
+      call. = FALSE
+    )
+  }
+
+  session$sendCustomMessage(
+    "dull:collapse",
+    list(
+      id = id,
+      action = action
+    )
+  )
 }
