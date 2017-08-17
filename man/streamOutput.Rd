@@ -2,49 +2,57 @@
 % Please edit documentation in R/stream.R
 \name{streamOutput}
 \alias{streamOutput}
-\alias{updateStream}
+\alias{sendStreamMessage}
 \title{Stream notifications}
 \usage{
 streamOutput(id, ...)
 
-updateStream(id, message, template = listGroupItem(),
+sendStreamMessage(id, message, context = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the stream output.}
 
-\item{message}{A character string specifying an update message.}
+\item{message}{A character string specifying the message text.}
 
-\item{template}{A call \code{listGroupItem} which is used as a template for the
-message sent, any body element(s) or text of the item are replaced by
-\code{message}, defaults to \code{listGroupItem()}.}
+\item{context}{One of \code{"success"}, \code{"info"}, \code{"warning"}, or \code{"danger"}
+specifying the visual context of the message, defaults to NULL, in which
+case no visual context is applied.}
 
-\item{session}{The shiny session, defaults to the default reactive domain.}
+\item{session}{A \code{session} object passed to the shiny server function,
+defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-These functionalities allow an application to convey text progress updates
-to the user during long running processes.
+The stream output is used to send updates to the user during long-running
+processes. Unlike conventional reactive outputs, the stream output does not
+have a render function instead messages are sent with \code{sendStreamMessage}.
+This allows message to "render" during long-running observers or other
+processes.
 }
 \examples{
 if (interactive()) {
   shinyApp(
     ui = container(
-      buttonInput(id = "trigger", "Go!"),
-      tags$div(
-        id = "myStream"
+      row(
+        col(
+          buttonInput(id = "trigger", "Go!")
+        ),
+        col(
+          streamOutput(
+            id = "stream"
+          )
+        )
       )
     ),
     server = function(input, output, session) {
       observeEvent(input$trigger, {
         for (i in seq_len(5)) {
-          updateStream(
-            id = "myStream",
+          sendStreamMessage(
+            id = "stream",
             message = paste("Update:", i),
-            template = listGroupItem(
-              context = if (i \%\% 2) "warning" else "info"
-            )
+            context = if (i \%\% 2) "warning" else "info"
           )
-          Sys.sleep(1);
+          Sys.sleep(1)
         }
       })
     }
