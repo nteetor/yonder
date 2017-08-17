@@ -32,8 +32,8 @@ defaults to \code{FALSE}.}
 the context of selected table rows, defaults to \code{NULL}, in which case
 selected rows are highlighted in grey.}
 
-\item{session}{A shiny server session object, defaults to
-\code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
+\item{session}{A \code{session} object passed to the shiny server function,
+defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 Render a table. Thruputs are a new reactive object.
