@@ -10,46 +10,27 @@ $.extend(tableOutputBinding, {
   renderValue: function(el, data) {
     var $el = $(el);
 
-    if (data.data) {
+    if (data.data && data.columns) {
       $el.empty();
 
       $el.append(
         $("<thead>").append(
           $("<tr>").append(
             $("<th>").text("#"),
-            $.map(Object.keys(data.data[1]), (header, i) => {
-              return $("<th>").text(header);
+            $.map(data.columns, (col, i) => {
+              return $("<th>").text(col);
             })
           )
         ),
         $("<tbody>").append(
           $.map(data.data, (row, i) => {
-            return $("<tr>").addClass("data-row").append(
-              $("<th>").text(i + 1).attr("scope", "row").addClass("util-cell"),
+            return $("<tr>").append(
+              $("<th>").text(i + 1).attr("scope", "row"),
               $.map(Object.entries(row), ([key, value], i) => {
-                return $("<td>").addClass("data-cell").text(value)
-                  .data("col", key);
-              }),
-              $("<td>").addClass("selector-cell").append(
-                $("<i>").addClass("px-1 fa fa-plus row-selector"),
-                $("<i>").addClass("px-1 fa fa-minus row-deselector")
-              )
+                return $("<td>").text(value).data("col", key);
+              })
             );
-          }),
-          $("<tr>").addClass("selector-row").append(
-            $("<th>"),
-            $.map(data.data[1], () => {
-               return $("<td>").addClass("selector-cell")
-                 .append(
-                   $("<i>").addClass("px-1 fa fa-plus column-selector"),
-                   $("<i>").addClass("px-1 fa fa-minus column-deselector")
-                 );
-            }),
-            $("<td>")
-//            .addClass("centered").append(
-//              $("<i>").addClass("fa fa-table table-toggle").data("on", true)
-//            )
-          )
+          })
         )
       );
     }

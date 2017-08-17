@@ -1,31 +1,28 @@
-#' Table output
+#' Table thruput
 #'
-#' Render a table.
+#' Render a table. Thruputs are a new reactive object.
 #'
-#' @param id A character string specifying the id of the table output.
+#' @param id A character string specifying the id of the table thruput.
 #'
-#' @param borders If `TRUE`, the table renders with borders, defaults to
+#' @param borders If `TRUE`, the table renders with cell borders, defaults to
 #'   `FALSE`.
 #'
 #' @param compact If `TRUE`, table cell padding is cut in half to reduce the
 #'   size of the table, defaults to `FALSE`.
 #'
-#' @param invert If `TRUE`, the table renders with a dark background, light
-#'   text, and any borders are light, defaults to `FALSE`.
-#'
-#' @param striped If `TRUE`, the table renders with a striped pattern, defaults
-#'   to `FALSE`.
-#'
-#' @param hoverable If `TRUE`, each table row has a hover state, defaults to
-#'   `FALSE`.
-#'
 #' @param context One `"success"`, `"info"`, `"warning"`, `"danger"`, specifying
 #'   the context of selected table rows, defaults to `NULL`, in which case
 #'   selected rows are highlighted in grey.
 #'
-#' @param responsive If `TRUE`, the table will scroll horizontally on small
-#'   viewports, viewports under 768 pixels, defaults to `TRUE`. There is no
-#'   effect when the viewport height is greater than 768 pixels.
+#' @param expr An expression which returns a data frame or `NULL`. If data frame
+#'   the table thruput is re-rendered, otherwise if `NULL` the current table
+#'   thruput is left as is.
+#'
+#' @param quoted If `TRUE`, then `expr` is treated as a quoted expression,
+#'   defaults to `FALSE`.
+#'
+#' @param session A shiny server session object, defaults to
+#'   [`getDefaultReactiveDomain()`].
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
@@ -48,10 +45,9 @@
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$table <- renderTable(
-#'         numbered = TRUE,
+#'       output$table <- renderTable({
 #'         iris[1:10, ]
-#'       )
+#'       })
 #'
 #'       output$value <- renderPrint({
 #'         input$table
@@ -67,8 +63,6 @@
 #'         col(
 #'           tableThruput(
 #'             id = "tbl",
-#'             hoverable = TRUE,
-#'             context = "warning",
 #'             borders = TRUE
 #'           )
 #'         ),
@@ -81,73 +75,73 @@
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$tbl <- renderTable(
-#'         numbered = TRUE,
+#'       output$tbl <- renderTable({
 #'         iris[1:10, ]
-#'       )
+#'       })
 #'
-#'       output$subset <- renderTable(
-#'         numbered = TRUE,
+#'       output$subset <- renderTable({
 #'         input$tbl
-#'       )
+#'       })
 #'     }
 #'   )
 #' }
 #'
 #'
-tableThruput <- function(id, borders = FALSE, compact = FALSE, invert = FALSE,
-                        striped = FALSE, hoverable = FALSE, context = NULL,
-                        responsive = TRUE, ...) {
-  if (!re(context, "success|info|warning|danger")) {
+tableThruput <- function(id, borders = FALSE, compact = FALSE, ...) {
+  # if (!re(context, "success|info|warning|danger")) {
+  #   stop(
+  #     "invalid `tableThruput` argument, `context` must be one of ",
+  #     '"success", "info", "warning", or "danger"',
+  #     call. = FALSE
+  #   )
+  # }
+  if (!is.null(id) || !is.character(id)) {
     stop(
-      "invalid `tableThruput` argument, `context` must be one of ",
-      '"success", "info", "warning", or "danger"',
+      "invalid `tableThruput` argument, `id` must be a character string or ",
+      "NULL",
       call. = FALSE
     )
   }
+
   tags$table(
     class = collate(
       "dull-table-thruput",
       "table",
-      if (invert) "table-invert",
-      if (striped) "table-striped",
+      if (is.character(id)) "table-hover",
+      "table-responsive",
       if (borders) "table-bordered",
-      if (hoverable) "table-hover",
-      if (compact) "table-sm",
-      if (responsive) "table-responsive"
+      if (compact) "table-sm"
     ),
-    `data-context` = context %||% "active",
     id = id,
-    ...,
-    `font-awesome`()
+    ...
   )
 }
 
 #' @rdname tableThruput
 #' @export
-renderTable <- function(expr, numbered = FALSE, env = parent.frame(),
-                        quoted = FALSE) {
+renderTable <- function(expr, env = parent.frame(), quoted = FALSE) {
   dfFunc <- shiny::exprToFunction(expr, env, quoted)
 
   function() {
     df <- dfFunc()
 
     if (is.null(df)) {
-      return(
-        list(data = NULL)
-      )
+      return(list())
     }
 
     if (!is.data.frame(df)) {
       stop(
-        "invalid `renderTable` return value, `expr` returned " + class(df) +
+        "invalid `renderTable` value, `expr` returned " + class(df) +
         ", expecting data frame",
         call. = FALSE
       )
     }
 
     return(
-      list(data = jsonlite::toJSON(df))
+      list(
+        columns = colnames(df) %||% rep("", NCOL(df)),
+        data = jsonlite::toJSON(df)
+      )
     )
   }
 }

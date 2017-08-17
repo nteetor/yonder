@@ -1,39 +1,7 @@
 .dull-table-thruput {
-  thead {
-    th {
-      white-space: nowrap;
-    }
-
-    .table-toggle {
+  tbody {
+    tr {
       cursor: pointer;
     }
-  }
-
-  tbody {
-    td:last-child {
-      white-space: nowrap;
-    }
-  }
-
-  .centered {
-    text-align: center;
-  }
-
-  .column-selector {
-    cursor: pointer;
-  }
-
-  .column-deselector {
-    cursor: pointer;
-  }
-
-  .row-selector {
-    cursor: pointer;
-    font-size: 0.85em;
-  }
-
-  .row-deselector {
-    cursor: pointer;
-    font-size: 0.85em;
   }
 }

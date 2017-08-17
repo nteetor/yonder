@@ -1,25 +1,2 @@
-.dull-table-thruput thead th {
-  white-space: nowrap; }
-
-.dull-table-thruput thead .table-toggle {
+.dull-table-thruput tbody tr {
   cursor: pointer; }
-
-.dull-table-thruput tbody td:last-child {
-  white-space: nowrap; }
-
-.dull-table-thruput .centered {
-  text-align: center; }
-
-.dull-table-thruput .column-selector {
-  cursor: pointer; }
-
-.dull-table-thruput .column-deselector {
-  cursor: pointer; }
-
-.dull-table-thruput .row-selector {
-  cursor: pointer;
-  font-size: 0.85em; }
-
-.dull-table-thruput .row-deselector {
-  cursor: pointer;
-  font-size: 0.85em; }

@@ -3,45 +3,40 @@
 \name{tableThruput}
 \alias{tableThruput}
 \alias{renderTable}
-\title{Table output}
+\title{Table thruput}
 \usage{
-tableThruput(id, borders = FALSE, compact = FALSE, invert = FALSE,
-  striped = FALSE, hoverable = FALSE, context = NULL, responsive = TRUE,
-  ...)
+tableThruput(id, borders = FALSE, compact = FALSE, ...)
 
-renderTable(expr, numbered = FALSE, env = parent.frame(), quoted = FALSE)
+renderTable(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying the id of the table output.}
+\item{id}{A character string specifying the id of the table thruput.}
 
-\item{borders}{If \code{TRUE}, the table renders with borders, defaults to
+\item{borders}{If \code{TRUE}, the table renders with cell borders, defaults to
 \code{FALSE}.}
 
 \item{compact}{If \code{TRUE}, table cell padding is cut in half to reduce the
 size of the table, defaults to \code{FALSE}.}
 
-\item{invert}{If \code{TRUE}, the table renders with a dark background, light
-text, and any borders are light, defaults to \code{FALSE}.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
-\item{striped}{If \code{TRUE}, the table renders with a striped pattern, defaults
-to \code{FALSE}.}
+\item{expr}{An expression which returns a data frame or \code{NULL}. If data frame
+the table thruput is re-rendered, otherwise if \code{NULL} the current table
+thruput is left as is.}
 
-\item{hoverable}{If \code{TRUE}, each table row has a hover state, defaults to
-\code{FALSE}.}
+\item{quoted}{If \code{TRUE}, then \code{expr} is treated as a quoted expression,
+defaults to \code{FALSE}.}
 
 \item{context}{One \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, specifying
 the context of selected table rows, defaults to \code{NULL}, in which case
 selected rows are highlighted in grey.}
 
-\item{responsive}{If \code{TRUE}, the table will scroll horizontally on small
-viewports, viewports under 768 pixels, defaults to \code{TRUE}. There is no
-effect when the viewport height is greater than 768 pixels.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
+\item{session}{A shiny server session object, defaults to
+\code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-Render a table.
+Render a table. Thruputs are a new reactive object.
 }
 \examples{
 if (interactive()) {
@@ -60,10 +55,9 @@ if (interactive()) {
       )
     ),
     server = function(input, output) {
-      output$table <- renderTable(
-        numbered = TRUE,
+      output$table <- renderTable({
         iris[1:10, ]
-      )
+      })
 
       output$value <- renderPrint({
         input$table
@@ -79,8 +73,6 @@ if (interactive()) {
         col(
           tableThruput(
             id = "tbl",
-            hoverable = TRUE,
-            context = "warning",
             borders = TRUE
           )
         ),
@@ -93,15 +85,13 @@ if (interactive()) {
       )
     ),
     server = function(input, output) {
-      output$tbl <- renderTable(
-        numbered = TRUE,
+      output$tbl <- renderTable({
         iris[1:10, ]
-      )
+      })
 
-      output$subset <- renderTable(
-        numbered = TRUE,
+      output$subset <- renderTable({
         input$tbl
-      )
+      })
     }
   )
 }
