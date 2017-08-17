@@ -26,9 +26,7 @@ resetButtonInput(id, session = getDefaultReactiveDomain())
 submit(label = "Submit", outline = FALSE, block = FALSE, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the button input, the
-reactive value of the button input is available to the shiny server
-function as part of the \code{input} object.}
+\item{id}{A character string specifying the id of the button input.}
 
 \item{label}{A character string specifying a label for the button input.}
 
@@ -43,13 +41,15 @@ border of the button instead of the background, defaults to \code{FALSE}.}
 to \code{FALSE}. A block-level element will occupy the entire width of its
 parent element, thereby creating a "block."}
 
-\item{...}{Named arguments passed as HTML attributes to the parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
 \item{disabled}{If \code{TRUE}, the button renders in a disabled state, defaults
 to \code{FALSE}.}
 }
 \description{
-Button inputs and submit buttons.
+Button inputs and submit buttons. A submit button generated with \code{submit}
+will not freeze reactive inputs unlike shiny's \code{submitButton}.
 }
 \examples{
 if (interactive()) {

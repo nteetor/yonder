@@ -7,29 +7,26 @@
 \usage{
 accordion(...)
 
-accordionPanel(header, body = NULL, collapsed = TRUE, ...)
+accordionPanel(label, ..., collapsed = TRUE)
 }
 \arguments{
-\item{...}{Any number of \code{accordionPanel}s or named arguments passed as HTML
-attributes to the parent element.}
+\item{...}{For \strong{accordion}, any number of \code{accordionPanel}s or named
+arguments passed as HTML attributes to the parent element.
 
-\item{header}{A character string specifying the header of an accordion panel.}
+For \strong{accordionPanel}, any number of elements to include in the panel or
+named arguments passed as HTML attributes to the parent element.}
 
-\item{body}{A character string or tag element(s) specifying the body content
-of the panel, defaults to \code{NULL}.}
+\item{label}{A character string specifying the accordion panel's header.}
 
 \item{collapsed}{If \code{TRUE}, the accordion panel renders in the collapsed
 state, defaults to \code{TRUE}.}
 }
 \description{
 Similar to \code{collapse}, \code{accordion} is a way to hide content. An accordion
-is made up of multiple panels and at most one panel is open. There is one
-exception, when the page renders multiple panels may start in the open state,
-however once the user interacts with accordion the default behavior returns.
-
-\code{panel} is a helper function to facilitate building accordion panels and does
-not have an explicit corresponding bootstrap class, see details for more
-information.
+is made up of multiple panels. As one panel is toggled open other panels
+are closed. A page may render with multiple panels open, but once toggled
+only one panel will remain open. \code{accordionPanel} is a helper function to
+facilitate building the accordion's panels.
 }
 \details{
 \code{accordion} will generate an HTML id if an \code{id} argument is not passed in
@@ -37,21 +34,6 @@ information.
 parent.
 }
 \examples{
-accordion(
-  panel(
-    heading = "Group 1",
-    "Body text of the first group."
-  ),
-  panel(
-    heading = "Group 2",
-    "Body text of the second group."
-  ),
-  panel(
-    heading = "Group 3",
-    "Body text of the third group."
-  )
-)
-
 if (interactive()) {
   shinyApp(
     ui = container(

@@ -88,13 +88,6 @@
 #'
 #'
 tableThruput <- function(id, borders = FALSE, compact = FALSE, ...) {
-  # if (!re(context, "success|info|warning|danger")) {
-  #   stop(
-  #     "invalid `tableThruput` argument, `context` must be one of ",
-  #     '"success", "info", "warning", or "danger"',
-  #     call. = FALSE
-  #   )
-  # }
   if (!is.null(id) || !is.character(id)) {
     stop(
       "invalid `tableThruput` argument, `id` must be a character string or ",

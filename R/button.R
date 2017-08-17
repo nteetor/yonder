@@ -1,10 +1,9 @@
 #' Button inputs and submit buttons
 #'
-#' Button inputs and submit buttons.
+#' Button inputs and submit buttons. A submit button generated with `submit`
+#' will not freeze reactive inputs unlike shiny's `submitButton`.
 #'
-#' @param id A character string specifying the id of the button input, the
-#'   reactive value of the button input is available to the shiny server
-#'   function as part of the `input` object.
+#' @param id A character string specifying the id of the button input.
 #'
 #' @param label A character string specifying a label for the button input.
 #'
@@ -22,7 +21,8 @@
 #' @param disabled If `TRUE`, the button renders in a disabled state, defaults
 #'   to `FALSE`.
 #'
-#' @param ... Named arguments passed as HTML attributes to the parent element.
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
 #'
 #' @seealso
 #'

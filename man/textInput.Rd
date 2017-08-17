@@ -32,38 +32,17 @@ colorInput(id, label, value = NULL, placeholder = NULL, ...)
 to \code{NULL}. If specified, a reactive value is available to the shiny server
 function.}
 
-\item{label}{A character vector specifying a label for the input, defaults to
+\item{label}{A character string specifying a label for the input, defaults to
 \code{NULL}. If a label is specified it is advised, though not necessary, to
 also specify an \code{id} for the input.}
 
 \item{placeholder}{A character string specifying placeholder text for the
-input, defaults to \code{NULL}.}
+input, defaults to \code{NULL}, in which case there is no placeholder text.}
 
-\item{...}{Named arguments passed as HTML attributes to the input. Specify
-\code{value} to give the input a default value. Specify \code{placeholder} to give
-the input hint text about the expected value of the input.}
+\item{...}{Additional named arguments passed as HTML attributes to the input.}
 }
 \description{
 Form control inputs.
-}
-\details{
-\itemize{
-\item text - Single-line text input, linebreaks are removed.
-\item search - Single-line text input for search strings, linebreaks are removed.
-\item email - Single-line text input for email addresses, validated to contain
-the empty string or a valid email address.
-\item url - Single-line text input for URLs, validated to contain the empty
-string or valid absolute URL.
-\item tel - Single-line text input for telephone numbers, syntax is not enforced.
-\item password - Single-line text input for password, value is obscured.
-\item number - Number picker.
-\item datetime - Date and time picker, no time zone.
-\item date - Year, month, and day picker, no time.
-\item month - Month and year picker, no time zone.
-\item week - Week of year picker.
-\item time - Time picker.
-\item color - Color picker.
-}
 }
 \examples{
 

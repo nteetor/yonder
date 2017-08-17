@@ -27,34 +27,14 @@ textualInput <- function(id, label, value, placeholder, type, ...) {
 #'   to `NULL`. If specified, a reactive value is available to the shiny server
 #'   function.
 #'
-#' @param label A character vector specifying a label for the input, defaults to
+#' @param label A character string specifying a label for the input, defaults to
 #'   `NULL`. If a label is specified it is advised, though not necessary, to
 #'   also specify an `id` for the input.
 #'
-#' @param ... Named arguments passed as HTML attributes to the input. Specify
-#'   `value` to give the input a default value. Specify `placeholder` to give
-#'   the input hint text about the expected value of the input.
+#' @param ... Additional named arguments passed as HTML attributes to the input.
 #'
 #' @param placeholder A character string specifying placeholder text for the
-#'   input, defaults to `NULL`.
-#'
-#' @details
-#'
-#' * text - Single-line text input, linebreaks are removed.
-#' * search - Single-line text input for search strings, linebreaks are removed.
-#' * email - Single-line text input for email addresses, validated to contain
-#'   the empty string or a valid email address.
-#' * url - Single-line text input for URLs, validated to contain the empty
-#'   string or valid absolute URL.
-#' * tel - Single-line text input for telephone numbers, syntax is not enforced.
-#' * password - Single-line text input for password, value is obscured.
-#' * number - Number picker.
-#' * datetime - Date and time picker, no time zone.
-#' * date - Year, month, and day picker, no time.
-#' * month - Month and year picker, no time zone.
-#' * week - Week of year picker.
-#' * time - Time picker.
-#' * color - Color picker.
+#'   input, defaults to `NULL`, in which case there is no placeholder text.
 #'
 #' @family inputs
 #' @export
