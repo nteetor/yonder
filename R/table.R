@@ -1,31 +1,28 @@
-#' Table output
+#' Table thruput
 #'
-#' Render a table.
+#' Render a table. Thruputs are a new reactive object.
 #'
-#' @param id A character string specifying the id of the table output.
+#' @param id A character string specifying the id of the table thruput.
 #'
-#' @param borders If `TRUE`, the table renders with borders, defaults to
+#' @param borders If `TRUE`, the table renders with cell borders, defaults to
 #'   `FALSE`.
 #'
 #' @param compact If `TRUE`, table cell padding is cut in half to reduce the
 #'   size of the table, defaults to `FALSE`.
 #'
-#' @param invert If `TRUE`, the table renders with a dark background, light
-#'   text, and any borders are light, defaults to `FALSE`.
-#'
-#' @param striped If `TRUE`, the table renders with a striped pattern, defaults
-#'   to `FALSE`.
-#'
-#' @param hoverable If `TRUE`, each table row has a hover state, defaults to
-#'   `FALSE`.
-#'
 #' @param context One `"success"`, `"info"`, `"warning"`, `"danger"`, specifying
 #'   the context of selected table rows, defaults to `NULL`, in which case
 #'   selected rows are highlighted in grey.
 #'
-#' @param responsive If `TRUE`, the table will scroll horizontally on small
-#'   viewports, viewports under 768 pixels, defaults to `TRUE`. There is no
-#'   effect when the viewport height is greater than 768 pixels.
+#' @param expr An expression which returns a data frame or `NULL`. If data frame
+#'   the table thruput is re-rendered, otherwise if `NULL` the current table
+#'   thruput is left as is.
+#'
+#' @param quoted If `TRUE`, then `expr` is treated as a quoted expression,
+#'   defaults to `FALSE`.
+#'
+#' @param session A `session` object passed to the shiny server function,
+#'   defaults to [`getDefaultReactiveDomain()`].
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
@@ -38,9 +35,34 @@
 #'       row(
 #'         col(
 #'           tableThruput(
+#'             id = "table",
+#'             context = "danger"
+#'           )
+#'         ),
+#'         col(
+#'           verbatimTextOutput("value")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$table <- renderTable({
+#'         iris[1:10, ]
+#'       })
+#'
+#'       output$value <- renderPrint({
+#'         input$table
+#'       })
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           tableThruput(
 #'             id = "tbl",
-#'             hoverable = TRUE,
-#'             context = "warning",
 #'             borders = TRUE
 #'           )
 #'         ),
@@ -53,42 +75,36 @@
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$tbl <- renderTable(
-#'         numbered = TRUE,
+#'       output$tbl <- renderTable({
 #'         iris[1:10, ]
-#'       )
+#'       })
 #'
-#'       output$subset <- renderTable(
-#'         numbered = TRUE,
+#'       output$subset <- renderTable({
 #'         input$tbl
-#'       )
+#'       })
 #'     }
 #'   )
 #' }
 #'
 #'
-tableThruput <- function(id, borders = FALSE, compact = FALSE, invert = FALSE,
-                        striped = FALSE, hoverable = FALSE, context = NULL,
-                        responsive = TRUE, ...) {
-  if (!re(context, "success|info|warning|danger")) {
+tableThruput <- function(id, borders = FALSE, compact = FALSE, ...) {
+  if (!is.null(id) || !is.character(id)) {
     stop(
-      "invalid `tableOutput` argument, `context` must be one of ",
-      '"success", "info", "warning", or "danger"',
+      "invalid `tableThruput` argument, `id` must be a character string or ",
+      "NULL",
       call. = FALSE
     )
   }
+
   tags$table(
     class = collate(
-      "dull-table",
+      "dull-table-thruput",
       "table",
-      if (invert) "table-invert",
-      if (striped) "table-striped",
+      if (is.character(id)) "table-hover",
+      "table-responsive",
       if (borders) "table-bordered",
-      if (hoverable) "table-hover",
-      if (compact) "table-sm",
-      if (responsive) "table-responsive"
+      if (compact) "table-sm"
     ),
-    `data-context` = context %||% "active",
     id = id,
     ...
   )
@@ -96,63 +112,43 @@ tableThruput <- function(id, borders = FALSE, compact = FALSE, invert = FALSE,
 
 #' @rdname tableThruput
 #' @export
-renderTable <- function(expr, numbered = FALSE, env = parent.frame(),
-                        quoted = FALSE) {
-  tableFunc <- shiny::exprToFunction(expr, env, quoted)
+renderTable <- function(expr, env = parent.frame(), quoted = FALSE) {
+  dfFunc <- shiny::exprToFunction(expr, env, quoted)
 
   function() {
-    tbl <- tableFunc()
+    df <- dfFunc()
 
-    if (is.null(tbl)) {
-      return(
-        list(
-          content = NULL
-        )
+    if (is.null(df)) {
+      return(list())
+    }
+
+    if (!is.data.frame(df)) {
+      stop(
+        "invalid `renderTable` value, `expr` returned " + class(df) +
+        ", expecting data frame",
+        call. = FALSE
       )
     }
 
-    headers <- as.character(
-      tags$thead(
-        tags$tr(
-          if (numbered) tags$th(scope = "col", "#"),
-          lapply(colnames(tbl), function(col) tags$th(col))
-        )
+    return(
+      list(
+        columns = colnames(df) %||% rep("", NCOL(df)),
+        data = jsonlite::toJSON(df)
       )
-    )
-
-    body <- as.character(
-      tags$tbody(
-        lapply(
-          seq_len(NROW(tbl)),
-          function(i) {
-            tags$tr(
-              if (numbered) tags$th(scope = "row", i),
-              lapply(
-                tbl[i, , drop = TRUE], tags$td
-              )
-            )
-          }
-        )
-      )
-    )
-
-    list(
-      content = paste0(headers, body)
     )
   }
 }
 
 shiny::registerInputHandler(
-  type = "dull.table",
+  type = "dull.table.input",
   fun = function(x, session, name) {
-    if (NROW(x) <= 1) {
+    frame <- jsonlite::fromJSON(x)
+
+    if (NROW(frame) == 0 || NCOL(frame) == 0) {
       return(NULL)
     }
 
-    x <- do.call(rbind, x)
-    colnames(x) <- x[1, ]
-    x <- x[-1, ]
-    as.data.frame(x)
+    frame
   },
   force = TRUE
 )

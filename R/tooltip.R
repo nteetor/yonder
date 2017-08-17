@@ -13,44 +13,27 @@
 #'
 #' @export
 #' @examples
-#' tooltip(
-#'   button("My button!"),
-#'   text = "This is my button",
-#' )
-#'
-#' tooltip(
-#'   button("Another button"),
-#'   text = "I won't do much when clicked, sorry",
-#'   placement = "bottom"
-#' )
-#'
-#' listGroup(
-#'   tooltip(
-#'     listGroupItem("Item 1"),
-#'     "This is the first item"
-#'   ),
-#'   tooltip(
-#'     listGroupItem("Item 2"),
-#'     "This is the second item"
-#'   )
-#' )
 #'
 tooltip <- function(content, text, placement = "top") {
-  if (!(placement %in% c("top", "left", "bottom", "right"))) {
+  if (!is_tag(content)) {
     stop(
-      'tooltip `placement` must be one of "top", "left", "bottom", or "right"',
+      "invalid `tooltip` argument, `content` must be a tag object",
       call. = FALSE
     )
   }
 
-  if (!is_tag(content)) {
-    stop("content must be a `tag`", call. = FALSE)
+  if (!re(placement, "top|left|bottom|right", FALSE)) {
+    stop(
+      "invalid `tooltip` argument, `placement` must be one of ",
+      '"top", "left", "bottom", or "right"',
+      call. = FALSE
+    )
   }
 
   content$attribs$`data-toggle` <- "tooltip"
   content$attribs$`data-placement` <- placement
   content$attribs$title <- as.character(text)
-  content$children <- c(content$children, bootstrap())
+  content$children <- append(content$children, list(bootstrap()))
 
   content
 }
@@ -59,30 +42,22 @@ tooltip <- function(content, text, placement = "top") {
 #' @export
 #' @examples
 #' popover(
-#'   button("Click me!"),
-#'   "This text appears on click"
-#' )
-#'
-#' # list items with popovers
-#' listGroup(
-#'   popover(
-#'     listGroupItem("Some text"),
-#'     "The first list item"
-#'   ),
-#'   popover(
-#'     listGroupItem("More text"),
-#'     "The second list item"
-#'   ),
-#'   popover(
-#'     listGroupItem("Final text"),
-#'     "Did you find this text?"
-#'   )
+#'   buttonInput("Click me!"),
+#'   "This text appears when the button is clicked"
 #' )
 #'
 popover <- function(content, text, placement = "top") {
-  if (!(placement %in% c("top", "left", "bottom", "right"))) {
+  if (!is_tag(content)) {
     stop(
-      'popover `placement` must be one of "top", "left", "bottom", or "right"',
+      "invalid `popover` argument, `content` must be a tag object",
+      call. = FALSE
+    )
+  }
+
+  if (!re(placement, "top|left|bottom|right", FALSE)) {
+    stop(
+      "invalid `popover` argument, `placement` must be one of ",
+      '"top", "left", "bottom", or "right"',
       call. = FALSE
     )
   }

@@ -2,19 +2,16 @@ var buttonInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-button[id]");
+    return $(scope).find(".dull-button-input[id]");
   },
   getValue: function(el) {
     var $el = $(el);
 
-    if ($el.data("count") === 0) {
+    if ($el.data("clicks") === 0) {
       return null;
     }
 
-    return {
-      count: parseInt($el.data("count"), 10),
-      value: $el.data("value") || null
-    };
+    return parseInt($el.data("clicks"), 10);
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
@@ -22,7 +19,7 @@ $.extend(buttonInputBinding, {
   subscribe: function(el, callback) {
     $(el).on("click.buttonInputBinding", function(e) {
       var $el = $(el);
-      $el.data("count", parseInt($el.data("count"), 10) + 1);
+      $el.data("clicks", parseInt($el.data("clicks"), 10) + 1);
 
       callback();
     });
@@ -36,64 +33,41 @@ $.extend(buttonInputBinding, {
   receiveMessage: function(el, data) {
     var $el = $(el);
 
-    if (data.count !== null) {
-      $el.data("count", data.count);
+    if (data.label) {
+      $el.html(data.label);
     }
 
-    if (data.context) {
+    if (data.reset === true) {
+      $el.data("clicks", 0);
+    }
+
+    if (data.state) {
+      var state = data.state === "valid" ? null : data.state;
+
+      if (state) {
+        if ($el.attr("class").search(/btn-outline-/)) {
+          state = "btn-outline-" + data.state;
+        } else {
+          state = "btn-" + data.state;
+        }
+      }
+
       $el.attr("class", function(i, c) {
-        return c.replace(/btn-(?:outline-)?(?:primary|secondary|link|success|info|warning|danger)/, "");
-      });
-      $el.addClass(data.context);
+          return c.replace(/btn-(?:outline-)?(?:primary|secondary|link|success|info|warning|danger)/g, "");
+        })
+        .addClass(data.state === "valid" ? null : state);
     }
 
-    if (data.count !== null || data.context) {
-      $el.trigger("change");
+    if (data.disable === true) {
+      $el.prop("disabled", true);
     }
+
+    if (data.enable === true) {
+      $el.prop("disabled", false);
+    }
+
+    $el.trigger("change");
   }
 });
 
 Shiny.inputBindings.register(buttonInputBinding, "dull.buttonInput");
-
-var buttonGroupInputBinding = new Shiny.InputBinding();
-
-$.extend(buttonGroupInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-button-group[id]");
-  },
-  getValue: function(el) {
-    var $el = $(el);
-    return {
-      count: $el.data("count") || null,
-      value: $el.data("value") || null
-    };
-  },
-  getState: function(el, data) {
-    return { value: this.getValue(el) };
-  },
-  subscribe: function(el, callback) {
-    $(el).on("click.buttonGroupInputBinding", function(e) {
-      callback();
-    });
-    $(el).on("change.buttonGroupInputBinding", function(e) {
-      callback();
-    });
-  },
-  unsubscribe: function(el) {
-    $(el).off(".buttonGroupInputBinding");
-  }
-});
-
-Shiny.inputBindings.register(buttonGroupInputBinding, "dull.buttonGroupInput");
-
-$(document).ready(function() {
-  $(".dull-button-group[id] button").on("click", function(e) {
-    var $child = $(this);
-    var $parent = $child.parent(".dull-button-group");
-
-    $parent
-      .data("value", $child.data("value"))
-      .data("count", parseInt($parent.data("count"), 10) + 1)
-      .trigger("change");
-  });
-});

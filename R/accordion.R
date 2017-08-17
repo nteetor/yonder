@@ -1,23 +1,18 @@
 #' Accordion panels
 #'
-#' @description
-#'
 #' Similar to `collapse`, `accordion` is a way to hide content. An accordion
-#' is made up of multiple panels and at most one panel is open. There is one
-#' exception, when the page renders multiple panels may start in the open state,
-#' however once the user interacts with accordion the default behavior returns.
+#' is made up of multiple panels. As one panel is toggled open other panels
+#' are closed. A page may render with multiple panels open, but once toggled
+#' only one panel will remain open. `accordionPanel` is a helper function to
+#' facilitate building the accordion's panels.
 #'
-#' `panel` is a helper function to facilitate building accordion panels and does
-#' not have an explicit corresponding bootstrap class, see details for more
-#' information.
+#' @param ... For **accordion**, any number of `accordionPanel`s or named
+#'   arguments passed as HTML attributes to the parent element.
 #'
-#' @param ... Any number of `accordionPanel`s or named arguments passed as HTML
-#'   attributes to the parent element.
+#'   For **accordionPanel**, any number of elements to include in the panel or
+#'   named arguments passed as HTML attributes to the parent element.
 #'
-#' @param header A character string specifying the header of an accordion panel.
-#'
-#' @param body A character string or tag element(s) specifying the body content
-#'   of the panel, defaults to `NULL`.
+#' @param label A character string specifying the accordion panel's header.
 #'
 #' @param collapsed If `TRUE`, the accordion panel renders in the collapsed
 #'   state, defaults to `TRUE`.
@@ -35,21 +30,6 @@
 #'
 #' @export
 #' @examples
-#' accordion(
-#'   panel(
-#'     heading = "Group 1",
-#'     "Body text of the first group."
-#'   ),
-#'   panel(
-#'     heading = "Group 2",
-#'     "Body text of the second group."
-#'   ),
-#'   panel(
-#'     heading = "Group 3",
-#'     "Body text of the third group."
-#'   )
-#' )
-#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
@@ -105,59 +85,50 @@ accordion <- function(...) {
 
 #' @rdname accordion
 #' @export
-accordionPanel <- function(header, body = NULL, collapsed = TRUE, ...) {
-  # <div class="card">
-  #   <div class="card-header" role="tab" id="headingOne">
-  #     <h5 class="mb-0">
-  #       <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-  #         Collapsible Group Item #1
-  #       </a>
-  #     </h5>
-  #   </div>
-  #
-  #   <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne">
-  #     <div class="card-block">
-  #       Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et. Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them accusamus labore sustainable VHS.
-  #     </div>
-  #   </div>
-  # </div>
+accordionPanel <- function(label, ..., collapsed = TRUE) {
+  args <- list(...)
+  attrs <- attribs(args)
+  body <- content(args)
 
   headingId <- ID("panel-heading")
   collapseId <- ID("panel-collapse")
 
-  tags$div(
-    class = "card",
+  tagConcatAttributes(
     tags$div(
-      class = "card-header",
-      id = headingId,
-      role = "tab",
-      tags$h5(
-        class = "mb-0",
-        tags$a(
-          class = collate(
-            if (collapsed) "collapsed"
-          ),
-          `data-toggle` = "collapse",
-          href = paste0("#", collapseId),
-          `aria-expanded` = if (collapsed) "false" else "true",
-          `aria-controls` = collapseId,
-          header
-        )
-      )
-    ),
-    tags$div(
-      class = collate(
-        "collapse",
-        if (!collapsed) "show"
-      ),
-      id = collapseId,
-      `aria-labelledby` = headingId,
-      role = "tabpanel",
+      class = "card",
       tags$div(
-        class = "card-block",
-        body
-      )
+        class = "card-header",
+        id = headingId,
+        role = "tab",
+        tags$h5(
+          class = "mb-0",
+          tags$a(
+            class = collate(
+              if (collapsed) "collapsed"
+            ),
+            `data-toggle` = "collapse",
+            href = paste0("#", collapseId),
+            `aria-expanded` = if (collapsed) "false" else "true",
+            `aria-controls` = collapseId,
+            header
+          )
+        )
+      ),
+      tags$div(
+        class = collate(
+          "collapse",
+          if (!collapsed) "show"
+        ),
+        id = collapseId,
+        `aria-labelledby` = headingId,
+        role = "tabpanel",
+        tags$div(
+          class = "card-block",
+          body
+        )
+      ),
+      bootstrap()
     ),
-    bootstrap()
+    attrs
   )
 }

@@ -1,0 +1,25 @@
+{
+  "name": "dull-css",
+  "version": "0.0.5",
+  "description": "dull package css",
+  "main": "index.js",
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-clean-css": "^3.7.0"
+  },
+  "devDependencies": {
+    "del": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-sass": "^3.1.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/nteetor/dull"
+  },
+  "author": "Nathan Teetor",
+  "license": "MIT"
+}

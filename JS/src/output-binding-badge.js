@@ -2,53 +2,34 @@ var badgeOutputBinding = new Shiny.OutputBinding();
 
 $.extend(badgeOutputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-badge[id]");
+    return $(scope).find(".dull-badge-output[id]");
   },
   getId: function(el) {
     return el.id;
   },
   renderValue: function(el, data) {
     var $el = $(el);
-    $el.text(data.value);
 
-    if (data.context) {
-      var conClass = "badge-" + data.context;
-
-      if (!$el.hasClass(conClass)) {
-        this._removeContextClasses(el);
-        $el.addClass(conClass);
-      }
+    if (data.value !== null || data.value !== undefined) {
+      $el.text(data.value);
     }
 
-    return false;
+    if (data.context) {
+      var context = "badge-" + data.context;
+
+      if (!$el.hasClass(context)) {
+        $el.attr("class", function(i, c) {
+          return c.replace(/badge-(default|primary|success|info|warning|danger)/g, "");
+        });
+        $el.addClass(context);
+      }
+    }
   },
-/*  renderError: function(el, err) {
-    var $el = $(el);
-    this._removeContextClasses(el);
+  renderError: function(el, data) {
 
-    $el.addClass("badge-danger");
-    this.prevText = $el.text();
-    $el.text("*");
-
-    return false;
   },
   clearError: function(el) {
-    var $el = $(el);
-    $el.removeClass("badge-danger");
-    $el.addClass("badge-default");
-    $el.text(this.prevText);
-    this.prevText = null;
 
-    return false;
-  },*/
-  _removeContextClasses: function(el) {
-    var $el = $(el);
-    $el.attr("class", function(i, c) {
-      return c.replace(
-        /badge-(default|primary|success|info|warning|danger)/g,
-        ""
-      );
-    });
   }
 });
 

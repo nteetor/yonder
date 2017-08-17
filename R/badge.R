@@ -1,89 +1,116 @@
-#' Badges, tags
+#' Badge outputs
 #'
-#' A badge is a useful means of highlighting text.
+#' Small highlighted content which scales to its parent's size. Useful for
+#' displaying dynamically changing counts or tickers, drawing attention to new
+#' options, or tagging content.
 #'
-#' @param content The text or label of the badge, defaults to `NULL`.
+#' @param id A character string specifying the id of the badge output.
 #'
-#' @param context A character string specifying the visual context of the badge,
-#'   one of `"primary"`, `"success"`, `"info"`, `"warning"`, or `"danger"`,
-#'   defaults to `NULL`.
+#' @param content A character string specifying the content of the badge or an
+#'   expression which returns a character string.
 #'
-#' @param pill If `TRUE` the badge has rounder corners, defaults to `FALSE`.
+#' @param rounded If `TRUE` the badge appears in a pill instead of a rectangular
+#'   shape, defaults to `FALSE`.
 #'
-#' @param ... Additional named argument passed on as HTML attributes to the parent
+#' @param context An expression which returns one of `"default"`, `"success"`,
+#'   `"info"`, `"warning"`, or `"danger"`. The expression may contain reactive
+#'   values.
+#'
+#' @param ... Additional named argument passed as HTML attributes to the parent
 #'   element.
 #'
 #' @export
 #' @examples
-#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       listGroup(
-#'         listGroupItem(
-#'           label = "Button clicks",
-#'           badge = badge(
-#'             id = "buttonClicks",
-#'             content = 0
+#'       row(
+#'         col(
+#'           offset = 3,
+#'           listGroupInput(
+#'             id = NULL,
+#'             items = "Button clicks",
+#'             badges = list(
+#'               badgeOutput(
+#'                 id = "clicks",
+#'                 content = 0
+#'               )
+#'             )
+#'           )
+#'         ),
+#'         col(
+#'           buttonInput(
+#'             id = "clicker",
+#'             "Click here!"
 #'           )
 #'         )
-#'       ),
-#'       button(
-#'         id = "myButton",
-#'         "Click here!"
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       numClicks <- 0
-#'       output$buttonClicks <- renderBadge({
-#'         req(input$myButton)
-#'         numClicks <<- numClicks + 1
-#'         numClicks
-#'       }, {
-#'         if (numClicks > 19) {
-#'           "danger"
-#'         } else if (numClicks > 9) {
-#'           "warning"
-#'         } else {
-#'           "info"
+#'       output$clicks <- renderBadge(
+#'         content = {
+#'           input$clicker
+#'         },
+#'         context = {
+#'           req(input$clicker)
+#'           clicks <- input$clicker
+#'
+#'           if (clicks > 19) {
+#'             "danger"
+#'           } else if (clicks > 9) {
+#'             "warning"
+#'           } else {
+#'             "info"
+#'           }
 #'         }
-#'       })
+#'       )
 #'     }
 #'   )
 #' }
 #'
-badge <- function(content = NULL, context = NULL, pill = FALSE, ...) {
-  if (bad_context(context, extra = c("primary", "default"))) {
+badgeOutput <- function(id, content, rounded = FALSE, ...) {
+  if (!is.character(id)) {
     stop(
-      '`badge` argument `context` must be one of "default", "primary", ',
-      '"success", "info", "warning", or "danger"', call. = FALSE
+      "invalid `badgeOutput` argument, `id` must be a character string",
+      call. = FALSE
     )
   }
 
-  context <- context %||% "default"
-
   tags$span(
     class = collate(
-      "dull-badge",
+      "dull-badge-output",
       "badge",
-      paste0("badge-", context),
-      if (pill) "badge-pill"
+      "badge-default",
+      if (rounded) "badge-pill"
     ),
+    id = id,
     content,
     ...
   )
 }
 
-#' @rdname badge
+#' @rdname badgeOutput
 #' @export
-renderBadge <- function(value, context = NULL, env = parent.frame(), quoted = FALSE) {
-  valFun <- shiny::exprToFunction(value, env, quoted)
+renderBadge <- function(content, context = NULL, env = parent.frame(),
+                        quoted = FALSE) {
+  valFun <- shiny::exprToFunction(content, env, quoted)
   conFun <- shiny::exprToFunction(context, env, quoted)
 
   function() {
+    con <- conFun()
+
+    if (!re(con, "default|primary|success|info|warning|danger")) {
+      stop(
+        "invalid `renderBadge` argument, `context` expression must return ",
+        "one of ",
+        '"default", "success", "info", "warning", or "danger"',
+        call. = FALSE
+      )
+    }
+
     list(
       value = valFun(),
-      context = conFun()
+      context = con
     )
   }
 }

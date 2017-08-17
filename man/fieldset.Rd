@@ -2,27 +2,19 @@
 % Please edit documentation in R/inputs.R
 \name{fieldset}
 \alias{fieldset}
-\title{Visually group and label inputs}
+\title{Group and label multiple inputs}
 \usage{
-fieldset(..., legend = NULL, disabled = FALSE, id = NULL)
+fieldset(legend, ...)
 }
 \arguments{
-\item{...}{Inputs to put within the fieldset or additional named arguments
-passed as HTML attributes to the parent element.}
+\item{legend}{A character string specifying the fieldset's legend.}
 
-\item{legend}{A character string specifying a label for fieldset, defaults to
-\code{NULL}.}
-
-\item{disabled}{If \code{TRUE}, all inputs within the fieldset are rendered in a
-disabled state, defaults to \code{FALSE}.}
-
-\item{id}{A character string specifying the id of the fieldset, defaults to
-\code{NULL}. Specifying an id is only necessary when using \code{updateFieldset} to
-disable or enable the inputs within the fieldset.}
+\item{...}{Any number of inputs to group or named arguments passed as HTML
+attributes to the parent element.}
 }
 \description{
-Use \code{fieldset} to associate inputs. Good for screen readers and other
-assitive technologies.
+Use \code{fieldset} to associate and label inputs. Good for screen readers and
+other assitive technologies.
 }
 \examples{
 

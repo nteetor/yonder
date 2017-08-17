@@ -2,119 +2,197 @@
 % Please edit documentation in R/inputs.R
 \name{groupInput}
 \alias{groupInput}
-\title{Group inputs, combination buttons and text}
+\title{Group inputs, combination button, dropdown, and text input}
 \usage{
-groupInput(placeholder = NULL, value = NULL, left = NULL, right = NULL,
-  ..., id = NULL)
+groupInput(id, placeholder = NULL, value = NULL, left = NULL,
+  right = NULL, ...)
 }
 \arguments{
+\item{id}{A character string specifying the id of the group input.}
+
 \item{placeholder}{A character string specifying placeholder text for the
 input group, defaults to \code{NULL}.}
 
 \item{value}{A character string specifying an initial value for the input
 group, defaults to \code{NULL}.}
 
-\item{left, right}{A character string, \link{button} element, or \link{dropdown}
-element, used as the left or right addon, respectively, of the input group,
-both default to \code{NULL}. Addon's affect the reactive events and value of the
-input group, see the details section below for more information.}
+\item{left, right}{A character vector specifying static addons or
+\link{buttonInput} or \link{dropdownInput} elements specifying dynamic addons.
+Addon's affect the reactive value of the group input, see the Details
+section below for more information.}
 
-\item{id}{A character string specifying an id for the input, defaults to
-\code{NULL}. When specified, a reactive value, \code{input$<id>}, is available to the
-shiny server function.}
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element.}
 }
 \description{
-An input group is composite reactive input which may consist of one or two
-buttons, dropdowns, character addons, or any combination of these elements.
-Character addons, specified with \code{left} and \code{right} may be used to ensure an
-input group's value always has a certain prefix or suffix and render a
-visual cue to indicate this behavior. Buttons and dropdowns may be included
-to control when the input group's reactive value updates. See below for more
-information and examples.
+A group input is a combination reactive input which may consist of one or two
+buttons, dropdowns, static addons, or any combination of these elements.
+Static addons, specified with \code{left} and \code{right} may be used to ensure an
+group input's reactive value always has a certain prefix or suffix. These
+static addons render with a shaded background to help indicated this behavior to the user.
+Buttons and dropdowns may be included to control when the group input's
+reactive value updates. See Details for more information.
 }
 \details{
-\strong{reactive event}
+** \code{left} is character or \code{right} is character **
 
-If either \code{left} or \code{right} is a button or a dropdown the reactive value of
-the input group is changed when either button or a dropdown item is clicked.
-If either \code{left} and \code{right} are character strings or \code{NULL} the reactive
-value of the input group will update each time the text input is changed by
-the user.
+If \code{left} or \code{right} are character vectors, then the group input functions
+like a text input. The value will update and trigger a reactive event when
+the text box is modified. The group input's reactive value is the
+concatention of the static addons specified by \code{left} or \code{right} and the
+value of the text input.
 
-\strong{input value}
+** \code{left} is button or \code{right} is button **
 
-An input group's value is \code{NULL} when its text input is empty and neither,
-if any, buttons or dropdown item's have been clicked. Otherwise, a input
-group's value is list of two named elements. The first element is \code{value}
-which is the concatenation of \code{left}, \emph{if a character string}, the text input
-value, and \code{right}, \emph{if a character string}. The second element is \code{click}
-and is indicates which button or dropdown item was clicked. The value of
-\code{click} depends on the value of the button or dropdown item, see
-\link{button} or \link{dropdownItem}.
+The button does not change the value of the group input. However, the input
+no longer triggers event when the text box is updated. Instead the value
+is updated when a button is clicked. Static addons are still applied to the
+group input value.
+
+** \code{left} is a dropdown or \code{right} is a dropdown **
+
+The value of the group input does chance depending on the clicked dropdown
+menu item. The value of the input group is the concatentation of the
+dropdown input value, the value of the text input, and any static addons.
 }
 \examples{
 if (interactive()) {
   shinyApp(
     ui = container(
-      groupInput(
-        id = "nearlytext"
-      ),
-      groupInput(
-        id = "username",
-        placeholder = "username",
-        left = "@",
-        right = button(
-          label = "Go!",
-          value = "go"
-        )
-      ),
-      groupInput(
-        id = "github",
-        left = "https://github.com/"
-      ),
-      groupInput(
-        id = "preference",
-        left = button(
-          label = fontAwesome("thumbs-up"),
-          value = "up"
+      row(
+        col(
+          groupInput(
+            id = "buttongroup",
+            left = "@",
+            placeholder = "Username"
+          )
         ),
-        right = button(
-          label = fontAwesome("thumbs-down"),
-          value = "down"
-        )
-      ),
-      groupInput(
-        id = "options",
-        placeholder = "",
-        left = dropdown(
-          label = "Action",
-          dropdownItem("Action", "action"),
-          dropdownItem("Another action", "another"),
-          dropdownItem("Something else", "something"),
-          dropdownDivider(),
-          dropdownItem("Final", "final")
+        col(
+          display4(
+            textOutput("value")
+          )
         )
       )
     ),
     server = function(input, output) {
-      observe({
-        print(input$nearlytext)
+      output$value <- renderText({
+        input$buttongroup
       })
+    }
+  )
+}
 
-      observe({
-        print(input$username)
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          groupInput(
+            id = "groupinput",
+            placeholder = "Search terms",
+            right = buttonInput(
+              id = "button",
+              label = "Go!"
+            )
+          )
+        ),
+        col(
+          display4(
+            textOutput("value")
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$value <- renderText({
+        input$groupinput
       })
+    }
+  )
+}
 
-      observe({
-        print(input$github)
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          groupInput(
+            id = "groupinput",
+            left = c("$", "0.00")
+          )
+        ),
+        col(
+          display4(
+            textOutput("value")
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$value <- renderText({
+        input$groupinput
       })
+    }
+  )
+}
 
-      observe({
-        print(input$preference)
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          groupInput(
+            id = "groupinput",
+            left = "@",
+            placeholder = "Username",
+            right = buttonInput(
+              id = "right",
+              label = "Search"
+            )
+          )
+        ),
+        col(
+          display4(
+            textOutput("value")
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$value <- renderText({
+        input$groupinput
       })
+    }
+  )
+}
 
-      observe({
-        print(input$options)
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          groupInput(
+            id = "groupinput",
+            left = dropdownInput(
+              id = "dropdown",
+              label = "Title",
+              choices = c("Mrs.", "Miss", "Mr.", "none"),
+              values = c("Mrs. ", "Miss ", "Mr. ", "")
+            ),
+            placeholder = "First name",
+            right = "!"
+          )
+        ),
+        col(
+          display4(
+            textOutput("value")
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$value <- renderText({
+        input$groupinput
       })
     }
   )
@@ -122,7 +200,8 @@ if (interactive()) {
 
 }
 \seealso{
-Other inputs: \code{\link{button}},
+Other inputs: \code{\link{buttonInput}},
+  \code{\link{checkboxInput}}, \code{\link{formInput}},
   \code{\link{radioInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }

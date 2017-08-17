@@ -11,59 +11,38 @@
 \alias{colorInput}
 \title{Inputs}
 \usage{
-textInput(value = NULL, placeholder = NULL, ..., id = NULL)
+textInput(id, label, value = NULL, placeholder = NULL, ...)
 
-searchInput(value = NULL, placeholder = NULL, ..., id = NULL)
+searchInput(id, label, value = NULL, placeholder = NULL, ...)
 
-emailInput(value = NULL, placeholder = NULL, ..., id = NULL)
+emailInput(id, label, value = NULL, placeholder = NULL, ...)
 
-urlInput(value = NULL, placeholder = NULL, ..., id = NULL)
+urlInput(id, label, value = NULL, placeholder = NULL, ...)
 
-telephoneInput(value = NULL, placeholder = NULL, ..., id = NULL)
+telephoneInput(id, label, value = NULL, placeholder = NULL, ...)
 
-passwordInput(value = NULL, placeholder = NULL, ..., id = NULL)
+passwordInput(id, label, value = NULL, placeholder = NULL, ...)
 
-numberInput(value = NULL, placeholder = NULL, ..., id = NULL)
+numberInput(id, label, value = NULL, placeholder = NULL, ...)
 
-colorInput(value = NULL, placeholder = NULL, ..., id = NULL)
+colorInput(id, label, value = NULL, placeholder = NULL, ...)
 }
 \arguments{
-\item{placeholder}{A character string specifying placeholder text for the
-input, defaults to \code{NULL}.}
-
-\item{...}{Named arguments passed as HTML attributes to the input. Specify
-\code{value} to give the input a default value. Specify \code{placeholder} to give
-the input hint text about the expected value of the input.}
-
 \item{id}{A character string specifying the id of the textual input, defaults
 to \code{NULL}. If specified, a reactive value is available to the shiny server
 function.}
 
-\item{label}{A character vector specifying a label for the input, defaults to
+\item{label}{A character string specifying a label for the input, defaults to
 \code{NULL}. If a label is specified it is advised, though not necessary, to
 also specify an \code{id} for the input.}
+
+\item{placeholder}{A character string specifying placeholder text for the
+input, defaults to \code{NULL}, in which case there is no placeholder text.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the input.}
 }
 \description{
 Form control inputs.
-}
-\details{
-\itemize{
-\item text - Single-line text input, linebreaks are removed.
-\item search - Single-line text input for search strings, linebreaks are removed.
-\item email - Single-line text input for email addresses, validated to contain
-the empty string or a valid email address.
-\item url - Single-line text input for URLs, validated to contain the empty
-string or valid absolute URL.
-\item tel - Single-line text input for telephone numbers, syntax is not enforced.
-\item password - Single-line text input for password, value is obscured.
-\item number - Number picker.
-\item datetime - Date and time picker, no time zone.
-\item date - Year, month, and day picker, no time.
-\item month - Month and year picker, no time zone.
-\item week - Week of year picker.
-\item time - Time picker.
-\item color - Color picker.
-}
 }
 \examples{
 
@@ -71,7 +50,8 @@ stub
 
 }
 \seealso{
-Other inputs: \code{\link{button}},
+Other inputs: \code{\link{buttonInput}},
+  \code{\link{checkboxInput}}, \code{\link{formInput}},
   \code{\link{groupInput}}, \code{\link{radioInput}},
   \code{\link{selectInput}}
 }

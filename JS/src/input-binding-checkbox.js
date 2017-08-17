@@ -2,15 +2,12 @@ var checkboxInputBinding = new Shiny.InputBinding();
 
 $.extend(checkboxInputBinding, {
   find: function(scope){
-    return $(scope).find(".dull-checkbox[id]");
+    return $(scope).find(".dull-checkbox-input[id]");
   },
   getValue: function(el) {
     var $val = $(el)
-      .find("input[type=\"checkbox\"]:checked")
-      .map(function(i, e) {
-        return $(e).data("value");
-      })
-      .get();
+      .find("input[type=\"checkbox\"]:checked:not(:disabled)")
+      .data("value");
     return $val === undefined ? null : $val;
   },
   _getLabel: function(el) {
@@ -24,7 +21,7 @@ $.extend(checkboxInputBinding, {
   },
   subscribe: function(el, callback) {
     $(el).on("change.checkboxInputBinding", function(e) {
-      callback(true);
+      callback();
     });
   },
   unsubscribe: function(el) {
@@ -33,11 +30,31 @@ $.extend(checkboxInputBinding, {
   receiveMessage: function(el, data) {
     var $el = $(el);
 
-    if (data.context) {
+    if (data.content !== undefined) {
+      $el.find("label").remove();
+      $el.html(data.choice);
+    }
+
+    if (data.state) {
       $el.attr("class", function(i, c) {
         return c.replace(/has-(success|warning|danger)/g, "");
       });
-      $el.addClass(data.context);
+
+      if (data.state !== "valid") {
+        $el.addClass("has-" + data.state);
+      }
+    }
+
+    if (data.disable === true) {
+      $el.find("input[type=\"checkbox\"]").prop("disabled", true);
+      if ($el.find(".form-gruop").hasClass("disabled")) {
+        $el.find(".form-group").addClass("disabled");
+      }
+    }
+
+    if (data.enable === true) {
+      $el.find("input[type=\"checkbox\"]").prop("disabled", false);
+      $el.find(".form-group").removeClass("disabled");
     }
 
     $el.trigger("change");

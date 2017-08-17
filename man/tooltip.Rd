@@ -23,47 +23,10 @@ Both functions are a means of adding help text to HTML components. Tooltips
 appear on hover and popovers appear when the element is clicked.
 }
 \examples{
-tooltip(
-  button("My button!"),
-  text = "This is my button",
-)
-
-tooltip(
-  button("Another button"),
-  text = "I won't do much when clicked, sorry",
-  placement = "bottom"
-)
-
-listGroup(
-  tooltip(
-    listGroupItem("Item 1"),
-    "This is the first item"
-  ),
-  tooltip(
-    listGroupItem("Item 2"),
-    "This is the second item"
-  )
-)
 
 popover(
-  button("Click me!"),
-  "This text appears on click"
-)
-
-# list items with popovers
-listGroup(
-  popover(
-    listGroupItem("Some text"),
-    "The first list item"
-  ),
-  popover(
-    listGroupItem("More text"),
-    "The second list item"
-  ),
-  popover(
-    listGroupItem("Final text"),
-    "Did you find this text?"
-  )
+  buttonInput("Click me!"),
+  "This text appears when the button is clicked"
 )
 
 }

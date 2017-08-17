@@ -1,169 +1,192 @@
-#' Dropdown Menu
+#' Dropdown input
 #'
-#' Dropdown menus function similar to a set of buttons. The initial dropdown
-#' open does not trigger a reactive event, but a subsequent click on one of the
-#' menu choices triggers a reactive event. The value of a dropdown item may
-#' be specified in `dropdownItem`, otherwise the default value is `NULL`.
+#' Dropdown inputs, or dropdown menus, function similar to a set of buttons.
+#' The initial click to open a dropdown menu does not trigger a reactive event,
+#' but a click on one of the dropdown items triggers a reactive event. The
+#' reactive value of a dropdown input is the value of the most recently clicked
+#' dropdown menu item. Disabling a dropdown menu triggers a reactive event and
+#' resets the reactive value to `NULL`.
 #'
-#' @param ... Any number of dropdown items passed to `dropdown` or additional
-#'   named arguments passed as HTML attributes to the respective parent element.
+#' @param items A character vector specifying the labels of the dropdown menu
+#'   items.
 #'
-#' @param label A character string specifying the label for a dropdown, dropdown
-#'   item, or dropdown header, defaults to `NULL` for dropdowns and dropdown
-#'   items, but is required for a dropdown header.
+#' @param values A character vector, list of character strings, vector of values
+#'   to coerce to character strings, or list of values to coerce to character
+#'   strings specifying the values of the dropdown input's choices, defaults to
+#'   `items`.
 #'
-#' @param value A character string specifying the value of a dropdown item,
-#'   defaults to `NULL`.
+#' @param disabled,enabled One or more of `values` indicating which dropdown
+#'   menu items to disable or enable, defaults to `NULL`. If `NULL` then
+#'   `disableDropdownInput` and `enableDropdownInput` will disable or enable all
+#'   the dropdown input's items, respectively.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, or `"danger"` specifying the visual context of the dropdown,
-#'   defaults to `"secondary"`.
+#' @param dividers One or more of `values` indicating which dropdown menu items
+#'   are the start of a new section, defaults to `NULL`. Divider lines will be
+#'   placed above the indicated values separating the dropdown menu items into
+#'   sections.
 #'
-#' @param align One of `"left"` or `"right"` specifying which side of the
-#'   dropdown button the menu aligns to, defaults to `"left"`.
+#' @param dropup If `TRUE`, the dropdown menu opens upwards instead of
+#'   downwards, defaults to `FALSE`.
 #'
-#' @param split If `TRUE`, the dropdown is changed aesthetically such that the
-#'   dropdown icon is split into a separate, smaller button, defaults to
-#'   `FALSE`.
-#'
-#' @param dropup If `TRUE`, the dropdown menu extends upwards, defaults to
-#'   `FALSE`.
-#'
-#' @param disabled If `TRUE`, the dropdown item renders in a disabled state and
-#'   will not trigger a reactive event, defaults to `FALSE`. The state of a
-#'   dropdown item may be toggled with `updateDropdownItem`.
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
 #'
 #' @export
 #' @examples
-#' dropdown(
-#'   label = "Secondary",
-#'   dropdownItem("Option 1"),
-#'   dropdownItem("Option 2")
-#' )
-#'
-#' dropdown(
-#'   id = "flavor",
-#'   label = "Ice cream flavors",
-#'   dropdownItem("Vanilla", "vanilla"),
-#'   dropdownItem("Chocolate", "chocolate"),
-#'   dropdownItem("Mint", "mint")
-#' )
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           dropdownInput(
+#'             id = "dropdown",
+#'             label = "A dropdown"
+#'             items = paste("Action", 1:5),
+#'             dividers = "Action 4"
+#'           )
+#'         ),
+#'         col(
+#'           display4(
+#'             textOutput("value")
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$value <- renderText({
+#'         input$dropdown
+#'       })
+#'     }
+#'   )
+#' }
 #'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
 #'       row(
 #'         col(
-#'           dropdown(
-#'             id = "desserts",
-#'             label = "Pick a dessert to learn more",
-#'             align = "right",
-#'             dropdownHeader("Frozen"),
-#'             dropdownItem("Ice cream", "icecream"),
-#'             dropdownItem("Gelato", "gelato"),
-#'             dropdownHeader("Baked goods"),
-#'             dropdownItem("Cake", "cake"),
-#'             dropdownItem("Pie", "pie")
+#'           offset = 1,
+#'           dropdownInput(
+#'             id = "actions",
+#'             label = "Actions",
+#'             items = c("disable", "enable", "disable some", "enable some"),
+#'             dividers = "disable some"
 #'           )
 #'         ),
 #'         col(
-#'           dropdown(
-#'             id = "spices",
-#'             label = "Check for a spice",
-#'             dropdownItem("Cardamom", "cardamom"),
-#'             dropdownItem("Nutmeg", "nutmeg"),
-#'             dropdownItem("Vanilla", "vanilla")
+#'           dropdownInput(
+#'             id = "dropdown",
+#'             label = "Other actions",
+#'             items = paste("Action", 1:5),
+#'             disabled = "Action 3"
+#'           )
+#'         ),
+#'         col(
+#'           display4(
+#'             textOutput("value")
 #'           )
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       observe({
-#'         print(input$desserts)
+#'       observeEvent(input$actions, {
+#'         if (input$actions == "disable") {
+#'           disableDropdownInput("dropdown")
+#'         } else if (input$actions == "enable") {
+#'           enableDropdownInput("dropdown")
+#'         } else if (input$actions == "disable some") {
+#'           disableDropdownInput("dropdown", paste("Action", c(2, 3, 5)))
+#'         } else if (input$actions == "enable some") {
+#'           enableDropdownInput("dropdown", paste("Action", c(2, 3, 5)))
+#'         }
 #'       })
 #'
-#'       observe({
-#'         print(input$spices)
+#'       output$value <- renderText({
+#'         input$dropdown
 #'       })
 #'     }
 #'   )
 #' }
 #'
-dropdown <- function(..., label = NULL, context = "secondary", split = FALSE,
-                     align = "left", dropup = FALSE) {
-  if (!re(context, "primary|secondary|success|info|warning|danger", len0 = FALSE)) {
+dropdownInput <- function(id, label, items, values = items, disabled = NULL,
+                          dividers = NULL, dropup = FALSE, ...) {
+  if (length(items) != length(values)) {
     stop(
-      'invalid `dropdown` argument, `context` must be one of "primary", ',
-      '"secondary", "success", "info", "warning", or "danger"',
+      "invalid `dropdownInput` arguments, `items` and `values` must be the ",
+      "same length",
       call. = FALSE
     )
   }
 
-  if (!re(align, "left|right", len0 = FALSE)) {
-    stop(
-      'invalid `dropdown` argument, `align` must be one of "left" or "right"',
-      call. = FALSE
-    )
-  }
+  disabled <- match2(disabled, values)
+  dividers <- match2(dividers, values)
 
-  args <- list(...)
-  attrs <- attribs(args)
-  items <- elements(args)
-
-  tagConcatAttributes(
+  tags$div(
+    class = collate(
+      "dull-dropdown-input",
+      "btn-group",
+      if (dropup) "dropup" else "dropdown"
+    ),
+    id = id,
+    `data-value` = NULL,
+    tags$button(
+      class = "btn btn-secondary dropdown-toggle",
+      type = "button",
+      `data-toggle` = "dropdown",
+      `aria-haspop` = "true",
+      `aria-expanded` = "false",
+      label
+    ),
     tags$div(
       class = collate(
-        "dull-dropdown",
-        "btn-group",
-        if (dropup) "dropup" else "dropdown"
+        "dropdown-menu",
+        "dropdown-menu-right"
       ),
-      if (split) button(context = context, label = label),
-      button(
-        class = collate(
-          "dropdown-toggle",
-          if (split) "dropdown-toggle-split"
-        ),
-        label = label,
-        context = context,
-        `data-toggle` = "dropdown",
-        if (split) tags$span(class = "sr-only", "Toggle Dropdown")
-      ),
-      tags$div(
-        class = collate(
-          "dropdown-menu",
-          if (align == "right") "dropdown-menu-right"
-        ),
-        items
-      ),
-      bootstrap()
+      lapply(
+        seq_along(items),
+        function(i) {
+          list(
+            if (dividers[[i]]) {
+              tags$div(class = "dropdown-divider")
+            },
+            tags$a(
+              class = collate(
+                "dropdown-item",
+                if (disabled[[i]]) "disabled"
+              ),
+              href = NA,
+              `data-value` = values[[i]],
+              items[[i]]
+            )
+          )
+        }
+      )
     ),
-    attrs
+    ...,
+    bootstrap()
   )
 }
 
-#' @rdname dropdown
+#' @rdname dropdownInput
 #' @export
-dropdownItem <- function(label = NULL, value = NULL, disabled = FALSE, ...) {
-  tags$a(
-    class = collate(
-      "dull-dropdown-item",
-      "dropdown-item",
-      if (disabled) "disabled"
-    ),
-    `data-value` = value,
-    label,
-    ...
+disableDropdownInput <- function(id, disabled = NULL,
+                                 session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(
+    id,
+    list(
+      disable = if (is.null(disabled)) TRUE else as.list(disabled)
+    )
   )
 }
 
-#' @rdname dropdown
+#' @rdname dropdownInput
 #' @export
-dropdownDivider <- function() {
-  tags$div(class = "dropdown-divider")
-}
-
-#' @rdname dropdown
-#' @export
-dropdownHeader <- function(label) {
-  tags$h6(class = "dropdown-header", label)
+enableDropdownInput <- function(id, enabled = NULL,
+                                session = getDefaultReactiveDomain()) {
+  session$sendInputMessage(
+    id,
+    list(
+      enable = if (is.null(enabled)) TRUE else as.list(enabled)
+    )
+  )
 }

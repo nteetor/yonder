@@ -1,22 +1,22 @@
-var textInputBinding = new Shiny.InputBinding();
+var textualInputBinding = new Shiny.InputBinding();
 
-$.extend(textInputBinding, {
+$.extend(textualInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-textual[id]");
+    return $(scope).find(".dull-textual-input[id]");
   },
   getValue: function(el) {
-    var $el = $(el);
-    var $val = $el.val() || null;
+    var $input = $(el).find("input");
+    var val = $input.val() === undefined ? null : $input.val();
 
-    if ($val === null) {
+    if (val === null) {
       return null;
     }
 
-    if ($el.attr("type") === "number") {
-      return parseInt($val, 10);
+    if ($input.attr("type") === "number") {
+      return parseInt(val, 10);
     }
 
-    return $val;
+    return val;
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
@@ -28,13 +28,16 @@ $.extend(textInputBinding, {
     };
   },
   subscribe: function(el, callback) {
-    $(el).on("change.textInputBinding", function(e) {
+    $(el).on("change.textualInputBinding", function(e) {
+      callback(true);
+    });
+    $(el).on("input.textualInputBinding", function(e) {
       callback(true);
     });
   },
   unsubscribe: function(el) {
-    $(el).off(".textInputBinding");
+    $(el).off(".textualInputBinding");
   }
 });
 
-Shiny.inputBindings.register(textInputBinding, "dull.textInput");
+Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");

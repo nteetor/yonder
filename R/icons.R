@@ -5,7 +5,8 @@
 #' @param name A character string specifying the icon name, leading prefixes
 #'   unique to the icon set are not required.
 #'
-#' @param ... Named arguments passed as HTML attributes to the parent element.
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
 #'
 #' @seealso
 #'

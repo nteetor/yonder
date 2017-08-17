@@ -10,7 +10,8 @@ fontAwesome(name, ...)
 \item{name}{A character string specifying the icon name, leading prefixes
 unique to the icon set are not required.}
 
-\item{...}{Named arguments passed as HTML attributes to the parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 }
 \description{
 Currently only FontAwesome icons are available.

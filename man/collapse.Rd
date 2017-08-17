@@ -7,7 +7,7 @@
 \alias{toggleCollapse}
 \title{Collapsible sections}
 \usage{
-collapse(..., label = NULL, context = "secondary")
+collapse(id, label, content, context = "secondary", ...)
 
 showCollapse(id, session = getDefaultReactiveDomain())
 
@@ -16,32 +16,28 @@ hideCollapse(id, session = getDefaultReactiveDomain())
 toggleCollapse(id, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{...}{Any number of tag elements to include in the collapsible section
-or additional named arguments passed as attributes to the parent element.}
+\item{id}{A character string specifying the id of the collapse.}
 
-\item{label}{A character string specifying the label of the collapse, passed
-to \link{button}, defaults to \code{NULL}.}
+\item{label}{A character string specifying the label of the collapse toggle.}
 
-\item{context}{A character string specifying the visual context of the
-toggle button, passed to \link{button}, defaults to \code{"secondary"}.}
+\item{context}{One of \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, or
+\code{"danger"} specifying the visual context of the collapse toggle, defaults
+to \code{"secondary"}.}
 
-\item{id}{A character string specifying the id of a collapse section.}
+\item{...}{Additional named arguments passed as attributes to the parent
+element.}
 
 \item{session}{A \code{session} object passed to the shiny server function,
-defaults to \code{\link[shiny:getDefaultReactiveDomain]{shiny::getDefaultReactiveDomain()}}.}
+defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
+
+\item{id}{A character string specifying the id of a collapse section.}
 }
 \description{
 \code{collapse} allows content to be hidden and toggled into a shown state.
-The collapsed content is toggled by a button. A collapsed section may be
-toggled between hidden and shown using \code{toggleCollapse}, shown with
-\code{showCollapse}, and hidden with \code{hideCollapse}.
-}
-\details{
-The \code{showCollapse}, \code{hideCollapse}, and \code{toggleCollapse} functions can be
-used very similarly to the \code{update*} functions found in shiny. Because
-collapse is not a reactive input a single \code{updateCollapse} function is not
-included with dull nor did it make sense to create a \code{renderCollapse}
-function as a collapse is not a reactive output.
+The collapsed content is toggled by a button or may be toggled between hidden
+and shown states using \code{toggleCollapse}. \code{showCollapse} and \code{hideCollapse}
+are alternatives to \code{toggleCollapse} to change the state of collapsed content
+to shown or hidden, respectively.
 }
 \examples{
 if (interactive()) {
@@ -64,9 +60,9 @@ if (interactive()) {
           )
         ),
         col(
-          button(id = "toggle", "Toggle collapse"),
-          button(id = "hide", "Only hide", context = "warning"),
-          button(id = "show", "Only show", context = "info")
+          buttonInput(id = "toggle", "Toggle"),
+          buttonInput(id = "hide", "Hide"),
+          buttonInput(id = "show", "Show")
         )
       )
     ),

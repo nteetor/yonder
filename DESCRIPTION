@@ -13,7 +13,8 @@ Depends:
     R (>= 3.0.0),
     shiny
 Imports:
-    htmltools
+    htmltools,
+    jsonlite
 Suggests:
     testthat,
     knitr,
@@ -29,7 +30,6 @@ Collate:
     accordion.R
     alerts.R
     badge.R
-    breadcrumb.R
     button.R
     card.R
     checkbox.R

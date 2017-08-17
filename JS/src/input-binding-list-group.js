@@ -1,79 +1,119 @@
 $(document).ready(function() {
-  $(".dull-list-group[id] .list-group-item:not(.disabled)").click(function(e) {
+  $(".dull-list-group-input[id]").on("click", ".list-group-item:not(.disabled)", function(e) {
     e.preventDefault();
 
-    var el = $(e.target);
-    el.toggleClass("active");
-
-    el.parent().trigger("change");
+    var $this = $(this);
+    $this.toggleClass("active");
+    $this.trigger("change");
   });
 });
 
-var listGroupBinding = new Shiny.InputBinding();
+var listGroupInputBinding = new Shiny.InputBinding();
 
-$.extend(listGroupBinding, {
+$.extend(listGroupInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-list-group[id]");
+    return $(scope).find(".dull-list-group-input[id]");
   },
   getValue: function(el) {
-    return $(el)
-      .children(".list-group-item.active")
-      .map(function() {
-        return $(this).data("value");
+    var $val = $(el)
+      .children(".list-group-item.active:not(:disabled)")
+      .map(function(i, e) {
+        return $(e).data("value");
       })
       .get();
+    return $val === undefined ? null : $val;
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function(el, callback) {
-    $(el).on("change.listGroupBinding", function(e) {
+    $(el).on("change.listGroupInputBinding", function(e) {
       callback();
     });
   },
   unsubscribe: function(el) {
-    $(el).off(".listGroupBinding");
-  }
-});
-
-Shiny.inputBindings.register(listGroupBinding, "dull.listGroup");
-
-var listGroupItemBinding = new Shiny.InputBinding();
-
-$.extend(listGroupItemBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-list-group-item[id]");
-  },
-  getValue: function(el) {
-    return $(el).data("value");
+    $(el).off(".listGroupInputBinding");
   },
   receiveMessage: function(el, data) {
     var $el = $(el);
 
-    if (data.label) {
-      $el.text(data.label);
+    if (data.items !== undefined) {
+      $el.find(".list-group-item").remove();
+      if ($el.children().length !== 0) {
+        $el.children().first().before(data.items);
+      } else {
+        $el.html(data.items);
+      }
     }
 
-    if (data.value) {
-      $el.data("value", data.value);
+    if (data.state !== undefined) {
+      var state = data.state === "valid" ? null : "list-group-item-" + data.state;
+
+      if (data.filter !== null) {
+        $.each(data.filter, function(i, v) {
+          $el.find(".list-group-item[data-value=\"" + v + "\"]")
+            .attr("class", function(i, c) {
+              return c.replace(/list-group-item-(success|info|warning|danger)/g, "");
+            })
+            .addClass(state);
+        });
+      } else {
+        $el.find(".list-group-item")
+          .attr("class", function(i, c) {
+            return c.replace(/list-group-item-(success|info|warning|danger)/g, "");
+          })
+          .addClass(state);
+      }
     }
 
-    if (data.context) {
-      $el.attr("class", function(i, c) {
-        return c.replace(/list-group-item-(success|info|warning|danger)/, "");
-      });
-      $el.addClass(data.context);
+    if (data.disable) {
+      if (data.disable === true) {
+        $el.find(".list-group-item").each(function(i, e) {
+          $(e).prop("disabled", true);
+        });
+      } else {
+        $.each(data.disable, function(i, v) {
+          $el.find(".list-group-item[data-value=\"" + v + "\"]")
+            .prop("disabled", true);
+        });
+      }
     }
 
-    if (data.active) {
-      $el.prop("active", data.active);
+    if (data.enable) {
+      if (data.enable === true) {
+        $el.find(".list-group-item").each(function(i, e) {
+          $(e).prop("disabled", false);
+        });
+      } else {
+        $.each(data.enable, function(i, v) {
+          $el.find(".list-group-item[data-value=\"" + v + "\"]")
+            .prop("disabled", false);
+        });
+      }
     }
 
-    if (data.disabled) {
-      $el.prop("disabled", data.disabled);
+    if (data.increment) {
+      if (data.increment === true) {
+        var $badge = $el.find(".list-group-item .badge");
+
+        if ($badge.length !== 0) {
+          $badge.each(function(i, e) {
+            $(e).text(parseInt($(e).text(), 10) + 1);
+          });
+        }
+      } else {
+        $.each(data.increment, function(i, v) {
+          var $badge = $el.find(".list-group-item[data-value=\"" + v + "\"] .badge");
+
+          if ($badge.length !== 0) {
+            $badge.text(parseInt($badge.text(), 10) + 1);
+          }
+        });
+      }
     }
 
+    $el.trigger("change");
   }
 });
 
-Shiny.inputBindings.register(listGroupItemBinding, "dull.listGroupItem");
+Shiny.inputBindings.register(listGroupInputBinding, "dull.listGroupInput");

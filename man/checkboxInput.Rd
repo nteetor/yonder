@@ -2,51 +2,124 @@
 % Please edit documentation in R/checkbox.R
 \name{checkboxInput}
 \alias{checkboxInput}
-\alias{updateCheckbox}
-\title{Checkbox inputs and checkbox bars}
+\alias{updateCheckboxInput}
+\alias{validateCheckboxInput}
+\alias{disableCheckboxInput}
+\alias{enableCheckboxInput}
+\title{Checkbox inputs}
 \usage{
-checkboxInput(labels = NULL, values = NULL, checked = NULL,
-  inline = FALSE, bar = FALSE, context = "secondary", ..., id = NULL)
+checkboxInput(id, choice, value = choice, label = NULL, checked = FALSE,
+  ...)
 
-updateCheckbox(id, context, session = getDefaultReactiveDomain())
+updateCheckboxInput(id, choice, value = choice, checked = FALSE,
+  session = getDefaultReactiveDomain())
+
+validateCheckboxInput(id, state, session = getDefaultReactiveDomain())
+
+disableCheckboxInput(id, session = getDefaultReactiveDomain())
+
+enableCheckboxInput(id, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{labels}{A character vector specifying the labels of the checkboxes,
-defaults to \code{NULL}.}
+\item{id}{A character string specifying the id of the checkbox input, the
+reactive value of the checkbox input is available to the shiny server
+function as part of the \code{input} object.}
 
-\item{values}{A character vector specifying the values of the checkboxes,
-must be the same length as \code{labels}, defaults to \code{NULL}.}
+\item{choice}{A character string specifying a label for the checkbox.}
 
-\item{checked}{A logical vector specifying which of the checkboxes render in
-a checked state, if specified must be the same length as \code{labels}, defaults
-to \code{NULL}. If unspecified all checkboxes render in an unchecked state.}
+\item{value}{A character string, object to coerce to a character string, or
+\code{NULL} specifying the value of the checkbox or a new value for the
+checkbox, defaults to \code{choice}.}
 
-\item{inline}{If \code{TRUE}, the checkbox options are rendered inline, otherwise
-the checkbox options appear on individual lines, defaults to \code{FALSE}.}
+\item{label}{A character string specifying a label for the checkbox input,
+defaults to \code{NULL}, in which case a label is not added.}
 
-\item{bar}{If \code{TRUE}, changes only the visual appearance of a group of
-checkboxes, checkboxes are rendered as a button bar or set of buttons,
-defaults to \code{FALSE}.}
+\item{checked}{If \code{TRUE} the checkbox renders in a checked state, defaults
+to \code{FALSE}.}
 
-\item{context}{Applied only when \code{bar = TRUE}, one of \code{"primary"},
-\code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, or \code{"danger"} specifying
-the visual context of the checkbox bar, defaults to \code{"secondary"}.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
-\item{...}{Additional named arguments passed on as HTML attributes to the
-parent element.}
-
-\item{id}{A character string specifying the id of the checkbox bar, if
-specified a reactive input is available to the shiny server function,
-defaults to \code{NULL}.}
+\item{state}{One of \code{"valid"}, \code{"warning"}, or \code{"danger"} indicating the
+state of the checkbox input. If the return value is \code{"valid"} any visual
+context is removed.}
 }
 \description{
-A reactive input for selecting one or more values. A checkbox bar is a
-visually re-styling of a group of checkboxes. A checkbox bar appears as a set
-of buttons, but still acts as a checkbox group. Because checkbox bars are
-pseudo-buttons a visual context may be specified.
+A reactive checkbox input. When a checkbox input is unchecked the reactive
+value is \code{NULL}. When checked the checkbox input reactive value is \code{value}.
 }
 \examples{
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          checkboxInput(
+            id = "checkbox",
+            label = "A checkbox",
+            choice = "Are you there?",
+            value = "yes"
+          )
+        ),
+        col(
+          display1(
+            textOutput("value")
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$value <- renderText({
+        input$checkbox
+      })
+    }
+  )
+}
 
-stub
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          checkboxInput(
+            id = "caps",
+            choice = "Capslock?",
+            value = "capslock"
+          )
+        ),
+        col(
+          checkboxInput(
+            id = "question",
+            choice = "Please check this box",
+            value = "checked"
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      observe({
+        if (isTruthy(input$caps)) {
+          updateCheckboxInput(
+            id = "question",
+            choice = "PLEASE CHECK THIS BOX",
+            value = "checked"
+          )
+        } else {
+          updateCheckboxInput(
+            id = "question",
+            choice = "Please check this box",
+            value = "checked"
+          )
+        }
+      })
+    }
+  )
+}
 
+}
+\seealso{
+Other inputs: \code{\link{buttonInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{radioInput}}, \code{\link{selectInput}},
+  \code{\link{textInput}}
 }

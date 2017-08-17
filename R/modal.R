@@ -24,28 +24,28 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       button(id = "toggle", "Click to show modal"),
-#'       modal(
-#'         id = "simple",
-#'         header = "A simple modal",
-#'         body = paste(
-#'           "Cras mattis consectetur purus sit amet fermentum.",
-#'           "Cras justo odio, dapibus ac facilisis in, egestas",
-#'           "eget quam. Morbi leo risus, porta ac consectetur",
-#'           "ac, vestibulum at eros."
-#'         )
-#'       )
+#'       buttonInput(id = "button", "Click to show modal")
 #'     ),
 #'     server = function(input, output) {
-#'       observeEvent(input$toggle, {
-#'         toggleModal("simple")
+#'       observeEvent(input$button, {
+#'         sendModal(
+#'           title = "A simple modal",
+#'           body = paste(
+#'             "Cras mattis consectetur purus sit amet fermentum.",
+#'             "Cras justo odio, dapibus ac facilisis in, egestas",
+#'             "eget quam. Morbi leo risus, porta ac consectetur",
+#'             "ac, vestibulum at eros."
+#'           )
+#'         )
 #'       })
 #'     }
 #'   )
+#' }
 #'
+#' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       button(id = "toggle", "Demo login"),
+#'       buttonInput(id = "toggle", "Demo login"),
 #'       modal(
 #'         id = "login",
 #'         header = "Please login",
@@ -55,12 +55,12 @@
 #'             label = "Name",
 #'             placeholder = "yourname@@email.com"
 #'           ),
-#'           textInput(
+#'           passwordInput(
 #'             id = "password",
 #'             label = "Password"
 #'           )
 #'         ),
-#'         footer = button(id = "process", "Submit")
+#'         footer = buttonInput(id = "process", "Submit")
 #'       )
 #'     ),
 #'     server = function(input, output) {
@@ -76,51 +76,14 @@
 #'   )
 #' }
 #'
-modal <- function(header = NULL, body = NULL, footer = NULL, ...) {
-  tags$div(
-    class = "dull-modal modal fade",
-    tags$div(
-      class = "modal-dialog",
-      role = "document",
-      tags$div(
-        class = "modal-content",
-        tags$div(
-          class = "modal-header",
-          if (is.character(header)) tags$h5(class = "modal-title", header) else
-            tagEnsureClass(header, "modal-title"),
-          tags$button(
-            type = "button",
-            class = "close",
-            `data-dismiss` = "modal",
-            `aria-label` = "Close",
-            fontAwesome("times-rectangle")
-          )
-        ),
-        if (!is.null(body)) {
-          tags$div(
-            class = "modal-body",
-            body
-          )
-        },
-        if (!is.null(footer)) {
-          tags$div(
-            class = "modal-footer",
-            footer
-          )
-        }
-      )
-    ),
-    ...
-  )
-}
-
-#' @rdname modal
-#' @export
-toggleModal <- function(id, session = getDefaultReactiveDomain()) {
+sendModal <- function(title, body, footer = NULL,
+                      session = getDefaultReactiveDomain()) {
   session$sendCustomMessage(
-    "dull.modal.toggle",
+    "dull:modal",
     list(
-      id = paste0("#", id)
+      title = htmltools::HTML(as.character(title)),
+      body = htmltools::HTML(as.character(body)),
+      footer = if (!is.null(footer)) htmltools::HTML(as.character(footer))
     )
   )
 }

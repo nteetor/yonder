@@ -2,25 +2,39 @@ var tableOutputBinding = new Shiny.OutputBinding();
 
 $.extend(tableOutputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-table[id]");
+    return $(scope).find(".dull-table-thruput[id]");
   },
   getId: function(el) {
     return el.id;
   },
   renderValue: function(el, data) {
-    if (data.content) {
-      $(el).html(data.content);
+    var $el = $(el);
+
+    if (data.data && data.columns) {
+      $el.empty();
+
+      $el.append(
+        $("<thead>").append(
+          $("<tr>").append(
+            $("<th>").text("#"),
+            $.map(data.columns, (col, i) => {
+              return $("<th>").addClass("thead-default").text(col);
+            })
+          )
+        ),
+        $("<tbody>").append(
+          $.map(data.data, (row, i) => {
+            return $("<tr>").append(
+              $("<th>").text(i + 1).attr("scope", "row"),
+              $.map(Object.entries(row), ([key, value], i) => {
+                return $("<td>").text(value).data("col", key);
+              })
+            );
+          })
+        )
+      );
     }
   }
 });
 
 Shiny.outputBindings.register(tableOutputBinding, "dull.tableOutput");
-
-$(document).ready(function() {
-  $(".dull-table").delegate("tbody tr", "click", function(e) {
-    var $this = $(this);
-    var context = $this.parents(".dull-table").first().data("context");
-    $this.toggleClass("table-" + context);
-    $this.toggleClass("dull-row");
-  });
-});
