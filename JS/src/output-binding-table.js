@@ -18,7 +18,7 @@ $.extend(tableOutputBinding, {
           $("<tr>").append(
             $("<th>").text("#"),
             $.map(data.columns, (col, i) => {
-              return $("<th>").text(col);
+              return $("<th>").addClass("thead-default").text(col);
             })
           )
         ),
