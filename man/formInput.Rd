@@ -11,8 +11,8 @@ formInput(id, ...)
 defaults to \code{NULL}. If specified a form or form group becomes a reactive
 input. A reactive form group will modify its parent form's input.}
 
-\item{...}{Any number of inputs, other elements, or named arguments passed
-as HTML attributes to the parent element.}
+\item{...}{Any number of inputs, other elements, or additional named
+arguments passed as HTML attributes to the parent element.}
 }
 \description{
 Form inputs are a new reactive input. A form input's reactive value is a list
@@ -41,7 +41,7 @@ if (interactive()) {
               legend = "Radios",
               radioInput(
                 id = "options",
-                labels = c(
+                choices = c(
                   "Option one",
                   "Option two",
                   "Option three"

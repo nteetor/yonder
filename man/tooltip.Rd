@@ -23,46 +23,10 @@ Both functions are a means of adding help text to HTML components. Tooltips
 appear on hover and popovers appear when the element is clicked.
 }
 \examples{
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      listGroupInput(
-        tooltip(
-          listGroupItem("Item 1"),
-          "This is the first item",
-          placement = "bottom"
-        ),
-        tooltip(
-          listGroupItem("Item 2"),
-          "This is the second item"
-        )
-      )
-    ),
-    server = function(input, output) {
-
-    }
-  )
-}
 
 popover(
   buttonInput("Click me!"),
-  "This text appears on click"
-)
-
-# list items with popovers
-listGroup(
-  popover(
-    listGroupItem("Some text"),
-    "The first list item"
-  ),
-  popover(
-    listGroupItem("More text"),
-    "The second list item"
-  ),
-  popover(
-    listGroupItem("Final text"),
-    "Did you find this text?"
-  )
+  "This text appears when the button is clicked"
 )
 
 }

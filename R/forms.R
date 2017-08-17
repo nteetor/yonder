@@ -8,8 +8,8 @@
 #'   defaults to `NULL`. If specified a form or form group becomes a reactive
 #'   input. A reactive form group will modify its parent form's input.
 #'
-#' @param ... Any number of inputs, other elements, or named arguments passed
-#'   as HTML attributes to the parent element.
+#' @param ... Any number of inputs, other elements, or additional named
+#'   arguments passed as HTML attributes to the parent element.
 #'
 #' @seealso
 #'
@@ -41,7 +41,7 @@
 #'               legend = "Radios",
 #'               radioInput(
 #'                 id = "options",
-#'                 labels = c(
+#'                 choices = c(
 #'                   "Option one",
 #'                   "Option two",
 #'                   "Option three"

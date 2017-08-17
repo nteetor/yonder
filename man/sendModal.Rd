@@ -4,7 +4,7 @@
 \alias{sendModal}
 \title{Modal dialogs}
 \usage{
-sendModal(title, body, footer = NULL, ...)
+sendModal(title, body, footer = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{body}{A character vectory specifying the main text of the modal or
@@ -13,12 +13,12 @@ custom elements to use as the body of the modal, defaults to \code{NULL}.}
 \item{footer}{Custom tags to include at the bottom of the modal, defaults to
 \code{NULL}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
-
 \item{header}{A character vector specifying a title for the modal or a custom
 element to use as a header, defaults to \code{NULL}. The default heading tag is
 \code{h5}.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 }
 \description{
 Modals are a flexible alert window, which disable interaction with the page
@@ -31,21 +31,19 @@ updated components. Modal elements may be included anywhere on a web page.
 if (interactive()) {
   shinyApp(
     ui = container(
-      buttonInput(id = "toggle", "Click to show modal"),
-      modal(
-        id = "simple",
-        header = "A simple modal",
-        body = paste(
-          "Cras mattis consectetur purus sit amet fermentum.",
-          "Cras justo odio, dapibus ac facilisis in, egestas",
-          "eget quam. Morbi leo risus, porta ac consectetur",
-          "ac, vestibulum at eros."
-        )
-      )
+      buttonInput(id = "button", "Click to show modal")
     ),
     server = function(input, output) {
-      observeEvent(input$toggle, {
-        toggleModal("simple")
+      observeEvent(input$button, {
+        sendModal(
+          title = "A simple modal",
+          body = paste(
+            "Cras mattis consectetur purus sit amet fermentum.",
+            "Cras justo odio, dapibus ac facilisis in, egestas",
+            "eget quam. Morbi leo risus, porta ac consectetur",
+            "ac, vestibulum at eros."
+          )
+        )
       })
     }
   )
