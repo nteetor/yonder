@@ -24,8 +24,16 @@ $.extend(tableOutputBinding, {
         ),
         $("<tbody>").append(
           $.map(data.data, (row, i) => {
+            var heading;
+            if ("_row" in row) {
+              heading = $("<th>").text(row._row).attr("scope", "row");
+              delete row._row;
+            } else {
+              heading = $("<th>").text(i + 1).attr("scope", "row");
+            }
+
             return $("<tr>").append(
-              $("<th>").text(i + 1).attr("scope", "row"),
+              heading,
               $.map(Object.entries(row), ([key, value], i) => {
                 return $("<td>").text(value).data("col", key);
               })

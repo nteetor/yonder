@@ -32,6 +32,12 @@ defaults to \code{FALSE}.}
 the context of selected table rows, defaults to \code{NULL}, in which case
 selected rows are highlighted in grey.}
 
+\item{state}{One of \code{"valid"}, \code{"primary"}, \code{"secondary"}, \code{"success"},
+\code{"info"}, \code{"warning"}, or \code{"danger"} indicating the state of the table row.
+If \code{"valid"} then the visual context is removed.}
+
+\item{validate}{A numeric vector of row numbers indicating which}
+
 \item{session}{A \code{session} object passed to the shiny server function,
 defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }

@@ -15,7 +15,8 @@ $.extend(tableInputBinding, {
 
     var columns = $el.find("thead th").map((i, e) => $(e).text()).get();
 
-    var value = $el.find(".table-active")
+    var value = $el.find("tr")
+      .filter((i, e) => $(e).data("selected"))
       .map(function(i, row) {
         var obj = {};
 
@@ -42,6 +43,16 @@ $.extend(tableInputBinding, {
   },
   unsubscribe: function(el) {
     $(el).off(".tableInputBinding");
+  },
+  receiveMessage: function(el, data) {
+    var $el = $(el);
+
+    if (data.validate) {
+      $.each(data.validate, function(i, index) {
+        $el.find("tbody tr:nth-child(" + index + ")")
+          .addClass("table-" + data.state);
+      });
+    }
   }
 });
 
@@ -51,6 +62,25 @@ $(document).ready(function() {
   $(".dull-table-thruput[id]").on("click", "tbody tr", function(e) {
     var $this = $(this);
 
-    $this.toggleClass("table-active");
+    if ($this.data("selected")) {
+      $this.data("selected", false).attr("class", function(i, c) {
+        c = c || "";
+        var d = c.replace(/bg-(primary|success|info|warning|danger)/g, "table-$1")
+          .replace(/table-dark/g, "");
+
+        return d;
+      });
+    } else {
+      $this.data("selected", true).attr("class", function(i, c) {
+        c = c || "";
+        var d = c.replace(/table-(primary|success|info|warning|danger)/g, "bg-$1");
+
+        if (d === c) {
+          d = d + " table-dark";
+        }
+
+        return d;
+      });
+    }
   });
 });

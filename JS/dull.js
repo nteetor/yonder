@@ -304,70 +304,6 @@ $.extend(dropdownInputBinding, {
 
 Shiny.inputBindings.register(dropdownInputBinding, "dull.dropdownInput");
 
-var formGroupInputBinding = new Shiny.InputBinding();
-
-$.extend(formGroupInputBinding, {
-  find: function find(scope) {
-    return $(scope).find(".dull-form-group[id]");
-  },
-  getValue: function getValue(el) {
-    var $children = $(el).children(".dull-input[id]");
-
-    if (!$children.length) {
-      return null;
-    }
-
-    return $children.map(function (i, e) {
-      var ret = {};
-      ret[e.id] = $(e).val() || null;
-      return ret;
-    }).get().reduce(function (acc, obj) {
-      return Object.assign(acc, obj);
-    });
-  },
-  getState: function getState(el, data) {
-    return { value: this.getValue(el) };
-  },
-  subscribe: function subscribe(el, callback) {
-    $(el).on("dull:formchange.formGroupInputBinding", function (e) {
-      callback();
-    });
-  },
-  unsubscribe: function unsubscribe(el) {
-    $(el).off(".formGroupInputBinding");
-  },
-  receiveMessage: function receiveMessage(el, data) {
-    var $el = $(el);
-
-    if (data.state) {
-      $el.attr("class", function (i, c) {
-        return c.replace(/has-(success|warning|danger)/g, "");
-      });
-      $el.addClass(data.state);
-    }
-  }
-});
-
-Shiny.inputBindings.register(formGroupInputBinding, "dull.formGroupInput");
-
-$(document).on("shiny:inputchanged", function (e) {
-  var $el = $(e.el);
-
-  if ($el.parents(".dull-form[id]").length) {
-    var $parent = $el.parents(".dull-form[id]").first();
-
-    if (!$parent.find(".dull-submit[type=\"submit\"]").length) {
-      e.preventDefault();
-
-      $parent.trigger("dull:formchange");
-    }
-  } else if ($el.parents(".dull-form-group[id]").length) {
-    e.preventDefault();
-
-    $el.parents(".dull-form-group[id]").first().trigger("dull:formchange");
-  }
-});
-
 var formInputBinding = new Shiny.InputBinding();
 
 $(document).ready(function () {
@@ -707,7 +643,9 @@ $.extend(tableInputBinding, {
       return $(e).text();
     }).get();
 
-    var value = $el.find(".table-active").map(function (i, row) {
+    var value = $el.find("tr").filter(function (i, e) {
+      return $(e).data("selected");
+    }).map(function (i, row) {
       var obj = {};
 
       $(row).children("td").each(function (j, cell) {
@@ -732,6 +670,15 @@ $.extend(tableInputBinding, {
   },
   unsubscribe: function unsubscribe(el) {
     $(el).off(".tableInputBinding");
+  },
+  receiveMessage: function receiveMessage(el, data) {
+    var $el = $(el);
+
+    if (data.validate) {
+      $.each(data.validate, function (i, index) {
+        $el.find("tbody tr:nth-child(" + index + ")").addClass("table-" + data.state);
+      });
+    }
   }
 });
 
@@ -741,7 +688,25 @@ $(document).ready(function () {
   $(".dull-table-thruput[id]").on("click", "tbody tr", function (e) {
     var $this = $(this);
 
-    $this.toggleClass("table-active");
+    if ($this.data("selected")) {
+      $this.data("selected", false).attr("class", function (i, c) {
+        c = c || "";
+        var d = c.replace(/bg-(primary|success|info|warning|danger)/g, "table-$1").replace(/table-dark/g, "");
+
+        return d;
+      });
+    } else {
+      $this.data("selected", true).attr("class", function (i, c) {
+        c = c || "";
+        var d = c.replace(/table-(primary|success|info|warning|danger)/g, "bg-$1");
+
+        if (d === c) {
+          d = d + " table-dark";
+        }
+
+        return d;
+      });
+    }
   });
 });
 
@@ -884,7 +849,7 @@ Shiny.outputBindings.register(barOutputBinding, "dull.barOutput");
 
 $.extend(Shiny.progressHandlers, {
   dull: function dull(data) {
-    $("<li>").addClass("list-group-item").addClass(data.context ? "list-group-item-" + data.context : "").text(data.message).hide().appendTo($(data.id)).fadeIn(300);
+    $("<li>").addClass("list-group-item").addClass(data.context ? "list-group-item-" + data.context : "").text(data.message).hide().appendTo($("#" + data.id)).fadeIn(300);
 
     return false;
   }
@@ -908,7 +873,15 @@ $.extend(tableOutputBinding, {
       $el.append($("<thead>").append($("<tr>").append($("<th>").text("#"), $.map(data.columns, function (col, i) {
         return $("<th>").addClass("thead-default").text(col);
       }))), $("<tbody>").append($.map(data.data, function (row, i) {
-        return $("<tr>").append($("<th>").text(i + 1).attr("scope", "row"), $.map(Object.entries(row), function (_ref, i) {
+        var heading;
+        if ("_row" in row) {
+          heading = $("<th>").text(row._row).attr("scope", "row");
+          delete row._row;
+        } else {
+          heading = $("<th>").text(i + 1).attr("scope", "row");
+        }
+
+        return $("<tr>").append(heading, $.map(Object.entries(row), function (_ref, i) {
           var _ref2 = _slicedToArray(_ref, 2),
               key = _ref2[0],
               value = _ref2[1];
