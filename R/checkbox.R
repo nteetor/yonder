@@ -34,6 +34,7 @@
 #'     ui = container(
 #'       row(
 #'         col(
+#'           width = 8,
 #'           checkboxInput(
 #'             id = "checkbox",
 #'             label = "A checkbox",
@@ -42,7 +43,7 @@
 #'           )
 #'         ),
 #'         col(
-#'           display1(
+#'           display4(
 #'             textOutput("value")
 #'           )
 #'         )

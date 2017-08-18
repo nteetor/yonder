@@ -57,8 +57,8 @@ badges.}
 element.}
 
 \item{state}{One of \code{"valid"}, \code{"warning"}, or \code{"danger"} indicating the
-state of the list group items. If the return value is \code{"valid"} any visual
-context is removed.}
+state of the list group items. If \code{"valid"} then the visual context is
+removed.}
 
 \item{validate}{One or more of \code{values} indicating which list group items
 to mark with \code{state}, defaults to \code{NULL}. If \code{NULL} then the all list group

@@ -54,6 +54,7 @@ if (interactive()) {
     ui = container(
       row(
         col(
+          width = 8,
           checkboxInput(
             id = "checkbox",
             label = "A checkbox",
@@ -62,7 +63,7 @@ if (interactive()) {
           )
         ),
         col(
-          display1(
+          display4(
             textOutput("value")
           )
         )

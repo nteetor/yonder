@@ -28,8 +28,8 @@
 #'   badges.
 #'
 #' @param state One of `"valid"`, `"warning"`, or `"danger"` indicating the
-#'   state of the list group items. If the return value is `"valid"` any visual
-#'   context is removed.
+#'   state of the list group items. If `"valid"` then the visual context is
+#'   removed.
 #'
 #' @param validate One or more of `values` indicating which list group items
 #'   to mark with `state`, defaults to `NULL`. If `NULL` then the all list group
