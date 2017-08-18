@@ -81,7 +81,7 @@ sendStreamMessage <- function(id, message, context = NULL,
   session$sendProgress(
     "dull",
     list(
-      id = paste0("#", id),
+      id = id,
       message = message,
       context = context
     )

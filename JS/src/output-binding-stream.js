@@ -5,7 +5,7 @@ $.extend(Shiny.progressHandlers, {
       .addClass(data.context ? "list-group-item-" + data.context : "")
       .text(data.message)
       .hide()
-      .appendTo($(data.id))
+      .appendTo($("#" + data.id))
       .fadeIn(300);
 
     return false;
