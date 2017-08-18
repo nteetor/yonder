@@ -30,6 +30,7 @@ Collate:
     accordion.R
     alerts.R
     badge.R
+    bars.R
     button.R
     card.R
     checkbox.R
