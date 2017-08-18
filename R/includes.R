@@ -4,12 +4,12 @@ bootstrap <- function() {
   htmltools::singleton(
     tags$head(
       htmltools::suppressDependencies("bootstrap"),
-      tags$script(src = "dull/tether/tether.min.js"),
+      tags$script(src = "dull/popper/popper.min.js"),
       tags$link(
         rel = "stylesheet",
-        href = "dull/bootstrap/bootstrap.min.css"
+        href = "dull/bootstrap/css/bootstrap.min.css"
       ),
-      tags$script(src = "dull/bootstrap/bootstrap.min.js"),
+      tags$script(src = "dull/bootstrap/js/bootstrap.min.js"),
       tags$script(src = "dull/js/dull.min.js"),
       tags$link(rel = "stylesheet", href = "dull/css/dull.min.css")
     )
