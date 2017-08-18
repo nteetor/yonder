@@ -1,12 +1,11 @@
-#' Form and form group inputs
+#' Form inputs
 #'
 #' Form inputs are a new reactive input. A form input's reactive value is a list
 #' of all the reactive inputs within it. Additionally, form inputs suppress
 #' the reactive nature of
 #'
-#' @param id A character string specifying an id for the form or form group,
-#'   defaults to `NULL`. If specified a form or form group becomes a reactive
-#'   input. A reactive form group will modify its parent form's input.
+#' @param id A character string specifying an id for the form input, defaults to
+#'   `NULL`.
 #'
 #' @param ... Any number of inputs, other elements, or additional named
 #'   arguments passed as HTML attributes to the parent element.

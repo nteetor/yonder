@@ -8,9 +8,11 @@ sendAlert(id, content, context = "secondary",
   session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{id}{A character vector of HTML id(s) where the alerts are inserted.}
+\item{id}{A character vector of HTML id(s) where the alert(s) will be
+inserted.}
 
-\item{content}{Text and elements to include}
+\item{content}{A character string specifying the body of the alert or
+a custom element to include as the body of the alert.}
 
 \item{context}{One of \code{"success"}, \code{"info"}, \code{"warning"}, or \code{"danger"}
 specifying the visual context of the alert, defaults to \code{"secondary"}.}

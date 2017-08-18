@@ -6,12 +6,10 @@
 #' modals, dull modals must be built ahead of time, but may include dynamically
 #' updated components. Modal elements may be included anywhere on a web page.
 #'
-#' @param header A character vector specifying a title for the modal or a custom
-#'   element to use as a header, defaults to `NULL`. The default heading tag is
-#'   `h5`.
+#' @param title A character string specifying the modal's title.
 #'
-#' @param body A character vectory specifying the main text of the modal or
-#'   custom elements to use as the body of the modal, defaults to `NULL`.
+#' @param body A character string specifying the body of the modal or
+#'   custom element to use as the body of the modal, defaults to `NULL`.
 #'
 #' @param footer Custom tags to include at the bottom of the modal, defaults to
 #'   `NULL`.

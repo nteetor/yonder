@@ -7,15 +7,13 @@
 sendModal(title, body, footer = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{body}{A character vectory specifying the main text of the modal or
-custom elements to use as the body of the modal, defaults to \code{NULL}.}
+\item{title}{A character string specifying the modal's title.}
+
+\item{body}{A character string specifying the body of the modal or
+custom element to use as the body of the modal, defaults to \code{NULL}.}
 
 \item{footer}{Custom tags to include at the bottom of the modal, defaults to
 \code{NULL}.}
-
-\item{header}{A character vector specifying a title for the modal or a custom
-element to use as a header, defaults to \code{NULL}. The default heading tag is
-\code{h5}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}

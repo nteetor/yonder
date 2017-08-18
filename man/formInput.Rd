@@ -2,14 +2,13 @@
 % Please edit documentation in R/forms.R
 \name{formInput}
 \alias{formInput}
-\title{Form and form group inputs}
+\title{Form inputs}
 \usage{
 formInput(id, ...)
 }
 \arguments{
-\item{id}{A character string specifying an id for the form or form group,
-defaults to \code{NULL}. If specified a form or form group becomes a reactive
-input. A reactive form group will modify its parent form's input.}
+\item{id}{A character string specifying an id for the form input, defaults to
+\code{NULL}.}
 
 \item{...}{Any number of inputs, other elements, or additional named
 arguments passed as HTML attributes to the parent element.}

@@ -2,9 +2,11 @@
 #'
 #' `sendAlert`
 #'
-#' @param id A character vector of HTML id(s) where the alerts are inserted.
+#' @param id A character vector of HTML id(s) where the alert(s) will be
+#'   inserted.
 #'
-#' @param content Text and elements to include
+#' @param content A character string specifying the body of the alert or
+#'   a custom element to include as the body of the alert.
 #'
 #' @param context One of `"success"`, `"info"`, `"warning"`, or `"danger"`
 #'   specifying the visual context of the alert, defaults to `"secondary"`.
