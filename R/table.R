@@ -21,6 +21,14 @@
 #' @param quoted If `TRUE`, then `expr` is treated as a quoted expression,
 #'   defaults to `FALSE`.
 #'
+#' @param state One of `"valid"`, `"primary"`, `"secondary"`, `"success"`,
+#'   `"info"`, `"warning"`, or `"danger"` indicating the state of the table row.
+#'   If `"valid"` then the visual context is removed.
+#'
+#' @param validate A numeric vector or list of row numbers indicating which
+#'   table rows to mark as `state`, defaults to `NULL`. If `NULL` then all rows
+#'   are marked as `state`.
+#'
 #' @param session A `session` object passed to the shiny server function,
 #'   defaults to [`getDefaultReactiveDomain()`].
 #'
@@ -62,7 +70,7 @@
 #'       row(
 #'         col(
 #'           tableThruput(
-#'             id = "tbl",
+#'             id = "table",
 #'             borders = TRUE
 #'           )
 #'         ),
@@ -75,12 +83,40 @@
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$tbl <- renderTable({
-#'         iris[1:10, ]
+#'       output$table <- renderTable({
+#'         mtcars[1:10, ]
 #'       })
 #'
 #'       output$subset <- renderTable({
-#'         input$tbl
+#'         input$table
+#'       })
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           width = 8,
+#'           tableThruput(
+#'             id = "table",
+#'             border = TRUE
+#'           )
+#'         ),
+#'         col(
+#'           buttonInput(id = "button", "Validate")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$table <- renderTable({
+#'         mtcars[1:10, ]
+#'       })
+#'
+#'       observeEvent(input$button, {
+#'         validateTableThruput("table", "success", c(1, 2, 3, 5, 8))
 #'       })
 #'     }
 #'   )
@@ -88,7 +124,7 @@
 #'
 #'
 tableThruput <- function(id, borders = FALSE, compact = FALSE, ...) {
-  if (!is.null(id) || !is.character(id)) {
+  if (!is.null(id) && !is.character(id)) {
     stop(
       "invalid `tableThruput` argument, `id` must be a character string or ",
       "NULL",
@@ -137,6 +173,25 @@ renderTable <- function(expr, env = parent.frame(), quoted = FALSE) {
       )
     )
   }
+}
+
+validateTableThruput <- function(id, state, validate = NULL,
+                                 session = getDefaultReactiveDomain()) {
+  if (!re(state, "primary|success|info|warning|danger|valid", FALSE)) {
+    stop(
+      "invalid `validateTableThruput` argument, `state` must be one of ",
+      '"primary", "success", "info", "warning", "danger", or "valid"',
+      call. = FALSE
+    )
+  }
+
+  session$sendInputMessage(
+    id,
+    list(
+      state = state,
+      validate = if (is.null(validate)) TRUE else as.list(validate)
+    )
+  )
 }
 
 shiny::registerInputHandler(

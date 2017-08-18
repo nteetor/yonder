@@ -32,6 +32,14 @@ defaults to \code{FALSE}.}
 the context of selected table rows, defaults to \code{NULL}, in which case
 selected rows are highlighted in grey.}
 
+\item{state}{One of \code{"valid"}, \code{"primary"}, \code{"secondary"}, \code{"success"},
+\code{"info"}, \code{"warning"}, or \code{"danger"} indicating the state of the table row.
+If \code{"valid"} then the visual context is removed.}
+
+\item{validate}{A numeric vector or list of row numbers indicating which
+table rows to mark as \code{state}, defaults to \code{NULL}. If \code{NULL} then all rows
+are marked as \code{state}.}
+
 \item{session}{A \code{session} object passed to the shiny server function,
 defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
@@ -72,7 +80,7 @@ if (interactive()) {
       row(
         col(
           tableThruput(
-            id = "tbl",
+            id = "table",
             borders = TRUE
           )
         ),
@@ -85,12 +93,40 @@ if (interactive()) {
       )
     ),
     server = function(input, output) {
-      output$tbl <- renderTable({
-        iris[1:10, ]
+      output$table <- renderTable({
+        mtcars[1:10, ]
       })
 
       output$subset <- renderTable({
-        input$tbl
+        input$table
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          width = 8,
+          tableThruput(
+            id = "table",
+            border = TRUE
+          )
+        ),
+        col(
+          buttonInput(id = "button", "Validate")
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$table <- renderTable({
+        mtcars[1:10, ]
+      })
+
+      observeEvent(input$button, {
+        validateTableThruput("table", "success", c(1, 2, 3, 5, 8))
       })
     }
   )
