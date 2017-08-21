@@ -13,7 +13,17 @@ re <- function(string, pattern, len0 = TRUE) {
 }
 
 ID <- function(x) {
-  paste0(x, "-", paste0(sample(seq_len(1000), 2, TRUE), collapse = "-"))
+  vapply(
+    x,
+    function(i) {
+      paste0(
+        paste0(i, collapse = "-"), "-",
+        paste0(sample(seq_len(1000), 2, TRUE), collapse = "-")
+      )
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
 }
 
 names2 <- function(x) {
