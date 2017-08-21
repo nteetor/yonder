@@ -2,9 +2,13 @@
 % Please edit documentation in R/bars.R
 \name{checkbarInput}
 \alias{checkbarInput}
+\alias{radiobarInput}
 \title{Checkbar inputs}
 \usage{
 checkbarInput(id, choices, values = choices, selected = NULL,
+  label = NULL, context = "secondary")
+
+radiobarInput(id, choices, values = choices, selected = NULL,
   label = NULL, context = "secondary")
 }
 \description{
@@ -23,7 +27,8 @@ if (interactive()) {
               "Check 2",
               "Check 3"
             ),
-            values = paste0("check", 1:3)
+            values = c("check1", "check2", "check3"),
+            selected = "check1"
           )
         ),
         col(
@@ -39,4 +44,35 @@ if (interactive()) {
     }
   )
 }
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          radiobarInput(
+            id = "radiobar",
+            choices = c(
+              "Radio 1 (pre-selected)",
+              "Radio 2",
+              "Radio 3"
+            ),
+            values = c("radio1", "radio2", "radio3"),
+            selected = "radio1"
+          )
+        ),
+        col(
+          verbatimTextOutput("value")
+        )
+      )
+
+    ),
+    server = function(input, output) {
+      output$value <- renderPrint({
+        input$radiobar
+      })
+    }
+  )
+}
+
 }

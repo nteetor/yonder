@@ -12,7 +12,7 @@ var jslint = require("gulp-jshint"),
 
 /* FILE LOCATIONS */
 var jsFiles = "src/*.js",
-    jsDest = "../inst/www/js";
+    jsDest = "../inst/www/dull";
 
 /* TASKS */
 

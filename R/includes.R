@@ -10,8 +10,8 @@ bootstrap <- function() {
         href = "dull/bootstrap/css/bootstrap.min.css"
       ),
       tags$script(src = "dull/bootstrap/js/bootstrap.min.js"),
-      tags$script(src = "dull/js/dull.min.js"),
-      tags$link(rel = "stylesheet", href = "dull/css/dull.min.css")
+      tags$script(src = "dull/dull/dull.min.js"),
+      tags$link(rel = "stylesheet", href = "dull/dull/dull.min.css")
     )
   )
 }

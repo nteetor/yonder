@@ -11,7 +11,7 @@ var css = require("gulp-clean-css"),
 var scssFiles = "scss/*.scss",
     cssLocal = "./css",
     cssFiles = cssLocal + "/*.css",
-    cssDest = "../inst/www/css";
+    cssDest = "../inst/www/dull";
 
 /* TASKS */
 gulp.task("clean", function() {

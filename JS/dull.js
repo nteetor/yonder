@@ -169,7 +169,7 @@ $.extend(checkbarInputBinding, {
     return $(scope).find(".dull-checkbar-input[id]");
   },
   getValue: function getValue(el) {
-    return $(el).find("input[type=\"checkbox\"]:checked").map(function (i, e) {
+    return $(el).find("input[type=checkbox]:checked").map(function (i, e) {
       return $(e).data("value");
     }).get();
   },
@@ -625,6 +625,33 @@ $.extend(radioInputBinding, {
 });
 
 Shiny.inputBindings.register(radioInputBinding, "dull.radioInput");
+
+var radiobarInputBinding = new Shiny.InputBinding();
+
+$.extend(radiobarInputBinding, {
+  find: function find(scope) {
+    return $(scope).find(".dull-radiobar-input[id]");
+  },
+  getValue: function getValue(el) {
+    return $(el).find("input[type=radio]:checked").data("value");
+  },
+  getState: function getState(el, data) {
+    return { value: this.getValue(el) };
+  },
+  subscribe: function subscribe(el, callback) {
+    $(el).on("click.radiobarInputBinding", function (e) {
+      callback();
+    });
+    $(el).on("change.radiobarInputBinding", function (e) {
+      callback();
+    });
+  },
+  unsubcribe: function unsubcribe(el) {
+    $(el).off(".radiobarInputBinding");
+  }
+});
+
+Shiny.inputBindings.register(radiobarInputBinding, "radiobarInput");
 
 var selectInputBinding = new Shiny.InputBinding();
 

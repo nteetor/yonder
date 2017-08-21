@@ -5,7 +5,7 @@ $.extend(checkbarInputBinding, {
     return $(scope).find(".dull-checkbar-input[id]");
   },
   getValue: function(el) {
-    return $(el).find("input[type=\"checkbox\"]:checked")
+    return $(el).find("input[type=checkbox]:checked")
       .map((i, e) => $(e).data("value"))
       .get();
   },
