@@ -44,7 +44,7 @@ display5 <- function(...) display(5, ...)
 display <- function(level, ...) {
   if (!(level %in% 1:5)) {
     stop(
-      "`display` argument `level` must be one of 1, 2, 3, 4, or 5",
+      "invalid `display` argument, `level` must be one of 1, 2, 3, 4, or 5",
       call. = FALSE
     )
   }
@@ -82,4 +82,46 @@ mark <- function(...) {
 #' @export
 small <- function(...) {
   tags$span(class = "small", ...)
+}
+
+#' Jumbotron
+#'
+#' Highlight messages.
+#'
+#' @param title A character string specifying the jumbotron's title.
+#'
+#' @param subtitle A character string specifying the jumbotron's subtitle.
+#'
+#' @param ... Additional elements or named arguments passed as HTML attributes
+#'   to the parent element.
+#'
+#' @export
+#' @examples
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       jumbotron(
+#'         title = "Hello, world!",
+#'         subtitle = "This simple jumbotron-style component calls attention to a new feature",
+#'         tags$p(
+#'           "Here we can talk more about this excellently superb new feature.",
+#'           "The best."
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+jumbotron <- function(title, subtitle, ...) {
+  tags$div(
+    class = "jumbotron",
+    display3(title),
+    lead(subtitle),
+    if (length(elements(list(...))) > 0) tags$hr(class = "my-4"),
+    ...,
+    bootstrap()
+  )
 }
