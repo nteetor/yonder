@@ -23,6 +23,15 @@ developers could start with a clean slate. dull hopes to be that clean slate and
 much of what I sought to build into dull I later found mirrored in the issues
 and requests of the shiny GitHub repo.
 
+## Installation
+
+dull is still a work in progress and may be downloaded using
+`devtools::install_github`.
+
+```R
+devtools::install_github("nteetor/dull")
+```
+
 ## Reactive Controls
 
 These reactive controls are included in the package.
