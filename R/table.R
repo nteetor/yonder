@@ -168,7 +168,7 @@ renderTable <- function(expr, env = parent.frame(), quoted = FALSE) {
 
     return(
       list(
-        columns = colnames(df) %||% rep("", NCOL(df)),
+        columns = as.list(colnames(df) %||% rep("", NCOL(df))),
         data = jsonlite::toJSON(df)
       )
     )

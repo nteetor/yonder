@@ -2,6 +2,42 @@
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
+is_list <- function(x) {
+  class(x)[1] == "list"
+}
+
+each <- function(x, f) {
+  if (length(x) == 1) {
+    return(f())
+  }
+
+  lapply(
+    x,
+    function(i) {
+      each(i, f)
+    }
+  )
+}
+
+# conform x to structure of y
+conform <- function(x, y) {
+  if (length(unlist(y, FALSE)) != length(x)) {
+    stop(
+      "invalid `conform` arguments, `x` and `y` must have the same number of ",
+      "items",
+      call. = FALSE
+    )
+  }
+
+  counter <- 0
+  getnext <- function() {
+    counter <<- counter + 1
+    x[[counter]]
+  }
+
+  each(y, getnext)
+}
+
 re <- function(string, pattern, len0 = TRUE) {
   if (length(string) == 0 && len0) {
     # because grepl("", <regex>) returns TRUE, extend this to
