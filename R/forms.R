@@ -12,9 +12,8 @@
 #'
 #' @seealso
 #'
-#' For more information on forms and form groups please refer to the online
-#' bootstrap [reference
-#' page](https://v4-alpha.getbootstrap.com/components/forms/).
+#' Bootstrap 4 forms documentation:
+#' \url{https://getbootstrap.com/docs/4.0/components/forms/}
 #'
 #' @family inputs
 #' @export

@@ -50,8 +50,8 @@
 #'
 #' @seealso
 #'
-#' For more information on Bootstrap list groups please refer to the
-#' [reference page](https://v4-alpha.getbootstrap.com/components/list-group/).
+#' Boostrap 4 list group documentation:
+#' \url{https://getbootstrap.com/docs/4.0/components/list-group/}
 #'
 #' @export
 #' @examples

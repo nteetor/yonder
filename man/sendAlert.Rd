@@ -44,6 +44,6 @@ if (interactive()) {
 
 }
 \seealso{
-For more information on bootstrap alerts please refer to the
-\href{https://v4-alpha.getbootstrap.com/components/alerts/}{reference page}.
+Boostrap 4 alert documentation:
+\url{https://getbootstrap.com/docs/4.0/components/alerts/}
 }

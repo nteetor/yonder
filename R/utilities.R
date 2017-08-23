@@ -292,11 +292,6 @@ utils <- structure(
 #' ```
 #' }
 #'
-#' @seealso
-#'
-#' For more information about bootstrap HTML utility classes please refer to the
-#' online [reference page](https://v4-alpha.getbootstrap.com/utilities/).
-#'
 #' @family utilities
 #' @aliases flexitem
 #' @name flexbox

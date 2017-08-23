@@ -540,12 +540,6 @@ if (interactive()) {
 
 }
 \seealso{
-For more information about bootstrap HTML utility classes please refer to the
-online \href{https://v4-alpha.getbootstrap.com/utilities/}{reference page}.
-
-For more information about bootstrap HTML utility classes please refer to the
-online \href{https://v4-alpha.getbootstrap.com/utilities/}{reference page}.
-
 Other utilities: \code{\link{colors}}, \code{\link{float}},
   \code{\link{hidden}}, \code{\link{position}},
   \code{\link{sizing}}, \code{\link{spacing}},

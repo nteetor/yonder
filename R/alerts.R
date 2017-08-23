@@ -16,8 +16,8 @@
 #'
 #' @seealso
 #'
-#' For more information on bootstrap alerts please refer to the
-#' [reference page](https://v4-alpha.getbootstrap.com/components/alerts/).
+#' Boostrap 4 alert documentation:
+#' \url{https://getbootstrap.com/docs/4.0/components/alerts/}
 #'
 #' @export
 #' @examples

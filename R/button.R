@@ -26,12 +26,8 @@
 #'
 #' @seealso
 #'
-#' For more about block-level elements please refer to the block-level elements
-#' MDN
-#' [reference section](https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements).
-#'
-#' For more about buttons and button groups please refer to the bootstrap
-#' [reference section](https://v4-alpha.getbootstrap.com/components/input-group/#button-addons).
+#' Bootstrap 4 button documentation:
+#' \url{https://getbootstrap.com/docs/4.0/components/buttons/}
 #'
 #' @family inputs
 #' @export

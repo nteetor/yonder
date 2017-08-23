@@ -121,12 +121,8 @@ if (interactive()) {
 
 }
 \seealso{
-For more about block-level elements please refer to the block-level elements
-MDN
-\href{https://developer.mozilla.org/en-US/docs/Web/HTML/Block-level_elements}{reference section}.
-
-For more about buttons and button groups please refer to the bootstrap
-\href{https://v4-alpha.getbootstrap.com/components/input-group/#button-addons}{reference section}.
+Bootstrap 4 button documentation:
+\url{https://getbootstrap.com/docs/4.0/components/buttons/}
 
 Other inputs: \code{\link{checkboxInput}},
   \code{\link{formInput}}, \code{\link{groupInput}},

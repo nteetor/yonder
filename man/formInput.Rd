@@ -122,8 +122,8 @@ if (interactive()) {
 
 }
 \seealso{
-For more information on forms and form groups please refer to the online
-bootstrap \href{https://v4-alpha.getbootstrap.com/components/forms/}{referencepage}.
+Bootstrap 4 forms documentation:
+\url{https://getbootstrap.com/docs/4.0/components/forms/}
 
 Other inputs: \code{\link{buttonInput}},
   \code{\link{checkboxInput}}, \code{\link{groupInput}},
