@@ -28,3 +28,13 @@ bootstrap <- function() {
     )
   )
 }
+
+d3 <- function() {
+  shiny::addResourcePath("dull", system.file("www", package = "dull"))
+
+  htmltools::singleton(
+    tags$head(
+      tags$script(src = "dull/d3/d3.min.js")
+    )
+  )
+}

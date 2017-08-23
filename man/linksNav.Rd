@@ -4,23 +4,17 @@
 \alias{linksNav}
 \title{Page Navigation}
 \usage{
-linksNav(labels, ids, align = "right", block = FALSE, ...)
+linksNav(labels, hrefs, ...)
 }
 \arguments{
 \item{labels}{A character vector or flat list of character strings specifying
 the labels of the nav.}
 
-\item{align}{One of \code{"left"}, \code{"right"}, \code{"center"}, or \code{"horizontal"}
-specifying the alignment of the nav, defaults to \code{"left"}.}
-
 \item{hrefs}{A character vector or flat list of character strings specifying
-the HTML href attribute for each nav link.}
+the HTML href attributes for each nav link.}
 
-\item{vertical}{If \code{TRUE}, the nav is rendered vertically, defaults to
-\code{FALSE}.}
-
-\item{align}{One of \code{"left"}, \code{"right"}, or \code{"center"} specifying how the nav
-is aligned on the page, defaults to \code{"left"}.}
+\item{...}{Additional named arguments to pass as HTML attributes to the
+parent element.}
 }
 \description{
 Create a nav element. This is not a set of tabs, for creating a tabbed interface

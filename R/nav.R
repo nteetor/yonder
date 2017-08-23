@@ -7,16 +7,10 @@
 #'   the labels of the nav.
 #'
 #' @param hrefs A character vector or flat list of character strings specifying
-#'   the HTML href attribute for each nav link.
+#'   the HTML href attributes for each nav link.
 #'
-#' @param align One of `"left"`, `"right"`, `"center"`, or `"horizontal"`
-#'   specifying the alignment of the nav, defaults to `"left"`.
-#'
-#' @param vertical If `TRUE`, the nav is rendered vertically, defaults to
-#'   `FALSE`.
-#'
-#' @param align One of `"left"`, `"right"`, or `"center"` specifying how the nav
-#'   is aligned on the page, defaults to `"left"`.
+#' @param ... Additional named arguments to pass as HTML attributes to the
+#'   parent element.
 #'
 #' @seealso
 #'
@@ -29,16 +23,14 @@
 #'
 #' stub
 #'
-linksNav <- function(labels, ids, align = "right", block = FALSE,
-                    ...) {
-  if (!re(align, "right|left|center", FALSE)) {
+linksNav <- function(labels, hrefs, ...) {
+  if (length(labels) != length(hrefs)) {
     stop(
-      'invalid `nav` argument, `align` must be "right", "left", or "center"',
+      "invalid `linksNav` arguments, `labels` and `hrefs` must be the same ",
+      "length",
       call. = FALSE
     )
   }
-
-  align <- switch(align, left = "start", right = "end", "center")
 
   tags$ul(
     class = collate(
@@ -54,7 +46,7 @@ linksNav <- function(labels, ids, align = "right", block = FALSE,
               "nav-link"
             ),
             `data-toggle` = "tab",
-            href = paste0("#", ids[[i]]),
+            href = hrefs[[i]],
             role = "tab",
             `aria-expanded` = "true",
             labels[[i]]
@@ -62,6 +54,7 @@ linksNav <- function(labels, ids, align = "right", block = FALSE,
         )
       }
     ),
+    ...,
     bootstrap()
   )
 
@@ -81,6 +74,9 @@ linksNav <- function(labels, ids, align = "right", block = FALSE,
 #'   structure of `labels`, but specifying the HTML ids to use for each tab and
 #'   pane pair, defaults to `NULL`, in which case ids are automatically
 #'   generated.
+#'
+#' @param ... Additional named arguments passed as HTML attributes to the
+#'   parent element.
 #'
 #' @family navs
 #' @export
@@ -190,7 +186,7 @@ linksNav <- function(labels, ids, align = "right", block = FALSE,
 #'   )
 #' }
 #'
-tabsNav <- function(labels, panes, ids = NULL, align = "right") {
+tabsNav <- function(labels, panes, ids = NULL, ...) {
   if (length(unlist(labels)) != length(panes)) {
     stop(
       "invalid `tabsNav` arguments, `labels` and `panes` must have the same ",
@@ -201,11 +197,18 @@ tabsNav <- function(labels, panes, ids = NULL, align = "right") {
 
   ids <- ids %||% `map*`(labels, function(x) ID("tab"))
 
+  if (length(unlist(ids)) != length(panes)) {
+    stop(
+      "invalid `tabsNav` arguments, `labels` and `ids` must have the same ",
+      "number of items",
+      call. = FALSE
+    )
+  }
+
   row(
-    col(
-      tabbableTabs("tabs", labels, ids),
-      tabbablePanes(panes, ids)
-    ),
+    tabbableTabs("tabs", labels, ids),
+    tabbablePanes(panes, ids),
+    ...,
     bootstrap()
   )
 }
@@ -213,8 +216,7 @@ tabsNav <- function(labels, panes, ids = NULL, align = "right") {
 
 #' @rdname tabsNav
 #' @export
-pillsNav <- function(labels, panes, ids = NULL, align = "right",
-                     block = FALSE) {
+pillsNav <- function(labels, panes, ids = NULL, ...) {
   if (length(unlist(labels)) != length(panes)) {
     stop(
       "invalid `pillsNav` arguments, `labels` and `panes` must have the same ",
@@ -225,9 +227,18 @@ pillsNav <- function(labels, panes, ids = NULL, align = "right",
 
   ids <- ids %||% `map*`(labels, function(x) ID("tab"))
 
+  if (length(unlist(ids)) != length(panes)) {
+    stop(
+      "invalid `pillsNav` arguments, `labels` and `ids` must have the same ",
+      "number of items",
+      call. = FALSE
+    )
+  }
+
   row(
     tabbableTabs("pills", labels, ids),
     tabbablePanes(panes, ids),
+    ...,
     bootstrap()
   )
 }
@@ -331,15 +342,17 @@ tabbablePanes <- function(panes, ids) {
 #'
 #' A list group nav.
 #'
-#' @param labels A character vector specifying the nav tab labels.
+#' @param labels A character vector or flast list of character strings
+#'   specifying the nav tab labels.
 #'
 #' @param panes A list of character strings or custom elements specifying the
 #'   nav panes.
 #'
+#' @param ids A character vector or flat list of character strings specifying
+#'   the ids of the panes.
+#'
 #' @param selected One of `labels` indicating which tab is open by default,
 #'  defaults to `NULL`, in which case the first tab is the default.
-#'
-#' @param ids
 #'
 #' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
 #'   `"warning"`. `"danger"`, `"light"`, `"dark"`, or `"default"`, specifying
@@ -381,7 +394,7 @@ tabbablePanes <- function(panes, ids) {
 #'   )
 #' }
 #'
-listGroupNav <- function(labels, panes = labels, selected = NULL, ids = NULL,
+listGroupNav <- function(labels, panes, ids = NULL, selected = NULL,
                          context = "default", ...) {
   if (length(labels) != length(panes)) {
     stop(
@@ -391,17 +404,18 @@ listGroupNav <- function(labels, panes = labels, selected = NULL, ids = NULL,
     )
   }
 
-  if (!is.null(ids) && length(ids) != length(labels)) {
+  selected <- match2(selected, labels, default = TRUE)
+
+  # vapply(labels, gsub, labels, pattern = "[.:# ]", replacement = "")
+  ids <- ids %||% ID(rep.int("tab", length(labels)))
+
+  if (length(ids) != length(labels)) {
     stop(
-      "invalid `listGroupNav` argument, if `ids` is not NULL, `ids` must be ",
-      "the same length as `labels`",
+      "invalid `listGroupNav` argument, `ids` and `labels` must be the same ",
+      "length",
       call. = FALSE
     )
   }
-
-  selected <- match2(selected, labels, default = TRUE)
-  # vapply(labels, gsub, labels, pattern = "[.:# ]", replacement = "")
-  ids <- ids %||% ID(rep.int("tab", length(labels)))
 
   row(
     col(

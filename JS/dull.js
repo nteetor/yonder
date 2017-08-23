@@ -903,6 +903,28 @@ $.extend(barOutputBinding, {
 
 Shiny.outputBindings.register(barOutputBinding, "dull.barOutput");
 
+var radialOutputBinding = new Shiny.OutputBinding();
+
+$.extend(radialOutputBinding, {
+  find: function find(scope) {
+    return $(scope).find(".dull-radial-output[id]");
+  },
+  getId: function getId(el) {
+    return el.id;
+  },
+  renderValue: function renderValue(el, data) {
+    var dat = [30, 86, 168, 281, 303, 365];
+
+    d3.select(".chart").selectAll("div").data(dat).enter().append("div").style("width", function (d) {
+      return d + "px";
+    }).text(function (d) {
+      return d;
+    });
+  }
+});
+
+Shiny.outputBindings.register(radialOutputBinding, "dull.radialOutput");
+
 $.extend(Shiny.progressHandlers, {
   dull: function dull(data) {
     $("<li>").addClass("list-group-item").addClass(data.context ? "list-group-item-" + data.context : "").text(data.message).hide().appendTo($("#" + data.id)).fadeIn(300);

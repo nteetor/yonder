@@ -2,10 +2,6 @@
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
-is_list <- function(x) {
-  class(x)[1] == "list"
-}
-
 `map*` <- function(x, f) {
   if (length(x) == 1) {
     return(f(x))

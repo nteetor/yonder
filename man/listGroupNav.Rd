@@ -4,11 +4,12 @@
 \alias{listGroupNav}
 \title{List group nav}
 \usage{
-listGroupNav(labels, panes = labels, selected = NULL, ids = NULL,
+listGroupNav(labels, panes, selected = NULL, ids = NULL,
   context = "default", ...)
 }
 \arguments{
-\item{labels}{A character vector specifying the nav tab labels.}
+\item{labels}{A character vector or flast list of character strings
+specifying the nav tab labels.}
 
 \item{panes}{A list of character strings or custom elements specifying the
 nav panes.}

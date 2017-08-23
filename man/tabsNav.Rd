@@ -5,7 +5,7 @@
 \alias{pillsNav}
 \title{Navigation tabs}
 \usage{
-tabsNav(labels, panes, ids = NULL, align = "right")
+tabsNav(labels, panes, ids = NULL, ...)
 
 pillsNav(labels, panes, ids = NULL, align = "right", block = FALSE)
 }
@@ -20,6 +20,9 @@ nav. Unlike \code{labels} or \code{ids} this is a flat list of items.}
 structure of \code{labels}, but specifying the HTML ids to use for each tab and
 pane pair, defaults to \code{NULL}, in which case ids are automatically
 generated.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element.}
 }
 \description{
 A set of navigation tabs.
