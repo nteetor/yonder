@@ -1,44 +1,22 @@
 #' Page Navigation
 #'
-#' Create a nav.
+#' Create a nav element. This is not a set of tabs, for creating a tabbed interface
+#' of dynamic content see [tabsNav] or [pillsNav].
 #'
-#' @param ... `navItem`s or `navDropdown`s passed to `nav`, `dropdownItem`s
-#'   passed to `navDropdown`, or named arguments passed as HTML attributes to
-#'   the respective parent element.
+#' @param labels A character vector or flat list of character strings specifying
+#'   the labels of the nav.
+#'
+#' @param hrefs A character vector or flat list of character strings specifying
+#'   the HTML href attribute for each nav link.
 #'
 #' @param align One of `"left"`, `"right"`, `"center"`, or `"horizontal"`
 #'   specifying the alignment of the nav, defaults to `"left"`.
 #'
-#' @param width If specified, one of `"fill"` or `"justify"` specifying how the
-#'   nav will fill its parent element, defaults to `NULL`. If `"justify"` all
-#'   nav links have equal width, when `"fill"` nav links are only equally
-#'   spaced.
-#'
 #' @param vertical If `TRUE`, the nav is rendered vertically, defaults to
 #'   `FALSE`.
 #'
-#' @param tabs If `TRUE`, the nav is rendered as a set of tabs for a tabbed
-#'   interface, defaults to `FALSE`.
-#'
-#' @param pills If `TRUE`, `navItem`s are rendered as pills, defaults to
-#'   `FALSE`.
-#'
-#' @param label A character vector specifying the label of a nav item,
-#'   defaults to `NULL`.
-#'
-#' @param active If `TRUE`, the nav item renders in a an active state, defaults
-#'   to `FALSE`.
-#'
-#' @param disabled If `TRUE`, the nav item renders in a disabled state and
-#'   will not receive click events, defaults to `FALSE`.
-#'
-#' @param align One of `"left"`, `"right"`, or `"center"` specifying how the
-#'   nav is aligned on the page, defaults to `"left"`.
-#'
-#' @details
-#'
-#' To center a horizontal nav specify `align = "horiztonal"` and `width =
-#' "fill"` or `width = "justify"`.
+#' @param align One of `"left"`, `"right"`, or `"center"` specifying how the nav
+#'   is aligned on the page, defaults to `"left"`.
 #'
 #' @seealso
 #'
@@ -48,37 +26,11 @@
 #' @family navs
 #' @export
 #' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = linkNav(
-#'       labels = c("Home", "Profile", "Messages", "Settings"),
-#'       panes = list(
-#'         tags$p(
-#'           "To write, to rhyme, to put a slew of words to verse, these ",
-#'           "powers I do not claim to fully grasp, but like a hem catching ",
-#'           "the dew in the grey of early dawn, I catch a whisper ",
-#'           "each chance I stumble from the dark."
-#'         ),
-#'         tags$p(
-#'           "Stumbling down the mountain side I chanced to turn and look ",
-#'           "upon the path I'd chanced to take."
-#'         ),
-#'         tags$p(
-#'           ""
-#'         ),
-#'         tags$p(
-#'           "A stone set in diamond."
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
 #'
-#'     }
-#'   )
-#' }
+#' stub
 #'
-linkNav <- function(labels, panes = labels, ids = NULL,
-                    align = "right", block = FALSE, ...) {
+linksNav <- function(labels, ids, align = "right", block = FALSE,
+                    ...) {
   if (!re(align, "right|left|center", FALSE)) {
     stop(
       'invalid `nav` argument, `align` must be "right", "left", or "center"',
@@ -87,55 +39,32 @@ linkNav <- function(labels, panes = labels, ids = NULL,
   }
 
   align <- switch(align, left = "start", right = "end", "center")
-  ids <- ids %||% ID(rep.int("tab", length(labels)))
 
-  container(
-    row(
-      tags$nav(
-        class = collate(
-          "nav",
-          # "nav-pills",
-          "flex-column",
-          "flex-sm-row"
-          # paste0("justify-content-", align)
-        ),
-        lapply(
-          seq_along(labels),
-          function(i) {
-            tags$a(
-              class = collate(
-                "flex-sm-fill",
-                "text-sm-center",
-                "nav-link"
-              ),
-              `data-toggle` = "tab",
-              href = paste0("#", ids[[i]]),
-              role = "tab",
-              labels[[i]]
-            )
-          }
-        )
-      )
+  tags$ul(
+    class = collate(
+      "nav"
     ),
-    row(
-      class = "tab-content",
-      lapply(
-        seq_along(labels),
-        function(i) {
-          col(
+    lapply(
+      seq_along(labels),
+      function(i) {
+        tags$li(
+          class = "nav-item",
+          tags$a(
             class = collate(
-              "tab-pane",
-              if (i == 1) "active"
+              "nav-link"
             ),
-            id = ids[[i]],
-            role = "tabpanel",
-            panes[[i]]
+            `data-toggle` = "tab",
+            href = paste0("#", ids[[i]]),
+            role = "tab",
+            `aria-expanded` = "true",
+            labels[[i]]
           )
-        }
-      )
+        )
+      }
     ),
     bootstrap()
   )
+
 }
 
 #' Navigation tabs
@@ -227,95 +156,55 @@ linkNav <- function(labels, panes = labels, ids = NULL,
 #'   )
 #' }
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       pillsNav(
+#'         labels = c("Home", "Profile", "Messages", "Settings"),
+#'         panes = list(
+#'           lapply(
+#'             c(
+#'               "To write, to rhyme, to put a slew of words to verse",
+#'               "These powers I cannot claim to fully grasp",
+#'               "But like my hem catches the dew in the grey of early dawn",
+#'               "I catch a whisper each chance I stumble from the darkness."
+#'             ),
+#'             tags$p
+#'           ),
+#'           tags$p(
+#'             "Stumbling down the mountain side I chanced to turn and look ",
+#'             "upon the path I'd chanced to take."
+#'           ),
+#'           tags$p(
+#'             ""
+#'           ),
+#'           tags$p(
+#'             "A stone set in diamond."
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
 tabsNav <- function(labels, panes, ids = NULL, align = "right") {
   if (length(unlist(labels)) != length(panes)) {
     stop(
       "invalid `tabsNav` arguments, `labels` and `panes` must have the same ",
-      "number of itesm",
+      "number of items",
       call. = FALSE
     )
   }
 
-  ids <- ids %||% each(labels, function() ID("tab"))
+  ids <- ids %||% `map*`(labels, function(x) ID("tab"))
 
-  tagList(
-    row(
-      col(
-        tags$ul(
-          class = "nav nav-tabs",
-          role = "tablist",
-          lapply(
-            seq_along(labels),
-            function(i) {
-              if (nchar(names2(labels[i]))) {
-                tags$li(
-                  class = "nav-item dropdown",
-                  tags$a(
-                    class = "nav-link dropdown-toggle",
-                    href = "#",
-                    `data-toggle` = "dropdown",
-                    role = "button",
-                    `aria-haspopup` = "true",
-                    `aria-expanded` = "false",
-                    names(labels[i])
-                  ),
-                  tags$div(
-                    class = "dropdown-menu",
-                    lapply(
-                      seq_along(labels[[i]]),
-                      function(j) {
-                        tags$a(
-                          class = "dropdown-item",
-                          href = paste0("#", ids[[i]][[j]]),
-                          role = "tab",
-                          `data-toggle` = "tab",
-                          labels[[i]][[j]]
-                        )
-                      }
-                    )
-                  )
-                )
-              } else {
-                tags$li(
-                  class = "nav-item",
-                  tags$a(
-                    class = collate(
-                      "nav-link",
-                      if (i == 1) "active"
-                    ),
-                    href = paste0("#", ids[[i]]),
-                    `data-toggle` = "tab",
-                    role = "tab",
-                    `aria-controls` = ids[[i]],
-                    `aria-expanded` = "true",
-                    labels[[i]]
-                  )
-                )
-              }
-            }
-          )
-        )
-      )
-    ),
-    row(
-      col(
-        class = "tab-content",
-        lapply(
-          seq_along(panes),
-          function(i) {
-            tags$div(
-              class = collate(
-                "tab-pane",
-                "fade",
-                if (i == 1) c("show", "active")
-              ),
-              id = unlist(ids)[[i]],
-              role = "tabpanel",
-              panes[[i]]
-            )
-          }
-        )
-      )
+  row(
+    col(
+      tabbableTabs("tabs", labels, ids),
+      tabbablePanes(panes, ids)
     ),
     bootstrap()
   )
@@ -324,9 +213,117 @@ tabsNav <- function(labels, panes, ids = NULL, align = "right") {
 
 #' @rdname tabsNav
 #' @export
-pillsNav <- function(labels, panes = labels, ids = NULL, align = "right",
+pillsNav <- function(labels, panes, ids = NULL, align = "right",
                      block = FALSE) {
-  stop("not implemented")
+  if (length(unlist(labels)) != length(panes)) {
+    stop(
+      "invalid `pillsNav` arguments, `labels` and `panes` must have the same ",
+      "number of items",
+      call. = FALSE
+    )
+  }
+
+  ids <- ids %||% `map*`(labels, function(x) ID("tab"))
+
+  row(
+    tabbableTabs("pills", labels, ids),
+    tabbablePanes(panes, ids),
+    bootstrap()
+  )
+}
+
+tabbableTabs <- function(type, labels, ids) {
+  toggle <- sub("s$", "", type)
+
+  col(
+    class = collate(
+      "nav",
+      paste0("nav-", type),
+      "col-12",
+      "col-lg-3",
+      "flex-column",
+      "flex-sm-row",
+      "flex-lg-column",
+      "mb-1",
+      "mb-sm-3",
+      "pr-0",
+      "pr-sm-3"
+    ),
+    role = "tablist",
+    lapply(
+      seq_along(labels),
+      function(i) {
+        if (nchar(names2(labels[i]))) {
+          tags$div(
+            class = "dropdown",
+            tags$a(
+              class = "nav-link dropdown-toggle",
+              href = "#",
+              `data-toggle` = "dropdown",
+              role = "button",
+              `aria-haspopup` = "true",
+              `aria-expanded` = "false",
+              names(labels[i])
+            ),
+            tags$div(
+              class = "dropdown-menu",
+              lapply(
+                seq_along(labels[[i]]),
+                function(j) {
+                  tags$a(
+                    class = "dropdown-item",
+                    href = paste0("#", ids[[i]][[j]]),
+                    role = "tab",
+                    `data-toggle` = toggle,
+                    labels[[i]][[j]]
+                  )
+                }
+              )
+            )
+          )
+        } else {
+          tags$a(
+            class = collate(
+              "flex-sm-fill",
+              "nav-link",
+              if (i == 1) "active"
+            ),
+            href = paste0("#", ids[[i]]),
+            `data-toggle` = toggle,
+            role = "tab",
+            `aria-controls` = ids[[i]],
+            `aria-expanded` = "true",
+            labels[[i]]
+          )
+        }
+      }
+    )
+  )
+}
+
+tabbablePanes <- function(panes, ids) {
+  col(
+    class = collate(
+      "col-12",
+      "col-lg-9",
+      "tab-content"
+    ),
+    lapply(
+      seq_along(panes),
+      function(i) {
+        tags$div(
+          class = collate(
+            "tab-pane",
+            "fade",
+            if (i == 1) c("show", "active")
+          ),
+          id = unlist(ids)[[i]],
+          role = "tabpanel",
+          panes[[i]]
+        )
+      }
+    )
+  )
 }
 
 

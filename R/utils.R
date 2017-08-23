@@ -6,15 +6,15 @@ is_list <- function(x) {
   class(x)[1] == "list"
 }
 
-each <- function(x, f) {
+`map*` <- function(x, f) {
   if (length(x) == 1) {
-    return(f())
+    return(f(x))
   }
 
   lapply(
     x,
     function(i) {
-      each(i, f)
+      `map*`(i, f)
     }
   )
 }

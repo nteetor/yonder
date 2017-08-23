@@ -61,5 +61,5 @@ if (interactive()) {
 
 }
 \seealso{
-Other navs: \code{\link{linkNav}}, \code{\link{tabsNav}}
+Other navs: \code{\link{linksNav}}, \code{\link{tabsNav}}
 }

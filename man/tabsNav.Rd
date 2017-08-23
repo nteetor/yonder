@@ -7,8 +7,7 @@
 \usage{
 tabsNav(labels, panes, ids = NULL, align = "right")
 
-pillsNav(labels, panes = labels, ids = NULL, align = "right",
-  block = FALSE)
+pillsNav(labels, panes, ids = NULL, align = "right", block = FALSE)
 }
 \arguments{
 \item{labels}{A character vector or list of character vectors specifying
@@ -97,8 +96,42 @@ if (interactive()) {
   )
 }
 
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      pillsNav(
+        labels = c("Home", "Profile", "Messages", "Settings"),
+        panes = list(
+          lapply(
+            c(
+              "To write, to rhyme, to put a slew of words to verse",
+              "These powers I cannot claim to fully grasp",
+              "But like my hem catches the dew in the grey of early dawn",
+              "I catch a whisper each chance I stumble from the darkness."
+            ),
+            tags$p
+          ),
+          tags$p(
+            "Stumbling down the mountain side I chanced to turn and look ",
+            "upon the path I'd chanced to take."
+          ),
+          tags$p(
+            ""
+          ),
+          tags$p(
+            "A stone set in diamond."
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
+
 }
 \seealso{
-Other navs: \code{\link{linkNav}},
+Other navs: \code{\link{linksNav}},
   \code{\link{listGroupNav}}
 }
