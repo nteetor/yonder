@@ -2,54 +2,43 @@
 % Please edit documentation in R/accordion.R
 \name{accordion}
 \alias{accordion}
-\alias{accordionPanel}
 \title{Accordion panels}
 \usage{
-accordion(...)
-
-accordionPanel(label, ..., collapsed = TRUE)
+accordion(labels, contents, ids = NULL, ...)
 }
 \arguments{
-\item{...}{For \strong{accordion}, any number of \code{accordionPanel}s or named
-arguments passed as HTML attributes to the parent element.
+\item{labels}{A character vector or flat list of character strings specifying
+the link labels of the accordion panels.}
 
-For \strong{accordionPanel}, any number of elements to include in the panel or
-named arguments passed as HTML attributes to the parent element.}
+\item{contents}{A list of custom tags specifying the content of the panels.}
 
-\item{label}{A character string specifying the accordion panel's header.}
+\item{ids}{A character vector or flat list of character strings specifying
+the HTML ids of the accordion panels, defaults to \code{NULL}, in which case
+ids are automatically generated.}
 
-\item{collapsed}{If \code{TRUE}, the accordion panel renders in the collapsed
-state, defaults to \code{TRUE}.}
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element.}
 }
 \description{
-Similar to \code{collapse}, \code{accordion} is a way to hide content. An accordion
+Similar to \code{collapse}, \code{accordion} is a way to condense content. An accordion
 is made up of multiple panels. As one panel is toggled open other panels
 are closed. A page may render with multiple panels open, but once toggled
-only one panel will remain open. \code{accordionPanel} is a helper function to
-facilitate building the accordion's panels.
-}
-\details{
-\code{accordion} will generate an HTML id if an \code{id} argument is not passed in
-\code{...} and child panels are assigned IDs based on the id of the accordion
-parent.
+only one panel will remain open.
 }
 \examples{
 if (interactive()) {
   shinyApp(
     ui = container(
-      accordion(
-        accordionPanel(
-          "Option 1",
-          "What do you think of option 1?",
-          collapse = FALSE
-        ),
-        accordionPanel(
-          "Option 2",
-          "What do you think of option 2?"
-        ),
-        accordionPanel(
-          "Option 3",
-          "What do you think of option 3?"
+      row(
+        col(
+          accordion(
+            labels = c("Option 1", "Option 2", "Option 3"),
+            contents = list(
+              tags$p("What do you think of option 1?"),
+              tags$p("What do you think of option 2?"),
+              tags$p("What do you think of option 3?")
+            )
+          )
         )
       )
     ),
@@ -61,6 +50,6 @@ if (interactive()) {
 
 }
 \seealso{
-For more information on accordion's, please refer to
-\url{https://v4-alpha.getbootstrap.com/components/collapse/}.
+Bootstrap 4 accordion documentation:
+\url{https://getbootstrap.com/docs/4.0/components/collapse/#accordion-example}
 }

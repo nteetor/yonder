@@ -1,51 +1,42 @@
 #' Accordion panels
 #'
-#' Similar to `collapse`, `accordion` is a way to hide content. An accordion
+#' Similar to `collapse`, `accordion` is a way to condense content. An accordion
 #' is made up of multiple panels. As one panel is toggled open other panels
 #' are closed. A page may render with multiple panels open, but once toggled
-#' only one panel will remain open. `accordionPanel` is a helper function to
-#' facilitate building the accordion's panels.
+#' only one panel will remain open.
 #'
-#' @param ... For **accordion**, any number of `accordionPanel`s or named
-#'   arguments passed as HTML attributes to the parent element.
+#' @param labels A character vector or flat list of character strings specifying
+#'   the link labels of the accordion panels.
 #'
-#'   For **accordionPanel**, any number of elements to include in the panel or
-#'   named arguments passed as HTML attributes to the parent element.
+#' @param contents A list of custom tags specifying the content of the panels.
 #'
-#' @param label A character string specifying the accordion panel's header.
+#' @param ids A character vector or flat list of character strings specifying
+#'   the HTML ids of the accordion panels, defaults to `NULL`, in which case
+#'   ids are automatically generated.
 #'
-#' @param collapsed If `TRUE`, the accordion panel renders in the collapsed
-#'   state, defaults to `TRUE`.
-#'
-#' @details
-#'
-#' `accordion` will generate an HTML id if an `id` argument is not passed in
-#' `...` and child panels are assigned IDs based on the id of the accordion
-#' parent.
+#' @param ... Additional named arguments passed as HTML attributes to the
+#'   parent element.
 #'
 #' @seealso
 #'
-#' For more information on accordion's, please refer to
-#' [https://v4-alpha.getbootstrap.com/components/collapse/](https://v4-alpha.getbootstrap.com/components/collapse/).
+#' Bootstrap 4 accordion documentation:
+#' \url{https://getbootstrap.com/docs/4.0/components/collapse/#accordion-example}
 #'
 #' @export
 #' @examples
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       accordion(
-#'         accordionPanel(
-#'           "Option 1",
-#'           "What do you think of option 1?",
-#'           collapse = FALSE
-#'         ),
-#'         accordionPanel(
-#'           "Option 2",
-#'           "What do you think of option 2?"
-#'         ),
-#'         accordionPanel(
-#'           "Option 3",
-#'           "What do you think of option 3?"
+#'       row(
+#'         col(
+#'           accordion(
+#'             labels = c("Option 1", "Option 2", "Option 3"),
+#'             contents = list(
+#'               tags$p("What do you think of option 1?"),
+#'               tags$p("What do you think of option 2?"),
+#'               tags$p("What do you think of option 3?")
+#'             )
+#'           )
 #'         )
 #'       )
 #'     ),
@@ -55,77 +46,52 @@
 #'   )
 #' }
 #'
-accordion <- function(...) {
-  args <- list(...)
-  attrs <- attribs(args)
-  panels <- elements(args)
-
-  if (length(panels)) {
-    attrs$id <- attrs$id %||% ID("accordion")
+accordion <- function(labels, contents, ids = NULL, ...) {
+  if (length(labels) != length(contents)) {
+    stop(
+      "invalid `accordion` arguments, `labels` and `contents` must be the ",
+      "same length",
+      call. = FALSE
+    )
   }
 
+  ids <- ids %||% `map*`(labels, function(x) ID("panel"))
+
+  if (length(ids) != length(labels)) {
+    stop(
+      "invalid `accordion` arguments, `labels` and `ids` must be the same ",
+      "length",
+      call. = FALSE
+    )
+  }
+
+  attrs <- attribs(list(...))
+  attrs$id <- attrs[["id"]] %||% ID("accordion")
+
   tagConcatAttributes(
     tags$div(
-      class = "accordion",
-      role = "tablist",
+      `data-children` = ".accordion-item",
       lapply(
-        panels,
-        function(p) {
-          # this is horrendous
-          p$children[[1]]$children[[1]]$children[[1]]$attribs$`data-parent` <-
-            paste0("#", attrs$id)
-          p
-        }
-      ),
-      bootstrap()
-    ),
-    attrs
-  )
-}
-
-#' @rdname accordion
-#' @export
-accordionPanel <- function(label, ..., collapsed = TRUE) {
-  args <- list(...)
-  attrs <- attribs(args)
-  body <- content(args)
-
-  headingId <- ID("panel-heading")
-  collapseId <- ID("panel-collapse")
-
-  tagConcatAttributes(
-    tags$div(
-      class = "card",
-      tags$div(
-        class = "card-header",
-        id = headingId,
-        role = "tab",
-        tags$h5(
-          class = "mb-0",
-          tags$a(
-            class = collate(
-              if (collapsed) "collapsed"
+        seq_along(labels),
+        function(i) {
+          tags$div(
+            class = "accordion-item",
+            tags$a(
+              `data-toggle` = "collapse",
+              `data-parent` = paste0("#", attrs$id),
+              href = paste0("#", ids[[i]]),
+              `aria-expanded` = "false",
+              `aria-controls` = ids[[i]],
+              labels[[i]]
             ),
-            `data-toggle` = "collapse",
-            href = paste0("#", collapseId),
-            `aria-expanded` = if (collapsed) "false" else "true",
-            `aria-controls` = collapseId,
-            header
+            tags$div(
+              id = ids[[i]],
+              class = "collapse",
+              role = "tabpanel",
+              contents[[i]]
+            )
           )
-        )
-      ),
-      tags$div(
-        class = collate(
-          "collapse",
-          if (!collapsed) "show"
-        ),
-        id = collapseId,
-        `aria-labelledby` = headingId,
-        role = "tabpanel",
-        tags$div(
-          class = "card-block",
-          body
-        )
+        }
       ),
       bootstrap()
     ),
