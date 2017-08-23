@@ -26,9 +26,6 @@ stub
 
 }
 \seealso{
-For more information about the Bootstrap nav please follow this
-\href{http://v4-alpha.getbootstrap.com/components/navs/}{link}.
-
-Other navs: \code{\link{listGroupNav}},
-  \code{\link{tabsNav}}
+Bootstrap 4 nav documentation:
+\url{https://getbootstrap.com/docs/4.0/components/navs/}
 }

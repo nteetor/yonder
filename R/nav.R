@@ -14,8 +14,8 @@
 #'
 #' @seealso
 #'
-#' For more information about the Bootstrap nav please follow this
-#' [link](http://v4-alpha.getbootstrap.com/components/navs/).
+#' Bootstrap 4 nav documentation:
+#' \url{https://getbootstrap.com/docs/4.0/components/navs/}
 #'
 #' @family navs
 #' @export
@@ -60,12 +60,17 @@ linksNav <- function(labels, hrefs, ...) {
 
 }
 
-#' Navigation tabs
+#' Tabbable content
 #'
-#' A set of navigation tabs.
+#' Create tabbable content with headers stylized as tabs, pills, or a list
+#' group. Tab sets or tab panels are distinct from navs. `tabsTabs` and
+#' `pillsTabs` may include nested tabs as dropdowns by passing named character
+#' vectors or lists as elements of the `labels` argument. However, `listTabs`
+#' does not allow nested tabs.
 #'
 #' @param labels A character vector or list of character vectors specifying
-#'   the labels of the nav's tabs, named items are converted into dropdown tabs.
+#'   the labels of the nav's tabs. `tabsTabs` and `pillsTabs` understand named
+#'   items which are converted into dropdown tabs.
 #'
 #' @param panes A list of custom tags specifying the panes controlled by the
 #'   nav. Unlike `labels` or `ids` this is a flat list of items.
@@ -75,10 +80,22 @@ linksNav <- function(labels, hrefs, ...) {
 #'   pane pair, defaults to `NULL`, in which case ids are automatically
 #'   generated.
 #'
+#' @param selected One of `labels` indicating which tab is open by default,
+#'   defaults to `NULL`, in which case the first tab is the default.
+#'
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`. `"danger"`, `"light"`, `"dark"`, or `"default"`, specifying
+#'   the visual context of the list group nav, defaults to `"default"`.
+#'
 #' @param ... Additional named arguments passed as HTML attributes to the
 #'   parent element.
 #'
-#' @family navs
+#' @seealso
+#'
+#' Bootstrap 4 nav documentation:
+#' \url{https://getbootstrap.com/docs/4.0/components/navs/}
+#'
+#' @family tabs
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -186,10 +203,43 @@ linksNav <- function(labels, hrefs, ...) {
 #'   )
 #' }
 #'
-tabsNav <- function(labels, panes, ids = NULL, ...) {
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       listTabs(
+#'         labels = c("Home", "Profile", "Messages", "Settings"),
+#'         panes = list(
+#'           tags$p(
+#'             "When all is said and done, the sun's brow dipped below the ",
+#'             "horizon, then shall we rest ourselves, and then shall we ",
+#'             "share a smile, for our hardwork is behind us for a while, ",
+#'             "and for a while can we admire the life we build together."
+#'           ),
+#'           tags$p(
+#'             "How, when the field is laid low, how, when the snow begins to ",
+#'             "fall, shall I find you once again? I have let this wonderful ",
+#'             "life slip through my fingers and so I am left with none, but ",
+#'             "empty fists clenched against my sides"
+#'           ),
+#'           tags$p(
+#'
+#'           ),
+#'           tags$p(
+#'
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+tabsTabs <- function(labels, panes, ids = NULL, ...) {
   if (length(unlist(labels)) != length(panes)) {
     stop(
-      "invalid `tabsNav` arguments, `labels` and `panes` must have the same ",
+      "invalid `tabsTabs` arguments, `labels` and `panes` must have the same ",
       "number of items",
       call. = FALSE
     )
@@ -199,7 +249,7 @@ tabsNav <- function(labels, panes, ids = NULL, ...) {
 
   if (length(unlist(ids)) != length(panes)) {
     stop(
-      "invalid `tabsNav` arguments, `labels` and `ids` must have the same ",
+      "invalid `tabsTabs` arguments, `labels` and `ids` must have the same ",
       "number of items",
       call. = FALSE
     )
@@ -214,9 +264,9 @@ tabsNav <- function(labels, panes, ids = NULL, ...) {
 }
 
 
-#' @rdname tabsNav
+#' @rdname tabsTabs
 #' @export
-pillsNav <- function(labels, panes, ids = NULL, ...) {
+pillsTabs <- function(labels, panes, ids = NULL, ...) {
   if (length(unlist(labels)) != length(panes)) {
     stop(
       "invalid `pillsNav` arguments, `labels` and `panes` must have the same ",
@@ -241,6 +291,42 @@ pillsNav <- function(labels, panes, ids = NULL, ...) {
     ...,
     bootstrap()
   )
+}
+
+#' @rdname tabsTabs
+#' @export
+listTabs <- function(labels, panes, ids = NULL, selected = NULL,
+                     context = "default", ...) {
+  if (!all(vapply(labels, is.character, logical(1)))) {
+    stop(
+      "invalid `listTabs` argument, `labels` must be a character vector or ",
+      "flat list of character strings",
+      call. = FALSE
+    )
+  }
+
+  if (length(labels) != length(panes)) {
+    stop(
+      "invalid `listTabs` arguments, `labels` and `panes` must be the ",
+      "same length",
+      call. = FALSE
+    )
+  }
+
+  selected <- match2(selected, labels, default = TRUE)
+
+  # vapply(labels, gsub, labels, pattern = "[.:# ]", replacement = "")
+  ids <- ids %||% `map*`(labels, function(e) ID("tab"))
+
+  if (length(ids) != length(labels)) {
+    stop(
+      "invalid `listTabs` argument, `ids` and `labels` must be the same ",
+      "length",
+      call. = FALSE
+    )
+  }
+
+  tabbableList(labels, panes, ids, selected, context, ...)
 }
 
 tabbableTabs <- function(type, labels, ids) {
@@ -337,86 +423,7 @@ tabbablePanes <- function(panes, ids) {
   )
 }
 
-
-#' List group nav
-#'
-#' A list group nav.
-#'
-#' @param labels A character vector or flast list of character strings
-#'   specifying the nav tab labels.
-#'
-#' @param panes A list of character strings or custom elements specifying the
-#'   nav panes.
-#'
-#' @param ids A character vector or flat list of character strings specifying
-#'   the ids of the panes.
-#'
-#' @param selected One of `labels` indicating which tab is open by default,
-#'  defaults to `NULL`, in which case the first tab is the default.
-#'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`. `"danger"`, `"light"`, `"dark"`, or `"default"`, specifying
-#'   the visual context of the list group nav, defaults to `"default"`.
-#'
-#' @family navs
-#' @export
-#' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       listGroupNav(
-#'         labels = c("Home", "Profile", "Messages", "Settings"),
-#'         panes = list(
-#'           tags$p(
-#'             "When all is said and done, the sun's brow dipped below the ",
-#'             "horizon, then shall we rest ourselves, and then shall we ",
-#'             "share a smile, for our hardwork is behind us for a while, ",
-#'             "and for a while can we admire the life we build together."
-#'           ),
-#'           tags$p(
-#'             "How, when the field is laid low, how, when the snow begins to ",
-#'             "fall, shall I find you once again? I have let this wonderful ",
-#'             "life slip through my fingers and so I am left with none, but ",
-#'             "empty fists clenched against my sides"
-#'           ),
-#'           tags$p(
-#'
-#'           ),
-#'           tags$p(
-#'
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'
-#'     }
-#'   )
-#' }
-#'
-listGroupNav <- function(labels, panes, ids = NULL, selected = NULL,
-                         context = "default", ...) {
-  if (length(labels) != length(panes)) {
-    stop(
-      "invalid `listGroupNav` arguments, `labels` and `panes` must be the ",
-      "same length",
-      call. = FALSE
-    )
-  }
-
-  selected <- match2(selected, labels, default = TRUE)
-
-  # vapply(labels, gsub, labels, pattern = "[.:# ]", replacement = "")
-  ids <- ids %||% ID(rep.int("tab", length(labels)))
-
-  if (length(ids) != length(labels)) {
-    stop(
-      "invalid `listGroupNav` argument, `ids` and `labels` must be the same ",
-      "length",
-      call. = FALSE
-    )
-  }
-
+tabbableList <- function(labels, panes, ids, selected, context, ...) {
   row(
     col(
       width = 4,
