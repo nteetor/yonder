@@ -7,7 +7,7 @@
 \title{Dropdown input}
 \usage{
 dropdownInput(id, label, items, values = items, disabled = NULL,
-  dividers = NULL, dropup = FALSE, ...)
+  dividers = NULL, context = "secondary", dropup = FALSE, ...)
 
 disableDropdownInput(id, disabled = NULL,
   session = getDefaultReactiveDomain())

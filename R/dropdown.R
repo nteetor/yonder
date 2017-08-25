@@ -109,11 +109,20 @@
 #' }
 #'
 dropdownInput <- function(id, label, items, values = items, disabled = NULL,
-                          dividers = NULL, dropup = FALSE, ...) {
+                          dividers = NULL, context = "secondary",
+                          dropup = FALSE, ...) {
   if (length(items) != length(values)) {
     stop(
       "invalid `dropdownInput` arguments, `items` and `values` must be the ",
       "same length",
+      call. = FALSE
+    )
+  }
+
+  if (!re(context, "secondary|primary|success|info|warning|danger", FALSE)) {
+    stop(
+      "invalid `dropdownInput` arguments, `context` must be one of ",
+      '"secondary", "primary", "success", "info", "warning", or "danger"',
       call. = FALSE
     )
   }
@@ -130,7 +139,12 @@ dropdownInput <- function(id, label, items, values = items, disabled = NULL,
     id = id,
     `data-value` = NULL,
     tags$button(
-      class = "btn btn-secondary dropdown-toggle",
+      class = collate(
+        "btn",
+        paste0("btn-", context),
+        "btn-secondary",
+        "dropdown-toggle"
+      ),
       type = "button",
       `data-toggle` = "dropdown",
       `aria-haspop` = "true",
