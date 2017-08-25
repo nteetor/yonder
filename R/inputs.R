@@ -1,4 +1,5 @@
-textualInput <- function(id, label, value, placeholder, type, ...) {
+textualInput <- function(id, label, value, placeholder, readonly, help, type,
+                         ...) {
   tags$div(
     class = "dull-textual-input dull-input form-group row",
     id = id,
@@ -12,29 +13,44 @@ textualInput <- function(id, label, value, placeholder, type, ...) {
         class = "form-control",
         type = type,
         value = value,
-        placeholder = placeholder
-      )
+        placeholder = placeholder,
+        readonly = if (readonly) NA
+      ),
+      if (!is.null(help)) {
+        tags$small(
+          class = "form-text text-muted",
+          help
+        )
+      }
     ),
     ...
   )
 }
 
-#' Inputs
+#' Textual nputs
 #'
-#' Form control inputs.
+#' Textual inputs.
 #'
 #' @param id A character string specifying the id of the textual input, defaults
-#'   to `NULL`. If specified, a reactive value is available to the shiny server
-#'   function.
+#'   to `NULL`.
 #'
 #' @param label A character string specifying a label for the input, defaults to
-#'   `NULL`. If a label is specified it is advised, though not necessary, to
-#'   also specify an `id` for the input.
+#'   `NULL`.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the input.
+#' @param value A character string or a value coerced to a character string
+#'   specifying the default value of the textual input.
 #'
 #' @param placeholder A character string specifying placeholder text for the
 #'   input, defaults to `NULL`, in which case there is no placeholder text.
+#'
+#' @param readonly If `TRUE`, the textual input is read-only preventing
+#'   modification of the value, defaults `FALSE`.
+#'
+#' @param help A character string specifying the help text of the textual input,
+#'   defaults to `NULL`, in which case no help text is added.
+#'
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
 #'
 #' @family inputs
 #' @export
@@ -42,80 +58,93 @@ textualInput <- function(id, label, value, placeholder, type, ...) {
 #'
 #' stub
 #'
-textInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placeholder, "text", ...)
+textInput <- function(id, label, value = NULL, placeholder = NULL,
+                      readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "text", ...)
 }
 
 #' @rdname textInput
 #' @export
-searchInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placeholder, "search", ...)
+searchInput <- function(id, label, value = NULL, placeholder = NULL,
+                        readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "search", ...)
 }
 
 #' @rdname textInput
 #' @export
-emailInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placeholder, "email", ...)
+emailInput <- function(id, label, value = NULL, placeholder = NULL,
+                       readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "email", ...)
 }
 
 #' @rdname textInput
 #' @export
-urlInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placeholder, "url", ...)
+urlInput <- function(id, label, value = NULL, placeholder = NULL,
+                     readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "url", ...)
 }
 
 #' @rdname textInput
 #' @export
-telephoneInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placholder, "tel", ...)
+telephoneInput <- function(id, label, value = NULL, placeholder = NULL,
+                           readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "tel", ...)
 }
 
 #' @rdname textInput
 #' @export
-passwordInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placeholder, "password", ...)
+passwordInput <- function(id, label, value = NULL, placeholder = NULL,
+                          readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "password", ...)
 }
 
 #' @rdname textInput
 #' @export
-numberInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placeholder, "number", ...)
+numberInput <- function(id, label, value = NULL, placeholder = NULL,
+                        readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "number", ...)
 }
 
 # @rdname textInput
 # @export
-dateInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placeholder, "date", ...)
+dateInput <- function(id, label, value = NULL, placeholder = NULL,
+                      readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "date", ...)
 }
 
 # @rdname textInput
 # @export
-datetimeInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placeholder, "datetime-local", ...)
+datetimeInput <- function(id, label, value = NULL, placeholder = NULL,
+                          readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "datetime-local", ...)
 }
 
 # @rdname textInput
 # @export
-monthInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placeholder, "month", ...)
+monthInput <- function(id, label, value = NULL, placeholder = NULL,
+                       readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "month", ...)
 }
 
 # @rdname textInput
 # @export
-weekInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placeholder, "week", ...)
+weekInput <- function(id, label, value = NULL, placeholder = NULL,
+                      readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "week", ...)
 }
 
 # @rdname textInput
 # @export
-timeInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placeholder, "time", ...)
+timeInput <- function(id, label, value = NULL, placeholder = NULL,
+                      readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "time", ...)
 }
 
 #' @rdname textInput
 #' @export
-colorInput <- function(id, label, value = NULL, placeholder = NULL, ...) {
-  textualInput(id, label, value, placeholder, "color", ...)
+colorInput <- function(id, label, value = NULL, placeholder = NULL,
+                       readonly = FALSE, help = NULL, ...) {
+  textualInput(id, label, value, placeholder, readonly, help, "color", ...)
 }
 
 #' Group and label multiple inputs

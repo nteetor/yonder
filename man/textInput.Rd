@@ -9,40 +9,56 @@
 \alias{passwordInput}
 \alias{numberInput}
 \alias{colorInput}
-\title{Inputs}
+\title{Textual nputs}
 \usage{
-textInput(id, label, value = NULL, placeholder = NULL, ...)
+textInput(id, label, value = NULL, placeholder = NULL, readonly = FALSE,
+  help = NULL, ...)
 
-searchInput(id, label, value = NULL, placeholder = NULL, ...)
+searchInput(id, label, value = NULL, placeholder = NULL, readonly = FALSE,
+  help = NULL, ...)
 
-emailInput(id, label, value = NULL, placeholder = NULL, ...)
+emailInput(id, label, value = NULL, placeholder = NULL, readonly = FALSE,
+  help = NULL, ...)
 
-urlInput(id, label, value = NULL, placeholder = NULL, ...)
+urlInput(id, label, value = NULL, placeholder = NULL, readonly = FALSE,
+  help = NULL, ...)
 
-telephoneInput(id, label, value = NULL, placeholder = NULL, ...)
+telephoneInput(id, label, value = NULL, placeholder = NULL,
+  readonly = FALSE, help = NULL, ...)
 
-passwordInput(id, label, value = NULL, placeholder = NULL, ...)
+passwordInput(id, label, value = NULL, placeholder = NULL,
+  readonly = FALSE, help = NULL, ...)
 
-numberInput(id, label, value = NULL, placeholder = NULL, ...)
+numberInput(id, label, value = NULL, placeholder = NULL, readonly = FALSE,
+  help = NULL, ...)
 
-colorInput(id, label, value = NULL, placeholder = NULL, ...)
+colorInput(id, label, value = NULL, placeholder = NULL, readonly = FALSE,
+  help = NULL, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the textual input, defaults
-to \code{NULL}. If specified, a reactive value is available to the shiny server
-function.}
+to \code{NULL}.}
 
 \item{label}{A character string specifying a label for the input, defaults to
-\code{NULL}. If a label is specified it is advised, though not necessary, to
-also specify an \code{id} for the input.}
+\code{NULL}.}
+
+\item{value}{A character string or a value coerced to a character string
+specifying the default value of the textual input.}
 
 \item{placeholder}{A character string specifying placeholder text for the
 input, defaults to \code{NULL}, in which case there is no placeholder text.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the input.}
+\item{readonly}{If \code{TRUE}, the textual input is read-only preventing
+modification of the value, defaults \code{FALSE}.}
+
+\item{help}{A character string specifying the help text of the textual input,
+defaults to \code{NULL}, in which case no help text is added.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 }
 \description{
-Form control inputs.
+Textual inputs.
 }
 \examples{
 
