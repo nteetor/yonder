@@ -1,29 +1,22 @@
-var barOutputBinding = new Shiny.OutputBinding();
+$.extend(Shiny.progressHandlers, {
+  "dull-progress": function(msg) {
+    console.log(msg);
 
-$.extend(barOutputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-bar[id]");
-  },
-  getId: function(el) {
-    return el.id;
-  },
-  renderValue: function(el, data) {
-    var $el = $(el);
+    var $bar = $(".dull-progress-output #" + msg.id);
 
-    if (data.value !== null) {
-      $el.attr("style", "width: " + data.value + "%");
+    $bar.attr("style", function(i, s) {
+        return s.replace(/width: [0-9]+%/, "width: " + msg.value + "%");
+      })
+      .attr("aria-valuenow", msg.value);
+
+    if (msg.label) {
+      $bar.text(msg.label);
     }
 
-    if (data.label !== null) {
-      $el.text(data.label);
+    if (msg.context) {
+      $bar.attr("class", function(i, c) {
+        return c.replace(/bg-(?:primary|secondary|success|info|warning|danger|light|dark|white)/g, "bg-" + msg.context);
+      });
     }
-
-    /*
-    $.each(data, function(key, value) {
-      console.log(key + ": " + value);
-    });
-    */
   }
 });
-
-Shiny.outputBindings.register(barOutputBinding, "dull.barOutput");

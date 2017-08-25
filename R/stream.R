@@ -36,7 +36,7 @@
 #'     server = function(input, output, session) {
 #'       observeEvent(input$trigger, {
 #'         for (i in seq_len(5)) {
-#'           sendStreamMessage(
+#'           sendStream(
 #'             id = "stream",
 #'             message = paste("Update:", i),
 #'             context = if (i %% 2) "warning" else "info"
@@ -61,25 +61,25 @@ streamOutput <- function(id, ...) {
 
 #' @rdname streamOutput
 #' @export
-sendStreamMessage <- function(id, message, context = NULL,
-                              session = getDefaultReactiveDomain()) {
+sendStream <- function(id, message, context = NULL,
+                       session = getDefaultReactiveDomain()) {
   if (!is.character(id)) {
     stop(
-      "invalid `sendStreamMessage` argument, `id` must be a character string",
+      "invalid `sendStream` argument, `id` must be a character string",
       call. = FALSE
     )
   }
 
   if (!re(context, "success|info|warning|danger")) {
     stop(
-      "invalid `sendStreamMessage` argument, `context` must be one of ",
+      "invalid `sendStream` argument, `context` must be one of ",
       '"secondary", "success", "info", "warning", or "danger"',
       call. = FALSE
     )
   }
 
   session$sendProgress(
-    "dull",
+    "dull-stream",
     list(
       id = id,
       message = message,

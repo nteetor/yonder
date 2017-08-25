@@ -2,12 +2,12 @@
 % Please edit documentation in R/stream.R
 \name{streamOutput}
 \alias{streamOutput}
-\alias{sendStreamMessage}
+\alias{sendStream}
 \title{Stream notifications}
 \usage{
 streamOutput(id, ...)
 
-sendStreamMessage(id, message, context = NULL,
+sendStream(id, message, context = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
@@ -47,7 +47,7 @@ if (interactive()) {
     server = function(input, output, session) {
       observeEvent(input$trigger, {
         for (i in seq_len(5)) {
-          sendStreamMessage(
+          sendStream(
             id = "stream",
             message = paste("Update:", i),
             context = if (i \%\% 2) "warning" else "info"
