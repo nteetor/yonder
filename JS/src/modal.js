@@ -26,7 +26,11 @@ Shiny.addCustomMessageHandler("dull:modal", function(msg) {
             })
           )
         ),
-        $("<div>", {"class": "modal-body"}).html(msg.body)
+        $("<div>", {
+          "class": "container-fluid"
+        }).append(
+          $("<div>", {"class": "modal-body"}).html(msg.body)
+        )
       )
     )
   );
