@@ -5,7 +5,7 @@
 #'
 #' @param id A character string specifying the id of the button input.
 #'
-#' @param label A character string specifying a label for the button input.
+#' @param text A character string specifying the label text of the button input.
 #'
 #' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
 #'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"link"` specifying the
@@ -64,14 +64,14 @@
 #'         col(
 #'           buttonInput(
 #'             id = "change",
-#'             label = "Change other button",
+#'             text = "Change other button",
 #'             context = "success"
 #'           )
 #'         ),
 #'         col(
 #'           buttonInput(
 #'             id = "button",
-#'             label = "Button",
+#'             text = "Button",
 #'             outline = TRUE
 #'           )
 #'         ),
@@ -86,7 +86,7 @@
 #'       observeEvent(input$change, {
 #'         updateButtonInput(
 #'           id = "button",
-#'           label = paste("Button", input$change)
+#'           text = paste("Button", input$change)
 #'         )
 #'
 #'         resetButtonInput("button")
@@ -99,7 +99,7 @@
 #'   )
 #' }
 #'
-buttonInput <- function(id, label, context = "secondary", outline = FALSE,
+buttonInput <- function(id, text, context = "secondary", outline = FALSE,
                         block = FALSE, ...) {
   if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|link", FALSE)) {
     stop(
@@ -121,7 +121,7 @@ buttonInput <- function(id, label, context = "secondary", outline = FALSE,
     type = "button",
     role = "button",
     `data-clicks` = 0,
-    label,
+    text,
     id = id,
     ...
   )

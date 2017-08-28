@@ -10,7 +10,7 @@
 \alias{submit}
 \title{Button inputs and submit buttons}
 \usage{
-buttonInput(id, label, context = "secondary", outline = FALSE,
+buttonInput(id, text, context = "secondary", outline = FALSE,
   block = FALSE, ...)
 
 updateButtonInput(id, label, session = getDefaultReactiveDomain())
@@ -28,7 +28,7 @@ submit(label = "Submit", outline = FALSE, block = FALSE, ...)
 \arguments{
 \item{id}{A character string specifying the id of the button input.}
 
-\item{label}{A character string specifying a label for the button input.}
+\item{text}{A character string specifying the label text of the button input.}
 
 \item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
 \code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"link"} specifying the
