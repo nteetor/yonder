@@ -854,7 +854,7 @@ $.extend(badgeOutputBinding, {
   renderValue: function renderValue(el, data) {
     var $el = $(el);
 
-    if (data.value !== null || data.value !== undefined) {
+    if (data.value !== null && data.value !== undefined) {
       $el.text(data.value);
     }
 

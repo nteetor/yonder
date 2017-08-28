@@ -99,6 +99,29 @@
 #'   )
 #' }
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       fluid = FALSE,
+#'       buttonInput(
+#'         id = "button",
+#'         text = list(
+#'           "Increment badge",
+#'           badgeOutput(
+#'             id = "badge",
+#'             content = 0
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$badge <- renderBadge({
+#'         input$button
+#'       })
+#'     }
+#'   )
+#' }
+#'
 buttonInput <- function(id, text, context = "secondary", outline = FALSE,
                         block = FALSE, ...) {
   if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|link", FALSE)) {

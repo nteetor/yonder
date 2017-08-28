@@ -73,7 +73,7 @@ badgeOutput <- function(id, content, context = "secondary", ...) {
     )
   }
 
-  if (!re(con, "primary|secondary|success|info|warning|danger|dark|light")) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|dark|light")) {
     stop(
       "invalid `renderBadge` argument, `context` expression must return ",
       "one of ",
