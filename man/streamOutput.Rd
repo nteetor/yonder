@@ -15,9 +15,10 @@ sendStream(id, message, context = NULL,
 
 \item{message}{A character string specifying the message text.}
 
-\item{context}{One of \code{"success"}, \code{"info"}, \code{"warning"}, or \code{"danger"}
-specifying the visual context of the message, defaults to NULL, in which
-case no visual context is applied.}
+\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
+\code{"warning"}, \code{"danger"}, \code{"light"}, or \code{"dark"} specifying the visual
+context of the message, defaults to NULL, in which case no visual context
+is applied.}
 
 \item{session}{A \code{session} object passed to the shiny server function,
 defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}

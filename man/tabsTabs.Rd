@@ -10,8 +10,7 @@ tabsTabs(labels, panes, ids = NULL, ...)
 
 pillsTabs(labels, panes, ids = NULL, ...)
 
-listTabs(labels, panes, ids = NULL, selected = NULL, context = "default",
-  ...)
+listTabs(labels, panes, ids = NULL, selected = NULL, context = NULL, ...)
 }
 \arguments{
 \item{labels}{A character vector or list of character vectors specifying
@@ -33,8 +32,9 @@ parent element.}
 defaults to \code{NULL}, in which case the first tab is the default.}
 
 \item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}. \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"default"}, specifying
-the visual context of the list group nav, defaults to \code{"default"}.}
+\code{"warning"}. \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{NULL}, specifying
+the visual context of the list nav, defaults to \code{NULL}, in which case a
+visual context is not applied.}
 }
 \description{
 Create tabbable content with headers stylized as tabs, pills, or a list

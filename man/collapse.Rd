@@ -20,9 +20,9 @@ toggleCollapse(id, session = getDefaultReactiveDomain())
 
 \item{label}{A character string specifying the label of the collapse toggle.}
 
-\item{context}{One of \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, or
-\code{"danger"} specifying the visual context of the collapse toggle, defaults
-to \code{"secondary"}.}
+\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
+\code{"warning"}, \code{"danger"}, \code{"dark"}, \code{"light"}, or \code{"link"} specifying the
+visual context of the collapse toggle, defaults to \code{"secondary"}.}
 
 \item{...}{Additional named arguments passed as attributes to the parent
 element.}

@@ -7,9 +7,9 @@
 #'
 #' @param label A character string specifying a label for the button input.
 #'
-#' @param context One of `"secondary"`, `"success"`, `"info"`, `"warning"`, or
-#'   `"danger"` specifying the visual context of the button input, defaults to
-#'   `"secondary"`.
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"link"` specifying the
+#'   visual context of the button input, defaults to `"secondary"`.
 #'
 #' @param outline If `TRUE`, the button's visual context is applied to the
 #'   border of the button instead of the background, defaults to `FALSE`.
@@ -101,10 +101,11 @@
 #'
 buttonInput <- function(id, label, context = "secondary", outline = FALSE,
                         block = FALSE, ...) {
-  if (!re(context, "secondary|success|info|warning|danger|link|primary", len0 = FALSE)) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|link", FALSE)) {
     stop(
       "invalid `buttonInput` argument, `context` must be one of ",
-      '"secondary", "success", "info", "warning", or "danger"',
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", "dark", or "link"',
       call. = FALSE
     )
   }

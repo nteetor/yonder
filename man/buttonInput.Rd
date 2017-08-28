@@ -30,9 +30,9 @@ submit(label = "Submit", outline = FALSE, block = FALSE, ...)
 
 \item{label}{A character string specifying a label for the button input.}
 
-\item{context}{One of \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, or
-\code{"danger"} specifying the visual context of the button input, defaults to
-\code{"secondary"}.}
+\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
+\code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"link"} specifying the
+visual context of the button input, defaults to \code{"secondary"}.}
 
 \item{outline}{If \code{TRUE}, the button's visual context is applied to the
 border of the button instead of the background, defaults to \code{FALSE}.}

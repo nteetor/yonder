@@ -84,8 +84,9 @@ linksNav <- function(labels, hrefs, ...) {
 #'   defaults to `NULL`, in which case the first tab is the default.
 #'
 #' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`. `"danger"`, `"light"`, `"dark"`, or `"default"`, specifying
-#'   the visual context of the list group nav, defaults to `"default"`.
+#'   `"warning"`. `"danger"`, `"light"`, `"dark"`, or `NULL`, specifying
+#'   the visual context of the list nav, defaults to `NULL`, in which case a
+#'   visual context is not applied.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the
 #'   parent element.
@@ -315,7 +316,7 @@ pillsTabs <- function(labels, panes, ids = NULL, ...) {
 #' @rdname tabsTabs
 #' @export
 listTabs <- function(labels, panes, ids = NULL, selected = NULL,
-                     context = "default", ...) {
+                     context = NULL, ...) {
   if (!all(vapply(labels, is.character, logical(1)))) {
     stop(
       "invalid `listTabs` argument, `labels` must be a character vector or ",
@@ -328,6 +329,15 @@ listTabs <- function(labels, panes, ids = NULL, selected = NULL,
     stop(
       "invalid `listTabs` arguments, `labels` and `panes` must be the ",
       "same length",
+      call. = FALSE
+    )
+  }
+
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark")) {
+    stop(
+      "invalid `listTabs` argument, `context` must be one of ",
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", "dark", or NULL',
       call. = FALSE
     )
   }

@@ -2,6 +2,25 @@
 #'
 #' Similar to a checkbox input.
 #'
+#' @param id A character string specifying the id of the checkbar input.
+#'
+#' @param choices A character vector or flat list of character strings
+#'   specifying the labels of the checkbar options.
+#'
+#' @param values A character vector, flat list of character strings, or
+#'   object to convert to either, specifying the values of the checkbar
+#'   options, defaults to `choices`.
+#'
+#' @param selected One or more of `values` indicating which of the checkbar
+#'   options are selected by default, defaults to `NULL`, in which case there
+#'   is no default option.
+#'
+#' @param label A character string specifying a label for the checkbar input,
+#'   defaults to `NULL`, in which case a label is not added.
+#'
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, `"light"`, or `"dark"`, defaults to `"secondary"`.
+#'
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -74,10 +93,11 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL,
     )
   }
 
-  if (!re(context, "secondary|success|info|warning|danger|link|primary", FALSE)) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark", FALSE)) {
     stop(
       "invalid `checkbarInput` argument, `context` must be one of ",
-      '"secondary", "primary", "success", "info", "warning", or "danger"',
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", or "dark"',
       call. = FALSE
     )
   }
@@ -122,10 +142,11 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL,
     )
   }
 
-  if (!re(context, "secondary|success|info|warning|danger|link|primary", FALSE)) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark", FALSE)) {
     stop(
       "invalid `radiobarInput` argument, `context` must be one of ",
-      '"secondary", "primary", "success", "info", "warning", or "danger"',
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", or "dark"',
       call. = FALSE
     )
   }

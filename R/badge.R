@@ -9,12 +9,9 @@
 #' @param content A character string specifying the content of the badge or an
 #'   expression which returns a character string.
 #'
-#' @param rounded If `TRUE` the badge appears in a pill instead of a rectangular
-#'   shape, defaults to `FALSE`.
-#'
-#' @param context An expression which returns one of `"default"`, `"success"`,
-#'   `"info"`, `"warning"`, or `"danger"`. The expression may contain reactive
-#'   values.
+#' @param context An expression which returns one of `"primary"`, `"secondary"`,
+#'   `"success"`, `"info"`, `"warning"`, `"danger"`, `"light"`, or `"dark"`. The
+#'   expression may contain reactive values.
 #'
 #' @param ... Additional named argument passed as HTML attributes to the parent
 #'   element.
@@ -68,10 +65,20 @@
 #'   )
 #' }
 #'
-badgeOutput <- function(id, content, rounded = FALSE, ...) {
+badgeOutput <- function(id, content, context = "secondary", ...) {
   if (!is.character(id)) {
     stop(
       "invalid `badgeOutput` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
+  if (!re(con, "primary|secondary|success|info|warning|danger|dark|light")) {
+    stop(
+      "invalid `renderBadge` argument, `context` expression must return ",
+      "one of ",
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", or "dark"',
       call. = FALSE
     )
   }
@@ -80,8 +87,7 @@ badgeOutput <- function(id, content, rounded = FALSE, ...) {
     class = collate(
       "dull-badge-output",
       "badge",
-      "badge-default",
-      if (rounded) "badge-pill"
+      "badge-default"
     ),
     id = id,
     content,
@@ -91,7 +97,7 @@ badgeOutput <- function(id, content, rounded = FALSE, ...) {
 
 #' @rdname badgeOutput
 #' @export
-renderBadge <- function(content, context = NULL, env = parent.frame(),
+renderBadge <- function(content, context = "secondary", env = parent.frame(),
                         quoted = FALSE) {
   valFun <- shiny::exprToFunction(content, env, quoted)
   conFun <- shiny::exprToFunction(context, env, quoted)
@@ -99,11 +105,12 @@ renderBadge <- function(content, context = NULL, env = parent.frame(),
   function() {
     con <- conFun()
 
-    if (!re(con, "default|primary|success|info|warning|danger")) {
+    if (!re(con, "primary|secondary|success|info|warning|danger|dark|light", FALSE)) {
       stop(
         "invalid `renderBadge` argument, `context` expression must return ",
         "one of ",
-        '"default", "success", "info", "warning", or "danger"',
+        '"primary", "secondary", "success", "info", "warning", "danger", ',
+        '"light", or "dark"',
         call. = FALSE
       )
     }

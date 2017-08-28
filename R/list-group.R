@@ -27,6 +27,11 @@
 #'   defaults to `NULL`. See `badgeOutput` for more information on rendering
 #'   badges.
 #'
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, `"light"`, `"dark"` or `NULL` specifying the
+#'   visual context of the list group input, defaults to `NULL`, in which case
+#'   a visual context is not applied.
+#'
 #' @param state One of `"valid"`, `"warning"`, or `"danger"` indicating the
 #'   state of the list group items. If `"valid"` then the visual context is
 #'   removed.
@@ -233,7 +238,8 @@
 #' }
 #'
 listGroupInput <- function(id, items, values = items, selected = NULL,
-                           disabled = NULL, badges = NULL, ...) {
+                           disabled = NULL, badges = NULL, context = NULL,
+                           ...) {
   if (length(items) != length(values)) {
     stop(
       "invalid `listGroupInput` arguments, `items` and `values` must be the ",
@@ -257,6 +263,15 @@ listGroupInput <- function(id, items, values = items, selected = NULL,
         call. = FALSE
       )
     }
+  }
+
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark")) {
+    stop(
+      "invalid `listGroupInput` argument, `context` must be one of ",
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", "dark", or NULL',
+      call. = FALSE
+    )
   }
 
   selected <- match2(selected, values)

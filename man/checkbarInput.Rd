@@ -11,6 +11,26 @@ checkbarInput(id, choices, values = choices, selected = NULL,
 radiobarInput(id, choices, values = choices, selected = NULL,
   label = NULL, context = "secondary")
 }
+\arguments{
+\item{id}{A character string specifying the id of the checkbar input.}
+
+\item{choices}{A character vector or flat list of character strings
+specifying the labels of the checkbar options.}
+
+\item{values}{A character vector, flat list of character strings, or
+object to convert to either, specifying the values of the checkbar
+options, defaults to \code{choices}.}
+
+\item{selected}{One or more of \code{values} indicating which of the checkbar
+options are selected by default, defaults to \code{NULL}, in which case there
+is no default option.}
+
+\item{label}{A character string specifying a label for the checkbar input,
+defaults to \code{NULL}, in which case a label is not added.}
+
+\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
+\code{"warning"}, \code{"danger"}, \code{"light"}, or \code{"dark"}, defaults to \code{"secondary"}.}
+}
 \description{
 Similar to a checkbox input.
 }

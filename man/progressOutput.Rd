@@ -24,8 +24,8 @@ of a bar.}
 defaults to \code{NULL}.}
 
 \item{context}{One of \code{"primary"}, \code{"secondary"},  \code{"success"}, \code{"info"},
-\code{"warning"}, \code{"danger"}. \code{"light"}, \code{"dark"}, or \code{"white"}, specifying the
-visual context of a bar.}
+\code{"warning"}, \code{"danger"}. \code{"light"}, or \code{"dark"}, specifying the visual
+context of a bar.}
 
 \item{striped}{If \code{TRUE}, the progress bar has a striped gradient, defaults
 to \code{FALSE}.}

@@ -25,6 +25,10 @@
 #'   placed above the indicated values separating the dropdown menu items into
 #'   sections.
 #'
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"link"`, specifying the
+#'   visual context of the dropdown input, defaults to `"secondary"`.
+#'
 #' @param dropup If `TRUE`, the dropdown menu opens upwards instead of
 #'   downwards, defaults to `FALSE`.
 #'
@@ -119,10 +123,11 @@ dropdownInput <- function(id, label, items, values = items, disabled = NULL,
     )
   }
 
-  if (!re(context, "secondary|primary|success|info|warning|danger", FALSE)) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark", FALSE)) {
     stop(
-      "invalid `dropdownInput` arguments, `context` must be one of ",
-      '"secondary", "primary", "success", "info", "warning", or "danger"',
+      "invalid `dropdownInput` argument, `context` must be one of ",
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", or "dark"',
       call. = FALSE
     )
   }

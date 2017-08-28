@@ -143,10 +143,6 @@ collate <- function(..., collapse = " ") {
   }
 }
 
-bad_context <- function(x, extra = NULL) {
-  !re(x, paste0("success|info|warning|danger", paste0(c("", extra), collapse = "|")))
-}
-
 # shiny utils ----
 
 dropNulls <- function(x) {

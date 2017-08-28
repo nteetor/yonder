@@ -34,6 +34,10 @@ are the start of a new section, defaults to \code{NULL}. Divider lines will be
 placed above the indicated values separating the dropdown menu items into
 sections.}
 
+\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
+\code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"link"}, specifying the
+visual context of the dropdown input, defaults to \code{"secondary"}.}
+
 \item{dropup}{If \code{TRUE}, the dropdown menu opens upwards instead of
 downwards, defaults to \code{FALSE}.}
 

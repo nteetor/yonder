@@ -10,9 +10,10 @@
 #'
 #' @param message A character string specifying the message text.
 #'
-#' @param context One of `"success"`, `"info"`, `"warning"`, or `"danger"`
-#'   specifying the visual context of the message, defaults to NULL, in which
-#'   case no visual context is applied.
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, `"light"`, or `"dark"` specifying the visual
+#'   context of the message, defaults to NULL, in which case no visual context
+#'   is applied.
 #'
 #' @param session A `session` object passed to the shiny server function,
 #'   defaults to [`getDefaultReactiveDomain()`].
@@ -70,10 +71,11 @@ sendStream <- function(id, message, context = NULL,
     )
   }
 
-  if (!re(context, "success|info|warning|danger")) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark")) {
     stop(
       "invalid `sendStream` argument, `context` must be one of ",
-      '"secondary", "success", "info", "warning", or "danger"',
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", or "dark"',
       call. = FALSE
     )
   }

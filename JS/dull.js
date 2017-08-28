@@ -938,11 +938,14 @@ $.extend(tableOutputBinding, {
   },
   renderValue: function renderValue(el, data) {
     var $el = $(el);
+    var context = $el.data("table");
 
     if (data.data && data.columns) {
       $el.empty();
 
-      $el.append($("<thead>").append($("<tr>").append($("<th>").text("#"), $.map(data.columns, function (col, i) {
+      $el.append($("<thead>").append($("<tr>", {
+        "class": context
+      }).append($("<th>").text("#"), $.map(data.columns, function (col, i) {
         return $("<th>").addClass("thead-default").text(col);
       }))), $("<tbody>").append($.map(data.data, function (row, i) {
         var heading;
@@ -953,7 +956,9 @@ $.extend(tableOutputBinding, {
           heading = $("<th>").text(i + 1).attr("scope", "row");
         }
 
-        return $("<tr>").append(heading, $.map(Object.entries(row), function (_ref, i) {
+        return $("<tr>", {
+          "color": context
+        }).append(heading, $.map(Object.entries(row), function (_ref, i) {
           var _ref2 = _slicedToArray(_ref, 2),
               key = _ref2[0],
               value = _ref2[1];

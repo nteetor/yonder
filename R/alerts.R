@@ -8,8 +8,9 @@
 #' @param content A character string specifying the body of the alert or
 #'   a custom element to include as the body of the alert.
 #'
-#' @param context One of `"success"`, `"info"`, `"warning"`, or `"danger"`
-#'   specifying the visual context of the alert, defaults to `"secondary"`.
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, `"light"`, or `"dark"` specifying the visual
+#'   context of the alert, defaults to `"secondary"`.
 #'
 #' @param session A `session` object passed to the shiny server function,
 #'   defaults to [`getDefaultReactiveDomain()`].
@@ -48,10 +49,11 @@ sendAlert <- function(id, content, context = "secondary",
     )
   }
 
-  if (!re(context, "primary|secondary|success|info|warning|danger", FALSE)) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|dark|light", FALSE)) {
     stop(
       "invalid `sendAlert` argument, `context` must be one of ",
-      '"success", "info", "warning", or "danger"',
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", or "dark"',
       call. = FALSE
     )
   }

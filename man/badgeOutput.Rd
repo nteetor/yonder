@@ -5,9 +5,10 @@
 \alias{renderBadge}
 \title{Badge outputs}
 \usage{
-badgeOutput(id, content, rounded = FALSE, ...)
+badgeOutput(id, content, context = "secondary", ...)
 
-renderBadge(content, context = NULL, env = parent.frame(), quoted = FALSE)
+renderBadge(content, context = "secondary", env = parent.frame(),
+  quoted = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the badge output.}
@@ -15,15 +16,12 @@ renderBadge(content, context = NULL, env = parent.frame(), quoted = FALSE)
 \item{content}{A character string specifying the content of the badge or an
 expression which returns a character string.}
 
-\item{rounded}{If \code{TRUE} the badge appears in a pill instead of a rectangular
-shape, defaults to \code{FALSE}.}
+\item{context}{An expression which returns one of \code{"primary"}, \code{"secondary"},
+\code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"}, or \code{"dark"}. The
+expression may contain reactive values.}
 
 \item{...}{Additional named argument passed as HTML attributes to the parent
 element.}
-
-\item{context}{An expression which returns one of \code{"default"}, \code{"success"},
-\code{"info"}, \code{"warning"}, or \code{"danger"}. The expression may contain reactive
-values.}
 }
 \description{
 Small highlighted content which scales to its parent's size. Useful for

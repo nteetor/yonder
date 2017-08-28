@@ -14,8 +14,8 @@
 #'   defaults to `NULL`.
 #'
 #' @param context One of `"primary"`, `"secondary"`,  `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`. `"light"`, `"dark"`, or `"white"`, specifying the
-#'   visual context of a bar.
+#'   `"warning"`, `"danger"`. `"light"`, or `"dark"`, specifying the visual
+#'   context of a bar.
 #'
 #' @param striped If `TRUE`, the progress bar has a striped gradient, defaults
 #'   to `FALSE`.
@@ -98,10 +98,11 @@ bar <- function(id, value, label = NULL, context = "primary", striped = FALSE,
     )
   }
 
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|white", FALSE)) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark", FALSE)) {
     stop(
-      'invalid `progress` argument, `context` must be one of "success", ',
-      '"info", "warning", or "danger"',
+      "invalid `bar` argument, `context` must be one of",
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", or "dark"',
       call. = FALSE
     )
   }
@@ -130,11 +131,11 @@ bar <- function(id, value, label = NULL, context = "primary", striped = FALSE,
 #' @export
 sendBar <- function(id, value, label = NULL, context = NULL,
                     session = getDefaultReactiveDomain()) {
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|white")) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark")) {
     stop(
       "invalid `sendBar` argument, `context` must be one of ",
       '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", "dark", or "white"',
+      '"light", or "dark"',
       call. = FALSE
     )
   }

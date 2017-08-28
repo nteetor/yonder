@@ -14,8 +14,9 @@ inserted.}
 \item{content}{A character string specifying the body of the alert or
 a custom element to include as the body of the alert.}
 
-\item{context}{One of \code{"success"}, \code{"info"}, \code{"warning"}, or \code{"danger"}
-specifying the visual context of the alert, defaults to \code{"secondary"}.}
+\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
+\code{"warning"}, \code{"danger"}, \code{"light"}, or \code{"dark"} specifying the visual
+context of the alert, defaults to \code{"secondary"}.}
 
 \item{session}{A \code{session} object passed to the shiny server function,
 defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}

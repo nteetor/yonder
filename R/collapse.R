@@ -10,9 +10,9 @@
 #'
 #' @param label A character string specifying the label of the collapse toggle.
 #'
-#' @param context One of `"secondary"`, `"success"`, `"info"`, `"warning"`, or
-#'   `"danger"` specifying the visual context of the collapse toggle, defaults
-#'   to `"secondary"`.
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, `"dark"`, `"light"`, or `"link"` specifying the
+#'   visual context of the collapse toggle, defaults to `"secondary"`.
 #'
 #' @param ... Additional named arguments passed as attributes to the parent
 #'   element.
@@ -67,6 +67,15 @@
 #' }
 #'
 collapse <- function(id, label, content, context = "secondary", ...) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark", FALSE)) {
+    stop(
+      "invalid `collapse` argument, `context` must be one of ",
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", or "dark"',
+      call. = FALSE
+    )
+  }
+
   tags$div(
     `aria-expanded` = "false",
     tags$p(

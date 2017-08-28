@@ -10,7 +10,7 @@
 \title{List group inputs}
 \usage{
 listGroupInput(id, items, values = items, selected = NULL,
-  disabled = NULL, badges = NULL, ...)
+  disabled = NULL, badges = NULL, context = NULL, ...)
 
 updateListGroupInput(id, items, values = items, selected = NULL,
   disabled = NULL, session = getDefaultReactiveDomain())
@@ -52,6 +52,11 @@ list group items, respectively.}
 \item{badges}{A list of \code{\link{badgeOutput}}s added to the list group's items,
 defaults to \code{NULL}. See \code{badgeOutput} for more information on rendering
 badges.}
+
+\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
+\code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"} or \code{NULL} specifying the
+visual context of the list group input, defaults to \code{NULL}, in which case
+a visual context is not applied.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}

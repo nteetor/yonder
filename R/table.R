@@ -10,20 +10,21 @@
 #' @param compact If `TRUE`, table cell padding is cut in half to reduce the
 #'   size of the table, defaults to `FALSE`.
 #'
-#' @param context One `"success"`, `"info"`, `"warning"`, `"danger"`, specifying
-#'   the context of selected table rows, defaults to `NULL`, in which case
-#'   selected rows are highlighted in grey.
+#' @param context One `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `NULL` specifying the
+#'   visual context of the table, defaults to `NULL`, in which case a visual
+#'   context is not applied.
 #'
-#' @param expr An expression which returns a data frame or `NULL`. If data frame
-#'   the table thruput is re-rendered, otherwise if `NULL` the current table
-#'   thruput is left as is.
+#' @param expr An expression which returns a data frame or `NULL`. If a data
+#'   frame is returned the table thruput is re-rendered, otherwise if `NULL` the
+#'   current table thruput is left as is.
 #'
 #' @param quoted If `TRUE`, then `expr` is treated as a quoted expression,
 #'   defaults to `FALSE`.
 #'
-#' @param state One of `"valid"`, `"primary"`, `"secondary"`, `"success"`,
-#'   `"info"`, `"warning"`, or `"danger"` indicating the state of the table row.
-#'   If `"valid"` then the visual context is removed.
+#' @param state One of `"valid"`, "success"`, `"warning"`, or `"danger"`
+#'   indicating the state of the table row. If `"valid"` then the visual context
+#'   is removed.
 #'
 #' @param validate A numeric vector or list of row numbers indicating which
 #'   table rows to mark as `state`, defaults to `NULL`. If `NULL` then all rows
@@ -123,11 +124,20 @@
 #' }
 #'
 #'
-tableThruput <- function(id, borders = FALSE, compact = FALSE, ...) {
+tableThruput <- function(id, borders = FALSE, context = NULL, compact = FALSE, ...) {
   if (!is.null(id) && !is.character(id)) {
     stop(
       "invalid `tableThruput` argument, `id` must be a character string or ",
       "NULL",
+      call. = FALSE
+    )
+  }
+
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark")) {
+    stop(
+      "invalid `tableThruput` argument, `context` must be one of ",
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", "dark", or NULL',
       call. = FALSE
     )
   }
@@ -139,7 +149,8 @@ tableThruput <- function(id, borders = FALSE, compact = FALSE, ...) {
       if (is.character(id)) "table-hover",
       "table-responsive",
       if (borders) "table-bordered",
-      if (compact) "table-sm"
+      if (compact) "table-sm",
+      `data-table` = if (!is.null(context)) paste0("table-", context)
     ),
     id = id,
     ...
@@ -177,10 +188,10 @@ renderTable <- function(expr, env = parent.frame(), quoted = FALSE) {
 
 validateTableThruput <- function(id, state, validate = NULL,
                                  session = getDefaultReactiveDomain()) {
-  if (!re(state, "primary|success|info|warning|danger|valid", FALSE)) {
+  if (!re(state, "success|warning|danger|valid", FALSE)) {
     stop(
       "invalid `validateTableThruput` argument, `state` must be one of ",
-      '"primary", "success", "info", "warning", "danger", or "valid"',
+      '"success", "warning", "danger", or "valid"',
       call. = FALSE
     )
   }

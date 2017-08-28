@@ -5,7 +5,7 @@
 \alias{renderTable}
 \title{Table thruput}
 \usage{
-tableThruput(id, borders = FALSE, compact = FALSE, ...)
+tableThruput(id, borders = FALSE, context = NULL, compact = FALSE, ...)
 
 renderTable(expr, env = parent.frame(), quoted = FALSE)
 }
@@ -15,26 +15,26 @@ renderTable(expr, env = parent.frame(), quoted = FALSE)
 \item{borders}{If \code{TRUE}, the table renders with cell borders, defaults to
 \code{FALSE}.}
 
+\item{context}{One \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
+\code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{NULL} specifying the
+visual context of the table, defaults to \code{NULL}, in which case a visual
+context is not applied.}
+
 \item{compact}{If \code{TRUE}, table cell padding is cut in half to reduce the
 size of the table, defaults to \code{FALSE}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{expr}{An expression which returns a data frame or \code{NULL}. If data frame
-the table thruput is re-rendered, otherwise if \code{NULL} the current table
-thruput is left as is.}
+\item{expr}{An expression which returns a data frame or \code{NULL}. If a data
+frame is returned the table thruput is re-rendered, otherwise if \code{NULL} the
+current table thruput is left as is.}
 
 \item{quoted}{If \code{TRUE}, then \code{expr} is treated as a quoted expression,
 defaults to \code{FALSE}.}
 
-\item{context}{One \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, specifying
-the context of selected table rows, defaults to \code{NULL}, in which case
-selected rows are highlighted in grey.}
-
-\item{state}{One of \code{"valid"}, \code{"primary"}, \code{"secondary"}, \code{"success"},
-\code{"info"}, \code{"warning"}, or \code{"danger"} indicating the state of the table row.
-If \code{"valid"} then the visual context is removed.}
+\item{state}{One of \code{"valid"}, "success"\code{,}"warning"\code{, or}"danger"\code{indicating the state of the table row. If}"valid"` then the visual context
+is removed.}
 
 \item{validate}{A numeric vector or list of row numbers indicating which
 table rows to mark as \code{state}, defaults to \code{NULL}. If \code{NULL} then all rows
