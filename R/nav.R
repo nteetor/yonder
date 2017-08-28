@@ -256,8 +256,8 @@ tabsTabs <- function(labels, panes, ids = NULL, ...) {
   }
 
   row(
-    tabbableTabs("tabs", labels, ids),
-    tabbablePanes(panes, ids),
+    tabs("tabs", labels, ids),
+    panes(panes, ids),
     ...,
     bootstrap()
   )
@@ -286,8 +286,27 @@ pillsTabs <- function(labels, panes, ids = NULL, ...) {
   }
 
   row(
-    tabbableTabs("pills", labels, ids),
-    tabbablePanes(panes, ids),
+    tabs(
+      "pills",
+      labels,
+      ids,
+      class = collate(
+        "col-12",
+        "col-lg-3",
+        "flex-column",
+        "flex-sm-row",
+        "flex-lg-column",
+        "mb-1",
+        "mb-sm-3",
+        "pr-0",
+        "pr-sm-3"
+      )
+    ),
+    panes(
+      panes,
+      ids,
+      class = "col-12 col-lg-9"
+    ),
     ...,
     bootstrap()
   )
@@ -326,27 +345,19 @@ listTabs <- function(labels, panes, ids = NULL, selected = NULL,
     )
   }
 
-  tabbableList(labels, panes, ids, selected, context, ...)
+  tabslist(labels, panes, ids, selected, context, ...)
 }
 
-tabbableTabs <- function(type, labels, ids) {
+tabs <- function(type, labels, ids, ...) {
   toggle <- sub("s$", "", type)
 
   col(
     class = collate(
       "nav",
-      paste0("nav-", type),
-      "col-12",
-      "col-lg-3",
-      "flex-column",
-      "flex-sm-row",
-      "flex-lg-column",
-      "mb-1",
-      "mb-sm-3",
-      "pr-0",
-      "pr-sm-3"
+      paste0("nav-", type)
     ),
     role = "tablist",
+    ...,
     lapply(
       seq_along(labels),
       function(i) {
@@ -398,13 +409,12 @@ tabbableTabs <- function(type, labels, ids) {
   )
 }
 
-tabbablePanes <- function(panes, ids) {
+panes <- function(panes, ids, ...) {
   col(
     class = collate(
-      "col-12",
-      "col-lg-9",
       "tab-content"
     ),
+    ...,
     lapply(
       seq_along(panes),
       function(i) {
@@ -423,7 +433,7 @@ tabbablePanes <- function(panes, ids) {
   )
 }
 
-tabbableList <- function(labels, panes, ids, selected, context, ...) {
+tabslist <- function(labels, panes, ids, selected, context, ...) {
   row(
     col(
       width = 4,

@@ -1,52 +1,90 @@
 #' Cards, highly variable blocks of content
 #'
-#' Create cards. Use `cardBlock`, `cardList` to add components to a card.
+#' `textCard` a simple way to represent content as a standalone block.
+#' `tabsCard` and `pillsCard` allow more content to be packed into a single
+#' card. `deck` is used to group and ensure proper padding is placed around any
+#' number of cards.
 #'
-#' @param header A character string specifying a header for the card, defaults
-#'   to `NULL`.
+#' @param title A character string specifying the title of the card's content.
 #'
-#' @param title A character string specifying a title for the card, defaults
-#'   to `NULL`.
+#' @param body A character string specifying the body of the card's content.
 #'
-#' @param subtitle A character string specifying a subtitle for the card,
-#'   defaults to `NULL`.
+#' @param align One of `"left"`, `"right"`, or `"center"` specifying the text
+#'   alignment of the card, defaults to `"left"`.
 #'
-#' @param text A character string specifying a body of the card, defaults to
-#'   `NULL`.
+#' @param header A character string specifying header text of the card, defaults
+#'   to `NULL`, in which case a header is not added.
 #'
-#' @param context One of `"primary"`, `"success"`, `"info"`, `"warning"`, or
-#'   `"danger"`, used to add a visual context to the card, defaults to `NULL`.
+#' @param footer A character string specifying footer text of the card, defaults
+#'   to `NULL`, in which case a footer is not added.
 #'
-#' @param outline If `TRUE`, the card context is styled as an outline
-#'   rather than the background of the card, defaults to `FALSE`.
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, `"light"` or `"dark"` used to add a visual context
+#'   to the card, defaults to `"light"`.
 #'
-#' @param inverse If `TRUE`, the card has a dark background and light text as
-#'   opposed to the default dark text on light background, defaults to `FALSE`.
+#' @param outline If `TRUE`, `context` changes the border color of the card
+#'   instead of changing the background color, defaults to `FALSE`.
+#'
+#' @param labels A character vector or list of character strings specifying the
+#'   tab labels of the navigation card.
+#'
+#' @param panes A list of custom tags specifying the tab content of the
+#'   navigation card.
+#'
+#' @param ... Any number of cards or additional named arguments passed as HTML
+#'   attributes to the parent element.
 #'
 #' @export
 #' @examples
+#' if (interactive()) {
+#'   library(ggplot2)
+#'
+#'   shinyApp(
+#'     ui = container(
+#'       tags$div(
+#'         class = "card",
+#'         style="width: 20rem;",
+#'         tags$div(
+#'           class = "shiny-plot-output",
+#'           id = "plot",
+#'           style = "width: 318px; height: 180px;",
+#'           tags$div(
+#'             class = "card-img-top",
+#'             tags$img(
+#'               alt = "Card image cap"
+#'             )
+#'           )
+#'         ),
+#'         tags$div(
+#'           class = "card-body",
+#'           tags$h4(class = "card-title", "Card title"),
+#'           tags$p(class = "card-text", "card text, card text")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$plot <- renderPlot({
+#'         ggplot(mtcars, aes(cyl, mpg)) +
+#'           geom_point()
+#'       })
+#'     }
+#'   )
+#' }
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
 #'       row(
 #'         col(
-#'           card(
-#'             align = "center",
-#'             cardBlock(
-#'               title = "Card One",
-#'               text = "Hello, world!",
-#'               buttonInput("Click me")
-#'             )
+#'           textCard(
+#'             title = "A special title",
+#'             body = "Here is some supporting text"
 #'           )
 #'         ),
 #'         col(
-#'           card(
-#'             align = "center",
-#'             cardBlock(
-#'               title = "Card Two",
-#'               text = "Goodnight, moon!",
-#'               buttonInput("Click me")
-#'             )
+#'           textCard(
+#'             title = "A special title",
+#'             body = "Here is some supporting text"
 #'           )
 #'         )
 #'       )
@@ -57,19 +95,81 @@
 #'   )
 #' }
 #'
-card <- function(..., context = NULL, outline = FALSE, align = "left") {
-  if (!re(context, "primary|success|info|warning|danger")) {
+#' #
+#' #  with `deck` you can ensure proper spacing between cards
+#' #
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       deck(
+#'         textCard(
+#'           title = "Long content",
+#'           body = "This text is the long and where does the text go? How do you know when the text will end? Never fear. This is over."
+#'         ),
+#'         textCard(
+#'           align = "right",
+#'           title = "Longer content",
+#'           body = c(
+#'             "This text makes what you read look like childs play. Here goes the world and here comes the sun. There was an eclipse the other day, did you know? ",
+#'             "In case you did not know I hope you will find someone to explain the majesty of it all."
+#'           )
+#'         ),
+#'         textCard(
+#'           align = "center",
+#'           title = "Short content",
+#'           body = "No rambling necessary for this card."
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       deck(
+#'         tabsCard(
+#'           labels = c("Info", "Data", "Options"),
+#'           panes = list(
+#'             tags$p("Some info, the main content of this card"),
+#'             tags$p(class = "card-text", "This tab describes the data behind what you saw on on the info tab"),
+#'             tags$p("Here are some options")
+#'           )
+#'         ),
+#'         pillsCard(
+#'           labels = c("Info", "Data", "Options"),
+#'           panes = list(
+#'             tags$p("Some info, the main content of this card"),
+#'             tags$p(class = "card-text", "This tab describes the data behind what you saw on on the info tab"),
+#'             tags$p("Here are some options")
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+textCard <- function(title, body, header = NULL, align = "left", footer = NULL,
+                     context = NULL, outline = FALSE, ...) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark")) {
     stop(
-      '`card` argument `context` must be one of `"primary"`, `"success"`, ',
-      '`"info"`, `"warning"`, or `"danger"`',
+      "invalid `textCard` argument, `context` must be one of ",
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", "dark", or NULL',
       call. = FALSE
     )
   }
 
-  if (!re(align, "left|right|center")) {
+  if (!re(align, "left|right|center", FALSE)) {
     stop(
-      'invalid `card` argument, `align` must be one of "left", "right", or ',
-      '"center"',
+      "invalid `textCard` argument, `align` must be one of ",
+      '"left", "right", or "center"',
       call. = FALSE
     )
   }
@@ -77,76 +177,134 @@ card <- function(..., context = NULL, outline = FALSE, align = "left") {
   tags$div(
     class = collate(
       "card",
-      if (!is.null(context)) {
-        if (outline) {
-          paste0("card-outline-", context)
-        } else {
-          paste0("card-", context, " card-inverse")
-        }
-      },
+      if (!is.null(context)) paste0(if (outline) "border-" else "bg-", context),
       if (align != "left") paste0("text-", align)
-    ),
-    ...
-  )
-}
-
-#' @rdname card
-#' @export
-cardBlock <- function(..., header = NULL, title = NULL, subtitle = NULL,
-                      text = NULL, footer = NULL, context = NULL,
-                      outline = FALSE) {
-  tags$div(
-    class = collate(
-      "card-block"
     ),
     if (!is.null(header)) {
       tags$div(class = "card-header", header)
     },
-    if (!is.null(title)) {
-      tags$h4(class = "card-title", title)
-    },
-    if (!is.null(subtitle)) {
-      tags$h6(class = "card-subtitle", subtitle)
-    },
-    if (!is.null(text)) {
-      tags$p(class = "card-text", text)
-    },
+    tags$div(
+      class = "card-body",
+      tags$h4(class = "card-title", title),
+      tags$p(class = "card-text", body)
+    ),
     ...,
     if (!is.null(footer)) {
-      tags$div(class = "card-footer", footer)
+      tags$div(
+        class = "card-footer",
+        tags$small(class = "text-muted", footer)
+      )
     }
   )
 }
 
-#' @rdname card
+#' @rdname textCard
 #' @export
-cardList <- function(...) {
-  listGroupInput(
-    class = "list-group-flush",
-    ...
-  )
-}
+tabsCard <- function(labels, panes, ...) {
+  ids <- ID(rep.int("tab", length(labels)))
 
-#' Card groups and decks
-#'
-#' Group card objects together as groups or decks. Card groups placed cards
-#' directly side by side. Card decks put space in between cards. When grouping
-#' cards footers are aligned.
-#'
-#' @param ... Any number of card elements or named arguments passed as HTML
-#'   attributes to the parent element.
-#'
-#' @export
-cardGroup <- function(...) {
   tags$div(
-    class = "card-group",
+    class = "card",
+    tags$div(
+      class = "card-header",
+      tags$ul(
+        class = "nav nav-tabs card-header-tabs",
+        role = "tablist",
+        lapply(
+          seq_along(labels),
+          function(i) {
+            tags$li(
+              class = "nav-item",
+              tags$a(
+                class = collate(
+                  "nav-link",
+                  if (i == 1) "active"
+                ),
+                href = paste0("#", ids[[i]]),
+                `data-toggle` = "tab",
+                labels[[i]]
+              )
+            )
+          }
+        )
+      )
+    ),
+    tags$div(
+      class = "card-body tab-content",
+      lapply(
+        seq_along(labels),
+        function(i) {
+          tags$div(
+            class = collate(
+              "tab-pane",
+              if (i == 1) "active"
+            ),
+            id = ids[[i]],
+            role = "tabpanel",
+            panes[[i]]
+          )
+        }
+      )
+    ),
     ...
   )
 }
 
-#' @rdname cardGroup
+#' @rdname textCard
 #' @export
-cardDeck <- function(...) {
+pillsCard <- function(labels, panes, ...) {
+  ids <- ID(rep.int("tab", length(labels)))
+
+  tags$div(
+    class = "card",
+    tags$div(
+      class = "card-header",
+      tags$ul(
+        class = "nav nav-pills card-header-pills",
+        role = "tablist",
+        lapply(
+          seq_along(labels),
+          function(i) {
+            tags$li(
+              class = "nav-item",
+              tags$a(
+                class = collate(
+                  "nav-link",
+                  if (i == 1) "active"
+                ),
+                href = paste0("#", ids[[i]]),
+                `data-toggle` = "pill",
+                labels[[i]]
+              )
+            )
+          }
+        )
+      )
+    ),
+    tags$div(
+      class = "card-body tab-content",
+      lapply(
+        seq_along(labels),
+        function(i) {
+          tags$div(
+            class = collate(
+              "tab-pane",
+              if (i == 1) "active"
+            ),
+            id = ids[[i]],
+            role = "tabpanel",
+            panes[[i]]
+          )
+        }
+      )
+    ),
+    ...
+  )
+}
+
+#' @rdname textCard
+#' @export
+deck <- function(...) {
   tags$div(
     class = "card-deck",
     ...
