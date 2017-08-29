@@ -49,6 +49,48 @@ Shiny.addCustomMessageHandler("dull:alert", function (msg) {
   };
 }).call(Shiny.InputBinding.prototype);
 
+var addressInputBinding = new Shiny.InputBinding();
+
+$.extend(addressInputBinding, {
+  find: function find(scope) {
+    return $(scope).find(".dull-address-input[id]");
+  },
+  getValue: function getValue(el) {
+    var $el = $(el);
+    var $inputs = $el.find("input");
+    var names = ["line1", "line2", "city", "state", "zip"];
+
+    var values = $inputs.map(function (i, e) {
+      return $(e).val();
+    }).get().reduce(function (acc, val, i) {
+      console.log(i);
+      acc[names[i]] = val;
+      return acc;
+    }, {});
+
+    if (!Object.values(values).reduce(function (acc, obj) {
+      return acc || obj;
+    })) {
+      return null;
+    }
+
+    return values;
+  },
+  getState: function getState(el, data) {
+    return { value: this.getValue(el) };
+  },
+  subscribe: function subscribe(el, callback) {
+    $(el).on("change.addressInputBinding", function (e) {
+      callback();
+    });
+  },
+  unsubscribe: function unsubscribe(el) {
+    $(el).off(".addressInputBinding");
+  }
+});
+
+Shiny.inputBindings.register(addressInputBinding, "dull.addressInput");
+
 var alertInputBinding = new Shiny.InputBinding();
 
 $.extend(alertInputBinding, {
