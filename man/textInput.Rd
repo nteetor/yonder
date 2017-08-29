@@ -61,8 +61,10 @@ element.}
 Textual inputs.
 }
 \examples{
+if (interactive()) {
 
-stub
+}
+
 
 }
 \seealso{

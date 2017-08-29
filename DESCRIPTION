@@ -26,6 +26,7 @@ Collate:
     tags.R
     icons.R
     inputs.R
+    select.R
     utilities.R
     accordion.R
     alerts.R

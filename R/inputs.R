@@ -55,8 +55,10 @@ textualInput <- function(id, label, value, placeholder, readonly, help, type,
 #' @family inputs
 #' @export
 #' @examples
+#' if (interactive()) {
 #'
-#' stub
+#' }
+#'
 #'
 textInput <- function(id, label, value = NULL, placeholder = NULL,
                       readonly = FALSE, help = NULL, ...) {
@@ -190,29 +192,19 @@ fieldset <- function(legend, ...) {
   )
 }
 
-#' Select input
+#' Address input
 #'
-#' A select input.
+#' An address input which includes a street field, apartment or unit field, city
+#' field, state field, and a zip code field.
 #'
-#' @param id A character string specifying the id of the select input.
+#' @param id A character string specifying the id of the address input.
 #'
-#' @param options A character vector specifying the labels of the select input
-#'   options.
+#' @param placeholders If `TRUE`, placeholder text is added to all the address
+#'   input fields, defaults to `TRUE`.
 #'
-#' @param values A character vector specifying the values of the select input
-#'   options, defaults to `options`.
+#' @param abbreviate If `TRUE`, state abbreviations are used instead of state
+#'   names, defaults to `TRUE`.
 #'
-#' @param selected One of `options` indicating the default value of the select
-#'   input, defaults to `NULL`. If `NULL` the first value is selected by
-#'   default.
-#'
-#' @param multiple If `TRUE` multiple options may be selected, defaults to
-#'   `FALSE`, in which case only one option may be selected.
-#'
-#' @param ... Additional named arguments passed as HTML attributes to the parent
-#'   element.
-#'
-#' @family inputs
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -220,85 +212,117 @@ fieldset <- function(legend, ...) {
 #'     ui = container(
 #'       row(
 #'         col(
-#'           selectInput(
-#'             id = "select",
-#'             options = c("Choose one", "One", "Two", "Three"),
-#'             values = list(NULL, 1, 2, 3),
-#'             multiple = TRUE
+#'           tags$form(
+#'             addressInput("address")
 #'           )
 #'         ),
 #'         col(
-#'           display4(
-#'             textOutput("value")
-#'           )
+#'           verbatimTextOutput("value")
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$value <- renderText({
-#'         input$select
+#'       output$value <- renderPrint({
+#'         input$address
 #'       })
 #'     }
 #'   )
 #' }
 #'
-#'
-selectInput <- function(id, options, values = options, selected = NULL,
-                        multiple = FALSE, ...) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `selectInput` argument, `id` must be a character string or NULL",
-      call. = FALSE
-    )
-  }
+addressInput <- function(id, placeholders = TRUE, abbreviate = TRUE) {
+  # <div class="form-group">
+  #   <label for="inputAddress" class="col-form-label">Address</label>
+  #   <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
+  # </div>
+  ids <- ID(rep.int("tab", 5))
 
-  if (length(options) != length(values)) {
-    stop(
-      "invalid `selectInput` arguments, `options` and `values` must be the ",
-      "same length",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(selected)) {
-    if (length(selected) > 1) {
-      stop(
-        "invalid `selectInput` argument, `selected` must be of length 1",
-        call. = FALSE
-      )
-    }
-
-    if (!(selected %in% options)) {
-      stop(
-        "invalid `selectInput` argument, `selected` must be one of `values`",
-        call. = FALSE
-      )
-    }
-  }
-
-  selected <- match2(selected, values, default = TRUE)
-
-  tags$select(
-    class = collate(
-      "dull-select-input",
-      "dull-input",
-      "custom-select",
-      if (multiple) "h-100"
-    ),
+  tags$div(
+    class = "dull-address-input",
     id = id,
-    lapply(
-      seq_along(options),
-      function(i) {
-        tags$option(
-          `data-value` = values[[i]],
-          options[[i]],
-          selected = if (selected[[i]]) NA
-        )
-      }
+    tags$div(
+      class = "form-group",
+      tags$label(
+        `for` = ids[[1]],
+        class = "col-form-label",
+        "Address Line 1"
+      ),
+      tags$input(
+        type = "text",
+        class = "form-control",
+        id = ids[[1]],
+        placeholder = if (placeholders) "Street address"
+      )
     ),
-    ...,
-    multiple = if (multiple) NA,
-    bootstrap()
+    tags$div(
+      class = "form-group",
+      tags$label(
+        `for` = ids[[2]],
+        class = "form-control-label",
+        "Address Line 2"
+      ),
+      tags$input(
+        type = "text",
+        class = "form-control",
+        id = ids[[2]],
+        placeholder = if (placeholders) "Apartment or unit"
+      )
+    ),
+    tags$div(
+      class = "form-row",
+      tags$div(
+        class = "form-group col-md-6",
+        tags$label(
+          class = "form-control-label",
+          `for` = ids[[3]],
+          "City or town"
+        ),
+        tags$input(
+          type = "text",
+          class = "form-control",
+          id = ids[[3]]
+        )
+      ),
+      tags$div(
+        class = "form-group col-md-4",
+        tags$label(
+          class = "form-control-label",
+          `for` = ids[[4]],
+          "State, province, or region"
+        ),
+        tags$input(
+          type = "text",
+          class = "form-control",
+          id = ids[[4]]
+        )
+        # tags$select(
+        #   class = "form-control custom-select",
+        #   id = ids[[4]],
+        #   size = 10,
+        #   lapply(
+        #     if (abbreviate) state.abb else state.name,
+        #     function(state) {
+        #       tags$option(
+        #         value = state,
+        #         state
+        #       )
+        #     }
+        #   )
+        # )
+      ),
+      tags$div(
+        class = "form-group col-md-2",
+        tags$label(
+          class = "form-control-label",
+          `for` = ids[[5]],
+          "Zip or postal code"
+        ),
+        tags$input(
+          type = "text",
+          class = "form-control",
+          id = ids[[5]]
+        )
+      )
+    )
   )
 }
 

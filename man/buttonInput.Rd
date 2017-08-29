@@ -84,14 +84,14 @@ if (interactive()) {
         col(
           buttonInput(
             id = "change",
-            label = "Change other button",
+            text = "Change other button",
             context = "success"
           )
         ),
         col(
           buttonInput(
             id = "button",
-            label = "Button",
+            text = "Button",
             outline = TRUE
           )
         ),
@@ -106,13 +106,36 @@ if (interactive()) {
       observeEvent(input$change, {
         updateButtonInput(
           id = "button",
-          label = paste("Button", input$change)
+          text = paste("Button", input$change)
         )
 
         resetButtonInput("button")
       })
 
       output$value <- renderText({
+        input$button
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      fluid = FALSE,
+      buttonInput(
+        id = "button",
+        text = list(
+          "Increment badge",
+          badgeOutput(
+            id = "badge",
+            content = 0
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$badge <- renderBadge({
         input$button
       })
     }
