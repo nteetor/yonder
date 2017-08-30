@@ -7,9 +7,6 @@
 \alias{display3}
 \alias{display4}
 \alias{display5}
-\alias{lead}
-\alias{mark}
-\alias{small}
 \title{Text and Heading Styles}
 \usage{
 display1(...)
@@ -21,12 +18,6 @@ display3(...)
 display4(...)
 
 display5(...)
-
-lead(...)
-
-mark(...)
-
-small(...)
 }
 \arguments{
 \item{...}{Child elements, additional HTML classes, or HTML attributes
@@ -45,10 +36,5 @@ of \code{<mark>} while avoiding the usage and purpose restrictions.
 }
 \examples{
 display1("Eye-catching!")
-
-lead(
-  "Some text you want to make sure catches",
-  "the reader's eye."
-)
 
 }

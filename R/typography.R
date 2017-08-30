@@ -56,34 +56,6 @@ display <- function(level, ...) {
   )
 }
 
-#' @rdname typography
-#' @export
-#' @examples
-#' lead(
-#'   "Some text you want to make sure catches",
-#'   "the reader's eye."
-#' )
-#'
-lead <- function(...) {
-  tags$p(
-    class = "lead",
-    ...,
-    bootstrap()
-  )
-}
-
-#' @rdname typography
-#' @export
-mark <- function(...) {
-  tags$span(class = "mark", ...)
-}
-
-#' @rdname typography
-#' @export
-small <- function(...) {
-  tags$span(class = "small", ...)
-}
-
 #' Jumbotron
 #'
 #' Highlight messages.

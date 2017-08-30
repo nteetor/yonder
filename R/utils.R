@@ -2,6 +2,8 @@
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
+`%!!%` <- function(a, b) if (!is.null(a)) b else NULL
+
 `map*` <- function(x, f) {
   if (length(x) == 1) {
     return(f(x))
