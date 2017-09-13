@@ -593,6 +593,41 @@ $.extend(listGroupInputBinding, {
 
 Shiny.inputBindings.register(listGroupInputBinding, "dull.listGroupInput");
 
+var loginInputBinding = new Shiny.InputBinding();
+
+$.extend(loginInputBinding, {
+  find: function find(scope) {
+    return $(scope).find(".dull-login-input[id]");
+  },
+  getValue: function getValue(el) {
+    var values = $(el).find(".form-control").map(function (i, e) {
+      return $(e).val();
+    }).get();
+
+    if (!values[0] && !values[1]) {
+      return null;
+    }
+
+    return {
+      username: values[0],
+      password: values[1]
+    };
+  },
+  getState: function getState(el, data) {
+    return { value: this.getValue(el) };
+  },
+  subscribe: function subscribe(el, callback) {
+    $(el).on("click.loginInputBinding", ".btn", function (e) {
+      callback();
+    });
+  },
+  unsubscribe: function unsubscribe(el) {
+    $(el).off(".loginInputBinding");
+  }
+});
+
+Shiny.inputBindings.register(loginInputBinding, "dull.loginInput");
+
 var radioInputBinding = new Shiny.InputBinding();
 
 $.extend(radioInputBinding, {
@@ -853,35 +888,62 @@ $.extend(textualInputBinding, {
 Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");
 
 Shiny.addCustomMessageHandler("dull:modal", function (msg) {
-  var modal = $("<div>", {
-    "class": "modal fade",
-    "tabindex": -1,
-    "role": "dialog"
-  }).append($("<div>", {
-    "class": "modal-dialog",
-    "role": "document"
-  }).append($("<div>", {
-    "class": "modal-content"
-  }).append($("<div>", {
-    "class": "modal-header"
-  }).append($("<h5>", { "class": "modal-title" }).html(msg.title), $("<button>", {
-    "type": "button",
-    "class": "close",
-    "data-dismiss": "modal",
-    "aria-label": "Close"
-  }).append($("span", {
-    "class": "fa fa-times-rectangle"
-  }))), $("<div>", {
-    "class": "container-fluid"
-  }).append($("<div>", { "class": "modal-body" }).html(msg.body)))));
-
-  if (msg.footer) {
-    modal.find(".modal-content").append($("<div>", {
-      "class": "modal-footer"
-    }).html(msg.footer));
+  if (msg.close === true) {
+    $(".modal").modal("hide");
+    return true;
   }
 
-  modal.modal("toggle");
+  if ($(".modal").length) {
+    modal = $(".modal");
+  } else {
+    var modal = $("<div>", {
+      "class": "modal fade",
+      "tabindex": -1,
+      "role": "dialog"
+    }).append($("<div>", {
+      "class": "modal-dialog",
+      "role": "document"
+    }).append($("<div>", {
+      "class": "modal-content"
+    }).append($("<div>", {
+      "class": "modal-header"
+    }).append($("<h5>", { "class": "modal-title" }), $("<button>", {
+      "type": "button",
+      "class": "close",
+      "data-dismiss": "modal",
+      "aria-label": "Close"
+    }).append($("span", {
+      "class": "fa fa-times-rectangle"
+    }))), $("<div>", {
+      "class": "container-fluid"
+    }).append($("<div>", { "class": "modal-body" })))));
+
+    $("<body>").append(modal);
+  }
+
+  $(".modal-title").html(msg.title);
+  $(".modal-body").html(msg.body);
+
+  if (msg.footer) {
+    if (!$(".modal-footer").length) {
+      $(".modal-content").append($("<div>", {
+        "class": "modal-footer"
+      }).html(msg.footer));
+    } else {
+      $(".modal-content").html(msg.footer);
+    }
+  }
+});
+
+$(document).ready(function () {
+  $(document).on("shown.bs.modal", ".modal", function (e) {
+    console.log($(".modal").find(".shiny-bound-output, .shiny-bound-input").length);
+    if (!$(".modal").find(".shiny-bound-output, .shiny-bound-input").length) {
+      console.log("no bound found");
+      Shiny.initializeInputs(".modal");
+      Shiny.bindAll(".modal");
+    }
+  });
 });
 
 var badgeOutputBinding = new Shiny.OutputBinding();
@@ -960,6 +1022,42 @@ $.extend(radialOutputBinding, {
 });
 
 Shiny.outputBindings.register(radialOutputBinding, "dull.radialOutput");
+
+var sparklineOutputBinding = new Shiny.OutputBinding();
+
+$.extend(sparklineOutputBinding, {
+  find: function find(scope) {
+    return $(scope).find(".dull-sparkline-output[id]");
+  },
+  getId: function getId(el) {
+    return el.id;
+  },
+  renderValue: function renderValue(el, data) {
+    if (data.values) {
+      var $el = $(el);
+
+      var labels = $el.data("labels");
+
+      $el.text(function (i, c) {
+        var contents = "{" + data.values.join(",") + "}";
+
+        if (labels) {
+          contents = data.raw[0] + contents + data.raw[data.raw.length - 1];
+        }
+
+        if (c === "") {
+          return contents;
+        } else {
+          return c.replace(/{[0-9,]*}/, contents);
+        }
+      });
+    }
+  },
+  renderError: function renderError(el, data) {},
+  clearError: function clearError(el) {}
+});
+
+Shiny.outputBindings.register(sparklineOutputBinding, "dull.sparklineOutput");
 
 $.extend(Shiny.progressHandlers, {
   "dull-stream": function dullStream(data) {

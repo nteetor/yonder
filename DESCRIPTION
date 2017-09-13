@@ -45,6 +45,7 @@ Collate:
     nav.R
     radio.R
     table.R
+    sparkline.R
     progress.R
     stream.R
     radial.R
