@@ -192,6 +192,80 @@ fieldset <- function(legend, ...) {
   )
 }
 
+#' Login input
+#'
+#' Username
+#'
+#'
+#' @export
+#' @examples
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           loginInput(
+#'             id = "login"
+#'           )
+#'         ),
+#'         col(
+#'           verbatimTextOutput("value")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$value <- renderPrint({
+#'         input$login
+#'       })
+#'     }
+#'   )
+#' }
+loginInput <- function(id, ...) {
+  ids <- ID(rep.int("login", 2))
+
+  tags$div(
+    class = "dull-login-input col",
+    id = id,
+    tags$div(
+      class = "form-group",
+      tags$label(
+        class = "form-control-label",
+        # `for` = ids[[1]],
+        "Username"
+      ),
+      tags$input(
+        type = "text",
+        class = "form-control"
+        # id = ids[[1]]
+      )
+    ),
+    tags$div(
+      class = "form-group",
+      tags$label(
+        class = "form-control-label",
+        # `for` = ids[[2]],
+        "Password"
+      ),
+      tags$input(
+        type = "password",
+        class = "form-control"
+        # id = ids[[2]]
+      )
+    ),
+    tags$div(
+      class = "row justify-content-center",
+      tags$div(
+        class = "col col-auto",
+        tags$button(
+          class = "btn btn-primary",
+          "Login"
+        )
+      )
+    ),
+    ...
+  )
+}
+
 #' Address input
 #'
 #' An address input which includes a street field, apartment or unit field, city
@@ -230,11 +304,7 @@ fieldset <- function(legend, ...) {
 #' }
 #'
 addressInput <- function(id, placeholders = TRUE, abbreviate = TRUE) {
-  # <div class="form-group">
-  #   <label for="inputAddress" class="col-form-label">Address</label>
-  #   <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-  # </div>
-  ids <- ID(rep.int("tab", 5))
+  ids <- ID(rep.int("address", 5))
 
   tags$div(
     class = "dull-address-input",
@@ -294,20 +364,6 @@ addressInput <- function(id, placeholders = TRUE, abbreviate = TRUE) {
           class = "form-control",
           id = ids[[4]]
         )
-        # tags$select(
-        #   class = "form-control custom-select",
-        #   id = ids[[4]],
-        #   size = 10,
-        #   lapply(
-        #     if (abbreviate) state.abb else state.name,
-        #     function(state) {
-        #       tags$option(
-        #         value = state,
-        #         state
-        #       )
-        #     }
-        #   )
-        # )
       ),
       tags$div(
         class = "form-group col-md-2",

@@ -85,7 +85,6 @@ if (interactive()) {
     ui = container(
       row(
         col(
-          offset = 1,
           dropdownInput(
             id = "actions",
             label = "Actions",

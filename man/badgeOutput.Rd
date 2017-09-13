@@ -34,7 +34,6 @@ if (interactive()) {
     ui = container(
       row(
         col(
-          offset = 3,
           listGroupInput(
             id = NULL,
             items = "Button clicks",

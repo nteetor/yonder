@@ -43,32 +43,26 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       buttonInput(id = "toggle", "Demo login"),
-#'       modal(
-#'         id = "login",
-#'         header = "Please login",
-#'         body = tagList(
-#'           textInput(
-#'             id = "name",
-#'             label = "Name",
-#'             placeholder = "yourname@@email.com"
-#'           ),
-#'           passwordInput(
-#'             id = "password",
-#'             label = "Password"
-#'           )
-#'         ),
-#'         footer = buttonInput(id = "process", "Submit")
+#'       row(
+#'         class = "justify-content-center",
+#'         col(
+#'           class = "col-auto",
+#'           buttonInput(id = "trigger", "Trigger modal")
+#'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       observeEvent(input$toggle, {
-#'         toggleModal("login")
+#'       observeEvent(input$trigger, {
+#'         sendModal(
+#'           title = "Login",
+#'           body = loginInput("login")
+#'         )
 #'       })
 #'
-#'       observeEvent(input$process, {
-#'         print(isolate(input$name))
-#'         print(isolate(input$password))
+#'       observeEvent(input$login, {
+#'         if (input$login$username != "" && input$login$password != "") {
+#'           closeModal()
+#'         }
 #'       })
 #'     }
 #'   )
@@ -82,6 +76,17 @@ sendModal <- function(title, body, footer = NULL,
       title = htmltools::HTML(as.character(title)),
       body = htmltools::HTML(as.character(body)),
       footer = if (!is.null(footer)) htmltools::HTML(as.character(footer))
+    )
+  )
+}
+
+#' @rdname sendModal
+#' @export
+closeModal <- function(session = getDefaultReactiveDomain()) {
+  session$sendCustomMessage(
+    "dull:modal",
+    list(
+      close = TRUE
     )
   )
 }
