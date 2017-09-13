@@ -15,6 +15,7 @@ var scssFiles = "scss/*.scss",
 
 /* TASKS */
 gulp.task("clean", function() {
+  // removes font-face?!!?!?
   return del.sync([cssFiles]);
 });
   
@@ -33,4 +34,4 @@ gulp.task("concat", function() {
     .pipe(gulp.dest(cssDest));
 });
 
- gulp.task("default", ["clean", "sass", "concat"]);
+gulp.task("default", ["sass", "concat"]);
