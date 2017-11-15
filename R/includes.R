@@ -38,3 +38,14 @@ d3 <- function() {
     )
   )
 }
+
+chartist <- function() {
+  shiny::addResourcePath("dull", system.file("www", package = "dull"))
+
+  htmltools::singleton(
+    tags$head(
+      tags$link(rel = "stylesheet", href = "dull/chartist/chartist.min.css"),
+      tags$script(src = "dull/chartist/chartist.min.js")
+    )
+  )
+}
