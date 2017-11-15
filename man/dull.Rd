@@ -11,29 +11,6 @@ More freedom to the programmer, more to come.
 }
 \section{Q and A}{
 
-
-\strong{Where are the input functions?}
-
-Unlike shiny, dull does not include explicit input functions. Instead an \code{id}
-argument must be specified as an HTML attribute, passed to a function through
-\code{...}. Once an \code{id} attribute is specified a reactive input value is
-available.
-
-For example, a \link{listGroupInput} may be used to display series of items, but by
-passing an \code{id} attribute the \code{listGroup} still displays a series of items
-can function similar to shiny \code{checkboxGroupInput}.
-
-\strong{What is the \code{bs} object?}
-
-Similar to the \code{tags} object in \code{htmltools}, the \code{inputs} object bundles
-together many HTML form input elements. Functions like \code{textInput} and
-\code{selectInput} are similar to shiny's \code{textInput} and \code{selectInput}.
-Additionally, there are new, specific inputs like \code{datetimeInput},
-\code{colorInput}, and more.
-
-The \code{bs} object bundles together builder functions, like those found in
-\code{tags}, which have received distinct parameters corresponding to
-functionality provided by the bootstrap library.
 }
 
 \author{
