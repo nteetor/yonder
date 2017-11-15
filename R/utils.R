@@ -2,7 +2,7 @@
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
-`%!!%` <- function(a, b) if (!is.null(a)) b else NULL
+`%??%` <- function(a, b) if (!is.null(a)) b else NULL
 
 `map*` <- function(x, f) {
   if (length(x) == 1) {
@@ -15,25 +15,6 @@
       `map*`(i, f)
     }
   )
-}
-
-# conform x to structure of y
-conform <- function(x, y) {
-  if (length(unlist(y, FALSE)) != length(x)) {
-    stop(
-      "invalid `conform` arguments, `x` and `y` must have the same number of ",
-      "items",
-      call. = FALSE
-    )
-  }
-
-  counter <- 0
-  getnext <- function() {
-    counter <<- counter + 1
-    x[[counter]]
-  }
-
-  each(y, getnext)
 }
 
 re <- function(string, pattern, len0 = TRUE) {
@@ -103,34 +84,21 @@ elements <- function(x) {
   x[names2(x) == ""]
 }
 
-#' Join HTML attribute values
-#'
-#' A function to join HTML attribute values with `htmltools` in mind. If all
-#' arguments are `NULL`, `NULL` is returned so the attribute can be dropped. If
-#' all arguments are the empty string, `NULL` is returned so the attribute can
-#' be dropped. If all arguments are `NA`, then `NA` is returned to preserve a
-#' boolean attribute. Otherwise, all arguments are collapsed together into a
-#' single string suitable for an HTML attribute.
-#'
-#' @param ... Any number of arguments to combine together as a single HTML
-#'   attribute value.
-#'
-#' @param collapse A character string specifying how the arguments are pasted
-#'   together, passed to `paste`, defaults to `" "`.
-#'
-#' @keywords internal
-#' @export
-#' @examples
-#' collate(
-#'   "container",
-#'   "my-custom-class"
-#' )
-#'
-#' collate(
-#'   "container",
-#'   utils$border(round = "all")
-#' )
-#'
+# Join HTML attribute values
+#
+# A function to join HTML attribute values with `htmltools` in mind. If all
+# arguments are `NULL`, `NULL` is returned so the attribute can be dropped. If
+# all arguments are the empty string, `NULL` is returned so the attribute can
+# be dropped. If all arguments are `NA`, then `NA` is returned to preserve a
+# boolean attribute. Otherwise, all arguments are collapsed together into a
+# single string suitable for an HTML attribute.
+#
+# @param ... Any number of arguments to combine together as a single HTML
+#   attribute value.
+#
+# @param collapse A character string specifying how the arguments are pasted
+#   together, passed to `paste`, defaults to `" "`.
+#
 collate <- function(..., collapse = " ") {
   args <- unique(c(...))
 
