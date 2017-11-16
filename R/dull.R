@@ -4,6 +4,6 @@
 #'
 #' @section Q and A:
 #'
-#' @importFrom shiny getDefaultReactiveDomain
+#' @importFrom shiny getDefaultReactiveDomain tagAppendAttributes
 #' @name dull
 "_PACKAGE"

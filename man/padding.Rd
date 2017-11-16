@@ -3,11 +3,13 @@
 \name{padding}
 \alias{padding}
 \alias{margins}
-\title{Tag margins and padding}
+\title{Element margins and padding}
 \usage{
-padding(default = NULL, sm = NULL, md = NULL, lg = NULL, xl = NULL)
+padding(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+  xl = NULL)
 
-margins(default = NULL, sm = NULL, md = NULL, lg = NULL, xl = NULL)
+margins(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+  xl = NULL)
 }
 \arguments{
 \item{default}{One of 0, 1, 2, 3, 4, 5 specifying the default margins or

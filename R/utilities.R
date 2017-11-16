@@ -1,4 +1,91 @@
-#' Tag margins and padding
+#' Element borders
+#'
+#' Apply borders, border colors, and border radius to a tag element.
+#'
+#' @param tag A tag element object.
+#'
+#' @param sides One of `"all"`, `"none"`, or one or more of `"top"`, `"right"`,
+#'   `"bottom"`, `"left"` specifying the sides to apply a border, defaults to
+#'   `"all"`.
+#'
+#' @param color One of `NULL`, `"primary"`, `"secondary"`, `"success"`,
+#'   `"info"`, `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"white"`
+#'   specifying the visual context and border color. If `NULL`, the border is
+#'   the browser default.
+#'
+#' @param rounded One of `"all"`, `"circle"`, `"none"`, or one or more of
+#'   `"top"`, `"right"`, `"bottom"`, `"left"` specifying the side whose corners
+#'   to round.
+#'
+#' @export
+#' @examples
+#' tags$h1("Hello, world!") %>%
+#'   border(sides = c("top", "bottom"))
+#'
+#' tags$div() %>%
+#'   border(color = "warning")
+#'
+border <- function(tag, sides = "all", color = NULL, rounded = "none") {
+  if ((length(sides) > 1 && any(re(sides, "all|none", FALSE))) ||
+      !all(re(sides, "top|right|bottom|left|all|none", FALSE))) {
+      stop(
+        "invalid `border` argument, `sides` must be ",
+        '"all", "none", or one or more of ',
+        '"top", "right", "bottom", or "left"',
+        call. = FALSE
+      )
+  }
+
+  if ((!is.null(color) && length(sides) != 1) ||
+      !re(color, "primary|secondary|success|info|warning|danger|light|dark|white")) {
+    stop(
+      "invalid `border` argument, `color` must be one of NULL, ",
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", "dark", or "white"',
+      call. = FALSE
+    )
+  }
+
+  if ((length(rounded) > 1 && any(re(sides, "all|circle|none", FALSE))) ||
+      !all(re(rounded, "top|right|bottom|left|all|none", FALSE))) {
+    stop(
+      "invalid `border` argument, `sides` must be ",
+      '"all", "none", or one or more of',
+      '"top", "right", "bottom", or "left"',
+      call. = FALSE
+    )
+  }
+
+  tag <- tagEnsureClass(tag, "border")
+
+  if (length(sides) == 1) {
+    if (sides == "none") {
+      tag <- tagAppendAttributes(tag, class = "border-0")
+    }
+  } else {
+    remove <- setdiff(c("top", "right", "bottom", "left"), sides)
+
+    tag <- tagAppendAttributes(
+      tag,
+      class = paste0("border-", remove, "-0", collapse = " ")
+    )
+  }
+
+  if (length(rounded) == 1) {
+    if (rounded == "none") {
+      tag <- tagAppendAttributes(tag, class = "rounded-0")
+    }
+  } else {
+    tag <- tagAppendAttributes(
+      tag,
+      class = paste0("rounded-", rounded, collapse = " ")
+    )
+  }
+
+  tag
+}
+
+#' Element margins and padding
 #'
 #' @description
 #'
@@ -33,7 +120,7 @@
 #'
 #' @family utilities
 #' @export
-padding <- function(default = NULL, sm = NULL, md = NULL, lg = NULL,
+padding <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
                     xl = NULL) {
   args <- dropNulls(list(default = default, sm = sm , md = md, lg = lg, xl = xl))
 
@@ -77,16 +164,12 @@ padding <- function(default = NULL, sm = NULL, md = NULL, lg = NULL,
     character(1)
   )
 
-  class <- collate(classes)
-
-  function(tag) {
-    htmltools::tagAppendAttributes(tag, class = class)
-  }
+  tagAppendAttributes(tag, class = collate(classes))
 }
 
 #' @rdname padding
 #' @export
-margins <- function(default = NULL, sm = NULL, md = NULL, lg = NULL,
+margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
                     xl = NULL) {
   args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
 
@@ -130,11 +213,7 @@ margins <- function(default = NULL, sm = NULL, md = NULL, lg = NULL,
     character(1)
   )
 
-  class <- collate(classes)
-
-  function(tag) {
-    htmltools::tagAppendAttributes(tag, class = class)
-  }
+  tagAppendAttributes(tag, class = collate(classes))
 }
 
 #' Tag width and height
@@ -162,7 +241,7 @@ margins <- function(default = NULL, sm = NULL, md = NULL, lg = NULL,
 #'   tags$div()
 #' )
 #'
-width <- function(percentage = NULL, max = NULL) {
+width <- function(tag, percentage = NULL, max = NULL) {
   if (is.null(percentage) && is.null(max)) {
     stop(
       "invalid `width` arguments, `percentage` and `max` may not both be NULL",
@@ -184,14 +263,13 @@ width <- function(percentage = NULL, max = NULL) {
     )
   }
 
-  class <- collate(
-    percentage %??% paste0("w-", percentage),
-    max %??% paste0("mw-", max)
+  tagAppendAttributes(
+    tag,
+    class = collate(
+      percentage %??% paste0("w-", percentage),
+      max %??% paste0("mw-", max)
+    )
   )
-
-  function(tag) {
-    htmltools::tagAppendAttributes(tag, class = class)
-  }
 }
 
 #' @rdname width
@@ -218,36 +296,36 @@ height <- function(percentage = NULL, max = NULL) {
     )
   }
 
-  class <- collate(
-    percentage %??% paste0("h-", percentage),
-    max %??% paste0("mh-", max)
+  tagAppendAttributes(
+    tag,
+    class = collate(
+      percentage %??% paste0("h-", percentage),
+      max %??% paste0("mh-", max)
+    )
   )
 
-  function(tag) {
-    htmltools::tagAppendAttributes(tag, class = class)
-  }
 }
 
-#' Apply styles to a tag
-#'
-#' This function applies any number of styles generated by utility function
-#' calls.
-#'
-#' @param ... Any number of utility function calls **and** one tag object.
-#'
-#' @export
-#' @examples
-#' tagReduce(
-#'   width(25),
-#'   padding(3),
-#'   tags$div()
-#' )
-#'
-#' tagReduce(
-#'   margins(sm = 1, xl = 5),
-#'   tags$span()
-#' )
-#'
+# Apply styles to a tag
+#
+# This function applies any number of styles generated by utility function
+# calls.
+#
+# @param ... Any number of utility function calls **and** one tag object.
+#
+# @export
+# @examples
+# tagReduce(
+#   width(25),
+#   padding(3),
+#   tags$div()
+# )
+#
+# tagReduce(
+#   margins(sm = 1, xl = 5),
+#   tags$span()
+# )
+#
 tagReduce <- function(...) {
   args <- list(...)
 

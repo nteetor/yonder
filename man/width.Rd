@@ -5,7 +5,7 @@
 \alias{height}
 \title{Tag width and height}
 \usage{
-width(percentage = NULL, max = NULL)
+width(tag, percentage = NULL, max = NULL)
 
 height(percentage = NULL, max = NULL)
 }
