@@ -2,14 +2,14 @@
 % Please edit documentation in R/alerts.R
 \name{sendAlert}
 \alias{sendAlert}
-\title{Send and add alerts}
+\title{Alerts}
 \usage{
 sendAlert(id, content, context = "secondary",
   session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{id}{A character vector of HTML id(s) where the alert(s) will be
-inserted.}
+\item{id}{A character vector of id(s). Alerts are inserted above the elements
+with these ids.}
 
 \item{content}{A character string specifying the body of the alert or
 a custom element to include as the body of the alert.}
@@ -22,13 +22,13 @@ context of the alert, defaults to \code{"secondary"}.}
 defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-\code{sendAlert}
+Trigger one or more alerts. Use alerts to let the user know of successes
+or to call attention to problems.
 }
 \examples{
 if (interactive()) {
   shinyApp(
     ui = container(
-      `font-awesome`(),
       buttonInput(id = "button", "A button")
     ),
     server = function(input, output) {

@@ -1,5 +1,4 @@
 Shiny.addCustomMessageHandler("dull:alert", function(msg) {
-  console.log(msg.id);
   var ids = msg.id.map(v => "#" + v).join(",");
 
   $("<div>")
