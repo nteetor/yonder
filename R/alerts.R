@@ -1,9 +1,10 @@
-#' Send and add alerts
+#' Alerts
 #'
-#' `sendAlert`
+#' Trigger one or more alerts. Use alerts to let the user know of successes
+#' or to call attention to problems.
 #'
-#' @param id A character vector of HTML id(s) where the alert(s) will be
-#'   inserted.
+#' @param id A character vector of id(s). Alerts are inserted above the elements
+#'   with these ids.
 #'
 #' @param content A character string specifying the body of the alert or
 #'   a custom element to include as the body of the alert.
@@ -25,7 +26,6 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       `font-awesome`(),
 #'       buttonInput(id = "button", "A button")
 #'     ),
 #'     server = function(input, output) {

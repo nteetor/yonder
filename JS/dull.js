@@ -25,7 +25,6 @@ Shiny.addCustomMessageHandler("dull:collapse", function (msg) {
 });
 
 Shiny.addCustomMessageHandler("dull:alert", function (msg) {
-  console.log(msg.id);
   var ids = msg.id.map(function (v) {
     return "#" + v;
   }).join(",");
@@ -978,6 +977,12 @@ $.extend(badgeOutputBinding, {
 });
 
 Shiny.outputBindings.register(badgeOutputBinding, "dull.badgeOutput");
+
+var chartistOutputBinding = new Shiny.OutputBinding();
+
+$.extend(chartistOutputBinding, {});
+
+Shiny.outputBindings.register(chartistOutputBinding, "dull.chartistOutput");
 
 $.extend(Shiny.progressHandlers, {
   "dull-progress": function dullProgress(msg) {
