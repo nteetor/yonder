@@ -40,6 +40,10 @@ tags$div("Goodnight, moon") \%>\%
   text(truncate = TRUE, weight = "bold") \%>\%
   text("success")
 
+tags$div("Howdy") \%>\%
+  text("white") \%>\%
+  background("dark")
+
 }
 \seealso{
 Other utilities: \code{\link{affix}}, \code{\link{align}},

@@ -121,6 +121,10 @@ border <- function(tag, sides = "all", rounded = "none", context = NULL) {
 #'   text(truncate = TRUE, weight = "bold") %>%
 #'   text("success")
 #'
+#' tags$div("Howdy") %>%
+#'   text("white") %>%
+#'   background("dark")
+#'
 text <- function(tag, context = NULL, align = NULL, truncate = FALSE,
                  case = NULL, weight = NULL, style = NULL) {
   if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|muted|white")) {
@@ -234,6 +238,31 @@ font <- function(tag, weight = NULL, style = NULL) {
   tag
 }
 
+#' Background color
+#'
+#' The `background` utility function applies Bootstrap classes to a tag element
+#' to change the element's background color.
+#'
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"white"`.
+#'
+#' @export
+#' @examples
+#' tags$div("light text, dark background") %>%
+#'   text("white") %>%
+#'   background("dark")
+#'
+background <- function(tag, context) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|white")) {
+    stop(
+      "invalid `background` argument, `context` must be one of ",
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", "dark", or "white"',
+      call. = FALSE
+    )
+  }
+}
+
 #' Float an element
 #'
 #' The `float` utility function applies Bootstrap float classes to a tag
@@ -263,6 +292,13 @@ font <- function(tag, weight = NULL, style = NULL) {
 float <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
                   xl = NULL) {
   args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
+
+  if (length(float) == 0) {
+    stop(
+      "invalid `float` arguments, at least one argument must not be NULL",
+      call. = FALSE
+    )
+  }
 
   classes <- vapply(
     names2(args),
@@ -345,6 +381,76 @@ align <- function(tag, position) {
   }
 
   tagEnsureClass(tag, paste0("align-", position))
+}
+
+#' Element display property, inline, block, and more
+#'
+#' The `display` utility is used to apply Bootstrap classes to adjust a tag
+#' element's display property. This can be used to hide an element on small
+#' screens or convert an element from inline to block on large screens. Use the
+#' `print` argument to change the display property of an element during
+#' printing.
+#'
+#' @param default One of `"inline"`, `"inline-block"`, `"block"`, `"table"`,
+#'   `"table-cell"`, `"flex"`, `"inline-flex"`, or `"none"` specifying the
+#'   default display property of the element.
+#'
+#' @param sm Like `default`, but the display property is applied once the
+#'   viewport is 576 pixels wide, think phone in landscape mode.
+#'
+#' @param md Like `default`, but the display property is applied once the
+#'   viewport is 768 pixels wide, think tablets.
+#'
+#' @param lg Like `default`, but the display property is applied once the
+#'   viewport is 992 pixels wide, think desktop.
+#'
+#' @param xl Like `default`, but the display property is applied once the
+#'   viewport is 1200 pixels wide, think large desktop.
+#'
+#' @param print Like `default`, but the display property is applied when the
+#'   page is printed.
+#'
+#' @export
+#' @examples
+#' tags$div() %>%
+#'   display(default = "none", md = "block")
+#'
+display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+                    xl = NULL, print = NULL) {
+  args <- dropNulls(
+    list(default = default, sm = sm, md = md, lg = lg, xl = xl, print = print)
+  )
+
+  if (length(args) == 0) {
+    stop(
+      "invalid `display` arguments, at least one value must not be NULL",
+      call. = FALSE
+    )
+  }
+
+  classes <- vapply(
+    names2(args),
+    function(nm) {
+      arg <- args[[nm]]
+
+      if (!re(arg, "inline|inline-block|block|none")) {
+        stop(
+          "invalid `display` argument, `", nm, "` must be one of ",
+          '"inline", "inline-block", "block", or "none"',
+          call. = FALSE
+        )
+      }
+
+      if (nm == "default") {
+        paste0("d-", arg)
+      } else {
+        paste0("d-", nm, "-", arg)
+      }
+    },
+    character(1)
+  )
+
+  tagAddClass(tag, collate(classes))
 }
 
 #' Element margins and padding
