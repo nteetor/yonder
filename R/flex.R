@@ -1,3 +1,94 @@
+#' Flex box
+#'
+#' Use flexbox utilities.
+#'
+#' @export
+#' @examples
+#' tags$div() %>%
+#'   display("flex") %>%
+#'   direction("row") %>%
+#'
+
+
+#' Flex direction, rows and columns
+#'
+#' Change the direction of a flex boxes items. `reverse` is similar to
+#' `direction`, but for `"row"` flex items start from the right of the parent
+#' flex box and for `"column"` flex items start from the bottom of the parent
+#' flex box.
+#'
+#' @param tag A tag element.
+#'
+#' @export
+#' @examples
+#'
+direction <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+                      xl = NULL) {
+  args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
+
+  classes <- responsives("flex", args, c("row", "column"))
+
+  tagAddClass(tag, collate(classes))
+}
+
+#' @rdname direction
+#' @export
+reverse <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+                    xl = NULL) {
+  args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
+
+  classes <- responsives("flex", args, c("row", "column"))
+
+  classes <- paste0(classes, "-reverse")
+
+  tagAddClass(tag, collate(classes))
+}
+
+#' Align flex items
+#'
+#' The `content` function adds Bootstrap classes to a tag element to change how
+#' flex item's align on the x-axis (when the flex direction is row) or on the
+#' y-axis (when the flex is direction is column). For more on flex directions
+#' see [direction].
+#'
+#' @param default One of `"start"`, `"end"`, `"center"`, `"between"` or
+#'   `"around"` specifying the default alignment of the element's flex items.
+#'
+#' @param sm Like `default`, but the alignment is applied once the viewport is
+#'   576 pixels wide, think phone in landscape mode.
+#'
+#' @param md Like `default`, but the alignment is applied once the viewport is
+#'   768 pixels wide, think tablets.
+#'
+#' @param lg Like `default`, but the alignment is applied once the viewport is
+#'   992 pixels wide, think desktop.
+#'
+#' @param xl Like `default`, but the alignment is applied once the viewport is
+#'   1200 pixels wide, think large desktop.
+#'
+#' @export
+#' @examples
+#' lapply(1:5, tags$div) %>%
+#'   tags$div() %>%
+#'   display("flex") %>%
+#'   content("center")
+#'
+content <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+                    xl = NULL) {
+  args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
+
+  classes <- responsives(
+    "justify-content", args, c("start", "end", "center", "between", "around")
+  )
+
+  tagAddClass(tag, collate(classes))
+}
+
+items <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+                  xl = NULL) {
+
+}
+
 #' Flex box and flex item utilities
 #'
 #' Convert tags into flex boxes and flex items. These functions may be chained

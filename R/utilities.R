@@ -437,33 +437,10 @@ display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
     list(default = default, sm = sm, md = md, lg = lg, xl = xl, print = print)
   )
 
-  if (length(args) == 0) {
-    stop(
-      "invalid `display` arguments, at least one value must not be NULL",
-      call. = FALSE
-    )
-  }
-
-  classes <- vapply(
-    names2(args),
-    function(nm) {
-      arg <- args[[nm]]
-
-      if (!re(arg, "inline|inline-block|block|none")) {
-        stop(
-          "invalid `display` argument, `", nm, "` must be one of ",
-          '"inline", "inline-block", "block", or "none"',
-          call. = FALSE
-        )
-      }
-
-      if (nm == "default") {
-        paste0("d-", arg)
-      } else {
-        paste0("d-", nm, "-", arg)
-      }
-    },
-    character(1)
+  classes <- responsives(
+    prefix = "d",
+    values = args,
+    possible = c("inline", "inline-block", "block", "flex", "flex-inline", "none")
   )
 
   tagAddClass(tag, collate(classes))
