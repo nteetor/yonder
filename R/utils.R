@@ -181,3 +181,38 @@ tagIs <- function(x, name) {
   }
   x$name == name
 }
+
+tagAddClass <- function(x, class) {
+  if (is.null(x$attribs$class)) {
+    x$attribs$class <- class
+    return(x)
+  }
+
+  this <- x$attribs$class
+  this <- paste(this, class)
+  this <- gsub("^\\s+|\\s+$", "", this)
+
+  x$attribs$class <- this
+
+  x
+}
+
+tagDropClass <- function(x, regex) {
+  if (is.null(x$attribs$class)) {
+    return(x)
+  }
+
+  x$attribs$class <- gsub(regex, "", x$attribs$class)
+  x
+}
+
+tagDropContext <- function(x, prefix) {
+  if (is.null(x$attribs$class)) {
+    return(x)
+  }
+
+  reg <- paste0(prefix, "-(primary|secondary|success|info|warning|danger|light|dark|white|muted)")
+  x$attribs$class <- gsub(reg, "", x$attribs$class)
+
+  x
+}
