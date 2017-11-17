@@ -4,7 +4,7 @@
 \alias{border}
 \title{Element borders}
 \usage{
-border(tag, sides = "all", context = NULL, rounded = "none")
+border(tag, sides = "all", rounded = "none", context = NULL)
 }
 \arguments{
 \item{tag}{A tag element object.}
@@ -13,14 +13,14 @@ border(tag, sides = "all", context = NULL, rounded = "none")
 \code{"bottom"}, \code{"left"} specifying the sides to apply a border, defaults to
 \code{"all"}.}
 
+\item{rounded}{One of \code{"all"}, \code{"circle"}, \code{"none"}, or one or more of
+\code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"} specifying the side whose corners
+to round.}
+
 \item{context}{One of \code{NULL}, \code{"primary"}, \code{"secondary"}, \code{"success"},
 \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"white"}
 specifying the visual context and border color. If \code{NULL}, the border is
 the browser default.}
-
-\item{rounded}{One of \code{"all"}, \code{"circle"}, \code{"none"}, or one or more of
-\code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"} specifying the side whose corners
-to round.}
 }
 \description{
 Apply borders, border colors, and border radius to a tag element.
@@ -32,4 +32,10 @@ tags$h1("Hello, world!") \%>\%
 tags$div() \%>\%
   border(context = "warning")
 
+}
+\seealso{
+Other utilities: \code{\link{affix}}, \code{\link{align}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{padding}}, \code{\link{text}},
+  \code{\link{width}}
 }

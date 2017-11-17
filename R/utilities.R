@@ -17,6 +17,7 @@
 #'   `"top"`, `"right"`, `"bottom"`, `"left"` specifying the side whose corners
 #'   to round.
 #'
+#' @family utilities
 #' @export
 #' @examples
 #' tags$h1("Hello, world!") %>%
@@ -25,7 +26,7 @@
 #' tags$div() %>%
 #'   border(context = "warning")
 #'
-border <- function(tag, sides = "all", context = NULL, rounded = "none") {
+border <- function(tag, sides = "all", rounded = "none", context = NULL) {
   if ((length(sides) > 1 && any(re(sides, "all|none", FALSE))) ||
       !all(re(sides, "top|right|bottom|left|all|none", FALSE))) {
       stop(
@@ -83,6 +84,267 @@ border <- function(tag, sides = "all", context = NULL, rounded = "none") {
   }
 
   tag
+}
+
+#' Element text color, font case, font weight, and more
+#'
+#' The `text` helper function applies text related Boostrap classes to a tag
+#' element. These classes apply CSS to change text color, alignment, or case.
+#'
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, `"muted"`, or `"white"`
+#'   specifying the visual context of the text. `"white"` is best suited for
+#'   elements with dark backgrounds. Defaults to `NULL`, the element text color
+#'   is left as is.
+#'
+#' @param align One of `"justify"`, `"left"`, `"right"`, or `"center"`
+#'   specifying the alignment of an element's text. Defaults to `NULL`, no
+#'   alignment is applied, however the CSS default is to left align element
+#'   text.
+#'
+#' @param truncate One of `TRUE` or `FALSE` specifying whether or not an
+#'   element's text is truncated. Defaults to `FALSE`, the element text is left
+#'   as is.
+#'
+#' @param case One of `"upper"`, `"lower"`, or `"capitalize"` specifying a
+#'   transformation of an element's text. Defaults to `NULL`, element case is
+#'   left as is. `"capitalize"` changes only the first letter to upper case,
+#'   all other characters are left as is.
+#'
+#' @family utilities
+#' @export
+#' @examples
+#' tags$span("hello, world!") %>%
+#'   text(context = "warning", case = "upper")
+#'
+#' tags$div("Goodnight, moon") %>%
+#'   text(truncate = TRUE, weight = "bold") %>%
+#'   text("success")
+#'
+text <- function(tag, context = NULL, align = NULL, truncate = FALSE,
+                 case = NULL, weight = NULL, style = NULL) {
+  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|muted|white")) {
+    stop(
+      "invalid `text` argument, `context` must be one of ",
+      '"primary", "secondary", "success", "info", "warning", "danger", ',
+      '"light", "dark", "muted", or "white"',
+      call. = FALSE
+    )
+  }
+
+  if (!re(align, "left|right|center|justify")) {
+    stop(
+      "invalid `text` argument, `align` must be one of ",
+      '"justify", "left", "right", or "center"',
+      call. = FALSE
+    )
+  }
+
+  if (truncate != TRUE && truncate != FALSE) {
+    stop(
+      "invalid `text` argument, `truncate` must be one of TRUE or FALSE",
+      call. = FALSE
+    )
+  }
+
+  if (!re(case, "upper|lower|capitalize")) {
+    stop(
+      "invalid `text` argument, `case` must be one of ",
+      '"upper", "lower", or "capitalize"',
+      call. = FALSE
+    )
+  }
+
+  if (!is.null(context)) {
+    context <- paste0("text-", context)
+    tag <- tagDropContext(tag, "text")
+    tag <- tagAddClass(tag, context)
+  }
+
+  if (!is.null(align)) {
+    align <- paste0("text-", align)
+    tag <- tagDropClass(tag, "text-(left|right|center|justify)")
+    tag <- tagAddClass(tag, align)
+  }
+
+  if (truncate) {
+    tag <- tagEnsureClass(tag, "text-truncate")
+  }
+
+  if (!is.null(case)) {
+    case <- paste0("text-", case)
+    tag <- tagDropClass(tag, "text-(lowercase|uppercase|capitalize)")
+    tag <- tagAddClass(tag, case)
+  }
+
+  tag
+}
+
+#' Text font and styles
+#'
+#' The `font` utility function applies Bootstrap classes to a tag element.
+#' These classes apply CSS to change the font weight of an element's text or the
+#' font style of an element text.
+#'
+#' @param weight One of `"bold"`, `"normal"`, or `"light"` specifying the font
+#'   weight of an element's text. Defaults to `NULL`, element font weight is
+#'   left as is.
+#'
+#' @param style One of `"bold"` or `"italic"` specifying the font style of an
+#'   element. Defaults to `NULL`, element font style is left as is. Specifying
+#'   `"bold"` is equivalent to `weight = "bold"`.
+#'
+#' @family utilities
+#' @export
+#' @examples
+#' tags$span("This and other news") %>%
+#'   font(weight = "light")
+#'
+font <- function(tag, weight = NULL, style = NULL) {
+  if (!re(weight, "bold|normal|light")) {
+    stop(
+      "invalid `text` argument, `weight` must be one of ",
+      '"bold", "normal", or "light"',
+      call. = FALSE
+    )
+  }
+
+  if (!re(style, "bold|italic")) {
+    stop(
+      "invalid `text` arugment, `style` must be one of ",
+      '"bold" or "italics"',
+      call. = FALSE
+    )
+  }
+
+  if (!is.null(weight)) {
+    weight <- paste0("font-weight-", weight)
+    tag <- tagDropClass(tag, "font-weight-(bold|normal|light)")
+    tag <- tagAddClass(tag, weight)
+  }
+
+  if (!is.null(style)) {
+    if (style == "italic") {
+      tag <- tagEnsureClass(tag, "font-italic")
+    } else if (style == "bold") {
+      tag <- tagEnsureClass(tag, "font-weight-bold")
+    }
+  }
+
+  tag
+}
+
+#' Float an element
+#'
+#' The `float` utility function applies Bootstrap float classes to a tag
+#' element. These classes cause a tag element to float to the left or right
+#' in its parent element. Alternatively, specify `"none"` to remove the
+#' element's float. The float utilities are viewport responsive.
+#'
+#' @param default One of `"left"`, `"right"`, or `"none"` specifying the default
+#'   float of the element.
+#'
+#' @param sm Like `default`, but the float is applied once the viewport is 576
+#'   pixels wide, think phone in landscape mode.
+#'
+#' @param md Like `default`, but the float is applied once the viewport is 768
+#'   pixels wide, think tablets.
+#'
+#' @param lg Like `default`, but the float is applied once the viewport is 992
+#'   pixels wide, think desktop.
+#'
+#' @param xl Like `default`, but the float is applied once the viewport is 1200
+#'   pixels wide, think large desktop.
+#'
+#' @family utilities
+#' @export
+#' @examples
+#'
+float <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+                  xl = NULL) {
+  args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
+
+  classes <- vapply(
+    names2(args),
+    function(nm) {
+      arg <- args[[nm]]
+
+      if (!re(arg, "left|right|none")) {
+        stop(
+          "invalid `float` argument, `", nm, "` must be one of ",
+          '"left", "right", or "none"',
+          call. = FALSE
+        )
+      }
+
+      if (nm == "default") {
+        paste0("float-", arg)
+      } else {
+        paste0("float-", nm, "-", arg)
+      }
+    },
+    character(1)
+  )
+
+  tagAddClass(tag, collate(classes))
+}
+
+#' Affix elements to top or bottom of page
+#'
+#' The `affix` utility function applies Bootstrap classes to fix elements to the
+#' top or bottom of a page. Use `"sticky"` to cause an element to fix to the top
+#' of a page *after* the element is scrolled past. *Important*, the IE11 and
+#' Edge browsers do not support the sticky behavior.
+#'
+#' @param position One of `"top"`, `"bottom"`, or `"sticky"` specifying the
+#'   fixed behavior of an element.
+#'
+#' @family utilities
+#' @export
+#' @examples
+#' tags$div("A simple banner") %>%
+#'   width(100) %>%
+#'   affix("top")
+#'
+affix <- function(tag, position) {
+  if (!re(position, "top|bottom|sticky", len0 = FALSE)) {
+    stop(
+      "invalid `affix` argument, `position` must be one of ",
+      '"top", "bottom", or "sticky"',
+      call. = FALSE
+    )
+  }
+
+  if (position == "sticky") {
+    tagEnsureClass(tag, "sticky-top")
+  } else {
+    tagEnsureClass(tag, paste0("fixed-", position))
+  }
+}
+
+#' Align an element
+#'
+#' The `align` utility function applies Bootstrap classes to change how an
+#' *inline* element or *table cell* element is vertically aligned.
+#'
+#' @param position One of `"top"`, `"middle"`, or `"bottom"` specifying how
+#'   the element is vertically aligned.
+#'
+#' @family utilities
+#' @export
+#' @examples
+#' tags$span() %>%
+#'   align("bottom")
+#'
+align <- function(tag, position) {
+  if (!re(position, "top|middle|bottom", len0 = FALSE)) {
+    stop(
+      "invalid `align` argument, `position` must be one of ",
+      '"top", "middle", or "bottom"'
+    )
+  }
+
+  tagEnsureClass(tag, paste0("align-", position))
 }
 
 #' Element margins and padding
@@ -164,7 +426,7 @@ padding <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
     character(1)
   )
 
-  tagAppendAttributes(tag, class = collate(classes))
+  tagAddClass(tag, collate(classes))
 }
 
 #' @rdname padding
@@ -213,7 +475,7 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
     character(1)
   )
 
-  tagAppendAttributes(tag, class = collate(classes))
+  tagAddClass(tag, collate(classes))
 }
 
 #' Tag width and height
@@ -228,6 +490,7 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' @param max One of 25, 50, 75, or 100 specifying max width or max height as a
 #'   percentage of a parent element's width or height.
 #'
+#' @family utilities
 #' @export
 #' @examples
 #' tagReduce(
@@ -263,9 +526,9 @@ width <- function(tag, percentage = NULL, max = NULL) {
     )
   }
 
-  tagAppendAttributes(
+  tagAddClass(
     tag,
-    class = collate(
+    collate(
       percentage %??% paste0("w-", percentage),
       max %??% paste0("mw-", max)
     )
@@ -296,14 +559,13 @@ height <- function(percentage = NULL, max = NULL) {
     )
   }
 
-  tagAppendAttributes(
+  tagAddClass(
     tag,
-    class = collate(
+    collate(
       percentage %??% paste0("h-", percentage),
       max %??% paste0("mh-", max)
     )
   )
-
 }
 
 # Apply styles to a tag

@@ -42,3 +42,9 @@ the left side, third for the bottom side, and the fourth value is for the
 left side. As a wise help page once said, think "\strong{tr}ou\strong{bl}e" to help
 remember the order.
 }
+\seealso{
+Other utilities: \code{\link{affix}}, \code{\link{align}},
+  \code{\link{border}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{text}},
+  \code{\link{width}}
+}
