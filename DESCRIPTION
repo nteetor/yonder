@@ -14,6 +14,7 @@ Depends:
     shiny
 Imports:
     htmltools,
+    magrittr,
     jsonlite
 Suggests:
     testthat,
@@ -21,6 +22,7 @@ Suggests:
     rmarkdown
 Collate:
     dull.R
+    pipe.R
     utils.R
     includes.R
     tags.R
