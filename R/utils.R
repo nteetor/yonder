@@ -4,6 +4,18 @@
 
 `%??%` <- function(a, b) if (!is.null(a)) b else NULL
 
+to_sentence <- function(x, con = "or") {
+  if (length(x) == 1) {
+    return(x)
+  }
+
+  if (length(x) == 2) {
+    return(paste(x[1], con, x[2]))
+  }
+
+  paste0(paste(x[-length(x)], collapse = ", "), ", ", con, " ", x[length(x)])
+}
+
 `map*` <- function(x, f) {
   if (length(x) == 1) {
     return(f(x))
@@ -111,6 +123,46 @@ collate <- function(..., collapse = " ") {
   } else {
     paste(args, collapse = collapse)
   }
+}
+
+responsives <- function(prefix, values, possible) {
+  call <- as.character(sys.call(-1))[1]
+
+  if (length(values) == 0) {
+    stop(
+      "invalid `", call, "` arguments, at least one argument must not be NULL",
+      call. = FALSE
+    )
+  }
+
+  breakpoints <- names2(values)
+  allowed <- paste(possible, collapse = "|")
+
+  vapply(
+    breakpoints,
+    function(point) {
+      val <- values[[point]]
+
+      if (!re(val, allowed)) {
+        if (is.character(possible)) {
+          possible <- paste0('"', possible, '"')
+        }
+
+        stop(
+          "invalid `", call, "` argument, `", point, "` must be one of ",
+          to_sentence(possible),
+          call. = FALSE
+        )
+      }
+
+      if (point == "default") {
+        paste0(prefix, "-", val)
+      } else {
+        paste0(prefix, "-", point, "-", val)
+      }
+    },
+    character(1)
+  )
 }
 
 # shiny utils ----
