@@ -35,6 +35,7 @@ tags$div() \%>\%
 }
 \seealso{
 Other utilities: \code{\link{affix}}, \code{\link{align}},
+  \code{\link{background}}, \code{\link{display}},
   \code{\link{float}}, \code{\link{font}},
   \code{\link{padding}}, \code{\link{text}},
   \code{\link{width}}

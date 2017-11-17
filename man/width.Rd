@@ -22,21 +22,24 @@ height. Widths and heights are specified as percentages of the parent
 object's width or height.
 }
 \examples{
-tagReduce(
-  width(25),
+tags$div() \%>\%
+  width(25) \%>\%
   height(100)
-  tags$div()
-)
 
-tagReduce(
-  width(max = 75),
-  tags$div()
-)
+tags$div() \%>\%
+  width(max = 75)
 
 }
 \seealso{
 Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{border}}, \code{\link{float}},
+  \code{\link{background}}, \code{\link{border}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{padding}},
+  \code{\link{text}}
+
+Other utilities: \code{\link{affix}}, \code{\link{align}},
+  \code{\link{background}}, \code{\link{border}},
+  \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{padding}},
   \code{\link{text}}
 }

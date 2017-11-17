@@ -246,6 +246,7 @@ font <- function(tag, weight = NULL, style = NULL) {
 #' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
 #'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"white"`.
 #'
+#' @family utilities
 #' @export
 #' @examples
 #' tags$div("light text, dark background") %>%
@@ -410,6 +411,7 @@ align <- function(tag, position) {
 #' @param print Like `default`, but the display property is applied when the
 #'   page is printed.
 #'
+#' @family utilities
 #' @export
 #' @examples
 #' tags$div() %>%
@@ -535,6 +537,7 @@ padding <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   tagAddClass(tag, collate(classes))
 }
 
+#' @family utilities
 #' @rdname padding
 #' @export
 margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
@@ -599,16 +602,12 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' @family utilities
 #' @export
 #' @examples
-#' tagReduce(
-#'   width(25),
+#' tags$div() %>%
+#'   width(25) %>%
 #'   height(100)
-#'   tags$div()
-#' )
 #'
-#' tagReduce(
-#'   width(max = 75),
-#'   tags$div()
-#' )
+#' tags$div() %>%
+#'   width(max = 75)
 #'
 width <- function(tag, percentage = NULL, max = NULL) {
   if (is.null(percentage) && is.null(max)) {
@@ -641,6 +640,7 @@ width <- function(tag, percentage = NULL, max = NULL) {
   )
 }
 
+#' @family utilities
 #' @rdname width
 #' @export
 height <- function(percentage = NULL, max = NULL) {

@@ -44,7 +44,14 @@ remember the order.
 }
 \seealso{
 Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{border}}, \code{\link{float}},
+  \code{\link{background}}, \code{\link{border}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{text}},
+  \code{\link{width}}
+
+Other utilities: \code{\link{affix}}, \code{\link{align}},
+  \code{\link{background}}, \code{\link{border}},
+  \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{text}},
   \code{\link{width}}
 }
