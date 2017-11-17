@@ -23,25 +23,25 @@ NULL
 #' @examples
 #' display1("Eye-catching!")
 #'
-display1 <- function(...) display(1, ...)
+display1 <- function(...) displayHeading(1, ...)
 
 #' @rdname typography
 #' @export
-display2 <- function(...) display(2, ...)
+display2 <- function(...) displayHeading(2, ...)
 
 #' @rdname typography
 #' @export
-display3 <- function(...) display(3, ...)
+display3 <- function(...) displayHeading(3, ...)
 
 #' @rdname typography
 #' @export
-display4 <- function(...) display(4, ...)
+display4 <- function(...) displayHeading(4, ...)
 
 #' @rdname typography
 #' @export
-display5 <- function(...) display(5, ...)
+display5 <- function(...) displayHeading(5, ...)
 
-display <- function(level, ...) {
+displayHeading <- function(level, ...) {
   if (!(level %in% 1:5)) {
     stop(
       "invalid `display` argument, `level` must be one of 1, 2, 3, 4, or 5",
