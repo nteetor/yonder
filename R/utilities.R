@@ -8,7 +8,7 @@
 #'   `"bottom"`, `"left"` specifying the sides to apply a border, defaults to
 #'   `"all"`.
 #'
-#' @param color One of `NULL`, `"primary"`, `"secondary"`, `"success"`,
+#' @param context One of `NULL`, `"primary"`, `"secondary"`, `"success"`,
 #'   `"info"`, `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"white"`
 #'   specifying the visual context and border color. If `NULL`, the border is
 #'   the browser default.
@@ -23,9 +23,9 @@
 #'   border(sides = c("top", "bottom"))
 #'
 #' tags$div() %>%
-#'   border(color = "warning")
+#'   border(context = "warning")
 #'
-border <- function(tag, sides = "all", color = NULL, rounded = "none") {
+border <- function(tag, sides = "all", context = NULL, rounded = "none") {
   if ((length(sides) > 1 && any(re(sides, "all|none", FALSE))) ||
       !all(re(sides, "top|right|bottom|left|all|none", FALSE))) {
       stop(
@@ -36,10 +36,10 @@ border <- function(tag, sides = "all", color = NULL, rounded = "none") {
       )
   }
 
-  if ((!is.null(color) && length(sides) != 1) ||
-      !re(color, "primary|secondary|success|info|warning|danger|light|dark|white")) {
+  if ((!is.null(context) && length(sides) != 1) ||
+      !re(context, "primary|secondary|success|info|warning|danger|light|dark|white")) {
     stop(
-      "invalid `border` argument, `color` must be one of NULL, ",
+      "invalid `border` argument, `context` must be one of NULL, ",
       '"primary", "secondary", "success", "info", "warning", "danger", ',
       '"light", "dark", or "white"',
       call. = FALSE

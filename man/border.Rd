@@ -4,7 +4,7 @@
 \alias{border}
 \title{Element borders}
 \usage{
-border(tag, sides = "all", color = NULL, rounded = "none")
+border(tag, sides = "all", context = NULL, rounded = "none")
 }
 \arguments{
 \item{tag}{A tag element object.}
@@ -13,7 +13,7 @@ border(tag, sides = "all", color = NULL, rounded = "none")
 \code{"bottom"}, \code{"left"} specifying the sides to apply a border, defaults to
 \code{"all"}.}
 
-\item{color}{One of \code{NULL}, \code{"primary"}, \code{"secondary"}, \code{"success"},
+\item{context}{One of \code{NULL}, \code{"primary"}, \code{"secondary"}, \code{"success"},
 \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"white"}
 specifying the visual context and border color. If \code{NULL}, the border is
 the browser default.}
@@ -30,6 +30,6 @@ tags$h1("Hello, world!") \%>\%
   border(sides = c("top", "bottom"))
 
 tags$div() \%>\%
-  border(color = "warning")
+  border(context = "warning")
 
 }
