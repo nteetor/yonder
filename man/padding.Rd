@@ -12,6 +12,8 @@ margins(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   xl = NULL)
 }
 \arguments{
+\item{tag}{A tag element.}
+
 \item{default}{One of 0, 1, 2, 3, 4, 5 specifying the default margins or
 padding to apply. If the margins and padding remain the same across all
 viewports then only \code{default} needs to be specified.}

@@ -8,6 +8,8 @@ display(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   xl = NULL, print = NULL)
 }
 \arguments{
+\item{tag}{A tag element.}
+
 \item{default}{One of \code{"inline"}, \code{"inline-block"}, \code{"block"}, \code{"table"},
 \code{"table-cell"}, \code{"flex"}, \code{"inline-flex"}, or \code{"none"} specifying the
 default display property of the element.}

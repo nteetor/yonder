@@ -7,6 +7,8 @@
 font(tag, weight = NULL, style = NULL)
 }
 \arguments{
+\item{tag}{A tag element.}
+
 \item{weight}{One of \code{"bold"}, \code{"normal"}, or \code{"light"} specifying the font
 weight of an element's text. Defaults to \code{NULL}, element font weight is
 left as is.}

@@ -7,6 +7,8 @@
 align(tag, position)
 }
 \arguments{
+\item{tag}{A tag object.}
+
 \item{position}{One of \code{"top"}, \code{"middle"}, or \code{"bottom"} specifying how
 the element is vertically aligned.}
 }

@@ -91,6 +91,8 @@ border <- function(tag, sides = "all", rounded = "none", context = NULL) {
 #' The `text` helper function applies text related Boostrap classes to a tag
 #' element. These classes apply CSS to change text color, alignment, or case.
 #'
+#' @param tag A tag element.
+#'
 #' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
 #'   `"warning"`, `"danger"`, `"light"`, `"dark"`, `"muted"`, or `"white"`
 #'   specifying the visual context of the text. `"white"` is best suited for
@@ -190,6 +192,8 @@ text <- function(tag, context = NULL, align = NULL, truncate = FALSE,
 #' These classes apply CSS to change the font weight of an element's text or the
 #' font style of an element text.
 #'
+#' @param tag A tag element.
+#'
 #' @param weight One of `"bold"`, `"normal"`, or `"light"` specifying the font
 #'   weight of an element's text. Defaults to `NULL`, element font weight is
 #'   left as is.
@@ -243,6 +247,8 @@ font <- function(tag, weight = NULL, style = NULL) {
 #' The `background` utility function applies Bootstrap classes to a tag element
 #' to change the element's background color.
 #'
+#' @param tag A tag element.
+#'
 #' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
 #'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"white"`.
 #'
@@ -270,6 +276,8 @@ background <- function(tag, context) {
 #' element. These classes cause a tag element to float to the left or right
 #' in its parent element. Alternatively, specify `"none"` to remove the
 #' element's float. The float utilities are viewport responsive.
+#'
+#' @param tag A tag element.
 #'
 #' @param default One of `"left"`, `"right"`, or `"none"` specifying the default
 #'   float of the element.
@@ -333,6 +341,8 @@ float <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' of a page *after* the element is scrolled past. *Important*, the IE11 and
 #' Edge browsers do not support the sticky behavior.
 #'
+#' @param tag A tag element.
+#'
 #' @param position One of `"top"`, `"bottom"`, or `"sticky"` specifying the
 #'   fixed behavior of an element.
 #'
@@ -364,6 +374,8 @@ affix <- function(tag, position) {
 #' The `align` utility function applies Bootstrap classes to change how an
 #' *inline* element or *table cell* element is vertically aligned.
 #'
+#' @param tag A tag object.
+#'
 #' @param position One of `"top"`, `"middle"`, or `"bottom"` specifying how
 #'   the element is vertically aligned.
 #'
@@ -391,6 +403,8 @@ align <- function(tag, position) {
 #' screens or convert an element from inline to block on large screens. Use the
 #' `print` argument to change the display property of an element during
 #' printing.
+#'
+#' @param tag A tag element.
 #'
 #' @param default One of `"inline"`, `"inline-block"`, `"block"`, `"table"`,
 #'   `"table-cell"`, `"flex"`, `"inline-flex"`, or `"none"` specifying the
@@ -471,6 +485,8 @@ display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' the left side, third for the bottom side, and the fourth value is for the
 #' left side. As a wise help page once said, think "**tr**ou**bl**e" to help
 #' remember the order.
+#'
+#' @param tag A tag element.
 #'
 #' @param default One of 0, 1, 2, 3, 4, 5 specifying the default margins or
 #'   padding to apply. If the margins and padding remain the same across all
@@ -722,4 +738,3 @@ tagReduce <- function(...) {
 
   Reduce(function(acc, fun) fun(acc), funs, init = tag)
 }
-

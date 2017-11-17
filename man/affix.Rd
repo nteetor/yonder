@@ -7,6 +7,8 @@
 affix(tag, position)
 }
 \arguments{
+\item{tag}{A tag element.}
+
 \item{position}{One of \code{"top"}, \code{"bottom"}, or \code{"sticky"} specifying the
 fixed behavior of an element.}
 }

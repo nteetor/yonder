@@ -7,6 +7,8 @@
 background(tag, context)
 }
 \arguments{
+\item{tag}{A tag element.}
+
 \item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
 \code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"white"}.}
 }

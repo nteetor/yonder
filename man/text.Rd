@@ -8,6 +8,8 @@ text(tag, context = NULL, align = NULL, truncate = FALSE, case = NULL,
   weight = NULL, style = NULL)
 }
 \arguments{
+\item{tag}{A tag element.}
+
 \item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
 \code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, \code{"muted"}, or \code{"white"}
 specifying the visual context of the text. \code{"white"} is best suited for

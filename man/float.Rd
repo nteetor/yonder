@@ -7,6 +7,8 @@
 float(tag, default = NULL, sm = NULL, md = NULL, lg = NULL, xl = NULL)
 }
 \arguments{
+\item{tag}{A tag element.}
+
 \item{default}{One of \code{"left"}, \code{"right"}, or \code{"none"} specifying the default
 float of the element.}
 
