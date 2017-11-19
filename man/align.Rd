@@ -14,7 +14,7 @@ the element is vertically aligned.}
 }
 \description{
 The \code{align} utility function applies Bootstrap classes to change how an
-\emph{inline} element or \emph{table cell} element is vertically aligned.
+\emph{inline} or \emph{table cell} element is vertically aligned.
 }
 \examples{
 tags$span() \%>\%

@@ -3,7 +3,7 @@
 \name{direction}
 \alias{direction}
 \alias{reverse}
-\title{Flex box}
+\title{Flex direction, rows and columns}
 \usage{
 direction(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   xl = NULL)
@@ -15,19 +15,11 @@ reverse(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 \item{tag}{A tag element.}
 }
 \description{
-Use flexbox utilities.
+Change the direction of a flex boxes items. \code{reverse} is similar to
+\code{direction}, but for \code{"row"} flex items start from the right of the parent
+flex box and for \code{"column"} flex items start from the bottom of the parent
+flex box.
 }
 \examples{
-tags$div() \%>\%
-  display("flex") \%>\%
-  direction("row") \%>\%
-
-Flex direction, rows and columns
-
-Change the direction of a flex boxes items. `reverse` is similar to
-`direction`, but for `"row"` flex items start from the right of the parent
-flex box and for `"column"` flex items start from the bottom of the parent
-flex box.
-
 
 }

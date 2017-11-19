@@ -1,13 +1,13 @@
-#' Flex box
-#'
-#' Use flexbox utilities.
-#'
-#' @export
-#' @examples
-#' tags$div() %>%
-#'   display("flex") %>%
-#'   direction("row") %>%
-#'
+# Flex box
+#
+# Use flexbox utilities.
+#
+# @export
+# @examples
+# tags$div() %>%
+#   display("flex") %>%
+#   direction("row") %>%
+#
 
 
 #' Flex direction, rows and columns
@@ -66,6 +66,35 @@ reverse <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' @param xl Like `default`, but the alignment is applied once the viewport is
 #'   1200 pixels wide, think large desktop.
 #'
+#' @details
+#'
+#' The flex box mindset is no easy feat. Here is one way to think about the
+#' effects of `content`. If you would, take a look over the diagrams below.
+#'
+#' `"start"`
+#'
+#' * `| Item 1 | Item 2 | Item 3 | ============= |`
+#'
+#' `"end"`
+#'
+#' * `| ============= | Item 1 | Item 2 | Item 3 |`
+#'
+#' `"center"`
+#'
+#' * `| ===== | Item 1 | Item 2 | Item 3 | ===== |`
+#'
+#' `"between"`
+#'
+#' * `| Item 1 | ===== | Item 2 | ===== | Item 3 |`
+#'
+#' `"around"`
+#'
+#' * `| = | Item 1 | = | Item 2 | = | Item 3 | = |`
+#'
+#' With `content` each possible value relates to where the content **as a
+#' whole** is placed along the main axis. `"between"` and `"around"` prove
+#' troublesome.
+#'
 #' @export
 #' @examples
 #' lapply(1:5, tags$div) %>%
@@ -84,9 +113,88 @@ content <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   tagAddClass(tag, collate(classes))
 }
 
+#' Flex items, cross axis alignment
+#'
+#' The `items` utility function applies Bootstrap classes to a tag element in
+#' order to change the cross axis alignment of its flex items. The element must
+#' must use a flex display. To change the display property of a tag, see
+#' [display] for more information.
+#'
+#' @param default One of `"start"`, `"end"`, `"center"`, `"baseline"` or
+#'   `"stretch"` specifying the default cross axis alignment of the element's
+#'   flex items.
+#'
+#' @param sm Like `default`, but the alignment is applied once the viewport is
+#'   576 pixels wide, think phone in landscape mode.
+#'
+#' @param md Like `default`, but the alignment is applied once the viewport is
+#'   768 pixels wide, think tablets.
+#'
+#' @param lg Like `default`, but the alignment is applied once the viewport is
+#'   992 pixels wide, think desktop.
+#'
+#' @param xl Like `default`, but the alignment is applied once the viewport is
+#'   1200 pixels wide, think large desktop.
+#'
+#' @details
+#'
+#' When the flex direction is row, see [direction], the cross axis is the
+#' y-axis. When the flex direction is column, see [direction], the cross axis is
+#' the x-axis. The default direction is row. In this case, use `items` to
+#' control where flex items are placed vertically within the tag element.
+#'
+#' @section Alignments:
+#'
+#' **`"start"`**, flex items are aligned at the top of the parent element.
+#'
+#' ```
+#' | Item 1 | Item 2 | Item 3 | ============= |
+#' |        |        |        |               |
+#' |        |        |        |               |
+#' ```
+#'
+#' **`"end"`**, flex items are aligned at the bottom of the parent element.
+#'
+#' ```
+#' |        |        |        |               |
+#' |        |        |        |               |
+#' | Item 1 | Item 2 | Item 3 | ============= |
+#' ```
+#'
+#' **`"center"`**, flex items are aligned at the center of the parent element.
+#'
+#' ```
+#' |        |        |        |               |
+#' | Item 1 | Item 2 | Item 3 | ============= |
+#' |        |        |        |               |
+#' ```
+#'
+#' **`"baseline"`**, flex items are aligned by font size.
+#'
+#' ```
+#' | Item 1 | Item 2 | Item 3 | ============= |
+#' |        |        |        |               |
+#' |        |        |        |               |
+#' ```
+#'
+#' **`"stretch"`**, flex items stretch to fill the height of their parent
+#' element. This is the browser defalut.
+#'
+#' ```
+#' | It     | It     | It     | ============= |
+#' |   em   |   em   |   em   |               |
+#' |      1 |      2 |      3 |               |
+#' ```
+#'
 items <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
                   xl = NULL) {
+  args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
 
+  classes <- responsives(
+    "align-items", args, c("start", "end", "center", "baseline", "stretch")
+  )
+
+  tagAddClass(tag, collate(classes))
 }
 
 #' Flex box and flex item utilities

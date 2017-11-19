@@ -29,6 +29,39 @@ flex item's align on the x-axis (when the flex direction is row) or on the
 y-axis (when the flex is direction is column). For more on flex directions
 see \link{direction}.
 }
+\details{
+The flex box mindset is no easy feat. Here is one way to think about the
+effects of \code{content}. If you would, take a look over the diagrams below.
+
+\code{"start"}
+\itemize{
+\item \code{| Item 1 | Item 2 | Item 3 | ============= |}
+}
+
+\code{"end"}
+\itemize{
+\item \code{| ============= | Item 1 | Item 2 | Item 3 |}
+}
+
+\code{"center"}
+\itemize{
+\item \code{| ===== | Item 1 | Item 2 | Item 3 | ===== |}
+}
+
+\code{"between"}
+\itemize{
+\item \code{| Item 1 | ===== | Item 2 | ===== | Item 3 |}
+}
+
+\code{"around"}
+\itemize{
+\item \code{| = | Item 1 | = | Item 2 | = | Item 3 | = |}
+}
+
+With \code{content} each possible value relates to where the content \strong{as a
+whole} is placed along the main axis. \code{"between"} and \code{"around"} prove
+troublesome.
+}
 \examples{
 lapply(1:5, tags$div) \%>\%
   tags$div() \%>\%
