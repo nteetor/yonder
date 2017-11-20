@@ -9,7 +9,6 @@
 #   direction("row") %>%
 #
 
-
 #' Flex direction, rows and columns
 #'
 #' Change the direction of a flex boxes items. `reverse` is similar to
@@ -193,6 +192,72 @@ items <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   classes <- responsives(
     "align-items", args, c("start", "end", "center", "baseline", "stretch")
   )
+
+  tagAddClass(tag, collate(classes))
+}
+
+#' Wrapping flex items
+#'
+#' This function applies bootstrap classes to a tag element to change how the
+#' element's flex items wrap or do not wrap. By default items will not wrap
+#' onto new lines. See the *Wrapping* section below for more information on
+#' the possible wrapping behaviors.
+#'
+#' @param tag A tag element.
+#'
+#' @param default One of `"nowrap"`, `"wrap"`, or `"reverse"` specifying how the
+#'   flex items of an element wrap.
+#'
+#' @param sm Like `default`, but the wrapping behavior is applied once the
+#'   viewport is 576 pixels wide, think phone in landscape mode.
+#'
+#' @param md Like `default`, but the wrapping behavior is applied once the
+#'   viewport is 768 pixels wide, think tablets.
+#'
+#' @param lg Like `default`, but the wrapping behavior is applied once the
+#'   viewport is 992 pixels wide, think desktop.
+#'
+#' @param xl Like `default`, but the wrapping behavior is applied once the
+#'   viewport is 1200 pixels wide, think large desktop.
+#'
+#' @section Wrapping:
+#'
+#' **`"nowrap"`**, flex items do not wrap onto a new line and will extend
+#' beyond the boundaries of the parent element. This is the browser default.
+#'
+#' ```
+#' | Item | Item | Item | Item | Item | Item |
+#' | 1    | 2    | 3    | 4    | 5    | 6    |
+#' ```
+#'
+#' **`"wrap"`**, flex items will wrap onto a new line.
+#'
+#' ```
+#' | Item 1 | Item 2 | Item 3 | Item 4 | === |
+#' | Item 5 | Item 6 | ===================== |
+#' ```
+#'
+#' **`"reverse"`**, rows of flex items appear in reverse order wrapping from the
+#' bottom of the parent element up.
+#'
+#' ```
+#' | Item 5 | Item 6 | ===================== |
+#' | Item 1 | Item 2 | Item 3 | Item 4 | === |
+#' ```
+#'
+#' @export
+#' @examples
+#'
+wrap <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+                 xl = NULL) {
+  args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
+
+  args <- lapply(
+    args,
+    function(a) switch(a, reverse = "wrap-reverse", a)
+  )
+
+  classes <- responsives("flex", args, c("wrap", "nowrap", "wrap-reverse"))
 
   tagAddClass(tag, collate(classes))
 }

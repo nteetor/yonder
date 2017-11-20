@@ -580,45 +580,6 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   tagAddClass(tag, collate(classes))
 }
 
-#' Wrapping flex items
-#'
-#' This function applies bootstrap classes to a tag element to change how the
-#' element's flex items wrap or do not wrap.
-#'
-#' @param tag A tag element.
-#'
-#' @param default One of `"none"`, `"wrap"`, or `"reverse` specifying how the
-#'   flex items of an element wrap.
-#'
-#' @param sm Like `default`, but the wrapping behavior is applied once the
-#'   viewport is 576 pixels wide, think phone in landscape mode.
-#'
-#' @param md Like `default`, but the wrapping behavior is applied once the
-#'   viewport is 768 pixels wide, think tablets.
-#'
-#' @param lg Like `default`, but the wrapping behavior is applied once the
-#'   viewport is 992 pixels wide, think desktop.
-#'
-#' @param xl Like `default`, but the wrapping behavior is applied once the
-#'   viewport is 1200 pixels wide, think large desktop.
-#'
-#' @export
-#' @examples
-#'
-wrap <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
-                 xl = NULL) {
-  args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
-
-  args <- lapply(
-    args,
-    function(a) switch(a, none = "nowrap", reverse = "wrap-reverse", a)
-  )
-
-  classes <- responsives("flex", args, c("wrap", "nowrap", "wrap-reverse"))
-
-  tagAddClass(tag, collate(classes))
-}
-
 #' Tag width and height
 #'
 #' Used in conjunction with [tagReduce] to change a tag element's width or
