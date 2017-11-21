@@ -982,7 +982,7 @@ var chartistOutputBinding = new Shiny.OutputBinding();
 
 $.extend(chartistOutputBinding, {});
 
-Shiny.outputBindings.register(chartistOutputBinding, "dull.chartistOutput");
+//Shiny.outputBindings.register(chartistOutputBinding, "dull.chartistOutput");
 
 $.extend(Shiny.progressHandlers, {
   "dull-progress": function dullProgress(msg) {

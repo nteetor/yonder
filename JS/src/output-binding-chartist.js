@@ -4,4 +4,4 @@ $.extend(chartistOutputBinding, {
 
 });
 
-Shiny.outputBindings.register(chartistOutputBinding, "dull.chartistOutput");
+//Shiny.outputBindings.register(chartistOutputBinding, "dull.chartistOutput");
