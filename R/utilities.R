@@ -198,7 +198,7 @@ text <- function(tag, context = NULL, align = NULL, truncate = FALSE,
 #'   weight of an element's text. Defaults to `NULL`, element font weight is
 #'   left as is.
 #'
-#' @param style One of `"bold"` or `"italic"` specifying the font style of an
+#' @param style One of `"bold"` or `"italics"` specifying the font style of an
 #'   element. Defaults to `NULL`, element font style is left as is. Specifying
 #'   `"bold"` is equivalent to `weight = "bold"`.
 #'
@@ -217,7 +217,7 @@ font <- function(tag, weight = NULL, style = NULL) {
     )
   }
 
-  if (!re(style, "bold|italic")) {
+  if (!re(style, "bold|italics")) {
     stop(
       "invalid `text` arugment, `style` must be one of ",
       '"bold" or "italics"',
@@ -232,7 +232,7 @@ font <- function(tag, weight = NULL, style = NULL) {
   }
 
   if (!is.null(style)) {
-    if (style == "italic") {
+    if (style == "italics") {
       tag <- tagEnsureClass(tag, "font-italic")
     } else if (style == "bold") {
       tag <- tagEnsureClass(tag, "font-weight-bold")

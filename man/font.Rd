@@ -13,7 +13,7 @@ font(tag, weight = NULL, style = NULL)
 weight of an element's text. Defaults to \code{NULL}, element font weight is
 left as is.}
 
-\item{style}{One of \code{"bold"} or \code{"italic"} specifying the font style of an
+\item{style}{One of \code{"bold"} or \code{"italics"} specifying the font style of an
 element. Defaults to \code{NULL}, element font style is left as is. Specifying
 \code{"bold"} is equivalent to \code{weight = "bold"}.}
 }
