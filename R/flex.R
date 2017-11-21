@@ -247,6 +247,63 @@ items <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #'
 #' @export
 #' @examples
+#' # Make sure to try resizing the browser or viewer window after running
+#' # the following examples.
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           tags$p("No wrap") %>%
+#'             font(style = "italics"),
+#'           lapply(
+#'             1:15,
+#'             . %>%
+#'               paste("Flex item", .) %>%
+#'               tags$div() %>%
+#'               width(25) %>%
+#'               border()
+#'           ) %>%
+#'             tags$div() %>%
+#'             width(100) %>%
+#'             display("flex")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           tags$p("wrap") %>%
+#'             font(style = "italics"),
+#'           lapply(
+#'             1:15,
+#'             . %>%
+#'               paste("Flex item", .) %>%
+#'               tags$div() %>%
+#'               width(25) %>%
+#'               border()
+#'           ) %>%
+#'             tags$div() %>%
+#'             width(100) %>%
+#'             display("flex") %>%
+#'             wrap("wrap")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
 #'
 wrap <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
                  xl = NULL) {
