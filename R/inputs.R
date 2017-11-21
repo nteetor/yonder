@@ -231,9 +231,11 @@ loginInput <- function(id, ...) {
       class = "form-group",
       tags$label(
         class = "form-control-label",
+        `for` = ids[[1]],
         "Username"
       ),
       tags$input(
+        id = ids[[1]],
         type = "text",
         class = "form-control"
       )
@@ -242,9 +244,11 @@ loginInput <- function(id, ...) {
       class = "form-group",
       tags$label(
         class = "form-control-label",
+        `for` = ids[[2]],
         "Password"
       ),
       tags$input(
+        id = ids[[1]],
         type = "password",
         class = "form-control"
       )
@@ -300,7 +304,7 @@ loginInput <- function(id, ...) {
 #'   )
 #' }
 #'
-addressInput <- function(id, placeholders = TRUE, abbreviate = TRUE) {
+addressInput <- function(id) {
   ids <- ID(rep.int("address", 5))
 
   tags$div(
@@ -311,37 +315,37 @@ addressInput <- function(id, placeholders = TRUE, abbreviate = TRUE) {
       tags$label(
         `for` = ids[[1]],
         class = "col-form-label",
-        "Address Line 1"
+        "Address"
       ),
       tags$input(
         type = "text",
         class = "form-control",
         id = ids[[1]],
-        placeholder = if (placeholders) "Street address"
+        placeholder = "Street address, P.O. box"
       )
     ),
     tags$div(
       class = "form-group",
       tags$label(
         `for` = ids[[2]],
-        class = "form-control-label",
-        "Address Line 2"
+        class = "form-control-label sr-only",
+        "Address line 2"
       ),
       tags$input(
         type = "text",
         class = "form-control",
         id = ids[[2]],
-        placeholder = if (placeholders) "Apartment or unit"
+        placeholder = "Apartment, floor, unit"
       )
     ),
     tags$div(
       class = "form-row",
       tags$div(
-        class = "form-group col-md-6",
+        class = "form-group col-md-6 mt-auto",
         tags$label(
           class = "form-control-label",
           `for` = ids[[3]],
-          "City or town"
+          "City"
         ),
         tags$input(
           type = "text",
@@ -350,11 +354,11 @@ addressInput <- function(id, placeholders = TRUE, abbreviate = TRUE) {
         )
       ),
       tags$div(
-        class = "form-group col-md-4",
+        class = "form-group col-md-3",
         tags$label(
           class = "form-control-label",
           `for` = ids[[4]],
-          "State, province, or region"
+          "State"
         ),
         tags$input(
           type = "text",
@@ -363,11 +367,11 @@ addressInput <- function(id, placeholders = TRUE, abbreviate = TRUE) {
         )
       ),
       tags$div(
-        class = "form-group col-md-2",
+        class = "form-group col-md-3 mt-auto",
         tags$label(
           class = "form-control-label",
           `for` = ids[[5]],
-          "Zip or postal code"
+          "Zip"
         ),
         tags$input(
           type = "text",
