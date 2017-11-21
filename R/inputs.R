@@ -220,6 +220,7 @@ fieldset <- function(legend, ...) {
 #'     }
 #'   )
 #' }
+#'
 loginInput <- function(id, ...) {
   ids <- ID(rep.int("login", 2))
 
@@ -230,26 +231,22 @@ loginInput <- function(id, ...) {
       class = "form-group",
       tags$label(
         class = "form-control-label",
-        # `for` = ids[[1]],
         "Username"
       ),
       tags$input(
         type = "text",
         class = "form-control"
-        # id = ids[[1]]
       )
     ),
     tags$div(
       class = "form-group",
       tags$label(
         class = "form-control-label",
-        # `for` = ids[[2]],
         "Password"
       ),
       tags$input(
         type = "password",
         class = "form-control"
-        # id = ids[[2]]
       )
     ),
     tags$div(
