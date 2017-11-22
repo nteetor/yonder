@@ -2,7 +2,6 @@ $bs-light: #FAF9FA;
 $bs-dark: #343A40;
 
 $bs-colors: (
-    default: $bs-light,
     primary: #007BFF,
     secondary: #868E96,
     success: #28C997,
@@ -23,129 +22,109 @@ $thumb-cursor: pointer;
 
 .dull-range-input {
 
-    @each $key, $value in $bs-colors {
-
-	input.range-#{$key} {
-	    /* Chrome */
-	    @media screen and (-webkit-min-device-pixel-ratio:0) {
-		&[type="range"] {
-		    width: $bar-width;
-		    height: $bar-height;
-		    -webkit-appearance: none;
-		    background-color: $bs-light;
-		}
-		
-		&[type="range"]::-webkit-slider-runnable-track {
-		    height: $bar-height;
-		    -webkit-appearance: none;
-		    color: $value;
-		    margin-top: -1px;
-		}
-		
-		&[type="range"]::-webkit-slider-thumb {
-		    width: $thumb-size;
-		    height: $thumb-size;
-		    -webkit-appearance: none;
-		    cursor: $thumb-cursor;
-		    
-		    background: $bs-dark;
-		    color: $bs-dark;
-
-		    border: $thumb-border;
-		    border-radius: $thumb-radius;
-		}
+    /* thumb */
+    .thumb-circle {
+	// chrome
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+	    &::-webkit-slider-thumb {
+		border-radius: 50%;
+		-webkit-border-radius: 50%;
 	    }
+	}
+	
+	&::-moz-range-thumb {
+	    border-radius: 50%;
+	    -moz-border-radius: 50%;
+	}
+    }
+    /* end thumb */
 
-	    /* FF */
-	    &[type="range"]::-moz-range-thumb {
+    input[type="range"] {
+	
+	/* slider and thumb defaults */
+	// chrome
+	@media screen and (-webkit-min-device-pixel-ratio:0) {
+	    & {
+		width: $bar-width;
+		height: $bar-height;
+		-webkit-appearance: none;
+		background-color: $bs-light;
+	    }
+	    
+	    &::-webkit-slider-runnable-track {
+		height: $bar-height;
+		-webkit-appearance: none;
+		margin-top: -1px;
+	    }
+	    
+	    &::-webkit-slider-thumb {
 		width: $thumb-size;
 		height: $thumb-size;
+		-webkit-appearance: none;
 		cursor: $thumb-cursor;
-		background: $thumb-bg;
-		color: $thumb-color;
+		
+		background: $bs-dark;
+		color: $bs-dark;
 
 		border: $thumb-border;
 		border-radius: $thumb-radius;
 	    }
+	}
 
-	    &[type="range"]::-moz-range-progress {
-		height: $bar-height;
+	// firefox
+	&::-moz-range-progress {
+	    height: $bar-height;
+	}
+
+	&::-moz-range-track {
+	    height: $bar-height;
+	    background-color: $bs-light;
+	}
+	
+	&::-moz-range-thumb {
+	    width: $thumb-size;
+	    height: $thumb-size;
+	    cursor: $thumb-cursor;
+	    background: $thumb-bg;
+	    color: $thumb-color;
+
+	    border: $thumb-border;
+	    border-radius: $thumb-radius;
+	}
+
+	// explorer
+	&::-ms-fill-lower {
+	    //	background-color: $value;
+	}
+
+	&::-ms-fill-upper {
+	    background-color: $bs-light;
+	}
+    }
+    /* end defaults */
+
+    /* slider contexts */
+    @each $key, $value in $bs-colors {
+
+	input.range-#{$key}[type="range"] {
+	    // chrome
+	    @media screen and (-webkit-min-device-pixel-ratio:0) {
+		&::-webkit-slider-runnable-track {
+		    color: $value;
+		}
+	    }
+
+	    // firefox
+	    &::-moz-range-progress {
 		background-color: $value;
 	    }
 
-	    &[type="range"]::-moz-range-track {
-		height: $bar-height;
-		background-color: $bs-light;
-	    }
-
-	    /* IE */
-
-	    &[type="range"]::-ms-fill-lower {
+	    // explorer
+	    &::-ms-fill-lower {
 		background-color: $value;
-	    }
-
-	    &[type="range"]::-ms-fill-upper {
-		background-color: $bs-light;
 	    }
 	}
     }
+    /* end contexts */
+
 }
-
-// input[type="range"] {
-// 	width: 100%;
-// 	height: $range-height;
-
-// 	cursor: pointer;
-
-// 	@media screen and (-webkit-min-device-pixel-ratio:0) {
-// 	    -webkit-appearance: none;
-// 	    overflow: hidden;
-// 	    background-color: map-get($bs-colors, "secondary");
-
-// 	    &::-webkit-slider-runnable-track {
-// 		height: $range-height;
-// 		-webkit-appearance: none;
-// 	    }
-
-// 	    &::-webkit-slider-thumb {
-// 		width: 1.5rem;
-// 		height: 1.5rem;
-// 		-webkit-appearance: none;
-
-// 		cursor: pointer;
-// 	    }
-// 	}
-// }
-
-// @media screen and (-webkit-min-device-pixel-ratio:0) {
-// 	@each $key, $value in $bs-colors {
-// 	    .range-#{$key} {
-// 		&::-webkit-slider-runnable-track {
-// 		    color: $value;
-// 		}
-
-// 		&::-webkit-slider-thumb {
-// 		    background: map-get($bs-colors, "dark");
-// 		}
-// 	    }
-// 	}
-// }
-
-// @each $key, $value in $bs-colors { 
-// 	&::-moz-range-progress {
-// 	    background-color: $value;
-// 	}
-
-// 	&::-moz-range-track {
-// 	    background-color: $value;
-// 	}
-
-// 	&::-ms-fill-lower {
-// 	    background-color: $value;
-// 	}
-
-// 	&::-ms-fill-upper {
-// 	    background-color: $value;
-// 	}
-// }
-
