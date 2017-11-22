@@ -4,7 +4,7 @@
 \alias{addressInput}
 \title{Address input}
 \usage{
-addressInput(id, placeholders = TRUE, abbreviate = TRUE)
+addressInput(id)
 }
 \arguments{
 \item{id}{A character string specifying the id of the address input.}
