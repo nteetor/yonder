@@ -729,6 +729,36 @@ $.extend(radiobarInputBinding, {
 
 Shiny.inputBindings.register(radiobarInputBinding, "radiobarInput");
 
+var rangeInputBinding = new Shiny.InputBinding();
+
+$.extend(rangeInputBinding, {
+  find: function find(scope) {
+    return $(scope).find(".dull-range-input[id]");
+  },
+  getId: function getId(el) {
+    return el.id;
+  },
+  getValue: function getValue(el) {
+    return parseInt($("input[type='range']", el).val());
+  },
+  getState: function getState(el, data) {
+    return { value: this.getValue(el) };
+  },
+  subscribe: function subscribe(el, callback) {
+    $(el).on("change.rangeInputBinding", function (e) {
+      callback(true);
+    });
+    $(el).on("input.rangeInputBinding", function (e) {
+      callback(true);
+    });
+  },
+  unsubscribe: function unsubscribe(el) {
+    $(el).off(".rangeInputBinding");
+  }
+});
+
+Shiny.inputBindings.register(rangeInputBinding, "dull.rangeInput");
+
 var selectInputBinding = new Shiny.InputBinding();
 
 $.extend(selectInputBinding, {

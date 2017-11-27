@@ -62,11 +62,28 @@
 #'             size = "small"
 #'           )
 #'         ),
-#'         col()
+#'         col(
+#'           tags$h6("Large range"),
+#'           verbatimTextOutput("valuelg"),
+#'           tags$h6("Medium range"),
+#'           verbatimTextOutput("valuemd"),
+#'           tags$h6("Small range"),
+#'           verbatimTextOutput("valuesm")
+#'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
+#'       output$valuelg <- renderPrint({
+#'         input$rangelg
+#'       })
 #'
+#'       output$valuemd <- renderPrint({
+#'         input$rangemd
+#'       })
+#'
+#'       output$valuesm <- renderPrint({
+#'         input$rangesm
+#'       })
 #'     }
 #'   )
 #' }
@@ -87,15 +104,32 @@
 #'           ),
 #'           rangeInput(
 #'             id = "range3",
-#'             length = 4,
+#'             length = 5,
 #'             context = "info"
 #'           )
 #'         ),
-#'         col()
+#'         col(
+#'           tags$h6("Primary range"),
+#'           verbatimTextOutput("primary"),
+#'           tags$h6("Warning range"),
+#'           verbatimTextOutput("warning"),
+#'           tags$h6("Info range"),
+#'           verbatimTextOutput("info")
+#'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
+#'       output$primary <- renderPrint({
+#'         input$range1
+#'       })
 #'
+#'       output$warning <- renderPrint({
+#'         input$range2
+#'       })
+#'
+#'       output$info <- renderPrint({
+#'         input$range3
+#'       })
 #'     }
 #'   )
 #' }
@@ -107,22 +141,26 @@ rangeInput <- function(id, min = 0, max = 100, step = 1, length = NULL,
     step <- diff(seq(min, max, length.out = length))[1]
   }
 
+  default <- default %||% ceiling((min + max) / 2)
+  rid <- ID("range")
+
   tags$div(
     class = "dull-input dull-range-input form-group",
+    id = id,
     tags$div(
       class = "labels",
       tags$label(
-        `for` = id,
+        `for` = rid,
         if (!is.null(labels)) labels[[1]] else min
       ),
       tags$label(
-        `for` = id,
+        `for` = rid,
         if (!is.null(labels)) labels[[2]] else max
       )
     ),
     tags$input(
       type = "range",
-      id = id,
+      id = rid,
       min = min,
       max = max,
       step = step,
