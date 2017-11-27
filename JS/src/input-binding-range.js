@@ -8,7 +8,7 @@ $.extend(rangeInputBinding, {
     return el.id;
   },
   getValue: function(el) {
-    return parseInt($("input[type='range']", el).val());
+    return parseFloat($("input[type='range']", el).val());
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
