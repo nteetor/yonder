@@ -32,11 +32,12 @@ to use as labels for the minimum and maximum of the range. Defaults to
 
 \item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
 \code{"warning"}, or \code{"danger"} specifying the visual context of the range
-input.
+input. Defaults to \code{NULL} in which case a visual context is not applied.
 
 \strong{Note}: On Chrome the entire range input is colored according to the
 context. On Firefox and Internet Explorer the lower half of the range input
-is colored according to the context.}
+is colored according to the context. In the future, Chrome may support
+better styling.}
 
 \item{size}{One of \code{"small"} or \code{"large"} specifying a size transformation of
 the range input. Defaults to \code{NULL} in which case the size of the range
@@ -48,7 +49,8 @@ input is not modified.}
 the thumb. Defaults to \code{NULL} in which case the thumb is circular.}
 }
 \description{
-Create a range input.
+Create a range input. A range input allows a user fine control over a
+bounded value, think volume control.
 }
 \examples{
 if (interactive()) {
@@ -56,20 +58,20 @@ if (interactive()) {
     ui = container(
       row(
         col(
-          class = "col col-4 mx-auto",
           rangeInput(
-            id = "baz",
+            id = "rangelg",
             size = "large"
           ),
           rangeInput(
-            id = "foo",
+            id = "rangemd",
             default = 60
           ),
           rangeInput(
-            id = "bar",
+            id = "rangesm",
             size = "small"
           )
-        )
+        ),
+        col()
       )
     ),
     server = function(input, output) {
@@ -98,8 +100,7 @@ if (interactive()) {
             context = "info"
           )
         ),
-        col(
-        )
+        col()
       )
     ),
     server = function(input, output) {

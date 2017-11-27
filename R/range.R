@@ -1,6 +1,7 @@
 #' A range or slider input
 #'
-#' Create a range input.
+#' Create a range input. A range input allows a user fine control over a
+#' bounded value, think volume control.
 #'
 #' @param id A character string specifying the id of the range input.
 #'
@@ -25,11 +26,12 @@
 #'
 #' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
 #'   `"warning"`, or `"danger"` specifying the visual context of the range
-#'   input.
+#'   input. Defaults to `NULL` in which case a visual context is not applied.
 #'
 #'   **Note**: On Chrome the entire range input is colored according to the
 #'   context. On Firefox and Internet Explorer the lower half of the range input
-#'   is colored according to the context.
+#'   is colored according to the context. In the future, Chrome may support
+#'   better styling.
 #'
 #' @param size One of `"small"` or `"large"` specifying a size transformation of
 #'   the range input. Defaults to `NULL` in which case the size of the range
@@ -47,20 +49,20 @@
 #'     ui = container(
 #'       row(
 #'         col(
-#'           class = "col col-4 mx-auto",
 #'           rangeInput(
-#'             id = "baz",
+#'             id = "rangelg",
 #'             size = "large"
 #'           ),
 #'           rangeInput(
-#'             id = "foo",
+#'             id = "rangemd",
 #'             default = 60
 #'           ),
 #'           rangeInput(
-#'             id = "bar",
+#'             id = "rangesm",
 #'             size = "small"
 #'           )
-#'         )
+#'         ),
+#'         col()
 #'       )
 #'     ),
 #'     server = function(input, output) {
@@ -89,8 +91,7 @@
 #'             context = "info"
 #'           )
 #'         ),
-#'         col(
-#'         )
+#'         col()
 #'       )
 #'     ),
 #'     server = function(input, output) {
@@ -100,9 +101,8 @@
 #' }
 #'
 rangeInput <- function(id, min = 0, max = 100, step = 1, length = NULL,
-                       default = NULL, labels = NULL,
-                       context = NULL, size = NULL, track = NULL,
-                       thumb = NULL) {
+                       default = NULL, labels = NULL, context = NULL,
+                       size = NULL, track = NULL, thumb = NULL) {
   if (!is.null(length)) {
     step <- diff(seq(min, max, length.out = length))[1]
   }
