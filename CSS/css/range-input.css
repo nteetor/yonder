@@ -1,91 +1,183 @@
-.dull-range-input {
-  /* thumb */
-  /* end thumb */
-  /* end defaults */
-  /* slider contexts */
-  /* end contexts */ }
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    .dull-range-input .thumb-circle::-webkit-slider-thumb {
-      border-radius: 50%;
-      -webkit-border-radius: 50%; } }
-  .dull-range-input .thumb-circle::-moz-range-thumb {
-    border-radius: 50%;
-    -moz-border-radius: 50%; }
-  .dull-range-input input[type="range"] {
-    /* slider and thumb defaults */ }
-    @media screen and (-webkit-min-device-pixel-ratio: 0) {
-      .dull-range-input input[type="range"] {
-        width: 100%;
-        height: 1rem;
-        -webkit-appearance: none;
-        background-color: #FAF9FA; }
-      .dull-range-input input[type="range"]::-webkit-slider-runnable-track {
-        height: 1rem;
-        -webkit-appearance: none;
-        margin-top: -1px; }
-      .dull-range-input input[type="range"]::-webkit-slider-thumb {
-        width: 1.15rem;
-        height: 1.15rem;
-        -webkit-appearance: none;
-        cursor: pointer;
-        background: #343A40;
-        color: #343A40;
-        border: solid 2px #FAF9FA;
-        border-radius: 0; } }
-    .dull-range-input input[type="range"]::-moz-range-progress {
-      height: 1rem; }
-    .dull-range-input input[type="range"]::-moz-range-track {
-      height: 1rem;
-      background-color: #FAF9FA; }
-    .dull-range-input input[type="range"]::-moz-range-thumb {
-      width: 1.15rem;
-      height: 1.15rem;
-      cursor: pointer;
-      background: #343A40;
-      color: #343A40;
-      border: solid 2px #FAF9FA;
-      border-radius: 0; }
-    .dull-range-input input[type="range"]::-ms-fill-upper {
-      background-color: #FAF9FA; }
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    .dull-range-input input.range-primary[type="range"]::-webkit-slider-runnable-track {
-      color: #007BFF; } }
-  .dull-range-input input.range-primary[type="range"]::-moz-range-progress {
-    background-color: #007BFF; }
-  .dull-range-input input.range-primary[type="range"]::-ms-fill-lower {
-    background-color: #007BFF; }
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    .dull-range-input input.range-secondary[type="range"]::-webkit-slider-runnable-track {
-      color: #868E96; } }
-  .dull-range-input input.range-secondary[type="range"]::-moz-range-progress {
-    background-color: #868E96; }
-  .dull-range-input input.range-secondary[type="range"]::-ms-fill-lower {
-    background-color: #868E96; }
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    .dull-range-input input.range-success[type="range"]::-webkit-slider-runnable-track {
-      color: #28C997; } }
-  .dull-range-input input.range-success[type="range"]::-moz-range-progress {
-    background-color: #28C997; }
-  .dull-range-input input.range-success[type="range"]::-ms-fill-lower {
-    background-color: #28C997; }
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    .dull-range-input input.range-info[type="range"]::-webkit-slider-runnable-track {
-      color: #17A2B8; } }
-  .dull-range-input input.range-info[type="range"]::-moz-range-progress {
-    background-color: #17A2B8; }
-  .dull-range-input input.range-info[type="range"]::-ms-fill-lower {
-    background-color: #17A2B8; }
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    .dull-range-input input.range-warning[type="range"]::-webkit-slider-runnable-track {
-      color: #FFC107; } }
-  .dull-range-input input.range-warning[type="range"]::-moz-range-progress {
-    background-color: #FFC107; }
-  .dull-range-input input.range-warning[type="range"]::-ms-fill-lower {
-    background-color: #FFC107; }
-  @media screen and (-webkit-min-device-pixel-ratio: 0) {
-    .dull-range-input input.range-danger[type="range"]::-webkit-slider-runnable-track {
-      color: #DC3545; } }
-  .dull-range-input input.range-danger[type="range"]::-moz-range-progress {
-    background-color: #DC3545; }
-  .dull-range-input input.range-danger[type="range"]::-ms-fill-lower {
-    background-color: #DC3545; }
+.dull-range-input .labels {
+  width: 100%;
+  display: flex;
+  justify-content: space-between; }
+  .dull-range-input .labels label {
+    margin-bottom: 0;
+    padding-bottom: 0.15rem;
+    font-size: 0.75rem; }
+
+.range {
+  width: 100%;
+  height: 0.75rem;
+  -webkit-appearance: none;
+  background-color: #FAF9FA;
+  cursor: pointer; }
+  .range:focus {
+    outline: none; }
+  .range::-webkit-slider-runnable-track {
+    width: 100%;
+    height: 0.75rem;
+    -webkit-appearance: none;
+    border-radius: 1.5px; }
+  .range::-webkit-slider-thumb {
+    width: 1.3125rem;
+    height: 1.3125rem;
+    -webkit-appearance: none;
+    margin-top: -0.29167rem;
+    cursor: -webkit-pointer;
+    background-color: #343A40;
+    border: #343A40;
+    border-radius: 50%; }
+  .range::-moz-range-progress {
+    height: 0.75rem; }
+  .range::-moz-range-track {
+    height: 0.75rem;
+    background-color: #FAF9FA;
+    border-radius: 1.5px; }
+  .range::-moz-focus-outer {
+    border: 0; }
+  .range::-moz-range-thumb {
+    width: 1.3125rem;
+    height: 1.3125rem;
+    cursor: pointer;
+    background: #343A40;
+    color: #343A40;
+    border: solid 2px #FAF9FA;
+    border-radius: 50%; }
+  .range::-ms-fill-upper {
+    background-color: #FAF9FA; }
+
+.range-primary::-webkit-slider-runnable-track {
+  background: #007BFF; }
+
+.range-primary::-moz-range-progress {
+  background-color: #007BFF; }
+
+.range-primary::-ms-fill-lower {
+  background-color: #007BFF; }
+
+.range-secondary::-webkit-slider-runnable-track {
+  background: #868E96; }
+
+.range-secondary::-moz-range-progress {
+  background-color: #868E96; }
+
+.range-secondary::-ms-fill-lower {
+  background-color: #868E96; }
+
+.range-success::-webkit-slider-runnable-track {
+  background: #28C997; }
+
+.range-success::-moz-range-progress {
+  background-color: #28C997; }
+
+.range-success::-ms-fill-lower {
+  background-color: #28C997; }
+
+.range-info::-webkit-slider-runnable-track {
+  background: #17A2B8; }
+
+.range-info::-moz-range-progress {
+  background-color: #17A2B8; }
+
+.range-info::-ms-fill-lower {
+  background-color: #17A2B8; }
+
+.range-warning::-webkit-slider-runnable-track {
+  background: #FFC107; }
+
+.range-warning::-moz-range-progress {
+  background-color: #FFC107; }
+
+.range-warning::-ms-fill-lower {
+  background-color: #FFC107; }
+
+.range-danger::-webkit-slider-runnable-track {
+  background: #DC3545; }
+
+.range-danger::-moz-range-progress {
+  background-color: #DC3545; }
+
+.range-danger::-ms-fill-lower {
+  background-color: #DC3545; }
+
+.range-sm {
+  height: 0.6rem; }
+
+.range-sm::-webkit-slider-runnable-track {
+  height: 0.6rem; }
+
+.range-sm::-webkit-slider-thumb {
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: -0.23333rem; }
+
+.range-sm::-moz-range-progress {
+  height: 0.6rem; }
+
+.range-sm::-moz-range-track {
+  height: 0.6rem; }
+
+.range-sm::-moz-range-thumb {
+  width: 1.05rem;
+  height: 1.05rem;
+  margin-top: -0.23333rem; }
+
+.range-lg {
+  height: 0.9rem; }
+
+.range-lg::-webkit-slider-runnable-track {
+  height: 0.9rem; }
+
+.range-lg::-webkit-slider-thumb {
+  width: 1.575rem;
+  height: 1.575rem;
+  margin-top: -0.35rem; }
+
+.range-lg::-moz-range-progress {
+  height: 0.9rem; }
+
+.range-lg::-moz-range-track {
+  height: 0.9rem; }
+
+.range-lg::-moz-range-thumb {
+  width: 1.575rem;
+  height: 1.575rem;
+  margin-top: -0.35rem; }
+
+.range-vertical {
+  transform: rotate(-90deg);
+  width: calc(100% / 4); }
+
+.range-square::-webkit-slider-runnable-track {
+  border-radius: 0;
+  -webkit-border-radius: 0; }
+
+.range-square::-moz-range-track {
+  border-radius: 0;
+  -moz-border-radius: 0; }
+
+.thumb-square::-webkit-slider-thumb {
+  border-radius: 0;
+  -webkit-border-radius: 0; }
+
+.thumb-square::-moz-range-thumb {
+  border-radius: 0;
+  -moz-border-radius: 0; }
+
+.range-rounded::-webkit-slider-runnable-track {
+  border-radius: 12%;
+  -webkit-border-radius: 12%; }
+
+.range-rounded::-moz-range-track {
+  border-radius: 12%;
+  -moz-border-radius: 12%; }
+
+.thumb-rounded::-webkit-slider-thumb {
+  border-radius: 12%;
+  -webkit-border-radius: 12%; }
+
+.thumb-rounded::-moz-range-thumb {
+  border-radius: 12%;
+  -moz-border-radius: 12%; }
