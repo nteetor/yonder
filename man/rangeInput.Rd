@@ -38,6 +38,12 @@ input.
 context. On Firefox and Internet Explorer the lower half of the range input
 is colored according to the context.}
 
+\item{size}{One of \code{"small"} or \code{"large"} specifying a size transformation of
+the range input. Defaults to \code{NULL} in which case the size of the range
+input is not modified.}
+
+\item{track}{The corresponding CSS is not working.}
+
 \item{thumb}{One of \code{"square"} or \code{"rounded"} specifying the appearance of
 the thumb. Defaults to \code{NULL} in which case the thumb is circular.}
 }

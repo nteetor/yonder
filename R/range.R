@@ -31,6 +31,12 @@
 #'   context. On Firefox and Internet Explorer the lower half of the range input
 #'   is colored according to the context.
 #'
+#' @param size One of `"small"` or `"large"` specifying a size transformation of
+#'   the range input. Defaults to `NULL` in which case the size of the range
+#'   input is not modified.
+#'
+#' @param track The corresponding CSS is not working.
+#'
 #' @param thumb One of `"square"` or `"rounded"` specifying the appearance of
 #'   the thumb. Defaults to `NULL` in which case the thumb is circular.
 #'
