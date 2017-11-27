@@ -15,8 +15,8 @@ rangeInput(id, min = 0, max = 100, step = 1, length = NULL,
 
 \item{max}{The maxmium value of the range.}
 
-\item{step}{Controls possible values, the values of the range input are
-multiples of \code{step}. Defaults to \code{1}. If \code{length} is specified the \code{step}
+\item{step}{Controls possible values, the value of the range input is always
+a multiple of \code{step}. Defaults to 1. If \code{length} is specified the \code{step}
 argument is ignored.}
 
 \item{length}{An alternative to \code{step}, a number specifying how many values
@@ -71,11 +71,28 @@ if (interactive()) {
             size = "small"
           )
         ),
-        col()
+        col(
+          tags$h6("Large range"),
+          verbatimTextOutput("valuelg"),
+          tags$h6("Medium range"),
+          verbatimTextOutput("valuemd"),
+          tags$h6("Small range"),
+          verbatimTextOutput("valuesm")
+        )
       )
     ),
     server = function(input, output) {
+      output$valuelg <- renderPrint({
+        input$rangelg
+      })
 
+      output$valuemd <- renderPrint({
+        input$rangemd
+      })
+
+      output$valuesm <- renderPrint({
+        input$rangesm
+      })
     }
   )
 }
@@ -88,23 +105,42 @@ if (interactive()) {
           rangeInput(
             id = "range1",
             context = "primary",
-            labels = c("Minimum", "Maximum")
+            labels = c("Minimum", "Maximum"),
+            step = 0.01
           ),
           rangeInput(
             id = "range2",
-            context = "warning"
+            context = "warning",
+            default = 0
           ),
           rangeInput(
             id = "range3",
-            length = 4,
+            length = 5,
             context = "info"
           )
         ),
-        col()
+        col(
+          tags$h6("Primary range"),
+          verbatimTextOutput("primary"),
+          tags$h6("Warning range"),
+          verbatimTextOutput("warning"),
+          tags$h6("Info range"),
+          verbatimTextOutput("info")
+        )
       )
     ),
     server = function(input, output) {
+      output$primary <- renderPrint({
+        input$range1
+      })
 
+      output$warning <- renderPrint({
+        input$range2
+      })
+
+      output$info <- renderPrint({
+        input$range3
+      })
     }
   )
 }

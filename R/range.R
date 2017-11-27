@@ -9,8 +9,8 @@
 #'
 #' @param max The maxmium value of the range.
 #'
-#' @param step Controls possible values, the values of the range input are
-#'   multiples of `step`. Defaults to `1`. If `length` is specified the `step`
+#' @param step Controls possible values, the value of the range input is always
+#'   a multiple of `step`. Defaults to 1. If `length` is specified the `step`
 #'   argument is ignored.
 #'
 #' @param length An alternative to `step`, a number specifying how many values
@@ -96,11 +96,13 @@
 #'           rangeInput(
 #'             id = "range1",
 #'             context = "primary",
-#'             labels = c("Minimum", "Maximum")
+#'             labels = c("Minimum", "Maximum"),
+#'             step = 0.01
 #'           ),
 #'           rangeInput(
 #'             id = "range2",
-#'             context = "warning"
+#'             context = "warning",
+#'             default = 0
 #'           ),
 #'           rangeInput(
 #'             id = "range3",
