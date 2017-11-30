@@ -49,3 +49,15 @@ chartist <- function() {
     )
   )
 }
+
+`ion-range-slider` <- function() {
+  shiny::addResourcePath("dull", system.file("www", package = "dull"))
+
+  htmltools::singleton(
+    tags$head(
+      tags$link(rel = "stylesheet", href = "dull/ion-range-slider/css/ion-range-slider.css"),
+      tags$link(rel = "stylesheet", href = "dull/ion-range-slider/css/ion-range-slider-flat.css"),
+      tags$script(src = "dull/ion-range-slider/js/ion-range-slider-patched.min.js")
+    )
+  )
+}

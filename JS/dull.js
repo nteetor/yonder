@@ -735,21 +735,29 @@ $.extend(rangeInputBinding, {
   find: function find(scope) {
     return $(scope).find(".dull-range-input[id]");
   },
+  initialize: function initialize(el) {
+    var $input = $("input[type='text']", el);
+
+    $input.ionRangeSlider();
+  },
   getId: function getId(el) {
     return el.id;
   },
   getValue: function getValue(el) {
-    return parseFloat($("input[type='range']", el).val());
+    var data = $("input[type='text']", el).data("ionRangeSlider") || {};
+
+    if (!data) {
+      return null;
+    }
+
+    return data.result;
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function subscribe(el, callback) {
     $(el).on("change.rangeInputBinding", function (e) {
-      callback(true);
-    });
-    $(el).on("input.rangeInputBinding", function (e) {
-      callback(true);
+      callback();
     });
   },
   unsubscribe: function unsubscribe(el) {
