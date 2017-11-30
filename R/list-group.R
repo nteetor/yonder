@@ -291,7 +291,7 @@ listGroupInput <- function(id, items, values = items, selected = NULL,
           tags$button(
             class = collate(
               "list-group-item",
-              if (!length(id)) "list-group-item-action",
+              if (length(id) != 0) "list-group-item-action",
               if (selected[[i]]) "active",
               if (!is.null(badges)) "justify-content-between"
             ),
