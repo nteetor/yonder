@@ -29,8 +29,7 @@
   .range .irs-bar {
     cursor: pointer; }
     .range .irs-bar.draggable {
-      cursor: grab;
-      cursor: -webkit-grab; }
+      cursor: move; }
   .range .irs-min,
   .range .irs-max,
   .range .irs-from,
