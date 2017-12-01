@@ -744,13 +744,18 @@ $.extend(rangeInputBinding, {
     return el.id;
   },
   getValue: function getValue(el) {
-    var data = $("input[type='text']", el).data("ionRangeSlider") || {};
+    var $input = $("input[type='text']", el);
+    var data = $input.data("ionRangeSlider") || {};
 
     if (!data) {
       return null;
     }
 
-    return data.result;
+    if ($input.data("type") == "double") {
+      return [data.result.from, data.result.to];
+    }
+
+    return data.result.from;
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };

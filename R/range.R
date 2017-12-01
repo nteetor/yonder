@@ -56,6 +56,9 @@
 #'       rangeInput("yellow", context = "warning", prefix = "$", suffix = ".00")
 #'     ),
 #'     server = function(input, output) {
+#'       observe({
+#'         print(input$default)
+#'       })
 #'
 #'     }
 #'   )
@@ -104,7 +107,9 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
 #'       intervalInput("green", default = c(25, 75), draggable = TRUE)
 #'     ),
 #'     server = function(input, output) {
-#'
+#'       observe({
+#'         print(input$green)
+#'       })
 #'     }
 #'   )
 #' }

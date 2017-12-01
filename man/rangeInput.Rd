@@ -75,6 +75,9 @@ if (interactive()) {
       rangeInput("yellow", context = "warning", prefix = "$", suffix = ".00")
     ),
     server = function(input, output) {
+      observe({
+        print(input$default)
+      })
 
     }
   )
@@ -86,7 +89,9 @@ if (interactive()) {
       intervalInput("green", default = c(25, 75), draggable = TRUE)
     ),
     server = function(input, output) {
-
+      observe({
+        print(input$green)
+      })
     }
   )
 }
