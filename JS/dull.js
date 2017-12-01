@@ -738,6 +738,10 @@ $.extend(rangeInputBinding, {
   initialize: function initialize(el) {
     var $input = $("input[type='text']", el);
 
+    if ($input.data("choices") !== undefined) {
+      this.choices = $input.data("choices").split("\\,");
+    }
+
     $input.ionRangeSlider();
   },
   getId: function getId(el) {
@@ -752,10 +756,17 @@ $.extend(rangeInputBinding, {
     }
 
     if ($input.data("type") == "double") {
-      return [data.result.from, data.result.to];
+      return {
+        from: data.result.from,
+        to: data.result.to
+      };
+    } else if ($input.data("type") == "single") {
+      if (this.choices) {
+        return this.choices[data.result.from];
+      } else {
+        return data.result.from;
+      }
     }
-
-    return data.result.from;
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };
@@ -767,6 +778,11 @@ $.extend(rangeInputBinding, {
   },
   unsubscribe: function unsubscribe(el) {
     $(el).off(".rangeInputBinding");
+  },
+  dispose: function dispose(el) {
+    var $input = $("input[type='text']", el);
+
+    $input.data("ionRangeSlider").destroy();
   }
 });
 

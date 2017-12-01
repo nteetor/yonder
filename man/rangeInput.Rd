@@ -3,6 +3,7 @@
 \name{rangeInput}
 \alias{rangeInput}
 \alias{intervalInput}
+\alias{sliderInput}
 \title{A range input}
 \usage{
 rangeInput(id, min = 0, max = 100, default = min, step = 1,
@@ -11,6 +12,9 @@ rangeInput(id, min = 0, max = 100, default = min, step = 1,
 
 intervalInput(id, min = 0, max = 100, default = c(min, max), step = 1,
   draggable = FALSE, ticks = TRUE, labels = 4, snap = FALSE,
+  prefix = NULL, suffix = NULL, context = "secondary")
+
+sliderInput(id, choices, values = choices, selected = NULL, ticks = TRUE,
   prefix = NULL, suffix = NULL, context = "secondary")
 }
 \arguments{
@@ -58,8 +62,18 @@ defaults to \code{"secondary"}.}
 
 \item{draggable}{One of \code{TRUE} or \code{FALSE} specifying if the user can drag the
 interval between an interval input's two sliders defaults to \code{FALSE}. If
-\code{TRUE} the user can drag the entire range, otherwise the interval is not
-draggable.}
+\code{TRUE} the slider interval may be dragged with the cursor, otherwise the
+interval is not draggable.}
+
+\item{choices}{A character vector specifying the labels along the slider
+input.}
+
+\item{values}{A character vector specifying the values of the slider input,
+defaults to \code{choices}.}
+
+\item{selected}{One of \code{values} specifying the initial value of the slider
+input, defaults to \code{NULL}, in which case the slider input defaults to the
+first choice.}
 }
 \description{
 A take on shiny's \code{sliderInput}.
@@ -82,6 +96,7 @@ if (interactive()) {
     }
   )
 }
+
 if (interactive()) {
   shinyApp(
     ui = container(
@@ -95,4 +110,23 @@ if (interactive()) {
     }
   )
 }
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      sliderInput(
+        "slide",
+        choices = c("hello, world", "goodnight, moon", "greetings, earthlings"),
+        values = c("hello", "goodnight", "greetings"),
+        selected = "goodnight, moon"
+      )
+    ),
+    server = function(input, output) {
+      observe({
+        print(input$slide)
+      })
+    }
+  )
+}
+
 }
