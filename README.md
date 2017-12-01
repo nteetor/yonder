@@ -32,6 +32,55 @@ dull is still a work in progress and may be downloaded using
 devtools::install_github("nteetor/dull")
 ```
 
+## Example
+
+```R
+library(dull)  # will load shiny
+
+shinyApp(
+  ui = container(
+    row(
+      col(
+        default = 4,
+        tags$h5("Welcome to dull") %>% 
+          padding(c(0, 0, 2, 0)) %>% 
+          width(100) %>% 
+          border("dark", "bottom"),
+        intervalInput(
+          id = "int", 
+          default = c(25, 75)
+        ),
+        buttonInput(
+          id = "go", 
+          text = "GO!", 
+          context = "primary",
+          block = TRUE
+        ) %>% 
+          width(75)
+      ) %>%
+        padding(c(4, 3, 4, 3)) %>%
+        background("light") %>%
+        border("secondary"),
+      col(
+
+      )
+    ) %>%
+    margins(2)
+  ),
+  server = function(input, output) {
+    observeEvent(input$go, {
+      sendModal(
+        title = "Whoops", 
+        body = tags$div(
+          "Sorry, this button does not doing anything yet."
+        )
+      )
+    })
+
+  }
+)
+```
+
 ## Reactive Controls
 
 These reactive controls are included in the package.
@@ -67,6 +116,8 @@ These reactive controls are included in the package.
 ### Outputs
 
 * `badgeOutput`
+* `streamOutput`
+* `progressOutput`
 
 ### Thruputs
 
