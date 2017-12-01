@@ -406,7 +406,7 @@
 
             extra_classes: $inp.data("extraClasses"),
         };
-        config_from_data.values = config_from_data.values && config_from_data.values.split(",");
+        config_from_data.values = config_from_data.values && config_from_data.values.split("\\,");
 
         for (prop in config_from_data) {
             if (config_from_data.hasOwnProperty(prop)) {
