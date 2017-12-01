@@ -40,6 +40,10 @@ These reactive controls are included in the package.
 
 * `buttonInput`
 * `checkboxInput`
+* `rangeInput`, similar to `shiny::sliderInput`
+* `intervalInput`, like `rangeInput`, but with two slider controls
+* `sliderInput`, like `rangeInput`, but handles custom string values and choices
+  instead of numeric values
 * `colorInput`
 * `radioInput`
 * `dateInput`
