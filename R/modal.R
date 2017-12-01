@@ -2,9 +2,6 @@
 #'
 #' Modals are a flexible alert window, which disable interaction with the page
 #' behind them. Modals may include inputs or buttons or simply include text.
-#' Create a modal that can by shown or hidden by `toggleModal`. Unlike shiny
-#' modals, dull modals must be built ahead of time, but may include dynamically
-#' updated components. Modal elements may be included anywhere on a web page.
 #'
 #' @param title A character string specifying the modal's title.
 #'
@@ -13,9 +10,6 @@
 #'
 #' @param footer Custom tags to include at the bottom of the modal, defaults to
 #'   `NULL`.
-#'
-#' @param ... Additional named arguments passed as HTML attributes to the parent
-#'   element.
 #'
 #' @export
 #' @examples
@@ -46,7 +40,6 @@
 #'       row(
 #'         class = "justify-content-center",
 #'         col(
-#'           class = "col-auto",
 #'           buttonInput(id = "trigger", "Trigger modal")
 #'         )
 #'       )

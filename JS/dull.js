@@ -951,53 +951,33 @@ Shiny.addCustomMessageHandler("dull:modal", function (msg) {
     return true;
   }
 
-  if ($(".modal").length) {
-    modal = $(".modal");
-  } else {
-    var modal = $("<div>", {
-      "class": "modal fade",
-      "tabindex": -1,
-      "role": "dialog"
-    }).append($("<div>", {
-      "class": "modal-dialog",
-      "role": "document"
-    }).append($("<div>", {
-      "class": "modal-content"
-    }).append($("<div>", {
-      "class": "modal-header"
-    }).append($("<h5>", { "class": "modal-title" }), $("<button>", {
-      "type": "button",
-      "class": "close",
-      "data-dismiss": "modal",
-      "aria-label": "Close"
-    }).append($("span", {
-      "class": "fa fa-times-rectangle"
-    }))), $("<div>", {
-      "class": "container-fluid"
-    }).append($("<div>", { "class": "modal-body" })))));
+  var $modal;
 
-    $("<body>").append(modal);
+  if ($(".modal").length) {
+    $modal = $(".modal");
+  } else {
+    $modal = $(["<div class='modal fade' tabindex=-1 role='dialog'>", "<div class='modal-dialog' role='document'>", "<div class='modal-content'>", "<div class='modal-header'>", "<h5 class='modal-title'></h5>", "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>", "<span class='fa fa-times-rectangle'></span>", "</button>", "</div>", "<div class='container-fluid'>", "<div class='modal-body'></div>", "</div>", "</div>", "</div>", "</div>"].join("\n"));
+
+    $("body").append($modal);
   }
 
-  $(".modal-title").html(msg.title);
-  $(".modal-body").html(msg.body);
+  $(".modal-title", $modal).html(msg.title);
+  $(".modal-body", $modal).html(msg.body);
 
   if (msg.footer) {
-    if (!$(".modal-footer").length) {
-      $(".modal-content").append($("<div>", {
-        "class": "modal-footer"
-      }).html(msg.footer));
-    } else {
-      $(".modal-content").html(msg.footer);
+    if (!$(".modal-footer", $modal).length) {
+      $(".modal-content", $modal).append($("<div class='modal-footer'></div>"));
     }
+
+    $(".modal-content", $modal).html(msg.footer);
   }
+
+  $modal.modal();
 });
 
 $(document).ready(function () {
   $(document).on("shown.bs.modal", ".modal", function (e) {
-    console.log($(".modal").find(".shiny-bound-output, .shiny-bound-input").length);
     if (!$(".modal").find(".shiny-bound-output, .shiny-bound-input").length) {
-      console.log("no bound found");
       Shiny.initializeInputs(".modal");
       Shiny.bindAll(".modal");
     }
