@@ -4,14 +4,14 @@
 #'
 #' @param tag A tag element object.
 #'
-#' @param sides One of `"all"`, `"none"`, or one or more of `"top"`, `"right"`,
-#'   `"bottom"`, `"left"` specifying the sides to apply a border, defaults to
-#'   `"all"`.
-#'
 #' @param context One of `NULL`, `"primary"`, `"secondary"`, `"success"`,
 #'   `"info"`, `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"white"`
 #'   specifying the visual context and border color. If `NULL`, the border is
 #'   the browser default.
+#'
+#' @param sides One of `"all"`, `"none"`, or one or more of `"top"`, `"right"`,
+#'   `"bottom"`, `"left"` specifying the sides to apply a border, defaults to
+#'   `"all"`.
 #'
 #' @param rounded One of `"all"`, `"circle"`, `"none"`, or one or more of
 #'   `"top"`, `"right"`, `"bottom"`, `"left"` specifying the side whose corners
@@ -24,9 +24,9 @@
 #'   border(sides = c("top", "bottom"))
 #'
 #' tags$div() %>%
-#'   border(context = "warning")
+#'   border("warning")
 #'
-border <- function(tag, sides = "all", rounded = "none", context = NULL) {
+border <- function(tag, context = NULL, sides = "all", rounded = "none") {
   if ((length(sides) > 1 && any(re(sides, "all|none", FALSE))) ||
       !all(re(sides, "top|right|bottom|left|all|none", FALSE))) {
       stop(
@@ -59,10 +59,8 @@ border <- function(tag, sides = "all", rounded = "none", context = NULL) {
 
   tag <- tagEnsureClass(tag, "border")
 
-  if (length(sides) == 1) {
-    if (sides == "none") {
-      tag <- tagAppendAttributes(tag, class = "border-0")
-    }
+  if (length(sides) == 1 && sides == "none") {
+    tag <- tagAppendAttributes(tag, class = "border-0")
   } else {
     remove <- setdiff(c("top", "right", "bottom", "left"), sides)
 
@@ -72,10 +70,8 @@ border <- function(tag, sides = "all", rounded = "none", context = NULL) {
     )
   }
 
-  if (length(rounded) == 1) {
-    if (rounded == "none") {
-      tag <- tagAppendAttributes(tag, class = "rounded-0")
-    }
+  if (length(rounded) == 1 && rounded == "none") {
+    tag <- tagAppendAttributes(tag, class = "rounded-0")
   } else {
     tag <- tagAppendAttributes(
       tag,
@@ -268,6 +264,8 @@ background <- function(tag, context) {
       call. = FALSE
     )
   }
+
+  tagEnsureClass(tag, paste0("bg-", context))
 }
 
 #' Float an element

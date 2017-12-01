@@ -4,10 +4,15 @@
 \alias{border}
 \title{Element borders}
 \usage{
-border(tag, sides = "all", rounded = "none", context = NULL)
+border(tag, context = NULL, sides = "all", rounded = "none")
 }
 \arguments{
 \item{tag}{A tag element object.}
+
+\item{context}{One of \code{NULL}, \code{"primary"}, \code{"secondary"}, \code{"success"},
+\code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"white"}
+specifying the visual context and border color. If \code{NULL}, the border is
+the browser default.}
 
 \item{sides}{One of \code{"all"}, \code{"none"}, or one or more of \code{"top"}, \code{"right"},
 \code{"bottom"}, \code{"left"} specifying the sides to apply a border, defaults to
@@ -16,11 +21,6 @@ border(tag, sides = "all", rounded = "none", context = NULL)
 \item{rounded}{One of \code{"all"}, \code{"circle"}, \code{"none"}, or one or more of
 \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"} specifying the side whose corners
 to round.}
-
-\item{context}{One of \code{NULL}, \code{"primary"}, \code{"secondary"}, \code{"success"},
-\code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"white"}
-specifying the visual context and border color. If \code{NULL}, the border is
-the browser default.}
 }
 \description{
 Apply borders, border colors, and border radius to a tag element.
@@ -30,7 +30,7 @@ tags$h1("Hello, world!") \%>\%
   border(sides = c("top", "bottom"))
 
 tags$div() \%>\%
-  border(context = "warning")
+  border("warning")
 
 }
 \seealso{
