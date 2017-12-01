@@ -57,7 +57,7 @@ chartist <- function() {
     tags$head(
       tags$link(rel = "stylesheet", href = "dull/ion-range-slider/css/ion-range-slider.css"),
       tags$link(rel = "stylesheet", href = "dull/ion-range-slider/css/ion-range-slider-flat.css"),
-      tags$script(src = "dull/ion-range-slider/js/ion-range-slider-patched.min.js")
+      tags$script(src = "dull/ion-range-slider/js/ion-range-slider.min.js")
     )
   )
 }
