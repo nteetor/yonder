@@ -6,8 +6,7 @@
 \alias{container}
 \title{Grid system and responsive layout}
 \usage{
-col(..., default = NULL, small = NULL, medium = NULL, large = NULL,
-  extralarge = NULL)
+col(..., default = NULL, sm = NULL, md = NULL, lg = NULL, xl = NULL)
 
 row(...)
 
@@ -17,15 +16,71 @@ container(..., fluid = TRUE)
 \item{...}{Any number of child elements or named arguments passed as HTML
 attributes to the parent element. \code{row}s need to be placed inside a
 \code{container}. A \code{row} typically contains only \code{col}s. A \code{col} may contain
-other \code{col}s or any number of other elements.}
+other \code{col}s or other elements.}
+
+\item{default}{A number 1 through 12 or \code{"auto"} specifying the default
+width of the column. Columns with width \code{"auto"} equally divide space or
+fill remaining space when used with other columns.}
+
+\item{sm}{Like \code{default}, but the width is applied once the viewport is 576
+pixels wide, think phone in landscape mode.}
+
+\item{md}{Like \code{default}, but the width is applied once the viewport is 768
+pixels wide, think tablets.}
+
+\item{lg}{Like \code{default}, but the width is applied once the viewport is 992
+pixels wide, think desktop.}
+
+\item{xl}{Like \code{default}, but the width is applied once the viewport is 1200
+pixels wide, think large desktop.}
+
+\item{tag}{A tag element, for \code{col} this is typically \code{tags$div()}.}
 }
 \description{
-Flexbox, grid layout, containers, rows, and columns (oh my). Arguments \code{width} and
-\code{order} can be applied depending on the width of the page, see the details
-section for more information.
+Build apps using the grid layout: containers, rows, and columns (oh my).
 }
 \examples{
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col("1 of 2") \%>\%
+          border(),
+        col("2 of 2") \%>\%
+          border()
+      ),
+      row(
+        lapply(
+          1:3,
+          . \%>\%
+            paste("of 3") \%>\%
+            col() \%>\%
+            border()
+        )
+      )
+    ),
+    server = function(input, output) {
 
-stub
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col("1 or 3") \%>\%
+          border(),
+        col("2 of 3", default = 6) \%>\%
+          border(),
+        col("3 of 3") \%>\%
+          border()
+      )
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
 
 }
