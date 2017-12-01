@@ -119,6 +119,7 @@ $radius: .25rem;
 	.irs-single,
 	.irs-slider {
 	    background: $color;
+	    color: color-yiq($color);
 	}
 
 	.irs-slider {

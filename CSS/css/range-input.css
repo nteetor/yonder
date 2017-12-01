@@ -56,7 +56,8 @@
 .range-primary .irs-from,
 .range-primary .irs-single,
 .range-primary .irs-slider {
-  background: #007BFF; }
+  background: #007BFF;
+  color: #FFF; }
 
 .range-primary .irs-slider:hover, .range-primary .irs-slider:focus {
   background: #0069d9; }
@@ -72,7 +73,8 @@
 .range-secondary .irs-from,
 .range-secondary .irs-single,
 .range-secondary .irs-slider {
-  background: #868E96; }
+  background: #868E96;
+  color: #FFF; }
 
 .range-secondary .irs-slider:hover, .range-secondary .irs-slider:focus {
   background: #727b84; }
@@ -88,7 +90,8 @@
 .range-success .irs-from,
 .range-success .irs-single,
 .range-success .irs-slider {
-  background: #28C997; }
+  background: #28C997;
+  color: #FFF; }
 
 .range-success .irs-slider:hover, .range-success .irs-slider:focus {
   background: #22a97f; }
@@ -104,7 +107,8 @@
 .range-info .irs-from,
 .range-info .irs-single,
 .range-info .irs-slider {
-  background: #17A2B8; }
+  background: #17A2B8;
+  color: #FFF; }
 
 .range-info .irs-slider:hover, .range-info .irs-slider:focus {
   background: #138496; }
@@ -120,7 +124,8 @@
 .range-warning .irs-from,
 .range-warning .irs-single,
 .range-warning .irs-slider {
-  background: #FFC107; }
+  background: #FFC107;
+  color: #212529; }
 
 .range-warning .irs-slider:hover, .range-warning .irs-slider:focus {
   background: #e0a800; }
@@ -136,7 +141,8 @@
 .range-danger .irs-from,
 .range-danger .irs-single,
 .range-danger .irs-slider {
-  background: #DC3545; }
+  background: #DC3545;
+  color: #FFF; }
 
 .range-danger .irs-slider:hover, .range-danger .irs-slider:focus {
   background: #c82333; }
