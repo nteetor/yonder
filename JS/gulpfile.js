@@ -42,6 +42,14 @@ gulp.task("scripts", function() {
   	.pipe(gulp.dest(jsDest));
 });
 
+// minify ion range slider
+gulp.task("ion", function() {
+    return gulp.src("../inst/www/ion-range-slider/js/ion-range-slider.js")
+	.pipe(rename("ion-range-slider.min.js"))
+	.pipe(uglify())
+	.pipe(gulp.dest("../inst/www/ion-range-slider/js"));
+});
+
 // default
 gulp.task("default", ["eslint", "scripts"]);
 
