@@ -21,30 +21,38 @@ NULL
 #' @rdname typography
 #' @export
 #' @examples
-#' display1("Eye-catching!")
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       d1("Eye-catching!"),
+#'       d3("Wowza."),
+#'       d5("You'll never guess what happens next."),
+#'       h1("This is an <h1> heading for comparision")
+#'     ),
+#'     server = function(input, output) {
 #'
-display1 <- function(...) displayHeading(1, ...)
+#'     }
+#'   )
+#' }
+#'
+d1 <- function(...) d(1, ...)
 
 #' @rdname typography
 #' @export
-display2 <- function(...) displayHeading(2, ...)
+d2 <- function(...) d(2, ...)
 
 #' @rdname typography
 #' @export
-display3 <- function(...) displayHeading(3, ...)
+d3 <- function(...) d(3, ...)
 
 #' @rdname typography
 #' @export
-display4 <- function(...) displayHeading(4, ...)
+d4 <- function(...) d(4, ...)
 
-#' @rdname typography
-#' @export
-display5 <- function(...) displayHeading(5, ...)
-
-displayHeading <- function(level, ...) {
-  if (!(level %in% 1:5)) {
+d <- function(level, ...) {
+  if (!(level %in% 1:4)) {
     stop(
-      "invalid `display` argument, `level` must be one of 1, 2, 3, 4, or 5",
+      "invalid `d` argument, `level` must be one of 1, 2, 3, or 4",
       call. = FALSE
     )
   }

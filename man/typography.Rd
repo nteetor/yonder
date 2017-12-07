@@ -2,22 +2,19 @@
 % Please edit documentation in R/typography.R
 \name{typography}
 \alias{typography}
-\alias{display1}
-\alias{display2}
-\alias{display3}
-\alias{display4}
-\alias{display5}
+\alias{d1}
+\alias{d2}
+\alias{d3}
+\alias{d4}
 \title{Text and Heading Styles}
 \usage{
-display1(...)
+d1(...)
 
-display2(...)
+d2(...)
 
-display3(...)
+d3(...)
 
-display4(...)
-
-display5(...)
+d4(...)
 }
 \arguments{
 \item{...}{Child elements, additional HTML classes, or HTML attributes
@@ -35,6 +32,18 @@ Bootstrap's class alternatives one can utilize the highlighting aspect
 of \code{<mark>} while avoiding the usage and purpose restrictions.
 }
 \examples{
-display1("Eye-catching!")
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      d1("Eye-catching!"),
+      d3("Wowza."),
+      d5("You'll never guess what happens next."),
+      h1("This is an <h1> heading for comparision")
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
 
 }
