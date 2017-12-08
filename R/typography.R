@@ -98,7 +98,7 @@ d <- function(level, ...) {
 jumbotron <- function(title, subtitle, ...) {
   tags$div(
     class = "jumbotron",
-    display3(title),
+    d3(title),
     lead(subtitle),
     if (length(elements(list(...))) > 0) tags$hr(class = "my-4"),
     ...,

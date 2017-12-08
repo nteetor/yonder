@@ -80,7 +80,7 @@ if (interactive()) {
           )
         ),
         col(
-          display1(
+          d4(
             textOutput("selected")
           )
         )

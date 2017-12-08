@@ -59,7 +59,7 @@
 #'           )
 #'         ),
 #'         col(
-#'           display1(
+#'           d4(
 #'             textOutput("selected")
 #'           )
 #'         )
@@ -282,7 +282,7 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
     },
     tags$div(class = "form-control-feedback"),
     if (!is.null(footer)) {
-      small(
+      tags$small(
         class = "form-text text-muted",
         footer
       )

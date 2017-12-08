@@ -228,7 +228,7 @@ if (interactive()) {
               )
             ),
             col(
-              display4(
+              d4(
                 textOutput("value")
               )
             )

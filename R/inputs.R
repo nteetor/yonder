@@ -448,7 +448,7 @@ addressInput <- function(id) {
 #'           )
 #'         ),
 #'         col(
-#'           display4(
+#'           d4(
 #'             textOutput("value")
 #'           )
 #'         )
@@ -477,7 +477,7 @@ addressInput <- function(id) {
 #'           )
 #'         ),
 #'         col(
-#'           display4(
+#'           d4(
 #'             textOutput("value")
 #'           )
 #'         )
@@ -502,7 +502,7 @@ addressInput <- function(id) {
 #'           )
 #'         ),
 #'         col(
-#'           display4(
+#'           d4(
 #'             textOutput("value")
 #'           )
 #'         )
@@ -532,7 +532,7 @@ addressInput <- function(id) {
 #'           )
 #'         ),
 #'         col(
-#'           display4(
+#'           d4(
 #'             textOutput("value")
 #'           )
 #'         )
@@ -564,7 +564,7 @@ addressInput <- function(id) {
 #'           )
 #'         ),
 #'         col(
-#'           display4(
+#'           d4(
 #'             textOutput("value")
 #'           )
 #'         )
