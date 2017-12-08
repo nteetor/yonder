@@ -27,14 +27,16 @@ $.extend(textualInputBinding, {
       delay: 250
     };
   },
-  _markInvalid: function(el, msg) {
+  _reject: function(el, msg) {
     $("input", el).addClass("is-invalid");
+    $(".invalid-feedback", el).html(msg);
   },
-  _markValid: function(el, msg) {
-    $("input", el).removeClass("is-invalid").addClass("is-valid");
+  _validify: function(el, msg) {
+    $("input", el).removeClass("is-invalid")
+      .addClass("is-valid");
   },
   subscribe: function(el, callback) {
-    var that = this;
+    var self = this;
     $(el).on("change.textualInputBinding", function(e) {
       callback(true);
     });
@@ -42,11 +44,10 @@ $.extend(textualInputBinding, {
       callback(true);
     });
     $(el).on("dull:invalid.textualInputBinding", function(e, msg) {
-      console.log(msg);
-      that._markInvalid(el, msg);
+      self._reject(el, msg);
     });
     $(el).on("dull:valid.textualInputBinding", function(e, msg) {
-      that._markValid(el, msg);
+      self._validify(el, msg);
     });
   },
   unsubscribe: function(el) {

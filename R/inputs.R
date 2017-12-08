@@ -21,7 +21,8 @@ textualInput <- function(id, label, value, placeholder, readonly, help, type,
           class = "form-text text-muted",
           help
         )
-      }
+      },
+      tags$div(class = "invalid-feedback")
     ),
     ...
   )

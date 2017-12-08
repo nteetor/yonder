@@ -24,13 +24,11 @@ $(function () {
 
     $el.collapse(msg.action);
   });
-
   Shiny.addCustomMessageHandler("dull:invalidateinput", function (msg) {
     if (msg.id) {
       $("#" + msg.id).trigger("dull:invalid", msg.message);
     }
   });
-
   Shiny.addCustomMessageHandler("dull:validateinput", function (msg) {
     if (msg.id) {
       $("#" + msg.id).trigger("dull:valid", msg.message);
@@ -944,14 +942,15 @@ $.extend(textualInputBinding, {
       delay: 250
     };
   },
-  _markInvalid: function _markInvalid(el, msg) {
+  _reject: function _reject(el, msg) {
     $("input", el).addClass("is-invalid");
+    $(".invalid-feedback", el).html(msg);
   },
-  _markValid: function _markValid(el, msg) {
+  _validify: function _validify(el, msg) {
     $("input", el).removeClass("is-invalid").addClass("is-valid");
   },
   subscribe: function subscribe(el, callback) {
-    var that = this;
+    var self = this;
     $(el).on("change.textualInputBinding", function (e) {
       callback(true);
     });
@@ -959,11 +958,10 @@ $.extend(textualInputBinding, {
       callback(true);
     });
     $(el).on("dull:invalid.textualInputBinding", function (e, msg) {
-      console.log(msg);
-      that._markInvalid(el, msg);
+      self._reject(el, msg);
     });
     $(el).on("dull:valid.textualInputBinding", function (e, msg) {
-      that._markValid(el, msg);
+      self._validify(el, msg);
     });
   },
   unsubscribe: function unsubscribe(el) {
