@@ -104,33 +104,4 @@ if (interactive()) {
   )
 }
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        col(
-          width = 8,
-          tableThruput(
-            id = "table",
-            border = TRUE
-          )
-        ),
-        col(
-          buttonInput(id = "button", "Validate")
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$table <- renderTable({
-        mtcars[1:10, ]
-      })
-
-      observeEvent(input$button, {
-        validateTableThruput("table", "success", c(1, 2, 3, 5, 8))
-      })
-    }
-  )
-}
-
-
 }

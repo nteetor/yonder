@@ -44,4 +44,49 @@ if (interactive()) {
   )
 }
 
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      fluid = FALSE,
+      div(
+        h5("Where to?"),
+        selectInput(
+          id = "dropdown",
+          options = c("(pick one)", "Home", "Work", "Store")
+        ),
+        h5("In what?"),
+        radioInput(
+          id = "npr",
+          choices = c("Car", "Bus", "Bike")
+        ),
+        h5("Pickup pizza?"),
+        checkboxInput(
+          id = "pizza",
+          choice = "Absolutely!"
+        )
+      ) \%>\%
+       padding(4)
+    ),
+    server = function(input, output) {
+      validateEvent(input$dropdown, {
+        if (is.null(input$dropdown) || input$dropdown == "(pick one)") {
+          stop("please select a choice")
+        }
+      })
+
+      validateEvent(input$npr, {
+        if (is.null(input$npr)) {
+          stop("field is required")
+        }
+      })
+
+      validateEvent(input$pizza, {
+        if (is.null(input$pizza)) {
+          stop("")
+        }
+      })
+    }
+  )
+}
+
 }

@@ -86,26 +86,33 @@ selectInput <- function(id, options, values = options, selected = NULL,
 
   selected <- match2(selected, values, default = TRUE)
 
-  tags$select(
+  tags$div(
     class = collate(
       "dull-select-input",
       "dull-input",
-      "custom-select",
+      "form-group",
       if (multiple) "h-100"
     ),
     id = id,
-    lapply(
-      seq_along(options),
-      function(i) {
-        tags$option(
-          `data-value` = values[[i]],
-          options[[i]],
-          selected = if (selected[[i]]) NA
-        )
-      }
+    tags$select(
+      class = collate(
+        "custom-select",
+        if (multiple) "h-100"
+      ),
+      lapply(
+        seq_along(options),
+        function(i) {
+          tags$option(
+            `data-value` = values[[i]],
+            options[[i]],
+            selected = if (selected[[i]]) NA
+          )
+        }
+      ),
+      multiple = if (multiple) NA
     ),
+    tags$div(class = "invalid-feedback"),
     ...,
-    multiple = if (multiple) NA,
     bootstrap()
   )
 }

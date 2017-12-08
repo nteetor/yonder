@@ -20,14 +20,4 @@ $(function() {
 
   	$el.collapse(msg.action);
   });
-  Shiny.addCustomMessageHandler("dull:invalidateinput", function(msg) {
-  	if (msg.id) {
-  	    $("#" + msg.id).trigger("dull:invalid", msg.message);
-  	}
-  });
-  Shiny.addCustomMessageHandler("dull:validateinput", function(msg) {
-  	if (msg.id) {
-  	    $("#" + msg.id).trigger("dull:valid", msg.message);
-  	}
-  });
 });

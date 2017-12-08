@@ -41,23 +41,6 @@ $.extend(buttonInputBinding, {
       $el.data("clicks", 0);
     }
 
-    if (data.state) {
-      var state = data.state === "valid" ? null : data.state;
-
-      if (state) {
-        if ($el.attr("class").search(/btn-outline-/)) {
-          state = "btn-outline-" + data.state;
-        } else {
-          state = "btn-" + data.state;
-        }
-      }
-
-      $el.attr("class", function(i, c) {
-          return c.replace(/btn-(?:outline-)?(?:primary|secondary|link|success|info|warning|danger)/g, "");
-        })
-        .addClass(data.state === "valid" ? null : state);
-    }
-
     if (data.disable === true) {
       $el.prop("disabled", true);
     }

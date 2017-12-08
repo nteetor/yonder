@@ -3,7 +3,6 @@
 \name{listGroupInput}
 \alias{listGroupInput}
 \alias{updateListGroupInput}
-\alias{validateListGroupInput}
 \alias{disableListGroupInput}
 \alias{enableListGroupInput}
 \alias{incrementListGroupInput}
@@ -14,9 +13,6 @@ listGroupInput(id, items, values = items, selected = NULL,
 
 updateListGroupInput(id, items, values = items, selected = NULL,
   disabled = NULL, session = getDefaultReactiveDomain())
-
-validateListGroupInput(id, state, validate = NULL,
-  session = getDefaultReactiveDomain())
 
 disableListGroupInput(id, disabled = NULL,
   session = getDefaultReactiveDomain())
@@ -61,6 +57,11 @@ a visual context is not applied.}
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
+\item{increment}{One or more of \code{values} indicating which list group items to
+increment, defaults to \code{NULL}. If \code{NULL} then all list group items are
+incremented. If the list group items do not include badges there is no
+effect.}
+
 \item{state}{One of \code{"valid"}, \code{"warning"}, or \code{"danger"} indicating the
 state of the list group items. If \code{"valid"} then the visual context is
 removed.}
@@ -68,11 +69,6 @@ removed.}
 \item{validate}{One or more of \code{values} indicating which list group items
 to mark with \code{state}, defaults to \code{NULL}. If \code{NULL} then the all list group
 items are updated.}
-
-\item{increment}{One or more of \code{values} indicating which list group items to
-increment, defaults to \code{NULL}. If \code{NULL} then all list group items are
-incremented. If the list group items do not include badges there is no
-effect.}
 }
 \description{
 A way of handling and outlining content as a list. List groups function
@@ -133,72 +129,6 @@ if (interactive()) {
     server = function(input, output) {
       observe({
         updateListGroupInput("stub", input$sets)
-      })
-    }
-  )
-}
-
-if (interactive()) {
-  teams <- c(
-    `avengers` = "iron man, thor, hulk, ant-man, wasp",
-    `west coast avengers` = "hawkeye, mockingbird, wonder man, tigra, iron man",
-    `new avengers` = "luke cage, captain america, iron man, spider-man, spider-woman"
-  )
-
-  shinyApp(
-    ui = container(
-      row(
-        col(
-          tags$p(
-            "Select teams and click a button to highlight them or remove ",
-            "the highlighting from them"
-          )
-        )
-      ),
-      row(
-        col(
-          listGroupInput(
-            id = "teams",
-            items = names(teams),
-            values = teams
-          )
-        ),
-        col(
-          row(
-            buttonInput("clear", "valid", block = TRUE)
-          ),
-          row(
-            buttonInput("warning", "warning", block = TRUE)
-          ),
-          row(
-            buttonInput("danger", "danger", block = TRUE)
-          )
-        )
-      )
-    ),
-    server = function(input, output) {
-      observeEvent(input$clear, {
-        validateListGroupInput(
-          id = "teams",
-          state = input$clear$value,
-          validate = input$teams
-        )
-      })
-
-      observeEvent(input$warning, {
-        validateListGroupInput(
-          id = "teams",
-          state = input$warning$value,
-          validate = input$teams
-        )
-      })
-
-      observeEvent(input$danger, {
-        validateListGroupInput(
-          id = "teams",
-          state = input$danger$value,
-          validate = input$teams
-        )
       })
     }
   )

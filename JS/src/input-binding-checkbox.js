@@ -6,7 +6,7 @@ $.extend(checkboxInputBinding, {
   },
   getValue: function(el) {
     var $val = $(el)
-      .find("input[type=\"checkbox\"]:checked:not(:disabled)")
+      .find("input[type='checkbox']:checked:not(:disabled)")
       .data("value");
     return $val === undefined ? null : $val;
   },
@@ -30,19 +30,23 @@ $.extend(checkboxInputBinding, {
   receiveMessage: function(el, data) {
     var $el = $(el);
 
+     if (data.validate !== undefined) {
+      $("input", el).removeClass("is-invalid")
+        .addClass("is-valid");
+
+      return;
+    }
+
+    if (data.invalidate !== undefined) {
+      $("input", el).addClass("is-invalid");
+      $(".invalid-feedback", el).html(data.invalidate);
+
+      return;
+    }
+
     if (data.content !== undefined) {
       $el.find("label").remove();
       $el.html(data.choice);
-    }
-
-    if (data.state) {
-      $el.attr("class", function(i, c) {
-        return c.replace(/has-(success|warning|danger)/g, "");
-      });
-
-      if (data.state !== "valid") {
-        $el.addClass("has-" + data.state);
-      }
     }
 
     if (data.disable === true) {

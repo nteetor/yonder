@@ -19,18 +19,13 @@
 #'   selected by default.
 #'
 #' @param label A character string specifying a label for the radio input,
-#'   defaults to `NULL`, in which case a label is not added.
+#'   defaults to `NULL` in which case a label is not added.
+#'
+#' @param help A character string specifying a small help label which appears
+#'   below the input, defaults to `NULL` in which case help text is not added.
 #'
 #' @param inline If `TRUE`, the radio input renders inline, defaults to `FALSE`,
 #'   in which case the radio controls render on separate lines.
-#'
-#' @param state One of `"success"`, `"warning"`, or `"danger"` indicating the
-#'   state of the radio input. If the return value is `NULL` any visual context
-#'   is removed.
-#'
-#' @param hint A character string specifying hint text to accompany a change in
-#'   the input's state, defaults to `NULL`. If `state` is `NULL` then `hint`
-#'   is ignored.
 #'
 #' @param disabled,enabled One or more of `values` indicating which radio
 #'   choices to disable or enable, defaults to `NULL`. If `NULL` then
@@ -51,8 +46,10 @@
 #'           radioInput(
 #'             id = "radio",
 #'             choices = c(
-#'               "(A) Ice cream", "(B) A small frigate",
-#'               "(C) A length of rope", "(D) (A) and (C)",
+#'               "(A) Ice cream",
+#'               "(B) Pumpkin pie",
+#'               "(C) 3 turtle doves",
+#'               "(D) (A) and (C)",
 #'               "(E) All of the above"
 #'             ),
 #'             values = LETTERS[1:5]
@@ -104,41 +101,6 @@
 #'         updateRadioInput(
 #'           id = "choices",
 #'           choices = strsplit(input$groups, ", ", fixed = TRUE)[[1]]
-#'         )
-#'       })
-#'     }
-#'   )
-#' }
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         col(
-#'           radioInput(
-#'             id = "state",
-#'             label = "Pick a state",
-#'             choices = list("valid", "danger", "warning"),
-#'             footer = "(changes the state of the other radio input)"
-#'           )
-#'         ),
-#'         col(
-#'           radioInput(
-#'             id = "choices",
-#'             label = "More choices",
-#'             choices = paste("Choice", 1:4),
-#'             values = 1:4,
-#'             footer = "These choices won't do anything yet"
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observe({
-#'         validateRadioInput(
-#'           id = "choices",
-#'           state = input$state,
-#'           hint = "(something doesn't look right)"
 #'         )
 #'       })
 #'     }
@@ -210,7 +172,7 @@
 #' }
 #'
 radioInput <- function(id, choices, values = choices, selected = NULL,
-                       disabled = NULL, label = NULL, footer = NULL,
+                       disabled = NULL, label = NULL, help = NULL,
                        inline = FALSE) {
   if (!is.null(selected) && !(selected %in% values)) {
     stop(
@@ -280,11 +242,11 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
         }
       )
     },
-    tags$div(class = "form-control-feedback"),
-    if (!is.null(footer)) {
+    tags$div(class = "invalid-feedback"),
+    if (!is.null(help)) {
       tags$small(
         class = "form-text text-muted",
-        footer
+        help
       )
     },
     bootstrap()
@@ -347,27 +309,6 @@ updateRadioInput <- function(id, choices, values = choices, selected = NULL,
     id,
     list(
       choices = as.character(choices)
-    )
-  )
-}
-
-#' @rdname radioInput
-#' @export
-validateRadioInput <- function(id, state, hint = NULL,
-                               session = getDefaultReactiveDomain()) {
-  if (!re(state, "valid|success|warning|danger")) {
-    stop(
-      "invalid `validateRadioInput` argument, `state` must be one of ",
-      '"valid", "warning", or "danger"',
-      call. = FALSE
-    )
-  }
-
-  session$sendInputMessage(
-    id,
-    list(
-      state = state,
-      hint = hint
     )
   )
 }

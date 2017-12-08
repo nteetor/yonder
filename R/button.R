@@ -164,26 +164,6 @@ updateButtonInput <- function(id, label,
 
 #' @rdname buttonInput
 #' @export
-validateButtonInput <- function(id, state,
-                                session = getDefaultReactiveDomain()) {
-  if (!re(state, "valid|secondary|success|info|warning|danger", len0 = FALSE)) {
-    stop(
-      "invalid `validateButtonInput` argument, `state` expecting one of ",
-      '"valid", "success", "warning", or "danger"',
-      call. = FALSE
-    )
-  }
-
-  session$sendInputMessage(
-    id,
-    list(
-      state = state
-    )
-  )
-}
-
-#' @rdname buttonInput
-#' @export
 disableButtonInput <- function(id, session = getDefaultReactiveDomain()) {
   session$sendInputMessage(
     id,

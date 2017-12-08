@@ -3,7 +3,6 @@
 \name{checkboxInput}
 \alias{checkboxInput}
 \alias{updateCheckboxInput}
-\alias{validateCheckboxInput}
 \alias{disableCheckboxInput}
 \alias{enableCheckboxInput}
 \title{Checkbox inputs}
@@ -13,8 +12,6 @@ checkboxInput(id, choice, value = choice, label = NULL, checked = FALSE,
 
 updateCheckboxInput(id, choice, value = choice, checked = FALSE,
   session = getDefaultReactiveDomain())
-
-validateCheckboxInput(id, state, session = getDefaultReactiveDomain())
 
 disableCheckboxInput(id, session = getDefaultReactiveDomain())
 

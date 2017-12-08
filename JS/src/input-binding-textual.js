@@ -27,31 +27,32 @@ $.extend(textualInputBinding, {
       delay: 250
     };
   },
-  _reject: function(el, msg) {
-    $("input", el).addClass("is-invalid");
-    $(".invalid-feedback", el).html(msg);
-  },
-  _validify: function(el, msg) {
-    $("input", el).removeClass("is-invalid")
-      .addClass("is-valid");
-  },
   subscribe: function(el, callback) {
-    var self = this;
     $(el).on("change.textualInputBinding", function(e) {
       callback(true);
     });
     $(el).on("input.textualInputBinding", function(e) {
       callback(true);
     });
-    $(el).on("dull:invalid.textualInputBinding", function(e, msg) {
-      self._reject(el, msg);
-    });
-    $(el).on("dull:valid.textualInputBinding", function(e, msg) {
-      self._validify(el, msg);
-    });
+
   },
   unsubscribe: function(el) {
     $(el).off(".textualInputBinding");
+  },
+  receiveMessage: function(el, data) {
+    if (data.validate !== undefined) {
+      $("input", el).removeClass("is-invalid")
+        .addClass("is-valid");
+
+      return;
+    }
+
+    if (data.invalidate !== undefined) {
+      $("input", el).addClass("is-invalid");
+      $(".invalid-feedback", el).html(data.invalidate);
+
+      return;
+    }
   }
 });
 

@@ -3,19 +3,15 @@
 \name{radioInput}
 \alias{radioInput}
 \alias{updateRadioInput}
-\alias{validateRadioInput}
 \alias{disableRadioInput}
 \alias{enableRadioInput}
 \title{Radio inputs}
 \usage{
 radioInput(id, choices, values = choices, selected = NULL,
-  disabled = NULL, label = NULL, footer = NULL, inline = FALSE)
+  disabled = NULL, label = NULL, help = NULL, inline = FALSE)
 
 updateRadioInput(id, choices, values = choices, selected = NULL,
   disabled = NULL, session = getDefaultReactiveDomain())
-
-validateRadioInput(id, state, hint = NULL,
-  session = getDefaultReactiveDomain())
 
 disableRadioInput(id, disabled = NULL, session = getDefaultReactiveDomain())
 
@@ -44,18 +40,13 @@ choices to disable or enable, defaults to \code{NULL}. If \code{NULL} then
 the radio input's choices, respectively.}
 
 \item{label}{A character string specifying a label for the radio input,
-defaults to \code{NULL}, in which case a label is not added.}
+defaults to \code{NULL} in which case a label is not added.}
+
+\item{help}{A character string specifying a small help label which appears
+below the input, defaults to \code{NULL} in which case help text is not added.}
 
 \item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
 in which case the radio controls render on separate lines.}
-
-\item{state}{One of \code{"success"}, \code{"warning"}, or \code{"danger"} indicating the
-state of the radio input. If the return value is \code{NULL} any visual context
-is removed.}
-
-\item{hint}{A character string specifying hint text to accompany a change in
-the input's state, defaults to \code{NULL}. If \code{state} is \code{NULL} then \code{hint}
-is ignored.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
@@ -72,8 +63,10 @@ if (interactive()) {
           radioInput(
             id = "radio",
             choices = c(
-              "(A) Ice cream", "(B) A small frigate",
-              "(C) A length of rope", "(D) (A) and (C)",
+              "(A) Ice cream",
+              "(B) Pumpkin pie",
+              "(C) 3 turtle doves",
+              "(D) (A) and (C)",
               "(E) All of the above"
             ),
             values = LETTERS[1:5]
@@ -125,41 +118,6 @@ if (interactive()) {
         updateRadioInput(
           id = "choices",
           choices = strsplit(input$groups, ", ", fixed = TRUE)[[1]]
-        )
-      })
-    }
-  )
-}
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        col(
-          radioInput(
-            id = "state",
-            label = "Pick a state",
-            choices = list("valid", "danger", "warning"),
-            footer = "(changes the state of the other radio input)"
-          )
-        ),
-        col(
-          radioInput(
-            id = "choices",
-            label = "More choices",
-            choices = paste("Choice", 1:4),
-            values = 1:4,
-            footer = "These choices won't do anything yet"
-          )
-        )
-      )
-    ),
-    server = function(input, output) {
-      observe({
-        validateRadioInput(
-          id = "choices",
-          state = input$state,
-          hint = "(something doesn't look right)"
         )
       })
     }

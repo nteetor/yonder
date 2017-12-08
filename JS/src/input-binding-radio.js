@@ -24,25 +24,22 @@ $.extend(radioInputBinding, {
   receiveMessage: function(el, data) {
     var $el = $(el);
 
-    if (data.choices !== undefined) {
-      $el.find(".custom-radio").remove();
-      $el.find(".form-control-feedback").before(data.choices);
+    if (data.validate !== undefined) {
+      $("input", el).removeClass("is-invalid")
+        .addClass("is-valid");
+
+      return;
     }
 
-    if (data.state) {
-      $el.attr("class", function(i, c) {
-        return c.replace(/has-(success|warning|danger)/g, "");
-      });
+    if (data.invalidate !== undefined) {
+      $("input", el).addClass("is-invalid");
+      $(".invalid-feedback", el).html(data.invalidate);
 
-      $el.find(".form-control-feedback").empty();
+      return;
+    }
 
-      if (data.state !== "valid") {
-        $el.addClass("has-" + data.state);
-
-        if (data.hint) {
-          $el.find(".form-control-feedback").html(data.hint);
-        }
-      }
+    if (data.choices !== undefined) {
+      $el.find(".custom-radio").remove();
     }
 
     if (data.disable) {

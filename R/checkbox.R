@@ -104,37 +104,28 @@ checkboxInput <- function(id, choice, value = choice, label = NULL,
     class = collate(
       "dull-checkbox-input",
       "dull-input",
-      "form-group",
-      "row"
+      "form-group"
     ),
     id = id,
-    if (!is.null(label)) {
-      tags$label(
-        class = "col-sm-2",
-        label
-      )
-    },
-    tags$div(
-      class = if (!is.null(label)) "col-sm-10",
-      tags$label(
-        class = collate(
-          "custom-control",
-          "custom-checkbox"
-        ),
-        tags$input(
-          class = "custom-control-input",
-          type = "checkbox",
-          `data-value` = value,
-          checked = if (checked) NA
-        ),
-        tags$span(
-          class = "custom-control-indicator"
-        ),
-        tags$span(
-          class = "custom-control-description",
-          choice
-        )
-      )
+    tags$label(
+      class = collate(
+        "custom-control",
+        "custom-checkbox"
+      ),
+      tags$input(
+        class = "custom-control-input",
+        type = "checkbox",
+        `data-value` = value,
+        checked = if (checked) NA
+      ),
+      tags$span(
+        class = "custom-control-indicator"
+      ),
+      tags$span(
+        class = "custom-control-description",
+        choice
+      ),
+      tags$div(class = "invalid-feedback")
     ),
     ...,
     bootstrap()
@@ -169,26 +160,6 @@ updateCheckboxInput <- function(id, choice, value = choice, checked = FALSE,
     id,
     list(
       content = as.character(this)
-    )
-  )
-}
-
-#' @rdname checkboxInput
-#' @export
-validateCheckboxInput <- function(id, state,
-                                  session = getDefaultReactiveDomain()) {
-  if (!re(state, "valid|success|warning|danger", len0 = FALSE)) {
-    stop(
-      "invalid `validateCheckboxInput` argument, `state` must be one ",
-      '"valid", "warning", or "danger"',
-      call. = FALSE
-    )
-  }
-
-  session$sendInputMessage(
-    id,
-    list(
-      state = state
     )
   )
 }

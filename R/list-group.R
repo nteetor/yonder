@@ -116,72 +116,6 @@
 #' }
 #'
 #' if (interactive()) {
-#'   teams <- c(
-#'     `avengers` = "iron man, thor, hulk, ant-man, wasp",
-#'     `west coast avengers` = "hawkeye, mockingbird, wonder man, tigra, iron man",
-#'     `new avengers` = "luke cage, captain america, iron man, spider-man, spider-woman"
-#'   )
-#'
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         col(
-#'           tags$p(
-#'             "Select teams and click a button to highlight them or remove ",
-#'             "the highlighting from them"
-#'           )
-#'         )
-#'       ),
-#'       row(
-#'         col(
-#'           listGroupInput(
-#'             id = "teams",
-#'             items = names(teams),
-#'             values = teams
-#'           )
-#'         ),
-#'         col(
-#'           row(
-#'             buttonInput("clear", "valid", block = TRUE)
-#'           ),
-#'           row(
-#'             buttonInput("warning", "warning", block = TRUE)
-#'           ),
-#'           row(
-#'             buttonInput("danger", "danger", block = TRUE)
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$clear, {
-#'         validateListGroupInput(
-#'           id = "teams",
-#'           state = input$clear$value,
-#'           validate = input$teams
-#'         )
-#'       })
-#'
-#'       observeEvent(input$warning, {
-#'         validateListGroupInput(
-#'           id = "teams",
-#'           state = input$warning$value,
-#'           validate = input$teams
-#'         )
-#'       })
-#'
-#'       observeEvent(input$danger, {
-#'         validateListGroupInput(
-#'           id = "teams",
-#'           state = input$danger$value,
-#'           validate = input$teams
-#'         )
-#'       })
-#'     }
-#'   )
-#' }
-#'
-#' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
 #'       row(
@@ -359,29 +293,6 @@ updateListGroupInput <- function(id, items, values = items, selected = NULL,
     id,
     list(
       items = as.character(items)
-    )
-  )
-}
-
-#' @rdname listGroupInput
-#' @export
-validateListGroupInput <- function(id, state, validate = NULL,
-                                   session = getDefaultReactiveDomain()) {
-  if (!re(state, "valid|success|info|warning|danger", len0 = FALSE)) {
-    stop(
-      "`invalid `validateListGroupItem` argument, `state` must be one of ",
-      '"valid", "warning", or "danger"',
-      call. = FALSE
-    )
-  }
-
-  validate <- unname(validate)
-
-  session$sendInputMessage(
-    id,
-    list(
-      state = state,
-      filter = if (!is.null(validate)) as.list(validate)
     )
   )
 }

@@ -36,6 +36,51 @@
 #'   )
 #' }
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       fluid = FALSE,
+#'       div(
+#'         h5("Where to?"),
+#'         selectInput(
+#'           id = "dropdown",
+#'           options = c("(pick one)", "Home", "Work", "Store")
+#'         ),
+#'         h5("In what?"),
+#'         radioInput(
+#'           id = "npr",
+#'           choices = c("Car", "Bus", "Bike")
+#'         ),
+#'         h5("Pickup pizza?"),
+#'         checkboxInput(
+#'           id = "pizza",
+#'           choice = "Absolutely!"
+#'         )
+#'       ) %>%
+#'        padding(4)
+#'     ),
+#'     server = function(input, output) {
+#'       validateEvent(input$dropdown, {
+#'         if (is.null(input$dropdown) || input$dropdown == "(pick one)") {
+#'           stop("please select a choice")
+#'         }
+#'       })
+#'
+#'       validateEvent(input$npr, {
+#'         if (is.null(input$npr)) {
+#'           stop("field is required")
+#'         }
+#'       })
+#'
+#'       validateEvent(input$pizza, {
+#'         if (is.null(input$pizza)) {
+#'           stop("")
+#'         }
+#'       })
+#'     }
+#'   )
+#' }
+#'
 validateEvent <- function(trigger, handler, priority = 0,
                           domain = getDefaultReactiveDomain(), initial = TRUE) {
   priority <- priority + 9999
@@ -82,16 +127,10 @@ validateEvent <- function(trigger, handler, priority = 0,
 
     tryCatch({
       isolate(handlerFunc())
-      domain$sendCustomMessage("dull:validateinput", list(
-        id = i
-      ))
+      domain$sendInputMessage(i, list(validate = TRUE))
     }, error = function(e) {
       .subset2(domain$input, "impl")$freeze(i)
-      domain$sendCustomMessage("dull:invalidateinput", list(
-        id = i,
-        message = e$message
-      ))
-      FALSE
+      domain$sendInputMessage(i, list(invalidate = e$message %||% ""))
     })
 
   }, label = label, suspended = FALSE, priority = priority, domain = domain,

@@ -95,35 +95,6 @@
 #'   )
 #' }
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         col(
-#'           width = 8,
-#'           tableThruput(
-#'             id = "table",
-#'             border = TRUE
-#'           )
-#'         ),
-#'         col(
-#'           buttonInput(id = "button", "Validate")
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$table <- renderTable({
-#'         mtcars[1:10, ]
-#'       })
-#'
-#'       observeEvent(input$button, {
-#'         validateTableThruput("table", "success", c(1, 2, 3, 5, 8))
-#'       })
-#'     }
-#'   )
-#' }
-#'
-#'
 tableThruput <- function(id, borders = FALSE, context = NULL, compact = FALSE, ...) {
   if (!is.null(id) && !is.character(id)) {
     stop(
@@ -184,25 +155,6 @@ renderTable <- function(expr, env = parent.frame(), quoted = FALSE) {
       )
     )
   }
-}
-
-validateTableThruput <- function(id, state, validate = NULL,
-                                 session = getDefaultReactiveDomain()) {
-  if (!re(state, "success|warning|danger|valid", FALSE)) {
-    stop(
-      "invalid `validateTableThruput` argument, `state` must be one of ",
-      '"success", "warning", "danger", or "valid"',
-      call. = FALSE
-    )
-  }
-
-  session$sendInputMessage(
-    id,
-    list(
-      state = state,
-      validate = if (is.null(validate)) TRUE else as.list(validate)
-    )
-  )
 }
 
 shiny::registerInputHandler(

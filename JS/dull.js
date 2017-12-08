@@ -24,16 +24,6 @@ $(function () {
 
     $el.collapse(msg.action);
   });
-  Shiny.addCustomMessageHandler("dull:invalidateinput", function (msg) {
-    if (msg.id) {
-      $("#" + msg.id).trigger("dull:invalid", msg.message);
-    }
-  });
-  Shiny.addCustomMessageHandler("dull:validateinput", function (msg) {
-    if (msg.id) {
-      $("#" + msg.id).trigger("dull:valid", msg.message);
-    }
-  });
 });
 
 Shiny.addCustomMessageHandler("dull:alert", function (msg) {
@@ -185,22 +175,6 @@ $.extend(buttonInputBinding, {
       $el.data("clicks", 0);
     }
 
-    if (data.state) {
-      var state = data.state === "valid" ? null : data.state;
-
-      if (state) {
-        if ($el.attr("class").search(/btn-outline-/)) {
-          state = "btn-outline-" + data.state;
-        } else {
-          state = "btn-" + data.state;
-        }
-      }
-
-      $el.attr("class", function (i, c) {
-        return c.replace(/btn-(?:outline-)?(?:primary|secondary|link|success|info|warning|danger)/g, "");
-      }).addClass(data.state === "valid" ? null : state);
-    }
-
     if (data.disable === true) {
       $el.prop("disabled", true);
     }
@@ -251,7 +225,7 @@ $.extend(checkboxInputBinding, {
     return $(scope).find(".dull-checkbox-input[id]");
   },
   getValue: function getValue(el) {
-    var $val = $(el).find("input[type=\"checkbox\"]:checked:not(:disabled)").data("value");
+    var $val = $(el).find("input[type='checkbox']:checked:not(:disabled)").data("value");
     return $val === undefined ? null : $val;
   },
   _getLabel: function _getLabel(el) {
@@ -274,19 +248,22 @@ $.extend(checkboxInputBinding, {
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
 
+    if (data.validate !== undefined) {
+      $("input", el).removeClass("is-invalid").addClass("is-valid");
+
+      return;
+    }
+
+    if (data.invalidate !== undefined) {
+      $("input", el).addClass("is-invalid");
+      $(".invalid-feedback", el).html(data.invalidate);
+
+      return;
+    }
+
     if (data.content !== undefined) {
       $el.find("label").remove();
       $el.html(data.choice);
-    }
-
-    if (data.state) {
-      $el.attr("class", function (i, c) {
-        return c.replace(/has-(success|warning|danger)/g, "");
-      });
-
-      if (data.state !== "valid") {
-        $el.addClass("has-" + data.state);
-      }
     }
 
     if (data.disable === true) {
@@ -538,22 +515,6 @@ $.extend(listGroupInputBinding, {
       }
     }
 
-    if (data.state !== undefined) {
-      var state = data.state === "valid" ? null : "list-group-item-" + data.state;
-
-      if (data.filter !== null) {
-        $.each(data.filter, function (i, v) {
-          $el.find(".list-group-item[data-value=\"" + v + "\"]").attr("class", function (i, c) {
-            return c.replace(/list-group-item-(success|info|warning|danger)/g, "");
-          }).addClass(state);
-        });
-      } else {
-        $el.find(".list-group-item").attr("class", function (i, c) {
-          return c.replace(/list-group-item-(success|info|warning|danger)/g, "");
-        }).addClass(state);
-      }
-    }
-
     if (data.disable) {
       if (data.disable === true) {
         $el.find(".list-group-item").each(function (i, e) {
@@ -663,25 +624,21 @@ $.extend(radioInputBinding, {
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
 
-    if (data.choices !== undefined) {
-      $el.find(".custom-radio").remove();
-      $el.find(".form-control-feedback").before(data.choices);
+    if (data.validate !== undefined) {
+      $("input", el).removeClass("is-invalid").addClass("is-valid");
+
+      return;
     }
 
-    if (data.state) {
-      $el.attr("class", function (i, c) {
-        return c.replace(/has-(success|warning|danger)/g, "");
-      });
+    if (data.invalidate !== undefined) {
+      $("input", el).addClass("is-invalid");
+      $(".invalid-feedback", el).html(data.invalidate);
 
-      $el.find(".form-control-feedback").empty();
+      return;
+    }
 
-      if (data.state !== "valid") {
-        $el.addClass("has-" + data.state);
-
-        if (data.hint) {
-          $el.find(".form-control-feedback").html(data.hint);
-        }
-      }
+    if (data.choices !== undefined) {
+      $el.find(".custom-radio").remove();
     }
 
     if (data.disable) {
@@ -816,12 +773,27 @@ $.extend(selectInputBinding, {
     return { value: this.getValue(el) };
   },
   subscribe: function subscribe(el, callback) {
+    var self = this;
     $(el).on("change.selectInputBinding", function (e) {
       callback();
     });
   },
   unsubscribe: function unsubscribe(el) {
     $(el).off(".selectInputBinding");
+  },
+  receiveMessage: function receiveMessage(el, data) {
+    if (data.validate !== undefined) {
+      $("select", el).removeClass("is-invalid").addClass("is-valid");
+
+      return;
+    }
+
+    if (data.invalidate !== undefined) {
+      $("select", el).addClass("is-invalid");
+      $(".invalid-feedback", el).html(data.invalidate);
+
+      return;
+    }
   }
 });
 
@@ -942,30 +914,30 @@ $.extend(textualInputBinding, {
       delay: 250
     };
   },
-  _reject: function _reject(el, msg) {
-    $("input", el).addClass("is-invalid");
-    $(".invalid-feedback", el).html(msg);
-  },
-  _validify: function _validify(el, msg) {
-    $("input", el).removeClass("is-invalid").addClass("is-valid");
-  },
   subscribe: function subscribe(el, callback) {
-    var self = this;
     $(el).on("change.textualInputBinding", function (e) {
       callback(true);
     });
     $(el).on("input.textualInputBinding", function (e) {
       callback(true);
     });
-    $(el).on("dull:invalid.textualInputBinding", function (e, msg) {
-      self._reject(el, msg);
-    });
-    $(el).on("dull:valid.textualInputBinding", function (e, msg) {
-      self._validify(el, msg);
-    });
   },
   unsubscribe: function unsubscribe(el) {
     $(el).off(".textualInputBinding");
+  },
+  receiveMessage: function receiveMessage(el, data) {
+    if (data.validate !== undefined) {
+      $("input", el).removeClass("is-invalid").addClass("is-valid");
+
+      return;
+    }
+
+    if (data.invalidate !== undefined) {
+      $("input", el).addClass("is-invalid");
+      $(".invalid-feedback", el).html(data.invalidate);
+
+      return;
+    }
   }
 });
 

@@ -46,26 +46,6 @@ $.extend(listGroupInputBinding, {
       }
     }
 
-    if (data.state !== undefined) {
-      var state = data.state === "valid" ? null : "list-group-item-" + data.state;
-
-      if (data.filter !== null) {
-        $.each(data.filter, function(i, v) {
-          $el.find(".list-group-item[data-value=\"" + v + "\"]")
-            .attr("class", function(i, c) {
-              return c.replace(/list-group-item-(success|info|warning|danger)/g, "");
-            })
-            .addClass(state);
-        });
-      } else {
-        $el.find(".list-group-item")
-          .attr("class", function(i, c) {
-            return c.replace(/list-group-item-(success|info|warning|danger)/g, "");
-          })
-          .addClass(state);
-      }
-    }
-
     if (data.disable) {
       if (data.disable === true) {
         $el.find(".list-group-item").each(function(i, e) {

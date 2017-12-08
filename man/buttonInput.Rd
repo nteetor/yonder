@@ -3,7 +3,6 @@
 \name{buttonInput}
 \alias{buttonInput}
 \alias{updateButtonInput}
-\alias{validateButtonInput}
 \alias{disableButtonInput}
 \alias{enableButtonInput}
 \alias{resetButtonInput}
@@ -14,8 +13,6 @@ buttonInput(id, text, context = "secondary", outline = FALSE,
   block = FALSE, ...)
 
 updateButtonInput(id, label, session = getDefaultReactiveDomain())
-
-validateButtonInput(id, state, session = getDefaultReactiveDomain())
 
 disableButtonInput(id, session = getDefaultReactiveDomain())
 
