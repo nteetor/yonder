@@ -14,7 +14,7 @@ $.extend(sparklineOutputBinding, {
       var labels = $el.data("labels");
 
       $el.text(function(i, c) {
-        let contents = "{" + data.values.join(",") + "}";
+        var contents = "{" + data.values.join(",") + "}";
 
         if (labels) {
           contents = data.raw[0] + contents + data.raw[data.raw.length - 1];
