@@ -171,6 +171,41 @@ dropNulls <- function(x) {
   x[!vapply(x, is.null, logical(1))]
 }
 
+# borrowed from shiny, see shiny/R/utils.R
+wrapFunctionLabel <- function(func, name, ..stacktraceon = FALSE) {
+  if (name == "name" || name == "func" || name == "relabelWrapper") {
+    stop("Invalid name for wrapFunctionLabel: ", name)
+  }
+  assign(name, func, environment())
+  registerDebugHook(name, environment(), name)
+
+  relabelWrapper <- eval(substitute(
+    function(...) {
+      # This `f` gets renamed to the value of `name`. Note that it may not
+      # print as the new name, because of source refs stored in the function.
+      if (..stacktraceon)
+        shiny::..stacktraceon..(f(...))
+      else
+        f(...)
+    },
+    list(f = as.name(name))
+  ))
+
+  relabelWrapper
+}
+
+# borrowed from shiny, see shiny/R/utils.R
+registerDebugHook <- function(name, where, label) {
+  if (exists("registerShinyDebugHook", mode = "function")) {
+    registerShinyDebugHook <- get("registerShinyDebugHook", mode = "function")
+    params <- new.env(parent = emptyenv())
+    params$name <- name
+    params$where <- where
+    params$label <- label
+    registerShinyDebugHook(params)
+  }
+}
+
 # tag utils ----
 
 is_tag <- function(x) {
