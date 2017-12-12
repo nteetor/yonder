@@ -24,6 +24,16 @@ $(function () {
 
     $el.collapse(msg.action);
   });
+
+  Shiny.addCustomMessageHandler("dull:download", function (msg) {
+    var uri = "/session/" + msg.token + "/download/" + msg.name;
+
+    $.get(uri, function () {
+      window.location = uri;
+    }).fail(function () {
+      alert("An error occurred during download.");
+    });
+  });
 });
 
 Shiny.addCustomMessageHandler("dull:alert", function (msg) {
