@@ -29,22 +29,24 @@ a custom reactive event to trigger a download. Thus, a single handler may be
 used for a complex reactive input or widget.
 }
 \examples{
-shinyApp(
-  ui = container(
-    textInput("name", "File name"),
-    buttonInput("trigger", "Download")
-  ),
-  server = function(input, output) {
-    downloadEvent(input$trigger, {
-      if (is.null(input$name)) {
-        "default"
-      } else {
-        input$name
-      }
-    }, function(file) {
-      cat("hello, world!", file = file)
-    })
-  }
-)
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      textInput("name", "File name"),
+      buttonInput("trigger", "Download")
+    ),
+    server = function(input, output) {
+      downloadEvent(input$trigger, {
+        if (is.null(input$name)) {
+          "default"
+        } else {
+          input$name
+        }
+      }, function(file) {
+        cat("hello, world!", file = file)
+      })
+    }
+  )
+}
 
 }

@@ -22,23 +22,25 @@
 #'
 #' @export
 #' @examples
-#' shinyApp(
-#'   ui = container(
-#'     textInput("name", "File name"),
-#'     buttonInput("trigger", "Download")
-#'   ),
-#'   server = function(input, output) {
-#'     downloadEvent(input$trigger, {
-#'       if (is.null(input$name)) {
-#'         "default"
-#'       } else {
-#'         input$name
-#'       }
-#'     }, function(file) {
-#'       cat("hello, world!", file = file)
-#'     })
-#'   }
-#' )
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       textInput("name", "File name"),
+#'       buttonInput("trigger", "Download")
+#'     ),
+#'     server = function(input, output) {
+#'       downloadEvent(input$trigger, {
+#'         if (is.null(input$name)) {
+#'           "default"
+#'         } else {
+#'           input$name
+#'         }
+#'       }, function(file) {
+#'         cat("hello, world!", file = file)
+#'       })
+#'     }
+#'   )
+#' }
 #'
 downloadEvent <- function(event, filename, handler,
                           domain = getDefaultReactiveDomain()) {
