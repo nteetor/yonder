@@ -1103,7 +1103,14 @@ Shiny.outputBindings.register(sparklineOutputBinding, "dull.sparklineOutput");
 
 $.extend(Shiny.progressHandlers, {
   "dull-stream": function dullStream(data) {
-    $("<li>").addClass("list-group-item").addClass(data.context ? "list-group-item-" + data.context : "").text(data.message).hide().appendTo($("#" + data.id)).fadeIn(300);
+    var classes;
+    if (data.context) {
+      classes = "list-group-item list-group-item-" + data.context;
+    } else {
+      classes = "list-group-item";
+    }
+
+    $("<li class='" + classes + "'></li>").text(data.message).hide().appendTo($("#" + data.id)).fadeIn(300);
 
     return false;
   }

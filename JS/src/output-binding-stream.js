@@ -1,8 +1,13 @@
 $.extend(Shiny.progressHandlers, {
   "dull-stream": function(data) {
-    $("<li>")
-      .addClass("list-group-item")
-      .addClass(data.context ? "list-group-item-" + data.context : "")
+    var classes;
+    if (data.context) {
+      classes = "list-group-item list-group-item-" + data.context;
+    } else {
+      classes = "list-group-item";
+    }
+
+    $("<li class='" + classes + "'></li>")
       .text(data.message)
       .hide()
       .appendTo($("#" + data.id))
