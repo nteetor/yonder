@@ -40,9 +40,9 @@ These examples are adapted from the
 [start simple](https://shiny.rstudio.com/gallery/#start-simple) section of the
 shiny gallery.
 
-#### k means
+### k means
 
-See the original, pure shiny version 
+See the original shiny version 
 [here](https://shiny.rstudio.com/gallery/kmeans-example.html).
 
 ```R
