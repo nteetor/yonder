@@ -177,7 +177,7 @@ $.extend(buttonInputBinding, {
   receiveMessage: function receiveMessage(el, data) {
     var $el = $(el);
 
-    if (data.label) {
+    if (data.label !== undefined) {
       $el.html(data.label);
     }
 
