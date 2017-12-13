@@ -11,36 +11,33 @@
 \alias{colorInput}
 \title{Textual nputs}
 \usage{
-textInput(id, label, value = NULL, placeholder = NULL, readonly = FALSE,
+textInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
   help = NULL, ...)
 
-searchInput(id, label, value = NULL, placeholder = NULL, readonly = FALSE,
+searchInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
   help = NULL, ...)
 
-emailInput(id, label, value = NULL, placeholder = NULL, readonly = FALSE,
+emailInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
   help = NULL, ...)
 
-urlInput(id, label, value = NULL, placeholder = NULL, readonly = FALSE,
+urlInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
   help = NULL, ...)
 
-telephoneInput(id, label, value = NULL, placeholder = NULL,
-  readonly = FALSE, help = NULL, ...)
-
-passwordInput(id, label, value = NULL, placeholder = NULL,
-  readonly = FALSE, help = NULL, ...)
-
-numberInput(id, label, value = NULL, placeholder = NULL, readonly = FALSE,
+telephoneInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
   help = NULL, ...)
 
-colorInput(id, label, value = NULL, placeholder = NULL, readonly = FALSE,
+passwordInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
+  help = NULL, ...)
+
+numberInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
+  help = NULL, ...)
+
+colorInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
   help = NULL, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the textual input, defaults
 to \code{NULL}.}
-
-\item{label}{A character string specifying a label for the input, defaults to
-\code{NULL}.}
 
 \item{value}{A character string or a value coerced to a character string
 specifying the default value of the textual input.}

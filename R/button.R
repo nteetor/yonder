@@ -1,28 +1,40 @@
-#' Button inputs and submit buttons
+#' Button and submit inputs
 #'
-#' Button inputs and submit buttons. A submit button generated with `submit`
-#' will not freeze reactive inputs unlike shiny's `submitButton`.
+#' @description
+#'
+#' Button inputs are useful as triggers for reactive or observer expressions.
+#' The reactive value of a button input is the number of times it has been
+#' clicked.
+#'
+#' A submit input is a special type of button used to control HTML form
+#' submission. Unlike shiny's `submitButton`, `submitInput` will not freeze all
+#' reactive inputs.
 #'
 #' @param id A character string specifying the id of the button input.
 #'
-#' @param text A character string specifying the label text of the button input.
+#' @param label A character string specifying the label text on the button
+#'   input.
 #'
 #' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
 #'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"link"` specifying the
 #'   visual context of the button input, defaults to `"secondary"`.
 #'
-#' @param outline If `TRUE`, the button's visual context is applied to the
+#' @param outline If `TRUE`, the input's visual context is applied to the
 #'   border of the button instead of the background, defaults to `FALSE`.
 #'
-#' @param block If `TRUE`, the button is block-level instead of inline, defaults
+#' @param block If `TRUE`, the input is block-level instead of inline, defaults
 #'   to `FALSE`. A block-level element will occupy the entire width of its
-#'   parent element, thereby creating a "block."
+#'   parent element.
 #'
-#' @param disabled If `TRUE`, the button renders in a disabled state, defaults
+#' @param disabled If `TRUE`, the input renders in a disabled state, defaults
 #'   to `FALSE`.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
+#'
+#' @details
+#'
+#' A submit input is automatically included as part of a [`formInput`].
 #'
 #' @seealso
 #'
@@ -122,8 +134,8 @@
 #'   )
 #' }
 #'
-buttonInput <- function(id, text, context = "secondary", outline = FALSE,
-                        block = FALSE, ...) {
+buttonInput <- function(id, label, context = "secondary", outline = FALSE,
+                        block = FALSE, disabled = FALSE, ...) {
   if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|link", FALSE)) {
     stop(
       "invalid `buttonInput` argument, `context` must be one of ",
@@ -144,9 +156,10 @@ buttonInput <- function(id, text, context = "secondary", outline = FALSE,
     type = "button",
     role = "button",
     `data-clicks` = 0,
-    text,
+    label,
     id = id,
-    ...
+    ...,
+    disabled = if (disabled) NA
   )
 }
 
@@ -197,7 +210,8 @@ resetButtonInput <- function(id, session = getDefaultReactiveDomain()) {
 
 #' @rdname buttonInput
 #' @export
-submit <- function(label = "Submit", outline = FALSE, block = FALSE, ...) {
+submitInput <- function(label = "Submit", outline = FALSE, block = FALSE,
+                        disabled = FALSE, ...) {
   tags$button(
     class = collate(
       "dull-submit",
@@ -210,6 +224,7 @@ submit <- function(label = "Submit", outline = FALSE, block = FALSE, ...) {
     `data-type` = "submit",
     role = "button",
     label,
-    ...
+    ...,
+    disabled = if (disabled) NA
   )
 }

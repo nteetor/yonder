@@ -6,8 +6,12 @@
 \usage{
 loginInput(id, ...)
 }
+\arguments{
+\item{...}{Additional named arguments passed as HTML attibutes to the login
+input.}
+}
 \description{
-Username
+A complex input which consists of a username field and a password field.
 }
 \examples{
 if (interactive()) {

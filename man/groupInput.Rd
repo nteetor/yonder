@@ -118,7 +118,7 @@ if (interactive()) {
         col(
           groupInput(
             id = "groupinput",
-            left = c("$", "0.00")
+            left = c("$", "0.")
           )
         ),
         col(
@@ -176,7 +176,7 @@ if (interactive()) {
             left = dropdownInput(
               id = "dropdown",
               label = "Title",
-              choices = c("Mrs.", "Miss", "Mr.", "none"),
+              items = c("Mrs.", "Miss", "Mr.", "none"),
               values = c("Mrs. ", "Miss ", "Mr. ", "")
             ),
             placeholder = "First name",

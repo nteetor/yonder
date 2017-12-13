@@ -6,11 +6,11 @@
 \alias{disableButtonInput}
 \alias{enableButtonInput}
 \alias{resetButtonInput}
-\alias{submit}
-\title{Button inputs and submit buttons}
+\alias{submitInput}
+\title{Button and submit inputs}
 \usage{
-buttonInput(id, text, context = "secondary", outline = FALSE,
-  block = FALSE, ...)
+buttonInput(id, label, context = "secondary", outline = FALSE,
+  block = FALSE, disabled = FALSE, ...)
 
 updateButtonInput(id, label, session = getDefaultReactiveDomain())
 
@@ -20,33 +20,43 @@ enableButtonInput(id, session = getDefaultReactiveDomain())
 
 resetButtonInput(id, session = getDefaultReactiveDomain())
 
-submit(label = "Submit", outline = FALSE, block = FALSE, ...)
+submitInput(label = "Submit", outline = FALSE, block = FALSE,
+  disabled = FALSE, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the button input.}
 
-\item{text}{A character string specifying the label text of the button input.}
+\item{label}{A character string specifying the label text on the button
+input.}
 
 \item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
 \code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"link"} specifying the
 visual context of the button input, defaults to \code{"secondary"}.}
 
-\item{outline}{If \code{TRUE}, the button's visual context is applied to the
+\item{outline}{If \code{TRUE}, the input's visual context is applied to the
 border of the button instead of the background, defaults to \code{FALSE}.}
 
-\item{block}{If \code{TRUE}, the button is block-level instead of inline, defaults
+\item{block}{If \code{TRUE}, the input is block-level instead of inline, defaults
 to \code{FALSE}. A block-level element will occupy the entire width of its
-parent element, thereby creating a "block."}
+parent element.}
+
+\item{disabled}{If \code{TRUE}, the input renders in a disabled state, defaults
+to \code{FALSE}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
-
-\item{disabled}{If \code{TRUE}, the button renders in a disabled state, defaults
-to \code{FALSE}.}
 }
 \description{
-Button inputs and submit buttons. A submit button generated with \code{submit}
-will not freeze reactive inputs unlike shiny's \code{submitButton}.
+Button inputs are useful as triggers for reactive or observer expressions.
+The reactive value of a button input is the number of times it has been
+clicked.
+
+A submit input is a special type of button used to control HTML form
+submission. Unlike shiny's \code{submitButton}, \code{submitInput} will not freeze all
+reactive inputs.
+}
+\details{
+A submit input is automatically included as part of a \code{\link{formInput}}.
 }
 \examples{
 if (interactive()) {

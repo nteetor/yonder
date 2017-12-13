@@ -16,7 +16,7 @@ arguments passed as HTML attributes to the parent element.}
 \description{
 Form inputs are a new reactive input. A form input's reactive value is a list
 of all the reactive inputs within it. Additionally, form inputs suppress
-the reactive nature of
+the reactive nature of their child inputs.
 }
 \examples{
 if (interactive()) {

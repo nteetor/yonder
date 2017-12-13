@@ -2,7 +2,7 @@
 #'
 #' Form inputs are a new reactive input. A form input's reactive value is a list
 #' of all the reactive inputs within it. Additionally, form inputs suppress
-#' the reactive nature of
+#' the reactive nature of their child inputs.
 #'
 #' @param id A character string specifying an id for the form input, defaults to
 #'   `NULL`.
@@ -135,7 +135,7 @@ formInput <- function(id, ...) {
       class = "form-group row",
       tags$div(
         class = "offset-sm-2 col-sm-10",
-        submit()
+        submitInput()
       )
     ),
     bootstrap()
