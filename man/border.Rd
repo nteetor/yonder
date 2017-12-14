@@ -4,17 +4,16 @@
 \alias{border}
 \title{Element borders}
 \usage{
-border(tag, context = NULL, sides = "all", rounded = "none")
+border(tag, context = "secondary", sides = "all", rounded = "none")
 }
 \arguments{
 \item{tag}{A tag element object.}
 
-\item{context}{One of \code{NULL}, \code{"primary"}, \code{"secondary"}, \code{"success"},
-\code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"white"}
-specifying the visual context and border color. If \code{NULL}, the border is
-the browser default.}
+\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
+\code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"white"} specifying the
+visual context and color of the border, defaults to \code{"secondary"}.}
 
-\item{sides}{One of \code{"all"}, \code{"none"}, or one or more of \code{"top"}, \code{"right"},
+\item{sides}{One of \code{"all"} or \code{"none"} or one or more of \code{"top"}, \code{"right"},
 \code{"bottom"}, \code{"left"} specifying the sides to apply a border, defaults to
 \code{"all"}.}
 

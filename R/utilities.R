@@ -4,12 +4,11 @@
 #'
 #' @param tag A tag element object.
 #'
-#' @param context One of `NULL`, `"primary"`, `"secondary"`, `"success"`,
-#'   `"info"`, `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"white"`
-#'   specifying the visual context and border color. If `NULL`, the border is
-#'   the browser default.
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"white"` specifying the
+#'   visual context and color of the border, defaults to `"secondary"`.
 #'
-#' @param sides One of `"all"`, `"none"`, or one or more of `"top"`, `"right"`,
+#' @param sides One of `"all"` or `"none"` or one or more of `"top"`, `"right"`,
 #'   `"bottom"`, `"left"` specifying the sides to apply a border, defaults to
 #'   `"all"`.
 #'
@@ -26,7 +25,7 @@
 #' tags$div() %>%
 #'   border("warning")
 #'
-border <- function(tag, context = NULL, sides = "all", rounded = "none") {
+border <- function(tag, context = "secondary", sides = "all", rounded = "none") {
   if ((length(sides) > 1 && any(re(sides, "all|none", FALSE))) ||
       !all(re(sides, "top|right|bottom|left|all|none", FALSE))) {
       stop(
@@ -61,6 +60,8 @@ border <- function(tag, context = NULL, sides = "all", rounded = "none") {
 
   if (length(sides) == 1 && sides == "none") {
     tag <- tagAppendAttributes(tag, class = "border-0")
+  } else if (length(sides) == 1 && sides == "all") {
+
   } else {
     remove <- setdiff(c("top", "right", "bottom", "left"), sides)
 
