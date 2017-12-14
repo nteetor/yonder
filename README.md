@@ -137,6 +137,10 @@ fancyCol <- function(...) {
     border(rounded = "all")
 }
 
+valueLabel <- function() {
+  text(tags$p("Current value:"), context = "muted")
+}
+
 shinyApp(
   ui = container(
     jumbotron(
@@ -155,6 +159,7 @@ shinyApp(
           label = "Button"
         ),
         hr(),
+        valueLabel(),
         verbatimTextOutput("buttonOut")
       ), 
       fancyCol(
@@ -164,6 +169,7 @@ shinyApp(
           choice = "Choice A"
         ),
         hr(),
+        valueLabel(),
         verbatimTextOutput("checkboxOut")
       ),
       fancyCol(
@@ -174,6 +180,7 @@ shinyApp(
           values = 1:3
         ),
         hr(),
+        valueLabel(),
         verbatimTextOutput("checkbarOut")
       )
     ),
@@ -181,16 +188,19 @@ shinyApp(
       fancyCol(
         h3("Date input"),
         hr(),
+        valueLabel(),
         verbatimTextOutput("dateIn")
-      ),
+        ),
       fancyCol(
         h3("Date and time input"),
         hr(),
+        valueLabel(),
         verbatimTextOutput("datetimeOut")
       ),
       fancyCol(
         h3("File input"),
         hr(),
+        valueLabel(),
         verbatimTextOutput("fileOut")
       )
     ),
@@ -202,6 +212,7 @@ shinyApp(
           value = 1
         ),
         hr(),
+        valueLabel(),
         verbatimTextOutput("numberOut")
       ),
       fancyCol(
@@ -212,6 +223,7 @@ shinyApp(
           values = 1:3
         ),
         hr(),
+        valueLabel(),
         verbatimTextOutput("radioOut")
       ),
       fancyCol(
@@ -222,6 +234,7 @@ shinyApp(
           values = 1:3
         ),
         hr(),
+        valueLabel(),
         verbatimTextOutput("radiobarOut")
       )
     ),
@@ -234,6 +247,7 @@ shinyApp(
           values = 1:3
         ),
         hr(),
+        valueLabel(),
         verbatimTextOutput("selectOut")
       ),
       fancyCol(
@@ -242,6 +256,7 @@ shinyApp(
           id = "rangeIn"
         ),
         hr(),
+        valueLabel(),
         verbatimTextOutput("rangeOut")
       ),
       fancyCol(
@@ -250,6 +265,7 @@ shinyApp(
           id = "intervalIn"
         ),
         hr(),
+        valueLabel(),
         verbatimTextOutput("intervalOut")
       )
     ),
@@ -263,6 +279,7 @@ shinyApp(
           nobar = TRUE
         ),
         hr(),
+        valueLabel(),
         verbatimTextOutput("sliderOut")
       ),
       fancyCol(),
