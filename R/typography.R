@@ -99,7 +99,10 @@ jumbotron <- function(title, subtitle, ...) {
   tags$div(
     class = "jumbotron",
     d3(title),
-    lead(subtitle),
+    tags$p(
+      class = "lead",
+      subtitle
+    ),
     if (length(elements(list(...))) > 0) tags$hr(class = "my-4"),
     ...,
     bootstrap()
