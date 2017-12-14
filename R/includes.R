@@ -21,10 +21,10 @@ bootstrap <- function() {
 
   htmltools::singleton(
     tags$head(
-      tags$link(
-        rel = "stylesheet",
-        href = "dull/font-awesome/css/font-awesome.min.css"
-      )
+      tags$script(
+        defer = NA,
+        src = "dull/font-awesome/js/fontawesome-all.js"
+        )
     )
   )
 }

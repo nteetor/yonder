@@ -2,31 +2,57 @@
 % Please edit documentation in R/icons.R
 \name{fontAwesome}
 \alias{fontAwesome}
-\title{Include icons in applications}
+\title{Font Awesome icons}
 \usage{
-fontAwesome(name, ...)
+fontAwesome(name, solid = TRUE, size = "md", border = FALSE,
+  pull = NULL, fixed = FALSE, spin = FALSE, ...)
 }
 \arguments{
-\item{name}{A character string specifying the icon name, leading prefixes
-unique to the icon set are not required.}
+\item{name}{A character string specifying the icon name, the \code{fa-} prefix
+is not necessary.}
+
+\item{solid}{One of \code{TRUE} or \code{FALSE} specifying if the icon's solid variant
+is used, defaults to \code{TRUE}. If the icon does not have a solid variant a
+warning is raised.}
+
+\item{size}{One of \code{"xs"}, \code{"sm"}, \code{"md"}, \code{"lg"}, or \code{"1x"} through \code{"10x"}
+specifying the size of the icon, defaults to \code{"md"}.}
+
+\item{border}{One of \code{TRUE} or \code{FALSE} specifying if a border is added to the
+icon, defaults to \code{FALSE}.}
+
+\item{pull}{One of \code{"left"} or \code{"right"} specifying a direction in which to
+float the element, defaults to \code{NULL} in which case neither style is
+applied.}
+
+\item{fixed}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} the icon has a fixed width,
+defaults to \code{FALSE}. This feature is particularly useful or necessary when
+vertically aligning icons.}
+
+\item{spin}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} the icon is animated and
+spins, defaults to \code{FALSE}. This functionality works best with circular
+icons like \code{"spinner"}, \code{"circle-notch"}, \code{"sync"}, or \code{"cog"}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 }
 \description{
-Currently only FontAwesome icons are available.
+A set of icons developed by Fort Awesome. Icons have regular and solid
+variants. The regular variant of an icon is often the inverse or outline
+of the solid variant.
 }
 \examples{
 if (interactive()) {
   shinyApp(
     ui = container(
-      fontAwesome("thumbs-up"),
-      fontAwesome("bathtub"),
-      fontAwesome("cog"),
-      fontAwesome("clock-o"),
-      fontAwesome("microphone"),
-      fontAwesome("print")
-      # and more!
+      fluid = FALSE,
+      blockquote(
+        fontAwesome("quote-left", size = "2x", border = TRUE, pull = "left", spin = TRUE),
+        "It's the questions we can't answer that teach us the most. They teach
+        us how to think. If you give a man an answer, all he gains is a little
+        fact. But give him a question and he'll look for his own answers.",
+        source = "Patrick Rothfuss"
+      )
     ),
     server = function(input, output) {
 
@@ -36,6 +62,6 @@ if (interactive()) {
 
 }
 \seealso{
-For a complete list of possible FontAwesome icons please refer to
-\url{http://fontawesome.io/icons/}.
+For a complete list of possible icons please refer to the Font Awesome
+website, \url{https://fontawesome.com/icons?d=listing&m=free}.
 }
