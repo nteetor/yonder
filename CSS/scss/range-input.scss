@@ -138,3 +138,10 @@ $radius: .25rem;
 	}
     }
 }
+
+.range-nobar {
+    .irs-bar,
+    .irs-bar-edge {
+	background: $gray-200 !important;
+    }
+}

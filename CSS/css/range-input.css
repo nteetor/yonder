@@ -151,3 +151,7 @@
 .range-danger .irs-from::after,
 .range-danger .irs-single::after {
   border-top-color: #DC3545; }
+
+.range-nobar .irs-bar,
+.range-nobar .irs-bar-edge {
+  background: #e9ecef !important; }

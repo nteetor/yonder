@@ -15,7 +15,7 @@ intervalInput(id, min = 0, max = 100, default = c(min, max), step = 1,
   prefix = NULL, suffix = NULL, context = "secondary")
 
 sliderInput(id, choices, values = choices, selected = NULL, ticks = TRUE,
-  prefix = NULL, suffix = NULL, context = "secondary")
+  prefix = NULL, suffix = NULL, context = "secondary", fill = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the range input or \code{NULL}.}
@@ -74,6 +74,9 @@ defaults to \code{choices}.}
 \item{selected}{One of \code{values} specifying the initial value of the slider
 input, defaults to \code{NULL}, in which case the slider input defaults to the
 first choice.}
+
+\item{fill}{One of \code{TRUE} or \code{FALSE}, if \code{FALSE} the fill region of the
+slider input is hidden, defaults to \code{TRUE}.}
 }
 \description{
 A take on shiny's \code{sliderInput}.

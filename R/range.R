@@ -59,6 +59,9 @@
 #'   `"warning"`, or `"danger"` specifying the visual context of the slider,
 #'   defaults to `"secondary"`.
 #'
+#' @param fill One of `TRUE` or `FALSE`, if `FALSE` the fill region of the
+#'   slider input is hidden, defaults to `TRUE`.
+#'
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -182,14 +185,15 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
 #'
 sliderInput <- function(id, choices, values = choices, selected = NULL,
                         ticks = TRUE, prefix = NULL, suffix = NULL,
-                        context = "secondary") {
+                        context = "secondary", fill = FALSE) {
   values <- vapply(values, as.character, character(1))
 
   tags$div(
     class = collate(
       "dull-range-input dull-input form-group",
       "range",
-      if (!is.null(context)) paste0("range-", context)
+      if (!is.null(context)) paste0("range-", context),
+      if (!fill) "range-nobar"
     ),
     id = id,
     tags$input(
