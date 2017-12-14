@@ -36,9 +36,11 @@ devtools::install_github("nteetor/dull")
 
 ## Examples
 
-These examples are adapted from the 
-[start simple](https://shiny.rstudio.com/gallery/#start-simple) section of the
-shiny gallery.
+These examples are adapted from the shiny apps
+[gallery](https://shiny.rstudio.com/gallery/).
+
+1. [k means](#k-means)
+1. [widgets](#widgets)
 
 ### k means
 
@@ -118,6 +120,196 @@ shinyApp(
            
       points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
     })
+  }
+)
+```
+
+### widgets
+
+See the original shiny version 
+[here](https://shiny.rstudio.com/gallery/widget-gallery.html).
+
+```R
+fancyCol <- function(...) {
+  col(...) %>% 
+    padding(3) %>% 
+    margins(2) %>% 
+    border(rounded = "all")
+}
+
+shinyApp(
+  ui = container(
+    jumbotron(
+      title = "Dull Widgets Gallery",
+      subtitle = paste(
+        "For each widget below, the Current Value(s) window displays",
+        "the value the input provides to the shiny server. Notice the",
+        "values change as you interact with the widgets."
+      )
+    ),
+    row(
+      fancyCol(
+        h3("Button input"),
+        buttonInput(
+          id = "buttonIn",
+          label = "Button"
+        ),
+        hr(),
+        verbatimTextOutput("buttonOut")
+      ), 
+      fancyCol(
+        h3("Checkbox input"),
+        checkboxInput(
+          id = "checkboxIn",
+          choice = "Choice A"
+        ),
+        hr(),
+        verbatimTextOutput("checkboxOut")
+      ),
+      fancyCol(
+        h3("Checkbar input"),
+        checkbarInput(
+          id = "checkbarIn",
+          choices = c("Choice 1", "Choice 2", "Choice 3"),
+          values = 1:3
+        ),
+        hr(),
+        verbatimTextOutput("checkbarOut")
+      )
+    ),
+    row(
+      fancyCol(
+        h3("Date input"),
+        hr(),
+        verbatimTextOutput("dateIn")
+      ),
+      fancyCol(
+        h3("Date and time input"),
+        hr(),
+        verbatimTextOutput("datetimeOut")
+      ),
+      fancyCol(
+        h3("File input"),
+        hr(),
+        verbatimTextOutput("fileOut")
+      )
+    ),
+    row(
+      fancyCol(
+        h3("Number input"),
+        numberInput(
+          id = "numberIn",
+          value = 1
+        ),
+        hr(),
+        verbatimTextOutput("numberOut")
+      ),
+      fancyCol(
+        h3("Radio input"),
+        radioInput(
+          id = "radioIn",
+          choices = c("Choice 1", "Choice 2", "Choice 3"),
+          values = 1:3
+        ),
+        hr(),
+        verbatimTextOutput("radioOut")
+      ),
+      fancyCol(
+        h3("Radio bar input"),
+        radiobarInput(
+          id = "radiobarIn",
+          choices = c("Choice 1", "Choice 2", "Choice 3"),
+          values = 1:3
+        ),
+        hr(),
+        verbatimTextOutput("radiobarOut")
+      )
+    ),
+    row(
+      fancyCol(
+        h3("Select input"),
+        selectInput(
+          id = "selectIn",
+          options = c("Choice 1", "Choice 2", "Choice 3"),
+          values = 1:3
+        ),
+        hr(),
+        verbatimTextOutput("selectOut")
+      ),
+      fancyCol(
+        h3("Range input"),
+        rangeInput(
+          id = "rangeIn"
+        ),
+        hr(),
+        verbatimTextOutput("rangeOut")
+      ),
+      fancyCol(
+        h3("Interval input"),
+        intervalInput(
+          id = "intervalIn"
+        ),
+        hr(),
+        verbatimTextOutput("intervalOut")
+      )
+    ),
+    row(
+      fancyCol(
+        h3("Slider input"),
+        sliderInput(
+          id = "sliderIn",
+          choices = c("Choice 1", "Choice 2", "Choice 3"),
+          values = 1:3,
+          nobar = TRUE
+        ),
+        hr(),
+        verbatimTextOutput("sliderOut")
+      ),
+      fancyCol(),
+      fancyCol()
+    )
+  ),
+  server = function(input, output) {
+    output$buttonOut <- renderPrint({
+      input$buttonIn
+    })
+    
+    output$checkboxOut <- renderPrint({
+      input$checkboxIn
+    })
+    
+    output$checkbarOut <- renderPrint({
+      input$checkbarIn
+    })
+    
+    output$numberOut <- renderPrint({
+      input$numberIn
+    })
+    
+    output$radioOut <- renderPrint({
+      input$radioIn
+    })
+    
+    output$radiobarOut <- renderPrint({
+      input$radiobarIn
+    })
+    
+    output$selectOut <- renderPrint({
+      input$selectIn
+    })
+    
+    output$rangeOut <- renderPrint({
+      input$rangeIn
+    })
+    
+    output$intervalOut <- renderPrint({
+      input$intervalIn
+    })
+    
+    output$sliderOut <- renderPrint({
+      input$sliderIn
+    })
+
   }
 )
 ```
