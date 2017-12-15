@@ -198,9 +198,9 @@ fontAwesomeIcons <- list(
 #' @param size One of `"xs"`, `"sm"`, `"md"`, `"lg"`, or `"1x"` through `"10x"`
 #'   specifying the size of the icon, defaults to `"md"`.
 #'
-#' @param pull One of `"left"` or `"right"` specifying a direction in which to
-#'   float the element, defaults to `NULL` in which case neither style is
-#'   applied.
+#' @param float One of `"left"` or `"right"` specifying a direction in which to
+#'   float the element. This is particularly useful when wrapping text around an
+#'   icon. Defaults to `NULL` in which case a float is not applied.
 #'
 #' @param fixed One of `TRUE` or `FALSE`, if `TRUE` the icon has a fixed width,
 #'   defaults to `FALSE`. This feature is particularly useful or necessary when
@@ -239,7 +239,7 @@ fontAwesomeIcons <- list(
 #' }
 #'
 fontAwesome <- function(name, solid = TRUE, size = "md", border = FALSE,
-                        pull = NULL, fixed = FALSE, spin = FALSE, ...) {
+                        float = NULL, fixed = FALSE, spin = FALSE, ...) {
   if (!is.character(name)) {
     stop(
       "invalid `fontAwesome` argument, `name` must be a character string",
@@ -256,11 +256,11 @@ fontAwesome <- function(name, solid = TRUE, size = "md", border = FALSE,
   }
 
   if (name %in% fontAwesomeIcons$brands) {
-    set <- "fab"
+    iconSet <- "fab"
   } else if (name %in% fontAwesomeIcons$regular) {
-    set <- "far"
+    iconSet <- "far"
   } else {
-    set <- "fas"
+    iconSet <- "fas"
   }
 
   if (solid) {
@@ -271,13 +271,13 @@ fontAwesome <- function(name, solid = TRUE, size = "md", border = FALSE,
         call. = FALSE
       )
     } else {
-      set <- "fas"
+      iconSet <- "fas"
     }
   }
 
-  if (!is.null(pull) && !(pull %in% c("left", "right"))) {
+  if (!re(float, "left|right")) {
     stop(
-      "invalid `fontAwesome` argument, `pull` must be one of ",
+      "invalid `fontAwesome` argument, `float` must be one of ",
       '"left" or "right"',
       call. = FALSE
     )
@@ -285,16 +285,91 @@ fontAwesome <- function(name, solid = TRUE, size = "md", border = FALSE,
 
   tags$i(
     class = collate(
-      set,
+      iconSet,
       paste0("fa-", name),
       if (size != "md") paste0("fa-", size),
       if (border) "fa-border",
       if (fixed) "fa-fw",
-      if (!is.null(pull)) paste0("fa-pull-", pull),
+      if (!is.null(float)) paste0("fa-pull-", float),
       if (spin) "fa-spin"
     ),
     `aria-hidden` = "true",
     ...,
     `font-awesome`()
   )
+}
+
+#' A spinner
+#'
+#' Start or stop a spinner based on process progress.
+#'
+#' @param id A character specifying the id of the spinner output.
+#'
+#' @param type One of `"circle"`, `"cog"`, `"dots"`, or `"sync"` specifying the
+#'   type of spinner, defaults to `"circle"`.
+#'
+#' @param pulse One of `TRUE` or `FALSE`, if `TRUE` the spinner rotates in 8
+#'   discrete steps, defaults to `FALSE`.
+#'
+#' @export
+#' @examples
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       col(
+#'         spinnerOutput("spin"),
+#'         buttonInput("trigger", "Start/stop")
+#'       ) %>%
+#'         display("flex") %>%
+#'         content("around")
+#'     ),
+#'     server = function(input, output) {
+#'       observeEvent(input$trigger, {
+#'         if (input$trigger %% 2 == 1) {
+#'           startSpinner("spin")
+#'         } else {
+#'           stopSpinner("spin")
+#'         }
+#'       })
+#'     }
+#'   )
+#' }
+#'
+spinnerOutput <- function(id, type = "circle", pulse = FALSE, ...) {
+  tags$i(
+    class = collate(
+      "dull-spinner-output",
+      "fas",
+      switch(
+        type,
+        circle = "fa-circle-notch",
+        cog = "fa-cog",
+        dots = "fa-spinner",
+        sync = "fa-sync"
+      ),
+      if (pulse) "fa-pulse" else "fa-spin",
+      "pause"
+    ),
+    id = id,
+    ...,
+    `font-awesome`()
+  )
+}
+
+#' @rdname spinnerOutput
+#' @export
+startSpinner <- function(id, session = getDefaultReactiveDomain()) {
+  session$sendProgress("dull-spinner", list(
+    id = id,
+    action = "start"
+  ))
+}
+
+#' @rdname spinnerOutput
+#' @export
+stopSpinner <- function(id, session = getDefaultReactiveDomain()) {
+  session$sendProgress("dull-spinner", list(
+    id = id,
+    action = "stop"
+  ))
 }

@@ -1033,8 +1033,6 @@ $.extend(chartistOutputBinding, {});
 
 $.extend(Shiny.progressHandlers, {
   "dull-progress": function dullProgress(msg) {
-    console.log(msg);
-
     var $bar = $(".dull-progress-output #" + msg.id);
 
     $bar.attr("style", function (i, s) {
@@ -1110,6 +1108,24 @@ $.extend(sparklineOutputBinding, {
 });
 
 Shiny.outputBindings.register(sparklineOutputBinding, "dull.sparklineOutput");
+
+$.extend(Shiny.progressHandlers, {
+  "dull-spinner": function dullSpinner(msg) {
+    var $spinner = $("#" + msg.id);
+
+    if (!$spinner.is(".dull-spinner-output")) {
+      return false;
+    }
+
+    if (msg.action === "start") {
+      $spinner.removeClass("pause");
+    }
+
+    if (msg.action == "stop") {
+      $spinner.addClass("pause");
+    }
+  }
+});
 
 $.extend(Shiny.progressHandlers, {
   "dull-stream": function dullStream(data) {

@@ -5,7 +5,7 @@
 \title{Font Awesome icons}
 \usage{
 fontAwesome(name, solid = TRUE, size = "md", border = FALSE,
-  pull = NULL, fixed = FALSE, spin = FALSE, ...)
+  float = NULL, fixed = FALSE, spin = FALSE, ...)
 }
 \arguments{
 \item{name}{A character string specifying the icon name, the \code{fa-} prefix
@@ -21,9 +21,9 @@ specifying the size of the icon, defaults to \code{"md"}.}
 \item{border}{One of \code{TRUE} or \code{FALSE} specifying if a border is added to the
 icon, defaults to \code{FALSE}.}
 
-\item{pull}{One of \code{"left"} or \code{"right"} specifying a direction in which to
-float the element, defaults to \code{NULL} in which case neither style is
-applied.}
+\item{float}{One of \code{"left"} or \code{"right"} specifying a direction in which to
+float the element. This is particularly useful when wrapping text around an
+icon. Defaults to \code{NULL} in which case a float is not applied.}
 
 \item{fixed}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} the icon has a fixed width,
 defaults to \code{FALSE}. This feature is particularly useful or necessary when
@@ -47,7 +47,7 @@ if (interactive()) {
     ui = container(
       fluid = FALSE,
       blockquote(
-        fontAwesome("quote-left", size = "2x", border = TRUE, pull = "left", spin = TRUE),
+        fontAwesome("quote-left", size = "2x", border = TRUE, pull = "left"),
         "It's the questions we can't answer that teach us the most. They teach
         us how to think. If you give a man an answer, all he gains is a little
         fact. But give him a question and he'll look for his own answers.",
