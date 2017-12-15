@@ -1,14 +1,3 @@
-# Flex box
-#
-# Use flexbox utilities.
-#
-# @export
-# @examples
-# tags$div() %>%
-#   display("flex") %>%
-#   direction("row") %>%
-#
-
 #' Flex direction, rows and columns
 #'
 #' Change the direction of a flex boxes items. `reverse` is similar to

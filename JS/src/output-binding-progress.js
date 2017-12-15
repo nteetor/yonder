@@ -1,7 +1,5 @@
 $.extend(Shiny.progressHandlers, {
   "dull-progress": function(msg) {
-    console.log(msg);
-
     var $bar = $(".dull-progress-output #" + msg.id);
 
     $bar.attr("style", function(i, s) {
