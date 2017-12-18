@@ -84,8 +84,8 @@ col <- function(..., default = NULL, sm = NULL, md = NULL, lg = NULL,
     possible = c(as.character(1:12), "auto")
   )
 
-  classes <- sub("-((sm|md|lg|xl)-)?auto", "", classes)
-  classes <- unique(classes)
+  classes <- sub("-(sm|md|lg|xl)-auto", "", classes)
+  classes <- sort(unique(c("col", classes)))
 
   tagAddClass(tags$div(...), collate(classes))
 }

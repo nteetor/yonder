@@ -1,9 +1,17 @@
-textualInput <- function(id, value, placeholder, readonly, help, type, ...) {
+textualInput <- function(id, value, placeholder, readonly, help, type,
+                         size = NULL, ...) {
+  if (!is.null(size)) {
+    size <- switch(size, small = "sm", large = "lg")
+  }
+
   tags$div(
     class = "dull-textual-input dull-input form-group",
     id = id,
     tags$input(
-      class = "form-control",
+      class = collate(
+        "form-control",
+        if (!is.null(size)) paste0("form-control-", size)
+      ),
       type = type,
       value = value,
       placeholder = placeholder,
@@ -33,6 +41,10 @@ textualInput <- function(id, value, placeholder, readonly, help, type, ...) {
 #' @param placeholder A character string specifying placeholder text for the
 #'   input, defaults to `NULL`, in which case there is no placeholder text.
 #'
+#' @param size One of `"small"` or `"large"` specifying the size transformation
+#'   of the input, defaults to `NULL`, in which case the input's size is
+#'   unchanged.
+#'
 #' @param readonly If `TRUE`, the textual input is read-only preventing
 #'   modification of the value, defaults `FALSE`.
 #'
@@ -50,93 +62,93 @@ textualInput <- function(id, value, placeholder, readonly, help, type, ...) {
 #' }
 #'
 #'
-textInput <- function(id, value = NULL, placeholder = NULL, readonly = FALSE,
-                      help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "text", ...)
+textInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
+                      readonly = FALSE, help = NULL, ...) {
+  textualInput(id, value, placeholder, readonly, help, "text", size = size, ...)
 }
 
 #' @rdname textInput
 #' @export
-searchInput <- function(id, value = NULL, placeholder = NULL,
+searchInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                         readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "search", ...)
+  textualInput(id, value, placeholder, readonly, help, "search", size = size, ...)
 }
 
 #' @rdname textInput
 #' @export
-emailInput <- function(id, value = NULL, placeholder = NULL,
+emailInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                        readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "email", ...)
+  textualInput(id, value, placeholder, readonly, help, "email", size = size, ...)
 }
 
 #' @rdname textInput
 #' @export
-urlInput <- function(id, value = NULL, placeholder = NULL,
+urlInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                      readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "url", ...)
+  textualInput(id, value, placeholder, readonly, help, "url", size = size, ...)
 }
 
 #' @rdname textInput
 #' @export
-telephoneInput <- function(id, value = NULL, placeholder = NULL,
+telephoneInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                            readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "tel", ...)
+  textualInput(id, value, placeholder, readonly, help, "tel", size = size, ...)
 }
 
 #' @rdname textInput
 #' @export
-passwordInput <- function(id, value = NULL, placeholder = NULL,
+passwordInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                           readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "password", ...)
+  textualInput(id, value, placeholder, readonly, help, "password", size = size, ...)
 }
 
 #' @rdname textInput
 #' @export
-numberInput <- function(id, value = NULL, placeholder = NULL,
+numberInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                         readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "number", ...)
+  textualInput(id, value, placeholder, readonly, help, "number", size = size, ...)
 }
 
 # @rdname textInput
 # @export
-dateInput <- function(id, value = NULL, placeholder = NULL,
+dateInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                       readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "date", ...)
+  textualInput(id, value, placeholder, readonly, help, "date", size = size, ...)
 }
 
 # @rdname textInput
 # @export
-datetimeInput <- function(id, value = NULL, placeholder = NULL,
+datetimeInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                           readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "datetime-local", ...)
+  textualInput(id, value, placeholder, readonly, help, "datetime-local", size = size, ...)
 }
 
 # @rdname textInput
 # @export
-monthInput <- function(id, value = NULL, placeholder = NULL,
+monthInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                        readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "month", ...)
+  textualInput(id, value, placeholder, readonly, help, "month", size = size, ...)
 }
 
 # @rdname textInput
 # @export
-weekInput <- function(id, value = NULL, placeholder = NULL,
+weekInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                       readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "week", ...)
+  textualInput(id, value, placeholder, readonly, help, "week", size = size, ...)
 }
 
 # @rdname textInput
 # @export
-timeInput <- function(id, value = NULL, placeholder = NULL,
+timeInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                       readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "time", ...)
+  textualInput(id, value, placeholder, readonly, help, "time", size = size, ...)
 }
 
 #' @rdname textInput
 #' @export
-colorInput <- function(id, value = NULL, placeholder = NULL,
+colorInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                        readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "color", ...)
+  textualInput(id, value, placeholder, readonly, help, "color", size = size, ...)
 }
 
 #' Group and label multiple inputs
@@ -396,7 +408,7 @@ addressInput <- function(id) {
 #'
 #' @details
 #'
-#' ** `left` is character or `right` is character **
+#' **`left` is character or `right` is character**
 #'
 #' If `left` or `right` are character vectors, then the group input functions
 #' like a text input. The value will update and trigger a reactive event when
@@ -404,14 +416,14 @@ addressInput <- function(id) {
 #' concatention of the static addons specified by `left` or `right` and the
 #' value of the text input.
 #'
-#' ** `left` is button or `right` is button **
+#' **`left` is button or `right` is button**
 #'
 #' The button does not change the value of the group input. However, the input
 #' no longer triggers event when the text box is updated. Instead the value
 #' is updated when a button is clicked. Static addons are still applied to the
 #' group input value.
 #'
-#' ** `left` is a dropdown or `right` is a dropdown **
+#' **`left` is a dropdown or `right` is a dropdown**
 #'
 #' The value of the group input does chance depending on the clicked dropdown
 #' menu item. The value of the input group is the concatentation of the

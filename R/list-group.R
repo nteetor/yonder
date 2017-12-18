@@ -272,18 +272,18 @@ updateListGroupInput <- function(id, items, values = items, selected = NULL,
           class = collate(
             "list-group-item",
             "list-group-item-action",
-            if (selected[[i]]) "active",
-            if (badges) "justify-content-between"
+            if (selected[[i]]) "active"
+            # if (badges) "justify-content-between"
           ),
           `data-value` = values[[i]],
           disabled = if (disabled[[i]]) NA,
-          items[[i]],
-          if (badges) {
-            tags$span(
-              class = "badge badge-default badge-pill",
-              0
-            )
-          }
+          items[[i]]
+          # if (badges) {
+          #   tags$span(
+          #     class = "badge badge-default badge-pill",
+          #     0
+          #   )
+          # }
         )
       }
     )

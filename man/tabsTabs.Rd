@@ -47,7 +47,7 @@ does not allow nested tabs.
 if (interactive()) {
   shinyApp(
     ui = container(
-      tabsNav(
+      tabsTabs(
         labels = list(
           "Home",
           "Profile",

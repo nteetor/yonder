@@ -39,6 +39,11 @@
 #'             label = "A checkbox",
 #'             choice = "Are you there?",
 #'             value = "yes"
+#'           ),
+#'           checkboxInput(
+#'             id = "hello",
+#'             label = "A second checkbox!",
+#'             choice = "Hello"
 #'           )
 #'         ),
 #'         col(

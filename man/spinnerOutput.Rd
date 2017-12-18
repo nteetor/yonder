@@ -29,7 +29,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       col(
-        spinnerOutput("spin"),
+        spinnerOutput("spin", pulse = TRUE),
         buttonInput("trigger", "Start/stop")
       ) \%>\%
         display("flex") \%>\%

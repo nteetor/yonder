@@ -11,29 +11,29 @@
 \alias{colorInput}
 \title{Textual nputs}
 \usage{
-textInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
-  help = NULL, ...)
+textInput(id, value = NULL, placeholder = NULL, size = NULL,
+  readonly = FALSE, help = NULL, ...)
 
-searchInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
-  help = NULL, ...)
+searchInput(id, value = NULL, placeholder = NULL, size = NULL,
+  readonly = FALSE, help = NULL, ...)
 
-emailInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
-  help = NULL, ...)
+emailInput(id, value = NULL, placeholder = NULL, size = NULL,
+  readonly = FALSE, help = NULL, ...)
 
-urlInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
-  help = NULL, ...)
+urlInput(id, value = NULL, placeholder = NULL, size = NULL,
+  readonly = FALSE, help = NULL, ...)
 
-telephoneInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
-  help = NULL, ...)
+telephoneInput(id, value = NULL, placeholder = NULL, size = NULL,
+  readonly = FALSE, help = NULL, ...)
 
-passwordInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
-  help = NULL, ...)
+passwordInput(id, value = NULL, placeholder = NULL, size = NULL,
+  readonly = FALSE, help = NULL, ...)
 
-numberInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
-  help = NULL, ...)
+numberInput(id, value = NULL, placeholder = NULL, size = NULL,
+  readonly = FALSE, help = NULL, ...)
 
-colorInput(id, value = NULL, placeholder = NULL, readonly = FALSE,
-  help = NULL, ...)
+colorInput(id, value = NULL, placeholder = NULL, size = NULL,
+  readonly = FALSE, help = NULL, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the textual input, defaults
@@ -44,6 +44,10 @@ specifying the default value of the textual input.}
 
 \item{placeholder}{A character string specifying placeholder text for the
 input, defaults to \code{NULL}, in which case there is no placeholder text.}
+
+\item{size}{One of \code{"small"} or \code{"large"} specifying the size transformation
+of the input, defaults to \code{NULL}, in which case the input's size is
+unchanged.}
 
 \item{readonly}{If \code{TRUE}, the textual input is read-only preventing
 modification of the value, defaults \code{FALSE}.}

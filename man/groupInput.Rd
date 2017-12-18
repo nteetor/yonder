@@ -34,7 +34,7 @@ Buttons and dropdowns may be included to control when the group input's
 reactive value updates. See Details for more information.
 }
 \details{
-** \code{left} is character or \code{right} is character **
+\strong{\code{left} is character or \code{right} is character}
 
 If \code{left} or \code{right} are character vectors, then the group input functions
 like a text input. The value will update and trigger a reactive event when
@@ -42,14 +42,14 @@ the text box is modified. The group input's reactive value is the
 concatention of the static addons specified by \code{left} or \code{right} and the
 value of the text input.
 
-** \code{left} is button or \code{right} is button **
+\strong{\code{left} is button or \code{right} is button}
 
 The button does not change the value of the group input. However, the input
 no longer triggers event when the text box is updated. Instead the value
 is updated when a button is clicked. Static addons are still applied to the
 group input value.
 
-** \code{left} is a dropdown or \code{right} is a dropdown **
+\strong{\code{left} is a dropdown or \code{right} is a dropdown}
 
 The value of the group input does chance depending on the clicked dropdown
 menu item. The value of the input group is the concatentation of the

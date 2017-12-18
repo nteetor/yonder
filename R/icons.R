@@ -317,7 +317,7 @@ fontAwesome <- function(name, solid = TRUE, size = "md", border = FALSE,
 #'   shinyApp(
 #'     ui = container(
 #'       col(
-#'         spinnerOutput("spin"),
+#'         spinnerOutput("spin", pulse = TRUE),
 #'         buttonInput("trigger", "Start/stop")
 #'       ) %>%
 #'         display("flex") %>%

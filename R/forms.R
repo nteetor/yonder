@@ -127,28 +127,25 @@ formInput <- function(id, ...) {
     )
   }
 
+  #
+  # the hackiest work around I've put together
+  #
+  shiny::registerInputHandler(
+    type = "dull.form.element",
+    force = TRUE,
+    fun = function(x, session, name) {
+      NULL
+    }
+  )
+
   tags$form(
     class = "dull-form-input",
     id = id,
     ...,
     tags$div(
-      class = "form-group row",
-      tags$div(
-        class = "offset-sm-2 col-sm-10",
-        submitInput()
-      )
+      class = "form-group",
+      submitInput()
     ),
     bootstrap()
   )
 }
-
-#
-# the hackiest work around I've put together
-#
-shiny::registerInputHandler(
-  type = "dull.form.element",
-  force = TRUE,
-  fun = function(x, session, name) {
-    NULL
-  }
-)

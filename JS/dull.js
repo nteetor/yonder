@@ -1083,7 +1083,7 @@ $.extend(sparklineOutputBinding, {
     return el.id;
   },
   renderValue: function renderValue(el, data) {
-    if (data.values) {
+    if (data.values !== undefined) {
       var $el = $(el);
 
       var labels = $el.data("labels");
@@ -1091,9 +1091,9 @@ $.extend(sparklineOutputBinding, {
       $el.text(function (i, c) {
         var contents = "{" + data.values.join(",") + "}";
 
-        if (labels) {
-          contents = data.raw[0] + contents + data.raw[data.raw.length - 1];
-        }
+        // if (labels) {
+        //   contents = data.raw[0] + contents + data.raw[data.raw.length - 1];
+        // }
 
         if (c === "") {
           return contents;

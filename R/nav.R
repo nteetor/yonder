@@ -102,7 +102,7 @@ linksNav <- function(labels, hrefs, ...) {
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       tabsNav(
+#'       tabsTabs(
 #'         labels = list(
 #'           "Home",
 #'           "Profile",
@@ -256,7 +256,7 @@ tabsTabs <- function(labels, panes, ids = NULL, ...) {
     )
   }
 
-  row(
+  tagList(
     tabs("tabs", labels, ids),
     panes(panes, ids),
     ...,
@@ -446,7 +446,7 @@ panes <- function(panes, ids, ...) {
 tabslist <- function(labels, panes, ids, selected, context, ...) {
   row(
     col(
-      width = 4,
+      default = "auto",
       tags$div(
         class = "list-group",
         role = "tablist",
