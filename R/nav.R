@@ -173,7 +173,7 @@ linksNav <- function(labels, hrefs, ...) {
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       pillsNav(
+#'       pillsTabs(
 #'         labels = c("Home", "Profile", "Messages", "Settings"),
 #'         panes = list(
 #'           lapply(
@@ -291,22 +291,11 @@ pillsTabs <- function(labels, panes, ids = NULL, ...) {
       "pills",
       labels,
       ids,
-      class = collate(
-        "col-12",
-        "col-lg-3",
-        "flex-column",
-        "flex-sm-row",
-        "flex-lg-column",
-        "mb-1",
-        "mb-sm-3",
-        "pr-0",
-        "pr-sm-3"
-      )
+      class = "col-12"
     ),
     panes(
       panes,
-      ids,
-      class = "col-12 col-lg-9"
+      ids
     ),
     ...,
     bootstrap()

@@ -118,7 +118,7 @@ if (interactive()) {
 if (interactive()) {
   shinyApp(
     ui = container(
-      pillsNav(
+      pillsTabs(
         labels = c("Home", "Profile", "Messages", "Settings"),
         panes = list(
           lapply(
