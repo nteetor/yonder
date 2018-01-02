@@ -69,3 +69,7 @@ lapply(1:5, tags$div) \%>\%
   content("center")
 
 }
+\seealso{
+Other flex: \code{\link{direction}}, \code{\link{items}},
+  \code{\link{wrap}}
+}

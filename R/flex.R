@@ -7,6 +7,7 @@
 #'
 #' @param tag A tag element.
 #'
+#' @family flex
 #' @export
 #' @examples
 #'
@@ -19,6 +20,7 @@ direction <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   tagAddClass(tag, collate(classes))
 }
 
+#' @family flex
 #' @rdname direction
 #' @export
 reverse <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
@@ -83,6 +85,7 @@ reverse <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' whole** is placed along the main axis. `"between"` and `"around"` prove
 #' troublesome.
 #'
+#' @family flex
 #' @export
 #' @examples
 #' lapply(1:5, tags$div) %>%
@@ -174,6 +177,10 @@ content <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' |      1 |      2 |      3 |               |
 #' ```
 #'
+#' @family flex
+#' @export
+#' @examples
+#'
 items <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
                   xl = NULL) {
   args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
@@ -234,6 +241,7 @@ items <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' | Item 1 | Item 2 | Item 3 | Item 4 | === |
 #' ```
 #'
+#' @family flex
 #' @export
 #' @examples
 #' # Make sure to try resizing the browser or viewer window after running

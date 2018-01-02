@@ -23,3 +23,10 @@ flex box.
 \examples{
 
 }
+\seealso{
+Other flex: \code{\link{content}}, \code{\link{items}},
+  \code{\link{wrap}}
+
+Other flex: \code{\link{content}}, \code{\link{items}},
+  \code{\link{wrap}}
+}

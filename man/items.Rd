@@ -65,3 +65,10 @@ element. This is the browser defalut.\preformatted{| It     | It     | It     | 
 }
 }
 
+\examples{
+
+}
+\seealso{
+Other flex: \code{\link{content}}, \code{\link{direction}},
+  \code{\link{wrap}}
+}

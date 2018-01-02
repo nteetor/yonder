@@ -108,3 +108,7 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other flex: \code{\link{content}}, \code{\link{direction}},
+  \code{\link{items}}
+}
