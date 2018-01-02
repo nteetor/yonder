@@ -10,6 +10,14 @@ $(function () {
   $("[data-toggle=\"popover\"]").popover();
 });
 
+$(function () {
+  $(".nav:not(.dull-tabs) li").on("click", function (e) {
+    var $this = $(this);
+    $(".nav-link", $this.parent(".nav")).removeClass("active");
+    $(".nav-link", $this).addClass("active");
+  });
+});
+
 $(document).on("shiny:connected", function () {
   $(".dull-submit[data-type=\"submit\"]").attr("type", "submit");
 });

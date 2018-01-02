@@ -38,7 +38,8 @@ in which case ids will be generated.}
 defaults to \code{TRUE}.}
 }
 \description{
-Content with tabs.
+Create tabbable content stylized as tabs, horizontal pills, or vertical
+pills. Tab sets or tab panels are distinct from navs.
 }
 \examples{
 if (interactive()) {
