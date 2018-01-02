@@ -635,7 +635,7 @@ width <- function(tag, percentage = NULL, max = NULL) {
 #' @family utilities
 #' @rdname width
 #' @export
-height <- function(percentage = NULL, max = NULL) {
+height <- function(tag, percentage = NULL, max = NULL) {
   if (is.null(percentage) && is.null(max)) {
     stop(
       "invalid `height` arguments, `percentage` and `max` may not both be NULL",

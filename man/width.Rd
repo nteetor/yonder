@@ -7,7 +7,7 @@
 \usage{
 width(tag, percentage = NULL, max = NULL)
 
-height(percentage = NULL, max = NULL)
+height(tag, percentage = NULL, max = NULL)
 }
 \arguments{
 \item{percentage}{One of 25, 50, 75, or 100 specifying width or height as a
