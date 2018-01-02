@@ -895,6 +895,30 @@ $(document).ready(function () {
   });
 });
 
+var tabsInputBinding = new Shiny.InputBinding();
+
+$.extend(tabsInputBinding, {
+  find: function find(scope) {
+    return $(scope).find(".dull-tabs[id]");
+  },
+  getValue: function getValue(el) {
+    return $(".nav", el).find(".active").data("value");
+  },
+  getState: function getState(el, data) {
+    return { value: this.getValue(el) };
+  },
+  subscribe: function subscribe(el, callback) {
+    $(el).on("shown.bs.tab.tabsInputBinding", function (e) {
+      callback();
+    });
+  },
+  unsubscribe: function unsubscribe(el) {
+    $(el).off(".tabsInputBinding");
+  }
+});
+
+Shiny.inputBindings.register(tabsInputBinding, "dull.tabsInput");
+
 var textualInputBinding = new Shiny.InputBinding();
 
 $.extend(textualInputBinding, {

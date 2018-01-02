@@ -4,25 +4,81 @@
 \alias{linksNav}
 \title{Page Navigation}
 \usage{
-linksNav(labels, hrefs, ...)
+linksNav(labels, ids, ...)
 }
 \arguments{
 \item{labels}{A character vector or flat list of character strings specifying
 the labels of the nav.}
 
-\item{hrefs}{A character vector or flat list of character strings specifying
-the HTML href attributes for each nav link.}
+\item{ids}{A character vector or flat list of character strings specifying
+ids of the content linked to.}
 
 \item{...}{Additional named arguments to pass as HTML attributes to the
 parent element.}
+
+\item{vertical}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} the nav links are
+rendered as a column instead of a row, defaults to \code{FALSE}.}
 }
 \description{
-Create a nav element. This is not a set of tabs, for creating a tabbed interface
+Create a nav element. This is not a set of tabs. To create a tabbed interface
 of dynamic content see \link{tabsNav} or \link{pillsNav}.
 }
 \examples{
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      fluid = FALSE,
+      linksNav(
+        labels = paste("Section", 1:5),
+        ids = paste0("section", 1:5)
+      ),
+      tags$h5(id = "section1", "Section 1"),
+      tags$p(
+        "In sed minim reprimique, usu omnesque tincidunt disputando no, porro
+        debitis adipisci qui an. An augue alterum qui. Nam ei debitis
+        luptatum, usu munere docendi an, viderer disputando ut sed. Enim
+        erant partiendo pri ei, mazim fierent mei et. Cum elit scripserit in,
+        cu novum equidem officiis eum."
+      ),
+      tags$h5(id = "section2", "Section 2"),
+      tags$p(
+        "In sed minim reprimique, usu omnesque tincidunt disputando no, porro
+        debitis adipisci qui an. An augue alterum qui. Nam ei debitis
+        luptatum, usu munere docendi an, viderer disputando ut sed. Enim
+        erant partiendo pri ei, mazim fierent mei et. Cum elit scripserit in,
+        cu novum equidem officiis eum."
+      ),
+      tags$h5(id = "section3", "Section 3"),
+      tags$p(
+        "In sed minim reprimique, usu omnesque tincidunt disputando no, porro
+        debitis adipisci qui an. An augue alterum qui. Nam ei debitis
+        luptatum, usu munere docendi an, viderer disputando ut sed. Enim
+        erant partiendo pri ei, mazim fierent mei et. Cum elit scripserit in,
+        cu novum equidem officiis eum."
+      ),
+      tags$h5(id = "section4", "Section 4"),
+      tags$p(
+        "In sed minim reprimique, usu omnesque tincidunt disputando no, porro
+        debitis adipisci qui an. An augue alterum qui. Nam ei debitis
+        luptatum, usu munere docendi an, viderer disputando ut sed. Enim
+        erant partiendo pri ei, mazim fierent mei et. Cum elit scripserit in,
+        cu novum equidem officiis eum."
+      ),
+      tags$h5(id = "section5", "Section 5"),
+      tags$p(
+        "In sed minim reprimique, usu omnesque tincidunt disputando no, porro
+        debitis adipisci qui an. An augue alterum qui. Nam ei debitis
+        luptatum, usu munere docendi an, viderer disputando ut sed. Enim
+        erant partiendo pri ei, mazim fierent mei et. Cum elit scripserit in,
+        cu novum equidem officiis eum."
+      )
+    ),
+    server = function(input, output) {
 
-stub
+    }
+  )
+}
+
 
 }
 \seealso{

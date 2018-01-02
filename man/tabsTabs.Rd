@@ -84,7 +84,10 @@ if (interactive()) {
             "To find our long-forgotten gold."
           ),
           tags$div(
-            lead("This text is stylized"),
+            tags$p(
+              class = "lead",
+              "This text is stylized"
+            ),
             tags$p(
               "This is the body of the whole text and nothing but the ",
               "text."
