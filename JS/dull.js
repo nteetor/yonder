@@ -11,7 +11,7 @@ $(function () {
 });
 
 $(function () {
-  $(".nav:not(.dull-tabs) li").on("click", function (e) {
+  $(".nav:not([role='tablist']) li").on("click", function (e) {
     var $this = $(this);
     $(".nav-link", $this.parent(".nav")).removeClass("active");
     $(".nav-link", $this).addClass("active");
