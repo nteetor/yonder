@@ -7,6 +7,9 @@
 #'
 #' @param hrefs A character vector specifying the hrefs of the nav links.
 #'
+#' @param active One of `labels` specifying which nav link is active by default,
+#'   defaults to `NULL`, in which case there is no active tab.
+#'
 #' @param ... Additional named arguments to pass as HTML attributes to the
 #'   parent element.
 #'
@@ -100,6 +103,7 @@ nav <- function(labels, hrefs = NULL, active = NULL, style = "links", ...) {
         paste0("nav-", style)
       }
     ),
+    id = id,
     Map(
       label = labels,
       href = hrefs,
@@ -124,31 +128,17 @@ nav <- function(labels, hrefs = NULL, active = NULL, style = "links", ...) {
 #' Create tabbable content stylized as tabs, horizontal pills, or vertical
 #' pills. Tab sets or tab panels are distinct from navs.
 #'
-#' @param id A character string specifying the id of the tabbed content. The
-#'   reactive value of tabbed content is the label of the currently selected tab
-#'   or a custom value if `values` is not `NULL`.
+#' @param nav A `nav()` element.
 #'
-#' @param labels A character vector of labels, one for each tab panel.
-#'
-#' @param ... Any number of `tabPanel`'s or named attributes passed as HTML
+#' @param ... Any number of `tabPane`s or named attributes passed as HTML
 #'   attributes to the parent element.
-#'
-#' @param style One of `"tabs"`, `"pills"`, or `"vertical"` specifying the
-#'   visual style of the tabs, defaults to `"tabs"`.
-#'
-#' @param selected One of `labels` specifying which tab is selected by default,
-#'   defaults to `NULL`, in which case the first tab is selected by default.
-#'
-#' @param values A character vector specifying the possible values of the tabs,
-#'   defaults to `labels`. The reactive value of the tabbed content is the
-#'   corresponding value of the active tab. Values are matched to tabs by
-#'   position.
-#'
-#' @param ids A character vector of ids to use for each tab, defaults to `NULL`
-#'   in which case ids will be generated.
 #'
 #' @param fade One of `TRUE` or `FALSE`, if `TRUE` the tab pane fades in,
 #'   defaults to `TRUE`.
+#'
+#' @details
+#'
+#' To know which tab is active check the reactive value of the nav.
 #'
 #' @export
 #' @examples
@@ -157,69 +147,20 @@ nav <- function(labels, hrefs = NULL, active = NULL, style = "links", ...) {
 #'     ui = container(
 #'       row(
 #'         col(
-#'           default = 3,
-#'           tabContent(
-#'             id = "tabs",
-#'             labels = c("Hello", "Goodnight"),
-#'             tabPanel(
-#'               d4("World")
-#'             ),
-#'             tabPanel(
-#'               d4("Moon")
-#'             )
-#'           )
-#'         ),
-#'         col(
-#'           default = 3,
-#'           tabContent(
-#'             id = "pills",
-#'             style = "pills",
-#'             labels = c("One", "Red"),
-#'             tabPanel(
-#'               d4("fish, two fish")
-#'             ),
-#'             tabPanel(
-#'               d4("fish, blue fish")
-#'             )
-#'           )
-#'         ),
-#'         col(
-#'           tabContent(
-#'             id = "vert",
-#'             style = "vertical",
-#'             labels = c("How", "Brown"),
-#'             tabPanel(
-#'               d4("now")
-#'             ),
-#'             tabPanel(
-#'               d4("cow")
-#'             )
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'
-#'     }
-#'   )
-#' }
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         col(
-#'           tabContent(
-#'             id = "tabs",
-#'             labels = c("One", "Two", "Three"),
-#'             values = c("first tab", "second tab", "third tab"),
-#'             tabPanel(
+#'           tabbableContent(
+#'             nav = nav(
+#'               id = "tabs",
+#'               labels = c("One", "Two", "Three"),
+#'               style = "tabs"
+#'             ) %>%
+#'               margins(c(0, 0, 3, 0)),
+#'             tabPane(
 #'               "A tab"
 #'             ),
-#'             tabPanel(
+#'             tabPane(
 #'               "Another tab"
 #'             ),
-#'             tabPanel(
+#'             tabPane(
 #'               "A final tab"
 #'             )
 #'           )
@@ -237,121 +178,85 @@ nav <- function(labels, hrefs = NULL, active = NULL, style = "links", ...) {
 #'   )
 #' }
 #'
-tabContent <- function(id, labels, ..., style = "tabs", selected = NULL,
-                       values = labels, ids = NULL) {
-  if (!re(style, "tabs|pills|vertical", len0 = NULL)) {
+tabbableContent <- function(nav, ...) {
+  if (!tagHasClass(nav, "nav") && !tagIs(nav, "ul")) {
     stop(
-      "invalid `tabContent` argument, `style` must be one of",
-      '"tabs", "pills", or "vertical"',
+      "invalid `tabbableContent` argument, expecting `nav` to be a call to ",
+      "`nav()`, see ?nav",
       call. = FALSE
     )
   }
 
   args <- list(...)
-  eles <- elements(args)
   attrs <- attribs(args)
+  elems <- elements(args)
 
-  if (length(eles) != length(labels)) {
-    stop(
-      "invalid `tabContent` argument, `labels` must be the same length",
-      "as the number of tab panels",
-      call. = FALSE
-    )
+  isPane <- vapply(elems, tagHasClass, logical(1), class = "tab-pane")
+  panes <- elems[isPane]
+  other <- elems[!isPane]
+
+  if (length(panes) != length(nav$children[[1]])) {
+    stop("expecting same number of nav elements as panes")
   }
 
-  if (!is.null(values) && (length(values) != length(eles))) {
-    stop(
-      "inavlid `tabContent` argument, if `values` is not NULL, a value must",
-      "be specified for each tab panel",
-      call. = FALSE
-    )
+  tabIds <- ID(rep.int("tab", length(panes)))
+  paneIds <- ID(rep.int("pane", length(panes)))
+
+  #
+  # panes
+  #
+  for (i in seq_along(panes)) {
+    if ("id" %in% names(panes[[i]]$attribs)) {
+      paneIds[[i]] <- panes[[i]]$attribs$id
+    } else {
+      panes[[i]]$attribs$id <- paneIds[[i]]
+    }
+
+    panes[[i]]$attribs$`aria-labelledby` <- tabIds[[i]]
   }
 
-  if (!is.null(ids) && (length(ids) != length(eles))) {
-    stop(
-      "invalid `tabContent` argument, if `ids` is not NULL, an id must be",
-      "specified for each tab panel",
-      call. = FALSE
-    )
+  panes[[1]] <- tagEnsureClass(panes[[1]], "show")
+  panes[[1]] <- tagEnsureClass(panes[[1]], "active")
+
+  #
+  # tabs (nav)
+  #
+  for (i in seq_along(nav$children[[1]])) {
+    attrs <- nav$children[[1]][[i]]$children[[1]]$attribs
+
+    attrs$id <- tabIds[[i]]
+    attrs$href <- paste0("#", paneIds[[i]])
+    attrs$`data-toggle` <- "tab"
+    attrs$`aria-controls` <- paneIds[[i]]
+
+    nav$children[[1]][[i]]$children[[1]]$attribs <- attrs
   }
 
-  ids <- ids %||% ID(rep.int("tab", length(eles)))
-  selected <- match2(selected %||% labels[[1]], labels)
-  values <- values %||% labels
+  nav$children[[1]][[1]]$children[[1]] <- tagEnsureClass(
+    nav$children[[1]][[1]]$children[[1]],
+    "active"
+  )
 
-  tabs <- tags$ul(
-    class = collate(
-      "nav",
-      paste0("nav-", if (style == "vertical") "pills" else style),
-      if (style == "vertical") "flex-column"
+  nav$attribs$id <- id
+  nav$attribs$role <- "tablist"
+
+  tagConcatAttributes(
+    tags$div(
+      nav,
+      tags$div(
+        class = "tab-content",
+        other,
+        panes
+      ),
+      bootstrap()
     ),
-    role = "tablist",
-    Map(
-      id = ids,
-      label = labels,
-      active = selected,
-      value = values,
-      f = function(id, label, active, value) {
-        tags$li(
-          class = "nav-item",
-          tags$a(
-            class = collate(
-              "nav-link",
-              if (active) "active"
-            ),
-            `data-toggle` = "tab",
-            href = paste0("#", id),
-            role = "tab",
-            `aria-controls` = id,
-            `aria-selected` = if (active) "true" else "false",
-            `data-value` = if (!is.null(values)) value,
-            label
-          )
-        )
-      }
-    )
-  )
-
-  tabs <- tagConcatAttributes(tabs, attrs)
-
-  panes <- tags$div(
-    class = "tab-content",
-    Map(
-      id = ids,
-      pane = eles,
-      active = selected,
-      f = function(id, pane, active) {
-        if (active) {
-          pane <- tagEnsureClass(pane, "show")
-          pane <- tagEnsureClass(pane, "active")
-        }
-
-        pane$attribs$id <- id
-
-        pane
-      }
-    )
-  )
-
-  if (style == "vertical") {
-    tabs <- col(default = 3, tabs)
-    panes <- col(default = 9, panes)
-  }
-
-  parent <- if (style == "vertical") row else tags$div
-
-  parent(
-    id = id,
-    class = "dull-tabs",
-    tabs,
-    panes,
-    bootstrap()
+    attrs
   )
 }
 
-#' @rdname tabContent
+#' @rdname tabbableContent
 #' @export
-tabPanel <- function(..., fade = TRUE) {
+tabPane <- function(..., fade = TRUE) {
   tags$div(
     class = collate(
       "tab-pane",

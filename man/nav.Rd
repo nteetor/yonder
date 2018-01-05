@@ -11,6 +11,9 @@ nav(labels, hrefs = NULL, active = NULL, style = "links", ...)
 
 \item{hrefs}{A character vector specifying the hrefs of the nav links.}
 
+\item{active}{One of \code{labels} specifying which nav link is active by default,
+defaults to \code{NULL}, in which case there is no active tab.}
+
 \item{...}{Additional named arguments to pass as HTML attributes to the
 parent element.}
 }

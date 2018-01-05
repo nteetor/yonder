@@ -1,8 +1,8 @@
-var tabsInputBinding = new Shiny.InputBinding();
+var navInputBinding = new Shiny.InputBinding();
 
-$.extend(tabsInputBinding, {
+$.extend(navInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-tabs[id]");
+    return $(scope).find(".dull-nav[id]");
   },
   getValue: function(el) {
     return $(".nav", el).find(".active").data("value");
@@ -11,13 +11,13 @@ $.extend(tabsInputBinding, {
     return { value: this.getValue(el) };
   },
   subscribe: function(el, callback) {
-    $(el).on("shown.bs.tab.tabsInputBinding", function(e) {
+    $(el).on("shown.bs.tab.navInputBinding", function(e) {
       callback();
     });
   },
   unsubscribe: function(el) {
-    $(el).off(".tabsInputBinding");
+    $(el).off(".navInputBinding");
   }
 });
 
-Shiny.inputBindings.register(tabsInputBinding, "dull.tabsInput");
+Shiny.inputBindings.register(navInputBinding, "dull.navInput");
