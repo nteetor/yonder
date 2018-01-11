@@ -150,6 +150,30 @@ $.extend(breadcrumbOutputBinding, {
 
 /* THIS IS A STUB */
 
+var buttonGroupInputBinding = new Shiny.InputBinding();
+
+$.extend(buttonGroupInputBinding, {
+  find: function find(scope) {
+    return $(scope).find(".dull-button-group-input[id]");
+  },
+  _value: null,
+  getValue: function getValue(el) {
+    return this._value;
+  },
+  subscribe: function subscribe(el, callback) {
+    var self = this;
+    $(el).on("click.buttonGroupInputBinding", "button", function (e) {
+      self._value = $(this).data("value");
+      callback();
+    });
+  },
+  unsubscribe: function unsubscribe(el) {
+    $(el).off(".buttonGroupInputBinding", "button");
+  }
+});
+
+Shiny.inputBindings.register(buttonGroupInputBinding, "dull.buttonGroup");
+
 var buttonInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonInputBinding, {

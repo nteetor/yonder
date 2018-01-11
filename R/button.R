@@ -228,3 +228,92 @@ submitInput <- function(label = "Submit", outline = FALSE, block = FALSE,
     disabled = if (disabled) NA
   )
 }
+
+#' Button groups
+#'
+#' Groups of buttons with persisting value.
+#'
+#' @param id A character string specifying the id of the button group input.
+#'
+#' @param labels A character vector of labels, a button is added to the group
+#'   for each label specified.
+#'
+#' @param values A character vector of values, one for each button specified,
+#'   defaults to `labels`.
+#'
+#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
+#'   `"warning"`, or `"danger"` specifying the visual context of the button
+#'   group, defaults to `"secondary"`.
+#'
+#' @param outline One of `TRUE` or `FALSE`, if `TRUE` the button group appears
+#'   as an outline, defaults to `FALSE`.`
+#'
+#' @export
+#' @examples
+#' buttonGroup("group", c("Once", "Twice"), c(1, 2))
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           buttonGroup(
+#'             id = "group",
+#'             labels = c("Once", "Twice", "Thrice"),
+#'             values = c(1, 2, 3)
+#'           )
+#'         ),
+#'         col(
+#'           verbatimTextOutput("value")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$value <- renderPrint({
+#'         input$group
+#'       })
+#'     }
+#'   )
+#' }
+#'
+buttonGroup <- function(id, labels, values = labels, context = "secondary",
+                        outline = FALSE) {
+  if (!re(context, "secondary|primary|info|success|warning|danger", FALSE)) {
+    stop(
+      "invalid `buttonGroup` argument, `context` must be one of ",
+      '"primary", "secondary", "success", "info", "warning", or "danger"',
+      call. = FALSE
+    )
+  }
+
+  if (length(labels) != length(values)) {
+    stop(
+      "invalid `buttonGroup` arguments, `labels` and `values` must be the ",
+      "same length",
+      call. = FALSE
+    )
+  }
+
+  tags$div(
+    class = "dull-button-group-input btn-group",
+    id = id,
+    role = "group",
+    Map(
+      label = labels,
+      value = values,
+      context = context,
+      outline = outline,
+      function(label, value, context, outline) {
+        tags$button(
+          type = "button",
+          class = collate(
+            "btn",
+            paste0("btn-", if (outline) "outline-", context)
+          ),
+          `data-value` = value,
+          label
+        )
+      }
+    )
+  )
+}
