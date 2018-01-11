@@ -276,8 +276,8 @@ submitInput <- function(label = "Submit", outline = FALSE, block = FALSE,
 #'   )
 #' }
 #'
-buttonGroup <- function(id, labels, values = labels, context = "secondary",
-                        outline = FALSE) {
+buttonGroupInput <- function(id, labels, values = labels, context = "secondary",
+                             outline = FALSE) {
   if (!re(context, "secondary|primary|info|success|warning|danger", FALSE)) {
     stop(
       "invalid `buttonGroup` argument, `context` must be one of ",
