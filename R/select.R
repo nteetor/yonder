@@ -87,18 +87,10 @@ selectInput <- function(id, options, values = options, selected = NULL,
   selected <- match2(selected, values, default = TRUE)
 
   tags$div(
-    class = collate(
-      "dull-select-input",
-      "dull-input",
-      "form-group",
-      if (multiple) "h-100"
-    ),
+    class = "dull-select-input dull-input",
     id = id,
     tags$select(
-      class = collate(
-        "custom-select",
-        if (multiple) "h-100"
-      ),
+      class = "custom-select",
       lapply(
         seq_along(options),
         function(i) {
