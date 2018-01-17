@@ -280,7 +280,7 @@ buttonGroupInput <- function(id, labels, values = labels, context = "secondary",
                              outline = FALSE) {
   if (!re(context, "secondary|primary|info|success|warning|danger", FALSE)) {
     stop(
-      "invalid `buttonGroup` argument, `context` must be one of ",
+      "invalid `buttonGroupInput` argument, `context` must be one of ",
       '"primary", "secondary", "success", "info", "warning", or "danger"',
       call. = FALSE
     )
@@ -288,8 +288,8 @@ buttonGroupInput <- function(id, labels, values = labels, context = "secondary",
 
   if (length(labels) != length(values)) {
     stop(
-      "invalid `buttonGroup` arguments, `labels` and `values` must be the ",
-      "same length",
+      "invalid `buttonGroupInput` arguments, `labels` and `values` must be ",
+      "the same length",
       call. = FALSE
     )
   }
@@ -314,6 +314,7 @@ buttonGroupInput <- function(id, labels, values = labels, context = "secondary",
           label
         )
       }
-    )
+    ),
+    bootstrap()
   )
 }
