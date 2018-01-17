@@ -5,11 +5,7 @@ $.extend(rangeInputBinding, {
     return $(scope).find(".dull-range-input[id]");
   },
   initialize: function(el) {
-    var $input = $("input[type='text']", el);
-
-    if ($input.data("choices") !== undefined) {
-      this.choices = $input.data("choices").split("\\,");
-    }
+    var $input = $(el).find("input[type='text']");
 
     $input.ionRangeSlider();
   },
@@ -18,11 +14,7 @@ $.extend(rangeInputBinding, {
   },
   getValue: function(el) {
     var $input = $("input[type='text']", el);
-    var data = $input.data("ionRangeSlider") || {};
-
-    if (!data) {
-      return null;
-    }
+    var data = $input.data("ionRangeSlider");
 
     if ($input.data("type") == "double") {
       return {
@@ -30,8 +22,8 @@ $.extend(rangeInputBinding, {
         to: data.result.to
       };
     } else if ($input.data("type") == "single") {
-      if (this.choices) {
-        return this.choices[data.result.from];
+      if (data.result.from_value !== null) {
+        return data.result.from_value;
       } else {
         return data.result.from;
       }
@@ -56,3 +48,5 @@ $.extend(rangeInputBinding, {
 });
 
 Shiny.inputBindings.register(rangeInputBinding, "dull.rangeInput");
+
+
