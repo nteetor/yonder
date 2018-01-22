@@ -1,12 +1,12 @@
 Package: dull
 Type: Package
 Title: A New Approach to Shiny
-Version: 0.0.1
+Version: 0.0.5
 Authors@R: person(given = "Nathan", family = "Teetor", email = "nathanteetor@gmail.com", role = c("aut", "cre"))
 Description: A new way to build shiny applications.
 License: What license is it under?
 Encoding: UTF-8
-Roxygen: list(markdown = TRUE, roclets = c("rd", "namespace", "collate"))
+Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.0.1
 VignetteBuilder: knitr
 Depends:
