@@ -25,6 +25,10 @@
 #' @param xl Like `default`, but the width is applied once the viewport is 1200
 #'   pixels wide, think large desktop.
 #'
+#' @param fluid One of `TRUE` or `FALSE` specifying if the container occupies
+#'   the entire width of the viewport, defaults to `TRUE`, in which case the
+#'   container occupies the full width of the viewport.
+#'
 #' @export
 #' @examples
 #' if (interactive()) {

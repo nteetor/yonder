@@ -75,6 +75,10 @@ d <- function(level, ...) {
 #' @param ... Additional elements or named arguments passed as HTML attributes
 #'   to the parent element.
 #'
+#' @param fluid One of `TRUE` or `FALSE` specifying if the jumbotron fills the
+#'   width of its parent container, defaults to `TRUE`, in which case the
+#'   jumbotron fills the width of its parent container.
+#'
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -95,9 +99,12 @@ d <- function(level, ...) {
 #'   )
 #' }
 #'
-jumbotron <- function(title, subtitle, ...) {
+jumbotron <- function(title, subtitle, ..., fluid = TRUE) {
   tags$div(
-    class = "jumbotron",
+    class = collate(
+      "jumbotron",
+      if (fluid) "jumbotron-fluid"
+    ),
     d3(title),
     tags$p(
       class = "lead",

@@ -34,6 +34,10 @@ pixels wide, think desktop.}
 \item{xl}{Like \code{default}, but the width is applied once the viewport is 1200
 pixels wide, think large desktop.}
 
+\item{fluid}{One of \code{TRUE} or \code{FALSE} specifying if the container occupies
+the entire width of the viewport, defaults to \code{TRUE}, in which case the
+container occupies the full width of the viewport.}
+
 \item{tag}{A tag element, for \code{col} this is typically \code{tags$div()}.}
 }
 \description{
