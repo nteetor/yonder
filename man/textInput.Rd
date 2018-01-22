@@ -8,6 +8,8 @@
 \alias{telephoneInput}
 \alias{passwordInput}
 \alias{numberInput}
+\alias{dateInput}
+\alias{timeInput}
 \alias{colorInput}
 \title{Textual nputs}
 \usage{
@@ -30,6 +32,12 @@ passwordInput(id, value = NULL, placeholder = NULL, size = NULL,
   readonly = FALSE, help = NULL, ...)
 
 numberInput(id, value = NULL, placeholder = NULL, size = NULL,
+  readonly = FALSE, help = NULL, ...)
+
+dateInput(id, value = NULL, placeholder = NULL, size = NULL,
+  readonly = FALSE, help = NULL, ...)
+
+timeInput(id, value = NULL, placeholder = NULL, size = NULL,
   readonly = FALSE, help = NULL, ...)
 
 colorInput(id, value = NULL, placeholder = NULL, size = NULL,
@@ -63,7 +71,50 @@ Textual inputs.
 }
 \examples{
 if (interactive()) {
-
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          p("For best results open in a browser") \%>\%
+            font(weight = "bold")
+        )
+      ),
+      row(
+        col(
+          h6("Text input:"),
+          textInput(id = "text"),
+          h6("Search input:"),
+          searchInput(id = "search"),
+          h6("Email input:"),
+          emailInput(id = "email"),
+          h6("URL input:"),
+          urlInput(id = "url"),
+          h6("Telephone input:"),
+          telephoneInput(id = "tel"),
+          h6("Password input:"),
+          passwordInput(id = "pass"),
+          h6("Number input:"),
+          numberInput(id = "num"),
+          h6("Date input:"),
+          dateInput(id = "date"),
+          h6("Time input:"),
+          timeInput(id = "time")
+        ),
+        col(
+          verbatimTextOutput("values")
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$values <- renderPrint({
+        list(
+          text = input$text, search = input$search, email = input$email,
+          url = input$url, telephone = input$tel, password = input$pass,
+          number = input$num, date = input$date, time = input$time
+         )
+      })
+    }
+  )
 }
 
 

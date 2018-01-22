@@ -82,7 +82,6 @@ $.extend(addressInputBinding, {
     var values = $inputs.map(function (i, e) {
       return $(e).val();
     }).get().reduce(function (acc, val, i) {
-      console.log(i);
       acc[names[i]] = val;
       return acc;
     }, {});
@@ -962,6 +961,13 @@ $.extend(textualInputBinding, {
     }
 
     return val;
+  },
+  getType: function getType(el) {
+    var $type = $("input", el).attr("type");
+    if ($type === "date") {
+      return "dull.date.input";
+    }
+    return false;
   },
   getState: function getState(el, data) {
     return { value: this.getValue(el) };

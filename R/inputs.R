@@ -58,7 +58,50 @@ textualInput <- function(id, value, placeholder, readonly, help, type,
 #' @export
 #' @examples
 #' if (interactive()) {
-#'
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           p("For best results open in a browser") %>%
+#'             font(weight = "bold")
+#'         )
+#'       ),
+#'       row(
+#'         col(
+#'           h6("Text input:"),
+#'           textInput(id = "text"),
+#'           h6("Search input:"),
+#'           searchInput(id = "search"),
+#'           h6("Email input:"),
+#'           emailInput(id = "email"),
+#'           h6("URL input:"),
+#'           urlInput(id = "url"),
+#'           h6("Telephone input:"),
+#'           telephoneInput(id = "tel"),
+#'           h6("Password input:"),
+#'           passwordInput(id = "pass"),
+#'           h6("Number input:"),
+#'           numberInput(id = "num"),
+#'           h6("Date input:"),
+#'           dateInput(id = "date"),
+#'           h6("Time input:"),
+#'           timeInput(id = "time")
+#'         ),
+#'         col(
+#'           verbatimTextOutput("values")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$values <- renderPrint({
+#'         list(
+#'           text = input$text, search = input$search, email = input$email,
+#'           url = input$url, telephone = input$tel, password = input$pass,
+#'           number = input$num, date = input$date, time = input$time
+#'          )
+#'       })
+#'     }
+#'   )
 #' }
 #'
 #'
@@ -109,40 +152,47 @@ numberInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
   textualInput(id, value, placeholder, readonly, help, "number", size = size, ...)
 }
 
-# @rdname textInput
-# @export
+#' @rdname textInput
+#' @export
 dateInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                       readonly = FALSE, help = NULL, ...) {
   textualInput(id, value, placeholder, readonly, help, "date", size = size, ...)
 }
 
-# @rdname textInput
-# @export
-datetimeInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
-                          readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "datetime-local", size = size, ...)
-}
+shiny::registerInputHandler(
+  type = "dull.date.input",
+  force = TRUE,
+  function(x, session, name) {
+    d <- as.Date(x, format = "%Y-%m-%d")
 
-# @rdname textInput
-# @export
-monthInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
-                       readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "month", size = size, ...)
-}
+    if (is.na(d)) {
+      return(NULL)
+    }
 
-# @rdname textInput
-# @export
-weekInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
-                      readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "week", size = size, ...)
-}
+    d
+  }
+)
 
-# @rdname textInput
-# @export
+#' @rdname textInput
+#' @export
 timeInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                       readonly = FALSE, help = NULL, ...) {
   textualInput(id, value, placeholder, readonly, help, "time", size = size, ...)
 }
+
+shiny::registerInputHandler(
+  type = "dull.time.input",
+  force = TRUE,
+  function(x, session, name) {
+    t <- hms::as.hms(x)
+
+    if (is.na(t)) {
+      return(NULL)
+    }
+
+    t
+  }
+)
 
 #' @rdname textInput
 #' @export

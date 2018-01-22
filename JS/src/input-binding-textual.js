@@ -18,6 +18,17 @@ $.extend(textualInputBinding, {
 
     return val;
   },
+  getType: function(el) {
+    var $type = $("input", el).attr("type");
+
+    if ($type === "date") {
+      return "dull.date.input";
+    } else if ($type === "time") {
+      return "dull.time.input";
+    }
+
+    return false;
+  },
   getState: function(el, data) {
     return { value: this.getValue(el) };
   },
