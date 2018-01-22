@@ -57,6 +57,7 @@ border <- function(tag, context = "secondary", sides = "all", rounded = "none") 
   }
 
   tag <- tagEnsureClass(tag, "border")
+  tag <- tagEnsureClass(tag, paste0("border-", context))
 
   if (length(sides) == 1 && sides == "none") {
     tag <- tagAppendAttributes(tag, class = "border-0")
@@ -73,6 +74,8 @@ border <- function(tag, context = "secondary", sides = "all", rounded = "none") 
 
   if (length(rounded) == 1 && rounded == "none") {
     tag <- tagAppendAttributes(tag, class = "rounded-0")
+  } else if (length(rounded) == 1 && rounded == "all") {
+    tag <- tagAppendAttributes(tag, class = "rounded")
   } else {
     tag <- tagAppendAttributes(
       tag,
@@ -117,7 +120,7 @@ border <- function(tag, context = "secondary", sides = "all", rounded = "none") 
 #'   text(context = "warning", case = "upper")
 #'
 #' tags$div("Goodnight, moon") %>%
-#'   text(truncate = TRUE, weight = "bold") %>%
+#'   text(truncate = TRUE) %>%
 #'   text("success")
 #'
 #' tags$div("Howdy") %>%
@@ -125,7 +128,7 @@ border <- function(tag, context = "secondary", sides = "all", rounded = "none") 
 #'   background("dark")
 #'
 text <- function(tag, context = NULL, align = NULL, truncate = FALSE,
-                 case = NULL, weight = NULL, style = NULL) {
+                 case = NULL) {
   if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|muted|white")) {
     stop(
       "invalid `text` argument, `context` must be one of ",
@@ -143,7 +146,7 @@ text <- function(tag, context = NULL, align = NULL, truncate = FALSE,
     )
   }
 
-  if (truncate != TRUE && truncate != FALSE) {
+  if (!is.logical(truncate)) {
     stop(
       "invalid `text` argument, `truncate` must be one of TRUE or FALSE",
       call. = FALSE
@@ -200,6 +203,7 @@ text <- function(tag, context = NULL, align = NULL, truncate = FALSE,
 #'   `"bold"` is equivalent to `weight = "bold"`.
 #'
 #' @family utilities
+#' @rdname text
 #' @export
 #' @examples
 #' tags$span("This and other news") %>%

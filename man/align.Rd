@@ -25,6 +25,6 @@ tags$span() \%>\%
 Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{padding}},
-  \code{\link{text}}, \code{\link{width}}
+  \code{\link{padding}}, \code{\link{text}},
+  \code{\link{width}}
 }

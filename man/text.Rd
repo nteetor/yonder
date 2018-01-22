@@ -2,10 +2,12 @@
 % Please edit documentation in R/utilities.R
 \name{text}
 \alias{text}
+\alias{font}
 \title{Element text color, font case, font weight, and more}
 \usage{
-text(tag, context = NULL, align = NULL, truncate = FALSE, case = NULL,
-  weight = NULL, style = NULL)
+text(tag, context = NULL, align = NULL, truncate = FALSE, case = NULL)
+
+font(tag, weight = NULL, style = NULL)
 }
 \arguments{
 \item{tag}{A tag element.}
@@ -29,28 +31,49 @@ as is.}
 transformation of an element's text. Defaults to \code{NULL}, element case is
 left as is. \code{"capitalize"} changes only the first letter to upper case,
 all other characters are left as is.}
+
+\item{weight}{One of \code{"bold"}, \code{"normal"}, or \code{"light"} specifying the font
+weight of an element's text. Defaults to \code{NULL}, element font weight is
+left as is.}
+
+\item{style}{One of \code{"bold"} or \code{"italics"} specifying the font style of an
+element. Defaults to \code{NULL}, element font style is left as is. Specifying
+\code{"bold"} is equivalent to \code{weight = "bold"}.}
+
+\item{tag}{A tag element.}
 }
 \description{
 The \code{text} helper function applies text related Boostrap classes to a tag
 element. These classes apply CSS to change text color, alignment, or case.
+
+The \code{font} utility function applies Bootstrap classes to a tag element.
+These classes apply CSS to change the font weight of an element's text or the
+font style of an element text.
 }
 \examples{
 tags$span("hello, world!") \%>\%
   text(context = "warning", case = "upper")
 
 tags$div("Goodnight, moon") \%>\%
-  text(truncate = TRUE, weight = "bold") \%>\%
+  text(truncate = TRUE) \%>\%
   text("success")
 
 tags$div("Howdy") \%>\%
   text("white") \%>\%
   background("dark")
 
+tags$span("This and other news") \%>\%
+  font(weight = "light")
+
 }
 \seealso{
 Other utilities: \code{\link{affix}}, \code{\link{align}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{padding}},
-  \code{\link{width}}
+  \code{\link{padding}}, \code{\link{width}}
+
+Other utilities: \code{\link{affix}}, \code{\link{align}},
+  \code{\link{background}}, \code{\link{border}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{padding}}, \code{\link{width}}
 }

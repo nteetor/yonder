@@ -25,7 +25,6 @@ tags$div("light text, dark background") \%>\%
 \seealso{
 Other utilities: \code{\link{affix}}, \code{\link{align}},
   \code{\link{border}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{font}},
-  \code{\link{padding}}, \code{\link{text}},
-  \code{\link{width}}
+  \code{\link{float}}, \code{\link{padding}},
+  \code{\link{text}}, \code{\link{width}}
 }
