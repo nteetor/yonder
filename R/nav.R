@@ -103,7 +103,6 @@ nav <- function(labels, hrefs = NULL, active = NULL, style = "links", ...) {
         paste0("nav-", style)
       }
     ),
-    id = id,
     Map(
       label = labels,
       href = hrefs,

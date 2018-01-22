@@ -12,7 +12,6 @@ $.extend(addressInputBinding, {
     var values = $inputs.map((i, e) => $(e).val())
       .get()
       .reduce(function(acc, val, i) {
-        console.log(i);
         acc[names[i]] = val;
         return acc;
       }, {});
