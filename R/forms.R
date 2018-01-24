@@ -146,6 +146,6 @@ formInput <- function(id, ...) {
       class = "form-group",
       submitInput()
     ),
-    bootstrap()
+    includes()
   )
 }

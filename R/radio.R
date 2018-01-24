@@ -249,7 +249,7 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
         help
       )
     },
-    bootstrap()
+    includes()
   )
 }
 

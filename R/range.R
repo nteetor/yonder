@@ -106,9 +106,8 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
       `data-grid` = ticks,
       `data-grid-num` = labels,
       `data-grid-snap` = if (isTRUE(snap)) snap
-      # `data-force-edges` = TRUE
     ),
-    `ion-range-slider`()
+    includes()
   )
 }
 
@@ -156,9 +155,8 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
       `data-grid` = ticks,
       `data-grid-num` = labels,
       `data-grid-snap` = if (isTRUE(snap)) snap
-      # `data-force-edges` = TRUE
     ),
-    `ion-range-slider`()
+    includes()
   )
 }
 
@@ -188,6 +186,12 @@ sliderInput <- function(id, choices, values = choices, selected = NULL,
                         context = "secondary", fill = FALSE) {
   values <- vapply(values, as.character, character(1))
 
+  # need to replace commas as ion rangeslider splits the string of values on the
+  # string literal ","
+  values <- encode_commas(values)
+  choices <- encode_commas(choices)
+  selected <- encode_commas(selected)
+
   tags$div(
     class = collate(
       "dull-range-input dull-input form-group",
@@ -200,15 +204,14 @@ sliderInput <- function(id, choices, values = choices, selected = NULL,
       class = "range",
       type = "text",
       `data-type` = "single",
-      `data-values` = paste0(choices, collapse = "\\,"),  # confusing, yes.
-      `data-choices` = paste0(values, collapse = "\\,"),
+      `data-values` = paste0(choices, collapse = ","),
+      `data-choices` = paste0(values, collapse = ","),
       `data-from` = if (!is.null(selected)) which(choices == selected)[1] - 1, # JS is 0-indexed
       `data-prefix` = prefix,
       `data-postfix` = suffix,
       `data-grid` = ticks,
       `data-hide-min-max` = TRUE
-      # `data-force-edges` = TRUE
     ),
-    `ion-range-slider`()
+    includes()
   )
 }

@@ -181,7 +181,7 @@ dropdownInput <- function(id, label, items, values = items, disabled = NULL,
       )
     ),
     ...,
-    bootstrap()
+    includes()
   )
 }
 

@@ -240,7 +240,7 @@ listGroupInput <- function(id, items, values = items, selected = NULL,
       )
     },
     ...,
-    bootstrap()
+    includes()
   )
 }
 

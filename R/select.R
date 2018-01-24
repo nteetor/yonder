@@ -105,6 +105,6 @@ selectInput <- function(id, options, values = options, selected = NULL,
     ),
     tags$div(class = "invalid-feedback"),
     ...,
-    bootstrap()
+    includes()
   )
 }

@@ -83,7 +83,7 @@ progressOutput <- function(...) {
   tags$div(
     class = "dull-progress-output progress",
     ...,
-    bootstrap()
+    includes()
   )
 }
 
@@ -122,8 +122,7 @@ bar <- function(id, value, label = NULL, context = "primary", striped = FALSE,
     `aria-valuemin` = "0",
     `aria-valuemax` = "100",
     label,
-    ...,
-    bootstrap()
+    ...
   )
 }
 

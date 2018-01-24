@@ -94,7 +94,7 @@ collapse <- function(id, label, content, context = "secondary", ...) {
       content
     ),
     ...,
-    bootstrap()
+    includes()
   )
 }
 

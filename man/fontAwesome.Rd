@@ -47,7 +47,7 @@ if (interactive()) {
     ui = container(
       fluid = FALSE,
       blockquote(
-        fontAwesome("quote-left", size = "2x", border = TRUE, pull = "left"),
+        fontAwesome("quote-left", size = "2x", border = TRUE, float = "left"),
         "It's the questions we can't answer that teach us the most. They teach
         us how to think. If you give a man an answer, all he gains is a little
         fact. But give him a question and he'll look for his own answers.",

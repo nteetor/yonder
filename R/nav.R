@@ -118,7 +118,7 @@ nav <- function(labels, hrefs = NULL, active = NULL, style = "links", ...) {
       }
     ),
     ...,
-    bootstrap()
+    includes()
   )
 }
 
@@ -247,7 +247,7 @@ tabbableContent <- function(nav, ...) {
         other,
         panes
       ),
-      bootstrap()
+      includes()
     ),
     attrs
   )

@@ -4,6 +4,10 @@
 
 `%??%` <- function(a, b) if (!is.null(a)) b else NULL
 
+encode_commas <- function(x) {
+  gsub(",", "&#44;", x, fixed = TRUE)
+}
+
 to_sentence <- function(x, con = "or") {
   if (length(x) == 1) {
     return(x)

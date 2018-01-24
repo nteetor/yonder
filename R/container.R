@@ -100,7 +100,7 @@ row <- function(...) {
   tags$div(
     class = "row",
     ...,
-    bootstrap()
+    includes()
   )
 }
 
@@ -110,7 +110,6 @@ container <- function(..., fluid = TRUE) {
   tags$div(
     class = if (fluid) "container-fluid" else "container",
     ...,
-    bootstrap(),
-    `font-awesome`()
+    includes()
   )
 }

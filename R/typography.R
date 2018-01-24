@@ -60,7 +60,7 @@ d <- function(level, ...) {
   tags$h1(
     class = paste0("display-", level),
     ...,
-    bootstrap()
+    includes()
   )
 }
 
@@ -112,6 +112,6 @@ jumbotron <- function(title, subtitle, ..., fluid = TRUE) {
     ),
     if (length(elements(list(...))) > 0) tags$hr(class = "my-4"),
     ...,
-    bootstrap()
+    includes()
   )
 }

@@ -133,7 +133,7 @@ checkboxInput <- function(id, choice, value = choice, label = NULL,
       tags$div(class = "invalid-feedback")
     ),
     ...,
-    bootstrap()
+    includes()
   )
 }
 

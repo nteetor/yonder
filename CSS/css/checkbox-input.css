@@ -1,4 +1,0 @@
-.dull-checkbox-input {
-  margin-bottom: 0; }
-  .dull-checkbox-input + :not(.dull-checkbox-input), .dull-checkbox-input:last-child {
-    margin-bottom: 1rem; }

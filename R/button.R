@@ -315,6 +315,6 @@ buttonGroupInput <- function(id, labels, values = labels, context = "secondary",
         )
       }
     ),
-    bootstrap()
+    includes()
   )
 }

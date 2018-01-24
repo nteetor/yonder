@@ -52,7 +52,7 @@ img <- function(..., fluid = TRUE, align = NULL, thumbnail = FALSE) {
       if (!is.null(align)) paste0("float-", align)
     ),
     ...,
-    bootstrap()
+    includes()
   )
 }
 
@@ -73,7 +73,7 @@ figure <- function(..., image = NULL, caption = NULL, align = "left") {
         )
       }
     ),
-    bootstrap()
+    includes()
   )
 }
 
@@ -110,6 +110,6 @@ blockquote <- function(..., source = NULL, align = "left") {
     if (!is.null(source)) {
       tags$footer(class = "blockquote-footer", source)
     },
-    bootstrap()
+    includes()
   )
 }
