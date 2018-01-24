@@ -325,6 +325,34 @@ $.extend(checkboxInputBinding, {
 
 Shiny.inputBindings.register(checkboxInputBinding, "dull.checkboxInput");
 
+var datetimeInputBinding = new Shiny.InputBinding();
+
+$.extend(datetimeInputBinding, {
+  find: function find(scope) {
+    return $(".dull-datetime-input[id]", scope);
+  },
+  initialize: function initialize(el) {
+    var $input = $("input", el);
+    $input.flatpickr();
+  },
+  getType: function getType() {
+    return "dull.datetime";
+  },
+  getValue: function getValue(el) {
+    return $("input", el).get(0)._flatpickr.selectedDates;
+  },
+  subscribe: function subscribe(el, callback) {
+    $(el).on("change.datetimeInputBinding", "input", function (e) {
+      callback();
+    });
+  },
+  unsubscribe: function unsubscribe(el) {
+    return $(el).off(".datetimeInputBinding");
+  }
+});
+
+Shiny.inputBindings.register(datetimeInputBinding, "dull.datetimeInput");
+
 $(document).ready(function () {
   $(".dull-dropdown-input[id]").on("click", ".dropdown-item", function (e) {
     e.preventDefault();

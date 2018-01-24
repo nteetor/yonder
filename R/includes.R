@@ -24,6 +24,11 @@ includes <- function() {
         href = "dull/ion-rangeslider/css/ion.rangeSlider.skinFlat.css"
       ),
       tags$script(src = "dull/ion-rangeslider/js/ion.rangeSlider.min.js"),
+      tags$link(
+        rel = "stylesheet",
+        href = "dull/flatpickr/css/flatpickr.min.css"
+      ),
+      tags$script(src = "dull/flatpickr/js/flatpickr.min.js"),
       tags$script(
         defer = NA,
         src = "dull/font-awesome/js/fontawesome.min.js"

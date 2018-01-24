@@ -8,8 +8,6 @@
 \alias{telephoneInput}
 \alias{passwordInput}
 \alias{numberInput}
-\alias{dateInput}
-\alias{timeInput}
 \alias{colorInput}
 \title{Textual nputs}
 \usage{
@@ -32,12 +30,6 @@ passwordInput(id, value = NULL, placeholder = NULL, size = NULL,
   readonly = FALSE, help = NULL, ...)
 
 numberInput(id, value = NULL, placeholder = NULL, size = NULL,
-  readonly = FALSE, help = NULL, ...)
-
-dateInput(id, value = NULL, placeholder = NULL, size = NULL,
-  readonly = FALSE, help = NULL, ...)
-
-timeInput(id, value = NULL, placeholder = NULL, size = NULL,
   readonly = FALSE, help = NULL, ...)
 
 colorInput(id, value = NULL, placeholder = NULL, size = NULL,

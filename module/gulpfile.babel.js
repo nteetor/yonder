@@ -202,4 +202,20 @@ gulp.task('vend-font-awesome-js', (cb) => {
 
 gulp.task('vend-font-awesome', ['vend-font-awesome-js', 'vend-font-awesome-css']);
 
+gulp.task('vend-flatpickr-js', (cb) => {
+  pump([
+    gulp.src('node_modules/flatpickr/dist/flatpickr.min.js'),
+    gulp.dest('../inst/www/flatpickr/js/')
+  ], cb);
+});
+
+gulp.task('vend-flatpickr-css', (cb) => {
+  pump([
+    gulp.src('node_modules/flatpickr/dist/flatpickr.min.css'),
+    gulp.dest('../inst/www/flatpickr/css/')
+  ], cb);
+});
+
+gulp.task('vend-flatpickr', ['vend-flatpickr-js', 'vend-flatpickr-css']);
+
 gulp.task('vend', ['vend-bootstrap', 'vend-popper', 'vend-jquery', 'vend-ion', 'vend-font-awesome']);

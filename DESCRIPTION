@@ -28,6 +28,7 @@ Collate:
     tags.R
     icons.R
     inputs.R
+    datetime.R
     range.R
     select.R
     utilities.R

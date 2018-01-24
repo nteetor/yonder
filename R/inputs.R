@@ -154,48 +154,6 @@ numberInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
 
 #' @rdname textInput
 #' @export
-dateInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
-                      readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "date", size = size, ...)
-}
-
-shiny::registerInputHandler(
-  type = "dull.date.input",
-  force = TRUE,
-  function(x, session, name) {
-    d <- as.Date(x, format = "%Y-%m-%d")
-
-    if (is.na(d)) {
-      return(NULL)
-    }
-
-    d
-  }
-)
-
-#' @rdname textInput
-#' @export
-timeInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
-                      readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "time", size = size, ...)
-}
-
-shiny::registerInputHandler(
-  type = "dull.time.input",
-  force = TRUE,
-  function(x, session, name) {
-    t <- hms::as.hms(x)
-
-    if (is.na(t)) {
-      return(NULL)
-    }
-
-    t
-  }
-)
-
-#' @rdname textInput
-#' @export
 colorInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                        readonly = FALSE, help = NULL, ...) {
   textualInput(id, value, placeholder, readonly, help, "color", size = size, ...)
