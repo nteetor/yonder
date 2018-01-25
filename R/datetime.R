@@ -1,6 +1,7 @@
 #' Date time input
 #'
-#' A date time picker.
+#' A date time picker. Alternatively, use the date time range picker to select
+#' a range of dates. The value of the date range picker is always two dates.
 #'
 #' @param id A character specifying the id of the datetime input.
 #'
@@ -53,6 +54,18 @@
 #'
 dateInput <- function(id, value = NULL, min = NULL, max = NULL,
                       multiple = FALSE) {
+  if (!is.null(value)) {
+    value <- as.character(value)
+
+    if (is.na(strftime(value, format = "%Y-%m-%d"))) {
+      stop(
+        "invalid `dateInput` argument, `value` has unexpected format, ",
+        "please use YYYY-mm-dd",
+        call. = FALSE
+      )
+    }
+  }
+
   tags$div(
     class = "dull-datetime-input",
     id = id,

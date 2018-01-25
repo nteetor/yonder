@@ -25,7 +25,8 @@ selected, if \code{TRUE} the user may select multiple dates and a vector of
 one or more dates is returned as the reactive value.}
 }
 \description{
-A date time picker.
+A date time picker. Alternatively, use the date time range picker to select
+a range of dates. The value of the date range picker is always two dates.
 }
 \examples{
 # date input ----
