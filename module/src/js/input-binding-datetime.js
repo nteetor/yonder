@@ -6,7 +6,15 @@ $.extend(datetimeInputBinding, {
   },
   initialize: function(el) {
     let $input = $("input", el);
-    $input.flatpickr();
+    let config = {};
+    
+    if ($input.data("mode") === "range" && $input.data("default-date")) {
+      config.defaultDate = $input.data("default-date").split("\\,");
+      console.log(config);
+      $input.removeAttr("data-default-date");
+    }
+    
+    $input.flatpickr(config);
   },
   getType: () => "dull.datetime",
   getValue: function(el) {

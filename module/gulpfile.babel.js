@@ -75,9 +75,10 @@ gulp.task('dull-concat-scss', (cb) => {
 gulp.task('dull-uglify-css', (cb) => {
   pump(
     [
-      gulp.src('lib/css/dull.css'),
+      gulp.src('src/scss/*.scss'),
+      sass(),
+      concat('dull.min.css'),
       uglifycss(),
-      rename('dull.min.css'),
       gulp.dest('lib/css/')
     ],
     cb

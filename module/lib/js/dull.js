@@ -333,7 +333,15 @@ $.extend(datetimeInputBinding, {
   },
   initialize: function initialize(el) {
     var $input = $("input", el);
-    $input.flatpickr();
+    var config = {};
+
+    if ($input.data("mode") === "range" && $input.data("default-date")) {
+      config.defaultDate = $input.data("default-date").split("\\,");
+      console.log(config);
+      $input.removeAttr("data-default-date");
+    }
+
+    $input.flatpickr(config);
   },
   getType: function getType() {
     return "dull.datetime";

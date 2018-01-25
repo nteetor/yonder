@@ -2,10 +2,12 @@
 % Please edit documentation in R/datetime.R
 \name{dateInput}
 \alias{dateInput}
+\alias{dateRangeInput}
 \title{Date time input}
 \usage{
-dateInput(id, value = NULL, placeholder = NULL, min = NULL, max = NULL,
-  multiple = FALSE)
+dateInput(id, value = NULL, min = NULL, max = NULL, multiple = FALSE)
+
+dateRangeInput(id, value = NULL, min = NULL, max = NULL)
 }
 \arguments{
 \item{id}{A character specifying the id of the datetime input.}
@@ -13,7 +15,7 @@ dateInput(id, value = NULL, placeholder = NULL, min = NULL, max = NULL,
 \item{value}{The default value of the input, defaults to \code{NULL}, in which
 case the initial value is \code{NULL}.}
 
-\item{min, max}{Date objects or character strings in the format \code{YYY-mm-dd}
+\item{min, max}{Date objects or character strings in the format \code{YYYY-mm-dd}
 specifying the minimum and maximum date that can be selecetd, both
 default to \code{NULL} in which case there is no minimum or maximum value
 respectively.}
@@ -26,28 +28,61 @@ one or more dates is returned as the reactive value.}
 A date time picker.
 }
 \examples{
-
+# date input ----
 if (interactive()) {
   shinyApp(
     ui = container(
       row(
         col(
+          h6("Single date input:"),
           dateInput(
-            id = "datetime",
-            min = Sys.Date() + 10,
+            id = "datetime"
+          ),
+          h6("Multiple dates input:") \%>\%
+            margins(c(3, 0, 2, 0)),
+          dateInput(
+            id = "datemult",
             multiple = TRUE
           )
         ),
         col(
-          verbatimTextOutput("value")
+          verbatimTextOutput("values")
         )
       )
     ),
     server = function(input, output) {
-      output$value <- renderPrint({
-        input$datetime
+      output$values <- renderPrint({
+        list(
+          single = input$datetime,
+          multiple = input$datemult
+        )
       })
     }
   )
 }
+
+# date range input ----
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          dateRangeInput(
+            id = "daterange",
+            value = c(Sys.Date(), Sys.Date() + 3)
+          )
+        ),
+        col(
+          verbatimTextOutput("values")
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$values <- renderPrint({
+        input$daterange
+      })
+    }
+  )
+}
+
 }
