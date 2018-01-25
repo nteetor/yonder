@@ -43,6 +43,7 @@ if (interactive()) {
             margins(c(3, 0, 2, 0)),
           dateInput(
             id = "datemult",
+            value = Sys.Date() + 2:4, 
             multiple = TRUE
           )
         ),

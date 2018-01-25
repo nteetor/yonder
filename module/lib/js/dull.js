@@ -335,9 +335,13 @@ $.extend(datetimeInputBinding, {
     var $input = $("input", el);
     var config = {};
 
-    if ($input.data("mode") === "range" && $input.data("default-date")) {
+    if ($input.data("mode") === "multiple" && !$input.data("alt-format")) {
+      config.altFormat = "M j, Y";
+      config.conjunction = "; ";
+    }
+
+    if ($input.data("default-date") && ($input.data("mode") === "range" || $input.data("mode") === "multiple")) {
       config.defaultDate = $input.data("default-date").split("\\,");
-      console.log(config);
       $input.removeAttr("data-default-date");
     }
 

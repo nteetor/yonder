@@ -8,6 +8,15 @@ encode_commas <- function(x) {
   gsub(",", "&#44;", x, fixed = TRUE)
 }
 
+# check that a date string is in the format YYYY-mm-dd
+is_ymd <- function(x) {
+  grepl("\\d{4}-\\d{2}-\\d{2}", x)
+}
+
+is_date <- function(x) {
+  inherits(x, c("Date", "POSIXlt", "POSIXt"))
+}
+
 to_sentence <- function(x, con = "or") {
   if (length(x) == 1) {
     return(x)
