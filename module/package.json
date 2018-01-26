@@ -12,6 +12,7 @@
     "flatpickr": "^4.2.3",
     "ion-rangeslider": "^2.2.0",
     "jquery": "^3.3.1",
+    "materialize-css": "^0.100.2",
     "popper.js": "^1.12.9"
   },
   "devDependencies": {
