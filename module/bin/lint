@@ -19,16 +19,13 @@ parser.version('0.0.1');
 parser
   .command('scss')
   .description('lint scss files')
-  .option('-q, --quiet', 'No output')
   .action((options) => {
     stylelint.lint({
       files: 'src/scss/**/*.scss',
       formatter: 'verbose'
     })
       .then((data) => {
-        if (!options.quiet) {
-          console.log(data.output);
-        }
+        console.log(data.output);
       })
       .catch((err) => {
         console.log(err.stack);

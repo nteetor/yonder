@@ -83,6 +83,12 @@ $radius: 0.25rem;
     border-radius: $radius;
   }
 
+  .irs-bar,
+  .irs-bar-edge,
+  .irs-slider {
+    background: none;
+  }
+
   .irs-line-left {
     border-radius: $radius 0 0 $radius;
   }
