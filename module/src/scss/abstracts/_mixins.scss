@@ -1,1 +1,48 @@
 // mixins
+
+@mixin no-select {
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@mixin bg-variants($parent, $color-map) {
+  @include bg-primary($parent, $color-map);
+  @include bg-lighten($parent, $color-map);
+  @include bg-darken($parent, $color-map);
+}
+
+/*! based on bootstrap v4 scss/utilities/_background-variant.scss */
+@mixin bg-util($parent, $color) {
+  #{$parent} {
+    background-color: $color;
+  }
+
+  a#{$parent},
+  button#{$parent} {
+    &:hover,
+    &:focus {
+      background-color: darken($color, 10%);
+    }
+  }
+}
+
+@mixin bg-primary($parent, $color-map) {
+  @include bg-util('#{$parent}', map-get($color-map, '500'));
+}
+
+@mixin bg-lighten($parent, $color-map) {
+  @include bg-util('#{$parent}.lighten-4', map-get($color-map, '100'));
+  @include bg-util('#{$parent}.lighten-3', map-get($color-map, '200'));
+  @include bg-util('#{$parent}.lighten-2', map-get($color-map, '300'));
+  @include bg-util('#{$parent}.lighten-1', map-get($color-map, '400'));
+}
+
+@mixin bg-darken($parent, $color-map) {
+  @include bg-util('#{$parent}.darken-4', map-get($color-map, '900'));
+  @include bg-util('#{$parent}.darken-3', map-get($color-map, '800'));
+  @include bg-util('#{$parent}.darken-2', map-get($color-map, '700'));
+  @include bg-util('#{$parent}.darken-1', map-get($color-map, '600'));
+}

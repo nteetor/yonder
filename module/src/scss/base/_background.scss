@@ -1,0 +1,5 @@
+// background colors
+
+@each $key, $color-map in $colors {
+  @include bg-variants('.bg-#{singular($key)}', $color-map);
+}

@@ -279,3 +279,27 @@ $gray-600: #757575;
 $gray-700: #616161;
 $gray-800: #424242;
 $gray-900: #212121;
+
+$colors: ()  !default;
+$colors: map-merge((
+  'reds': $reds,
+  'pinks': $pinks,
+  'purples': $purples,
+  'deep-purples': $deep-purples,
+  'indigos': $indigos,
+  'blues': $blues,
+  'light-blues': $light-blues,
+  'cyans': $cyans,
+  'teals': $teals,
+  'greens': $greens,
+  'light-greens': $light-greens,
+  'limes': $limes,
+  'yellows': $yellows,
+  'ambers': $ambers,
+  'oranges': $oranges,
+  'deep-oranges': $deep-oranges,
+  'browns': $browns,
+  'blue-greys': $blue-greys,
+  'greys': $greys),
+  $colors
+);

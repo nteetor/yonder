@@ -118,7 +118,6 @@ $.extend(alertInputBinding, {
   },
   getValue: function(el) {
     var ret = $(el).data("closed") || null;
-    console.log(ret);
     return ret;
   },
   getState: function(el, data) {
@@ -825,10 +824,22 @@ $.extend(rangeInputBinding, {
   find: function(scope) {
     return $(scope).find(".dull-range-input[id]");
   },
-  initialize: function(el) {
-    var $input = $(el).find("input[type='text']");
+  initialize: (el) => {
+    let $el = $(el);
+    let $input = $el.find("input[type='text']");
 
     $input.ionRangeSlider();
+
+    let bgclasses = $el.attr("class")
+        .split(/\s+/)
+        .filter(c => /^bg-[a-z-]+|(lighten|darken)-[1234]/.test(c))
+        .join(" ");
+
+    if (bgclasses) {
+      $el
+        .find(".irs-slider,.irs-bar,.irs-bar-edge,.irs-to,.irs-from,.irs-single,.irs-slider")
+        .addClass(bgclasses);
+    }
   },
   getId: function(el) {
     return el.id;
@@ -869,8 +880,6 @@ $.extend(rangeInputBinding, {
 });
 
 Shiny.inputBindings.register(rangeInputBinding, "dull.rangeInput");
-
-
 
 var selectInputBinding = new Shiny.InputBinding();
 

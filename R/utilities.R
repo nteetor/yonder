@@ -1,3 +1,25 @@
+.colors <- c(
+  "red",
+  "pink",
+  "purple",
+  "deep-purple",
+  "indigo",
+  "blue",
+  "light-blue",
+  "cyan",
+  "teal",
+  "green",
+  "light-green",
+  "lime",
+  "yellow",
+  "amber",
+  "orange",
+  "deep-orange",
+  "brown",
+  "blue-grey",
+  "grey"
+)
+
 #' Element borders
 #'
 #' Apply borders, border colors, and border radius to a tag element.
@@ -246,12 +268,15 @@ font <- function(tag, weight = NULL, style = NULL) {
 #' Background color
 #'
 #' The `background` utility function applies Bootstrap classes to a tag element
-#' to change the element's background color.
+#' to change the element's background color. Use `lighten` and `darken` to
+#' further fine tune the background color.
 #'
 #' @param tag A tag element.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"white"`.
+#' @param color A character string specifying the background color, see details
+#'   for all possible values.
+#'
+#' @param level `1`, `2`, `3`, or `4` specifying how much to lighten a color.
 #'
 #' @family utilities
 #' @export
@@ -260,17 +285,50 @@ font <- function(tag, weight = NULL, style = NULL) {
 #'   text("white") %>%
 #'   background("dark")
 #'
-background <- function(tag, context) {
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|white")) {
+background <- function(tag, color) {
+  if (!re(color, paste0(.colors, collapse = "|"))) {
     stop(
-      "invalid `background` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", "dark", or "white"',
+      "invalid `background` argument, `color` is invalid, see ?background ",
+      "details for possible colors",
       call. = FALSE
     )
   }
 
-  tagEnsureClass(tag, paste0("bg-", context))
+  tag <- tagDropClass(tag, paste0("bg-", .colors, collapse = "|"))
+
+  tagEnsureClass(tag, paste0("bg-", color))
+}
+
+#' @family utilities
+#' @rdname background
+#' @export
+#' @examples
+#'
+lighten <- function(tag, level) {
+  if (!(level %in% 1:4)) {
+    stop(
+      "invalid `lighten` argument, `level` must be 1, 2, 3, or 4",
+      call. = FALSE
+    )
+  }
+
+  tagEnsureClass(tag, paste0("lighten-", level))
+}
+
+#' @family utilities
+#' @rdname background
+#' @export
+#' @examples
+#'
+darken <- function(tag, level) {
+  if (!(level %in% 1:4)) {
+    stop(
+      "invalid `darken` argument, `level` must be 1, 2, 3, or 4",
+      call. = FALSE
+    )
+  }
+
+  tagEnsureClass(tag, paste0("darken-", level))
 }
 
 #' Float an element

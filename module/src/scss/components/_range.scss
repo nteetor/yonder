@@ -1,65 +1,21 @@
-@mixin no-select {
-  -moz-user-select: none;
-  -ms-user-select: none;
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  user-select: none;
-}
-
-// $gray-100: #f8f9fa;
-// $gray-200: #e9ecef;
-// $gray-300: #dee2e6;
-// $gray-400: #ced4da;
-// $gray-500: #adb5bd;
-// $gray-600: #868e96;
-// $gray-700: #495057;
-// $gray-800: #343a40;
-// $gray-900: #212529;
-
-$light: #faf9fa;
-$dark: #343a40;
-
-$colors: (
-  primary: #007bff,
-  secondary: #868e96,
-  success: #28c997,
-  info: #17a2b8,
-  warning: #ffc107,
-  danger: #dc3545
-);
+// range
 
 $radius: 0.25rem;
 
-// color contrast
-@function color-yiq($color) {
-  $r: red($color);
-  $g: green($color);
-  $b: blue($color);
-
-  $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
-
-  @if ($yiq >= 150) {
-    @return $gray-900;
-  } @else {
-    @return $white;
-  }
-}
-
-.range {
-  @include no-select;
+.dull-range-input {
+  background-color: initial !important;
 
   .irs-line-mid,
   .irs-line-left,
   .irs-line-right,
   .irs-grid-pol {
-    background-color: $gray-200;
+    // background-color: $gray-200;
   }
 
   .irs-bar-edge,
   .irs-to,
   .irs-from,
   .irs-single,
-  .irs-slider,
   .irs-line-left,
   .irs-line-mid,
   .irs-line-right {
@@ -85,8 +41,31 @@ $radius: 0.25rem;
 
   .irs-bar,
   .irs-bar-edge,
+  .irs-to,
+  .irs-from,
+  .irs-single,
   .irs-slider {
-    background: none;
+    background-image: none;
+    // background-color: $gray-400;
+    color: color-yiq($gray-400);
+  }
+
+  .irs-slider {
+    cursor: ew-resize;
+
+    &:hover,
+    &:focus {
+      filter: brightness(90%);
+      // background-color: darken($gray-400, 10%);
+    }
+  }
+
+  .irs-to,
+  .irs-from,
+  .irs-single {
+    &::after {
+      border-top-color: transparent;
+    }
   }
 
   .irs-line-left {
@@ -103,42 +82,12 @@ $radius: 0.25rem;
 
   .irs-min,
   .irs-max {
-    background-color: $gray-200;
+    // background-color: $gray-200;
     color: $gray-700;
   }
 
   .irs-grid-text {
     color: $gray-700;
-  }
-}
-
-// range colors
-@each $key, $color in $colors {
-  .range-#{$key} {
-    .irs-bar,
-    .irs-bar-edge,
-    .irs-to,
-    .irs-from,
-    .irs-single,
-    .irs-slider {
-      background-color: $color;
-      color: color-yiq($color);
-    }
-
-    .irs-slider {
-      &:hover,
-      &:focus {
-        background-color: darken($color, 7.5%);
-      }
-    }
-
-    .irs-to,
-    .irs-from,
-    .irs-single {
-      &::after {
-        border-top-color: $color;
-      }
-    }
   }
 }
 

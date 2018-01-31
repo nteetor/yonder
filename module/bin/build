@@ -18,22 +18,22 @@ parser
   .command('scss')
   .description('compile and uglify scss')
   .action(() => {
-    let render = (path, style = 'nested') => {
+    let render = (file, style = 'nested') => {
       sass.render({
         file: 'src/scss/main.scss',
-        outFile: path,
+        outFile: file,
         outputStyle: style
       }, (err, res) => {
         if (!err) {
-          fs.writeFile(path, res.css, (err) => {
+          fs.writeFile(file, res.css, (err) => {
             if (!err) {
-              console.log('✔  wrote ' + path);
+              console.log('✔  wrote ' + file);
             } else {
               console.log('X ' + err);
             }
           });
         } else {
-          console.log(path.relative('.', err.file))
+          console.log(path.relative('.', err.file));
           console.log('(' + err.line + ',' + err.column + ')\t' + err.message);
         }
       });

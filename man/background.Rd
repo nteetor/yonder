@@ -2,27 +2,48 @@
 % Please edit documentation in R/utilities.R
 \name{background}
 \alias{background}
+\alias{lighten}
+\alias{darken}
 \title{Background color}
 \usage{
-background(tag, context)
+background(tag, color)
+
+lighten(tag, level)
+
+darken(tag, level)
 }
 \arguments{
 \item{tag}{A tag element.}
 
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"white"}.}
+\item{color}{A character string specifying the background color, see details
+for all possible values.}
+
+\item{level}{\code{1}, \code{2}, \code{3}, or \code{4} specifying how much to lighten a color.}
 }
 \description{
 The \code{background} utility function applies Bootstrap classes to a tag element
-to change the element's background color.
+to change the element's background color. Use \code{lighten} and \code{darken} to
+further fine tune the background color.
 }
 \examples{
 tags$div("light text, dark background") \%>\%
   text("white") \%>\%
   background("dark")
 
+
+
 }
 \seealso{
+Other utilities: \code{\link{affix}}, \code{\link{align}},
+  \code{\link{border}}, \code{\link{display}},
+  \code{\link{float}}, \code{\link{padding}},
+  \code{\link{text}}, \code{\link{width}}
+
+Other utilities: \code{\link{affix}}, \code{\link{align}},
+  \code{\link{border}}, \code{\link{display}},
+  \code{\link{float}}, \code{\link{padding}},
+  \code{\link{text}}, \code{\link{width}}
+
 Other utilities: \code{\link{affix}}, \code{\link{align}},
   \code{\link{border}}, \code{\link{display}},
   \code{\link{float}}, \code{\link{padding}},
