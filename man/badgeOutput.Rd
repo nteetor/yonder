@@ -5,20 +5,15 @@
 \alias{renderBadge}
 \title{Badge outputs}
 \usage{
-badgeOutput(id, content, context = "secondary", ...)
+badgeOutput(id, content, ...)
 
-renderBadge(content, context = "secondary", env = parent.frame(),
-  quoted = FALSE)
+renderBadge(content, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the badge output.}
 
 \item{content}{A character string specifying the content of the badge or an
 expression which returns a character string.}
-
-\item{context}{An expression which returns one of \code{"primary"}, \code{"secondary"},
-\code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"}, or \code{"dark"}. The
-expression may contain reactive values.}
 
 \item{...}{Additional named argument passed as HTML attributes to the parent
 element.}
@@ -34,43 +29,22 @@ if (interactive()) {
     ui = container(
       row(
         col(
-          listGroupInput(
-            id = NULL,
-            items = "Button clicks",
-            badges = list(
-              badgeOutput(
-                id = "clicks",
-                content = 0
-              )
-            )
-          )
-        ),
-        col(
           buttonInput(
-            id = "clicker",
-            "Click here!"
+            id = "button",
+            label = list(
+              "Number of clicks: ",
+              badgeOutput("clicks", 0) \%>\%
+                background("pink") \%>\%
+                darken(4)
+            )
           )
         )
       )
     ),
     server = function(input, output) {
-      output$clicks <- renderBadge(
-        content = {
-          input$clicker
-        },
-        context = {
-          req(input$clicker)
-          clicks <- input$clicker
-
-          if (clicks > 19) {
-            "danger"
-          } else if (clicks > 9) {
-            "warning"
-          } else {
-            "info"
-          }
-        }
-      )
+      output$clicks <- renderBadge({
+        input$button
+      })
     }
   )
 }
