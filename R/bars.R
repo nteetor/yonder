@@ -1,25 +1,23 @@
-#' Checkbar inputs
+#' Check- and radiobar inputs
 #'
-#' Similar to a checkbox input.
+#' Checkbar and radiobar inputs behave like the counter parts, checkbox and
+#' radio inputs. The -bar inputs are a stylistic variation. However, dull
+#' checkbox inputs are singletons, thus the checkbar input is more akin to
+#' shiny's checkbox group input.
 #'
-#' @param id A character string specifying the id of the checkbar input.
+#'@param id A character string specifying the id of the check- or radiobar
+#'   input.
 #'
 #' @param choices A character vector or flat list of character strings
-#'   specifying the labels of the checkbar options.
+#'   specifying the labels of the check- or radiobar options.
 #'
-#' @param values A character vector, flat list of character strings, or
-#'   object to convert to either, specifying the values of the checkbar
+#' @param values A character vector, flat list of character strings, or object
+#'   to coerce to either, specifying the values of the check- or radiobar
 #'   options, defaults to `choices`.
 #'
-#' @param selected One or more of `values` indicating which of the checkbar
-#'   options are selected by default, defaults to `NULL`, in which case there
-#'   is no default option.
-#'
-#' @param label A character string specifying a label for the checkbar input,
-#'   defaults to `NULL`, in which case a label is not added.
-#'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, or `"dark"`, defaults to `"secondary"`.
+#' @param selected One or more of `values` indicating which of the check- or
+#'   radiobar options are selected by default, defaults to `NULL`, in which case
+#'   there is no default option.
 #'
 #' @export
 #' @examples
@@ -29,25 +27,42 @@
 #'       row(
 #'         col(
 #'           checkbarInput(
-#'             id = "checkbar",
+#'             id = "lightblue",
 #'             choices = c(
-#'               "Check 1 (pre-selected)",
+#'               "Check 1",
 #'               "Check 2",
 #'               "Check 3"
 #'             ),
-#'             values = c("check1", "check2", "check3"),
-#'             selected = "check1"
-#'           )
+#'             selected = "Check 1"
+#'           ) %>%
+#'             background("light-blue") %>%
+#'             lighten(1) %>%
+#'             margins(2),
+#'          checkbarInput(
+#'             id = "indigo",
+#'             choices = c(
+#'               "Check 1",
+#'               "Check 2",
+#'               "Check 3"
+#'             ),
+#'             selected = "Check 2"
+#'           ) %>%
+#'             background("indigo") %>%
+#'             lighten(1) %>%
+#'             margins(2)
 #'         ),
 #'         col(
-#'           verbatimTextOutput("value")
+#'           verbatimTextOutput("values")
 #'         )
 #'       )
 #'
 #'     ),
 #'     server = function(input, output) {
-#'       output$value <- renderPrint({
-#'         input$checkbar
+#'       output$values <- renderPrint({
+#'         list(
+#'           `light-blue` = input$lightblue,
+#'           indigo = input$indigo
+#'         )
 #'       })
 #'     }
 #'   )
@@ -61,12 +76,11 @@
 #'           radiobarInput(
 #'             id = "radiobar",
 #'             choices = c(
-#'               "Radio 1 (pre-selected)",
+#'               "Radio 1",
 #'               "Radio 2",
 #'               "Radio 3"
 #'             ),
-#'             values = c("radio1", "radio2", "radio3"),
-#'             selected = "radio1"
+#'             selected = "Radio 1"
 #'           )
 #'         ),
 #'         col(
@@ -83,8 +97,7 @@
 #'   )
 #' }
 #'
-checkbarInput <- function(id, choices, values = choices, selected = NULL,
-                          label = NULL, context = "secondary") {
+checkbarInput <- function(id, choices, values = choices, selected = NULL) {
   if (length(choices) != length(values)) {
     stop(
       "invalid `checkbarInput` arguments, `choices` and `values` must have ",
@@ -93,19 +106,15 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL,
     )
   }
 
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark", FALSE)) {
-    stop(
-      "invalid `checkbarInput` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", or "dark"',
-      call. = FALSE
-    )
-  }
-
   selected <- match2(selected, values)
 
   tags$div(
-    class = "dull-checkbar-input btn-group",
+    class = collate(
+      "dull-checkbar-input",
+      if (length(choices) > 1) "btn-group",
+      "btn-group-toggle",
+      "bg-grey"
+    ),
     `data-toggle` = "buttons",
     id = id,
     lapply(
@@ -114,7 +123,6 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL,
         tags$label(
           class = collate(
             "btn",
-            paste0("btn-", context),
             if (selected[[i]]) "active"
           ),
           tags$input(
@@ -132,8 +140,7 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL,
 
 #' @rdname checkbarInput
 #' @export
-radiobarInput <- function(id, choices, values = choices, selected = NULL,
-                          label = NULL, context = "secondary") {
+radiobarInput <- function(id, choices, values = choices, selected = NULL) {
   if (length(choices) != length(values)) {
     stop(
       "invalid `radiobarInput` arguments, `choices` and `values` must be ",
@@ -142,19 +149,10 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL,
     )
   }
 
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark", FALSE)) {
-    stop(
-      "invalid `radiobarInput` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", or "dark"',
-      call. = FALSE
-    )
-  }
-
   selected <- match2(selected, values)
 
   tags$div(
-    class = "dull-radiobar-input btn-group",
+    class = "dull-radiobar-input btn-group btn-group-toggle bg-grey",
     id = id,
     `data-toggle` = "buttons",
     lapply(
@@ -163,7 +161,6 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL,
         tags$label(
           class = collate(
             "btn",
-            paste0("btn-", context),
             if (selected[[i]]) "active"
           ),
           tags$input(
