@@ -15,13 +15,6 @@
 #' @param label A character string specifying the label text on the button
 #'   input.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"link"` specifying the
-#'   visual context of the button input, defaults to `"secondary"`.
-#'
-#' @param outline If `TRUE`, the input's visual context is applied to the
-#'   border of the button instead of the background, defaults to `FALSE`.
-#'
 #' @param block If `TRUE`, the input is block-level instead of inline, defaults
 #'   to `FALSE`. A block-level element will occupy the entire width of its
 #'   parent element.
@@ -51,8 +44,9 @@
 #'         col(
 #'           buttonInput(
 #'             id = "button",
-#'             label = "C-c-c-click me!"
-#'           )
+#'             label = "Click me!"
+#'           ) %>%
+#'             background("green")
 #'         ),
 #'         col(
 #'           d4(
@@ -76,8 +70,7 @@
 #'         col(
 #'           buttonInput(
 #'             id = "change",
-#'             text = "Change other button",
-#'             context = "success"
+#'             text = "Change other button"
 #'           )
 #'         ),
 #'         col(
@@ -117,14 +110,18 @@
 #'       fluid = FALSE,
 #'       buttonInput(
 #'         id = "button",
-#'         text = list(
+#'         label = list(
 #'           "Increment badge",
 #'           badgeOutput(
 #'             id = "badge",
 #'             content = 0
-#'           )
+#'           ) %>%
+#'             background("lime") %>%
+#'             darken(4)
 #'         )
-#'       )
+#'       ) %>%
+#'         background("amber") %>%
+#'         lighten(2)
 #'     ),
 #'     server = function(input, output) {
 #'       output$badge <- renderBadge({
@@ -134,23 +131,12 @@
 #'   )
 #' }
 #'
-buttonInput <- function(id, label, context = "secondary", outline = FALSE,
-                        block = FALSE, disabled = FALSE, ...) {
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|link", FALSE)) {
-    stop(
-      "invalid `buttonInput` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", "dark", or "link"',
-      call. = FALSE
-    )
-  }
-
+buttonInput <- function(id, label, block = FALSE, disabled = FALSE, ...) {
   tags$button(
     class = collate(
       "dull-button-input",
       "dull-input",
       "btn",
-      paste0("btn-", if (outline) "outline-", context),
       if (block) "btn-block"
     ),
     type = "button",
@@ -210,13 +196,13 @@ resetButtonInput <- function(id, session = getDefaultReactiveDomain()) {
 
 #' @rdname buttonInput
 #' @export
-submitInput <- function(label = "Submit", outline = FALSE, block = FALSE,
-                        disabled = FALSE, ...) {
+submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
+                        ...) {
   tags$button(
     class = collate(
       "dull-submit",
       "btn",
-      paste0("btn-", if (outline) "outline-", "primary"),
+      "bg-blue",
       if (block) "btn-block"
     ),
     # done to avoid the way Shiny handles submit buttons, will be

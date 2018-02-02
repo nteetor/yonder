@@ -9,8 +9,7 @@
 \alias{submitInput}
 \title{Button and submit inputs}
 \usage{
-buttonInput(id, label, context = "secondary", outline = FALSE,
-  block = FALSE, disabled = FALSE, ...)
+buttonInput(id, label, block = FALSE, disabled = FALSE, ...)
 
 updateButtonInput(id, label, session = getDefaultReactiveDomain())
 
@@ -20,21 +19,13 @@ enableButtonInput(id, session = getDefaultReactiveDomain())
 
 resetButtonInput(id, session = getDefaultReactiveDomain())
 
-submitInput(label = "Submit", outline = FALSE, block = FALSE,
-  disabled = FALSE, ...)
+submitInput(label = "Submit", block = FALSE, disabled = FALSE, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the button input.}
 
 \item{label}{A character string specifying the label text on the button
 input.}
-
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"link"} specifying the
-visual context of the button input, defaults to \code{"secondary"}.}
-
-\item{outline}{If \code{TRUE}, the input's visual context is applied to the
-border of the button instead of the background, defaults to \code{FALSE}.}
 
 \item{block}{If \code{TRUE}, the input is block-level instead of inline, defaults
 to \code{FALSE}. A block-level element will occupy the entire width of its
@@ -66,8 +57,9 @@ if (interactive()) {
         col(
           buttonInput(
             id = "button",
-            label = "C-c-c-click me!"
-          )
+            label = "Click me!"
+          ) \%>\%
+            background("green")
         ),
         col(
           d4(
@@ -91,8 +83,7 @@ if (interactive()) {
         col(
           buttonInput(
             id = "change",
-            text = "Change other button",
-            context = "success"
+            text = "Change other button"
           )
         ),
         col(
@@ -132,14 +123,18 @@ if (interactive()) {
       fluid = FALSE,
       buttonInput(
         id = "button",
-        text = list(
+        label = list(
           "Increment badge",
           badgeOutput(
             id = "badge",
             content = 0
-          )
+          ) \%>\%
+            background("lime") \%>\%
+            darken(4)
         )
-      )
+      ) \%>\%
+        background("amber") \%>\%
+        lighten(2)
     ),
     server = function(input, output) {
       output$badge <- renderBadge({
