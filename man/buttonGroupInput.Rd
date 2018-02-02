@@ -2,10 +2,9 @@
 % Please edit documentation in R/button.R
 \name{buttonGroupInput}
 \alias{buttonGroupInput}
-\title{Button groups}
+\title{Button group inputs}
 \usage{
-buttonGroupInput(id, labels, values = labels, context = "secondary",
-  outline = FALSE)
+buttonGroupInput(id, labels, values = labels)
 }
 \arguments{
 \item{id}{A character string specifying the id of the button group input.}
@@ -15,26 +14,19 @@ for each label specified.}
 
 \item{values}{A character vector of values, one for each button specified,
 defaults to \code{labels}.}
-
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, or \code{"danger"} specifying the visual context of the button
-group, defaults to \code{"secondary"}.}
-
-\item{outline}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} the button group appears
-as an outline, defaults to \code{FALSE}.`}
 }
 \description{
-Groups of buttons with persisting value.
+Groups of buttons with a persisting value.
 }
 \examples{
-buttonGroup("group", c("Once", "Twice"), c(1, 2))
+buttonGroupInput("group", c("Once", "Twice"), c(1, 2))
 
 if (interactive()) {
   shinyApp(
     ui = container(
       row(
         col(
-          buttonGroup(
+          buttonGroupInput(
             id = "group",
             labels = c("Once", "Twice", "Thrice"),
             values = c(1, 2, 3)
@@ -48,6 +40,42 @@ if (interactive()) {
     server = function(input, output) {
       output$value <- renderPrint({
         input$group
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          buttonGroupInput(
+            id = "bg1",
+            labels = c("Button 1", "Button 2", "Button 3")
+          ) \%>\%
+            background("light-blue") \%>\%
+            darken(3) \%>\%
+            margins(3)
+        ),
+        col(
+          buttonGroupInput(
+            id = "bg2",
+            labels = c("Groupee 1", "Groupee 2", "Groupee 3")
+          ) \%>\%
+            background("yellow") \%>\%
+            lighten(2) \%>\%
+            margins(3)
+        )
+      )
+    ),
+    server = function(input, output) {
+      observe({
+        print(input$bg1)
+      })
+
+      observe({
+        print(input$bg2)
       })
     }
   )

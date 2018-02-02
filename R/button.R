@@ -215,9 +215,9 @@ submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
   )
 }
 
-#' Button groups
+#' Button group inputs
 #'
-#' Groups of buttons with persisting value.
+#' Groups of buttons with a persisting value.
 #'
 #' @param id A character string specifying the id of the button group input.
 #'
@@ -227,23 +227,16 @@ submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
 #' @param values A character vector of values, one for each button specified,
 #'   defaults to `labels`.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, or `"danger"` specifying the visual context of the button
-#'   group, defaults to `"secondary"`.
-#'
-#' @param outline One of `TRUE` or `FALSE`, if `TRUE` the button group appears
-#'   as an outline, defaults to `FALSE`.`
-#'
 #' @export
 #' @examples
-#' buttonGroup("group", c("Once", "Twice"), c(1, 2))
+#' buttonGroupInput("group", c("Once", "Twice"), c(1, 2))
 #'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
 #'       row(
 #'         col(
-#'           buttonGroup(
+#'           buttonGroupInput(
 #'             id = "group",
 #'             labels = c("Once", "Twice", "Thrice"),
 #'             values = c(1, 2, 3)
@@ -262,16 +255,43 @@ submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
 #'   )
 #' }
 #'
-buttonGroupInput <- function(id, labels, values = labels, context = "secondary",
-                             outline = FALSE) {
-  if (!re(context, "secondary|primary|info|success|warning|danger", FALSE)) {
-    stop(
-      "invalid `buttonGroupInput` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", or "danger"',
-      call. = FALSE
-    )
-  }
-
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           buttonGroupInput(
+#'             id = "bg1",
+#'             labels = c("Button 1", "Button 2", "Button 3")
+#'           ) %>%
+#'             background("light-blue") %>%
+#'             darken(3) %>%
+#'             margins(3)
+#'         ),
+#'         col(
+#'           buttonGroupInput(
+#'             id = "bg2",
+#'             labels = c("Groupee 1", "Groupee 2", "Groupee 3")
+#'           ) %>%
+#'             background("yellow") %>%
+#'             lighten(2) %>%
+#'             margins(3)
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observe({
+#'         print(input$bg1)
+#'       })
+#'
+#'       observe({
+#'         print(input$bg2)
+#'       })
+#'     }
+#'   )
+#' }
+#'
+buttonGroupInput <- function(id, labels, values = labels) {
   if (length(labels) != length(values)) {
     stop(
       "invalid `buttonGroupInput` arguments, `labels` and `values` must be ",
@@ -281,21 +301,16 @@ buttonGroupInput <- function(id, labels, values = labels, context = "secondary",
   }
 
   tags$div(
-    class = "dull-button-group-input btn-group",
+    class = "dull-button-group-input btn-group bg-grey",
     id = id,
     role = "group",
     Map(
       label = labels,
       value = values,
-      context = context,
-      outline = outline,
-      function(label, value, context, outline) {
+      function(label, value, outline) {
         tags$button(
           type = "button",
-          class = collate(
-            "btn",
-            paste0("btn-", if (outline) "outline-", context)
-          ),
+          class = "btn",
           `data-value` = value,
           label
         )

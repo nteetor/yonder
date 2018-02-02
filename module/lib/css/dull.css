@@ -8,24 +8,36 @@
 .btn:not(:disabled):not(.disabled):active, .btn:not(:disabled):not(.disabled).active {
   filter: brightness(90%); }
 
+.dull-button-group-input .btn {
+  background-color: inherit;
+  color: inherit; }
+
+.dull-button-group-input,
 .dull-checkbar-input,
 .dull-radiobar-input {
   border-radius: 0.25em; }
-  .dull-checkbar-input .btn:not(:disabled):not(.disabled):active, .dull-checkbar-input .btn:not(:disabled):not(.disabled).active,
+  .dull-button-group-input .btn:not(:disabled):not(.disabled):active, .dull-button-group-input .btn:not(:disabled):not(.disabled).active,
+  .dull-checkbar-input .btn:not(:disabled):not(.disabled):active,
+  .dull-checkbar-input .btn:not(:disabled):not(.disabled).active,
   .dull-radiobar-input .btn:not(:disabled):not(.disabled):active,
   .dull-radiobar-input .btn:not(:disabled):not(.disabled).active {
     background-color: rgba(0, 0, 0, 0.1);
     border-radius: 0.25em; }
-  .dull-checkbar-input .btn:not(:last-child):not(:disabled):not(.disabled):active, .dull-checkbar-input .btn:not(:last-child):not(:disabled):not(.disabled).active,
+  .dull-button-group-input .btn:not(:last-child):not(:disabled):not(.disabled):active, .dull-button-group-input .btn:not(:last-child):not(:disabled):not(.disabled).active,
+  .dull-checkbar-input .btn:not(:last-child):not(:disabled):not(.disabled):active,
+  .dull-checkbar-input .btn:not(:last-child):not(:disabled):not(.disabled).active,
   .dull-radiobar-input .btn:not(:last-child):not(:disabled):not(.disabled):active,
   .dull-radiobar-input .btn:not(:last-child):not(:disabled):not(.disabled).active {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0; }
-  .dull-checkbar-input .btn:not(:first-child):not(:disabled):not(.disabled):active, .dull-checkbar-input .btn:not(:first-child):not(:disabled):not(.disabled).active,
+  .dull-button-group-input .btn:not(:first-child):not(:disabled):not(.disabled):active, .dull-button-group-input .btn:not(:first-child):not(:disabled):not(.disabled).active,
+  .dull-checkbar-input .btn:not(:first-child):not(:disabled):not(.disabled):active,
+  .dull-checkbar-input .btn:not(:first-child):not(:disabled):not(.disabled).active,
   .dull-radiobar-input .btn:not(:first-child):not(:disabled):not(.disabled):active,
   .dull-radiobar-input .btn:not(:first-child):not(:disabled):not(.disabled).active {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0; }
+  .dull-button-group-input .btn + .btn,
   .dull-checkbar-input .btn + .btn,
   .dull-radiobar-input .btn + .btn {
     margin-left: 0; }

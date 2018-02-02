@@ -12,6 +12,14 @@
   }
 }
 
+.dull-button-group-input {
+  .btn {
+    background-color: inherit;
+    color: inherit;
+  }
+}
+
+.dull-button-group-input,
 .dull-checkbar-input,
 .dull-radiobar-input {
   border-radius: 0.25em;
