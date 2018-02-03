@@ -870,6 +870,11 @@
 .dull-table-thruput tbody tr {
   cursor: pointer; }
 
+.dull-list-group-input .list-group-item.active {
+  background-color: inherit;
+  color: inherit;
+  border-color: transparent; }
+
 @font-face {
   font-family: 'spark-line-medium';
   src: url("/dull/spark/spark-dotline-medium.eot");
