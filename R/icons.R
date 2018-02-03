@@ -238,6 +238,25 @@ fontAwesomeIcons <- list(
 #'   )
 #' }
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       listGroupInput(
+#'         id = NULL,
+#'         items = list(
+#'           fontAwesome("address-book") %>%
+#'             text("primary"),
+#'           fontAwesome("building") %>%
+#'             text("warning")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
 fontAwesome <- function(name, solid = TRUE, size = "md", border = FALSE,
                         float = NULL, fixed = FALSE, spin = FALSE, ...) {
   if (!is.character(name)) {

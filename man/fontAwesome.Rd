@@ -60,6 +60,25 @@ if (interactive()) {
   )
 }
 
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      listGroupInput(
+        id = NULL,
+        items = list(
+          fontAwesome("address-book") \%>\%
+            text("primary"),
+          fontAwesome("building") \%>\%
+            text("warning")
+        )
+      )
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
+
 }
 \seealso{
 For a complete list of possible icons please refer to the Font Awesome
