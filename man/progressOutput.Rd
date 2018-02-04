@@ -19,8 +19,8 @@ arguments passed as HTML attributes to the parent element.}
 \item{value}{An integer between 0 and 100 specifying the initial value
 of a bar.}
 
-\item{label}{A character string speciLabel(s) for a progress bar or components of a progress bar,
-defaults to \code{NULL}.}
+\item{label}{A character string specifying the label of a bar, defaults to
+\code{NULL}, in which case a label is not added.}
 
 \item{striped}{If \code{TRUE}, the progress bar has a striped gradient, defaults
 to \code{FALSE}.}
@@ -28,7 +28,8 @@ to \code{FALSE}.}
 \description{
 Create simple or composite progress bars. To create a composite progress bar
 pass multiple calls to \code{bar} to a progress output. Each \code{bar} component has
-its own id, value, label, and context.
+its own id, value, label, and attributes. Furthermore, utility functions may
+be applied to individual bars for added customization.
 }
 \examples{
 if (interactive()) {
@@ -40,7 +41,7 @@ if (interactive()) {
         ),
         col(
           progressOutput(
-            bar(id = "clicks", value = 0) \%>\%
+            bar("clicks", 0, striped = TRUE) \%>\%
               background("light-blue")
           )
         )
