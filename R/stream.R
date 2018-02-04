@@ -8,12 +8,7 @@
 #'
 #' @param id A character string specifying the id of the stream output.
 #'
-#' @param message A character string specifying the message text.
-#'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, or `"dark"` specifying the visual
-#'   context of the message, defaults to NULL, in which case no visual context
-#'   is applied.
+#' @param content A character string specifying the message text.
 #'
 #' @param session A `session` object passed to the shiny server function,
 #'   defaults to [`getDefaultReactiveDomain()`].
@@ -39,8 +34,7 @@
 #'         for (i in seq_len(5)) {
 #'           sendStream(
 #'             id = "stream",
-#'             message = paste("Update:", i),
-#'             context = if (i %% 2) "warning" else "info"
+#'             content = paste("Update:", i)
 #'           )
 #'           Sys.sleep(1)
 #'         }
@@ -62,7 +56,7 @@ streamOutput <- function(id, ...) {
 
 #' @rdname streamOutput
 #' @export
-sendStream <- function(id, message, context = NULL,
+sendStream <- function(id, content,
                        session = getDefaultReactiveDomain()) {
   if (!is.character(id)) {
     stop(
@@ -71,21 +65,11 @@ sendStream <- function(id, message, context = NULL,
     )
   }
 
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark")) {
-    stop(
-      "invalid `sendStream` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", or "dark"',
-      call. = FALSE
-    )
-  }
-
   session$sendProgress(
     "dull-stream",
     list(
       id = id,
-      message = message,
-      context = context
+      content = content
     )
   )
 }

@@ -7,18 +7,12 @@
 \usage{
 streamOutput(id, ...)
 
-sendStream(id, message, context = NULL,
-  session = getDefaultReactiveDomain())
+sendStream(id, content, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the stream output.}
 
-\item{message}{A character string specifying the message text.}
-
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, \code{"danger"}, \code{"light"}, or \code{"dark"} specifying the visual
-context of the message, defaults to NULL, in which case no visual context
-is applied.}
+\item{content}{A character string specifying the message text.}
 
 \item{session}{A \code{session} object passed to the shiny server function,
 defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
@@ -50,8 +44,7 @@ if (interactive()) {
         for (i in seq_len(5)) {
           sendStream(
             id = "stream",
-            message = paste("Update:", i),
-            context = if (i \%\% 2) "warning" else "info"
+            content = paste("Update:", i)
           )
           Sys.sleep(1)
         }
