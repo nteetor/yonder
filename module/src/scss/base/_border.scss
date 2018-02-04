@@ -1,0 +1,6 @@
+// borders
+
+@each $key, $color-map in $colors {
+  // ../abstracts/_mixins.scss
+  @include border-variants('.border-#{singular($key)}', $color-map);
+}

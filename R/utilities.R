@@ -22,88 +22,53 @@
 
 #' Element borders
 #'
-#' Apply borders, border colors, and border radius to a tag element.
+#' Apply a border color to an element.
 #'
 #' @param tag A tag element object.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"white"` specifying the
-#'   visual context and color of the border, defaults to `"secondary"`.
-#'
-#' @param sides One of `"all"` or `"none"` or one or more of `"top"`, `"right"`,
-#'   `"bottom"`, `"left"` specifying the sides to apply a border, defaults to
-#'   `"all"`.
-#'
-#' @param rounded One of `"all"`, `"circle"`, `"none"`, or one or more of
-#'   `"top"`, `"right"`, `"bottom"`, `"left"` specifying the side whose corners
-#'   to round.
+#' @param color A character string specifying the border color, see details for
+#'   a list of possible colors.
 #'
 #' @family utilities
 #' @export
 #' @examples
 #' tags$h1("Hello, world!") %>%
-#'   border(sides = c("top", "bottom"))
+#'   border("grey", sides = c("top", "bottom"))
 #'
 #' tags$div() %>%
-#'   border("warning")
+#'   border("orange")
 #'
-border <- function(tag, context = "secondary", sides = "all", rounded = "none") {
-  if ((length(sides) > 1 && any(re(sides, "all|none", FALSE))) ||
-      !all(re(sides, "top|right|bottom|left|all|none", FALSE))) {
-      stop(
-        "invalid `border` argument, `sides` must be ",
-        '"all", "none", or one or more of ',
-        '"top", "right", "bottom", or "left"',
-        call. = FALSE
-      )
-  }
-
-  if ((!is.null(context) && length(sides) != 1) ||
-      !re(context, "primary|secondary|success|info|warning|danger|light|dark|white")) {
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           checkbarInput(
+#'             id = NULL,
+#'             choices = paste("Choice", 1:4)
+#'           ) %>%
+#'             background("cyan") %>%
+#'             border("indigo")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+border <- function(tag, color) {
+  if (!(color %in% .colors)) {
     stop(
-      "invalid `border` argument, `context` must be one of NULL, ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", "dark", or "white"',
-      call. = FALSE
-    )
-  }
-
-  if ((length(rounded) > 1 && any(re(sides, "all|circle|none", FALSE))) ||
-      !all(re(rounded, "top|right|bottom|left|all|none", FALSE))) {
-    stop(
-      "invalid `border` argument, `sides` must be ",
-      '"all", "none", or one or more of',
-      '"top", "right", "bottom", or "left"',
+      "invalid `border` argument, `color` is invalid, see ?border ",
+      "details for possible colors",
       call. = FALSE
     )
   }
 
   tag <- tagEnsureClass(tag, "border")
-  tag <- tagEnsureClass(tag, paste0("border-", context))
-
-  if (length(sides) == 1 && sides == "none") {
-    tag <- tagAppendAttributes(tag, class = "border-0")
-  } else if (length(sides) == 1 && sides == "all") {
-
-  } else {
-    remove <- setdiff(c("top", "right", "bottom", "left"), sides)
-
-    tag <- tagAppendAttributes(
-      tag,
-      class = paste0("border-", remove, "-0", collapse = " ")
-    )
-  }
-
-  if (length(rounded) == 1 && rounded == "none") {
-    tag <- tagAppendAttributes(tag, class = "rounded-0")
-  } else if (length(rounded) == 1 && rounded == "all") {
-    tag <- tagAppendAttributes(tag, class = "rounded")
-  } else {
-    tag <- tagAppendAttributes(
-      tag,
-      class = paste0("rounded-", rounded, collapse = " ")
-    )
-  }
+  tag <- tagEnsureClass(tag, paste0("border-", color))
 
   tag
 }
@@ -286,7 +251,7 @@ font <- function(tag, weight = NULL, style = NULL) {
 #'   background("dark")
 #'
 background <- function(tag, color) {
-  if (!re(color, paste0(.colors, collapse = "|"))) {
+  if (!(color %in% .colors)) {
     stop(
       "invalid `background` argument, `color` is invalid, see ?background ",
       "details for possible colors",

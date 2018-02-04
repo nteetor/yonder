@@ -48,3 +48,35 @@
   @include bg-util('#{$parent}.darken-2', map-get($color-map, '700'));
   @include bg-util('#{$parent}.darken-1', map-get($color-map, '600'));
 }
+
+@mixin border-variants($parent, $color-map) {
+  @include border-util($parent, map-get($color-map, '500'));
+  @include border-lighten($parent, $color-map);
+  @include border-darken($parent, $color-map);
+}
+
+@mixin border-util($parent, $color) {
+  #{$parent} {
+    border-color: $color !important;
+
+    &:hover,
+    &:focus {
+      border-color: darken($color, 10%) !important;
+    }
+  }
+}
+
+
+@mixin border-lighten($parent, $color-map) {
+  @include border-util('#{$parent}.lighten-4', map-get($color-map, '100'));
+  @include border-util('#{$parent}.lighten-3', map-get($color-map, '200'));
+  @include border-util('#{$parent}.lighten-2', map-get($color-map, '300'));
+  @include bg-util('#{$parent}.lighten-1', map-get($color-map, '400'));
+}
+
+@mixin border-darken($parent, $color-map) {
+  @include border-util('#{$parent}.darken-4', map-get($color-map, '900'));
+  @include border-util('#{$parent}.darken-3', map-get($color-map, '800'));
+  @include border-util('#{$parent}.darken-2', map-get($color-map, '700'));
+  @include border-util('#{$parent}.darken-1', map-get($color-map, '600'));
+}

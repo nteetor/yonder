@@ -4,32 +4,43 @@
 \alias{border}
 \title{Element borders}
 \usage{
-border(tag, context = "secondary", sides = "all", rounded = "none")
+border(tag, color)
 }
 \arguments{
 \item{tag}{A tag element object.}
 
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"white"} specifying the
-visual context and color of the border, defaults to \code{"secondary"}.}
-
-\item{sides}{One of \code{"all"} or \code{"none"} or one or more of \code{"top"}, \code{"right"},
-\code{"bottom"}, \code{"left"} specifying the sides to apply a border, defaults to
-\code{"all"}.}
-
-\item{rounded}{One of \code{"all"}, \code{"circle"}, \code{"none"}, or one or more of
-\code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"} specifying the side whose corners
-to round.}
+\item{color}{A character string specifying the border color, see details for
+a list of possible colors.}
 }
 \description{
-Apply borders, border colors, and border radius to a tag element.
+Apply a border color to an element.
 }
 \examples{
 tags$h1("Hello, world!") \%>\%
-  border(sides = c("top", "bottom"))
+  border("grey", sides = c("top", "bottom"))
 
 tags$div() \%>\%
-  border("warning")
+  border("orange")
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          checkbarInput(
+            id = NULL,
+            choices = paste("Choice", 1:4)
+          ) \%>\%
+            background("cyan") \%>\%
+            border("indigo")
+        )
+      )
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
 
 }
 \seealso{
