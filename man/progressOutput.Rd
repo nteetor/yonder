@@ -8,10 +8,9 @@
 \usage{
 progressOutput(...)
 
-bar(id, value, label = NULL, context = "primary", striped = FALSE, ...)
+bar(id, value, label = NULL, striped = FALSE, ...)
 
-sendBar(id, value, label = NULL, context = NULL,
-  session = getDefaultReactiveDomain())
+sendBar(id, value, label = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{...}{One or more \code{bar} elements passed to a progress output or named
@@ -22,10 +21,6 @@ of a bar.}
 
 \item{label}{A character string speciLabel(s) for a progress bar or components of a progress bar,
 defaults to \code{NULL}.}
-
-\item{context}{One of \code{"primary"}, \code{"secondary"},  \code{"success"}, \code{"info"},
-\code{"warning"}, \code{"danger"}. \code{"light"}, or \code{"dark"}, specifying the visual
-context of a bar.}
 
 \item{striped}{If \code{TRUE}, the progress bar has a striped gradient, defaults
 to \code{FALSE}.}
@@ -45,7 +40,8 @@ if (interactive()) {
         ),
         col(
           progressOutput(
-            bar(id = "clicks", value = 0)
+            bar(id = "clicks", value = 0) \%>\%
+              background("light-blue")
           )
         )
       )
@@ -67,7 +63,8 @@ if (interactive()) {
       row(
         col(
           progressOutput(
-            bar(id = "faster", value = 0, context = "danger"),
+            bar(id = "faster", value = 0) \%>\%
+              background("yellow"),
             bar(id = "slower", value = 0)
           )
         )
