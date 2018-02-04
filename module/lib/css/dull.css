@@ -803,8 +803,15 @@
   .flatpickr-calendar .hasWeeks .flatpickr-days {
     border-right: 0; }
 
-.buckle-dropdown-input a {
-  cursor: pointer; }
+.dull-dropdown-input {
+  border-radius: 0.25em;
+  border-color: transparent; }
+  .dull-dropdown-input a {
+    cursor: pointer; }
+  .dull-dropdown-input > .btn {
+    background-color: inherit;
+    color: inherit;
+    border-color: inherit; }
 
 .fa-spin.pause,
 .fa-pulse.pause {

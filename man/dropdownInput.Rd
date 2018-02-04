@@ -7,7 +7,7 @@
 \title{Dropdown input}
 \usage{
 dropdownInput(id, label, items, values = items, disabled = NULL,
-  dividers = NULL, context = "secondary", dropup = FALSE, ...)
+  dividers = NULL, direction = "down", ...)
 
 disableDropdownInput(id, disabled = NULL,
   session = getDefaultReactiveDomain())
@@ -34,15 +34,11 @@ are the start of a new section, defaults to \code{NULL}. Divider lines will be
 placed above the indicated values separating the dropdown menu items into
 sections.}
 
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"link"}, specifying the
-visual context of the dropdown input, defaults to \code{"secondary"}.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
 \item{dropup}{If \code{TRUE}, the dropdown menu opens upwards instead of
 downwards, defaults to \code{FALSE}.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
 }
 \description{
 Dropdown inputs, or dropdown menus, function similar to a set of buttons.
@@ -60,10 +56,11 @@ if (interactive()) {
         col(
           dropdownInput(
             id = "dropdown",
-            label = "A dropdown"
+            label = "A dropdown",
             items = paste("Action", 1:5),
             dividers = "Action 4"
-          )
+          ) \%>\%
+            background("deep-orange")
         ),
         col(
           d4(
@@ -90,7 +87,8 @@ if (interactive()) {
             label = "Actions",
             items = c("disable", "enable", "disable some", "enable some"),
             dividers = "disable some"
-          )
+          ) \%>\%
+            background("blue-grey")
         ),
         col(
           dropdownInput(
@@ -98,7 +96,8 @@ if (interactive()) {
             label = "Other actions",
             items = paste("Action", 1:5),
             disabled = "Action 3"
-          )
+          ) \%>\%
+            background("amber")
         ),
         col(
           d4(
