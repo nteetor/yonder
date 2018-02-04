@@ -137,7 +137,8 @@ buttonInput <- function(id, label, block = FALSE, disabled = FALSE, ...) {
       "dull-button-input",
       "dull-input",
       "btn",
-      if (block) "btn-block"
+      if (block) "btn-block",
+      "bg-grey"
     ),
     type = "button",
     role = "button",
