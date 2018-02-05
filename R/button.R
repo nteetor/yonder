@@ -116,12 +116,10 @@
 #'             id = "badge",
 #'             content = 0
 #'           ) %>%
-#'             background("lime") %>%
-#'             darken(4)
+#'             background("lime", -4)
 #'         )
 #'       ) %>%
-#'         background("amber") %>%
-#'         lighten(2)
+#'         background("amber", 2)
 #'     ),
 #'     server = function(input, output) {
 #'       output$badge <- renderBadge({
@@ -265,8 +263,7 @@ submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
 #'             id = "bg1",
 #'             labels = c("Button 1", "Button 2", "Button 3")
 #'           ) %>%
-#'             background("light-blue") %>%
-#'             darken(3) %>%
+#'             background("light-blue", -3) %>%
 #'             margins(3)
 #'         ),
 #'         col(
@@ -274,8 +271,7 @@ submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
 #'             id = "bg2",
 #'             labels = c("Groupee 1", "Groupee 2", "Groupee 3")
 #'           ) %>%
-#'             background("yellow") %>%
-#'             lighten(2) %>%
+#'             background("yellow", 2) %>%
 #'             margins(3)
 #'         )
 #'       )

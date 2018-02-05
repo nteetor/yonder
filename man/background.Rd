@@ -2,15 +2,15 @@
 % Please edit documentation in R/utilities.R
 \name{background}
 \alias{background}
-\alias{lighten}
-\alias{darken}
-\title{Background color}
+\alias{text}
+\alias{border}
+\title{Chance text, background, or border color}
 \usage{
-background(tag, color)
+background(tag, color, tone = 0)
 
-lighten(tag, level)
+text(tag, color, tone = 0)
 
-darken(tag, level)
+border(tag, color, tone = 0)
 }
 \arguments{
 \item{tag}{A tag element.}
@@ -18,34 +18,77 @@ darken(tag, level)
 \item{color}{A character string specifying the background color, see details
 for all possible values.}
 
-\item{level}{\code{1}, \code{2}, \code{3}, or \code{4} specifying how much to lighten a color.}
+\item{tone}{An integer -4 through 4 specifying how much to darken or lighten
+a color, defaults to 0, in which case the base color is not modified.
+Negative values result in darker tones, whereas positive values create a
+lighter tone.}
 }
 \description{
-The \code{background} utility function applies Bootstrap classes to a tag element
-to change the element's background color. Use \code{lighten} and \code{darken} to
-further fine tune the background color.
+The \code{text}, \code{background}, and \code{border} utility functions may be used to
+change the text, background, or border color of a tag element, respectively.
 }
 \examples{
 tags$div("light text, dark background") \%>\%
-  text("white") \%>\%
-  background("dark")
+  background("grey", -4) \%>\%
+  text("yellow", 3)
 
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          div("hello hello") \%>\%
+            text("amber", 4) \%>\%
+            background("blue-grey", -4)
+        )
+      )
+    ),
+    server = function(input, output) {
 
+    }
+  )
+}
+
+tags$h1("Hello, world!") \%>\%
+  border("grey", sides = c("top", "bottom"))
+
+tags$div() \%>\%
+  border("orange")
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          checkbarInput(
+            id = NULL,
+            choices = paste("Choice", 1:4)
+          ) \%>\%
+            background("cyan") \%>\%
+            border("indigo")
+        )
+      )
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
 
 }
 \seealso{
 Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{border}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{padding}},
-  \code{\link{text}}, \code{\link{width}}
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{padding}},
+  \code{\link{width}}
 
 Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{border}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{padding}},
-  \code{\link{text}}, \code{\link{width}}
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{padding}},
+  \code{\link{width}}
 
 Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{border}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{padding}},
-  \code{\link{text}}, \code{\link{width}}
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{padding}},
+  \code{\link{width}}
 }

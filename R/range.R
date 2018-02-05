@@ -64,14 +64,11 @@
 #'       rangeInput("default") %>%
 #'         background("yellow"),
 #'       rangeInput("blue") %>%
-#'         background("blue") %>%
-#'         lighten(3),
+#'         background("blue", 3),
 #'       rangeInput("red") %>%
-#'         background("red") %>%
-#'         darken(2),
+#'         background("red", -2),
 #'       rangeInput("white", step = 10, snap = TRUE) %>%
-#'         background("lime") %>%
-#'         lighten(4),
+#'         background("lime", 4)
 #'       rangeInput("yellow", prefix = "$", suffix = ".00")
 #'     ),
 #'     server = function(input, output) {

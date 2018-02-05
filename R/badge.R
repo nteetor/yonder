@@ -24,8 +24,7 @@
 #'             label = list(
 #'               "Number of clicks: ",
 #'               badgeOutput("clicks", 0) %>%
-#'                 background("pink") %>%
-#'                 darken(4)
+#'                 background("pink", -4)
 #'             )
 #'           )
 #'         )

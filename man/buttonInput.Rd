@@ -129,12 +129,10 @@ if (interactive()) {
             id = "badge",
             content = 0
           ) \%>\%
-            background("lime") \%>\%
-            darken(4)
+            background("lime", -4)
         )
       ) \%>\%
-        background("amber") \%>\%
-        lighten(2)
+        background("amber", 2)
     ),
     server = function(input, output) {
       output$badge <- renderBadge({

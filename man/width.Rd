@@ -32,12 +32,12 @@ tags$div() \%>\%
 }
 \seealso{
 Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{background}}, \code{\link{border}},
-  \code{\link{display}}, \code{\link{float}},
-  \code{\link{padding}}, \code{\link{text}}
+  \code{\link{background}}, \code{\link{display}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{padding}}
 
 Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{background}}, \code{\link{border}},
-  \code{\link{display}}, \code{\link{float}},
-  \code{\link{padding}}, \code{\link{text}}
+  \code{\link{background}}, \code{\link{display}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{padding}}
 }
