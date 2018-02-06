@@ -9,7 +9,7 @@
 \title{List group inputs}
 \usage{
 listGroupInput(id, items, values = items, selected = NULL,
-  disabled = NULL, badges = NULL, context = NULL, ...)
+  disabled = NULL, badges = NULL, ...)
 
 updateListGroupInput(id, items, values = items, selected = NULL,
   disabled = NULL, session = getDefaultReactiveDomain())
@@ -49,11 +49,6 @@ list group items, respectively.}
 defaults to \code{NULL}. See \code{badgeOutput} for more information on rendering
 badges.}
 
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"} or \code{NULL} specifying the
-visual context of the list group input, defaults to \code{NULL}, in which case
-a visual context is not applied.}
-
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
@@ -61,14 +56,6 @@ element.}
 increment, defaults to \code{NULL}. If \code{NULL} then all list group items are
 incremented. If the list group items do not include badges there is no
 effect.}
-
-\item{state}{One of \code{"valid"}, \code{"warning"}, or \code{"danger"} indicating the
-state of the list group items. If \code{"valid"} then the visual context is
-removed.}
-
-\item{validate}{One or more of \code{values} indicating which list group items
-to mark with \code{state}, defaults to \code{NULL}. If \code{NULL} then the all list group
-items are updated.}
 }
 \description{
 A way of handling and outlining content as a list. List groups function
@@ -89,7 +76,8 @@ if (interactive()) {
             items = paste("Item", 1:5),
             values = 1:5,
             selected = 2
-          )
+          ) \%>\%
+            background("teal")
         ),
         col(
           textOutput("selected")

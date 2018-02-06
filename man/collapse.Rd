@@ -7,7 +7,7 @@
 \alias{toggleCollapse}
 \title{Collapsible sections}
 \usage{
-collapse(id, label, content, context = "secondary", ...)
+collapse(button, content, ...)
 
 showCollapse(id, session = getDefaultReactiveDomain())
 
@@ -16,21 +16,16 @@ hideCollapse(id, session = getDefaultReactiveDomain())
 toggleCollapse(id, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{id}{A character string specifying the id of the collapse.}
-
-\item{label}{A character string specifying the label of the collapse toggle.}
-
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, \code{"danger"}, \code{"dark"}, \code{"light"}, or \code{"link"} specifying the
-visual context of the collapse toggle, defaults to \code{"secondary"}.}
+\item{button}{A button input, when clicked the button will hide or show the
+collapsable content.}
 
 \item{...}{Additional named arguments passed as attributes to the parent
 element.}
 
+\item{id}{A character string specifying the id of a collapse section.}
+
 \item{session}{A \code{session} object passed to the shiny server function,
 defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
-
-\item{id}{A character string specifying the id of a collapse section.}
 }
 \description{
 \code{collapse} allows content to be hidden and toggled into a shown state.
@@ -45,19 +40,23 @@ if (interactive()) {
     ui = container(
       row(
         col(
-          collapse(
-            id = "book",
-            label = "The Time Machine",
-            tags$div(
-              class  = "card card-block",
-              "\\"The Time Traveller (for so it will be convenient to speak
-              of him) was expounding a recondite matter to us. His grey eyes
-              shone and twinkled, and his usually pale face was flushed and
-              animated. The fire burned brightly, and the soft radiance of
-              the incandescent lights in the lilies of silver caught the
-              bubbles that flashed and passed in our glasses.\\""
+          buttonInput(
+            id = "trigger",
+            label = "The Time Machine"
+          ) \%>\%
+            background("purple", 4) \%>\%
+            margins(2) \%>\%
+            collapse(
+              tags$div(
+                class  = "card card-block",
+                "\\"The Time Traveller (for so it will be convenient to speak
+                of him) was expounding a recondite matter to us. His grey eyes
+                shone and twinkled, and his usually pale face was flushed and
+                animated. The fire burned brightly, and the soft radiance of
+                the incandescent lights in the lilies of silver caught the
+                bubbles that flashed and passed in our glasses.\\""
+              )
             )
-          )
         ),
         col(
           buttonInput(id = "toggle", "Toggle"),
@@ -68,15 +67,15 @@ if (interactive()) {
     ),
     server = function(input, output) {
       observeEvent(input$toggle, {
-        toggleCollapse("book")
+        toggleCollapse("trigger")
       })
 
       observeEvent(input$hide, {
-        hideCollapse("book")
+        hideCollapse("trigger")
       })
 
       observeEvent(input$show, {
-        showCollapse("book")
+        showCollapse("trigger")
       })
     }
   )

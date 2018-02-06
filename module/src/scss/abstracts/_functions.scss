@@ -1,0 +1,19 @@
+// functions
+
+@function color-map($set) {
+  @return map-get($colors, $set);
+}
+
+// get color from map
+@function color($set, $key: '500') {
+  @return map-get(color-map($set), $key);
+}
+
+// remove trailing "s"
+@function singular($string) {
+  @if (str-slice($string, -1) == 's') {
+    @return str-slice($string, 1, -2);
+  }
+
+  @return $string;
+}

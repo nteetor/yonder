@@ -18,13 +18,6 @@
 #' @param footer A character string specifying footer text of the card, defaults
 #'   to `NULL`, in which case a footer is not added.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"` or `"dark"` used to add a visual context
-#'   to the card, defaults to `"light"`.
-#'
-#' @param outline If `TRUE`, `context` changes the border color of the card
-#'   instead of changing the background color, defaults to `FALSE`.
-#'
 #' @param labels A character vector or list of character strings specifying the
 #'   tab labels of the navigation card.
 #'
@@ -156,16 +149,7 @@
 #' }
 #'
 textCard <- function(title, body, header = NULL, align = "left", footer = NULL,
-                     context = NULL, outline = FALSE, ...) {
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark")) {
-    stop(
-      "invalid `textCard` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", "dark", or NULL',
-      call. = FALSE
-    )
-  }
-
+                     ...) {
   if (!re(align, "left|right|center", FALSE)) {
     stop(
       "invalid `textCard` argument, `align` must be one of ",
@@ -177,7 +161,6 @@ textCard <- function(title, body, header = NULL, align = "left", footer = NULL,
   tags$div(
     class = collate(
       "card",
-      if (!is.null(context)) paste0(if (outline) "border-" else "bg-", context),
       if (align != "left") paste0("text-", align)
     ),
     if (!is.null(header)) {

@@ -10,25 +10,12 @@
 #' @param compact If `TRUE`, table cell padding is cut in half to reduce the
 #'   size of the table, defaults to `FALSE`.
 #'
-#' @param context One `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `NULL` specifying the
-#'   visual context of the table, defaults to `NULL`, in which case a visual
-#'   context is not applied.
-#'
 #' @param expr An expression which returns a data frame or `NULL`. If a data
 #'   frame is returned the table thruput is re-rendered, otherwise if `NULL` the
 #'   current table thruput is left as is.
 #'
 #' @param quoted If `TRUE`, then `expr` is treated as a quoted expression,
 #'   defaults to `FALSE`.
-#'
-#' @param state One of `"valid"`, "success"`, `"warning"`, or `"danger"`
-#'   indicating the state of the table row. If `"valid"` then the visual context
-#'   is removed.
-#'
-#' @param validate A numeric vector or list of row numbers indicating which
-#'   table rows to mark as `state`, defaults to `NULL`. If `NULL` then all rows
-#'   are marked as `state`.
 #'
 #' @param session A `session` object passed to the shiny server function,
 #'   defaults to [`getDefaultReactiveDomain()`].
@@ -44,8 +31,7 @@
 #'       row(
 #'         col(
 #'           tableThruput(
-#'             id = "table",
-#'             context = "danger"
+#'             id = "table"
 #'           )
 #'         ),
 #'         col(
@@ -95,20 +81,12 @@
 #'   )
 #' }
 #'
-tableThruput <- function(id, borders = FALSE, context = NULL, compact = FALSE, ...) {
+tableThruput <- function(id, borders = FALSE, context = NULL, compact = FALSE,
+                         ...) {
   if (!is.null(id) && !is.character(id)) {
     stop(
       "invalid `tableThruput` argument, `id` must be a character string or ",
       "NULL",
-      call. = FALSE
-    )
-  }
-
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark")) {
-    stop(
-      "invalid `tableThruput` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", "dark", or NULL',
       call. = FALSE
     )
   }
@@ -120,8 +98,7 @@ tableThruput <- function(id, borders = FALSE, context = NULL, compact = FALSE, .
       if (is.character(id)) "table-hover",
       "table-responsive",
       if (borders) "table-bordered",
-      if (compact) "table-sm",
-      `data-table` = if (!is.null(context)) paste0("table-", context)
+      if (compact) "table-sm"
     ),
     id = id,
     ...
@@ -142,7 +119,7 @@ renderTable <- function(expr, env = parent.frame(), quoted = FALSE) {
 
     if (!is.data.frame(df)) {
       stop(
-        "invalid `renderTable` value, `expr` returned " + class(df) +
+        "invalid `renderTable` value, `expr` returned ", class(df),
         ", expecting data frame",
         call. = FALSE
       )

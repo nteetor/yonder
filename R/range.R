@@ -55,27 +55,26 @@
 #' @param suffix A character string specifying a suffix for the range input
 #'   slider value. Defaults to `NULL`, in which case a prefix is not appended.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, or `"danger"` specifying the visual context of the slider,
-#'   defaults to `"secondary"`.
-#'
-#' @param fill One of `TRUE` or `FALSE`, if `FALSE` the fill region of the
-#'   slider input is hidden, defaults to `TRUE`.
 #'
 #' @export
 #' @examples
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       rangeInput("default"),
-#'       rangeInput("blue", context = "primary"),
-#'       rangeInput("red", context = "danger"),
-#'       rangeInput("white", context = "info", step = 10, snap = TRUE),
-#'       rangeInput("yellow", context = "warning", prefix = "$", suffix = ".00")
+#'       rangeInput("default") %>%
+#'         background("yellow"),
+#'       rangeInput("blue") %>%
+#'         background("blue", 3),
+#'       rangeInput("red") %>%
+#'         background("red", -2),
+#'       rangeInput("white", step = 10, snap = TRUE) %>%
+#'         background("lime", 4)
+#'       rangeInput("yellow", prefix = "$", suffix = ".00")
 #'     ),
 #'     server = function(input, output) {
 #'       observe({
-#'         print(input$default)
+#'         req(input$default)
+#'         cat(paste0(rep.int("\r", nchar(input$default)), input$default))
 #'       })
 #'
 #'     }
@@ -84,13 +83,9 @@
 #'
 rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
                        ticks = TRUE, labels = 4, snap = FALSE, prefix = NULL,
-                       suffix = NULL, context = "secondary") {
+                       suffix = NULL) {
   tags$div(
-    class = collate(
-      "dull-range-input dull-input form-group",
-      "range",
-      if (!is.null(context)) paste0("range-", context)
-    ),
+    class = "dull-range-input dull-input form-group bg-grey",
     id = id,
     tags$input(
       class = "range",
@@ -131,14 +126,9 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
 intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
                           step = 1, draggable = FALSE,
                           ticks = TRUE, labels = 4, snap = FALSE,
-                          prefix = NULL, suffix = NULL,
-                          context = "secondary") {
+                          prefix = NULL, suffix = NULL) {
   tags$div(
-    class = collate(
-      "dull-range-input dull-input form-group",
-      "range",
-      if (!is.null(context)) paste0("range-", context)
-    ),
+    class = "dull-range-input dull-input form-group bg-grey",
     id = id,
     tags$input(
       class = "range",
@@ -182,8 +172,7 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
 #' }
 #'
 sliderInput <- function(id, choices, values = choices, selected = NULL,
-                        ticks = TRUE, prefix = NULL, suffix = NULL,
-                        context = "secondary", fill = FALSE) {
+                        ticks = TRUE, prefix = NULL, suffix = NULL) {
   values <- vapply(values, as.character, character(1))
 
   # need to replace commas as ion rangeslider splits the string of values on the
@@ -193,12 +182,7 @@ sliderInput <- function(id, choices, values = choices, selected = NULL,
   selected <- encode_commas(selected)
 
   tags$div(
-    class = collate(
-      "dull-range-input dull-input form-group",
-      "range",
-      if (!is.null(context)) paste0("range-", context),
-      if (!fill) "range-nobar"
-    ),
+    class = "dull-range-input dull-input form-group bg-grey",
     id = id,
     tags$input(
       class = "range",

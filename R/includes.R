@@ -13,8 +13,6 @@ includes <- function() {
         href = "dull/bootstrap/css/bootstrap.min.css"
       ),
       tags$script(src = "dull/bootstrap/js/bootstrap.min.js"),
-      tags$script(src = "dull/dull/js/dull.min.js"),
-      tags$link(rel = "stylesheet", href = "dull/dull/css/dull.min.css"),
       tags$link(
         rel = "stylesheet",
         href = "dull/ion-rangeslider/css/ion.rangeSlider.css"
@@ -32,7 +30,9 @@ includes <- function() {
       tags$script(
         defer = NA,
         src = "dull/font-awesome/js/fontawesome.min.js"
-      )
+      ),
+      tags$script(src = "dull/dull/js/dull.min.js"),
+      tags$link(rel = "stylesheet", href = "dull/dull/css/dull.min.css")
     )
   )
 }

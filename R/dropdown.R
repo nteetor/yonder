@@ -25,10 +25,6 @@
 #'   placed above the indicated values separating the dropdown menu items into
 #'   sections.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"link"`, specifying the
-#'   visual context of the dropdown input, defaults to `"secondary"`.
-#'
 #' @param dropup If `TRUE`, the dropdown menu opens upwards instead of
 #'   downwards, defaults to `FALSE`.
 #'
@@ -44,10 +40,11 @@
 #'         col(
 #'           dropdownInput(
 #'             id = "dropdown",
-#'             label = "A dropdown"
+#'             label = "A dropdown",
 #'             items = paste("Action", 1:5),
 #'             dividers = "Action 4"
-#'           )
+#'           ) %>%
+#'             background("deep-orange")
 #'         ),
 #'         col(
 #'           d4(
@@ -74,7 +71,8 @@
 #'             label = "Actions",
 #'             items = c("disable", "enable", "disable some", "enable some"),
 #'             dividers = "disable some"
-#'           )
+#'           ) %>%
+#'             background("grey", 2)
 #'         ),
 #'         col(
 #'           dropdownInput(
@@ -82,7 +80,8 @@
 #'             label = "Other actions",
 #'             items = paste("Action", 1:5),
 #'             disabled = "Action 3"
-#'           )
+#'           ) %>%
+#'             background("amber")
 #'         ),
 #'         col(
 #'           d4(
@@ -112,8 +111,7 @@
 #' }
 #'
 dropdownInput <- function(id, label, items, values = items, disabled = NULL,
-                          dividers = NULL, context = "secondary",
-                          dropup = FALSE, ...) {
+                          dividers = NULL, direction = "down", ...) {
   if (length(items) != length(values)) {
     stop(
       "invalid `dropdownInput` arguments, `items` and `values` must be the ",
@@ -122,11 +120,28 @@ dropdownInput <- function(id, label, items, values = items, disabled = NULL,
     )
   }
 
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark", FALSE)) {
+  if (!is.null(disabled) && !all(disabled %in% values)) {
+    problematic <- paste0('"', disabled[!(disabled %in% values)], '"')
+    warning(
+      "problematic `dropdownInput` argument, `disabled` contains ",
+      to_sentence(problematic, "and"), " which are not in `values`",
+      call. = FALSE
+    )
+  }
+
+  if (!is.null(dividers) && !all(dividers %in% values)) {
+    problematic <- paste0('"', dividers[!(dividers %in% values)], '"')
+    warning(
+      "problematic `dropdownInput` argument, `dividers` contains ",
+      to_sentence(problematic, "and"), " which are not in `values`",
+      call. = FALSE
+    )
+  }
+
+  if (!re(direction, "up|right|down|left", len0 = FALSE)) {
     stop(
-      "invalid `dropdownInput` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", or "dark"',
+      "invalid `dropdownInput` arguments, `direction` must be one of ",
+      '"up", "right", "down", or "left"',
       call. = FALSE
     )
   }
@@ -138,15 +153,14 @@ dropdownInput <- function(id, label, items, values = items, disabled = NULL,
     class = collate(
       "dull-dropdown-input",
       "btn-group",
-      if (dropup) "dropup" else "dropdown"
+      paste0("drop", direction),
+      "bg-grey"
     ),
     id = id,
     `data-value` = NULL,
     tags$button(
       class = collate(
         "btn",
-        paste0("btn-", context),
-        "btn-secondary",
         "dropdown-toggle"
       ),
       type = "button",

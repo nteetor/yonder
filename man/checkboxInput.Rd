@@ -7,8 +7,7 @@
 \alias{enableCheckboxInput}
 \title{Checkbox inputs}
 \usage{
-checkboxInput(id, choice, value = choice, label = NULL, checked = FALSE,
-  ...)
+checkboxInput(id, choice, value = choice, checked = FALSE, ...)
 
 updateCheckboxInput(id, choice, value = choice, checked = FALSE,
   session = getDefaultReactiveDomain())
@@ -28,18 +27,11 @@ function as part of the \code{input} object.}
 \code{NULL} specifying the value of the checkbox or a new value for the
 checkbox, defaults to \code{choice}.}
 
-\item{label}{A character string specifying a label for the checkbox input,
-defaults to \code{NULL}, in which case a label is not added.}
-
 \item{checked}{If \code{TRUE} the checkbox renders in a checked state, defaults
 to \code{FALSE}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
-
-\item{state}{One of \code{"valid"}, \code{"warning"}, or \code{"danger"} indicating the
-state of the checkbox input. If the return value is \code{"valid"} any visual
-context is removed.}
 }
 \description{
 A reactive checkbox input. When a checkbox input is unchecked the reactive
@@ -53,13 +45,11 @@ if (interactive()) {
         col(
           checkboxInput(
             id = "checkbox",
-            label = "A checkbox",
             choice = "Are you there?",
             value = "yes"
           ),
           checkboxInput(
             id = "hello",
-            label = "A second checkbox!",
             choice = "Hello"
           )
         ),

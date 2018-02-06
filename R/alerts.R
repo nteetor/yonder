@@ -9,10 +9,6 @@
 #' @param content A character string specifying the body of the alert or
 #'   a custom element to include as the body of the alert.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, or `"dark"` specifying the visual
-#'   context of the alert, defaults to `"secondary"`.
-#'
 #' @param session A `session` object passed to the shiny server function,
 #'   defaults to [`getDefaultReactiveDomain()`].
 #'
@@ -32,28 +28,17 @@
 #'       observeEvent(input$button, {
 #'         sendAlert(
 #'           id = "button",
-#'           content = "You clicked the button!",
-#'           context = "warning"
+#'           content = "You clicked the button!"
 #'         )
 #'       })
 #'     }
 #'   )
 #' }
 #'
-sendAlert <- function(id, content, context = "secondary",
-                      session = getDefaultReactiveDomain()) {
+sendAlert <- function(id, content, session = getDefaultReactiveDomain()) {
   if (!is.character(id)) {
     stop(
       "invalid `sendAlert` argument, `id` must be a character string or vector",
-      call. = FALSE
-    )
-  }
-
-  if (!re(context, "primary|secondary|success|info|warning|danger|dark|light", FALSE)) {
-    stop(
-      "invalid `sendAlert` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", or "dark"',
       call. = FALSE
     )
   }
@@ -62,8 +47,7 @@ sendAlert <- function(id, content, context = "secondary",
     "dull:alert",
     list(
       id = as.list(id),
-      content = htmltools::HTML(content),
-      context = context
+      content = htmltools::HTML(content)
     )
   )
 }

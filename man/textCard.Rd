@@ -7,8 +7,7 @@
 \alias{deck}
 \title{Cards, highly variable blocks of content}
 \usage{
-textCard(title, body, header = NULL, align = "left", footer = NULL,
-  context = NULL, outline = FALSE, ...)
+textCard(title, body, header = NULL, align = "left", footer = NULL, ...)
 
 tabsCard(labels, panes, ...)
 
@@ -29,13 +28,6 @@ alignment of the card, defaults to \code{"left"}.}
 
 \item{footer}{A character string specifying footer text of the card, defaults
 to \code{NULL}, in which case a footer is not added.}
-
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, \code{"danger"}, \code{"light"} or \code{"dark"} used to add a visual context
-to the card, defaults to \code{"light"}.}
-
-\item{outline}{If \code{TRUE}, \code{context} changes the border color of the card
-instead of changing the background color, defaults to \code{FALSE}.}
 
 \item{...}{Any number of cards or additional named arguments passed as HTML
 attributes to the parent element.}

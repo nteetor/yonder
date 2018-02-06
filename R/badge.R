@@ -9,10 +9,6 @@
 #' @param content A character string specifying the content of the badge or an
 #'   expression which returns a character string.
 #'
-#' @param context An expression which returns one of `"primary"`, `"secondary"`,
-#'   `"success"`, `"info"`, `"warning"`, `"danger"`, `"light"`, or `"dark"`. The
-#'   expression may contain reactive values.
-#'
 #' @param ... Additional named argument passed as HTML attributes to the parent
 #'   element.
 #'
@@ -23,48 +19,26 @@
 #'     ui = container(
 #'       row(
 #'         col(
-#'           listGroupInput(
-#'             id = NULL,
-#'             items = "Button clicks",
-#'             badges = list(
-#'               badgeOutput(
-#'                 id = "clicks",
-#'                 content = 0
-#'               )
-#'             )
-#'           )
-#'         ),
-#'         col(
 #'           buttonInput(
-#'             id = "clicker",
-#'             "Click here!"
+#'             id = "button",
+#'             label = list(
+#'               "Number of clicks: ",
+#'               badgeOutput("clicks", 0) %>%
+#'                 background("red", -4)
+#'             )
 #'           )
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$clicks <- renderBadge(
-#'         content = {
-#'           input$clicker
-#'         },
-#'         context = {
-#'           req(input$clicker)
-#'           clicks <- input$clicker
-#'
-#'           if (clicks > 19) {
-#'             "danger"
-#'           } else if (clicks > 9) {
-#'             "warning"
-#'           } else {
-#'             "info"
-#'           }
-#'         }
-#'       )
+#'       output$clicks <- renderBadge({
+#'         input$button
+#'       })
 #'     }
 #'   )
 #' }
 #'
-badgeOutput <- function(id, content, context = "secondary", ...) {
+badgeOutput <- function(id, content, ...) {
   if (!is.character(id)) {
     stop(
       "invalid `badgeOutput` argument, `id` must be a character string",
@@ -72,22 +46,8 @@ badgeOutput <- function(id, content, context = "secondary", ...) {
     )
   }
 
-  if (!re(context, "primary|secondary|success|info|warning|danger|dark|light")) {
-    stop(
-      "invalid `renderBadge` argument, `context` expression must return ",
-      "one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", or "dark"',
-      call. = FALSE
-    )
-  }
-
   tags$span(
-    class = collate(
-      "dull-badge-output",
-      "badge",
-      "badge-default"
-    ),
+    class = "dull-badge-output badge",
     id = id,
     content,
     ...
@@ -96,27 +56,12 @@ badgeOutput <- function(id, content, context = "secondary", ...) {
 
 #' @rdname badgeOutput
 #' @export
-renderBadge <- function(content, context = "secondary", env = parent.frame(),
-                        quoted = FALSE) {
+renderBadge <- function(content, env = parent.frame(), quoted = FALSE) {
   valFun <- shiny::exprToFunction(content, env, quoted)
-  conFun <- shiny::exprToFunction(context, env, quoted)
 
   function() {
-    con <- conFun()
-
-    if (!re(con, "primary|secondary|success|info|warning|danger|dark|light", FALSE)) {
-      stop(
-        "invalid `renderBadge` argument, `context` expression must return ",
-        "one of ",
-        '"primary", "secondary", "success", "info", "warning", "danger", ',
-        '"light", or "dark"',
-        call. = FALSE
-      )
-    }
-
     list(
-      value = valFun(),
-      context = con
+      value = valFun()
     )
   }
 }

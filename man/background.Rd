@@ -2,29 +2,147 @@
 % Please edit documentation in R/utilities.R
 \name{background}
 \alias{background}
-\title{Background color}
+\alias{text}
+\alias{border}
+\title{Chance text, background, or border color}
 \usage{
-background(tag, context)
+background(tag, color, tone = 0)
+
+text(tag, color, tone = 0)
+
+border(tag, color, tone = 0)
 }
 \arguments{
 \item{tag}{A tag element.}
 
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, \code{"danger"}, \code{"light"}, \code{"dark"}, or \code{"white"}.}
+\item{color}{A character string specifying the background color, see details
+for all possible values.}
+
+\item{tone}{An integer -4 through 4 specifying how much to darken or lighten
+a color, defaults to 0, in which case the base color is not modified.
+Negative values result in darker tones, whereas positive values create a
+lighter tone.}
 }
 \description{
-The \code{background} utility function applies Bootstrap classes to a tag element
-to change the element's background color.
+The \code{text}, \code{background}, and \code{border} utility functions may be used to
+change the text, background, or border color of a tag element, respectively.
 }
 \examples{
 tags$div("light text, dark background") \%>\%
-  text("white") \%>\%
-  background("dark")
+  background("grey", -4) \%>\%
+  text("yellow", 3)
+
+if (interactive()) {
+  opts <- c(
+    "red", "purple", "indigo", "blue", "cyan", "teal", "green", "yellow",
+    "amber", "orange", "brown", "grey"
+  )
+
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          h5("Background"),
+          selectInput(
+            id = "bg",
+            options = opts,
+            selected = sample(opts, 1)
+          ),
+          rangeInput(
+            id = "bgtone",
+            min = -4,
+            max = 4,
+            default = 0,
+            step = 1
+          ) \%>\%
+            margins(c(2, 0, 2, 0)),
+          h5("Border"),
+          selectInput(
+            id = "border",
+            options = opts,
+            selected = sample(opts, 1)
+          ),
+          rangeInput(
+            id = "bordertone",
+            min = -4,
+            max = 4,
+            default = 0,
+            step = 1
+          ) \%>\%
+            margins(c(2, 0, 2, 0)),
+          h5("Text color"),
+          selectInput(
+            id = "text",
+            options = opts,
+            selected = sample(opts, 1)
+          ),
+          rangeInput(
+            id = "texttone",
+            min = -4,
+            max = 4,
+            default = 0,
+            step = 1
+          ) \%>\%
+            margins(c(2, 0, 2, 0))
+        ),
+        col(
+          uiOutput("preview") \%>\%
+            margins(3) \%>\%
+            padding(3)
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$preview <- renderUI({
+        d3("Hello, world!") \%>\%
+          background(input$bg, input$bgtone) \%>\%
+          border(input$border, input$bordertone) \%>\%
+          text(input$text, input$texttone)
+      })
+    }
+  )
+}
+
+tags$h1("Hello, world!") \%>\%
+  border("grey", sides = c("top", "bottom"))
+
+tags$div() \%>\%
+  border("orange")
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          checkbarInput(
+            id = NULL,
+            choices = paste("Choice", 1:4)
+          ) \%>\%
+            background("cyan") \%>\%
+            border("indigo")
+        )
+      )
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
 
 }
 \seealso{
 Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{border}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{padding}},
-  \code{\link{text}}, \code{\link{width}}
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{padding}},
+  \code{\link{width}}
+
+Other utilities: \code{\link{affix}}, \code{\link{align}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{padding}},
+  \code{\link{width}}
+
+Other utilities: \code{\link{affix}}, \code{\link{align}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{padding}},
+  \code{\link{width}}
 }
