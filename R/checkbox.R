@@ -13,15 +13,8 @@
 #'   `NULL` specifying the value of the checkbox or a new value for the
 #'   checkbox, defaults to `choice`.
 #'
-#' @param label A character string specifying a label for the checkbox input,
-#'   defaults to `NULL`, in which case a label is not added.
-#'
 #' @param checked If `TRUE` the checkbox renders in a checked state, defaults
 #'   to `FALSE`.
-#'
-#' @param state One of `"valid"`, `"warning"`, or `"danger"` indicating the
-#'   state of the checkbox input. If the return value is `"valid"` any visual
-#'   context is removed.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
@@ -36,13 +29,11 @@
 #'         col(
 #'           checkboxInput(
 #'             id = "checkbox",
-#'             label = "A checkbox",
 #'             choice = "Are you there?",
 #'             value = "yes"
 #'           ),
 #'           checkboxInput(
 #'             id = "hello",
-#'             label = "A second checkbox!",
 #'             choice = "Hello"
 #'           )
 #'         ),
@@ -101,8 +92,7 @@
 #'   )
 #' }
 #'
-checkboxInput <- function(id, choice, value = choice, label = NULL,
-                          checked = FALSE, ...) {
+checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
   value <- as.character(value)
 
   tags$div(

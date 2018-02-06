@@ -1,190 +1,17 @@
-#' Element borders
-#'
-#' Apply borders, border colors, and border radius to a tag element.
-#'
-#' @param tag A tag element object.
-#'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"white"` specifying the
-#'   visual context and color of the border, defaults to `"secondary"`.
-#'
-#' @param sides One of `"all"` or `"none"` or one or more of `"top"`, `"right"`,
-#'   `"bottom"`, `"left"` specifying the sides to apply a border, defaults to
-#'   `"all"`.
-#'
-#' @param rounded One of `"all"`, `"circle"`, `"none"`, or one or more of
-#'   `"top"`, `"right"`, `"bottom"`, `"left"` specifying the side whose corners
-#'   to round.
-#'
-#' @family utilities
-#' @export
-#' @examples
-#' tags$h1("Hello, world!") %>%
-#'   border(sides = c("top", "bottom"))
-#'
-#' tags$div() %>%
-#'   border("warning")
-#'
-border <- function(tag, context = "secondary", sides = "all", rounded = "none") {
-  if ((length(sides) > 1 && any(re(sides, "all|none", FALSE))) ||
-      !all(re(sides, "top|right|bottom|left|all|none", FALSE))) {
-      stop(
-        "invalid `border` argument, `sides` must be ",
-        '"all", "none", or one or more of ',
-        '"top", "right", "bottom", or "left"',
-        call. = FALSE
-      )
-  }
-
-  if ((!is.null(context) && length(sides) != 1) ||
-      !re(context, "primary|secondary|success|info|warning|danger|light|dark|white")) {
-    stop(
-      "invalid `border` argument, `context` must be one of NULL, ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", "dark", or "white"',
-      call. = FALSE
-    )
-  }
-
-  if ((length(rounded) > 1 && any(re(sides, "all|circle|none", FALSE))) ||
-      !all(re(rounded, "top|right|bottom|left|all|none", FALSE))) {
-    stop(
-      "invalid `border` argument, `sides` must be ",
-      '"all", "none", or one or more of',
-      '"top", "right", "bottom", or "left"',
-      call. = FALSE
-    )
-  }
-
-  tag <- tagEnsureClass(tag, "border")
-  tag <- tagEnsureClass(tag, paste0("border-", context))
-
-  if (length(sides) == 1 && sides == "none") {
-    tag <- tagAppendAttributes(tag, class = "border-0")
-  } else if (length(sides) == 1 && sides == "all") {
-
-  } else {
-    remove <- setdiff(c("top", "right", "bottom", "left"), sides)
-
-    tag <- tagAppendAttributes(
-      tag,
-      class = paste0("border-", remove, "-0", collapse = " ")
-    )
-  }
-
-  if (length(rounded) == 1 && rounded == "none") {
-    tag <- tagAppendAttributes(tag, class = "rounded-0")
-  } else if (length(rounded) == 1 && rounded == "all") {
-    tag <- tagAppendAttributes(tag, class = "rounded")
-  } else {
-    tag <- tagAppendAttributes(
-      tag,
-      class = paste0("rounded-", rounded, collapse = " ")
-    )
-  }
-
-  tag
-}
-
-#' Element text color, font case, font weight, and more
-#'
-#' The `text` helper function applies text related Boostrap classes to a tag
-#' element. These classes apply CSS to change text color, alignment, or case.
-#'
-#' @param tag A tag element.
-#'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, `"muted"`, or `"white"`
-#'   specifying the visual context of the text. `"white"` is best suited for
-#'   elements with dark backgrounds. Defaults to `NULL`, the element text color
-#'   is left as is.
-#'
-#' @param align One of `"justify"`, `"left"`, `"right"`, or `"center"`
-#'   specifying the alignment of an element's text. Defaults to `NULL`, no
-#'   alignment is applied, however the CSS default is to left align element
-#'   text.
-#'
-#' @param truncate One of `TRUE` or `FALSE` specifying whether or not an
-#'   element's text is truncated. Defaults to `FALSE`, the element text is left
-#'   as is.
-#'
-#' @param case One of `"upper"`, `"lower"`, or `"capitalize"` specifying a
-#'   transformation of an element's text. Defaults to `NULL`, element case is
-#'   left as is. `"capitalize"` changes only the first letter to upper case,
-#'   all other characters are left as is.
-#'
-#' @family utilities
-#' @export
-#' @examples
-#' tags$span("hello, world!") %>%
-#'   text(context = "warning", case = "upper")
-#'
-#' tags$div("Goodnight, moon") %>%
-#'   text(truncate = TRUE) %>%
-#'   text("success")
-#'
-#' tags$div("Howdy") %>%
-#'   text("white") %>%
-#'   background("dark")
-#'
-text <- function(tag, context = NULL, align = NULL, truncate = FALSE,
-                 case = NULL) {
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|muted|white")) {
-    stop(
-      "invalid `text` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", "dark", "muted", or "white"',
-      call. = FALSE
-    )
-  }
-
-  if (!re(align, "left|right|center|justify")) {
-    stop(
-      "invalid `text` argument, `align` must be one of ",
-      '"justify", "left", "right", or "center"',
-      call. = FALSE
-    )
-  }
-
-  if (!is.logical(truncate)) {
-    stop(
-      "invalid `text` argument, `truncate` must be one of TRUE or FALSE",
-      call. = FALSE
-    )
-  }
-
-  if (!re(case, "upper|lower|capitalize")) {
-    stop(
-      "invalid `text` argument, `case` must be one of ",
-      '"upper", "lower", or "capitalize"',
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(context)) {
-    context <- paste0("text-", context)
-    tag <- tagDropContext(tag, "text")
-    tag <- tagAddClass(tag, context)
-  }
-
-  if (!is.null(align)) {
-    align <- paste0("text-", align)
-    tag <- tagDropClass(tag, "text-(left|right|center|justify)")
-    tag <- tagAddClass(tag, align)
-  }
-
-  if (truncate) {
-    tag <- tagEnsureClass(tag, "text-truncate")
-  }
-
-  if (!is.null(case)) {
-    case <- paste0("text-", case)
-    tag <- tagDropClass(tag, "text-(lowercase|uppercase|capitalize)")
-    tag <- tagAddClass(tag, case)
-  }
-
-  tag
-}
+.colors <- c(
+  "red",
+  "purple",
+  "indigo",
+  "blue",
+  "cyan",
+  "teal",
+  "green",
+  "yellow",
+  "amber",
+  "orange",
+  "brown",
+  "grey"
+)
 
 #' Text font and styles
 #'
@@ -243,34 +70,223 @@ font <- function(tag, weight = NULL, style = NULL) {
   tag
 }
 
-#' Background color
+colorUtility <- function(tag, base, color, tone) {
+  if (tagHasClass(tag, "btn-group")) {
+    tag$children[[1]] <- lapply(
+      tag$children[[1]],
+      colorUtility,
+      base = base,
+      color = color,
+      tone = tone
+    )
+
+    return(tag)
+  }
+
+  if (tagHasClass(tag, "alert")) {
+    base <- "alert"
+  } else if (tagHasClass(tag, "badge")) {
+    base <- "badge"
+  } else if (tagHasClass(tag, "btn")) {
+    base <- "btn"
+  } else if (tagHasClass(tag, "list-group-item")) {
+    base <- "list-group-item"
+  }
+
+  tag <- tagDropClass(tag, paste0(base, "-[a-z-]+(-[1-9]00)?"))
+
+  tone <- switch(
+    as.character(tone),
+    `0` = 0,
+    `-4` = 900, `-3` = 800, `-2` = 700, `-1` = 600, `1` = 400, `2` = 300,
+    `3` = 200, `4` = 100
+  )
+
+  tone <- if (tone) paste0("-", tone) else ""
+
+  tag <- tagEnsureClass(tag, paste0(base, "-", color, tone))
+
+  tag
+}
+
+#' Chance text, background, or border color
 #'
-#' The `background` utility function applies Bootstrap classes to a tag element
-#' to change the element's background color.
+#' The `text`, `background`, and `border` utility functions may be used to
+#' change the text, background, or border color of a tag element, respectively.
 #'
 #' @param tag A tag element.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"white"`.
+#' @param color A character string specifying the background color, see details
+#'   for all possible values.
+#'
+#' @param tone An integer -4 through 4 specifying how much to darken or lighten
+#'   a color, defaults to 0, in which case the base color is not modified.
+#'   Negative values result in darker tones, whereas positive values create a
+#'   lighter tone.
 #'
 #' @family utilities
 #' @export
 #' @examples
 #' tags$div("light text, dark background") %>%
-#'   text("white") %>%
-#'   background("dark")
+#'   background("grey", -4) %>%
+#'   text("yellow", 3)
 #'
-background <- function(tag, context) {
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|white")) {
+#' if (interactive()) {
+#'   opts <- c(
+#'     "red", "purple", "indigo", "blue", "cyan", "teal", "green", "yellow",
+#'     "amber", "orange", "brown", "grey"
+#'   )
+#'
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           h5("Background"),
+#'           selectInput(
+#'             id = "bg",
+#'             options = opts,
+#'             selected = sample(opts, 1)
+#'           ),
+#'           rangeInput(
+#'             id = "bgtone",
+#'             min = -4,
+#'             max = 4,
+#'             default = 0,
+#'             step = 1
+#'           ) %>%
+#'             margins(c(2, 0, 2, 0)),
+#'           h5("Border"),
+#'           selectInput(
+#'             id = "border",
+#'             options = opts,
+#'             selected = sample(opts, 1)
+#'           ),
+#'           rangeInput(
+#'             id = "bordertone",
+#'             min = -4,
+#'             max = 4,
+#'             default = 0,
+#'             step = 1
+#'           ) %>%
+#'             margins(c(2, 0, 2, 0)),
+#'           h5("Text color"),
+#'           selectInput(
+#'             id = "text",
+#'             options = opts,
+#'             selected = sample(opts, 1)
+#'           ),
+#'           rangeInput(
+#'             id = "texttone",
+#'             min = -4,
+#'             max = 4,
+#'             default = 0,
+#'             step = 1
+#'           ) %>%
+#'             margins(c(2, 0, 2, 0))
+#'         ),
+#'         col(
+#'           uiOutput("preview") %>%
+#'             margins(3) %>%
+#'             padding(3)
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$preview <- renderUI({
+#'         d3("Hello, world!") %>%
+#'           background(input$bg, input$bgtone) %>%
+#'           border(input$border, input$bordertone) %>%
+#'           text(input$text, input$texttone)
+#'       })
+#'     }
+#'   )
+#' }
+#'
+background <- function(tag, color, tone = 0) {
+  if (!(color %in% .colors)) {
     stop(
-      "invalid `background` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", "dark", or "white"',
+      "invalid `background` argument, `color` is invalid, see ?background ",
+      "details for possible colors",
       call. = FALSE
     )
   }
 
-  tagEnsureClass(tag, paste0("bg-", context))
+  if (!(tone %in% -4:4)) {
+    stop(
+      "invalid `background` argument, `tone` must be an integer between -4 ",
+      "and 4",
+      call. = FALSE
+    )
+  }
+
+  colorUtility(tag, "bg", color, tone)
+}
+
+#' @family utilities
+#' @rdname background
+#' @export
+text <- function(tag, color, tone = 0) {
+  if (!(color %in% .colors)) {
+    stop(
+      "invalid `text` argument, `color` is invalid, see ?background ",
+      "details for possible colors",
+      call. = FALSE
+    )
+  }
+
+  if (!(tone %in% -4:4)) {
+    stop(
+      "invalid `text` argument, `tone` must be an integer between -4 ",
+      "and 4",
+      call. = FALSE
+    )
+  }
+
+  colorUtility(tag, "text", color, tone)
+}
+
+#' @family utilities
+#' @rdname background
+#' @export
+#' @examples
+#' tags$h1("Hello, world!") %>%
+#'   border("grey", sides = c("top", "bottom"))
+#'
+#' tags$div() %>%
+#'   border("orange")
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           checkbarInput(
+#'             id = NULL,
+#'             choices = paste("Choice", 1:4)
+#'           ) %>%
+#'             background("cyan") %>%
+#'             border("indigo")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+border <- function(tag, color, tone = 0) {
+  if (!(color %in% .colors)) {
+    stop(
+      "invalid `border` argument, `color` is invalid, see ?border ",
+      "details for possible colors",
+      call. = FALSE
+    )
+  }
+
+  tag <- tagEnsureClass(tag, "border")
+
+  colorUtility(tag, "border", color, tone)
 }
 
 #' Float an element

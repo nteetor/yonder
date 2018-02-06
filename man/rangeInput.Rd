@@ -8,14 +8,14 @@
 \usage{
 rangeInput(id, min = 0, max = 100, default = min, step = 1,
   ticks = TRUE, labels = 4, snap = FALSE, prefix = NULL,
-  suffix = NULL, context = "secondary")
+  suffix = NULL)
 
 intervalInput(id, min = 0, max = 100, default = c(min, max), step = 1,
   draggable = FALSE, ticks = TRUE, labels = 4, snap = FALSE,
-  prefix = NULL, suffix = NULL, context = "secondary")
+  prefix = NULL, suffix = NULL)
 
 sliderInput(id, choices, values = choices, selected = NULL, ticks = TRUE,
-  prefix = NULL, suffix = NULL, context = "secondary", fill = FALSE)
+  prefix = NULL, suffix = NULL)
 }
 \arguments{
 \item{id}{A character string specifying the id of the range input or \code{NULL}.}
@@ -56,10 +56,6 @@ slider value. Defaults to \code{NULL}, in which case a prefix is not prepended.}
 \item{suffix}{A character string specifying a suffix for the range input
 slider value. Defaults to \code{NULL}, in which case a prefix is not appended.}
 
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, or \code{"danger"} specifying the visual context of the slider,
-defaults to \code{"secondary"}.}
-
 \item{draggable}{One of \code{TRUE} or \code{FALSE} specifying if the user can drag the
 interval between an interval input's two sliders defaults to \code{FALSE}. If
 \code{TRUE} the slider interval may be dragged with the cursor, otherwise the
@@ -74,9 +70,6 @@ defaults to \code{choices}.}
 \item{selected}{One of \code{values} specifying the initial value of the slider
 input, defaults to \code{NULL}, in which case the slider input defaults to the
 first choice.}
-
-\item{fill}{One of \code{TRUE} or \code{FALSE}, if \code{FALSE} the fill region of the
-slider input is hidden, defaults to \code{TRUE}.}
 }
 \description{
 A take on shiny's \code{sliderInput}.
@@ -85,15 +78,20 @@ A take on shiny's \code{sliderInput}.
 if (interactive()) {
   shinyApp(
     ui = container(
-      rangeInput("default"),
-      rangeInput("blue", context = "primary"),
-      rangeInput("red", context = "danger"),
-      rangeInput("white", context = "info", step = 10, snap = TRUE),
-      rangeInput("yellow", context = "warning", prefix = "$", suffix = ".00")
+      rangeInput("default") \%>\%
+        background("yellow"),
+      rangeInput("blue") \%>\%
+        background("blue", 3),
+      rangeInput("red") \%>\%
+        background("red", -2),
+      rangeInput("white", step = 10, snap = TRUE) \%>\%
+        background("lime", 4)
+      rangeInput("yellow", prefix = "$", suffix = ".00")
     ),
     server = function(input, output) {
       observe({
-        print(input$default)
+        req(input$default)
+        cat(paste0(rep.int("\\r", nchar(input$default)), input$default))
       })
 
     }

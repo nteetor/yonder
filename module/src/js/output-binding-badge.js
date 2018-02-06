@@ -13,17 +13,6 @@ $.extend(badgeOutputBinding, {
     if (data.value !== null && data.value !== undefined) {
       $el.text(data.value);
     }
-
-    if (data.context) {
-      var context = "badge-" + data.context;
-
-      if (!$el.hasClass(context)) {
-        $el.attr("class", function(i, c) {
-          return c.replace(/badge-(default|primary|success|info|warning|danger)/g, "");
-        });
-        $el.addClass(context);
-      }
-    }
   },
   renderError: function(el, data) {
 

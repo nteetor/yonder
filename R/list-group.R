@@ -27,19 +27,6 @@
 #'   defaults to `NULL`. See `badgeOutput` for more information on rendering
 #'   badges.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, `"dark"` or `NULL` specifying the
-#'   visual context of the list group input, defaults to `NULL`, in which case
-#'   a visual context is not applied.
-#'
-#' @param state One of `"valid"`, `"warning"`, or `"danger"` indicating the
-#'   state of the list group items. If `"valid"` then the visual context is
-#'   removed.
-#'
-#' @param validate One or more of `values` indicating which list group items
-#'   to mark with `state`, defaults to `NULL`. If `NULL` then the all list group
-#'   items are updated.
-#'
 #' @param disabled,enabled One or more of `values` indicating which list group
 #'   items to disable or enable, defaults to `NULL`. If `NULL` then
 #'   `disableListGroup` and `enableListGroup` will disable or enable all the
@@ -70,7 +57,8 @@
 #'             items = paste("Item", 1:5),
 #'             values = 1:5,
 #'             selected = 2
-#'           )
+#'           ) %>%
+#'             background("teal")
 #'         ),
 #'         col(
 #'           textOutput("selected")
@@ -172,8 +160,7 @@
 #' }
 #'
 listGroupInput <- function(id, items, values = items, selected = NULL,
-                           disabled = NULL, badges = NULL, context = NULL,
-                           ...) {
+                           disabled = NULL, badges = NULL, ...) {
   if (length(items) != length(values)) {
     stop(
       "invalid `listGroupInput` arguments, `items` and `values` must be the ",
@@ -197,15 +184,6 @@ listGroupInput <- function(id, items, values = items, selected = NULL,
         call. = FALSE
       )
     }
-  }
-
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark")) {
-    stop(
-      "invalid `listGroupInput` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", "dark", or NULL',
-      call. = FALSE
-    )
   }
 
   selected <- match2(selected, values)

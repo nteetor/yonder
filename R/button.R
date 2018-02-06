@@ -15,13 +15,6 @@
 #' @param label A character string specifying the label text on the button
 #'   input.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"light"`, `"dark"`, or `"link"` specifying the
-#'   visual context of the button input, defaults to `"secondary"`.
-#'
-#' @param outline If `TRUE`, the input's visual context is applied to the
-#'   border of the button instead of the background, defaults to `FALSE`.
-#'
 #' @param block If `TRUE`, the input is block-level instead of inline, defaults
 #'   to `FALSE`. A block-level element will occupy the entire width of its
 #'   parent element.
@@ -51,8 +44,9 @@
 #'         col(
 #'           buttonInput(
 #'             id = "button",
-#'             label = "C-c-c-click me!"
-#'           )
+#'             label = "Click me!"
+#'           ) %>%
+#'             background("green")
 #'         ),
 #'         col(
 #'           d4(
@@ -76,8 +70,7 @@
 #'         col(
 #'           buttonInput(
 #'             id = "change",
-#'             text = "Change other button",
-#'             context = "success"
+#'             text = "Change other button"
 #'           )
 #'         ),
 #'         col(
@@ -117,14 +110,16 @@
 #'       fluid = FALSE,
 #'       buttonInput(
 #'         id = "button",
-#'         text = list(
+#'         label = list(
 #'           "Increment badge",
 #'           badgeOutput(
 #'             id = "badge",
 #'             content = 0
-#'           )
+#'           ) %>%
+#'             background("green")
 #'         )
-#'       )
+#'       ) %>%
+#'         background("amber")
 #'     ),
 #'     server = function(input, output) {
 #'       output$badge <- renderBadge({
@@ -134,23 +129,12 @@
 #'   )
 #' }
 #'
-buttonInput <- function(id, label, context = "secondary", outline = FALSE,
-                        block = FALSE, disabled = FALSE, ...) {
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark|link", FALSE)) {
-    stop(
-      "invalid `buttonInput` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", "dark", or "link"',
-      call. = FALSE
-    )
-  }
-
+buttonInput <- function(id, label, block = FALSE, disabled = FALSE, ...) {
   tags$button(
     class = collate(
       "dull-button-input",
       "dull-input",
       "btn",
-      paste0("btn-", if (outline) "outline-", context),
       if (block) "btn-block"
     ),
     type = "button",
@@ -210,13 +194,13 @@ resetButtonInput <- function(id, session = getDefaultReactiveDomain()) {
 
 #' @rdname buttonInput
 #' @export
-submitInput <- function(label = "Submit", outline = FALSE, block = FALSE,
-                        disabled = FALSE, ...) {
+submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
+                        ...) {
   tags$button(
     class = collate(
       "dull-submit",
       "btn",
-      paste0("btn-", if (outline) "outline-", "primary"),
+      "bg-blue",
       if (block) "btn-block"
     ),
     # done to avoid the way Shiny handles submit buttons, will be
@@ -229,9 +213,9 @@ submitInput <- function(label = "Submit", outline = FALSE, block = FALSE,
   )
 }
 
-#' Button groups
+#' Button group inputs
 #'
-#' Groups of buttons with persisting value.
+#' Groups of buttons with a persisting value.
 #'
 #' @param id A character string specifying the id of the button group input.
 #'
@@ -241,23 +225,16 @@ submitInput <- function(label = "Submit", outline = FALSE, block = FALSE,
 #' @param values A character vector of values, one for each button specified,
 #'   defaults to `labels`.
 #'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, or `"danger"` specifying the visual context of the button
-#'   group, defaults to `"secondary"`.
-#'
-#' @param outline One of `TRUE` or `FALSE`, if `TRUE` the button group appears
-#'   as an outline, defaults to `FALSE`.`
-#'
 #' @export
 #' @examples
-#' buttonGroup("group", c("Once", "Twice"), c(1, 2))
+#' buttonGroupInput("group", c("Once", "Twice"), c(1, 2))
 #'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
 #'       row(
 #'         col(
-#'           buttonGroup(
+#'           buttonGroupInput(
 #'             id = "group",
 #'             labels = c("Once", "Twice", "Thrice"),
 #'             values = c(1, 2, 3)
@@ -276,16 +253,41 @@ submitInput <- function(label = "Submit", outline = FALSE, block = FALSE,
 #'   )
 #' }
 #'
-buttonGroupInput <- function(id, labels, values = labels, context = "secondary",
-                             outline = FALSE) {
-  if (!re(context, "secondary|primary|info|success|warning|danger", FALSE)) {
-    stop(
-      "invalid `buttonGroupInput` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", or "danger"',
-      call. = FALSE
-    )
-  }
-
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           buttonGroupInput(
+#'             id = "bg1",
+#'             labels = c("Button 1", "Button 2", "Button 3")
+#'           ) %>%
+#'             background("blue", -3) %>%
+#'             margins(3)
+#'         ),
+#'         col(
+#'           buttonGroupInput(
+#'             id = "bg2",
+#'             labels = c("Groupee 1", "Groupee 2", "Groupee 3")
+#'           ) %>%
+#'             background("yellow", 2) %>%
+#'             margins(3)
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observe({
+#'         print(input$bg1)
+#'       })
+#'
+#'       observe({
+#'         print(input$bg2)
+#'       })
+#'     }
+#'   )
+#' }
+#'
+buttonGroupInput <- function(id, labels, values = labels) {
   if (length(labels) != length(values)) {
     stop(
       "invalid `buttonGroupInput` arguments, `labels` and `values` must be ",
@@ -301,15 +303,10 @@ buttonGroupInput <- function(id, labels, values = labels, context = "secondary",
     Map(
       label = labels,
       value = values,
-      context = context,
-      outline = outline,
-      function(label, value, context, outline) {
+      function(label, value, outline) {
         tags$button(
           type = "button",
-          class = collate(
-            "btn",
-            paste0("btn-", if (outline) "outline-", context)
-          ),
+          class = "btn",
           `data-value` = value,
           label
         )

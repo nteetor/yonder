@@ -6,7 +6,6 @@ $.extend(alertInputBinding, {
   },
   getValue: function(el) {
     var ret = $(el).data("closed") || null;
-    console.log(ret);
     return ret;
   },
   getState: function(el, data) {

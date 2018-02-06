@@ -3,36 +3,32 @@
 \name{checkbarInput}
 \alias{checkbarInput}
 \alias{radiobarInput}
-\title{Checkbar inputs}
+\title{Check- and radiobar inputs}
 \usage{
-checkbarInput(id, choices, values = choices, selected = NULL,
-  label = NULL, context = "secondary")
+checkbarInput(id, choices, values = choices, selected = NULL)
 
-radiobarInput(id, choices, values = choices, selected = NULL,
-  label = NULL, context = "secondary")
+radiobarInput(id, choices, values = choices, selected = NULL)
 }
 \arguments{
-\item{id}{A character string specifying the id of the checkbar input.}
+\item{id}{A character string specifying the id of the check- or radiobar
+input.}
 
 \item{choices}{A character vector or flat list of character strings
-specifying the labels of the checkbar options.}
+specifying the labels of the check- or radiobar options.}
 
-\item{values}{A character vector, flat list of character strings, or
-object to convert to either, specifying the values of the checkbar
+\item{values}{A character vector, flat list of character strings, or object
+to coerce to either, specifying the values of the check- or radiobar
 options, defaults to \code{choices}.}
 
-\item{selected}{One or more of \code{values} indicating which of the checkbar
-options are selected by default, defaults to \code{NULL}, in which case there
-is no default option.}
-
-\item{label}{A character string specifying a label for the checkbar input,
-defaults to \code{NULL}, in which case a label is not added.}
-
-\item{context}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"},
-\code{"warning"}, \code{"danger"}, \code{"light"}, or \code{"dark"}, defaults to \code{"secondary"}.}
+\item{selected}{One or more of \code{values} indicating which of the check- or
+radiobar options are selected by default, defaults to \code{NULL}, in which case
+there is no default option.}
 }
 \description{
-Similar to a checkbox input.
+Checkbar and radiobar inputs behave like the counter parts, checkbox and
+radio inputs. The -bar inputs are a stylistic variation. However, dull
+checkbox inputs are singletons, thus the checkbar input is more akin to
+shiny's checkbox group input.
 }
 \examples{
 if (interactive()) {
@@ -41,25 +37,40 @@ if (interactive()) {
       row(
         col(
           checkbarInput(
-            id = "checkbar",
+            id = "blue",
             choices = c(
-              "Check 1 (pre-selected)",
+              "Check 1",
               "Check 2",
               "Check 3"
             ),
-            values = c("check1", "check2", "check3"),
-            selected = "check1"
-          )
+            selected = "Check 1"
+          ) \%>\%
+            background("blue", 1) \%>\%
+            margins(2),
+         checkbarInput(
+            id = "indigo",
+            choices = c(
+              "Check 1",
+              "Check 2",
+              "Check 3"
+            ),
+            selected = "Check 2"
+          ) \%>\%
+            background("indigo", 1) \%>\%
+            margins(2)
         ),
         col(
-          verbatimTextOutput("value")
+          verbatimTextOutput("values")
         )
       )
 
     ),
     server = function(input, output) {
-      output$value <- renderPrint({
-        input$checkbar
+      output$values <- renderPrint({
+        list(
+          `blue` = input$blue,
+          indigo = input$indigo
+        )
       })
     }
   )
@@ -73,12 +84,11 @@ if (interactive()) {
           radiobarInput(
             id = "radiobar",
             choices = c(
-              "Radio 1 (pre-selected)",
+              "Radio 1",
               "Radio 2",
               "Radio 3"
             ),
-            values = c("radio1", "radio2", "radio3"),
-            selected = "radio1"
+            selected = "Radio 1"
           )
         ),
         col(

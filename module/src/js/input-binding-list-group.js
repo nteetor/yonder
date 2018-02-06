@@ -1,8 +1,8 @@
-$(document).ready(function() {
+$(document).ready(() => {
   $(".dull-list-group-input[id]").on("click", ".list-group-item:not(.disabled)", function(e) {
     e.preventDefault();
 
-    var $this = $(this);
+    let $this = $(this);
     $this.toggleClass("active");
     $this.trigger("change");
   });

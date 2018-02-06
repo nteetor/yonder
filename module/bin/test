@@ -1,0 +1,21 @@
+#!/usr/bin/env node
+
+/*! 
+ * Test script
+ *
+ */
+
+var parser = require('commander');
+
+function main(args) {
+  parser
+    .version('0.0.1')
+    .option('-a, --ayy', 'Ayy!')
+    .parse(process.argv);
+
+  if (parser.ayy) {
+    console.log('Ayy!');
+  }
+}
+
+main(process.argv);

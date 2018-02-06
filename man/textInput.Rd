@@ -86,11 +86,8 @@ if (interactive()) {
           h6("Password input:"),
           passwordInput(id = "pass"),
           h6("Number input:"),
-          numberInput(id = "num"),
-          h6("Date input:"),
-          dateInput(id = "date"),
-          h6("Time input:"),
-          timeInput(id = "time")
+          numberInput(id = "num") \%>\%
+            background("lime", 4)
         ),
         col(
           verbatimTextOutput("values")
@@ -102,7 +99,7 @@ if (interactive()) {
         list(
           text = input$text, search = input$search, email = input$email,
           url = input$url, telephone = input$tel, password = input$pass,
-          number = input$num, date = input$date, time = input$time
+          number = input$num
          )
       })
     }

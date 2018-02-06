@@ -1,0 +1,6 @@
+.fa-spin,
+.fa-pulse {
+  &.pause {
+    animation-play-state: paused;
+  }
+}

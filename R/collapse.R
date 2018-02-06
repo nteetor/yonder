@@ -6,13 +6,8 @@
 #' are alternatives to `toggleCollapse` to change the state of collapsed content
 #' to shown or hidden, respectively.
 #'
-#' @param id A character string specifying the id of the collapse.
-#'
-#' @param label A character string specifying the label of the collapse toggle.
-#'
-#' @param context One of `"primary"`, `"secondary"`, `"success"`, `"info"`,
-#'   `"warning"`, `"danger"`, `"dark"`, `"light"`, or `"link"` specifying the
-#'   visual context of the collapse toggle, defaults to `"secondary"`.
+#' @param button A button input, when clicked the button will hide or show the
+#'   collapsable content.
 #'
 #' @param ... Additional named arguments passed as attributes to the parent
 #'   element.
@@ -29,19 +24,23 @@
 #'     ui = container(
 #'       row(
 #'         col(
-#'           collapse(
-#'             id = "book",
-#'             label = "The Time Machine",
-#'             tags$div(
-#'               class  = "card card-block",
-#'               "\"The Time Traveller (for so it will be convenient to speak
-#'               of him) was expounding a recondite matter to us. His grey eyes
-#'               shone and twinkled, and his usually pale face was flushed and
-#'               animated. The fire burned brightly, and the soft radiance of
-#'               the incandescent lights in the lilies of silver caught the
-#'               bubbles that flashed and passed in our glasses.\""
+#'           buttonInput(
+#'             id = "trigger",
+#'             label = "The Time Machine"
+#'           ) %>%
+#'             background("purple", 4) %>%
+#'             margins(2) %>%
+#'             collapse(
+#'               tags$div(
+#'                 class  = "card card-block",
+#'                 "\"The Time Traveller (for so it will be convenient to speak
+#'                 of him) was expounding a recondite matter to us. His grey eyes
+#'                 shone and twinkled, and his usually pale face was flushed and
+#'                 animated. The fire burned brightly, and the soft radiance of
+#'                 the incandescent lights in the lilies of silver caught the
+#'                 bubbles that flashed and passed in our glasses.\""
+#'               )
 #'             )
-#'           )
 #'         ),
 #'         col(
 #'           buttonInput(id = "toggle", "Toggle"),
@@ -52,41 +51,30 @@
 #'     ),
 #'     server = function(input, output) {
 #'       observeEvent(input$toggle, {
-#'         toggleCollapse("book")
+#'         toggleCollapse("trigger")
 #'       })
 #'
 #'       observeEvent(input$hide, {
-#'         hideCollapse("book")
+#'         hideCollapse("trigger")
 #'       })
 #'
 #'       observeEvent(input$show, {
-#'         showCollapse("book")
+#'         showCollapse("trigger")
 #'       })
 #'     }
 #'   )
 #' }
 #'
-collapse <- function(id, label, content, context = "secondary", ...) {
-  if (!re(context, "primary|secondary|success|info|warning|danger|light|dark", FALSE)) {
-    stop(
-      "invalid `collapse` argument, `context` must be one of ",
-      '"primary", "secondary", "success", "info", "warning", "danger", ',
-      '"light", or "dark"',
-      call. = FALSE
-    )
-  }
+collapse <- function(button, content, ...) {
+  id <- ID("collapse")
 
   tags$div(
     `aria-expanded` = "false",
-    tags$p(
-      buttonInput(
-        id = NULL,
-        label = label,
-        context = context,
-        `data-toggle` = "collapse",
-        `data-target` = paste0("#", id),
-        `aria-controls` = id
-      )
+    tagAppendAttributes(
+      button,
+      `data-toggle` = "collapse",
+      `data-target` = paste0("#", id),
+      `aria-controls` = id
     ),
     tags$div(
       class = "collapse",
