@@ -20386,6 +20386,9 @@ a.text-grey-900:hover, a.text-grey-900:focus {
   .flatpickr-calendar .hasWeeks .flatpickr-days {
     border-right: 0; }
 
+.dull-dropdown-input a {
+  cursor: pointer; }
+
 .fa-spin.pause,
 .fa-pulse.pause {
   animation-play-state: paused; }
