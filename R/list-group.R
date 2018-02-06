@@ -27,14 +27,6 @@
 #'   defaults to `NULL`. See `badgeOutput` for more information on rendering
 #'   badges.
 #'
-#' @param state One of `"valid"`, `"warning"`, or `"danger"` indicating the
-#'   state of the list group items. If `"valid"` then the visual context is
-#'   removed.
-#'
-#' @param validate One or more of `values` indicating which list group items
-#'   to mark with `state`, defaults to `NULL`. If `NULL` then the all list group
-#'   items are updated.
-#'
 #' @param disabled,enabled One or more of `values` indicating which list group
 #'   items to disable or enable, defaults to `NULL`. If `NULL` then
 #'   `disableListGroup` and `enableListGroup` will disable or enable all the

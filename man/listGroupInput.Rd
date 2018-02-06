@@ -56,14 +56,6 @@ element.}
 increment, defaults to \code{NULL}. If \code{NULL} then all list group items are
 incremented. If the list group items do not include badges there is no
 effect.}
-
-\item{state}{One of \code{"valid"}, \code{"warning"}, or \code{"danger"} indicating the
-state of the list group items. If \code{"valid"} then the visual context is
-removed.}
-
-\item{validate}{One or more of \code{values} indicating which list group items
-to mark with \code{state}, defaults to \code{NULL}. If \code{NULL} then the all list group
-items are updated.}
 }
 \description{
 A way of handling and outlining content as a list. List groups function
