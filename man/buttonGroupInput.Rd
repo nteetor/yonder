@@ -54,7 +54,7 @@ if (interactive()) {
             id = "bg1",
             labels = c("Button 1", "Button 2", "Button 3")
           ) \%>\%
-            background("light-blue", -3) \%>\%
+            background("blue", -3) \%>\%
             margins(3)
         ),
         col(

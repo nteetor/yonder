@@ -129,10 +129,10 @@ if (interactive()) {
             id = "badge",
             content = 0
           ) \%>\%
-            background("lime", -4)
+            background("green")
         )
       ) \%>\%
-        background("amber", 2)
+        background("amber")
     ),
     server = function(input, output) {
       output$badge <- renderBadge({

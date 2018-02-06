@@ -29,7 +29,7 @@
 #'         col(
 #'           progressOutput(
 #'             bar("clicks", 0, striped = TRUE) %>%
-#'               background("light-blue")
+#'               background("blue", 3)
 #'           )
 #'         )
 #'       )

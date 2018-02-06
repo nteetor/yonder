@@ -1,11 +1,11 @@
 // background colors
 
-@each $key, $color-map in $colors {
-  // ../abstracts/_mixins.scss
-  @include bg-variants('.bg-#{singular($key)}', $color-map);
-}
+// @each $key, $color-map in $dull-colors {
+//   // ../abstracts/_mixins.scss
+//   @include bg-variants-2('.bg-#{singular($key)}', $color-map);
+// }
 
-.bg-white {
-  background-color: #fff;
-  color: #000;
-}
+// .bg-white {
+//   background-color: #fff;
+//   color: #000;
+// }

@@ -37,7 +37,7 @@ if (interactive()) {
       row(
         col(
           checkbarInput(
-            id = "lightblue",
+            id = "blue",
             choices = c(
               "Check 1",
               "Check 2",
@@ -45,7 +45,7 @@ if (interactive()) {
             ),
             selected = "Check 1"
           ) \%>\%
-            background("light-blue", 1) \%>\%
+            background("blue", 1) \%>\%
             margins(2),
          checkbarInput(
             id = "indigo",
@@ -68,7 +68,7 @@ if (interactive()) {
     server = function(input, output) {
       output$values <- renderPrint({
         list(
-          `light-blue` = input$lightblue,
+          `blue` = input$blue,
           indigo = input$indigo
         )
       })

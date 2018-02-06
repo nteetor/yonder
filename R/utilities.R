@@ -1,22 +1,22 @@
 .colors <- c(
   "red",
-  "pink",
+  # "pink",
   "purple",
-  "deep-purple",
+  # "deep-purple",
   "indigo",
   "blue",
-  "light-blue",
+  # "light-blue",
   "cyan",
   "teal",
   "green",
-  "light-green",
-  "lime",
+  # "light-green",
+  # "lime",
   "yellow",
   "amber",
   "orange",
-  "deep-orange",
+  # "deep-orange",
   "brown",
-  "blue-grey",
+  # "blue-grey",
   "grey"
 )
 
@@ -77,6 +77,45 @@ font <- function(tag, weight = NULL, style = NULL) {
   tag
 }
 
+colorUtility <- function(tag, base, color, tone) {
+  if (tagHasClass(tag, "btn-group")) {
+    tag$children[[1]] <- lapply(
+      tag$children[[1]],
+      colorUtility,
+      base = base,
+      color = color,
+      tone = tone
+    )
+
+    return(tag)
+  }
+
+  if (tagHasClass(tag, "alert")) {
+    base <- "alert"
+  } else if (tagHasClass(tag, "badge")) {
+    base <- "badge"
+  } else if (tagHasClass(tag, "btn")) {
+    base <- "btn"
+  } else if (tagHasClass(tag, "list-group-item")) {
+    base <- "list-group-item"
+  }
+
+  tag <- tagDropClass(tag, paste0(base, "-[a-z-]+(-[1-9]00)?"))
+
+  tone <- switch(
+    as.character(tone),
+    `0` = 0,
+    `-4` = 900, `-3` = 800, `-2` = 700, `-1` = 600, `1` = 400, `2` = 300,
+    `3` = 200, `4` = 100
+  )
+
+  tone <- if (tone) paste0("-", tone) else ""
+
+  tag <- tagEnsureClass(tag, paste0(base, "-", color, tone))
+
+  tag
+}
+
 #' Chance text, background, or border color
 #'
 #' The `text`, `background`, and `border` utility functions may be used to
@@ -100,18 +139,72 @@ font <- function(tag, weight = NULL, style = NULL) {
 #'   text("yellow", 3)
 #'
 #' if (interactive()) {
+#'   opts <- c(
+#'     "red", "purple", "indigo", "blue", "cyan", "teal", "green", "yellow",
+#'     "amber", "orange", "brown", "grey"
+#'   )
+#'
 #'   shinyApp(
 #'     ui = container(
 #'       row(
 #'         col(
-#'           div("hello hello") %>%
-#'             text("amber", 4) %>%
-#'             background("blue-grey", -4)
+#'           h5("Background"),
+#'           selectInput(
+#'             id = "bg",
+#'             options = opts,
+#'             selected = sample(opts, 1)
+#'           ),
+#'           rangeInput(
+#'             id = "bgtone",
+#'             min = -4,
+#'             max = 4,
+#'             default = 0,
+#'             step = 1
+#'           ) %>%
+#'             margins(c(2, 0, 2, 0)),
+#'           h5("Border"),
+#'           selectInput(
+#'             id = "border",
+#'             options = opts,
+#'             selected = sample(opts, 1)
+#'           ),
+#'           rangeInput(
+#'             id = "bordertone",
+#'             min = -4,
+#'             max = 4,
+#'             default = 0,
+#'             step = 1
+#'           ) %>%
+#'             margins(c(2, 0, 2, 0)),
+#'           h5("Text color"),
+#'           selectInput(
+#'             id = "text",
+#'             options = opts,
+#'             selected = sample(opts, 1)
+#'           ),
+#'           rangeInput(
+#'             id = "texttone",
+#'             min = -4,
+#'             max = 4,
+#'             default = 0,
+#'             step = 1
+#'           ) %>%
+#'             margins(c(2, 0, 2, 0))
+#'         ),
+#'         col(
+#'           uiOutput("preview") %>%
+#'             margins(3) %>%
+#'             padding(3)
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'
+#'       output$preview <- renderUI({
+#'         d3("Hello, world!") %>%
+#'           background(input$bg, input$bgtone) %>%
+#'           border(input$border, input$bordertone) %>%
+#'           text(input$text, input$texttone)
+#'       })
 #'     }
 #'   )
 #' }
@@ -133,17 +226,7 @@ background <- function(tag, color, tone = 0) {
     )
   }
 
-  tag <- tagDropClass(tag, paste0("bg-", .colors, collapse = "|"))
-  tag <- tagEnsureClass(tag, paste0("bg-", color))
-
-  if (tone != 0) {
-    tag <- tagEnsureClass(
-      tag,
-      paste0(if (tone < 0) "darken" else "lighten-", tone)
-    )
-  }
-
-  tag
+  colorUtility(tag, "bg", color, tone)
 }
 
 #' @family utilities
@@ -152,7 +235,7 @@ background <- function(tag, color, tone = 0) {
 text <- function(tag, color, tone = 0) {
   if (!(color %in% .colors)) {
     stop(
-      "invalid `color` argument, `color` is invalid, see ?background ",
+      "invalid `text` argument, `color` is invalid, see ?background ",
       "details for possible colors",
       call. = FALSE
     )
@@ -160,23 +243,13 @@ text <- function(tag, color, tone = 0) {
 
   if (!(tone %in% -4:4)) {
     stop(
-      "invalid `color` argument, `tone` must be an integer between -4 ",
+      "invalid `text` argument, `tone` must be an integer between -4 ",
       "and 4",
       call. = FALSE
     )
   }
 
-  tag <- tagDropClass(tag, paste0("text-", .colors, collapse = "|"))
-  tag <- tagEnsureClass(tag, paste0("text-", color))
-
-  if (tone != 0) {
-    tag <- tagEnsureClass(
-      tag,
-      paste0("text-", if (tone < 0) "darken" else "lighten-", tone)
-    )
-  }
-
-  tag
+  colorUtility(tag, "text", color, tone)
 }
 
 #' @family utilities
@@ -220,17 +293,7 @@ border <- function(tag, color, tone = 0) {
 
   tag <- tagEnsureClass(tag, "border")
 
-  tag <- tagDropClass(tag, paste0("border-", .colors, collapse = "|"))
-  tag <- tagEnsureClass(tag, paste0("border-", color))
-
-  if (tone != 0) {
-    tag <- tagEnsureClass(
-      tag,
-      paste0("border-", if (tone < 0) "darken" else "lighten-", tone)
-    )
-  }
-
-  tag
+  colorUtility(tag, "border", color, tone)
 }
 
 #' Float an element

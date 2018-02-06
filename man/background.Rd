@@ -33,18 +33,72 @@ tags$div("light text, dark background") \%>\%
   text("yellow", 3)
 
 if (interactive()) {
+  opts <- c(
+    "red", "purple", "indigo", "blue", "cyan", "teal", "green", "yellow",
+    "amber", "orange", "brown", "grey"
+  )
+
   shinyApp(
     ui = container(
       row(
         col(
-          div("hello hello") \%>\%
-            text("amber", 4) \%>\%
-            background("blue-grey", -4)
+          h5("Background"),
+          selectInput(
+            id = "bg",
+            options = opts,
+            selected = sample(opts, 1)
+          ),
+          rangeInput(
+            id = "bgtone",
+            min = -4,
+            max = 4,
+            default = 0,
+            step = 1
+          ) \%>\%
+            margins(c(2, 0, 2, 0)),
+          h5("Border"),
+          selectInput(
+            id = "border",
+            options = opts,
+            selected = sample(opts, 1)
+          ),
+          rangeInput(
+            id = "bordertone",
+            min = -4,
+            max = 4,
+            default = 0,
+            step = 1
+          ) \%>\%
+            margins(c(2, 0, 2, 0)),
+          h5("Text color"),
+          selectInput(
+            id = "text",
+            options = opts,
+            selected = sample(opts, 1)
+          ),
+          rangeInput(
+            id = "texttone",
+            min = -4,
+            max = 4,
+            default = 0,
+            step = 1
+          ) \%>\%
+            margins(c(2, 0, 2, 0))
+        ),
+        col(
+          uiOutput("preview") \%>\%
+            margins(3) \%>\%
+            padding(3)
         )
       )
     ),
     server = function(input, output) {
-
+      output$preview <- renderUI({
+        d3("Hello, world!") \%>\%
+          background(input$bg, input$bgtone) \%>\%
+          border(input$border, input$bordertone) \%>\%
+          text(input$text, input$texttone)
+      })
     }
   )
 }

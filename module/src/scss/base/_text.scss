@@ -1,5 +1,5 @@
 // text color
 
-@each $key, $color-map in $colors {
-  @include color-variants('.text-#{singular($key)}', $color-map);
-}
+//@each $key, $color-map in $dull-colors {
+//  @include color-variants('.text-#{singular($key)}', $color-map);
+//}

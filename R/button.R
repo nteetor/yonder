@@ -116,10 +116,10 @@
 #'             id = "badge",
 #'             content = 0
 #'           ) %>%
-#'             background("lime", -4)
+#'             background("green")
 #'         )
 #'       ) %>%
-#'         background("amber", 2)
+#'         background("amber")
 #'     ),
 #'     server = function(input, output) {
 #'       output$badge <- renderBadge({
@@ -135,8 +135,7 @@ buttonInput <- function(id, label, block = FALSE, disabled = FALSE, ...) {
       "dull-button-input",
       "dull-input",
       "btn",
-      if (block) "btn-block",
-      "bg-grey"
+      if (block) "btn-block"
     ),
     type = "button",
     role = "button",
@@ -263,7 +262,7 @@ submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
 #'             id = "bg1",
 #'             labels = c("Button 1", "Button 2", "Button 3")
 #'           ) %>%
-#'             background("light-blue", -3) %>%
+#'             background("blue", -3) %>%
 #'             margins(3)
 #'         ),
 #'         col(
@@ -298,7 +297,7 @@ buttonGroupInput <- function(id, labels, values = labels) {
   }
 
   tags$div(
-    class = "dull-button-group-input btn-group bg-grey",
+    class = "dull-button-group-input btn-group",
     id = id,
     role = "group",
     Map(

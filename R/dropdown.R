@@ -72,7 +72,7 @@
 #'             items = c("disable", "enable", "disable some", "enable some"),
 #'             dividers = "disable some"
 #'           ) %>%
-#'             background("blue-grey")
+#'             background("grey", 2)
 #'         ),
 #'         col(
 #'           dropdownInput(

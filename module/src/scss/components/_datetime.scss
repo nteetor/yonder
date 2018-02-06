@@ -20,9 +20,9 @@
   box-sizing: border-box;
   -ms-touch-action: manipulation;
   touch-action: manipulation;
-  background: #fff;
-  -webkit-box-shadow: 1px 0 0 #eee, -1px 0 0 #eee, 0 1px 0 #eee, 0 -1px 0 #eee, 0 3px 13px rgba(0, 0, 0, 0.08);
-  box-shadow: 1px 0 0 #eee, -1px 0 0 #eee, 0 1px 0 #eee, 0 -1px 0 #eee, 0 3px 13px rgba(0, 0, 0, 0.08);
+  background: $white;
+  -webkit-box-shadow: 1px 0 0 $gray-200, -1px 0 0 $gray-200, 0 1px 0 $gray-200, 0 -1px 0 $gray-200, 0 3px 13px rgba($black, 0.08);
+  box-shadow: 1px 0 0 $gray-200, -1px 0 0 $gray-200, 0 1px 0 $gray-200, 0 -1px 0 $gray-200, 0 3px 13px rgba($black, 0.08);
 
   &.open,
   &.inline {
@@ -81,7 +81,7 @@
     &.hasTime {
       .flatpickr-time {
         height: 40px;
-        border-top: 1px solid #eee;
+        border-top: 1px solid $gray-200;
       }
     }
   }
@@ -130,11 +130,11 @@
   }
 
   &.arrowTop::before {
-    border-bottom-color: #eee;
+    border-bottom-color: $gray-200;
   }
 
   &.arrowTop::after {
-    border-bottom-color: #fff;
+    border-bottom-color: $white;
   }
 
   &.arrowBottom {
@@ -144,11 +144,11 @@
     }
 
     &::before {
-      border-top-color: #eee;
+      border-top-color: $gray-200;
     }
 
     &::after {
-      border-top-color: #fff;
+      border-top-color: $white;
     }
   }
 
@@ -163,8 +163,8 @@
 
   .flatpickr-month {
     background: transparent;
-    color: #3c3f40;
-    fill: #3c3f40;
+    color: $gray-800;
+    fill: $gray-800;
     height: 28px;
     line-height: 1;
     text-align: center;
@@ -222,10 +222,10 @@
     }
 
     &:hover {
-      color: #f64747;
+      color: $red;
 
       svg {
-        fill: #f64747;
+        fill: $red;
       }
     }
   }
@@ -257,7 +257,7 @@
       line-height: 50%;
       opacity: 0;
       cursor: pointer;
-      border: 1px solid rgba(64, 72, 72, 0.05);
+      border: 1px solid rgba($gray-800, 0.05);
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
 
@@ -266,16 +266,16 @@
         height: auto;
 
         path {
-          fill: rgba(60, 63, 64, 0.5);
+          fill: rgba($gray-800, 0.5);
         }
       }
 
       &:hover {
-        background: rgba(0, 0, 0, 0.1);
+        background: rgba($black, 0.1);
       }
 
       &:active {
-        background: rgba(0, 0, 0, 0.2);
+        background: rgba($black, 0.2);
       }
 
       &::after {
@@ -293,7 +293,7 @@
       &.arrowUp::after {
         border-left: 4px solid transparent;
         border-right: 4px solid transparent;
-        border-bottom: 4px solid rgba(64, 72, 72, 0.6);
+        border-bottom: 4px solid rgba($gray-800, 0.6);
       }
 
       &.arrowDown {
@@ -302,13 +302,13 @@
         &::after {
           border-left: 4px solid transparent;
           border-right: 4px solid transparent;
-          border-top: 4px solid rgba(64, 72, 72, 0.6);
+          border-top: 4px solid rgba($gray-800, 0.6);
         }
       }
     }
 
     &:hover {
-      background: rgba(0, 0, 0, 0.05);
+      background: rgba($black, 0.05);
 
       span {
         opacity: 1;
@@ -370,7 +370,7 @@
         padding: 0;
 
         &:hover {
-          background: rgba(0, 0, 0, 0.05);
+          background: rgba($black, 0.05);
         }
       }
     }
@@ -382,11 +382,11 @@
 
       span {
         &.arrowUp::after {
-          border-bottom-color: #3c3f40;
+          border-bottom-color: $gray-800;
         }
 
         &.arrowDown::after {
-          border-top-color: #3c3f40;
+          border-top-color: $gray-800;
         }
       }
     }
@@ -445,7 +445,7 @@
     cursor: default;
     font-size: 90%;
     background: transparent;
-    color: rgba(0, 0, 0, 0.54);
+    color: rgba($black, 0.54);
     line-height: 1;
     margin: 0;
     text-align: center;
@@ -536,7 +536,7 @@
     border-radius: 150px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
-    color: #404848;
+    color: $gray-800;
     cursor: pointer;
     font-weight: 400;
     width: 14.2857143%;
@@ -570,19 +570,19 @@
   .flatpickr-day.nextMonthDay:focus {
     cursor: pointer;
     outline: 0;
-    background: #e9e9e9;
-    border-color: #e9e9e9;
+    background: $gray-300;
+    border-color: $gray-300;
   }
 
   .flatpickr-day.today {
-    border-color: #f64747;
+    border-color: $red;
   }
 
   .flatpickr-day.today:hover,
   .flatpickr-day.today:focus {
-    border-color: #f64747;
-    background: #f64747;
-    color: #fff;
+    border-color: $red;
+    background: $red;
+    color: $white;
   }
 
   .flatpickr-day.selected,
@@ -603,11 +603,11 @@
   .flatpickr-day.selected.nextMonthDay,
   .flatpickr-day.startRange.nextMonthDay,
   .flatpickr-day.endRange.nextMonthDay {
-    background: #4f99ff;
+    background: $blue;
     -webkit-box-shadow: none;
     box-shadow: none;
-    color: #fff;
-    border-color: #4f99ff;
+    color: $white;
+    border-color: $blue;
   }
 
   .flatpickr-day.selected.startRange,
@@ -625,8 +625,8 @@
   .flatpickr-day.selected.startRange + .endRange,
   .flatpickr-day.startRange.startRange + .endRange,
   .flatpickr-day.endRange.startRange + .endRange {
-    -webkit-box-shadow: -10px 0 0 #4f99ff;
-    box-shadow: -10px 0 0 #4f99ff;
+    -webkit-box-shadow: -10px 0 0 $blue;
+    box-shadow: -10px 0 0 $blue;
   }
 
   .flatpickr-day.selected.startRange.endRange,
@@ -637,8 +637,8 @@
 
   .flatpickr-day.inRange {
     border-radius: 0;
-    -webkit-box-shadow: -5px 0 0 #e9e9e9, 5px 0 0 #e9e9e9;
-    box-shadow: -5px 0 0 #e9e9e9, 5px 0 0 #e9e9e9;
+    -webkit-box-shadow: -5px 0 0 $gray-300, 5px 0 0 $gray-300;
+    box-shadow: -5px 0 0 $gray-300, 5px 0 0 $gray-300;
   }
 
   .flatpickr-day.disabled,
@@ -648,22 +648,22 @@
   .flatpickr-day.notAllowed,
   .flatpickr-day.notAllowed.prevMonthDay,
   .flatpickr-day.notAllowed.nextMonthDay {
-    color: rgba(64, 72, 72, 0.3);
+    color: rgba($gray-800, 0.3);
     background: transparent;
-    border-color: #e9e9e9;
+    border-color: $gray-300;
     cursor: default;
   }
 
   .flatpickr-day.disabled,
   .flatpickr-day.disabled:hover {
     cursor: not-allowed;
-    color: rgba(64, 72, 72, 0.1);
+    color: rgba($gray-800, 0.1);
   }
 
   .flatpickr-day.week.selected {
     border-radius: 0;
-    -webkit-box-shadow: -5px 0 0 #4f99ff, 5px 0 0 #4f99ff;
-    box-shadow: -5px 0 0 #4f99ff, 5px 0 0 #4f99ff;
+    -webkit-box-shadow: -5px 0 0 $blue, 5px 0 0 $blue;
+    box-shadow: -5px 0 0 $blue, 5px 0 0 $blue;
   }
 
   .rangeMode .flatpickr-day {
@@ -677,8 +677,8 @@
 
   .flatpickr-weekwrapper .flatpickr-weeks {
     padding: 0 12px;
-    -webkit-box-shadow: 1px 0 0 #eee;
-    box-shadow: 1px 0 0 #eee;
+    -webkit-box-shadow: 1px 0 0 $gray-200;
+    box-shadow: 1px 0 0 $gray-200;
   }
 
   .flatpickr-weekwrapper .flatpickr-weekday {
@@ -749,11 +749,11 @@
   }
 
   .flatpickr-time .numInputWrapper span.arrowUp::after {
-    border-bottom-color: #404848;
+    border-bottom-color: $gray-800;
   }
 
   .flatpickr-time .numInputWrapper span.arrowDown::after {
-    border-top-color: #404848;
+    border-top-color: $gray-800;
   }
 
   .flatpickr-time.hasSeconds .numInputWrapper {
@@ -776,7 +776,7 @@
     height: inherit;
     line-height: inherit;
     cursor: pointer;
-    color: #404848;
+    color: $gray-800;
     font-size: 14px;
     position: relative;
     -webkit-box-sizing: border-box;
@@ -803,7 +803,7 @@
     display: inline-block;
     float: left;
     line-height: inherit;
-    color: #404848;
+    color: $gray-800;
     font-weight: bold;
     width: 2%;
     -webkit-user-select: none;
@@ -825,7 +825,7 @@
 
   .flatpickr-time .flatpickr-am-pm:hover,
   .flatpickr-time .flatpickr-am-pm:focus {
-    background: #f3f3f3;
+    background: $gray-100;
   }
 
   .flatpickr-input[readonly] {
@@ -1009,7 +1009,7 @@
   span.flatpickr-day.prevMonthDay,
   span.flatpickr-day.nextMonthDay {
     border-radius: 0 !important;
-    border: 1px solid #e9e9e9;
+    border: 1px solid $gray-300;
     max-width: none;
     border-right-color: transparent;
   }
@@ -1041,16 +1041,16 @@
   span.flatpickr-day.today:not(.selected),
   span.flatpickr-day.prevMonthDay.today:not(.selected),
   span.flatpickr-day.nextMonthDay.today:not(.selected) {
-    border-color: #e9e9e9;
+    border-color: $gray-200;
     border-right-color: transparent;
     border-top-color: transparent;
-    border-bottom-color: #f64747;
+    border-bottom-color: $red;
   }
 
   span.flatpickr-day.today:not(.selected):hover,
   span.flatpickr-day.prevMonthDay.today:not(.selected):hover,
   span.flatpickr-day.nextMonthDay.today:not(.selected):hover {
-    border: 1px solid #f64747;
+    border: 1px solid $red;
   }
 
   span.flatpickr-day.startRange,
@@ -1059,7 +1059,7 @@
   span.flatpickr-day.endRange,
   span.flatpickr-day.prevMonthDay.endRange,
   span.flatpickr-day.nextMonthDay.endRange {
-    border-color: #4f99ff;
+    border-color: $blue;
   }
 
   span.flatpickr-day.today,

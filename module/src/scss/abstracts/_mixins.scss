@@ -9,109 +9,109 @@
 }
 
 // background
-@mixin bg-variants($parent, $color-map) {
-  @include bg-primary($parent, $color-map);
-  @include bg-lighten($parent, $color-map);
-  @include bg-darken($parent, $color-map);
-}
+// @mixin bg-variants-2($parent, $color-map) {
+//   @include bg-primary($parent, $color-map);
+//   @include bg-lighten($parent, $color-map);
+//   @include bg-darken($parent, $color-map);
+// }
 
-/*! based on bootstrap v4 scss/utilities/_background-variant.scss */
-@mixin bg-util($parent, $color) {
-  #{$parent} {
-    background-color: $color;
-    color: color-yiq($color);
-  }
+// /*! based on bootstrap v4 scss/utilities/_background-variant.scss */
+// @mixin bg-util($parent, $color) {
+//   #{$parent} {
+//     background-color: $color;
+//     color: color-yiq($color);
+//   }
 
-  a#{$parent},
-  button#{$parent} {
-    &:hover,
-    &:focus {
-      background-color: darken($color, 10%);
-      color: color-yiq(darken($color, 10%));
-    }
-  }
-}
+//   a#{$parent},
+//   button#{$parent} {
+//     &:hover,
+//     &:focus {
+//       background-color: darken($color, 10%);
+//       color: color-yiq(darken($color, 10%));
+//     }
+//   }
+// }
 
-@mixin bg-primary($parent, $color-map) {
-  @include bg-util('#{$parent}', map-get($color-map, '500'));
-}
+// @mixin bg-primary($parent, $color-map) {
+//   @include bg-util('#{$parent}', map-get($color-map, '500'));
+// }
 
-@mixin bg-lighten($parent, $color-map) {
-  @include bg-util('#{$parent}.lighten-4', map-get($color-map, '100'));
-  @include bg-util('#{$parent}.lighten-3', map-get($color-map, '200'));
-  @include bg-util('#{$parent}.lighten-2', map-get($color-map, '300'));
-  @include bg-util('#{$parent}.lighten-1', map-get($color-map, '400'));
-}
+// @mixin bg-lighten($parent, $color-map) {
+//   @include bg-util('#{$parent}.lighten-4', map-get($color-map, '100'));
+//   @include bg-util('#{$parent}.lighten-3', map-get($color-map, '200'));
+//   @include bg-util('#{$parent}.lighten-2', map-get($color-map, '300'));
+//   @include bg-util('#{$parent}.lighten-1', map-get($color-map, '400'));
+// }
 
-@mixin bg-darken($parent, $color-map) {
-  @include bg-util('#{$parent}.darken-4', map-get($color-map, '900'));
-  @include bg-util('#{$parent}.darken-3', map-get($color-map, '800'));
-  @include bg-util('#{$parent}.darken-2', map-get($color-map, '700'));
-  @include bg-util('#{$parent}.darken-1', map-get($color-map, '600'));
-}
+// @mixin bg-darken($parent, $color-map) {
+//   @include bg-util('#{$parent}.darken-4', map-get($color-map, '900'));
+//   @include bg-util('#{$parent}.darken-3', map-get($color-map, '800'));
+//   @include bg-util('#{$parent}.darken-2', map-get($color-map, '700'));
+//   @include bg-util('#{$parent}.darken-1', map-get($color-map, '600'));
+// }
 
-// borders
-@mixin border-variants($parent, $color-map) {
-  @include border-util($parent, map-get($color-map, '500'));
-  @include border-lighten($parent, $color-map);
-  @include border-darken($parent, $color-map);
-}
+// // borders
+// @mixin border-variants($parent, $color-map) {
+//   @include border-util($parent, map-get($color-map, '500'));
+//   @include border-lighten($parent, $color-map);
+//   @include border-darken($parent, $color-map);
+// }
 
-@mixin border-util($parent, $color) {
-  #{$parent} {
-    border-color: $color !important;
+// @mixin border-util($parent, $color) {
+//   #{$parent} {
+//     border-color: $color !important;
 
-    &:hover,
-    &:focus {
-      border-color: darken($color, 10%) !important;
-    }
-  }
-}
-
-
-@mixin border-lighten($parent, $color-map) {
-  @include border-util('#{$parent}.border-lighten-4', map-get($color-map, '100'));
-  @include border-util('#{$parent}.border-lighten-3', map-get($color-map, '200'));
-  @include border-util('#{$parent}.border-lighten-2', map-get($color-map, '300'));
-  @include border-util('#{$parent}.border-lighten-1', map-get($color-map, '400'));
-}
-
-@mixin border-darken($parent, $color-map) {
-  @include border-util('#{$parent}.border-darken-4', map-get($color-map, '900'));
-  @include border-util('#{$parent}.border-darken-3', map-get($color-map, '800'));
-  @include border-util('#{$parent}.border-darken-2', map-get($color-map, '700'));
-  @include border-util('#{$parent}.border-darken-1', map-get($color-map, '600'));
-}
-
-// text colors
-@mixin color-variants($parent, $color-map) {
-  @include color-util('#{$parent}', map-get($color-map, '500'));
-  @include color-lighten('#{$parent}', $color-map);
-  @include color-darken('#{$parent}', $color-map);
-}
-
-@mixin color-util($parent, $color) {
-  #{$parent} {
-    color: $color;
-
-    &:hover,
-    &:focus {
-      color: darken($color, 10%);
-    }
-  }
-}
+//     &:hover,
+//     &:focus {
+//       border-color: darken($color, 10%) !important;
+//     }
+//   }
+// }
 
 
-@mixin color-lighten($parent, $color-map) {
-  @include color-util('#{$parent}.text-lighten-4', map-get($color-map, '100'));
-  @include color-util('#{$parent}.text-lighten-3', map-get($color-map, '200'));
-  @include color-util('#{$parent}.text-lighten-2', map-get($color-map, '300'));
-  @include color-util('#{$parent}.text-lighten-1', map-get($color-map, '400'));
-}
+// @mixin border-lighten($parent, $color-map) {
+//   @include border-util('#{$parent}.border-lighten-4', map-get($color-map, '100'));
+//   @include border-util('#{$parent}.border-lighten-3', map-get($color-map, '200'));
+//   @include border-util('#{$parent}.border-lighten-2', map-get($color-map, '300'));
+//   @include border-util('#{$parent}.border-lighten-1', map-get($color-map, '400'));
+// }
 
-@mixin color-darken($parent, $color-map) {
-  @include color-util('#{$parent}.text-darken-4', map-get($color-map, '900'));
-  @include color-util('#{$parent}.text-darken-3', map-get($color-map, '800'));
-  @include color-util('#{$parent}.text-darken-2', map-get($color-map, '700'));
-  @include color-util('#{$parent}.text-darken-1', map-get($color-map, '600'));
-}
+// @mixin border-darken($parent, $color-map) {
+//   @include border-util('#{$parent}.border-darken-4', map-get($color-map, '900'));
+//   @include border-util('#{$parent}.border-darken-3', map-get($color-map, '800'));
+//   @include border-util('#{$parent}.border-darken-2', map-get($color-map, '700'));
+//   @include border-util('#{$parent}.border-darken-1', map-get($color-map, '600'));
+// }
+
+// // text colors
+// @mixin color-variants($parent, $color-map) {
+//   @include color-util('#{$parent}', map-get($color-map, '500'));
+//   @include color-lighten('#{$parent}', $color-map);
+//   @include color-darken('#{$parent}', $color-map);
+// }
+
+// @mixin color-util($parent, $color) {
+//   #{$parent} {
+//     color: $color;
+
+//     &:hover,
+//     &:focus {
+//       color: darken($color, 10%);
+//     }
+//   }
+// }
+
+
+// @mixin color-lighten($parent, $color-map) {
+//   @include color-util('#{$parent}.text-lighten-4', map-get($color-map, '100'));
+//   @include color-util('#{$parent}.text-lighten-3', map-get($color-map, '200'));
+//   @include color-util('#{$parent}.text-lighten-2', map-get($color-map, '300'));
+//   @include color-util('#{$parent}.text-lighten-1', map-get($color-map, '400'));
+// }
+
+// @mixin color-darken($parent, $color-map) {
+//   @include color-util('#{$parent}.text-darken-4', map-get($color-map, '900'));
+//   @include color-util('#{$parent}.text-darken-3', map-get($color-map, '800'));
+//   @include color-util('#{$parent}.text-darken-2', map-get($color-map, '700'));
+//   @include color-util('#{$parent}.text-darken-1', map-get($color-map, '600'));
+// }

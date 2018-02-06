@@ -9,30 +9,6 @@
   @return map-get(color-map($set), $key);
 }
 
-// get variant
-// @function variant($key: '500') {
-//   @return map-get(
-//     ('50': 'lighten-5',
-//      '100': 'lighten-4',
-//      '200': 'lighten-3',
-//      '300': 'lighten-4
-// }
-
-// color contrast
-@function color-yiq($color) {
-  $r: red($color);
-  $g: green($color);
-  $b: blue($color);
-
-  $yiq: (($r * 299) + ($g * 587) + ($b * 114)) / 1000;
-
-  @if ($yiq >= 150) {
-    @return $gray-900;
-  } @else {
-    @return $white;
-  }
-}
-
 // remove trailing "s"
 @function singular($string) {
   @if (str-slice($string, -1) == 's') {

@@ -27,7 +27,7 @@
 #'       row(
 #'         col(
 #'           checkbarInput(
-#'             id = "lightblue",
+#'             id = "blue",
 #'             choices = c(
 #'               "Check 1",
 #'               "Check 2",
@@ -35,7 +35,7 @@
 #'             ),
 #'             selected = "Check 1"
 #'           ) %>%
-#'             background("light-blue", 1) %>%
+#'             background("blue", 1) %>%
 #'             margins(2),
 #'          checkbarInput(
 #'             id = "indigo",
@@ -58,7 +58,7 @@
 #'     server = function(input, output) {
 #'       output$values <- renderPrint({
 #'         list(
-#'           `light-blue` = input$lightblue,
+#'           `blue` = input$blue,
 #'           indigo = input$indigo
 #'         )
 #'       })
@@ -110,8 +110,7 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL) {
     class = collate(
       "dull-checkbar-input",
       if (length(choices) > 1) "btn-group",
-      "btn-group-toggle",
-      "bg-grey"
+      "btn-group-toggle"
     ),
     `data-toggle` = "buttons",
     id = id,
@@ -150,7 +149,7 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL) {
   selected <- match2(selected, values)
 
   tags$div(
-    class = "dull-radiobar-input btn-group btn-group-toggle bg-grey",
+    class = "dull-radiobar-input btn-group btn-group-toggle",
     id = id,
     `data-toggle` = "buttons",
     lapply(
