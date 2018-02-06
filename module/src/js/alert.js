@@ -12,7 +12,7 @@ Shiny.addCustomMessageHandler("dull:alert", function(msg) {
         "aria-label": "Close"
       }).append(
         $("<span>", {
-          "class": "fa fa-times-rectangle",
+          "class": "fas fa-window-close",
           "aria-hidden": true
         })
       )
