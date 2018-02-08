@@ -1,18 +1,3 @@
-.colors <- c(
-  "red",
-  "purple",
-  "indigo",
-  "blue",
-  "cyan",
-  "teal",
-  "green",
-  "yellow",
-  "amber",
-  "orange",
-  "brown",
-  "grey"
-)
-
 #' Text font and styles
 #'
 #' The `font` utility function applies Bootstrap classes to a tag element.
@@ -70,6 +55,20 @@ font <- function(tag, weight = NULL, style = NULL) {
   tag
 }
 
+.colors <- c(
+  "red",
+  "purple",
+  "indigo",
+  "blue",
+  "cyan",
+  "teal",
+  "green",
+  "yellow",
+  "amber",
+  "orange",
+  "grey"
+)
+
 colorUtility <- function(tag, base, color, tone) {
   if (tagHasClass(tag, "btn-group")) {
     tag$children[[1]] <- lapply(
@@ -98,8 +97,8 @@ colorUtility <- function(tag, base, color, tone) {
   tone <- switch(
     as.character(tone),
     `0` = 0,
-    `-4` = 900, `-3` = 800, `-2` = 700, `-1` = 600, `1` = 400, `2` = 300,
-    `3` = 200, `4` = 100
+    `-2` = 900, `-1` = 700,
+    `1` = 300, `2` = 100
   )
 
   tone <- if (tone) paste0("-", tone) else ""
@@ -119,17 +118,17 @@ colorUtility <- function(tag, base, color, tone) {
 #' @param color A character string specifying the background color, see details
 #'   for all possible values.
 #'
-#' @param tone An integer -4 through 4 specifying how much to darken or lighten
-#'   a color, defaults to 0, in which case the base color is not modified.
-#'   Negative values result in darker tones, whereas positive values create a
-#'   lighter tone.
+#' @param tone An integer between -2 and 2 specifying to use a darker or lighter
+#'   tone of `color`. Negative values indicate darker tones and positive values
+#'   indicate lighter tones. Defaults to 0, in which case the base color is
+#'   unchanged.
 #'
 #' @family utilities
 #' @export
 #' @examples
 #' tags$div("light text, dark background") %>%
-#'   background("grey", -4) %>%
-#'   text("yellow", 3)
+#'   background("grey", -2) %>%
+#'   text("yellow", +1)
 #'
 #' if (interactive()) {
 #'   opts <- c(
@@ -149,8 +148,8 @@ colorUtility <- function(tag, base, color, tone) {
 #'           ),
 #'           rangeInput(
 #'             id = "bgtone",
-#'             min = -4,
-#'             max = 4,
+#'             min = -2,
+#'             max = 2,
 #'             default = 0,
 #'             step = 1
 #'           ) %>%
@@ -163,8 +162,8 @@ colorUtility <- function(tag, base, color, tone) {
 #'           ),
 #'           rangeInput(
 #'             id = "bordertone",
-#'             min = -4,
-#'             max = 4,
+#'             min = -2,
+#'             max = 2,
 #'             default = 0,
 #'             step = 1
 #'           ) %>%
@@ -177,8 +176,8 @@ colorUtility <- function(tag, base, color, tone) {
 #'           ),
 #'           rangeInput(
 #'             id = "texttone",
-#'             min = -4,
-#'             max = 4,
+#'             min = -2,
+#'             max = 2,
 #'             default = 0,
 #'             step = 1
 #'           ) %>%
@@ -211,10 +210,9 @@ background <- function(tag, color, tone = 0) {
     )
   }
 
-  if (!(tone %in% -4:4)) {
+  if (!(tone %in% -2:2)) {
     stop(
-      "invalid `background` argument, `tone` must be an integer between -4 ",
-      "and 4",
+      "invalid `background` argument, `tone` must be one of -2, -1, 0, 1, or 2",
       call. = FALSE
     )
   }
@@ -234,10 +232,9 @@ text <- function(tag, color, tone = 0) {
     )
   }
 
-  if (!(tone %in% -4:4)) {
+  if (!(tone %in% -2:2)) {
     stop(
-      "invalid `text` argument, `tone` must be an integer between -4 ",
-      "and 4",
+      "invalid `text` argument, `tone` must be one of -2, -1, 0, 1, or 2",
       call. = FALSE
     )
   }
@@ -280,6 +277,13 @@ border <- function(tag, color, tone = 0) {
     stop(
       "invalid `border` argument, `color` is invalid, see ?border ",
       "details for possible colors",
+      call. = FALSE
+    )
+  }
+
+  if (!(tone %in% -2:2)) {
+    stop(
+      "invalid `border` argument, `tone` must be one of -2, -1, 0, 1, or 2",
       call. = FALSE
     )
   }

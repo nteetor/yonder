@@ -88,7 +88,7 @@ if (interactive()) {
             items = c("disable", "enable", "disable some", "enable some"),
             dividers = "disable some"
           ) \%>\%
-            background("grey", 2)
+            background("grey", +1)
         ),
         col(
           dropdownInput(

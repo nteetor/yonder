@@ -35,7 +35,7 @@
 #'             ),
 #'             selected = "Check 1"
 #'           ) %>%
-#'             background("blue", 1) %>%
+#'             background("blue") %>%
 #'             margins(2),
 #'          checkbarInput(
 #'             id = "indigo",
@@ -46,7 +46,7 @@
 #'             ),
 #'             selected = "Check 2"
 #'           ) %>%
-#'             background("indigo", 1) %>%
+#'             background("indigo", +1) %>%
 #'             margins(2)
 #'         ),
 #'         col(

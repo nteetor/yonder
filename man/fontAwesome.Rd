@@ -67,9 +67,9 @@ if (interactive()) {
         id = NULL,
         items = list(
           fontAwesome("address-book") \%>\%
-            text("primary"),
+            text("blue"),
           fontAwesome("building") \%>\%
-            text("warning")
+            text("yellow")
         )
       )
     ),

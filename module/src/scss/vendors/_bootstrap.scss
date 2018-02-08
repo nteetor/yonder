@@ -29,14 +29,14 @@ $theme-colors: (
   'yellow':      #ffeb3b,
   'amber':       #ffc107,
   'orange':      #ff9800,
-  'brown':       #795548,
   'grey':        #9e9e9e
 );
 
 @each $key, $ignore in $theme-colors {
   $variants: map-get($color-maps, $key);
 
-  @each $variant, $color in $variants {
+  @each $variant in '100', '300', '700', '900' {
+    $color: map-get($variants, $variant);
     $theme-colors: map-merge($theme-colors, ('#{$key}-#{$variant}': $color));
   }
 }
@@ -44,6 +44,20 @@ $theme-colors: (
 @import '../../../node_modules/bootstrap/scss/functions';
 @import '../../../node_modules/bootstrap/scss/variables';
 @import '../../../node_modules/bootstrap/scss/mixins';
+
+// override bootstrap bg-variant(), add contrasting text color
+@mixin bg-variant($parent, $color) {
+  #{$parent} {
+    background-color: $color !important;
+    color: color-yiq($color) !important;
+  }
+  a#{$parent},
+  button#{$parent} {
+    @include hover-focus {
+      background-color: darken($color, 10%) !important;
+    }
+  }
+}
 
 @import '../../../node_modules/bootstrap/scss/alert';
 @import '../../../node_modules/bootstrap/scss/badge';

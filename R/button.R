@@ -262,7 +262,7 @@ submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
 #'             id = "bg1",
 #'             labels = c("Button 1", "Button 2", "Button 3")
 #'           ) %>%
-#'             background("blue", -3) %>%
+#'             background("blue", -2) %>%
 #'             margins(3)
 #'         ),
 #'         col(
@@ -270,7 +270,7 @@ submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
 #'             id = "bg2",
 #'             labels = c("Groupee 1", "Groupee 2", "Groupee 3")
 #'           ) %>%
-#'             background("yellow", 2) %>%
+#'             background("yellow", +1) %>%
 #'             margins(3)
 #'         )
 #'       )

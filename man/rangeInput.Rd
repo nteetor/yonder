@@ -81,11 +81,11 @@ if (interactive()) {
       rangeInput("default") \%>\%
         background("yellow"),
       rangeInput("blue") \%>\%
-        background("blue", 3),
+        background("blue", +1),
       rangeInput("red") \%>\%
-        background("red", -2),
+        background("red", -1),
       rangeInput("white", step = 10, snap = TRUE) \%>\%
-        background("lime", 4)
+        background("green", +2),
       rangeInput("yellow", prefix = "$", suffix = ".00")
     ),
     server = function(input, output) {

@@ -18,10 +18,10 @@ border(tag, color, tone = 0)
 \item{color}{A character string specifying the background color, see details
 for all possible values.}
 
-\item{tone}{An integer -4 through 4 specifying how much to darken or lighten
-a color, defaults to 0, in which case the base color is not modified.
-Negative values result in darker tones, whereas positive values create a
-lighter tone.}
+\item{tone}{An integer between -2 and 2 specifying to use a darker or lighter
+tone of \code{color}. Negative values indicate darker tones and positive values
+indicate lighter tones. Defaults to 0, in which case the base color is
+unchanged.}
 }
 \description{
 The \code{text}, \code{background}, and \code{border} utility functions may be used to
@@ -29,8 +29,8 @@ change the text, background, or border color of a tag element, respectively.
 }
 \examples{
 tags$div("light text, dark background") \%>\%
-  background("grey", -4) \%>\%
-  text("yellow", 3)
+  background("grey", -2) \%>\%
+  text("yellow", +1)
 
 if (interactive()) {
   opts <- c(
@@ -50,8 +50,8 @@ if (interactive()) {
           ),
           rangeInput(
             id = "bgtone",
-            min = -4,
-            max = 4,
+            min = -2,
+            max = 2,
             default = 0,
             step = 1
           ) \%>\%
@@ -64,8 +64,8 @@ if (interactive()) {
           ),
           rangeInput(
             id = "bordertone",
-            min = -4,
-            max = 4,
+            min = -2,
+            max = 2,
             default = 0,
             step = 1
           ) \%>\%
@@ -78,8 +78,8 @@ if (interactive()) {
           ),
           rangeInput(
             id = "texttone",
-            min = -4,
-            max = 4,
+            min = -2,
+            max = 2,
             default = 0,
             step = 1
           ) \%>\%

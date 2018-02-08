@@ -42,7 +42,7 @@ if (interactive()) {
         col(
           progressOutput(
             bar("clicks", 0, striped = TRUE) \%>\%
-              background("blue", 3)
+              background("blue", +2)
           )
         )
       )

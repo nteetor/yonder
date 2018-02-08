@@ -28,7 +28,7 @@
 #'             id = "trigger",
 #'             label = "The Time Machine"
 #'           ) %>%
-#'             background("purple", 4) %>%
+#'             background("purple", +1) %>%
 #'             margins(2) %>%
 #'             collapse(
 #'               tags$div(
