@@ -224,6 +224,50 @@ listGroupInput <- function(id, items, values = items, selected = NULL,
 
 #' @rdname listGroupInput
 #' @export
+#' @examples
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           listGroupThruput(
+#'             id = "thrulist"
+#'           )
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       output$thrulist <- renderListGroup({
+#'         c("Hello, world!", "Goodnight, moon.", "Goodbye, Winter...")
+#'       })
+#'     }
+#'   )
+#' }
+#'
+listGroupThruput <- function(id, flush = FALSE) {
+  tags$div(
+    class = collate(
+      "dull-list-group-thruput list-group",
+      if (flush) "list-group-flush"
+    ),
+    id = id
+  )
+}
+
+#' @rdname listGroupInput
+#' @export
+renderListGroup <- function(values, env = parent.frame(), quoted = FALSE) {
+  valFun <- shiny::exprToFunction(values, env, quoted)
+
+  function() {
+    list(
+      values = valFun()
+    )
+  }
+}
+
+#' @rdname listGroupInput
+#' @export
 updateListGroupInput <- function(id, items, values = items, selected = NULL,
                                  disabled = NULL,
                                  session = getDefaultReactiveDomain()) {

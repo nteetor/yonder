@@ -2,6 +2,8 @@
 % Please edit documentation in R/list-group.R
 \name{listGroupInput}
 \alias{listGroupInput}
+\alias{listGroupThruput}
+\alias{renderListGroup}
 \alias{updateListGroupInput}
 \alias{disableListGroupInput}
 \alias{enableListGroupInput}
@@ -10,6 +12,10 @@
 \usage{
 listGroupInput(id, items, values = items, selected = NULL,
   disabled = NULL, badges = NULL, ...)
+
+listGroupThruput(id, flush = FALSE)
+
+renderListGroup(values, env = parent.frame(), quoted = FALSE)
 
 updateListGroupInput(id, items, values = items, selected = NULL,
   disabled = NULL, session = getDefaultReactiveDomain())
@@ -173,6 +179,25 @@ if (interactive()) {
 
       output$value <- renderText({
         paste0(input$listgroup, collapse = ", ")
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          listGroupThruput(
+            id = "thrulist"
+          )
+        )
+      )
+    ),
+    server = function(input, output) {
+      output$thrulist <- renderListGroup({
+        c("Hello, world!", "Goodnight, moon.", "Goodbye, Winter...")
       })
     }
   )
