@@ -42,10 +42,11 @@ $.extend(listGroupOutputBinding, {
   getId: (el) => el.id,
 
   renderValue: (el, data) => {
-    console.log(data);
-    $(el).append(
-      $.map(data.values, (val, i) => $("<a class='list-group-item'>" + val + "</a>"))
-    );
+    if (data.items) {
+      let items = data.items.join("\n");
+
+      Shiny.renderContent(el, items);
+    }
   }
 });
 
