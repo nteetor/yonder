@@ -51,24 +51,48 @@ if (interactive()) {
           listGroupThruput(
             id = "thrulist"
           )
+        ),
+        col(
+          rangeInput(
+            id = "num",
+            min = 0,
+            max = 20,
+            step = 2
+          ),
+          sliderInput(
+            id = "level",
+            choices = c("danger", "warning", "success", "info"),
+            values = c("red", "orange", "green", "cyan")
+          )
         )
       )
     ),
     server = function(input, output) {
+      observe({
+        print(input$level)
+      })
+
       output$thrulist <- renderListGroup(
         listGroupItem(
           "Cras justo odio",
-          badgeOutput("badge1", 14)
+          badgeOutput("badge1", 0) \%>\%
+            background(input$level)
         ) \%>\%
           display("flex") \%>\%
-          content("between"),
+          content("between") \%>\%
+          items("center"),
         listGroupItem(
           "Dapibus ac facilisis in",
-          badgeOutput("badge2", 3)
+          badgeOutput("badge2", 0) \%>\%
+            background(input$level)
         ) \%>\%
           display("flex") \%>\%
-          content("between")
+          content("between") \%>\%
+          items("center")
       )
+
+      output$badge1 <- renderBadge(input$num)
+      output$badge2 <- renderBadge(input$num)
     }
   )
 }
