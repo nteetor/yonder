@@ -306,8 +306,8 @@ $.extend(checkboxInputBinding, {
     }
 
     if (data.content !== undefined) {
-      $el.find("label").remove();
-      $el.html(data.choice);
+      $el.find(".custom-checkbox").remove();
+      $el.html(data.content);
     }
 
     if (data.disable === true) {
@@ -1043,7 +1043,7 @@ $.extend(textualInputBinding, {
       return "dull.time.input";
     }
 
-    return false;
+    return "dull.form.element";
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };

@@ -27,7 +27,7 @@ $.extend(textualInputBinding, {
       return "dull.time.input";
     }
 
-    return false;
+    return "dull.form.element";
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };

@@ -18,9 +18,6 @@
 #'   radio input, defaults to `NULL`, in which case the first choice is
 #'   selected by default.
 #'
-#' @param label A character string specifying a label for the radio input,
-#'   defaults to `NULL` in which case a label is not added.
-#'
 #' @param help A character string specifying a small help label which appears
 #'   below the input, defaults to `NULL` in which case help text is not added.
 #'
@@ -172,8 +169,7 @@
 #' }
 #'
 radioInput <- function(id, choices, values = choices, selected = NULL,
-                       disabled = NULL, label = NULL, help = NULL,
-                       inline = FALSE) {
+                       disabled = NULL, help = NULL, inline = FALSE) {
   if (!is.null(selected) && !(selected %in% values)) {
     stop(
       "invalid `radioInput` argument, `selected` must be one of `values`",
@@ -198,44 +194,37 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
 
   selected <- match2(selected, values, default = TRUE)
   disabled <- match2(disabled, values)
+  ids <- ID(rep.int("radio", length(choices)))
 
   tags$div(
     class = collate(
       "dull-radio-input",
       "dull-input",
-      "form-group",
-      if (!inline) "custom-controls-stacked"
+      "form-group"
     ),
     id = id,
-    if (!is.null(label)) {
-      tags$label(
-        class = "form-control-label",
-        `for` = id,
-        label
-      )
-    },
     if (!is.null(choices)) {
       lapply(
         seq_along(choices),
         function(i) {
-          tags$label(
+          tags$div(
             class = collate(
               "custom-control",
-              "custom-radio"
+              "custom-radio",
+              if (inline) "custom-control-inline"
             ),
             tags$input(
               class = "custom-control-input",
               type = "radio",
+              id = ids[[i]],
               name = id,
               `data-value` = values[[i]],
               checked = if (selected[[i]]) NA,
               disabled = if (disabled[[i]]) NA
             ),
-            tags$span(
-              class = "custom-control-indicator"
-            ),
-            tags$span(
-              class = "custom-control-description",
+            tags$label(
+              class = "custom-control-label",
+              `for` = ids[[i]],
               choices[[i]]
             )
           )
@@ -280,7 +269,7 @@ updateRadioInput <- function(id, choices, values = choices, selected = NULL,
     lapply(
       seq_along(choices),
       function(i) {
-        tags$label(
+        tags$div(
           class = collate(
             "custom-control",
             "custom-radio"
@@ -293,11 +282,8 @@ updateRadioInput <- function(id, choices, values = choices, selected = NULL,
             checked = if (selected[[i]]) NA,
             disabled = if (disabled[[i]]) NA
           ),
-          tags$span(
-            class = "custom-control-indicator"
-          ),
-          tags$span(
-            class = "custom-control-description",
+          tags$label(
+            class = "custom-control-label",
             choices[[i]]
           )
         )

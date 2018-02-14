@@ -8,7 +8,7 @@
 \title{Radio inputs}
 \usage{
 radioInput(id, choices, values = choices, selected = NULL,
-  disabled = NULL, label = NULL, help = NULL, inline = FALSE)
+  disabled = NULL, help = NULL, inline = FALSE)
 
 updateRadioInput(id, choices, values = choices, selected = NULL,
   disabled = NULL, session = getDefaultReactiveDomain())
@@ -38,9 +38,6 @@ selected by default.}
 choices to disable or enable, defaults to \code{NULL}. If \code{NULL} then
 \code{disableRadioInput} and \code{enableRadioInput} will disable or enable all
 the radio input's choices, respectively.}
-
-\item{label}{A character string specifying a label for the radio input,
-defaults to \code{NULL} in which case a label is not added.}
 
 \item{help}{A character string specifying a small help label which appears
 below the input, defaults to \code{NULL} in which case help text is not added.}
