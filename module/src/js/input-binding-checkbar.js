@@ -25,4 +25,4 @@ $.extend(checkbarInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(checkbarInputBinding, "checkbarInput");
+Shiny.inputBindings.register(checkbarInputBinding, "dull.checkbarInput");

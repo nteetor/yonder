@@ -91,6 +91,20 @@ tableThruput <- function(id, borders = FALSE, context = NULL, compact = FALSE,
     )
   }
 
+  shiny::registerInputHandler(
+    type = "dull.table.input",
+    fun = function(x, session, name) {
+      frame <- jsonlite::fromJSON(x)
+
+      if (NROW(frame) == 0 || NCOL(frame) == 0) {
+        return(NULL)
+      }
+
+      frame
+    },
+    force = TRUE
+  )
+
   tags$table(
     class = collate(
       "dull-table-thruput",
@@ -133,17 +147,3 @@ renderTable <- function(expr, env = parent.frame(), quoted = FALSE) {
     )
   }
 }
-
-shiny::registerInputHandler(
-  type = "dull.table.input",
-  fun = function(x, session, name) {
-    frame <- jsonlite::fromJSON(x)
-
-    if (NROW(frame) == 0 || NCOL(frame) == 0) {
-      return(NULL)
-    }
-
-    frame
-  },
-  force = TRUE
-)
