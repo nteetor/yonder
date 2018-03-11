@@ -4,17 +4,17 @@
 #'
 #' @param id A character string specifying the id of the select input.
 #'
-#' @param options A character vector specifying the labels of the select input
+#' @param choices A character vector specifying the labels of the select input
 #'   options.
 #'
 #' @param values A character vector specifying the values of the select input
-#'   options, defaults to `options`.
+#'   options, defaults to `chocies`.
 #'
-#' @param selected One of `options` indicating the default value of the select
+#' @param selected One of `values` indicating the default value of the select
 #'   input, defaults to `NULL`. If `NULL` the first value is selected by
 #'   default.
 #'
-#' @param multiple If `TRUE` multiple options may be selected, defaults to
+#' @param multiple If `TRUE` multiple values may be selected, defaults to
 #'   `FALSE`, in which case only one option may be selected.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
@@ -30,7 +30,7 @@
 #'         col(
 #'           selectInput(
 #'             id = "select",
-#'             options = c("Choose one", "One", "Two", "Three"),
+#'             choices = c("Choose one", "One", "Two", "Three"),
 #'             values = list(NULL, 1, 2, 3),
 #'             multiple = TRUE
 #'           )
@@ -51,7 +51,7 @@
 #' }
 #'
 #'
-selectInput <- function(id, options, values = options, selected = NULL,
+selectInput <- function(id, choices, values = choices, selected = NULL,
                         multiple = FALSE, ...) {
   if (!is.null(id) && !is.character(id)) {
     stop(
@@ -60,9 +60,9 @@ selectInput <- function(id, options, values = options, selected = NULL,
     )
   }
 
-  if (length(options) != length(values)) {
+  if (length(choices) != length(values)) {
     stop(
-      "invalid `selectInput` arguments, `options` and `values` must be the ",
+      "invalid `selectInput` arguments, `choices` and `values` must be the ",
       "same length",
       call. = FALSE
     )
@@ -76,7 +76,7 @@ selectInput <- function(id, options, values = options, selected = NULL,
       )
     }
 
-    if (!(selected %in% options)) {
+    if (!(selected %in% values)) {
       stop(
         "invalid `selectInput` argument, `selected` must be one of `values`",
         call. = FALSE

@@ -4,23 +4,23 @@
 \alias{selectInput}
 \title{Select input}
 \usage{
-selectInput(id, options, values = options, selected = NULL,
+selectInput(id, choices, values = choices, selected = NULL,
   multiple = FALSE, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the select input.}
 
-\item{options}{A character vector specifying the labels of the select input
+\item{choices}{A character vector specifying the labels of the select input
 options.}
 
 \item{values}{A character vector specifying the values of the select input
-options, defaults to \code{options}.}
+options, defaults to \code{chocies}.}
 
-\item{selected}{One of \code{options} indicating the default value of the select
+\item{selected}{One of \code{values} indicating the default value of the select
 input, defaults to \code{NULL}. If \code{NULL} the first value is selected by
 default.}
 
-\item{multiple}{If \code{TRUE} multiple options may be selected, defaults to
+\item{multiple}{If \code{TRUE} multiple values may be selected, defaults to
 \code{FALSE}, in which case only one option may be selected.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
@@ -37,7 +37,7 @@ if (interactive()) {
         col(
           selectInput(
             id = "select",
-            options = c("Choose one", "One", "Two", "Three"),
+            choices = c("Choose one", "One", "Two", "Three"),
             values = list(NULL, 1, 2, 3),
             multiple = TRUE
           )
