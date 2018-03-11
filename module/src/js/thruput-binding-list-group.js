@@ -3,7 +3,6 @@ $(() => {
     e.preventDefault();
 
     let $parent = $(this).closest(".dull-list-group-thruput");
-    console.log($parent);
 
     if (!$parent.data("multiple")) {
       $parent.children(".list-group-item.active").removeClass("active");
