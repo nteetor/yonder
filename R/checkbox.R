@@ -94,6 +94,7 @@
 #'
 checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
   value <- as.character(value)
+  self <- ID("checkbox")
 
   tags$div(
     class = collate(
@@ -102,7 +103,7 @@ checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
       "form-group"
     ),
     id = id,
-    tags$label(
+    tags$div(
       class = collate(
         "custom-control",
         "custom-checkbox"
@@ -110,14 +111,13 @@ checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
       tags$input(
         class = "custom-control-input",
         type = "checkbox",
+        id = self,
         `data-value` = value,
         checked = if (checked) NA
       ),
-      tags$span(
-        class = "custom-control-indicator"
-      ),
-      tags$span(
-        class = "custom-control-description",
+      tags$label(
+        class = "custom-control-label",
+        `for` = self,
         choice
       ),
       tags$div(class = "invalid-feedback")
@@ -131,7 +131,9 @@ checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
 #' @export
 updateCheckboxInput <- function(id, choice, value = choice, checked = FALSE,
                                 session = getDefaultReactiveDomain()) {
-  this <- tags$label(
+  self <- ID("checkbox")
+
+  this <- tags$div(
     class = collate(
       "custom-control",
       "custom-checkbox"
@@ -139,14 +141,13 @@ updateCheckboxInput <- function(id, choice, value = choice, checked = FALSE,
     tags$input(
       class = "custom-control-input",
       type = "checkbox",
+      id = self,
       `data-value` = value,
       checked = if (checked) NA
     ),
-    tags$span(
-      class = "custom-control-indicator"
-    ),
-    tags$span(
-      class = "custom-control-description",
+    tags$label(
+      class = "custom-control-label",
+      `for` = self,
       choice
     )
   )

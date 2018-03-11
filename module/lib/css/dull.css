@@ -6974,3 +6974,9 @@ a.text-grey-900:hover, a.text-grey-900:focus {
 .spark-dot-medium {
   font-family: 'spark-dot-medium', sans-serif;
   letter-spacing: 0 em; }
+
+html {
+  height: 100%; }
+
+body {
+  min-height: 100%; }

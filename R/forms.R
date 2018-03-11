@@ -25,32 +25,31 @@
 #'         col(
 #'           formInput(
 #'             id = "form",
+#'             tags$label("Email"),
 #'             emailInput(
 #'               id = "email",
-#'               label = "Email",
 #'               placeholder = "Email"
 #'             ),
+#'             tags$label("Password"),
 #'             passwordInput(
 #'               id = "password",
-#'               label = "Password",
 #'               placeholder = "Password"
 #'             ),
-#'             fieldset(
-#'               legend = "Radios",
-#'               radioInput(
-#'                 id = "options",
-#'                 choices = c(
-#'                   "Option one",
-#'                   "Option two",
-#'                   "Option three"
-#'                 )
+#'             tags$label("Radio"),
+#'             radioInput(
+#'               id = "options",
+#'               choices = c(
+#'                 "Option one",
+#'                 "Option two",
+#'                 "Option three"
 #'               )
 #'             ),
+#'             tags$label("Checkbox"),
 #'             checkboxInput(
 #'               id = "checkbox",
-#'               label = "Checkbox",
-#'               choice = "Check me out"
-#'             )
+#'               choice = "Simple checkbox"
+#'             ) %>%
+#'               margins(c(0, 0, 2, 0))
 #'           )
 #'         ),
 #'         col(
@@ -117,7 +116,6 @@
 #'     }
 #'   )
 #' }
-#'
 #'
 formInput <- function(id, ...) {
   if (!is.character(id)) {

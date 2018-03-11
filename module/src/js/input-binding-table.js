@@ -16,7 +16,7 @@ $.extend(tableInputBinding, {
     var columns = $el.find("thead th").map((i, e) => $(e).text()).get();
 
     var value = $el.find("tr")
-      .filter((i, e) => $(e).data("selected"))
+      .filter((i, e) => $(e).hasClass("table-active"))
       .map(function(i, row) {
         var obj = {};
 
@@ -60,27 +60,6 @@ Shiny.inputBindings.register(tableInputBinding, "dull.tableInput");
 
 $(document).ready(function() {
   $(".dull-table-thruput[id]").on("click", "tbody tr", function(e) {
-    var $this = $(this);
-
-    if ($this.data("selected")) {
-      $this.data("selected", false).attr("class", function(i, c) {
-        c = c || "";
-        var d = c.replace(/bg-(primary|success|info|warning|danger)/g, "table-$1")
-          .replace(/table-dark/g, "");
-
-        return d;
-      });
-    } else {
-      $this.data("selected", true).attr("class", function(i, c) {
-        c = c || "";
-        var d = c.replace(/table-(primary|success|info|warning|danger)/g, "bg-$1");
-
-        if (d === c) {
-          d = d + " table-dark";
-        }
-
-        return d;
-      });
-    }
+    $(this).toggleClass("table-active");
   });
 });
