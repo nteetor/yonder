@@ -92,7 +92,8 @@ colorUtility <- function(tag, base, color, tone) {
     base <- "list-group-item"
   }
 
-  tag <- tagDropClass(tag, paste0(base, "-[a-z-]+(-[1-9]00)?"))
+  cregex <- paste0("(", paste(.colors, collapse = "|"), ")")
+  tag <- tagDropClass(tag, paste0(base, "-", cregex, "(-[1-9]00)?"))
 
   tone <- switch(
     as.character(tone),
