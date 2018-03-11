@@ -1278,8 +1278,15 @@ $.extend(tooltipBinding, {
 //Shiny.outputBindings.register(tooltipBinding, "dull.tooltip");
 
 $(() => {
-  $(".dull-list-group-thruput[id]").on("click", ".list-group-item:not(.disabled)", (e) => {
+  $(".dull-list-group-thruput[id]").on("click", ".list-group-item:not(.disabled)", function(e) {
     e.preventDefault();
+
+    let $parent = $(this).closest(".dull-list-group-thruput");
+    console.log($parent);
+
+    if (!$parent.data("multiple")) {
+      $parent.children(".list-group-item.active").removeClass("active");
+    }
 
     $(this).toggleClass("active")
       .trigger("change");
@@ -1295,7 +1302,7 @@ $.extend(listGroupInputBinding, {
   getId: (el) => el.id,
 
   getValue: (el) => {
-    $(el)
+    return $(el)
       .children(".list-group-item.active:not(.disabled)")
       .map((index, item) => $(item).data("value"))
       .get();

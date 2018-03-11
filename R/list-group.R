@@ -53,17 +53,12 @@
 #'           ),
 #'           sliderInput(
 #'             id = "level",
-#'             choices = c("danger", "warning", "success", "info"),
-#'             values = c("red", "orange", "green", "cyan")
+#'             choices = c("red", "orange", "green", "cyan")
 #'           )
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       observe({
-#'         print(input$level)
-#'       })
-#'
 #'       output$thrulist <- renderListGroup(
 #'         listGroupItem(
 #'           "Cras justo odio",
@@ -89,12 +84,63 @@
 #'   )
 #' }
 #'
-listGroupThruput <- function(id, flush = FALSE, ...) {
+#' lessons <- list(
+#'   stars = c(
+#'     "The stars and moon are far too bright",
+#'     "Their beam and smile splashing o'er all",
+#'     "To illuminate while turning my sight",
+#'     "From the shadows wherein deeper shadows fall"
+#'   ),
+#'   joy = c(
+#'     "A single step, her hand aloft",
+#'     "More than a step, a joyful bound",
+#'     "The moment, precious, small, soft",
+#'     "And within a truth was found"
+#'   )
+#' )
+#'
+#' shinyApp(
+#'   ui = container(
+#'     row(
+#'       col(
+#'         class = "ml-auto",
+#'         default = 3,
+#'         listGroupThruput(
+#'           id = "lesson",
+#'           multiple = FALSE,
+#'           listGroupItem(
+#'             value = "stars",
+#'             h5("Stars"),
+#'             lessons[["stars"]][1]
+#'           ),
+#'           listGroupItem(
+#'             value = "joy",
+#'             h5("Joy"),
+#'             lessons[["joy"]][1]
+#'           )
+#'         )
+#'       ),
+#'       col(
+#'         class = "mr-auto",
+#'         htmlOutput("text")
+#'       )
+#'     )
+#'   ),
+#'   server = function(input, output) {
+#'     output$text <- renderText({
+#'       req(input$lesson)
+#'       HTML(paste(lessons[[input$lesson]], collapse = "</br>"))
+#'     })
+#'   }
+#' )
+#'
+listGroupThruput <- function(id, ..., multiple = TRUE, flush = FALSE) {
   tags$div(
     class = collate(
       "dull-list-group-thruput list-group",
       if (flush) "list-group-flush"
     ),
+    `data-multiple` = if (multiple) "true" else "false",
     id = id,
     ...
   )
@@ -110,7 +156,7 @@ listGroupItem <- function(..., value = NULL, selected = FALSE, disabled = FALSE)
       if (selected) "active",
       if (disabled) "disabled"
     ),
-    `data-value` = NULL,
+    `data-value` = value,
     ...
   )
 }
