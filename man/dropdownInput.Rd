@@ -6,7 +6,7 @@
 \alias{enableDropdownInput}
 \title{Dropdown input}
 \usage{
-dropdownInput(id, label, items, values = items, disabled = NULL,
+dropdownInput(id, choices, values = choices, disabled = NULL,
   dividers = NULL, direction = "down", ...)
 
 disableDropdownInput(id, disabled = NULL,
@@ -16,13 +16,13 @@ enableDropdownInput(id, enabled = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{items}{A character vector specifying the labels of the dropdown menu
+\item{choices}{A character vector specifying the labels of the dropdown menu
 items.}
 
 \item{values}{A character vector, list of character strings, vector of values
 to coerce to character strings, or list of values to coerce to character
 strings specifying the values of the dropdown input's choices, defaults to
-\code{items}.}
+\code{choices}.}
 
 \item{disabled, enabled}{One or more of \code{values} indicating which dropdown
 menu items to disable or enable, defaults to \code{NULL}. If \code{NULL} then
@@ -56,8 +56,7 @@ if (interactive()) {
         col(
           dropdownInput(
             id = "dropdown",
-            label = "A dropdown",
-            items = paste("Action", 1:5),
+            choices = paste("Action", 1:5),
             dividers = "Action 4"
           ) \%>\%
             background("deep-orange")
@@ -84,8 +83,7 @@ if (interactive()) {
         col(
           dropdownInput(
             id = "actions",
-            label = "Actions",
-            items = c("disable", "enable", "disable some", "enable some"),
+            choices = c("disable", "enable", "disable some", "enable some"),
             dividers = "disable some"
           ) \%>\%
             background("grey", +1)
@@ -94,7 +92,7 @@ if (interactive()) {
           dropdownInput(
             id = "dropdown",
             label = "Other actions",
-            items = paste("Action", 1:5),
+            choices = paste("Action", 1:5),
             disabled = "Action 3"
           ) \%>\%
             background("amber")

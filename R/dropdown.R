@@ -7,13 +7,13 @@
 #' dropdown menu item. Disabling a dropdown menu triggers a reactive event and
 #' resets the reactive value to `NULL`.
 #'
-#' @param items A character vector specifying the labels of the dropdown menu
+#' @param choices A character vector specifying the labels of the dropdown menu
 #'   items.
 #'
 #' @param values A character vector, list of character strings, vector of values
 #'   to coerce to character strings, or list of values to coerce to character
 #'   strings specifying the values of the dropdown input's choices, defaults to
-#'   `items`.
+#'   `choices`.
 #'
 #' @param disabled,enabled One or more of `values` indicating which dropdown
 #'   menu items to disable or enable, defaults to `NULL`. If `NULL` then
@@ -40,8 +40,7 @@
 #'         col(
 #'           dropdownInput(
 #'             id = "dropdown",
-#'             label = "A dropdown",
-#'             items = paste("Action", 1:5),
+#'             choices = paste("Action", 1:5),
 #'             dividers = "Action 4"
 #'           ) %>%
 #'             background("deep-orange")
@@ -68,8 +67,7 @@
 #'         col(
 #'           dropdownInput(
 #'             id = "actions",
-#'             label = "Actions",
-#'             items = c("disable", "enable", "disable some", "enable some"),
+#'             choices = c("disable", "enable", "disable some", "enable some"),
 #'             dividers = "disable some"
 #'           ) %>%
 #'             background("grey", +1)
@@ -78,7 +76,7 @@
 #'           dropdownInput(
 #'             id = "dropdown",
 #'             label = "Other actions",
-#'             items = paste("Action", 1:5),
+#'             choices = paste("Action", 1:5),
 #'             disabled = "Action 3"
 #'           ) %>%
 #'             background("amber")
@@ -110,11 +108,11 @@
 #'   )
 #' }
 #'
-dropdownInput <- function(id, label, items, values = items, disabled = NULL,
+dropdownInput <- function(id, choices, values = choices, disabled = NULL,
                           dividers = NULL, direction = "down", ...) {
-  if (length(items) != length(values)) {
+  if (length(choices) != length(values)) {
     stop(
-      "invalid `dropdownInput` arguments, `items` and `values` must be the ",
+      "invalid `dropdownInput` arguments, `choices` and `values` must be the ",
       "same length",
       call. = FALSE
     )
@@ -175,7 +173,7 @@ dropdownInput <- function(id, label, items, values = items, disabled = NULL,
         "dropdown-menu-right"
       ),
       lapply(
-        seq_along(items),
+        seq_along(choices),
         function(i) {
           list(
             if (dividers[[i]]) {
@@ -188,7 +186,7 @@ dropdownInput <- function(id, label, items, values = items, disabled = NULL,
               ),
               href = NA,
               `data-value` = values[[i]],
-              items[[i]]
+              choices[[i]]
             )
           )
         }
