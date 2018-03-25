@@ -9,7 +9,7 @@
 \alias{passwordInput}
 \alias{numberInput}
 \alias{colorInput}
-\title{Textual nputs}
+\title{Textual inputs}
 \usage{
 textInput(id, value = NULL, placeholder = NULL, size = NULL,
   readonly = FALSE, help = NULL, ...)

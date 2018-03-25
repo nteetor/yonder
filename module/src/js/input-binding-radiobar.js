@@ -1,11 +1,11 @@
 var radiobarInputBinding = new Shiny.InputBinding();
 
 $.extend(radiobarInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-radiobar-input[id]");
-  },
-  getValue: function(el) {
-    return $(el).find("input[type=radio]:checked").data("value");
+  Selector: {
+    SELF: ".dull-radiobar-input",
+    VALUE: ".btn input",
+    LABEL: ".btn > span",
+    SELECTED: ".btn input:checked"
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };

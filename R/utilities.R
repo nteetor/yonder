@@ -70,10 +70,21 @@ font <- function(tag, weight = NULL, style = NULL) {
 )
 
 colorUtility <- function(tag, base, color, tone) {
-  if (tagHasClass(tag, "btn-group")) {
+  if (tagHasClass(tag, "dull-checkbar-input|dull-radiobar-input")) {
     tag$children[[1]] <- lapply(
       tag$children[[1]],
       colorUtility,
+      base = base,
+      color = color,
+      tone = tone
+    )
+
+    return(tag)
+  }
+
+  if (tagHasClass(tag, "dull-dropdown-input")) {
+    tag$children[[1]] <- colorUtility(
+      tag$children[[1]],
       base = base,
       color = color,
       tone = tone
@@ -109,7 +120,7 @@ colorUtility <- function(tag, base, color, tone) {
   tag
 }
 
-#' Chance text, background, or border color
+#' Change text, background, or border color
 #'
 #' The `text`, `background`, and `border` utility functions may be used to
 #' change the text, background, or border color of a tag element, respectively.
@@ -123,6 +134,22 @@ colorUtility <- function(tag, base, color, tone) {
 #'   tone of `color`. Negative values indicate darker tones and positive values
 #'   indicate lighter tones. Defaults to 0, in which case the base color is
 #'   unchanged.
+#'
+#' @details
+#'
+#' The following colors are available,
+#'
+#' * red
+#' * purple
+#' * indigo
+#' * blue
+#' * cyan
+#' * teal
+#' * green
+#' * yellow
+#' * amber
+#' * orange
+#' * grey
 #'
 #' @family utilities
 #' @export

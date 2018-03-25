@@ -4,8 +4,11 @@
 #' The initial click to open a dropdown menu does not trigger a reactive event,
 #' but a click on one of the dropdown items triggers a reactive event. The
 #' reactive value of a dropdown input is the value of the most recently clicked
-#' dropdown menu item. Disabling a dropdown menu triggers a reactive event and
-#' resets the reactive value to `NULL`.
+#' dropdown menu item.
+#'
+#' @param id A character string specifying the id of the dropdown input.
+#'
+#' @param label A character string specifying the label of the dropdown's button.
 #'
 #' @param choices A character vector specifying the labels of the dropdown menu
 #'   items.
@@ -15,10 +18,8 @@
 #'   strings specifying the values of the dropdown input's choices, defaults to
 #'   `choices`.
 #'
-#' @param disabled,enabled One or more of `values` indicating which dropdown
-#'   menu items to disable or enable, defaults to `NULL`. If `NULL` then
-#'   `disableDropdownInput` and `enableDropdownInput` will disable or enable all
-#'   the dropdown input's items, respectively.
+#' @param disabled One or more of `values` indicating which dropdown menu items
+#'   to disable, defaults to `NULL`, in which case all choices are enabled.
 #'
 #' @param dividers One or more of `values` indicating which dropdown menu items
 #'   are the start of a new section, defaults to `NULL`. Divider lines will be
@@ -40,10 +41,11 @@
 #'         col(
 #'           dropdownInput(
 #'             id = "dropdown",
+#'             label = "A dropdown",
 #'             choices = paste("Action", 1:5),
 #'             dividers = "Action 4"
 #'           ) %>%
-#'             background("deep-orange")
+#'             background("orange")
 #'         ),
 #'         col(
 #'           d4(
@@ -63,52 +65,25 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       row(
-#'         col(
-#'           dropdownInput(
-#'             id = "actions",
-#'             choices = c("disable", "enable", "disable some", "enable some"),
-#'             dividers = "disable some"
-#'           ) %>%
-#'             background("grey", +1)
-#'         ),
-#'         col(
-#'           dropdownInput(
-#'             id = "dropdown",
-#'             label = "Other actions",
-#'             choices = paste("Action", 1:5),
-#'             disabled = "Action 3"
-#'           ) %>%
-#'             background("amber")
-#'         ),
-#'         col(
-#'           d4(
-#'             textOutput("value")
-#'           )
-#'         )
+#'       buttonInput("click", "Change dropdown choices"),
+#'       dropdownInput(
+#'         id = "foo",
+#'         label = "A dropdown",
+#'         choices = c("Hello", "World")
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       observeEvent(input$actions, {
-#'         if (input$actions == "disable") {
-#'           disableDropdownInput("dropdown")
-#'         } else if (input$actions == "enable") {
-#'           enableDropdownInput("dropdown")
-#'         } else if (input$actions == "disable some") {
-#'           disableDropdownInput("dropdown", paste("Action", c(2, 3, 5)))
-#'         } else if (input$actions == "enable some") {
-#'           enableDropdownInput("dropdown", paste("Action", c(2, 3, 5)))
-#'         }
-#'       })
-#'
-#'       output$value <- renderText({
-#'         input$dropdown
+#'       observeEvent(input$click, {
+#'         updateChoices(
+#'           id = "foo",
+#'           Hello = "Hello!"
+#'         )
 #'       })
 #'     }
 #'   )
 #' }
 #'
-dropdownInput <- function(id, choices, values = choices, disabled = NULL,
+dropdownInput <- function(id, label, choices, values = choices, disabled = NULL,
                           dividers = NULL, direction = "down", ...) {
   if (length(choices) != length(values)) {
     stop(
@@ -151,15 +126,15 @@ dropdownInput <- function(id, choices, values = choices, disabled = NULL,
     class = collate(
       "dull-dropdown-input",
       "btn-group",
-      paste0("drop", direction),
-      "bg-grey"
+      paste0("drop", direction)
     ),
     id = id,
     `data-value` = NULL,
     tags$button(
       class = collate(
         "btn",
-        "dropdown-toggle"
+        "dropdown-toggle",
+        "btn-grey"
       ),
       type = "button",
       `data-toggle` = "dropdown",
@@ -194,29 +169,5 @@ dropdownInput <- function(id, choices, values = choices, disabled = NULL,
     ),
     ...,
     includes()
-  )
-}
-
-#' @rdname dropdownInput
-#' @export
-disableDropdownInput <- function(id, disabled = NULL,
-                                 session = getDefaultReactiveDomain()) {
-  session$sendInputMessage(
-    id,
-    list(
-      disable = if (is.null(disabled)) TRUE else as.list(disabled)
-    )
-  )
-}
-
-#' @rdname dropdownInput
-#' @export
-enableDropdownInput <- function(id, enabled = NULL,
-                                session = getDefaultReactiveDomain()) {
-  session$sendInputMessage(
-    id,
-    list(
-      enable = if (is.null(enabled)) TRUE else as.list(enabled)
-    )
   )
 }

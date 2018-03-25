@@ -64,9 +64,145 @@ Shiny.addCustomMessageHandler("dull:alert", function(msg) {
 });
 
 (function() {
+  this.find = function(scope) {
+    return $(scope).find(`${ this.Selector.SELF }[id]`);
+  };
+
   this.getType = function(el) {
     if ($(el).parents(".dull-form-input[id]").length) {
       return "dull.form.element";
+    }
+  };
+
+  // may not be worth it to have this method already created
+  this.getValue = function(el) {
+    let values = $(el).find(`${ this.Selector.SELECTED }`)
+        .map((i, e) => {
+          let $e = $(e);
+
+          if ($e.is("[data-value]")) {
+            return $e.data("value");
+          }
+
+          if ($e.is("input")) {
+            return $e.val();
+          }
+
+          return $e.text();
+        })
+        .get();
+
+    return values === undefined ? null : values;
+  };
+
+  this.updateChoices = function(el, map) {
+    if (this.Selector.VALUE === this.Selector.SELF) {
+      let value = map[$(el).data("value")];
+
+      if (value !== undefined) {
+        $(el).html(value);
+      }
+
+      return;
+    }
+
+    let $inputs = $(el).find(`${ this.Selector.VALUE }`);
+    let $labels = $(el).find(`${ this.Selector.LABEL }`);
+
+    if ($inputs.length != $labels.length) {
+      console.error("updateChoices: mismatched number of inputs and labels");
+      return;
+    }
+
+    $inputs.each((index, input) => {
+      let $input = $(input);
+      let $label = $($labels.get(index));
+
+      let value = map[$input.data("value")];
+
+      if (value !== undefined) {
+        $label.html(value);
+      }
+    });
+  }
+
+  this.updateValues = function(el, map) {
+    if (this.Selector.VALUE === this.Selector.SELF) {
+      let value = map[$input.data("value")];
+
+      if (value !== undefined) {
+        $input.data("value", value);
+      }
+
+      return;
+    }
+
+    let $inputs = $(el).find(`${ this.Selector.VALUE }`);
+
+    $inputs.each((index, input) => {
+      let $input = $(input);
+
+      let value = map[$input.data("value")];
+
+      if (value !== undefined) {
+        $input.data("value", value);
+      }
+    });
+  }
+
+  this.markValid = function(el, data) {
+    let $input = $(el).find(this.Selector.VALIDATE);
+    $input.removeClass("is-invalid").addClass("is-valid");
+    let $feedback = $(el).find(".valid-feedback");
+    if ($feedback.length) {
+      $feedback.text(data.msg);
+    }
+  }
+
+  this.markInvalid = function(el, data) {
+    let $input = $(el).find(this.Selector.VALIDATE);
+    $input.removeClass("is-valid").addClass("is-invalid");
+    let $feedback = $(el).find(".invalid-feedback");
+    if ($feedback) {
+      $feedback.text(data.msg);
+    }
+  }
+
+  this.receiveMessage = function(el, msg) {
+    console.log("receiveMessage: " + JSON.stringify(msg));
+
+    if (!msg.type) {
+      return;
+    }
+
+    let [action, type = null] = msg.type.split(":");
+
+    if (action === "update") {
+      if (this.Selector.VALIDATE === undefined) {
+        return;
+      }
+
+      if (!type || msg.data === undefined) {
+        throw "Invalid update message"
+      }
+
+      if (type === "choices") {
+        this.updateChoices(el, msg.data);
+      }
+
+      if (type === "values") {
+        this.updateValues(el, msg.data);
+      }
+    }
+
+    if (action === "mark") {
+      if (type === "valid") {
+        this.markValid(el, msg.data);
+      }
+
+      if (type === "invalid") {
+        this.markInvalid(el, msg.data);
+      }
     }
   };
 }).call(Shiny.InputBinding.prototype);
@@ -149,11 +285,13 @@ $.extend(breadcrumbOutputBinding, {
 
 /* THIS IS A STUB */
 
-var buttonGroupInputBinding = new Shiny.InputBinding();
+let buttonGroupInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonGroupInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-button-group-input[id]");
+  Selector: {
+    SELF: ".dull-button-group-input",
+    VALUE: ".btn",
+    LABEL: ".btn"
   },
   _value: null,
   getValue: function(el) {
@@ -176,8 +314,10 @@ Shiny.inputBindings.register(buttonGroupInputBinding, "dull.buttonGroup");
 var buttonInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-button-input[id]");
+  Selector: {
+    SELF: ".dull-button-input",
+    VALUE: ".dull-button-input",
+    LABEL: ".dull-button-input"
   },
   getValue: function(el) {
     var $el = $(el);
@@ -204,27 +344,6 @@ $.extend(buttonInputBinding, {
   },
   unsubscribe: function(el) {
     $(el).off(".buttonInputBinding");
-  },
-  receiveMessage: function(el, data) {
-    var $el = $(el);
-
-    if (data.label !== undefined) {
-      $el.html(data.label);
-    }
-
-    if (data.reset === true) {
-      $el.data("clicks", 0);
-    }
-
-    if (data.disable === true) {
-      $el.prop("disabled", true);
-    }
-
-    if (data.enable === true) {
-      $el.prop("disabled", false);
-    }
-
-    $el.trigger("change");
   }
 });
 
@@ -233,13 +352,11 @@ Shiny.inputBindings.register(buttonInputBinding, "dull.buttonInput");
 var checkbarInputBinding = new Shiny.InputBinding();
 
 $.extend(checkbarInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-checkbar-input[id]");
-  },
-  getValue: function(el) {
-    return $(el).find("input[type=checkbox]:checked")
-      .map((i, e) => $(e).data("value"))
-      .get();
+  Selector: {
+    SELF: ".dull-checkbar-input",
+    VALUE: ".btn input",
+    LABEL: ".btn > span",
+    SELECTED: ".btn.active input"
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
@@ -259,20 +376,24 @@ $.extend(checkbarInputBinding, {
 
 Shiny.inputBindings.register(checkbarInputBinding, "dull.checkbarInput");
 
-var checkboxInputBinding = new Shiny.InputBinding();
+let checkboxInputBinding = new Shiny.InputBinding();
 
 $.extend(checkboxInputBinding, {
-  find: function(scope){
-    return $(scope).find(".dull-checkbox-input[id]");
+  Selector: {
+    SELF: ".dull-checkbox-input",
+    VALUE: ".custom-control-input",
+    LABEL: ".custom-control-label",
+    SELECTED: ".custom-control-input:checked:not(:disabled)",
+    VALIDATE: ".custom-control-input"
   },
   getValue: function(el) {
     var $val = $(el)
-      .find("input[type='checkbox']:checked:not(:disabled)")
+      .find(`${ this.Selector.SELECTED }`)
       .data("value");
     return $val === undefined ? null : $val;
   },
   _getLabel: function(el) {
-    return $(el).find(".custom-control-description").text();
+    return $(el).find(`${ this.Selector.LABEL }`).text();
   },
   getState: function(el, data) {
     return {
@@ -287,43 +408,31 @@ $.extend(checkboxInputBinding, {
   },
   unsubscribe: function(el) {
     $(el).off(".checkboxInputBinding");
-  },
-  receiveMessage: function(el, data) {
-    var $el = $(el);
-
-     if (data.validate !== undefined) {
-      $("input", el).removeClass("is-invalid")
-        .addClass("is-valid");
-
-      return;
-    }
-
-    if (data.invalidate !== undefined) {
-      $("input", el).addClass("is-invalid");
-      $(".invalid-feedback", el).html(data.invalidate);
-
-      return;
-    }
-
-    if (data.content !== undefined) {
-      $el.find(".custom-checkbox").remove();
-      $el.html(data.content);
-    }
-
-    if (data.disable === true) {
-      $el.find("input[type=\"checkbox\"]").prop("disabled", true);
-      if ($el.find(".form-gruop").hasClass("disabled")) {
-        $el.find(".form-group").addClass("disabled");
-      }
-    }
-
-    if (data.enable === true) {
-      $el.find("input[type=\"checkbox\"]").prop("disabled", false);
-      $el.find(".form-group").removeClass("disabled");
-    }
-
-    $el.trigger("change");
   }
+  // receiveMessage: function(el, data) {
+  //   if (data.type === "update:choices") {
+  //     this.updateChoices(el, data.data);
+  //     return;
+  //   }
+
+  //   var $el = $(el);
+
+  //    if (data.validate !== undefined) {
+  //     $("input", el).removeClass("is-invalid")
+  //       .addClass("is-valid");
+
+  //     return;
+  //   }
+
+  //   if (data.invalidate !== undefined) {
+  //     $("input", el).addClass("is-invalid");
+  //     $(".invalid-feedback", el).html(data.invalidate);
+
+  //     return;
+  //   }
+
+  //   $el.trigger("change");
+  // }
 });
 
 Shiny.inputBindings.register(checkboxInputBinding, "dull.checkboxInput");
@@ -331,8 +440,8 @@ Shiny.inputBindings.register(checkboxInputBinding, "dull.checkboxInput");
 var datetimeInputBinding = new Shiny.InputBinding();
 
 $.extend(datetimeInputBinding, {
-  find: function(scope) {
-    return $(".dull-datetime-input[id]", scope);
+  Selector: {
+    SELF: ".dull-datetime-input"
   },
   initialize: function(el) {
     let $input = $("input", el);
@@ -342,13 +451,13 @@ $.extend(datetimeInputBinding, {
       config.altFormat = "M j, Y";
       config.conjunction = "; ";
     }
-    
+
     if ($input.data("default-date") &&
         ($input.data("mode") === "range" || $input.data("mode") === "multiple")) {
       config.defaultDate = $input.data("default-date").split("\\,");
       $input.removeAttr("data-default-date");
     }
-    
+
     $input.flatpickr(config);
   },
   getType: () => "dull.datetime",
@@ -360,7 +469,11 @@ $.extend(datetimeInputBinding, {
       callback();
     });
   },
-  unsubscribe: (el) => $(el).off(".datetimeInputBinding")
+  unsubscribe: (el) => $(el).off(".datetimeInputBinding"),
+  receiveMessage: function(el, msg) {
+    console.error("receiveMessage: not implemented for datetime input");
+    return;
+  }
 });
 
 Shiny.inputBindings.register(datetimeInputBinding, "dull.datetimeInput");
@@ -379,8 +492,10 @@ $(document).ready(function() {
 var dropdownInputBinding = new Shiny.InputBinding();
 
 $.extend(dropdownInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-dropdown-input[id]");
+  Selector: {
+    SELF: ".dull-dropdown-input",
+    LABEL: ".dropdown-item",
+    VALUE: ".dropdown-item"
   },
   getValue: function(el) {
     var $value = $(el).data("value");
@@ -401,44 +516,6 @@ $.extend(dropdownInputBinding, {
   },
   unsubscribe: function(el) {
     $(el).off(".dropdownInputBinding");
-  },
-  receiveMessage: function(el, data) {
-    var $el = $(el);
-
-    if (data.disable) {
-      if (data.disable === true) {
-        $el.find(".dropdown-toggle").prop("disabled", true);
-        $el.data("value", null);
-      } else {
-        $.each(data.disable, function(i, v) {
-          var $item = $el.find(".dropdown-item[data-value=\"" + v + "\"]");
-
-          if ($item.length !== 0 && !$item.hasClass("disabled")) {
-            $item.addClass("disabled");
-          }
-
-          if (v == $el.data("value")) {
-            $el.data("value", null);
-          }
-        });
-      }
-    }
-
-    if (data.enable) {
-      if (data.enable === true) {
-        $el.find(".dropdown-toggle").prop("disabled", false);
-        $el.find(".dropdown-item").removeClass("disabled");
-      } else {
-        $.each(data.enable, function(i, v) {
-          var $item = $el.find(".dropdown-item[data-value=\"" + v + "\"]");
-          if ($item.length !== 0) {
-            $item.removeClass("disabled");
-          }
-        });
-      }
-    }
-
-    $el.trigger("change");
   }
 });
 
@@ -501,37 +578,16 @@ Shiny.inputBindings.register(formInputBinding, "dull.formInput");
 var groupInputBinding = new Shiny.InputBinding();
 
 $.extend(groupInputBinding, {
+  Selector: {
+    SELF: ".dull-group-input",
+    SELECTED: ".input-group-prepend .input-group-text, input, .input-group-append .input-group-text",
+    // LABEL: ".dull-button-input,"
+  },
   find: function(scope) {
     return $(scope).find(".dull-group-input[id]");
   },
-  initialize: function(el) {
-    var $el = $(el);
-
-    $el.data("prefix", $el.find(".left-addon")
-      .map((i, e) => $(e).text())
-      .get()
-      .join("")
-    );
-
-    $el.data("suffix", $el.find(".right-addon")
-      .map((i, e) => $(e).text())
-      .get()
-      .join("")
-    );
-  },
-  getValue: function(el) {
-    var $el = $(el);
-
-    var text = $el.find("input[type=\"text\"]").val();
-
-    if (text === "") {
-      return null;
-    }
-
-    var left = $el.find(".left-group .dull-dropdown-input[id]").data("value") || "";
-    var right = $el.find(".right-group .dull-dropdown-input[id]").data("value") || "";
-
-    return left + $el.data("prefix") + text + $el.data("suffix") + right;
+  getType: function(el) {
+    return "dull.group.input";
   },
   getState: function(el) {
     return { value: this.getValue(el) };
@@ -553,6 +609,10 @@ $.extend(groupInputBinding, {
   },
   unsubscribe: function(el) {
     $(el).off(".groupInputBinding");
+  },
+  receiveMessage: function(el, msg) {
+    console.error("receiveMessage: not implemented for group input");
+    return;
   }
 });
 
@@ -618,14 +678,12 @@ Shiny.inputBindings.register(navInputBinding, "dull.navInput");
 var radioInputBinding = new Shiny.InputBinding();
 
 $.extend(radioInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-radio-input[id]");
-  },
-  getValue: function(el) {
-    var $val = $(el)
-      .find("input[type=\"radio\"]:checked:not(:disabled)")
-      .data("value");
-    return $val === undefined ? null : $val;
+  Selector: {
+    SELF: ".dull-radio-input",
+    VALUE: ".custom-control-input",
+    LABEL: ".custom-control-label",
+    SELECTED: ".custom-control-input:checked:not(:disabled)",
+    VALIDATE: ".custom-control-input"
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
@@ -637,55 +695,6 @@ $.extend(radioInputBinding, {
   },
   unsubscribe: function(el) {
     $(el).off(".radioInputBinding");
-  },
-  receiveMessage: function(el, data) {
-    var $el = $(el);
-
-    if (data.validate !== undefined) {
-      $("input", el).removeClass("is-invalid")
-        .addClass("is-valid");
-
-      return;
-    }
-
-    if (data.invalidate !== undefined) {
-      $("input", el).addClass("is-invalid");
-      $(".invalid-feedback", el).html(data.invalidate);
-
-      return;
-    }
-
-    if (data.choices !== undefined) {
-      $el.find(".custom-radio").remove();
-    }
-
-    if (data.disable) {
-      if (data.disable === true) {
-        $el.find("input[type=\"radio\"]").each(function(i, e) {
-          $(e).prop("disabled", true);
-        });
-      } else {
-        $.each(data.disable, function(i, v) {
-          $el.find("input[type=\"radio\"][data-value=\"" + v + "\"]")
-            .prop("disabled", true);
-        });
-      }
-    }
-
-    if (data.enable) {
-      if (data.enable === true) {
-        $el.find("input[type=\"radio\"]").each(function(i, e) {
-          $(e).prop("disabled", false);
-        });
-      } else {
-        $.each(data.enable, function(i, v) {
-          $el.find("input[type=\"radio\"][data-value=\"" + v + "\"]")
-            .prop("disabled", false);
-        });
-      }
-    }
-
-    $el.trigger("change");
   }
 });
 
@@ -694,11 +703,11 @@ Shiny.inputBindings.register(radioInputBinding, "dull.radioInput");
 var radiobarInputBinding = new Shiny.InputBinding();
 
 $.extend(radiobarInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-radiobar-input[id]");
-  },
-  getValue: function(el) {
-    return $(el).find("input[type=radio]:checked").data("value");
+  Selector: {
+    SELF: ".dull-radiobar-input",
+    VALUE: ".btn input",
+    LABEL: ".btn > span",
+    SELECTED: ".btn input:checked"
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
@@ -721,8 +730,8 @@ Shiny.inputBindings.register(radiobarInputBinding, "radiobarInput");
 var rangeInputBinding = new Shiny.InputBinding();
 
 $.extend(rangeInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-range-input[id]");
+  Selector: {
+    SELF: ".dull-range-input"
   },
   initialize: (el) => {
     let $el = $(el);
@@ -772,6 +781,10 @@ $.extend(rangeInputBinding, {
   unsubscribe: function(el) {
     $(el).off(".rangeInputBinding");
   },
+  receiveMessage: function(el, msg) {
+    console.error("receiveMessage: not implemented for range input");
+    return;
+  },
   dispose: function(el) {
     var $input = $("input[type='text']", el);
 
@@ -784,45 +797,39 @@ Shiny.inputBindings.register(rangeInputBinding, "dull.rangeInput");
 var selectInputBinding = new Shiny.InputBinding();
 
 $.extend(selectInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-select-input[id]");
-  },
-  getValue: function(el) {
-    return $(el)
-      .find("option:checked")
-      .map(function(i, e) {
-        var $val = $(e).data("value");
-        return $val === undefined ? null : $val;
-      })
-      .get();
+  Selector: {
+    SELF: ".dull-select-input",
+    VALUE: "option",
+    LABEL: "option",
+    SELECTED: "option:checked",
+    VALIDATE: "select"
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   subscribe: function(el, callback) {
-    var self = this;
     $(el).on("change.selectInputBinding", function(e) {
       callback();
     });
   },
   unsubscribe: function(el) {
     $(el).off(".selectInputBinding");
-  },
-  receiveMessage: function(el, data) {
-    if (data.validate !== undefined) {
-      $("select", el).removeClass("is-invalid")
-        .addClass("is-valid");
-
-      return;
-    }
-
-    if (data.invalidate !== undefined) {
-      $("select", el).addClass("is-invalid");
-      $(".invalid-feedback", el).html(data.invalidate);
-
-      return;
-    }
   }
+  // receiveMessage: function(el, data) {
+  //   if (data.validate !== undefined) {
+  //     $("select", el).removeClass("is-invalid")
+  //       .addClass("is-valid");
+
+  //     return;
+  //   }
+
+  //   if (data.invalidate !== undefined) {
+  //     $("select", el).addClass("is-invalid");
+  //     $(".invalid-feedback", el).html(data.invalidate);
+
+  //     return;
+  //   }
+  // }
 });
 
 Shiny.inputBindings.register(selectInputBinding, "dull.selectInput");
@@ -896,8 +903,9 @@ $(document).ready(function() {
 var textualInputBinding = new Shiny.InputBinding();
 
 $.extend(textualInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-textual-input[id]");
+  Selector: {
+    SELF: ".dull-textual-input",
+    VALIDATE: "input"
   },
   getValue: function(el) {
     var $input = $(el).find("input");
@@ -922,7 +930,11 @@ $.extend(textualInputBinding, {
       return "dull.time.input";
     }
 
-    return "dull.form.element";
+    if ($(el).closest(".dull-form-input[id]").length) {
+      return "dull.form.element";
+    }
+
+    return false;
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };

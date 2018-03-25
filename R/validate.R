@@ -1,140 +1,60 @@
-#' Validate an input
+#' Input validation
 #'
-#' `validateEvent` is triggered by an input. A handler function may raise an
-#' error, warning, or return. If an error is raised using the input is marked as
-#' invalid and the reactive input value is frozen. While the value is invalid
-#' and remains frozen it will not trigger observers or reactive expressions.
+#' `markInvalid` and `markValid` are new utilities for conveying information to
+#' users. Both functions can add text to an input letting a user know why an
+#' input is valid or invalid. Additionally, `markInvalid` will immediately
+#' freeze an input. As a result, further observers or reactives using the input
+#' are not triggered. `markValid` will immediately thaw the reactive input, thus
+#' allowing subsequent observers and reactives to trigger.
 #'
-#' @param trigger The input to trigger the validation handler. Unlike
-#'   `observeEvent` this may not be an event and instead must be a single
-#'   reactive input value.
+#' @param id A character string specifying the id of an input to mark as invalid
+#'   or valid.
 #'
-#' @param handler An expression or function, may contain reactive values.
-#'
-#' @param priority A numeric value specifying the priority of the validation.
-#'   All validations are already highly prioritized, but this may be used
-#'   to reorder validations.
+#' @param msg A character string letting the user know why an input is invalid
+#'   or valid. For `markInvalid` this argument is required, for `markValid` the
+#'   argument is optional.
 #'
 #' @export
 #' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       fluid = FALSE,
-#'       textInput(
-#'         id = "text",
-#'         label = "Please enter some text"
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       validateEvent(input$text, {
-#'         if (input$text == "") {
-#'           stop("this field is required")
-#'         }
-#'       })
-#'     }
-#'   )
-#' }
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       fluid = FALSE,
-#'       div(
-#'         h5("Where to?"),
-#'         selectInput(
-#'           id = "dropdown",
-#'           options = c("(pick one)", "Home", "Work", "Store")
-#'         ),
-#'         h5("In what?"),
-#'         radioInput(
-#'           id = "npr",
-#'           choices = c("Car", "Bus", "Bike")
-#'         ),
-#'         h5("Pickup pizza?"),
-#'         checkboxInput(
-#'           id = "pizza",
-#'           choice = "Absolutely!"
-#'         )
-#'       ) %>%
-#'        padding(4)
-#'     ),
-#'     server = function(input, output) {
-#'       validateEvent(input$dropdown, {
-#'         if (is.null(input$dropdown) || input$dropdown == "(pick one)") {
-#'           stop("please select a choice")
-#'         }
-#'       })
-#'
-#'       validateEvent(input$npr, {
-#'         if (is.null(input$npr)) {
-#'           stop("field is required")
-#'         }
-#'       })
-#'
-#'       validateEvent(input$pizza, {
-#'         if (is.null(input$pizza)) {
-#'           stop("")
-#'         }
-#'       })
-#'     }
-#'   )
-#' }
-#'
-validateEvent <- function(trigger, handler, priority = 0,
-                          domain = getDefaultReactiveDomain(), initial = TRUE) {
-  priority <- priority + 9999
-  parent <- parent.frame()
+markInvalid <- function(id, msg) {
+  domain <- getDefaultReactiveDomain()
 
-  call <- as.list(substitute(trigger))
-
-  if (length(call) == 3) {
-    if (call[[2]] != "input") {
-      stop(
-        "currently, `validateEvent` argument `trigger` must be a single ",
-        "input value, e.g. `input$fields`",
-        call. = FALSE
-      )
-    }
+  if (is.null(domain)) {
+    stop(
+      "problem with `invalid`, input `", id, "` cannot be invalidated outside ",
+      "of a reactive context",
+      call. = FALSE
+    )
   }
 
-  i <- as.character(call[[3]])
+  domain$sendInputMessage(id, list(
+    type = "mark:invalid",
+    data = list(msg = msg)
+  ))
+  domain$freezeValue(domain$input, id)
 
-  triggerFunc <- shiny::exprToFunction(trigger, parent, FALSE)
-  triggerFunc <- wrapFunctionLabel(triggerFunc, "validateTrigger", ..stacktraceon = TRUE)
+  invisible()
+}
 
-  handlerFunc <- shiny::exprToFunction(handler, parent, FALSE)
-  handlerFunc <- wrapFunctionLabel(handlerFunc, "validateHandler", ..stacktraceon = TRUE)
+#' @rdname markInvalid
+#' @export
+markValid <- function(id, msg = NULL) {
+  domain <- getDefaultReactiveDomain()
 
-  label <- sprintf(
-    "validateEvent(%s)",
-    paste(deparse(body(triggerFunc)), collapse = "\n")
-  )
+  if (is.null(domain)) {
+    stop(
+      "problem with `valid`, input `", id, "` cannot be invalidated outside ",
+      "of a reactive context",
+      call. = FALSE
+    )
+  }
 
-  initialized <- FALSE
+  domain$sendInputMessage(id, list(
+    type = "mark:valid",
+    data = list(msg = msg)
+  ))
+  .subset2(domain$input, "impl")$thaw(id)
 
-  o <- observe({
-    if (.subset2(domain$input, "impl")$isFrozen(i)) {
-      .subset2(domain$input, "impl")$thaw(i)
-    }
-
-    e <- triggerFunc()
-
-    if (!initial && !initialized) {
-      initialized <<- TRUE
-      return()
-    }
-
-    tryCatch({
-      isolate(handlerFunc())
-      domain$sendInputMessage(i, list(validate = TRUE))
-    }, error = function(e) {
-      .subset2(domain$input, "impl")$freeze(i)
-      domain$sendInputMessage(i, list(invalidate = e$message %||% ""))
-    })
-
-  }, label = label, suspended = FALSE, priority = priority, domain = domain,
-  autoDestroy = TRUE, ..stacktraceon = FALSE)
-
-  invisible(o)
+  invisible()
 }

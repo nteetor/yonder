@@ -1,37 +1,16 @@
 var groupInputBinding = new Shiny.InputBinding();
 
 $.extend(groupInputBinding, {
+  Selector: {
+    SELF: ".dull-group-input",
+    SELECTED: ".input-group-prepend .input-group-text, input, .input-group-append .input-group-text",
+    // LABEL: ".dull-button-input,"
+  },
   find: function(scope) {
     return $(scope).find(".dull-group-input[id]");
   },
-  initialize: function(el) {
-    var $el = $(el);
-
-    $el.data("prefix", $el.find(".left-addon")
-      .map((i, e) => $(e).text())
-      .get()
-      .join("")
-    );
-
-    $el.data("suffix", $el.find(".right-addon")
-      .map((i, e) => $(e).text())
-      .get()
-      .join("")
-    );
-  },
-  getValue: function(el) {
-    var $el = $(el);
-
-    var text = $el.find("input[type=\"text\"]").val();
-
-    if (text === "") {
-      return null;
-    }
-
-    var left = $el.find(".left-group .dull-dropdown-input[id]").data("value") || "";
-    var right = $el.find(".right-group .dull-dropdown-input[id]").data("value") || "";
-
-    return left + $el.data("prefix") + text + $el.data("suffix") + right;
+  getType: function(el) {
+    return "dull.group.input";
   },
   getState: function(el) {
     return { value: this.getValue(el) };
@@ -53,6 +32,10 @@ $.extend(groupInputBinding, {
   },
   unsubscribe: function(el) {
     $(el).off(".groupInputBinding");
+  },
+  receiveMessage: function(el, msg) {
+    console.error("receiveMessage: not implemented for group input");
+    return;
   }
 });
 

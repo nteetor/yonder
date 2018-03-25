@@ -28,7 +28,7 @@ textualInput <- function(id, value, placeholder, readonly, help, type,
   )
 }
 
-#' Textual nputs
+#' Textual inputs
 #'
 #' Textual inputs.
 #'
@@ -557,7 +557,7 @@ addressInput <- function(id) {
 #'             left = dropdownInput(
 #'               id = "dropdown",
 #'               label = "Title",
-#'               items = c("Mrs.", "Miss", "Mr.", "none"),
+#'               choices = c("Mrs.", "Miss", "Mr.", "none"),
 #'               values = c("Mrs. ", "Miss ", "Mr. ", "")
 #'             ),
 #'             placeholder = "First name",
@@ -581,8 +581,7 @@ addressInput <- function(id) {
 #'
 groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
                        right = NULL, ...) {
-  if (!is.null(left) && !is.character(left) && !tagIs(left, "button") &&
-      !tagHasClass(left, "dull-dropdown-input")) {
+  if (!is.null(left) && !isValidAddon(left)) {
     stop(
       "invalid `groupInput` argument, `left` must be a character string, ",
       "buttonInput(), or dropdownInput()",
@@ -590,8 +589,7 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
     )
   }
 
-  if (!is.null(right) && !is.character(right) && !tagIs(right, "button") &&
-      !tagHasClass(right, "dull-dropdown-input")) {
+  if (!is.null(right) && !isValidAddon(right)) {
     stop(
       "invalid `groupInput` argument, `right` must be a character string, ",
       "buttonInput(), or dropdownInput()",
@@ -599,18 +597,27 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
     )
   }
 
+  shiny::registerInputHandler(
+    type = "dull.group.input",
+    fun = function(x, session, name) paste0(x, collapse = ""),
+    force = TRUE
+  )
+
   tags$div(
     class = "dull-group-input input-group",
     id = id,
     if (!is.null(left)) {
-      if (is.character(left)) {
-        lapply(left, function(l) tags$span(class = "input-group-addon left-addon", l))
-      } else {
-        tags$span(
-          class = "input-group-btn left-group",
+      tags$div(
+        class = "input-group-prepend",
+        if (is.character(left)) {
+          lapply(left, tags$span, class = "input-group-text")
+        } else if (tagHasClass(left, "dull-dropdown-input")) {
+          left$children
+        } else {
+          # list of buttons
           left
-        )
-      }
+        }
+      )
     },
     ...,
     tags$input(
@@ -620,14 +627,27 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
       value = value
     ),
     if (!is.null(right)) {
-      if (is.character(right)) {
-        lapply(right, function(r) tags$span(class = "input-group-addon right-addon", r))
-      } else {
-        tags$span(
-          class = "input-group-btn right-group",
+      tags$div(
+        class = "input-group-append",
+        if (is.character(right)) {
+          lapply(right, tags$span, class = "input-group-text")
+        } else if (tagHasClass(right, "dull-dropdown-input")) {
+          right$children
+        } else {
+          # list of buttons
           right
-        )
-      }
+        }
+      )
     }
   )
+}
+
+isValidAddon <- function(tag) {
+  if (all(class(tag) == "list")) {
+    return(all(vapply(tag, tagIs, logical(1), "button")))
+  }
+
+  is.character(tag) ||
+   tagIs(tag, "button") ||
+   tagHasClass(tag, "dull-dropdown-input")
 }

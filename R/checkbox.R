@@ -55,38 +55,35 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       row(
-#'         col(
-#'           checkboxInput(
-#'             id = "caps",
-#'             choice = "Capslock?",
-#'             value = "capslock"
-#'           )
-#'         ),
-#'         col(
-#'           checkboxInput(
-#'             id = "question",
-#'             choice = "Please check this box",
-#'             value = "checked"
-#'           )
-#'         )
-#'       )
+#'       checkboxInput("foo", "Hello, world!", "hello"),
+#'       textOutput("checkvalue", inline = TRUE),
+#'       textInput("label", placeholder = "New checkbox text"),
+#'       textInput("value", placeholder = "New checkbox value"),
+#'       tags$div(
+#'         buttonInput("choices", "Update checkbox text"),
+#'         buttonInput("values", "Update checkbox value")
+#'       ) %>%
+#'         display("flex")
 #'     ),
 #'     server = function(input, output) {
-#'       observe({
-#'         if (isTruthy(input$caps)) {
-#'           updateCheckboxInput(
-#'             id = "question",
-#'             choice = "PLEASE CHECK THIS BOX",
-#'             value = "checked"
-#'           )
+#'       output$checkvalue <- renderPrint({
+#'         if (is.null(input$foo)) {
+#'           invalid("foo", "Please check")
 #'         } else {
-#'           updateCheckboxInput(
-#'             id = "question",
-#'             choice = "Please check this box",
-#'             value = "checked"
-#'           )
+#'           valid("foo")
 #'         }
+#'
+#'         input$foo
+#'       })
+#'
+#'       observeEvent(input$choices, {
+#'         req(input$label)
+#'         updateChoices("foo", hello = input$label)
+#'       })
+#'
+#'       observeEvent(input$values, {
+#'         req(input$value, input$foo)
+#'         updateValues("foo", !!(input$foo) := input$value)
 #'       })
 #'     }
 #'   )
@@ -120,64 +117,10 @@ checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
         `for` = self,
         choice
       ),
-      tags$div(class = "invalid-feedback")
+      tags$div(class = "invalid-feedback"),
+      tags$div(class = "valid-feedback")
     ),
     ...,
     includes()
-  )
-}
-
-#' @rdname checkboxInput
-#' @export
-updateCheckboxInput <- function(id, choice, value = choice, checked = FALSE,
-                                session = getDefaultReactiveDomain()) {
-  self <- ID("checkbox")
-
-  this <- tags$div(
-    class = collate(
-      "custom-control",
-      "custom-checkbox"
-    ),
-    tags$input(
-      class = "custom-control-input",
-      type = "checkbox",
-      id = self,
-      `data-value` = value,
-      checked = if (checked) NA
-    ),
-    tags$label(
-      class = "custom-control-label",
-      `for` = self,
-      choice
-    )
-  )
-
-  session$sendInputMessage(
-    id,
-    list(
-      content = as.character(this)
-    )
-  )
-}
-
-#' @rdname checkboxInput
-#' @export
-disableCheckboxInput <- function(id, session = getDefaultReactiveDomain()) {
-  session$sendInputMessage(
-    id,
-    list(
-      disable = TRUE
-    )
-  )
-}
-
-#' @rdname checkboxInput
-#' @export
-enableCheckboxInput <- function(id, session = getDefaultReactiveDomain()) {
-  session$sendInputMessage(
-    id,
-    list(
-      enable = TRUE
-    )
   )
 }

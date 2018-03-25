@@ -2,22 +2,10 @@
 % Please edit documentation in R/button.R
 \name{buttonInput}
 \alias{buttonInput}
-\alias{updateButtonInput}
-\alias{disableButtonInput}
-\alias{enableButtonInput}
-\alias{resetButtonInput}
 \alias{submitInput}
 \title{Button and submit inputs}
 \usage{
 buttonInput(id, label, block = FALSE, disabled = FALSE, ...)
-
-updateButtonInput(id, label, session = getDefaultReactiveDomain())
-
-disableButtonInput(id, session = getDefaultReactiveDomain())
-
-enableButtonInput(id, session = getDefaultReactiveDomain())
-
-resetButtonInput(id, session = getDefaultReactiveDomain())
 
 submitInput(label = "Submit", block = FALSE, disabled = FALSE, ...)
 }
@@ -44,7 +32,7 @@ clicked.
 
 A submit input is a special type of button used to control HTML form
 submission. Unlike shiny's \code{submitButton}, \code{submitInput} will not freeze all
-reactive inputs.
+reactive inputs on the page.
 }
 \details{
 A submit input is automatically included as part of a \code{\link{formInput}}.
@@ -70,47 +58,6 @@ if (interactive()) {
     ),
     server = function(input, output) {
       output$clicks <- renderText({
-        input$button
-      })
-    }
-  )
-}
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        col(
-          buttonInput(
-            id = "change",
-            text = "Change other button"
-          )
-        ),
-        col(
-          buttonInput(
-            id = "button",
-            text = "Button",
-            outline = TRUE
-          )
-        ),
-        col(
-          d4(
-            textOutput("value")
-          )
-        )
-      )
-    ),
-    server = function(input, output) {
-      observeEvent(input$change, {
-        updateButtonInput(
-          id = "button",
-          text = paste("Button", input$change)
-        )
-
-        resetButtonInput("button")
-      })
-
-      output$value <- renderText({
         input$button
       })
     }

@@ -26,6 +26,7 @@ Collate:
     utils.R
     includes.R
     tags.R
+    update.R
     icons.R
     inputs.R
     datetime.R

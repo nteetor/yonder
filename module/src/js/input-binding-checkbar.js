@@ -1,13 +1,11 @@
 var checkbarInputBinding = new Shiny.InputBinding();
 
 $.extend(checkbarInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-checkbar-input[id]");
-  },
-  getValue: function(el) {
-    return $(el).find("input[type=checkbox]:checked")
-      .map((i, e) => $(e).data("value"))
-      .get();
+  Selector: {
+    SELF: ".dull-checkbar-input",
+    VALUE: ".btn input",
+    LABEL: ".btn > span",
+    SELECTED: ".btn.active input"
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };

@@ -5,5 +5,7 @@
 #' @section Q and A:
 #'
 #' @importFrom shiny getDefaultReactiveDomain tagAppendAttributes
+#' @importFrom rlang dots_list
+#'
 #' @name dull
 "_PACKAGE"
