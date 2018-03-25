@@ -15,7 +15,8 @@ Depends:
 Imports:
     htmltools,
     magrittr,
-    jsonlite
+    jsonlite,
+    rlang
 Suggests:
     testthat,
     knitr,
