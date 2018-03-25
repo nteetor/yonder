@@ -1,8 +1,10 @@
-var buttonGroupInputBinding = new Shiny.InputBinding();
+let buttonGroupInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonGroupInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-button-group-input[id]");
+  Selector: {
+    SELF: ".dull-button-group-input",
+    VALUE: ".btn",
+    LABEL: ".btn"
   },
   _value: null,
   getValue: function(el) {

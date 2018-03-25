@@ -1,8 +1,8 @@
 var textualInputBinding = new Shiny.InputBinding();
 
 $.extend(textualInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-textual-input[id]");
+  Selector: {
+    SELF: ".dull-textual-input"
   },
   getValue: function(el) {
     var $input = $(el).find("input");
@@ -27,7 +27,11 @@ $.extend(textualInputBinding, {
       return "dull.time.input";
     }
 
-    return "dull.form.element";
+    if ($(el).closest(".dull-form-input[id]").length) {
+      return "dull.form.element";
+    }
+
+    return false;
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };

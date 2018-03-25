@@ -1,8 +1,8 @@
 var rangeInputBinding = new Shiny.InputBinding();
 
 $.extend(rangeInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-range-input[id]");
+  Selector: {
+    SELF: ".dull-range-input"
   },
   initialize: (el) => {
     let $el = $(el);
@@ -51,6 +51,10 @@ $.extend(rangeInputBinding, {
   },
   unsubscribe: function(el) {
     $(el).off(".rangeInputBinding");
+  },
+  receiveMessage: function(el, msg) {
+    console.error("receiveMessage: not implemented for range input");
+    return;
   },
   dispose: function(el) {
     var $input = $("input[type='text']", el);

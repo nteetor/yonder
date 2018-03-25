@@ -176,7 +176,7 @@ if (interactive()) {
             left = dropdownInput(
               id = "dropdown",
               label = "Title",
-              items = c("Mrs.", "Miss", "Mr.", "none"),
+              choices = c("Mrs.", "Miss", "Mr.", "none"),
               values = c("Mrs. ", "Miss ", "Mr. ", "")
             ),
             placeholder = "First name",

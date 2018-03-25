@@ -91,8 +91,8 @@ validateEvent <- function(trigger, handler, priority = 0,
   if (length(call) == 3) {
     if (call[[2]] != "input") {
       stop(
-        "currently, `validateEvent` argument `trigger` must be a single ",
-        "input value, e.g. `input$fields`",
+        "`validateEvent` argument `trigger` must be a single input value, ",
+        "e.g. `input$field`",
         call. = FALSE
       )
     }

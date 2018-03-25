@@ -1,8 +1,10 @@
 var buttonInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-button-input[id]");
+  Selector: {
+    SELF: ".dull-button-input",
+    VALUE: ".dull-button-input",
+    LABEL: ".dull-button-input"
   },
   getValue: function(el) {
     var $el = $(el);
@@ -29,27 +31,6 @@ $.extend(buttonInputBinding, {
   },
   unsubscribe: function(el) {
     $(el).off(".buttonInputBinding");
-  },
-  receiveMessage: function(el, data) {
-    var $el = $(el);
-
-    if (data.label !== undefined) {
-      $el.html(data.label);
-    }
-
-    if (data.reset === true) {
-      $el.data("clicks", 0);
-    }
-
-    if (data.disable === true) {
-      $el.prop("disabled", true);
-    }
-
-    if (data.enable === true) {
-      $el.prop("disabled", false);
-    }
-
-    $el.trigger("change");
   }
 });
 

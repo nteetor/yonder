@@ -1,8 +1,8 @@
 var datetimeInputBinding = new Shiny.InputBinding();
 
 $.extend(datetimeInputBinding, {
-  find: function(scope) {
-    return $(".dull-datetime-input[id]", scope);
+  Selector: {
+    SELF: ".dull-datetime-input"
   },
   initialize: function(el) {
     let $input = $("input", el);
@@ -12,13 +12,13 @@ $.extend(datetimeInputBinding, {
       config.altFormat = "M j, Y";
       config.conjunction = "; ";
     }
-    
+
     if ($input.data("default-date") &&
         ($input.data("mode") === "range" || $input.data("mode") === "multiple")) {
       config.defaultDate = $input.data("default-date").split("\\,");
       $input.removeAttr("data-default-date");
     }
-    
+
     $input.flatpickr(config);
   },
   getType: () => "dull.datetime",
@@ -30,7 +30,11 @@ $.extend(datetimeInputBinding, {
       callback();
     });
   },
-  unsubscribe: (el) => $(el).off(".datetimeInputBinding")
+  unsubscribe: (el) => $(el).off(".datetimeInputBinding"),
+  receiveMessage: function(el, msg) {
+    console.error("receiveMessage: not implemented for datetime input");
+    return;
+  }
 });
 
 Shiny.inputBindings.register(datetimeInputBinding, "dull.datetimeInput");

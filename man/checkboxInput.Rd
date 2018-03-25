@@ -2,19 +2,9 @@
 % Please edit documentation in R/checkbox.R
 \name{checkboxInput}
 \alias{checkboxInput}
-\alias{updateCheckboxInput}
-\alias{disableCheckboxInput}
-\alias{enableCheckboxInput}
 \title{Checkbox inputs}
 \usage{
 checkboxInput(id, choice, value = choice, checked = FALSE, ...)
-
-updateCheckboxInput(id, choice, value = choice, checked = FALSE,
-  session = getDefaultReactiveDomain())
-
-disableCheckboxInput(id, session = getDefaultReactiveDomain())
-
-enableCheckboxInput(id, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the checkbox input, the
@@ -71,38 +61,29 @@ if (interactive()) {
 if (interactive()) {
   shinyApp(
     ui = container(
-      row(
-        col(
-          checkboxInput(
-            id = "caps",
-            choice = "Capslock?",
-            value = "capslock"
-          )
-        ),
-        col(
-          checkboxInput(
-            id = "question",
-            choice = "Please check this box",
-            value = "checked"
-          )
-        )
-      )
+      checkboxInput("foo", "Hello, world!", "hello"),
+      textOutput("checkvalue", inline = TRUE),
+      textInput("label", placeholder = "New checkbox text"),
+      textInput("value", placeholder = "New checkbox value"),
+      tags$div(
+        buttonInput("choices", "Update checkbox text"),
+        buttonInput("values", "Update checkbox value")
+      ) \%>\%
+        display("flex")
     ),
     server = function(input, output) {
-      observe({
-        if (isTruthy(input$caps)) {
-          updateCheckboxInput(
-            id = "question",
-            choice = "PLEASE CHECK THIS BOX",
-            value = "checked"
-          )
-        } else {
-          updateCheckboxInput(
-            id = "question",
-            choice = "Please check this box",
-            value = "checked"
-          )
-        }
+      output$checkvalue <- renderPrint({
+        input$foo
+      })
+
+      observeEvent(input$choices, {
+        req(input$label)
+        updateChoices("foo", hello = input$label)
+      })
+
+      observeEvent(input$values, {
+        req(input$value, input$foo)
+        updateValues("foo", !!(input$foo) := input$value)
       })
     }
   )

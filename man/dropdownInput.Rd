@@ -2,20 +2,16 @@
 % Please edit documentation in R/dropdown.R
 \name{dropdownInput}
 \alias{dropdownInput}
-\alias{disableDropdownInput}
-\alias{enableDropdownInput}
 \title{Dropdown input}
 \usage{
-dropdownInput(id, choices, values = choices, disabled = NULL,
+dropdownInput(id, label, choices, values = choices, disabled = NULL,
   dividers = NULL, direction = "down", ...)
-
-disableDropdownInput(id, disabled = NULL,
-  session = getDefaultReactiveDomain())
-
-enableDropdownInput(id, enabled = NULL,
-  session = getDefaultReactiveDomain())
 }
 \arguments{
+\item{id}{A character string specifying the id of the dropdown input.}
+
+\item{label}{A character string specifying the label of the dropdown's button.}
+
 \item{choices}{A character vector specifying the labels of the dropdown menu
 items.}
 
@@ -24,10 +20,8 @@ to coerce to character strings, or list of values to coerce to character
 strings specifying the values of the dropdown input's choices, defaults to
 \code{choices}.}
 
-\item{disabled, enabled}{One or more of \code{values} indicating which dropdown
-menu items to disable or enable, defaults to \code{NULL}. If \code{NULL} then
-\code{disableDropdownInput} and \code{enableDropdownInput} will disable or enable all
-the dropdown input's items, respectively.}
+\item{disabled}{One or more of \code{values} indicating which dropdown menu items
+to disable, defaults to \code{NULL}, in which case all choices are enabled.}
 
 \item{dividers}{One or more of \code{values} indicating which dropdown menu items
 are the start of a new section, defaults to \code{NULL}. Divider lines will be
@@ -45,8 +39,7 @@ Dropdown inputs, or dropdown menus, function similar to a set of buttons.
 The initial click to open a dropdown menu does not trigger a reactive event,
 but a click on one of the dropdown items triggers a reactive event. The
 reactive value of a dropdown input is the value of the most recently clicked
-dropdown menu item. Disabling a dropdown menu triggers a reactive event and
-resets the reactive value to \code{NULL}.
+dropdown menu item.
 }
 \examples{
 if (interactive()) {
@@ -56,10 +49,11 @@ if (interactive()) {
         col(
           dropdownInput(
             id = "dropdown",
+            label = "A dropdown",
             choices = paste("Action", 1:5),
             dividers = "Action 4"
           ) \%>\%
-            background("deep-orange")
+            background("orange")
         ),
         col(
           d4(
@@ -79,46 +73,19 @@ if (interactive()) {
 if (interactive()) {
   shinyApp(
     ui = container(
-      row(
-        col(
-          dropdownInput(
-            id = "actions",
-            choices = c("disable", "enable", "disable some", "enable some"),
-            dividers = "disable some"
-          ) \%>\%
-            background("grey", +1)
-        ),
-        col(
-          dropdownInput(
-            id = "dropdown",
-            label = "Other actions",
-            choices = paste("Action", 1:5),
-            disabled = "Action 3"
-          ) \%>\%
-            background("amber")
-        ),
-        col(
-          d4(
-            textOutput("value")
-          )
-        )
+      buttonInput("click", "Change dropdown choices"),
+      dropdownInput(
+        id = "foo",
+        label = "A dropdown",
+        choices = c("Hello", "World")
       )
     ),
     server = function(input, output) {
-      observeEvent(input$actions, {
-        if (input$actions == "disable") {
-          disableDropdownInput("dropdown")
-        } else if (input$actions == "enable") {
-          enableDropdownInput("dropdown")
-        } else if (input$actions == "disable some") {
-          disableDropdownInput("dropdown", paste("Action", c(2, 3, 5)))
-        } else if (input$actions == "enable some") {
-          enableDropdownInput("dropdown", paste("Action", c(2, 3, 5)))
-        }
-      })
-
-      output$value <- renderText({
-        input$dropdown
+      observeEvent(input$click, {
+        updateChoices(
+          id = "foo",
+          Hello = "Hello!"
+        )
       })
     }
   )

@@ -8,7 +8,7 @@
 #'
 #' A submit input is a special type of button used to control HTML form
 #' submission. Unlike shiny's `submitButton`, `submitInput` will not freeze all
-#' reactive inputs.
+#' reactive inputs on the page.
 #'
 #' @param id A character string specifying the id of the button input.
 #'
@@ -66,47 +66,6 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       row(
-#'         col(
-#'           buttonInput(
-#'             id = "change",
-#'             text = "Change other button"
-#'           )
-#'         ),
-#'         col(
-#'           buttonInput(
-#'             id = "button",
-#'             text = "Button",
-#'             outline = TRUE
-#'           )
-#'         ),
-#'         col(
-#'           d4(
-#'             textOutput("value")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$change, {
-#'         updateButtonInput(
-#'           id = "button",
-#'           text = paste("Button", input$change)
-#'         )
-#'
-#'         resetButtonInput("button")
-#'       })
-#'
-#'       output$value <- renderText({
-#'         input$button
-#'       })
-#'     }
-#'   )
-#' }
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
 #'       fluid = FALSE,
 #'       buttonInput(
 #'         id = "button",
@@ -135,7 +94,8 @@ buttonInput <- function(id, label, block = FALSE, disabled = FALSE, ...) {
       "dull-button-input",
       "dull-input",
       "btn",
-      if (block) "btn-block"
+      if (block) "btn-block",
+      "btn-grey"
     ),
     type = "button",
     role = "button",
@@ -149,58 +109,13 @@ buttonInput <- function(id, label, block = FALSE, disabled = FALSE, ...) {
 
 #' @rdname buttonInput
 #' @export
-updateButtonInput <- function(id, label,
-                              session = getDefaultReactiveDomain()) {
-  session$sendInputMessage(
-    id,
-    list(
-      label = label
-    )
-  )
-}
-
-#' @rdname buttonInput
-#' @export
-disableButtonInput <- function(id, session = getDefaultReactiveDomain()) {
-  session$sendInputMessage(
-    id,
-    list(
-      disable = TRUE
-    )
-  )
-}
-
-#' @rdname buttonInput
-#' @export
-enableButtonInput <- function(id, session = getDefaultReactiveDomain()) {
-  session$sendInputMessage(
-    id,
-    list(
-      enable = TRUE
-    )
-  )
-}
-
-#' @rdname buttonInput
-#' @export
-resetButtonInput <- function(id, session = getDefaultReactiveDomain()) {
-  session$sendInputMessage(
-    id,
-    list(
-      reset = TRUE
-    )
-  )
-}
-
-#' @rdname buttonInput
-#' @export
 submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
                         ...) {
   tags$button(
     class = collate(
       "dull-submit",
       "btn",
-      "bg-blue",
+      "btn-blue",
       if (block) "btn-block"
     ),
     # done to avoid the way Shiny handles submit buttons, will be

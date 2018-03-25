@@ -4,7 +4,7 @@
 \alias{background}
 \alias{text}
 \alias{border}
-\title{Chance text, background, or border color}
+\title{Change text, background, or border color}
 \usage{
 background(tag, color, tone = 0)
 
@@ -26,6 +26,22 @@ unchanged.}
 \description{
 The \code{text}, \code{background}, and \code{border} utility functions may be used to
 change the text, background, or border color of a tag element, respectively.
+}
+\details{
+The following colors are available,
+\itemize{
+\item red
+\item purple
+\item indigo
+\item blue
+\item cyan
+\item teal
+\item green
+\item yellow
+\item amber
+\item orange
+\item grey
+}
 }
 \examples{
 tags$div("light text, dark background") \%>\%

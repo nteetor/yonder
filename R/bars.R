@@ -95,6 +95,30 @@
 #'   )
 #' }
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       checkbarInput("foo", c("hello, world!", "goodnight, moon"), c("world", "moon")),
+#'       textOutput("selected"),
+#'       buttonInput("labels", "Change labels"),
+#'       buttonInput("values", "Change values")
+#'     ),
+#'     server = function(input, output) {
+#'       output$selected <- renderPrint({
+#'         input$foo
+#'       })
+#'
+#'       observeEvent(input$labels, {
+#'         updateChoices("foo", world = "goodbye, world!", moon = "morning, moon")
+#'       })
+#'
+#'       observeEvent(input$values, {
+#'         updateValues("foo", world = "planet", moon = "spacestation")
+#'       })
+#'     }
+#'   )
+#' }
+#'
 checkbarInput <- function(id, choices, values = choices, selected = NULL) {
   if (length(choices) != length(values)) {
     stop(
@@ -128,7 +152,9 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL) {
             `data-value` = values[[i]],
             checked = if (selected[[i]]) NA
           ),
-          choices[[i]]
+          tags$span(
+            choices[[i]]
+          )
         )
       }
     )
@@ -167,7 +193,9 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL) {
             autocomplete = "false",
             checked = if (selected[[i]]) NA
           ),
-          choices[[i]]
+          tags$span(
+            choices[[i]]
+          )
         )
       }
     )

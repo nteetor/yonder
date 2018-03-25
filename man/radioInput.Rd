@@ -2,20 +2,10 @@
 % Please edit documentation in R/radio.R
 \name{radioInput}
 \alias{radioInput}
-\alias{updateRadioInput}
-\alias{disableRadioInput}
-\alias{enableRadioInput}
 \title{Radio inputs}
 \usage{
 radioInput(id, choices, values = choices, selected = NULL,
   disabled = NULL, help = NULL, inline = FALSE)
-
-updateRadioInput(id, choices, values = choices, selected = NULL,
-  disabled = NULL, session = getDefaultReactiveDomain())
-
-disableRadioInput(id, disabled = NULL, session = getDefaultReactiveDomain())
-
-enableRadioInput(id, enabled = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the radio input, the
@@ -34,10 +24,8 @@ strings specifying the values of the radio input's choices, defaults to
 radio input, defaults to \code{NULL}, in which case the first choice is
 selected by default.}
 
-\item{disabled, enabled}{One or more of \code{values} indicating which radio
-choices to disable or enable, defaults to \code{NULL}. If \code{NULL} then
-\code{disableRadioInput} and \code{enableRadioInput} will disable or enable all
-the radio input's choices, respectively.}
+\item{disabled}{One or more of \code{values} indicating which radio choices to
+disable, defaults to \code{NULL}, in which case all choices are enabled.}
 
 \item{help}{A character string specifying a small help label which appears
 below the input, defaults to \code{NULL} in which case help text is not added.}
@@ -79,107 +67,6 @@ if (interactive()) {
     server = function(input, output) {
       output$selected <- renderText({
         input$radio
-      })
-    }
-  )
-}
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        col(
-          tags$h2("Stacked"),
-          radioInput(
-            id = "groups",
-            choices = c("le guin", "rothfuss", "traviss"),
-            values = c(
-              "rocannon, exile, illusion",
-              "wind, fear",
-              "contact, zero, colors"
-            )
-          )
-        ),
-        col(
-          tags$h2("Inline"),
-          radioInput(
-            id = "choices",
-            choices = NULL,
-            inline = TRUE
-          )
-        )
-      )
-    ),
-    server = function(input, output) {
-      observe({
-        updateRadioInput(
-          id = "choices",
-          choices = strsplit(input$groups, ", ", fixed = TRUE)[[1]]
-        )
-      })
-    }
-  )
-}
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        col(
-          tags$h2("Disable inputs"),
-          radioInput(
-            id = "disabled",
-            choices = c("one & three", "two", "two & three")
-          )
-        ),
-        col(
-          tags$h2("The inputs"),
-          radioInput(
-            id = "other",
-            choices = c("one", "two", "three")
-          )
-        ),
-        col(
-          tags$h2("Input value"),
-          textOutput("value")
-        )
-      )
-    ),
-    server = function(input, output) {
-      observe({
-        req(input$disabled)
-
-        disableRadioInput(
-          id = "other",
-          disabled = switch(
-            input$disabled,
-            `one & three` = c("one", "three"),
-            `two` = "two",
-            `two & three` = c("two", "three")
-          )
-        )
-      })
-
-      observe({
-        req(input$disabled)
-
-        enableRadioInput(
-          id = "other",
-          enabled = switch(
-            input$disabled,
-            `one & three` = "two",
-            `two` = c("one", "three"),
-            `two & three` = "one"
-          )
-        )
-      })
-
-      output$value <- renderText({
-        if (is.null(input$other)) {
-          "<NULL>"
-        } else {
-          input$other
-        }
       })
     }
   )

@@ -92,11 +92,11 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
     tags$select(
       class = "custom-select",
       lapply(
-        seq_along(options),
+        seq_along(choices),
         function(i) {
           tags$option(
             `data-value` = values[[i]],
-            options[[i]],
+            choices[[i]],
             selected = if (selected[[i]]) NA
           )
         }

@@ -1,17 +1,20 @@
-var checkboxInputBinding = new Shiny.InputBinding();
+let checkboxInputBinding = new Shiny.InputBinding();
 
 $.extend(checkboxInputBinding, {
-  find: function(scope){
-    return $(scope).find(".dull-checkbox-input[id]");
+  Selector: {
+    SELF: ".dull-checkbox-input",
+    VALUE: ".custom-control-input",
+    LABEL: ".custom-control-label",
+    SELECTED: ".custom-control-input:checked:not(:disabled)"
   },
   getValue: function(el) {
     var $val = $(el)
-      .find("input[type='checkbox']:checked:not(:disabled)")
+      .find(`${ this.Selector.SELECTED }`)
       .data("value");
     return $val === undefined ? null : $val;
   },
   _getLabel: function(el) {
-    return $(el).find(".custom-control-description").text();
+    return $(el).find(`${ this.Selector.LABEL }`).text();
   },
   getState: function(el, data) {
     return {
@@ -26,43 +29,31 @@ $.extend(checkboxInputBinding, {
   },
   unsubscribe: function(el) {
     $(el).off(".checkboxInputBinding");
-  },
-  receiveMessage: function(el, data) {
-    var $el = $(el);
-
-     if (data.validate !== undefined) {
-      $("input", el).removeClass("is-invalid")
-        .addClass("is-valid");
-
-      return;
-    }
-
-    if (data.invalidate !== undefined) {
-      $("input", el).addClass("is-invalid");
-      $(".invalid-feedback", el).html(data.invalidate);
-
-      return;
-    }
-
-    if (data.content !== undefined) {
-      $el.find(".custom-checkbox").remove();
-      $el.html(data.content);
-    }
-
-    if (data.disable === true) {
-      $el.find("input[type=\"checkbox\"]").prop("disabled", true);
-      if ($el.find(".form-gruop").hasClass("disabled")) {
-        $el.find(".form-group").addClass("disabled");
-      }
-    }
-
-    if (data.enable === true) {
-      $el.find("input[type=\"checkbox\"]").prop("disabled", false);
-      $el.find(".form-group").removeClass("disabled");
-    }
-
-    $el.trigger("change");
   }
+  // receiveMessage: function(el, data) {
+  //   if (data.type === "update:choices") {
+  //     this.updateChoices(el, data.data);
+  //     return;
+  //   }
+
+  //   var $el = $(el);
+
+  //    if (data.validate !== undefined) {
+  //     $("input", el).removeClass("is-invalid")
+  //       .addClass("is-valid");
+
+  //     return;
+  //   }
+
+  //   if (data.invalidate !== undefined) {
+  //     $("input", el).addClass("is-invalid");
+  //     $(".invalid-feedback", el).html(data.invalidate);
+
+  //     return;
+  //   }
+
+  //   $el.trigger("change");
+  // }
 });
 
 Shiny.inputBindings.register(checkboxInputBinding, "dull.checkboxInput");
