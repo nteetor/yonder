@@ -73,6 +73,12 @@ if (interactive()) {
     ),
     server = function(input, output) {
       output$checkvalue <- renderPrint({
+        if (is.null(input$foo)) {
+          invalid("foo", "Please check")
+        } else {
+          valid("foo")
+        }
+
         input$foo
       })
 

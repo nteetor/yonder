@@ -85,7 +85,27 @@
     });
   }
 
+  this.markValid = function(el, data) {
+    let $input = $(el).find(this.Selector.VALIDATE);
+    $input.removeClass("is-invalid").addClass("is-valid");
+    let $feedback = $(el).find(".valid-feedback");
+    if ($feedback.length) {
+      $feedback.text(data.msg);
+    }
+  }
+
+  this.markInvalid = function(el, data) {
+    let $input = $(el).find(this.Selector.VALIDATE);
+    $input.removeClass("is-valid").addClass("is-invalid");
+    let $feedback = $(el).find(".invalid-feedback");
+    if ($feedback) {
+      $feedback.text(data.msg);
+    }
+  }
+
   this.receiveMessage = function(el, msg) {
+    console.log("receiveMessage: " + JSON.stringify(msg));
+
     if (!msg.type) {
       return;
     }
@@ -93,6 +113,10 @@
     let [action, type = null] = msg.type.split(":");
 
     if (action === "update") {
+      if (this.Selector.VALIDATE === undefined) {
+        return;
+      }
+
       if (!type || msg.data === undefined) {
         throw "Invalid update message"
       }
@@ -103,6 +127,16 @@
 
       if (type === "values") {
         this.updateValues(el, msg.data);
+      }
+    }
+
+    if (action === "mark") {
+      if (type === "valid") {
+        this.markValid(el, msg.data);
+      }
+
+      if (type === "invalid") {
+        this.markInvalid(el, msg.data);
       }
     }
   };

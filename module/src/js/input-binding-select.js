@@ -5,7 +5,8 @@ $.extend(selectInputBinding, {
     SELF: ".dull-select-input",
     VALUE: "option",
     LABEL: "option",
-    SELECTED: "option:checked"
+    SELECTED: "option:checked",
+    VALIDATE: "select"
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };

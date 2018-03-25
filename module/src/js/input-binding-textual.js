@@ -2,7 +2,8 @@ var textualInputBinding = new Shiny.InputBinding();
 
 $.extend(textualInputBinding, {
   Selector: {
-    SELF: ".dull-textual-input"
+    SELF: ".dull-textual-input",
+    VALIDATE: "input"
   },
   getValue: function(el) {
     var $input = $(el).find("input");

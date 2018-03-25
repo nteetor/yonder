@@ -5,7 +5,8 @@ $.extend(checkboxInputBinding, {
     SELF: ".dull-checkbox-input",
     VALUE: ".custom-control-input",
     LABEL: ".custom-control-label",
-    SELECTED: ".custom-control-input:checked:not(:disabled)"
+    SELECTED: ".custom-control-input:checked:not(:disabled)",
+    VALIDATE: ".custom-control-input"
   },
   getValue: function(el) {
     var $val = $(el)

@@ -150,7 +150,27 @@ Shiny.addCustomMessageHandler("dull:alert", function(msg) {
     });
   }
 
+  this.markValid = function(el, data) {
+    let $input = $(el).find(this.Selector.VALIDATE);
+    $input.removeClass("is-invalid").addClass("is-valid");
+    let $feedback = $(el).find(".valid-feedback");
+    if ($feedback.length) {
+      $feedback.text(data.msg);
+    }
+  }
+
+  this.markInvalid = function(el, data) {
+    let $input = $(el).find(this.Selector.VALIDATE);
+    $input.removeClass("is-valid").addClass("is-invalid");
+    let $feedback = $(el).find(".invalid-feedback");
+    if ($feedback) {
+      $feedback.text(data.msg);
+    }
+  }
+
   this.receiveMessage = function(el, msg) {
+    console.log("receiveMessage: " + JSON.stringify(msg));
+
     if (!msg.type) {
       return;
     }
@@ -158,6 +178,10 @@ Shiny.addCustomMessageHandler("dull:alert", function(msg) {
     let [action, type = null] = msg.type.split(":");
 
     if (action === "update") {
+      if (this.Selector.VALIDATE === undefined) {
+        return;
+      }
+
       if (!type || msg.data === undefined) {
         throw "Invalid update message"
       }
@@ -168,6 +192,16 @@ Shiny.addCustomMessageHandler("dull:alert", function(msg) {
 
       if (type === "values") {
         this.updateValues(el, msg.data);
+      }
+    }
+
+    if (action === "mark") {
+      if (type === "valid") {
+        this.markValid(el, msg.data);
+      }
+
+      if (type === "invalid") {
+        this.markInvalid(el, msg.data);
       }
     }
   };
@@ -349,7 +383,8 @@ $.extend(checkboxInputBinding, {
     SELF: ".dull-checkbox-input",
     VALUE: ".custom-control-input",
     LABEL: ".custom-control-label",
-    SELECTED: ".custom-control-input:checked:not(:disabled)"
+    SELECTED: ".custom-control-input:checked:not(:disabled)",
+    VALIDATE: ".custom-control-input"
   },
   getValue: function(el) {
     var $val = $(el)
@@ -647,7 +682,8 @@ $.extend(radioInputBinding, {
     SELF: ".dull-radio-input",
     VALUE: ".custom-control-input",
     LABEL: ".custom-control-label",
-    SELECTED: ".custom-control-input:checked:not(:disabled)"
+    SELECTED: ".custom-control-input:checked:not(:disabled)",
+    VALIDATE: ".custom-control-input"
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
@@ -765,7 +801,8 @@ $.extend(selectInputBinding, {
     SELF: ".dull-select-input",
     VALUE: "option",
     LABEL: "option",
-    SELECTED: "option:checked"
+    SELECTED: "option:checked",
+    VALIDATE: "select"
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
@@ -867,7 +904,8 @@ var textualInputBinding = new Shiny.InputBinding();
 
 $.extend(textualInputBinding, {
   Selector: {
-    SELF: ".dull-textual-input"
+    SELF: ".dull-textual-input",
+    VALIDATE: "input"
   },
   getValue: function(el) {
     var $input = $(el).find("input");

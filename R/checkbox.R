@@ -67,6 +67,12 @@
 #'     ),
 #'     server = function(input, output) {
 #'       output$checkvalue <- renderPrint({
+#'         if (is.null(input$foo)) {
+#'           invalid("foo", "Please check")
+#'         } else {
+#'           valid("foo")
+#'         }
+#'
 #'         input$foo
 #'       })
 #'
@@ -111,7 +117,8 @@ checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
         `for` = self,
         choice
       ),
-      tags$div(class = "invalid-feedback")
+      tags$div(class = "invalid-feedback"),
+      tags$div(class = "valid-feedback")
     ),
     ...,
     includes()
