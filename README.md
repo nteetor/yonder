@@ -107,4 +107,4 @@ devtools::install_github("nteetor/dull")
   for shiny
 * https://github.com/cran/shinyFeedback, give users validation feedback (CRAN
   mirror only)
-* [missing link], build shiny apps on top of material design
+* https://ericrayanderson.github.io/shinymaterial/, build shiny apps on top of material design
