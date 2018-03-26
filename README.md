@@ -31,7 +31,7 @@ shinyApp(
         h5("Data set"),
         selectInput(
           id = "dataset",
-          options = sets$Item,
+          choices = sets$Item,
           size = 16
         )
       ) %>%
