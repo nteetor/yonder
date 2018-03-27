@@ -31,7 +31,7 @@ shinyApp(
         h5("Data set"),
         selectInput(
           id = "dataset",
-          options = sets$Item,
+          choices = sets$Item,
           size = 16
         )
       ) %>%
@@ -107,4 +107,4 @@ devtools::install_github("nteetor/dull")
   for shiny
 * https://github.com/cran/shinyFeedback, give users validation feedback (CRAN
   mirror only)
-* [missing link], build shiny apps on top of material design
+* https://github.com/ericrayanderson/shinymaterial, build shiny apps on top of material design
