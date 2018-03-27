@@ -4,6 +4,9 @@ $.extend(rangeInputBinding, {
   Selector: {
     SELF: ".dull-range-input"
   },
+  Events: [
+    { type: "change" }
+  ],
   initialize: (el) => {
     let $el = $(el);
     let $input = $el.find("input[type='text']");
@@ -43,14 +46,6 @@ $.extend(rangeInputBinding, {
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
-  },
-  subscribe: function(el, callback) {
-    $(el).on("change.rangeInputBinding", function(e) {
-      callback();
-    });
-  },
-  unsubscribe: function(el) {
-    $(el).off(".rangeInputBinding");
   },
   receiveMessage: function(el, msg) {
     console.error("receiveMessage: not implemented for range input");

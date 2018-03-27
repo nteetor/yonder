@@ -1,14 +1,18 @@
 #' Form inputs
 #'
-#' Form inputs are a new reactive input. A form input's reactive value is a list
-#' of all the reactive inputs within it. Additionally, form inputs suppress
-#' the reactive nature of their child inputs.
+#' Form inputs are a new reactive input. Form inputs are an alternative to
+#' shiny's submit buttons. A form input is comprised of any number of
+#' inputs. The value of these inputs will not change until the form input's
+#' submit button is clicked. A form input has no value.
 #'
-#' @param id A character string specifying an id for the form input, defaults to
-#'   `NULL`.
+#' @param id A character string specifying an id for the form input.
 #'
-#' @param ... Any number of inputs, other elements, or additional named
-#'   arguments passed as HTML attributes to the parent element.
+#' @param ... Any number of inputs, tags, or additional named arguments passed
+#'   as HTML attributes to the parent element.
+#'
+#' @param submit A submit button or tags containing a submit button. The submit
+#'   button will trigger the update of input form elements. Defaults to
+#'   [submitInput()].
 #'
 #' @seealso
 #'
@@ -70,80 +74,44 @@
 #'     ui = container(
 #'       row(
 #'         col(
+#'           h5("A form input"),
+#'           p("Elements are non-reactive"),
 #'           formInput(
-#'             id = "real",
-#'             tags$label("Real name"),
-#'             textInput(
-#'               id = "first",
-#'               label = "First name"
-#'             ),
-#'             textInput(
-#'               id = "last",
-#'               label = "Last name"
-#'             )
-#'           )
+#'             id = "myform",
+#'             textInput(id = "text"),
+#'             rangeInput(id = "range")
+#'           ) %>%
+#'             border("grey", -1) %>%
+#'             padding(3),
+#'           h5("This input is unaffected"),
+#'           textinput(id = "standalone")
 #'         ),
 #'         col(
-#'           verbatimTextOutput("realvalue")
-#'         ),
-#'         col(
-#'           formInput(
-#'             id = "nickname",
-#'             tags$label("Nickname"),
-#'             textInput(
-#'               id = "first",
-#'               label = "First name"
-#'             ),
-#'             textInput(
-#'               id = "last",
-#'               label = "Last name"
-#'             )
-#'           )
-#'         ),
-#'         col(
-#'           verbatimTextOutput("nickvalue")
+#'           h5("Form elements values:"),
+#'           verbatimTextOutput("elements") %>%
+#'             padding(c(0, 0, 3, 0)),
+#'           h5("Unaffected text input value:"),
+#'           textOutput("unaffected")
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$realvalue <- renderPrint({
-#'         str(input$real)
-#'       })
+#'       output$elements <- renderPrint(list(
+#'         text = input$text,
+#'         range = input$range
+#'       ))
 #'
-#'       output$nickvalue <- renderPrint({
-#'         str(input$nickname)
-#'       })
+#'       output$unaffected <- renderPrint(input$standalone)
 #'     }
 #'   )
 #' }
 #'
-formInput <- function(id, ...) {
-  if (!is.character(id)) {
-    stop(
-      "invalid `formInput` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  #
-  # the hackiest work around I've put together
-  #
-  shiny::registerInputHandler(
-    type = "dull.form.element",
-    force = TRUE,
-    fun = function(x, session, name) {
-      NULL
-    }
-  )
-
+formInput <- function(id, ..., submit = submitInput()) {
   tags$form(
     class = "dull-form-input",
     id = id,
     ...,
-    tags$div(
-      class = "form-group",
-      submitInput()
-    ),
+    submit,
     includes()
   )
 }

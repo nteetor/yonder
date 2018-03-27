@@ -5,6 +5,10 @@ $.extend(textualInputBinding, {
     SELF: ".dull-textual-input",
     VALIDATE: "input"
   },
+  Events: [
+    { type: "change", debounce: true },
+    { type: "input", debounce: true }
+  ],
   getValue: function(el) {
     var $input = $(el).find("input");
     var val = $input.val() === undefined ? null : $input.val();
@@ -28,10 +32,6 @@ $.extend(textualInputBinding, {
       return "dull.time.input";
     }
 
-    if ($(el).closest(".dull-form-input[id]").length) {
-      return "dull.form.element";
-    }
-
     return false;
   },
   getState: function(el, data) {
@@ -43,33 +43,18 @@ $.extend(textualInputBinding, {
       delay: 250
     };
   },
-  subscribe: function(el, callback) {
-    $(el).on("change.textualInputBinding", function(e) {
-      callback(true);
-    });
-    $(el).on("input.textualInputBinding", function(e) {
-      callback(true);
-    });
-
-  },
-  unsubscribe: function(el) {
-    $(el).off(".textualInputBinding");
-  },
-  receiveMessage: function(el, data) {
-    if (data.validate !== undefined) {
-      $("input", el).removeClass("is-invalid")
-        .addClass("is-valid");
-
-      return;
-    }
-
-    if (data.invalidate !== undefined) {
-      $("input", el).addClass("is-invalid");
-      $(".invalid-feedback", el).html(data.invalidate);
-
-      return;
-    }
-  }
+  // subscribe: function(el, callback) {
+  //   if (this.isFormElement(el)) {
+  //     $(el).closest(".dull-form-input[id]").on("submit.textualInputBinding", e => callback());
+  //   } else {
+  //     $(el).on("change.textualInputBinding", function(e) {
+  //       callback(true);
+  //     });
+  //   }
+  // },
+  // unsubscribe: function(el) {
+  //   $(el).off(".textualInputBinding");
+  // },
 });
 
 Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");

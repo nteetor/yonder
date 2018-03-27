@@ -3,10 +3,12 @@
     return $(scope).find(`${ this.Selector.SELF }[id]`);
   };
 
+  this.getId = function(el) {
+    return el.id;
+  }
+
   this.getType = function(el) {
-    if ($(el).parents(".dull-form-input[id]").length) {
-      return "dull.form.element";
-    }
+    return false;
   };
 
   // may not be worth it to have this method already created
@@ -28,6 +30,23 @@
         .get();
 
     return values === undefined ? null : values;
+  };
+
+  this.subscribe = function(el, callback) {
+    if (this.isFormElement(el)) {
+      $(el).closest(".dull-form-input[id]").on("submit", e => callback());
+    } else {
+      for (const event of (this.Events || [])) {
+        console.log(event);
+        $(el).on(`${ event.type }.dull`, (e) => {
+          callback(event.debounce || false);
+        });
+      }
+    }
+  };
+
+  this.unsubscribe = function(el) {
+    $(el).off("dull");
   };
 
   this.updateChoices = function(el, map) {
@@ -128,6 +147,8 @@
       if (type === "values") {
         this.updateValues(el, msg.data);
       }
+
+      return;
     }
 
     if (action === "mark") {
@@ -138,6 +159,12 @@
       if (type === "invalid") {
         this.markInvalid(el, msg.data);
       }
+
+      return;
     }
   };
+
+  this.isFormElement = function(el) {
+    return $(el).parents(".dull-form-input[id]").length > 0;
+  }
 }).call(Shiny.InputBinding.prototype);

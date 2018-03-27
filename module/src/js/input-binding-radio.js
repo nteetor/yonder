@@ -8,16 +8,11 @@ $.extend(radioInputBinding, {
     SELECTED: ".custom-control-input:checked:not(:disabled)",
     VALIDATE: ".custom-control-input"
   },
+  Events: [
+    { type: "change" }
+  ],
   getState: function(el, data) {
     return { value: this.getValue(el) };
-  },
-  subscribe: function(el, callback) {
-    $(el).on("change.radioInputBinding", function(e) {
-      callback();
-    });
-  },
-  unsubscribe: function(el) {
-    $(el).off(".radioInputBinding");
   }
 });
 
