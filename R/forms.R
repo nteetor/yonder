@@ -82,7 +82,8 @@
 #'             rangeInput(id = "range")
 #'           ) %>%
 #'             border("grey", -1) %>%
-#'             padding(3),
+#'             padding(3) %>%
+#'             margins(c(0, 0, 3, 0)),
 #'           h5("This input is unaffected"),
 #'           textInput(id = "standalone")
 #'         ),
