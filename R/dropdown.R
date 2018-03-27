@@ -1,36 +1,27 @@
 #' Dropdown input
 #'
-#' Dropdown inputs, or dropdown menus, function similar to a set of buttons.
-#' The initial click to open a dropdown menu does not trigger a reactive event,
-#' but a click on one of the dropdown items triggers a reactive event. The
-#' reactive value of a dropdown input is the value of the most recently clicked
-#' dropdown menu item.
+#' Dropdown inputs, or dropdown menus, a similar to form inputs. The dropdown
+#' input has no value per say, but acts as an intelligent container for button
+#' and form inputs.
 #'
 #' @param id A character string specifying the id of the dropdown input.
 #'
-#' @param label A character string specifying the label of the dropdown's button.
+#' @param label A character string specifying the label of the dropdown's
+#'   button.
 #'
-#' @param choices A character vector specifying the labels of the dropdown menu
-#'   items.
+#' @param ... Character strings, button inputs, or form inputs specifying the
+#'   elements of the dropdown. These elements may be grouped into lists, in
+#'   which case menu dividers are placed after, before, or between the lists of
+#'   elements. Character strings are interpreted as dropdown section
+#'   headers. Named arguments are passed HTML attributes to the parent element.
 #'
-#' @param values A character vector, list of character strings, vector of values
-#'   to coerce to character strings, or list of values to coerce to character
-#'   strings specifying the values of the dropdown input's choices, defaults to
-#'   `choices`.
+#' @param direction One of `"up"`, `"right"`, `"down"`, or `"left"` specifying
+#'   the direction in which the menu opens, defaults to `"down"`.
 #'
-#' @param disabled One or more of `values` indicating which dropdown menu items
-#'   to disable, defaults to `NULL`, in which case all choices are enabled.
-#'
-#' @param dividers One or more of `values` indicating which dropdown menu items
-#'   are the start of a new section, defaults to `NULL`. Divider lines will be
-#'   placed above the indicated values separating the dropdown menu items into
-#'   sections.
-#'
-#' @param dropup If `TRUE`, the dropdown menu opens upwards instead of
-#'   downwards, defaults to `FALSE`.
-#'
-#' @param ... Additional named arguments passed as HTML attributes to the parent
-#'   element.
+#' @param split One of `TRUE` or `FALSE` specifying if the dropdown toggle button
+#'   is split into two distinct buttons, defaults to `FALSE`. This is a stylistic
+#'   modification which properly spaces the dropdown toggle icon and aligns the
+#'   dropdown menu to the toggle icon.
 #'
 #' @export
 #' @examples
@@ -40,77 +31,53 @@
 #'       row(
 #'         col(
 #'           dropdownInput(
-#'             id = "dropdown",
-#'             label = "A dropdown",
-#'             choices = paste("Action", 1:5),
-#'             dividers = "Action 4"
-#'           ) %>%
-#'             background("orange")
+#'             id = NULL,
+#'             label = "Dropdown",
+#'             split = TRUE,
+#'             formInput(
+#'               id = NULL,
+#'               submit = NULL,
+#'               textInput(
+#'                 id = "email",
+#'                 placeholder = "email@example.com"
+#'               ),
+#'               textInput(
+#'                 id = "password",
+#'                 placeholder = "Password"
+#'               )
+#'             ) %>%
+#'               padding(3),
+#'             list(
+#'               buttonInput(
+#'                 id = "signup",
+#'                 label = "New? Sign up"
+#'               ),
+#'               buttonInput(
+#'                 id = "forgot",
+#'                 label = "Forgot password?"
+#'               )
+#'             )
+#'           )
 #'         ),
 #'         col(
-#'           d4(
-#'             textOutput("value")
-#'           )
+#'           verbatimTextOutput("values")
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$value <- renderText({
-#'         input$dropdown
-#'       })
-#'     }
-#'   )
-#' }
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       buttonInput("click", "Change dropdown choices"),
-#'       dropdownInput(
-#'         id = "foo",
-#'         label = "A dropdown",
-#'         choices = c("Hello", "World")
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$click, {
-#'         updateChoices(
-#'           id = "foo",
-#'           Hello = "Hello!"
+#'       output$values <- renderPrint(
+#'         list(
+#'           email = input$email,
+#'           password = input$password,
+#'           signup = input$signup,
+#'           forgot = input$forgot
 #'         )
-#'       })
+#'       )
 #'     }
 #'   )
 #' }
 #'
-dropdownInput <- function(id, label, choices, values = choices, disabled = NULL,
-                          dividers = NULL, direction = "down", ...) {
-  if (length(choices) != length(values)) {
-    stop(
-      "invalid `dropdownInput` arguments, `choices` and `values` must be the ",
-      "same length",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(disabled) && !all(disabled %in% values)) {
-    problematic <- paste0('"', disabled[!(disabled %in% values)], '"')
-    warning(
-      "problematic `dropdownInput` argument, `disabled` contains ",
-      to_sentence(problematic, "and"), " which are not in `values`",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(dividers) && !all(dividers %in% values)) {
-    problematic <- paste0('"', dividers[!(dividers %in% values)], '"')
-    warning(
-      "problematic `dropdownInput` argument, `dividers` contains ",
-      to_sentence(problematic, "and"), " which are not in `values`",
-      call. = FALSE
-    )
-  }
-
+dropdownInput <- function(id, label, ..., direction = "down", split = FALSE) {
   if (!re(direction, "up|right|down|left", len0 = FALSE)) {
     stop(
       "invalid `dropdownInput` arguments, `direction` must be one of ",
@@ -119,8 +86,9 @@ dropdownInput <- function(id, label, choices, values = choices, disabled = NULL,
     )
   }
 
-  disabled <- match2(disabled, values)
-  dividers <- match2(dividers, values)
+  args <- dots_list(...)
+  items <- elements(args)
+  attrs <- attribs(args)
 
   tags$div(
     class = collate(
@@ -129,45 +97,74 @@ dropdownInput <- function(id, label, choices, values = choices, disabled = NULL,
       paste0("drop", direction)
     ),
     id = id,
-    `data-value` = NULL,
+    if (split) {
+      tags$button(
+        class = "btn btn-grey",
+        label
+      )
+    },
     tags$button(
       class = collate(
         "btn",
+        "btn-grey",
         "dropdown-toggle",
-        "btn-grey"
+        if (split) "dropdown-toggle-split"
       ),
       type = "button",
       `data-toggle` = "dropdown",
       `aria-haspop` = "true",
       `aria-expanded` = "false",
-      label
+      if (!split) label else tags$span(class = "sr-only", "Dropdown toggle")
     ),
     tags$div(
-      class = collate(
-        "dropdown-menu",
-        "dropdown-menu-right"
-      ),
-      lapply(
-        seq_along(choices),
-        function(i) {
-          list(
-            if (dividers[[i]]) {
-              tags$div(class = "dropdown-divider")
-            },
-            tags$a(
-              class = collate(
-                "dropdown-item",
-                if (disabled[[i]]) "disabled"
-              ),
-              href = NA,
-              `data-value` = values[[i]],
-              choices[[i]]
+      class = "dropdown-menu",
+      Reduce(
+        x = lapply(items, dropdownItem),
+        function(acc, obj) {
+          if (is_tag(acc)) {
+            acc <- list(acc)
+          }
+
+          if (is_strictly_list(acc[[length(acc)]]) ||
+                is_strictly_list(obj)) {
+            return(
+              c(acc, list(tags$div(class = "dropdown-divider")), list(obj))
             )
-          )
+          }
+
+          return(c(acc, list(obj)))
         }
       )
     ),
-    ...,
     includes()
+  )
+}
+
+dropdownItem <- function(base) {
+  if (is_strictly_list(base)) {
+    return(list(lapply(base, dropdownItem)))
+  }
+
+  if (is.character(base)) {
+    return(tags$h6(class = "dropdown-header", base))
+  }
+
+  if (tagIs(base, "a") || tagIs(base, "button")) {
+    cregex <- paste(.colors, collapse = "|")
+
+    base <- tagDropClass(base, paste0("btn(-", cregex, ")?"))
+    base <- tagEnsureClass(base, "dropdown-item")
+
+    return(base)
+  }
+
+  if (tagIs(base, "form")) {
+    return(base)
+  }
+
+  stop(
+    "problem converting object of class ", class(base)[1], " into ",
+    "dropdown item",
+    call. = FALSE
   )
 }

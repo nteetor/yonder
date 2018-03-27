@@ -4,42 +4,32 @@
 \alias{dropdownInput}
 \title{Dropdown input}
 \usage{
-dropdownInput(id, label, choices, values = choices, disabled = NULL,
-  dividers = NULL, direction = "down", ...)
+dropdownInput(id, label, ..., direction = "down", split = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the dropdown input.}
 
-\item{label}{A character string specifying the label of the dropdown's button.}
+\item{label}{A character string specifying the label of the dropdown's
+button.}
 
-\item{choices}{A character vector specifying the labels of the dropdown menu
-items.}
+\item{...}{Character strings, button inputs, or form inputs specifying the
+elements of the dropdown. These elements may be grouped into lists, in
+which case menu dividers are placed after, before, or between the lists of
+elements. Character strings are interpreted as dropdown section
+headers. Named arguments are passed HTML attributes to the parent element.}
 
-\item{values}{A character vector, list of character strings, vector of values
-to coerce to character strings, or list of values to coerce to character
-strings specifying the values of the dropdown input's choices, defaults to
-\code{choices}.}
+\item{direction}{One of \code{"up"}, \code{"right"}, \code{"down"}, or \code{"left"} specifying
+the direction in which the menu opens, defaults to \code{"down"}.}
 
-\item{disabled}{One or more of \code{values} indicating which dropdown menu items
-to disable, defaults to \code{NULL}, in which case all choices are enabled.}
-
-\item{dividers}{One or more of \code{values} indicating which dropdown menu items
-are the start of a new section, defaults to \code{NULL}. Divider lines will be
-placed above the indicated values separating the dropdown menu items into
-sections.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
-
-\item{dropup}{If \code{TRUE}, the dropdown menu opens upwards instead of
-downwards, defaults to \code{FALSE}.}
+\item{split}{One of \code{TRUE} or \code{FALSE} specifying if the dropdown toggle button
+is split into two distinct buttons, defaults to \code{FALSE}. This is a stylistic
+modification which properly spaces the dropdown toggle icon and aligns the
+dropdown menu to the toggle icon.}
 }
 \description{
-Dropdown inputs, or dropdown menus, function similar to a set of buttons.
-The initial click to open a dropdown menu does not trigger a reactive event,
-but a click on one of the dropdown items triggers a reactive event. The
-reactive value of a dropdown input is the value of the most recently clicked
-dropdown menu item.
+Dropdown inputs, or dropdown menus, a similar to form inputs. The dropdown
+input has no value per say, but acts as an intelligent container for button
+and form inputs.
 }
 \examples{
 if (interactive()) {
@@ -48,45 +38,48 @@ if (interactive()) {
       row(
         col(
           dropdownInput(
-            id = "dropdown",
-            label = "A dropdown",
-            choices = paste("Action", 1:5),
-            dividers = "Action 4"
-          ) \%>\%
-            background("orange")
+            id = NULL,
+            label = "Dropdown",
+            split = TRUE,
+            formInput(
+              id = NULL,
+              submit = NULL,
+              textInput(
+                id = "email",
+                placeholder = "email@example.com"
+              ),
+              textInput(
+                id = "password",
+                placeholder = "Password"
+              )
+            ) \%>\%
+              padding(3),
+            list(
+              buttonInput(
+                id = "signup",
+                label = "New? Sign up"
+              ),
+              buttonInput(
+                id = "forgot",
+                label = "Forgot password?"
+              )
+            )
+          )
         ),
         col(
-          d4(
-            textOutput("value")
-          )
+          verbatimTextOutput("values")
         )
       )
     ),
     server = function(input, output) {
-      output$value <- renderText({
-        input$dropdown
-      })
-    }
-  )
-}
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      buttonInput("click", "Change dropdown choices"),
-      dropdownInput(
-        id = "foo",
-        label = "A dropdown",
-        choices = c("Hello", "World")
-      )
-    ),
-    server = function(input, output) {
-      observeEvent(input$click, {
-        updateChoices(
-          id = "foo",
-          Hello = "Hello!"
+      output$values <- renderPrint(
+        list(
+          email = input$email,
+          password = input$password,
+          signup = input$signup,
+          forgot = input$forgot
         )
-      })
+      )
     }
   )
 }

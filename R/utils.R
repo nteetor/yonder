@@ -17,6 +17,10 @@ is_date <- function(x) {
   inherits(x, c("Date", "POSIXlt", "POSIXt"))
 }
 
+is_strictly_list <- function(x) {
+  length(class(x)) == 1 && class(x) == "list"
+}
+
 to_sentence <- function(x, con = "or") {
   if (length(x) == 1) {
     return(x)
