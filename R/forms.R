@@ -84,7 +84,7 @@
 #'             border("grey", -1) %>%
 #'             padding(3),
 #'           h5("This input is unaffected"),
-#'           textinput(id = "standalone")
+#'           textInput(id = "standalone")
 #'         ),
 #'         col(
 #'           h5("Form elements values:"),
