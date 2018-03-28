@@ -25,8 +25,9 @@ tags$div("A simple banner") \%>\%
 
 }
 \seealso{
-Other utilities: \code{\link{align}},
+Other utilities: \code{\link{alignment}},
   \code{\link{background}}, \code{\link{display}},
   \code{\link{float}}, \code{\link{font}},
-  \code{\link{padding}}, \code{\link{width}}
+  \code{\link{padding}}, \code{\link{rounded}},
+  \code{\link{width}}
 }

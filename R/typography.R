@@ -12,13 +12,10 @@
 #' Bootstrap's class alternatives one can utilize the highlighting aspect
 #' of `<mark>` while avoiding the usage and purpose restrictions.
 #'
-#' @param ... Child elements, additional HTML classes, or HTML attributes
-#'   passed to the parent element.
+#' @param ... Child elements or named arguments passed as HTML attributes
+#'   to the parent element.
 #'
 #' @name typography
-NULL
-
-#' @rdname typography
 #' @export
 #' @examples
 #' if (interactive()) {

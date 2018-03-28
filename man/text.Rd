@@ -28,8 +28,9 @@ tags$span("This and other news") \%>\%
 
 }
 \seealso{
-Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{background}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{padding}},
+Other utilities: \code{\link{affix}},
+  \code{\link{alignment}}, \code{\link{background}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{padding}}, \code{\link{rounded}},
   \code{\link{width}}
 }

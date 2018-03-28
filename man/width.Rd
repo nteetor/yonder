@@ -3,7 +3,7 @@
 \name{width}
 \alias{width}
 \alias{height}
-\title{Tag width and height}
+\title{Tag element width and height}
 \usage{
 width(tag, percentage = NULL, max = NULL)
 
@@ -31,13 +31,15 @@ tags$div() \%>\%
 
 }
 \seealso{
-Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{background}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{font}},
-  \code{\link{padding}}
+Other utilities: \code{\link{affix}},
+  \code{\link{alignment}}, \code{\link{background}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{padding}},
+  \code{\link{rounded}}
 
-Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{background}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{font}},
-  \code{\link{padding}}
+Other utilities: \code{\link{affix}},
+  \code{\link{alignment}}, \code{\link{background}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{padding}},
+  \code{\link{rounded}}
 }

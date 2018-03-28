@@ -34,8 +34,9 @@ element's float. The float utilities are viewport responsive.
 
 }
 \seealso{
-Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{background}}, \code{\link{display}},
-  \code{\link{font}}, \code{\link{padding}},
+Other utilities: \code{\link{affix}},
+  \code{\link{alignment}}, \code{\link{background}},
+  \code{\link{display}}, \code{\link{font}},
+  \code{\link{padding}}, \code{\link{rounded}},
   \code{\link{width}}
 }

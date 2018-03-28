@@ -55,7 +55,6 @@
 #' @param suffix A character string specifying a suffix for the range input
 #'   slider value. Defaults to `NULL`, in which case a prefix is not appended.
 #'
-#'
 #' @export
 #' @examples
 #' if (interactive()) {

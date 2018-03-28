@@ -2,7 +2,7 @@
 % Please edit documentation in R/tags.R
 \name{blockquote}
 \alias{blockquote}
-\title{Cleaner Blockquotes}
+\title{Cleaner blockquotes}
 \usage{
 blockquote(..., source = NULL, align = "left")
 }
@@ -29,5 +29,5 @@ blockquote(
 
 }
 \seealso{
-Other content: \code{\link{img}}
+Other content: \code{\link{img}}, \code{\link{pre}}
 }

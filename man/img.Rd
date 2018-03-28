@@ -5,46 +5,57 @@
 \alias{figure}
 \alias{image}
 \alias{figure}
-\title{Responsive Images and Figures}
+\title{Responsive images and figures}
 \usage{
-img(..., fluid = TRUE, align = NULL, thumbnail = FALSE)
+img(src, ...)
 
-figure(..., image = NULL, caption = NULL, align = "left")
+figure(image, caption = NULL, ...)
 }
 \arguments{
+\item{src}{A character string specifying the source of the image.}
+
+\item{...}{Additional tag elements or named arguments passed as HTML attributes
+to the parent element.}
+
+\item{image}{An \code{<img>} tag, typically a call to \code{img}.}
+
+\item{caption}{A character string specifying the image caption, defaults to
+\code{NULL}.}
+
 \item{fluid}{If \code{TRUE}, the image will scale with its parent element,
 defaults to \code{TRUE}.}
-
-\item{align}{For \code{img}, one of \code{"left"} or \code{"right"} specifying which side of
-the parent element the image should align to, defaults to \code{NULL} in which
-case no alignment is applied.
-
-For \code{figure}, one of \code{"left"}, \code{"right"}, or \code{"center"} specifying which
-side of the figure the figure caption is aligned to, defaults to \code{"left"}.}
-
-\item{thumbnail}{If \code{TRUE}, the image is rendered with a small border,
-defaults to \code{FALSE}.}
-
-\item{image}{An \code{img} element, it is best to leave the image as fluid,
-defaults to \code{NULL}.}
-
-\item{caption}{A character vector specifying a caption for the image,
-defaults to \code{NULL}.}
 }
 \description{
-A small update to \code{<img>} and \code{<figure>}. Additional arguments has been added
-to the \code{img} builder function. Figures have specific arguments for an \code{img}
-child element and caption.
+A small update to \code{tags$img} and \code{tags$figure}. Create responsive images with
+\code{img}. \code{figure} has specific arguments for an image child element and image
+caption.
 }
 \examples{
+
 if (interactive()) {
   shinyApp(
     ui = container(
-      # A figure with a,
-      #   - fluid image
-      #   - left-aligned caption
+      img("https://upload.wikimedia.org/wikipedia/commons/1/18/Grey_Square.svg") \%>\%
+        float("left") \%>\%
+        rounded(),
+      img("https://upload.wikimedia.org/wikipedia/commons/1/18/Grey_Square.svg") \%>\%
+        float("right") \%>\%
+        rounded()
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
+
+# Thank you to Wikimedia Commons
+# Grey square provided by Johannes Rössel (Own work) [Public domain]
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
       figure(
-        image = img(src = "http://bit.ly/2qchbEB"),
+        image = rounded(img("http://bit.ly/2qchbEB")),
         caption = "Stock cat photo."
       )
     ),
@@ -56,5 +67,7 @@ if (interactive()) {
 
 }
 \seealso{
-Other content: \code{\link{blockquote}}
+Other content: \code{\link{blockquote}}, \code{\link{pre}}
+
+Other content: \code{\link{blockquote}}, \code{\link{pre}}
 }

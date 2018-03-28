@@ -321,6 +321,51 @@ border <- function(tag, color, tone = 0) {
   colorUtility(tag, "border", color, tone)
 }
 
+#' Round tag element corners
+#'
+#' The `rounded` utility function applies Bootstrap classes to an element.
+#' The styles are applied by sides, e.g. `"left"` or `"bottom"`. The `"circle"`
+#' value, as it suggests, rounds the corners such that the element appears
+#' as a circle.
+#'
+#' @param tag A tag element.
+#'
+#' @param sides One of `"top"`, `"right"`, `"bottom"`, `"left"`, `"circle"`, `"all"` or
+#'   `"none"`, defaults to `"all"`.
+#'
+#' @family utilities
+#' @export
+#' @examples
+#'
+rounded <- function(tag, sides = "all") {
+  if (!all(re(sides, "top|right|bottom|left|circle|all|none", len0 = FALSE))) {
+    stop(
+      "invalid `rounded` argument, `sides` must be one of ",
+      '"top", "right", "bottom", "left", "circle", "all", or "none"',
+      call. = FALSE
+    )
+  }
+
+  classes <- vapply(
+    sides,
+    function(s) {
+      switch(
+        s,
+        none = "rounded-0",
+        all = "rounded",
+        paste0("rounded-", s)
+      )
+    },
+    character(1)
+  )
+
+  for (c in classes) {
+    tag <- tagEnsureClass(tag, c)
+  }
+
+  tag
+}
+
 #' Float an element
 #'
 #' The `float` utility function applies Bootstrap float classes to a tag
@@ -420,31 +465,51 @@ affix <- function(tag, position) {
   }
 }
 
-#' Align an element
+#' Align element text
 #'
-#' The `align` utility function applies Bootstrap classes to change how an
-#' *inline* or *table cell* element is vertically aligned.
+#' The `alignment` utility applies Bootstrap classes to change how an element's
+#' text is aligned. Like with [display] or [padding] different text alignments
+#' can be applied based on the viewport size.
 #'
 #' @param tag A tag object.
 #'
-#' @param position One of `"top"`, `"middle"`, or `"bottom"` specifying how
-#'   the element is vertically aligned.
+#' @param default One of `"left"`, `"right"`, `"center"`, or `"justified"`
+#'   specifying the default text alignment of the element.
+#'
+#' @param sm Like `default`, but the text alignment is applied once the viewport
+#'   is 576 pixels wide, think phone in landscape mode.
+#'
+#' @param md Like `default`, but the text alignment is applied once the
+#'   viewport is 768 pixels wide, think tablets.
+#'
+#' @param lg Like `default`, but the text alignment is applied once the
+#'   viewport is 992 pixels wide, think desktop.
+#'
+#' @param xl Like `default`, but the text alignment is applied once the
+#'   viewport is 1200 pixels wide, think large desktop.
 #'
 #' @family utilities
 #' @export
 #' @examples
-#' tags$span() %>%
-#'   align("bottom")
 #'
-align <- function(tag, position) {
-  if (!re(position, "top|middle|bottom", len0 = FALSE)) {
-    stop(
-      "invalid `align` argument, `position` must be one of ",
-      '"top", "middle", or "bottom"'
-    )
+#'
+alignment <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+                  xl = NULL) {
+  args <- dropNulls(
+    list(default = default, sm = sm, md = md, lg = lg, xl = xl)
+  )
+
+  classes <- responsives(
+    prefix = "text",
+    values = args,
+    possible = c("left", "right", "center", "justify")
+  )
+
+  for (c in classes) {
+    tag <- tagEnsureClass(tag, c)
   }
 
-  tagEnsureClass(tag, paste0("align-", position))
+  tag
 }
 
 #' Element display property, inline, block, and more
@@ -494,7 +559,11 @@ display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
     possible = c("inline", "inline-block", "block", "flex", "flex-inline", "none")
   )
 
-  tagAddClass(tag, collate(classes))
+  for (c in classes) {
+    tag <- tagEnsureClass(tag, c)
+  }
+
+  tag
 }
 
 #' Element margins and padding
@@ -631,7 +700,7 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   tagAddClass(tag, collate(classes))
 }
 
-#' Tag width and height
+#' Tag element width and height
 #'
 #' Used in conjunction with [tagReduce] to change a tag element's width or
 #' height. Widths and heights are specified as percentages of the parent
@@ -678,8 +747,8 @@ width <- function(tag, percentage = NULL, max = NULL) {
   tagAddClass(
     tag,
     collate(
-      percentage %??% paste0("w-", percentage),
-      max %??% paste0("mw-", max)
+      if (!is.null(percentage)) paste0("w-", percentage),
+      if (!is.null(max)) paste0("mw-", max)
     )
   )
 }
@@ -712,8 +781,8 @@ height <- function(tag, percentage = NULL, max = NULL) {
   tagAddClass(
     tag,
     collate(
-      percentage %??% paste0("h-", percentage),
-      max %??% paste0("mh-", max)
+      if (!is.null(percentage)) paste0("h-", percentage),
+      if (!is.null(max)) paste0("mh-", max)
     )
   )
 }

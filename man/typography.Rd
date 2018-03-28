@@ -17,8 +17,8 @@ d3(...)
 d4(...)
 }
 \arguments{
-\item{...}{Child elements, additional HTML classes, or HTML attributes
-passed to the parent element.}
+\item{...}{Child elements or named arguments passed as HTML attributes
+to the parent element.}
 }
 \description{
 These function encapsulate Bootstrap classes for styling text and headings.

@@ -1,40 +1,51 @@
-#' Responsive Images and Figures
+#' Responsive images and figures
 #'
-#' A small update to `<img>` and `<figure>`. Additional arguments has been added
-#' to the `img` builder function. Figures have specific arguments for an `img`
-#' child element and caption.
+#' A small update to `tags$img` and `tags$figure`. Create responsive images with
+#' `img`. `figure` has specific arguments for an image child element and image
+#' caption.
+#'
+#' @param src A character string specifying the source of the image.
 #'
 #' @param fluid If `TRUE`, the image will scale with its parent element,
 #'   defaults to `TRUE`.
 #'
-#' @param align For `img`, one of `"left"` or `"right"` specifying which side of
-#'   the parent element the image should align to, defaults to `NULL` in which
-#'   case no alignment is applied.
+#' @param image An `<img>` tag, typically a call to `img`.
 #'
-#'   For `figure`, one of `"left"`, `"right"`, or `"center"` specifying which
-#'   side of the figure the figure caption is aligned to, defaults to `"left"`.
+#' @param caption A character string specifying the image caption, defaults to
+#'   `NULL`.
 #'
-#' @param thumbnail If `TRUE`, the image is rendered with a small border,
-#'   defaults to `FALSE`.
-#'
-#' @param image An `img` element, it is best to leave the image as fluid,
-#'   defaults to `NULL`.
-#'
-#' @param caption A character vector specifying a caption for the image,
-#'   defaults to `NULL`.
+#' @param ... Additional tag elements or named arguments passed as HTML attributes
+#'   to the parent element.
 #'
 #' @family content
 #' @aliases figure image
 #' @export
 #' @examples
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       # A figure with a,
-#'       #   - fluid image
-#'       #   - left-aligned caption
+#'       img("https://upload.wikimedia.org/wikipedia/commons/1/18/Grey_Square.svg") %>%
+#'         float("left") %>%
+#'         rounded(),
+#'       img("https://upload.wikimedia.org/wikipedia/commons/1/18/Grey_Square.svg") %>%
+#'         float("right") %>%
+#'         rounded()
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+#' # Thank you to Wikimedia Commons
+#' # Grey square provided by Johannes Rössel (Own work) [Public domain]
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
 #'       figure(
-#'         image = img(src = "http://bit.ly/2qchbEB"),
+#'         image = rounded(img("http://bit.ly/2qchbEB")),
 #'         caption = "Stock cat photo."
 #'       )
 #'     ),
@@ -44,40 +55,41 @@
 #'   )
 #' }
 #'
-img <- function(..., fluid = TRUE, align = NULL, thumbnail = FALSE) {
+img <- function(src, ...) {
   tags$img(
-    class = collate(
-      if (fluid) "img-fluid",
-      if (thumbnail) "img-thumbnail",
-      if (!is.null(align)) paste0("float-", align)
-    ),
+    class = "img-fluid",
+    src = src,
     ...,
     includes()
   )
 }
 
+#' @family content
 #' @rdname img
 #' @export
-figure <- function(..., image = NULL, caption = NULL, align = "left") {
+figure <- function(image, caption = NULL, ...) {
+  if (!is_tag(image)) {
+    stop(
+      "invalid `figure` argument, `image` must be a tag element",
+      call. = FALSE
+    )
+  }
+
   tags$figure(
+    class = "figure",
+    tagEnsureClass(image, "figure-img"),
+    if (!is.null(caption)) {
+      tags$figcaption(
+        class = "figure-caption",
+        caption
+      )
+    },
     ...,
-    class = collate(
-      if (!is.null(image)) tagEnsureClass(image, "figure-img"),
-      if (!is.null(caption)) {
-        tags$figcaption(
-          class = collate(
-            "figure-caption",
-            if (align %in% c("center", "right")) paste0("text-", align)
-          ),
-          caption
-        )
-      }
-    ),
     includes()
   )
 }
 
-#' Cleaner Blockquotes
+#' Cleaner blockquotes
 #'
 #' Stylized blockquotes, an updated builder function for `<blockquote>`.
 #'
@@ -111,5 +123,24 @@ blockquote <- function(..., source = NULL, align = "left") {
       tags$footer(class = "blockquote-footer", source)
     },
     includes()
+  )
+}
+
+#' Scrollable code snippets
+#'
+#' The `pre` function adds a maximum height and scroll bar to the standard
+#' `<pre>` element.
+#'
+#' @param ... Text, tag elements, or named arguments passed as HTML attributes
+#'   to the tag.
+#'
+#' @family content
+#' @export
+#' @examples
+#'
+pre <- function(...) {
+  tags$pre(
+    class = "pre-scrollable",
+    ...
   )
 }

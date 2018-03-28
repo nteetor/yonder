@@ -147,18 +147,21 @@ if (interactive()) {
 
 }
 \seealso{
-Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{display}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{padding}},
+Other utilities: \code{\link{affix}},
+  \code{\link{alignment}}, \code{\link{display}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{padding}}, \code{\link{rounded}},
   \code{\link{width}}
 
-Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{display}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{padding}},
+Other utilities: \code{\link{affix}},
+  \code{\link{alignment}}, \code{\link{display}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{padding}}, \code{\link{rounded}},
   \code{\link{width}}
 
-Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{display}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{padding}},
+Other utilities: \code{\link{affix}},
+  \code{\link{alignment}}, \code{\link{display}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{padding}}, \code{\link{rounded}},
   \code{\link{width}}
 }

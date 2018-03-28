@@ -45,13 +45,15 @@ left side. As a wise help page once said, think "\strong{tr}ou\strong{bl}e" to h
 remember the order.
 }
 \seealso{
-Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{background}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{font}},
+Other utilities: \code{\link{affix}},
+  \code{\link{alignment}}, \code{\link{background}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{rounded}},
   \code{\link{width}}
 
-Other utilities: \code{\link{affix}}, \code{\link{align}},
-  \code{\link{background}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{font}},
+Other utilities: \code{\link{affix}},
+  \code{\link{alignment}}, \code{\link{background}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{rounded}},
   \code{\link{width}}
 }
