@@ -37,7 +37,6 @@
       $(el).closest(".dull-form-input[id]").on("submit", e => callback());
     } else {
       for (const event of (this.Events || [])) {
-        console.log(event);
         $(el).on(`${ event.type }.dull`, (e) => {
           callback(event.debounce || false);
         });
@@ -123,8 +122,6 @@
   }
 
   this.receiveMessage = function(el, msg) {
-    console.log("receiveMessage: " + JSON.stringify(msg));
-
     if (!msg.type) {
       return;
     }

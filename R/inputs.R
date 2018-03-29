@@ -529,39 +529,9 @@ addressInput <- function(id) {
 #'             right = buttonInput(
 #'               id = "right",
 #'               label = "Search"
-#'             )
-#'           )
-#'         ),
-#'         col(
-#'           d4(
-#'             textOutput("value")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$value <- renderText({
-#'         input$groupinput
-#'       })
-#'     }
-#'   )
-#' }
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         col(
-#'           groupInput(
-#'             id = "groupinput",
-#'             left = dropdownInput(
-#'               id = "dropdown",
-#'               label = "Title",
-#'               choices = c("Mrs.", "Miss", "Mr.", "none"),
-#'               values = c("Mrs. ", "Miss ", "Mr. ", "")
-#'             ),
-#'             placeholder = "First name",
-#'             right = "!"
+#'             ) %>%
+#'               background("white") %>%
+#'               border("blue")
 #'           )
 #'         ),
 #'         col(
@@ -619,7 +589,6 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
         }
       )
     },
-    ...,
     tags$input(
       type = "text",
       class = "form-control",
@@ -638,7 +607,8 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
           right
         }
       )
-    }
+    },
+    ...
   )
 }
 

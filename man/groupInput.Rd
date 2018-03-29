@@ -148,39 +148,9 @@ if (interactive()) {
             right = buttonInput(
               id = "right",
               label = "Search"
-            )
-          )
-        ),
-        col(
-          d4(
-            textOutput("value")
-          )
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$value <- renderText({
-        input$groupinput
-      })
-    }
-  )
-}
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        col(
-          groupInput(
-            id = "groupinput",
-            left = dropdownInput(
-              id = "dropdown",
-              label = "Title",
-              choices = c("Mrs.", "Miss", "Mr.", "none"),
-              values = c("Mrs. ", "Miss ", "Mr. ", "")
-            ),
-            placeholder = "First name",
-            right = "!"
+            ) \%>\%
+              background("white") \%>\%
+              border("blue")
           )
         ),
         col(
