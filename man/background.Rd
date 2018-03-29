@@ -41,6 +41,7 @@ The following colors are available,
 \item amber
 \item orange
 \item grey
+\item white
 }
 }
 \examples{

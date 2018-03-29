@@ -66,7 +66,8 @@ font <- function(tag, weight = NULL, style = NULL) {
   "yellow",
   "amber",
   "orange",
-  "grey"
+  "grey",
+  "white"
 )
 
 colorUtility <- function(tag, base, color, tone) {
@@ -93,16 +94,6 @@ colorUtility <- function(tag, base, color, tone) {
     return(tag)
   }
 
-  if (tagHasClass(tag, "alert")) {
-    base <- "alert"
-  } else if (tagHasClass(tag, "badge")) {
-    base <- "badge"
-  } else if (tagHasClass(tag, "btn")) {
-    base <- "btn"
-  } else if (tagHasClass(tag, "list-group-item")) {
-    base <- "list-group-item"
-  }
-
   cregex <- paste0("(", paste(.colors, collapse = "|"), ")")
   tag <- tagDropClass(tag, paste0(base, "-", cregex, "(-[1-9]00)?"))
 
@@ -113,7 +104,7 @@ colorUtility <- function(tag, base, color, tone) {
     `1` = 300, `2` = 100
   )
 
-  tone <- if (tone) paste0("-", tone) else ""
+  tone <- if (tone && color != "white") paste0("-", tone) else ""
 
   tag <- tagEnsureClass(tag, paste0(base, "-", color, tone))
 
@@ -150,6 +141,7 @@ colorUtility <- function(tag, base, color, tone) {
 #' * amber
 #' * orange
 #' * grey
+#' * white
 #'
 #' @family utilities
 #' @export
@@ -245,7 +237,21 @@ background <- function(tag, color, tone = 0) {
     )
   }
 
-  colorUtility(tag, "bg", color, tone)
+  if (color == "white") {
+    base <- "bg"
+  } else if (tagHasClass(tag, "alert")) {
+    base <- "alert"
+  } else if (tagHasClass(tag, "badge")) {
+    base <- "badge"
+  } else if (tagHasClass(tag, "btn")) {
+    base <- "btn"
+  } else if (tagHasClass(tag, "list-group-item")) {
+    base <- "list-group-item"
+  } else {
+    base <- "bg"
+  }
+
+  colorUtility(tag, base, color, tone)
 }
 
 #' @family utilities
