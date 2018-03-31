@@ -145,6 +145,29 @@ Shiny.addCustomMessageHandler("dull:alert", function(msg) {
   }
 
   this.updateValues = function(el, map) {
+    if (typeof map == "string" || Array.isArray(map)) {
+      let $inputs = $(el).find(`${ this.Selector.VALUE }`);
+      let value = typeof map == "string" ? [map] : map;
+
+      if ($inputs.has(":not(input[type='text'])").length) {
+        console.error("updateValues: expecting all inputs to be text if new values are unnamed");
+        return;
+      }
+
+      if ($inputs.length != value.length) {
+        console.error("updateValues: mismatched number of inputs and values");
+        return;
+      }
+
+      $inputs.each((index, input) => {
+        let $input = $(input);
+        $input.val(value[index]);
+        $input.trigger("change");
+      });
+
+      return;
+    }
+
     if (this.Selector.VALUE === this.Selector.SELF) {
       let value = map[$input.data("value")];
 
@@ -194,10 +217,6 @@ Shiny.addCustomMessageHandler("dull:alert", function(msg) {
     let [action, type = null] = msg.type.split(":");
 
     if (action === "update") {
-      if (this.Selector.VALIDATE === undefined) {
-        return;
-      }
-
       if (!type || msg.data === undefined) {
         throw "Invalid update message"
       }
@@ -214,6 +233,10 @@ Shiny.addCustomMessageHandler("dull:alert", function(msg) {
     }
 
     if (action === "mark") {
+      if (this.Selector.VALIDATE === undefined) {
+        return;
+      }
+
       if (type === "valid") {
         this.markValid(el, msg.data);
       }
@@ -559,6 +582,7 @@ var groupInputBinding = new Shiny.InputBinding();
 $.extend(groupInputBinding, {
   Selector: {
     SELF: ".dull-group-input",
+    VALUE: "input",
     SELECTED: ".input-group-prepend .input-group-text, input, .input-group-append .input-group-text",
   },
   Events: [
@@ -570,10 +594,6 @@ $.extend(groupInputBinding, {
   },
   getState: function(el) {
     return { value: this.getValue(el) };
-  },
-  receiveMessage: function(el, msg) {
-    console.error("receiveMessage: not implemented for group input");
-    return;
   }
 });
 
@@ -875,19 +895,7 @@ $.extend(textualInputBinding, {
       policy: "debounce",
       delay: 250
     };
-  },
-  // subscribe: function(el, callback) {
-  //   if (this.isFormElement(el)) {
-  //     $(el).closest(".dull-form-input[id]").on("submit.textualInputBinding", e => callback());
-  //   } else {
-  //     $(el).on("change.textualInputBinding", function(e) {
-  //       callback(true);
-  //     });
-  //   }
-  // },
-  // unsubscribe: function(el) {
-  //   $(el).off(".textualInputBinding");
-  // },
+  }
 });
 
 Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");

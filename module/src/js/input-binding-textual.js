@@ -42,19 +42,7 @@ $.extend(textualInputBinding, {
       policy: "debounce",
       delay: 250
     };
-  },
-  // subscribe: function(el, callback) {
-  //   if (this.isFormElement(el)) {
-  //     $(el).closest(".dull-form-input[id]").on("submit.textualInputBinding", e => callback());
-  //   } else {
-  //     $(el).on("change.textualInputBinding", function(e) {
-  //       callback(true);
-  //     });
-  //   }
-  // },
-  // unsubscribe: function(el) {
-  //   $(el).off(".textualInputBinding");
-  // },
+  }
 });
 
 Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");

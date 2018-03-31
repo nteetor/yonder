@@ -33,11 +33,8 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       row(
-#'         col(
-#'           buttonInput("show", "Alert!")
-#'         )
-#'       )
+#'       buttonInput("show", "Alert!") %>%
+#'         margins(3)
 #'     ),
 #'     server = function(input, output) {
 #'       observeEvent(input$show, {
@@ -53,18 +50,31 @@
 #'     ui = container(
 #'       row(
 #'         col(
-#'           buttonInput("show", "Alert!")
+#'           groupInput(
+#'             id = "text",
+#'             right = buttonInput("clear", fontAwesome("times")) %>%
+#'               background("red", -1)
+#'           )
+#'         ),
+#'         col(
+#'           verbatimTextOutput("value")
 #'         )
-#'       )
+#'       ) %>%
+#'         margins(3)
 #'     ),
 #'     server = function(input, output) {
-#'       observeEvent(input$show, {
-#'         color <- sample(c("teal", "red", "orange", "blue"), 1)
-#'         showAlert("Alert", color = color, action = "undo")
+#'       oldValue <- NULL
+#'
+#'       output$value <- renderPrint(input$text)
+#'
+#'       observeEvent(input$clear, {
+#'         oldValue <<- input$text
+#'         updateValues("text", "")
+#'         showAlert("Undo clear.", color = "yellow", action = "undo")
 #'       })
 #'
 #'       observeEvent(input$undo, {
-#'         print("OOOOOOHHH yes!")
+#'         updateValues("text", oldValue)
 #'       })
 #'     }
 #'   )

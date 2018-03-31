@@ -3,6 +3,7 @@ var groupInputBinding = new Shiny.InputBinding();
 $.extend(groupInputBinding, {
   Selector: {
     SELF: ".dull-group-input",
+    VALUE: "input",
     SELECTED: ".input-group-prepend .input-group-text, input, .input-group-append .input-group-text",
   },
   Events: [
@@ -14,10 +15,6 @@ $.extend(groupInputBinding, {
   },
   getState: function(el) {
     return { value: this.getValue(el) };
-  },
-  receiveMessage: function(el, msg) {
-    console.error("receiveMessage: not implemented for group input");
-    return;
   }
 });
 
