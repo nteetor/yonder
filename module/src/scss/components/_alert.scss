@@ -1,0 +1,43 @@
+/*
+ * Based on toasts from materializecss
+ * https://github.com/Dogfalo/materialize/blob/master/sass/components/_toast.scss
+ */
+
+.dull-alert-container {
+  display: block;
+  position: fixed;
+  z-index: 9001;       // ugh, z-index
+
+  @media only screen and (max-width: 576px) {
+    bottom: 0%;
+    min-width: 100%;
+  }
+
+  @media only screen and (min-width: 577px) and (max-width: 768px) {
+    bottom: 7%;
+    right: 5%;
+    max-width: 90%;
+  }
+
+  @media only screen and (min-width: 769px) {
+    top: 10%;
+    right: 7%;
+    max-width: 86%;
+  }
+}
+
+.dull-alert {
+  top: 35px;
+  width: auto;
+  position: relative;
+  cursor: default;
+
+  .alert-action {
+    margin-left: 3rem;
+  }
+
+  @media only screen and (max-width: 576px) {
+    width: 100%;
+    border-radius: 0;
+  }
+}

@@ -8,6 +8,7 @@ includes <- function() {
       tags$link(rel = "stylesheet", href = "shared/shiny.css"),
       tags$script(src = "shared/shiny.min.js"),
       tags$script(src = "dull/popper/popper.min.js"),
+      tags$script(src = "dull/velocity/velocity.min.js"),
       tags$link(
         rel = "stylesheet",
         href = "dull/bootstrap/css/bootstrap.min.css"

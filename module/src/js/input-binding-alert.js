@@ -1,24 +1,41 @@
 var alertInputBinding = new Shiny.InputBinding();
 
+$(() => $("body").append(
+  $("<div class='dull-alert-container' id='alert-container'></div>")
+));
+
 $.extend(alertInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-alert[id] .close").parent();
+  Selector: {
+    SELF: ".dull-alert-container"
   },
+  Alerts: [],
   getValue: function(el) {
-    var ret = $(el).data("closed") || null;
-    return ret;
-  },
-  getState: function(el, data) {
-    return { value: this.getValue(el) };
+    return null;
   },
   subscribe: function(el, callback) {
-    $(el).on("closed.bs.alert.alertInputBinding", function(e) {
-      $(el).data("closed", true);
-      callback();
-    });
+
   },
   unsubscribe: function(el) {
-    $(el).off(".alertInputBinding");
+
+  },
+  receiveMessage: function(el, data) {
+    // let action = "<button class='btn btn-teal alert-action'>Undo</button>";
+    console.log(data);
+
+    let alertClass = data.color ? `alert-${ data.color }` : "";
+
+    $(`<div class="alert ${ alertClass } fade show dull-alert" role="alert">${ data.text }</div>`)
+      .attr(data.attrs || {})
+      .appendTo($(this.Selector.SELF))
+      .velocity(
+        { top: 0, opacity: 1 },
+        { duration: 300, easing: "easeOutCubic", queue: false }
+      );
+
+    setTimeout(
+      () => $(this.Selector.SELF).children(".dull-alert:first-child").alert("close"),
+      data.duration
+    );
   }
 });
 
