@@ -1,18 +1,26 @@
-#' Show an alert
+#' Static and actionable alerts
 #'
 #' Use `showAlert` to let the user know of successes or to call attention to
-#' problems.
+#' problems. While alerts are static by default they can also be made
+#' actionable. Actionable alerts can be used for undoing or redoing an action
+#' and more.
 #'
 #' @param text A character string specifying the message text of the alert.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the
 #'   alert element.
 #'
+#' @param duration A positive integer specifying the duration of the alert,
+#'   by default the alert is removed after 4 seconds.
+#'
 #' @param color A character string specifying the color of the alert,
 #'   for possible colors see [background].
 #'
-#' @param duration A positive integer specifying the duration of the alert,
-#'   by default the alert is removed after 4 seconds.
+#' @param action A character string specifying a reactive id. If specified a
+#'   button is added to the alert. If clicked the reactive value
+#'   `input[[action]]` is set to `TRUE`. When the alert is removed
+#'   `input[[action]]` is reset to `NULL`.
+#'
 #'
 #' @seealso
 #'
@@ -40,7 +48,29 @@
 #'   )
 #' }
 #'
-showAlert <- function(text, ..., color = NULL, duration = 4) {
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           buttonInput("show", "Alert!")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'       observeEvent(input$show, {
+#'         color <- sample(c("teal", "red", "orange", "blue"), 1)
+#'         showAlert("Alert", color = color, action = "undo")
+#'       })
+#'
+#'       observeEvent(input$undo, {
+#'         print("OOOOOOHHH yes!")
+#'       })
+#'     }
+#'   )
+#' }
+#'
+showAlert <- function(text, ..., duration = 4, color = NULL, action = NULL) {
   domain <- getDefaultReactiveDomain()
 
   if (is.null(domain)) {
@@ -81,8 +111,9 @@ showAlert <- function(text, ..., color = NULL, duration = 4) {
 
   domain$sendInputMessage("alert-container", list(
     text = text,
-    color = color,
     duration = duration * 1000,
+    color = color,
+    action = action,
     attrs = if (length(attrs)) attrs
   ))
 }

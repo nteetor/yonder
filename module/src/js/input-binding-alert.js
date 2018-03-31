@@ -19,21 +19,40 @@ $.extend(alertInputBinding, {
 
   },
   receiveMessage: function(el, data) {
-    // let action = "<button class='btn btn-teal alert-action'>Undo</button>";
-    console.log(data);
-
+    let alertAttrs = data.attrs || {};
     let alertClass = data.color ? `alert-${ data.color }` : "";
 
-    $(`<div class="alert ${ alertClass } fade show dull-alert" role="alert">${ data.text }</div>`)
-      .attr(data.attrs || {})
-      .appendTo($(this.Selector.SELF))
+    let $alert = $(`<div class="alert ${ alertClass } fade show dull-alert" role="alert">${ data.text }</div>`);
+
+    if (data.action) {
+      $alert.append($(`<button class="btn btn-link alert-action">${ data.action }</button>`));
+      $alert.on("click", ".alert-action", (e) => {
+        Shiny.onInputChange(data.action, true);
+      });
+    }
+
+    Object.entries(alertAttrs).forEach((item) => {
+      item[0] == "class" ? $alert.addClass(item[1]) : $alert.attr(...item);
+    });
+
+    this.Alerts.push({ el: $alert, action: data.action });
+
+    $alert.appendTo($(this.Selector.SELF))
       .velocity(
         { top: 0, opacity: 1 },
         { duration: 300, easing: "easeOutCubic", queue: false }
       );
 
     setTimeout(
-      () => $(this.Selector.SELF).children(".dull-alert:first-child").alert("close"),
+      () => {
+        let item = this.Alerts.shift();
+
+        if (data.action) {
+          Shiny.onInputChange(item.action, null);
+        }
+
+        item.el.remove()
+      },
       data.duration
     );
   }

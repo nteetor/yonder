@@ -2,9 +2,9 @@
 % Please edit documentation in R/alerts.R
 \name{showAlert}
 \alias{showAlert}
-\title{Show an alert}
+\title{Static and actionable alerts}
 \usage{
-showAlert(text, ..., color = NULL, duration = 4)
+showAlert(text, ..., duration = 4, color = NULL, action = NULL)
 }
 \arguments{
 \item{text}{A character string specifying the message text of the alert.}
@@ -12,15 +12,25 @@ showAlert(text, ..., color = NULL, duration = 4)
 \item{...}{Additional named arguments passed as HTML attributes to the
 alert element.}
 
+\item{duration}{A positive integer specifying the duration of the alert,
+by default the alert is removed after 4 seconds.}
+
 \item{color}{A character string specifying the color of the alert,
 for possible colors see \link{background}.}
 
-\item{duration}{A positive integer specifying the duration of the alert,
-by default the alert is removed after 4 seconds.}
+\item{action}{A character string specifying a reactive id. If specified a
+button is added to the alert. If clicked the reactive value
+\code{input[[action]]} is set to \code{TRUE}. When the alert is removed
+\code{input[[action]]} is reset to \code{NULL}.
+
+[[action]: R:[action
+[[action]: R:[action}
 }
 \description{
 Use \code{showAlert} to let the user know of successes or to call attention to
-problems.
+problems. While alerts are static by default they can also be made
+actionable. Actionable alerts can be used for undoing or redoing an action
+and more.
 }
 \examples{
 
@@ -37,6 +47,28 @@ if (interactive()) {
       observeEvent(input$show, {
         color <- sample(c("teal", "red", "orange", "blue"), 1)
         showAlert("Alert", color = color)
+      })
+    }
+  )
+}
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          buttonInput("show", "Alert!")
+        )
+      )
+    ),
+    server = function(input, output) {
+      observeEvent(input$show, {
+        color <- sample(c("teal", "red", "orange", "blue"), 1)
+        showAlert("Alert", color = color, action = "undo")
+      })
+
+      observeEvent(input$undo, {
+        print("OOOOOOHHH yes!")
       })
     }
   )
