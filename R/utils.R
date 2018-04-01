@@ -110,7 +110,7 @@ elements <- function(x) {
   if (is.null(x)) {
     return(NULL)
   }
-  x[names2(x) == ""]
+  unname(x[names2(x) == ""])
 }
 
 # Join HTML attribute values
