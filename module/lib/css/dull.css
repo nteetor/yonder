@@ -5674,6 +5674,56 @@ a.text-grey-900:hover, a.text-grey-900:focus {
   overflow: hidden;
   overflow-y: scroll; }
 
+/*
+ * Based on toasts from materializecss
+ * https://github.com/Dogfalo/materialize/blob/master/sass/components/_toast.scss
+ */
+.dull-alert-container {
+  display: block;
+  position: fixed;
+  z-index: 9001; }
+  @media only screen and (max-width: 576px) {
+    .dull-alert-container {
+      bottom: 0%;
+      min-width: 100%; } }
+  @media only screen and (min-width: 577px) and (max-width: 768px) {
+    .dull-alert-container {
+      bottom: 7%;
+      right: 5%;
+      max-width: 90%; } }
+  @media only screen and (min-width: 769px) {
+    .dull-alert-container {
+      top: 10%;
+      right: 7%;
+      max-width: 86%; } }
+
+.dull-alert {
+  top: 35px;
+  width: auto;
+  margin-top: 10px;
+  padding: 10px 25px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 1.1rem;
+  cursor: default; }
+  .dull-alert .alert-action {
+    margin-left: 3rem;
+    margin-right: -20px;
+    background: transparent;
+    border: 0;
+    color: inherit;
+    font-weight: 500;
+    text-transform: uppercase; }
+    .dull-alert .alert-action:focus {
+      outline: none;
+      box-shadow: none; }
+  @media only screen and (max-width: 576px) {
+    .dull-alert {
+      width: 100%;
+      border-radius: 0; } }
+
 .dull-table-thruput tbody tr {
   cursor: pointer; }
 

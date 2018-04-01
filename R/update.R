@@ -1,4 +1,8 @@
 sendUpdateMessage <- function(id, type, data) {
+  if (all(names2(data) == "")) {
+    data <- vapply(data, as.character, character(1), USE.NAMES = FALSE)
+  }
+
   msg <- list(
     type = paste0("update:", type),
     data = data

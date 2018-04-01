@@ -80,6 +80,29 @@
   }
 
   this.updateValues = function(el, map) {
+    if (typeof map == "string" || Array.isArray(map)) {
+      let $inputs = $(el).find(`${ this.Selector.VALUE }`);
+      let value = typeof map == "string" ? [map] : map;
+
+      if ($inputs.has(":not(input[type='text'])").length) {
+        console.error("updateValues: expecting all inputs to be text if new values are unnamed");
+        return;
+      }
+
+      if ($inputs.length != value.length) {
+        console.error("updateValues: mismatched number of inputs and values");
+        return;
+      }
+
+      $inputs.each((index, input) => {
+        let $input = $(input);
+        $input.val(value[index]);
+        $input.trigger("change");
+      });
+
+      return;
+    }
+
     if (this.Selector.VALUE === this.Selector.SELF) {
       let value = map[$input.data("value")];
 
@@ -129,10 +152,6 @@
     let [action, type = null] = msg.type.split(":");
 
     if (action === "update") {
-      if (this.Selector.VALIDATE === undefined) {
-        return;
-      }
-
       if (!type || msg.data === undefined) {
         throw "Invalid update message"
       }
@@ -149,6 +168,10 @@
     }
 
     if (action === "mark") {
+      if (this.Selector.VALIDATE === undefined) {
+        return;
+      }
+
       if (type === "valid") {
         this.markValid(el, msg.data);
       }

@@ -41,28 +41,6 @@ $(function() {
   });
 });
 
-Shiny.addCustomMessageHandler("dull:alert", function(msg) {
-  var ids = msg.id.map(v => "#" + v).join(",");
-
-  $("<div>")
-    .addClass("alert alert-dismissible fade show")
-    .html(msg.content)
-    .append(
-      $("<button>", {
-        "type": "button",
-        "class": "close",
-        "data-dismiss": "alert",
-        "aria-label": "Close"
-      }).append(
-        $("<span>", {
-          "class": "fas fa-window-close",
-          "aria-hidden": true
-        })
-      )
-    )
-    .insertBefore($(ids));
-});
-
 (function() {
   this.find = function(scope) {
     return $(scope).find(`${ this.Selector.SELF }[id]`);
@@ -145,6 +123,29 @@ Shiny.addCustomMessageHandler("dull:alert", function(msg) {
   }
 
   this.updateValues = function(el, map) {
+    if (typeof map == "string" || Array.isArray(map)) {
+      let $inputs = $(el).find(`${ this.Selector.VALUE }`);
+      let value = typeof map == "string" ? [map] : map;
+
+      if ($inputs.has(":not(input[type='text'])").length) {
+        console.error("updateValues: expecting all inputs to be text if new values are unnamed");
+        return;
+      }
+
+      if ($inputs.length != value.length) {
+        console.error("updateValues: mismatched number of inputs and values");
+        return;
+      }
+
+      $inputs.each((index, input) => {
+        let $input = $(input);
+        $input.val(value[index]);
+        $input.trigger("change");
+      });
+
+      return;
+    }
+
     if (this.Selector.VALUE === this.Selector.SELF) {
       let value = map[$input.data("value")];
 
@@ -194,10 +195,6 @@ Shiny.addCustomMessageHandler("dull:alert", function(msg) {
     let [action, type = null] = msg.type.split(":");
 
     if (action === "update") {
-      if (this.Selector.VALIDATE === undefined) {
-        return;
-      }
-
       if (!type || msg.data === undefined) {
         throw "Invalid update message"
       }
@@ -214,6 +211,10 @@ Shiny.addCustomMessageHandler("dull:alert", function(msg) {
     }
 
     if (action === "mark") {
+      if (this.Selector.VALIDATE === undefined) {
+        return;
+      }
+
       if (type === "valid") {
         this.markValid(el, msg.data);
       }
@@ -272,25 +273,110 @@ Shiny.inputBindings.register(addressInputBinding, "dull.addressInput");
 
 var alertInputBinding = new Shiny.InputBinding();
 
+$(() => $("body").append(
+  $("<div class='dull-alert-container' id='alert-container'></div>")
+));
+
 $.extend(alertInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-alert[id] .close").parent();
+  Selector: {
+    SELF: ".dull-alert-container"
   },
+  Alerts: [],
   getValue: function(el) {
-    var ret = $(el).data("closed") || null;
-    return ret;
-  },
-  getState: function(el, data) {
-    return { value: this.getValue(el) };
+    return null;
   },
   subscribe: function(el, callback) {
-    $(el).on("closed.bs.alert.alertInputBinding", function(e) {
-      $(el).data("closed", true);
-      callback();
-    });
+
   },
   unsubscribe: function(el) {
-    $(el).off(".alertInputBinding");
+
+  },
+  receiveMessage: function(el, msg) {
+    if (msg.type === undefined) {
+      return;
+    }
+
+    if (msg.type === "show") {
+      let data = msg.data;
+
+      let alertAttrs = data.attrs || {};
+      let alertClass = data.color ? `alert-${ data.color }` : "";
+
+      let $alert = $(`<div class="alert ${ alertClass } fade show dull-alert" role="alert">${ data.text }</div>`);
+
+      if (data.action) {
+        $alert.append($(`<button class="btn btn-link alert-action">${ data.action }</button>`));
+        $alert.on("click", ".alert-action", (e) => {
+          Shiny.onInputChange(data.action, true);
+        });
+      }
+
+      Object.entries(alertAttrs).forEach((item) => {
+        item[0] == "class" ? $alert.addClass(item[1]) : $alert.attr(...item);
+      });
+
+      this.Alerts.push({ el: $alert, action: data.action });
+
+      $alert.appendTo($(this.Selector.SELF))
+        .velocity(
+          { top: 0, opacity: 1 },
+          { duration: 300, easing: "easeOutCubic", queue: false }
+        );
+
+      if (data.duration !== null) {
+        setTimeout(
+          () => {
+            if (this.Alerts.length === 0) {
+              return;
+            }
+
+            let item = this.Alerts.shift();
+
+            if (item.action) {
+              Shiny.onInputChange(item.action, null);
+            }
+
+            item.el.remove()
+          },
+          data.duration
+        );
+      }
+
+      return;
+    }
+
+    if (msg.type === "close") {
+      if (this.Alerts.length === 0) {
+        return;
+      }
+
+      let data = msg.data;
+
+      let indeces = typeof data.index === "number" ? [data.index] : data.index;
+      let text = typeof data.text === "string" ? [data.text] : data.text;
+
+      let selector = Object.entries(data.attrs)
+          .map(item => {
+            return `[${ item[0] }${ item[1] ? (item[0] === "class" ? "*=" : "=") + item[1] : "" }]`;
+          })
+          .join("");
+
+      this.Alerts = this.Alerts.filter((alert, index) => {
+        let $el = $(alert.el);
+
+        if (indeces.includes(index) || text.includes($el.text()) || $el.is(selector)) {
+          if (alert.action) {
+            Shiny.onInputChange(alert.action, null);
+          }
+
+          $el.remove();
+
+          return false;
+        }
+
+        return true;
+      });
+    }
   }
 });
 
@@ -523,6 +609,7 @@ var groupInputBinding = new Shiny.InputBinding();
 $.extend(groupInputBinding, {
   Selector: {
     SELF: ".dull-group-input",
+    VALUE: "input",
     SELECTED: ".input-group-prepend .input-group-text, input, .input-group-append .input-group-text",
   },
   Events: [
@@ -534,10 +621,6 @@ $.extend(groupInputBinding, {
   },
   getState: function(el) {
     return { value: this.getValue(el) };
-  },
-  receiveMessage: function(el, msg) {
-    console.error("receiveMessage: not implemented for group input");
-    return;
   }
 });
 
@@ -839,19 +922,7 @@ $.extend(textualInputBinding, {
       policy: "debounce",
       delay: 250
     };
-  },
-  // subscribe: function(el, callback) {
-  //   if (this.isFormElement(el)) {
-  //     $(el).closest(".dull-form-input[id]").on("submit.textualInputBinding", e => callback());
-  //   } else {
-  //     $(el).on("change.textualInputBinding", function(e) {
-  //       callback(true);
-  //     });
-  //   }
-  // },
-  // unsubscribe: function(el) {
-  //   $(el).off(".textualInputBinding");
-  // },
+  }
 });
 
 Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");

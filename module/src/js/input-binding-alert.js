@@ -1,24 +1,109 @@
 var alertInputBinding = new Shiny.InputBinding();
 
+$(() => $("body").append(
+  $("<div class='dull-alert-container' id='alert-container'></div>")
+));
+
 $.extend(alertInputBinding, {
-  find: function(scope) {
-    return $(scope).find(".dull-alert[id] .close").parent();
+  Selector: {
+    SELF: ".dull-alert-container"
   },
+  Alerts: [],
   getValue: function(el) {
-    var ret = $(el).data("closed") || null;
-    return ret;
-  },
-  getState: function(el, data) {
-    return { value: this.getValue(el) };
+    return null;
   },
   subscribe: function(el, callback) {
-    $(el).on("closed.bs.alert.alertInputBinding", function(e) {
-      $(el).data("closed", true);
-      callback();
-    });
+
   },
   unsubscribe: function(el) {
-    $(el).off(".alertInputBinding");
+
+  },
+  receiveMessage: function(el, msg) {
+    if (msg.type === undefined) {
+      return;
+    }
+
+    if (msg.type === "show") {
+      let data = msg.data;
+
+      let alertAttrs = data.attrs || {};
+      let alertClass = data.color ? `alert-${ data.color }` : "";
+
+      let $alert = $(`<div class="alert ${ alertClass } fade show dull-alert" role="alert">${ data.text }</div>`);
+
+      if (data.action) {
+        $alert.append($(`<button class="btn btn-link alert-action">${ data.action }</button>`));
+        $alert.on("click", ".alert-action", (e) => {
+          Shiny.onInputChange(data.action, true);
+        });
+      }
+
+      Object.entries(alertAttrs).forEach((item) => {
+        item[0] == "class" ? $alert.addClass(item[1]) : $alert.attr(...item);
+      });
+
+      this.Alerts.push({ el: $alert, action: data.action });
+
+      $alert.appendTo($(this.Selector.SELF))
+        .velocity(
+          { top: 0, opacity: 1 },
+          { duration: 300, easing: "easeOutCubic", queue: false }
+        );
+
+      if (data.duration !== null) {
+        setTimeout(
+          () => {
+            if (this.Alerts.length === 0) {
+              return;
+            }
+
+            let item = this.Alerts.shift();
+
+            if (item.action) {
+              Shiny.onInputChange(item.action, null);
+            }
+
+            item.el.remove()
+          },
+          data.duration
+        );
+      }
+
+      return;
+    }
+
+    if (msg.type === "close") {
+      if (this.Alerts.length === 0) {
+        return;
+      }
+
+      let data = msg.data;
+
+      let indeces = typeof data.index === "number" ? [data.index] : data.index;
+      let text = typeof data.text === "string" ? [data.text] : data.text;
+
+      let selector = Object.entries(data.attrs)
+          .map(item => {
+            return `[${ item[0] }${ item[1] ? (item[0] === "class" ? "*=" : "=") + item[1] : "" }]`;
+          })
+          .join("");
+
+      this.Alerts = this.Alerts.filter((alert, index) => {
+        let $el = $(alert.el);
+
+        if (indeces.includes(index) || text.includes($el.text()) || $el.is(selector)) {
+          if (alert.action) {
+            Shiny.onInputChange(alert.action, null);
+          }
+
+          $el.remove();
+
+          return false;
+        }
+
+        return true;
+      });
+    }
   }
 });
 
