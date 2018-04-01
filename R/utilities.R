@@ -595,6 +595,11 @@ display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #'   padding to apply. If the margins and padding remain the same across all
 #'   viewports then only `default` needs to be specified.
 #'
+#'   For **margins**, specifying `"auto"` allows you to center a block-level
+#'   element by automatically setting the element's left and right margins. When
+#'   specifying a margin for each side both the left and right values must be
+#'   `"auto"`, e.g. `c(1, "auto", 3, "auto")`.
+#'
 #' @param sm Like `default`, but the margins or padding are applied once the
 #'   viewport is 576 pixels wide, think phone in landscape mode.
 #'
@@ -678,16 +683,28 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
     function(nm) {
       arg <- args[[nm]]
 
-      if (!all(arg %in% 0:5)) {
+      if (length(arg) != 4 && length(arg) != 1) {
         stop(
-          "invalid `margins` argument, `", nm, "` value(s) must be 0, 1, 2, 3, 4, or 5",
+          "invalid `margins` argument, `", nm, "` must be a single value or a ",
+          "vector of four values",
           call. = FALSE
         )
       }
 
-      if (length(arg) != 4 && length(arg) != 1) {
+      if ("auto" %in% arg && length(arg) > 1) {
+        if (arg[2] != "auto" && arg[4] != "auto") {
+          stop(
+            "invalid `margins` argument, when specifying individual margins ",
+            'using "auto" both right and left must be "auto"',
+            call. = FALSE
+          )
+        }
+      }
+
+      if (!all(arg %in% c(0:5, "auto"))) {
         stop(
-          "invalid `margins` argument, `", nm, "` must be a single value or a vector of four values",
+          "invalid `margins` argument, `", nm, "` value(s) must be ",
+          '0, 1, 2, 3, 4, 5, or "auto"',
           call. = FALSE
         )
       }
@@ -695,10 +712,23 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
       breakpoint <- if (nm == "default") "-" else paste0("-", nm, "-")
 
       if (length(arg) == 4) {
+        if ("auto" %in% arg) {
+          return(
+            paste(
+              paste0(prefix, sides[c(1, 3)], breakpoint, arg[c(1, 3)], collapse = " "),
+              paste0(prefix, "x", breakpoint, "auto")
+            )
+          )
+        }
+
         return(paste0(prefix, sides, breakpoint, arg, collapse = " "))
       }
 
-      paste0(prefix, breakpoint, arg)
+      if (arg == "auto") {
+        paste0(prefix, "x", breakpoint, "auto")
+      } else {
+        paste0(prefix, breakpoint, arg)
+      }
     },
     character(1)
   )

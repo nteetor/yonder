@@ -16,7 +16,12 @@ margins(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 
 \item{default}{One of 0, 1, 2, 3, 4, 5 specifying the default margins or
 padding to apply. If the margins and padding remain the same across all
-viewports then only \code{default} needs to be specified.}
+viewports then only \code{default} needs to be specified.
+
+For \strong{margins}, specifying \code{"auto"} allows you to center a block-level
+element by automatically setting the element's left and right margins. When
+specifying a margin for each side both the left and right values must be
+\code{"auto"}, e.g. \code{c(1, "auto", 3, "auto")}.}
 
 \item{sm}{Like \code{default}, but the margins or padding are applied once the
 viewport is 576 pixels wide, think phone in landscape mode.}
