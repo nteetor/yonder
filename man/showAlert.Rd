@@ -2,9 +2,12 @@
 % Please edit documentation in R/alerts.R
 \name{showAlert}
 \alias{showAlert}
+\alias{closeAlert}
 \title{Static and actionable alerts}
 \usage{
 showAlert(text, ..., duration = 4, color = NULL, action = NULL)
+
+closeAlert(...)
 }
 \arguments{
 \item{text}{A character string specifying the message text of the alert.}
@@ -12,8 +15,9 @@ showAlert(text, ..., duration = 4, color = NULL, action = NULL)
 \item{...}{Additional named arguments passed as HTML attributes to the
 alert element.}
 
-\item{duration}{A positive integer specifying the duration of the alert,
-by default the alert is removed after 4 seconds.}
+\item{duration}{A positive integer or \code{NULL} specifying the duration of the
+alert, by default the alert is removed after 4 seconds. If \code{NULL} the
+alert is not automatically removed.}
 
 \item{color}{A character string specifying the color of the alert,
 for possible colors see \link{background}.}
@@ -79,6 +83,83 @@ if (interactive()) {
 
       observeEvent(input$undo, {
         updateValues("text", oldValue)
+      })
+    }
+  )
+}
+
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      buttonInput("add", "Alert") \%>\%
+        margins(3),
+      buttonInput("first", "Remove first alert"),
+      buttonInput(
+        id = "reds",
+        label = "Remove red alerts",
+        alt = "the red ones offend the aesthetic"
+      ),
+      buttonInput("alert", "Remove 'Alert' alerts")
+    ),
+    server = function(input, output) {
+      observeEvent(input$add, {
+        color <- sample(c("grey", "teal", "purple", "yellow", "red"), 1)
+        showAlert("Alert", duration = NULL, color = color)
+      })
+
+      observeEvent(input$first, {
+        closeAlert(1)
+      })
+
+      observeEvent(input$reds, {
+        closeAlert(class = "alert-red")
+      })
+
+      observeEvent(input$alert, {
+        closeAlert("Alert")
+      })
+    }
+  )
+}
+
+# this is a variation of the second example
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          groupInput(
+            id = "text",
+            right = buttonInput("clear", fontAwesome("times")) \%>\%
+              background("red", -1)
+          )
+        ),
+        col(
+          verbatimTextOutput("value")
+        )
+      ) \%>\%
+        margins(3)
+    ),
+    server = function(input, output) {
+      oldValue <- NULL
+
+      output$value <- renderPrint(input$text)
+
+      observeEvent(input$clear, {
+        oldValue <<- input$text
+        updateValues("text", "")
+        showAlert(
+          text = "Undo clear.",
+          color = "yellow",
+          action = "undo",
+          duration = NULL
+        )
+      })
+
+      observeEvent(input$undo, {
+        updateValues("text", oldValue)
+        closeAlert(1)
       })
     }
   )
