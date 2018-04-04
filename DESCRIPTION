@@ -40,6 +40,7 @@ Collate:
     bars.R
     button.R
     card.R
+    tabs.R
     checkbox.R
     collapse.R
     container.R
