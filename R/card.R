@@ -1,291 +1,130 @@
-#' Cards, highly variable blocks of content
+#' Cards, blocks of content
 #'
-#' `textCard` a simple way to represent content as a standalone block.
-#' `tabsCard` and `pillsCard` allow more content to be packed into a single
-#' card. `deck` is used to group and ensure proper padding is placed around any
-#' number of cards.
+#' Create blocks of content with `card`. `deck` is used to group and add padding
+#' is placed around any number of cards. Additionally, grouping cards with
+#' `deck` has the benefit of aligning the footer of each card.
 #'
-#' @param title A character string specifying the title of the card's content.
-#'
-#' @param body A character string specifying the body of the card's content.
-#'
-#' @param align One of `"left"`, `"right"`, or `"center"` specifying the text
-#'   alignment of the card, defaults to `"left"`.
-#'
-#' @param header A character string specifying header text of the card, defaults
-#'   to `NULL`, in which case a header is not added.
-#'
-#' @param footer A character string specifying footer text of the card, defaults
-#'   to `NULL`, in which case a footer is not added.
-#'
-#' @param labels A character vector or list of character strings specifying the
-#'   tab labels of the navigation card.
-#'
-#' @param panes A list of custom tags specifying the tab content of the
-#'   navigation card.
-#'
-#' @param ... Any number of cards or additional named arguments passed as HTML
+#' @param ... For **card**, character strings, tag elements, or list groups to
+#'   include as the body of a card or additional named arguments passed as HTML
 #'   attributes to the parent element.
+#'
+#'   For **deck**, any number of cards or additional named arguments passed as
+#'   HTML attributes to the parent element.
+#'
+#' @param header A character string or tag element specifying the header of the
+#'   card, defaults to `NULL`, in which case a header is not added.
+#'
+#' @param title A character string or tag element specifying the title of the
+#'   card, defaults to `NULL`, in which case a title is not added.
+#'
+#' @param subtitle A character string or tag element specifying the subtitle of
+#'   the card, defaults to `NULL`, in which case a subtitle is not added.
+#'
+#' @param footer A character string or tag element specifying the footer of the
+#'   card, defaults to `NULL`, in which case a footer is not added.
 #'
 #' @export
 #' @examples
-#' if (interactive()) {
-#'   library(ggplot2)
 #'
-#'   shinyApp(
-#'     ui = container(
-#'       tags$div(
-#'         class = "card",
-#'         style="width: 20rem;",
-#'         tags$div(
-#'           class = "shiny-plot-output",
-#'           id = "plot",
-#'           style = "width: 318px; height: 180px;",
-#'           tags$div(
-#'             class = "card-img-top",
-#'             tags$img(
-#'               alt = "Card image cap"
-#'             )
-#'           )
-#'         ),
-#'         tags$div(
-#'           class = "card-body",
-#'           tags$h4(class = "card-title", "Card title"),
-#'           tags$p(class = "card-text", "card text, card text")
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$plot <- renderPlot({
-#'         ggplot(mtcars, aes(cyl, mpg)) +
-#'           geom_point()
-#'       })
-#'     }
-#'   )
-#' }
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         col(
-#'           textCard(
-#'             title = "A special title",
-#'             body = "Here is some supporting text"
-#'           )
-#'         ),
-#'         col(
-#'           textCard(
-#'             title = "A special title",
-#'             body = "Here is some supporting text"
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'
-#'     }
-#'   )
-#' }
-#'
-#' #
-#' #  with `deck` you can ensure proper spacing between cards
-#' #
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       deck(
-#'         textCard(
-#'           title = "Long content",
-#'           body = "This text is the long and where does the text go? How do you know when the text will end? Never fear. This is over."
-#'         ),
-#'         textCard(
-#'           align = "right",
-#'           title = "Longer content",
-#'           body = c(
-#'             "This text makes what you read look like childs play. Here goes the world and here comes the sun. There was an eclipse the other day, did you know? ",
-#'             "In case you did not know I hope you will find someone to explain the majesty of it all."
-#'           )
-#'         ),
-#'         textCard(
-#'           align = "center",
-#'           title = "Short content",
-#'           body = "No rambling necessary for this card."
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'
-#'     }
-#'   )
-#' }
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       deck(
-#'         tabsCard(
-#'           labels = c("Info", "Data", "Options"),
-#'           panes = list(
-#'             tags$p("Some info, the main content of this card"),
-#'             tags$p(class = "card-text", "This tab describes the data behind what you saw on on the info tab"),
-#'             tags$p("Here are some options")
-#'           )
-#'         ),
-#'         pillsCard(
-#'           labels = c("Info", "Data", "Options"),
-#'           panes = list(
-#'             tags$p("Some info, the main content of this card"),
-#'             tags$p(class = "card-text", "This tab describes the data behind what you saw on on the info tab"),
-#'             tags$p("Here are some options")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'
-#'     }
-#'   )
-#' }
-#'
-textCard <- function(title, body, header = NULL, align = "left", footer = NULL,
-                     ...) {
-  if (!re(align, "left|right|center", FALSE)) {
-    stop(
-      "invalid `textCard` argument, `align` must be one of ",
-      '"left", "right", or "center"',
-      call. = FALSE
-    )
-  }
+card <- function(..., header = NULL, title = NULL, subtitle = NULL,
+                 footer = NULL) {
+  args <- list(...)
+  attrs <- attribs(args)
 
-  tags$div(
-    class = collate(
-      "card",
-      if (align != "left") paste0("text-", align)
-    ),
-    if (!is.null(header)) {
-      tags$div(class = "card-header", header)
-    },
-    tags$div(
-      class = "card-body",
-      tags$h4(class = "card-title", title),
-      tags$p(class = "card-text", body)
-    ),
-    ...,
-    if (!is.null(footer)) {
+  isListGroup <- function(x) tagHasClass(x, "list-group")
+
+  elems <- lapply(
+    elements(args),
+    function(el) {
+      if (isListGroup(el)) {
+        return(tagEnsureClass(el, "list-group-flush"))
+      }
+
       tags$div(
-        class = "card-footer",
-        tags$small(class = "text-muted", footer)
+        class = "card-body",
+        if (!is_tag(el)) {
+          tags$p(class = "card-text", el)
+        } else {
+          el
+        }
       )
     }
   )
-}
 
-#' @rdname textCard
-#' @export
-tabsCard <- function(labels, panes, ...) {
-  ids <- ID(rep.int("tab", length(labels)))
+  if (length(elems)) {
+    elems <- Reduce(
+      x = elems[-1],
+      init = list(elems[[1]]),
+      function(acc, el) {
+        if (isListGroup(acc[[length(acc)]])) {
+          c(acc, list(el))
+        } else {
+          acc[[length(acc)]][["children"]] <- c(
+            acc[[length(acc)]][["children"]],
+            el$children
+          )
+
+          acc
+        }
+      }
+    )
+  }
+
+  header <- if (!is.null(header)) {
+    if (is_tag(header)) {
+      if (tagHasClass(header, "nav-tabs")) {
+        tags$div(
+          class = "card-header",
+          tagEnsureClass(header, "card-header-tabs")
+        )
+      } else {
+        tagEnsureClass(header, "card-header")
+      }
+    } else {
+      tags$div(class = "card-header", header)
+    }
+  }
+
+  title <- if (!is.null(title)) {
+    if (is_tag(title)) {
+      tagEnsureClass(title, "card-title")
+    } else {
+      tags$h5(class = "card-title", title)
+    }
+  }
+
+  subtitle <- if (!is.null(subtitle)) {
+    if (is_tag(subtitle)) {
+      tagEnsureClass(subtitle, "card-subtitle")
+    } else {
+      tags$h6(class = "card-subtitle", subtitle)
+    }
+  }
+
+  footer <- if (!is.null(footer)) {
+    if (is_tag(footer)) {
+      tagEnsureClass(footer, "card-footer")
+    } else {
+      tags$div(class = )
+    }
+  }
 
   tags$div(
     class = "card",
-    tags$div(
-      class = "card-header",
-      tags$ul(
-        class = "nav nav-tabs card-header-tabs",
-        role = "tablist",
-        lapply(
-          seq_along(labels),
-          function(i) {
-            tags$li(
-              class = "nav-item",
-              tags$a(
-                class = collate(
-                  "nav-link",
-                  if (i == 1) "active"
-                ),
-                href = paste0("#", ids[[i]]),
-                `data-toggle` = "tab",
-                labels[[i]]
-              )
-            )
-          }
-        )
+    if (!is.null(header)) header,
+    if (!is.null(title) || !is.null(subtitle)) {
+      tags$div(
+        class = "card-body",
+        title,
+        subtitle
       )
-    ),
-    tags$div(
-      class = "card-body tab-content",
-      lapply(
-        seq_along(labels),
-        function(i) {
-          tags$div(
-            class = collate(
-              "tab-pane",
-              if (i == 1) "active"
-            ),
-            id = ids[[i]],
-            role = "tabpanel",
-            panes[[i]]
-          )
-        }
-      )
-    ),
-    ...
+    },
+    elems,
+    if (!is.null(footer)) footer
   )
 }
 
-#' @rdname textCard
-#' @export
-pillsCard <- function(labels, panes, ...) {
-  ids <- ID(rep.int("tab", length(labels)))
-
-  tags$div(
-    class = "card",
-    tags$div(
-      class = "card-header",
-      tags$ul(
-        class = "nav nav-pills card-header-pills",
-        role = "tablist",
-        lapply(
-          seq_along(labels),
-          function(i) {
-            tags$li(
-              class = "nav-item",
-              tags$a(
-                class = collate(
-                  "nav-link",
-                  if (i == 1) "active"
-                ),
-                href = paste0("#", ids[[i]]),
-                `data-toggle` = "pill",
-                labels[[i]]
-              )
-            )
-          }
-        )
-      )
-    ),
-    tags$div(
-      class = "card-body tab-content",
-      lapply(
-        seq_along(labels),
-        function(i) {
-          tags$div(
-            class = collate(
-              "tab-pane",
-              if (i == 1) "active"
-            ),
-            id = ids[[i]],
-            role = "tabpanel",
-            panes[[i]]
-          )
-        }
-      )
-    ),
-    ...
-  )
-}
-
-#' @rdname textCard
+#' @rdname card
 #' @export
 deck <- function(...) {
   tags$div(
