@@ -5,7 +5,7 @@
 
   this.getId = function(el) {
     return el.id;
-  }
+  };
 
   this.getType = function(el) {
     return false;
@@ -13,6 +13,10 @@
 
   // may not be worth it to have this method already created
   this.getValue = function(el) {
+    if (!this.hasSelector("SELECTED")) {
+      return null;
+    }
+
     let values = $(el).find(`${ this.Selector.SELECTED }`)
         .map((i, e) => {
           let $e = $(e);
@@ -33,6 +37,10 @@
   };
 
   this.subscribe = function(el, callback) {
+    if (this.Events === undefined || !this.Events.length) {
+      return;
+    }
+
     if (this.isFormElement(el)) {
       $(el).closest(".dull-form-input[id]").on("submit", e => callback());
     } else {
@@ -49,6 +57,10 @@
   };
 
   this.updateChoices = function(el, map) {
+    if (!this.hasSelector("VALUE") || !this.hasSelector("LABEL")) {
+      return;
+    }
+
     if (this.Selector.VALUE === this.Selector.SELF) {
       let value = map[$(el).data("value")];
 
@@ -77,9 +89,13 @@
         $label.html(value);
       }
     });
-  }
+  };
 
   this.updateValues = function(el, map) {
+    if (!this.hasSelector("VALUE")) {
+      return;
+    }
+
     if (typeof map == "string" || Array.isArray(map)) {
       let $inputs = $(el).find(`${ this.Selector.VALUE }`);
       let value = typeof map == "string" ? [map] : map;
@@ -124,25 +140,33 @@
         $input.data("value", value);
       }
     });
-  }
+  };
 
   this.markValid = function(el, data) {
+    if (!this.hasSelector("VALIDATE")) {
+      return;
+    }
+
     let $input = $(el).find(this.Selector.VALIDATE);
     $input.removeClass("is-invalid").addClass("is-valid");
     let $feedback = $(el).find(".valid-feedback");
     if ($feedback.length) {
       $feedback.text(data.msg);
     }
-  }
+  };
 
   this.markInvalid = function(el, data) {
+    if (!this.hasSelector("VALIDATE")) {
+      return;
+    }
+
     let $input = $(el).find(this.Selector.VALIDATE);
     $input.removeClass("is-valid").addClass("is-invalid");
     let $feedback = $(el).find(".invalid-feedback");
-    if ($feedback) {
+    if ($feedback.length) {
       $feedback.text(data.msg);
     }
-  }
+  };
 
   this.receiveMessage = function(el, msg) {
     if (!msg.type) {
@@ -153,7 +177,7 @@
 
     if (action === "update") {
       if (!type || msg.data === undefined) {
-        throw "Invalid update message"
+        return;
       }
 
       if (type === "choices") {
@@ -168,7 +192,7 @@
     }
 
     if (action === "mark") {
-      if (this.Selector.VALIDATE === undefined) {
+      if (!type) {
         return;
       }
 
@@ -184,7 +208,11 @@
     }
   };
 
+  this.hasSelector = function(key) {
+    return this.Selector !== undefined && this.Selector[key] !== undefined;
+  };
+
   this.isFormElement = function(el) {
     return $(el).parents(".dull-form-input[id]").length > 0;
-  }
+  };
 }).call(Shiny.InputBinding.prototype);
