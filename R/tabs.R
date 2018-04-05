@@ -1,11 +1,18 @@
 #' Tab list
 #'
-#' Create a tab list for controlling tab content.
+#' Create a set of tabs for controlling tab content. Tab lists are separated
+#' from tab content or tab panes for flexible placement, see the example below
+#' combining cards and tabs. Because of this separation it is important to
+#' remember a tab list does very little alone. Be sure to add corresponding
+#' [tab panes][tabPane].
+#'
+#' @param id A character string specifying the id of the tab list, this
+#'   value must also be passed to [tabContent()] as the `list` argument.
+#'
+#'   Tabs have a reactive value which is by default is the label of the open
+#'   tab. For custom values see `values`.
 #'
 #' @param labels A character vector specifying the labels of the tabs.
-#'
-#' @param panes A character vector specifying the ids of the tab panes
-#'   controlled by the tab list, see `id` in [tabPane].
 #'
 #' @param values A character vector specifying a reactive value for each tab,
 #'   defaults to `labels`.
@@ -16,37 +23,35 @@
 #' @param ... Additional named arguments passed as HTML attributes to the
 #'   parent element.
 #'
-#' @param id A character string specifying a reactive id for the tab list,
-#'   defaults to `NULL`, in which case a reactive value is not created. If *not*
-#'   `NULL` the tab lists's reactive value is the value of the active tab.
-#'
 #' @family tabs
 #' @export
 #' @examples
+#'
+#' tabList(
+#'   labels = c("Home", "About", "Posts"),
+#'   values = c("home", "about", "blog")
+#' )
 #'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
 #'       card(
 #'         header = tabList(
+#'           id = "tabs",
 #'           labels = c("Home", "Profile", "Contact"),
-#'           panes = c("homePane", "profPane", "contactPane"),
 #'         ),
 #'         tabContent(
+#'           list = "tabs",
 #'           tabPane(
-#'             id = "homePane",
-#'             class = "show active",
 #'             "Vestibulum id ligula porta felis euismod semper. Cras justo
 #'              odio, dapibus ac facilisis in, egestas eget quam."
 #'           ),
 #'           tabPane(
-#'             id = "profPane",
 #'             "Duis mollis, est non commodo luctus, nisi erat porttitor ligula,
 #'              eget lacinia odio sem nec elit. Aenean eu leo quam. Pellentesque
 #'              ornare sem lacinia quam venenatis vestibulum."
 #'           ),
 #'           tabPane(
-#'             id = "contactPane",
 #'             "Donec ullamcorper nulla non metus auctor fringilla. Nullam id
 #'              dolor id nibh ultricies vehicula ut id elit."
 #'           )
@@ -56,13 +61,14 @@
 #'         width(50)
 #'     ),
 #'     server = function(input, output) {
-#'
+#'       observe({
+#'         showAlert(input$tabs, duration = 2, color = "grey")
+#'       })
 #'     }
 #'   )
 #' }
-#'
-tabList <- function(labels, panes, values = labels, active = values[1], ...,
-                    id = NULL) {
+
+tabList <- function(id, labels, values = labels, active = values[1], ...) {
   if (length(labels) == 0) {
     stop(
       "invalid `tabList()` argument, `labels` must contain at least one ",
@@ -106,16 +112,15 @@ tabList <- function(labels, panes, values = labels, active = values[1], ...,
   active <- match2(active, values)
 
   tags$ul(
-    class = "nav nav-tabs",
+    class = "dull-tabs-input nav nav-tabs",
     role = "tablist",
     id = id,
     ...,
     Map(
       label = labels,
-      pane = panes,
       value = values,
       active = active,
-      function(label, pane, value, active) {
+      function(label, value, active) {
         tags$li(
           class = "nav-item",
           tags$a(
@@ -124,8 +129,7 @@ tabList <- function(labels, panes, values = labels, active = values[1], ...,
               if (active) "active"
             ),
             `data-toggle` = "tab",
-            href = paste0("#", pane),
-            `aria-controls` = pane,
+            `data-value` = value,
             `aria-selected` = if (active) "true" else "false",
             label
           )
@@ -137,24 +141,95 @@ tabList <- function(labels, panes, values = labels, active = values[1], ...,
 
 #' Tab content, panes
 #'
-#' Create tabbed content.
+#' Create tabbed content. You will need to create a tab pane for each of the
+#' tabs in the corresponding tab list. A tab list and tab content are linked
+#' through the `id` argument and `list` argument respectively.
 #'
-#' @param ... For **tabContent***, calls to `tabPane` or named arguments passed
+#' @param list A character string specifying the id of a tab list, see `id`
+#'   in [tabList()].
+#'
+#' @param ... For **tabContent**, calls to `tabPane` or named arguments passed
 #'   as HTML attributes to the parent element.
 #'
 #'   For **tabPane**, any number of tag elements or named arguments passed as
 #'   HTML attributes to the parent element.
 #'
-#' @param id A character string specifying the id of the tab pane, this id
-#'   must be passed to a tab list, see **panes** in [tabList].
-#'
 #' @family tabs
 #' @export
 #' @examples
 #'
-tabContent <- function(...) {
+#' tabContent(
+#'   list = "tabListId",
+#'   tabPane(
+#'     tags$h1("Pane 1"),
+#'     tags$p("Lorem Dapibus Malesuada Cras Cursus")
+#'   ),
+#'   tabPane(
+#'     tags$p("Pane 2"),
+#'     tags$p("Magna Aenean Mattis Ultricies Ridiculus")
+#'   )
+#' )
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       row(
+#'         col(
+#'           default = 4,
+#'           card(
+#'             p("Nullam quis risus eget urna mollis ornare vel eu leo. Nullam
+#'             id dolor id nibh ultricies vehicula ut id elit.")
+#'           ) %>%
+#'             background("grey", +2)
+#'         ),
+#'         col(
+#'           tabList(
+#'             id = "myTabs",
+#'             labels = c("Home", "About", "Posts")
+#'           ) %>%
+#'             margins(c(0, 0, 5, 0)),
+#'           tabContent(
+#'             list = "myTabs",
+#'             tabPane(
+#'               h4("This is home."),
+#'               p("Pellentesque dapibus suscipit ligula.  Donec ",
+#'                 "posuere augue in quam.  Etiam vel tortor ",
+#'                 "sodales tellus ultricies commodo.  Suspendisse ",
+#'                 "potenti.  Aenean in sem ac leo mollis blandit."),
+#'               p("Donec neque quam, dignissim in, mollis nec, ",
+#'                 "sagittis eu, wisi.  Phasellus lacus.  Etiam ",
+#'                 "laoreet quam sed arcu.  Phasellus at dui in ligula",
+#'                 "mollis ultricies.  Integer placerat tristique nisl.")
+#'             ),
+#'             tabPane(
+#'               h4("All about."),
+#'               p("Pellentesque dapibus suscipit ligula. ",
+#'                 "Phasellus neque orci, porta a, aliquet quis, semper a, massa. ",
+#'                 "Nullam tristique diam non turpis. ",
+#'                 "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.")
+#'             ),
+#'             tabPane(
+#'               h4("Blog items."),
+#'               p("Nullam tempus.  Mauris ac felis vel velit ",
+#'                 "tristique imperdiet.  Donec at pede.  Etiam vel ",
+#'                 "neque nec dui dignissim bibendum.  Vivamus id ",
+#'                 "enim.  Phasellus neque orci, porta a, aliquet ",
+#'                 "quis, semper a, massa.  Phasellus purus.")
+#'             )
+#'           )
+#'         )
+#'       ) %>%
+#'         padding(3)
+#'     ),
+#'     server = function(input, output) {
+#'     }
+#'   )
+#' }
+#'
+tabContent <- function(list, ...) {
   tags$div(
     class = "tab-content",
+    `data-tablist` = list,
     ...
   )
 }
@@ -163,9 +238,10 @@ tabContent <- function(...) {
 #' @rdname tabContent
 #' @export
 #'
-tabPane <- function(id, ...) {
+tabPane <- function(...) {
   tags$div(
     class = "tab-pane fade",
+    role = "tab-panel",
     ...
   )
 }

@@ -48,7 +48,7 @@ $(function() {
 
   this.getId = function(el) {
     return el.id;
-  }
+  };
 
   this.getType = function(el) {
     return false;
@@ -56,6 +56,10 @@ $(function() {
 
   // may not be worth it to have this method already created
   this.getValue = function(el) {
+    if (!this.hasSelector("SELECTED")) {
+      return null;
+    }
+
     let values = $(el).find(`${ this.Selector.SELECTED }`)
         .map((i, e) => {
           let $e = $(e);
@@ -76,6 +80,10 @@ $(function() {
   };
 
   this.subscribe = function(el, callback) {
+    if (this.Events === undefined || !this.Events.length) {
+      return;
+    }
+
     if (this.isFormElement(el)) {
       $(el).closest(".dull-form-input[id]").on("submit", e => callback());
     } else {
@@ -92,6 +100,10 @@ $(function() {
   };
 
   this.updateChoices = function(el, map) {
+    if (!this.hasSelector("VALUE") || !this.hasSelector("LABEL")) {
+      return;
+    }
+
     if (this.Selector.VALUE === this.Selector.SELF) {
       let value = map[$(el).data("value")];
 
@@ -120,9 +132,13 @@ $(function() {
         $label.html(value);
       }
     });
-  }
+  };
 
   this.updateValues = function(el, map) {
+    if (!this.hasSelector("VALUE")) {
+      return;
+    }
+
     if (typeof map == "string" || Array.isArray(map)) {
       let $inputs = $(el).find(`${ this.Selector.VALUE }`);
       let value = typeof map == "string" ? [map] : map;
@@ -167,25 +183,33 @@ $(function() {
         $input.data("value", value);
       }
     });
-  }
+  };
 
   this.markValid = function(el, data) {
+    if (!this.hasSelector("VALIDATE")) {
+      return;
+    }
+
     let $input = $(el).find(this.Selector.VALIDATE);
     $input.removeClass("is-invalid").addClass("is-valid");
     let $feedback = $(el).find(".valid-feedback");
     if ($feedback.length) {
       $feedback.text(data.msg);
     }
-  }
+  };
 
   this.markInvalid = function(el, data) {
+    if (!this.hasSelector("VALIDATE")) {
+      return;
+    }
+
     let $input = $(el).find(this.Selector.VALIDATE);
     $input.removeClass("is-valid").addClass("is-invalid");
     let $feedback = $(el).find(".invalid-feedback");
-    if ($feedback) {
+    if ($feedback.length) {
       $feedback.text(data.msg);
     }
-  }
+  };
 
   this.receiveMessage = function(el, msg) {
     if (!msg.type) {
@@ -196,7 +220,7 @@ $(function() {
 
     if (action === "update") {
       if (!type || msg.data === undefined) {
-        throw "Invalid update message"
+        return;
       }
 
       if (type === "choices") {
@@ -211,7 +235,7 @@ $(function() {
     }
 
     if (action === "mark") {
-      if (this.Selector.VALIDATE === undefined) {
+      if (!type) {
         return;
       }
 
@@ -227,9 +251,13 @@ $(function() {
     }
   };
 
+  this.hasSelector = function(key) {
+    return this.Selector !== undefined && this.Selector[key] !== undefined;
+  };
+
   this.isFormElement = function(el) {
     return $(el).parents(".dull-form-input[id]").length > 0;
-  }
+  };
 }).call(Shiny.InputBinding.prototype);
 
 var addressInputBinding = new Shiny.InputBinding();
@@ -285,12 +313,6 @@ $.extend(alertInputBinding, {
   getValue: function(el) {
     return null;
   },
-  subscribe: function(el, callback) {
-
-  },
-  unsubscribe: function(el) {
-
-  },
   receiveMessage: function(el, msg) {
     if (msg.type === undefined) {
       return;
@@ -336,7 +358,7 @@ $.extend(alertInputBinding, {
               Shiny.onInputChange(item.action, null);
             }
 
-            item.el.remove()
+            item.el.remove();
           },
           data.duration
         );
@@ -877,6 +899,62 @@ $(document).ready(function() {
     $(this).toggleClass("table-active");
   });
 });
+
+let tabsInputBinding = new Shiny.InputBinding();
+
+$.extend(tabsInputBinding, {
+  Selector: {
+    SELF: ".dull-tabs-input[id]",
+    SELECTED: ".nav-item > .active:not(.disabled)"
+  },
+  Events: [
+    { type: "shown.bs.tab" }
+  ],
+  initialize: function(el) {
+    let id = el.id;
+    let $tabs = $(el).find(".nav-link");
+    let $panes = $(`.tab-content[data-tablist="${ id }"] > .tab-pane`);
+    let active = $tabs.index(".active");
+
+    if ($tabs.length === 0 || $panes.length === 0) {
+      throw "tabs input: missing tabs or panes";
+    }
+
+    if ($tabs.length != $panes.length) {
+      throw "tabs input: incorrect number of tabs for panes";
+    }
+
+    $panes.each((index, pane) => {
+      let $pane = $(pane);
+
+      $pane.attr({
+        "id": `${ id }-pane-${ index }`,
+        "aria-labelledby": `${ id }-tab-${ index }`
+      });
+
+      if (index == active) {
+        $pane.addClass("show active");
+      }
+    });
+
+    $tabs.each((index, tab) => {
+      let $tab = $(tab);
+
+      $tab.attr({
+        "id": `${ id }-tab-${ index }`,
+        "href": `#${ id }-pane-${ index }`,
+        "aria-controls": `${ id }-pane-${ index }`
+      });
+
+      /*$tab.on("click", (e) => {
+        e.preventDefault();
+        $tab.tab("show");
+      });*/
+    });
+  }
+});
+
+Shiny.inputBindings.register(tabsInputBinding, "dull.tabsInput");
 
 var textualInputBinding = new Shiny.InputBinding();
 

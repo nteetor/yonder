@@ -4,14 +4,16 @@
 \alias{tabList}
 \title{Tab list}
 \usage{
-tabList(labels, panes, values = labels, active = values[1], ...,
-  id = NULL)
+tabList(id, labels, values = labels, active = values[1], ...)
 }
 \arguments{
-\item{labels}{A character vector specifying the labels of the tabs.}
+\item{id}{A character string specifying the id of the tab list, this
+value must also be passed to \code{\link[=tabContent]{tabContent()}} as the \code{list} argument.
 
-\item{panes}{A character vector specifying the ids of the tab panes
-controlled by the tab list, see \code{id} in \link{tabPane}.}
+Tabs have a reactive value which is by default is the label of the open
+tab. For custom values see \code{values}.}
+
+\item{labels}{A character vector specifying the labels of the tabs.}
 
 \item{values}{A character vector specifying a reactive value for each tab,
 defaults to \code{labels}.}
@@ -21,39 +23,41 @@ defaults to \code{values[1]}.`}
 
 \item{...}{Additional named arguments passed as HTML attributes to the
 parent element.}
-
-\item{id}{A character string specifying a reactive id for the tab list,
-defaults to \code{NULL}, in which case a reactive value is not created. If \emph{not}
-\code{NULL} the tab lists's reactive value is the value of the active tab.}
 }
 \description{
-Create a tab list for controlling tab content.
+Create a set of tabs for controlling tab content. Tab lists are separated
+from tab content or tab panes for flexible placement, see the example below
+combining cards and tabs. Because of this separation it is important to
+remember a tab list does very little alone. Be sure to add corresponding
+\link[=tabPane]{tab panes}.
 }
 \examples{
+
+tabList(
+  labels = c("Home", "About", "Posts"),
+  values = c("home", "about", "blog")
+)
 
 if (interactive()) {
   shinyApp(
     ui = container(
       card(
         header = tabList(
+          id = "tabs",
           labels = c("Home", "Profile", "Contact"),
-          panes = c("homePane", "profPane", "contactPane"),
         ),
         tabContent(
+          list = "tabs",
           tabPane(
-            id = "homePane",
-            class = "show active",
             "Vestibulum id ligula porta felis euismod semper. Cras justo
              odio, dapibus ac facilisis in, egestas eget quam."
           ),
           tabPane(
-            id = "profPane",
             "Duis mollis, est non commodo luctus, nisi erat porttitor ligula,
              eget lacinia odio sem nec elit. Aenean eu leo quam. Pellentesque
              ornare sem lacinia quam venenatis vestibulum."
           ),
           tabPane(
-            id = "contactPane",
             "Donec ullamcorper nulla non metus auctor fringilla. Nullam id
              dolor id nibh ultricies vehicula ut id elit."
           )
@@ -63,11 +67,12 @@ if (interactive()) {
         width(50)
     ),
     server = function(input, output) {
-
+      observe({
+        showAlert(input$tabs, duration = 2, color = "grey")
+      })
     }
   )
 }
-
 }
 \seealso{
 Other tabs: \code{\link{tabContent}}
