@@ -12,12 +12,6 @@ $.extend(alertInputBinding, {
   getValue: function(el) {
     return null;
   },
-  subscribe: function(el, callback) {
-
-  },
-  unsubscribe: function(el) {
-
-  },
   receiveMessage: function(el, msg) {
     if (msg.type === undefined) {
       return;
@@ -63,7 +57,7 @@ $.extend(alertInputBinding, {
               Shiny.onInputChange(item.action, null);
             }
 
-            item.el.remove()
+            item.el.remove();
           },
           data.duration
         );
