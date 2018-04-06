@@ -46,6 +46,9 @@
     } else {
       for (const event of (this.Events || [])) {
         $(el).on(`${ event.type }.dull`, (e) => {
+          if (event.callback) {
+            event.callback(el);
+          }
           callback(event.debounce || false);
         });
       }
