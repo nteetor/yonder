@@ -20,14 +20,16 @@ options, defaults to \code{chocies}.}
 input, defaults to \code{NULL}. If \code{NULL} the first value is selected by
 default.}
 
-\item{multiple}{If \code{TRUE} multiple values may be selected, defaults to
-\code{FALSE}, in which case only one option may be selected.}
+\item{multiple}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} multiple values may be
+selected, otherwise a single value is selected at a time,
+defaults to \code{FALSE}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 }
 \description{
-A select input.
+Create a select input. Select elements often appear as a dropdown menu and
+may have one or more selected values, see \code{multiple}.
 }
 \examples{
 if (interactive()) {

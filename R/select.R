@@ -1,6 +1,7 @@
 #' Select input
 #'
-#' A select input.
+#' Create a select input. Select elements often appear as a dropdown menu and
+#' may have one or more selected values, see `multiple`.
 #'
 #' @param id A character string specifying the id of the select input.
 #'
@@ -14,8 +15,9 @@
 #'   input, defaults to `NULL`. If `NULL` the first value is selected by
 #'   default.
 #'
-#' @param multiple If `TRUE` multiple values may be selected, defaults to
-#'   `FALSE`, in which case only one option may be selected.
+#' @param multiple One of `TRUE` or `FALSE`, if `TRUE` multiple values may be
+#'   selected, otherwise a single value is selected at a time,
+#'   defaults to `FALSE`.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
@@ -87,7 +89,7 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
   selected <- match2(selected, values, default = TRUE)
 
   tags$div(
-    class = "dull-select-input dull-input",
+    class = "dull-select-input",
     id = id,
     tags$select(
       class = "custom-select",

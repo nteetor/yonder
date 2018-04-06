@@ -94,11 +94,7 @@ checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
   self <- ID("checkbox")
 
   tags$div(
-    class = collate(
-      "dull-checkbox-input",
-      "dull-input",
-      "form-group"
-    ),
+    class = "dull-checkbox-input",
     id = id,
     tags$div(
       class = collate(
