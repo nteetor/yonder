@@ -10,7 +10,7 @@
 #' submission. Unlike shiny's `submitButton`, `submitInput` will not freeze all
 #' reactive inputs on the page.
 #'
-#' @param id A character string specifying the id of the button input.
+#' @param id A character string specifying the id of the button or link input.
 #'
 #' @param label A character string specifying the label text on the button
 #'   input.
@@ -21,6 +21,9 @@
 #'
 #' @param disabled If `TRUE`, the input renders in a disabled state, defaults
 #'   to `FALSE`.
+#'
+#' @param text A character string specifying the text displayed as part of the
+#'   link input.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
@@ -37,6 +40,7 @@
 #' @family inputs
 #' @export
 #' @examples
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
@@ -89,6 +93,12 @@
 #' }
 #'
 buttonInput <- function(id, label, block = FALSE, ...) {
+  shiny::registerInputHandler(
+    type = "dull.button",
+    fun = function(x, session, name) as.numeric(x),
+    force = TRUE
+  )
+
   tags$button(
     class = collate(
       "dull-button-input",
@@ -98,7 +108,6 @@ buttonInput <- function(id, label, block = FALSE, ...) {
     ),
     type = "button",
     role = "button",
-    `data-clicks` = 0,
     label,
     id = id,
     ...
@@ -124,6 +133,38 @@ submitInput <- function(label = "Submit", block = FALSE, ...) {
   )
 }
 
+#' @rdname buttonInput
+#' @export
+#' @examples
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       "Curabitur ", linkInput("test", "vulputate"), " vestibulum lorem."
+#'     ),
+#'     server = function(input, output) {
+#'       observe({
+#'         cat(input$test, "\n")
+#'       })
+#'     }
+#'   )
+#' }
+#'
+linkInput <- function(id, text, ...) {
+  shiny::registerInputHandler(
+    type = "dull.link",
+    fun = function(x, session, name) as.numeric(x),
+    force = TRUE
+  )
+
+  tags$span(
+    class = "dull-link-input",
+    id = id,
+    tags$u(text),
+    ...
+  )
+}
+
 #' Button group inputs
 #'
 #' Groups of buttons with a persisting value.
@@ -138,6 +179,7 @@ submitInput <- function(label = "Submit", block = FALSE, ...) {
 #'
 #' @export
 #' @examples
+#'
 #' buttonGroupInput("group", c("Once", "Twice"), c(1, 2))
 #'
 #' if (interactive()) {

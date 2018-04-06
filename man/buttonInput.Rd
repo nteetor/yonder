@@ -3,14 +3,17 @@
 \name{buttonInput}
 \alias{buttonInput}
 \alias{submitInput}
+\alias{linkInput}
 \title{Button and submit inputs}
 \usage{
 buttonInput(id, label, block = FALSE, ...)
 
 submitInput(label = "Submit", block = FALSE, ...)
+
+linkInput(id, text, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the button input.}
+\item{id}{A character string specifying the id of the button or link input.}
 
 \item{label}{A character string specifying the label text on the button
 input.}
@@ -21,6 +24,9 @@ parent element.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
+
+\item{text}{A character string specifying the text displayed as part of the
+link input.}
 
 \item{disabled}{If \code{TRUE}, the input renders in a disabled state, defaults
 to \code{FALSE}.}
@@ -38,6 +44,7 @@ reactive inputs on the page.
 A submit input is automatically included as part of a \code{\link{formInput}}.
 }
 \examples{
+
 if (interactive()) {
   shinyApp(
     ui = container(
@@ -84,6 +91,20 @@ if (interactive()) {
     server = function(input, output) {
       output$badge <- renderBadge({
         input$button
+      })
+    }
+  )
+}
+
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      "Curabitur ", linkInput("test", "vulputate"), " vestibulum lorem."
+    ),
+    server = function(input, output) {
+      observe({
+        cat(input$test, "\\n")
       })
     }
   )

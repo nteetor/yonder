@@ -19,6 +19,7 @@ defaults to \code{labels}.}
 Groups of buttons with a persisting value.
 }
 \examples{
+
 buttonGroupInput("group", c("Once", "Twice"), c(1, 2))
 
 if (interactive()) {

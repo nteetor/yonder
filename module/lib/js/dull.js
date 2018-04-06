@@ -89,6 +89,9 @@ $(function() {
     } else {
       for (const event of (this.Events || [])) {
         $(el).on(`${ event.type }.dull`, (e) => {
+          if (event.callback) {
+            event.callback(el);
+          }
           callback(event.debounce || false);
         });
       }
@@ -451,31 +454,17 @@ $.extend(buttonInputBinding, {
     VALUE: ".dull-button-input",
     LABEL: ".dull-button-input"
   },
+  Events: [
+    { type: "click", callback: (el) => $(el).data().value++ }
+  ],
+  initialize: function(el) {
+    $(el).data("value", 0);
+  },
+  getType: function(el) {
+    return "dull.button";
+  },
   getValue: function(el) {
-    var $el = $(el);
-
-    if ($el.data("clicks") === 0) {
-      return null;
-    }
-
-    return parseInt($el.data("clicks"), 10);
-  },
-  getState: function(el, data) {
-    return { value: this.getValue(el) };
-  },
-  subscribe: function(el, callback) {
-    $(el).on("click.buttonInputBinding", function(e) {
-      var $el = $(el);
-      $el.data("clicks", parseInt($el.data("clicks"), 10) + 1);
-
-      callback();
-    });
-    $(el).on("change.buttonInputBinding", function(e) {
-      callback();
-    });
-  },
-  unsubscribe: function(el) {
-    $(el).off(".buttonInputBinding");
+    return $(el).data("value");
   }
 });
 
@@ -647,6 +636,28 @@ $.extend(groupInputBinding, {
 });
 
 Shiny.inputBindings.register(groupInputBinding, "dull.groupInput");
+
+let linkInputBindng = new Shiny.InputBinding();
+
+$.extend(linkInputBindng, {
+  Selector: {
+    SELF: ".dull-link-input"
+  },
+  Events: [
+    { type: "click", callback: (el) => $(el).data().value++ }
+  ],
+  initialize: function(el) {
+    $(el).data("value", 0);
+  },
+  getType: function(el) {
+    return "dull.link";
+  },
+  getValue: function(el) {
+    return $(el).data("value");
+  }
+});
+
+Shiny.inputBindings.register(linkInputBindng, "dull.linkInput");
 
 var loginInputBinding = new Shiny.InputBinding();
 
