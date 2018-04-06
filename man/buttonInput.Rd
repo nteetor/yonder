@@ -5,9 +5,9 @@
 \alias{submitInput}
 \title{Button and submit inputs}
 \usage{
-buttonInput(id, label, block = FALSE, disabled = FALSE, ...)
+buttonInput(id, label, block = FALSE, ...)
 
-submitInput(label = "Submit", block = FALSE, disabled = FALSE, ...)
+submitInput(label = "Submit", block = FALSE, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the button input.}
@@ -19,11 +19,11 @@ input.}
 to \code{FALSE}. A block-level element will occupy the entire width of its
 parent element.}
 
-\item{disabled}{If \code{TRUE}, the input renders in a disabled state, defaults
-to \code{FALSE}.}
-
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
+
+\item{disabled}{If \code{TRUE}, the input renders in a disabled state, defaults
+to \code{FALSE}.}
 }
 \description{
 Button inputs are useful as triggers for reactive or observer expressions.

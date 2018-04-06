@@ -88,11 +88,10 @@
 #'   )
 #' }
 #'
-buttonInput <- function(id, label, block = FALSE, disabled = FALSE, ...) {
+buttonInput <- function(id, label, block = FALSE, ...) {
   tags$button(
     class = collate(
       "dull-button-input",
-      "dull-input",
       "btn",
       if (block) "btn-block",
       "btn-grey"
@@ -102,15 +101,13 @@ buttonInput <- function(id, label, block = FALSE, disabled = FALSE, ...) {
     `data-clicks` = 0,
     label,
     id = id,
-    ...,
-    disabled = if (disabled) NA
+    ...
   )
 }
 
 #' @rdname buttonInput
 #' @export
-submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
-                        ...) {
+submitInput <- function(label = "Submit", block = FALSE, ...) {
   tags$button(
     class = collate(
       "dull-submit",
@@ -123,8 +120,7 @@ submitInput <- function(label = "Submit", block = FALSE, disabled = FALSE,
     `data-type` = "submit",
     role = "button",
     label,
-    ...,
-    disabled = if (disabled) NA
+    ...
   )
 }
 
