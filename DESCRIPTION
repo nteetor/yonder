@@ -29,7 +29,7 @@ Collate:
     tags.R
     update.R
     icons.R
-    inputs.R
+    textual.R
     datetime.R
     range.R
     select.R
@@ -45,6 +45,7 @@ Collate:
     collapse.R
     container.R
     dropdown.R
+    group.R
     flex.R
     forms.R
     list-group.R
