@@ -5,16 +5,19 @@ $.extend(linkInputBindng, {
     SELF: ".dull-link-input"
   },
   Events: [
-    { type: "click", callback: (el) => $(el).data().value++ }
+    { type: "click", callback: (el) => el.dataset.value++ }
   ],
   initialize: function(el) {
-    $(el).data("value", 0);
+    el.dataset.value = 0;
   },
   getType: function(el) {
     return "dull.link";
   },
   getValue: function(el) {
-    return $(el).data("value");
+    return {
+      value: el.dataset.value,
+      id: el.id
+    };
   }
 });
 

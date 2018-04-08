@@ -140,11 +140,15 @@ submitInput <- function(label = "Submit", block = FALSE, ...) {
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       "Curabitur ", linkInput("test", "vulputate"), " vestibulum lorem."
+#'       "Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem."
 #'     ),
 #'     server = function(input, output) {
-#'       observe({
-#'         cat(input$test, "\n")
+#'       observeEvent(input$inline, {
+#'         showPopover(
+#'           input$inline,
+#'           content = "This means beef?",
+#'           placement = "bottom"
+#'         )
 #'       })
 #'     }
 #'   )
@@ -153,7 +157,15 @@ submitInput <- function(label = "Submit", block = FALSE, ...) {
 linkInput <- function(id, text, ...) {
   shiny::registerInputHandler(
     type = "dull.link",
-    fun = function(x, session, name) as.numeric(x),
+    fun = function(x, session, name) {
+      if (x$value == 0) {
+        return(NULL)
+      }
+
+      id <- x$id
+      attr(id, "clicks") <- x$value
+      id
+    },
     force = TRUE
   )
 

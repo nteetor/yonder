@@ -100,11 +100,15 @@ if (interactive()) {
 if (interactive()) {
   shinyApp(
     ui = container(
-      "Curabitur ", linkInput("test", "vulputate"), " vestibulum lorem."
+      "Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem."
     ),
     server = function(input, output) {
-      observe({
-        cat(input$test, "\\n")
+      observeEvent(input$inline, {
+        showPopover(
+          input$inline,
+          content = "This means beef?",
+          placement = "bottom"
+        )
       })
     }
   )
