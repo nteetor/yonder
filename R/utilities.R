@@ -717,7 +717,7 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
       }
 
 
-      if (!re(arg, "[0-5]|auto", len0 = FALSE)) {
+      if (!all(re(arg, "[0-5]|auto", len0 = FALSE))) {
         stop(
           "invalid `margins` argument, `", nm, "` value(s) must be ",
           '0, 1, 2, 3, 4, 5, or "auto"',
