@@ -4,84 +4,77 @@ Build Bootstrap 4 applications with the familiar Shiny toolkit.
 
 ## Introduction
 
-dull is a set of UI and server functions . dull also features Font Awesome 5,
-aftertheflood's Spark font, flatpickr calendar widgets, and refreshed IonRange
-sliders.
+dull is a set of UI and server functions built on top of Bootstrap 4. On the UI
+side dull features Font Awesome 5, aftertheflood's Spark font, flatpickr
+calendar widgets, and refreshed IonRange sliders. On the server side dull 
+includes tools for showing alerts, modals, [popovers](http://getbootstrap.com/docs/4.0/components/popovers/), validating
+and freezing input values, and more!
 
-## Check it out!
-
-_(don't worry about `background()` or `padding()` for now)_
+## A first example
 
 ```R
 library(dull)
 
-sets <- as.data.frame(
-  data(package = .packages(all.available = TRUE))$results,
-  stringsAsFactors = FALSE
-)
-
-sets <- sets[!grepl(" ", sets$Item), ]
-sets <- sets[with(sets, order(Item)), ]
-
 shinyApp(
   ui = container(
+    h2("Iris k-means clustering"),
     row(
       col(
-        default = 2,
-        h5("Data set"),
-        selectInput(
-          id = "dataset",
-          choices = sets$Item,
-          size = 16
-        )
-      ) %>%
-        background("grey", +1) %>%
-        border("grey") %>%
-        padding(3),
-      col(
-        default = "auto",
-        tableThruput("data", compact = TRUE) %>%
-          height(75)
-      ) %>%
-        height(100),
-      col(
-        h5("Options"),
-        radioInput(
-          id = "format",
-          choices = c(
-            "csv",
-            "tsv"
+        default = 4,
+        card(
+          formGroup(
+            "X variable",
+            selectInput(
+              id = "xcolumn",
+              choices = names(iris)
+            )
+          ),
+          formGroup(
+            "Y variable",
+            selectInput(
+              id = "ycolumn",
+              choices = names(iris),
+              selected = names(iris)[2]
+            )
+          ),
+          formGroup(
+            "Cluster count",
+            rangeInput(
+              id = "clusters",
+              min = 1,
+              max = 9,
+              default = 2
+            ) %>% 
+              background("blue")
           )
-        ),
-        verbatimTextOutput("result")
+        ) %>%
+          background("grey", +2)
+      ),
+      col(
+        plotOutput("plot1")
       )
-    ) %>%
-      height(100)
-  ) %>%
-    height(100),
+    )
+  ),
   server = function(input, output) {
-    output$data <- renderTable({
-      local({
-        pkg <- sets[sets$Item == input$dataset, "Package"]
-        expr <- sprintf("as.data.frame(%s::%s)", pkg, input$dataset)
-        eval(parse(text = expr))
-      })
+    selected_data <- reactive({
+      iris[ , c(input$xcolumn, input$ycolumn)]
     })
-
-    output$result <- renderText({
-      req(input$data)
-      selected <- input$data
-      collapse <- if (input$format == "csv") ", " else "\t"
-
-      rows <- vapply(
-        seq_len(NROW(selected)),
-        function(i) paste0(selected[i, ], collapse = collapse),
-        character(1)
+  
+    clusters <- reactive({
+      kmeans(selected_data(), as.numeric(input$clusters))
+    })
+  
+    output$plot1 <- renderPlot({
+      palette(
+        c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
+          "#FF7F00", "#FFFF33", "#A65628", "#F781BF", "#999999")
       )
-
-      rows <- c(paste0(colnames(selected), collapse = collapse), rows)
-
-      paste0(rows, collapse = "\n")
+  
+      par(mar = c(5.1, 4.1, 0, 1))
+      
+      plot(selected_data(), col = clusters()$cluster, pch = 20, cex = 3)
+      
+      points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
     })
   }
 )
