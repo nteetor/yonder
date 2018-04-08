@@ -98,6 +98,5 @@ devtools::install_github("nteetor/dull")
   R side of shiny
 * https://github.com/andrewsali/shinycssloaders, improved CSS loading animations
   for shiny
-* https://github.com/cran/shinyFeedback, give users validation feedback (CRAN
-  mirror only)
+* https://github.com/merlinoa/shinyFeedback, give users validation feedback
 * https://github.com/ericrayanderson/shinymaterial, build shiny apps on top of material design
