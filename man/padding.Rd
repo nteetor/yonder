@@ -18,10 +18,9 @@ margins(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 padding to apply. If the margins and padding remain the same across all
 viewports then only \code{default} needs to be specified.
 
-For \strong{margins}, specifying \code{"auto"} allows you to center a block-level
-element by automatically setting the element's left and right margins. When
-specifying a margin for each side both the left and right values must be
-\code{"auto"}, e.g. \code{c(1, "auto", 3, "auto")}.}
+For \strong{margins}, specifying \code{"auto"} leaves the spacing up to the browser.
+For example, you could horizontally center an element for all viewports
+by specifying \code{default = c(1, "auto", 1, "auto")}.}
 
 \item{sm}{Like \code{default}, but the margins or padding are applied once the
 viewport is 576 pixels wide, think phone in landscape mode.}
@@ -36,18 +35,45 @@ viewport is 992 pixels wide, think desktop.}
 viewport is 1200 pixels wide, think large desktop.}
 }
 \description{
-These functions are used in conjunction with \link{tagReduce} to change the
-padding or margins of a tag. Each argument value may be a single value or a
-vector of four values. Margins and padding are specified as 0, 1, 2, 3, 4, or
-5. 0 removes any margins or padding. 5 is equivalent to \code{3rem} (\code{rem} is a
-relative unit of measurement in css).
+These utilities change the padding or margins of a tag. Each argument value
+may be a single value or a vector of four values. Margins and padding are
+specified as 0, 1, 2, 3, 4, or 5, where 0 removes all space and 5 adds the most
+space.
 
-Specifying a single value changes the margin or padding of all four tag
-sides. To apply different margins or padding to each side pass a vector of
-four values. In this case, the first value is for the top side, second for
-the left side, third for the bottom side, and the fourth value is for the
-left side. As a wise help page once said, think "\strong{tr}ou\strong{bl}e" to help
-remember the order.
+Specifying a single value changes the margins or padding along all four sides
+of \code{tag}. To apply different margins or padding to each side pass a vector of
+four values. In this case, the first value adjusts the top, second the right
+side, third the bottom, and the fourth value adjusts the left side. As a wise
+help page once said, think "\strong{tr}ou\strong{bl}e" to help remember the order.
+}
+\details{
+Padding refers to the space between an element and its child element(s).
+
+Margins refer to the space outside and around an element.
+}
+\examples{
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      lapply(1:5, function(p) {
+        div("Nunc aliquet, augue nec adipiscing interdum.") \%>\%
+          width(25) \%>\%
+          margins(1) \%>\%
+          padding(p) \%>\%
+          border("blue") \%>\%
+          rounded() \%>\%
+          alignment("center")
+      })
+    ) \%>\%
+      display("flex") \%>\%
+      wrap("wrap"),
+    server = function(input, output) {
+
+    }
+  )
+}
+
 }
 \seealso{
 Other utilities: \code{\link{affix}},

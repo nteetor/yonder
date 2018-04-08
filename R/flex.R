@@ -7,6 +7,21 @@
 #'
 #' @param tag A tag element.
 #'
+#' @param default One of `"row"` or `"column"` specifying the default direction
+#'   of an element's flex items.
+#'
+#' @param sm Like `default`, but the direction is applied once the viewport is
+#'   576 pixels wide, think phone in landscape mode.
+#'
+#' @param md Like `default`, but the direction is applied once the viewport is
+#'   768 pixels wide, think tablets.
+#'
+#' @param lg Like `default`, but the direction is applied once the viewport is
+#'   992 pixels wide, think desktop.
+#'
+#' @param xl Like `default`, but the direction is applied once the viewport is
+#'   1200 pixels wide, think large desktop.
+#'
 #' @family flex
 #' @export
 #' @examples

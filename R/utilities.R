@@ -15,7 +15,6 @@
 #'   `"bold"` is equivalent to `weight = "bold"`.
 #'
 #' @family utilities
-#' @rdname text
 #' @export
 #' @examples
 #' tags$span("This and other news") %>%
@@ -576,18 +575,16 @@ display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #'
 #' @description
 #'
-#' These functions are used in conjunction with [tagReduce] to change the
-#' padding or margins of a tag. Each argument value may be a single value or a
-#' vector of four values. Margins and padding are specified as 0, 1, 2, 3, 4, or
-#' 5. 0 removes any margins or padding. 5 is equivalent to `3rem` (`rem` is a
-#' relative unit of measurement in css).
+#'These utilities change the padding or margins of a tag. Each argument value
+#' may be a single value or a vector of four values. Margins and padding are
+#' specified as 0, 1, 2, 3, 4, or 5, where 0 removes all space and 5 adds the most
+#' space.
 #'
-#' Specifying a single value changes the margin or padding of all four tag
-#' sides. To apply different margins or padding to each side pass a vector of
-#' four values. In this case, the first value is for the top side, second for
-#' the left side, third for the bottom side, and the fourth value is for the
-#' left side. As a wise help page once said, think "**tr**ou**bl**e" to help
-#' remember the order.
+#' Specifying a single value changes the margins or padding along all four sides
+#' of `tag`. To apply different margins or padding to each side pass a vector of
+#' four values. In this case, the first value adjusts the top, second the right
+#' side, third the bottom, and the fourth value adjusts the left side. As a wise
+#' help page once said, think "**tr**ou**bl**e" to help remember the order.
 #'
 #' @param tag A tag element.
 #'
@@ -595,10 +592,9 @@ display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #'   padding to apply. If the margins and padding remain the same across all
 #'   viewports then only `default` needs to be specified.
 #'
-#'   For **margins**, specifying `"auto"` allows you to center a block-level
-#'   element by automatically setting the element's left and right margins. When
-#'   specifying a margin for each side both the left and right values must be
-#'   `"auto"`, e.g. `c(1, "auto", 3, "auto")`.
+#'   For **margins**, specifying `"auto"` leaves the spacing up to the browser.
+#'   For example, you could horizontally center an element for all viewports
+#'   by specifying `default = c(1, "auto", 1, "auto")`.
 #'
 #' @param sm Like `default`, but the margins or padding are applied once the
 #'   viewport is 576 pixels wide, think phone in landscape mode.
@@ -612,8 +608,37 @@ display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' @param xl Like `default`, but the margins or padding are applied once the
 #'   viewport is 1200 pixels wide, think large desktop.
 #'
+#' @details
+#'
+#' Padding refers to the space between an element and its child element(s).
+#'
+#' Margins refer to the space outside and around an element.
+#'
 #' @family utilities
 #' @export
+#' @examples
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       lapply(1:5, function(p) {
+#'         div("Nunc aliquet, augue nec adipiscing interdum.") %>%
+#'           width(25) %>%
+#'           margins(1) %>%
+#'           padding(p) %>%
+#'           border("blue") %>%
+#'           rounded() %>%
+#'           alignment("center")
+#'       })
+#'     ) %>%
+#'       display("flex") %>%
+#'       wrap("wrap"),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
 padding <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
                     xl = NULL) {
   args <- dropNulls(list(default = default, sm = sm , md = md, lg = lg, xl = xl))
@@ -691,17 +716,8 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
         )
       }
 
-      if ("auto" %in% arg && length(arg) > 1) {
-        if (arg[2] != "auto" && arg[4] != "auto") {
-          stop(
-            "invalid `margins` argument, when specifying individual margins ",
-            'using "auto" both right and left must be "auto"',
-            call. = FALSE
-          )
-        }
-      }
 
-      if (!all(arg %in% c(0:5, "auto"))) {
+      if (!re(arg, "[0-5]|auto", len0 = FALSE)) {
         stop(
           "invalid `margins` argument, `", nm, "` value(s) must be ",
           '0, 1, 2, 3, 4, 5, or "auto"',
@@ -712,23 +728,10 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
       breakpoint <- if (nm == "default") "-" else paste0("-", nm, "-")
 
       if (length(arg) == 4) {
-        if ("auto" %in% arg) {
-          return(
-            paste(
-              paste0(prefix, sides[c(1, 3)], breakpoint, arg[c(1, 3)], collapse = " "),
-              paste0(prefix, "x", breakpoint, "auto")
-            )
-          )
-        }
-
         return(paste0(prefix, sides, breakpoint, arg, collapse = " "))
       }
 
-      if (arg == "auto") {
-        paste0(prefix, "x", breakpoint, "auto")
-      } else {
-        paste0(prefix, breakpoint, arg)
-      }
+      paste0(prefix, breakpoint, arg)
     },
     character(1)
   )
