@@ -831,9 +831,12 @@ $.extend(rangeInputBinding, {
         .join(" ");
 
     if (bgclasses) {
-      $el
-        .find(".irs-slider,.irs-bar,.irs-bar-edge,.irs-to,.irs-from,.irs-single,.irs-slider")
+      $el.find(".irs-slider,.irs-bar,.irs-bar-edge,.irs-to,.irs-from,.irs-single,.irs-slider")
         .addClass(bgclasses);
+    }
+
+    if ($input.data("no-fill")) {
+      $el.find(".irs-bar,.irs-bar-edge").addClass("no-fill");
     }
   },
   getId: function(el) {

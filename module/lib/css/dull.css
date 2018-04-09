@@ -5646,6 +5646,9 @@ a.text-grey-900:hover, a.text-grey-900:focus {
   .dull-range-input .irs-slider {
     background-image: none;
     color: #212121; }
+  .dull-range-input .irs-bar.no-fill,
+  .dull-range-input .irs-bar-edge.no-fill {
+    background-color: transparent !important; }
   .dull-range-input .irs-slider {
     cursor: ew-resize; }
     .dull-range-input .irs-slider:hover, .dull-range-input .irs-slider:focus {

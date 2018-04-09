@@ -7,7 +7,7 @@
 \title{A range input}
 \usage{
 rangeInput(id, min = 0, max = 100, default = min, step = 1,
-  ticks = TRUE, labels = 4, snap = FALSE, prefix = NULL,
+  ticks = TRUE, fill = TRUE, labels = 4, snap = FALSE, prefix = NULL,
   suffix = NULL)
 
 intervalInput(id, min = 0, max = 100, default = c(min, max), step = 1,
@@ -15,7 +15,7 @@ intervalInput(id, min = 0, max = 100, default = c(min, max), step = 1,
   prefix = NULL, suffix = NULL)
 
 sliderInput(id, choices, values = choices, selected = NULL, ticks = TRUE,
-  prefix = NULL, suffix = NULL)
+  fill = FALSE, prefix = NULL, suffix = NULL)
 }
 \arguments{
 \item{id}{A character string specifying the id of the range input or \code{NULL}.}
@@ -41,6 +41,13 @@ defaults to \code{1}.}
 the range input, defaults to \code{FALSE}. If \code{TRUE} tick marks are added,
 otherwise if \code{FALSE} tick marks are not added.}
 
+\item{fill}{One of \code{TRUE} or \code{FALSE} specifying whether the filled portion of
+a range or slider input is shown. If \code{FALSE} the filled porition is hidden.
+
+For \strong{rangeInput} the default is \code{TRUE}.
+
+For \strong{sliderInput} the default is \code{FALSE}.}
+
 \item{labels}{A number specifying how many ticks are labeled, defaults to
 \code{4}. If \code{snap} is \code{TRUE}, this argument is ignored and tick labels are
 based on \code{step}.}
@@ -51,10 +58,10 @@ marks are adjusted to align with a multiple of \code{step}. If \code{FALSE} the 
 input tick marks are calculeted using \code{labels}.}
 
 \item{prefix}{A character string specifying a prefix for the range input
-slider value. Defaults to \code{NULL}, in which case a prefix is not prepended.}
+slider value, defaults to \code{NULL}, in which case a prefix is not prepended.}
 
 \item{suffix}{A character string specifying a suffix for the range input
-slider value. Defaults to \code{NULL}, in which case a prefix is not appended.}
+slider value, defaults to \code{NULL}, in which case a prefix is not appended.}
 
 \item{draggable}{One of \code{TRUE} or \code{FALSE} specifying if the user can drag the
 interval between an interval input's two sliders defaults to \code{FALSE}. If
@@ -98,10 +105,12 @@ if (interactive()) {
   )
 }
 
+
 if (interactive()) {
   shinyApp(
     ui = container(
-      intervalInput("gray"),
+      intervalInput("gray") \%>\%
+        margins(c(0, 0, 4, 0)),
       intervalInput("green", default = c(25, 75), draggable = TRUE)
     ),
     server = function(input, output) {
@@ -111,6 +120,7 @@ if (interactive()) {
     }
   )
 }
+
 
 if (interactive()) {
   shinyApp(

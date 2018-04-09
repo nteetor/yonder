@@ -40,6 +40,13 @@
 #'   the range input, defaults to `FALSE`. If `TRUE` tick marks are added,
 #'   otherwise if `FALSE` tick marks are not added.
 #'
+#' @param fill One of `TRUE` or `FALSE` specifying whether the filled portion of
+#'   a range or slider input is shown. If `FALSE` the filled porition is hidden.
+#'
+#'   For **rangeInput** the default is `TRUE`.
+#'
+#'   For **sliderInput** the default is `FALSE`.
+#'
 #' @param labels A number specifying how many ticks are labeled, defaults to
 #'   `4`. If `snap` is `TRUE`, this argument is ignored and tick labels are
 #'   based on `step`.
@@ -50,10 +57,10 @@
 #'   input tick marks are calculeted using `labels`.
 #'
 #' @param prefix A character string specifying a prefix for the range input
-#'   slider value. Defaults to `NULL`, in which case a prefix is not prepended.
+#'   slider value, defaults to `NULL`, in which case a prefix is not prepended.
 #'
 #' @param suffix A character string specifying a suffix for the range input
-#'   slider value. Defaults to `NULL`, in which case a prefix is not appended.
+#'   slider value, defaults to `NULL`, in which case a prefix is not appended.
 #'
 #' @export
 #' @examples
@@ -81,8 +88,8 @@
 #' }
 #'
 rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
-                       ticks = TRUE, labels = 4, snap = FALSE, prefix = NULL,
-                       suffix = NULL) {
+                       ticks = TRUE, fill = TRUE, labels = 4, snap = FALSE,
+                       prefix = NULL, suffix = NULL) {
   tags$div(
     class = "dull-range-input bg-grey",
     id = id,
@@ -99,7 +106,8 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
       `data-postfix` = suffix,
       `data-grid` = ticks,
       `data-grid-num` = labels,
-      `data-grid-snap` = if (isTRUE(snap)) snap
+      `data-grid-snap` = if (isTRUE(snap)) snap,
+      `data-no-fill` = if (!fill) "true"
     ),
     includes()
   )
@@ -108,10 +116,12 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
 #' @rdname rangeInput
 #' @export
 #' @examples
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       intervalInput("gray"),
+#'       intervalInput("gray") %>%
+#'         margins(c(0, 0, 4, 0)),
 #'       intervalInput("green", default = c(25, 75), draggable = TRUE)
 #'     ),
 #'     server = function(input, output) {
@@ -152,6 +162,7 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
 #' @rdname rangeInput
 #' @export
 #' @examples
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
@@ -171,7 +182,8 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
 #' }
 #'
 sliderInput <- function(id, choices, values = choices, selected = NULL,
-                        ticks = TRUE, prefix = NULL, suffix = NULL) {
+                        ticks = TRUE, fill = FALSE, prefix = NULL,
+                        suffix = NULL) {
   values <- vapply(values, as.character, character(1))
 
   # need to replace commas as ion rangeslider splits the string of values on the
@@ -193,7 +205,8 @@ sliderInput <- function(id, choices, values = choices, selected = NULL,
       `data-prefix` = prefix,
       `data-postfix` = suffix,
       `data-grid` = ticks,
-      `data-hide-min-max` = TRUE
+      `data-hide-min-max` = TRUE,
+      `data-no-fill` = if (!fill) "true"
     ),
     includes()
   )

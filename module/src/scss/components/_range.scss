@@ -50,6 +50,13 @@ $radius: 0.25rem;
     color: color-yiq($gray-400);
   }
 
+  .irs-bar,
+  .irs-bar-edge {
+    &.no-fill {
+      background-color: transparent !important;
+    }
+  }
+
   .irs-slider {
     cursor: ew-resize;
 
