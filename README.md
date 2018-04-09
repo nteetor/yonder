@@ -43,7 +43,9 @@ shinyApp(
               id = "clusters",
               min = 1,
               max = 9,
-              default = 2
+              default = 2,
+              labels = 8,
+              fill = FALSE
             ) %>% 
               background("blue")
           )
@@ -51,6 +53,7 @@ shinyApp(
           background("grey", +2)
       ),
       col(
+        default = 8,
         plotOutput("plot1")
       )
     )
