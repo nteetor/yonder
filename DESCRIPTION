@@ -36,6 +36,7 @@ Collate:
     utilities.R
     accordion.R
     alerts.R
+    popover.R
     badge.R
     bars.R
     button.R
