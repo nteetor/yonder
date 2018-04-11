@@ -626,7 +626,7 @@ $.extend(fileInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(fileInputBinding, "dull.fileInput");
+//Shiny.inputBindings.register(fileInputBinding, "dull.fileInput");
 
 var formInputBinding = new Shiny.InputBinding();
 
