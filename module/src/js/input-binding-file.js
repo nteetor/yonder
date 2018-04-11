@@ -47,8 +47,8 @@ $.extend(fileInputBinding, {
         let job = res.jobId;
         let uri = res.uploadUrl;
 
-        for (let f of files) {
-          this.sendFile(uri, job, f, el);
+        for (var i = 0; i < files.length; i++) {
+          this.sendFile(uri, job, files[i], el);
         }
       },
       (err) => {

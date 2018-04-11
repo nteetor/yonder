@@ -47,6 +47,7 @@ Collate:
     container.R
     dropdown.R
     group.R
+    file.R
     flex.R
     forms.R
     list-group.R

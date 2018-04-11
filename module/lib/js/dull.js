@@ -654,8 +654,8 @@ $.extend(fileInputBinding, {
         let job = res.jobId;
         let uri = res.uploadUrl;
 
-        for (let f of files) {
-          this.sendFile(uri, job, f, el);
+        for (var i = 0; i < files.length; i++) {
+          this.sendFile(uri, job, files[i], el);
         }
       },
       (err) => {
@@ -694,7 +694,11 @@ $.extend(fileInputBinding, {
       e.stopPropagation();
       e.preventDefault();
 
-      this.doUpload(el, e.originalEvent.dataTransfer.files);
+      if (input.hasAttribute("multiple")) {
+        this.doUpload(el, e.originalEvent.dataTransfer.files);
+      } else {
+        this.doUpload(el, e.originalEvent.dataTransfer.files[0]);
+      }
     });
   },
   unsubscribe: function(el) {
