@@ -30,14 +30,28 @@ $(function() {
   });
 
   Shiny.addCustomMessageHandler("dull:download", function(msg) {
-    var uri = "/session/" + msg.token + "/download/" + msg.name;
+    if (!(msg.filename && msg.token && msg.key)) {
+      throw "invalid download event";
+    }
 
-    $.get(uri, function() {
-      window.location = uri;
-    })
-    .fail(function() {
-      alert("An error occurred during download.");
-    });
+    const uri = "/session/" + msg.token + "/download/" + msg.key;
+
+    let agent = window.navigator.userAgent;
+    let ie = ua.indexOf("MSIE ");
+
+    if (ie > 0) {
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", uri);
+      xhr.responseType = "blob";
+      xhr.onload = () => saveAs(xhr.response, msg.filename);
+      xhr.send();
+    } else {
+      fetch(uri)
+        .then(res => res.blob())
+        .then(blob => {
+          saveAs(blob, msg.filename);
+        });
+    }
   });
 });
 
@@ -591,6 +605,29 @@ $.extend(dropdownInputBinding, {
 
 Shiny.inputBindings.register(dropdownInputBinding, "dull.dropdownInput");
 
+let fileInputBinding = new Shiny.InputBinding();
+
+$.extend(fileInputBinding, {
+  Selector: {
+    SELF: ".dull-file-input"
+  },
+  Events: [
+    { type: "change", callback: this.doUpload }
+  ],
+  doUpload: function(el) {
+    let reader = new FileReader();
+
+    reader.onload = (e) => {
+      // the meat of this thing
+
+    }
+
+    reader.readAsBinaryString(file);
+  }
+});
+
+Shiny.inputBindings.register(fileInputBinding, "dull.fileInput");
+
 var formInputBinding = new Shiny.InputBinding();
 
 $.extend(formInputBinding, {
@@ -847,10 +884,7 @@ $.extend(rangeInputBinding, {
     var data = $input.data("ionRangeSlider");
 
     if ($input.data("type") == "double") {
-      return {
-        from: data.result.from,
-        to: data.result.to
-      };
+      return [data.result.from, data.result.to];
     } else if ($input.data("type") == "single") {
       if (data.result.from_value !== null) {
         return data.result.from_value.replace("&#44;", ",");

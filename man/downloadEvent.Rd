@@ -29,6 +29,7 @@ a custom reactive event to trigger a download. Thus, a single handler may be
 used for a complex reactive input or widget.
 }
 \examples{
+
 if (interactive()) {
   shinyApp(
     ui = container(

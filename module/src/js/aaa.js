@@ -30,13 +30,27 @@ $(function() {
   });
 
   Shiny.addCustomMessageHandler("dull:download", function(msg) {
-    var uri = "/session/" + msg.token + "/download/" + msg.name;
+    if (!(msg.filename && msg.token && msg.key)) {
+      throw "invalid download event";
+    }
 
-    $.get(uri, function() {
-      window.location = uri;
-    })
-    .fail(function() {
-      alert("An error occurred during download.");
-    });
+    const uri = "/session/" + msg.token + "/download/" + msg.key;
+
+    let agent = window.navigator.userAgent;
+    let ie = ua.indexOf("MSIE ");
+
+    if (ie > 0) {
+      let xhr = new XMLHttpRequest();
+      xhr.open("GET", uri);
+      xhr.responseType = "blob";
+      xhr.onload = () => saveAs(xhr.response, msg.filename);
+      xhr.send();
+    } else {
+      fetch(uri)
+        .then(res => res.blob())
+        .then(blob => {
+          saveAs(blob, msg.filename);
+        });
+    }
   });
 });

@@ -22,6 +22,7 @@
 #'
 #' @export
 #' @examples
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
@@ -87,7 +88,8 @@ downloadEvent <- function(event, filename, handler,
 
     domain$sendCustomMessage("dull:download", list(
       token = domain$token,
-      name = key
+      key = key,
+      filename = shiny::isolate(filenameFunc())
     ))
 
   }, label = label, suspended = FALSE, priority = priority, domain = domain,
