@@ -35,10 +35,7 @@ $.extend(rangeInputBinding, {
     var data = $input.data("ionRangeSlider");
 
     if ($input.data("type") == "double") {
-      return {
-        from: data.result.from,
-        to: data.result.to
-      };
+      return [data.result.from, data.result.to];
     } else if ($input.data("type") == "single") {
       if (data.result.from_value !== null) {
         return data.result.from_value.replace("&#44;", ",");

@@ -4,7 +4,7 @@
 \alias{rangeInput}
 \alias{intervalInput}
 \alias{sliderInput}
-\title{A range input}
+\title{Ranges, intervals, and custom sliders}
 \usage{
 rangeInput(id, min = 0, max = 100, default = min, step = 1,
   ticks = TRUE, fill = TRUE, labels = 4, snap = FALSE, prefix = NULL,

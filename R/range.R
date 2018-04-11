@@ -1,4 +1,4 @@
-#' A range input
+#' Ranges, intervals, and custom sliders
 #'
 #' A take on shiny's `sliderInput`.
 #'
