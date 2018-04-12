@@ -7,13 +7,13 @@ $.extend(fileInputBinding, {
   getValue: function(el) {
     return null;
   },
-  sendFile: function(uri, job, file, el) {
+  sendFile: function(uri, job, file, final, el) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", uri, true);
     xhr.setRequestHeader("Content-Type", "application/octet-stream");
 
     xhr.onreadystatechange = function() {
-      if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+      if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 && final) {
         Shiny.shinyapp.makeRequest(
           "uploadEnd",
           [job, el.id],
@@ -23,7 +23,7 @@ $.extend(fileInputBinding, {
             $input.text("Choose file");
           },
           (err) => {
-            throw err;
+            console.error(`uploadEnd request failed for ${ el.id }: ${ err }`);
           }
         );
       }
@@ -48,11 +48,11 @@ $.extend(fileInputBinding, {
         let uri = res.uploadUrl;
 
         for (var i = 0; i < files.length; i++) {
-          this.sendFile(uri, job, files[i], el);
+          this.sendFile(uri, job, files[i], i === (files.length - 1), el);
         }
       },
       (err) => {
-        throw err;
+        console.error(`uploadInit request failed for ${ el.id }: ${ err }`);
       }
     );
   },

@@ -69,4 +69,24 @@ if (interactive()) {
   )
 }
 
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      fileInput("upload1") \%>\%
+        margins(3),
+      fileInput("upload2") \%>\%
+        margins(3)
+    ),
+    server = function(input, output) {
+      observeEvent(input$upload1, {
+        cat("Upload 1:", input$upload1$name, "\\n")
+      })
+
+      observeEvent(input$upload2, {
+        cat("Upload 2:", input$upload2$name, "\\n")
+      })
+    }
+  )
+}
+
 }
