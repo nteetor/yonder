@@ -9,11 +9,13 @@
 #' @param label A character string specifying the label of the dropdown's
 #'   button.
 #'
-#' @param ... Character strings, button inputs, or form inputs specifying the
-#'   elements of the dropdown. These elements may be grouped into lists, in
-#'   which case menu dividers are placed after, before, or between the lists of
-#'   elements. Character strings are interpreted as dropdown section
-#'   headers. Named arguments are passed HTML attributes to the parent element.
+#' @param ... Character strings or vectors, header tag elements, button inputs,
+#'   or form inputs specifying the elements of the dropdown. These elements may
+#'   be grouped into lists, in which case menu dividers are placed before,
+#'   after, or between the lists of elements. `h6()` is the recommended heading
+#'   level for menu headers. Character vectors are converted into paragraphs of
+#'   text. To format menu text use `p()` and any utility functions instead.
+#'   Named arguments are passed HTML attributes to the parent element.
 #'
 #' @param direction One of `"up"`, `"right"`, `"down"`, or `"left"` specifying
 #'   the direction in which the menu opens, defaults to `"down"`.
@@ -146,7 +148,15 @@ dropdownItem <- function(base) {
   }
 
   if (is.character(base)) {
-    return(tags$h6(class = "dropdown-header", base))
+    return(lapply(base, tags$p, class = "text-muted"))
+  }
+
+  if (tagIs(base, "p")) {
+    return(base)
+  }
+
+  if (tagIs(base, paste0("h", 1:6))) {
+    return(tagEnsureClass(base, "dropdown-header"))
   }
 
   if (tagIs(base, "a") || tagIs(base, "button")) {

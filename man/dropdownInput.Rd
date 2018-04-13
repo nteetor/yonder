@@ -12,11 +12,13 @@ dropdownInput(id, label, ..., direction = "down", split = FALSE)
 \item{label}{A character string specifying the label of the dropdown's
 button.}
 
-\item{...}{Character strings, button inputs, or form inputs specifying the
-elements of the dropdown. These elements may be grouped into lists, in
-which case menu dividers are placed after, before, or between the lists of
-elements. Character strings are interpreted as dropdown section
-headers. Named arguments are passed HTML attributes to the parent element.}
+\item{...}{Character strings or vectors, header tag elements, button inputs,
+or form inputs specifying the elements of the dropdown. These elements may
+be grouped into lists, in which case menu dividers are placed before,
+after, or between the lists of elements. \code{h6()} is the recommended heading
+level for menu headers. Character vectors are converted into paragraphs of
+text. To format menu text use \code{p()} and any utility functions instead.
+Named arguments are passed HTML attributes to the parent element.}
 
 \item{direction}{One of \code{"up"}, \code{"right"}, \code{"down"}, or \code{"left"} specifying
 the direction in which the menu opens, defaults to \code{"down"}.}
