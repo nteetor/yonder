@@ -4385,6 +4385,9 @@ button.bg-grey-900:focus {
 .rounded-0 {
   border-radius: 0 !important; }
 
+.text-monospace {
+  font-family: SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
 .text-justify {
   text-align: justify !important; }
 
@@ -4839,8 +4842,17 @@ a.text-grey-700:hover, a.text-grey-700:focus {
 a.text-grey-900:hover, a.text-grey-900:focus {
   color: #080808 !important; }
 
+.text-body {
+  color: #212121 !important; }
+
 .text-muted {
   color: #757575 !important; }
+
+.text-black-50 {
+  color: rgba(0, 0, 0, 0.5) !important; }
+
+.text-white-50 {
+  color: rgba(255, 255, 255, 0.5) !important; }
 
 .text-hide {
   font: 0/0 a;
