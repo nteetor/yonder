@@ -1083,7 +1083,7 @@ $.extend(tabsInputBinding, {
   initialize: function(el) {
     let id = el.id;
     let $tabs = $(el).find(".nav-link");
-    let $panes = $(`.tab-content[data-tablist="${ id }"] > .tab-pane`);
+    let $panes = $(`.tab-content[data-tabs="${ id }"] > .tab-pane`);
     let active = $tabs.index(".active");
 
     if ($tabs.length === 0 || $panes.length === 0) {
