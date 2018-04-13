@@ -1,9 +1,15 @@
 #' Form inputs
 #'
+#' @description
+#'
 #' Form inputs are a new reactive input. Form inputs are an alternative to
 #' shiny's submit buttons. A form input is comprised of any number of
 #' inputs. The value of these inputs will not change until the form input's
 #' submit button is clicked. A form input has no value.
+#'
+#' **Important** if `id` or `submit` are `NULL` the form input will not freeze
+#' its child inputs. This can be useful if you want to use a `formInput()`
+#' solely for page layout.
 #'
 #' @param id A character string specifying an id for the form input.
 #'
@@ -13,6 +19,19 @@
 #' @param submit A submit button or tags containing a submit button. The submit
 #'   button will trigger the update of input form elements. Defaults to
 #'   [submitInput()].
+#'
+#' @param inline One of `TRUE` or `FALSE`, if `TRUE` the form and its child
+#'   elements are rendered in a horizontal row, defaults to `FALSE`. On small
+#'   viewports, think mobile device, `inline` has no effect and the form will
+#'   span multiple lines.
+#'
+#' @details
+#'
+#' When `inline` is `TRUE` you may want to adjust the right margin of each
+#' child element for viewports larger than mobile,
+#' `margins(<TAG>, sm = c(0, 2, 0, 0))`, see [margins()]. You only need to
+#' apply extra space for larger viewports because inline forms do not take
+#' effect on small viewports.
 #'
 #' @seealso
 #'
@@ -107,9 +126,12 @@
 #'   )
 #' }
 #'
-formInput <- function(id, ..., submit = submitInput()) {
+formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
   tags$form(
-    class = "dull-form-input",
+    class = collate(
+      "dull-form-input",
+      if (inline) "form-inline"
+    ),
     id = id,
     ...,
     submit,
