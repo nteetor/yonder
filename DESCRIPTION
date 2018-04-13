@@ -52,7 +52,7 @@ Collate:
     forms.R
     list-group.R
     modal.R
-    nav.R
+    navbar.R
     radio.R
     table.R
     chartist.R
