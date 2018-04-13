@@ -307,6 +307,7 @@ tagDropClass <- function(x, regex) {
   }
 
   x$attribs$class <- gsub(regex, "", x$attribs$class)
+  x$attribs$class <- gsub("\\s+", " ", x$attribs$class)
   x
 }
 
