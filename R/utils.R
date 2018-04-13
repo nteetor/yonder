@@ -283,7 +283,8 @@ tagIs <- function(x, name) {
   if (!is_tag(x)) {
     return(NULL)
   }
-  x$name == name
+
+  isTRUE(x$name %in% name)
 }
 
 tagAddClass <- function(x, class) {
