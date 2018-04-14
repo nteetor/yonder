@@ -124,3 +124,4 @@ Other inputs: \code{\link{checkboxInput}},
   \code{\link{radioInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }
+\concept{inputs}

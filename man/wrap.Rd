@@ -112,3 +112,4 @@ if (interactive()) {
 Other flex: \code{\link{content}}, \code{\link{direction}},
   \code{\link{items}}
 }
+\concept{flex}

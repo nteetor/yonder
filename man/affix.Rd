@@ -31,3 +31,4 @@ Other utilities: \code{\link{alignment}},
   \code{\link{padding}}, \code{\link{rounded}},
   \code{\link{width}}
 }
+\concept{utilities}

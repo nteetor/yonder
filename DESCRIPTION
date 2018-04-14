@@ -7,7 +7,7 @@ Description: A new way to build shiny applications.
 License: What license is it under?
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.0.1
+RoxygenNote: 6.0.1.9000
 VignetteBuilder: knitr
 Depends:
     R (>= 3.0.0),

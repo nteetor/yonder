@@ -72,3 +72,4 @@ element. This is the browser defalut.\preformatted{| It     | It     | It     | 
 Other flex: \code{\link{content}}, \code{\link{direction}},
   \code{\link{wrap}}
 }
+\concept{flex}

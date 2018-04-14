@@ -4,7 +4,6 @@
 \alias{img}
 \alias{figure}
 \alias{image}
-\alias{figure}
 \title{Responsive images and figures}
 \usage{
 img(src, ...)
@@ -71,3 +70,4 @@ Other content: \code{\link{blockquote}}, \code{\link{pre}}
 
 Other content: \code{\link{blockquote}}, \code{\link{pre}}
 }
+\concept{content}

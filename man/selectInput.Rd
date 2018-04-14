@@ -67,3 +67,4 @@ Other inputs: \code{\link{buttonInput}},
   \code{\link{groupInput}}, \code{\link{radioInput}},
   \code{\link{textInput}}
 }
+\concept{inputs}

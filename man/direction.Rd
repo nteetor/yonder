@@ -45,3 +45,4 @@ Other flex: \code{\link{content}}, \code{\link{items}},
 Other flex: \code{\link{content}}, \code{\link{items}},
   \code{\link{wrap}}
 }
+\concept{flex}

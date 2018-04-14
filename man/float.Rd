@@ -40,3 +40,4 @@ Other utilities: \code{\link{affix}},
   \code{\link{padding}}, \code{\link{rounded}},
   \code{\link{width}}
 }
+\concept{utilities}

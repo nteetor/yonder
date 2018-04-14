@@ -79,3 +79,4 @@ Other inputs: \code{\link{buttonInput}},
   \code{\link{groupInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }
+\concept{inputs}

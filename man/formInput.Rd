@@ -134,3 +134,4 @@ Other inputs: \code{\link{buttonInput}},
   \code{\link{radioInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }
+\concept{inputs}

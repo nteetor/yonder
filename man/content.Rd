@@ -73,3 +73,4 @@ lapply(1:5, tags$div) \%>\%
 Other flex: \code{\link{direction}}, \code{\link{items}},
   \code{\link{wrap}}
 }
+\concept{flex}

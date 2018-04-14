@@ -43,3 +43,4 @@ Other utilities: \code{\link{affix}},
   \code{\link{font}}, \code{\link{padding}},
   \code{\link{rounded}}
 }
+\concept{utilities}

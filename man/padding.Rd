@@ -88,3 +88,4 @@ Other utilities: \code{\link{affix}},
   \code{\link{font}}, \code{\link{rounded}},
   \code{\link{width}}
 }
+\concept{utilities}
