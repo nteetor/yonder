@@ -28,6 +28,7 @@ Collate:
     includes.R
     tags.R
     update.R
+    font-awesome.R
     icons.R
     textual.R
     datetime.R
