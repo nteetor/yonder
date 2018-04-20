@@ -2,28 +2,24 @@
 % Please edit documentation in R/utilities.R
 \name{font}
 \alias{font}
-\title{Text font and styles}
+\title{Text font}
 \usage{
-font(tag, weight = NULL, style = NULL)
+font(tag, weight = NULL)
 }
 \arguments{
 \item{tag}{A tag element.}
 
 \item{weight}{One of \code{"bold"}, \code{"normal"}, or \code{"light"} specifying the font
-weight of an element's text. Defaults to \code{NULL}, element font weight is
-left as is.}
-
-\item{style}{One of \code{"bold"} or \code{"italics"} specifying the font style of an
-element. Defaults to \code{NULL}, element font style is left as is. Specifying
-\code{"bold"} is equivalent to \code{weight = "bold"}.}
+weight of the element's text, defaults to \code{NULL}, in which case the font
+weight is unchanged.}
 }
 \description{
-The \code{font} utility function applies Bootstrap classes to a tag element.
-These classes apply CSS to change the font weight of an element's text or the
-font style of an element text.
+The \code{font} utility changes the weight and size of an element's text font.
+Bold fonts are darker and heavier whereas light fonts are thinner.
 }
 \examples{
-tags$span("This and other news") \%>\%
+
+span("This and other news") \%>\%
   font(weight = "light")
 
 }

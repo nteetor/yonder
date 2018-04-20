@@ -28,9 +28,13 @@ includes <- function() {
         href = "dull/flatpickr/css/flatpickr.min.css"
       ),
       tags$script(src = "dull/flatpickr/js/flatpickr.min.js"),
+      tags$link(
+        rel = "stylesheet",
+        href = "dull/font-awesome/css/font-awesome.min.css"
+      ),
       tags$script(
         defer = NA,
-        src = "dull/font-awesome/js/fontawesome.min.js"
+        src = "dull/font-awesome/js/fontawesome.js"
       ),
       tags$script(src = "dull/file-saver/FileSaver.min.js"),
       tags$script(src = "dull/dull/js/dull.min.js"),

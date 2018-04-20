@@ -1,3 +1,106 @@
+#' Icon elements
+#'
+#' Include an icon in your application. For now only Font Awesome icons are
+#' included.
+#'
+#' @param name A character string specifying the name of the icon.
+#'
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
+#'
+#' @param set A character string specifying the icon set to choose from, defaults
+#'   to `"NULL"`, in which case all icon sets are searched.
+#'
+#' @seealso
+#'
+#' For more on Font Awesome check out \url{https://fontawesome.com}.
+#'
+#' @export
+#' @examples
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       fluid = FALSE,
+#'       selectInput(
+#'         id = "name",
+#'         choices = unique(.icons$name),
+#'       ) %>%
+#'         margins(3),
+#'       div(
+#'         htmlOutput("icon")
+#'       ) %>%
+#'         margins(3) %>%
+#'         display("flex") %>%
+#'         direction("column") %>%
+#'         items("center")
+#'     ),
+#'     server = function(input, output) {
+#'       output$icon <- renderUI({
+#'         icon(input$name, class = "fa-10x")
+#'       })
+#'     }
+#'   )
+#' }
+#'
+icon <- function(name, ..., set = NULL) {
+  if (length(name) != 1) {
+    stop(
+      "invalid `icon()` argument, `name` must be a single character string",
+      call. = FALSE
+    )
+  }
+
+  if (!is.null(set)) {
+    if (length(set) != 1) {
+      stop(
+        "invalid `icon()` argument, if specified `set` must be a single ",
+        "character string",
+        call. = FALSE
+      )
+    }
+
+    if (!(set %in% .icons$set)) {
+      stop(
+        "invalid `icon()` argument, unknown icon set",
+        '"', set, '"',
+        call. = FALSE
+      )
+    }
+  }
+
+  index <- .icons$name == name &
+    if (!is.null(set)) .icons$set == set else TRUE
+
+  icon <- head(.icons[index, ], 1)
+
+  if (NROW(icon) == 0) {
+    stop(
+      'in `icon()`, no icon found with name "', name, '"',
+      if (!is.null(set)) paste0(' in set "', set, '"'),
+      call. = FALSE
+    )
+  }
+
+  if (icon$set == "font awesome") {
+    tags$i(
+      class = sprintf("%s fa-%s", icon$prefix, icon$name),
+      ...,
+      includes()
+      # include font awesome(?)
+    )
+  }
+}
+
+#' Icon data
+#'
+#' Data frame of icon sets, keywords, names, and additional meta information.
+#'
+#' @keywords internal
+#' @name .icons
+#' @export
+.icons
+
 #' A spinner
 #'
 #' Start or stop a spinner based on process progress.
