@@ -4,10 +4,6 @@
   "description": "Reimagine shiny applications.",
   "main": "lib/js/dull.min.js",
   "dependencies": {
-    "@fortawesome/fontawesome": "^1.1.5",
-    "@fortawesome/fontawesome-free-brands": "^5.0.10",
-    "@fortawesome/fontawesome-free-regular": "^5.0.10",
-    "@fortawesome/fontawesome-free-solid": "^5.0.10",
     "bootstrap": "^4.1.0",
     "file-saver": "^1.3.8",
     "flatpickr": "^4.4.4",
@@ -32,16 +28,22 @@
     "stylelint-scss": "^2.5.0"
   },
   "scripts": {
-    "test": "echo \"Sorry, nothing here\""
-  },
-  "bin": {
-    "lint": "bin/lint",
-    "build": "bin/build",
-    "vend": "bin/vend"
+    "test": "echo \"Sorry, nothing here\"",
+    "js-lint": "eslint src/js/",
+    "js-update": "npm run js-compile && cp lib/js/dull.min.js ../inst/www/dull/js/dull.min.js",
+    "js-compile": "cat src/js/**.js | babel --compact --minified --no-comments > lib/js/dull.min.js",
+    "css-lint": "stylelint src/scss",
+    "css-update": "npm run css-compile && cp lib/css/dull.min.css ../inst/www/dull/css/dull.min.css",
+    "css-compile": "node-sass --output-style compressed src/scss/main.scss > lib/css/dull.min.css",
+    "font-awesome-update": "npm run font-awesome-checkout &> /dev/null && npm run --silent font-awesome-js > ../inst/www/font-awesome/js/fontawesome.js && npm run --silent font-awesome-css > ../inst/www/font-awesome/css/fontawesome.min.css",
+    "font-awesome-js": "cat vendors/Font-Awesome/svg-with-js/js/fontawesome-all.min.js",
+    "font-awesome-css": "cat vendors/Font-Awesome/svg-with-js/css/fa-svg-with-js.css",
+    "font-awesome-checkout": "npm run font-awesome-clone && cd vendors/Font-Awesome && git checkout tags/$(git describe --tags --abbrev=0)",
+    "font-awesome-clone": "cd vendors && test -d Font-Awesome || git clone https://github.com/FortAwesome/Font-Awesome.git"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/nteetor/dull.git"
+    "url": "https://github.com/nteetor/dull.git"
   },
   "keywords": [
     "shiny",
