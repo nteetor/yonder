@@ -1,26 +1,22 @@
-#' Text font and styles
+#' Text font
 #'
-#' The `font` utility function applies Bootstrap classes to a tag element.
-#' These classes apply CSS to change the font weight of an element's text or the
-#' font style of an element text.
+#' The `font` utility changes the weight and size of an element's text font.
+#' Bold fonts are darker and heavier whereas light fonts are thinner.
 #'
 #' @param tag A tag element.
 #'
 #' @param weight One of `"bold"`, `"normal"`, or `"light"` specifying the font
-#'   weight of an element's text. Defaults to `NULL`, element font weight is
-#'   left as is.
-#'
-#' @param style One of `"bold"` or `"italics"` specifying the font style of an
-#'   element. Defaults to `NULL`, element font style is left as is. Specifying
-#'   `"bold"` is equivalent to `weight = "bold"`.
+#'   weight of the element's text, defaults to `NULL`, in which case the font
+#'   weight is unchanged.
 #'
 #' @family utilities
 #' @export
 #' @examples
-#' tags$span("This and other news") %>%
+#'
+#' span("This and other news") %>%
 #'   font(weight = "light")
 #'
-font <- function(tag, weight = NULL, style = NULL) {
+font <- function(tag, weight = NULL) {
   if (!re(weight, "bold|normal|light")) {
     stop(
       "invalid `text` argument, `weight` must be one of ",
@@ -29,26 +25,10 @@ font <- function(tag, weight = NULL, style = NULL) {
     )
   }
 
-  if (!re(style, "bold|italics")) {
-    stop(
-      "invalid `text` arugment, `style` must be one of ",
-      '"bold" or "italics"',
-      call. = FALSE
-    )
-  }
-
   if (!is.null(weight)) {
     weight <- paste0("font-weight-", weight)
     tag <- tagDropClass(tag, "font-weight-(bold|normal|light)")
     tag <- tagAddClass(tag, weight)
-  }
-
-  if (!is.null(style)) {
-    if (style == "italics") {
-      tag <- tagEnsureClass(tag, "font-italic")
-    } else if (style == "bold") {
-      tag <- tagEnsureClass(tag, "font-weight-bold")
-    }
   }
 
   tag
