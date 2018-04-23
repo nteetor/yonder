@@ -43,6 +43,33 @@
 #'   )
 #' }
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       lapply(
+#'         unique(.icons$set),
+#'         function(s) {
+#'           div(
+#'             lapply(
+#'               unique(.icons[.icons$set == s, ]$name),
+#'               function(nm) {
+#'                 icon(nm, set = s) %>%
+#'                   margins(2)
+#'               }
+#'             )
+#'           ) %>%
+#'             display("flex") %>%
+#'             wrap("wrap")
+#'         }
+#'       ),
+#'       tags$script("feather.replace()")
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
 icon <- function(name, ..., set = NULL) {
   if (length(name) != 1) {
     stop(
@@ -84,10 +111,27 @@ icon <- function(name, ..., set = NULL) {
 
   if (icon$set == "font awesome") {
     tags$i(
-      class = sprintf("%s fa-%s", icon$prefix, icon$name),
+      class = collate(
+        icon$prefix,
+        sprintf("fa-%s", icon$name),
+        "fa-fw"
+      ),
       ...,
       includes()
       # include font awesome(?)
+    )
+  } else if (icon$set == "material design") {
+    tags$i(
+      class = "material-icons",
+      ...,
+      icon$name,
+      includes()
+    )
+  } else if (icon$set == "feather") {
+    tags$i(
+      `data-feather` = icon$name,
+      ...,
+      includes()
     )
   }
 }
