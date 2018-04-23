@@ -36,6 +36,14 @@ includes <- function() {
         defer = NA,
         src = "dull/font-awesome/js/fontawesome.js"
       ),
+      tags$script(
+        src = "dull/feather/feather.min.js"
+      ),
+      tags$img(hidden = NA, src = "dull/feather/feather-sprite.svg"),
+      tags$link(
+        rel = "stylesheet",
+        href = "dull/material-design/material-icons.css"
+      ),
       tags$script(src = "dull/file-saver/FileSaver.min.js"),
       tags$script(src = "dull/dull/js/dull.min.js"),
       tags$link(rel = "stylesheet", href = "dull/dull/css/dull.min.css")

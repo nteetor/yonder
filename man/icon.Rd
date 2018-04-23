@@ -46,6 +46,32 @@ if (interactive()) {
   )
 }
 
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      lapply(
+        unique(.icons$set),
+        function(s) {
+          div(
+            lapply(
+              unique(.icons[.icons$set == s, ]$name),
+              function(nm) {
+                icon(nm, set = s) \%>\%
+                  margins(2)
+              }
+            )
+          ) \%>\%
+            display("flex") \%>\%
+            wrap("wrap")
+        }
+      )
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
+
 }
 \seealso{
 For more on Font Awesome check out \url{https://fontawesome.com}.
