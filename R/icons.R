@@ -117,7 +117,7 @@ icon <- function(name, ..., set = NULL) {
         "fa-fw"
       ),
       ...,
-      includes()
+      include("font awesome")
       # include font awesome(?)
     )
   } else if (icon$set == "material design") {
@@ -125,13 +125,13 @@ icon <- function(name, ..., set = NULL) {
       class = "material-icons",
       ...,
       icon$name,
-      includes()
+      include("material icons")
     )
   } else if (icon$set == "feather") {
     tags$i(
       `data-feather` = icon$name,
       ...,
-      includes()
+      include("feather")
     )
   }
 }
@@ -198,7 +198,7 @@ spinnerOutput <- function(id, type = "circle", pulse = FALSE, ...) {
     ),
     id = id,
     ...,
-    includes()
+    include("font awesome")
   )
 }
 

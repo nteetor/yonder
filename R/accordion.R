@@ -93,7 +93,7 @@ accordion <- function(labels, contents, ids = NULL, ...) {
           )
         }
       ),
-      includes()
+      include("core")
     ),
     attrs
   )

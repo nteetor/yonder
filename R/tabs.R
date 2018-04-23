@@ -213,7 +213,7 @@ tabTabs <- function(id, labels, values = labels, active = values[1], ...) {
         )
       }
     ),
-    includes()
+    include("core")
   )
 }
 
@@ -224,7 +224,7 @@ tabContent <- function(tabs, ...) {
     class = "tab-content",
     `data-tabs` = tabs,
     ...,
-    includes()
+    include("core")
   )
 }
 
@@ -235,6 +235,6 @@ tabPane <- function(...) {
     class = "tab-pane fade",
     role = "tab-panel",
     ...,
-    includes()
+    include("core")
   )
 }

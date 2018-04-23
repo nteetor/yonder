@@ -100,7 +100,7 @@ row <- function(...) {
   tags$div(
     class = "row",
     ...,
-    includes()
+    include("core")
   )
 }
 
@@ -110,6 +110,6 @@ container <- function(..., fluid = TRUE) {
   tags$div(
     class = if (fluid) "container-fluid" else "container",
     ...,
-    includes()
+    include("core")
   )
 }

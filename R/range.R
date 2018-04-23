@@ -109,7 +109,8 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
       `data-grid-snap` = if (isTRUE(snap)) snap,
       `data-no-fill` = if (!fill) "true"
     ),
-    includes()
+    include("core"),
+    include("ion slider")
   )
 }
 
@@ -155,7 +156,8 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
       `data-grid-num` = labels,
       `data-grid-snap` = if (isTRUE(snap)) snap
     ),
-    includes()
+    include("core"),
+    include("ion slider")
   )
 }
 
@@ -208,6 +210,7 @@ sliderInput <- function(id, choices, values = choices, selected = NULL,
       `data-hide-min-max` = TRUE,
       `data-no-fill` = if (!fill) "true"
     ),
-    includes()
+    include("core"),
+    include("ion slider")
   )
 }

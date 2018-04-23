@@ -138,7 +138,7 @@ dropdownInput <- function(id, label, ..., direction = "down", split = FALSE) {
         }
       )
     ),
-    includes()
+    include("core")
   )
 }
 
