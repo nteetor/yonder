@@ -60,7 +60,7 @@ img <- function(src, ...) {
     class = "img-fluid",
     src = src,
     ...,
-    includes()
+    include("core")
   )
 }
 
@@ -85,7 +85,7 @@ figure <- function(image, caption = NULL, ...) {
       )
     },
     ...,
-    includes()
+    include("core")
   )
 }
 
@@ -122,7 +122,7 @@ blockquote <- function(..., source = NULL, align = "left") {
     if (!is.null(source)) {
       tags$footer(class = "blockquote-footer", source)
     },
-    includes()
+    include("core")
   )
 }
 

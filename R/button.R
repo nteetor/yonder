@@ -277,6 +277,6 @@ buttonGroupInput <- function(id, labels, values = labels) {
         )
       }
     ),
-    includes()
+    include("core")
   )
 }

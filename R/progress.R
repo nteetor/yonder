@@ -82,7 +82,7 @@ progressOutput <- function(...) {
   tags$div(
     class = "dull-progress-output progress",
     ...,
-    includes()
+    include("core")
   )
 }
 

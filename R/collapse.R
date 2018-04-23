@@ -82,7 +82,7 @@ collapse <- function(button, content, ...) {
       content
     ),
     ...,
-    includes()
+    include("core")
   )
 }
 

@@ -57,7 +57,7 @@ d <- function(level, ...) {
   tags$h1(
     class = paste0("display-", level),
     ...,
-    includes()
+    include("core")
   )
 }
 
@@ -109,6 +109,6 @@ jumbotron <- function(title, subtitle, ..., fluid = TRUE) {
     ),
     if (length(elements(list(...))) > 0) tags$hr(class = "my-4"),
     ...,
-    includes()
+    include("core")
   )
 }

@@ -117,6 +117,6 @@ checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
       tags$div(class = "valid-feedback")
     ),
     ...,
-    includes()
+    include("core")
   )
 }
