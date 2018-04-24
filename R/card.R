@@ -20,6 +20,9 @@
 #' @param subtitle A character string or tag element specifying the subtitle of
 #'   the card, defaults to `NULL`, in which case a subtitle is not added.
 #'
+#' @param image An [img()] element specifying an image to add to the card,
+#'   defaults to `NULL`, in which case an image is not added.
+#'
 #' @param footer A character string or tag element specifying the footer of the
 #'   card, defaults to `NULL`, in which case a footer is not added.
 #'
@@ -27,7 +30,7 @@
 #' @examples
 #'
 card <- function(..., header = NULL, title = NULL, subtitle = NULL,
-                 footer = NULL) {
+                 image = NULL, footer = NULL) {
   args <- list(...)
   attrs <- attribs(args)
 
@@ -101,6 +104,10 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
     }
   }
 
+  image <- if (!is.null(image)) {
+    tagEnsureClass(image, "card-img-top")
+  }
+
   footer <- if (!is.null(footer)) {
     if (is_tag(footer)) {
       tagEnsureClass(footer, "card-footer")
@@ -111,7 +118,8 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
 
   tags$div(
     class = "card",
-    if (!is.null(header)) header,
+    header,
+    image,
     if (!is.null(title) || !is.null(subtitle)) {
       tags$div(
         class = "card-body",
@@ -120,7 +128,7 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
       )
     },
     elems,
-    if (!is.null(footer)) footer
+    footer
   )
 }
 

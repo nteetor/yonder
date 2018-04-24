@@ -5,7 +5,8 @@
 \alias{deck}
 \title{Cards, blocks of content}
 \usage{
-card(..., header = NULL, title = NULL, subtitle = NULL, footer = NULL)
+card(..., header = NULL, title = NULL, subtitle = NULL, image = NULL,
+  footer = NULL)
 
 deck(...)
 }
@@ -25,6 +26,9 @@ card, defaults to \code{NULL}, in which case a title is not added.}
 
 \item{subtitle}{A character string or tag element specifying the subtitle of
 the card, defaults to \code{NULL}, in which case a subtitle is not added.}
+
+\item{image}{An \code{\link[=img]{img()}} element specifying an image to add to the card,
+defaults to \code{NULL}, in which case an image is not added.}
 
 \item{footer}{A character string or tag element specifying the footer of the
 card, defaults to \code{NULL}, in which case a footer is not added.}
