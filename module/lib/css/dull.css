@@ -1450,255 +1450,255 @@
     .show > .btn-grey-900.dropdown-toggle:focus {
       box-shadow: 0 0 0 0.2rem rgba(33, 33, 33, 0.5); }
 
-.border-primary.bg-white:hover {
+.border-primary.bg-transparent:hover {
   color: #fff !important;
   background-color: #2196f3 !important; }
 
-.border-secondary.bg-white:hover {
+.border-secondary.bg-transparent:hover {
   color: #fff !important;
   background-color: #757575 !important; }
 
-.border-success.bg-white:hover {
+.border-success.bg-transparent:hover {
   color: #fff !important;
   background-color: #4caf50 !important; }
 
-.border-info.bg-white:hover {
+.border-info.bg-transparent:hover {
   color: #fff !important;
   background-color: #00bcd4 !important; }
 
-.border-warning.bg-white:hover {
+.border-warning.bg-transparent:hover {
   color: #212121 !important;
   background-color: #ffeb3b !important; }
 
-.border-danger.bg-white:hover {
+.border-danger.bg-transparent:hover {
   color: #fff !important;
   background-color: #f44336 !important; }
 
-.border-light.bg-white:hover {
+.border-light.bg-transparent:hover {
   color: #212121 !important;
   background-color: #f5f5f5 !important; }
 
-.border-dark.bg-white:hover {
+.border-dark.bg-transparent:hover {
   color: #fff !important;
   background-color: #424242 !important; }
 
-.border-red.bg-white:hover {
+.border-red.bg-transparent:hover {
   color: #fff !important;
   background-color: #f44336 !important; }
 
-.border-purple.bg-white:hover {
+.border-purple.bg-transparent:hover {
   color: #fff !important;
   background-color: #9c27b0 !important; }
 
-.border-indigo.bg-white:hover {
+.border-indigo.bg-transparent:hover {
   color: #fff !important;
   background-color: #3f51b5 !important; }
 
-.border-blue.bg-white:hover {
+.border-blue.bg-transparent:hover {
   color: #fff !important;
   background-color: #2196f3 !important; }
 
-.border-cyan.bg-white:hover {
+.border-cyan.bg-transparent:hover {
   color: #fff !important;
   background-color: #00bcd4 !important; }
 
-.border-teal.bg-white:hover {
+.border-teal.bg-transparent:hover {
   color: #fff !important;
   background-color: #009688 !important; }
 
-.border-green.bg-white:hover {
+.border-green.bg-transparent:hover {
   color: #fff !important;
   background-color: #4caf50 !important; }
 
-.border-yellow.bg-white:hover {
+.border-yellow.bg-transparent:hover {
   color: #212121 !important;
   background-color: #ffeb3b !important; }
 
-.border-amber.bg-white:hover {
+.border-amber.bg-transparent:hover {
   color: #212121 !important;
   background-color: #ffc107 !important; }
 
-.border-orange.bg-white:hover {
+.border-orange.bg-transparent:hover {
   color: #212121 !important;
   background-color: #ff9800 !important; }
 
-.border-grey.bg-white:hover {
+.border-grey.bg-transparent:hover {
   color: #212121 !important;
   background-color: #9e9e9e !important; }
 
-.border-red-100.bg-white:hover {
+.border-red-100.bg-transparent:hover {
   color: #212121 !important;
   background-color: #ffcdd2 !important; }
 
-.border-red-300.bg-white:hover {
+.border-red-300.bg-transparent:hover {
   color: #fff !important;
   background-color: #e57373 !important; }
 
-.border-red-700.bg-white:hover {
+.border-red-700.bg-transparent:hover {
   color: #fff !important;
   background-color: #d32f2f !important; }
 
-.border-red-900.bg-white:hover {
+.border-red-900.bg-transparent:hover {
   color: #fff !important;
   background-color: #b71c1c !important; }
 
-.border-purple-100.bg-white:hover {
+.border-purple-100.bg-transparent:hover {
   color: #212121 !important;
   background-color: #e1bee7 !important; }
 
-.border-purple-300.bg-white:hover {
+.border-purple-300.bg-transparent:hover {
   color: #fff !important;
   background-color: #ba68c8 !important; }
 
-.border-purple-700.bg-white:hover {
+.border-purple-700.bg-transparent:hover {
   color: #fff !important;
   background-color: #7b1fa2 !important; }
 
-.border-purple-900.bg-white:hover {
+.border-purple-900.bg-transparent:hover {
   color: #fff !important;
   background-color: #4a148c !important; }
 
-.border-indigo-100.bg-white:hover {
+.border-indigo-100.bg-transparent:hover {
   color: #212121 !important;
   background-color: #c5cae9 !important; }
 
-.border-indigo-300.bg-white:hover {
+.border-indigo-300.bg-transparent:hover {
   color: #fff !important;
   background-color: #7986cb !important; }
 
-.border-indigo-700.bg-white:hover {
+.border-indigo-700.bg-transparent:hover {
   color: #fff !important;
   background-color: #303f9f !important; }
 
-.border-indigo-900.bg-white:hover {
+.border-indigo-900.bg-transparent:hover {
   color: #fff !important;
   background-color: #1a237e !important; }
 
-.border-blue-100.bg-white:hover {
+.border-blue-100.bg-transparent:hover {
   color: #212121 !important;
   background-color: #bbdefb !important; }
 
-.border-blue-300.bg-white:hover {
+.border-blue-300.bg-transparent:hover {
   color: #212121 !important;
   background-color: #64b5f6 !important; }
 
-.border-blue-700.bg-white:hover {
+.border-blue-700.bg-transparent:hover {
   color: #fff !important;
   background-color: #1976d2 !important; }
 
-.border-blue-900.bg-white:hover {
+.border-blue-900.bg-transparent:hover {
   color: #fff !important;
   background-color: #0d47a1 !important; }
 
-.border-cyan-100.bg-white:hover {
+.border-cyan-100.bg-transparent:hover {
   color: #212121 !important;
   background-color: #b2ebf2 !important; }
 
-.border-cyan-300.bg-white:hover {
+.border-cyan-300.bg-transparent:hover {
   color: #212121 !important;
   background-color: #4dd0e1 !important; }
 
-.border-cyan-700.bg-white:hover {
+.border-cyan-700.bg-transparent:hover {
   color: #fff !important;
   background-color: #0097a7 !important; }
 
-.border-cyan-900.bg-white:hover {
+.border-cyan-900.bg-transparent:hover {
   color: #fff !important;
   background-color: #006064 !important; }
 
-.border-teal-100.bg-white:hover {
+.border-teal-100.bg-transparent:hover {
   color: #212121 !important;
   background-color: #b2dfdb !important; }
 
-.border-teal-300.bg-white:hover {
+.border-teal-300.bg-transparent:hover {
   color: #fff !important;
   background-color: #4db6ac !important; }
 
-.border-teal-700.bg-white:hover {
+.border-teal-700.bg-transparent:hover {
   color: #fff !important;
   background-color: #00796b !important; }
 
-.border-teal-900.bg-white:hover {
+.border-teal-900.bg-transparent:hover {
   color: #fff !important;
   background-color: #004d40 !important; }
 
-.border-green-100.bg-white:hover {
+.border-green-100.bg-transparent:hover {
   color: #212121 !important;
   background-color: #c8e6c9 !important; }
 
-.border-green-300.bg-white:hover {
+.border-green-300.bg-transparent:hover {
   color: #212121 !important;
   background-color: #81c784 !important; }
 
-.border-green-700.bg-white:hover {
+.border-green-700.bg-transparent:hover {
   color: #fff !important;
   background-color: #388e3c !important; }
 
-.border-green-900.bg-white:hover {
+.border-green-900.bg-transparent:hover {
   color: #fff !important;
   background-color: #1b5e20 !important; }
 
-.border-yellow-100.bg-white:hover {
+.border-yellow-100.bg-transparent:hover {
   color: #212121 !important;
   background-color: #fff9c4 !important; }
 
-.border-yellow-300.bg-white:hover {
+.border-yellow-300.bg-transparent:hover {
   color: #212121 !important;
   background-color: #fff176 !important; }
 
-.border-yellow-700.bg-white:hover {
+.border-yellow-700.bg-transparent:hover {
   color: #212121 !important;
   background-color: #fbc02d !important; }
 
-.border-yellow-900.bg-white:hover {
+.border-yellow-900.bg-transparent:hover {
   color: #212121 !important;
   background-color: #f57f17 !important; }
 
-.border-amber-100.bg-white:hover {
+.border-amber-100.bg-transparent:hover {
   color: #212121 !important;
   background-color: #ffecb3 !important; }
 
-.border-amber-300.bg-white:hover {
+.border-amber-300.bg-transparent:hover {
   color: #212121 !important;
   background-color: #ffd54f !important; }
 
-.border-amber-700.bg-white:hover {
+.border-amber-700.bg-transparent:hover {
   color: #212121 !important;
   background-color: #ffa000 !important; }
 
-.border-amber-900.bg-white:hover {
+.border-amber-900.bg-transparent:hover {
   color: #fff !important;
   background-color: #ff6f00 !important; }
 
-.border-orange-100.bg-white:hover {
+.border-orange-100.bg-transparent:hover {
   color: #212121 !important;
   background-color: #ffe0b2 !important; }
 
-.border-orange-300.bg-white:hover {
+.border-orange-300.bg-transparent:hover {
   color: #212121 !important;
   background-color: #ffb74d !important; }
 
-.border-orange-700.bg-white:hover {
+.border-orange-700.bg-transparent:hover {
   color: #fff !important;
   background-color: #f57c00 !important; }
 
-.border-orange-900.bg-white:hover {
+.border-orange-900.bg-transparent:hover {
   color: #fff !important;
   background-color: #e65100 !important; }
 
-.border-grey-100.bg-white:hover {
+.border-grey-100.bg-transparent:hover {
   color: #212121 !important;
   background-color: #f5f5f5 !important; }
 
-.border-grey-300.bg-white:hover {
+.border-grey-300.bg-transparent:hover {
   color: #212121 !important;
   background-color: #e0e0e0 !important; }
 
-.border-grey-700.bg-white:hover {
+.border-grey-700.bg-transparent:hover {
   color: #fff !important;
   background-color: #616161 !important; }
 
-.border-grey-900.bg-white:hover {
+.border-grey-900.bg-transparent:hover {
   color: #fff !important;
   background-color: #212121 !important; }
 
@@ -5741,6 +5741,9 @@ a.text-grey-900:hover, a.text-grey-900:focus {
 
 .dull-table-thruput tbody tr {
   cursor: pointer; }
+
+.custom-file-label::after {
+  content: none; }
 
 @font-face {
   font-family: 'spark-line-medium';

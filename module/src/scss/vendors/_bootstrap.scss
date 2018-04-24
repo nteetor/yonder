@@ -68,7 +68,7 @@ $theme-colors: (
 
 // border and bg-white combo styling
 @each $color, $value in $theme-colors {
-  .border-#{$color}.bg-white {
+  .border-#{$color}.bg-transparent {
     &:hover {
       color: color-yiq($value) !important;
       background-color: $value !important;

@@ -142,6 +142,8 @@ colorUtility <- function(tag, base, color, tone) {
 #' * grey
 #' * white
 #'
+#' For `background` you can also specify `"transparent"`.
+#'
 #' @family utilities
 #' @export
 #' @examples
@@ -221,7 +223,7 @@ colorUtility <- function(tag, base, color, tone) {
 #' }
 #'
 background <- function(tag, color, tone = 0) {
-  if (!(color %in% .colors)) {
+  if (color != "transparent" && !(color %in% .colors)) {
     stop(
       "invalid `background` argument, `color` is invalid, see ?background ",
       "details for possible colors",
@@ -236,7 +238,7 @@ background <- function(tag, color, tone = 0) {
     )
   }
 
-  if (color == "white") {
+  if (color == "transparent") {
     base <- "bg"
   } else if (tagHasClass(tag, "alert")) {
     base <- "alert"

@@ -43,6 +43,8 @@ The following colors are available,
 \item grey
 \item white
 }
+
+For \code{background} you can also specify \code{"transparent"}.
 }
 \examples{
 tags$div("light text, dark background") \%>\%
