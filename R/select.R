@@ -107,6 +107,6 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
     ),
     tags$div(class = "invalid-feedback"),
     ...,
-    includes()
+    include("core")
   )
 }

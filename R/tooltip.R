@@ -33,7 +33,7 @@ tooltip <- function(content, text, placement = "top") {
   content$attribs$`data-toggle` <- "tooltip"
   content$attribs$`data-placement` <- placement
   content$attribs$title <- as.character(text)
-  content$children <- append(content$children, list(includes()))
+  content$children <- append(content$children, list(include("core")))
 
   content
 }
@@ -66,7 +66,7 @@ popover <- function(content, text, placement = "top") {
   content$attribs$`data-toggle` <- "popover"
   content$attribs$`data-placement` <- placement
   content$attribs$`data-content` <- as.character(text)
-  content$children <- c(content$children, includes())
+  content$children <- c(content$children, include("core"))
 
   content
 }

@@ -104,7 +104,7 @@ navbar <- function(..., brand = NULL) {
       id = navContentId,
       elems
     ),
-    includes()
+    include("core")
   )
 
   this <- tagConcatAttributes(this, attrs)

@@ -131,6 +131,6 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
         help
       )
     },
-    includes()
+    include("core")
   )
 }

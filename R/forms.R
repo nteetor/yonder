@@ -135,7 +135,7 @@ formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
     id = id,
     ...,
     submit,
-    includes()
+    include("core")
   )
 }
 
@@ -249,7 +249,7 @@ formGroup <- function(label, input, help = NULL,..., default = NULL, sm = NULL,
         help
       )
     },
-    includes()
+    include("core")
   )
 }
 
@@ -259,6 +259,6 @@ formRow <- function(...) {
   tags$div(
     class = "form-row",
     ...,
-    includes()
+    include("core")
   )
 }
