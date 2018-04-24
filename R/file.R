@@ -11,6 +11,9 @@
 #'   appended respectively to the file input. For more information refer to
 #'   [inputGroup()].
 #'
+#'   Clicking on an element specified by `right` also opens the file input
+#'   dialog.
+#'
 #' @param ... Additional named arguments passed on as HTML attributes to the
 #'   parent element.
 #'
@@ -20,13 +23,19 @@
 #' @param accept A character vector of possible MIME types or file extensions,
 #'   defaults to `NULL`, in which case any file type may be selected.
 #'
+#' @details
+#'
+#' Be careful when adjusting the right or left margins of a file input. In the
+#' current version of Bootstrap file inputs can be pushed off the side of a
+#' page.
+#'
 #' @examples
 #'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
 #'       fileInput("upload") %>%
-#'         margins(3)
+#'         margins(c(0, "auto", 0, "auto"))
 #'     ),
 #'     server = function(input, output) {
 #'       observe({
@@ -46,7 +55,7 @@
 #'           background("white") %>%
 #'           border("green", -1)
 #'       ) %>%
-#'         margins(3)
+#'         margins(c("auto", 0, "auto", 0))
 #'     ),
 #'     server = function(input, output) {
 #'       observe({
@@ -81,7 +90,7 @@
 #' }
 #'
 fileInput <- function(id, placeholder = "Choose file", left = NULL,
-                      right = NULL, ..., multiple = TRUE, accept = NULL) {
+                      right = "Browse", ..., multiple = TRUE, accept = NULL) {
   if (is_tag(left) && !tagIs(left, "button")) {
     stop(
       "invalid `fileInput()` argument, `left` must be a button element or ",

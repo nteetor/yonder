@@ -1,0 +1,12 @@
+.dull-file-input {
+  .input-group-text,
+  .custom-file-input {
+    cursor: pointer;
+  }
+}
+
+.custom-file-label {
+  &::after {
+    content: none;
+  }
+}

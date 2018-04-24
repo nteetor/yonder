@@ -605,6 +605,12 @@ $.extend(dropdownInputBinding, {
 
 Shiny.inputBindings.register(dropdownInputBinding, "dull.dropdownInput");
 
+$(() => {
+  $(".dull-file-input").on("click", ".input-group-append", function(e) {
+    $(e.delegateTarget).find("input[type='file']").trigger("click");
+  });
+});
+
 let fileInputBinding = new Shiny.InputBinding();
 
 $.extend(fileInputBinding, {

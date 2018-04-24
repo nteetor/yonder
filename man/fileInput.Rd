@@ -4,8 +4,8 @@
 \alias{fileInput}
 \title{Upload user files}
 \usage{
-fileInput(id, placeholder = "Choose file", left = NULL, right = NULL, ...,
-  multiple = TRUE, accept = NULL)
+fileInput(id, placeholder = "Choose file", left = NULL, right = "Browse",
+  ..., multiple = TRUE, accept = NULL)
 }
 \arguments{
 \item{id}{A character string specifying the HTML id of the file input.}
@@ -15,7 +15,10 @@ input, defaults to \code{"Choose file"}.}
 
 \item{left, right}{A character string or button element placed prepended or
 appended respectively to the file input. For more information refer to
-\code{\link[=inputGroup]{inputGroup()}}.}
+\code{\link[=inputGroup]{inputGroup()}}.
+
+Clicking on an element specified by \code{right} also opens the file input
+dialog.}
 
 \item{...}{Additional named arguments passed on as HTML attributes to the
 parent element.}
@@ -29,13 +32,18 @@ defaults to \code{NULL}, in which case any file type may be selected.}
 \description{
 Upload files to the server.
 }
+\details{
+Be careful when adjusting the right or left margins of a file input. In the
+current version of Bootstrap file inputs can be pushed off the side of a
+page.
+}
 \examples{
 
 if (interactive()) {
   shinyApp(
     ui = container(
       fileInput("upload") \%>\%
-        margins(3)
+        margins(c(0, "auto", 0, "auto"))
     ),
     server = function(input, output) {
       observe({
@@ -55,7 +63,7 @@ if (interactive()) {
           background("white") \%>\%
           border("green", -1)
       ) \%>\%
-        margins(3)
+        margins(c("auto", 0, "auto", 0))
     ),
     server = function(input, output) {
       observe({

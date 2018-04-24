@@ -5742,6 +5742,10 @@ a.text-grey-900:hover, a.text-grey-900:focus {
 .dull-table-thruput tbody tr {
   cursor: pointer; }
 
+.dull-file-input .input-group-text,
+.dull-file-input .custom-file-input {
+  cursor: pointer; }
+
 .custom-file-label::after {
   content: none; }
 
