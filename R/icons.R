@@ -61,8 +61,7 @@
 #'             display("flex") %>%
 #'             wrap("wrap")
 #'         }
-#'       ),
-#'       tags$script("feather.replace()")
+#'       )
 #'     ),
 #'     server = function(input, output) {
 #'
@@ -131,6 +130,7 @@ icon <- function(name, ..., set = NULL) {
     tags$i(
       `data-feather` = icon$name,
       ...,
+      tags$script("feather.replace()"),
       include("feather")
     )
   }
