@@ -4,23 +4,35 @@
 \alias{font}
 \title{Text font}
 \usage{
-font(tag, weight = NULL)
+font(tag, size = NULL, weight = NULL)
 }
 \arguments{
 \item{tag}{A tag element.}
 
-\item{weight}{One of \code{"bold"}, \code{"normal"}, or \code{"light"} specifying the font
-weight of the element's text, defaults to \code{NULL}, in which case the font
-weight is unchanged.}
+\item{size}{One of \code{"2x"}, \code{"3x"}, ..., or \code{"10x"} specifying a factor to
+increase a tag element's font size by (e.g. \code{"2x"} is double the base font
+size), defaults to \code{NULL}, in which case the font size is unchanged.}
+
+\item{weight}{One of \code{"bold"}, \code{"normal"}, \code{"light"}, \code{"italic"}, or
+\code{"monospace"} specifying the font weight of the element's text, defaults to
+\code{NULL}, in which case the font is unchanged.}
 }
 \description{
 The \code{font} utility changes the weight and size of an element's text font.
-Bold fonts are darker and heavier whereas light fonts are thinner.
+Bold fonts are darker and heavier whereas light fonts are thinner. Font
+size's are changed relative to the current font size.
 }
 \examples{
 
 span("This and other news") \%>\%
   font(weight = "light")
+
+icon("anchor") \%>\%
+  font("5x")
+
+p("Ipsum Consectetur Nibh Bibendum Ullamcorper") \%>\%
+  font("2x", "monospace") \%>\%
+  font(weight = "italic")
 
 }
 \seealso{
