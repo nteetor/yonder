@@ -77,7 +77,7 @@ figure <- function(image, caption = NULL, ...) {
 
   tags$figure(
     class = "figure",
-    tagEnsureClass(image, "figure-img"),
+    tagAddClass(image, "figure-img"),
     if (!is.null(caption)) {
       tags$figcaption(
         class = "figure-caption",

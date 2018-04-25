@@ -2,8 +2,6 @@
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
-`%??%` <- function(a, b) if (!is.null(a)) b else NULL
-
 encode_commas <- function(x) {
   gsub(",", "&#44;", x, fixed = TRUE)
 }
@@ -252,24 +250,6 @@ tagHasClass <- function(x, class) {
   )
 }
 
-tagEnsureClass <- function(x, class) {
-  if (!is_tag(x)) {
-    return(NULL)
-  }
-
-  if (is.null(x$attribs$class)) {
-    x$attribs$class <- class
-    return(x)
-  }
-
-  if (!tagHasClass(x, class)) {
-    x$attribs$class <- collate(x$attribs$class, class)
-    return(x)
-  }
-
-  x
-}
-
 tagRename <- function(tag, name) {
   if (!is_tag(tag)) {
     return(NULL)
@@ -281,23 +261,28 @@ tagRename <- function(tag, name) {
 
 tagIs <- function(x, name) {
   if (!is_tag(x)) {
-    return(NULL)
+    return(FALSE)
   }
 
   isTRUE(x$name %in% name)
 }
 
 tagAddClass <- function(x, class) {
+  stopifnot(is_tag(x))
+
+  if (length(class) < 1) {
+    return(x)
+  }
+
   if (is.null(x$attribs$class)) {
     x$attribs$class <- class
     return(x)
   }
 
-  this <- x$attribs$class
-  this <- paste(this, class)
-  this <- gsub("^\\s+|\\s+$", "", this)
+  old <- stringi::stri_split_regex(x$attribs$class, "\\s+")[[1]]
+  new <- unlist(stringi::stri_split_regex(class, "\\s+"))
 
-  x$attribs$class <- this
+  x$attribs$class <- paste(unique(c(old, new)), collapse = " ")
 
   x
 }
@@ -309,16 +294,5 @@ tagDropClass <- function(x, regex) {
 
   x$attribs$class <- gsub(regex, "", x$attribs$class)
   x$attribs$class <- gsub("\\s+", " ", x$attribs$class)
-  x
-}
-
-tagDropContext <- function(x, prefix) {
-  if (is.null(x$attribs$class)) {
-    return(x)
-  }
-
-  reg <- paste0(prefix, "-(primary|secondary|success|info|warning|danger|light|dark|white|muted)")
-  x$attribs$class <- gsub(reg, "", x$attribs$class)
-
   x
 }

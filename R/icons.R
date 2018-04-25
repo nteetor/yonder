@@ -37,7 +37,8 @@
 #'     ),
 #'     server = function(input, output) {
 #'       output$icon <- renderUI({
-#'         icon(input$name, class = "fa-10x")
+#'         icon(input$name) %>%
+#'           font("8x")
 #'       })
 #'     }
 #'   )

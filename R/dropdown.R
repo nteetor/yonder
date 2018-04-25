@@ -156,14 +156,14 @@ dropdownItem <- function(base) {
   }
 
   if (tagIs(base, paste0("h", 1:6))) {
-    return(tagEnsureClass(base, "dropdown-header"))
+    return(tagAddClass(base, "dropdown-header"))
   }
 
   if (tagIs(base, "a") || tagIs(base, "button")) {
     cregex <- paste(.colors, collapse = "|")
 
     base <- tagDropClass(base, paste0("btn(-", cregex, ")?"))
-    base <- tagEnsureClass(base, "dropdown-item")
+    base <- tagAddClass(base, "dropdown-item")
 
     return(base)
   }

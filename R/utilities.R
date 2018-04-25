@@ -116,7 +116,7 @@ colorUtility <- function(tag, base, color, tone) {
 
   tone <- if (tone && color != "white") paste0("-", tone) else ""
 
-  tag <- tagEnsureClass(tag, paste0(base, "-", color, tone))
+  tag <- tagAddClass(tag, paste0(base, "-", color, tone))
 
   tag
 }
@@ -138,7 +138,8 @@ colorUtility <- function(tag, base, color, tone) {
 #'
 #' @details
 #'
-#' The following colors are available,
+#' For `text()`, `background()`, and `border()`, the following colors are
+#' available,
 #'
 #' * red
 #' * purple
@@ -153,11 +154,14 @@ colorUtility <- function(tag, base, color, tone) {
 #' * grey
 #' * white
 #'
-#' For `background` you can also specify `"transparent"`.
+#' For `background()`, you can also specify the following,
+#'
+#'  * transparent
 #'
 #' @family utilities
 #' @export
 #' @examples
+#'
 #' tags$div("light text, dark background") %>%
 #'   background("grey", -2) %>%
 #'   text("yellow", +1)
@@ -292,6 +296,7 @@ text <- function(tag, color, tone = 0) {
 #' @rdname background
 #' @export
 #' @examples
+#'
 #' tags$h1("Hello, world!") %>%
 #'   border("grey", sides = c("top", "bottom"))
 #'
@@ -334,22 +339,22 @@ border <- function(tag, color, tone = 0) {
     )
   }
 
-  tag <- tagEnsureClass(tag, "border")
+  tag <- tagAddClass(tag, "border")
 
   colorUtility(tag, "border", color, tone)
 }
 
 #' Round tag element corners
 #'
-#' The `rounded` utility function applies Bootstrap classes to an element.
-#' The styles are applied by sides, e.g. `"left"` or `"bottom"`. The `"circle"`
-#' value, as it suggests, rounds the corners such that the element appears
-#' as a circle.
+#' The `rounded` utility function applies Bootstrap classes to an element. The
+#' styles are applied by sides, e.g. `"left"` or `"bottom"`. The `"circle"`
+#' value heavily rounds all the corners of an element.
 #'
 #' @param tag A tag element.
 #'
-#' @param sides One of `"top"`, `"right"`, `"bottom"`, `"left"`, `"circle"`, `"all"` or
-#'   `"none"`, defaults to `"all"`.
+#' @param sides One of `"top"`, `"right"`, `"bottom"`, `"left"`, `"circle"`,
+#'   `"all"` or `"none"`, defaults to `"all"`, specifying which and how the
+#'   the corners of the tag element are rounded.
 #'
 #' @family utilities
 #' @export
@@ -377,11 +382,7 @@ rounded <- function(tag, sides = "all") {
     character(1)
   )
 
-  for (c in classes) {
-    tag <- tagEnsureClass(tag, c)
-  }
-
-  tag
+  tagAddClass(tag, classes)
 }
 
 #' Add shadows to tag elements
@@ -437,7 +438,7 @@ shadow <- function(tag, size = "regular") {
     large = "lg"
   )
 
-  tagEnsureClass(tag, paste0(c("shadow", size), collapse = "-"))
+  tagAddClass(tag, paste0(c("shadow", size), collapse = "-"))
 }
 
 #' Float an element
@@ -501,7 +502,7 @@ float <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
     character(1)
   )
 
-  tagAddClass(tag, collate(classes))
+  tagAddClass(tag, classes)
 }
 
 #' Affix elements to top or bottom of page
@@ -533,9 +534,9 @@ affix <- function(tag, position) {
   }
 
   if (position == "sticky") {
-    tagEnsureClass(tag, "sticky-top")
+    tagAddClass(tag, "sticky-top")
   } else {
-    tagEnsureClass(tag, paste0("fixed-", position))
+    tagAddClass(tag, paste0("fixed-", position))
   }
 }
 
@@ -579,11 +580,7 @@ alignment <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
     possible = c("left", "right", "center", "justify")
   )
 
-  for (c in classes) {
-    tag <- tagEnsureClass(tag, c)
-  }
-
-  tag
+  tagAddClass(tag, classes)
 }
 
 #' Element display property, inline, block, and more
@@ -633,11 +630,7 @@ display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
     possible = c("inline", "inline-block", "block", "flex", "flex-inline", "none")
   )
 
-  for (c in classes) {
-    tag <- tagEnsureClass(tag, c)
-  }
-
-  tag
+  tagAddClass(tag, classes)
 }
 
 #' Element margins and padding
@@ -752,7 +745,7 @@ padding <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
     character(1)
   )
 
-  tagAddClass(tag, collate(classes))
+  tagAddClass(tag, classes)
 }
 
 #' @family utilities
@@ -805,7 +798,7 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
     character(1)
   )
 
-  tagAddClass(tag, collate(classes))
+  tagAddClass(tag, classes)
 }
 
 #' Tag element width and height
@@ -852,13 +845,10 @@ width <- function(tag, percentage = NULL, max = NULL) {
     )
   }
 
-  tagAddClass(
-    tag,
-    collate(
-      if (!is.null(percentage)) paste0("w-", percentage),
-      if (!is.null(max)) paste0("mw-", max)
-    )
-  )
+  percentage <- if (!is.null(precentage)) paste0("w-", precentage)
+  max <- if (!is.null(max)) paste0("mw-", max)
+
+  tagAddClass(tag, c(percentage, max))
 }
 
 #' @family utilities
@@ -886,13 +876,10 @@ height <- function(tag, percentage = NULL, max = NULL) {
     )
   }
 
-  tagAddClass(
-    tag,
-    collate(
-      if (!is.null(percentage)) paste0("h-", percentage),
-      if (!is.null(max)) paste0("mh-", max)
-    )
-  )
+  percentage <- if (!is.null(precentage)) paste0("h-", precentage)
+  max <- if (!is.null(max)) paste0("mh-", max)
+
+  tagAddClass(tag, c(percentage, max))
 }
 
 # Apply styles to a tag

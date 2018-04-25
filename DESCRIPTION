@@ -1,9 +1,9 @@
 Package: dull
 Type: Package
-Title: A New Approach to Shiny
+Title: Shiny Reimagined With Bootstrap 4
 Version: 0.0.5
 Authors@R: person(given = "Nathan", family = "Teetor", email = "nathanteetor@gmail.com", role = c("aut", "cre"))
-Description: A new way to build shiny applications.
+Description: A new toolset to build shiny applications with Bootstrap 4.
 License: What license is it under?
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
@@ -16,7 +16,8 @@ Imports:
     htmltools,
     magrittr,
     jsonlite,
-    rlang
+    rlang,
+    stringi
 Suggests:
     testthat,
     knitr,

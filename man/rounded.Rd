@@ -9,14 +9,14 @@ rounded(tag, sides = "all")
 \arguments{
 \item{tag}{A tag element.}
 
-\item{sides}{One of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"}, \code{"circle"}, \code{"all"} or
-\code{"none"}, defaults to \code{"all"}.}
+\item{sides}{One of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"}, \code{"circle"},
+\code{"all"} or \code{"none"}, defaults to \code{"all"}, specifying which and how the
+the corners of the tag element are rounded.}
 }
 \description{
-The \code{rounded} utility function applies Bootstrap classes to an element.
-The styles are applied by sides, e.g. \code{"left"} or \code{"bottom"}. The \code{"circle"}
-value, as it suggests, rounds the corners such that the element appears
-as a circle.
+The \code{rounded} utility function applies Bootstrap classes to an element. The
+styles are applied by sides, e.g. \code{"left"} or \code{"bottom"}. The \code{"circle"}
+value heavily rounds all the corners of an element.
 }
 \examples{
 

@@ -79,7 +79,7 @@ col <- function(..., default = NULL, sm = NULL, md = NULL, lg = NULL,
   args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
 
   if (length(args) == 0) {
-    return(tagEnsureClass(tags$div(...), "col"))
+    return(tagAddClass(tags$div(...), "col"))
   }
 
   classes <- responsives(

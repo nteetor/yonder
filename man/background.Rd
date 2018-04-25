@@ -28,7 +28,8 @@ The \code{text}, \code{background}, and \code{border} utility functions may be u
 change the text, background, or border color of a tag element, respectively.
 }
 \details{
-The following colors are available,
+For \code{text()}, \code{background()}, and \code{border()}, the following colors are
+available,
 \itemize{
 \item red
 \item purple
@@ -44,9 +45,13 @@ The following colors are available,
 \item white
 }
 
-For \code{background} you can also specify \code{"transparent"}.
+For \code{background()}, you can also specify the following,
+\itemize{
+\item transparent
+}
 }
 \examples{
+
 tags$div("light text, dark background") \%>\%
   background("grey", -2) \%>\%
   text("yellow", +1)
@@ -121,6 +126,7 @@ if (interactive()) {
     }
   )
 }
+
 
 tags$h1("Hello, world!") \%>\%
   border("grey", sides = c("top", "bottom"))

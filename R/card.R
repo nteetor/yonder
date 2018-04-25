@@ -40,7 +40,7 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
     elements(args),
     function(el) {
       if (isListGroup(el)) {
-        return(tagEnsureClass(el, "list-group-flush"))
+        return(tagAddClass(el, "list-group-flush"))
       }
 
       tags$div(
@@ -78,10 +78,10 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
       if (tagHasClass(header, "nav-tabs")) {
         tags$div(
           class = "card-header",
-          tagEnsureClass(header, "card-header-tabs")
+          tagAddClass(header, "card-header-tabs")
         )
       } else {
-        tagEnsureClass(header, "card-header")
+        tagAddClass(header, "card-header")
       }
     } else {
       tags$div(class = "card-header", header)
@@ -90,7 +90,7 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
 
   title <- if (!is.null(title)) {
     if (is_tag(title)) {
-      tagEnsureClass(title, "card-title")
+      tagAddClass(title, "card-title")
     } else {
       tags$h5(class = "card-title", title)
     }
@@ -98,19 +98,19 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
 
   subtitle <- if (!is.null(subtitle)) {
     if (is_tag(subtitle)) {
-      tagEnsureClass(subtitle, "card-subtitle")
+      tagAddClass(subtitle, "card-subtitle")
     } else {
       tags$h6(class = "card-subtitle", subtitle)
     }
   }
 
   image <- if (!is.null(image)) {
-    tagEnsureClass(image, "card-img-top")
+    tagAddClass(image, "card-img-top")
   }
 
   footer <- if (!is.null(footer)) {
     if (is_tag(footer)) {
-      tagEnsureClass(footer, "card-footer")
+      tagAddClass(footer, "card-footer")
     } else {
       tags$div(class = )
     }

@@ -63,7 +63,7 @@ navbar <- function(..., brand = NULL) {
     function(arg) {
       if (tagHasClass(arg, "nav")) {
         arg <- tagDropClass(arg, "nav-tabs|nav-pills")
-        arg <- tagEnsureClass(arg, "navbar-nav")
+        arg <- tagAddClass(arg, "navbar-nav")
       } else if (tagIs(arg, "form")) {
         if (!tagHasClass(arg, "inline-form")) {
           warning("non-inline form element passed to `navbar()`", call. = FALSE)
