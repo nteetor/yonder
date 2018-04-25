@@ -28,7 +28,6 @@
 
 .dull-alert {
   top: 35px;
-
   width: auto;
   margin-top: 10px;
   padding: 10px 25px;
@@ -37,17 +36,14 @@
   align-items: center;
   justify-content: space-between;
   font-size: 1.1rem;
-  // font-weight: 300;
   cursor: default;
 
   .alert-action {
     margin-left: 3rem;
     margin-right: -20px;
-
     background: transparent;
     border: 0;
     color: inherit;
-
     font-weight: 500;
     text-transform: uppercase;
 

@@ -281,7 +281,7 @@ $greys: (
   '900': $gray-900
 );
 
-$color-maps: ()  !default;
+$color-maps: () !default;
 $color-maps: map-merge((
   'red': $reds,
   'pink': $pinks,
