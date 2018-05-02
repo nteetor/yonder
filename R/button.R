@@ -67,6 +67,7 @@
 #'   )
 #' }
 #'
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
@@ -114,6 +115,7 @@ buttonInput <- function(id, label, block = FALSE, ...) {
   )
 }
 
+#' @family inputs
 #' @rdname buttonInput
 #' @export
 submitInput <- function(label = "Submit", block = FALSE, ...) {
@@ -133,6 +135,7 @@ submitInput <- function(label = "Submit", block = FALSE, ...) {
   )
 }
 
+#' @family inputs
 #' @rdname buttonInput
 #' @export
 #' @examples
@@ -189,10 +192,12 @@ linkInput <- function(id, text, ...) {
 #' @param values A character vector of values, one for each button specified,
 #'   defaults to `labels`.
 #'
+#' @family inputs
 #' @export
 #' @examples
 #'
 #' buttonGroupInput("group", c("Once", "Twice"), c(1, 2))
+#'
 #'
 #' if (interactive()) {
 #'   shinyApp(
@@ -217,6 +222,7 @@ linkInput <- function(id, text, ...) {
 #'     }
 #'   )
 #' }
+#'
 #'
 #' if (interactive()) {
 #'   shinyApp(

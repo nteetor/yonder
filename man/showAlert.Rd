@@ -53,6 +53,7 @@ if (interactive()) {
   )
 }
 
+
 if (interactive()) {
   shinyApp(
     ui = container(
@@ -122,6 +123,7 @@ if (interactive()) {
     }
   )
 }
+
 
 # this is a variation of the second example
 if (interactive()) {

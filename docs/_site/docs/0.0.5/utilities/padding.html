@@ -1,0 +1,242 @@
+<!doctype html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="/dull/assets/css/main.css">
+
+  </head>
+  <body>
+
+    <header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
+  <a class="navbar-brand" href="/dull">
+    dull
+  </a>
+
+  <ul class="navbar-nav ml-sm-3">
+    <li class="nav-item">
+      <a class="nav-link " href="/dull/">Home<a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/dull/docs/0.0.5/">Documentation</a>
+    </li>
+  </ul>
+</header>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="sidebar col-2 p-2">
+  <dl>
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/content">
+        Content
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/flex">
+        Flex
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/inputs">
+        Inputs
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/utilities">
+        Utilities
+      </a>
+    </dt>
+
+    
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/font">
+        font
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/background">
+        background
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/rounded">
+        rounded
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/float">
+        float
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/affix">
+        affix
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/alignment">
+        alignment
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/display">
+        display
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted font-weight-bold" href="/dull/docs/0.0.5/utilities/padding">
+        padding
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/width">
+        width
+      </a>
+    </dd>
+    
+    
+
+    
+  </dl>
+</div>
+
+        <div class="col">
+          <h1>Element margins and padding</h1>
+          <p class="lead">
+            <p>These utilities change the padding or margins of a tag. Each argument value
+may be a single value or a vector of four values. Margins and padding are
+specified as 0, 1, 2, 3, 4, or 5, where 0 removes all space and 5 adds the most
+space.</p>
+
+<p>Specifying a single value changes the margins or padding along all four sides
+of <code class="highlighter-rouge">tag</code>. To apply different margins or padding to each side pass a vector of
+four values. In this case, the first value adjusts the top, second the right
+side, third the bottom, and the fourth value adjusts the left side. As a wise
+help page once said, think “<strong>tr</strong>ou<strong>bl</strong>e” to help remember the order.</p>
+
+          </p>
+
+          <h2 id="params">Arguments</h2>
+          
+            <h4 id="param-tag" class="text-monospace">tag</h4>
+            <p><p>A tag element.</p>
+</p>
+          
+            <h4 id="param-default" class="text-monospace">default</h4>
+            <p><p>One of 0, 1, 2, 3, 4, 5 specifying the default margins or
+  padding to apply. If the margins and padding remain the same across all
+  viewports then only <code class="highlighter-rouge">default</code> needs to be specified.</p>
+
+<p>For <strong>margins</strong>, specifying <code class="highlighter-rouge">"auto"</code> leaves the spacing up to the browser.
+  For example, you could horizontally center an element for all viewports
+  by specifying <code class="highlighter-rouge">default = c(1, "auto", 1, "auto")</code>.</p>
+</p>
+          
+            <h4 id="param-sm" class="text-monospace">sm</h4>
+            <p><p>Like <code class="highlighter-rouge">default</code>, but the margins or padding are applied once the
+viewport is 576 pixels wide, think phone in landscape mode.</p>
+</p>
+          
+            <h4 id="param-md" class="text-monospace">md</h4>
+            <p><p>Like <code class="highlighter-rouge">default</code>, but the margins or padding are applied once the
+viewport is 768 pixels wide, think tablets.</p>
+</p>
+          
+            <h4 id="param-lg" class="text-monospace">lg</h4>
+            <p><p>Like <code class="highlighter-rouge">default</code>, but the margins or padding are applied once the
+viewport is 992 pixels wide, think desktop.</p>
+</p>
+          
+            <h4 id="param-xl" class="text-monospace">xl</h4>
+            <p><p>Like <code class="highlighter-rouge">default</code>, but the margins or padding are applied once the
+viewport is 1200 pixels wide, think large desktop.</p>
+</p>
+          
+
+          <h2 id="source">Source</h2>
+          <p>
+            
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">padding</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> 
+    </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">args</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dropNulls</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">default</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">md</span><span class="p">,</span><span class="w"> 
+        </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lg</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xl</span><span class="p">))</span><span class="w">
+    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `padding` arguments, at least one argument must not be NULL"</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">vapply</span><span class="p">(</span><span class="n">names2</span><span class="p">(</span><span class="n">args</span><span class="p">),</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">nm</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">arg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">args</span><span class="p">[[</span><span class="n">nm</span><span class="p">]]</span><span class="w">
+        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">all</span><span class="p">(</span><span class="n">arg</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="m">0</span><span class="o">:</span><span class="m">5</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `padding` argument, `"</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="s2">"` value(s) must be 0, 1, 2, 3, 4, or 5"</span><span class="p">,</span><span class="w"> 
+                </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `padding` argument, `"</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="s2">"` must be a single value or a vector of 4 values"</span><span class="p">,</span><span class="w"> 
+                </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+        </span><span class="n">prefix</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"p"</span><span class="w">
+        </span><span class="n">sides</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"t"</span><span class="p">,</span><span class="w"> </span><span class="s2">"r"</span><span class="p">,</span><span class="w"> </span><span class="s2">"b"</span><span class="p">,</span><span class="w"> </span><span class="s2">"l"</span><span class="p">)</span><span class="w">
+        </span><span class="n">breakpoint</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nm</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"default"</span><span class="p">)</span><span class="w"> 
+            </span><span class="s2">"-"</span><span class="w">
+        </span><span class="k">else</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"-"</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="s2">"-"</span><span class="p">)</span><span class="w">
+        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">default</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="nf">return</span><span class="p">(</span><span class="n">paste0</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span><span class="w"> </span><span class="n">sides</span><span class="p">,</span><span class="w"> </span><span class="n">breakpoint</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="n">collapse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">" "</span><span class="p">))</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+        </span><span class="n">paste0</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span><span class="w"> </span><span class="n">breakpoint</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w">
+    </span><span class="p">},</span><span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="m">1</span><span class="p">))</span><span class="w">
+    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span><span class="w">
+            </span></code></pre></figure>
+
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

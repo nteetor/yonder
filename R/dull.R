@@ -4,8 +4,13 @@
 #'
 #' @section Q and A:
 #'
+#' This is a section stub.
+#'
+#' @section shiny to dull:
+#'
+#' How to move from shiny to dull.
+#'
 #' @importFrom shiny getDefaultReactiveDomain tagAppendAttributes
 #' @importFrom rlang dots_list
-#'
 #' @name dull
 "_PACKAGE"

@@ -1,0 +1,38 @@
+<!doctype html>
+<html>
+  <head>
+
+    {% include header.html %}
+
+  </head>
+  <body>
+
+    {% include navbar.html %}
+
+    <div class="container">
+      <div class="row">
+
+        {% include sidebar.html %}
+
+        <div class="col">
+          <h1>{{ page.roxygen.title }}</h1>
+          <p class="lead">
+            {{ page.roxygen.description | markdownify }}
+          </p>
+
+          <h2 id="params">Arguments</h2>
+          {% for param in page.roxygen.parameters %}
+            <h4 id="param-{{ param.name }}" class="text-monospace">{{ param.name }}</h4>
+            <p>{{ param.description | markdownify }}</p>
+          {% endfor %}
+
+          <h2 id="source">Source</h2>
+          <p>
+            {% highlight R %}{{ page.roxygen.source }}
+            {% endhighlight %}
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

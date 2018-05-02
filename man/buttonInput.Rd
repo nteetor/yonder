@@ -71,6 +71,7 @@ if (interactive()) {
   )
 }
 
+
 if (interactive()) {
   shinyApp(
     ui = container(
@@ -119,9 +120,19 @@ if (interactive()) {
 Bootstrap 4 button documentation:
 \url{https://getbootstrap.com/docs/4.0/components/buttons/}
 
-Other inputs: \code{\link{checkboxInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{radioInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{checkboxInput}}, \code{\link{formInput}},
+  \code{\link{groupInput}}, \code{\link{radioInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
+
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{checkboxInput}}, \code{\link{formInput}},
+  \code{\link{groupInput}}, \code{\link{radioInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
+
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{checkboxInput}}, \code{\link{formInput}},
+  \code{\link{groupInput}}, \code{\link{radioInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

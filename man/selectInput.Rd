@@ -62,9 +62,9 @@ if (interactive()) {
 
 }
 \seealso{
-Other inputs: \code{\link{buttonInput}},
-  \code{\link{checkboxInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{radioInput}},
-  \code{\link{textInput}}
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{radioInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

@@ -52,6 +52,7 @@
 #'   )
 #' }
 #'
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(

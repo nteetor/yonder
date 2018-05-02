@@ -1,0 +1,14 @@
+<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
+  <a class="navbar-brand" href="{{ site.baseurl }}">
+    {{ site.package.name }}
+  </a>
+
+  <ul class="navbar-nav ml-sm-3">
+    <li class="nav-item">
+      <a class="nav-link {% if page.layout == "home" %}active{% endif %}" href="{{ site.baseurl }}/">Home<a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link {% if page.url contains "/docs/" %}active{% endif %}" href="{{ site.baseurl }}/docs/{{ site.package.version }}/">Documentation</a>
+    </li>
+  </ul>
+</header>

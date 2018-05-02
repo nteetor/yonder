@@ -46,6 +46,7 @@
 #'   )
 #' }
 #'
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
@@ -171,6 +172,7 @@ showAlert <- function(text, ..., duration = 4, color = NULL, action = NULL) {
 #'     }
 #'   )
 #' }
+#'
 #'
 #' # this is a variation of the second example
 #' if (interactive()) {

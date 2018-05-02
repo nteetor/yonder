@@ -1,0 +1,27 @@
+<div class="sidebar col-2 p-2">
+  <dl>
+    {% assign collections = site.collections | where_exp:"coll", "coll.label != 'posts'" %}
+
+    {% for collection in collections %}
+
+    {% assign name = collection.label %}
+
+    <dt class="mb-1">
+      <a class="text-dark" href="{{ site.baseurl }}/docs/{{ site.package.version }}/{{ name }}">
+        {{ name | capitalize }}
+      </a>
+    </dt>
+
+    {% if page.layout == "page" and page.collection == name %}
+    {% for item in page.sections %}
+    <dd>
+      <a class="text-muted{% if page.slug == item.slug %} font-weight-bold{% endif %}" href="{{ site.baseurl }}/docs/{{ site.package.version }}/{{ page.collection }}/{{ item.slug }}">
+        {{ item.name }}
+      </a>
+    </dd>
+    {% endfor %}
+    {% endif %}
+
+    {% endfor %}
+  </dl>
+</div>

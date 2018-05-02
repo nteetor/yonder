@@ -10,6 +10,14 @@ More freedom to the programmer, more to come.
 }
 \section{Q and A}{
 
+
+This is a section stub.
+}
+
+\section{shiny to dull}{
+
+
+How to move from shiny to dull.
 }
 
 \author{

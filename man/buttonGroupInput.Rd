@@ -22,6 +22,7 @@ Groups of buttons with a persisting value.
 
 buttonGroupInput("group", c("Once", "Twice"), c(1, 2))
 
+
 if (interactive()) {
   shinyApp(
     ui = container(
@@ -45,6 +46,7 @@ if (interactive()) {
     }
   )
 }
+
 
 if (interactive()) {
   shinyApp(
@@ -81,3 +83,10 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other inputs: \code{\link{buttonInput}},
+  \code{\link{checkboxInput}}, \code{\link{formInput}},
+  \code{\link{groupInput}}, \code{\link{radioInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
+}
+\concept{inputs}

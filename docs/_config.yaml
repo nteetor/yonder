@@ -1,0 +1,113 @@
+# Welcome to Jekyll!
+
+# Site variables -------
+title: Shiny Reimagined With Bootstrap 4
+email: nathanteetor@gmail.com
+description: A new toolset to build shiny applications with Bootstrap 4.
+baseurl: /dull
+url: https://nteetor.github.io/
+
+# Package variables ----
+package:
+  name: dull
+  version: 0.0.5
+
+# Build settings -------
+collections_dir: collections
+markdown: kramdown
+plugins:
+  - jekyll-redirect-from
+
+# Collections ----------
+collections:
+  content:
+    output: yes
+    permalink: /docs/0.0.5/:collection/:path
+  inputs:
+    output: yes
+    permalink: /docs/0.0.5/:collection/:path
+  utilities:
+    output: yes
+    permalink: /docs/0.0.5/:collection/:path
+  flex:
+    output: yes
+    permalink: /docs/0.0.5/:collection/:path
+
+
+# Defaults -------------
+defaults:
+- scope:
+    path: ''
+    type: content
+  values:
+    sections:
+    - name: img
+      slug: img
+    - name: blockquote
+      slug: blockquote
+    - name: pre
+      slug: pre
+- scope:
+    path: ''
+    type: inputs
+  values:
+    sections:
+    - name: textInput
+      slug: text-input
+    - name: selectInput
+      slug: select-input
+    - name: buttonInput
+      slug: button-input
+    - name: buttonGroupInput
+      slug: button-group-input
+    - name: checkboxInput
+      slug: checkbox-input
+    - name: groupInput
+      slug: group-input
+    - name: formInput
+      slug: form-input
+    - name: radioInput
+      slug: radio-input
+- scope:
+    path: ''
+    type: utilities
+  values:
+    sections:
+    - name: font
+      slug: font
+    - name: background
+      slug: background
+    - name: rounded
+      slug: rounded
+    - name: float
+      slug: float
+    - name: affix
+      slug: affix
+    - name: alignment
+      slug: alignment
+    - name: display
+      slug: display
+    - name: padding
+      slug: padding
+    - name: width
+      slug: width
+- scope:
+    path: ''
+    type: flex
+  values:
+    sections:
+    - name: direction
+      slug: direction
+    - name: content
+      slug: content
+    - name: items
+      slug: items
+    - name: wrap
+      slug: wrap
+
+
+# Excluded files -------
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md

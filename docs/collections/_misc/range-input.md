@@ -1,0 +1,122 @@
+---
+layout: page
+slug: range-input
+roxygen:
+  rdname: ~
+  name: rangeInput
+  doctype: ~
+  title: Ranges, intervals, and custom sliders
+  description: A take on shiny's `sliderInput`.
+  parameters:
+  - name: id
+    description: A character string specifying the id of the range input or `NULL`.
+  - name: min
+    description: |-
+      A number specifying the minimum value of the range input, defaults
+      to `0`.
+  - name: max
+    description: |-
+      A number specifying the maximum value of the range input, defaults
+      to `100`.
+  - name: default
+    description: |-
+      A numeric vector between `min` and `max` specifying the
+        default value of the range input.
+
+        For **rangeInput**, a single number, defaults to `min`.
+
+        For **intervalInput**, a vector of two numbers specifying the minimum and
+        maximum of the slider interval, defaults to `c(min, max)`.
+  - name: step
+    description: |-
+      A number specifying the interval step of the range input,
+      defaults to `1`.
+  - name: draggable
+    description: |-
+      One of `TRUE` or `FALSE` specifying if the user can drag the
+      interval between an interval input's two sliders defaults to `FALSE`. If
+      `TRUE` the slider interval may be dragged with the cursor, otherwise the
+      interval is not draggable.
+  - name: choices
+    description: |-
+      A character vector specifying the labels along the slider
+      input.
+  - name: values
+    description: |-
+      A character vector specifying the values of the slider input,
+      defaults to `choices`.
+  - name: selected
+    description: |-
+      One of `values` specifying the initial value of the slider
+      input, defaults to `NULL`, in which case the slider input defaults to the
+      first choice.
+  - name: ticks
+    description: |-
+      One of `TRUE` or `FALSE` specifying if tick marks are added to
+      the range input, defaults to `FALSE`. If `TRUE` tick marks are added,
+      otherwise if `FALSE` tick marks are not added.
+  - name: fill
+    description: |-
+      One of `TRUE` or `FALSE` specifying whether the filled portion of
+        a range or slider input is shown. If `FALSE` the filled porition is hidden.
+
+        For **rangeInput** the default is `TRUE`.
+
+        For **sliderInput** the default is `FALSE`.
+  - name: labels
+    description: |-
+      A number specifying how many ticks are labeled, defaults to
+      `4`. If `snap` is `TRUE`, this argument is ignored and tick labels are
+      based on `step`.
+  - name: snap
+    description: |-
+      One of `TRUE` or `FALSE` specifying how the range input tick
+      marks are labeled, defaults to `FALSE`. If `TRUE` the range input tick
+      marks are adjusted to align with a multiple of `step`. If `FALSE` the range
+      input tick marks are calculeted using `labels`.
+  - name: prefix
+    description: |-
+      A character string specifying a prefix for the range input
+      slider value, defaults to `NULL`, in which case a prefix is not prepended.
+  - name: suffix
+    description: |-
+      A character string specifying a suffix for the range input
+      slider value, defaults to `NULL`, in which case a prefix is not appended.
+  sections: ~
+  examples: |
+    if (interactive()) {
+      shinyApp(
+        ui = container(
+          rangeInput("default") %>%
+            background("yellow"),
+          rangeInput("blue") %>%
+            background("blue", +1),
+          rangeInput("red") %>%
+            background("red", -1),
+          rangeInput("white", step = 10, snap = TRUE) %>%
+            background("green", +2),
+          rangeInput("yellow", prefix = "$", suffix = ".00")
+        ),
+        server = function(input, output) {
+          observe({
+            req(input$default)
+            cat(paste0(rep.int("\r", nchar(input$default)), input$default))
+          })
+
+        }
+      )
+    }
+  aliases: ~
+  family: ~
+  export: yes
+  filename: range.R
+  source: "rangeInput <- function(id, min = 0, max = 100, default = min, \n    step
+    = 1, ticks = TRUE, fill = TRUE, labels = 4, snap = FALSE, \n    prefix = NULL,
+    suffix = NULL) {\n    tags$div(class = \"dull-range-input bg-grey\", id = id,
+    tags$input(class = \"range\", \n        type = \"text\", `data-type` = \"single\",
+    `data-min` = min, \n        `data-max` = max, `data-step` = step, `data-from`
+    = default, \n        `data-prettify-separator` = \",\", `data-prefix` = prefix,
+    \n        `data-postfix` = suffix, `data-grid` = ticks, `data-grid-num` = labels,
+    \n        `data-grid-snap` = if (isTRUE(snap)) \n            snap, `data-no-fill`
+    = if (!fill) \n            \"true\"), include(\"core\"), include(\"ion slider\"))\n}"
+---

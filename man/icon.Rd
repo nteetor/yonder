@@ -27,7 +27,7 @@ if (interactive()) {
       fluid = FALSE,
       selectInput(
         id = "name",
-        choices = unique(.icons$name),
+        choices = unique(.icons$name)
       ) \%>\%
         margins(3),
       div(
