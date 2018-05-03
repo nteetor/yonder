@@ -96,14 +96,33 @@ roxygen:
   family: ~
   export: yes
   filename: table.R
-  source: "tableThruput <- function(id, borders = FALSE, context = NULL, \n    compact
-    = FALSE, ...) {\n    if (!is.null(id) && !is.character(id)) {\n        stop(\"invalid
-    `tableThruput` argument, `id` must be a character string or \", \n            \"NULL\",
-    call. = FALSE)\n    }\n    shiny::registerInputHandler(type = \"dull.table.input\",
-    fun = function(x, \n        session, name) {\n        frame <- jsonlite::fromJSON(x)\n
-    \       if (NROW(frame) == 0 || NCOL(frame) == 0) {\n            return(NULL)\n
-    \       }\n        frame\n    }, force = TRUE)\n    tags$table(class = collate(\"dull-table-thruput\",
-    \"table\", \n        if (is.character(id)) \n            \"table-hover\", \"table-responsive\",
-    if (borders) \n            \"table-bordered\", if (compact) \n            \"table-sm\"),
-    id = id, ...)\n}"
+  source:
+  - tableThruput <- function(id, borders = FALSE, context = NULL,
+  - '                         compact = FALSE, ...) {'
+  - '  if (!is.null(id) && !is.character(id)) {'
+  - '    stop('
+  - '      "invalid `tableThruput` argument, `id` must be a character string or ",'
+  - '      "NULL", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  shiny::registerInputHandler(type = "dull.table.input", fun = function(x,'
+  - '                                                                        session,
+    name) {'
+  - '    frame <- jsonlite::fromJSON(x)'
+  - '    if (NROW(frame) == 0 || NCOL(frame) == 0) {'
+  - '      return(NULL)'
+  - '    }'
+  - '    frame'
+  - '  }, force = TRUE)'
+  - '  tags$table(class = collate('
+  - '    "dull-table-thruput", "table",'
+  - '    if (is.character(id)) {'
+  - '      "table-hover"'
+  - '    } , "table-responsive", if (borders) {'
+  - '      "table-bordered"'
+  - '    } , if (compact) {'
+  - '      "table-sm"'
+  - '    }'
+  - '  ), id = id, ...)'
+  - '}'
 ---

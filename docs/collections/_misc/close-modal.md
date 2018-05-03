@@ -14,8 +14,8 @@ roxygen:
   family: ~
   export: yes
   filename: modal.R
-  source: |-
-    closeModal <- function(session = getDefaultReactiveDomain()) {
-        session$sendCustomMessage("dull:modal", list(close = TRUE))
-    }
+  source:
+  - closeModal <- function(session = getDefaultReactiveDomain()) {
+  - '  session$sendCustomMessage("dull:modal", list(close = TRUE))'
+  - '}'
 ---

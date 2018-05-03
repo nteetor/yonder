@@ -103,12 +103,26 @@ roxygen:
   family: inputs
   export: yes
   filename: checkbox.R
-  source: "checkboxInput <- function(id, choice, value = choice, checked = FALSE,
-    \n    ...) {\n    value <- as.character(value)\n    self <- ID(\"checkbox\")\n
-    \   tags$div(class = \"dull-checkbox-input\", id = id, tags$div(class = collate(\"custom-control\",
-    \n        \"custom-checkbox\"), tags$input(class = \"custom-control-input\", \n
-    \       type = \"checkbox\", id = self, `data-value` = value, checked = if (checked)
-    \n            NA), tags$label(class = \"custom-control-label\", `for` = self,
-    \n        choice), tags$div(class = \"invalid-feedback\"), tags$div(class = \"valid-feedback\")),
-    \n        ..., include(\"core\"))\n}"
+  source:
+  - checkboxInput <- function(id, choice, value = choice, checked = FALSE,
+  - '                          ...) {'
+  - '  value <- as.character(value)'
+  - '  self <- ID("checkbox")'
+  - '  tags$div('
+  - '    class = "dull-checkbox-input", id = id, tags$div(class = collate('
+  - '      "custom-control",'
+  - '      "custom-checkbox"'
+  - '    ), tags$input('
+  - '      class = "custom-control-input",'
+  - '      type = "checkbox", id = self, `data-value` = value, checked = if (checked)
+    {'
+  - '        NA'
+  - '      }'
+  - '    ), tags$label('
+  - '      class = "custom-control-label", `for` = self,'
+  - '      choice'
+  - '    ), tags$div(class = "invalid-feedback"), tags$div(class = "valid-feedback")),'
+  - '    ..., include("core")'
+  - '  )'
+  - '}'
 ---

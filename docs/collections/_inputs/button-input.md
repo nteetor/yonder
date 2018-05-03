@@ -95,9 +95,16 @@ roxygen:
   family: inputs
   export: yes
   filename: button.R
-  source: "buttonInput <- function(id, label, block = FALSE, ...) {\n    shiny::registerInputHandler(type
-    = \"dull.button\", fun = function(x, \n        session, name) as.numeric(x), force
-    = TRUE)\n    tags$button(class = collate(\"dull-button-input\", \"btn\", if (block)
-    \n        \"btn-block\", \"btn-grey\"), type = \"button\", role = \"button\",
-    \n        label, id = id, ...)\n}"
+  source:
+  - buttonInput <- function(id, label, block = FALSE, ...) {
+  - '  shiny::registerInputHandler(type = "dull.button", fun = function(x,'
+  - '                                                                   session, name)
+    as.numeric(x), force = TRUE)'
+  - '  tags$button('
+  - '    class = collate("dull-button-input", "btn", if (block) {'
+  - '      "btn-block"'
+  - '    } , "btn-grey"), type = "button", role = "button",'
+  - '    label, id = id, ...'
+  - '  )'
+  - '}'
 ---

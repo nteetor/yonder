@@ -14,7 +14,12 @@ roxygen:
   family: ~
   export: yes
   filename: textual.R
-  source: "telephoneInput <- function(id, value = NULL, placeholder = NULL, \n    size
-    = NULL, readonly = FALSE, help = NULL, ...) {\n    textualInput(id, value, placeholder,
-    readonly, help, \"tel\", \n        size = size, ...)\n}"
+  source:
+  - telephoneInput <- function(id, value = NULL, placeholder = NULL,
+  - '                           size = NULL, readonly = FALSE, help = NULL, ...) {'
+  - '  textualInput('
+  - '    id, value, placeholder, readonly, help, "tel",'
+  - '    size = size, ...'
+  - '  )'
+  - '}'
 ---

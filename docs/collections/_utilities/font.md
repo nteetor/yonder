@@ -38,18 +38,37 @@ roxygen:
   family: utilities
   export: yes
   filename: utilities.R
-  source: "font <- function(tag, size = NULL, weight = NULL) {\n    if (!re(weight,
-    \"bold|normal|light|italic|monospace\")) {\n        stop(\"invalid `text` argument,
-    `weight` must be one of \", \n            \"\\\"bold\\\", \\\"normal\\\", \\\"light\\\",
-    \\\"italic\\\", or \\\"monospace\\\"\", \n            call. = FALSE)\n    }\n
-    \   if (!re(size, \"([2-9]|10)x\")) {\n        stop(\"invalid `size` argument,
-    `size` must be one of \", \n            \"\\\"2x\\\" through \\\"10px\\\"\", call.
-    = FALSE)\n    }\n    if (!is.null(size)) {\n        size <- paste0(\"font-size-\",
-    size)\n        tag <- tagDropClass(tag, \"font-size-([2-9]|10)x\")\n        tag
-    <- tagAddClass(tag, size)\n    }\n    if (!is.null(weight)) {\n        if (re(weight,
-    \"bold|normal|light\")) {\n            weight <- paste0(\"font-weight-\", weight)\n
-    \       }\n        else {\n            weight <- paste0(\"font-\", weight)\n        }\n
-    \       tag <- tagDropClass(tag, \"font-(weight-(bold|normal|light)|italic|monospace)\")\n
-    \       tag <- tagAddClass(tag, weight)\n    }\n    tag\n}"
+  source:
+  - font <- function(tag, size = NULL, weight = NULL) {
+  - '  if (!re(weight, "bold|normal|light|italic|monospace")) {'
+  - '    stop('
+  - '      "invalid `text` argument, `weight` must be one of ",'
+  - '      "\"bold\", \"normal\", \"light\", \"italic\", or \"monospace\"",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!re(size, "([2-9]|10)x")) {'
+  - '    stop('
+  - '      "invalid `size` argument, `size` must be one of ",'
+  - '      "\"2x\" through \"10px\"", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!is.null(size)) {'
+  - '    size <- paste0("font-size-", size)'
+  - '    tag <- tagDropClass(tag, "font-size-([2-9]|10)x")'
+  - '    tag <- tagAddClass(tag, size)'
+  - '  }'
+  - '  if (!is.null(weight)) {'
+  - '    if (re(weight, "bold|normal|light")) {'
+  - '      weight <- paste0("font-weight-", weight)'
+  - '    }'
+  - '    else {'
+  - '      weight <- paste0("font-", weight)'
+  - '    }'
+  - '    tag <- tagDropClass(tag, "font-(weight-(bold|normal|light)|italic|monospace)")'
+  - '    tag <- tagAddClass(tag, weight)'
+  - '  }'
+  - '  tag'
+  - '}'
 redirect_from: /docs/0.0.5/utilities/
 ---

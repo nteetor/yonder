@@ -77,22 +77,56 @@ roxygen:
   family: ~
   export: yes
   filename: icons.R
-  source: "icon <- function(name, ..., set = NULL) {\n    if (length(name) != 1) {\n
-    \       stop(\"invalid `icon()` argument, `name` must be a single character string\",
-    \n            call. = FALSE)\n    }\n    if (!is.null(set)) {\n        if (length(set)
-    != 1) {\n            stop(\"invalid `icon()` argument, if specified `set` must
-    be a single \", \n                \"character string\", call. = FALSE)\n        }\n
-    \       if (!(set %in% .icons$set)) {\n            stop(\"invalid `icon()` argument,
-    unknown icon set\", \n                \"\\\"\", set, \"\\\"\", call. = FALSE)\n
-    \       }\n    }\n    index <- .icons$name == name & if (!is.null(set)) \n        .icons$set
-    == set\n    else TRUE\n    icon <- head(.icons[index, ], 1)\n    if (NROW(icon)
-    == 0) {\n        stop(\"in `icon()`, no icon found with name \\\"\", name, \n
-    \           \"\\\"\", if (!is.null(set)) \n                paste0(\" in set \\\"\",
-    set, \"\\\"\"), call. = FALSE)\n    }\n    if (icon$set == \"font awesome\") {\n
-    \       tags$i(class = collate(icon$prefix, sprintf(\"fa-%s\", \n            icon$name),
-    \"fa-fw\"), ..., include(\"font awesome\"))\n    }\n    else if (icon$set == \"material
-    design\") {\n        tags$i(class = \"material-icons\", ..., icon$name, include(\"material
-    icons\"))\n    }\n    else if (icon$set == \"feather\") {\n        tags$i(`data-feather`
-    = icon$name, ..., tags$script(\"feather.replace()\"), \n            include(\"feather\"))\n
-    \   }\n}"
+  source:
+  - icon <- function(name, ..., set = NULL) {
+  - '  if (length(name) != 1) {'
+  - '    stop('
+  - '      "invalid `icon()` argument, `name` must be a single character string",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!is.null(set)) {'
+  - '    if (length(set) != 1) {'
+  - '      stop('
+  - '        "invalid `icon()` argument, if specified `set` must be a single ",'
+  - '        "character string", call. = FALSE'
+  - '      )'
+  - '    }'
+  - '    if (!(set %in% .icons$set)) {'
+  - '      stop('
+  - '        "invalid `icon()` argument, unknown icon set",'
+  - '        "\"", set, "\"", call. = FALSE'
+  - '      )'
+  - '    }'
+  - '  }'
+  - '  index <- .icons$name == name & if (!is.null(set)) {'
+  - '    .icons$set == set'
+  - '  } else {'
+  - '    TRUE'
+  - '  }'
+  - '  icon <- head(.icons[index, ], 1)'
+  - '  if (NROW(icon) == 0) {'
+  - '    stop('
+  - '      "in `icon()`, no icon found with name \"", name,'
+  - '      "\"", if (!is.null(set)) {'
+  - '        paste0(" in set \"", set, "\"")'
+  - '      } , call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (icon$set == "font awesome") {'
+  - '    tags$i(class = collate(icon$prefix, sprintf('
+  - '      "fa-%s",'
+  - '      icon$name'
+  - '    ), "fa-fw"), ..., include("font awesome"))'
+  - '  }'
+  - '  else if (icon$set == "material design") {'
+  - '    tags$i(class = "material-icons", ..., icon$name, include("material icons"))'
+  - '  }'
+  - '  else if (icon$set == "feather") {'
+  - '    tags$i('
+  - '      `data-feather` = icon$name, ..., tags$script("feather.replace()"),'
+  - '      include("feather")'
+  - '    )'
+  - '  }'
+  - '}'
 ---

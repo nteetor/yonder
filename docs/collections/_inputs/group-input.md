@@ -152,24 +152,50 @@ roxygen:
   family: inputs
   export: yes
   filename: group.R
-  source: "groupInput <- function(id, placeholder = NULL, value = NULL, \n    left
-    = NULL, right = NULL, ...) {\n    if (!is.null(left) && !isValidAddon(left)) {\n
-    \       stop(\"invalid `groupInput` argument, `left` must be a character string,
-    \", \n            \"buttonInput(), or dropdownInput()\", call. = FALSE)\n    }\n
-    \   if (!is.null(right) && !isValidAddon(right)) {\n        stop(\"invalid `groupInput`
-    argument, `right` must be a character string, \", \n            \"buttonInput(),
-    or dropdownInput()\", call. = FALSE)\n    }\n    shiny::registerInputHandler(type
-    = \"dull.group.input\", fun = function(x, \n        session, name) paste0(x, collapse
-    = \"\"), force = TRUE)\n    tags$div(class = \"dull-group-input input-group\",
-    id = id, \n        if (!is.null(left)) {\n            tags$div(class = \"input-group-prepend\",
-    if (is.character(left)) {\n                lapply(left, tags$span, class = \"input-group-text\")\n
-    \           }\n            else if (tagHasClass(left, \"dull-dropdown-input\"))
-    {\n                left$children\n            }\n            else {\n                left\n
-    \           })\n        }, tags$input(type = \"text\", class = \"form-control\",
-    \n            placeholder = placeholder, value = value), if (!is.null(right))
-    {\n            tags$div(class = \"input-group-append\", if (is.character(right))
-    {\n                lapply(right, tags$span, class = \"input-group-text\")\n            }\n
-    \           else if (tagHasClass(right, \"dull-dropdown-input\")) {\n                right$children\n
-    \           }\n            else {\n                right\n            })\n        },
-    ...)\n}"
+  source:
+  - groupInput <- function(id, placeholder = NULL, value = NULL,
+  - '                       left = NULL, right = NULL, ...) {'
+  - '  if (!is.null(left) && !isValidAddon(left)) {'
+  - '    stop('
+  - '      "invalid `groupInput` argument, `left` must be a character string, ",'
+  - '      "buttonInput(), or dropdownInput()", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!is.null(right) && !isValidAddon(right)) {'
+  - '    stop('
+  - '      "invalid `groupInput` argument, `right` must be a character string, ",'
+  - '      "buttonInput(), or dropdownInput()", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  shiny::registerInputHandler(type = "dull.group.input", fun = function(x,'
+  - '                                                                        session,
+    name) paste0(x, collapse = ""), force = TRUE)'
+  - '  tags$div('
+  - '    class = "dull-group-input input-group", id = id,'
+  - '    if (!is.null(left)) {'
+  - '      tags$div(class = "input-group-prepend", if (is.character(left)) {'
+  - '        lapply(left, tags$span, class = "input-group-text")'
+  - '      }'
+  - '      else if (tagHasClass(left, "dull-dropdown-input")) {'
+  - '        left$children'
+  - '      }'
+  - '      else {'
+  - '        left'
+  - '      })'
+  - '    }, tags$input('
+  - '      type = "text", class = "form-control",'
+  - '      placeholder = placeholder, value = value'
+  - '    ), if (!is.null(right)) {'
+  - '      tags$div(class = "input-group-append", if (is.character(right)) {'
+  - '        lapply(right, tags$span, class = "input-group-text")'
+  - '      }'
+  - '      else if (tagHasClass(right, "dull-dropdown-input")) {'
+  - '        right$children'
+  - '      }'
+  - '      else {'
+  - '        right'
+  - '      })'
+  - '    }, ...'
+  - '  )'
+  - '}'
 ---

@@ -78,8 +78,18 @@ roxygen:
   family: ~
   export: yes
   filename: collapse.R
-  source: "collapse <- function(button, content, ...) {\n    id <- ID(\"collapse\")\n
-    \   tags$div(`aria-expanded` = \"false\", tagAppendAttributes(button, \n        `data-toggle`
-    = \"collapse\", `data-target` = paste0(\"#\", \n            id), `aria-controls`
-    = id), tags$div(class = \"collapse\", \n        id = id, content), ..., include(\"core\"))\n}"
+  source:
+  - collapse <- function(button, content, ...) {
+  - '  id <- ID("collapse")'
+  - '  tags$div(`aria-expanded` = "false", tagAppendAttributes('
+  - '    button,'
+  - '    `data-toggle` = "collapse", `data-target` = paste0('
+  - '      "#",'
+  - '      id'
+  - '    ), `aria-controls` = id'
+  - '  ), tags$div('
+  - '    class = "collapse",'
+  - '    id = id, content'
+  - '  ), ..., include("core"))'
+  - '}'
 ---

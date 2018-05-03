@@ -16,7 +16,7 @@
   </head>
   <body>
 
-    <header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
+    <!--<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
   <a class="navbar-brand" href="/dull">
     dull
   </a>
@@ -29,6 +29,16 @@
       <a class="nav-link active" href="/dull/docs/0.0.5/">Documentation</a>
     </li>
   </ul>
+</header>
+-->
+<header class="container">
+  <div class="d-flex flex-column align-items-center">
+      <h4>dull</h4>
+      <div>
+        <a class="mx-sm-3 " href="/dull/">Home<a>
+        <a class="mx-sm-3 font-weight-bold" href="/dull/docs/0.0.5/">Documentation</a>
+      </div>
+  </div>
 </header>
 
     <div class="container">
@@ -149,52 +159,49 @@
 
           <h2 id="params">Arguments</h2>
           
-            <h4 id="param-id" class="text-monospace">id</h4>
+          
+            <h5 id="param-id">id</h5>
             <p><p>A character string specifying the id of the textual input, defaults
 to <code class="highlighter-rouge">NULL</code>.</p>
 </p>
           
-            <h4 id="param-value" class="text-monospace">value</h4>
+            <h5 id="param-value">value</h5>
             <p><p>A character string or a value coerced to a character string
 specifying the default value of the textual input.</p>
 </p>
           
-            <h4 id="param-placeholder" class="text-monospace">placeholder</h4>
+            <h5 id="param-placeholder">placeholder</h5>
             <p><p>A character string specifying placeholder text for the
 input, defaults to <code class="highlighter-rouge">NULL</code>, in which case there is no placeholder text.</p>
 </p>
           
-            <h4 id="param-size" class="text-monospace">size</h4>
+            <h5 id="param-size">size</h5>
             <p><p>One of <code class="highlighter-rouge">"small"</code> or <code class="highlighter-rouge">"large"</code> specifying the size transformation
 of the input, defaults to <code class="highlighter-rouge">NULL</code>, in which case the input’s size is
 unchanged.</p>
 </p>
           
-            <h4 id="param-readonly" class="text-monospace">readonly</h4>
+            <h5 id="param-readonly">readonly</h5>
             <p><p>If <code class="highlighter-rouge">TRUE</code>, the textual input is read-only preventing
 modification of the value, defaults <code class="highlighter-rouge">FALSE</code>.</p>
 </p>
           
-            <h4 id="param-help" class="text-monospace">help</h4>
+            <h5 id="param-help">help</h5>
             <p><p>A character string specifying the help text of the textual input,
 defaults to <code class="highlighter-rouge">NULL</code>, in which case no help text is added.</p>
 </p>
           
-            <h4 id="param-..." class="text-monospace">...</h4>
+            <h5 id="param-...">...</h5>
             <p><p>Additional named arguments passed as HTML attributes to the parent
 element.</p>
 </p>
+          
           
 
           <h2 id="source">Source</h2>
           <p>
             
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">textInput</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> 
-    </span><span class="n">readonly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">help</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">textualInput</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">placeholder</span><span class="p">,</span><span class="w"> </span><span class="n">readonly</span><span class="p">,</span><span class="w"> </span><span class="n">help</span><span class="p">,</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w"> 
-        </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">)</span><span class="w">
-</span><span class="p">}</span><span class="w">
-            </span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">textInput</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">                      </span><span class="n">readonly</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">help</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="n">textualInput</span><span class="p">(</span><span class="w">    </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">placeholder</span><span class="p">,</span><span class="w"> </span><span class="n">readonly</span><span class="p">,</span><span class="w"> </span><span class="n">help</span><span class="p">,</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w">    </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">size</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="w">  </span><span class="p">)}</span></code></pre></figure>
 
           </p>
         </div>

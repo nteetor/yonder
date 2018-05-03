@@ -14,9 +14,19 @@ roxygen:
   family: content
   export: yes
   filename: tags.R
-  source: "figure <- function(image, caption = NULL, ...) {\n    if (!is_tag(image))
-    {\n        stop(\"invalid `figure` argument, `image` must be a tag element\",
-    \n            call. = FALSE)\n    }\n    tags$figure(class = \"figure\", tagAddClass(image,
-    \"figure-img\"), \n        if (!is.null(caption)) {\n            tags$figcaption(class
-    = \"figure-caption\", caption)\n        }, ..., include(\"core\"))\n}"
+  source:
+  - figure <- function(image, caption = NULL, ...) {
+  - '  if (!is_tag(image)) {'
+  - '    stop('
+  - '      "invalid `figure` argument, `image` must be a tag element",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  tags$figure('
+  - '    class = "figure", tagAddClass(image, "figure-img"),'
+  - '    if (!is.null(caption)) {'
+  - '      tags$figcaption(class = "figure-caption", caption)'
+  - '    }, ..., include("core")'
+  - '  )'
+  - '}'
 ---

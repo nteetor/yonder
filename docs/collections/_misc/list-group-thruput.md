@@ -144,8 +144,17 @@ roxygen:
   family: ~
   export: yes
   filename: list-group.R
-  source: "listGroupThruput <- function(id, ..., multiple = TRUE, flush = FALSE) {\n
-    \   tags$div(class = collate(\"dull-list-group-thruput list-group\", \n        if
-    (flush) \n            \"list-group-flush\"), `data-multiple` = if (multiple) \n
-    \       \"true\"\n    else \"false\", id = id, ...)\n}"
+  source:
+  - listGroupThruput <- function(id, ..., multiple = TRUE, flush = FALSE) {
+  - '  tags$div(class = collate('
+  - '    "dull-list-group-thruput list-group",'
+  - '    if (flush) {'
+  - '      "list-group-flush"'
+  - '    }'
+  - '  ), `data-multiple` = if (multiple) {'
+  - '    "true"'
+  - '  } else {'
+  - '    "false"'
+  - '  } , id = id, ...)'
+  - '}'
 ---

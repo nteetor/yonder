@@ -16,7 +16,7 @@
   </head>
   <body>
 
-    <header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
+    <!--<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
   <a class="navbar-brand" href="/dull">
     dull
   </a>
@@ -29,6 +29,16 @@
       <a class="nav-link active" href="/dull/docs/0.0.5/">Documentation</a>
     </li>
   </ul>
+</header>
+-->
+<header class="container">
+  <div class="d-flex flex-column align-items-center">
+      <h4>dull</h4>
+      <div>
+        <a class="mx-sm-3 " href="/dull/">Home<a>
+        <a class="mx-sm-3 font-weight-bold" href="/dull/docs/0.0.5/">Documentation</a>
+      </div>
+  </div>
 </header>
 
     <div class="container">
@@ -157,41 +167,23 @@ object’s width or height.</p>
 
           <h2 id="params">Arguments</h2>
           
-            <h4 id="param-percentage" class="text-monospace">percentage</h4>
+          
+            <h5 id="param-percentage">percentage</h5>
             <p><p>One of 25, 50, 75, or 100 specifying width or height as a
 percentage of a parent element’s width or height.</p>
 </p>
           
-            <h4 id="param-max" class="text-monospace">max</h4>
+            <h5 id="param-max">max</h5>
             <p><p>One of 25, 50, 75, or 100 specifying max width or max height as a
 percentage of a parent element’s width or height.</p>
 </p>
+          
           
 
           <h2 id="source">Source</h2>
           <p>
             
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">width</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">percentage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">is.null</span><span class="p">(</span><span class="n">percentage</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nf">is.null</span><span class="p">(</span><span class="n">max</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `width` arguments, `percentage` and `max` may not both be NULL"</span><span class="p">,</span><span class="w"> 
-            </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">percentage</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="n">percentage</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">75</span><span class="p">,</span><span class="w"> 
-        </span><span class="m">100</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `width` argument, `percentage` must be one of 25, 50, 75, or 100"</span><span class="p">,</span><span class="w"> 
-            </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">max</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="n">max</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">75</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `width` argument, `max` must be one of 25, 50, 75, or 100"</span><span class="p">,</span><span class="w"> 
-            </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-    </span><span class="n">percentage</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">precentage</span><span class="p">))</span><span class="w"> 
-        </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"w-"</span><span class="p">,</span><span class="w"> </span><span class="n">precentage</span><span class="p">)</span><span class="w">
-    </span><span class="n">max</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">max</span><span class="p">))</span><span class="w"> 
-        </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"mw-"</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">)</span><span class="w">
-    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">percentage</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">))</span><span class="w">
-</span><span class="p">}</span><span class="w">
-            </span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">width</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">percentage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">is.null</span><span class="p">(</span><span class="n">percentage</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nf">is.null</span><span class="p">(</span><span class="n">max</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">    </span><span class="n">stop</span><span class="p">(</span><span class="w">      </span><span class="s2">"invalid `width` arguments, `percentage` and `max` may not both be NULL"</span><span class="p">,</span><span class="w">      </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">    </span><span class="p">)</span><span class="w">  </span><span class="p">}</span><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">percentage</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="n">percentage</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">    </span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">75</span><span class="p">,</span><span class="w">    </span><span class="m">100</span><span class="w">  </span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w">    </span><span class="n">stop</span><span class="p">(</span><span class="w">      </span><span class="s2">"invalid `width` argument, `percentage` must be one of 25, 50, 75, or 100"</span><span class="p">,</span><span class="w">      </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">    </span><span class="p">)</span><span class="w">  </span><span class="p">}</span><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">max</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="p">(</span><span class="n">max</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">25</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">75</span><span class="p">,</span><span class="w"> </span><span class="m">100</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w">    </span><span class="n">stop</span><span class="p">(</span><span class="w">      </span><span class="s2">"invalid `width` argument, `max` must be one of 25, 50, 75, or 100"</span><span class="p">,</span><span class="w">      </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">    </span><span class="p">)</span><span class="w">  </span><span class="p">}</span><span class="w">  </span><span class="n">percentage</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">precentage</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">    </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"w-"</span><span class="p">,</span><span class="w"> </span><span class="n">precentage</span><span class="p">)</span><span class="w">  </span><span class="p">}</span><span class="w">  </span><span class="n">max</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">max</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">    </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"mw-"</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">)</span><span class="w">  </span><span class="p">}</span><span class="w">  </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">percentage</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">))}</span></code></pre></figure>
 
           </p>
         </div>

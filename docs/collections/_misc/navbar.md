@@ -65,21 +65,48 @@ roxygen:
   family: ~
   export: yes
   filename: navbar.R
-  source: "navbar <- function(..., brand = NULL) {\n    args <- list(...)\n    attrs
-    <- attribs(args)\n    elems <- lapply(elements(args), function(arg) {\n        if
-    (tagHasClass(arg, \"nav\")) {\n            arg <- tagDropClass(arg, \"nav-tabs|nav-pills\")\n
-    \           arg <- tagAddClass(arg, \"navbar-nav\")\n        }\n        else if
-    (tagIs(arg, \"form\")) {\n            if (!tagHasClass(arg, \"inline-form\"))
-    {\n                warning(\"non-inline form element passed to `navbar()`\", \n
-    \                 call. = FALSE)\n            }\n        }\n        else if (!is_tag(arg))
-    {\n            arg <- tags$span(class = \"navbar-text\", arg)\n        }\n        arg\n
-    \   })\n    brand <- if (!is.null(brand)) {\n        tags$a(class = \"navbar-brand\",
-    href = \"#\", brand)\n    }\n    navContentId <- ID(\"navContent\")\n    this
-    <- tags$nav(class = \"navbar navbar-expand-lg navbar-light\", \n        brand,
-    tags$button(class = \"navbar-toggler\", type = \"button\", \n            `data-toggle`
-    = \"collapse\", `data-target` = paste0(\"#\", \n                navContentId),
-    `aria-controls` = navContentId, \n            `aria-expanded` = \"false\", `aria-label`
-    = \"Toggle navigation\", \n            fontAwesome(\"bars\")), tags$div(class
-    = \"collapse navbar-collapse\", \n            id = navContentId, elems), include(\"core\"))\n
-    \   this <- tagConcatAttributes(this, attrs)\n    this\n}"
+  source:
+  - navbar <- function(..., brand = NULL) {
+  - '  args <- list(...)'
+  - '  attrs <- attribs(args)'
+  - '  elems <- lapply(elements(args), function(arg) {'
+  - '    if (tagHasClass(arg, "nav")) {'
+  - '      arg <- tagDropClass(arg, "nav-tabs|nav-pills")'
+  - '      arg <- tagAddClass(arg, "navbar-nav")'
+  - '    }'
+  - '    else if (tagIs(arg, "form")) {'
+  - '      if (!tagHasClass(arg, "inline-form")) {'
+  - '        warning('
+  - '          "non-inline form element passed to `navbar()`",'
+  - '          call. = FALSE'
+  - '        )'
+  - '      }'
+  - '    }'
+  - '    else if (!is_tag(arg)) {'
+  - '      arg <- tags$span(class = "navbar-text", arg)'
+  - '    }'
+  - '    arg'
+  - '  })'
+  - '  brand <- if (!is.null(brand)) {'
+  - '    tags$a(class = "navbar-brand", href = "#", brand)'
+  - '  }'
+  - '  navContentId <- ID("navContent")'
+  - '  this <- tags$nav('
+  - '    class = "navbar navbar-expand-lg navbar-light",'
+  - '    brand, tags$button('
+  - '      class = "navbar-toggler", type = "button",'
+  - '      `data-toggle` = "collapse", `data-target` = paste0('
+  - '        "#",'
+  - '        navContentId'
+  - '      ), `aria-controls` = navContentId,'
+  - '      `aria-expanded` = "false", `aria-label` = "Toggle navigation",'
+  - '      fontAwesome("bars")'
+  - '    ), tags$div('
+  - '      class = "collapse navbar-collapse",'
+  - '      id = navContentId, elems'
+  - '    ), include("core")'
+  - '  )'
+  - '  this <- tagConcatAttributes(this, attrs)'
+  - '  this'
+  - '}'
 ---

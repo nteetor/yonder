@@ -158,23 +158,62 @@ roxygen:
   family: ~
   export: yes
   filename: tabs.R
-  source: "tabTabs <- function(id, labels, values = labels, active = values[1], \n
-    \   ...) {\n    if (length(labels) == 0) {\n        stop(\"invalid `tabTabs()`
-    argument, `labels` must contain at least one \", \n            \"character string\",
-    call = FALSE)\n    }\n    if (!all(is.character(labels))) {\n        stop(\"invalid
-    `tabTabs()` argument, `labels` must be a character vector\", \n            call.
-    = FALSE)\n    }\n    if (!is.null(id) && !is.character(id)) {\n        stop(\"invalid
-    `tabTabs()` argument, `id` must be a character string or \", \n            \"NULL\",
-    call. = FALSE)\n    }\n    if (!is.null(active)) {\n        if (length(active)
-    > 1) {\n            stop(\"invalid `tabTabs()` argument, `active` must be a single
-    character \", \n                \"string\", call. = FALSE)\n        }\n        if
-    (!(active %in% values)) {\n            stop(\"invalid `tabTabs()` argument, `active`
-    must be one of `values`\", \n                call. = FALSE)\n        }\n    }\n
-    \   active <- match2(active, values)\n    tags$ul(class = \"dull-tabs-input nav
-    nav-tabs\", role = \"tablist\", \n        id = id, ..., Map(label = labels, value
-    = values, active = active, \n            function(label, value, active) {\n                tags$li(class
-    = \"nav-item\", tags$a(class = collate(\"nav-link\", \n                  if (active)
-    \n                    \"active\"), `data-tabs` = \"tab\", `data-value` = value,
-    \n                  `aria-selected` = if (active) \n                    \"true\"\n
-    \                 else \"false\", label))\n            }), include(\"core\"))\n}"
+  source:
+  - tabTabs <- function(id, labels, values = labels, active = values[1],
+  - '                    ...) {'
+  - '  if (length(labels) == 0) {'
+  - '    stop('
+  - '      "invalid `tabTabs()` argument, `labels` must contain at least one ",'
+  - '      "character string", call = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!all(is.character(labels))) {'
+  - '    stop('
+  - '      "invalid `tabTabs()` argument, `labels` must be a character vector",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!is.null(id) && !is.character(id)) {'
+  - '    stop('
+  - '      "invalid `tabTabs()` argument, `id` must be a character string or ",'
+  - '      "NULL", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!is.null(active)) {'
+  - '    if (length(active) > 1) {'
+  - '      stop('
+  - '        "invalid `tabTabs()` argument, `active` must be a single character ",'
+  - '        "string", call. = FALSE'
+  - '      )'
+  - '    }'
+  - '    if (!(active %in% values)) {'
+  - '      stop('
+  - '        "invalid `tabTabs()` argument, `active` must be one of `values`",'
+  - '        call. = FALSE'
+  - '      )'
+  - '    }'
+  - '  }'
+  - '  active <- match2(active, values)'
+  - '  tags$ul('
+  - '    class = "dull-tabs-input nav nav-tabs", role = "tablist",'
+  - '    id = id, ..., Map('
+  - '      label = labels, value = values, active = active,'
+  - '      function(label, value, active) {'
+  - '        tags$li(class = "nav-item", tags$a('
+  - '          class = collate('
+  - '            "nav-link",'
+  - '            if (active) {'
+  - '              "active"'
+  - '            }'
+  - '          ), `data-tabs` = "tab", `data-value` = value,'
+  - '          `aria-selected` = if (active) {'
+  - '            "true"'
+  - '          } else {'
+  - '            "false"'
+  - '          } , label'
+  - '        ))'
+  - '      }'
+  - '    ), include("core")'
+  - '  )'
+  - '}'
 ---

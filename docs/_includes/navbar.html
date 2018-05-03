@@ -1,4 +1,4 @@
-<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
+<!--<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
   <a class="navbar-brand" href="{{ site.baseurl }}">
     {{ site.package.name }}
   </a>
@@ -11,4 +11,14 @@
       <a class="nav-link {% if page.url contains "/docs/" %}active{% endif %}" href="{{ site.baseurl }}/docs/{{ site.package.version }}/">Documentation</a>
     </li>
   </ul>
+</header>
+-->
+<header class="container">
+  <div class="d-flex flex-column align-items-center">
+      <h4>{{ site.package.name }}</h4>
+      <div>
+        <a class="mx-sm-3 {% if page.layout == "home" %}font-weight-bold{% endif %}" href="{{ site.baseurl }}/">Home<a>
+        <a class="mx-sm-3 {% if page.url contains "/docs/" %}font-weight-bold{% endif %}" href="{{ site.baseurl }}/docs/{{ site.package.version }}/">Documentation</a>
+      </div>
+  </div>
 </header>

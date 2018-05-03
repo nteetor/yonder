@@ -14,6 +14,11 @@ roxygen:
   family: ~
   export: yes
   filename: tabs.R
-  source: "tabContent <- function(tabs, ...) {\n    tags$div(class = \"tab-content\",
-    `data-tabs` = tabs, ..., \n        include(\"core\"))\n}"
+  source:
+  - tabContent <- function(tabs, ...) {
+  - '  tags$div('
+  - '    class = "tab-content", `data-tabs` = tabs, ...,'
+  - '    include("core")'
+  - '  )'
+  - '}'
 ---

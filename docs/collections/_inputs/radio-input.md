@@ -81,24 +81,53 @@ roxygen:
   family: inputs
   export: yes
   filename: radio.R
-  source: "radioInput <- function(id, choices, values = choices, selected = NULL,
-    \n    disabled = NULL, help = NULL, inline = FALSE) {\n    if (!is.null(selected)
-    && !(selected %in% values)) {\n        stop(\"invalid `radioInput` argument, `selected`
-    must be one of `values`\", \n            call. = FALSE)\n    }\n    if (!is.null(disabled)
-    && !(disabled %in% values)) {\n        stop(\"invalid `radioInput` argument, `disabled`
-    must be one of `values`\", \n            call. = FALSE)\n    }\n    if (length(choices)
-    != length(values)) {\n        stop(\"invalid `radioInput` arguments, `choices`
-    and `values` must be the same \", \n            \"length\", call. = FALSE)\n    }\n
-    \   selected <- match2(selected, values, default = TRUE)\n    disabled <- match2(disabled,
-    values)\n    ids <- ID(rep.int(\"radio\", length(choices)))\n    tags$div(class
-    = \"dull-radio-input\", id = id, if (!is.null(choices)) {\n        lapply(seq_along(choices),
-    function(i) {\n            tags$div(class = collate(\"custom-control\", \"custom-radio\",
-    \n                if (inline) \n                  \"custom-control-inline\"),
-    tags$input(class = \"custom-control-input\", \n                type = \"radio\",
-    id = ids[[i]], name = id, `data-value` = values[[i]], \n                checked
-    = if (selected[[i]]) \n                  NA, disabled = if (disabled[[i]]) \n
-    \                 NA), tags$label(class = \"custom-control-label\", \n                `for`
-    = ids[[i]], choices[[i]]))\n        })\n    }, tags$div(class = \"invalid-feedback\"),
-    if (!is.null(help)) {\n        tags$small(class = \"form-text text-muted\", help)\n
-    \   }, include(\"core\"))\n}"
+  source:
+  - radioInput <- function(id, choices, values = choices, selected = NULL,
+  - '                       disabled = NULL, help = NULL, inline = FALSE) {'
+  - '  if (!is.null(selected) && !(selected %in% values)) {'
+  - '    stop('
+  - '      "invalid `radioInput` argument, `selected` must be one of `values`",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!is.null(disabled) && !(disabled %in% values)) {'
+  - '    stop('
+  - '      "invalid `radioInput` argument, `disabled` must be one of `values`",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (length(choices) != length(values)) {'
+  - '    stop('
+  - '      "invalid `radioInput` arguments, `choices` and `values` must be the same
+    ",'
+  - '      "length", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  selected <- match2(selected, values, default = TRUE)'
+  - '  disabled <- match2(disabled, values)'
+  - '  ids <- ID(rep.int("radio", length(choices)))'
+  - '  tags$div(class = "dull-radio-input", id = id, if (!is.null(choices)) {'
+  - '    lapply(seq_along(choices), function(i) {'
+  - '      tags$div(class = collate('
+  - '        "custom-control", "custom-radio",'
+  - '        if (inline) {'
+  - '          "custom-control-inline"'
+  - '        }'
+  - '      ), tags$input('
+  - '        class = "custom-control-input",'
+  - '        type = "radio", id = ids[[i]], name = id, `data-value` = values[[i]],'
+  - '        checked = if (selected[[i]]) {'
+  - '          NA'
+  - '        } , disabled = if (disabled[[i]]) {'
+  - '          NA'
+  - '        }'
+  - '      ), tags$label('
+  - '        class = "custom-control-label",'
+  - '        `for` = ids[[i]], choices[[i]]'
+  - '      ))'
+  - '    })'
+  - '  }, tags$div(class = "invalid-feedback"), if (!is.null(help)) {'
+  - '    tags$small(class = "form-text text-muted", help)'
+  - '  }, include("core"))'
+  - '}'
 ---

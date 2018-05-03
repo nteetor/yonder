@@ -39,12 +39,30 @@ roxygen:
   family: ~
   export: yes
   filename: textual.R
-  source: "loginInput <- function(id, ...) {\n    ids <- ID(rep.int(\"login\", 2))\n
-    \   tags$div(class = \"dull-login-input col\", id = id, tags$div(class = \"form-group\",
-    \n        tags$label(class = \"form-control-label\", `for` = ids[[1]], \n            \"Username\"),
-    tags$input(id = ids[[1]], type = \"text\", \n            class = \"form-control\")),
-    tags$div(class = \"form-group\", \n        tags$label(class = \"form-control-label\",
-    `for` = ids[[2]], \n            \"Password\"), tags$input(id = ids[[1]], type
-    = \"password\", \n            class = \"form-control\")), tags$button(class =
-    \"btn btn-primary\", \n        \"Login\"), ...)\n}"
+  source:
+  - loginInput <- function(id, ...) {
+  - '  ids <- ID(rep.int("login", 2))'
+  - '  tags$div(class = "dull-login-input col", id = id, tags$div('
+  - '    class = "form-group",'
+  - '    tags$label('
+  - '      class = "form-control-label", `for` = ids[[1]],'
+  - '      "Username"'
+  - '    ), tags$input('
+  - '      id = ids[[1]], type = "text",'
+  - '      class = "form-control"'
+  - '    )'
+  - '  ), tags$div('
+  - '    class = "form-group",'
+  - '    tags$label('
+  - '      class = "form-control-label", `for` = ids[[2]],'
+  - '      "Password"'
+  - '    ), tags$input('
+  - '      id = ids[[1]], type = "password",'
+  - '      class = "form-control"'
+  - '    )'
+  - '  ), tags$button('
+  - '    class = "btn btn-primary",'
+  - '    "Login"'
+  - '  ), ...)'
+  - '}'
 ---

@@ -87,8 +87,13 @@ roxygen:
   family: inputs
   export: yes
   filename: textual.R
-  source: "textInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
-    \n    readonly = FALSE, help = NULL, ...) {\n    textualInput(id, value, placeholder,
-    readonly, help, \"text\", \n        size = size, ...)\n}"
+  source:
+  - textInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
+  - '                      readonly = FALSE, help = NULL, ...) {'
+  - '  textualInput('
+  - '    id, value, placeholder, readonly, help, "text",'
+  - '    size = size, ...'
+  - '  )'
+  - '}'
 redirect_from: /docs/0.0.5/inputs/
 ---

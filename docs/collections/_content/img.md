@@ -65,9 +65,9 @@ roxygen:
   family: content
   export: yes
   filename: tags.R
-  source: |-
-    img <- function(src, ...) {
-        tags$img(class = "img-fluid", src = src, ..., include("core"))
-    }
+  source:
+  - img <- function(src, ...) {
+  - '  tags$img(class = "img-fluid", src = src, ..., include("core"))'
+  - '}'
 redirect_from: /docs/0.0.5/content/
 ---

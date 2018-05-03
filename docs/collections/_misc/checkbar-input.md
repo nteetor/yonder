@@ -133,14 +133,30 @@ roxygen:
   family: ~
   export: yes
   filename: bars.R
-  source: "checkbarInput <- function(id, choices, values = choices, selected = NULL)
-    {\n    if (length(choices) != length(values)) {\n        stop(\"invalid `checkbarInput`
-    arguments, `choices` and `values` must have \", \n            \"the same length\",
-    call. = FALSE)\n    }\n    selected <- match2(selected, values)\n    tags$div(class
-    = collate(\"dull-checkbar-input\", if (length(choices) > \n        1) \n        \"btn-group\",
-    \"btn-group-toggle\"), `data-toggle` = \"buttons\", \n        id = id, lapply(seq_along(choices),
-    function(i) {\n            tags$label(class = collate(\"btn\", if (selected[[i]])
-    \n                \"active\"), tags$input(type = \"checkbox\", autocomplete =
-    \"off\", \n                `data-value` = values[[i]], checked = if (selected[[i]])
-    \n                  NA), tags$span(choices[[i]]))\n        }))\n}"
+  source:
+  - checkbarInput <- function(id, choices, values = choices, selected = NULL) {
+  - '  if (length(choices) != length(values)) {'
+  - '    stop('
+  - '      "invalid `checkbarInput` arguments, `choices` and `values` must have ",'
+  - '      "the same length", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  selected <- match2(selected, values)'
+  - '  tags$div('
+  - '    class = collate("dull-checkbar-input", if (length(choices) >'
+  - '      1) {'
+  - '      "btn-group"'
+  - '    } , "btn-group-toggle"), `data-toggle` = "buttons",'
+  - '    id = id, lapply(seq_along(choices), function(i) {'
+  - '      tags$label(class = collate("btn", if (selected[[i]]) {'
+  - '        "active"'
+  - '      } ), tags$input('
+  - '        type = "checkbox", autocomplete = "off",'
+  - '        `data-value` = values[[i]], checked = if (selected[[i]]) {'
+  - '          NA'
+  - '        }'
+  - '      ), tags$span(choices[[i]]))'
+  - '    })'
+  - '  )'
+  - '}'
 ---

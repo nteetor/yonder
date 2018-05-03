@@ -48,9 +48,17 @@ roxygen:
   family: utilities
   export: yes
   filename: utilities.R
-  source: "display <- function(tag, default = NULL, sm = NULL, md = NULL, \n    lg
-    = NULL, xl = NULL, print = NULL) {\n    args <- dropNulls(list(default = default,
-    sm = sm, md = md, \n        lg = lg, xl = xl, print = print))\n    classes <-
-    responsives(prefix = \"d\", values = args, possible = c(\"inline\", \n        \"inline-block\",
-    \"block\", \"flex\", \"flex-inline\", \"none\"))\n    tagAddClass(tag, classes)\n}"
+  source:
+  - display <- function(tag, default = NULL, sm = NULL, md = NULL,
+  - '                    lg = NULL, xl = NULL, print = NULL) {'
+  - '  args <- dropNulls(list('
+  - '    default = default, sm = sm, md = md,'
+  - '    lg = lg, xl = xl, print = print'
+  - '  ))'
+  - '  classes <- responsives(prefix = "d", values = args, possible = c('
+  - '    "inline",'
+  - '    "inline-block", "block", "flex", "flex-inline", "none"'
+  - '  ))'
+  - '  tagAddClass(tag, classes)'
+  - '}'
 ---

@@ -93,13 +93,27 @@ roxygen:
   family: ~
   export: yes
   filename: forms.R
-  source: "formGroup <- function(label, input, help = NULL, ..., default = NULL, \n
-    \   sm = NULL, md = NULL, lg = NULL, xl = NULL) {\n    if (!is_tag(input)) {\n
-    \       stop(\"invalid `formGroup()` argument, expecting `input` to be a tag element\",
-    \n            call. = FALSE)\n    }\n    build <- col(default = default, sm =
-    sm, md = md, lg = lg, \n        xl = xl)\n    extra <- if (build$attribs$class
-    != \"col\") {\n        sub(\"^col\\\\s+\", \"\", build$attribs$class)\n    }\n
-    \   tags$div(class = collate(\"form-group\", extra), label, input, \n        if
-    (!is.null(help)) {\n            tags$small(class = \"form-text text-muted\", help)\n
-    \       }, include(\"core\"))\n}"
+  source:
+  - formGroup <- function(label, input, help = NULL, ..., default = NULL,
+  - '                      sm = NULL, md = NULL, lg = NULL, xl = NULL) {'
+  - '  if (!is_tag(input)) {'
+  - '    stop('
+  - '      "invalid `formGroup()` argument, expecting `input` to be a tag element",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  build <- col('
+  - '    default = default, sm = sm, md = md, lg = lg,'
+  - '    xl = xl'
+  - '  )'
+  - '  extra <- if (build$attribs$class != "col") {'
+  - '    sub("^col\\s+", "", build$attribs$class)'
+  - '  }'
+  - '  tags$div('
+  - '    class = collate("form-group", extra), label, input,'
+  - '    if (!is.null(help)) {'
+  - '      tags$small(class = "form-text text-muted", help)'
+  - '    }, include("core")'
+  - '  )'
+  - '}'
 ---

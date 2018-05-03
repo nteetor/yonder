@@ -65,11 +65,25 @@ roxygen:
   family: ~
   export: yes
   filename: popover.R
-  source: "showPopover <- function(id, content, title = NULL, placement = \"top\",
-    \n    duration = 4) {\n    domain <- getDefaultReactiveDomain()\n    if (is.null(domain))
-    {\n        stop(\"function `showPopover()` must be called in a reactive context\",
-    \n            call. = FALSE)\n    }\n    domain$sendCustomMessage(\"dull:popover\",
-    list(type = \"show\", \n        id = id, data = list(content = HTML(content),
-    title = title, \n            placement = placement, duration = if (!is.null(duration))
-    duration * \n                1000)))\n}"
+  source:
+  - showPopover <- function(id, content, title = NULL, placement = "top",
+  - '                        duration = 4) {'
+  - '  domain <- getDefaultReactiveDomain()'
+  - '  if (is.null(domain)) {'
+  - '    stop('
+  - '      "function `showPopover()` must be called in a reactive context",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  domain$sendCustomMessage("dull:popover", list('
+  - '    type = "show",'
+  - '    id = id, data = list('
+  - '      content = HTML(content), title = title,'
+  - '      placement = placement, duration = if (!is.null(duration)) {'
+  - '        duration *'
+  - '          1000'
+  - '      }'
+  - '    )'
+  - '  ))'
+  - '}'
 ---

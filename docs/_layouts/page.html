@@ -21,15 +21,18 @@
           </p>
 
           <h2 id="params">Arguments</h2>
+          {% if page.roxygen.parameters %}
           {% for param in page.roxygen.parameters %}
-            <h4 id="param-{{ param.name }}" class="text-monospace">{{ param.name }}</h4>
+            <h5 id="param-{{ param.name }}">{{ param.name }}</h5>
             <p>{{ param.description | markdownify }}</p>
           {% endfor %}
+          {% else %}
+          <h5>None</h5>
+          {% endif %}
 
           <h2 id="source">Source</h2>
           <p>
-            {% highlight R %}{{ page.roxygen.source }}
-            {% endhighlight %}
+            {% highlight R %}{{ page.roxygen.source }}{% endhighlight %}
           </p>
         </div>
       </div>

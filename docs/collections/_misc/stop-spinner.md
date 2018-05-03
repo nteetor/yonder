@@ -14,8 +14,8 @@ roxygen:
   family: ~
   export: yes
   filename: icons.R
-  source: |-
-    stopSpinner <- function(id, session = getDefaultReactiveDomain()) {
-        session$sendProgress("dull-spinner", list(id = id, action = "stop"))
-    }
+  source:
+  - stopSpinner <- function(id, session = getDefaultReactiveDomain()) {
+  - '  session$sendProgress("dull-spinner", list(id = id, action = "stop"))'
+  - '}'
 ---

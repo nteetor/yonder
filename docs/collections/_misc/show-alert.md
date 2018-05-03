@@ -89,19 +89,47 @@ roxygen:
   family: ~
   export: yes
   filename: alerts.R
-  source: "showAlert <- function(text, ..., duration = 4, color = NULL, \n    action
-    = NULL) {\n    domain <- getDefaultReactiveDomain()\n    if (is.null(domain))
-    {\n        stop(\"function `showAlert()` must be called in a reactive context\",
-    \n            call. = FALSE)\n    }\n    if (!is.null(color) && !(color %in% .colors))
-    {\n        stop(\"invalid `showAlert()` argument, unrecognized `color` , see ?background
-    \", \n            \"for possible values\", call. = FALSE)\n    }\n    text <-
-    as.character(text)\n    if (length(text) != 1) {\n        stop(\"invalid `showAlert()`
-    argument, expecting `text` to be a character \", \n            \"string\", call.
-    = FALSE)\n    }\n    if (!is.null(duration)) {\n        if (!is.numeric(duration)
-    || duration <= 0) {\n            stop(\"invalid `showAlert()` argument, expecting
-    `duration` to be a positive \", \n                \"integer or NULL\", call. =
-    FALSE)\n        }\n    }\n    args <- list(...)\n    attrs <- attribs(args)\n
-    \   domain$sendInputMessage(\"alert-container\", list(type = \"show\", \n        data
-    = list(text = text, duration = if (!is.null(duration)) duration * \n            1000,
-    color = color, action = action, attrs = if (length(attrs)) attrs)))\n}"
+  source:
+  - showAlert <- function(text, ..., duration = 4, color = NULL,
+  - '                      action = NULL) {'
+  - '  domain <- getDefaultReactiveDomain()'
+  - '  if (is.null(domain)) {'
+  - '    stop('
+  - '      "function `showAlert()` must be called in a reactive context",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!is.null(color) && !(color %in% .colors)) {'
+  - '    stop('
+  - '      "invalid `showAlert()` argument, unrecognized `color` , see ?background
+    ",'
+  - '      "for possible values", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  text <- as.character(text)'
+  - '  if (length(text) != 1) {'
+  - '    stop('
+  - '      "invalid `showAlert()` argument, expecting `text` to be a character ",'
+  - '      "string", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!is.null(duration)) {'
+  - '    if (!is.numeric(duration) || duration <= 0) {'
+  - '      stop('
+  - '        "invalid `showAlert()` argument, expecting `duration` to be a positive
+    ",'
+  - '        "integer or NULL", call. = FALSE'
+  - '      )'
+  - '    }'
+  - '  }'
+  - '  args <- list(...)'
+  - '  attrs <- attribs(args)'
+  - '  domain$sendInputMessage("alert-container", list('
+  - '    type = "show",'
+  - '    data = list(text = text, duration = if (!is.null(duration)) {'
+  - '      duration *'
+  - '        1000'
+  - '    } , color = color, action = action, attrs = if (length(attrs)) attrs)'
+  - '  ))'
+  - '}'
 ---

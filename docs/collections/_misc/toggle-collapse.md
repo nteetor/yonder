@@ -14,8 +14,8 @@ roxygen:
   family: ~
   export: yes
   filename: collapse.R
-  source: |-
-    toggleCollapse <- function(id, session = getDefaultReactiveDomain()) {
-        updateCollapse(id, "toggle", session)
-    }
+  source:
+  - toggleCollapse <- function(id, session = getDefaultReactiveDomain()) {
+  - '  updateCollapse(id, "toggle", session)'
+  - '}'
 ---

@@ -30,8 +30,13 @@ roxygen:
   family: content
   export: yes
   filename: tags.R
-  source: "blockquote <- function(..., source = NULL, align = \"left\") {\n    tags$blockquote(class
-    = collate(\"blockquote\", if (align == \n        \"right\") \n        \"blockquote-reverse\"),
-    ..., if (!is.null(source)) {\n        tags$footer(class = \"blockquote-footer\",
-    source)\n    }, include(\"core\"))\n}"
+  source:
+  - blockquote <- function(..., source = NULL, align = "left") {
+  - '  tags$blockquote(class = collate("blockquote", if (align =='
+  - '    "right") {'
+  - '    "blockquote-reverse"'
+  - '  } ), ..., if (!is.null(source)) {'
+  - '    tags$footer(class = "blockquote-footer", source)'
+  - '  }, include("core"))'
+  - '}'
 ---

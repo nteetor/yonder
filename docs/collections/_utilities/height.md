@@ -14,14 +14,36 @@ roxygen:
   family: utilities
   export: yes
   filename: utilities.R
-  source: "height <- function(tag, percentage = NULL, max = NULL) {\n    if (is.null(percentage)
-    && is.null(max)) {\n        stop(\"invalid `height` arguments, `percentage` and
-    `max` may not both be NULL\", \n            call. = FALSE)\n    }\n    if (!is.null(percentage)
-    && !(percentage %in% c(25, 50, 75, \n        100))) {\n        stop(\"invalid
-    `height` argument, `percentage` must be one of 25, 50, 75, or 100\", \n            call.
-    = FALSE)\n    }\n    if (!is.null(max) && !(max %in% c(25, 50, 75, 100))) {\n
-    \       stop(\"invalid `height` argument, `max` must be one of 25, 50, 75, or
-    100\", \n            call. = FALSE)\n    }\n    percentage <- if (!is.null(precentage))
-    \n        paste0(\"h-\", precentage)\n    max <- if (!is.null(max)) \n        paste0(\"mh-\",
-    max)\n    tagAddClass(tag, c(percentage, max))\n}"
+  source:
+  - height <- function(tag, percentage = NULL, max = NULL) {
+  - '  if (is.null(percentage) && is.null(max)) {'
+  - '    stop('
+  - '      "invalid `height` arguments, `percentage` and `max` may not both be NULL",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!is.null(percentage) && !(percentage %in% c('
+  - '    25, 50, 75,'
+  - '    100'
+  - '  ))) {'
+  - '    stop('
+  - '      "invalid `height` argument, `percentage` must be one of 25, 50, 75, or
+    100",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!is.null(max) && !(max %in% c(25, 50, 75, 100))) {'
+  - '    stop('
+  - '      "invalid `height` argument, `max` must be one of 25, 50, 75, or 100",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  percentage <- if (!is.null(precentage)) {'
+  - '    paste0("h-", precentage)'
+  - '  }'
+  - '  max <- if (!is.null(max)) {'
+  - '    paste0("mh-", max)'
+  - '  }'
+  - '  tagAddClass(tag, c(percentage, max))'
+  - '}'
 ---

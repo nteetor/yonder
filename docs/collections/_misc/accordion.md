@@ -54,18 +54,38 @@ roxygen:
   family: ~
   export: yes
   filename: accordion.R
-  source: "accordion <- function(labels, contents, ids = NULL, ...) {\n    if (length(labels)
-    != length(contents)) {\n        stop(\"invalid `accordion` arguments, `labels`
-    and `contents` must be the \", \n            \"same length\", call. = FALSE)\n
-    \   }\n    ids <- ids %||% `map*`(labels, function(x) ID(\"panel\"))\n    if (length(ids)
-    != length(labels)) {\n        stop(\"invalid `accordion` arguments, `labels` and
-    `ids` must be the same \", \n            \"length\", call. = FALSE)\n    }\n    attrs
-    <- attribs(list(...))\n    attrs$id <- attrs[[\"id\"]] %||% ID(\"accordion\")\n
-    \   tagConcatAttributes(tags$div(`data-children` = \".accordion-item\", \n        lapply(seq_along(labels),
-    function(i) {\n            tags$div(class = \"accordion-item\", tags$a(`data-toggle`
-    = \"collapse\", \n                `data-parent` = paste0(\"#\", attrs$id), href
-    = paste0(\"#\", \n                  ids[[i]]), `aria-expanded` = \"false\", `aria-controls`
-    = ids[[i]], \n                labels[[i]]), tags$div(id = ids[[i]], class = \"collapse\",
-    \n                role = \"tabpanel\", contents[[i]]))\n        }), include(\"core\")),
-    attrs)\n}"
+  source:
+  - accordion <- function(labels, contents, ids = NULL, ...) {
+  - '  if (length(labels) != length(contents)) {'
+  - '    stop('
+  - '      "invalid `accordion` arguments, `labels` and `contents` must be the ",'
+  - '      "same length", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  ids <- ids %||% `map*`(labels, function(x) ID("panel"))'
+  - '  if (length(ids) != length(labels)) {'
+  - '    stop('
+  - '      "invalid `accordion` arguments, `labels` and `ids` must be the same ",'
+  - '      "length", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  attrs <- attribs(list(...))'
+  - '  attrs$id <- attrs[["id"]] %||% ID("accordion")'
+  - '  tagConcatAttributes(tags$div('
+  - '    `data-children` = ".accordion-item",'
+  - '    lapply(seq_along(labels), function(i) {'
+  - '      tags$div(class = "accordion-item", tags$a('
+  - '        `data-toggle` = "collapse",'
+  - '        `data-parent` = paste0("#", attrs$id), href = paste0('
+  - '          "#",'
+  - '          ids[[i]]'
+  - '        ), `aria-expanded` = "false", `aria-controls` = ids[[i]],'
+  - '        labels[[i]]'
+  - '      ), tags$div('
+  - '        id = ids[[i]], class = "collapse",'
+  - '        role = "tabpanel", contents[[i]]'
+  - '      ))'
+  - '    }), include("core")'
+  - '  ), attrs)'
+  - '}'
 ---

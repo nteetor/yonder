@@ -31,14 +31,35 @@ roxygen:
   family: utilities
   export: yes
   filename: utilities.R
-  source: "width <- function(tag, percentage = NULL, max = NULL) {\n    if (is.null(percentage)
-    && is.null(max)) {\n        stop(\"invalid `width` arguments, `percentage` and
-    `max` may not both be NULL\", \n            call. = FALSE)\n    }\n    if (!is.null(percentage)
-    && !(percentage %in% c(25, 50, 75, \n        100))) {\n        stop(\"invalid
-    `width` argument, `percentage` must be one of 25, 50, 75, or 100\", \n            call.
-    = FALSE)\n    }\n    if (!is.null(max) && !(max %in% c(25, 50, 75, 100))) {\n
-    \       stop(\"invalid `width` argument, `max` must be one of 25, 50, 75, or 100\",
-    \n            call. = FALSE)\n    }\n    percentage <- if (!is.null(precentage))
-    \n        paste0(\"w-\", precentage)\n    max <- if (!is.null(max)) \n        paste0(\"mw-\",
-    max)\n    tagAddClass(tag, c(percentage, max))\n}"
+  source:
+  - width <- function(tag, percentage = NULL, max = NULL) {
+  - '  if (is.null(percentage) && is.null(max)) {'
+  - '    stop('
+  - '      "invalid `width` arguments, `percentage` and `max` may not both be NULL",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!is.null(percentage) && !(percentage %in% c('
+  - '    25, 50, 75,'
+  - '    100'
+  - '  ))) {'
+  - '    stop('
+  - '      "invalid `width` argument, `percentage` must be one of 25, 50, 75, or 100",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!is.null(max) && !(max %in% c(25, 50, 75, 100))) {'
+  - '    stop('
+  - '      "invalid `width` argument, `max` must be one of 25, 50, 75, or 100",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  percentage <- if (!is.null(precentage)) {'
+  - '    paste0("w-", precentage)'
+  - '  }'
+  - '  max <- if (!is.null(max)) {'
+  - '    paste0("mw-", max)'
+  - '  }'
+  - '  tagAddClass(tag, c(percentage, max))'
+  - '}'
 ---

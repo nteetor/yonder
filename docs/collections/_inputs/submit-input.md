@@ -14,7 +14,16 @@ roxygen:
   family: inputs
   export: yes
   filename: button.R
-  source: "submitInput <- function(label = \"Submit\", block = FALSE, ...) {\n    tags$button(class
-    = collate(\"dull-submit\", \"btn\", \"btn-blue\", \n        if (block) \n            \"btn-block\"),
-    `data-type` = \"submit\", role = \"button\", \n        label, ...)\n}"
+  source:
+  - submitInput <- function(label = "Submit", block = FALSE, ...) {
+  - '  tags$button('
+  - '    class = collate('
+  - '      "dull-submit", "btn", "btn-blue",'
+  - '      if (block) {'
+  - '        "btn-block"'
+  - '      }'
+  - '    ), `data-type` = "submit", role = "button",'
+  - '    label, ...'
+  - '  )'
+  - '}'
 ---

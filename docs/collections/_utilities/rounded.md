@@ -24,11 +24,24 @@ roxygen:
   family: utilities
   export: yes
   filename: utilities.R
-  source: "rounded <- function(tag, sides = \"all\") {\n    if (!all(re(sides, \"top|right|bottom|left|circle|all|none\",
-    \n        len0 = FALSE))) {\n        stop(\"invalid `rounded` argument, `sides`
-    must be one of \", \n            \"\\\"top\\\", \\\"right\\\", \\\"bottom\\\",
-    \\\"left\\\", \\\"circle\\\", \\\"all\\\", or \\\"none\\\"\", \n            call.
-    = FALSE)\n    }\n    classes <- vapply(sides, function(s) {\n        switch(s,
-    none = \"rounded-0\", all = \"rounded\", paste0(\"rounded-\", \n            s))\n
-    \   }, character(1))\n    tagAddClass(tag, classes)\n}"
+  source:
+  - rounded <- function(tag, sides = "all") {
+  - '  if (!all(re('
+  - '    sides, "top|right|bottom|left|circle|all|none",'
+  - '    len0 = FALSE'
+  - '  ))) {'
+  - '    stop('
+  - '      "invalid `rounded` argument, `sides` must be one of ",'
+  - '      "\"top\", \"right\", \"bottom\", \"left\", \"circle\", \"all\", or \"none\"",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  classes <- vapply(sides, function(s) {'
+  - '    switch(s, none = "rounded-0", all = "rounded", paste0('
+  - '      "rounded-",'
+  - '      s'
+  - '    ))'
+  - '  }, character(1))'
+  - '  tagAddClass(tag, classes)'
+  - '}'
 ---

@@ -14,6 +14,12 @@ roxygen:
   family: ~
   export: yes
   filename: container.R
-  source: "container <- function(..., fluid = TRUE) {\n    tags$div(class = if (fluid)
-    \n        \"container-fluid\"\n    else \"container\", ..., include(\"core\"))\n}"
+  source:
+  - container <- function(..., fluid = TRUE) {
+  - '  tags$div(class = if (fluid) {'
+  - '    "container-fluid"'
+  - '  } else {'
+  - '    "container"'
+  - '  } , ..., include("core"))'
+  - '}'
 ---

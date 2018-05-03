@@ -16,7 +16,7 @@
   </head>
   <body>
 
-    <header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
+    <!--<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
   <a class="navbar-brand" href="/dull">
     dull
   </a>
@@ -29,6 +29,16 @@
       <a class="nav-link active" href="/dull/docs/0.0.5/">Documentation</a>
     </li>
   </ul>
+</header>
+-->
+<header class="container">
+  <div class="d-flex flex-column align-items-center">
+      <h4>dull</h4>
+      <div>
+        <a class="mx-sm-3 " href="/dull/">Home<a>
+        <a class="mx-sm-3 font-weight-bold" href="/dull/docs/0.0.5/">Documentation</a>
+      </div>
+  </div>
 </header>
 
     <div class="container">
@@ -159,54 +169,48 @@ printing.</p>
 
           <h2 id="params">Arguments</h2>
           
-            <h4 id="param-tag" class="text-monospace">tag</h4>
+          
+            <h5 id="param-tag">tag</h5>
             <p><p>A tag element.</p>
 </p>
           
-            <h4 id="param-default" class="text-monospace">default</h4>
+            <h5 id="param-default">default</h5>
             <p><p>One of <code class="highlighter-rouge">"inline"</code>, <code class="highlighter-rouge">"inline-block"</code>, <code class="highlighter-rouge">"block"</code>, <code class="highlighter-rouge">"table"</code>,
 <code class="highlighter-rouge">"table-cell"</code>, <code class="highlighter-rouge">"flex"</code>, <code class="highlighter-rouge">"inline-flex"</code>, or <code class="highlighter-rouge">"none"</code> specifying the
 default display property of the element.</p>
 </p>
           
-            <h4 id="param-sm" class="text-monospace">sm</h4>
+            <h5 id="param-sm">sm</h5>
             <p><p>Like <code class="highlighter-rouge">default</code>, but the display property is applied once the
 viewport is 576 pixels wide, think phone in landscape mode.</p>
 </p>
           
-            <h4 id="param-md" class="text-monospace">md</h4>
+            <h5 id="param-md">md</h5>
             <p><p>Like <code class="highlighter-rouge">default</code>, but the display property is applied once the
 viewport is 768 pixels wide, think tablets.</p>
 </p>
           
-            <h4 id="param-lg" class="text-monospace">lg</h4>
+            <h5 id="param-lg">lg</h5>
             <p><p>Like <code class="highlighter-rouge">default</code>, but the display property is applied once the
 viewport is 992 pixels wide, think desktop.</p>
 </p>
           
-            <h4 id="param-xl" class="text-monospace">xl</h4>
+            <h5 id="param-xl">xl</h5>
             <p><p>Like <code class="highlighter-rouge">default</code>, but the display property is applied once the
 viewport is 1200 pixels wide, think large desktop.</p>
 </p>
           
-            <h4 id="param-print" class="text-monospace">print</h4>
+            <h5 id="param-print">print</h5>
             <p><p>Like <code class="highlighter-rouge">default</code>, but the display property is applied when the
 page is printed.</p>
 </p>
+          
           
 
           <h2 id="source">Source</h2>
           <p>
             
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">display</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> 
-    </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">print</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">args</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dropNulls</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">default</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">md</span><span class="p">,</span><span class="w"> 
-        </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lg</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xl</span><span class="p">,</span><span class="w"> </span><span class="n">print</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">print</span><span class="p">))</span><span class="w">
-    </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">responsives</span><span class="p">(</span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"d"</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="n">possible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"inline"</span><span class="p">,</span><span class="w"> 
-        </span><span class="s2">"inline-block"</span><span class="p">,</span><span class="w"> </span><span class="s2">"block"</span><span class="p">,</span><span class="w"> </span><span class="s2">"flex"</span><span class="p">,</span><span class="w"> </span><span class="s2">"flex-inline"</span><span class="p">,</span><span class="w"> </span><span class="s2">"none"</span><span class="p">))</span><span class="w">
-    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w">
-</span><span class="p">}</span><span class="w">
-            </span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">display</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">                    </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">print</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="n">args</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dropNulls</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="w">    </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">default</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">md</span><span class="p">,</span><span class="w">    </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lg</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xl</span><span class="p">,</span><span class="w"> </span><span class="n">print</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">print</span><span class="w">  </span><span class="p">))</span><span class="w">  </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">responsives</span><span class="p">(</span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"d"</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="n">possible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">    </span><span class="s2">"inline"</span><span class="p">,</span><span class="w">    </span><span class="s2">"inline-block"</span><span class="p">,</span><span class="w"> </span><span class="s2">"block"</span><span class="p">,</span><span class="w"> </span><span class="s2">"flex"</span><span class="p">,</span><span class="w"> </span><span class="s2">"flex-inline"</span><span class="p">,</span><span class="w"> </span><span class="s2">"none"</span><span class="w">  </span><span class="p">))</span><span class="w">  </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)}</span></code></pre></figure>
 
           </p>
         </div>

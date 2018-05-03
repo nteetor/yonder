@@ -28,8 +28,8 @@ roxygen:
   family: ~
   export: no
   filename: chartist.R
-  source: |-
-    chartistThruput <- function(id) {
-        NULL
-    }
+  source:
+  - chartistThruput <- function(id) {
+  - '  NULL'
+  - '}'
 ---

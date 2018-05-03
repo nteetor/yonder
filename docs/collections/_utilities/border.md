@@ -39,10 +39,21 @@ roxygen:
   family: utilities
   export: yes
   filename: utilities.R
-  source: "border <- function(tag, color, tone = 0) {\n    if (!(color %in% .colors))
-    {\n        stop(\"invalid `border` argument, `color` is invalid, see ?border \",
-    \n            \"details for possible colors\", call. = FALSE)\n    }\n    if (!(tone
-    %in% -2:2)) {\n        stop(\"invalid `border` argument, `tone` must be one of
-    -2, -1, 0, 1, or 2\", \n            call. = FALSE)\n    }\n    tag <- tagAddClass(tag,
-    \"border\")\n    colorUtility(tag, \"border\", color, tone)\n}"
+  source:
+  - border <- function(tag, color, tone = 0) {
+  - '  if (!(color %in% .colors)) {'
+  - '    stop('
+  - '      "invalid `border` argument, `color` is invalid, see ?border ",'
+  - '      "details for possible colors", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  if (!(tone %in% -2:2)) {'
+  - '    stop('
+  - '      "invalid `border` argument, `tone` must be one of -2, -1, 0, 1, or 2",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  tag <- tagAddClass(tag, "border")'
+  - '  colorUtility(tag, "border", color, tone)'
+  - '}'
 ---

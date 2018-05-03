@@ -83,11 +83,24 @@ roxygen:
   family: inputs
   export: yes
   filename: button.R
-  source: "buttonGroupInput <- function(id, labels, values = labels) {\n    if (length(labels)
-    != length(values)) {\n        stop(\"invalid `buttonGroupInput` arguments, `labels`
-    and `values` must be \", \n            \"the same length\", call. = FALSE)\n    }\n
-    \   tags$div(class = \"dull-button-group-input btn-group\", id = id, \n        role
-    = \"group\", Map(label = labels, value = values, function(label, \n            value,
-    outline) {\n            tags$button(type = \"button\", class = \"btn\", `data-value`
-    = value, \n                label)\n        }), include(\"core\"))\n}"
+  source:
+  - buttonGroupInput <- function(id, labels, values = labels) {
+  - '  if (length(labels) != length(values)) {'
+  - '    stop('
+  - '      "invalid `buttonGroupInput` arguments, `labels` and `values` must be ",'
+  - '      "the same length", call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  tags$div('
+  - '    class = "dull-button-group-input btn-group", id = id,'
+  - '    role = "group", Map(label = labels, value = values, function(label,'
+  - '                                                                 value, outline)
+    {'
+  - '      tags$button('
+  - '        type = "button", class = "btn", `data-value` = value,'
+  - '        label'
+  - '      )'
+  - '    }), include("core")'
+  - '  )'
+  - '}'
 ---

@@ -40,15 +40,34 @@ roxygen:
   family: utilities
   export: yes
   filename: utilities.R
-  source: "float <- function(tag, default = NULL, sm = NULL, md = NULL, \n    lg =
-    NULL, xl = NULL) {\n    args <- dropNulls(list(default = default, sm = sm, md
-    = md, \n        lg = lg, xl = xl))\n    if (length(float) == 0) {\n        stop(\"invalid
-    `float` arguments, at least one argument must not be NULL\", \n            call.
-    = FALSE)\n    }\n    classes <- vapply(names2(args), function(nm) {\n        arg
-    <- args[[nm]]\n        if (!re(arg, \"left|right|none\")) {\n            stop(\"invalid
-    `float` argument, `\", nm, \"` must be one of \", \n                \"\\\"left\\\",
-    \\\"right\\\", or \\\"none\\\"\", call. = FALSE)\n        }\n        if (nm ==
-    \"default\") {\n            paste0(\"float-\", arg)\n        }\n        else {\n
-    \           paste0(\"float-\", nm, \"-\", arg)\n        }\n    }, character(1))\n
-    \   tagAddClass(tag, classes)\n}"
+  source:
+  - float <- function(tag, default = NULL, sm = NULL, md = NULL,
+  - '                  lg = NULL, xl = NULL) {'
+  - '  args <- dropNulls(list('
+  - '    default = default, sm = sm, md = md,'
+  - '    lg = lg, xl = xl'
+  - '  ))'
+  - '  if (length(float) == 0) {'
+  - '    stop('
+  - '      "invalid `float` arguments, at least one argument must not be NULL",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  classes <- vapply(names2(args), function(nm) {'
+  - '    arg <- args[[nm]]'
+  - '    if (!re(arg, "left|right|none")) {'
+  - '      stop('
+  - '        "invalid `float` argument, `", nm, "` must be one of ",'
+  - '        "\"left\", \"right\", or \"none\"", call. = FALSE'
+  - '      )'
+  - '    }'
+  - '    if (nm == "default") {'
+  - '      paste0("float-", arg)'
+  - '    }'
+  - '    else {'
+  - '      paste0("float-", nm, "-", arg)'
+  - '    }'
+  - '  }, character(1))'
+  - '  tagAddClass(tag, classes)'
+  - '}'
 ---

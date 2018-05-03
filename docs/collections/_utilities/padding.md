@@ -71,19 +71,47 @@ roxygen:
   family: utilities
   export: yes
   filename: utilities.R
-  source: "padding <- function(tag, default = NULL, sm = NULL, md = NULL, \n    lg
-    = NULL, xl = NULL) {\n    args <- dropNulls(list(default = default, sm = sm, md
-    = md, \n        lg = lg, xl = xl))\n    if (length(args) == 0) {\n        stop(\"invalid
-    `padding` arguments, at least one argument must not be NULL\", \n            call.
-    = FALSE)\n    }\n    classes <- vapply(names2(args), function(nm) {\n        arg
-    <- args[[nm]]\n        if (!all(arg %in% 0:5)) {\n            stop(\"invalid `padding`
-    argument, `\", nm, \"` value(s) must be 0, 1, 2, 3, 4, or 5\", \n                call.
-    = FALSE)\n        }\n        if (length(arg) != 1 && length(arg) != 4) {\n            stop(\"invalid
-    `padding` argument, `\", nm, \"` must be a single value or a vector of 4 values\",
-    \n                call. = FALSE)\n        }\n        prefix <- \"p\"\n        sides
-    <- c(\"t\", \"r\", \"b\", \"l\")\n        breakpoint <- if (nm == \"default\")
-    \n            \"-\"\n        else paste0(\"-\", nm, \"-\")\n        if (length(default)
-    == 4) {\n            return(paste0(prefix, sides, breakpoint, arg, collapse =
-    \" \"))\n        }\n        paste0(prefix, breakpoint, arg)\n    }, character(1))\n
-    \   tagAddClass(tag, classes)\n}"
+  source:
+  - padding <- function(tag, default = NULL, sm = NULL, md = NULL,
+  - '                    lg = NULL, xl = NULL) {'
+  - '  args <- dropNulls(list('
+  - '    default = default, sm = sm, md = md,'
+  - '    lg = lg, xl = xl'
+  - '  ))'
+  - '  if (length(args) == 0) {'
+  - '    stop('
+  - '      "invalid `padding` arguments, at least one argument must not be NULL",'
+  - '      call. = FALSE'
+  - '    )'
+  - '  }'
+  - '  classes <- vapply(names2(args), function(nm) {'
+  - '    arg <- args[[nm]]'
+  - '    if (!all(arg %in% 0:5)) {'
+  - '      stop('
+  - '        "invalid `padding` argument, `", nm, "` value(s) must be 0, 1, 2, 3,
+    4, or 5",'
+  - '        call. = FALSE'
+  - '      )'
+  - '    }'
+  - '    if (length(arg) != 1 && length(arg) != 4) {'
+  - '      stop('
+  - '        "invalid `padding` argument, `", nm, "` must be a single value or a vector
+    of 4 values",'
+  - '        call. = FALSE'
+  - '      )'
+  - '    }'
+  - '    prefix <- "p"'
+  - '    sides <- c("t", "r", "b", "l")'
+  - '    breakpoint <- if (nm == "default") {'
+  - '      "-"'
+  - '    } else {'
+  - '      paste0("-", nm, "-")'
+  - '    }'
+  - '    if (length(default) == 4) {'
+  - '      return(paste0(prefix, sides, breakpoint, arg, collapse = " "))'
+  - '    }'
+  - '    paste0(prefix, breakpoint, arg)'
+  - '  }, character(1))'
+  - '  tagAddClass(tag, classes)'
+  - '}'
 ---

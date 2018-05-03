@@ -39,9 +39,17 @@ roxygen:
   family: utilities
   export: yes
   filename: utilities.R
-  source: "alignment <- function(tag, default = NULL, sm = NULL, md = NULL, \n    lg
-    = NULL, xl = NULL) {\n    args <- dropNulls(list(default = default, sm = sm, md
-    = md, \n        lg = lg, xl = xl))\n    classes <- responsives(prefix = \"text\",
-    values = args, possible = c(\"left\", \n        \"right\", \"center\", \"justify\"))\n
-    \   tagAddClass(tag, classes)\n}"
+  source:
+  - alignment <- function(tag, default = NULL, sm = NULL, md = NULL,
+  - '                      lg = NULL, xl = NULL) {'
+  - '  args <- dropNulls(list('
+  - '    default = default, sm = sm, md = md,'
+  - '    lg = lg, xl = xl'
+  - '  ))'
+  - '  classes <- responsives(prefix = "text", values = args, possible = c('
+  - '    "left",'
+  - '    "right", "center", "justify"'
+  - '  ))'
+  - '  tagAddClass(tag, classes)'
+  - '}'
 ---

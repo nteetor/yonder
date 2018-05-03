@@ -45,9 +45,16 @@ roxygen:
   family: ~
   export: yes
   filename: icons.R
-  source: "spinnerOutput <- function(id, type = \"circle\", pulse = FALSE, \n    ...)
-    {\n    tags$i(class = collate(\"dull-spinner-output\", \"fas\", switch(type, \n
-    \       circle = \"fa-circle-notch\", cog = \"fa-cog\", dots = \"fa-spinner\",
-    \n        sync = \"fa-sync\"), if (pulse) \n        \"fa-pulse\"\n    else \"fa-spin\",
-    \"pause\"), id = id, ..., include(\"font awesome\"))\n}"
+  source:
+  - spinnerOutput <- function(id, type = "circle", pulse = FALSE,
+  - '                          ...) {'
+  - '  tags$i(class = collate("dull-spinner-output", "fas", switch(type,'
+  - '    circle = "fa-circle-notch", cog = "fa-cog", dots = "fa-spinner",'
+  - '    sync = "fa-sync"'
+  - '  ), if (pulse) {'
+  - '    "fa-pulse"'
+  - '  } else {'
+  - '    "fa-spin"'
+  - '  } , "pause"), id = id, ..., include("font awesome"))'
+  - '}'
 ---

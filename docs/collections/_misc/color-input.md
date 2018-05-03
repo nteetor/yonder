@@ -14,7 +14,12 @@ roxygen:
   family: ~
   export: yes
   filename: textual.R
-  source: "colorInput <- function(id, value = NULL, placeholder = NULL, \n    size
-    = NULL, readonly = FALSE, help = NULL, ...) {\n    textualInput(id, value, placeholder,
-    readonly, help, \"color\", \n        size = size, ...)\n}"
+  source:
+  - colorInput <- function(id, value = NULL, placeholder = NULL,
+  - '                       size = NULL, readonly = FALSE, help = NULL, ...) {'
+  - '  textualInput('
+  - '    id, value, placeholder, readonly, help, "color",'
+  - '    size = size, ...'
+  - '  )'
+  - '}'
 ---

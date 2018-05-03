@@ -120,10 +120,20 @@ roxygen:
   family: flex
   export: yes
   filename: flex.R
-  source: "wrap <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
-    \n    xl = NULL) {\n    args <- dropNulls(list(default = default, sm = sm, md
-    = md, \n        lg = lg, xl = xl))\n    args <- lapply(args, function(a) switch(a,
-    reverse = \"wrap-reverse\", \n        a))\n    classes <- responsives(\"flex\",
-    args, c(\"wrap\", \"nowrap\", \n        \"wrap-reverse\"))\n    tagAddClass(tag,
-    collate(classes))\n}"
+  source:
+  - wrap <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+  - '                 xl = NULL) {'
+  - '  args <- dropNulls(list('
+  - '    default = default, sm = sm, md = md,'
+  - '    lg = lg, xl = xl'
+  - '  ))'
+  - '  args <- lapply(args, function(a) switch(a, reverse = "wrap-reverse",'
+  - '      a'
+  - '    ))'
+  - '  classes <- responsives("flex", args, c('
+  - '    "wrap", "nowrap",'
+  - '    "wrap-reverse"'
+  - '  ))'
+  - '  tagAddClass(tag, collate(classes))'
+  - '}'
 ---

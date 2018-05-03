@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css?family=Forum|Noto+Serif');
+@import url(https://cdn.rawgit.com/tonsky/FiraCode/1.205/distr/fira_code.css);
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'Noto Serif', serif;
+}
+
+body {
+  font-family: 'Forum', cursive;
+}
+
+code {
+  font-family: 'Fira Code';
+  font-weight: 400;
+}
