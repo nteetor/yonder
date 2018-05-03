@@ -27,7 +27,7 @@ if (interactive()) {
       fluid = FALSE,
       selectInput(
         id = "name",
-        choices = unique(.icons$name)
+        choices = unique(icons$name)
       ) \%>\%
         margins(3),
       div(
@@ -51,11 +51,11 @@ if (interactive()) {
   shinyApp(
     ui = container(
       lapply(
-        unique(.icons$set),
+        unique(icons$set),
         function(s) {
           div(
             lapply(
-              unique(.icons[.icons$set == s, ]$name),
+              unique(icons[icons$set == s, ]$name),
               function(nm) {
                 icon(nm, set = s) \%>\%
                   margins(2)

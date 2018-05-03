@@ -24,7 +24,7 @@
 #'       fluid = FALSE,
 #'       selectInput(
 #'         id = "name",
-#'         choices = unique(.icons$name)
+#'         choices = unique(icons$name)
 #'       ) %>%
 #'         margins(3),
 #'       div(
@@ -48,11 +48,11 @@
 #'   shinyApp(
 #'     ui = container(
 #'       lapply(
-#'         unique(.icons$set),
+#'         unique(icons$set),
 #'         function(s) {
 #'           div(
 #'             lapply(
-#'               unique(.icons[.icons$set == s, ]$name),
+#'               unique(icons[icons$set == s, ]$name),
 #'               function(nm) {
 #'                 icon(nm, set = s) %>%
 #'                   margins(2)
@@ -87,7 +87,7 @@ icon <- function(name, ..., set = NULL) {
       )
     }
 
-    if (!(set %in% .icons$set)) {
+    if (!(set %in% icons$set)) {
       stop(
         "invalid `icon()` argument, unknown icon set",
         '"', set, '"',
@@ -96,10 +96,10 @@ icon <- function(name, ..., set = NULL) {
     }
   }
 
-  index <- .icons$name == name &
-    if (!is.null(set)) .icons$set == set else TRUE
+  index <- icons$name == name &
+    if (!is.null(set)) icons$set == set else TRUE
 
-  icon <- head(.icons[index, ], 1)
+  icon <- head(icons[index, ], 1)
 
   if (NROW(icon) == 0) {
     stop(
@@ -141,10 +141,19 @@ icon <- function(name, ..., set = NULL) {
 #'
 #' Data frame of icon sets, keywords, names, and additional meta information.
 #'
+#' @format A data frame with 3563 rows and 4 columns:
+#'
+#' \describe{
+#' \item{set}{the icon family name}
+#' \item{keyword}{a keyword to identify the icon by}
+#' \item{name}{the name of the icon}
+#' \item{prefix}{used by the font awesome family}
+#' }
+#'
 #' @keywords internal
-#' @name .icons
-#' @export
-.icons
+#' @examples
+#' icons
+"icons"
 
 #' A spinner
 #'
