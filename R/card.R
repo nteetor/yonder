@@ -112,7 +112,7 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
     if (is_tag(footer)) {
       tagAddClass(footer, "card-footer")
     } else {
-      tags$div(class = )
+      tags$div(class = "card-footer", footer)
     }
   }
 
