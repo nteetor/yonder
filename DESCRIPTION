@@ -4,7 +4,7 @@ Title: Shiny Reimagined With Bootstrap 4
 Version: 0.0.5
 Authors@R: person(given = "Nathan", family = "Teetor", email = "nathanteetor@gmail.com", role = c("aut", "cre"))
 Description: A new toolset to build shiny applications with Bootstrap 4.
-License: What license is it under?
+License: MIT + file LICENSE
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
