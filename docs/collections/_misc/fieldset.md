@@ -17,8 +17,7 @@ roxygen:
       Any number of inputs to group or named arguments passed as HTML
       attributes to the parent element.
   sections: ~
-  examples: |
-    stub
+  examples: ''
   aliases: ~
   family: ~
   export: yes

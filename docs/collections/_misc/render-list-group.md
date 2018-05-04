@@ -15,8 +15,8 @@ roxygen:
   export: yes
   filename: list-group.R
   source: |-
-    renderListGroup <- function(..., env = parent.frame(), quoted = FALSE) {
-        itemsFun <- shiny::exprToFunction(list(...), env, quoted)
+    renderListGroup <- function(..., env = parent.frame()) {
+        itemsFun <- shiny::exprToFunction(list(...), env, FALSE)
         function() {
             items <- lapply(itemsFun(), function(i) HTML(as.character(i)))
             list(items = items)

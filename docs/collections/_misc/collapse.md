@@ -17,6 +17,8 @@ roxygen:
     description: |-
       A button input, when clicked the button will hide or show the
       collapsable content.
+  - name: content
+    description: A tag element speicfying the content to collapse.
   - name: '...'
     description: |-
       Additional named arguments passed as attributes to the parent

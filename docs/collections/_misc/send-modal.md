@@ -20,6 +20,8 @@ roxygen:
     description: |-
       Custom tags to include at the bottom of the modal, defaults to
       `NULL`.
+  - name: session
+    description: A reactive context, defaults to [getDefaultReactiveDomain()].
   sections: ~
   examples: |
     if (interactive()) {

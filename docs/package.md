@@ -8,11 +8,7 @@ roxygen:
   title: A new approach to shiny applications
   description: More freedom to the programmer, more to come.
   parameters: ~
-  sections:
-  - - 'Q and A:'
-    - This is a section stub.
-  - - 'shiny to dull:'
-    - How to move from shiny to dull.
+  sections: ~
   examples: ~
   aliases: NULL dull dull-package
   family: ~

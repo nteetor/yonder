@@ -12,6 +12,8 @@ roxygen:
     its own id, value, label, and attributes. Furthermore, utility functions may
     be applied to individual bars for added customization.
   parameters:
+  - name: id
+    description: A character string specifying the HTML id of a progress output.
   - name: '...'
     description: |-
       One or more `bar` elements passed to a progress output or named
@@ -28,6 +30,8 @@ roxygen:
     description: |-
       If `TRUE`, the progress bar has a striped gradient, defaults
       to `FALSE`.
+  - name: session
+    description: A reactive context, defaults to [getDefaultReactiveDomain()].
   sections: ~
   examples: |
     if (interactive()) {

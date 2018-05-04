@@ -12,6 +12,8 @@ roxygen:
     y-axis (when the flex is direction is column). For more on flex directions
     see [direction].
   parameters:
+  - name: tag
+    description: A tag element.
   - name: default
     description: |-
       One of `"start"`, `"end"`, `"center"`, `"between"` or

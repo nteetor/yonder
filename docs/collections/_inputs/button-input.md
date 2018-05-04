@@ -26,10 +26,6 @@ roxygen:
       If `TRUE`, the input is block-level instead of inline, defaults
       to `FALSE`. A block-level element will occupy the entire width of its
       parent element.
-  - name: disabled
-    description: |-
-      If `TRUE`, the input renders in a disabled state, defaults
-      to `FALSE`.
   - name: text
     description: |-
       A character string specifying the text displayed as part of the

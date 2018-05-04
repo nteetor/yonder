@@ -12,6 +12,8 @@ roxygen:
     must use a flex display. To change the display property of a tag, see
     [display] for more information.
   parameters:
+  - name: tag
+    description: A tag element.
   - name: default
     description: |-
       One of `"start"`, `"end"`, `"center"`, `"baseline"` or

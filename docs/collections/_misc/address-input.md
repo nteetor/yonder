@@ -12,14 +12,6 @@ roxygen:
   parameters:
   - name: id
     description: A character string specifying the id of the address input.
-  - name: placeholders
-    description: |-
-      If `TRUE`, placeholder text is added to all the address
-      input fields, defaults to `TRUE`.
-  - name: abbreviate
-    description: |-
-      If `TRUE`, state abbreviations are used instead of state
-      names, defaults to `TRUE`.
   sections: ~
   examples: |
     if (interactive()) {

@@ -20,7 +20,11 @@ roxygen:
   - name: session
     description: |-
       A `session` object passed to the shiny server function,
-      defaults to [`getDefaultReactiveDomain()`].
+      defaults to [getDefaultReactiveDomain()].
+  - name: '...'
+    description: |-
+      Additional named arguments passed as HTML attributes to the
+      parent element.
   sections: ~
   examples: |
     if (interactive()) {

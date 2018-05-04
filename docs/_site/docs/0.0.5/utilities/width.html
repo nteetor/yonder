@@ -159,14 +159,17 @@
         <div class="col-12 col-sm-10">
           <h1>Tag element width and height</h1>
           <p class="lead">
-            <p>Used in conjunction with [tagReduce] to change a tag element’s width or
-height. Widths and heights are specified as percentages of the parent
-object’s width or height.</p>
+            <p>Utility functions to change a tag element’s width or height. Widths and
+heights are specified as percentages of the parent object’s width or height.</p>
 
           </p>
 
           <h2 id="params">Arguments</h2>
           
+          
+            <h5 id="param-tag">tag</h5>
+            <p><p>A tag element.</p>
+</p>
           
             <h5 id="param-percentage">percentage</h5>
             <p><p>One of 25, 50, 75, or 100 specifying width or height as a
@@ -197,8 +200,8 @@ percentage of a parent element’s width or height.</p>
         </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `width` argument, `max` must be one of 25, 50, 75, or 100"</span><span class="p">,</span><span class="w"> 
             </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
     </span><span class="p">}</span><span class="w">
-    </span><span class="n">percentage</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">precentage</span><span class="p">))</span><span class="w"> 
-        </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"w-"</span><span class="p">,</span><span class="w"> </span><span class="n">precentage</span><span class="p">)</span><span class="w">
+    </span><span class="n">percentage</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">percentage</span><span class="p">))</span><span class="w"> 
+        </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"w-"</span><span class="p">,</span><span class="w"> </span><span class="n">percentage</span><span class="p">)</span><span class="w">
     </span><span class="n">max</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">max</span><span class="p">))</span><span class="w"> 
         </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"mw-"</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">)</span><span class="w">
     </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">percentage</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">))</span><span class="w">

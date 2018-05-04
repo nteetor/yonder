@@ -18,13 +18,23 @@ roxygen:
       thruput.
   - name: '...'
     description: |-
-      For `listGroupThruput`, additional named arguments passed on as
+      For `listGroupThruput()`, additional named arguments passed on as
         HTML attributes to the parent list group element.
 
-        For `listGroupItem`, the text or HTML content of the list group item.
+        For `listGroupItem()`, the text or HTML content of the list group item.
 
-        For `renderListGroup`, any number of expressions which return a
-        `listGroupItem` or calls to `listGroupItem`.
+        For `renderListGroup()`, any number of expressions which return a
+        `listGroupItem()` or calls to `listGroupItem()`.
+  - name: multiple
+    description: |-
+      One of `TRUE` or `FALSE` specifyng if multiple list group
+      items may be selected, defaults to `TRUE`.
+  - name: flush
+    description: |-
+      One of `TRUE` or `FALSE` specifying if the list group is
+      rendered without a border, defaults to `FALSE`. Removing the list group
+      border is useful when rendering a list group inside a custom parent
+      container, e.g. inside a `card()`.
   - name: value
     description: |-
       A character string specifying the value of the list group item,
@@ -39,6 +49,10 @@ roxygen:
     description: |-
       `TRUE` or `FALSE` specifying if the list group item can be
       selected, defaults to `FALSE`.
+  - name: env
+    description: |-
+      The environment in which to evalute the expressions based to
+      `renderListGroup()`.
   sections: ~
   examples: |
     if (interactive()) {

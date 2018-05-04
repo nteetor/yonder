@@ -31,7 +31,7 @@ roxygen:
     if (interactive()) {
       opts <- c(
         "red", "purple", "indigo", "blue", "cyan", "teal", "green", "yellow",
-        "amber", "orange", "brown", "grey"
+        "amber", "orange", "grey"
       )
 
       shinyApp(
@@ -41,7 +41,7 @@ roxygen:
               h5("Background"),
               selectInput(
                 id = "bg",
-                options = opts,
+                choices = opts,
                 selected = sample(opts, 1)
               ),
               rangeInput(
@@ -55,7 +55,7 @@ roxygen:
               h5("Border"),
               selectInput(
                 id = "border",
-                options = opts,
+                choices = opts,
                 selected = sample(opts, 1)
               ),
               rangeInput(
@@ -69,7 +69,7 @@ roxygen:
               h5("Text color"),
               selectInput(
                 id = "text",
-                options = opts,
+                choices = opts,
                 selected = sample(opts, 1)
               ),
               rangeInput(

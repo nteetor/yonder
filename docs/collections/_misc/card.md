@@ -70,7 +70,7 @@ roxygen:
     \   }\n    image <- if (!is.null(image)) {\n        tagAddClass(image, \"card-img-top\")\n
     \   }\n    footer <- if (!is.null(footer)) {\n        if (is_tag(footer)) {\n
     \           tagAddClass(footer, \"card-footer\")\n        }\n        else {\n
-    \           tags$div(class = )\n        }\n    }\n    tags$div(class = \"card\",
-    header, image, if (!is.null(title) || \n        !is.null(subtitle)) {\n        tags$div(class
-    = \"card-body\", title, subtitle)\n    }, elems, footer)\n}"
+    \           tags$div(class = \"card-footer\", footer)\n        }\n    }\n    tags$div(class
+    = \"card\", header, image, if (!is.null(title) || \n        !is.null(subtitle))
+    {\n        tags$div(class = \"card-body\", title, subtitle)\n    }, elems, footer)\n}"
 ---

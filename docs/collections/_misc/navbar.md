@@ -29,7 +29,7 @@ roxygen:
         ui = tagList(
           navbar(
             brand = "Navbar",
-            tabToggle("myTabs", c("Home", "About", "Our process")) %>%
+            tabTabs("myTabs", c("Home", "About", "Our process")) %>%
               margins(c(0, "auto", 0, 0)),
             formInput(
               inline = TRUE,
@@ -43,7 +43,7 @@ roxygen:
             background("teal", +1),
           container(
             tabContent(
-              toggle = "myTabs",
+              tabs = "myTabs",
               tabPane(
                 h3("Home")
               ),
@@ -69,7 +69,7 @@ roxygen:
     <- attribs(args)\n    elems <- lapply(elements(args), function(arg) {\n        if
     (tagHasClass(arg, \"nav\")) {\n            arg <- tagDropClass(arg, \"nav-tabs|nav-pills\")\n
     \           arg <- tagAddClass(arg, \"navbar-nav\")\n        }\n        else if
-    (tagIs(arg, \"form\")) {\n            if (!tagHasClass(arg, \"inline-form\"))
+    (tagIs(arg, \"form\")) {\n            if (!tagHasClass(arg, \"form-inline\"))
     {\n                warning(\"non-inline form element passed to `navbar()`\", \n
     \                 call. = FALSE)\n            }\n        }\n        else if (!is_tag(arg))
     {\n            arg <- tags$span(class = \"navbar-text\", arg)\n        }\n        arg\n
@@ -79,7 +79,7 @@ roxygen:
     tags$button(class = \"navbar-toggler\", type = \"button\", \n            `data-toggle`
     = \"collapse\", `data-target` = paste0(\"#\", \n                navContentId),
     `aria-controls` = navContentId, \n            `aria-expanded` = \"false\", `aria-label`
-    = \"Toggle navigation\", \n            fontAwesome(\"bars\")), tags$div(class
-    = \"collapse navbar-collapse\", \n            id = navContentId, elems), include(\"core\"))\n
+    = \"Toggle navigation\", \n            icon(\"bars\")), tags$div(class = \"collapse
+    navbar-collapse\", \n            id = navContentId, elems), include(\"core\"))\n
     \   this <- tagConcatAttributes(this, attrs)\n    this\n}"
 ---

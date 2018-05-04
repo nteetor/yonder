@@ -18,6 +18,12 @@ roxygen:
     description: |-
       One of `TRUE` or `FALSE`, if `TRUE` the spinner rotates in 8
       discrete steps, defaults to `FALSE`.
+  - name: '...'
+    description: |-
+      Additional named argument passed as HTML attributes to the
+      parent element.
+  - name: session
+    description: A reactive context, defaults to [getDefaultReactiveDomain())].
   sections: ~
   examples: |
     if (interactive()) {

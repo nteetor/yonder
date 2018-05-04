@@ -53,7 +53,7 @@ roxygen:
             col(
               groupInput(
                 id = "text",
-                right = buttonInput("clear", fontAwesome("times")) %>%
+                right = buttonInput("clear", icon("times")) %>%
                   background("red", -1)
               )
             ),

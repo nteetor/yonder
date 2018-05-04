@@ -8,6 +8,8 @@ roxygen:
   title: Login input
   description: A complex input which consists of a username field and a password field.
   parameters:
+  - name: id
+    description: A character string specifying the HTML id of the login input.
   - name: '...'
     description: |-
       Additional named arguments passed as HTML attibutes to the login
@@ -32,6 +34,7 @@ roxygen:
           output$value <- renderPrint({
             input$login
           })
+
         }
       )
     }

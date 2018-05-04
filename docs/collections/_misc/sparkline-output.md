@@ -23,59 +23,18 @@ roxygen:
       A numeric vector of values specifying the sparkline data
       points. Bar and dot sparklines expect values to be between 0 and 100 and
       line sparklines expect values to be between 0 and 10.
+  - name: '...'
+    description: |-
+      Additional named arguments passed as HTML attributes to the parent
+      element.
+  - name: env
+    description: The environment in which to evaluate `values`.
+  - name: quoted
+    description: |-
+      One of `TRUE` or `FALSE` specifying if `values` is a quoted
+      expression.
   sections: ~
-  examples: |
-    if (interactive()) {
-      shinyApp(
-        ui = container(
-          row(
-            col(
-              listGroupInput(
-                id = "toc",
-                items = list(
-                  tags$div(
-                    class = "d-flex w-100 justify-content-between",
-                    "Bars",
-                    sparklineOutput("bar", type = "bar")
-                  ),
-                  tags$div(
-                    class = "d-flex w-100 justify-content-between",
-                    "Dots",
-                    sparklineOutput("dot", type = "dot")
-                  ),
-                  tags$div(
-                    class = "d-flex w-100 justify-content-between",
-                    "Line",
-                    sparklineOutput("line", type = "line")
-                  )
-                ),
-                values = c("bar", "dot", "line")
-              )
-            ),
-            col(
-
-            )
-          )
-        ),
-        server = function(input, output) {
-          gen10 <- function() {
-            sample(10:100, 10, replace = TRUE) %/% 10 * 10
-          }
-
-          output$bar <- renderSparkline({
-            gen10()
-          })
-
-          output$dot <- renderSparkline({
-            gen10()
-          })
-
-          output$line <- renderSparkline({
-            gen10()
-          })
-        }
-      )
-    }
+  examples: ''
   aliases: ~
   family: ~
   export: yes

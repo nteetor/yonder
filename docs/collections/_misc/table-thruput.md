@@ -12,29 +12,29 @@ roxygen:
     description: A character string specifying the id of the table thruput.
   - name: borders
     description: |-
-      If `TRUE`, the table renders with cell borders, defaults to
-      `FALSE`.
+      One of `TRUE` or `FALSE` specifying if the table renders with
+      cell borders, defaults to `FALSE`.
   - name: compact
     description: |-
-      If `TRUE`, table cell padding is cut in half to reduce the
-      size of the table, defaults to `FALSE`.
-  - name: expr
-    description: |-
-      An expression which returns a data frame or `NULL`. If a data
-      frame is returned the table thruput is re-rendered, otherwise if `NULL` the
-      current table thruput is left as is.
-  - name: quoted
-    description: |-
-      If `TRUE`, then `expr` is treated as a quoted expression,
-      defaults to `FALSE`.
-  - name: session
-    description: |-
-      A `session` object passed to the shiny server function,
-      defaults to [`getDefaultReactiveDomain()`].
+      One of `TRUE` or `FALSE` specifying if the table cells are
+      rendered with less space, defaults to `FALSE`.
   - name: '...'
     description: |-
       Additional named arguments passed as HTML attributes to the parent
       element.
+  - name: expr
+    description: |-
+      An expression which returns a data frame or `NULL`. If a data
+      frame is returned the table thruput is re-rendered, otherwise if `NULL` the
+      current table is left as is.
+  - name: env
+    description: |-
+      The environment in which to evaluate `expr`, defaults to
+      `parent.frame()`.
+  - name: quoted
+    description: |-
+      One of `TRUE` or `FALSE` specifying if `expr` is a quoted
+      expression.
   sections: ~
   examples: |
     if (interactive()) {
@@ -96,10 +96,10 @@ roxygen:
   family: ~
   export: yes
   filename: table.R
-  source: "tableThruput <- function(id, borders = FALSE, context = NULL, \n    compact
-    = FALSE, ...) {\n    if (!is.null(id) && !is.character(id)) {\n        stop(\"invalid
-    `tableThruput` argument, `id` must be a character string or \", \n            \"NULL\",
-    call. = FALSE)\n    }\n    shiny::registerInputHandler(type = \"dull.table.input\",
+  source: "tableThruput <- function(id, borders = FALSE, compact = FALSE, \n    ...)
+    {\n    if (!is.null(id) && !is.character(id)) {\n        stop(\"invalid `tableThruput`
+    argument, `id` must be a character string or \", \n            \"NULL\", call.
+    = FALSE)\n    }\n    shiny::registerInputHandler(type = \"dull.table.input\",
     fun = function(x, \n        session, name) {\n        frame <- jsonlite::fromJSON(x)\n
     \       if (NROW(frame) == 0 || NCOL(frame) == 0) {\n            return(NULL)\n
     \       }\n        frame\n    }, force = TRUE)\n    tags$table(class = collate(\"dull-table-thruput\",

@@ -13,10 +13,6 @@ roxygen:
   parameters:
   - name: src
     description: A character string specifying the source of the image.
-  - name: fluid
-    description: |-
-      If `TRUE`, the image will scale with its parent element,
-      defaults to `TRUE`.
   - name: image
     description: An `<img>` tag, typically a call to `img`.
   - name: caption

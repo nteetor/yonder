@@ -8,6 +8,11 @@ roxygen:
   title: Cleaner blockquotes
   description: Stylized blockquotes, an updated builder function for `<blockquote>`.
   parameters:
+  - name: '...'
+    description: |-
+      Any number of tags elements or character strings passed as child
+      elements or named arguments passed as HTML attributes to the parent
+      element.
   - name: source
     description: |-
       The quote source, use `tags$cite` to format the source title,

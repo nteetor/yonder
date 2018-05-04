@@ -11,7 +11,7 @@ roxygen:
   sections: ~
   examples: |
     tags$h1("Hello, world!") %>%
-      border("grey", sides = c("top", "bottom"))
+      border("grey")
 
     tags$div() %>%
       border("orange")

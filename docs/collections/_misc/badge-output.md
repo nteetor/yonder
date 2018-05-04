@@ -17,6 +17,12 @@ roxygen:
     description: |-
       A character string specifying the content of the badge or an
       expression which returns a character string.
+  - name: env
+    description: The environment in which to evaluate `content`.
+  - name: quoted
+    description: |-
+      One of `TRUE` or `FALSE` specifying if `content` is a quoted
+      expression.
   - name: '...'
     description: |-
       Additional named argument passed as HTML attributes to the parent

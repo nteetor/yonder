@@ -21,7 +21,7 @@ roxygen:
     `height` argument, `percentage` must be one of 25, 50, 75, or 100\", \n            call.
     = FALSE)\n    }\n    if (!is.null(max) && !(max %in% c(25, 50, 75, 100))) {\n
     \       stop(\"invalid `height` argument, `max` must be one of 25, 50, 75, or
-    100\", \n            call. = FALSE)\n    }\n    percentage <- if (!is.null(precentage))
-    \n        paste0(\"h-\", precentage)\n    max <- if (!is.null(max)) \n        paste0(\"mh-\",
+    100\", \n            call. = FALSE)\n    }\n    percentage <- if (!is.null(percentage))
+    \n        paste0(\"h-\", percentage)\n    max <- if (!is.null(max)) \n        paste0(\"mh-\",
     max)\n    tagAddClass(tag, c(percentage, max))\n}"
 ---

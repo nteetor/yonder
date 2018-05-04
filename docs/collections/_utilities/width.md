@@ -7,10 +7,11 @@ roxygen:
   doctype: ~
   title: Tag element width and height
   description: |-
-    Used in conjunction with [tagReduce] to change a tag element's width or
-    height. Widths and heights are specified as percentages of the parent
-    object's width or height.
+    Utility functions to change a tag element's width or height. Widths and
+    heights are specified as percentages of the parent object's width or height.
   parameters:
+  - name: tag
+    description: A tag element.
   - name: percentage
     description: |-
       One of 25, 50, 75, or 100 specifying width or height as a
@@ -38,7 +39,7 @@ roxygen:
     `width` argument, `percentage` must be one of 25, 50, 75, or 100\", \n            call.
     = FALSE)\n    }\n    if (!is.null(max) && !(max %in% c(25, 50, 75, 100))) {\n
     \       stop(\"invalid `width` argument, `max` must be one of 25, 50, 75, or 100\",
-    \n            call. = FALSE)\n    }\n    percentage <- if (!is.null(precentage))
-    \n        paste0(\"w-\", precentage)\n    max <- if (!is.null(max)) \n        paste0(\"mw-\",
+    \n            call. = FALSE)\n    }\n    percentage <- if (!is.null(percentage))
+    \n        paste0(\"w-\", percentage)\n    max <- if (!is.null(max)) \n        paste0(\"mw-\",
     max)\n    tagAddClass(tag, c(percentage, max))\n}"
 ---
