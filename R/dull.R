@@ -10,7 +10,8 @@
 #'
 #' How to move from shiny to dull.
 #'
-#' @importFrom shiny getDefaultReactiveDomain tagAppendAttributes
+#' @importFrom shiny observe getDefaultReactiveDomain tagAppendAttributes tags
+#'   HTML
 #' @importFrom rlang dots_list
 #' @name dull
 "_PACKAGE"
