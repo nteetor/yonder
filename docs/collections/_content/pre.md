@@ -20,8 +20,8 @@ roxygen:
   family: content
   export: yes
   filename: tags.R
-  source:
-  - pre <- function(...) {
-  - '  tags$pre(class = "pre-scrollable", ...)'
-  - '}'
+  source: |-
+    pre <- function(...) {
+        tags$pre(class = "pre-scrollable", ...)
+    }
 ---

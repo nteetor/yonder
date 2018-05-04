@@ -77,17 +77,9 @@ roxygen:
   family: flex
   export: yes
   filename: flex.R
-  source:
-  - items <- function(tag, default = NULL, sm = NULL, md = NULL,
-  - '                  lg = NULL, xl = NULL) {'
-  - '  args <- dropNulls(list('
-  - '    default = default, sm = sm, md = md,'
-  - '    lg = lg, xl = xl'
-  - '  ))'
-  - '  classes <- responsives("align-items", args, c('
-  - '    "start", "end",'
-  - '    "center", "baseline", "stretch"'
-  - '  ))'
-  - '  tagAddClass(tag, collate(classes))'
-  - '}'
+  source: "items <- function(tag, default = NULL, sm = NULL, md = NULL, \n    lg =
+    NULL, xl = NULL) {\n    args <- dropNulls(list(default = default, sm = sm, md
+    = md, \n        lg = lg, xl = xl))\n    classes <- responsives(\"align-items\",
+    args, c(\"start\", \"end\", \n        \"center\", \"baseline\", \"stretch\"))\n
+    \   tagAddClass(tag, collate(classes))\n}"
 ---

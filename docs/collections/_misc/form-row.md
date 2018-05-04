@@ -14,8 +14,8 @@ roxygen:
   family: ~
   export: yes
   filename: forms.R
-  source:
-  - formRow <- function(...) {
-  - '  tags$div(class = "form-row", ..., include("core"))'
-  - '}'
+  source: |-
+    formRow <- function(...) {
+        tags$div(class = "form-row", ..., include("core"))
+    }
 ---

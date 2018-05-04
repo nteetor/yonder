@@ -93,52 +93,21 @@ roxygen:
   family: ~
   export: yes
   filename: dropdown.R
-  source:
-  - dropdownInput <- function(id, label, ..., direction = "down",
-  - '                          split = FALSE) {'
-  - '  if (!re(direction, "up|right|down|left", len0 = FALSE)) {'
-  - '    stop('
-  - '      "invalid `dropdownInput` arguments, `direction` must be one of ",'
-  - '      "\"up\", \"right\", \"down\", or \"left\"", call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  args <- dots_list(...)'
-  - '  items <- elements(args)'
-  - '  attrs <- attribs(args)'
-  - '  tags$div('
-  - '    class = collate('
-  - '      "dull-dropdown-input", "btn-group",'
-  - '      paste0("drop", direction)'
-  - '    ), id = id, if (split) {'
-  - '      tags$button(class = "btn btn-grey", label)'
-  - '    }, tags$button('
-  - '      class = collate('
-  - '        "btn", "btn-grey", "dropdown-toggle",'
-  - '        if (split) {'
-  - '          "dropdown-toggle-split"'
-  - '        }'
-  - '      ), type = "button", `data-toggle` = "dropdown",'
-  - '      `aria-haspop` = "true", `aria-expanded` = "false", if (!split) {'
-  - '        label'
-  - '      } else {'
-  - '        tags$span(class = "sr-only", "Dropdown toggle")'
-  - '      }'
-  - '    ),'
-  - '    tags$div(class = "dropdown-menu", Reduce(x = lapply('
-  - '      items,'
-  - '      dropdownItem'
-  - '    ), function(acc, obj) {'
-  - '      if (is_tag(acc)) {'
-  - '        acc <- list(acc)'
-  - '      }'
-  - '      if (is_strictly_list(acc[[length(acc)]]) || is_strictly_list(obj)) {'
-  - '        return(c('
-  - '          acc, list(tags$div(class = "dropdown-divider")),'
-  - '          list(obj)'
-  - '        ))'
-  - '      }'
-  - '      return(c(acc, list(obj)))'
-  - '    })), include("core")'
-  - '  )'
-  - '}'
+  source: "dropdownInput <- function(id, label, ..., direction = \"down\", \n    split
+    = FALSE) {\n    if (!re(direction, \"up|right|down|left\", len0 = FALSE)) {\n
+    \       stop(\"invalid `dropdownInput` arguments, `direction` must be one of \",
+    \n            \"\\\"up\\\", \\\"right\\\", \\\"down\\\", or \\\"left\\\"\", call.
+    = FALSE)\n    }\n    args <- dots_list(...)\n    items <- elements(args)\n    attrs
+    <- attribs(args)\n    tags$div(class = collate(\"dull-dropdown-input\", \"btn-group\",
+    \n        paste0(\"drop\", direction)), id = id, if (split) {\n        tags$button(class
+    = \"btn btn-grey\", label)\n    }, tags$button(class = collate(\"btn\", \"btn-grey\",
+    \"dropdown-toggle\", \n        if (split) \n            \"dropdown-toggle-split\"),
+    type = \"button\", `data-toggle` = \"dropdown\", \n        `aria-haspop` = \"true\",
+    `aria-expanded` = \"false\", if (!split) \n            label\n        else tags$span(class
+    = \"sr-only\", \"Dropdown toggle\")), \n        tags$div(class = \"dropdown-menu\",
+    Reduce(x = lapply(items, \n            dropdownItem), function(acc, obj) {\n            if
+    (is_tag(acc)) {\n                acc <- list(acc)\n            }\n            if
+    (is_strictly_list(acc[[length(acc)]]) || is_strictly_list(obj)) {\n                return(c(acc,
+    list(tags$div(class = \"dropdown-divider\")), \n                  list(obj)))\n
+    \           }\n            return(c(acc, list(obj)))\n        })), include(\"core\"))\n}"
 ---

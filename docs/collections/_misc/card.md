@@ -45,86 +45,32 @@ roxygen:
   family: ~
   export: yes
   filename: card.R
-  source:
-  - card <- function(..., header = NULL, title = NULL, subtitle = NULL,
-  - '                 image = NULL, footer = NULL) {'
-  - '  args <- list(...)'
-  - '  attrs <- attribs(args)'
-  - '  isListGroup <- function(x) tagHasClass(x, "list-group")'
-  - '  elems <- lapply(elements(args), function(el) {'
-  - '    if (isListGroup(el)) {'
-  - '      return(tagAddClass(el, "list-group-flush"))'
-  - '    }'
-  - '    tags$div(class = "card-body", if (!is_tag(el)) {'
-  - '      tags$p(class = "card-text", el)'
-  - '    }'
-  - '    else {'
-  - '      el'
-  - '    })'
-  - '  })'
-  - '  if (length(elems)) {'
-  - '    elems <- Reduce('
-  - '      x = elems[-1], init = list(elems[[1]]),'
-  - '      function(acc, el) {'
-  - '        if (isListGroup(acc[[length(acc)]])) {'
-  - '          c(acc, list(el))'
-  - '        }'
-  - '        else {'
-  - '          acc[[length(acc)]][["children"]] <- c('
-  - '            acc[[length(acc)]][["children"]],'
-  - '            el$children'
-  - '          )'
-  - '          acc'
-  - '        }'
-  - '      }'
-  - '    )'
-  - '  }'
-  - '  header <- if (!is.null(header)) {'
-  - '    if (is_tag(header)) {'
-  - '      if (tagHasClass(header, "nav-tabs")) {'
-  - '        tags$div(class = "card-header", tagAddClass('
-  - '          header,'
-  - '          "card-header-tabs"'
-  - '        ))'
-  - '      }'
-  - '      else {'
-  - '        tagAddClass(header, "card-header")'
-  - '      }'
-  - '    }'
-  - '    else {'
-  - '      tags$div(class = "card-header", header)'
-  - '    }'
-  - '  }'
-  - '  title <- if (!is.null(title)) {'
-  - '    if (is_tag(title)) {'
-  - '      tagAddClass(title, "card-title")'
-  - '    }'
-  - '    else {'
-  - '      tags$h5(class = "card-title", title)'
-  - '    }'
-  - '  }'
-  - '  subtitle <- if (!is.null(subtitle)) {'
-  - '    if (is_tag(subtitle)) {'
-  - '      tagAddClass(subtitle, "card-subtitle")'
-  - '    }'
-  - '    else {'
-  - '      tags$h6(class = "card-subtitle", subtitle)'
-  - '    }'
-  - '  }'
-  - '  image <- if (!is.null(image)) {'
-  - '    tagAddClass(image, "card-img-top")'
-  - '  }'
-  - '  footer <- if (!is.null(footer)) {'
-  - '    if (is_tag(footer)) {'
-  - '      tagAddClass(footer, "card-footer")'
-  - '    }'
-  - '    else {'
-  - '      tags$div(class = )'
-  - '    }'
-  - '  }'
-  - '  tags$div(class = "card", header, image, if (!is.null(title) ||'
-  - '    !is.null(subtitle)) {'
-  - '    tags$div(class = "card-body", title, subtitle)'
-  - '  }, elems, footer)'
-  - '}'
+  source: "card <- function(..., header = NULL, title = NULL, subtitle = NULL, \n
+    \   image = NULL, footer = NULL) {\n    args <- list(...)\n    attrs <- attribs(args)\n
+    \   isListGroup <- function(x) tagHasClass(x, \"list-group\")\n    elems <- lapply(elements(args),
+    function(el) {\n        if (isListGroup(el)) {\n            return(tagAddClass(el,
+    \"list-group-flush\"))\n        }\n        tags$div(class = \"card-body\", if
+    (!is_tag(el)) {\n            tags$p(class = \"card-text\", el)\n        }\n        else
+    {\n            el\n        })\n    })\n    if (length(elems)) {\n        elems
+    <- Reduce(x = elems[-1], init = list(elems[[1]]), \n            function(acc,
+    el) {\n                if (isListGroup(acc[[length(acc)]])) {\n                  c(acc,
+    list(el))\n                }\n                else {\n                  acc[[length(acc)]][[\"children\"]]
+    <- c(acc[[length(acc)]][[\"children\"]], \n                    el$children)\n
+    \                 acc\n                }\n            })\n    }\n    header <-
+    if (!is.null(header)) {\n        if (is_tag(header)) {\n            if (tagHasClass(header,
+    \"nav-tabs\")) {\n                tags$div(class = \"card-header\", tagAddClass(header,
+    \n                  \"card-header-tabs\"))\n            }\n            else {\n
+    \               tagAddClass(header, \"card-header\")\n            }\n        }\n
+    \       else {\n            tags$div(class = \"card-header\", header)\n        }\n
+    \   }\n    title <- if (!is.null(title)) {\n        if (is_tag(title)) {\n            tagAddClass(title,
+    \"card-title\")\n        }\n        else {\n            tags$h5(class = \"card-title\",
+    title)\n        }\n    }\n    subtitle <- if (!is.null(subtitle)) {\n        if
+    (is_tag(subtitle)) {\n            tagAddClass(subtitle, \"card-subtitle\")\n        }\n
+    \       else {\n            tags$h6(class = \"card-subtitle\", subtitle)\n        }\n
+    \   }\n    image <- if (!is.null(image)) {\n        tagAddClass(image, \"card-img-top\")\n
+    \   }\n    footer <- if (!is.null(footer)) {\n        if (is_tag(footer)) {\n
+    \           tagAddClass(footer, \"card-footer\")\n        }\n        else {\n
+    \           tags$div(class = )\n        }\n    }\n    tags$div(class = \"card\",
+    header, image, if (!is.null(title) || \n        !is.null(subtitle)) {\n        tags$div(class
+    = \"card-body\", title, subtitle)\n    }, elems, footer)\n}"
 ---

@@ -56,54 +56,20 @@ roxygen:
   family: ~
   export: yes
   filename: download.R
-  source:
-  - downloadEvent <- function(event, filename, handler, domain = getDefaultReactiveDomain())
-    {
-  - '  priority <- -5000'
-  - '  pframe <- parent.frame()'
-  - '  quoted <- FALSE'
-  - '  key <- deparse(substitute(event))'
-  - '  eventFunc <- shiny::exprToFunction(event, pframe, quoted)'
-  - '  eventFunc <- wrapFunctionLabel('
-  - '    eventFunc, "downloadEvent",'
-  - '    ..stacktraceon = TRUE'
-  - '  )'
-  - '  if (shiny::isolate(!is.function(filename))) {'
-  - '    filenameFunc <- shiny::exprToFunction('
-  - '      filename, pframe,'
-  - '      quoted'
-  - '    )'
-  - '  }'
-  - '  else {'
-  - '    filenameFunc <- filename'
-  - '  }'
-  - '  handlerFunc <- wrapFunctionLabel('
-  - '    handler, "downloadHandler",'
-  - '    ..stacktraceon = TRUE'
-  - '  )'
-  - '  label <- sprintf("downloadEvent(%s)", paste('
-  - '    deparse(body(eventFunc)),'
-  - '    collapse = "\n"'
-  - '  ))'
-  - '  domain$downloads$set(key, list('
-  - '    filename = filenameFunc, contentType = NA,'
-  - '    func = handlerFunc'
-  - '  ))'
-  - '  initialized <- FALSE'
-  - '  o <- observe('
-  - '    {'
-  - '      eventFunc()'
-  - '      if (!initialized) {'
-  - '        initialized <<- TRUE'
-  - '        return()'
-  - '      }'
-  - '      domain$sendCustomMessage("dull:download", list('
-  - '        token = domain$token,'
-  - '        key = key, filename = shiny::isolate(filenameFunc())'
-  - '      ))'
-  - '    }, label = label, suspended = FALSE, priority = priority,'
-  - '    domain = domain, autoDestroy = TRUE, ..stacktraceon = FALSE'
-  - '  )'
-  - '  invisible(o)'
-  - '}'
+  source: "downloadEvent <- function(event, filename, handler, domain = getDefaultReactiveDomain())
+    {\n    priority <- -5000\n    pframe <- parent.frame()\n    quoted <- FALSE\n
+    \   key <- deparse(substitute(event))\n    eventFunc <- shiny::exprToFunction(event,
+    pframe, quoted)\n    eventFunc <- wrapFunctionLabel(eventFunc, \"downloadEvent\",
+    \n        ..stacktraceon = TRUE)\n    if (shiny::isolate(!is.function(filename)))
+    {\n        filenameFunc <- shiny::exprToFunction(filename, pframe, \n            quoted)\n
+    \   }\n    else {\n        filenameFunc <- filename\n    }\n    handlerFunc <-
+    wrapFunctionLabel(handler, \"downloadHandler\", \n        ..stacktraceon = TRUE)\n
+    \   label <- sprintf(\"downloadEvent(%s)\", paste(deparse(body(eventFunc)), \n
+    \       collapse = \"\\n\"))\n    domain$downloads$set(key, list(filename = filenameFunc,
+    contentType = NA, \n        func = handlerFunc))\n    initialized <- FALSE\n    o
+    <- observe({\n        eventFunc()\n        if (!initialized) {\n            initialized
+    <<- TRUE\n            return()\n        }\n        domain$sendCustomMessage(\"dull:download\",
+    list(token = domain$token, \n            key = key, filename = shiny::isolate(filenameFunc())))\n
+    \   }, label = label, suspended = FALSE, priority = priority, \n        domain
+    = domain, autoDestroy = TRUE, ..stacktraceon = FALSE)\n    invisible(o)\n}"
 ---

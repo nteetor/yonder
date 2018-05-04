@@ -18,25 +18,13 @@ roxygen:
   family: ~
   export: yes
   filename: tooltip.R
-  source:
-  - popover <- function(content, text, placement = "top") {
-  - '  if (!is_tag(content)) {'
-  - '    stop('
-  - '      "invalid `popover` argument, `content` must be a tag object",'
-  - '      call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  if (!re(placement, "top|left|bottom|right", FALSE)) {'
-  - '    stop('
-  - '      "invalid `popover` argument, `placement` must be one of ",'
-  - '      "\"top\", \"left\", \"bottom\", or \"right\"", call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  content$attribs$`data-container` <- "body"'
-  - '  content$attribs$`data-toggle` <- "popover"'
-  - '  content$attribs$`data-placement` <- placement'
-  - '  content$attribs$`data-content` <- as.character(text)'
-  - '  content$children <- c(content$children, include("core"))'
-  - '  content'
-  - '}'
+  source: "popover <- function(content, text, placement = \"top\") {\n    if (!is_tag(content))
+    {\n        stop(\"invalid `popover` argument, `content` must be a tag object\",
+    \n            call. = FALSE)\n    }\n    if (!re(placement, \"top|left|bottom|right\",
+    FALSE)) {\n        stop(\"invalid `popover` argument, `placement` must be one
+    of \", \n            \"\\\"top\\\", \\\"left\\\", \\\"bottom\\\", or \\\"right\\\"\",
+    call. = FALSE)\n    }\n    content$attribs$`data-container` <- \"body\"\n    content$attribs$`data-toggle`
+    <- \"popover\"\n    content$attribs$`data-placement` <- placement\n    content$attribs$`data-content`
+    <- as.character(text)\n    content$children <- c(content$children, include(\"core\"))\n
+    \   content\n}"
 ---

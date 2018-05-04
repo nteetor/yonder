@@ -14,9 +14,9 @@ roxygen:
   family: ~
   export: yes
   filename: update.R
-  source:
-  - updateValues <- function(id, ...) {
-  - '  args <- dots_list(...)'
-  - '  sendUpdateMessage(id, "values", args)'
-  - '}'
+  source: |-
+    updateValues <- function(id, ...) {
+        args <- dots_list(...)
+        sendUpdateMessage(id, "values", args)
+    }
 ---

@@ -27,19 +27,9 @@ roxygen:
   family: utilities
   export: yes
   filename: utilities.R
-  source:
-  - affix <- function(tag, position) {
-  - '  if (!re(position, "top|bottom|sticky", len0 = FALSE)) {'
-  - '    stop('
-  - '      "invalid `affix` argument, `position` must be one of ",'
-  - '      "\"top\", \"bottom\", or \"sticky\"", call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  if (position == "sticky") {'
-  - '    tagAddClass(tag, "sticky-top")'
-  - '  }'
-  - '  else {'
-  - '    tagAddClass(tag, paste0("fixed-", position))'
-  - '  }'
-  - '}'
+  source: "affix <- function(tag, position) {\n    if (!re(position, \"top|bottom|sticky\",
+    len0 = FALSE)) {\n        stop(\"invalid `affix` argument, `position` must be
+    one of \", \n            \"\\\"top\\\", \\\"bottom\\\", or \\\"sticky\\\"\", call.
+    = FALSE)\n    }\n    if (position == \"sticky\") {\n        tagAddClass(tag, \"sticky-top\")\n
+    \   }\n    else {\n        tagAddClass(tag, paste0(\"fixed-\", position))\n    }\n}"
 ---

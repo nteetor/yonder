@@ -123,10 +123,7 @@ roxygen:
   family: inputs
   export: yes
   filename: forms.R
-  source:
-  - formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
-  - '  tags$form(class = collate("dull-form-input", if (inline) {'
-  - '    "form-inline"'
-  - '  } ), id = id, ..., submit, include("core"))'
-  - '}'
+  source: "formInput <- function(id, ..., submit = submitInput(), inline = FALSE)
+    {\n    tags$form(class = collate(\"dull-form-input\", if (inline) \n        \"form-inline\"),
+    id = id, ..., submit, include(\"core\"))\n}"
 ---

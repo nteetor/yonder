@@ -90,38 +90,16 @@ roxygen:
   family: ~
   export: yes
   filename: alerts.R
-  source:
-  - closeAlert <- function(...) {
-  - '  domain <- getDefaultReactiveDomain()'
-  - '  if (is.null(domain)) {'
-  - '    stop('
-  - '      "function `closeAlert()` must be called in a reactive context",'
-  - '      call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  args <- dots_list(...)'
-  - '  elems <- elements(args)'
-  - '  attrs <- attribs(args)'
-  - '  indeces <- elems[vapply(elems, is.numeric, logical(1))]'
-  - '  if (length(indeces)) {'
-  - '    if (any(unlist(indeces) %% 1 != 0)) {'
-  - '      stop('
-  - '        "invalid `closeAlert()` argument, indeces must be whole numbers",'
-  - '        call. = FALSE'
-  - '      )'
-  - '    }'
-  - '    indeces <- lapply(indeces, `-`, 1)'
-  - '  }'
-  - '  if (!is.null(attrs[["class"]]) && length(attrs[["class"]]) >'
-  - '    1) {'
-  - '    attrs[["class"]] <- paste(attrs[["class"]], collapse = " ")'
-  - '  }'
-  - '  domain$sendInputMessage("alert-container", list('
-  - '    type = "close",'
-  - '    data = list(text = elems[vapply('
-  - '      elems, is.character,'
-  - '      logical(1)'
-  - '    )], index = indeces, attrs = attrs)'
-  - '  ))'
-  - '}'
+  source: "closeAlert <- function(...) {\n    domain <- getDefaultReactiveDomain()\n
+    \   if (is.null(domain)) {\n        stop(\"function `closeAlert()` must be called
+    in a reactive context\", \n            call. = FALSE)\n    }\n    args <- dots_list(...)\n
+    \   elems <- elements(args)\n    attrs <- attribs(args)\n    indeces <- elems[vapply(elems,
+    is.numeric, logical(1))]\n    if (length(indeces)) {\n        if (any(unlist(indeces)%%1
+    != 0)) {\n            stop(\"invalid `closeAlert()` argument, indeces must be
+    whole numbers\", \n                call. = FALSE)\n        }\n        indeces
+    <- lapply(indeces, `-`, 1)\n    }\n    if (!is.null(attrs[[\"class\"]]) && length(attrs[[\"class\"]])
+    > \n        1) {\n        attrs[[\"class\"]] <- paste(attrs[[\"class\"]], collapse
+    = \" \")\n    }\n    domain$sendInputMessage(\"alert-container\", list(type =
+    \"close\", \n        data = list(text = elems[vapply(elems, is.character, \n            logical(1))],
+    index = indeces, attrs = attrs)))\n}"
 ---

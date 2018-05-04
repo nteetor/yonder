@@ -29,18 +29,9 @@ roxygen:
   family: ~
   export: yes
   filename: validate.R
-  source:
-  - markInvalid <- function(id, msg) {
-  - '  domain <- getDefaultReactiveDomain()'
-  - '  if (is.null(domain)) {'
-  - '    stop('
-  - '      "problem with `invalid`, input `", id, "` cannot be invalidated outside
-    ",'
-  - '      "of a reactive context", call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  domain$sendInputMessage(id, list(type = "mark:invalid", data = list(msg = msg)))'
-  - '  domain$freezeValue(domain$input, id)'
-  - '  invisible()'
-  - '}'
+  source: "markInvalid <- function(id, msg) {\n    domain <- getDefaultReactiveDomain()\n
+    \   if (is.null(domain)) {\n        stop(\"problem with `invalid`, input `\",
+    id, \"` cannot be invalidated outside \", \n            \"of a reactive context\",
+    call. = FALSE)\n    }\n    domain$sendInputMessage(id, list(type = \"mark:invalid\",
+    data = list(msg = msg)))\n    domain$freezeValue(domain$input, id)\n    invisible()\n}"
 ---

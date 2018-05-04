@@ -73,13 +73,8 @@ roxygen:
   family: ~
   export: yes
   filename: modal.R
-  source:
-  - sendModal <- function(title, body, footer = NULL, session = getDefaultReactiveDomain())
-    {
-  - '  session$sendCustomMessage("dull:modal", list('
-  - '    title = htmltools::HTML(as.character(title)),'
-  - '    body = htmltools::HTML(as.character(body)), footer = if (!is.null(footer))
-    htmltools::HTML(as.character(footer))'
-  - '  ))'
-  - '}'
+  source: "sendModal <- function(title, body, footer = NULL, session = getDefaultReactiveDomain())
+    {\n    session$sendCustomMessage(\"dull:modal\", list(title = htmltools::HTML(as.character(title)),
+    \n        body = htmltools::HTML(as.character(body)), footer = if (!is.null(footer))
+    htmltools::HTML(as.character(footer))))\n}"
 ---

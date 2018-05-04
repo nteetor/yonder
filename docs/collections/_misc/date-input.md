@@ -41,70 +41,30 @@ roxygen:
   family: ~
   export: yes
   filename: datetime.R
-  source:
-  - dateInput <- function(id, value = NULL, min = NULL, max = NULL,
-  - '                      multiple = FALSE) {'
-  - '  if (!is.null(value)) {'
-  - '    if (!multiple) {'
-  - '      if (length(value) > 1) {'
-  - '        stop('
-  - '          "invalid `dateInput` argument, if `multiple` is FALSE, `value` must
-    ",'
-  - '          "be a single date object or character string",'
-  - '          call. = FALSE'
-  - '        )'
-  - '      }'
-  - '      if (!is.character(value) && !is_date(value)) {'
-  - '        stop('
-  - '          "invalid `dateInput` argument, `value` must be a date object or ",'
-  - '          "character string in the format YYYY-mm-dd",'
-  - '          call. = FALSE'
-  - '        )'
-  - '      }'
-  - '      if (!is_ymd(value)) {'
-  - '        stop('
-  - '          "invalid `dateInput` argument, `value` must be in the format YYYY-mm-dd",'
-  - '          call. = FALSE'
-  - '        )'
-  - '      }'
-  - '    }'
-  - '    else {'
-  - '      passes <- function(x) (is.character(x) || is_date(x)) &&'
-  - '          is_ymd(x)'
-  - '      if (!all(vapply(value, passes, logical(1)))) {'
-  - '        stop('
-  - '          "invalid `dateInput` argument, `value` must be date ",'
-  - '          "objects and character strings in the format YYYY-mm-dd",'
-  - '          call. = FALSE'
-  - '        )'
-  - '      }'
-  - '    }'
-  - '  }'
-  - '  if (!is_ymd(min)) {'
-  - '    stop('
-  - '      "invalid `dateRangeInput` argument, `min` must be a date object or ",'
-  - '      "character string in the format YYYY-mm-dd", call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  if (!is_ymd(max)) {'
-  - '    stop('
-  - '      "invalid `dateRangeInput` argument, `max` must be a date object or ",'
-  - '      "character string in the format YYYY-mm-dd", call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  if (!is.null(value) && multiple) {'
-  - '    value <- paste('
-  - '      vapply(value, as.character, character(1)),'
-  - '      collapse = "\\,"'
-  - '    )'
-  - '  }'
-  - '  tags$div(class = "dull-datetime-input", id = id, tags$input('
-  - '    type = "datetime-local",'
-  - '    `data-default-date` = value, `data-alt-input` = "true",'
-  - '    `data-min-date` = min, `data-max-date` = max, `data-date-format` = "Y-m-d",'
-  - '    `data-mode` = if (multiple) {'
-  - '      "multiple"'
-  - '    }'
-  - '  ))'
-  - '}'
+  source: "dateInput <- function(id, value = NULL, min = NULL, max = NULL, \n    multiple
+    = FALSE) {\n    if (!is.null(value)) {\n        if (!multiple) {\n            if
+    (length(value) > 1) {\n                stop(\"invalid `dateInput` argument, if
+    `multiple` is FALSE, `value` must \", \n                  \"be a single date object
+    or character string\", \n                  call. = FALSE)\n            }\n            if
+    (!is.character(value) && !is_date(value)) {\n                stop(\"invalid `dateInput`
+    argument, `value` must be a date object or \", \n                  \"character
+    string in the format YYYY-mm-dd\", \n                  call. = FALSE)\n            }\n
+    \           if (!is_ymd(value)) {\n                stop(\"invalid `dateInput`
+    argument, `value` must be in the format YYYY-mm-dd\", \n                  call.
+    = FALSE)\n            }\n        }\n        else {\n            passes <- function(x)
+    (is.character(x) || is_date(x)) && \n                is_ymd(x)\n            if
+    (!all(vapply(value, passes, logical(1)))) {\n                stop(\"invalid `dateInput`
+    argument, `value` must be date \", \n                  \"objects and character
+    strings in the format YYYY-mm-dd\", \n                  call. = FALSE)\n            }\n
+    \       }\n    }\n    if (!is_ymd(min)) {\n        stop(\"invalid `dateRangeInput`
+    argument, `min` must be a date object or \", \n            \"character string
+    in the format YYYY-mm-dd\", call. = FALSE)\n    }\n    if (!is_ymd(max)) {\n        stop(\"invalid
+    `dateRangeInput` argument, `max` must be a date object or \", \n            \"character
+    string in the format YYYY-mm-dd\", call. = FALSE)\n    }\n    if (!is.null(value)
+    && multiple) {\n        value <- paste(vapply(value, as.character, character(1)),
+    \n            collapse = \"\\\\,\")\n    }\n    tags$div(class = \"dull-datetime-input\",
+    id = id, tags$input(type = \"datetime-local\", \n        `data-default-date` =
+    value, `data-alt-input` = \"true\", \n        `data-min-date` = min, `data-max-date`
+    = max, `data-date-format` = \"Y-m-d\", \n        `data-mode` = if (multiple) \n
+    \           \"multiple\"))\n}"
 ---

@@ -14,9 +14,9 @@ roxygen:
   family: ~
   export: yes
   filename: update.R
-  source:
-  - updateSelected <- function(id, ...) {
-  - '  args <- dots_list(...)'
-  - '  stop("`updateSelected` is not yet implemented")'
-  - '}'
+  source: |-
+    updateSelected <- function(id, ...) {
+        args <- dots_list(...)
+        stop("`updateSelected` is not yet implemented")
+    }
 ---

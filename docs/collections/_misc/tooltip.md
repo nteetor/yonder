@@ -25,24 +25,12 @@ roxygen:
   family: ~
   export: yes
   filename: tooltip.R
-  source:
-  - tooltip <- function(content, text, placement = "top") {
-  - '  if (!is_tag(content)) {'
-  - '    stop('
-  - '      "invalid `tooltip` argument, `content` must be a tag object",'
-  - '      call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  if (!re(placement, "top|left|bottom|right", FALSE)) {'
-  - '    stop('
-  - '      "invalid `tooltip` argument, `placement` must be one of ",'
-  - '      "\"top\", \"left\", \"bottom\", or \"right\"", call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  content$attribs$`data-toggle` <- "tooltip"'
-  - '  content$attribs$`data-placement` <- placement'
-  - '  content$attribs$title <- as.character(text)'
-  - '  content$children <- append(content$children, list(include("core")))'
-  - '  content'
-  - '}'
+  source: "tooltip <- function(content, text, placement = \"top\") {\n    if (!is_tag(content))
+    {\n        stop(\"invalid `tooltip` argument, `content` must be a tag object\",
+    \n            call. = FALSE)\n    }\n    if (!re(placement, \"top|left|bottom|right\",
+    FALSE)) {\n        stop(\"invalid `tooltip` argument, `placement` must be one
+    of \", \n            \"\\\"top\\\", \\\"left\\\", \\\"bottom\\\", or \\\"right\\\"\",
+    call. = FALSE)\n    }\n    content$attribs$`data-toggle` <- \"tooltip\"\n    content$attribs$`data-placement`
+    <- placement\n    content$attribs$title <- as.character(text)\n    content$children
+    <- append(content$children, list(include(\"core\")))\n    content\n}"
 ---

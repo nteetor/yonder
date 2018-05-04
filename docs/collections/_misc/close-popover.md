@@ -14,18 +14,8 @@ roxygen:
   family: ~
   export: yes
   filename: popover.R
-  source:
-  - closePopover <- function(id) {
-  - '  domain <- getDefaultReactiveDomain()'
-  - '  if (is.null(domain)) {'
-  - '    stop('
-  - '      "function `closePopover()` must be called in a reactive context",'
-  - '      call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  domain$sendCustomMessage("dull:popover", list('
-  - '    type = "close",'
-  - '    id = id'
-  - '  ))'
-  - '}'
+  source: "closePopover <- function(id) {\n    domain <- getDefaultReactiveDomain()\n
+    \   if (is.null(domain)) {\n        stop(\"function `closePopover()` must be called
+    in a reactive context\", \n            call. = FALSE)\n    }\n    domain$sendCustomMessage(\"dull:popover\",
+    list(type = \"close\", \n        id = id))\n}"
 ---

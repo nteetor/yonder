@@ -40,15 +40,9 @@ roxygen:
   family: flex
   export: yes
   filename: flex.R
-  source:
-  - direction <- function(tag, default = NULL, sm = NULL, md = NULL,
-  - '                      lg = NULL, xl = NULL) {'
-  - '  args <- dropNulls(list('
-  - '    default = default, sm = sm, md = md,'
-  - '    lg = lg, xl = xl'
-  - '  ))'
-  - '  classes <- responsives("flex", args, c("row", "column"))'
-  - '  tagAddClass(tag, collate(classes))'
-  - '}'
+  source: "direction <- function(tag, default = NULL, sm = NULL, md = NULL, \n    lg
+    = NULL, xl = NULL) {\n    args <- dropNulls(list(default = default, sm = sm, md
+    = md, \n        lg = lg, xl = xl))\n    classes <- responsives(\"flex\", args,
+    c(\"row\", \"column\"))\n    tagAddClass(tag, collate(classes))\n}"
 redirect_from: /docs/0.0.5/flex/
 ---

@@ -44,7 +44,7 @@
     <div class="container">
       <div class="row">
 
-        <div class="sidebar col-2 p-2">
+        <div class="sidebar col-12 col-sm-2 p-2">
   <dl>
     
 
@@ -53,7 +53,7 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/content">
+      <a class="text-dark" href="/dull/docs/0.0.5/content/img">
         Content
       </a>
     </dt>
@@ -65,7 +65,7 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/flex">
+      <a class="text-dark" href="/dull/docs/0.0.5/flex/direction">
         Flex
       </a>
     </dt>
@@ -103,7 +103,7 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/inputs">
+      <a class="text-dark" href="/dull/docs/0.0.5/inputs/text-input">
         Inputs
       </a>
     </dt>
@@ -115,7 +115,7 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/utilities">
+      <a class="text-dark" href="/dull/docs/0.0.5/utilities/font">
         Utilities
       </a>
     </dt>
@@ -126,7 +126,7 @@
   </dl>
 </div>
 
-        <div class="col">
+        <div class="col-12 col-sm-10">
           <h1>Flex direction, rows and columns</h1>
           <p class="lead">
             <p>Change the direction of a flex boxes items. <code class="highlighter-rouge">reverse</code> is similar to
@@ -173,7 +173,13 @@ of an element’s flex items.</p>
           <h2 id="source">Source</h2>
           <p>
             
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">direction</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">                      </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="n">args</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dropNulls</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="w">    </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">default</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">md</span><span class="p">,</span><span class="w">    </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lg</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xl</span><span class="w">  </span><span class="p">))</span><span class="w">  </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">responsives</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"row"</span><span class="p">,</span><span class="w"> </span><span class="s2">"column"</span><span class="p">))</span><span class="w">  </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">collate</span><span class="p">(</span><span class="n">classes</span><span class="p">))}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">direction</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> 
+    </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">args</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dropNulls</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">default</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">md</span><span class="p">,</span><span class="w"> 
+        </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lg</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xl</span><span class="p">))</span><span class="w">
+    </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">responsives</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">,</span><span class="w"> </span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"row"</span><span class="p">,</span><span class="w"> </span><span class="s2">"column"</span><span class="p">))</span><span class="w">
+    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">collate</span><span class="p">(</span><span class="n">classes</span><span class="p">))</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
           </p>
         </div>

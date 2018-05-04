@@ -44,7 +44,7 @@
     <div class="container">
       <div class="row">
 
-        <div class="sidebar col-2 p-2">
+        <div class="sidebar col-12 col-sm-2 p-2">
   <dl>
     
 
@@ -53,7 +53,7 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/content">
+      <a class="text-dark" href="/dull/docs/0.0.5/content/img">
         Content
       </a>
     </dt>
@@ -65,7 +65,7 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/flex">
+      <a class="text-dark" href="/dull/docs/0.0.5/flex/direction">
         Flex
       </a>
     </dt>
@@ -77,7 +77,7 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/inputs">
+      <a class="text-dark" href="/dull/docs/0.0.5/inputs/text-input">
         Inputs
       </a>
     </dt>
@@ -139,7 +139,7 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/utilities">
+      <a class="text-dark" href="/dull/docs/0.0.5/utilities/font">
         Utilities
       </a>
     </dt>
@@ -150,7 +150,7 @@
   </dl>
 </div>
 
-        <div class="col">
+        <div class="col-12 col-sm-10">
           <h1>Form inputs</h1>
           <p class="lead">
             <p>Form inputs are a new reactive input. Form inputs are an alternative to
@@ -194,7 +194,10 @@ span multiple lines.</p>
           <h2 id="source">Source</h2>
           <p>
             
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">formInput</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">submitInput</span><span class="p">(),</span><span class="w"> </span><span class="n">inline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="n">tags</span><span class="o">$</span><span class="n">form</span><span class="p">(</span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collate</span><span class="p">(</span><span class="s2">"dull-form-input"</span><span class="p">,</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inline</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">    </span><span class="s2">"form-inline"</span><span class="w">  </span><span class="p">}</span><span class="w"> </span><span class="p">),</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="n">submit</span><span class="p">,</span><span class="w"> </span><span class="n">include</span><span class="p">(</span><span class="s2">"core"</span><span class="p">))}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">formInput</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">submitInput</span><span class="p">(),</span><span class="w"> </span><span class="n">inline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">tags</span><span class="o">$</span><span class="n">form</span><span class="p">(</span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">collate</span><span class="p">(</span><span class="s2">"dull-form-input"</span><span class="p">,</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">inline</span><span class="p">)</span><span class="w"> 
+        </span><span class="s2">"form-inline"</span><span class="p">),</span><span class="w"> </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="n">submit</span><span class="p">,</span><span class="w"> </span><span class="n">include</span><span class="p">(</span><span class="s2">"core"</span><span class="p">))</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
           </p>
         </div>

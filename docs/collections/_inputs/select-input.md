@@ -67,48 +67,20 @@ roxygen:
   family: inputs
   export: yes
   filename: select.R
-  source:
-  - selectInput <- function(id, choices, values = choices, selected = NULL,
-  - '                        multiple = FALSE, ...) {'
-  - '  if (!is.null(id) && !is.character(id)) {'
-  - '    stop('
-  - '      "invalid `selectInput` argument, `id` must be a character string or NULL",'
-  - '      call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  if (length(choices) != length(values)) {'
-  - '    stop('
-  - '      "invalid `selectInput` arguments, `choices` and `values` must be the ",'
-  - '      "same length", call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  if (!is.null(selected)) {'
-  - '    if (length(selected) > 1) {'
-  - '      stop('
-  - '        "invalid `selectInput` argument, `selected` must be of length 1",'
-  - '        call. = FALSE'
-  - '      )'
-  - '    }'
-  - '    if (!(selected %in% values)) {'
-  - '      stop('
-  - '        "invalid `selectInput` argument, `selected` must be one of `values`",'
-  - '        call. = FALSE'
-  - '      )'
-  - '    }'
-  - '  }'
-  - '  selected <- match2(selected, values, default = TRUE)'
-  - '  tags$div(class = "dull-select-input", id = id, tags$select('
-  - '    class = "custom-select",'
-  - '    lapply(seq_along(choices), function(i) {'
-  - '      tags$option('
-  - '        `data-value` = values[[i]], choices[[i]],'
-  - '        selected = if (selected[[i]]) {'
-  - '          NA'
-  - '        }'
-  - '      )'
-  - '    }), multiple = if (multiple) {'
-  - '      NA'
-  - '    }'
-  - '  ), tags$div(class = "invalid-feedback"), ..., include("core"))'
-  - '}'
+  source: "selectInput <- function(id, choices, values = choices, selected = NULL,
+    \n    multiple = FALSE, ...) {\n    if (!is.null(id) && !is.character(id)) {\n
+    \       stop(\"invalid `selectInput` argument, `id` must be a character string
+    or NULL\", \n            call. = FALSE)\n    }\n    if (length(choices) != length(values))
+    {\n        stop(\"invalid `selectInput` arguments, `choices` and `values` must
+    be the \", \n            \"same length\", call. = FALSE)\n    }\n    if (!is.null(selected))
+    {\n        if (length(selected) > 1) {\n            stop(\"invalid `selectInput`
+    argument, `selected` must be of length 1\", \n                call. = FALSE)\n
+    \       }\n        if (!(selected %in% values)) {\n            stop(\"invalid
+    `selectInput` argument, `selected` must be one of `values`\", \n                call.
+    = FALSE)\n        }\n    }\n    selected <- match2(selected, values, default =
+    TRUE)\n    tags$div(class = \"dull-select-input\", id = id, tags$select(class
+    = \"custom-select\", \n        lapply(seq_along(choices), function(i) {\n            tags$option(`data-value`
+    = values[[i]], choices[[i]], \n                selected = if (selected[[i]]) \n
+    \                 NA)\n        }), multiple = if (multiple) \n            NA),
+    tags$div(class = \"invalid-feedback\"), ..., include(\"core\"))\n}"
 ---

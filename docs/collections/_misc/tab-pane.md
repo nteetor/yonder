@@ -14,11 +14,6 @@ roxygen:
   family: ~
   export: yes
   filename: tabs.R
-  source:
-  - tabPane <- function(...) {
-  - '  tags$div('
-  - '    class = "tab-pane fade", role = "tab-panel", ...,'
-  - '    include("core")'
-  - '  )'
-  - '}'
+  source: "tabPane <- function(...) {\n    tags$div(class = \"tab-pane fade\", role
+    = \"tab-panel\", ..., \n        include(\"core\"))\n}"
 ---

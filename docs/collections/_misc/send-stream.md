@@ -14,14 +14,8 @@ roxygen:
   family: ~
   export: yes
   filename: stream.R
-  source:
-  - sendStream <- function(id, content, session = getDefaultReactiveDomain()) {
-  - '  if (!is.character(id)) {'
-  - '    stop('
-  - '      "invalid `sendStream` argument, `id` must be a character string",'
-  - '      call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  session$sendProgress("dull-stream", list(id = id, content = content))'
-  - '}'
+  source: "sendStream <- function(id, content, session = getDefaultReactiveDomain())
+    {\n    if (!is.character(id)) {\n        stop(\"invalid `sendStream` argument,
+    `id` must be a character string\", \n            call. = FALSE)\n    }\n    session$sendProgress(\"dull-stream\",
+    list(id = id, content = content))\n}"
 ---

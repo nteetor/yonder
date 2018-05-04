@@ -14,24 +14,11 @@ roxygen:
   family: ~
   export: yes
   filename: progress.R
-  source:
-  - bar <- function(id, value, label = NULL, striped = FALSE, ...) {
-  - '  if (!is.character(id) && !is.null(id)) {'
-  - '    stop('
-  - '      "invalid `bar` argument, `id` must be a character string or NULL",'
-  - '      call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  value <- round(value)'
-  - '  tags$div('
-  - '    class = collate('
-  - '      "dull-bar-output", "progress-bar",'
-  - '      if (striped) {'
-  - '        "progress-bar-striped"'
-  - '      }'
-  - '    ), id = id, role = "progressbar",'
-  - '    style = paste0("width: ", value, "%"), `aria-valuemin` = "0",'
-  - '    `aria-valuemax` = "100", label, ...'
-  - '  )'
-  - '}'
+  source: "bar <- function(id, value, label = NULL, striped = FALSE, ...) {\n    if
+    (!is.character(id) && !is.null(id)) {\n        stop(\"invalid `bar` argument,
+    `id` must be a character string or NULL\", \n            call. = FALSE)\n    }\n
+    \   value <- round(value)\n    tags$div(class = collate(\"dull-bar-output\", \"progress-bar\",
+    \n        if (striped) \n            \"progress-bar-striped\"), id = id, role
+    = \"progressbar\", \n        style = paste0(\"width: \", value, \"%\"), `aria-valuemin`
+    = \"0\", \n        `aria-valuemax` = \"100\", label, ...)\n}"
 ---

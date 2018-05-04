@@ -40,6 +40,7 @@ defaults:
     path: ''
     type: content
   values:
+    default_page: /docs/0.0.5/content/img
     sections:
     - name: img
       slug: img
@@ -51,6 +52,7 @@ defaults:
     path: ''
     type: inputs
   values:
+    default_page: /docs/0.0.5/inputs/text-input
     sections:
     - name: textInput
       slug: text-input
@@ -72,6 +74,7 @@ defaults:
     path: ''
     type: utilities
   values:
+    default_page: /docs/0.0.5/utilities/font
     sections:
     - name: font
       slug: font
@@ -95,6 +98,7 @@ defaults:
     path: ''
     type: flex
   values:
+    default_page: /docs/0.0.5/flex/direction
     sections:
     - name: direction
       slug: direction

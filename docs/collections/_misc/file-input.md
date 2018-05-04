@@ -97,49 +97,20 @@ roxygen:
   family: ~
   export: no
   filename: file.R
-  source:
-  - fileInput <- function(id, placeholder = "Choose file", left = NULL,
-  - '                      right = "Browse", ..., multiple = TRUE, accept = NULL)
-    {'
-  - '  if (is_tag(left) && !tagIs(left, "button")) {'
-  - '    stop('
-  - '      "invalid `fileInput()` argument, `left` must be a button element or ",'
-  - '      "character string", call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  if (is_tag(right) && !tagIs(right, "button")) {'
-  - '    stop('
-  - '      "invalid `fileInput()` argument, `right` must be a button element or ",'
-  - '      "character string", call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  if (!is.null(left)) {'
-  - '    left <- tags$div(class = "input-group-prepend", if (is_tag(left)) {'
-  - '      left'
-  - '    }'
-  - '    else {'
-  - '      tags$span(class = "input-group-text", left)'
-  - '    })'
-  - '  }'
-  - '  if (!is.null(right)) {'
-  - '    right <- tags$div(class = "input-group-append", if (is_tag(right)) {'
-  - '      right'
-  - '    }'
-  - '    else {'
-  - '      tags$span(class = "input-group-text", right)'
-  - '    })'
-  - '  }'
-  - '  tags$div('
-  - '    class = "dull-file-input input-group", id = id,'
-  - '    ..., left, tags$div(class = "custom-file", tags$input('
-  - '      type = "file",'
-  - '      class = "custom-file-input", multiple = if (multiple) {'
-  - '        NA'
-  - '      }'
-  - '    ), tags$label('
-  - '      class = "custom-file-label",'
-  - '      placeholder'
-  - '    )), right'
-  - '  )'
-  - '}'
+  source: "fileInput <- function(id, placeholder = \"Choose file\", left = NULL, \n
+    \   right = \"Browse\", ..., multiple = TRUE, accept = NULL) {\n    if (is_tag(left)
+    && !tagIs(left, \"button\")) {\n        stop(\"invalid `fileInput()` argument,
+    `left` must be a button element or \", \n            \"character string\", call.
+    = FALSE)\n    }\n    if (is_tag(right) && !tagIs(right, \"button\")) {\n        stop(\"invalid
+    `fileInput()` argument, `right` must be a button element or \", \n            \"character
+    string\", call. = FALSE)\n    }\n    if (!is.null(left)) {\n        left <- tags$div(class
+    = \"input-group-prepend\", if (is_tag(left)) {\n            left\n        }\n
+    \       else {\n            tags$span(class = \"input-group-text\", left)\n        })\n
+    \   }\n    if (!is.null(right)) {\n        right <- tags$div(class = \"input-group-append\",
+    if (is_tag(right)) {\n            right\n        }\n        else {\n            tags$span(class
+    = \"input-group-text\", right)\n        })\n    }\n    tags$div(class = \"dull-file-input
+    input-group\", id = id, \n        ..., left, tags$div(class = \"custom-file\",
+    tags$input(type = \"file\", \n            class = \"custom-file-input\", multiple
+    = if (multiple) \n                NA), tags$label(class = \"custom-file-label\",
+    \n            placeholder)), right)\n}"
 ---

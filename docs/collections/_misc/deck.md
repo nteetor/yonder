@@ -14,8 +14,8 @@ roxygen:
   family: ~
   export: yes
   filename: card.R
-  source:
-  - deck <- function(...) {
-  - '  tags$div(class = "card-deck", ...)'
-  - '}'
+  source: |-
+    deck <- function(...) {
+        tags$div(class = "card-deck", ...)
+    }
 ---

@@ -14,11 +14,11 @@ roxygen:
   family: ~
   export: yes
   filename: badge.R
-  source:
-  - renderBadge <- function(content, env = parent.frame(), quoted = FALSE) {
-  - '  valFun <- shiny::exprToFunction(content, env, quoted)'
-  - '  function() {'
-  - '    list(value = valFun())'
-  - '  }'
-  - '}'
+  source: |-
+    renderBadge <- function(content, env = parent.frame(), quoted = FALSE) {
+        valFun <- shiny::exprToFunction(content, env, quoted)
+        function() {
+            list(value = valFun())
+        }
+    }
 ---

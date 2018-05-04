@@ -44,18 +44,10 @@ roxygen:
   family: ~
   export: yes
   filename: utilities.R
-  source:
-  - shadow <- function(tag, size = "regular") {
-  - '  if (!re(size, "none|small|regular|large", len0 = FALSE)) {'
-  - '    stop('
-  - '      "invalid `shadow()` argument, `size` must be one of ",'
-  - '      "\"none\", \"small\", \"regular\", or \"large\"",'
-  - '      call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  size <- switch(size, none = "none", small = "sm", regular = NULL,'
-  - '    large = "lg"'
-  - '  )'
-  - '  tagAddClass(tag, paste0(c("shadow", size), collapse = "-"))'
-  - '}'
+  source: "shadow <- function(tag, size = \"regular\") {\n    if (!re(size, \"none|small|regular|large\",
+    len0 = FALSE)) {\n        stop(\"invalid `shadow()` argument, `size` must be one
+    of \", \n            \"\\\"none\\\", \\\"small\\\", \\\"regular\\\", or \\\"large\\\"\",
+    \n            call. = FALSE)\n    }\n    size <- switch(size, none = \"none\",
+    small = \"sm\", regular = NULL, \n        large = \"lg\")\n    tagAddClass(tag,
+    paste0(c(\"shadow\", size), collapse = \"-\"))\n}"
 ---

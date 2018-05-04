@@ -1,4 +1,4 @@
-<div class="sidebar col-2 p-2">
+<div class="sidebar col-12 col-sm-2 p-2">
   <dl>
     {% assign collections = site.collections | where_exp:"coll", "coll.label != 'posts'" %}
 
@@ -7,7 +7,7 @@
     {% assign name = collection.label %}
 
     <dt class="mb-1">
-      <a class="text-dark" href="{{ site.baseurl }}/docs/{{ site.package.version }}/{{ name }}">
+      <a class="text-dark" href="{{ site.baseurl }}{{ site.[name].first.default_page }}">
         {{ name | capitalize }}
       </a>
     </dt>

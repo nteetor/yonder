@@ -91,22 +91,11 @@ roxygen:
   family: ~
   export: yes
   filename: container.R
-  source:
-  - col <- function(..., default = NULL, sm = NULL, md = NULL, lg = NULL,
-  - '                xl = NULL) {'
-  - '  args <- dropNulls(list('
-  - '    default = default, sm = sm, md = md,'
-  - '    lg = lg, xl = xl'
-  - '  ))'
-  - '  if (length(args) == 0) {'
-  - '    return(tagAddClass(tags$div(...), "col"))'
-  - '  }'
-  - '  classes <- responsives(prefix = "col", values = args, possible = c('
-  - '    as.character(1:12),'
-  - '    "auto"'
-  - '  ))'
-  - '  classes <- sub("-(sm|md|lg|xl)-auto", "", classes)'
-  - '  classes <- sort(unique(c("col", classes)))'
-  - '  tagAddClass(tags$div(...), collate(classes))'
-  - '}'
+  source: "col <- function(..., default = NULL, sm = NULL, md = NULL, lg = NULL, \n
+    \   xl = NULL) {\n    args <- dropNulls(list(default = default, sm = sm, md =
+    md, \n        lg = lg, xl = xl))\n    if (length(args) == 0) {\n        return(tagAddClass(tags$div(...),
+    \"col\"))\n    }\n    classes <- responsives(prefix = \"col\", values = args,
+    possible = c(as.character(1:12), \n        \"auto\"))\n    classes <- sub(\"-(sm|md|lg|xl)-auto\",
+    \"\", classes)\n    classes <- sort(unique(c(\"col\", classes)))\n    tagAddClass(tags$div(...),
+    collate(classes))\n}"
 ---

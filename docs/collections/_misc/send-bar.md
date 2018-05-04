@@ -14,12 +14,7 @@ roxygen:
   family: ~
   export: yes
   filename: progress.R
-  source:
-  - sendBar <- function(id, value, label = NULL, session = getDefaultReactiveDomain())
-    {
-  - '  session$sendProgress("dull-progress", dropNulls(list('
-  - '    id = id,'
-  - '    value = value, label = label'
-  - '  )))'
-  - '}'
+  source: "sendBar <- function(id, value, label = NULL, session = getDefaultReactiveDomain())
+    {\n    session$sendProgress(\"dull-progress\", dropNulls(list(id = id, \n        value
+    = value, label = label)))\n}"
 ---

@@ -14,12 +14,7 @@ roxygen:
   family: ~
   export: yes
   filename: textual.R
-  source:
-  - passwordInput <- function(id, value = NULL, placeholder = NULL,
-  - '                          size = NULL, readonly = FALSE, help = NULL, ...) {'
-  - '  textualInput('
-  - '    id, value, placeholder, readonly, help, "password",'
-  - '    size = size, ...'
-  - '  )'
-  - '}'
+  source: "passwordInput <- function(id, value = NULL, placeholder = NULL, \n    size
+    = NULL, readonly = FALSE, help = NULL, ...) {\n    textualInput(id, value, placeholder,
+    readonly, help, \"password\", \n        size = size, ...)\n}"
 ---

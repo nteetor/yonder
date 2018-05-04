@@ -80,22 +80,10 @@ roxygen:
   family: ~
   export: yes
   filename: sparkline.R
-  source:
-  - sparklineOutput <- function(id, type = "bar", labels = TRUE,
-  - '                            ...) {'
-  - '  if (!re(type, "bar|dot|line", FALSE)) {'
-  - '    stop('
-  - '      "invalid `sparklineOutput` argument, `type` must be one of ",'
-  - '      "\"bar\", \"dot\", or \"line\"", call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  tags$span(class = collate("dull-sparkline-output", paste0('
-  - '    "spark-",'
-  - '    type, "-medium"'
-  - '  )), id = id, `data-labels` = if (labels) {'
-  - '    "true"'
-  - '  } else {'
-  - '    "false"'
-  - '  } , ...)'
-  - '}'
+  source: "sparklineOutput <- function(id, type = \"bar\", labels = TRUE, \n    ...)
+    {\n    if (!re(type, \"bar|dot|line\", FALSE)) {\n        stop(\"invalid `sparklineOutput`
+    argument, `type` must be one of \", \n            \"\\\"bar\\\", \\\"dot\\\",
+    or \\\"line\\\"\", call. = FALSE)\n    }\n    tags$span(class = collate(\"dull-sparkline-output\",
+    paste0(\"spark-\", \n        type, \"-medium\")), id = id, `data-labels` = if
+    (labels) \n        \"true\"\n    else \"false\", ...)\n}"
 ---

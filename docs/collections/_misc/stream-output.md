@@ -54,11 +54,6 @@ roxygen:
   family: ~
   export: yes
   filename: stream.R
-  source:
-  - streamOutput <- function(id, ...) {
-  - '  tags$ul('
-  - '    class = collate("dull-stream-output", "list-group"),'
-  - '    id = id, ...'
-  - '  )'
-  - '}'
+  source: "streamOutput <- function(id, ...) {\n    tags$ul(class = collate(\"dull-stream-output\",
+    \"list-group\"), \n        id = id, ...)\n}"
 ---

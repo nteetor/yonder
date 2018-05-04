@@ -50,17 +50,8 @@ roxygen:
   family: ~
   export: yes
   filename: badge.R
-  source:
-  - badgeOutput <- function(id, content, ...) {
-  - '  if (!is.character(id)) {'
-  - '    stop('
-  - '      "invalid `badgeOutput` argument, `id` must be a character string",'
-  - '      call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  tags$span('
-  - '    class = "dull-badge-output badge", id = id, content,'
-  - '    ...'
-  - '  )'
-  - '}'
+  source: "badgeOutput <- function(id, content, ...) {\n    if (!is.character(id))
+    {\n        stop(\"invalid `badgeOutput` argument, `id` must be a character string\",
+    \n            call. = FALSE)\n    }\n    tags$span(class = \"dull-badge-output
+    badge\", id = id, content, \n        ...)\n}"
 ---

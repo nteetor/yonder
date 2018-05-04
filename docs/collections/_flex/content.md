@@ -42,17 +42,9 @@ roxygen:
   family: flex
   export: yes
   filename: flex.R
-  source:
-  - content <- function(tag, default = NULL, sm = NULL, md = NULL,
-  - '                    lg = NULL, xl = NULL) {'
-  - '  args <- dropNulls(list('
-  - '    default = default, sm = sm, md = md,'
-  - '    lg = lg, xl = xl'
-  - '  ))'
-  - '  classes <- responsives("justify-content", args, c('
-  - '    "start",'
-  - '    "end", "center", "between", "around"'
-  - '  ))'
-  - '  tagAddClass(tag, collate(classes))'
-  - '}'
+  source: "content <- function(tag, default = NULL, sm = NULL, md = NULL, \n    lg
+    = NULL, xl = NULL) {\n    args <- dropNulls(list(default = default, sm = sm, md
+    = md, \n        lg = lg, xl = xl))\n    classes <- responsives(\"justify-content\",
+    args, c(\"start\", \n        \"end\", \"center\", \"between\", \"around\"))\n
+    \   tagAddClass(tag, collate(classes))\n}"
 ---

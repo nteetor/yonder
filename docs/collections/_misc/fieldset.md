@@ -23,20 +23,10 @@ roxygen:
   family: ~
   export: yes
   filename: textual.R
-  source:
-  - fieldset <- function(legend, ...) {
-  - '  if (!is.character(legend)) {'
-  - '    stop('
-  - '      "invalid `fieldset` argument, `legend` must be a character string",'
-  - '      call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  args <- list(...)'
-  - '  attrs <- attribs(args)'
-  - '  inputs <- elements(args)'
-  - '  tagConcatAttributes(tags$fieldset(class = "form-group", tags$legend('
-  - '    class = "col-form-legend",'
-  - '    legend'
-  - '  ), tags$div(inputs)), attrs)'
-  - '}'
+  source: "fieldset <- function(legend, ...) {\n    if (!is.character(legend)) {\n
+    \       stop(\"invalid `fieldset` argument, `legend` must be a character string\",
+    \n            call. = FALSE)\n    }\n    args <- list(...)\n    attrs <- attribs(args)\n
+    \   inputs <- elements(args)\n    tagConcatAttributes(tags$fieldset(class = \"form-group\",
+    tags$legend(class = \"col-form-legend\", \n        legend), tags$div(inputs)),
+    attrs)\n}"
 ---

@@ -92,8 +92,8 @@ roxygen:
   family: ~
   export: yes
   filename: progress.R
-  source:
-  - progressOutput <- function(...) {
-  - '  tags$div(class = "dull-progress-output progress", ..., include("core"))'
-  - '}'
+  source: |-
+    progressOutput <- function(...) {
+        tags$div(class = "dull-progress-output progress", ..., include("core"))
+    }
 ---

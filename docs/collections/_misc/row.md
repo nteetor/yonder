@@ -14,8 +14,8 @@ roxygen:
   family: ~
   export: yes
   filename: container.R
-  source:
-  - row <- function(...) {
-  - '  tags$div(class = "row", ..., include("core"))'
-  - '}'
+  source: |-
+    row <- function(...) {
+        tags$div(class = "row", ..., include("core"))
+    }
 ---

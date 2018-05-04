@@ -44,7 +44,7 @@
     <div class="container">
       <div class="row">
 
-        <div class="sidebar col-2 p-2">
+        <div class="sidebar col-12 col-sm-2 p-2">
   <dl>
     
 
@@ -53,7 +53,7 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/content">
+      <a class="text-dark" href="/dull/docs/0.0.5/content/img">
         Content
       </a>
     </dt>
@@ -65,7 +65,7 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/flex">
+      <a class="text-dark" href="/dull/docs/0.0.5/flex/direction">
         Flex
       </a>
     </dt>
@@ -77,7 +77,7 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/inputs">
+      <a class="text-dark" href="/dull/docs/0.0.5/inputs/text-input">
         Inputs
       </a>
     </dt>
@@ -89,7 +89,7 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/utilities">
+      <a class="text-dark" href="/dull/docs/0.0.5/utilities/font">
         Utilities
       </a>
     </dt>
@@ -156,7 +156,7 @@
   </dl>
 </div>
 
-        <div class="col">
+        <div class="col-12 col-sm-10">
           <h1>Float an element</h1>
           <p class="lead">
             <p>The <code class="highlighter-rouge">float</code> utility function applies Bootstrap float classes to a tag
@@ -203,7 +203,29 @@ pixels wide, think large desktop.</p>
           <h2 id="source">Source</h2>
           <p>
             
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">float</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">                  </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">  </span><span class="n">args</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dropNulls</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="w">    </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">default</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">md</span><span class="p">,</span><span class="w">    </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lg</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xl</span><span class="w">  </span><span class="p">))</span><span class="w">  </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">float</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">    </span><span class="n">stop</span><span class="p">(</span><span class="w">      </span><span class="s2">"invalid `float` arguments, at least one argument must not be NULL"</span><span class="p">,</span><span class="w">      </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">    </span><span class="p">)</span><span class="w">  </span><span class="p">}</span><span class="w">  </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">vapply</span><span class="p">(</span><span class="n">names2</span><span class="p">(</span><span class="n">args</span><span class="p">),</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">nm</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">    </span><span class="n">arg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">args</span><span class="p">[[</span><span class="n">nm</span><span class="p">]]</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">re</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="s2">"left|right|none"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">      </span><span class="n">stop</span><span class="p">(</span><span class="w">        </span><span class="s2">"invalid `float` argument, `"</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="s2">"` must be one of "</span><span class="p">,</span><span class="w">        </span><span class="s2">"\"left\", \"right\", or \"none\""</span><span class="p">,</span><span class="w"> </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">      </span><span class="p">)</span><span class="w">    </span><span class="p">}</span><span class="w">    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nm</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"default"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">      </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"float-"</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w">    </span><span class="p">}</span><span class="w">    </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">      </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"float-"</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="s2">"-"</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w">    </span><span class="p">}</span><span class="w">  </span><span class="p">},</span><span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="m">1</span><span class="p">))</span><span class="w">  </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">float</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> 
+    </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">args</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dropNulls</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">default</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">md</span><span class="p">,</span><span class="w"> 
+        </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lg</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xl</span><span class="p">))</span><span class="w">
+    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">float</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `float` arguments, at least one argument must not be NULL"</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">vapply</span><span class="p">(</span><span class="n">names2</span><span class="p">(</span><span class="n">args</span><span class="p">),</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">nm</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">arg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">args</span><span class="p">[[</span><span class="n">nm</span><span class="p">]]</span><span class="w">
+        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">re</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="s2">"left|right|none"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `float` argument, `"</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="s2">"` must be one of "</span><span class="p">,</span><span class="w"> 
+                </span><span class="s2">"\"left\", \"right\", or \"none\""</span><span class="p">,</span><span class="w"> </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nm</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"default"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"float-"</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"float-"</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="s2">"-"</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="m">1</span><span class="p">))</span><span class="w">
+    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
 
           </p>
         </div>

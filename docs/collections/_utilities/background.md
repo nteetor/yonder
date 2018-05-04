@@ -102,39 +102,16 @@ roxygen:
   family: utilities
   export: yes
   filename: utilities.R
-  source:
-  - background <- function(tag, color, tone = 0) {
-  - '  if (color != "transparent" && !(color %in% .colors)) {'
-  - '    stop('
-  - '      "invalid `background` argument, `color` is invalid, see ?background ",'
-  - '      "details for possible colors", call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  if (!(tone %in% -2:2)) {'
-  - '    stop('
-  - '      "invalid `background` argument, `tone` must be one of -2, -1, 0, 1, or
-    2",'
-  - '      call. = FALSE'
-  - '    )'
-  - '  }'
-  - '  if (color == "transparent") {'
-  - '    base <- "bg"'
-  - '  }'
-  - '  else if (tagHasClass(tag, "alert")) {'
-  - '    base <- "alert"'
-  - '  }'
-  - '  else if (tagHasClass(tag, "badge")) {'
-  - '    base <- "badge"'
-  - '  }'
-  - '  else if (tagHasClass(tag, "btn")) {'
-  - '    base <- "btn"'
-  - '  }'
-  - '  else if (tagHasClass(tag, "list-group-item")) {'
-  - '    base <- "list-group-item"'
-  - '  }'
-  - '  else {'
-  - '    base <- "bg"'
-  - '  }'
-  - '  colorUtility(tag, base, color, tone)'
-  - '}'
+  source: "background <- function(tag, color, tone = 0) {\n    if (color != \"transparent\"
+    && !(color %in% .colors)) {\n        stop(\"invalid `background` argument, `color`
+    is invalid, see ?background \", \n            \"details for possible colors\",
+    call. = FALSE)\n    }\n    if (!(tone %in% -2:2)) {\n        stop(\"invalid `background`
+    argument, `tone` must be one of -2, -1, 0, 1, or 2\", \n            call. = FALSE)\n
+    \   }\n    if (color == \"transparent\") {\n        base <- \"bg\"\n    }\n    else
+    if (tagHasClass(tag, \"alert\")) {\n        base <- \"alert\"\n    }\n    else
+    if (tagHasClass(tag, \"badge\")) {\n        base <- \"badge\"\n    }\n    else
+    if (tagHasClass(tag, \"btn\")) {\n        base <- \"btn\"\n    }\n    else if
+    (tagHasClass(tag, \"list-group-item\")) {\n        base <- \"list-group-item\"\n
+    \   }\n    else {\n        base <- \"bg\"\n    }\n    colorUtility(tag, base,
+    color, tone)\n}"
 ---

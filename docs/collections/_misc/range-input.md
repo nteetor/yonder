@@ -110,22 +110,13 @@ roxygen:
   family: ~
   export: yes
   filename: range.R
-  source:
-  - rangeInput <- function(id, min = 0, max = 100, default = min,
-  - '                       step = 1, ticks = TRUE, fill = TRUE, labels = 4, snap
-    = FALSE,'
-  - '                       prefix = NULL, suffix = NULL) {'
-  - '  tags$div(class = "dull-range-input bg-grey", id = id, tags$input('
-  - '    class = "range",'
-  - '    type = "text", `data-type` = "single", `data-min` = min,'
-  - '    `data-max` = max, `data-step` = step, `data-from` = default,'
-  - '    `data-prettify-separator` = ",", `data-prefix` = prefix,'
-  - '    `data-postfix` = suffix, `data-grid` = ticks, `data-grid-num` = labels,'
-  - '    `data-grid-snap` = if (isTRUE(snap)) {'
-  - '      snap'
-  - '    } , `data-no-fill` = if (!fill) {'
-  - '      "true"'
-  - '    }'
-  - '  ), include("core"), include("ion slider"))'
-  - '}'
+  source: "rangeInput <- function(id, min = 0, max = 100, default = min, \n    step
+    = 1, ticks = TRUE, fill = TRUE, labels = 4, snap = FALSE, \n    prefix = NULL,
+    suffix = NULL) {\n    tags$div(class = \"dull-range-input bg-grey\", id = id,
+    tags$input(class = \"range\", \n        type = \"text\", `data-type` = \"single\",
+    `data-min` = min, \n        `data-max` = max, `data-step` = step, `data-from`
+    = default, \n        `data-prettify-separator` = \",\", `data-prefix` = prefix,
+    \n        `data-postfix` = suffix, `data-grid` = ticks, `data-grid-num` = labels,
+    \n        `data-grid-snap` = if (isTRUE(snap)) \n            snap, `data-no-fill`
+    = if (!fill) \n            \"true\"), include(\"core\"), include(\"ion slider\"))\n}"
 ---

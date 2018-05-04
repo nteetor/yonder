@@ -44,15 +44,8 @@ roxygen:
   family: ~
   export: yes
   filename: typography.R
-  source:
-  - jumbotron <- function(title, subtitle, ..., fluid = TRUE) {
-  - '  tags$div(class = collate("jumbotron", if (fluid) {'
-  - '    "jumbotron-fluid"'
-  - '  } ), d3(title), tags$p('
-  - '    class = "lead",'
-  - '    subtitle'
-  - '  ), if (length(elements(list(...))) > 0) {'
-  - '    tags$hr(class = "my-4")'
-  - '  } , ..., include("core"))'
-  - '}'
+  source: "jumbotron <- function(title, subtitle, ..., fluid = TRUE) {\n    tags$div(class
+    = collate(\"jumbotron\", if (fluid) \n        \"jumbotron-fluid\"), d3(title),
+    tags$p(class = \"lead\", \n        subtitle), if (length(elements(list(...)))
+    > 0) \n        tags$hr(class = \"my-4\"), ..., include(\"core\"))\n}"
 ---
