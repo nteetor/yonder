@@ -17,9 +17,8 @@ percentage of a parent element's width or height.}
 percentage of a parent element's width or height.}
 }
 \description{
-Used in conjunction with \link{tagReduce} to change a tag element's width or
-height. Widths and heights are specified as percentages of the parent
-object's width or height.
+Utility functions to change a tag element's width or height. Widths and
+heights are specified as percentages of the parent object's width or height.
 }
 \examples{
 tags$div() \%>\%

@@ -15,7 +15,7 @@ input, defaults to \code{"Choose file"}.}
 
 \item{left, right}{A character string or button element placed prepended or
 appended respectively to the file input. For more information refer to
-\code{\link[=inputGroup]{inputGroup()}}.
+\code{\link[=groupInput]{groupInput()}}.
 
 Clicking on an element specified by \code{right} also opens the file input
 dialog.}

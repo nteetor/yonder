@@ -803,9 +803,8 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 
 #' Tag element width and height
 #'
-#' Used in conjunction with [tagReduce] to change a tag element's width or
-#' height. Widths and heights are specified as percentages of the parent
-#' object's width or height.
+#' Utility functions to change a tag element's width or height. Widths and
+#' heights are specified as percentages of the parent object's width or height.
 #'
 #' @param percentage One of 25, 50, 75, or 100 specifying width or height as a
 #'   percentage of a parent element's width or height.
