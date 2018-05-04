@@ -60,7 +60,7 @@ tabContent(
     tags$p("Lorem Dapibus Malesuada Cras Cursus")
   ),
   tabPane(
-    tags$p("Pane 2"),
+    tags$h1("Pane 2"),
     tags$p("Magna Aenean Mattis Ultricies Ridiculus")
   )
 )

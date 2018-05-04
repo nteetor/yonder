@@ -15,6 +15,12 @@ sendUpdateMessage <- function(id, type, data) {
 #'
 #' Functions to update choices, values, and selected choices.
 #'
+#' @param id A character string specifying the id of an input to update.
+#'
+#' @param ... Named values or unnamed values specifying which and how existing
+#'   or new input choices, values, or which values are selected are updated,
+#'   values are [dots_list()] allowing the use of bangs and splices.
+#'
 #' @export
 updateChoices <- function(id, ...) {
   args <- dots_list(...)

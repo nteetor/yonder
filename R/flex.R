@@ -56,6 +56,8 @@ reverse <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' y-axis (when the flex is direction is column). For more on flex directions
 #' see [direction].
 #'
+#' @param tag A tag element.
+#'
 #' @param default One of `"start"`, `"end"`, `"center"`, `"between"` or
 #'   `"around"` specifying the default alignment of the element's flex items.
 #'
@@ -125,6 +127,8 @@ content <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' order to change the cross axis alignment of its flex items. The element must
 #' must use a flex display. To change the display property of a tag, see
 #' [display] for more information.
+#'
+#' @param tag A tag element.
 #'
 #' @param default One of `"start"`, `"end"`, `"center"`, `"baseline"` or
 #'   `"stretch"` specifying the default cross axis alignment of the element's

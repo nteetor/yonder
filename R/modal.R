@@ -11,6 +11,8 @@
 #' @param footer Custom tags to include at the bottom of the modal, defaults to
 #'   `NULL`.
 #'
+#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#'
 #' @export
 #' @examples
 #' if (interactive()) {

@@ -27,9 +27,6 @@ element.}
 
 \item{text}{A character string specifying the text displayed as part of the
 link input.}
-
-\item{disabled}{If \code{TRUE}, the input renders in a disabled state, defaults
-to \code{FALSE}.}
 }
 \description{
 Button inputs are useful as triggers for reactive or observer expressions.

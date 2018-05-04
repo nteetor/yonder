@@ -9,6 +9,8 @@
 #' @param button A button input, when clicked the button will hide or show the
 #'   collapsable content.
 #'
+#' @param content A tag element speicfying the content to collapse.
+#'
 #' @param ... Additional named arguments passed as attributes to the parent
 #'   element.
 #'

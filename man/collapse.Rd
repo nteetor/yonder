@@ -19,6 +19,8 @@ toggleCollapse(id, session = getDefaultReactiveDomain())
 \item{button}{A button input, when clicked the button will hide or show the
 collapsable content.}
 
+\item{content}{A tag element speicfying the content to collapse.}
+
 \item{...}{Additional named arguments passed as attributes to the parent
 element.}
 

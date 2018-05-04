@@ -8,6 +8,8 @@ content(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   xl = NULL)
 }
 \arguments{
+\item{tag}{A tag element.}
+
 \item{default}{One of \code{"start"}, \code{"end"}, \code{"center"}, \code{"between"} or
 \code{"around"} specifying the default alignment of the element's flex items.}
 

@@ -37,8 +37,6 @@ pixels wide, think large desktop.}
 \item{fluid}{One of \code{TRUE} or \code{FALSE} specifying if the container occupies
 the entire width of the viewport, defaults to \code{TRUE}, in which case the
 container occupies the full width of the viewport.}
-
-\item{tag}{A tag element, for \code{col} this is typically \code{tags$div()}.}
 }
 \description{
 Build apps using the grid layout: containers, rows, and columns (oh my).

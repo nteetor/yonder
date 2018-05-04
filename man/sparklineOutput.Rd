@@ -18,9 +18,17 @@ chart to render, defaults to \code{"bar"}.}
 \item{labels}{If \code{TRUE}, the first and last value of the sparkline data
 are used as labels, defaults to \code{TRUE}.}
 
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
+
 \item{values}{A numeric vector of values specifying the sparkline data
 points. Bar and dot sparklines expect values to be between 0 and 100 and
 line sparklines expect values to be between 0 and 10.}
+
+\item{env}{The environment in which to evaluate \code{values}.}
+
+\item{quoted}{One of \code{TRUE} or \code{FALSE} specifying if \code{values} is a quoted
+expression.}
 }
 \description{
 Display concise, reactive inline bar, line, or dot charts.

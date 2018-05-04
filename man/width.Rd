@@ -10,6 +10,8 @@ width(tag, percentage = NULL, max = NULL)
 height(tag, percentage = NULL, max = NULL)
 }
 \arguments{
+\item{tag}{A tag element.}
+
 \item{percentage}{One of 25, 50, 75, or 100 specifying width or height as a
 percentage of a parent element's width or height.}
 

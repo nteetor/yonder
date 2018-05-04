@@ -4,24 +4,24 @@
 #'
 #' @param id A character string specifying the id of the table thruput.
 #'
-#' @param borders If `TRUE`, the table renders with cell borders, defaults to
-#'   `FALSE`.
+#' @param borders One of `TRUE` or `FALSE` specifying if the table renders with
+#'   cell borders, defaults to `FALSE`.
 #'
-#' @param compact If `TRUE`, table cell padding is cut in half to reduce the
-#'   size of the table, defaults to `FALSE`.
-#'
-#' @param expr An expression which returns a data frame or `NULL`. If a data
-#'   frame is returned the table thruput is re-rendered, otherwise if `NULL` the
-#'   current table thruput is left as is.
-#'
-#' @param quoted If `TRUE`, then `expr` is treated as a quoted expression,
-#'   defaults to `FALSE`.
-#'
-#' @param session A `session` object passed to the shiny server function,
-#'   defaults to [`getDefaultReactiveDomain()`].
+#' @param compact One of `TRUE` or `FALSE` specifying if the table cells are
+#'   rendered with less space, defaults to `FALSE`.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
+#'
+#' @param expr An expression which returns a data frame or `NULL`. If a data
+#'   frame is returned the table thruput is re-rendered, otherwise if `NULL` the
+#'   current table is left as is.
+#'
+#' @param env The environment in which to evaluate `expr`, defaults to
+#'   `parent.frame()`.
+#'
+#' @param quoted One of `TRUE` or `FALSE` specifying if `expr` is a quoted
+#'   expression.
 #'
 #' @export
 #' @examples
@@ -81,8 +81,7 @@
 #'   )
 #' }
 #'
-tableThruput <- function(id, borders = FALSE, context = NULL, compact = FALSE,
-                         ...) {
+tableThruput <- function(id, borders = FALSE, compact = FALSE, ...) {
   if (!is.null(id) && !is.character(id)) {
     stop(
       "invalid `tableThruput` argument, `id` must be a character string or ",

@@ -20,9 +20,6 @@ to the parent element.}
 
 \item{caption}{A character string specifying the image caption, defaults to
 \code{NULL}.}
-
-\item{fluid}{If \code{TRUE}, the image will scale with its parent element,
-defaults to \code{TRUE}.}
 }
 \description{
 A small update to \code{tags$img} and \code{tags$figure}. Create responsive images with

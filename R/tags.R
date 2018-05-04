@@ -6,9 +6,6 @@
 #'
 #' @param src A character string specifying the source of the image.
 #'
-#' @param fluid If `TRUE`, the image will scale with its parent element,
-#'   defaults to `TRUE`.
-#'
 #' @param image An `<img>` tag, typically a call to `img`.
 #'
 #' @param caption A character string specifying the image caption, defaults to
@@ -92,6 +89,10 @@ figure <- function(image, caption = NULL, ...) {
 #' Cleaner blockquotes
 #'
 #' Stylized blockquotes, an updated builder function for `<blockquote>`.
+#'
+#' @param ... Any number of tags elements or character strings passed as child
+#'   elements or named arguments passed as HTML attributes to the parent
+#'   element.
 #'
 #' @param source The quote source, use `tags$cite` to format the source title,
 #'   defaults to `NULL`.

@@ -28,7 +28,7 @@ if (interactive()) {
     ui = tagList(
       navbar(
         brand = "Navbar",
-        tabToggle("myTabs", c("Home", "About", "Our process")) \%>\%
+        tabTabs("myTabs", c("Home", "About", "Our process")) \%>\%
           margins(c(0, "auto", 0, 0)),
         formInput(
           inline = TRUE,
@@ -42,7 +42,7 @@ if (interactive()) {
         background("teal", +1),
       container(
         tabContent(
-          toggle = "myTabs",
+          tabs = "myTabs",
           tabPane(
             h3("Home")
           ),

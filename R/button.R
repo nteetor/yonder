@@ -19,9 +19,6 @@
 #'   to `FALSE`. A block-level element will occupy the entire width of its
 #'   parent element.
 #'
-#' @param disabled If `TRUE`, the input renders in a disabled state, defaults
-#'   to `FALSE`.
-#'
 #' @param text A character string specifying the text displayed as part of the
 #'   link input.
 #'

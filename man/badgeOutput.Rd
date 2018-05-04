@@ -17,6 +17,11 @@ expression which returns a character string.}
 
 \item{...}{Additional named argument passed as HTML attributes to the parent
 element.}
+
+\item{env}{The environment in which to evaluate \code{content}.}
+
+\item{quoted}{One of \code{TRUE} or \code{FALSE} specifying if \code{content} is a quoted
+expression.}
 }
 \description{
 Small highlighted content which scales to its parent's size. Useful for

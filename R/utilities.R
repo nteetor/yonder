@@ -169,7 +169,7 @@ colorUtility <- function(tag, base, color, tone) {
 #' if (interactive()) {
 #'   opts <- c(
 #'     "red", "purple", "indigo", "blue", "cyan", "teal", "green", "yellow",
-#'     "amber", "orange", "brown", "grey"
+#'     "amber", "orange", "grey"
 #'   )
 #'
 #'   shinyApp(
@@ -179,7 +179,7 @@ colorUtility <- function(tag, base, color, tone) {
 #'           h5("Background"),
 #'           selectInput(
 #'             id = "bg",
-#'             options = opts,
+#'             choices = opts,
 #'             selected = sample(opts, 1)
 #'           ),
 #'           rangeInput(
@@ -193,7 +193,7 @@ colorUtility <- function(tag, base, color, tone) {
 #'           h5("Border"),
 #'           selectInput(
 #'             id = "border",
-#'             options = opts,
+#'             choices = opts,
 #'             selected = sample(opts, 1)
 #'           ),
 #'           rangeInput(
@@ -207,7 +207,7 @@ colorUtility <- function(tag, base, color, tone) {
 #'           h5("Text color"),
 #'           selectInput(
 #'             id = "text",
-#'             options = opts,
+#'             choices = opts,
 #'             selected = sample(opts, 1)
 #'           ),
 #'           rangeInput(
@@ -298,7 +298,7 @@ text <- function(tag, color, tone = 0) {
 #' @examples
 #'
 #' tags$h1("Hello, world!") %>%
-#'   border("grey", sides = c("top", "bottom"))
+#'   border("grey")
 #'
 #' tags$div() %>%
 #'   border("orange")
@@ -805,6 +805,8 @@ margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #'
 #' Utility functions to change a tag element's width or height. Widths and
 #' heights are specified as percentages of the parent object's width or height.
+#'
+#' @param tag A tag element.
 #'
 #' @param percentage One of 25, 50, 75, or 100 specifying width or height as a
 #'   percentage of a parent element's width or height.

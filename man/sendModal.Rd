@@ -17,6 +17,8 @@ custom element to use as the body of the modal, defaults to \code{NULL}.}
 
 \item{footer}{Custom tags to include at the bottom of the modal, defaults to
 \code{NULL}.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 Modals are a flexible alert window, which disable interaction with the page

@@ -202,6 +202,8 @@ fieldset <- function(legend, ...) {
 #'
 #' A complex input which consists of a username field and a password field.
 #'
+#' @param id A character string specifying the HTML id of the login input.
+#'
 #' @param ... Additional named arguments passed as HTML attibutes to the login
 #'   input.
 #'
@@ -225,6 +227,7 @@ fieldset <- function(legend, ...) {
 #'       output$value <- renderPrint({
 #'         input$login
 #'       })
+#'
 #'     }
 #'   )
 #' }

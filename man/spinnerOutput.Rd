@@ -20,6 +20,9 @@ type of spinner, defaults to \code{"circle"}.}
 
 \item{pulse}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} the spinner rotates in 8
 discrete steps, defaults to \code{FALSE}.}
+
+\item{...}{Additional named argument passed as HTML attributes to the
+parent element.}
 }
 \description{
 Start or stop a spinner based on process progress.

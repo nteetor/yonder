@@ -12,6 +12,9 @@ sendStream(id, content, session = getDefaultReactiveDomain())
 \arguments{
 \item{id}{A character string specifying the id of the stream output.}
 
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element.}
+
 \item{content}{A character string specifying the message text.}
 
 \item{session}{A \code{session} object passed to the shiny server function,

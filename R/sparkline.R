@@ -14,6 +14,14 @@
 #'   points. Bar and dot sparklines expect values to be between 0 and 100 and
 #'   line sparklines expect values to be between 0 and 10.
 #'
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
+#'
+#' @param env The environment in which to evaluate `values`.
+#'
+#' @param quoted One of `TRUE` or `FALSE` specifying if `values` is a quoted
+#'   expression.
+#'
 #' @export
 #' @examples
 #'

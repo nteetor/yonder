@@ -7,8 +7,6 @@
 #'   `container`. A `row` typically contains only `col`s. A `col` may contain
 #'   other `col`s or other elements.
 #'
-#' @param tag A tag element, for `col` this is typically `tags$div()`.
-#'
 #' @param default A number 1 through 12 or `"auto"` specifying the default
 #'   width of the column. Columns with width `"auto"` equally divide space or
 #'   fill remaining space when used with other columns.

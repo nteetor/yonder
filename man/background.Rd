@@ -59,7 +59,7 @@ tags$div("light text, dark background") \%>\%
 if (interactive()) {
   opts <- c(
     "red", "purple", "indigo", "blue", "cyan", "teal", "green", "yellow",
-    "amber", "orange", "brown", "grey"
+    "amber", "orange", "grey"
   )
 
   shinyApp(
@@ -69,7 +69,7 @@ if (interactive()) {
           h5("Background"),
           selectInput(
             id = "bg",
-            options = opts,
+            choices = opts,
             selected = sample(opts, 1)
           ),
           rangeInput(
@@ -83,7 +83,7 @@ if (interactive()) {
           h5("Border"),
           selectInput(
             id = "border",
-            options = opts,
+            choices = opts,
             selected = sample(opts, 1)
           ),
           rangeInput(
@@ -97,7 +97,7 @@ if (interactive()) {
           h5("Text color"),
           selectInput(
             id = "text",
-            options = opts,
+            choices = opts,
             selected = sample(opts, 1)
           ),
           rangeInput(
@@ -129,7 +129,7 @@ if (interactive()) {
 
 
 tags$h1("Hello, world!") \%>\%
-  border("grey", sides = c("top", "bottom"))
+  border("grey")
 
 tags$div() \%>\%
   border("orange")

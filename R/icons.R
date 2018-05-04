@@ -168,6 +168,9 @@ icon <- function(name, ..., set = NULL) {
 #' @param pulse One of `TRUE` or `FALSE`, if `TRUE` the spinner rotates in 8
 #'   discrete steps, defaults to `FALSE`.
 #'
+#' @param ... Additional named argument passed as HTML attributes to the
+#'   parent element.
+#'
 #' @export
 #' @examples
 #' if (interactive()) {

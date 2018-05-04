@@ -8,13 +8,21 @@
 #' @param id A character vector specifying the reactive id of the list group
 #'   thruput.
 #'
-#' @param ... For `listGroupThruput`, additional named arguments passed on as
+#' @param ... For `listGroupThruput()`, additional named arguments passed on as
 #'   HTML attributes to the parent list group element.
 #'
-#'   For `listGroupItem`, the text or HTML content of the list group item.
+#'   For `listGroupItem()`, the text or HTML content of the list group item.
 #'
-#'   For `renderListGroup`, any number of expressions which return a
-#'   `listGroupItem` or calls to `listGroupItem`.
+#'   For `renderListGroup()`, any number of expressions which return a
+#'   `listGroupItem()` or calls to `listGroupItem()`.
+#'
+#' @param multiple One of `TRUE` or `FALSE` specifyng if multiple list group
+#'   items may be selected, defaults to `TRUE`.
+#'
+#' @param flush One of `TRUE` or `FALSE` specifying if the list group is
+#'   rendered without a border, defaults to `FALSE`. Removing the list group
+#'   border is useful when rendering a list group inside a custom parent
+#'   container, e.g. inside a `card()`.
 #'
 #' @param value A character string specifying the value of the list group item,
 #'   defaults to `NULL`, in which case the list group item has no value. List
@@ -26,6 +34,9 @@
 #'
 #' @param disabled `TRUE` or `FALSE` specifying if the list group item can be
 #'   selected, defaults to `FALSE`.
+#'
+#' @param env The environment in which to evalute the expressions based to
+#'   `renderListGroup()`.
 #'
 #' @seealso
 #'
@@ -148,7 +159,8 @@ listGroupThruput <- function(id, ..., multiple = TRUE, flush = FALSE) {
 
 #' @rdname listGroupThruput
 #' @export
-listGroupItem <- function(..., value = NULL, selected = FALSE, disabled = FALSE) {
+listGroupItem <- function(..., value = NULL, selected = FALSE,
+                          disabled = FALSE) {
   tags$a(
     class = collate(
       "list-group-item",
@@ -163,7 +175,7 @@ listGroupItem <- function(..., value = NULL, selected = FALSE, disabled = FALSE)
 
 #' @rdname listGroupThruput
 #' @export
-renderListGroup <- function(..., env = parent.frame(), quoted = FALSE) {
+renderListGroup <- function(..., env = parent.frame()) {
   itemsFun <- shiny::exprToFunction(list(...), env, quoted)
 
   function() {

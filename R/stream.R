@@ -11,7 +11,10 @@
 #' @param content A character string specifying the message text.
 #'
 #' @param session A `session` object passed to the shiny server function,
-#'   defaults to [`getDefaultReactiveDomain()`].
+#'   defaults to [getDefaultReactiveDomain()].
+#'
+#' @param ... Additional named arguments passed as HTML attributes to the
+#'   parent element.
 #'
 #' @export
 #' @examples

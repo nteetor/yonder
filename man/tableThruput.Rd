@@ -5,31 +5,31 @@
 \alias{renderTable}
 \title{Table thruput}
 \usage{
-tableThruput(id, borders = FALSE, context = NULL, compact = FALSE, ...)
+tableThruput(id, borders = FALSE, compact = FALSE, ...)
 
 renderTable(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the table thruput.}
 
-\item{borders}{If \code{TRUE}, the table renders with cell borders, defaults to
-\code{FALSE}.}
+\item{borders}{One of \code{TRUE} or \code{FALSE} specifying if the table renders with
+cell borders, defaults to \code{FALSE}.}
 
-\item{compact}{If \code{TRUE}, table cell padding is cut in half to reduce the
-size of the table, defaults to \code{FALSE}.}
+\item{compact}{One of \code{TRUE} or \code{FALSE} specifying if the table cells are
+rendered with less space, defaults to \code{FALSE}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
 \item{expr}{An expression which returns a data frame or \code{NULL}. If a data
 frame is returned the table thruput is re-rendered, otherwise if \code{NULL} the
-current table thruput is left as is.}
+current table is left as is.}
 
-\item{quoted}{If \code{TRUE}, then \code{expr} is treated as a quoted expression,
-defaults to \code{FALSE}.}
+\item{env}{The environment in which to evaluate \code{expr}, defaults to
+\code{parent.frame()}.}
 
-\item{session}{A \code{session} object passed to the shiny server function,
-defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
+\item{quoted}{One of \code{TRUE} or \code{FALSE} specifying if \code{expr} is a quoted
+expression.}
 }
 \description{
 Render a table. Thruputs are a new reactive object.

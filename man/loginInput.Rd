@@ -7,6 +7,8 @@
 loginInput(id, ...)
 }
 \arguments{
+\item{id}{A character string specifying the HTML id of the login input.}
+
 \item{...}{Additional named arguments passed as HTML attibutes to the login
 input.}
 }
@@ -32,6 +34,7 @@ if (interactive()) {
       output$value <- renderPrint({
         input$login
       })
+
     }
   )
 }

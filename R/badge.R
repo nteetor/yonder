@@ -9,6 +9,11 @@
 #' @param content A character string specifying the content of the badge or an
 #'   expression which returns a character string.
 #'
+#' @param env The environment in which to evaluate `content`.
+#'
+#' @param quoted One of `TRUE` or `FALSE` specifying if `content` is a quoted
+#'   expression.
+#'
 #' @param ... Additional named argument passed as HTML attributes to the parent
 #'   element.
 #'

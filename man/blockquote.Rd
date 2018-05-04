@@ -7,6 +7,10 @@
 blockquote(..., source = NULL, align = "left")
 }
 \arguments{
+\item{...}{Any number of tags elements or character strings passed as child
+elements or named arguments passed as HTML attributes to the parent
+element.}
+
 \item{source}{The quote source, use \code{tags$cite} to format the source title,
 defaults to \code{NULL}.}
 

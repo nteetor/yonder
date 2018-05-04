@@ -7,6 +7,8 @@
 items(tag, default = NULL, sm = NULL, md = NULL, lg = NULL, xl = NULL)
 }
 \arguments{
+\item{tag}{A tag element.}
+
 \item{default}{One of \code{"start"}, \code{"end"}, \code{"center"}, \code{"baseline"} or
 \code{"stretch"} specifying the default cross axis alignment of the element's
 flex items.}

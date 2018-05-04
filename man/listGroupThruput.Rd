@@ -10,19 +10,27 @@ listGroupThruput(id, ..., multiple = TRUE, flush = FALSE)
 
 listGroupItem(..., value = NULL, selected = FALSE, disabled = FALSE)
 
-renderListGroup(..., env = parent.frame(), quoted = FALSE)
+renderListGroup(..., env = parent.frame())
 }
 \arguments{
 \item{id}{A character vector specifying the reactive id of the list group
 thruput.}
 
-\item{...}{For \code{listGroupThruput}, additional named arguments passed on as
+\item{...}{For \code{listGroupThruput()}, additional named arguments passed on as
 HTML attributes to the parent list group element.
 
-For \code{listGroupItem}, the text or HTML content of the list group item.
+For \code{listGroupItem()}, the text or HTML content of the list group item.
 
-For \code{renderListGroup}, any number of expressions which return a
-\code{listGroupItem} or calls to \code{listGroupItem}.}
+For \code{renderListGroup()}, any number of expressions which return a
+\code{listGroupItem()} or calls to \code{listGroupItem()}.}
+
+\item{multiple}{One of \code{TRUE} or \code{FALSE} specifyng if multiple list group
+items may be selected, defaults to \code{TRUE}.}
+
+\item{flush}{One of \code{TRUE} or \code{FALSE} specifying if the list group is
+rendered without a border, defaults to \code{FALSE}. Removing the list group
+border is useful when rendering a list group inside a custom parent
+container, e.g. inside a \code{card()}.}
 
 \item{value}{A character string specifying the value of the list group item,
 defaults to \code{NULL}, in which case the list group item has no value. List
@@ -34,6 +42,9 @@ selected by default, defaults to \code{FALSE}.}
 
 \item{disabled}{\code{TRUE} or \code{FALSE} specifying if the list group item can be
 selected, defaults to \code{FALSE}.}
+
+\item{env}{The environment in which to evalute the expressions based to
+\code{renderListGroup()}.}
 }
 \description{
 A way of handling and outlining content as a list. List groups function
