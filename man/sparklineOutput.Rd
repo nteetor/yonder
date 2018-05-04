@@ -26,56 +26,5 @@ line sparklines expect values to be between 0 and 10.}
 Display concise, reactive inline bar, line, or dot charts.
 }
 \examples{
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        col(
-          listGroupInput(
-            id = "toc",
-            items = list(
-              tags$div(
-                class = "d-flex w-100 justify-content-between",
-                "Bars",
-                sparklineOutput("bar", type = "bar")
-              ),
-              tags$div(
-                class = "d-flex w-100 justify-content-between",
-                "Dots",
-                sparklineOutput("dot", type = "dot")
-              ),
-              tags$div(
-                class = "d-flex w-100 justify-content-between",
-                "Line",
-                sparklineOutput("line", type = "line")
-              )
-            ),
-            values = c("bar", "dot", "line")
-          )
-        ),
-        col(
-
-        )
-      )
-    ),
-    server = function(input, output) {
-      gen10 <- function() {
-        sample(10:100, 10, replace = TRUE) \%/\% 10 * 10
-      }
-
-      output$bar <- renderSparkline({
-        gen10()
-      })
-
-      output$dot <- renderSparkline({
-        gen10()
-      })
-
-      output$line <- renderSparkline({
-        gen10()
-      })
-    }
-  )
-}
 
 }
