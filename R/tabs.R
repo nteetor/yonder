@@ -47,7 +47,7 @@
 #'     tags$p("Lorem Dapibus Malesuada Cras Cursus")
 #'   ),
 #'   tabPane(
-#'     tags$p("Pane 2"),
+#'     tags$h1("Pane 2"),
 #'     tags$p("Magna Aenean Mattis Ultricies Ridiculus")
 #'   )
 #' )
@@ -220,6 +220,13 @@ tabTabs <- function(id, labels, values = labels, active = values[1], ...) {
 #' @rdname tabTabs
 #' @export
 tabContent <- function(tabs, ...) {
+  if (!is.character(tabs)) {
+    stop(
+      "invalid `tabContent()` argument, `tabs` must be a character string",
+      call. = FALSE
+    )
+  }
+
   tags$div(
     class = "tab-content",
     `data-tabs` = tabs,

@@ -21,7 +21,7 @@
 #'     ui = tagList(
 #'       navbar(
 #'         brand = "Navbar",
-#'         tabToggle("myTabs", c("Home", "About", "Our process")) %>%
+#'         tabTabs("myTabs", c("Home", "About", "Our process")) %>%
 #'           margins(c(0, "auto", 0, 0)),
 #'         formInput(
 #'           inline = TRUE,
@@ -35,7 +35,7 @@
 #'         background("teal", +1),
 #'       container(
 #'         tabContent(
-#'           toggle = "myTabs",
+#'           tabs = "myTabs",
 #'           tabPane(
 #'             h3("Home")
 #'           ),
@@ -65,7 +65,7 @@ navbar <- function(..., brand = NULL) {
         arg <- tagDropClass(arg, "nav-tabs|nav-pills")
         arg <- tagAddClass(arg, "navbar-nav")
       } else if (tagIs(arg, "form")) {
-        if (!tagHasClass(arg, "inline-form")) {
+        if (!tagHasClass(arg, "form-inline")) {
           warning("non-inline form element passed to `navbar()`", call. = FALSE)
         }
       } else if (!is_tag(arg)) {

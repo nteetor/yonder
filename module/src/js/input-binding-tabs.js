@@ -30,6 +30,8 @@ $.extend(tabsInputBinding, {
         "aria-labelledby": `${ id }-tab-${ index }`
       });
 
+      $pane.removeAttr("data-tabs");
+
       if (index == active) {
         $pane.addClass("show active");
       }
@@ -40,9 +42,12 @@ $.extend(tabsInputBinding, {
 
       $tab.attr({
         "id": `${ id }-tab-${ index }`,
-        "href": `#${ id }-pane-${ index }`,
+        "data-toggle": "tab",
+        "data-target": `#${ id }-pane-${ index }`,
         "aria-controls": `${ id }-pane-${ index }`
       });
+
+      $tab.tab();
 
       /*$tab.on("click", (e) => {
         e.preventDefault();
