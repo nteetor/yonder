@@ -23,6 +23,10 @@ discrete steps, defaults to \code{FALSE}.}
 
 \item{...}{Additional named argument passed as HTML attributes to the
 parent element.}
+
+\item{session}{A reactive context, defaults to [getDefaultReactiveDomain())].
+
+[getDefaultReactiveDomain())]: R:getDefaultReactiveDomain())}
 }
 \description{
 Start or stop a spinner based on process progress.

@@ -16,6 +16,8 @@ sendBar(id, value, label = NULL, session = getDefaultReactiveDomain())
 \item{...}{One or more \code{bar} elements passed to a progress output or named
 arguments passed as HTML attributes to the parent element.}
 
+\item{id}{A character string specifying the HTML id of a progress output.}
+
 \item{value}{An integer between 0 and 100 specifying the initial value
 of a bar.}
 
@@ -24,6 +26,8 @@ of a bar.}
 
 \item{striped}{If \code{TRUE}, the progress bar has a striped gradient, defaults
 to \code{FALSE}.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 Create simple or composite progress bars. To create a composite progress bar

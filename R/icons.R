@@ -171,6 +171,8 @@ icon <- function(name, ..., set = NULL) {
 #' @param ... Additional named argument passed as HTML attributes to the
 #'   parent element.
 #'
+#' @param session A reactive context, defaults to [getDefaultReactiveDomain())].
+#'
 #' @export
 #' @examples
 #' if (interactive()) {

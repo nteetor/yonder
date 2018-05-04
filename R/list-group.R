@@ -176,7 +176,7 @@ listGroupItem <- function(..., value = NULL, selected = FALSE,
 #' @rdname listGroupThruput
 #' @export
 renderListGroup <- function(..., env = parent.frame()) {
-  itemsFun <- shiny::exprToFunction(list(...), env, quoted)
+  itemsFun <- shiny::exprToFunction(list(...), env, FALSE)
 
   function() {
     items <- lapply(itemsFun(), function(i) HTML(as.character(i)))

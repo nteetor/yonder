@@ -169,8 +169,6 @@ colorInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
 #' @export
 #' @examples
 #'
-#' stub
-#'
 fieldset <- function(legend, ...) {
   if (!is.character(legend)) {
     stop(

@@ -5,6 +5,8 @@
 #' its own id, value, label, and attributes. Furthermore, utility functions may
 #' be applied to individual bars for added customization.
 #'
+#' @param id A character string specifying the HTML id of a progress output.
+#'
 #' @param ... One or more `bar` elements passed to a progress output or named
 #'   arguments passed as HTML attributes to the parent element.
 #'
@@ -16,6 +18,8 @@
 #'
 #' @param striped If `TRUE`, the progress bar has a striped gradient, defaults
 #'   to `FALSE`.
+#'
+#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
 #' @export
 #' @examples

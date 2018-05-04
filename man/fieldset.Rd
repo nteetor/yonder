@@ -18,6 +18,4 @@ other assitive technologies.
 }
 \examples{
 
-stub
-
 }
