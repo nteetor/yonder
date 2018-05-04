@@ -97,7 +97,7 @@ navbar <- function(..., brand = NULL) {
       `aria-controls` = navContentId,
       `aria-expanded` = "false",
       `aria-label` = "Toggle navigation",
-      fontAwesome("bars")
+      icon("bars")
     ),
     tags$div(
       class = "collapse navbar-collapse",

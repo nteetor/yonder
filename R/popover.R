@@ -32,7 +32,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       buttonInput("click", "Button"),
-#'       buttonInput("close", fontAwesome("times")) %>%
+#'       buttonInput("close", icon("times")) %>%
 #'         background("red")
 #'     ),
 #'     server = function(input, output) {
