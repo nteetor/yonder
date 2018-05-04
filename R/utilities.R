@@ -845,7 +845,7 @@ width <- function(tag, percentage = NULL, max = NULL) {
     )
   }
 
-  percentage <- if (!is.null(precentage)) paste0("w-", precentage)
+  percentage <- if (!is.null(percentage)) paste0("w-", percentage)
   max <- if (!is.null(max)) paste0("mw-", max)
 
   tagAddClass(tag, c(percentage, max))
@@ -876,7 +876,7 @@ height <- function(tag, percentage = NULL, max = NULL) {
     )
   }
 
-  percentage <- if (!is.null(precentage)) paste0("h-", precentage)
+  percentage <- if (!is.null(percentage)) paste0("h-", percentage)
   max <- if (!is.null(max)) paste0("mh-", max)
 
   tagAddClass(tag, c(percentage, max))
