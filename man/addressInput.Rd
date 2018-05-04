@@ -8,12 +8,6 @@ addressInput(id)
 }
 \arguments{
 \item{id}{A character string specifying the id of the address input.}
-
-\item{placeholders}{If \code{TRUE}, placeholder text is added to all the address
-input fields, defaults to \code{TRUE}.}
-
-\item{abbreviate}{If \code{TRUE}, state abbreviations are used instead of state
-names, defaults to \code{TRUE}.}
 }
 \description{
 An address input which includes a street field, apartment or unit field, city

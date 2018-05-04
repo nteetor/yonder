@@ -276,12 +276,6 @@ loginInput <- function(id, ...) {
 #'
 #' @param id A character string specifying the id of the address input.
 #'
-#' @param placeholders If `TRUE`, placeholder text is added to all the address
-#'   input fields, defaults to `TRUE`.
-#'
-#' @param abbreviate If `TRUE`, state abbreviations are used instead of state
-#'   names, defaults to `TRUE`.
-#'
 #' @export
 #' @examples
 #' if (interactive()) {
