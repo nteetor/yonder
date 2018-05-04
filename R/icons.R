@@ -96,10 +96,11 @@ icon <- function(name, ..., set = NULL) {
     }
   }
 
-  index <- icons$name == name &
-    if (!is.null(set)) icons$set == set else TRUE
+  index <- which(
+    icons$name == name & if (!is.null(set)) icons$set == set else TRUE
+  )
 
-  icon <- head(icons[index, ], 1)
+  icon <- icons[index[1], ]
 
   if (NROW(icon) == 0) {
     stop(
