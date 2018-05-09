@@ -8,7 +8,16 @@ sendUpdateMessage <- function(id, type, data) {
     data = data
   )
 
-  getDefaultReactiveDomain()$sendInputMessage(id, msg)
+  domain <- getDefaultReactiveDomain()
+
+  if (is.null(domain)) {
+    stop(
+      "`sendUpdateMessage()` must be called from within a reactive context",
+      call. = FALSE
+    )
+  }
+
+  domain$sendInputMessage(id, msg)
 }
 
 #' Update choices, values, selected choices

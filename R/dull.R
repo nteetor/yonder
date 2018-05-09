@@ -5,5 +5,6 @@
 #' @importFrom shiny observe getDefaultReactiveDomain tagAppendAttributes tags
 #'   HTML
 #' @importFrom rlang dots_list
+#'
 #' @name dull
 "_PACKAGE"

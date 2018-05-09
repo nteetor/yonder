@@ -4,16 +4,16 @@
 \alias{icon}
 \title{Icon elements}
 \usage{
-icon(name, ..., set = NULL)
+icon(name, set = NULL, ...)
 }
 \arguments{
 \item{name}{A character string specifying the name of the icon.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
-
 \item{set}{A character string specifying the icon set to choose from, defaults
 to \code{"NULL"}, in which case all icon sets are searched.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 }
 \description{
 Include an icon in your application. For now only Font Awesome icons are

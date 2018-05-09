@@ -70,7 +70,7 @@
 #'   )
 #' }
 #'
-icon <- function(name, ..., set = NULL) {
+icon <- function(name, set = NULL, ...) {
   if (length(name) != 1) {
     stop(
       "invalid `icon()` argument, `name` must be a single character string",
@@ -100,15 +100,15 @@ icon <- function(name, ..., set = NULL) {
     icons$name == name & if (!is.null(set)) icons$set == set else TRUE
   )
 
-  icon <- icons[index[1], ]
-
-  if (NROW(icon) == 0) {
+  if (!length(index)) {
     stop(
       'in `icon()`, no icon found with name "', name, '"',
       if (!is.null(set)) paste0(' in set "', set, '"'),
       call. = FALSE
     )
   }
+
+  icon <- icons[index[1], ]
 
   if (icon$set == "font awesome") {
     tags$i(
