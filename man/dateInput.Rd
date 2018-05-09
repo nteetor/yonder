@@ -5,31 +5,41 @@
 \alias{dateRangeInput}
 \title{Date time input}
 \usage{
-dateInput(id, value = NULL, min = NULL, max = NULL, multiple = FALSE)
+dateInput(id, choices = NULL, selected = NULL, min = NULL, max = NULL,
+  multiple = FALSE, ...)
 
-dateRangeInput(id, value = NULL, min = NULL, max = NULL)
+dateRangeInput(id, choices = NULL, selected = NULL, min = NULL,
+  max = NULL, ...)
 }
 \arguments{
 \item{id}{A character specifying the id of the datetime input.}
 
-\item{value}{The default value of the input, defaults to \code{NULL}, in which
-case the initial value is \code{NULL}.}
+\item{choices}{Date objects or character strings specifying the set of
+dates the user may choose from, defaults to \code{NULL} in which case the user
+may choose any date.}
+
+\item{selected}{Date objects or character strings specifying the dates
+selected by default in the date input, defaults \code{NULL} in which case no
+dates are selected by default.}
 
 \item{min, max}{Date objects or character strings in the format \code{YYYY-mm-dd}
 specifying the minimum and maximum date that can be selecetd, both
 default to \code{NULL} in which case there is no minimum or maximum value
 respectively.}
 
-\item{multiple}{\code{TRUE} or \code{FALSE} specifying whether multiple dates may be
-selected, if \code{TRUE} the user may select multiple dates and a vector of
-one or more dates is returned as the reactive value.}
+\item{multiple}{One of \code{TRUE} or \code{FALSE} specifying whether multiple dates
+may be selected, if \code{TRUE} the user may select multiple dates and a vector
+of one or more dates is returned as the reactive value.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 }
 \description{
 A date time picker. Alternatively, use the date time range picker to select
 a range of dates. The value of the date range picker is always two dates.
 }
 \examples{
-# date input ----
+
 if (interactive()) {
   shinyApp(
     ui = container(
@@ -37,13 +47,14 @@ if (interactive()) {
         col(
           h6("Single date input:"),
           dateInput(
-            id = "datetime"
+            id = "singledate"
           ),
           h6("Multiple dates input:") \%>\%
             margins(c(3, 0, 2, 0)),
           dateInput(
-            id = "datemult",
-            value = Sys.Date() + 2:4, 
+            id = "multdate",
+            choices = Sys.Date() + (-4:4),
+            selected = Sys.Date() + 1,
             multiple = TRUE
           )
         ),
@@ -55,15 +66,15 @@ if (interactive()) {
     server = function(input, output) {
       output$values <- renderPrint({
         list(
-          single = input$datetime,
-          multiple = input$datemult
+          single = input$singledate,
+          multiple = input$multdate
         )
       })
     }
   )
 }
 
-# date range input ----
+
 if (interactive()) {
   shinyApp(
     ui = container(
@@ -71,7 +82,7 @@ if (interactive()) {
         col(
           dateRangeInput(
             id = "daterange",
-            value = c(Sys.Date(), Sys.Date() + 3)
+            selected = c(Sys.Date(), Sys.Date() + 3)
           )
         ),
         col(
@@ -88,3 +99,17 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{radioInput}}, \code{\link{selectInput}},
+  \code{\link{textInput}}
+
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{radioInput}}, \code{\link{selectInput}},
+  \code{\link{textInput}}
+}
+\concept{inputs}

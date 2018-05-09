@@ -5,21 +5,30 @@
 #'
 #' @param id A character specifying the id of the datetime input.
 #'
-#' @param value The default value of the input, defaults to `NULL`, in which
-#'   case the initial value is `NULL`.
+#' @param choices Date objects or character strings specifying the set of
+#'   dates the user may choose from, defaults to `NULL` in which case the user
+#'   may choose any date.
+#'
+#' @param selected Date objects or character strings specifying the dates
+#'   selected by default in the date input, defaults `NULL` in which case no
+#'   dates are selected by default.
 #'
 #' @param min,max Date objects or character strings in the format `YYYY-mm-dd`
 #'   specifying the minimum and maximum date that can be selecetd, both
 #'   default to `NULL` in which case there is no minimum or maximum value
 #'   respectively.
 #'
-#' @param multiple `TRUE` or `FALSE` specifying whether multiple dates may be
-#'   selected, if `TRUE` the user may select multiple dates and a vector of
-#'   one or more dates is returned as the reactive value.
+#' @param multiple One of `TRUE` or `FALSE` specifying whether multiple dates
+#'   may be selected, if `TRUE` the user may select multiple dates and a vector
+#'   of one or more dates is returned as the reactive value.
 #'
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
+#'
+#' @family inputs
 #' @export
 #' @examples
-#' # date input ----
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
@@ -27,13 +36,14 @@
 #'         col(
 #'           h6("Single date input:"),
 #'           dateInput(
-#'             id = "datetime"
+#'             id = "singledate"
 #'           ),
 #'           h6("Multiple dates input:") %>%
 #'             margins(c(3, 0, 2, 0)),
 #'           dateInput(
-#'             id = "datemult",
-#'             value = Sys.Date() + 2:4, 
+#'             id = "multdate",
+#'             choices = Sys.Date() + (-4:4),
+#'             selected = Sys.Date() + 1,
 #'             multiple = TRUE
 #'           )
 #'         ),
@@ -45,92 +55,94 @@
 #'     server = function(input, output) {
 #'       output$values <- renderPrint({
 #'         list(
-#'           single = input$datetime,
-#'           multiple = input$datemult
+#'           single = input$singledate,
+#'           multiple = input$multdate
 #'         )
 #'       })
 #'     }
 #'   )
 #' }
 #'
-dateInput <- function(id, value = NULL, min = NULL, max = NULL,
-                      multiple = FALSE) {
-  if (!is.null(value)) {
-    if (!multiple) {
-      if (length(value) > 1) {
-        stop(
-          "invalid `dateInput` argument, if `multiple` is FALSE, `value` must ",
-          "be a single date object or character string",
-          call. = FALSE
-        )
-      }
-      
-      if (!is.character(value) && !is_date(value)) {
-        stop(
-          "invalid `dateInput` argument, `value` must be a date object or ",
-          "character string in the format YYYY-mm-dd",
-          call. = FALSE
-        )
-      }
-      
-      if (!is_ymd(value)) {
-        stop(
-          "invalid `dateInput` argument, `value` must be in the format YYYY-mm-dd",
-          call. = FALSE
-        )
-      }
-    } else {
-      passes <- function(x) (is.character(x) || is_date(x)) && is_ymd(x)
-      
-      if (!all(vapply(value, passes, logical(1)))) {
-        stop(
-          "invalid `dateInput` argument, `value` must be date ",
-          "objects and character strings in the format YYYY-mm-dd",
-          call. = FALSE
-        )
-      }
+dateInput <- function(id, choices = NULL, selected = NULL, min = NULL,
+                      max = NULL, multiple = FALSE, ...) {
+  if (!is.null(choices)) {
+    if (!(is_date(choices) || is.character(choices)) && !all(is_ymd(choices))) {
+      stop(
+        "invalid `dateInput()` argument, `choices` must be date object(s) or ",
+        "character string in the format YYYY-mm-dd",
+        call. = FALSE
+      )
     }
   }
 
-  if (!is_ymd(min)) {
+  if (!is.null(selected)) {
+    if (!multiple && length(selected) > 1) {
+      stop(
+        "invalid `dateInput()` argument, if `multiple` is FALSE, `selected` ",
+        "must be a single date object or character string",
+        call. = FALSE
+      )
+    }
+
+    if (!(is.character(selected) || is_date(selected)) && !all(is_ymd(selected))) {
+      stop(
+        "invalid `dateInput()` argument, `selected` must be a date object ",
+        "or character string in the format YYYY-mm-dd",
+        call. = FALSE
+      )
+    }
+  }
+
+  if (!is.null(min) && !is_ymd(min)) {
     stop(
-      "invalid `dateRangeInput` argument, `min` must be a date object or ",
+      "invalid `dateInput()` argument, `min` must be a date object or ",
       "character string in the format YYYY-mm-dd",
       call. = FALSE
     )
   }
 
-  if (!is_ymd(max)) {
+  if (!is.null(max) && !is_ymd(max)) {
     stop(
-      "invalid `dateRangeInput` argument, `max` must be a date object or ",
+      "invalid `dateInput()` argument, `max` must be a date object or ",
       "character string in the format YYYY-mm-dd",
       call. = FALSE
     )
   }
 
-  if (!is.null(value) && multiple) {
-    value <- paste(vapply(value, as.character, character(1)), collapse = "\\,")
+  if (!is.null(selected) && multiple) {
+    selected <- paste(
+      vapply(selected, as.character, character(1)),
+      collapse = "\\,"
+    )
   }
-    
-  tags$div(
-    class = "dull-datetime-input",
+
+  if (!is.null(choices)) {
+    choices <- paste(vapply(choices, as.character, character(1)), collapse = "\\,")
+  }
+
+  shiny::registerInputHandler("dull.date", dateHandler, TRUE)
+
+  tags$input(
+    class = "dull-date-input form-control",
     id = id,
-    tags$input(
-      type = "datetime-local",
-      `data-default-date` = value,
-      `data-alt-input` = "true",
-      `data-min-date` = min,
-      `data-max-date` = max,
-      `data-date-format` = "Y-m-d",
-      `data-mode` = if (multiple) "multiple"
-    )
+    type = "text",
+    `data-default-date` = selected,
+    `data-enable` = choices,
+    # `data-alt-input` = "true",
+    `data-min-date` = min,
+    `data-max-date` = max,
+    `data-date-format` = "Y-m-d",
+    `data-mode` = if (multiple) "multiple",
+    ...,
+    include("flatpickr")
   )
 }
 
+#' @family inputs
 #' @rdname dateInput
 #' @export
 #' @examples
-#' # date range input ----
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
@@ -138,7 +150,7 @@ dateInput <- function(id, value = NULL, min = NULL, max = NULL,
 #'         col(
 #'           dateRangeInput(
 #'             id = "daterange",
-#'             value = c(Sys.Date(), Sys.Date() + 3)
+#'             selected = c(Sys.Date(), Sys.Date() + 3)
 #'           )
 #'         ),
 #'         col(
@@ -154,70 +166,82 @@ dateInput <- function(id, value = NULL, min = NULL, max = NULL,
 #'   )
 #' }
 #'
-dateRangeInput <- function(id, value = NULL, min = NULL, max = NULL) {
-  if (!is.null(value)) {
-    if (length(value) != 2) {
+dateRangeInput <- function(id, choices = NULL, selected = NULL, min = NULL,
+                           max = NULL, ...)  {
+  if (!is.null(choices)) {
+    if (!(is.character(choices) || is_date(choices)) || !all(is_ymd(choices))) {
       stop(
-        "invalid `dateRangeInput` argument, `value` must be NULL or a pair of ",
+        "invalid `dateRangeInput()` argument, `choices` must be date ",
+        "object(s) and character string(s) in the format YYYY-mm-dd",
+        call. = FALSE
+      )
+    }
+  }
+
+  if (!is.null(selected)) {
+    if (length(selected) != 2) {
+      stop(
+        "invalid `dateRangeInput()` argument, `selected` must be NULL or a pair of ",
         "date objects or character strings",
         call. = FALSE
       )
     }
-      
-    passes <- function(x) (is.character(x) || is_date(x)) && is_ymd(x)
-    
-    if (!all(vapply(value, passes, logical(1)))) {
+
+    if (!(is.character(selected) || is_date(selected)) || !is_ymd(selected)) {
       stop(
-        "invalid `dateRangeInput` argument, `value` must be date ",
-        "objects and character strings in the format YYYY-mm-dd",
+        "invalid `dateRangeInput()` argument, `selected` must be date ",
+        "object(s) and character string(s) in the format YYYY-mm-dd",
         call. = FALSE
       )
     }
   }
 
-  if (!is_ymd(min)) {
+  if (!is.null(min) && !is_ymd(min)) {
     stop(
-      "invalid `dateRangeInput` argument, `min` must be a date object or ",
+      "invalid `dateRangeInput()` argument, `min` must be a date object or ",
       "character string in the format YYYY-mm-dd",
       call. = FALSE
     )
   }
 
-  if (!is_ymd(max)) {
+  if (!is.null(max) && !is_ymd(max)) {
     stop(
-      "invalid `dateRangeInput` argument, `max` must be a date object or ",
+      "invalid `dateRangeInput()` argument, `max` must be a date object or ",
       "character string in the format YYYY-mm-dd",
       call. = FALSE
     )
   }
 
-  if (!is.null(value)) {
-    value <- paste(vapply(value, as.character, character(1)), collapse = "\\,")
+  if (!is.null(selected)) {
+    selected <- paste(vapply(selected, as.character, character(1)), collapse = "\\,")
   }
 
-  tags$div(
-    class = "dull-datetime-input",
+  if (!is.null(choices)) {
+    choices <- paste(vapply(choices, as.character, character(1)), collapse = "\\,")
+  }
+
+  shiny::registerInputHandler("dull.date", dateHandler, TRUE)
+
+  tags$input(
+    class = "dull-date-input form-control",
     id = id,
-    tags$input(
-      type = "datetime-local",
-      `data-default-date` = value,
-      `data-alt-input` = "true",
-      `data-min-date` = min,
-      `data-max-date` = max,
-      `data-date-format` = "Y-m-d",
-      `data-mode` = "range"
-    )
+    type = "text",
+    `data-default-date` = selected,
+    `data-enable` = choices,
+    # `data-alt-input` = "true",
+    `data-min-date` = min,
+    `data-max-date` = max,
+    `data-date-format` = "Y-m-d",
+    `data-mode` = "range",
+    ...,
+    include("flatpickr")
   )
 }
 
-shiny::registerInputHandler(
-  type = "dull.datetime",
-  force = TRUE,
-  function(x, session, name) {
-    if (length(x) == 0) {
-      return(NULL)
-    }
-
-    sort(strptime(unlist(x), format = "%Y-%m-%d"))
+dateHandler <- function(x, session, name) {
+  if (length(x) == 0) {
+    return(NULL)
   }
-)
+
+  sort(strptime(unlist(x), format = "%Y-%m-%d"))
+}

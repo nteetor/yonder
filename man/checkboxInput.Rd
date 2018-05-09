@@ -99,8 +99,9 @@ if (interactive()) {
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{radioInput}},
-  \code{\link{selectInput}}, \code{\link{textInput}}
+  \code{\link{buttonInput}}, \code{\link{dateInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{radioInput}}, \code{\link{selectInput}},
+  \code{\link{textInput}}
 }
 \concept{inputs}

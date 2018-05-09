@@ -111,7 +111,8 @@ if (interactive()) {
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{radioInput}}, \code{\link{selectInput}}
+  \code{\link{dateInput}}, \code{\link{formInput}},
+  \code{\link{groupInput}}, \code{\link{radioInput}},
+  \code{\link{selectInput}}
 }
 \concept{inputs}

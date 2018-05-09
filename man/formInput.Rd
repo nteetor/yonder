@@ -131,7 +131,8 @@ Bootstrap 4 forms documentation:
 
 Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{groupInput}}, \code{\link{radioInput}},
-  \code{\link{selectInput}}, \code{\link{textInput}}
+  \code{\link{dateInput}}, \code{\link{groupInput}},
+  \code{\link{radioInput}}, \code{\link{selectInput}},
+  \code{\link{textInput}}
 }
 \concept{inputs}
