@@ -1,6 +1,6 @@
 (function() {
   this.find = function(scope) {
-    return $(scope).find(`${ this.Selector.SELF }[id]`);
+    return scope.querySelectorAll(`${ this.Selector.SELF }[id]`);
   };
 
   this.getId = function(el) {
