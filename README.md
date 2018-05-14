@@ -6,9 +6,9 @@ Build Bootstrap 4 applications with the familiar Shiny toolkit.
 
 dull is a set of UI and server functions built on top of Bootstrap 4. On the UI
 side dull features Font Awesome 5, aftertheflood's Spark font, flatpickr
-calendar widgets, and refreshed IonRange sliders. On the server side dull 
-includes tools for showing alerts, modals, [popovers](http://getbootstrap.com/docs/4.0/components/popovers/), validating
-and freezing input values, and more!
+calendar widgets, and refreshed IonRange sliders. On the server side dull
+includes tools for showing alerts, modals, [popovers](http://getbootstrap.com/docs/4.0/components/popovers/)
+, validating and freezing input values, and more!
 
 ## A first example
 
@@ -46,11 +46,11 @@ shinyApp(
               default = 2,
               labels = 8,
               fill = FALSE
-            ) %>% 
+            ) %>%
               background("blue")
           )
         ) %>%
-          background("grey", +2)
+          background("grey")
       ),
       col(
         default = 8,
@@ -62,21 +62,21 @@ shinyApp(
     selected_data <- reactive({
       iris[ , c(input$xcolumn, input$ycolumn)]
     })
-  
+
     clusters <- reactive({
       kmeans(selected_data(), as.numeric(input$clusters))
     })
-  
+
     output$plot1 <- renderPlot({
       palette(
         c("#E41A1C", "#377EB8", "#4DAF4A", "#984EA3",
           "#FF7F00", "#FFFF33", "#A65628", "#F781BF", "#999999")
       )
-  
+
       par(mar = c(5.1, 4.1, 0, 1))
-      
+
       plot(selected_data(), col = clusters()$cluster, pch = 20, cex = 3)
-      
+
       points(clusters()$centers, pch = 4, cex = 4, lwd = 4)
     })
   }
