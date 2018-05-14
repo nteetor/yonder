@@ -46,7 +46,7 @@ if (interactive()) {
             id = "trigger",
             label = "The Time Machine"
           ) \%>\%
-            background("purple", +1) \%>\%
+            background("purple") \%>\%
             margins(2) \%>\%
             collapse(
               tags$div(

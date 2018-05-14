@@ -63,7 +63,7 @@ if (interactive()) {
           padding(p) \%>\%
           border("blue") \%>\%
           rounded() \%>\%
-          alignment("center")
+          text("center")
       })
     ) \%>\%
       display("flex") \%>\%
@@ -77,15 +77,15 @@ if (interactive()) {
 }
 \seealso{
 Other utilities: \code{\link{affix}},
-  \code{\link{alignment}}, \code{\link{background}},
+  \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{rounded}},
-  \code{\link{width}}
+  \code{\link{text}}, \code{\link{width}}
 
 Other utilities: \code{\link{affix}},
-  \code{\link{alignment}}, \code{\link{background}},
+  \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{rounded}},
-  \code{\link{width}}
+  \code{\link{text}}, \code{\link{width}}
 }
 \concept{utilities}

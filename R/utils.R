@@ -274,12 +274,14 @@ tagAddClass <- function(x, class) {
     return(x)
   }
 
+  class <- trimws(class)
+
   if (is.null(x$attribs$class)) {
-    x$attribs$class <- class
+    x$attribs$class <- paste(class, collapse = " ")
     return(x)
   }
 
-  old <- stringi::stri_split_regex(x$attribs$class, "\\s+")[[1]]
+  old <- unlist(stringi::stri_split_regex(x$attribs$class, "\\s+"))
   new <- unlist(stringi::stri_split_regex(class, "\\s+"))
 
   x$attribs$class <- paste(unique(c(old, new)), collapse = " ")

@@ -70,11 +70,11 @@
 #'       rangeInput("default") %>%
 #'         background("yellow"),
 #'       rangeInput("blue") %>%
-#'         background("blue", +1),
+#'         background("blue"),
 #'       rangeInput("red") %>%
-#'         background("red", -1),
+#'         background("red"),
 #'       rangeInput("white", step = 10, snap = TRUE) %>%
-#'         background("green", +2),
+#'         background("green"),
 #'       rangeInput("yellow", prefix = "$", suffix = ".00")
 #'     ),
 #'     server = function(input, output) {

@@ -25,7 +25,7 @@ if (interactive()) {
   shinyApp(
     ui = tagList(
       navbar(brand = "Navbar") \%>\%
-        background("cyan", +1) \%>\%
+        background("cyan") \%>\%
         shadow("small"),
       container(
         "Cras mattis consectetur purus sit amet fermentum. Donec sed ",

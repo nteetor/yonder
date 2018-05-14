@@ -55,7 +55,7 @@
 #'           groupInput(
 #'             id = "text",
 #'             right = buttonInput("clear", icon("times")) %>%
-#'               background("red", -1)
+#'               background("red")
 #'           )
 #'         ),
 #'         col(
@@ -183,7 +183,7 @@ showAlert <- function(text, ..., duration = 4, color = NULL, action = NULL) {
 #'           groupInput(
 #'             id = "text",
 #'             right = buttonInput("clear", icon("times")) %>%
-#'               background("red", -1)
+#'               background("red")
 #'           )
 #'         ),
 #'         col(

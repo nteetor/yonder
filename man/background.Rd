@@ -2,34 +2,21 @@
 % Please edit documentation in R/utilities.R
 \name{background}
 \alias{background}
-\alias{text}
-\alias{border}
-\title{Change text, background, or border color}
+\title{Tag element background color}
 \usage{
-background(tag, color, tone = 0)
-
-text(tag, color, tone = 0)
-
-border(tag, color, tone = 0)
+background(tag, color)
 }
 \arguments{
 \item{tag}{A tag element.}
 
-\item{color}{A character string specifying the background color, see details
+\item{color}{A character string specifying the background color, see below
 for all possible values.}
-
-\item{tone}{An integer between -2 and 2 specifying to use a darker or lighter
-tone of \code{color}. Negative values indicate darker tones and positive values
-indicate lighter tones. Defaults to 0, in which case the base color is
-unchanged.}
 }
 \description{
-The \code{text}, \code{background}, and \code{border} utility functions may be used to
-change the text, background, or border color of a tag element, respectively.
+Use \code{background()} to change the background color of a tag element.
 }
 \details{
-For \code{text()}, \code{background()}, and \code{border()}, the following colors are
-available,
+The possible background colors are,
 \itemize{
 \item red
 \item purple
@@ -43,111 +30,45 @@ available,
 \item orange
 \item grey
 \item white
-}
-
-For \code{background()}, you can also specify the following,
-\itemize{
 \item transparent
 }
 }
 \examples{
 
-tags$div("light text, dark background") \%>\%
-  background("grey", -2) \%>\%
-  text("yellow", +1)
+div("Nullam eu ante vel est convallis dignissim.") \%>\%
+  background("grey")
+
+
+checkbarInput(
+  id = NULL,
+  choices = c(
+    "Nunc rutrum turpis sed pede.",
+    "Etiam vel neque.",
+    "Lorem ipsum dolor sit amet."
+  )
+) \%>\%
+  background("cyan")
+
 
 if (interactive()) {
-  opts <- c(
-    "red", "purple", "indigo", "blue", "cyan", "teal", "green", "yellow",
-    "amber", "orange", "grey"
+  colors <- c(
+    "red", "purple", "indigo", "blue", "cyan", "teal", "green",
+    "yellow", "amber", "orange", "grey", "white"
   )
 
   shinyApp(
     ui = container(
-      row(
-        col(
-          h5("Background"),
-          selectInput(
-            id = "bg",
-            choices = opts,
-            selected = sample(opts, 1)
-          ),
-          rangeInput(
-            id = "bgtone",
-            min = -2,
-            max = 2,
-            default = 0,
-            step = 1
-          ) \%>\%
-            margins(c(2, 0, 2, 0)),
-          h5("Border"),
-          selectInput(
-            id = "border",
-            choices = opts,
-            selected = sample(opts, 1)
-          ),
-          rangeInput(
-            id = "bordertone",
-            min = -2,
-            max = 2,
-            default = 0,
-            step = 1
-          ) \%>\%
-            margins(c(2, 0, 2, 0)),
-          h5("Text color"),
-          selectInput(
-            id = "text",
-            choices = opts,
-            selected = sample(opts, 1)
-          ),
-          rangeInput(
-            id = "texttone",
-            min = -2,
-            max = 2,
-            default = 0,
-            step = 1
-          ) \%>\%
-            margins(c(2, 0, 2, 0))
-        ),
-        col(
-          uiOutput("preview") \%>\%
-            margins(3) \%>\%
-            padding(3)
-        )
+      fluid = FALSE,
+      lapply(
+        colors,
+        background,
+        tag = div() \%>\%
+          padding(5) \%>\%
+          margins(2)
       )
-    ),
-    server = function(input, output) {
-      output$preview <- renderUI({
-        d3("Hello, world!") \%>\%
-          background(input$bg, input$bgtone) \%>\%
-          border(input$border, input$bordertone) \%>\%
-          text(input$text, input$texttone)
-      })
-    }
-  )
-}
-
-
-tags$h1("Hello, world!") \%>\%
-  border("grey")
-
-tags$div() \%>\%
-  border("orange")
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        col(
-          checkbarInput(
-            id = NULL,
-            choices = paste("Choice", 1:4)
-          ) \%>\%
-            background("cyan") \%>\%
-            border("indigo")
-        )
-      )
-    ),
+    ) \%>\%
+      display("flex") \%>\%
+      wrap("wrap"),
     server = function(input, output) {
 
     }
@@ -156,22 +77,10 @@ if (interactive()) {
 
 }
 \seealso{
-Other utilities: \code{\link{affix}},
-  \code{\link{alignment}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{font}},
-  \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{width}}
-
-Other utilities: \code{\link{affix}},
-  \code{\link{alignment}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{font}},
-  \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{width}}
-
-Other utilities: \code{\link{affix}},
-  \code{\link{alignment}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{font}},
-  \code{\link{padding}}, \code{\link{rounded}},
+Other utilities: \code{\link{affix}}, \code{\link{border}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{padding}},
+  \code{\link{rounded}}, \code{\link{text}},
   \code{\link{width}}
 }
 \concept{utilities}

@@ -29,10 +29,10 @@
 #'           searchInput("search", placeholder = "Search") %>%
 #'             margins(sm = c(0, 2, 0, 0)),
 #'           submit = submitInput("Search") %>%
-#'             background("amber", +1)
+#'             background("amber")
 #'         )
 #'       ) %>%
-#'         background("teal", +1),
+#'         background("teal"),
 #'       container(
 #'         tabContent(
 #'           tabs = "myTabs",

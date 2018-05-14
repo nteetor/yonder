@@ -25,10 +25,10 @@ tags$div("A simple banner") \%>\%
 
 }
 \seealso{
-Other utilities: \code{\link{alignment}},
-  \code{\link{background}}, \code{\link{display}},
+Other utilities: \code{\link{background}},
+  \code{\link{border}}, \code{\link{display}},
   \code{\link{float}}, \code{\link{font}},
   \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{width}}
+  \code{\link{text}}, \code{\link{width}}
 }
 \concept{utilities}

@@ -2,12 +2,15 @@
 % Please edit documentation in R/utilities.R
 \name{font}
 \alias{font}
-\title{Text font}
+\title{Tag element font}
 \usage{
-font(tag, size = NULL, weight = NULL)
+font(tag, color = NULL, size = NULL, weight = NULL)
 }
 \arguments{
 \item{tag}{A tag element.}
+
+\item{color}{A character string specifying the text color of the tag element,
+defaults to \code{NULL} in which case the text color is unchanged.}
 
 \item{size}{One of \code{"2x"}, \code{"3x"}, ..., or \code{"10x"} specifying a factor to
 increase a tag element's font size by (e.g. \code{"2x"} is double the base font
@@ -15,31 +18,80 @@ size), defaults to \code{NULL}, in which case the font size is unchanged.}
 
 \item{weight}{One of \code{"bold"}, \code{"normal"}, \code{"light"}, \code{"italic"}, or
 \code{"monospace"} specifying the font weight of the element's text, defaults to
-\code{NULL}, in which case the font is unchanged.}
+\code{NULL}, in which case the font weight is unchanged.}
 }
 \description{
-The \code{font} utility changes the weight and size of an element's text font.
-Bold fonts are darker and heavier whereas light fonts are thinner. Font
-size's are changed relative to the current font size.
+The \code{font()} utility may be used to change the color, size, or weight of a
+tag element's text font. Font size's are changed relative to the base font
+size of the web page.
+}
+\details{
+The possible font colors are,
+\itemize{
+\item red
+\item purple
+\item indigo
+\item blue
+\item cyan
+\item teal
+\item green
+\item yellow
+\item amber
+\item orange
+\item body (this "color" sets the tag element's font color to the default body
+color)
+\item grey
+\item white
+}
 }
 \examples{
 
 span("This and other news") \%>\%
   font(weight = "light")
 
+
 icon("anchor") \%>\%
-  font("5x")
+  font(color = "blue", size = "5x")
+
 
 p("Ipsum Consectetur Nibh Bibendum Ullamcorper") \%>\%
-  font("2x", "monospace") \%>\%
-  font(weight = "italic")
+  font(size = "2x", weight = "italic")
+
+
+if (interactive()) {
+  colors <- c(
+    "red", "purple", "indigo", "blue", "cyan", "teal", "green",
+    "yellow", "amber", "orange", "body", "grey", "white"
+  )
+
+  shinyApp(
+    ui = container(
+      fluid = FALSE,
+      lapply(
+        head(colors, -1),
+        font,
+        tag = div("Pellentesque tristique imperdiet tortor.") \%>\%
+          padding(5)
+      ),
+      div("Pellentesque tristique imperdiet tortor.") \%>\%
+        padding(5) \%>\%
+        background("grey") \%>\%
+        font(tail(colors, 1))
+    ) \%>\%
+      display("flex") \%>\%
+      wrap("wrap"),
+    server = function(input, output) {
+
+    }
+  )
+}
 
 }
 \seealso{
 Other utilities: \code{\link{affix}},
-  \code{\link{alignment}}, \code{\link{background}},
+  \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{width}}
+  \code{\link{text}}, \code{\link{width}}
 }
 \concept{utilities}

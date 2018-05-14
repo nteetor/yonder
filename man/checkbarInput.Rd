@@ -56,7 +56,7 @@ if (interactive()) {
             ),
             selected = "Check 2"
           ) \%>\%
-            background("indigo", +1) \%>\%
+            background("indigo") \%>\%
             margins(2)
         ),
         col(
