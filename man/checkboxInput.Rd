@@ -28,6 +28,7 @@ A reactive checkbox input. When a checkbox input is unchecked the reactive
 value is \code{NULL}. When checked the checkbox input reactive value is \code{value}.
 }
 \examples{
+
 if (interactive()) {
   shinyApp(
     ui = container(
@@ -75,9 +76,9 @@ if (interactive()) {
     server = function(input, output) {
       output$checkvalue <- renderPrint({
         if (is.null(input$foo)) {
-          invalid("foo", "Please check")
+          markInvalid("foo", "Please check")
         } else {
-          valid("foo")
+          markValid("foo")
         }
 
         input$foo

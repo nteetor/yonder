@@ -22,6 +22,7 @@
 #' @family inputs
 #' @export
 #' @examples
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
@@ -69,9 +70,9 @@
 #'     server = function(input, output) {
 #'       output$checkvalue <- renderPrint({
 #'         if (is.null(input$foo)) {
-#'           invalid("foo", "Please check")
+#'           markInvalid("foo", "Please check")
 #'         } else {
-#'           valid("foo")
+#'           markValid("foo")
 #'         }
 #'
 #'         input$foo
