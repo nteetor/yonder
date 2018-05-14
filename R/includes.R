@@ -13,9 +13,7 @@ include <- function(resource) {
         tags$script(src = "dull/bootstrap/js/bootstrap.min.js"),
         tags$script(src = "dull/file-saver/FileSaver.min.js"),
         tags$script(src = "dull/dull/js/dull.min.js"),
-        tags$link(rel = "stylesheet", href = "dull/dull/css/dull.min.css")
-      ),
-      velocity = tags$head(
+        tags$link(rel = "stylesheet", href = "dull/dull/css/dull.min.css"),
         tags$script(src = "dull/velocity/velocity.min.js")
       ),
       `ion slider` = tags$head(
@@ -39,11 +37,11 @@ include <- function(resource) {
       `font awesome` = tags$head(
         tags$link(
           rel = "stylesheet",
-          href = "dull/font-awesome/css/font-awesome.min.css"
+          href = "dull/font-awesome/css/fa-svg-with-js.css"
         ),
         tags$script(
           defer = NA,
-          src = "dull/font-awesome/js/fontawesome.js"
+          src = "dull/font-awesome/js/fontawesome-all.min.js"
         )
       ),
       feather = tags$head(
