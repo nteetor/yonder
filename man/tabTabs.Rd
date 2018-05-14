@@ -111,7 +111,7 @@ if (interactive()) {
             p("Nullam quis risus eget urna mollis ornare vel eu leo. Nullam
             id dolor id nibh ultricies vehicula ut id elit.")
           ) \%>\%
-            background("grey", +2)
+            background("grey")
         ),
         col(
           tabTabs(

@@ -243,7 +243,6 @@
       width: 100%;
 
       &::-ms-clear {
-
         display: none;
       }
     }
@@ -471,7 +470,6 @@
     display: flex;
     width: 307.875px;
 
-
     &:focus {
       outline: 0;
     }
@@ -500,6 +498,7 @@
     -webkit-transform: translate3d(0, 0, 0);
     transform: translate3d(0, 0, 0);
     opacity: 1;
+    border-right: 0;
   }
 
   .flatpickr-calendar.animate .dayContainer.slideLeft {
@@ -667,7 +666,7 @@
   }
 
   .rangeMode .flatpickr-day {
-    margin-top: 1px;
+    margin-top: 1px; // -1px?
   }
 
   .flatpickr-weekwrapper {
@@ -676,9 +675,9 @@
   }
 
   .flatpickr-weekwrapper .flatpickr-weeks {
-    padding: 0 12px;
-    -webkit-box-shadow: 1px 0 0 $gray-200;
-    box-shadow: 1px 0 0 $gray-200;
+    padding: 0 12px;                       // no padding?
+    -webkit-box-shadow: 1px 0 0 $gray-200; // none?
+    box-shadow: 1px 0 0 $gray-200;         // none?
   }
 
   .flatpickr-weekwrapper .flatpickr-weekday {
@@ -699,10 +698,10 @@
   }
 
   .flatpickr-innerContainer {
-    display: block;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
+    // display: block;
+    // display: -webkit-box;
+    // display: -webkit-flex;
+    // display: -ms-flexbox;
     display: flex;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
@@ -719,16 +718,16 @@
   .flatpickr-time {
     text-align: center;
     outline: 0;
-    display: block;
+    // display: block;
     height: 0;
     line-height: 40px;
     max-height: 40px;
     -webkit-box-sizing: border-box;
     box-sizing: border-box;
     overflow: hidden;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
+    // display: -webkit-box;
+    // display: -webkit-flex;
+    // display: -ms-flexbox;
     display: flex;
   }
 
@@ -1000,11 +999,6 @@
     width: 307.875px;
   }
 
-  .dayContainer {
-    padding: 0;
-    border-right: 0;
-  }
-
   span.flatpickr-day,
   span.flatpickr-day.prevMonthDay,
   span.flatpickr-day.nextMonthDay {
@@ -1069,15 +1063,6 @@
   span.flatpickr-day.prevMonthDay.selected,
   span.flatpickr-day.nextMonthDay.selected {
     z-index: 2;
-  }
-
-  .rangeMode .flatpickr-day {
-    margin-top: -1px;
-  }
-
-  .flatpickr-weekwrapper .flatpickr-weeks {
-    -webkit-box-shadow: none;
-    box-shadow: none;
   }
 
   .flatpickr-weekwrapper span.flatpickr-day {

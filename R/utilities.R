@@ -1,10 +1,56 @@
-#' Text font
+.colors <- c(
+  "red",
+  "purple",
+  "indigo",
+  "blue",
+  "cyan",
+  "teal",
+  "green",
+  "yellow",
+  "amber",
+  "orange",
+  "grey",
+  "white"
+)
+
+colorUtility <- function(tag, base, color) {
+  if (tagHasClass(tag, "dull-checkbar-input|dull-radiobar-input")) {
+    tag$children[[1]] <- lapply(
+      tag$children[[1]],
+      colorUtility,
+      base = base,
+      color = color
+    )
+
+    return(tag)
+  }
+
+  if (tagHasClass(tag, "dull-dropdown-input")) {
+    tag$children[[1]] <- colorUtility(
+      tag$children[[1]],
+      base = base,
+      color = color
+    )
+
+    return(tag)
+  }
+
+  tag <- tagDropClass(tag, sprintf("%s-(%s)", base, paste(.colors, collapse = "|")))
+  tag <- tagAddClass(tag, paste0(base, "-", color))
+
+  tag
+}
+
+#' Tag element font
 #'
-#' The `font` utility changes the weight and size of an element's text font.
-#' Bold fonts are darker and heavier whereas light fonts are thinner. Font
-#' size's are changed relative to the current font size.
+#' The `font()` utility may be used to change the color, size, or weight of a
+#' tag element's text font. Font size's are changed relative to the base font
+#' size of the web page.
 #'
 #' @param tag A tag element.
+#'
+#' @param color A character string specifying the text color of the tag element,
+#'   defaults to `NULL` in which case the text color is unchanged.
 #'
 #' @param size One of `"2x"`, `"3x"`, ..., or `"10x"` specifying a factor to
 #'   increase a tag element's font size by (e.g. `"2x"` is double the base font
@@ -12,7 +58,26 @@
 #'
 #' @param weight One of `"bold"`, `"normal"`, `"light"`, `"italic"`, or
 #'   `"monospace"` specifying the font weight of the element's text, defaults to
-#'   `NULL`, in which case the font is unchanged.
+#'   `NULL`, in which case the font weight is unchanged.
+#'
+#' @details
+#'
+#' The possible font colors are,
+#'
+#' * red
+#' * purple
+#' * indigo
+#' * blue
+#' * cyan
+#' * teal
+#' * green
+#' * yellow
+#' * amber
+#' * orange
+#' * body (this "color" sets the tag element's font color to the default body
+#'   color)
+#' * grey
+#' * white
 #'
 #' @family utilities
 #' @export
@@ -21,14 +86,52 @@
 #' span("This and other news") %>%
 #'   font(weight = "light")
 #'
+#'
 #' icon("anchor") %>%
-#'   font("5x")
+#'   font(color = "blue", size = "5x")
+#'
 #'
 #' p("Ipsum Consectetur Nibh Bibendum Ullamcorper") %>%
-#'   font("2x", "monospace") %>%
-#'   font(weight = "italic")
+#'   font(size = "2x", weight = "italic")
 #'
-font <- function(tag, size = NULL, weight = NULL) {
+#'
+#' if (interactive()) {
+#'   colors <- c(
+#'     "red", "purple", "indigo", "blue", "cyan", "teal", "green",
+#'     "yellow", "amber", "orange", "body", "grey", "white"
+#'   )
+#'
+#'   shinyApp(
+#'     ui = container(
+#'       fluid = FALSE,
+#'       lapply(
+#'         head(colors, -1),
+#'         font,
+#'         tag = div("Pellentesque tristique imperdiet tortor.") %>%
+#'           padding(5)
+#'       ),
+#'       div("Pellentesque tristique imperdiet tortor.") %>%
+#'         padding(5) %>%
+#'         background("grey") %>%
+#'         font(tail(colors, 1))
+#'     ) %>%
+#'       display("flex") %>%
+#'       wrap("wrap"),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+font <- function(tag, color = NULL, size = NULL, weight = NULL) {
+  if (color != "body" && !re(color, paste(.colors, collapse = "|"))) {
+    stop(
+      "invalid `text` argument, `color` is invalid, see ?background ",
+      "details for possible colors",
+      call. = FALSE
+    )
+  }
+
   if (!re(weight, "bold|normal|light|italic|monospace")) {
     stop(
       "invalid `text` argument, `weight` must be one of ",
@@ -43,6 +146,10 @@ font <- function(tag, size = NULL, weight = NULL) {
       '"2x" through "10px"',
       call. = FALSE
     )
+  }
+
+  if (!is.null(color)) {
+    tag <- colorUtility(tag, "text", color)
   }
 
   if (!is.null(size)) {
@@ -65,81 +172,18 @@ font <- function(tag, size = NULL, weight = NULL) {
   tag
 }
 
-.colors <- c(
-  "red",
-  "purple",
-  "indigo",
-  "blue",
-  "cyan",
-  "teal",
-  "green",
-  "yellow",
-  "amber",
-  "orange",
-  "grey",
-  "white"
-)
-
-colorUtility <- function(tag, base, color, tone) {
-  if (tagHasClass(tag, "dull-checkbar-input|dull-radiobar-input")) {
-    tag$children[[1]] <- lapply(
-      tag$children[[1]],
-      colorUtility,
-      base = base,
-      color = color,
-      tone = tone
-    )
-
-    return(tag)
-  }
-
-  if (tagHasClass(tag, "dull-dropdown-input")) {
-    tag$children[[1]] <- colorUtility(
-      tag$children[[1]],
-      base = base,
-      color = color,
-      tone = tone
-    )
-
-    return(tag)
-  }
-
-  cregex <- paste0("(", paste(.colors, collapse = "|"), ")")
-  tag <- tagDropClass(tag, paste0(base, "-", cregex, "(-[1-9]00)?"))
-
-  tone <- switch(
-    as.character(tone),
-    `0` = 0,
-    `-2` = 900, `-1` = 700,
-    `1` = 300, `2` = 100
-  )
-
-  tone <- if (tone && color != "white") paste0("-", tone) else ""
-
-  tag <- tagAddClass(tag, paste0(base, "-", color, tone))
-
-  tag
-}
-
-#' Change text, background, or border color
+#' Tag element background color
 #'
-#' The `text`, `background`, and `border` utility functions may be used to
-#' change the text, background, or border color of a tag element, respectively.
+#' Use `background()` to change the background color of a tag element.
 #'
 #' @param tag A tag element.
 #'
-#' @param color A character string specifying the background color, see details
+#' @param color A character string specifying the background color, see below
 #'   for all possible values.
-#'
-#' @param tone An integer between -2 and 2 specifying to use a darker or lighter
-#'   tone of `color`. Negative values indicate darker tones and positive values
-#'   indicate lighter tones. Defaults to 0, in which case the base color is
-#'   unchanged.
 #'
 #' @details
 #'
-#' For `text()`, `background()`, and `border()`, the following colors are
-#' available,
+#' The possible background colors are,
 #'
 #' * red
 #' * purple
@@ -153,102 +197,57 @@ colorUtility <- function(tag, base, color, tone) {
 #' * orange
 #' * grey
 #' * white
-#'
-#' For `background()`, you can also specify the following,
-#'
-#'  * transparent
+#' * transparent
 #'
 #' @family utilities
 #' @export
 #' @examples
 #'
-#' tags$div("light text, dark background") %>%
-#'   background("grey", -2) %>%
-#'   text("yellow", +1)
+#' div("Nullam eu ante vel est convallis dignissim.") %>%
+#'   background("grey")
+#'
+#'
+#' checkbarInput(
+#'   id = NULL,
+#'   choices = c(
+#'     "Nunc rutrum turpis sed pede.",
+#'     "Etiam vel neque.",
+#'     "Lorem ipsum dolor sit amet."
+#'   )
+#' ) %>%
+#'   background("cyan")
+#'
 #'
 #' if (interactive()) {
-#'   opts <- c(
-#'     "red", "purple", "indigo", "blue", "cyan", "teal", "green", "yellow",
-#'     "amber", "orange", "grey"
+#'   colors <- c(
+#'     "red", "purple", "indigo", "blue", "cyan", "teal", "green",
+#'     "yellow", "amber", "orange", "grey", "white"
 #'   )
 #'
 #'   shinyApp(
 #'     ui = container(
-#'       row(
-#'         col(
-#'           h5("Background"),
-#'           selectInput(
-#'             id = "bg",
-#'             choices = opts,
-#'             selected = sample(opts, 1)
-#'           ),
-#'           rangeInput(
-#'             id = "bgtone",
-#'             min = -2,
-#'             max = 2,
-#'             default = 0,
-#'             step = 1
-#'           ) %>%
-#'             margins(c(2, 0, 2, 0)),
-#'           h5("Border"),
-#'           selectInput(
-#'             id = "border",
-#'             choices = opts,
-#'             selected = sample(opts, 1)
-#'           ),
-#'           rangeInput(
-#'             id = "bordertone",
-#'             min = -2,
-#'             max = 2,
-#'             default = 0,
-#'             step = 1
-#'           ) %>%
-#'             margins(c(2, 0, 2, 0)),
-#'           h5("Text color"),
-#'           selectInput(
-#'             id = "text",
-#'             choices = opts,
-#'             selected = sample(opts, 1)
-#'           ),
-#'           rangeInput(
-#'             id = "texttone",
-#'             min = -2,
-#'             max = 2,
-#'             default = 0,
-#'             step = 1
-#'           ) %>%
-#'             margins(c(2, 0, 2, 0))
-#'         ),
-#'         col(
-#'           uiOutput("preview") %>%
-#'             margins(3) %>%
-#'             padding(3)
-#'         )
+#'       fluid = FALSE,
+#'       lapply(
+#'         colors,
+#'         background,
+#'         tag = div() %>%
+#'           padding(5) %>%
+#'           margins(2)
 #'       )
-#'     ),
+#'     ) %>%
+#'       display("flex") %>%
+#'       wrap("wrap"),
 #'     server = function(input, output) {
-#'       output$preview <- renderUI({
-#'         d3("Hello, world!") %>%
-#'           background(input$bg, input$bgtone) %>%
-#'           border(input$border, input$bordertone) %>%
-#'           text(input$text, input$texttone)
-#'       })
+#'
 #'     }
 #'   )
 #' }
 #'
-background <- function(tag, color, tone = 0) {
-  if (color != "transparent" && !(color %in% .colors)) {
+background <- function(tag, color) {
+  if (!(color %in% c(.colors, "transparent"))) {
     stop(
       "invalid `background` argument, `color` is invalid, see ?background ",
       "details for possible colors",
-      call. = FALSE
-    )
-  }
-
-  if (!(tone %in% -2:2)) {
-    stop(
-      "invalid `background` argument, `tone` must be one of -2, -1, 0, 1, or 2",
       call. = FALSE
     )
   }
@@ -267,81 +266,107 @@ background <- function(tag, color, tone = 0) {
     base <- "bg"
   }
 
-  colorUtility(tag, base, color, tone)
+  colorUtility(tag, base, color)
 }
 
+#' Tag element borders
+#'
+#' Use `border()` to add borders to a tag element or change the color of a tag
+#' element's border.
+#'
+#' @param tag A tag element.
+#'
+#' @param color A character string specifying the border color, defaults to
+#'   `NULL`, in which case the browser default is used. See below for possible
+#'   border colors.
+#'
+#' @param sides One or more of `"top"`, `"right"`, `"bottom"`, `"left"` or
+#'   `"all"` or `"none"` specifying which sides to add a border to, defaults to
+#'   `"all"`.
+#'
+#' @details
+#'
+#' The following border colors are available,
+#'
+#' * red
+#' * purple
+#' * indigo
+#' * blue
+#' * cyan
+#' * teal
+#' * green
+#' * yellow
+#' * amber
+#' * orange
+#' * grey
+#' * white
+#'
 #' @family utilities
-#' @rdname background
-#' @export
-text <- function(tag, color, tone = 0) {
-  if (!(color %in% .colors)) {
-    stop(
-      "invalid `text` argument, `color` is invalid, see ?background ",
-      "details for possible colors",
-      call. = FALSE
-    )
-  }
-
-  if (!(tone %in% -2:2)) {
-    stop(
-      "invalid `text` argument, `tone` must be one of -2, -1, 0, 1, or 2",
-      call. = FALSE
-    )
-  }
-
-  colorUtility(tag, "text", color, tone)
-}
-
-#' @family utilities
-#' @rdname background
 #' @export
 #' @examples
 #'
-#' tags$h1("Hello, world!") %>%
+#' h1("") %>%
 #'   border("grey")
 #'
-#' tags$div() %>%
+#'
+#' div("Vivamus id enim.") %>%
 #'   border("orange")
 #'
 #' if (interactive()) {
+#'   colors <- c(
+#'     "red", "purple", "indigo", "blue", "cyan", "teal", "green",
+#'     "yellow", "amber", "orange", "grey", "white"
+#'   )
+#'
 #'   shinyApp(
 #'     ui = container(
-#'       row(
-#'         col(
-#'           checkbarInput(
-#'             id = NULL,
-#'             choices = paste("Choice", 1:4)
-#'           ) %>%
-#'             background("cyan") %>%
-#'             border("indigo")
-#'         )
+#'       fluid = FALSE,
+#'       lapply(
+#'         colors,
+#'         border,
+#'         tag = div() %>%
+#'           padding(5) %>%
+#'           margins(2)
 #'       )
-#'     ),
+#'     ) %>%
+#'       display("flex") %>%
+#'       wrap("wrap"),
 #'     server = function(input, output) {
 #'
 #'     }
 #'   )
 #' }
 #'
-border <- function(tag, color, tone = 0) {
-  if (!(color %in% .colors)) {
+border <- function(tag, color = NULL, sides = "all") {
+  if (!re(color, paste(color, collapse = "|"))) {
     stop(
-      "invalid `border` argument, `color` is invalid, see ?border ",
+      "invalid `border()` argument, `color` is invalid, see ?border ",
       "details for possible colors",
       call. = FALSE
     )
   }
 
-  if (!(tone %in% -2:2)) {
+  if (!all(re(sides, "top|right|bottom|left|all|none", len0 = FALSE))) {
     stop(
-      "invalid `border` argument, `tone` must be one of -2, -1, 0, 1, or 2",
+      "invalid `border()` argument, `sides` must be one of ",
+      '"top", "right", "bottom", "left", "all", or "none"',
       call. = FALSE
     )
   }
 
-  tag <- tagAddClass(tag, "border")
+  if (!is.null(color)) {
+    tag <- colorUtility(tag, "border", color)
+  }
 
-  colorUtility(tag, "border", color, tone)
+  if ("all" %in% sides) {
+    tag <- tagAddClass(tag, "border")
+  } else if ("none" %in% sides) {
+    tag <- tagAddClass(tag, "border-0")
+  } else {
+    tag <- tagAddClass(tag, sprintf("border-%s", sides))
+  }
+
+  tag
 }
 
 #' Round tag element corners
@@ -405,7 +430,7 @@ rounded <- function(tag, sides = "all") {
 #'   shinyApp(
 #'     ui = tagList(
 #'       navbar(brand = "Navbar") %>%
-#'         background("cyan", +1) %>%
+#'         background("cyan") %>%
 #'         shadow("small"),
 #'       container(
 #'         "Cras mattis consectetur purus sit amet fermentum. Donec sed ",
@@ -540,10 +565,10 @@ affix <- function(tag, position) {
   }
 }
 
-#' Align element text
+#' Tag element text alignment
 #'
-#' The `alignment` utility applies Bootstrap classes to change how an element's
-#' text is aligned. Like with [display] or [padding] different text alignments
+#' The `text()` utility applies Bootstrap classes to change how an element's
+#' text is aligned. Like with [display()] or [padding()] different text alignments
 #' can be applied based on the viewport size.
 #'
 #' @param tag A tag object.
@@ -567,9 +592,28 @@ affix <- function(tag, position) {
 #' @export
 #' @examples
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       p("Text always aligned center. Resize your browser window to see these",
+#'         "examples in action") %>%
+#'         text("center"),
+#'       p("Text centered on screens >= large, left aligned by default") %>%
+#'         text("left", lg = "center"),
+#'       p("Text aligned left on screens >= medium, right aligned by default") %>%
+#'         text("right", md = "left"),
+#'       p("Text aligned left on screens >= medium, centered for >= small, justified",
+#'         "for mobile") %>%
+#'         text("justify", sm = "center", md = "left")
+#'     ),
+#'     server = function(input, output) {
 #'
-alignment <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
-                  xl = NULL) {
+#'     }
+#'   )
+#' }
+#'
+text <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+                 xl = NULL) {
   args <- dropNulls(
     list(default = default, sm = sm, md = md, lg = lg, xl = xl)
   )
@@ -690,7 +734,7 @@ display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #'           padding(p) %>%
 #'           border("blue") %>%
 #'           rounded() %>%
-#'           alignment("center")
+#'           text("center")
 #'       })
 #'     ) %>%
 #'       display("flex") %>%

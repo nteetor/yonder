@@ -62,7 +62,7 @@ if (interactive()) {
           groupInput(
             id = "text",
             right = buttonInput("clear", icon("times")) \%>\%
-              background("red", -1)
+              background("red")
           )
         ),
         col(
@@ -134,7 +134,7 @@ if (interactive()) {
           groupInput(
             id = "text",
             right = buttonInput("clear", icon("times")) \%>\%
-              background("red", -1)
+              background("red")
           )
         ),
         col(

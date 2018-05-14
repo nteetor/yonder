@@ -82,7 +82,7 @@ textualInput <- function(id, value, placeholder, readonly, help, type,
 #'           passwordInput(id = "pass"),
 #'           h6("Number input:"),
 #'           numberInput(id = "num") %>%
-#'             background("lime", +1)
+#'             background("green")
 #'         ),
 #'         col(
 #'           verbatimTextOutput("values")

@@ -230,7 +230,7 @@ linkInput <- function(id, text, ...) {
 #'             id = "bg1",
 #'             labels = c("Button 1", "Button 2", "Button 3")
 #'           ) %>%
-#'             background("blue", -2) %>%
+#'             background("blue") %>%
 #'             margins(3)
 #'         ),
 #'         col(
@@ -238,7 +238,7 @@ linkInput <- function(id, text, ...) {
 #'             id = "bg2",
 #'             labels = c("Groupee 1", "Groupee 2", "Groupee 3")
 #'           ) %>%
-#'             background("yellow", +1) %>%
+#'             background("yellow") %>%
 #'             margins(3)
 #'         )
 #'       )

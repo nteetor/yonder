@@ -33,15 +33,15 @@ tags$div() \%>\%
 }
 \seealso{
 Other utilities: \code{\link{affix}},
-  \code{\link{alignment}}, \code{\link{background}},
+  \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{padding}},
-  \code{\link{rounded}}
+  \code{\link{rounded}}, \code{\link{text}}
 
 Other utilities: \code{\link{affix}},
-  \code{\link{alignment}}, \code{\link{background}},
+  \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{padding}},
-  \code{\link{rounded}}
+  \code{\link{rounded}}, \code{\link{text}}
 }
 \concept{utilities}

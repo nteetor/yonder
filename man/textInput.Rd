@@ -87,7 +87,7 @@ if (interactive()) {
           passwordInput(id = "pass"),
           h6("Number input:"),
           numberInput(id = "num") \%>\%
-            background("lime", +1)
+            background("green")
         ),
         col(
           verbatimTextOutput("values")
