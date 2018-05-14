@@ -53,6 +53,7 @@ tabTabs(
   values = c("home", "about", "blog")
 )
 
+
 tabContent(
   tabs = "myTabs",
   tabPane(
@@ -64,6 +65,7 @@ tabContent(
     tags$p("Magna Aenean Mattis Ultricies Ridiculus")
   )
 )
+
 
 if (interactive()) {
   shinyApp(
@@ -100,6 +102,7 @@ if (interactive()) {
     }
   )
 }
+
 
 if (interactive()) {
   shinyApp(

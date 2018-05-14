@@ -53,6 +53,7 @@ values from its active (selected) list group items. List group items are
 selected or unselected by clicking on them.
 }
 \examples{
+
 if (interactive()) {
   shinyApp(
     ui = container(
@@ -103,6 +104,7 @@ if (interactive()) {
   )
 }
 
+
 lessons <- list(
   stars = c(
     "The stars and moon are far too bright",
@@ -118,40 +120,42 @@ lessons <- list(
   )
 )
 
-shinyApp(
-  ui = container(
-    row(
-      col(
-        class = "ml-auto",
-        default = 3,
-        listGroupThruput(
-          id = "lesson",
-          multiple = FALSE,
-          listGroupItem(
-            value = "stars",
-            h5("Stars"),
-            lessons[["stars"]][1]
-          ),
-          listGroupItem(
-            value = "joy",
-            h5("Joy"),
-            lessons[["joy"]][1]
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      row(
+        col(
+          class = "ml-auto",
+          default = 3,
+          listGroupThruput(
+            id = "lesson",
+            multiple = FALSE,
+            listGroupItem(
+              value = "stars",
+              h5("Stars"),
+              lessons[["stars"]][1]
+            ),
+            listGroupItem(
+              value = "joy",
+              h5("Joy"),
+              lessons[["joy"]][1]
+            )
           )
+        ),
+        col(
+          class = "mr-auto",
+          htmlOutput("text")
         )
-      ),
-      col(
-        class = "mr-auto",
-        htmlOutput("text")
       )
-    )
-  ),
-  server = function(input, output) {
-    output$text <- renderText({
-      req(input$lesson)
-      HTML(paste(lessons[[input$lesson]], collapse = "</br>"))
-    })
-  }
-)
+    ),
+    server = function(input, output) {
+      output$text <- renderText({
+        req(input$lesson)
+        HTML(paste(lessons[[input$lesson]], collapse = "</br>"))
+      })
+    }
+  )
+}
 
 }
 \seealso{

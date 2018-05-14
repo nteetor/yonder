@@ -6,19 +6,19 @@
 @import 'abstracts/functions';
 @import 'abstracts/mixins';
 
-// @import 'vendors/bootstrap';
 @import 'vendors/feather';
 @import 'vendors/font-awesome';
 
+@import 'components/alert';
 @import 'components/checkbox';
 @import 'components/datetime';
 @import 'components/dropdown';
+@import 'components/file';
+@import 'components/nav';
 @import 'components/progress';
 @import 'components/range';
 @import 'components/stream';
-@import 'components/alert';
 @import 'components/table';
-@import 'components/file';
 
 @import 'base/text';
 @import 'base/typography';

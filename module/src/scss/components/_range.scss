@@ -1,7 +1,5 @@
 // range
 
-$radius: 0.25rem;
-
 .dull-range-input {
   background-color: initial !important;
 
@@ -36,7 +34,7 @@ $radius: 0.25rem;
   .irs-to,
   .irs-single,
   .irs-slider {
-    border-radius: $radius;
+    border-radius: $range-border-radius;
   }
 
   .irs-bar,
@@ -76,15 +74,15 @@ $radius: 0.25rem;
   }
 
   .irs-line-left {
-    border-radius: $radius 0 0 $radius;
+    border-radius: $range-border-radius 0 0 $range-border-radius;
   }
 
   .irs-line-right {
-    border-radius: 0 $radius $radius 0;
+    border-radius: 0 $range-border-radius $range-border-radius 0;
   }
 
   .irs-bar-edge {
-    border-radius: $radius 0 0 $radius;
+    border-radius: $range-border-radius 0 0 $range-border-radius;
   }
 
   .irs-min,

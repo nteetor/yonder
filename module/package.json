@@ -36,9 +36,10 @@
   },
   "scripts": {
     "test": "echo \"Sorry, nothing here\"",
-    "js-lint": "eslint src/js/",
-    "js-update": "npm run js-compile && cp lib/js/dull.min.js ../inst/www/dull/js/dull.min.js",
-    "js-compile": "cat src/js/**.js | babel --compact --minified --no-comments > lib/js/dull.min.js",
+    "js-lint": "eslint src/js/**/*.js",
+    "js-compile": "babel --compact --minified --no-comments --out-file lib/js/dull.min.js src/js/**/*.js",
+    "js-vend": "cp lib/js/dull.min.js ../inst/www/dull/js/",
+    "js": "npm-run-all js-lint js-compile js-vend",
     "css-lint": "stylelint --syntax scss src/scss/**/*.scss",
     "css-compile": "node-sass --quiet --output-style expanded src/scss/dull.scss lib/css/dull.css",
     "css-prefix": "postcss --config build/postcss.config.js --replace lib/css/dull.css",

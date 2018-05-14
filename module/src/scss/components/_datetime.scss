@@ -21,8 +21,8 @@
   -ms-touch-action: manipulation;
   touch-action: manipulation;
   background: $white;
-  -webkit-box-shadow: 1px 0 0 $gray-200, -1px 0 0 $gray-200, 0 1px 0 $gray-200, 0 -1px 0 $gray-200, 0 3px 13px rgba($black, 0.08);
-  box-shadow: 1px 0 0 $gray-200, -1px 0 0 $gray-200, 0 1px 0 $gray-200, 0 -1px 0 $gray-200, 0 3px 13px rgba($black, 0.08);
+  -webkit-box-shadow: 1px 0 0 $gray-200, -1px 0 0 $gray-200, 0 1px 0 $gray-200, 0 -1px 0 $gray-200, 0 3px 13px rgba($black, .08);
+  box-shadow: 1px 0 0 $gray-200, -1px 0 0 $gray-200, 0 1px 0 $gray-200, 0 -1px 0 $gray-200, 0 3px 13px rgba($black, .08);
 
   &.open,
   &.inline {
@@ -38,8 +38,8 @@
   }
 
   &.animate.open {
-    -webkit-animation: fpFadeInDown 300ms cubic-bezier(0.23, 1, 0.32, 1);
-    animation: fpFadeInDown 300ms cubic-bezier(0.23, 1, 0.32, 1);
+    -webkit-animation: fpFadeInDown 300ms cubic-bezier(.23, 1, .32, 1);
+    animation: fpFadeInDown 300ms cubic-bezier(.23, 1, .32, 1);
   }
 
   &.inline {
@@ -215,8 +215,8 @@
       width: 14px;
 
       path {
-        -webkit-transition: fill 0.1s;
-        transition: fill 0.1s;
+        -webkit-transition: fill .1s;
+        transition: fill .1s;
         fill: inherit;
       }
     }
@@ -256,7 +256,7 @@
       line-height: 50%;
       opacity: 0;
       cursor: pointer;
-      border: 1px solid rgba($gray-800, 0.05);
+      border: 1px solid rgba($gray-800, .05);
       -webkit-box-sizing: border-box;
       box-sizing: border-box;
 
@@ -265,16 +265,16 @@
         height: auto;
 
         path {
-          fill: rgba($gray-800, 0.5);
+          fill: rgba($gray-800, .5);
         }
       }
 
       &:hover {
-        background: rgba($black, 0.1);
+        background: rgba($black, .1);
       }
 
       &:active {
-        background: rgba($black, 0.2);
+        background: rgba($black, .2);
       }
 
       &::after {
@@ -292,7 +292,7 @@
       &.arrowUp::after {
         border-left: 4px solid transparent;
         border-right: 4px solid transparent;
-        border-bottom: 4px solid rgba($gray-800, 0.6);
+        border-bottom: 4px solid rgba($gray-800, .6);
       }
 
       &.arrowDown {
@@ -301,13 +301,13 @@
         &::after {
           border-left: 4px solid transparent;
           border-right: 4px solid transparent;
-          border-top: 4px solid rgba($gray-800, 0.6);
+          border-top: 4px solid rgba($gray-800, .6);
         }
       }
     }
 
     &:hover {
-      background: rgba($black, 0.05);
+      background: rgba($black, .05);
 
       span {
         opacity: 1;
@@ -334,29 +334,29 @@
     &.slideLeft {
       -webkit-transform: translate3d(-100%, 0, 0);
       transform: translate3d(-100%, 0, 0);
-      -webkit-animation: fpFadeOut 400ms ease, fpSlideLeft 400ms cubic-bezier(0.23, 1, 0.32, 1);
-      animation: fpFadeOut 400ms ease, fpSlideLeft 400ms cubic-bezier(0.23, 1, 0.32, 1);
+      -webkit-animation: fpFadeOut 400ms ease, fpSlideLeft 400ms cubic-bezier(.23, 1, .32, 1);
+      animation: fpFadeOut 400ms ease, fpSlideLeft 400ms cubic-bezier(.23, 1, .32, 1);
     }
 
     &.slideLeftNew {
       -webkit-transform: translate3d(100%, 0, 0);
       transform: translate3d(100%, 0, 0);
-      -webkit-animation: fpFadeIn 400ms ease, fpSlideLeftNew 400ms cubic-bezier(0.23, 1, 0.32, 1);
-      animation: fpFadeIn 400ms ease, fpSlideLeftNew 400ms cubic-bezier(0.23, 1, 0.32, 1);
+      -webkit-animation: fpFadeIn 400ms ease, fpSlideLeftNew 400ms cubic-bezier(.23, 1, .32, 1);
+      animation: fpFadeIn 400ms ease, fpSlideLeftNew 400ms cubic-bezier(.23, 1, .32, 1);
     }
 
     &.slideRight {
       -webkit-transform: translate3d(100%, 0, 0);
       transform: translate3d(100%, 0, 0);
-      -webkit-animation: fpFadeOut 400ms ease, fpSlideRight 400ms cubic-bezier(0.23, 1, 0.32, 1);
-      animation: fpFadeOut 400ms ease, fpSlideRight 400ms cubic-bezier(0.23, 1, 0.32, 1);
+      -webkit-animation: fpFadeOut 400ms ease, fpSlideRight 400ms cubic-bezier(.23, 1, .32, 1);
+      animation: fpFadeOut 400ms ease, fpSlideRight 400ms cubic-bezier(.23, 1, .32, 1);
     }
 
     &.slideRightNew {
       -webkit-transform: translate3d(0, 0, 0);
       transform: translate3d(0, 0, 0);
-      -webkit-animation: fpFadeIn 400ms ease, fpSlideRightNew 400ms cubic-bezier(0.23, 1, 0.32, 1);
-      animation: fpFadeIn 400ms ease, fpSlideRightNew 400ms cubic-bezier(0.23, 1, 0.32, 1);
+      -webkit-animation: fpFadeIn 400ms ease, fpSlideRightNew 400ms cubic-bezier(.23, 1, .32, 1);
+      animation: fpFadeIn 400ms ease, fpSlideRightNew 400ms cubic-bezier(.23, 1, .32, 1);
     }
 
     span {
@@ -365,11 +365,11 @@
         font-weight: 700;
         color: inherit;
         display: inline-block;
-        margin-left: 0.5ch;
+        margin-left: .5ch;
         padding: 0;
 
         &:hover {
-          background: rgba($black, 0.05);
+          background: rgba($black, .05);
         }
       }
     }
@@ -397,7 +397,7 @@
         box-sizing: border-box;
         color: inherit;
         cursor: text;
-        padding: 0 0 0 0.5ch;
+        padding: 0 0 0 .5ch;
         margin: 0;
         display: inline-block;
         font-size: inherit;
@@ -416,7 +416,7 @@
         &[disabled],
         &[disabled]:hover {
           font-size: 100%;
-          color: rgba(60, 63, 64, 0.5);
+          color: rgba(60, 63, 64, .5);
           background: transparent;
           pointer-events: none;
         }
@@ -444,7 +444,7 @@
     cursor: default;
     font-size: 90%;
     background: transparent;
-    color: rgba($black, 0.54);
+    color: rgba($black, .54);
     line-height: 1;
     margin: 0;
     text-align: center;
@@ -502,8 +502,8 @@
   }
 
   .flatpickr-calendar.animate .dayContainer.slideLeft {
-    -webkit-animation: fpFadeOut 400ms cubic-bezier(0.23, 1, 0.32, 1), fpSlideLeft 400ms cubic-bezier(0.23, 1, 0.32, 1);
-    animation: fpFadeOut 400ms cubic-bezier(0.23, 1, 0.32, 1), fpSlideLeft 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    -webkit-animation: fpFadeOut 400ms cubic-bezier(.23, 1, .32, 1), fpSlideLeft 400ms cubic-bezier(.23, 1, .32, 1);
+    animation: fpFadeOut 400ms cubic-bezier(.23, 1, .32, 1), fpSlideLeft 400ms cubic-bezier(.23, 1, .32, 1);
   }
 
   .flatpickr-calendar.animate .dayContainer.slideLeft,
@@ -513,20 +513,20 @@
   }
 
   .flatpickr-calendar.animate .dayContainer.slideLeftNew {
-    -webkit-animation: fpFadeIn 400ms cubic-bezier(0.23, 1, 0.32, 1), fpSlideLeft 400ms cubic-bezier(0.23, 1, 0.32, 1);
-    animation: fpFadeIn 400ms cubic-bezier(0.23, 1, 0.32, 1), fpSlideLeft 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    -webkit-animation: fpFadeIn 400ms cubic-bezier(.23, 1, .32, 1), fpSlideLeft 400ms cubic-bezier(.23, 1, .32, 1);
+    animation: fpFadeIn 400ms cubic-bezier(.23, 1, .32, 1), fpSlideLeft 400ms cubic-bezier(.23, 1, .32, 1);
   }
 
   .flatpickr-calendar.animate .dayContainer.slideRight {
-    -webkit-animation: fpFadeOut 400ms cubic-bezier(0.23, 1, 0.32, 1), fpSlideRight 400ms cubic-bezier(0.23, 1, 0.32, 1);
-    animation: fpFadeOut 400ms cubic-bezier(0.23, 1, 0.32, 1), fpSlideRight 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    -webkit-animation: fpFadeOut 400ms cubic-bezier(.23, 1, .32, 1), fpSlideRight 400ms cubic-bezier(.23, 1, .32, 1);
+    animation: fpFadeOut 400ms cubic-bezier(.23, 1, .32, 1), fpSlideRight 400ms cubic-bezier(.23, 1, .32, 1);
     -webkit-transform: translate3d(100%, 0, 0);
     transform: translate3d(100%, 0, 0);
   }
 
   .flatpickr-calendar.animate .dayContainer.slideRightNew {
-    -webkit-animation: fpFadeIn 400ms cubic-bezier(0.23, 1, 0.32, 1), fpSlideRightNew 400ms cubic-bezier(0.23, 1, 0.32, 1);
-    animation: fpFadeIn 400ms cubic-bezier(0.23, 1, 0.32, 1), fpSlideRightNew 400ms cubic-bezier(0.23, 1, 0.32, 1);
+    -webkit-animation: fpFadeIn 400ms cubic-bezier(.23, 1, .32, 1), fpSlideRightNew 400ms cubic-bezier(.23, 1, .32, 1);
+    animation: fpFadeIn 400ms cubic-bezier(.23, 1, .32, 1), fpSlideRightNew 400ms cubic-bezier(.23, 1, .32, 1);
   }
 
   .flatpickr-day {
@@ -647,7 +647,7 @@
   .flatpickr-day.notAllowed,
   .flatpickr-day.notAllowed.prevMonthDay,
   .flatpickr-day.notAllowed.nextMonthDay {
-    color: rgba($gray-800, 0.3);
+    color: rgba($gray-800, .3);
     background: transparent;
     border-color: $gray-300;
     cursor: default;
@@ -656,7 +656,7 @@
   .flatpickr-day.disabled,
   .flatpickr-day.disabled:hover {
     cursor: not-allowed;
-    color: rgba($gray-800, 0.1);
+    color: rgba($gray-800, .1);
   }
 
   .flatpickr-day.week.selected {
@@ -691,7 +691,7 @@
     display: block;
     width: 100%;
     max-width: none;
-    color: rgba(64, 72, 72, 0.3);
+    color: rgba(64, 72, 72, .3);
     background: transparent;
     cursor: default;
     border: none;

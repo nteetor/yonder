@@ -19,6 +19,7 @@
         "ignoreAtRules": [ "if", "else" ]
       }
     ],
-    "no-descending-specificity": null
+    "no-descending-specificity": null,
+    "number-leading-zero": "never"
   }
 }

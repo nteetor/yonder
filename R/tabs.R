@@ -40,6 +40,7 @@
 #'   values = c("home", "about", "blog")
 #' )
 #'
+#'
 #' tabContent(
 #'   tabs = "myTabs",
 #'   tabPane(
@@ -51,6 +52,7 @@
 #'     tags$p("Magna Aenean Mattis Ultricies Ridiculus")
 #'   )
 #' )
+#'
 #'
 #' if (interactive()) {
 #'   shinyApp(
@@ -87,6 +89,7 @@
 #'     }
 #'   )
 #' }
+#'
 #'
 #' if (interactive()) {
 #'   shinyApp(
