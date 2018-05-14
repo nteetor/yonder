@@ -29,6 +29,12 @@ value is \code{NULL}. When checked the checkbox input reactive value is \code{va
 }
 \examples{
 
+checkboxInput(
+  id = "pellentesque",
+  choice = "Cras placerat accumsan nulla"
+)
+
+
 if (interactive()) {
   shinyApp(
     ui = container(

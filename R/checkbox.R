@@ -23,6 +23,12 @@
 #' @export
 #' @examples
 #'
+#' checkboxInput(
+#'   id = "pellentesque",
+#'   choice = "Cras placerat accumsan nulla"
+#' )
+#'
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
