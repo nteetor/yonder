@@ -3,14 +3,11 @@
 \name{listGroupThruput}
 \alias{listGroupThruput}
 \alias{listGroupItem}
-\alias{renderListGroup}
 \title{List group thruputs}
 \usage{
 listGroupThruput(id, ..., multiple = TRUE, flush = FALSE)
 
 listGroupItem(..., value = NULL, selected = FALSE, disabled = FALSE)
-
-renderListGroup(..., env = parent.frame())
 }
 \arguments{
 \item{id}{A character vector specifying the reactive id of the list group
@@ -61,7 +58,8 @@ if (interactive()) {
         col(
           default = 3,
           listGroupThruput(
-            id = "thrulist"
+            id = "thrulist",
+            componentOutput("items")
           )
         ),
         col(
@@ -79,7 +77,7 @@ if (interactive()) {
       )
     ),
     server = function(input, output) {
-      output$thrulist <- renderListGroup(
+      output$items <- renderComponent(
         listGroupItem(
           "Cras justo odio",
           badgeOutput("badge1", 0) \%>\%
