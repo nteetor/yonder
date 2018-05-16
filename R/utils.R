@@ -19,7 +19,7 @@ is_strictly_list <- function(x) {
   length(class(x)) == 1 && class(x) == "list"
 }
 
-to_sentence <- function(x, con = "or") {
+conjoin <- function(x, con = "or") {
   if (length(x) == 1) {
     return(x)
   }
@@ -165,7 +165,7 @@ responsives <- function(prefix, values, possible) {
 
         stop(
           "invalid `", call, "` argument, `", point, "` must be one of ",
-          to_sentence(possible),
+          conjoin(possible),
           call. = FALSE
         )
       }
