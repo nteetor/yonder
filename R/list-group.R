@@ -1,14 +1,3 @@
-componentOutput <- function(id) {
-  tags$div(class = "dull-component-output", id = id)
-}
-
-renderComponent <- function(..., env = parent.frame()) {
-  installExprFunction(list(...), "func", env, FALSE)
-  shiny::createRenderFunction(func, function(data, session, name, ...) {
-    HTML(paste(vapply(data, as.character, character(1)), collapse = "\n"))
-  })
-}
-
 #' List group thruputs
 #'
 #' A way of handling and outlining content as a list. List groups function
@@ -187,4 +176,18 @@ listGroupItem <- function(..., value = NULL, selected = FALSE,
     `data-value` = value,
     ...
   )
+}
+
+#' @rdname listGroupThruput
+#' @export
+renderListGroup <- function(...,  env = parent.frame()) {
+  itemsFun <- shiny::exprToFunction(list(...), env, FALSE)
+
+  function() {
+    items <- lapply(itemsFun(), function(i) HTML(as.character(i)))
+
+    list(
+      items = items
+    )
+  }
 }
