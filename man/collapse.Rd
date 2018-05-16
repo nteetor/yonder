@@ -7,78 +7,78 @@
 \alias{toggleCollapse}
 \title{Collapsible sections}
 \usage{
-collapse(button, content, ...)
+collapse(tag, id, ...)
 
-showCollapse(id, session = getDefaultReactiveDomain())
+showCollapse(id)
 
-hideCollapse(id, session = getDefaultReactiveDomain())
+hideCollapse(id)
 
-toggleCollapse(id, session = getDefaultReactiveDomain())
+toggleCollapse(id)
 }
 \arguments{
-\item{button}{A button input, when clicked the button will hide or show the
-collapsable content.}
+\item{tag}{A tag element.}
 
-\item{content}{A tag element speicfying the content to collapse.}
+\item{id}{A character string specifying an HTML id. Pass this id to the
+\code{*Collapse()} functions to hide or show the collapsible element.}
 
-\item{...}{Additional named arguments passed as attributes to the parent
-element.}
-
-\item{id}{A character string specifying the id of a collapse section.}
-
-\item{session}{A \code{session} object passed to the shiny server function,
-defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
+\item{...}{Additional named arguments passed as HTML attributes to the
+collapsible div.}
 }
 \description{
-\code{collapse} allows content to be hidden and toggled into a shown state.
-The collapsed content is toggled by a button or may be toggled between hidden
-and shown states using \code{toggleCollapse}. \code{showCollapse} and \code{hideCollapse}
-are alternatives to \code{toggleCollapse} to change the state of collapsed content
-to shown or hidden, respectively.
+The \code{collapse()} function allows you to make a tag element collapsible. The
+state of the element, shown or hidden, is toggled using \code{hideCollapse()},
+\code{showCollapse()}, and \code{toggleCollapse()}.
 }
 \examples{
+
 if (interactive()) {
   shinyApp(
     ui = container(
-      row(
-        col(
-          buttonInput(
-            id = "trigger",
-            label = "The Time Machine"
-          ) \%>\%
-            background("purple") \%>\%
-            margins(2) \%>\%
-            collapse(
-              tags$div(
-                class  = "card card-block",
-                "\\"The Time Traveller (for so it will be convenient to speak
-                of him) was expounding a recondite matter to us. His grey eyes
-                shone and twinkled, and his usually pale face was flushed and
-                animated. The fire burned brightly, and the soft radiance of
-                the incandescent lights in the lilies of silver caught the
-                bubbles that flashed and passed in our glasses.\\""
-              )
-            )
-        ),
-        col(
-          buttonInput(id = "toggle", "Toggle"),
-          buttonInput(id = "hide", "Hide"),
-          buttonInput(id = "show", "Show")
-        )
-      )
+      fluid = FALSE,
+      buttonInput("toggle", "Toggle the card") \%>\%
+        margins(3),
+      card(
+        "\\"The Time Traveller (for so it will be convenient to speak
+         of him) was expounding a recondite matter to us. His grey eyes
+         shone and twinkled, and his usually pale face was flushed and
+         animated. The fire burned brightly, and the soft radiance of
+         the incandescent lights in the lilies of silver caught the
+         bubbles that flashed and passed in our glasses.\\""
+      ) \%>\%
+        background("grey") \%>\%
+        collapse("mycollapse")
     ),
     server = function(input, output) {
       observeEvent(input$toggle, {
-        toggleCollapse("trigger")
+        toggleCollapse("mycollapse")
       })
+    }
+  )
+}
 
-      observeEvent(input$hide, {
-        hideCollapse("trigger")
-      })
 
-      observeEvent(input$show, {
-        showCollapse("trigger")
-      })
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      fluid = FALSE,
+      buttonInput(
+        id = "toggle",
+        label = "Client-side toggle",
+        `data-target` = "#mycollapse",
+        `data-toggle` = "collapse"
+      ) \%>\%
+        margins(3),
+      card(
+        "If you do not need server-side control with the `*Collapse()`
+         functions consider setting up a client-side collapse with
+         `data-target` and `data-toggle='collapse'`, see
+         https://getbootstrap.com/docs/4.1/components/collapse/
+         for more about these attributes"
+      ) \%>\%
+        collapse("mycollapse")
+    ),
+    server = function(input, output) {
+
     }
   )
 }

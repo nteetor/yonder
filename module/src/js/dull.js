@@ -18,17 +18,48 @@ $(document).on("shiny:connected", function() {
   $(".dull-submit[data-type=\"submit\"]").attr("type", "submit");
 });
 
-$(function() {
+$(() => {
+  let collapsibles = document.querySelectorAll("[data-collapse-id]");
+
+  if (collapsibles.length) {
+    $(collapsibles).wrap(function() {
+      let data = this.dataset;
+      let attrs = {};
+
+      for (let key of Object.keys(data)) {
+        if (key.match(/^collapse/)) {
+          let newkey = key.replace(/([A-Z])/g, "-$1")
+              .toLowerCase()
+              .replace(/^collapse-/, "");
+
+          attrs[newkey] = data[key];
+        }
+      }
+
+      attrs["class"] = `${ attrs["class"] ? attrs["class"] + " " : ""}collapse`;
+
+      return $("<div>", attrs);
+    });
+
+    $(document.querySelectorAll(".collapse")).collapse();
+  }
+
   Shiny.addCustomMessageHandler("dull:collapse", function(msg) {
-  	var $el = $("#" + msg.id);
+    if (!msg.type || !msg.type.match(/^(show|hide|toggle)$/)) {
+      return;
+    }
 
-  	if ($el.length === 0 || !msg.action) {
-  	    return false;
-  	}
+    let collapsible = document.getElementById(`${ msg.data.id }`);
 
-  	$el.collapse(msg.action);
+    if (!collapsible || !collapsible.classList.contains("collapse")) {
+      return;
+    }
+
+    $(collapsible).collapse(msg.type);
   });
+});
 
+$(() => {
   Shiny.addCustomMessageHandler("dull:download", function(msg) {
     if (!(msg.filename && msg.token && msg.key)) {
       throw "invalid download event";

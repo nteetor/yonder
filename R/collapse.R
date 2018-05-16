@@ -1,114 +1,111 @@
 #' Collapsible sections
 #'
-#' `collapse` allows content to be hidden and toggled into a shown state.
-#' The collapsed content is toggled by a button or may be toggled between hidden
-#' and shown states using `toggleCollapse`. `showCollapse` and `hideCollapse`
-#' are alternatives to `toggleCollapse` to change the state of collapsed content
-#' to shown or hidden, respectively.
+#' The `collapse()` function allows you to make a tag element collapsible. The
+#' state of the element, shown or hidden, is toggled using `hideCollapse()`,
+#' `showCollapse()`, and `toggleCollapse()`.
 #'
-#' @param button A button input, when clicked the button will hide or show the
-#'   collapsable content.
+#' @param tag A tag element.
 #'
-#' @param content A tag element speicfying the content to collapse.
+#' @param id A character string specifying an HTML id. Pass this id to the
+#'   `*Collapse()` functions to hide or show the collapsible element.
 #'
-#' @param ... Additional named arguments passed as attributes to the parent
-#'   element.
-#'
-#' @param id A character string specifying the id of a collapse section.
-#'
-#' @param session A `session` object passed to the shiny server function,
-#'   defaults to [`getDefaultReactiveDomain()`].
+#' @param ... Additional named arguments passed as HTML attributes to the
+#'   collapsible div.
 #'
 #' @export
 #' @examples
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       row(
-#'         col(
-#'           buttonInput(
-#'             id = "trigger",
-#'             label = "The Time Machine"
-#'           ) %>%
-#'             background("purple") %>%
-#'             margins(2) %>%
-#'             collapse(
-#'               tags$div(
-#'                 class  = "card card-block",
-#'                 "\"The Time Traveller (for so it will be convenient to speak
-#'                 of him) was expounding a recondite matter to us. His grey eyes
-#'                 shone and twinkled, and his usually pale face was flushed and
-#'                 animated. The fire burned brightly, and the soft radiance of
-#'                 the incandescent lights in the lilies of silver caught the
-#'                 bubbles that flashed and passed in our glasses.\""
-#'               )
-#'             )
-#'         ),
-#'         col(
-#'           buttonInput(id = "toggle", "Toggle"),
-#'           buttonInput(id = "hide", "Hide"),
-#'           buttonInput(id = "show", "Show")
-#'         )
-#'       )
+#'       fluid = FALSE,
+#'       buttonInput("toggle", "Toggle the card") %>%
+#'         margins(3),
+#'       card(
+#'         "\"The Time Traveller (for so it will be convenient to speak
+#'          of him) was expounding a recondite matter to us. His grey eyes
+#'          shone and twinkled, and his usually pale face was flushed and
+#'          animated. The fire burned brightly, and the soft radiance of
+#'          the incandescent lights in the lilies of silver caught the
+#'          bubbles that flashed and passed in our glasses.\""
+#'       ) %>%
+#'         background("grey") %>%
+#'         collapse("mycollapse")
 #'     ),
 #'     server = function(input, output) {
 #'       observeEvent(input$toggle, {
-#'         toggleCollapse("trigger")
-#'       })
-#'
-#'       observeEvent(input$hide, {
-#'         hideCollapse("trigger")
-#'       })
-#'
-#'       observeEvent(input$show, {
-#'         showCollapse("trigger")
+#'         toggleCollapse("mycollapse")
 #'       })
 #'     }
 #'   )
 #' }
 #'
-collapse <- function(button, content, ...) {
-  id <- ID("collapse")
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       fluid = FALSE,
+#'       buttonInput(
+#'         id = "toggle",
+#'         label = "Client-side toggle",
+#'         `data-target` = "#mycollapse",
+#'         `data-toggle` = "collapse"
+#'       ) %>%
+#'         margins(3),
+#'       card(
+#'         "If you do not need server-side control with the `*Collapse()`
+#'          functions consider setting up a client-side collapse with
+#'          `data-target` and `data-toggle='collapse'`, see
+#'          https://getbootstrap.com/docs/4.1/components/collapse/
+#'          for more about these attributes"
+#'       ) %>%
+#'         collapse("mycollapse")
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+collapse <- function(tag, id, ...) {
+  args <- list(...)
+  attrs <- attribs(args)
+  elems <- elements(args)
 
-  tags$div(
-    `aria-expanded` = "false",
-    tagAppendAttributes(
-      button,
-      `data-toggle` = "collapse",
-      `data-target` = paste0("#", id),
-      `aria-controls` = id
-    ),
-    tags$div(
-      class = "collapse",
-      id = id,
-      content
-    ),
-    ...,
-    include("core")
-  )
+  if (length(attrs)) {
+    names(attrs) <- paste0("data-collapse-", names(attrs))
+  }
+
+  attrs$`data-collapse-id` <- id
+
+  tag <- shiny::tagAppendChildren(tag, list = elems)
+  tag <- shiny::tagAppendChild(tag, include("core"))
+  tag <- tagConcatAttributes(tag, attrs)
+
+  tag
 }
 
 #' @rdname collapse
 #' @export
-showCollapse <- function(id, session = getDefaultReactiveDomain()) {
-  updateCollapse(id, "show", session)
+showCollapse <- function(id) {
+  updateCollapse(id, "show")
 }
 
 #' @rdname collapse
 #' @export
-hideCollapse <- function(id, session = getDefaultReactiveDomain()) {
-  updateCollapse(id, "hide", session)
+hideCollapse <- function(id) {
+  updateCollapse(id, "hide")
 }
 
 #' @rdname collapse
 #' @export
-toggleCollapse <- function(id, session = getDefaultReactiveDomain()) {
-  updateCollapse(id, "toggle", session)
+toggleCollapse <- function(id) {
+  updateCollapse(id, "toggle")
 }
 
 # internal
-updateCollapse <- function(id, action, session) {
-  if (!re(action, "show|hide|toggle", len0 = FALSE)) {
+updateCollapse <- function(id, type) {
+  if (!re(type, "show|hide|toggle", len0 = FALSE)) {
     stop(
       'invalid `updateCollapse` argument, `action` must be one "show", ',
       '"hide", or "toggle"',
@@ -116,11 +113,20 @@ updateCollapse <- function(id, action, session) {
     )
   }
 
-  session$sendCustomMessage(
-    "dull:collapse",
-    list(
-      id = id,
-      action = action
+  domain <- getDefaultReactiveDomain()
+
+  if (is.null(domain)) {
+    stop(
+      "invalid call to `", sys.call(-1)[[1]], "()`, must be called within a ",
+      "reactive context",
+      call. = FALSE
     )
-  )
+  }
+
+  domain$sendCustomMessage("dull:collapse", list(
+    type = type,
+    data = list(
+      id = id
+    )
+  ))
 }
