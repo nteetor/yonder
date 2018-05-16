@@ -3,7 +3,7 @@
 \name{direction}
 \alias{direction}
 \alias{reverse}
-\title{Flex direction, rows and columns}
+\title{Flex layout direction}
 \usage{
 direction(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   xl = NULL)
@@ -14,35 +14,78 @@ reverse(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 \arguments{
 \item{tag}{A tag element.}
 
-\item{default}{One of \code{"row"} or \code{"column"} specifying the default direction
+\item{default}{One of \code{"row"} or \code{"column"} specifying the default placement
 of an element's flex items.}
 
-\item{sm}{Like \code{default}, but the direction is applied once the viewport is
+\item{sm}{Like \code{default}, but the placement is applied once the viewport is
 576 pixels wide, think phone in landscape mode.}
 
-\item{md}{Like \code{default}, but the direction is applied once the viewport is
+\item{md}{Like \code{default}, but the placement is applied once the viewport is
 768 pixels wide, think tablets.}
 
-\item{lg}{Like \code{default}, but the direction is applied once the viewport is
+\item{lg}{Like \code{default}, but the placement is applied once the viewport is
 992 pixels wide, think desktop.}
 
-\item{xl}{Like \code{default}, but the direction is applied once the viewport is
+\item{xl}{Like \code{default}, but the placement is applied once the viewport is
 1200 pixels wide, think large desktop.}
 }
 \description{
-Change the direction of a flex boxes items. \code{reverse} is similar to
-\code{direction}, but for \code{"row"} flex items start from the right of the parent
-flex box and for \code{"column"} flex items start from the bottom of the parent
-flex box.
+Use the \code{direction()} and \code{reverse()} utilities to specify how a flex
+element's children are placed. By default, browsers will place items
+horizontally. Changing the flex direction changes how \code{\link[=justify]{justify()}} and .
 }
+\section{Rows}{
+
+
+Because horizontal placement the browser default you may not often use
+\code{direction(.., "row")}.  The responsive arguments are potentially more
+useful. Take the following example. On small screens the flex items are
+placed vertically and can occupy the full width of the device. On medium
+screens and up the items are placed horizontally once again.\preformatted{div(
+  div("A flex item") \%>\%
+    padding(3) \%>\%
+    border(),
+  div("A flex item") \%>\%
+    padding(3) \%>\%
+    border(),
+  div("A flex item") \%>\%
+    padding(3) \%>\%
+    border()
+) \%>\%
+  display("flex") \%>\%
+  direction("column", md = "row") \%>\%
+  background("grey") \%>\%
+  border()
+}
+}
+
+\section{Columns}{
+
+
+Here is an example of a flex element with its children placed into columns.\preformatted{div(
+  div("A flex item") \%>\%
+    padding(3) \%>\%
+    border(),
+   div("A flex item") \%>\%
+    padding(3) \%>\%
+     border(),
+    div("A flex item") \%>\%
+    padding(3) \%>\%
+      border()
+) \%>\%
+  display("flex") \%>\%
+  direction("column")
+}
+}
+
 \examples{
 
 }
 \seealso{
-Other flex: \code{\link{content}}, \code{\link{items}},
+Other flex: \code{\link{align}}, \code{\link{justify}},
   \code{\link{wrap}}
 
-Other flex: \code{\link{content}}, \code{\link{items}},
+Other flex: \code{\link{align}}, \code{\link{justify}},
   \code{\link{wrap}}
 }
 \concept{flex}

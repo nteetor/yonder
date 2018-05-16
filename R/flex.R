@@ -1,26 +1,71 @@
-#' Flex direction, rows and columns
+#' Flex layout direction
 #'
-#' Change the direction of a flex boxes items. `reverse` is similar to
-#' `direction`, but for `"row"` flex items start from the right of the parent
-#' flex box and for `"column"` flex items start from the bottom of the parent
-#' flex box.
+#' Use the `direction()` and `reverse()` utilities to specify how a flex
+#' element's children are placed. By default, browsers will place items
+#' horizontally. Changing the flex direction changes how [justify()] and .
 #'
 #' @param tag A tag element.
 #'
-#' @param default One of `"row"` or `"column"` specifying the default direction
+#' @param default One of `"row"` or `"column"` specifying the default placement
 #'   of an element's flex items.
 #'
-#' @param sm Like `default`, but the direction is applied once the viewport is
+#' @param sm Like `default`, but the placement is applied once the viewport is
 #'   576 pixels wide, think phone in landscape mode.
 #'
-#' @param md Like `default`, but the direction is applied once the viewport is
+#' @param md Like `default`, but the placement is applied once the viewport is
 #'   768 pixels wide, think tablets.
 #'
-#' @param lg Like `default`, but the direction is applied once the viewport is
+#' @param lg Like `default`, but the placement is applied once the viewport is
 #'   992 pixels wide, think desktop.
 #'
-#' @param xl Like `default`, but the direction is applied once the viewport is
+#' @param xl Like `default`, but the placement is applied once the viewport is
 #'   1200 pixels wide, think large desktop.
+#'
+#' @section Rows:
+#'
+#' Because horizontal placement the browser default you may not often use
+#' `direction(.., "row")`.  The responsive arguments are potentially more
+#' useful. Take the following example. On small screens the flex items are
+#' placed vertically and can occupy the full width of the device. On medium
+#' screens and up the items are placed horizontally once again.
+#'
+#' ```
+#' div(
+#'   div("A flex item") %>%
+#'     padding(3) %>%
+#'     border(),
+#'   div("A flex item") %>%
+#'     padding(3) %>%
+#'     border(),
+#'   div("A flex item") %>%
+#'     padding(3) %>%
+#'     border()
+#' ) %>%
+#'   display("flex") %>%
+#'   direction("column", md = "row") %>%
+#'   background("grey") %>%
+#'   border()
+#' ```
+#'
+#' @section Columns:
+#'
+#' Here is an example of a flex element with its children placed into columns.
+#'
+#' ```
+#' div(
+#'   div("A flex item") %>%
+#'     padding(3) %>%
+#'     border(),
+#'    div("A flex item") %>%
+#'     padding(3) %>%
+#'      border(),
+#'     div("A flex item") %>%
+#'     padding(3) %>%
+#'       border()
+#' ) %>%
+#'   display("flex") %>%
+#'   direction("column")
+#' ```
 #'
 #' @family flex
 #' @export
@@ -49,12 +94,11 @@ reverse <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   tagAddClass(tag, collate(classes))
 }
 
-#' Align flex items
+#' Flex layout main axis
 #'
-#' The `content` function adds Bootstrap classes to a tag element to change how
-#' flex item's align on the x-axis (when the flex direction is row) or on the
-#' y-axis (when the flex is direction is column). For more on flex directions
-#' see [direction].
+#' The `justify()` function allows you to control how elements or flex items
+#' inside a flex element are aligned along the main axis. For more on the main
+#' and cross axis see below.
 #'
 #' @param tag A tag element.
 #'
@@ -75,8 +119,8 @@ reverse <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #'
 #' @details
 #'
-#' The flex box mindset is no easy feat. Here is one way to think about the
-#' effects of `content`. If you would, take a look over the diagrams below.
+#' The diagrams below demonstrate how `justify()` changes the alignment of flex
+#' items.
 #'
 #' `"start"`
 #'
@@ -98,9 +142,8 @@ reverse <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #'
 #' * `| = | Item 1 | = | Item 2 | = | Item 3 | = |`
 #'
-#' With `content` each possible value relates to where the content **as a
-#' whole** is placed along the main axis. `"between"` and `"around"` prove
-#' troublesome.
+#' @section Main and cross axis:
+#'
 #'
 #' @family flex
 #' @export
@@ -110,7 +153,7 @@ reverse <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #'   display("flex") %>%
 #'   content("center")
 #'
-content <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+justify <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
                     xl = NULL) {
   args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
 
@@ -121,12 +164,12 @@ content <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   tagAddClass(tag, collate(classes))
 }
 
-#' Flex items, cross axis alignment
+#' Flex layout, cross axis alignment
 #'
-#' The `items` utility function applies Bootstrap classes to a tag element in
+#' The `items()` utility function applies Bootstrap classes to a tag element in
 #' order to change the cross axis alignment of its flex items. The element must
 #' must use a flex display. To change the display property of a tag, see
-#' [display] for more information.
+#' [display()] for more information.
 #'
 #' @param tag A tag element.
 #'
@@ -200,7 +243,7 @@ content <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' @export
 #' @examples
 #'
-items <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
+align <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
                   xl = NULL) {
   args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
 

@@ -109,7 +109,7 @@ if (interactive()) {
 
 }
 \seealso{
-Other flex: \code{\link{content}}, \code{\link{direction}},
-  \code{\link{items}}
+Other flex: \code{\link{align}}, \code{\link{direction}},
+  \code{\link{justify}}
 }
 \concept{flex}
