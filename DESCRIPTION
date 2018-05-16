@@ -17,8 +17,7 @@ Imports:
     htmltools,
     magrittr,
     jsonlite,
-    rlang,
-    stringi
+    rlang
 Suggests:
     testthat,
     knitr,
