@@ -21,7 +21,7 @@ is_strictly_list <- function(x) {
 
 conjoin <- function(x, con = "or") {
   if (length(x) == 1) {
-    return(x)
+    return(as.character(x))
   }
 
   if (length(x) == 2) {
@@ -51,7 +51,7 @@ re <- function(string, pattern, len0 = TRUE) {
     return(TRUE)
   }
 
-  grepl(pattern, paste0("^", string, "$"))
+  grepl(paste0("^(", pattern, ")$"), string)
 }
 
 ID <- function(x) {
@@ -111,21 +111,6 @@ elements <- function(x) {
   unname(x[names2(x) == ""])
 }
 
-# Join HTML attribute values
-#
-# A function to join HTML attribute values with `htmltools` in mind. If all
-# arguments are `NULL`, `NULL` is returned so the attribute can be dropped. If
-# all arguments are the empty string, `NULL` is returned so the attribute can
-# be dropped. If all arguments are `NA`, then `NA` is returned to preserve a
-# boolean attribute. Otherwise, all arguments are collapsed together into a
-# single string suitable for an HTML attribute.
-#
-# @param ... Any number of arguments to combine together as a single HTML
-#   attribute value.
-#
-# @param collapse A character string specifying how the arguments are pasted
-#   together, passed to `paste`, defaults to `" "`.
-#
 collate <- function(..., collapse = " ") {
   args <- unique(c(...))
 
@@ -140,43 +125,100 @@ collate <- function(..., collapse = " ") {
   }
 }
 
-responsives <- function(prefix, values, possible) {
-  call <- as.character(sys.call(-1))[1]
+msgInvalidValues <- function(fun, argument, invalid) {
+  if (is.character(invalid)) {
+    invalid <- paste0('"', invalid, '"')
+  }
 
-  if (length(values) == 0) {
+  sprintf(
+    "invalid call to `%s()`, argument `%s` contains unexpected value%s %s",
+    as.character(fun),
+    as.character(argument),
+    if (length(invalid) > 1) "s" else "",
+    conjoin(as.character(invalid), con = "and")
+  )
+}
+
+msgInvalidBreakpoints <- function(fun, argument, invalid) {
+  sprintf(
+    "invalid call to `%s()`, argument `%s` contains unexpected breakpoint%s %s",
+    as.character(fun),
+    as.character(argument),
+    if (length(invalid) > 1) "s" else "",
+    conjoin(paste0('"', invalid, '"'))
+  )
+}
+
+ensureBreakpoints <- function(values, possible) {
+  if (is.null(values)) {
+    return(list())
+  }
+
+  values <- as.list(values)
+
+  if (length(values) == 1 && names2(values) == "") {
+    names(values) <- "default"
+  }
+
+  if (length(invalid <- getInvalidBreakpoints(values))) {
+    caller <- sys.call(-1)
     stop(
-      "invalid `", call, "` arguments, at least one argument must not be NULL",
+      msgInvalidBreakpoints(caller[[1]], match.call()$values, invalid),
       call. = FALSE
     )
   }
 
-  breakpoints <- names2(values)
-  allowed <- paste(possible, collapse = "|")
+  if (length(invalid <- getInvalidValues(values, possible))) {
+    caller <- sys.call(-1)
+    stop(
+      msgInvalidValues(caller[[1]], match.call()$values, invalid),
+      call. = FALSE
+    )
+  }
+
+  names(values) <- vapply(
+    names2(values),
+    function(nm) if (nm == "xs") "default" else nm,
+    character(1)
+  )
+
+  values
+}
+
+getInvalidBreakpoints <- function(values) {
+  if (length(values) == 0) {
+    return(NULL)
+  }
+
+  names2(values)[!re(names2(values), "default|xs|sm|md|lg|xl")]
+}
+
+getInvalidValues <- function(values, possible) {
+  if (length(values) == 0) {
+    return(NULL)
+  }
+
+  unlist(values)[!vapply(values, `%in%`, logical(1), possible)]
+}
+
+createResponsiveClasses <- function(values, prefix) {
+  if (!length(values)) {
+    return(NULL)
+  }
 
   vapply(
-    breakpoints,
-    function(point) {
-      val <- values[[point]]
+    names2(values),
+    function(breakpoint) {
+      value <- values[[breakpoint]]
 
-      if (!re(val, allowed)) {
-        if (is.character(possible)) {
-          possible <- paste0('"', possible, '"')
-        }
-
-        stop(
-          "invalid `", call, "` argument, `", point, "` must be one of ",
-          conjoin(possible),
-          call. = FALSE
-        )
-      }
-
-      if (point == "default") {
-        paste0(prefix, "-", val)
+      if (breakpoint == "default") {
+        paste0(prefix, "-", value)
       } else {
-        paste0(prefix, "-", point, "-", val)
+        paste0(prefix, "-", breakpoint, "-", value)
       }
     },
-    character(1)
+    character(1),
+    USE.NAMES = FALSE
   )
 }
 
