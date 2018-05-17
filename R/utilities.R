@@ -116,7 +116,7 @@ colorUtility <- function(tag, base, color) {
 #'         font(tail(colors, 1))
 #'     ) %>%
 #'       display("flex") %>%
-#'       wrap("wrap"),
+#'       flex(wrap = TRUE),
 #'     server = function(input, output) {
 #'
 #'     }
@@ -236,7 +236,7 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL) {
 #'       )
 #'     ) %>%
 #'       display("flex") %>%
-#'       wrap("wrap"),
+#'       flex(wrap = TRUE),
 #'     server = function(input, output) {
 #'
 #'     }
@@ -330,7 +330,7 @@ background <- function(tag, color) {
 #'       )
 #'     ) %>%
 #'       display("flex") %>%
-#'       wrap("wrap"),
+#'       flex(wrap = TRUE),
 #'     server = function(input, output) {
 #'
 #'     }
@@ -738,7 +738,7 @@ display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #'       })
 #'     ) %>%
 #'       display("flex") %>%
-#'       wrap("wrap"),
+#'       flex(wrap = TRUE),
 #'     server = function(input, output) {
 #'
 #'     }

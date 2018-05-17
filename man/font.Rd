@@ -79,7 +79,7 @@ if (interactive()) {
         font(tail(colors, 1))
     ) \%>\%
       display("flex") \%>\%
-      wrap("wrap"),
+      flex(wrap = TRUE),
     server = function(input, output) {
 
     }

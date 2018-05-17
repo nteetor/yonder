@@ -32,8 +32,7 @@
 #'       ) %>%
 #'         margins(3) %>%
 #'         display("flex") %>%
-#'         direction("column") %>%
-#'         items("center")
+#'         flex(direction = "column", align = "center")
 #'     ),
 #'     server = function(input, output) {
 #'       output$icon <- renderUI({
@@ -60,7 +59,7 @@
 #'             )
 #'           ) %>%
 #'             display("flex") %>%
-#'             wrap("wrap")
+#'             flex(wrap = TRUE)
 #'         }
 #'       )
 #'     ),
@@ -183,7 +182,7 @@ icon <- function(name, set = NULL, ...) {
 #'         buttonInput("trigger", "Start/stop")
 #'       ) %>%
 #'         display("flex") %>%
-#'         content("around")
+#'         flex(justify = "around")
 #'     ),
 #'     server = function(input, output) {
 #'       observeEvent(input$trigger, {

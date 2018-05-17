@@ -40,7 +40,7 @@ if (interactive()) {
         buttonInput("trigger", "Start/stop")
       ) \%>\%
         display("flex") \%>\%
-        content("around")
+        flex(justify = "around")
     ),
     server = function(input, output) {
       observeEvent(input$trigger, {

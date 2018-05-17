@@ -65,7 +65,7 @@ if (interactive()) {
       )
     ) \%>\%
       display("flex") \%>\%
-      wrap("wrap"),
+      flex(wrap = TRUE),
     server = function(input, output) {
 
     }
