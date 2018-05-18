@@ -629,80 +629,41 @@ text <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 
 #' Tag element display
 #'
-#' Use the `display()` utility to adjust a tag element's display property. This
-#' allows you to hide elements on small screens or convert elements from inline
-#' to block on large screens.
+#' Use the `display()` utility to adjust how a tag element is rendered. All
+#' arguments are responsive allowing you to hide elements on small screens or
+#' convert elements from inline to block on large screens. Most of the time
+#' you will use the `render` argument. However if you want to control how an
+#' element appears (or does not appear) when the page is printed use the `print`
+#' argument.
 #'
-#' @param tag A tag element.
+#' @param .tag A tag element.
 #'
-#' @param inline ..
-#'
-#' @param block ..
-#'
-#' @param flex ..
-#'
-#' @param none ..
+#' @param render,print A [responsive] argument. One of `"inline"`, `"block"`,
+#'   `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`, defaults to
+#'   `NULL`.
 #'
 #' @family utilities
 #' @export
 #' @examples
 #'
-#' div() %>%
-#'   display(none = TRUE, block = c(md = TRUE))
+#' display(div(), render = c(xs = "none", md = "block"))
 #'
-display <- function(tag, inline = NULL, block = NULL, flex = NULL,
-                    none = NULL) {
-  inline <- ensureBreakpoints(inline, TRUE)
-  block <- ensureBreakpoints(block, TRUE)
-  flex <- ensureBreakpoints(flex, TRUE)
-  none <- ensureBreakpoints(none, TRUE)
+#' display(div(), render = c(xs = "inline", sm = "block"))
+#'
+#' display(div(), print = "none")
+#'
+display <- function(.tag, render = NULL, print = NULL) {
+  possibles <- c("inline", "block", "inline-block", "flex", "inline-flex", "none")
 
-  checkDuplicateBreakpoints(block, flex, none)
-
-  if (length(inline) && (length(block) || length(flex))) {
-    for (breakpoint in names2(inline)) {
-      if (isTRUE(inline[[breakpoint]])) {
-        if (isTRUE(block[[breakpoint]])) {
-          block[[breakpoint]] <- "inline-block"
-          inline[[breakpoint]] <- NULL
-        }
-
-        if (isTRUE(flex[[breakpoint]])) {
-          flex[[breakpoint]] <- "inline-flex"
-          inline[[breakpoint]] <- NULL
-        }
-      }
-    }
-  }
-
-  if (length(inline)) {
-    inline[vapply(inline, isTRUE, logical(1))] <- "inline"
-  }
-
-  if (length(block)) {
-    block[vapply(block, isTRUE, logical(1))] <- "block"
-  }
-
-  if (length(flex)) {
-    flex[vapply(flex, isTRUE, logical(1))] <- "flex"
-  }
-
-  if (length(none)) {
-    none[vapply(none, isTRUE, logical(1))] <- "none"
-  }
-
-  if (length(print)) {
-    print[vapply(print, isTRUE, logical(1))] <- "print"
-  }
+  render <- ensureBreakpoints(render, possibles)
+  print <- ensureBreakpoints(print, possibles)
 
   classes <- c(
-    createResponsiveClasses(inline, "d"),
-    createResponsiveClasses(block, "d"),
-    createResponsiveClasses(flex, "d"),
-    createResponsiveClasses(none, "d")
+    createResponsiveClasses(render, "d"),
+    createResponsiveClasses(print, "d-print")
   )
 
-  tagAddClass(tag, classes)
+  tagAddClass(.tag, classes)
 }
 
 #' Tag element margin and padding

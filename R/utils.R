@@ -145,7 +145,18 @@ msgInvalidBreakpoints <- function(fun, argument, invalid) {
     as.character(fun),
     as.character(argument),
     if (length(invalid) > 1) "s" else "",
-    conjoin(paste0('"', invalid, '"'))
+    conjoin(paste0("`", invalid, "`"))
+  )
+}
+
+msgInvalidTooManyValues <- function(fun, argument, invalid) {
+  sprintf(
+    "invalid call to `%s()`, argument `%s` breakpoint%s %s contain%s too many values",
+    as.character(fun),
+    as.character(argument),
+    if (length(invalid) > 1) "s" else "",
+    conjoin(paste0("`", invalid, "`"), con = "and"),
+    if (length(invalid) > 1) "" else "s"
   )
 }
 
@@ -186,23 +197,30 @@ ensureBreakpoints <- function(values, possible) {
   }
 
   values <- as.list(values)
+  caller <- sys.call(-1)[[1]]
+  passed <- match.call()$values
 
   if (length(values) == 1 && names2(values) == "") {
     names(values) <- "default"
   }
 
   if (length(invalid <- getInvalidBreakpoints(values))) {
-    caller <- sys.call(-1)
     stop(
-      msgInvalidBreakpoints(caller[[1]], match.call()$values, invalid),
+      msgInvalidBreakpoints(caller, passed, invalid),
+      call. = FALSE
+    )
+  }
+
+  if (length(invalid <- getInvalidLengths(values))) {
+    stop(
+      msgInvalidTooManyValues(caller, passed, invalid),
       call. = FALSE
     )
   }
 
   if (length(invalid <- getInvalidValues(values, possible))) {
-    caller <- sys.call(-1)
     stop(
-      msgInvalidValues(caller[[1]], match.call()$values, invalid),
+      msgInvalidValues(caller, passed, invalid),
       call. = FALSE
     )
   }
@@ -222,6 +240,14 @@ getInvalidBreakpoints <- function(values) {
   }
 
   names2(values)[!re(names2(values), "default|xs|sm|md|lg|xl")]
+}
+
+getInvalidLengths <- function(values) {
+  if (length(values) == 0) {
+    return(NULL)
+  }
+
+  names2(values)[vapply(values, length, numeric(1)) > 1]
 }
 
 getInvalidValues <- function(values, possible) {

@@ -4,28 +4,30 @@
 \alias{display}
 \title{Tag element display}
 \usage{
-display(tag, inline = NULL, block = NULL, flex = NULL, none = NULL)
+display(.tag, render = NULL, print = NULL)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{.tag}{A tag element.}
 
-\item{inline}{..}
-
-\item{block}{..}
-
-\item{flex}{..}
-
-\item{none}{..}
+\item{render, print}{A \link{responsive} argument. One of \code{"inline"}, \code{"block"},
+\code{"inline-block"}, \code{"flex"}, \code{"inline-flex"}, or \code{"none"}, defaults to
+\code{NULL}.}
 }
 \description{
-Use the \code{display()} utility to adjust a tag element's display property. This
-allows you to hide elements on small screens or convert elements from inline
-to block on large screens.
+Use the \code{display()} utility to adjust how a tag element is rendered. All
+arguments are responsive allowing you to hide elements on small screens or
+convert elements from inline to block on large screens. Most of the time
+you will use the \code{render} argument. However if you want to control how an
+element appears (or does not appear) when the page is printed use the \code{print}
+argument.
 }
 \examples{
 
-div() \%>\%
-  display(none = TRUE, block = c(md = TRUE))
+display(div(), render = c(xs = "none", md = "block"))
+
+display(div(), render = c(xs = "inline", sm = "block"))
+
+display(div(), print = "none")
 
 }
 \seealso{
