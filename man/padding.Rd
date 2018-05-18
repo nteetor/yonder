@@ -56,17 +56,18 @@ Margins refer to the space outside and around an element.
 if (interactive()) {
   shinyApp(
     ui = container(
-      lapply(1:5, function(p) {
-        div("Nunc aliquet, augue nec adipiscing interdum.") \%>\%
+      lapply(
+        1:5,
+        padding,
+        tag = div("Nunc aliquet, augue nec") \%>\%
           width(25) \%>\%
           margins(1) \%>\%
-          padding(p) \%>\%
           border("blue") \%>\%
           rounded() \%>\%
           text("center")
-      })
+      )
     ) \%>\%
-      display("flex") \%>\%
+      display(flex = TRUE) \%>\%
       flex(wrap = TRUE),
     server = function(input, output) {
 

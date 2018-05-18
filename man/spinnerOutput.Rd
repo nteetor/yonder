@@ -39,7 +39,7 @@ if (interactive()) {
         spinnerOutput("spin", pulse = TRUE),
         buttonInput("trigger", "Start/stop")
       ) \%>\%
-        display("flex") \%>\%
+        display(flex = TRUE) \%>\%
         flex(justify = "around")
     ),
     server = function(input, output) {

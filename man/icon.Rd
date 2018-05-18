@@ -34,7 +34,7 @@ if (interactive()) {
         htmlOutput("icon")
       ) \%>\%
         margins(3) \%>\%
-        display("flex") \%>\%
+        display(flex = TRUE) \%>\%
         flex(direction = "column", align = "center")
     ),
     server = function(input, output) {
@@ -61,7 +61,7 @@ if (interactive()) {
               }
             )
           ) \%>\%
-            display("flex") \%>\%
+            display(flex = TRUE) \%>\%
             flex(wrap = TRUE)
         }
       )

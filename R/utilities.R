@@ -115,7 +115,7 @@ colorUtility <- function(tag, base, color) {
 #'         background("grey") %>%
 #'         font(tail(colors, 1))
 #'     ) %>%
-#'       display("flex") %>%
+#'       display(flex = TRUE) %>%
 #'       flex(wrap = TRUE),
 #'     server = function(input, output) {
 #'
@@ -235,7 +235,7 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL) {
 #'           margins(2)
 #'       )
 #'     ) %>%
-#'       display("flex") %>%
+#'       display(flex = TRUE) %>%
 #'       flex(wrap = TRUE),
 #'     server = function(input, output) {
 #'
@@ -329,7 +329,7 @@ background <- function(tag, color) {
 #'           margins(2)
 #'       )
 #'     ) %>%
-#'       display("flex") %>%
+#'       display(flex = TRUE) %>%
 #'       flex(wrap = TRUE),
 #'     server = function(input, output) {
 #'
@@ -627,51 +627,79 @@ text <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
   tagAddClass(tag, classes)
 }
 
-#' Element display property, inline, block, and more
+#' Tag element display
 #'
-#' The `display` utility is used to apply Bootstrap classes to adjust a tag
-#' element's display property. This can be used to hide an element on small
-#' screens or convert an element from inline to block on large screens. Use the
-#' `print` argument to change the display property of an element during
-#' printing.
+#' Use the `display()` utility to adjust a tag element's display property. This
+#' allows you to hide elements on small screens or convert elements from inline
+#' to block on large screens.
 #'
 #' @param tag A tag element.
 #'
-#' @param default One of `"inline"`, `"inline-block"`, `"block"`, `"table"`,
-#'   `"table-cell"`, `"flex"`, `"inline-flex"`, or `"none"` specifying the
-#'   default display property of the element.
+#' @param inline ..
 #'
-#' @param sm Like `default`, but the display property is applied once the
-#'   viewport is 576 pixels wide, think phone in landscape mode.
+#' @param block ..
 #'
-#' @param md Like `default`, but the display property is applied once the
-#'   viewport is 768 pixels wide, think tablets.
+#' @param flex ..
 #'
-#' @param lg Like `default`, but the display property is applied once the
-#'   viewport is 992 pixels wide, think desktop.
-#'
-#' @param xl Like `default`, but the display property is applied once the
-#'   viewport is 1200 pixels wide, think large desktop.
-#'
-#' @param print Like `default`, but the display property is applied when the
-#'   page is printed.
+#' @param none ..
 #'
 #' @family utilities
 #' @export
 #' @examples
-#' tags$div() %>%
-#'   display(default = "none", md = "block")
 #'
-display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
-                    xl = NULL, print = NULL) {
-  args <- dropNulls(
-    list(default = default, sm = sm, md = md, lg = lg, xl = xl, print = print)
-  )
+#' div() %>%
+#'   display(none = TRUE, block = c(md = TRUE))
+#'
+display <- function(tag, inline = NULL, block = NULL, flex = NULL,
+                    none = NULL) {
+  inline <- ensureBreakpoints(inline, TRUE)
+  block <- ensureBreakpoints(block, TRUE)
+  flex <- ensureBreakpoints(flex, TRUE)
+  none <- ensureBreakpoints(none, TRUE)
 
-  classes <- responsives(
-    prefix = "d",
-    values = args,
-    possible = c("inline", "inline-block", "block", "flex", "flex-inline", "none")
+  checkDuplicateBreakpoints(block, flex, none)
+
+  if (length(inline) && (length(block) || length(flex))) {
+    for (breakpoint in names2(inline)) {
+      if (isTRUE(inline[[breakpoint]])) {
+        if (isTRUE(block[[breakpoint]])) {
+          block[[breakpoint]] <- "inline-block"
+          inline[[breakpoint]] <- NULL
+        }
+
+        if (isTRUE(flex[[breakpoint]])) {
+          flex[[breakpoint]] <- "inline-flex"
+          inline[[breakpoint]] <- NULL
+        }
+      }
+    }
+  }
+
+  if (length(inline)) {
+    inline[vapply(inline, isTRUE, logical(1))] <- "inline"
+  }
+
+  if (length(block)) {
+    block[vapply(block, isTRUE, logical(1))] <- "block"
+  }
+
+  if (length(flex)) {
+    flex[vapply(flex, isTRUE, logical(1))] <- "flex"
+  }
+
+  if (length(none)) {
+    none[vapply(none, isTRUE, logical(1))] <- "none"
+  }
+
+  if (length(print)) {
+    print[vapply(print, isTRUE, logical(1))] <- "print"
+  }
+
+  classes <- c(
+    createResponsiveClasses(inline, "d"),
+    createResponsiveClasses(block, "d"),
+    createResponsiveClasses(flex, "d"),
+    createResponsiveClasses(none, "d")
   )
 
   tagAddClass(tag, classes)
@@ -727,17 +755,18 @@ display <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       lapply(1:5, function(p) {
-#'         div("Nunc aliquet, augue nec adipiscing interdum.") %>%
+#'       lapply(
+#'         1:5,
+#'         padding,
+#'         tag = div("Nunc aliquet, augue nec") %>%
 #'           width(25) %>%
 #'           margins(1) %>%
-#'           padding(p) %>%
 #'           border("blue") %>%
 #'           rounded() %>%
 #'           text("center")
-#'       })
+#'       )
 #'     ) %>%
-#'       display("flex") %>%
+#'       display(flex = TRUE) %>%
 #'       flex(wrap = TRUE),
 #'     server = function(input, output) {
 #'

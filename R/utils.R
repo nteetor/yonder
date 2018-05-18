@@ -149,6 +149,37 @@ msgInvalidBreakpoints <- function(fun, argument, invalid) {
   )
 }
 
+msgDuplicateBreakpoints <- function(fun, duplicates, arguments) {
+  fun <- as.character(fun)
+  duplicates <- as.character(duplicates)
+  arguments <- as.character(arguments)
+
+  sprintf(
+    "invalid call to `%s()`, %s breakpoint%s specified in multiple arguments %s",
+    fun,
+    conjoin(sprintf("`%s`", duplicates), con = "and"),
+    if (length(duplicates) > 1) "s" else "",
+    conjoin(sprintf("`%s`", arguments), con = "and")
+  )
+}
+
+checkDuplicateBreakpoints <- function(...) {
+  passed <- as.character(as.list(substitute(list(...)))[-1])
+  args <- list(...)
+  flat <- unlist(list(...))
+
+  if (any(duplicated(names(flat)))) {
+    dups <- names(flat)[duplicated(names(flat))]
+    points <- passed[vapply(args, function(a) any(names(a) %in% dups), logical(1))]
+    caller <-  sys.call(-1)[[1]]
+
+    stop(
+      msgDuplicateBreakpoints(caller, dups, points),
+      call. = FALSE
+    )
+  }
+}
+
 ensureBreakpoints <- function(values, possible) {
   if (is.null(values)) {
     return(list())

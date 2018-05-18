@@ -31,7 +31,7 @@
 #'         htmlOutput("icon")
 #'       ) %>%
 #'         margins(3) %>%
-#'         display("flex") %>%
+#'         display(flex = TRUE) %>%
 #'         flex(direction = "column", align = "center")
 #'     ),
 #'     server = function(input, output) {
@@ -58,7 +58,7 @@
 #'               }
 #'             )
 #'           ) %>%
-#'             display("flex") %>%
+#'             display(flex = TRUE) %>%
 #'             flex(wrap = TRUE)
 #'         }
 #'       )
@@ -181,7 +181,7 @@ icon <- function(name, set = NULL, ...) {
 #'         spinnerOutput("spin", pulse = TRUE),
 #'         buttonInput("trigger", "Start/stop")
 #'       ) %>%
-#'         display("flex") %>%
+#'         display(flex = TRUE) %>%
 #'         flex(justify = "around")
 #'     ),
 #'     server = function(input, output) {

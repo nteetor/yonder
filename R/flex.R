@@ -112,7 +112,7 @@ NULL
 #'     padding(3) %>%
 #'     border()
 #' ) %>%
-#'   display("flex") %>%
+#'   display(flex = TRUE) %>%
 #'   flex(
 #'     direction = list(xs = "column", md = "row")
 #'   ) %>%
@@ -135,7 +135,7 @@ NULL
 #'     padding(3) %>%
 #'       border()
 #' ) %>%
-#'   display("flex") %>%
+#'   display(flex = TRUE) %>%
 #'   flex(direction = "column")
 #' ```
 #'
@@ -259,8 +259,6 @@ flex <- function(tag, direction = NULL, reverse = NULL, justify = NULL,
     createResponsiveClasses(align, "align-items"),
     createResponsiveClasses(wrap, "flex")
   )
-
-  tag <- tagEnsureClass(tag, "d-flex")
 
   tagAddClass(tag, classes)
 }

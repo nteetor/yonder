@@ -67,7 +67,7 @@ if (interactive()) {
           margins(2)
       )
     ) \%>\%
-      display("flex") \%>\%
+      display(flex = TRUE) \%>\%
       flex(wrap = TRUE),
     server = function(input, output) {
 

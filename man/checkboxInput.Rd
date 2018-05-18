@@ -77,7 +77,7 @@ if (interactive()) {
         buttonInput("choices", "Update checkbox text"),
         buttonInput("values", "Update checkbox value")
       ) \%>\%
-        display("flex")
+        display(flex = TRUE)
     ),
     server = function(input, output) {
       output$checkvalue <- renderPrint({

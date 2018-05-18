@@ -2,43 +2,30 @@
 % Please edit documentation in R/utilities.R
 \name{display}
 \alias{display}
-\title{Element display property, inline, block, and more}
+\title{Tag element display}
 \usage{
-display(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
-  xl = NULL, print = NULL)
+display(tag, inline = NULL, block = NULL, flex = NULL, none = NULL)
 }
 \arguments{
 \item{tag}{A tag element.}
 
-\item{default}{One of \code{"inline"}, \code{"inline-block"}, \code{"block"}, \code{"table"},
-\code{"table-cell"}, \code{"flex"}, \code{"inline-flex"}, or \code{"none"} specifying the
-default display property of the element.}
+\item{inline}{..}
 
-\item{sm}{Like \code{default}, but the display property is applied once the
-viewport is 576 pixels wide, think phone in landscape mode.}
+\item{block}{..}
 
-\item{md}{Like \code{default}, but the display property is applied once the
-viewport is 768 pixels wide, think tablets.}
+\item{flex}{..}
 
-\item{lg}{Like \code{default}, but the display property is applied once the
-viewport is 992 pixels wide, think desktop.}
-
-\item{xl}{Like \code{default}, but the display property is applied once the
-viewport is 1200 pixels wide, think large desktop.}
-
-\item{print}{Like \code{default}, but the display property is applied when the
-page is printed.}
+\item{none}{..}
 }
 \description{
-The \code{display} utility is used to apply Bootstrap classes to adjust a tag
-element's display property. This can be used to hide an element on small
-screens or convert an element from inline to block on large screens. Use the
-\code{print} argument to change the display property of an element during
-printing.
+Use the \code{display()} utility to adjust a tag element's display property. This
+allows you to hide elements on small screens or convert elements from inline
+to block on large screens.
 }
 \examples{
-tags$div() \%>\%
-  display(default = "none", md = "block")
+
+div() \%>\%
+  display(none = TRUE, block = c(md = TRUE))
 
 }
 \seealso{

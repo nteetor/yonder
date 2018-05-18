@@ -78,14 +78,14 @@
 #'           badgeOutput("badge1", 0) %>%
 #'             background(input$level)
 #'         ) %>%
-#'           display("flex") %>%
+#'           display(flex = TRUE) %>%
 #'           flex(justify = "between", align = "center")
 #'         listGroupItem(
 #'           "Dapibus ac facilisis in",
 #'           badgeOutput("badge2", 0) %>%
 #'             background(input$level)
 #'         ) %>%
-#'           display("flex") %>%
+#'           display(flex = TRUE) %>%
 #'           flex(justify = "between", align = "center")
 #'       )
 #'
