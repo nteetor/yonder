@@ -676,7 +676,7 @@ display <- function(.tag, render = NULL, print = NULL) {
 #' element is the space between the tag element's border and its content or
 #' child elements.
 #'
-#' @param tag A tag element.
+#' @param .tag A tag element.
 #'
 #' @param top A [responsive] argument. One of `0:5` or `"auto"`. 0 removes all
 #'   space and 5 adds the most space.
@@ -842,7 +842,7 @@ margin <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
 #' Utility functions to change a tag element's width or height. Widths and
 #' heights are specified as percentages of the parent object's width or height.
 #'
-#' @param tag A tag element.
+#' @param .tag A tag element.
 #'
 #' @param percentage One of 25, 50, 75, or 100 specifying width or height as a
 #'   percentage of a parent element's width or height.
@@ -853,6 +853,7 @@ margin <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
 #' @family utilities
 #' @export
 #' @examples
+#'
 #' tags$div() %>%
 #'   width(25) %>%
 #'   height(100)
@@ -860,7 +861,7 @@ margin <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
 #' tags$div() %>%
 #'   width(max = 75)
 #'
-width <- function(tag, percentage = NULL, max = NULL) {
+width <- function(.tag, percentage = NULL, max = NULL) {
   if (is.null(percentage) && is.null(max)) {
     stop(
       "invalid `width` arguments, `percentage` and `max` may not both be NULL",
@@ -885,13 +886,13 @@ width <- function(tag, percentage = NULL, max = NULL) {
   percentage <- if (!is.null(percentage)) paste0("w-", percentage)
   max <- if (!is.null(max)) paste0("mw-", max)
 
-  tagAddClass(tag, c(percentage, max))
+  tagAddClass(.tag, c(percentage, max))
 }
 
 #' @family utilities
 #' @rdname width
 #' @export
-height <- function(tag, percentage = NULL, max = NULL) {
+height <- function(.tag, percentage = NULL, max = NULL) {
   if (is.null(percentage) && is.null(max)) {
     stop(
       "invalid `height` arguments, `percentage` and `max` may not both be NULL",
@@ -916,7 +917,7 @@ height <- function(tag, percentage = NULL, max = NULL) {
   percentage <- if (!is.null(percentage)) paste0("h-", percentage)
   max <- if (!is.null(max)) paste0("mh-", max)
 
-  tagAddClass(tag, c(percentage, max))
+  tagAddClass(.tag, c(percentage, max))
 }
 
 # Apply styles to a tag

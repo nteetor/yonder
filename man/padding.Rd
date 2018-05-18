@@ -10,6 +10,8 @@ padding(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL)
 margin(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL)
 }
 \arguments{
+\item{.tag}{A tag element.}
+
 \item{top}{A \link{responsive} argument. One of \code{0:5} or \code{"auto"}. 0 removes all
 space and 5 adds the most space.
 
@@ -18,8 +20,6 @@ apply the spcified spacing to \strong{all} sides.}
 
 \item{right, bottom, left}{A \link{responsive} argument. One of \code{0:5} or \code{"auto"}. 0
 removes all space and 5 adds the most space.}
-
-\item{tag}{A tag element.}
 }
 \description{
 Use the \code{margin()} and \code{padding()} utilities to change the margin or padding
