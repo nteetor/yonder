@@ -61,7 +61,7 @@ if (interactive()) {
         border,
         tag = div() \%>\%
           padding(5) \%>\%
-          margins(2)
+          margin(2)
       )
     ) \%>\%
       display(flex = TRUE) \%>\%

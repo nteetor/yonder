@@ -232,7 +232,7 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL) {
 #'         background,
 #'         tag = div() %>%
 #'           padding(5) %>%
-#'           margins(2)
+#'           margin(2)
 #'       )
 #'     ) %>%
 #'       display(flex = TRUE) %>%
@@ -326,7 +326,7 @@ background <- function(tag, color) {
 #'         border,
 #'         tag = div() %>%
 #'           padding(5) %>%
-#'           margins(2)
+#'           margin(2)
 #'       )
 #'     ) %>%
 #'       display(flex = TRUE) %>%
@@ -705,173 +705,175 @@ display <- function(tag, inline = NULL, block = NULL, flex = NULL,
   tagAddClass(tag, classes)
 }
 
-#' Element margins and padding
+#' Tag element margin and padding
 #'
 #' @description
 #'
-#'These utilities change the padding or margins of a tag. Each argument value
-#' may be a single value or a vector of four values. Margins and padding are
-#' specified as 0, 1, 2, 3, 4, or 5, where 0 removes all space and 5 adds the most
-#' space.
-#'
-#' Specifying a single value changes the margins or padding along all four sides
-#' of `tag`. To apply different margins or padding to each side pass a vector of
-#' four values. In this case, the first value adjusts the top, second the right
-#' side, third the bottom, and the fourth value adjusts the left side. As a wise
-#' help page once said, think "**tr**ou**bl**e" to help remember the order.
+#' Use the `margin()` and `padding()` utilities to change the margin or padding
+#' of a tag element.  The margin of a tag element is the space outside and
+#' around the tag element, its border, and its content.  The padding of a tag
+#' element is the space between the tag element's border and its content or
+#' child elements.
 #'
 #' @param tag A tag element.
 #'
-#' @param default One of 0, 1, 2, 3, 4, 5 specifying the default margins or
-#'   padding to apply. If the margins and padding remain the same across all
-#'   viewports then only `default` needs to be specified.
+#' @param top A [responsive] argument. One of `0:5` or `"auto"`. 0 removes all
+#'   space and 5 adds the most space.
 #'
-#'   For **margins**, specifying `"auto"` leaves the spacing up to the browser.
-#'   For example, you could horizontally center an element for all viewports
-#'   by specifying `default = c(1, "auto", 1, "auto")`.
+#'   If an **unnamed** value is passed as `top` `margin()` and `padding()` will
+#'   apply the spcified spacing to **all** sides.
 #'
-#' @param sm Like `default`, but the margins or padding are applied once the
-#'   viewport is 576 pixels wide, think phone in landscape mode.
+#' @param right,bottom,left A [responsive] argument. One of `0:5` or `"auto"`. 0
+#'   removes all space and 5 adds the most space.
 #'
-#' @param md Like `default`, but the margins or padding are applied once the
-#'   viewport is 768 pixels wide, think tablets.
+#' @section Centering an element:
 #'
-#' @param lg Like `default`, but the margins or padding are applied once the
-#'   viewport is 992 pixels wide, think desktop.
+#' In most modern browsers you want to horizontally center a tag element
+#' using the [flex] layout. Alternatively, you can horizontally center an element
+#' using `margin(<TAG>, right = "auto", left = "auto")`.
 #'
-#' @param xl Like `default`, but the margins or padding are applied once the
-#'   viewport is 1200 pixels wide, think large desktop.
+#' ```
+#' div("Nam a sapien. Integer placerat tristique nisl.") %>%
+#'   width(50) %>%
+#'   height(25) %>%
+#'   margin(top = 2, r = "auto", b = 2, l = "auto") %>%
+#'   padding(3) %>%
+#'   background("amber")
+#' )
+#' ```
 #'
-#' @details
+#' @section Building an inline form:
 #'
-#' Padding refers to the space between an element and its child element(s).
+#' Inline form elements automatically use of the flex layout providing you a
+#' means of creating condensed sets of inputs. However you may need to adjust
+#' the spacing of the form's child elements.
 #'
-#' Margins refer to the space outside and around an element.
+#' Here is an inline form without any additional spacing applied.
+#'
+#' ```
+#' formInput(
+#'   id = NULL,
+#'   inline = TRUE,
+#'   textInput(id = NULL, placeholder = "Sam Vimes"),
+#'   groupInput(id = NULL, right = "@", placeholder = "Username"),
+#'   checkboxInput(id = NULL, choice = "Remember me")
+#'   )
+#' )
+#' ```
+#'
+#' Not great. But, with some styling we can make this form sparkle. Notice
+#' we are also adjusting the default submit button added to the form input.
+#'
+#' ```
+#' formInput(
+#'   id = NULL,
+#'   inline = TRUE,
+#'   textInput(id = NULL, placeholder = "Sam Vimes") %>%
+#'     margin(r = c(sm = 2), b = 2),
+#'   groupInput(id = NULL, right = "@", placeholder = "Username") %>%
+#'     margin(r = c(sm = 2), b = 2),
+#'   checkboxInput(id = NULL, choice = "Remember me") %>%
+#'     margin(r = c(sm = 2), b = 2),
+#'   submit = submitInput() %>%
+#'     margin(b = 2)
+#' )
+#' ```
+#'
+#' Now we're cooking with gas!
 #'
 #' @family utilities
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       lapply(
-#'         1:5,
-#'         padding,
-#'         tag = div("Nunc aliquet, augue nec") %>%
-#'           width(25) %>%
-#'           margins(1) %>%
-#'           border("blue") %>%
-#'           rounded() %>%
-#'           text("center")
-#'       )
-#'     ) %>%
-#'       display(flex = TRUE) %>%
-#'       flex(wrap = TRUE),
-#'     server = function(input, output) {
+#' padding(div(), c(xs = 0, sm = 2, lg = 4))
 #'
-#'     }
-#'   )
-#' }
+#' margin(div(), right = c(md = "auto"))
 #'
-padding <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
-                    xl = NULL) {
-  args <- dropNulls(list(default = default, sm = sm , md = md, lg = lg, xl = xl))
+#' margin(div(), bottom = 3, left = 1)
+#'
+#'
+#' div(
+#'   div() %>%
+#'     margin(4) %>%
+#'     padding(4) %>%
+#'     background("grey") %>%
+#'     border()
+#' )
+#'
+padding <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
+  possibles <- c(0:5, "auto")
+  this <- sys.call()
 
-  if (length(args) == 0) {
-    stop(
-      "invalid `padding` arguments, at least one argument must not be NULL",
-      call. = FALSE
+  # all padding case
+  if (all(re(names2(this), "\\.tag|")) && length(this) == 3) {
+    all <- tryCatch(
+      ensureBreakpoints(top, possibles),
+      error = function(e) stop(
+        "invalid call to `padding()`, unexpected argument value ", top,
+        call. = FALSE
+      )
     )
+
+    classes <- createResponsiveClasses(all, "p")
+    return(tagAddClass(.tag, classes))
   }
 
-  classes <- vapply(
-    names2(args),
-    function(nm) {
-      arg <- args[[nm]]
+  top <- ensureBreakpoints(top, possibles)
+  right <- ensureBreakpoints(right, possibles)
+  bottom <- ensureBreakpoints(bottom, possibles)
+  left <- ensureBreakpoints(left, possibles)
 
-      if (!all(arg %in% 0:5)) {
-        stop(
-          "invalid `padding` argument, `", nm, "` value(s) must be 0, 1, 2, 3, 4, or 5",
-          call. = FALSE
-        )
-      }
-
-      if (length(arg) != 1 && length(arg) != 4) {
-        stop(
-          "invalid `padding` argument, `", nm, "` must be a single value or a vector of 4 values",
-          call. = FALSE
-        )
-      }
-
-      prefix <- "p"
-      sides <- c("t", "r", "b", "l")
-
-      breakpoint <- if (nm == "default") "-" else paste0("-", nm, "-")
-
-      if (length(default) == 4) {
-        return(paste0(prefix, sides, breakpoint, arg, collapse = " "))
-      }
-
-      paste0(prefix, breakpoint, arg)
-    },
-    character(1)
+  classes <- c(
+    createResponsiveClasses(top, "t"),
+    createResponsiveClasses(right, "r"),
+    createResponsiveClasses(bottom, "b"),
+    createResponsiveClasses(left, "l")
   )
 
-  tagAddClass(tag, classes)
+  if (!is.null(classes)) {
+    classes <- paste0("p", classes)
+  }
+
+  tagAddClass(.tag, classes)
 }
 
 #' @family utilities
 #' @rdname padding
 #' @export
-margins <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
-                    xl = NULL) {
-  args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
+margin <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
+  possibles <- c(0:5, "auto")
+  this <- sys.call()
 
-  if (length(args) == 0) {
-    stop(
-      "invalid `margins` arguments, at least one argument must not be NULL",
-      call. = FALSE
+  # all sides case
+  if (all(re(names2(this), "\\.tag|")) && length(this) == 3) {
+    all <- tryCatch(
+      ensureBreakpoints(top, possibles),
+      error = function(e) stop(
+        "invalid call to `margin()`, unexpected argument value ", top,
+        call. = FALSE
+      )
     )
+    classes <- createResponsiveClasses(all, "m")
+    return(tagAddClass(.tag, classes))
   }
 
-  prefix <- "m"
-  sides <- c("t", "r", "b", "l")
+  top <- ensureBreakpoints(top, possibles)
+  right <- ensureBreakpoints(right, possibles)
+  bottom <- ensureBreakpoints(bottom, possibles)
+  left <- ensureBreakpoints(left, possibles)
 
-  classes <- vapply(
-    names2(args),
-    function(nm) {
-      arg <- args[[nm]]
-
-      if (length(arg) != 4 && length(arg) != 1) {
-        stop(
-          "invalid `margins` argument, `", nm, "` must be a single value or a ",
-          "vector of four values",
-          call. = FALSE
-        )
-      }
-
-
-      if (!all(re(arg, "[0-5]|auto", len0 = FALSE))) {
-        stop(
-          "invalid `margins` argument, `", nm, "` value(s) must be ",
-          '0, 1, 2, 3, 4, 5, or "auto"',
-          call. = FALSE
-        )
-      }
-
-      breakpoint <- if (nm == "default") "-" else paste0("-", nm, "-")
-
-      if (length(arg) == 4) {
-        return(paste0(prefix, sides, breakpoint, arg, collapse = " "))
-      }
-
-      paste0(prefix, breakpoint, arg)
-    },
-    character(1)
+  classes <- c(
+    createResponsiveClasses(top, "t"),
+    createResponsiveClasses(right, "r"),
+    createResponsiveClasses(bottom, "b"),
+    createResponsiveClasses(left, "l")
   )
 
-  tagAddClass(tag, classes)
+  if (!is.null(classes)) {
+    classes <- paste0("m", classes)
+  }
+
+  tagAddClass(.tag, classes)
 }
 
 #' Tag element width and height
@@ -969,11 +971,6 @@ height <- function(tag, percentage = NULL, max = NULL) {
 #   width(25),
 #   padding(3),
 #   tags$div()
-# )
-#
-# tagReduce(
-#   margins(sm = 1, xl = 5),
-#   tags$span()
 # )
 #
 tagReduce <- function(...) {

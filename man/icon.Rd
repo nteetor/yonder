@@ -29,11 +29,11 @@ if (interactive()) {
         id = "name",
         choices = unique(icons$name)
       ) \%>\%
-        margins(3),
+        margin(3),
       div(
         htmlOutput("icon")
       ) \%>\%
-        margins(3) \%>\%
+        margin(3) \%>\%
         display(flex = TRUE) \%>\%
         flex(direction = "column", align = "center")
     ),
@@ -57,7 +57,7 @@ if (interactive()) {
               unique(icons[icons$set == s, ]$name),
               function(nm) {
                 icon(nm, set = s) \%>\%
-                  margins(2)
+                  margin(2)
               }
             )
           ) \%>\%

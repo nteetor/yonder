@@ -22,12 +22,12 @@
 #'       navbar(
 #'         brand = "Navbar",
 #'         tabTabs("myTabs", c("Home", "About", "Our process")) %>%
-#'           margins(c(0, "auto", 0, 0)),
+#'           margin(right = "auto"),
 #'         formInput(
 #'           inline = TRUE,
 #'           id = "navForm",
 #'           searchInput("search", placeholder = "Search") %>%
-#'             margins(sm = c(0, 2, 0, 0)),
+#'             margin(right = c(sm = 2)),
 #'           submit = submitInput("Search") %>%
 #'             background("amber")
 #'         )

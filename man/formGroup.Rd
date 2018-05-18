@@ -80,13 +80,14 @@ if (interactive()) {
             ) \%>\%
               background("blue")
           ) \%>\%
-            margins(3) \%>\%
+            margin(3) \%>\%
             background("grey", +2)
         ) \%>\%
-          margins("auto")
+          margin("auto")
       )
     ),
     server = function(input, output) {
+
     }
   )
 }

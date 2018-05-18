@@ -39,7 +39,7 @@
 #'             id = "singledate"
 #'           ),
 #'           h6("Multiple dates input:") %>%
-#'             margins(c(3, 0, 2, 0)),
+#'             margin(3, 0, 2, 0),
 #'           dateInput(
 #'             id = "multdate",
 #'             choices = Sys.Date() + (-4:4),

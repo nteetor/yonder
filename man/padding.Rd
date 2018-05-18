@@ -2,78 +2,98 @@
 % Please edit documentation in R/utilities.R
 \name{padding}
 \alias{padding}
-\alias{margins}
-\title{Element margins and padding}
+\alias{margin}
+\title{Tag element margin and padding}
 \usage{
-padding(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
-  xl = NULL)
+padding(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL)
 
-margins(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
-  xl = NULL)
+margin(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL)
 }
 \arguments{
+\item{top}{A \link{responsive} argument. One of \code{0:5} or \code{"auto"}. 0 removes all
+space and 5 adds the most space.
+
+If an \strong{unnamed} value is passed as \code{top} \code{margin()} and \code{padding()} will
+apply the spcified spacing to \strong{all} sides.}
+
+\item{right, bottom, left}{A \link{responsive} argument. One of \code{0:5} or \code{"auto"}. 0
+removes all space and 5 adds the most space.}
+
 \item{tag}{A tag element.}
-
-\item{default}{One of 0, 1, 2, 3, 4, 5 specifying the default margins or
-padding to apply. If the margins and padding remain the same across all
-viewports then only \code{default} needs to be specified.
-
-For \strong{margins}, specifying \code{"auto"} leaves the spacing up to the browser.
-For example, you could horizontally center an element for all viewports
-by specifying \code{default = c(1, "auto", 1, "auto")}.}
-
-\item{sm}{Like \code{default}, but the margins or padding are applied once the
-viewport is 576 pixels wide, think phone in landscape mode.}
-
-\item{md}{Like \code{default}, but the margins or padding are applied once the
-viewport is 768 pixels wide, think tablets.}
-
-\item{lg}{Like \code{default}, but the margins or padding are applied once the
-viewport is 992 pixels wide, think desktop.}
-
-\item{xl}{Like \code{default}, but the margins or padding are applied once the
-viewport is 1200 pixels wide, think large desktop.}
 }
 \description{
-These utilities change the padding or margins of a tag. Each argument value
-may be a single value or a vector of four values. Margins and padding are
-specified as 0, 1, 2, 3, 4, or 5, where 0 removes all space and 5 adds the most
-space.
-
-Specifying a single value changes the margins or padding along all four sides
-of \code{tag}. To apply different margins or padding to each side pass a vector of
-four values. In this case, the first value adjusts the top, second the right
-side, third the bottom, and the fourth value adjusts the left side. As a wise
-help page once said, think "\strong{tr}ou\strong{bl}e" to help remember the order.
+Use the \code{margin()} and \code{padding()} utilities to change the margin or padding
+of a tag element.  The margin of a tag element is the space outside and
+around the tag element, its border, and its content.  The padding of a tag
+element is the space between the tag element's border and its content or
+child elements.
 }
-\details{
-Padding refers to the space between an element and its child element(s).
+\section{Centering an element}{
 
-Margins refer to the space outside and around an element.
+
+In most modern browsers you want to horizontally center a tag element
+using the \link{flex} layout. Alternatively, you can horizontally center an element
+using \code{margin(<TAG>, right = "auto", left = "auto")}.\preformatted{div("Nam a sapien. Integer placerat tristique nisl.") \%>\%
+  width(50) \%>\%
+  height(25) \%>\%
+  margin(top = 2, r = "auto", b = 2, l = "auto") \%>\%
+  padding(3) \%>\%
+  background("amber")
+)
 }
+}
+
+\section{Building an inline form}{
+
+
+Inline form elements automatically use of the flex layout providing you a
+means of creating condensed sets of inputs. However you may need to adjust
+the spacing of the form's child elements.
+
+Here is an inline form without any additional spacing applied.\preformatted{formInput(
+  id = NULL,
+  inline = TRUE,
+  textInput(id = NULL, placeholder = "Sam Vimes"),
+  groupInput(id = NULL, right = "@", placeholder = "Username"),
+  checkboxInput(id = NULL, choice = "Remember me")
+  )
+)
+}
+
+Not great. But, with some styling we can make this form sparkle. Notice
+we are also adjusting the default submit button added to the form input.\preformatted{formInput(
+  id = NULL,
+  inline = TRUE,
+  textInput(id = NULL, placeholder = "Sam Vimes") \%>\%
+    margin(r = c(sm = 2), b = 2),
+  groupInput(id = NULL, right = "@", placeholder = "Username") \%>\%
+    margin(r = c(sm = 2), b = 2),
+  checkboxInput(id = NULL, choice = "Remember me") \%>\%
+    margin(r = c(sm = 2), b = 2),
+  submit = submitInput() \%>\%
+    margin(b = 2)
+)
+}
+
+Now we're cooking with gas!
+}
+
 \examples{
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      lapply(
-        1:5,
-        padding,
-        tag = div("Nunc aliquet, augue nec") \%>\%
-          width(25) \%>\%
-          margins(1) \%>\%
-          border("blue") \%>\%
-          rounded() \%>\%
-          text("center")
-      )
-    ) \%>\%
-      display(flex = TRUE) \%>\%
-      flex(wrap = TRUE),
-    server = function(input, output) {
+padding(div(), c(xs = 0, sm = 2, lg = 4))
 
-    }
-  )
-}
+margin(div(), right = c(md = "auto"))
+
+margin(div(), bottom = 3, left = 1)
+
+
+div(
+  div() \%>\%
+    margin(4) \%>\%
+    padding(4) \%>\%
+    background("grey") \%>\%
+    border()
+)
 
 }
 \seealso{

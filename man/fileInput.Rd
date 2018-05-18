@@ -33,7 +33,7 @@ defaults to \code{NULL}, in which case any file type may be selected.}
 Upload files to the server.
 }
 \details{
-Be careful when adjusting the right or left margins of a file input. In the
+Be careful when adjusting the right or left margin of a file input. In the
 current version of Bootstrap file inputs can be pushed off the side of a
 page.
 }
@@ -43,7 +43,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       fileInput("upload") \%>\%
-        margins(c(0, "auto", 0, "auto"))
+        margin(0, "auto", 0, "auto")
     ),
     server = function(input, output) {
       observe({
@@ -63,7 +63,7 @@ if (interactive()) {
           background("white") \%>\%
           border("green", -1)
       ) \%>\%
-        margins(c("auto", 0, "auto", 0))
+        margin("auto", 0, "auto", 0)
     ),
     server = function(input, output) {
       observe({
@@ -81,9 +81,9 @@ if (interactive()) {
   shinyApp(
     ui = container(
       fileInput("upload1") \%>\%
-        margins(3),
+        margin(3),
       fileInput("upload2") \%>\%
-        margins(3)
+        margin(3)
     ),
     server = function(input, output) {
       observeEvent(input$upload1, {

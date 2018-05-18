@@ -27,11 +27,10 @@
 #'
 #' @details
 #'
-#' When `inline` is `TRUE` you may want to adjust the right margin of each
-#' child element for viewports larger than mobile,
-#' `margins(<TAG>, sm = c(0, 2, 0, 0))`, see [margins()]. You only need to
-#' apply extra space for larger viewports because inline forms do not take
-#' effect on small viewports.
+#' When `inline` is `TRUE` you may want to adjust the right margin of each child
+#' element for viewports larger than mobile, `margin(<TAG>, right = c(sm = 2))`,
+#' more information at [margin()]. You only need to apply extra space for larger
+#' viewports because inline forms do not take effect on small viewports.
 #'
 #' @seealso
 #'
@@ -72,7 +71,7 @@
 #'               id = "checkbox",
 #'               choice = "Simple checkbox"
 #'             ) %>%
-#'               margins(c(0, 0, 2, 0))
+#'               margin(bottom = 2)
 #'           )
 #'         ),
 #'         col(
@@ -102,7 +101,7 @@
 #'           ) %>%
 #'             border("grey", -1) %>%
 #'             padding(3) %>%
-#'             margins(c(0, 0, 3, 0)),
+#'             margin(bottom = 3),
 #'           h5("This input is unaffected"),
 #'           textInput(id = "standalone")
 #'         ),
@@ -210,13 +209,14 @@ formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
 #'             ) %>%
 #'               background("blue")
 #'           ) %>%
-#'             margins(3) %>%
+#'             margin(3) %>%
 #'             background("grey", +2)
 #'         ) %>%
-#'           margins("auto")
+#'           margin("auto")
 #'       )
 #'     ),
 #'     server = function(input, output) {
+#'
 #'     }
 #'   )
 #' }

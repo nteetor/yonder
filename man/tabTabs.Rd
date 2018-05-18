@@ -92,7 +92,7 @@ if (interactive()) {
           )
         )
       ) \%>\%
-        margins(4) \%>\%
+        margin(4) \%>\%
         width(50)
     ),
     server = function(input, output) {
@@ -121,7 +121,7 @@ if (interactive()) {
             id = "myTabs",
             labels = c("Home", "About", "Posts")
           ) \%>\%
-            margins(c(0, 0, 5, 0)),
+            margin(bottom = 5),
           tabContent(
             tabs = "myTabs",
             tabPane(

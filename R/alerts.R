@@ -35,7 +35,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       buttonInput("show", "Alert!") %>%
-#'         margins(3)
+#'         margin(3)
 #'     ),
 #'     server = function(input, output) {
 #'       observeEvent(input$show, {
@@ -62,7 +62,7 @@
 #'           verbatimTextOutput("value")
 #'         )
 #'       ) %>%
-#'         margins(3)
+#'         margin(3)
 #'     ),
 #'     server = function(input, output) {
 #'       oldValue <- NULL
@@ -143,7 +143,7 @@ showAlert <- function(text, ..., duration = 4, color = NULL, action = NULL) {
 #'   shinyApp(
 #'     ui = container(
 #'       buttonInput("add", "Alert") %>%
-#'         margins(3),
+#'         margin(3),
 #'       buttonInput("first", "Remove first alert"),
 #'       buttonInput(
 #'         id = "reds",
@@ -190,7 +190,7 @@ showAlert <- function(text, ..., duration = 4, color = NULL, action = NULL) {
 #'           verbatimTextOutput("value")
 #'         )
 #'       ) %>%
-#'         margins(3)
+#'         margin(3)
 #'     ),
 #'     server = function(input, output) {
 #'       oldValue <- NULL

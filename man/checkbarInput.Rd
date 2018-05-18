@@ -46,7 +46,7 @@ if (interactive()) {
             selected = "Check 1"
           ) \%>\%
             background("blue") \%>\%
-            margins(2),
+            margin(2),
          checkbarInput(
             id = "indigo",
             choices = c(
@@ -57,7 +57,7 @@ if (interactive()) {
             selected = "Check 2"
           ) \%>\%
             background("indigo") \%>\%
-            margins(2)
+            margin(2)
         ),
         col(
           verbatimTextOutput("values")

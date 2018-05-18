@@ -32,11 +32,10 @@ its child inputs. This can be useful if you want to use a \code{formInput()}
 solely for page layout.
 }
 \details{
-When \code{inline} is \code{TRUE} you may want to adjust the right margin of each
-child element for viewports larger than mobile,
-\code{margins(<TAG>, sm = c(0, 2, 0, 0))}, see \code{\link[=margins]{margins()}}. You only need to
-apply extra space for larger viewports because inline forms do not take
-effect on small viewports.
+When \code{inline} is \code{TRUE} you may want to adjust the right margin of each child
+element for viewports larger than mobile, \code{margin(<TAG>, right = c(sm = 2))},
+more information at \code{\link[=margin]{margin()}}. You only need to apply extra space for larger
+viewports because inline forms do not take effect on small viewports.
 }
 \examples{
 if (interactive()) {
@@ -70,7 +69,7 @@ if (interactive()) {
               id = "checkbox",
               choice = "Simple checkbox"
             ) \%>\%
-              margins(c(0, 0, 2, 0))
+              margin(bottom = 2)
           )
         ),
         col(
@@ -100,7 +99,7 @@ if (interactive()) {
           ) \%>\%
             border("grey", -1) \%>\%
             padding(3) \%>\%
-            margins(c(0, 0, 3, 0)),
+            margin(bottom = 3),
           h5("This input is unaffected"),
           textInput(id = "standalone")
         ),
