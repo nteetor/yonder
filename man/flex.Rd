@@ -25,7 +25,7 @@ to top when \code{direction} is \code{"column"}.}
 horizontally aligned, defaults to \code{NULL}. See the \strong{justify} section below
 for more on how the different values affect horizontal spacing.}
 
-\item{align}{A \link{responsive} argument. One of \code{"start"}, \code{"end"}, \code{"center'},
+\item{align}{A \link{responsive} argument. One of \code{"start"}, \code{"end"}, \code{"center"},
 \code{"baseline"}, or \code{"stretch"} specifying how items are vertically aligned,
 defaults to \code{NULL}. See the \strong{align} section below for more on how the
 different values affect vertical spacing.}
@@ -72,12 +72,12 @@ columns.\preformatted{div(
   div("A flex item") \%>\%
     padding(3) \%>\%
     border(),
-   div("A flex item") \%>\%
+  div("A flex item") \%>\%
     padding(3) \%>\%
-     border(),
-    div("A flex item") \%>\%
-    padding(3) \%>\%
-      border()
+    border(),
+  div("A flex item") \%>\%
+     padding(3) \%>\%
+     border()
 ) \%>\%
   display(flex = TRUE) \%>\%
   flex(direction = "column")

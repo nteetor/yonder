@@ -2,34 +2,46 @@
 % Please edit documentation in R/utilities.R
 \name{float}
 \alias{float}
-\title{Float an element}
+\title{Tag element float}
 \usage{
-float(tag, default = NULL, sm = NULL, md = NULL, lg = NULL, xl = NULL)
+float(.tag, side)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{.tag}{A tag element.}
 
-\item{default}{One of \code{"left"}, \code{"right"}, or \code{"none"} specifying the default
-float of the element.}
-
-\item{sm}{Like \code{default}, but the float is applied once the viewport is 576
-pixels wide, think phone in landscape mode.}
-
-\item{md}{Like \code{default}, but the float is applied once the viewport is 768
-pixels wide, think tablets.}
-
-\item{lg}{Like \code{default}, but the float is applied once the viewport is 992
-pixels wide, think desktop.}
-
-\item{xl}{Like \code{default}, but the float is applied once the viewport is 1200
-pixels wide, think large desktop.}
+\item{side}{A \link{responsive} argument. One of \code{"left"} or \code{"right"} specifying
+the side to float the element.}
 }
 \description{
-The \code{float} utility function applies Bootstrap float classes to a tag
-element. These classes cause a tag element to float to the left or right
-in its parent element. Alternatively, specify \code{"none"} to remove the
-element's float. The float utilities are viewport responsive.
+Use \code{float()} to float an element to the left or right side of its parent
+element. A classic example using floats is a newspaper layout where text is
+wrapped around a picture.
 }
+\section{Newspaper layout}{
+\preformatted{div(
+  icon("table-tennis") \%>\%
+    font(size = "5x") \%>\%
+    padding(2) \%>\%
+    float("left"),
+  p(
+    "Fusce commodo. Nullam tempus. Nunc rutrum turpis sed pede.",
+    "Phasellus lacus.  Cras placerat accumsan nulla.",
+    "Fusce sagittis, libero non molestie mollis, ",
+    "magna orci ultrices dolor, at vulputate neque nulla lacinia eros."
+  ),
+  p(
+    "Nulla facilisis, risus a rhoncus fermentum, tellus tellus",
+    "lacinia purus, et dictum nunc justo sit amet elit."
+  ),
+  p(
+    "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.",
+    "Aliquam posuere.",
+    "Sed id ligula quis est convallis tempor."
+  )
+)
+}
+}
+
 \examples{
 
 }
@@ -38,6 +50,6 @@ Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{font}},
   \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{text}}, \code{\link{width}}
+  \code{\link{width}}
 }
 \concept{utilities}

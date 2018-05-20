@@ -81,7 +81,7 @@ NULL
 #'   horizontally aligned, defaults to `NULL`. See the **justify** section below
 #'   for more on how the different values affect horizontal spacing.
 #'
-#' @param align A [responsive] argument. One of `"start"`, `"end"`, `"center'`,
+#' @param align A [responsive] argument. One of `"start"`, `"end"`, `"center"`,
 #'   `"baseline"`, or `"stretch"` specifying how items are vertically aligned,
 #'   defaults to `NULL`. See the **align** section below for more on how the
 #'   different values affect vertical spacing.
@@ -90,7 +90,6 @@ NULL
 #'   whether to wrap flex items inside the flex containter, `tag`, defaults
 #'   to `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
 #'   not wrap. See the **wrap** section below for more.
-#'
 #'
 #' @section `direction`:
 #'
@@ -128,17 +127,16 @@ NULL
 #'   div("A flex item") %>%
 #'     padding(3) %>%
 #'     border(),
-#'    div("A flex item") %>%
+#'   div("A flex item") %>%
 #'     padding(3) %>%
-#'      border(),
-#'     div("A flex item") %>%
-#'     padding(3) %>%
-#'       border()
+#'     border(),
+#'   div("A flex item") %>%
+#'      padding(3) %>%
+#'      border()
 #' ) %>%
 #'   display(flex = TRUE) %>%
 #'   flex(direction = "column")
 #' ```
-#'
 #' @section `justify`:
 #'
 #' Below you can see how the possible `justify` values change the horizontal

@@ -35,6 +35,6 @@ Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{float}}, \code{\link{font}},
   \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{text}}, \code{\link{width}}
+  \code{\link{width}}
 }
 \concept{utilities}

@@ -47,7 +47,7 @@ colorUtility <- function(tag, base, color) {
 #' tag element's text font. Font size's are changed relative to the base font
 #' size of the web page.
 #'
-#' @param tag A tag element.
+#' @param .tag A tag element.
 #'
 #' @param color A character string specifying the text color of the tag element,
 #'   defaults to `NULL` in which case the text color is unchanged.
@@ -59,6 +59,9 @@ colorUtility <- function(tag, base, color) {
 #' @param weight One of `"bold"`, `"normal"`, `"light"`, `"italic"`, or
 #'   `"monospace"` specifying the font weight of the element's text, defaults to
 #'   `NULL`, in which case the font weight is unchanged.
+#'
+#' @param align A [responsive] argument. One of `"left"`, `"center"`, `"right"`,
+#'   or `"justify"`.
 #'
 #' @details
 #'
@@ -123,7 +126,7 @@ colorUtility <- function(tag, base, color) {
 #'   )
 #' }
 #'
-font <- function(tag, color = NULL, size = NULL, weight = NULL) {
+font <- function(.tag, color = NULL, size = NULL, weight = NULL, align = NULL) {
   if (color != "body" && !re(color, paste(.colors, collapse = "|"))) {
     stop(
       "invalid `text` argument, `color` is invalid, see ?background ",
@@ -148,14 +151,16 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL) {
     )
   }
 
+  align <- ensureBreakpoints(align, c("left", "center", "right", "justify"))
+
   if (!is.null(color)) {
-    tag <- colorUtility(tag, "text", color)
+    .tag <- colorUtility(.tag, "text", color)
   }
 
   if (!is.null(size)) {
     size <- paste0("font-size-", size)
-    tag <- tagDropClass(tag, "font-size-([2-9]|10)x")
-    tag <- tagAddClass(tag, size)
+    .tag <- tagDropClass(.tag, "font-size-([2-9]|10)x")
+    .tag <- tagAddClass(.tag, size)
   }
 
   if (!is.null(weight)) {
@@ -165,18 +170,23 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL) {
       weight <- paste0("font-", weight)
     }
 
-    tag <- tagDropClass(tag, "font-(weight-(bold|normal|light)|italic|monospace)")
-    tag <- tagAddClass(tag, weight)
+    .tag <- tagDropClass(.tag, "font-(weight-(bold|normal|light)|italic|monospace)")
+    .tag <- tagAddClass(.tag, weight)
   }
 
-  tag
+  if (length(align)) {
+    classes <- createResponsiveClasses(align, "text")
+    .tag <- tagAddClass(.tag, classes)
+  }
+
+  .tag
 }
 
 #' Tag element background color
 #'
 #' Use `background()` to change the background color of a tag element.
 #'
-#' @param tag A tag element.
+#' @param .tag A tag element.
 #'
 #' @param color A character string specifying the background color, see below
 #'   for all possible values.
@@ -243,7 +253,7 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL) {
 #'   )
 #' }
 #'
-background <- function(tag, color) {
+background <- function(.tag, color) {
   if (!(color %in% c(.colors, "transparent"))) {
     stop(
       "invalid `background` argument, `color` is invalid, see ?background ",
@@ -254,19 +264,19 @@ background <- function(tag, color) {
 
   if (color == "transparent") {
     base <- "bg"
-  } else if (tagHasClass(tag, "alert")) {
+  } else if (tagHasClass(.tag, "alert")) {
     base <- "alert"
-  } else if (tagHasClass(tag, "badge")) {
+  } else if (tagHasClass(.tag, "badge")) {
     base <- "badge"
-  } else if (tagHasClass(tag, "btn")) {
+  } else if (tagHasClass(.tag, "btn")) {
     base <- "btn"
-  } else if (tagHasClass(tag, "list-group-item")) {
+  } else if (tagHasClass(.tag, "list-group-item")) {
     base <- "list-group-item"
   } else {
     base <- "bg"
   }
 
-  colorUtility(tag, base, color)
+  colorUtility(.tag, base, color)
 }
 
 #' Tag element borders
@@ -274,7 +284,7 @@ background <- function(tag, color) {
 #' Use `border()` to add borders to a tag element or change the color of a tag
 #' element's border.
 #'
-#' @param tag A tag element.
+#' @param .tag A tag element.
 #'
 #' @param color A character string specifying the border color, defaults to
 #'   `NULL`, in which case the browser default is used. See below for possible
@@ -337,7 +347,7 @@ background <- function(tag, color) {
 #'   )
 #' }
 #'
-border <- function(tag, color = NULL, sides = "all") {
+border <- function(.tag, color = NULL, sides = "all") {
   if (!re(color, paste(color, collapse = "|"))) {
     stop(
       "invalid `border()` argument, `color` is invalid, see ?border ",
@@ -355,18 +365,18 @@ border <- function(tag, color = NULL, sides = "all") {
   }
 
   if (!is.null(color)) {
-    tag <- colorUtility(tag, "border", color)
+    .tag <- colorUtility(.tag, "border", color)
   }
 
   if ("all" %in% sides) {
-    tag <- tagAddClass(tag, "border")
+    .tag <- tagAddClass(.tag, "border")
   } else if ("none" %in% sides) {
-    tag <- tagAddClass(tag, "border-0")
+    .tag <- tagAddClass(.tag, "border-0")
   } else {
-    tag <- tagAddClass(tag, sprintf("border-%s", sides))
+    .tag <- tagAddClass(.tag, sprintf("border-%s", sides))
   }
 
-  tag
+  .tag
 }
 
 #' Round tag element corners
@@ -375,7 +385,7 @@ border <- function(tag, color = NULL, sides = "all") {
 #' styles are applied by sides, e.g. `"left"` or `"bottom"`. The `"circle"`
 #' value heavily rounds all the corners of an element.
 #'
-#' @param tag A tag element.
+#' @param .tag A tag element.
 #'
 #' @param sides One of `"top"`, `"right"`, `"bottom"`, `"left"`, `"circle"`,
 #'   `"all"` or `"none"`, defaults to `"all"`, specifying which and how the
@@ -385,7 +395,7 @@ border <- function(tag, color = NULL, sides = "all") {
 #' @export
 #' @examples
 #'
-rounded <- function(tag, sides = "all") {
+rounded <- function(.tag, sides = "all") {
   if (!all(re(sides, "top|right|bottom|left|circle|all|none", len0 = FALSE))) {
     stop(
       "invalid `rounded` argument, `sides` must be one of ",
@@ -407,7 +417,7 @@ rounded <- function(tag, sides = "all") {
     character(1)
   )
 
-  tagAddClass(tag, classes)
+  tagAddClass(.tag, classes)
 }
 
 #' Add shadows to tag elements
@@ -418,7 +428,7 @@ rounded <- function(tag, sides = "all") {
 #' Although `"none"` is an allowed `size`, most elements do not have a shadow by
 #' default.
 #'
-#' @param tag A tag element.
+#' @param .tag A tag element.
 #'
 #' @param size One of `"none"`, `"small"`, `"regular"`, or `"large"` specifying
 #'   the amount of shadow added, defaults to `"regular"`.
@@ -446,7 +456,7 @@ rounded <- function(tag, sides = "all") {
 #'   )
 #' }
 #'
-shadow <- function(tag, size = "regular") {
+shadow <- function(.tag, size = "regular") {
   if (!re(size, "none|small|regular|large", len0 = FALSE)) {
     stop(
       "invalid `shadow()` argument, `size` must be one of ",
@@ -463,71 +473,56 @@ shadow <- function(tag, size = "regular") {
     large = "lg"
   )
 
-  tagAddClass(tag, paste0(c("shadow", size), collapse = "-"))
+  tagAddClass(.tag, paste0(c("shadow", size), collapse = "-"))
 }
 
-#' Float an element
+#' Tag element float
 #'
-#' The `float` utility function applies Bootstrap float classes to a tag
-#' element. These classes cause a tag element to float to the left or right
-#' in its parent element. Alternatively, specify `"none"` to remove the
-#' element's float. The float utilities are viewport responsive.
+#' Use `float()` to float an element to the left or right side of its parent
+#' element. A classic example using floats is a newspaper layout where text is
+#' wrapped around a picture.
 #'
-#' @param tag A tag element.
+#' @param .tag A tag element.
 #'
-#' @param default One of `"left"`, `"right"`, or `"none"` specifying the default
-#'   float of the element.
+#' @param side A [responsive] argument. One of `"left"` or `"right"` specifying
+#'   the side to float the element.
 #'
-#' @param sm Like `default`, but the float is applied once the viewport is 576
-#'   pixels wide, think phone in landscape mode.
+#' @section Newspaper layout:
 #'
-#' @param md Like `default`, but the float is applied once the viewport is 768
-#'   pixels wide, think tablets.
-#'
-#' @param lg Like `default`, but the float is applied once the viewport is 992
-#'   pixels wide, think desktop.
-#'
-#' @param xl Like `default`, but the float is applied once the viewport is 1200
-#'   pixels wide, think large desktop.
+#' ```
+#' div(
+#'   icon("table-tennis") %>%
+#'     font(size = "5x") %>%
+#'     padding(2) %>%
+#'     float("left"),
+#'   p(
+#'     "Fusce commodo. Nullam tempus. Nunc rutrum turpis sed pede.",
+#'     "Phasellus lacus.  Cras placerat accumsan nulla.",
+#'     "Fusce sagittis, libero non molestie mollis, ",
+#'     "magna orci ultrices dolor, at vulputate neque nulla lacinia eros."
+#'   ),
+#'   p(
+#'     "Nulla facilisis, risus a rhoncus fermentum, tellus tellus",
+#'     "lacinia purus, et dictum nunc justo sit amet elit."
+#'   ),
+#'   p(
+#'     "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.",
+#'     "Aliquam posuere.",
+#'     "Sed id ligula quis est convallis tempor."
+#'   )
+#' )
+#' ```
 #'
 #' @family utilities
 #' @export
 #' @examples
 #'
-float <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
-                  xl = NULL) {
-  args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
+float <- function(.tag, side) {
+  side <- ensureBreakpoints(side, c("left", "right"))
 
-  if (length(float) == 0) {
-    stop(
-      "invalid `float` arguments, at least one argument must not be NULL",
-      call. = FALSE
-    )
-  }
+  classes <- createResponsiveClasses(side)
 
-  classes <- vapply(
-    names2(args),
-    function(nm) {
-      arg <- args[[nm]]
-
-      if (!re(arg, "left|right|none")) {
-        stop(
-          "invalid `float` argument, `", nm, "` must be one of ",
-          '"left", "right", or "none"',
-          call. = FALSE
-        )
-      }
-
-      if (nm == "default") {
-        paste0("float-", arg)
-      } else {
-        paste0("float-", nm, "-", arg)
-      }
-    },
-    character(1)
-  )
-
-  tagAddClass(tag, classes)
+  tagAddClass(.tag, classes)
 }
 
 #' Affix elements to top or bottom of page
@@ -537,7 +532,7 @@ float <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #' of a page *after* the element is scrolled past. *Important*, the IE11 and
 #' Edge browsers do not support the sticky behavior.
 #'
-#' @param tag A tag element.
+#' @param .tag A tag element.
 #'
 #' @param position One of `"top"`, `"bottom"`, or `"sticky"` specifying the
 #'   fixed behavior of an element.
@@ -549,7 +544,7 @@ float <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
 #'   width(100) %>%
 #'   affix("top")
 #'
-affix <- function(tag, position) {
+affix <- function(.tag, position) {
   if (!re(position, "top|bottom|sticky", len0 = FALSE)) {
     stop(
       "invalid `affix` argument, `position` must be one of ",
@@ -559,72 +554,10 @@ affix <- function(tag, position) {
   }
 
   if (position == "sticky") {
-    tagAddClass(tag, "sticky-top")
+    tagAddClass(.tag, "sticky-top")
   } else {
-    tagAddClass(tag, paste0("fixed-", position))
+    tagAddClass(.tag, paste0("fixed-", position))
   }
-}
-
-#' Tag element text alignment
-#'
-#' The `text()` utility applies Bootstrap classes to change how an element's
-#' text is aligned. Like with [display()] or [padding()] different text alignments
-#' can be applied based on the viewport size.
-#'
-#' @param tag A tag object.
-#'
-#' @param default One of `"left"`, `"right"`, `"center"`, or `"justified"`
-#'   specifying the default text alignment of the element.
-#'
-#' @param sm Like `default`, but the text alignment is applied once the viewport
-#'   is 576 pixels wide, think phone in landscape mode.
-#'
-#' @param md Like `default`, but the text alignment is applied once the
-#'   viewport is 768 pixels wide, think tablets.
-#'
-#' @param lg Like `default`, but the text alignment is applied once the
-#'   viewport is 992 pixels wide, think desktop.
-#'
-#' @param xl Like `default`, but the text alignment is applied once the
-#'   viewport is 1200 pixels wide, think large desktop.
-#'
-#' @family utilities
-#' @export
-#' @examples
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       p("Text always aligned center. Resize your browser window to see these",
-#'         "examples in action") %>%
-#'         text("center"),
-#'       p("Text centered on screens >= large, left aligned by default") %>%
-#'         text("left", lg = "center"),
-#'       p("Text aligned left on screens >= medium, right aligned by default") %>%
-#'         text("right", md = "left"),
-#'       p("Text aligned left on screens >= medium, centered for >= small, justified",
-#'         "for mobile") %>%
-#'         text("justify", sm = "center", md = "left")
-#'     ),
-#'     server = function(input, output) {
-#'
-#'     }
-#'   )
-#' }
-#'
-text <- function(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
-                 xl = NULL) {
-  args <- dropNulls(
-    list(default = default, sm = sm, md = md, lg = lg, xl = xl)
-  )
-
-  classes <- responsives(
-    prefix = "text",
-    values = args,
-    possible = c("left", "right", "center", "justify")
-  )
-
-  tagAddClass(tag, classes)
 }
 
 #' Tag element display

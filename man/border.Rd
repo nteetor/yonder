@@ -4,10 +4,10 @@
 \alias{border}
 \title{Tag element borders}
 \usage{
-border(tag, color = NULL, sides = "all")
+border(.tag, color = NULL, sides = "all")
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{.tag}{A tag element.}
 
 \item{color}{A character string specifying the border color, defaults to
 \code{NULL}, in which case the browser default is used. See below for possible
@@ -55,7 +55,7 @@ if (interactive()) {
 
   shinyApp(
     ui = container(
-      fluid = FALSE,
+      center = TRUE,
       lapply(
         colors,
         border,
@@ -78,6 +78,6 @@ Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{display}},
   \code{\link{float}}, \code{\link{font}},
   \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{text}}, \code{\link{width}}
+  \code{\link{width}}
 }
 \concept{utilities}
