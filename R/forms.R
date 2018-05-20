@@ -44,7 +44,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           formInput(
 #'             id = "form",
 #'             tags$label("Email"),
@@ -74,7 +74,7 @@
 #'               margin(bottom = 2)
 #'           )
 #'         ),
-#'         col(
+#'         column(
 #'           verbatimTextOutput("value")
 #'         )
 #'       )
@@ -91,7 +91,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           h5("A form input"),
 #'           p("Elements are non-reactive"),
 #'           formInput(
@@ -105,7 +105,7 @@
 #'           h5("This input is unaffected"),
 #'           textInput(id = "standalone")
 #'         ),
-#'         col(
+#'         column(
 #'           h5("Form elements values:"),
 #'           verbatimTextOutput("elements") %>%
 #'             padding(c(0, 0, 3, 0)),
@@ -159,10 +159,8 @@ formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
 #'   For **formRow**, any number of `formGroup`s or additional named arguments
 #'   passed as HTML attributes to the parent element.
 #'
-#' @param default,sm,md,lg,xl These arguments are taken directly from [col()]
-#'   because `formGroup`s can replicate column behaviour in order to build
-#'   highly flexible forms. To best understand these arguments please refer to
-#'   the `col` help page.
+#' @param width A [responsive] argument. One of `1:12` or "auto" specifying a
+#'   column width for the form group, defaults to `NULL`.
 #'
 #' @export
 #' @examples
@@ -172,57 +170,50 @@ formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       row(
-#'         col(
-#'           md = 6,
-#'           card(
-#'             formRow(
-#'               formGroup(
-#'                 md = 6,
-#'                 label = "Email",
-#'                 emailInput(
-#'                   id = "email",
-#'                   placeholder = "e@@mail.com"
-#'                 )
-#'               ),
-#'               formGroup(
-#'                 md = 6,
-#'                 label = "Password",
-#'                 passwordInput(
-#'                   id = "password",
-#'                   placeholder = "123456"
-#'                 ),
-#'                 help = "Please consider something
-#'                   better than 123456"
-#'               )
+#'       center = TRUE,
+#'       card(
+#'         formRow(
+#'           formGroup(
+#'             width = c(md = 6),
+#'             label = "Email",
+#'             emailInput(
+#'               id = "email",
+#'               placeholder = "e@@mail.com"
+#'             )
+#'           ),
+#'           formGroup(
+#'             width = c(md = 6),
+#'             label = "Password",
+#'             passwordInput(
+#'               id = "password",
+#'               placeholder = "123456"
 #'             ),
-#'             formGroup(
-#'               label = "Username",
-#'               groupInput(
-#'                 id = "username",
-#'                 left = "@@"
-#'               )
-#'             ),
-#'             buttonInput(
-#'               id = "go",
-#'               label = "Go!"
-#'             ) %>%
-#'               background("blue")
-#'           ) %>%
-#'             margin(3) %>%
-#'             background("grey", +2)
+#'             help = "Please consider something better than 123456"
+#'           )
+#'         ),
+#'         formGroup(
+#'           label = "Username",
+#'           groupInput(
+#'             id = "username",
+#'             left = "@@"
+#'           )
+#'         ),
+#'         buttonInput(
+#'           id = "go",
+#'           label = "Go!"
 #'         ) %>%
-#'           margin("auto")
-#'       )
+#'           background("blue")
+#'       ) %>%
+#'         margin(3) %>%
+#'         background("grey")
+#'
 #'     ),
 #'     server = function(input, output) {
-#'
 #'     }
 #'   )
 #' }
 #'
-formGroup <- function(label, input, help = NULL,..., default = NULL, sm = NULL,
-                      md = NULL, lg = NULL, xl = NULL) {
+formGroup <- function(label, input, help = NULL,..., width = NULL) {
   if (!is_tag(input)) {
     stop(
       "invalid `formGroup()` argument, expecting `input` to be a tag element",
@@ -230,16 +221,19 @@ formGroup <- function(label, input, help = NULL,..., default = NULL, sm = NULL,
     )
   }
 
-  build <- col(default = default, sm = sm, md = md, lg = lg, xl = xl)
+  build <- column(width = width)
 
   extra <- if (build$attribs$class != "col") {
     sub("^col\\s+", "", build$attribs$class)
   }
 
+  width <- ensureBreakpoints(width, c(1:12, "auto"))
+  classes <- createResponsiveClasses(width, "col")
+
   tags$div(
     class = collate(
       "form-group",
-      extra
+      classes
     ),
     label,
     input,

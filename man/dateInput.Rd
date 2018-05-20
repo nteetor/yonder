@@ -44,7 +44,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           h6("Single date input:"),
           dateInput(
             id = "singledate"
@@ -58,7 +58,7 @@ if (interactive()) {
             multiple = TRUE
           )
         ),
-        col(
+        column(
           verbatimTextOutput("values")
         )
       )
@@ -79,13 +79,13 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           dateRangeInput(
             id = "daterange",
             selected = c(Sys.Date(), Sys.Date() + 3)
           )
         ),
-        col(
+        column(
           verbatimTextOutput("values")
         )
       )

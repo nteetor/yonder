@@ -27,14 +27,14 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           buttonGroupInput(
             id = "group",
             labels = c("Once", "Twice", "Thrice"),
             values = c(1, 2, 3)
           )
         ),
-        col(
+        column(
           verbatimTextOutput("value")
         )
       )
@@ -52,7 +52,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           buttonGroupInput(
             id = "bg1",
             labels = c("Button 1", "Button 2", "Button 3")
@@ -60,7 +60,7 @@ if (interactive()) {
             background("blue") \%>\%
             margin(3)
         ),
-        col(
+        column(
           buttonGroupInput(
             id = "bg2",
             labels = c("Groupee 1", "Groupee 2", "Groupee 3")

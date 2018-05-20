@@ -20,12 +20,12 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           loginInput(
             id = "login"
           )
         ),
-        col(
+        column(
           verbatimTextOutput("value")
         )
       )

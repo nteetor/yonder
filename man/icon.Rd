@@ -24,7 +24,7 @@ included.
 if (interactive()) {
   shinyApp(
     ui = container(
-      fluid = FALSE,
+      center = TRUE,
       selectInput(
         id = "name",
         choices = unique(icons$name)

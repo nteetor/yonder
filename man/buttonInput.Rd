@@ -46,14 +46,14 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           buttonInput(
             id = "button",
             label = "Click me!"
           ) \%>\%
             background("green")
         ),
-        col(
+        column(
           d4(
             textOutput("clicks")
           )
@@ -72,7 +72,7 @@ if (interactive()) {
 if (interactive()) {
   shinyApp(
     ui = container(
-      fluid = FALSE,
+      center = TRUE,
       buttonInput(
         id = "button",
         label = list(

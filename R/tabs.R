@@ -95,7 +95,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           default = 4,
 #'           card(
 #'             p("Nullam quis risus eget urna mollis ornare vel eu leo. Nullam
@@ -103,7 +103,7 @@
 #'           ) %>%
 #'             background("grey")
 #'         ),
-#'         col(
+#'         column(
 #'           tabTabs(
 #'             id = "myTabs",
 #'             labels = c("Home", "About", "Posts")

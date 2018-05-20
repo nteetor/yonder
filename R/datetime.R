@@ -33,7 +33,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           h6("Single date input:"),
 #'           dateInput(
 #'             id = "singledate"
@@ -47,7 +47,7 @@
 #'             multiple = TRUE
 #'           )
 #'         ),
-#'         col(
+#'         column(
 #'           verbatimTextOutput("values")
 #'         )
 #'       )
@@ -147,13 +147,13 @@ dateInput <- function(id, choices = NULL, selected = NULL, min = NULL,
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           dateRangeInput(
 #'             id = "daterange",
 #'             selected = c(Sys.Date(), Sys.Date() + 3)
 #'           )
 #'         ),
-#'         col(
+#'         column(
 #'           verbatimTextOutput("values")
 #'         )
 #'       )

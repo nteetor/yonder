@@ -29,9 +29,9 @@ A group input is a combination reactive input which may consist of one or two
 buttons, dropdowns, static addons, or any combination of these elements.
 Static addons, specified with \code{left} and \code{right} may be used to ensure an
 group input's reactive value always has a certain prefix or suffix. These
-static addons render with a shaded background to help indicated this behavior to the user.
-Buttons and dropdowns may be included to control when the group input's
-reactive value updates. See Details for more information.
+static addons render with a shaded background to help indicated this behavior
+to the user. Buttons and dropdowns may be included to control when the group
+input's reactive value updates. See Details for more information.
 }
 \details{
 \strong{\code{left} is character or \code{right} is character}
@@ -60,14 +60,14 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           groupInput(
             id = "buttongroup",
             left = "@",
             placeholder = "Username"
           )
         ),
-        col(
+        column(
           d4(
             textOutput("value")
           )
@@ -86,7 +86,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           groupInput(
             id = "groupinput",
             placeholder = "Search terms",
@@ -96,7 +96,7 @@ if (interactive()) {
             )
           )
         ),
-        col(
+        column(
           d4(
             textOutput("value")
           )
@@ -115,13 +115,13 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           groupInput(
             id = "groupinput",
             left = c("$", "0.")
           )
         ),
-        col(
+        column(
           d4(
             textOutput("value")
           )
@@ -140,7 +140,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           groupInput(
             id = "groupinput",
             left = "@",
@@ -153,7 +153,7 @@ if (interactive()) {
               border("blue")
           )
         ),
-        col(
+        column(
           d4(
             textOutput("value")
           )

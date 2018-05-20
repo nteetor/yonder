@@ -35,7 +35,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           checkbarInput(
             id = "blue",
             choices = c(
@@ -59,7 +59,7 @@ if (interactive()) {
             background("indigo") \%>\%
             margin(2)
         ),
-        col(
+        column(
           verbatimTextOutput("values")
         )
       )
@@ -80,7 +80,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           radiobarInput(
             id = "radiobar",
             choices = c(
@@ -91,7 +91,7 @@ if (interactive()) {
             selected = "Radio 1"
           )
         ),
-        col(
+        column(
           verbatimTextOutput("value")
         )
       )

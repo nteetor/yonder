@@ -33,7 +33,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           checkboxInput(
 #'             id = "checkbox",
 #'             choice = "Are you there?",
@@ -44,7 +44,7 @@
 #'             choice = "Hello"
 #'           )
 #'         ),
-#'         col(
+#'         column(
 #'           d4(
 #'             textOutput("value")
 #'           )

@@ -25,7 +25,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           checkbarInput(
 #'             id = "blue",
 #'             choices = c(
@@ -49,7 +49,7 @@
 #'             background("indigo") %>%
 #'             margin(2)
 #'         ),
-#'         col(
+#'         column(
 #'           verbatimTextOutput("values")
 #'         )
 #'       )
@@ -70,7 +70,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           radiobarInput(
 #'             id = "radiobar",
 #'             choices = c(
@@ -81,7 +81,7 @@
 #'             selected = "Radio 1"
 #'           )
 #'         ),
-#'         col(
+#'         column(
 #'           verbatimTextOutput("value")
 #'         )
 #'       )

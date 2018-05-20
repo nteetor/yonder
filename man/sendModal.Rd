@@ -51,7 +51,7 @@ if (interactive()) {
     ui = container(
       row(
         class = "justify-content-center",
-        col(
+        column(
           buttonInput(id = "trigger", "Trigger modal")
         )
       )

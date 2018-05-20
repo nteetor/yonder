@@ -58,14 +58,14 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           groupInput(
             id = "text",
             right = buttonInput("clear", icon("times")) \%>\%
               background("red")
           )
         ),
-        col(
+        column(
           verbatimTextOutput("value")
         )
       ) \%>\%
@@ -130,14 +130,14 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           groupInput(
             id = "text",
             right = buttonInput("clear", icon("times")) \%>\%
               background("red")
           )
         ),
-        col(
+        column(
           verbatimTextOutput("value")
         )
       ) \%>\%

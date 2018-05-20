@@ -42,7 +42,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           formInput(
             id = "form",
             tags$label("Email"),
@@ -72,7 +72,7 @@ if (interactive()) {
               margin(bottom = 2)
           )
         ),
-        col(
+        column(
           verbatimTextOutput("value")
         )
       )
@@ -89,7 +89,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           h5("A form input"),
           p("Elements are non-reactive"),
           formInput(
@@ -103,7 +103,7 @@ if (interactive()) {
           h5("This input is unaffected"),
           textInput(id = "standalone")
         ),
-        col(
+        column(
           h5("Form elements values:"),
           verbatimTextOutput("elements") \%>\%
             padding(c(0, 0, 3, 0)),

@@ -34,7 +34,7 @@ state of the element, shown or hidden, is toggled using \code{hideCollapse()},
 if (interactive()) {
   shinyApp(
     ui = container(
-      fluid = FALSE,
+      center = TRUE,
       buttonInput("toggle", "Toggle the card") \%>\%
         margin(3),
       card(
@@ -60,7 +60,7 @@ if (interactive()) {
 if (interactive()) {
   shinyApp(
     ui = container(
-      fluid = FALSE,
+      center = TRUE,
       buttonInput(
         id = "toggle",
         label = "Client-side toggle",

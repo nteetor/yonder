@@ -40,10 +40,10 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           buttonInput(id = "inc", "Increment progress")
         ),
-        col(
+        column(
           progressOutput(
             bar("clicks", 0, striped = TRUE) \%>\%
               background("blue")
@@ -66,7 +66,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           progressOutput(
             bar(id = "faster", value = 0) \%>\%
               background("yellow"),

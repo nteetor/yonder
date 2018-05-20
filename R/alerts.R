@@ -51,14 +51,14 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           groupInput(
 #'             id = "text",
 #'             right = buttonInput("clear", icon("times")) %>%
 #'               background("red")
 #'           )
 #'         ),
-#'         col(
+#'         column(
 #'           verbatimTextOutput("value")
 #'         )
 #'       ) %>%
@@ -179,14 +179,14 @@ showAlert <- function(text, ..., duration = 4, color = NULL, action = NULL) {
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           groupInput(
 #'             id = "text",
 #'             right = buttonInput("clear", icon("times")) %>%
 #'               background("red")
 #'           )
 #'         ),
-#'         col(
+#'         column(
 #'           verbatimTextOutput("value")
 #'         )
 #'       ) %>%

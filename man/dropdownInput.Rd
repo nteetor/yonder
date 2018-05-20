@@ -38,7 +38,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           dropdownInput(
             id = NULL,
             label = "Dropdown",
@@ -68,7 +68,7 @@ if (interactive()) {
             )
           )
         ),
-        col(
+        column(
           verbatimTextOutput("values")
         )
       )

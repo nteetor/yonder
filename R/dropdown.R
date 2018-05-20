@@ -31,7 +31,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           dropdownInput(
 #'             id = NULL,
 #'             label = "Dropdown",
@@ -61,7 +61,7 @@
 #'             )
 #'           )
 #'         ),
-#'         col(
+#'         column(
 #'           verbatimTextOutput("values")
 #'         )
 #'       )

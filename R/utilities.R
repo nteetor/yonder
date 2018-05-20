@@ -103,7 +103,7 @@ colorUtility <- function(tag, base, color) {
 #'
 #'   shinyApp(
 #'     ui = container(
-#'       fluid = FALSE,
+#'       center = TRUE,
 #'       lapply(
 #'         head(colors, -1),
 #'         font,
@@ -226,7 +226,7 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL) {
 #'
 #'   shinyApp(
 #'     ui = container(
-#'       fluid = FALSE,
+#'       center = TRUE,
 #'       lapply(
 #'         colors,
 #'         background,
@@ -320,7 +320,7 @@ background <- function(tag, color) {
 #'
 #'   shinyApp(
 #'     ui = container(
-#'       fluid = FALSE,
+#'       center = TRUE,
 #'       lapply(
 #'         colors,
 #'         border,

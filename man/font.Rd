@@ -66,7 +66,7 @@ if (interactive()) {
 
   shinyApp(
     ui = container(
-      fluid = FALSE,
+      center = TRUE,
       lapply(
         head(colors, -1),
         font,
