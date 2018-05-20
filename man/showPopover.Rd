@@ -30,9 +30,9 @@ removed. When \code{NULL} is specified the popover can be removed with
 }
 \description{
 Popovers are small windows of content associated with a tag element. Use
-\code{howPopover()} to add a popover to any tag element with an HTML id. This
+\code{showPopover()} to add a popover to any tag element with an HTML id. This
 allows you to add explanations for inputs. Furthermore the \code{\link[=linkInput]{linkInput()}}
-makes explanations of semi-plain text possible. Popovers are hidden with
+makes adding popovers to semi-plain text possible. Popovers are hidden with
 \code{closePopover()}.
 }
 \examples{

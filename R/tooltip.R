@@ -1,23 +1,29 @@
-#' Add Tooltips and Popovers
+#' Tooltips
 #'
 #' Both functions are a means of adding help text to HTML components. Tooltips
-#' appear on hover and popovers appear when the element is clicked.
+#' appear on hover. To add tooltips to text first wrap the text in a `span()` tag
+#' element.
 #'
-#' @param content The tag to add a tooltip or popover to.
+#' @param .tag A tag element.
 #'
-#' @param text The tooltip or popover text.
+#' @param text The tooltip text.
 #'
-#' @param placement A character vector specifying where the tooltip or popover
-#'   is placed, defaults to top, one of `"left"`, `"top"`, `"right"`, or
-#'   `"bottom"`.
+#' @param placement One of `"top"`, `"right"`, `"bottom"`, or `"left"`
+#'   specifying what side of the tag element the tooltip appears on.
 #'
 #' @export
 #' @examples
 #'
-tooltip <- function(content, text, placement = "top") {
-  if (!is_tag(content)) {
+#' div(
+#'   "The island of ",
+#'   span("Yll") %>%
+#'     tooltip("An island of south of the Commonwealth")
+#' )
+#'
+tooltip <- function(.tag, text, placement = "top") {
+  if (!is_tag(.tag)) {
     stop(
-      "invalid `tooltip` argument, `content` must be a tag object",
+      "invalid `tooltip` argument, `.tag` must be a tag object",
       call. = FALSE
     )
   }
@@ -30,43 +36,10 @@ tooltip <- function(content, text, placement = "top") {
     )
   }
 
-  content$attribs$`data-toggle` <- "tooltip"
-  content$attribs$`data-placement` <- placement
-  content$attribs$title <- as.character(text)
-  content$children <- append(content$children, list(include("core")))
+  .tag$attribs$`data-toggle` <- "tooltip"
+  .tag$attribs$`data-placement` <- placement
+  .tag$attribs$title <- as.character(text)
+  .tag$children <- append(.tag$children, list(include("core")))
 
-  content
-}
-
-#' @rdname tooltip
-#' @export
-#' @examples
-#' popover(
-#'   buttonInput("Click me!"),
-#'   "This text appears when the button is clicked"
-#' )
-#'
-popover <- function(content, text, placement = "top") {
-  if (!is_tag(content)) {
-    stop(
-      "invalid `popover` argument, `content` must be a tag object",
-      call. = FALSE
-    )
-  }
-
-  if (!re(placement, "top|left|bottom|right", FALSE)) {
-    stop(
-      "invalid `popover` argument, `placement` must be one of ",
-      '"top", "left", "bottom", or "right"',
-      call. = FALSE
-    )
-  }
-
-  content$attribs$`data-container` <- "body"
-  content$attribs$`data-toggle` <- "popover"
-  content$attribs$`data-placement` <- placement
-  content$attribs$`data-content` <- as.character(text)
-  content$children <- c(content$children, include("core"))
-
-  content
+  .tag
 }
