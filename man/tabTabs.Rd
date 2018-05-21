@@ -161,3 +161,14 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other layout: \code{\link{column}}, \code{\link{fieldset}},
+  \code{\link{formGroup}}, \code{\link{navbar}}
+
+Other layout: \code{\link{column}}, \code{\link{fieldset}},
+  \code{\link{formGroup}}, \code{\link{navbar}}
+
+Other layout: \code{\link{column}}, \code{\link{fieldset}},
+  \code{\link{formGroup}}, \code{\link{navbar}}
+}
+\concept{layout}

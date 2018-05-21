@@ -29,6 +29,7 @@
 #' current version of Bootstrap file inputs can be pushed off the side of a
 #' page.
 #'
+#' @family inputs
 #' @examples
 #'
 #' if (interactive()) {

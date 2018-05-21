@@ -141,3 +141,29 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{dateInput}},
+  \code{\link{dropdownInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{listGroupThruput}}, \code{\link{radioInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
+
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{dateInput}},
+  \code{\link{dropdownInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{listGroupThruput}}, \code{\link{radioInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
+
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{dateInput}},
+  \code{\link{dropdownInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{listGroupThruput}}, \code{\link{radioInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
+}
+\concept{inputs}

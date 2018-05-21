@@ -96,3 +96,8 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other outputs: \code{\link{sparklineOutput}},
+  \code{\link{streamOutput}}
+}
+\concept{outputs}

@@ -31,6 +31,7 @@
 #'   For **tabTabs**, additional named arguments passed as HTML attributes to
 #'   the parent element.
 #'
+#' @family layout
 #' @export
 #' @examples
 #'
@@ -219,6 +220,7 @@ tabTabs <- function(id, labels, values = labels, active = values[1], ...) {
   )
 }
 
+#' @family layout
 #' @rdname tabTabs
 #' @export
 tabContent <- function(tabs, ...) {
@@ -237,6 +239,7 @@ tabContent <- function(tabs, ...) {
   )
 }
 
+#' @family layout
 #' @rdname tabTabs
 #' @export
 tabPane <- function(...) {

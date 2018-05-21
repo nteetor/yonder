@@ -129,9 +129,11 @@ Bootstrap 4 forms documentation:
 \url{https://getbootstrap.com/docs/4.0/components/forms/}
 
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{dateInput}}, \code{\link{groupInput}},
-  \code{\link{radioInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{dateInput}},
+  \code{\link{dropdownInput}}, \code{\link{fileInput}},
+  \code{\link{groupInput}}, \code{\link{listGroupThruput}},
+  \code{\link{radioInput}}, \code{\link{rangeInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

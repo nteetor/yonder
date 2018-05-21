@@ -11,9 +11,9 @@ roxygen:
     buttons, dropdowns, static addons, or any combination of these elements.
     Static addons, specified with `left` and `right` may be used to ensure an
     group input's reactive value always has a certain prefix or suffix. These
-    static addons render with a shaded background to help indicated this behavior to the user.
-    Buttons and dropdowns may be included to control when the group input's
-    reactive value updates. See Details for more information.
+    static addons render with a shaded background to help indicated this behavior
+    to the user. Buttons and dropdowns may be included to control when the group
+    input's reactive value updates. See Details for more information.
   parameters:
   - name: id
     description: A character string specifying the id of the group input.
@@ -41,14 +41,14 @@ roxygen:
       shinyApp(
         ui = container(
           row(
-            col(
+            column(
               groupInput(
                 id = "buttongroup",
                 left = "@",
                 placeholder = "Username"
               )
             ),
-            col(
+            column(
               d4(
                 textOutput("value")
               )
@@ -67,7 +67,7 @@ roxygen:
       shinyApp(
         ui = container(
           row(
-            col(
+            column(
               groupInput(
                 id = "groupinput",
                 placeholder = "Search terms",
@@ -77,7 +77,7 @@ roxygen:
                 )
               )
             ),
-            col(
+            column(
               d4(
                 textOutput("value")
               )
@@ -96,13 +96,13 @@ roxygen:
       shinyApp(
         ui = container(
           row(
-            col(
+            column(
               groupInput(
                 id = "groupinput",
                 left = c("$", "0.")
               )
             ),
-            col(
+            column(
               d4(
                 textOutput("value")
               )
@@ -121,7 +121,7 @@ roxygen:
       shinyApp(
         ui = container(
           row(
-            col(
+            column(
               groupInput(
                 id = "groupinput",
                 left = "@",
@@ -134,7 +134,7 @@ roxygen:
                   border("blue")
               )
             ),
-            col(
+            column(
               d4(
                 textOutput("value")
               )

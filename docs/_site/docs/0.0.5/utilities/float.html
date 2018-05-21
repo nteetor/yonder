@@ -65,18 +65,6 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/flex/direction">
-        Flex
-      </a>
-    </dt>
-
-    
-
-    
-
-    
-
-    <dt class="mb-1">
       <a class="text-dark" href="/dull/docs/0.0.5/inputs/text-input">
         Inputs
       </a>
@@ -89,12 +77,42 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/utilities/font">
+      <a class="text-dark" href="/dull/docs/0.0.5/layout/fieldset">
+        Layout
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/outputs/sparkline-output">
+        Outputs
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/utilities/update-choices">
         Utilities
       </a>
     </dt>
 
     
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/update-choices">
+        updateChoices
+      </a>
+    </dd>
     
     <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/font">
@@ -105,6 +123,12 @@
     <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/background">
         background
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/border">
+        border
       </a>
     </dd>
     
@@ -127,12 +151,6 @@
     </dd>
     
     <dd>
-      <a class="text-muted" href="/dull/docs/0.0.5/utilities/alignment">
-        alignment
-      </a>
-    </dd>
-    
-    <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/display">
         display
       </a>
@@ -150,6 +168,36 @@
       </a>
     </dd>
     
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/show-popover">
+        showPopover
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/flex">
+        flex
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/send-modal">
+        sendModal
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/tooltip">
+        tooltip
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/mark-invalid">
+        markInvalid
+      </a>
+    </dd>
+    
     
 
     
@@ -157,74 +205,63 @@
 </div>
 
         <div class="col-12 col-sm-10">
-          <h1>Float an element</h1>
+          <h1>Tag element float</h1>
           <p class="lead">
-            <p>The <code class="highlighter-rouge">float</code> utility function applies Bootstrap float classes to a tag
-element. These classes cause a tag element to float to the left or right
-in its parent element. Alternatively, specify <code class="highlighter-rouge">"none"</code> to remove the
-element’s float. The float utilities are viewport responsive.</p>
+            <p>Use <code class="highlighter-rouge">float()</code> to float an element to the left or right side of its parent
+element. A classic example using floats is a newspaper layout where text is
+wrapped around a picture.</p>
 
           </p>
 
           <h2 id="params">Arguments</h2>
           
           
-            <h5 id="param-tag">tag</h5>
+            <h5 id="param-.tag">.tag</h5>
             <p><p>A tag element.</p>
 </p>
           
-            <h5 id="param-default">default</h5>
-            <p><p>One of <code class="highlighter-rouge">"left"</code>, <code class="highlighter-rouge">"right"</code>, or <code class="highlighter-rouge">"none"</code> specifying the default
-float of the element.</p>
+            <h5 id="param-side">side</h5>
+            <p><p>A [responsive] argument. One of <code class="highlighter-rouge">"left"</code> or <code class="highlighter-rouge">"right"</code> specifying
+the side to float the element.</p>
 </p>
           
-            <h5 id="param-sm">sm</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the float is applied once the viewport is 576
-pixels wide, think phone in landscape mode.</p>
-</p>
           
-            <h5 id="param-md">md</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the float is applied once the viewport is 768
-pixels wide, think tablets.</p>
-</p>
+
           
-            <h5 id="param-lg">lg</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the float is applied once the viewport is 992
-pixels wide, think desktop.</p>
-</p>
-          
-            <h5 id="param-xl">xl</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the float is applied once the viewport is 1200
-pixels wide, think large desktop.</p>
-</p>
-          
+            <h2 id="newspaper-layout"><p>Newspaper layout</p>
+</h2>
+            <div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>div(
+  icon("table-tennis") %&gt;%
+    font(size = "5x") %&gt;%
+    padding(2) %&gt;%
+    float("left"),
+  p(
+    "Fusce commodo. Nullam tempus. Nunc rutrum turpis sed pede.",
+    "Phasellus lacus.  Cras placerat accumsan nulla.",
+    "Fusce sagittis, libero non molestie mollis, ",
+    "magna orci ultrices dolor, at vulputate neque nulla lacinia eros."
+  ),
+  p(
+    "Nulla facilisis, risus a rhoncus fermentum, tellus tellus",
+    "lacinia purus, et dictum nunc justo sit amet elit."
+  ),
+  p(
+    "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.",
+    "Aliquam posuere.",
+    "Sed id ligula quis est convallis tempor."
+  )
+)
+</code></pre></div></div>
+
           
 
           <h2 id="source">Source</h2>
           <p>
             
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">float</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> 
-    </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">args</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dropNulls</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">default</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">md</span><span class="p">,</span><span class="w"> 
-        </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lg</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xl</span><span class="p">))</span><span class="w">
-    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">float</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `float` arguments, at least one argument must not be NULL"</span><span class="p">,</span><span class="w"> 
-            </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-    </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">vapply</span><span class="p">(</span><span class="n">names2</span><span class="p">(</span><span class="n">args</span><span class="p">),</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">nm</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">arg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">args</span><span class="p">[[</span><span class="n">nm</span><span class="p">]]</span><span class="w">
-        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">re</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="s2">"left|right|none"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `float` argument, `"</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="s2">"` must be one of "</span><span class="p">,</span><span class="w"> 
-                </span><span class="s2">"\"left\", \"right\", or \"none\""</span><span class="p">,</span><span class="w"> </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nm</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"default"</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"float-"</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-        </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"float-"</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="s2">"-"</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-    </span><span class="p">},</span><span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="m">1</span><span class="p">))</span><span class="w">
-    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">float</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">side</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">side</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ensureBreakpoints</span><span class="p">(</span><span class="n">side</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"left"</span><span class="p">,</span><span class="w"> </span><span class="s2">"right"</span><span class="p">))</span><span class="w">
+    </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">createResponsiveClasses</span><span class="p">(</span><span class="n">side</span><span class="p">)</span><span class="w">
+    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
           </p>

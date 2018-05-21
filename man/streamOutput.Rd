@@ -57,3 +57,11 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other outputs: \code{\link{progressOutput}},
+  \code{\link{sparklineOutput}}
+
+Other outputs: \code{\link{progressOutput}},
+  \code{\link{sparklineOutput}}
+}
+\concept{outputs}

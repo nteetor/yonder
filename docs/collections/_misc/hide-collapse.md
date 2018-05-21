@@ -15,7 +15,7 @@ roxygen:
   export: yes
   filename: collapse.R
   source: |-
-    hideCollapse <- function(id, session = getDefaultReactiveDomain()) {
-        updateCollapse(id, "hide", session)
+    hideCollapse <- function(id) {
+        updateCollapse(id, "hide")
     }
 ---

@@ -33,13 +33,13 @@ roxygen:
       shinyApp(
         ui = container(
           row(
-            col(
+            column(
               buttonInput(
                 id = "button",
                 label = list(
                   "Number of clicks: ",
                   badgeOutput("clicks", 0) %>%
-                    background("red", -2)
+                    background("red")
                 )
               )
             )

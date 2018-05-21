@@ -24,7 +24,7 @@
 #'   removed. When `NULL` is specified the popover can be removed with
 #'   `closePopover()`.
 #'
-#'
+#' @family utilities
 #' @export
 #' @examples
 #'
@@ -75,6 +75,7 @@ showPopover <- function(id, content, title = NULL, placement = "top",
   ))
 }
 
+#' @family utilities
 #' @rdname showPopover
 #' @export
 closePopover <- function(id) {

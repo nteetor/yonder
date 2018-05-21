@@ -21,6 +21,7 @@
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
+#' @family outputs
 #' @export
 #' @examples
 #' if (interactive()) {

@@ -33,11 +33,16 @@ roxygen:
   sections: ~
   examples:
   - |-
+    checkboxInput(
+      id = "pellentesque",
+      choice = "Cras placerat accumsan nulla"
+    )
+  - |-
     if (interactive()) {
       shinyApp(
         ui = container(
           row(
-            col(
+            column(
               checkboxInput(
                 id = "checkbox",
                 choice = "Are you there?",
@@ -48,7 +53,7 @@ roxygen:
                 choice = "Hello"
               )
             ),
-            col(
+            column(
               d4(
                 textOutput("value")
               )
@@ -74,14 +79,14 @@ roxygen:
             buttonInput("choices", "Update checkbox text"),
             buttonInput("values", "Update checkbox value")
           ) %>%
-            display("flex")
+            display(flex = TRUE)
         ),
         server = function(input, output) {
           output$checkvalue <- renderPrint({
             if (is.null(input$foo)) {
-              invalid("foo", "Please check")
+              markInvalid("foo", "Please check")
             } else {
-              valid("foo")
+              markValid("foo")
             }
 
             input$foo

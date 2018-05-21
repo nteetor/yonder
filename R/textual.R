@@ -166,6 +166,7 @@ colorInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
 #' @param ... Any number of inputs to group or named arguments passed as HTML
 #'   attributes to the parent element.
 #'
+#' @family layout
 #' @export
 #' @examples
 #'

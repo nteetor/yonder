@@ -10,7 +10,7 @@ roxygen:
     Utility functions to change a tag element's width or height. Widths and
     heights are specified as percentages of the parent object's width or height.
   parameters:
-  - name: tag
+  - name: .tag
     description: A tag element.
   - name: percentage
     description: |-
@@ -32,7 +32,7 @@ roxygen:
   family: utilities
   export: yes
   filename: utilities.R
-  source: "width <- function(tag, percentage = NULL, max = NULL) {\n    if (is.null(percentage)
+  source: "width <- function(.tag, percentage = NULL, max = NULL) {\n    if (is.null(percentage)
     && is.null(max)) {\n        stop(\"invalid `width` arguments, `percentage` and
     `max` may not both be NULL\", \n            call. = FALSE)\n    }\n    if (!is.null(percentage)
     && !(percentage %in% c(25, 50, 75, \n        100))) {\n        stop(\"invalid
@@ -41,5 +41,5 @@ roxygen:
     \       stop(\"invalid `width` argument, `max` must be one of 25, 50, 75, or 100\",
     \n            call. = FALSE)\n    }\n    percentage <- if (!is.null(percentage))
     \n        paste0(\"w-\", percentage)\n    max <- if (!is.null(max)) \n        paste0(\"mw-\",
-    max)\n    tagAddClass(tag, c(percentage, max))\n}"
+    max)\n    tagAddClass(.tag, c(percentage, max))\n}"
 ---

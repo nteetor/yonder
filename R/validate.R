@@ -14,6 +14,7 @@
 #'   or valid. For `markInvalid` this argument is required, for `markValid` the
 #'   argument is optional.
 #'
+#' @family utilities
 #' @export
 #' @examples
 #'

@@ -39,7 +39,7 @@ roxygen:
       shinyApp(
         ui = container(
           row(
-            col(
+            column(
               formInput(
                 id = "form",
                 tags$label("Email"),
@@ -66,10 +66,10 @@ roxygen:
                   id = "checkbox",
                   choice = "Simple checkbox"
                 ) %>%
-                  margins(c(0, 0, 2, 0))
+                  margin(bottom = 2)
               )
             ),
-            col(
+            column(
               verbatimTextOutput("value")
             )
           )
@@ -86,7 +86,7 @@ roxygen:
       shinyApp(
         ui = container(
           row(
-            col(
+            column(
               h5("A form input"),
               p("Elements are non-reactive"),
               formInput(
@@ -96,11 +96,11 @@ roxygen:
               ) %>%
                 border("grey", -1) %>%
                 padding(3) %>%
-                margins(c(0, 0, 3, 0)),
+                margin(bottom = 3),
               h5("This input is unaffected"),
               textInput(id = "standalone")
             ),
-            col(
+            column(
               h5("Form elements values:"),
               verbatimTextOutput("elements") %>%
                 padding(c(0, 0, 3, 0)),

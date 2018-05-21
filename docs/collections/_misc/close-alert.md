@@ -15,7 +15,7 @@ roxygen:
       shinyApp(
         ui = container(
           buttonInput("add", "Alert") %>%
-            margins(3),
+            margin(3),
           buttonInput("first", "Remove first alert"),
           buttonInput(
             id = "reds",
@@ -50,18 +50,18 @@ roxygen:
       shinyApp(
         ui = container(
           row(
-            col(
+            column(
               groupInput(
                 id = "text",
                 right = buttonInput("clear", icon("times")) %>%
-                  background("red", -1)
+                  background("red")
               )
             ),
-            col(
+            column(
               verbatimTextOutput("value")
             )
           ) %>%
-            margins(3)
+            margin(3)
         ),
         server = function(input, output) {
           oldValue <- NULL

@@ -65,18 +65,6 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/flex/direction">
-        Flex
-      </a>
-    </dt>
-
-    
-
-    
-
-    
-
-    <dt class="mb-1">
       <a class="text-dark" href="/dull/docs/0.0.5/inputs/text-input">
         Inputs
       </a>
@@ -89,12 +77,42 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/utilities/font">
+      <a class="text-dark" href="/dull/docs/0.0.5/layout/fieldset">
+        Layout
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/outputs/sparkline-output">
+        Outputs
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/utilities/update-choices">
         Utilities
       </a>
     </dt>
 
     
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/update-choices">
+        updateChoices
+      </a>
+    </dd>
     
     <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/font">
@@ -105,6 +123,12 @@
     <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/background">
         background
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/border">
+        border
       </a>
     </dd>
     
@@ -127,12 +151,6 @@
     </dd>
     
     <dd>
-      <a class="text-muted" href="/dull/docs/0.0.5/utilities/alignment">
-        alignment
-      </a>
-    </dd>
-    
-    <dd>
       <a class="text-muted font-weight-bold" href="/dull/docs/0.0.5/utilities/display">
         display
       </a>
@@ -150,6 +168,36 @@
       </a>
     </dd>
     
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/show-popover">
+        showPopover
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/flex">
+        flex
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/send-modal">
+        sendModal
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/tooltip">
+        tooltip
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/mark-invalid">
+        markInvalid
+      </a>
+    </dd>
+    
     
 
     
@@ -157,66 +205,45 @@
 </div>
 
         <div class="col-12 col-sm-10">
-          <h1>Element display property, inline, block, and more</h1>
+          <h1>Tag element display</h1>
           <p class="lead">
-            <p>The <code class="highlighter-rouge">display</code> utility is used to apply Bootstrap classes to adjust a tag
-element’s display property. This can be used to hide an element on small
-screens or convert an element from inline to block on large screens. Use the
-<code class="highlighter-rouge">print</code> argument to change the display property of an element during
-printing.</p>
+            <p>Use the <code class="highlighter-rouge">display()</code> utility to adjust how a tag element is rendered. All
+arguments are responsive allowing you to hide elements on small screens or
+convert elements from inline to block on large screens. Most of the time
+you will use the <code class="highlighter-rouge">render</code> argument. However if you want to control how an
+element appears (or does not appear) when the page is printed use the <code class="highlighter-rouge">print</code>
+argument.</p>
 
           </p>
 
           <h2 id="params">Arguments</h2>
           
           
-            <h5 id="param-tag">tag</h5>
+            <h5 id="param-.tag">.tag</h5>
             <p><p>A tag element.</p>
 </p>
           
-            <h5 id="param-default">default</h5>
-            <p><p>One of <code class="highlighter-rouge">"inline"</code>, <code class="highlighter-rouge">"inline-block"</code>, <code class="highlighter-rouge">"block"</code>, <code class="highlighter-rouge">"table"</code>,
-<code class="highlighter-rouge">"table-cell"</code>, <code class="highlighter-rouge">"flex"</code>, <code class="highlighter-rouge">"inline-flex"</code>, or <code class="highlighter-rouge">"none"</code> specifying the
-default display property of the element.</p>
+            <h5 id="param-render,print">render,print</h5>
+            <p><p>A [responsive] argument. One of <code class="highlighter-rouge">"inline"</code>, <code class="highlighter-rouge">"block"</code>,
+<code class="highlighter-rouge">"inline-block"</code>, <code class="highlighter-rouge">"flex"</code>, <code class="highlighter-rouge">"inline-flex"</code>, or <code class="highlighter-rouge">"none"</code>, defaults to
+<code class="highlighter-rouge">NULL</code>.</p>
 </p>
           
-            <h5 id="param-sm">sm</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the display property is applied once the
-viewport is 576 pixels wide, think phone in landscape mode.</p>
-</p>
           
-            <h5 id="param-md">md</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the display property is applied once the
-viewport is 768 pixels wide, think tablets.</p>
-</p>
-          
-            <h5 id="param-lg">lg</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the display property is applied once the
-viewport is 992 pixels wide, think desktop.</p>
-</p>
-          
-            <h5 id="param-xl">xl</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the display property is applied once the
-viewport is 1200 pixels wide, think large desktop.</p>
-</p>
-          
-            <h5 id="param-print">print</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the display property is applied when the
-page is printed.</p>
-</p>
-          
+
           
 
           <h2 id="source">Source</h2>
           <p>
             
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">display</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> 
-    </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">print</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">args</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dropNulls</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">default</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">md</span><span class="p">,</span><span class="w"> 
-        </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lg</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xl</span><span class="p">,</span><span class="w"> </span><span class="n">print</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">print</span><span class="p">))</span><span class="w">
-    </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">responsives</span><span class="p">(</span><span class="n">prefix</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"d"</span><span class="p">,</span><span class="w"> </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">args</span><span class="p">,</span><span class="w"> </span><span class="n">possible</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"inline"</span><span class="p">,</span><span class="w"> 
-        </span><span class="s2">"inline-block"</span><span class="p">,</span><span class="w"> </span><span class="s2">"block"</span><span class="p">,</span><span class="w"> </span><span class="s2">"flex"</span><span class="p">,</span><span class="w"> </span><span class="s2">"flex-inline"</span><span class="p">,</span><span class="w"> </span><span class="s2">"none"</span><span class="p">))</span><span class="w">
-    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">display</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">render</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">print</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">possibles</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"inline"</span><span class="p">,</span><span class="w"> </span><span class="s2">"block"</span><span class="p">,</span><span class="w"> </span><span class="s2">"inline-block"</span><span class="p">,</span><span class="w"> </span><span class="s2">"flex"</span><span class="p">,</span><span class="w"> 
+        </span><span class="s2">"inline-flex"</span><span class="p">,</span><span class="w"> </span><span class="s2">"none"</span><span class="p">)</span><span class="w">
+    </span><span class="n">render</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ensureBreakpoints</span><span class="p">(</span><span class="n">render</span><span class="p">,</span><span class="w"> </span><span class="n">possibles</span><span class="p">)</span><span class="w">
+    </span><span class="n">print</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ensureBreakpoints</span><span class="p">(</span><span class="n">print</span><span class="p">,</span><span class="w"> </span><span class="n">possibles</span><span class="p">)</span><span class="w">
+    </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">createResponsiveClasses</span><span class="p">(</span><span class="n">render</span><span class="p">,</span><span class="w"> </span><span class="s2">"d"</span><span class="p">),</span><span class="w"> </span><span class="n">createResponsiveClasses</span><span class="p">(</span><span class="n">print</span><span class="p">,</span><span class="w"> 
+        </span><span class="s2">"d-print"</span><span class="p">))</span><span class="w">
+    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
           </p>

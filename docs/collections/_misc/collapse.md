@@ -7,72 +7,70 @@ roxygen:
   doctype: ~
   title: Collapsible sections
   description: |-
-    `collapse` allows content to be hidden and toggled into a shown state.
-    The collapsed content is toggled by a button or may be toggled between hidden
-    and shown states using `toggleCollapse`. `showCollapse` and `hideCollapse`
-    are alternatives to `toggleCollapse` to change the state of collapsed content
-    to shown or hidden, respectively.
+    The `collapse()` function allows you to make a tag element collapsible. The
+    state of the element, shown or hidden, is toggled using `hideCollapse()`,
+    `showCollapse()`, and `toggleCollapse()`.
   parameters:
-  - name: button
+  - name: tag
+    description: A tag element.
+  - name: id
     description: |-
-      A button input, when clicked the button will hide or show the
-      collapsable content.
-  - name: content
-    description: A tag element speicfying the content to collapse.
+      A character string specifying an HTML id. Pass this id to the
+      `*Collapse()` functions to hide or show the collapsible element.
   - name: '...'
     description: |-
-      Additional named arguments passed as attributes to the parent
-      element.
-  - name: id
-    description: A character string specifying the id of a collapse section.
-  - name: session
-    description: |-
-      A `session` object passed to the shiny server function,
-      defaults to [`getDefaultReactiveDomain()`].
+      Additional named arguments passed as HTML attributes to the
+      collapsible div.
   sections: ~
-  examples: |
+  examples:
+  - |-
     if (interactive()) {
       shinyApp(
         ui = container(
-          row(
-            col(
-              buttonInput(
-                id = "trigger",
-                label = "The Time Machine"
-              ) %>%
-                background("purple", +1) %>%
-                margins(2) %>%
-                collapse(
-                  tags$div(
-                    class  = "card card-block",
-                    "\"The Time Traveller (for so it will be convenient to speak
-                    of him) was expounding a recondite matter to us. His grey eyes
-                    shone and twinkled, and his usually pale face was flushed and
-                    animated. The fire burned brightly, and the soft radiance of
-                    the incandescent lights in the lilies of silver caught the
-                    bubbles that flashed and passed in our glasses.\""
-                  )
-                )
-            ),
-            col(
-              buttonInput(id = "toggle", "Toggle"),
-              buttonInput(id = "hide", "Hide"),
-              buttonInput(id = "show", "Show")
-            )
-          )
+          center = TRUE,
+          buttonInput("toggle", "Toggle the card") %>%
+            margin(3),
+          card(
+            "\"The Time Traveller (for so it will be convenient to speak
+             of him) was expounding a recondite matter to us. His grey eyes
+             shone and twinkled, and his usually pale face was flushed and
+             animated. The fire burned brightly, and the soft radiance of
+             the incandescent lights in the lilies of silver caught the
+             bubbles that flashed and passed in our glasses.\""
+          ) %>%
+            background("grey") %>%
+            collapse("mycollapse")
         ),
         server = function(input, output) {
           observeEvent(input$toggle, {
-            toggleCollapse("trigger")
+            toggleCollapse("mycollapse")
           })
+        }
+      )
+    }
+  - |
+    if (interactive()) {
+      shinyApp(
+        ui = container(
+          center = TRUE,
+          buttonInput(
+            id = "toggle",
+            label = "Client-side toggle",
+            `data-target` = "#mycollapse",
+            `data-toggle` = "collapse"
+          ) %>%
+            margin(3),
+          card(
+            "If you do not need server-side control with the `*Collapse()`
+             functions consider setting up a client-side collapse with
+             `data-target` and `data-toggle='collapse'`, see
+             https://getbootstrap.com/docs/4.1/components/collapse/
+             for more about these attributes"
+          ) %>%
+            collapse("mycollapse")
+        ),
+        server = function(input, output) {
 
-          observeEvent(input$hide, {
-            hideCollapse("trigger")
-          })
-
-          observeEvent(input$show, {
-            showCollapse("trigger")
-          })
         }
       )
     }
@@ -80,8 +78,18 @@ roxygen:
   family: ~
   export: yes
   filename: collapse.R
-  source: "collapse <- function(button, content, ...) {\n    id <- ID(\"collapse\")\n
-    \   tags$div(`aria-expanded` = \"false\", tagAppendAttributes(button, \n        `data-toggle`
-    = \"collapse\", `data-target` = paste0(\"#\", \n            id), `aria-controls`
-    = id), tags$div(class = \"collapse\", \n        id = id, content), ..., include(\"core\"))\n}"
+  source: |-
+    collapse <- function(tag, id, ...) {
+        args <- list(...)
+        attrs <- attribs(args)
+        elems <- elements(args)
+        if (length(attrs)) {
+            names(attrs) <- paste0("data-collapse-", names(attrs))
+        }
+        attrs$`data-collapse-id` <- id
+        tag <- shiny::tagAppendChildren(tag, list = elems)
+        tag <- shiny::tagAppendChild(tag, include("core"))
+        tag <- tagConcatAttributes(tag, attrs)
+        tag
+    }
 ---

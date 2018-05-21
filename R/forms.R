@@ -162,6 +162,7 @@ formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
 #' @param width A [responsive] argument. One of `1:12` or "auto" specifying a
 #'   column width for the form group, defaults to `NULL`.
 #'
+#' @family layout
 #' @export
 #' @examples
 #'
@@ -247,6 +248,7 @@ formGroup <- function(label, input, help = NULL,..., width = NULL) {
   )
 }
 
+#' @family layout
 #' @rdname formGroup
 #' @export
 formRow <- function(...) {

@@ -13,7 +13,7 @@ roxygen:
     Although `"none"` is an allowed `size`, most elements do not have a shadow by
     default.
   parameters:
-  - name: tag
+  - name: .tag
     description: A tag element.
   - name: size
     description: |-
@@ -25,7 +25,7 @@ roxygen:
       shinyApp(
         ui = tagList(
           navbar(brand = "Navbar") %>%
-            background("cyan", +1) %>%
+            background("cyan") %>%
             shadow("small"),
           container(
             "Cras mattis consectetur purus sit amet fermentum. Donec sed ",
@@ -44,10 +44,10 @@ roxygen:
   family: ~
   export: yes
   filename: utilities.R
-  source: "shadow <- function(tag, size = \"regular\") {\n    if (!re(size, \"none|small|regular|large\",
+  source: "shadow <- function(.tag, size = \"regular\") {\n    if (!re(size, \"none|small|regular|large\",
     len0 = FALSE)) {\n        stop(\"invalid `shadow()` argument, `size` must be one
     of \", \n            \"\\\"none\\\", \\\"small\\\", \\\"regular\\\", or \\\"large\\\"\",
     \n            call. = FALSE)\n    }\n    size <- switch(size, none = \"none\",
-    small = \"sm\", regular = NULL, \n        large = \"lg\")\n    tagAddClass(tag,
+    small = \"sm\", regular = NULL, \n        large = \"lg\")\n    tagAddClass(.tag,
     paste0(c(\"shadow\", size), collapse = \"-\"))\n}"
 ---

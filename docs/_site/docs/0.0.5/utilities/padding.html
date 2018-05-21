@@ -65,18 +65,6 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/flex/direction">
-        Flex
-      </a>
-    </dt>
-
-    
-
-    
-
-    
-
-    <dt class="mb-1">
       <a class="text-dark" href="/dull/docs/0.0.5/inputs/text-input">
         Inputs
       </a>
@@ -89,12 +77,42 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/utilities/font">
+      <a class="text-dark" href="/dull/docs/0.0.5/layout/fieldset">
+        Layout
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/outputs/sparkline-output">
+        Outputs
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/utilities/update-choices">
         Utilities
       </a>
     </dt>
 
     
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/update-choices">
+        updateChoices
+      </a>
+    </dd>
     
     <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/font">
@@ -105,6 +123,12 @@
     <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/background">
         background
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/border">
+        border
       </a>
     </dd>
     
@@ -127,12 +151,6 @@
     </dd>
     
     <dd>
-      <a class="text-muted" href="/dull/docs/0.0.5/utilities/alignment">
-        alignment
-      </a>
-    </dd>
-    
-    <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/display">
         display
       </a>
@@ -150,6 +168,36 @@
       </a>
     </dd>
     
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/show-popover">
+        showPopover
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/flex">
+        flex
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/send-modal">
+        sendModal
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/tooltip">
+        tooltip
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/mark-invalid">
+        markInvalid
+      </a>
+    </dd>
+    
     
 
     
@@ -157,92 +205,112 @@
 </div>
 
         <div class="col-12 col-sm-10">
-          <h1>Element margins and padding</h1>
+          <h1>Tag element margin and padding</h1>
           <p class="lead">
-            <p>These utilities change the padding or margins of a tag. Each argument value
-may be a single value or a vector of four values. Margins and padding are
-specified as 0, 1, 2, 3, 4, or 5, where 0 removes all space and 5 adds the most
-space.</p>
-
-<p>Specifying a single value changes the margins or padding along all four sides
-of <code class="highlighter-rouge">tag</code>. To apply different margins or padding to each side pass a vector of
-four values. In this case, the first value adjusts the top, second the right
-side, third the bottom, and the fourth value adjusts the left side. As a wise
-help page once said, think “<strong>tr</strong>ou<strong>bl</strong>e” to help remember the order.</p>
+            <p>Use the <code class="highlighter-rouge">margin()</code> and <code class="highlighter-rouge">padding()</code> utilities to change the margin or padding
+of a tag element.  The margin of a tag element is the space outside and
+around the tag element, its border, and its content.  The padding of a tag
+element is the space between the tag element’s border and its content or
+child elements.</p>
 
           </p>
 
           <h2 id="params">Arguments</h2>
           
           
-            <h5 id="param-tag">tag</h5>
+            <h5 id="param-.tag">.tag</h5>
             <p><p>A tag element.</p>
 </p>
           
-            <h5 id="param-default">default</h5>
-            <p><p>One of 0, 1, 2, 3, 4, 5 specifying the default margins or
-  padding to apply. If the margins and padding remain the same across all
-  viewports then only <code class="highlighter-rouge">default</code> needs to be specified.</p>
+            <h5 id="param-top">top</h5>
+            <p><p>A [responsive] argument. One of <code class="highlighter-rouge">0:5</code> or <code class="highlighter-rouge">"auto"</code>. 0 removes all
+  space and 5 adds the most space.</p>
 
-<p>For <strong>margins</strong>, specifying <code class="highlighter-rouge">"auto"</code> leaves the spacing up to the browser.
-  For example, you could horizontally center an element for all viewports
-  by specifying <code class="highlighter-rouge">default = c(1, "auto", 1, "auto")</code>.</p>
+<p>If an <strong>unnamed</strong> value is passed as <code class="highlighter-rouge">top</code> <code class="highlighter-rouge">margin()</code> and <code class="highlighter-rouge">padding()</code> will
+  apply the spcified spacing to <strong>all</strong> sides.</p>
 </p>
           
-            <h5 id="param-sm">sm</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the margins or padding are applied once the
-viewport is 576 pixels wide, think phone in landscape mode.</p>
+            <h5 id="param-right,bottom,left">right,bottom,left</h5>
+            <p><p>A [responsive] argument. One of <code class="highlighter-rouge">0:5</code> or <code class="highlighter-rouge">"auto"</code>. 0
+removes all space and 5 adds the most space.</p>
 </p>
           
-            <h5 id="param-md">md</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the margins or padding are applied once the
-viewport is 768 pixels wide, think tablets.</p>
-</p>
           
-            <h5 id="param-lg">lg</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the margins or padding are applied once the
-viewport is 992 pixels wide, think desktop.</p>
-</p>
+
           
-            <h5 id="param-xl">xl</h5>
-            <p><p>Like <code class="highlighter-rouge">default</code>, but the margins or padding are applied once the
-viewport is 1200 pixels wide, think large desktop.</p>
-</p>
+            <h2 id="centering-an-element"><p>Centering an element</p>
+</h2>
+            <p>In most modern browsers you want to horizontally center a tag element
+using the [flex] layout. Alternatively, you can horizontally center an element
+using <code class="highlighter-rouge">margin(&lt;TAG&gt;, right = "auto", left = "auto")</code>.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>div("Nam a sapien. Integer placerat tristique nisl.") %&gt;%
+  width(50) %&gt;%
+  height(25) %&gt;%
+  margin(top = 2, r = "auto", b = 2, l = "auto") %&gt;%
+  padding(3) %&gt;%
+  background("amber")
+)
+</code></pre></div></div>
+
           
+            <h2 id="building-an-inline-form"><p>Building an inline form</p>
+</h2>
+            <p>Inline form elements automatically use of the flex layout providing you a
+means of creating condensed sets of inputs. However you may need to adjust
+the spacing of the form’s child elements.
+Here is an inline form without any additional spacing applied.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>formInput(
+  id = NULL,
+  inline = TRUE,
+  textInput(id = NULL, placeholder = "Sam Vimes"),
+  groupInput(id = NULL, right = "@", placeholder = "Username"),
+  checkboxInput(id = NULL, choice = "Remember me")
+  )
+)
+</code></pre></div></div>
+<p>Not great. But, with some styling we can make this form sparkle. Notice
+we are also adjusting the default submit button added to the form input.</p>
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>formInput(
+  id = NULL,
+  inline = TRUE,
+  textInput(id = NULL, placeholder = "Sam Vimes") %&gt;%
+    margin(r = c(sm = 2), b = 2),
+  groupInput(id = NULL, right = "@", placeholder = "Username") %&gt;%
+    margin(r = c(sm = 2), b = 2),
+  checkboxInput(id = NULL, choice = "Remember me") %&gt;%
+    margin(r = c(sm = 2), b = 2),
+  submit = submitInput() %&gt;%
+    margin(b = 2)
+)
+</code></pre></div></div>
+<p>Now we’re cooking with gas!</p>
+
           
 
           <h2 id="source">Source</h2>
           <p>
             
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">padding</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> 
-    </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">args</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">dropNulls</span><span class="p">(</span><span class="nf">list</span><span class="p">(</span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">default</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">sm</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">md</span><span class="p">,</span><span class="w"> 
-        </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">lg</span><span class="p">,</span><span class="w"> </span><span class="n">xl</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">xl</span><span class="p">))</span><span class="w">
-    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `padding` arguments, at least one argument must not be NULL"</span><span class="p">,</span><span class="w"> 
-            </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">padding</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">bottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> 
+    </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">possibles</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="s2">"auto"</span><span class="p">)</span><span class="w">
+    </span><span class="n">this</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">sys.call</span><span class="p">()</span><span class="w">
+    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">all</span><span class="p">(</span><span class="n">re</span><span class="p">(</span><span class="n">names2</span><span class="p">(</span><span class="n">this</span><span class="p">),</span><span class="w"> </span><span class="s2">"\\.tag|"</span><span class="p">))</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">this</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">all</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tryCatch</span><span class="p">(</span><span class="n">ensureBreakpoints</span><span class="p">(</span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="n">possibles</span><span class="p">),</span><span class="w"> </span><span class="n">error</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="w"> </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid call to `padding()`, unexpected argument value "</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">))</span><span class="w">
+        </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">createResponsiveClasses</span><span class="p">(</span><span class="n">all</span><span class="p">,</span><span class="w"> </span><span class="s2">"p"</span><span class="p">)</span><span class="w">
+        </span><span class="nf">return</span><span class="p">(</span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">))</span><span class="w">
     </span><span class="p">}</span><span class="w">
-    </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">vapply</span><span class="p">(</span><span class="n">names2</span><span class="p">(</span><span class="n">args</span><span class="p">),</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">nm</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">arg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">args</span><span class="p">[[</span><span class="n">nm</span><span class="p">]]</span><span class="w">
-        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">all</span><span class="p">(</span><span class="n">arg</span><span class="w"> </span><span class="o">%in%</span><span class="w"> </span><span class="m">0</span><span class="o">:</span><span class="m">5</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `padding` argument, `"</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="s2">"` value(s) must be 0, 1, 2, 3, 4, or 5"</span><span class="p">,</span><span class="w"> 
-                </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m">1</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nf">length</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `padding` argument, `"</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="s2">"` must be a single value or a vector of 4 values"</span><span class="p">,</span><span class="w"> 
-                </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-        </span><span class="n">prefix</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="s2">"p"</span><span class="w">
-        </span><span class="n">sides</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"t"</span><span class="p">,</span><span class="w"> </span><span class="s2">"r"</span><span class="p">,</span><span class="w"> </span><span class="s2">"b"</span><span class="p">,</span><span class="w"> </span><span class="s2">"l"</span><span class="p">)</span><span class="w">
-        </span><span class="n">breakpoint</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">nm</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="s2">"default"</span><span class="p">)</span><span class="w"> 
-            </span><span class="s2">"-"</span><span class="w">
-        </span><span class="k">else</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"-"</span><span class="p">,</span><span class="w"> </span><span class="n">nm</span><span class="p">,</span><span class="w"> </span><span class="s2">"-"</span><span class="p">)</span><span class="w">
-        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">default</span><span class="p">)</span><span class="w"> </span><span class="o">==</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="nf">return</span><span class="p">(</span><span class="n">paste0</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span><span class="w"> </span><span class="n">sides</span><span class="p">,</span><span class="w"> </span><span class="n">breakpoint</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="n">collapse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">" "</span><span class="p">))</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-        </span><span class="n">paste0</span><span class="p">(</span><span class="n">prefix</span><span class="p">,</span><span class="w"> </span><span class="n">breakpoint</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w">
-    </span><span class="p">},</span><span class="w"> </span><span class="n">character</span><span class="p">(</span><span class="m">1</span><span class="p">))</span><span class="w">
-    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w">
+    </span><span class="n">top</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ensureBreakpoints</span><span class="p">(</span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="n">possibles</span><span class="p">)</span><span class="w">
+    </span><span class="n">right</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ensureBreakpoints</span><span class="p">(</span><span class="n">right</span><span class="p">,</span><span class="w"> </span><span class="n">possibles</span><span class="p">)</span><span class="w">
+    </span><span class="n">bottom</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ensureBreakpoints</span><span class="p">(</span><span class="n">bottom</span><span class="p">,</span><span class="w"> </span><span class="n">possibles</span><span class="p">)</span><span class="w">
+    </span><span class="n">left</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ensureBreakpoints</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="w"> </span><span class="n">possibles</span><span class="p">)</span><span class="w">
+    </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">createResponsiveClasses</span><span class="p">(</span><span class="n">top</span><span class="p">,</span><span class="w"> </span><span class="s2">"t"</span><span class="p">),</span><span class="w"> </span><span class="n">createResponsiveClasses</span><span class="p">(</span><span class="n">right</span><span class="p">,</span><span class="w"> 
+        </span><span class="s2">"r"</span><span class="p">),</span><span class="w"> </span><span class="n">createResponsiveClasses</span><span class="p">(</span><span class="n">bottom</span><span class="p">,</span><span class="w"> </span><span class="s2">"b"</span><span class="p">),</span><span class="w"> </span><span class="n">createResponsiveClasses</span><span class="p">(</span><span class="n">left</span><span class="p">,</span><span class="w"> 
+        </span><span class="s2">"l"</span><span class="p">))</span><span class="w">
+    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">classes</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"p"</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
           </p>

@@ -40,19 +40,81 @@ roxygen:
       A character string or tag element specifying the footer of the
       card, defaults to `NULL`, in which case a footer is not added.
   sections: ~
-  examples: ''
+  examples:
+  - card("Praesent fermentum tempor tellus.")
+  - |-
+    card(
+      title = "Mauris mollis tincidunt felis.",
+      subtitle = "Phasellus at dui in ligula mollis ultricies.",
+      "Nullam tempus. Mauris mollis tincidunt felis.",
+      "Nullam libero mauris, consequat quis, varius et, dictum id, arcu."
+    )
+  - |-
+    card(
+      listGroupThruput(
+        id = NULL,
+        listGroupItem(
+          "Pellentesque tristique imperdiet tortor."
+        ),
+        listGroupItem(
+          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+        ),
+        listGroupItem(
+          "Phasellus purus."
+        )
+      )
+    )
+  - |-
+    card(
+      header = "Nunc rutrum turpis sed pede.",
+      title = "Sed bibendum.",
+      "Etiam vel neque nec dui dignissim bibendum. Etiam vel neque nec dui dignissim bibendum.",
+      buttonInput(id = NULL, label = "Phasellus purus")
+    )
+  - |-
+    card(
+      header = tabTabs(
+        id = "myCardTabs",
+        labels = c("Phasellus", "Donec", "Fusce")
+      ),
+      tabContent(
+        tabs = "myCardTabs",
+        tabPane(
+          "Phasellus purus. Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
+        ),
+        tabPane(
+          "Donec at pede. Praesent augue."
+        ),
+        tabPanel(
+          "Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio."
+        )
+      )
+    )
+  - |
+    card(
+      header = div("Donec pretium posuere tellus.") %>%
+        background("teal"),
+      "Donec hendrerit tempor tellus.",
+      "Cras placerat accumsan nulla."
+    )
   aliases: ~
   family: ~
   export: yes
   filename: card.R
   source: "card <- function(..., header = NULL, title = NULL, subtitle = NULL, \n
     \   image = NULL, footer = NULL) {\n    args <- list(...)\n    attrs <- attribs(args)\n
-    \   isListGroup <- function(x) tagHasClass(x, \"list-group\")\n    elems <- lapply(elements(args),
-    function(el) {\n        if (isListGroup(el)) {\n            return(tagAddClass(el,
-    \"list-group-flush\"))\n        }\n        tags$div(class = \"card-body\", if
-    (!is_tag(el)) {\n            tags$p(class = \"card-text\", el)\n        }\n        else
-    {\n            el\n        })\n    })\n    if (length(elems)) {\n        elems
-    <- Reduce(x = elems[-1], init = list(elems[[1]]), \n            function(acc,
+    \   title <- if (!is.null(title)) {\n        if (is_tag(title)) {\n            tagAddClass(title,
+    \"card-title\")\n        }\n        else {\n            tags$h5(class = \"card-title\",
+    title)\n        }\n    }\n    subtitle <- if (!is.null(subtitle)) {\n        if
+    (is_tag(subtitle)) {\n            tagAddClass(subtitle, \"card-subtitle\")\n        }\n
+    \       else {\n            tags$h6(class = \"card-subtitle\", subtitle)\n        }\n
+    \   }\n    isListGroup <- function(x) tagHasClass(x, \"list-group\")\n    body
+    <- lapply(dropNulls(c(list(title, subtitle), elements(args))), \n        function(el)
+    {\n            if (isListGroup(el)) {\n                return(tagAddClass(el,
+    \"list-group-flush\"))\n            }\n            tags$div(class = \"card-body\",
+    if (!is_tag(el)) {\n                tags$p(class = \"card-text\", el)\n            }\n
+    \           else {\n                el\n            })\n        })\n    if (length(body))
+    {\n        body <- Reduce(x = body[-1], init = list(body[[1]]), \n            function(acc,
     el) {\n                if (isListGroup(acc[[length(acc)]])) {\n                  c(acc,
     list(el))\n                }\n                else {\n                  acc[[length(acc)]][[\"children\"]]
     <- c(acc[[length(acc)]][[\"children\"]], \n                    el$children)\n
@@ -62,15 +124,9 @@ roxygen:
     \n                  \"card-header-tabs\"))\n            }\n            else {\n
     \               tagAddClass(header, \"card-header\")\n            }\n        }\n
     \       else {\n            tags$div(class = \"card-header\", header)\n        }\n
-    \   }\n    title <- if (!is.null(title)) {\n        if (is_tag(title)) {\n            tagAddClass(title,
-    \"card-title\")\n        }\n        else {\n            tags$h5(class = \"card-title\",
-    title)\n        }\n    }\n    subtitle <- if (!is.null(subtitle)) {\n        if
-    (is_tag(subtitle)) {\n            tagAddClass(subtitle, \"card-subtitle\")\n        }\n
-    \       else {\n            tags$h6(class = \"card-subtitle\", subtitle)\n        }\n
     \   }\n    image <- if (!is.null(image)) {\n        tagAddClass(image, \"card-img-top\")\n
     \   }\n    footer <- if (!is.null(footer)) {\n        if (is_tag(footer)) {\n
     \           tagAddClass(footer, \"card-footer\")\n        }\n        else {\n
     \           tags$div(class = \"card-footer\", footer)\n        }\n    }\n    tags$div(class
-    = \"card\", header, image, if (!is.null(title) || \n        !is.null(subtitle))
-    {\n        tags$div(class = \"card-body\", title, subtitle)\n    }, elems, footer)\n}"
+    = \"card\", header, body, footer)\n}"
 ---

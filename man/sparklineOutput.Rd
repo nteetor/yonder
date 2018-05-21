@@ -36,3 +36,11 @@ Display concise, reactive inline bar, line, or dot charts.
 \examples{
 
 }
+\seealso{
+Other outputs: \code{\link{progressOutput}},
+  \code{\link{streamOutput}}
+
+Other outputs: \code{\link{progressOutput}},
+  \code{\link{streamOutput}}
+}
+\concept{outputs}

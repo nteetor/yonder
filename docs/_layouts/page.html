@@ -30,6 +30,11 @@
           <h5>None</h5>
           {% endif %}
 
+          {% for section in page.roxygen.sections %}
+            <h2 id="{{ section.title | slugify }}">{{ section.title | markdownify }}</h2>
+            {{ section.content | markdownify }}
+          {% endfor %}
+
           <h2 id="source">Source</h2>
           <p>
             {% highlight R %}{{ page.roxygen.source }}{% endhighlight %}

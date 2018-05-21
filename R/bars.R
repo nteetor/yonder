@@ -19,6 +19,7 @@
 #'   radiobar options are selected by default, defaults to `NULL`, in which case
 #'   there is no default option.
 #'
+#' @family inputs
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -161,6 +162,7 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL) {
   )
 }
 
+#' @family inputs
 #' @rdname checkbarInput
 #' @export
 radiobarInput <- function(id, choices, values = choices, selected = NULL) {

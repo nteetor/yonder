@@ -12,7 +12,7 @@
 #' @param ... Any number of tags elements passed as child elements or named
 #'   arguments passed as HTML attributes to the parent element.
 #'
-#' @param width A [responsive] argument. One of `1:12` or `"auto", defaults to
+#' @param width A [responsive] argument. One of `1:12` or `"auto"`, defaults to
 #'   `NULL`.
 #'
 #' @param gutters One of `TRUE` or `FALSE` specifying if columns inside the row
@@ -108,6 +108,7 @@
 #' )
 #' ```
 #'
+#' @family layout
 #' @export
 #' @examples
 #'
@@ -125,6 +126,7 @@ column <- function(..., width = NULL) {
   tagAddClass(tag, classes)
 }
 
+#' @family layout
 #' @rdname column
 #' @export
 row <- function(..., gutters = TRUE) {
@@ -138,6 +140,7 @@ row <- function(..., gutters = TRUE) {
   )
 }
 
+#' @family layout
 #' @rdname column
 #' @export
 container <- function(..., center = FALSE) {

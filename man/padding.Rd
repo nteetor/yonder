@@ -99,14 +99,20 @@ div(
 \seealso{
 Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
-  \code{\link{display}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{rounded}},
+  \code{\link{display}}, \code{\link{flex}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{markInvalid}}, \code{\link{rounded}},
+  \code{\link{sendModal}}, \code{\link{showPopover}},
+  \code{\link{tooltip}}, \code{\link{updateChoices}},
   \code{\link{width}}
 
 Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
-  \code{\link{display}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{rounded}},
+  \code{\link{display}}, \code{\link{flex}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{markInvalid}}, \code{\link{rounded}},
+  \code{\link{sendModal}}, \code{\link{showPopover}},
+  \code{\link{tooltip}}, \code{\link{updateChoices}},
   \code{\link{width}}
 }
 \concept{utilities}

@@ -30,6 +30,7 @@ sendUpdateMessage <- function(id, type, data) {
 #'   or new input choices, values, or which values are selected are updated,
 #'   values are [dots_list()] allowing the use of bangs and splices.
 #'
+#' @family utilities
 #' @export
 updateChoices <- function(id, ...) {
   args <- dots_list(...)
@@ -37,6 +38,7 @@ updateChoices <- function(id, ...) {
   sendUpdateMessage(id, "choices", args)
 }
 
+#' @family utilities
 #' @rdname updateChoices
 #' @export
 updateValues <- function(id, ...) {
@@ -45,6 +47,7 @@ updateValues <- function(id, ...) {
   sendUpdateMessage(id, "values", args)
 }
 
+#' @family utilities
 #' @rdname updateChoices
 #' @export
 updateSelected <- function(id, ...) {

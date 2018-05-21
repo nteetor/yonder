@@ -65,18 +65,6 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/flex/direction">
-        Flex
-      </a>
-    </dt>
-
-    
-
-    
-
-    
-
-    <dt class="mb-1">
       <a class="text-dark" href="/dull/docs/0.0.5/inputs/text-input">
         Inputs
       </a>
@@ -89,12 +77,42 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/utilities/font">
+      <a class="text-dark" href="/dull/docs/0.0.5/layout/fieldset">
+        Layout
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/outputs/sparkline-output">
+        Outputs
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/utilities/update-choices">
         Utilities
       </a>
     </dt>
 
     
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/update-choices">
+        updateChoices
+      </a>
+    </dd>
     
     <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/font">
@@ -105,6 +123,12 @@
     <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/background">
         background
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/border">
+        border
       </a>
     </dd>
     
@@ -127,12 +151,6 @@
     </dd>
     
     <dd>
-      <a class="text-muted" href="/dull/docs/0.0.5/utilities/alignment">
-        alignment
-      </a>
-    </dd>
-    
-    <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/display">
         display
       </a>
@@ -147,6 +165,36 @@
     <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/width">
         width
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/show-popover">
+        showPopover
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/flex">
+        flex
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/send-modal">
+        sendModal
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/tooltip">
+        tooltip
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/mark-invalid">
+        markInvalid
       </a>
     </dd>
     
@@ -168,10 +216,12 @@
           <h5>None</h5>
           
 
+          
+
           <h2 id="source">Source</h2>
           <p>
             
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">height</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">percentage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">height</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">percentage</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">is.null</span><span class="p">(</span><span class="n">percentage</span><span class="p">)</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="nf">is.null</span><span class="p">(</span><span class="n">max</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `height` arguments, `percentage` and `max` may not both be NULL"</span><span class="p">,</span><span class="w"> 
             </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
@@ -189,7 +239,7 @@
         </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"h-"</span><span class="p">,</span><span class="w"> </span><span class="n">percentage</span><span class="p">)</span><span class="w">
     </span><span class="n">max</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">max</span><span class="p">))</span><span class="w"> 
         </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"mh-"</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">)</span><span class="w">
-    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">percentage</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">))</span><span class="w">
+    </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">percentage</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="p">))</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
           </p>

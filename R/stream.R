@@ -16,6 +16,7 @@
 #' @param ... Additional named arguments passed as HTML attributes to the
 #'   parent element.
 #'
+#' @family outputs
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -57,6 +58,7 @@ streamOutput <- function(id, ...) {
   )
 }
 
+#' @family outputs
 #' @rdname streamOutput
 #' @export
 sendStream <- function(id, content,

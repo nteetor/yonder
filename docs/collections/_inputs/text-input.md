@@ -43,13 +43,13 @@ roxygen:
       shinyApp(
         ui = container(
           row(
-            col(
+            column(
               p("For best results open in a browser") %>%
                 font(weight = "bold")
             )
           ),
           row(
-            col(
+            column(
               h6("Text input:"),
               textInput(id = "text"),
               h6("Search input:"),
@@ -64,9 +64,9 @@ roxygen:
               passwordInput(id = "pass"),
               h6("Number input:"),
               numberInput(id = "num") %>%
-                background("lime", +1)
+                background("green")
             ),
-            col(
+            column(
               verbatimTextOutput("values")
             )
           )

@@ -41,14 +41,14 @@ roxygen:
       shinyApp(
         ui = container(
           row(
-            col(
+            column(
               buttonInput(
                 id = "button",
                 label = "Click me!"
               ) %>%
                 background("green")
             ),
-            col(
+            column(
               d4(
                 textOutput("clicks")
               )
@@ -66,7 +66,7 @@ roxygen:
     if (interactive()) {
       shinyApp(
         ui = container(
-          fluid = FALSE,
+          center = TRUE,
           buttonInput(
             id = "button",
             label = list(

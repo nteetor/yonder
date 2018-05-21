@@ -11,6 +11,7 @@
 #' @param placement One of `"top"`, `"right"`, `"bottom"`, or `"left"`
 #'   specifying what side of the tag element the tooltip appears on.
 #'
+#' @family utilities
 #' @export
 #' @examples
 #'

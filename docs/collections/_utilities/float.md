@@ -5,50 +5,53 @@ roxygen:
   rdname: ~
   name: float
   doctype: ~
-  title: Float an element
+  title: Tag element float
   description: |-
-    The `float` utility function applies Bootstrap float classes to a tag
-    element. These classes cause a tag element to float to the left or right
-    in its parent element. Alternatively, specify `"none"` to remove the
-    element's float. The float utilities are viewport responsive.
+    Use `float()` to float an element to the left or right side of its parent
+    element. A classic example using floats is a newspaper layout where text is
+    wrapped around a picture.
   parameters:
-  - name: tag
+  - name: .tag
     description: A tag element.
-  - name: default
+  - name: side
     description: |-
-      One of `"left"`, `"right"`, or `"none"` specifying the default
-      float of the element.
-  - name: sm
-    description: |-
-      Like `default`, but the float is applied once the viewport is 576
-      pixels wide, think phone in landscape mode.
-  - name: md
-    description: |-
-      Like `default`, but the float is applied once the viewport is 768
-      pixels wide, think tablets.
-  - name: lg
-    description: |-
-      Like `default`, but the float is applied once the viewport is 992
-      pixels wide, think desktop.
-  - name: xl
-    description: |-
-      Like `default`, but the float is applied once the viewport is 1200
-      pixels wide, think large desktop.
-  sections: ~
+      A [responsive] argument. One of `"left"` or `"right"` specifying
+      the side to float the element.
+  sections:
+  - title: Newspaper layout
+    content: |-
+      ```
+      div(
+        icon("table-tennis") %>%
+          font(size = "5x") %>%
+          padding(2) %>%
+          float("left"),
+        p(
+          "Fusce commodo. Nullam tempus. Nunc rutrum turpis sed pede.",
+          "Phasellus lacus.  Cras placerat accumsan nulla.",
+          "Fusce sagittis, libero non molestie mollis, ",
+          "magna orci ultrices dolor, at vulputate neque nulla lacinia eros."
+        ),
+        p(
+          "Nulla facilisis, risus a rhoncus fermentum, tellus tellus",
+          "lacinia purus, et dictum nunc justo sit amet elit."
+        ),
+        p(
+          "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.",
+          "Aliquam posuere.",
+          "Sed id ligula quis est convallis tempor."
+        )
+      )
+      ```
   examples: ''
   aliases: ~
   family: utilities
   export: yes
   filename: utilities.R
-  source: "float <- function(tag, default = NULL, sm = NULL, md = NULL, \n    lg =
-    NULL, xl = NULL) {\n    args <- dropNulls(list(default = default, sm = sm, md
-    = md, \n        lg = lg, xl = xl))\n    if (length(float) == 0) {\n        stop(\"invalid
-    `float` arguments, at least one argument must not be NULL\", \n            call.
-    = FALSE)\n    }\n    classes <- vapply(names2(args), function(nm) {\n        arg
-    <- args[[nm]]\n        if (!re(arg, \"left|right|none\")) {\n            stop(\"invalid
-    `float` argument, `\", nm, \"` must be one of \", \n                \"\\\"left\\\",
-    \\\"right\\\", or \\\"none\\\"\", call. = FALSE)\n        }\n        if (nm ==
-    \"default\") {\n            paste0(\"float-\", arg)\n        }\n        else {\n
-    \           paste0(\"float-\", nm, \"-\", arg)\n        }\n    }, character(1))\n
-    \   tagAddClass(tag, classes)\n}"
+  source: |-
+    float <- function(.tag, side) {
+        side <- ensureBreakpoints(side, c("left", "right"))
+        classes <- createResponsiveClasses(side)
+        tagAddClass(.tag, classes)
+    }
 ---

@@ -65,18 +65,6 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/flex/direction">
-        Flex
-      </a>
-    </dt>
-
-    
-
-    
-
-    
-
-    <dt class="mb-1">
       <a class="text-dark" href="/dull/docs/0.0.5/inputs/text-input">
         Inputs
       </a>
@@ -89,12 +77,42 @@
     
 
     <dt class="mb-1">
-      <a class="text-dark" href="/dull/docs/0.0.5/utilities/font">
+      <a class="text-dark" href="/dull/docs/0.0.5/layout/fieldset">
+        Layout
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/outputs/sparkline-output">
+        Outputs
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/utilities/update-choices">
         Utilities
       </a>
     </dt>
 
     
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/update-choices">
+        updateChoices
+      </a>
+    </dd>
     
     <dd>
       <a class="text-muted font-weight-bold" href="/dull/docs/0.0.5/utilities/font">
@@ -105,6 +123,12 @@
     <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/background">
         background
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/border">
+        border
       </a>
     </dd>
     
@@ -127,12 +151,6 @@
     </dd>
     
     <dd>
-      <a class="text-muted" href="/dull/docs/0.0.5/utilities/alignment">
-        alignment
-      </a>
-    </dd>
-    
-    <dd>
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/display">
         display
       </a>
@@ -150,6 +168,36 @@
       </a>
     </dd>
     
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/show-popover">
+        showPopover
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/flex">
+        flex
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/send-modal">
+        sendModal
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/tooltip">
+        tooltip
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/utilities/mark-invalid">
+        markInvalid
+      </a>
+    </dd>
+    
     
 
     
@@ -157,19 +205,24 @@
 </div>
 
         <div class="col-12 col-sm-10">
-          <h1>Text font</h1>
+          <h1>Tag element font</h1>
           <p class="lead">
-            <p>The <code class="highlighter-rouge">font</code> utility changes the weight and size of an element’s text font.
-Bold fonts are darker and heavier whereas light fonts are thinner. Font
-size’s are changed relative to the current font size.</p>
+            <p>The <code class="highlighter-rouge">font()</code> utility may be used to change the color, size, or weight of a
+tag element’s text font. Font size’s are changed relative to the base font
+size of the web page.</p>
 
           </p>
 
           <h2 id="params">Arguments</h2>
           
           
-            <h5 id="param-tag">tag</h5>
+            <h5 id="param-.tag">.tag</h5>
             <p><p>A tag element.</p>
+</p>
+          
+            <h5 id="param-color">color</h5>
+            <p><p>A character string specifying the text color of the tag element,
+defaults to <code class="highlighter-rouge">NULL</code> in which case the text color is unchanged.</p>
 </p>
           
             <h5 id="param-size">size</h5>
@@ -181,15 +234,27 @@ size), defaults to <code class="highlighter-rouge">NULL</code>, in which case th
             <h5 id="param-weight">weight</h5>
             <p><p>One of <code class="highlighter-rouge">"bold"</code>, <code class="highlighter-rouge">"normal"</code>, <code class="highlighter-rouge">"light"</code>, <code class="highlighter-rouge">"italic"</code>, or
 <code class="highlighter-rouge">"monospace"</code> specifying the font weight of the element’s text, defaults to
-<code class="highlighter-rouge">NULL</code>, in which case the font is unchanged.</p>
+<code class="highlighter-rouge">NULL</code>, in which case the font weight is unchanged.</p>
 </p>
           
+            <h5 id="param-align">align</h5>
+            <p><p>A [responsive] argument. One of <code class="highlighter-rouge">"left"</code>, <code class="highlighter-rouge">"center"</code>, <code class="highlighter-rouge">"right"</code>,
+or <code class="highlighter-rouge">"justify"</code>.</p>
+</p>
+          
+          
+
           
 
           <h2 id="source">Source</h2>
           <p>
             
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">font</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">font</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> 
+    </span><span class="n">align</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">!=</span><span class="w"> </span><span class="s2">"body"</span><span class="w"> </span><span class="o">&amp;&amp;</span><span class="w"> </span><span class="o">!</span><span class="n">re</span><span class="p">(</span><span class="n">color</span><span class="p">,</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="n">.colors</span><span class="p">,</span><span class="w"> </span><span class="n">collapse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"|"</span><span class="p">)))</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `text` argument, `color` is invalid, see ?background "</span><span class="p">,</span><span class="w"> 
+            </span><span class="s2">"details for possible colors"</span><span class="p">,</span><span class="w"> </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">re</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span><span class="w"> </span><span class="s2">"bold|normal|light|italic|monospace"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `text` argument, `weight` must be one of "</span><span class="p">,</span><span class="w"> 
             </span><span class="s2">"\"bold\", \"normal\", \"light\", \"italic\", or \"monospace\""</span><span class="p">,</span><span class="w"> 
@@ -199,10 +264,15 @@ size), defaults to <code class="highlighter-rouge">NULL</code>, in which case th
         </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `size` argument, `size` must be one of "</span><span class="p">,</span><span class="w"> 
             </span><span class="s2">"\"2x\" through \"10px\""</span><span class="p">,</span><span class="w"> </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
     </span><span class="p">}</span><span class="w">
+    </span><span class="n">align</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ensureBreakpoints</span><span class="p">(</span><span class="n">align</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"left"</span><span class="p">,</span><span class="w"> </span><span class="s2">"center"</span><span class="p">,</span><span class="w"> </span><span class="s2">"right"</span><span class="p">,</span><span class="w"> 
+        </span><span class="s2">"justify"</span><span class="p">))</span><span class="w">
+    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">color</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">.tag</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">colorUtility</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="s2">"text"</span><span class="p">,</span><span class="w"> </span><span class="n">color</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">size</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="n">size</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"font-size-"</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w">
-        </span><span class="n">tag</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tagDropClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="s2">"font-size-([2-9]|10)x"</span><span class="p">)</span><span class="w">
-        </span><span class="n">tag</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w">
+        </span><span class="n">.tag</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tagDropClass</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="s2">"font-size-([2-9]|10)x"</span><span class="p">)</span><span class="w">
+        </span><span class="n">.tag</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">size</span><span class="p">)</span><span class="w">
     </span><span class="p">}</span><span class="w">
     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">weight</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">re</span><span class="p">(</span><span class="n">weight</span><span class="p">,</span><span class="w"> </span><span class="s2">"bold|normal|light"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -211,10 +281,14 @@ size), defaults to <code class="highlighter-rouge">NULL</code>, in which case th
         </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
             </span><span class="n">weight</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"font-"</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="p">)</span><span class="w">
         </span><span class="p">}</span><span class="w">
-        </span><span class="n">tag</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tagDropClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="s2">"font-(weight-(bold|normal|light)|italic|monospace)"</span><span class="p">)</span><span class="w">
-        </span><span class="n">tag</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">tag</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="p">)</span><span class="w">
+        </span><span class="n">.tag</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tagDropClass</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="s2">"font-(weight-(bold|normal|light)|italic|monospace)"</span><span class="p">)</span><span class="w">
+        </span><span class="n">.tag</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">weight</span><span class="p">)</span><span class="w">
     </span><span class="p">}</span><span class="w">
-    </span><span class="n">tag</span><span class="w">
+    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">length</span><span class="p">(</span><span class="n">align</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">classes</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">createResponsiveClasses</span><span class="p">(</span><span class="n">align</span><span class="p">,</span><span class="w"> </span><span class="s2">"text"</span><span class="p">)</span><span class="w">
+        </span><span class="n">.tag</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="n">.tag</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
 
           </p>

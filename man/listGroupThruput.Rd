@@ -160,4 +160,13 @@ if (interactive()) {
 \seealso{
 Boostrap 4 list group documentation:
 \url{https://getbootstrap.com/docs/4.0/components/list-group/}
+
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{dateInput}},
+  \code{\link{dropdownInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{radioInput}}, \code{\link{rangeInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
 }
+\concept{inputs}

@@ -22,6 +22,7 @@
 #' @param quoted One of `TRUE` or `FALSE` specifying if `values` is a quoted
 #'   expression.
 #'
+#' @family outputs
 #' @export
 #' @examples
 #'
@@ -45,6 +46,7 @@ sparklineOutput <- function(id, type = "bar", labels = TRUE, ...) {
   )
 }
 
+#' @family outputs
 #' @rdname sparklineOutput
 #' @export
 renderSparkline <- function(values, env = parent.frame(), quoted = FALSE) {

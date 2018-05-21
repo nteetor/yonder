@@ -62,6 +62,7 @@
 #' @param suffix A character string specifying a suffix for the range input
 #'   slider value, defaults to `NULL`, in which case a prefix is not appended.
 #'
+#' @family inputs
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -114,6 +115,7 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
   )
 }
 
+#' @family inputs
 #' @rdname rangeInput
 #' @export
 #' @examples
@@ -161,6 +163,7 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
   )
 }
 
+#' @family inputs
 #' @rdname rangeInput
 #' @export
 #' @examples

@@ -1,0 +1,218 @@
+<!doctype html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+<link rel="stylesheet" href="/dull/assets/css/main.css">
+
+  </head>
+  <body>
+
+    <!--<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
+  <a class="navbar-brand" href="/dull">
+    dull
+  </a>
+
+  <ul class="navbar-nav ml-sm-3">
+    <li class="nav-item">
+      <a class="nav-link " href="/dull/">Home<a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/dull/docs/0.0.5/">Documentation</a>
+    </li>
+  </ul>
+</header>
+-->
+<header class="container">
+  <div class="d-flex flex-column align-items-center">
+      <h4>dull</h4>
+      <div>
+        <a class="mx-sm-3 " href="/dull/">Home<a>
+        <a class="mx-sm-3 font-weight-bold" href="/dull/docs/0.0.5/">Documentation</a>
+      </div>
+  </div>
+</header>
+
+    <div class="container">
+      <div class="row">
+
+        <div class="sidebar col-12 col-sm-2 p-2">
+  <dl>
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/content/img">
+        Content
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/inputs/text-input">
+        Inputs
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/layout/fieldset">
+        Layout
+      </a>
+    </dt>
+
+    
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/layout/fieldset">
+        fieldset
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/layout/tab-tabs">
+        tabTabs
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/layout/column">
+        column
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted" href="/dull/docs/0.0.5/layout/form-group">
+        formGroup
+      </a>
+    </dd>
+    
+    <dd>
+      <a class="text-muted font-weight-bold" href="/dull/docs/0.0.5/layout/navbar">
+        navbar
+      </a>
+    </dd>
+    
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/outputs/sparkline-output">
+        Outputs
+      </a>
+    </dt>
+
+    
+
+    
+
+    
+
+    <dt class="mb-1">
+      <a class="text-dark" href="/dull/docs/0.0.5/utilities/update-choices">
+        Utilities
+      </a>
+    </dt>
+
+    
+
+    
+  </dl>
+</div>
+
+        <div class="col-12 col-sm-10">
+          <h1>Page and content navigation</h1>
+          <p class="lead">
+            <p>Add a navigation bar to your application with <code class="highlighter-rouge">navbar()</code>. Navigation bars may
+include a tab toggle (useful for multi-page applications), inline forms
+(perhaps a search feature or login item), or character strings to add simple
+text. Navbars are responsive and will collapse on small screens, think mobile
+device. A button is automatically added to toggle between the collapsed and
+expanded states.</p>
+
+          </p>
+
+          <h2 id="params">Arguments</h2>
+          
+          
+            <h5 id="param-...">...</h5>
+            <p><p>A tab toggle, inline forms, or text to add to include as part of
+the navigation bar.</p>
+</p>
+          
+            <h5 id="param-brand">brand</h5>
+            <p><p>A tag element or text placed on the left end of the navbar,
+defaults to <code class="highlighter-rouge">NULL</code>, in which case nothing is added.</p>
+</p>
+          
+          
+
+          
+
+          <h2 id="source">Source</h2>
+          <p>
+            
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">navbar</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="n">brand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">args</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">...</span><span class="p">)</span><span class="w">
+    </span><span class="n">attrs</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">attribs</span><span class="p">(</span><span class="n">args</span><span class="p">)</span><span class="w">
+    </span><span class="n">elems</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">lapply</span><span class="p">(</span><span class="n">elements</span><span class="p">(</span><span class="n">args</span><span class="p">),</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">arg</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tagHasClass</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="s2">"nav"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="n">arg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tagDropClass</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="s2">"nav-tabs|nav-pills"</span><span class="p">)</span><span class="w">
+            </span><span class="n">arg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="s2">"navbar-nav"</span><span class="p">)</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">tagIs</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="s2">"form"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">tagHasClass</span><span class="p">(</span><span class="n">arg</span><span class="p">,</span><span class="w"> </span><span class="s2">"form-inline"</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+                </span><span class="n">warning</span><span class="p">(</span><span class="s2">"non-inline form element passed to `navbar()`"</span><span class="p">,</span><span class="w"> 
+                  </span><span class="n">call.</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">)</span><span class="w">
+            </span><span class="p">}</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+        </span><span class="k">else</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="n">is_tag</span><span class="p">(</span><span class="n">arg</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+            </span><span class="n">arg</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tags</span><span class="o">$</span><span class="n">span</span><span class="p">(</span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"navbar-text"</span><span class="p">,</span><span class="w"> </span><span class="n">arg</span><span class="p">)</span><span class="w">
+        </span><span class="p">}</span><span class="w">
+        </span><span class="n">arg</span><span class="w">
+    </span><span class="p">})</span><span class="w">
+    </span><span class="n">brand</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">brand</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">tags</span><span class="o">$</span><span class="n">a</span><span class="p">(</span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"navbar-brand"</span><span class="p">,</span><span class="w"> </span><span class="n">href</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"#"</span><span class="p">,</span><span class="w"> </span><span class="n">brand</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+    </span><span class="n">navContentId</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">ID</span><span class="p">(</span><span class="s2">"navContent"</span><span class="p">)</span><span class="w">
+    </span><span class="n">this</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tags</span><span class="o">$</span><span class="n">nav</span><span class="p">(</span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"navbar navbar-expand-lg navbar-light"</span><span class="p">,</span><span class="w"> 
+        </span><span class="n">brand</span><span class="p">,</span><span class="w"> </span><span class="n">tags</span><span class="o">$</span><span class="n">button</span><span class="p">(</span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"navbar-toggler"</span><span class="p">,</span><span class="w"> </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"button"</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">`data-toggle`</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"collapse"</span><span class="p">,</span><span class="w"> </span><span class="n">`data-target`</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"#"</span><span class="p">,</span><span class="w"> 
+                </span><span class="n">navContentId</span><span class="p">),</span><span class="w"> </span><span class="n">`aria-controls`</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">navContentId</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">`aria-expanded`</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"false"</span><span class="p">,</span><span class="w"> </span><span class="n">`aria-label`</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Toggle navigation"</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">icon</span><span class="p">(</span><span class="s2">"bars"</span><span class="p">)),</span><span class="w"> </span><span class="n">tags</span><span class="o">$</span><span class="n">div</span><span class="p">(</span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"collapse navbar-collapse"</span><span class="p">,</span><span class="w"> 
+            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">navContentId</span><span class="p">,</span><span class="w"> </span><span class="n">elems</span><span class="p">),</span><span class="w"> </span><span class="n">include</span><span class="p">(</span><span class="s2">"core"</span><span class="p">))</span><span class="w">
+    </span><span class="n">this</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">tagConcatAttributes</span><span class="p">(</span><span class="n">this</span><span class="p">,</span><span class="w"> </span><span class="n">attrs</span><span class="p">)</span><span class="w">
+    </span><span class="n">this</span><span class="w">
+</span><span class="p">}</span></code></pre></figure>
+
+          </p>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

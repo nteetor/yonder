@@ -5,52 +5,36 @@ roxygen:
   rdname: ~
   name: display
   doctype: ~
-  title: Element display property, inline, block, and more
+  title: Tag element display
   description: |-
-    The `display` utility is used to apply Bootstrap classes to adjust a tag
-    element's display property. This can be used to hide an element on small
-    screens or convert an element from inline to block on large screens. Use the
-    `print` argument to change the display property of an element during
-    printing.
+    Use the `display()` utility to adjust how a tag element is rendered. All
+    arguments are responsive allowing you to hide elements on small screens or
+    convert elements from inline to block on large screens. Most of the time
+    you will use the `render` argument. However if you want to control how an
+    element appears (or does not appear) when the page is printed use the `print`
+    argument.
   parameters:
-  - name: tag
+  - name: .tag
     description: A tag element.
-  - name: default
+  - name: render,print
     description: |-
-      One of `"inline"`, `"inline-block"`, `"block"`, `"table"`,
-      `"table-cell"`, `"flex"`, `"inline-flex"`, or `"none"` specifying the
-      default display property of the element.
-  - name: sm
-    description: |-
-      Like `default`, but the display property is applied once the
-      viewport is 576 pixels wide, think phone in landscape mode.
-  - name: md
-    description: |-
-      Like `default`, but the display property is applied once the
-      viewport is 768 pixels wide, think tablets.
-  - name: lg
-    description: |-
-      Like `default`, but the display property is applied once the
-      viewport is 992 pixels wide, think desktop.
-  - name: xl
-    description: |-
-      Like `default`, but the display property is applied once the
-      viewport is 1200 pixels wide, think large desktop.
-  - name: print
-    description: |-
-      Like `default`, but the display property is applied when the
-      page is printed.
+      A [responsive] argument. One of `"inline"`, `"block"`,
+      `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`, defaults to
+      `NULL`.
   sections: ~
   examples: |
-    tags$div() %>%
-      display(default = "none", md = "block")
+    display(div(), render = c(xs = "none", md = "block"))
+
+    display(div(), render = c(xs = "inline", sm = "block"))
+
+    display(div(), print = "none")
   aliases: ~
   family: utilities
   export: yes
   filename: utilities.R
-  source: "display <- function(tag, default = NULL, sm = NULL, md = NULL, \n    lg
-    = NULL, xl = NULL, print = NULL) {\n    args <- dropNulls(list(default = default,
-    sm = sm, md = md, \n        lg = lg, xl = xl, print = print))\n    classes <-
-    responsives(prefix = \"d\", values = args, possible = c(\"inline\", \n        \"inline-block\",
-    \"block\", \"flex\", \"flex-inline\", \"none\"))\n    tagAddClass(tag, classes)\n}"
+  source: "display <- function(.tag, render = NULL, print = NULL) {\n    possibles
+    <- c(\"inline\", \"block\", \"inline-block\", \"flex\", \n        \"inline-flex\",
+    \"none\")\n    render <- ensureBreakpoints(render, possibles)\n    print <- ensureBreakpoints(print,
+    possibles)\n    classes <- c(createResponsiveClasses(render, \"d\"), createResponsiveClasses(print,
+    \n        \"d-print\"))\n    tagAddClass(.tag, classes)\n}"
 ---

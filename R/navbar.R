@@ -13,6 +13,7 @@
 #' @param brand A tag element or text placed on the left end of the navbar,
 #'   defaults to `NULL`, in which case nothing is added.
 #'
+#' @family layout
 #' @export
 #' @examples
 #'

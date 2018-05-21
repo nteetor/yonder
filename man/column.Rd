@@ -16,7 +16,8 @@ container(..., center = FALSE)
 \item{...}{Any number of tags elements passed as child elements or named
 arguments passed as HTML attributes to the parent element.}
 
-\item{width}{A \link{responsive} argument. One of \code{1:12} or \code{"auto", defaults to}NULL`.}
+\item{width}{A \link{responsive} argument. One of \code{1:12} or \code{"auto"}, defaults to
+\code{NULL}.}
 
 \item{gutters}{One of \code{TRUE} or \code{FALSE} specifying if columns inside the row
 are padded, defaults to \code{TRUE}. If \code{FALSE} column content renders flush
@@ -115,3 +116,17 @@ applications.\preformatted{container(
 \examples{
 
 }
+\seealso{
+Other layout: \code{\link{fieldset}},
+  \code{\link{formGroup}}, \code{\link{navbar}},
+  \code{\link{tabTabs}}
+
+Other layout: \code{\link{fieldset}},
+  \code{\link{formGroup}}, \code{\link{navbar}},
+  \code{\link{tabTabs}}
+
+Other layout: \code{\link{fieldset}},
+  \code{\link{formGroup}}, \code{\link{navbar}},
+  \code{\link{tabTabs}}
+}
+\concept{layout}

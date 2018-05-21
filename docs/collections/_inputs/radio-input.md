@@ -50,7 +50,7 @@ roxygen:
       shinyApp(
         ui = container(
           row(
-            col(
+            column(
               radioInput(
                 id = "radio",
                 choices = c(
@@ -63,7 +63,7 @@ roxygen:
                 values = LETTERS[1:5]
               )
             ),
-            col(
+            column(
               d4(
                 textOutput("selected")
               )

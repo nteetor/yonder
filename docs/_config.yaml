@@ -23,13 +23,16 @@ collections:
   content:
     output: yes
     permalink: /docs/0.0.5/:collection/:path
-  inputs:
-    output: yes
-    permalink: /docs/0.0.5/:collection/:path
   utilities:
     output: yes
     permalink: /docs/0.0.5/:collection/:path
-  flex:
+  inputs:
+    output: yes
+    permalink: /docs/0.0.5/:collection/:path
+  layout:
+    output: yes
+    permalink: /docs/0.0.5/:collection/:path
+  outputs:
     output: yes
     permalink: /docs/0.0.5/:collection/:path
 
@@ -50,64 +53,102 @@ defaults:
       slug: pre
 - scope:
     path: ''
-    type: inputs
-  values:
-    default_page: /docs/0.0.5/inputs/text-input
-    sections:
-    - name: textInput
-      slug: text-input
-    - name: selectInput
-      slug: select-input
-    - name: buttonInput
-      slug: button-input
-    - name: buttonGroupInput
-      slug: button-group-input
-    - name: checkboxInput
-      slug: checkbox-input
-    - name: groupInput
-      slug: group-input
-    - name: formInput
-      slug: form-input
-    - name: radioInput
-      slug: radio-input
-- scope:
-    path: ''
     type: utilities
   values:
-    default_page: /docs/0.0.5/utilities/font
+    default_page: /docs/0.0.5/utilities/update-choices
     sections:
+    - name: updateChoices
+      slug: update-choices
     - name: font
       slug: font
     - name: background
       slug: background
+    - name: border
+      slug: border
     - name: rounded
       slug: rounded
     - name: float
       slug: float
     - name: affix
       slug: affix
-    - name: alignment
-      slug: alignment
     - name: display
       slug: display
     - name: padding
       slug: padding
     - name: width
       slug: width
+    - name: showPopover
+      slug: show-popover
+    - name: flex
+      slug: flex
+    - name: sendModal
+      slug: send-modal
+    - name: tooltip
+      slug: tooltip
+    - name: markInvalid
+      slug: mark-invalid
 - scope:
     path: ''
-    type: flex
+    type: inputs
   values:
-    default_page: /docs/0.0.5/flex/direction
+    default_page: /docs/0.0.5/inputs/text-input
     sections:
-    - name: direction
-      slug: direction
-    - name: content
-      slug: content
-    - name: items
-      slug: items
-    - name: wrap
-      slug: wrap
+    - name: textInput
+      slug: text-input
+    - name: dateInput
+      slug: date-input
+    - name: rangeInput
+      slug: range-input
+    - name: selectInput
+      slug: select-input
+    - name: checkbarInput
+      slug: checkbar-input
+    - name: buttonInput
+      slug: button-input
+    - name: buttonGroupInput
+      slug: button-group-input
+    - name: checkboxInput
+      slug: checkbox-input
+    - name: dropdownInput
+      slug: dropdown-input
+    - name: groupInput
+      slug: group-input
+    - name: fileInput
+      slug: file-input
+    - name: formInput
+      slug: form-input
+    - name: listGroupThruput
+      slug: list-group-thruput
+    - name: radioInput
+      slug: radio-input
+- scope:
+    path: ''
+    type: layout
+  values:
+    default_page: /docs/0.0.5/layout/fieldset
+    sections:
+    - name: fieldset
+      slug: fieldset
+    - name: tabTabs
+      slug: tab-tabs
+    - name: column
+      slug: column
+    - name: formGroup
+      slug: form-group
+    - name: navbar
+      slug: navbar
+- scope:
+    path: ''
+    type: outputs
+  values:
+    default_page: /docs/0.0.5/outputs/sparkline-output
+    sections:
+    - name: sparklineOutput
+      slug: sparkline-output
+    - name: progressOutput
+      slug: progress-output
+    - name: streamOutput
+      slug: stream-output
 
 
 # Excluded files -------
