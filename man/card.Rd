@@ -40,4 +40,86 @@ is placed around any number of cards. Additionally, grouping cards with
 }
 \examples{
 
+card("Praesent fermentum tempor tellus.")
+
+
+card(
+  title = "Mauris mollis tincidunt felis.",
+  subtitle = "Phasellus at dui in ligula mollis ultricies.",
+  "Nullam tempus. Mauris mollis tincidunt felis.",
+  "Nullam libero mauris, consequat quis, varius et, dictum id, arcu."
+)
+
+
+card(
+  listGroupThruput(
+    id = NULL,
+    listGroupItem(
+      "Pellentesque tristique imperdiet tortor."
+    ),
+    listGroupItem(
+      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+    ),
+    listGroupItem(
+      "Phasellus purus."
+    )
+  )
+)
+
+
+card(
+  header = "Nunc rutrum turpis sed pede.",
+  title = "Sed bibendum.",
+  "Etiam vel neque nec dui dignissim bibendum. Etiam vel neque nec dui dignissim bibendum.",
+  buttonInput(id = NULL, label = "Phasellus purus")
+)
+
+
+card(
+  header = tabTabs(
+    id = "myCardTabs",
+    labels = c("Phasellus", "Donec", "Fusce")
+  ),
+  tabContent(
+    tabs = "myCardTabs",
+    tabPane(
+      "Phasellus purus. Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
+    ),
+    tabPane(
+      "Donec at pede. Praesent augue."
+    ),
+    tabPanel(
+      "Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio."
+    )
+  )
+)
+
+
+card(
+  header = div("Donec pretium posuere tellus.") \%>\%
+    background("teal"),
+  "Donec hendrerit tempor tellus.",
+  "Cras placerat accumsan nulla."
+)
+
+
+deck(
+  card(
+    title = "Nullam tristique",
+    "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+    "Nunc rutrum turpis sed pede.",
+    footer = "Cras placerat accumsan nulla."
+  ),
+  card(
+    title = "Integer placerat",
+    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit tempor tellus.",
+    footer = "Cras placerat accumsan nulla."
+  ),
+  card(
+    title = "Phasellus neque",
+    "Donec at pede. Etiam vel neque nec dui dignissim bibendum.",
+    footer = "Cras placerat accumsan nulla."
+  )
+)
+
 }
