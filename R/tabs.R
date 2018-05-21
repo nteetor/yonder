@@ -40,7 +40,6 @@
 #'   values = c("home", "about", "blog")
 #' )
 #'
-#'
 #' tabContent(
 #'   tabs = "myTabs",
 #'   tabPane(
