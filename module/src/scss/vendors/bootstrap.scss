@@ -1,0 +1,111 @@
+// bootstap custom build
+
+@import '../../../node_modules/bootstrap/scss/functions';
+@import '../../../node_modules/bootstrap/scss/variables';
+@import '../../../node_modules/bootstrap/scss/mixins';
+
+// custom background mixin
+@mixin bg-variant($parent, $color) {
+  #{$parent} {
+    background-color: $color !important;
+    color: color-yiq($color) !important; // added line
+  }
+
+  a#{$parent},
+  button#{$parent} {
+    @include hover-focus {
+      background-color: darken($color, 10%) !important;
+    }
+  }
+}
+
+@import '../abstracts/variables';
+
+$theme-colors: (
+  'red':     $red,      // #f44336,
+  'purple':  $purple,   // #9c27b0,
+  'indigo':  $indigo,   // #3f51b5,
+  'blue':    $blue,     // #2196f3,
+  'cyan':    $cyan,     // #00bcd4,
+  'teal':    $teal,     // #009688,
+  'green':   $green,    // #4caf50,
+  'yellow':  $yellow,   // #ffeb3b,
+  'amber':   $amber,    // #ffc107,
+  'orange':  $orange,   // #ff9800,
+  'grey':    $gray-100  // #9e9e9e
+);
+
+$colors: ();
+$colors: map-merge(
+  ('white': $white),
+  $theme-colors
+);
+
+// active components
+$component-active-bg:     $blue;
+$component-active-color:  color-yiq($blue);
+
+// custom controls
+$custom-control-indicator-checked-color:         $component-active-color;
+$custom-control-indicator-checked-bg:            $component-active-bg;
+$custom-control-indicator-checked-disabled-bg:   rgba($component-active-bg, .5);
+
+$custom-control-indicator-active-color:          $component-active-color;
+$custom-control-indicator-active-bg:             lighten($component-active-bg, 35%);
+
+$custom-checkbox-indicator-indeterminate-bg:     $component-active-bg;
+$custom-checkbox-indicator-indeterminate-color:  $custom-control-indicator-checked-color;
+
+$custom-range-thumb-bg:                          $component-active-bg;
+$custom-range-thumb-active-bg:                   lighten($component-active-bg, 35%);
+
+// dropdowns
+$dropdown-link-active-color:  $component-active-color;
+$dropdown-link-active-bg:     $component-active-bg;
+
+// navs
+$nav-pills-link-active-color:  $component-active-color;
+$nav-pills-link-active-bg:     $component-active-bg;
+
+// pagination
+$pagination-active-color:         $component-active-color;
+$pagination-active-bg:            $component-active-bg;
+$pagination-active-border-color:  $pagination-active-bg;
+
+// list group
+$list-group-active-color:         $component-active-color;
+$list-group-active-bg:            $component-active-bg;
+$list-group-active-border-color:  $list-group-active-bg;
+
+@import '../../../node_modules/bootstrap/scss/root';
+@import '../../../node_modules/bootstrap/scss/reboot';
+@import '../../../node_modules/bootstrap/scss/type';
+@import '../../../node_modules/bootstrap/scss/images';
+@import '../../../node_modules/bootstrap/scss/code';
+@import '../../../node_modules/bootstrap/scss/grid';
+@import '../../../node_modules/bootstrap/scss/tables';
+@import '../../../node_modules/bootstrap/scss/forms';
+@import '../../../node_modules/bootstrap/scss/buttons';
+@import '../../../node_modules/bootstrap/scss/transitions';
+@import '../../../node_modules/bootstrap/scss/dropdown';
+@import '../../../node_modules/bootstrap/scss/button-group';
+@import '../../../node_modules/bootstrap/scss/input-group';
+@import '../../../node_modules/bootstrap/scss/custom-forms';
+@import '../../../node_modules/bootstrap/scss/nav';
+@import '../../../node_modules/bootstrap/scss/navbar';
+@import '../../../node_modules/bootstrap/scss/card';
+@import '../../../node_modules/bootstrap/scss/breadcrumb';
+@import '../../../node_modules/bootstrap/scss/pagination';
+@import '../../../node_modules/bootstrap/scss/badge';
+@import '../../../node_modules/bootstrap/scss/jumbotron';
+@import '../../../node_modules/bootstrap/scss/alert';
+@import '../../../node_modules/bootstrap/scss/progress';
+@import '../../../node_modules/bootstrap/scss/media';
+@import '../../../node_modules/bootstrap/scss/list-group';
+@import '../../../node_modules/bootstrap/scss/close';
+@import '../../../node_modules/bootstrap/scss/modal';
+@import '../../../node_modules/bootstrap/scss/tooltip';
+@import '../../../node_modules/bootstrap/scss/popover';
+@import '../../../node_modules/bootstrap/scss/carousel';
+@import '../../../node_modules/bootstrap/scss/utilities';
+@import '../../../node_modules/bootstrap/scss/print';
