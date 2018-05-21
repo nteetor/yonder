@@ -4,10 +4,10 @@
 \alias{affix}
 \title{Affix elements to top or bottom of page}
 \usage{
-affix(tag, position)
+affix(.tag, position)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{.tag}{A tag element.}
 
 \item{position}{One of \code{"top"}, \code{"bottom"}, or \code{"sticky"} specifying the
 fixed behavior of an element.}
@@ -29,6 +29,6 @@ Other utilities: \code{\link{background}},
   \code{\link{border}}, \code{\link{display}},
   \code{\link{float}}, \code{\link{font}},
   \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{text}}, \code{\link{width}}
+  \code{\link{width}}
 }
 \concept{utilities}

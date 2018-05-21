@@ -58,13 +58,14 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           default = 3,
           listGroupThruput(
-            id = "thrulist"
+            id = "thrulist",
+            componentOutput("items")
           )
         ),
-        col(
+        column(
           rangeInput(
             id = "num",
             min = 0,
@@ -79,23 +80,21 @@ if (interactive()) {
       )
     ),
     server = function(input, output) {
-      output$thrulist <- renderListGroup(
+      output$items <- renderComponent(
         listGroupItem(
           "Cras justo odio",
           badgeOutput("badge1", 0) \%>\%
             background(input$level)
         ) \%>\%
-          display("flex") \%>\%
-          content("between") \%>\%
-          items("center"),
+          display(flex = TRUE) \%>\%
+          flex(justify = "between", align = "center"),
         listGroupItem(
           "Dapibus ac facilisis in",
           badgeOutput("badge2", 0) \%>\%
             background(input$level)
         ) \%>\%
-          display("flex") \%>\%
-          content("between") \%>\%
-          items("center")
+          display(flex = TRUE) \%>\%
+          flex(justify = "between", align = "center")
       )
 
       output$badge1 <- renderBadge(input$num)
@@ -124,7 +123,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           class = "ml-auto",
           default = 3,
           listGroupThruput(
@@ -142,7 +141,7 @@ if (interactive()) {
             )
           )
         ),
-        col(
+        column(
           class = "mr-auto",
           htmlOutput("text")
         )

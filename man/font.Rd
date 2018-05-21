@@ -4,10 +4,10 @@
 \alias{font}
 \title{Tag element font}
 \usage{
-font(tag, color = NULL, size = NULL, weight = NULL)
+font(.tag, color = NULL, size = NULL, weight = NULL, align = NULL)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{.tag}{A tag element.}
 
 \item{color}{A character string specifying the text color of the tag element,
 defaults to \code{NULL} in which case the text color is unchanged.}
@@ -19,6 +19,9 @@ size), defaults to \code{NULL}, in which case the font size is unchanged.}
 \item{weight}{One of \code{"bold"}, \code{"normal"}, \code{"light"}, \code{"italic"}, or
 \code{"monospace"} specifying the font weight of the element's text, defaults to
 \code{NULL}, in which case the font weight is unchanged.}
+
+\item{align}{A \link{responsive} argument. One of \code{"left"}, \code{"center"}, \code{"right"},
+or \code{"justify"}.}
 }
 \description{
 The \code{font()} utility may be used to change the color, size, or weight of a
@@ -66,7 +69,7 @@ if (interactive()) {
 
   shinyApp(
     ui = container(
-      fluid = FALSE,
+      center = TRUE,
       lapply(
         head(colors, -1),
         font,
@@ -78,8 +81,8 @@ if (interactive()) {
         background("grey") \%>\%
         font(tail(colors, 1))
     ) \%>\%
-      display("flex") \%>\%
-      wrap("wrap"),
+      display(flex = TRUE) \%>\%
+      flex(wrap = TRUE),
     server = function(input, output) {
 
     }
@@ -92,6 +95,6 @@ Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{text}}, \code{\link{width}}
+  \code{\link{width}}
 }
 \concept{utilities}

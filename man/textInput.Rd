@@ -66,13 +66,13 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           p("For best results open in a browser") \%>\%
             font(weight = "bold")
         )
       ),
       row(
-        col(
+        column(
           h6("Text input:"),
           textInput(id = "text"),
           h6("Search input:"),
@@ -89,7 +89,7 @@ if (interactive()) {
           numberInput(id = "num") \%>\%
             background("green")
         ),
-        col(
+        column(
           verbatimTextOutput("values")
         )
       )

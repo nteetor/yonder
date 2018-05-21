@@ -35,12 +35,14 @@ Start or stop a spinner based on process progress.
 if (interactive()) {
   shinyApp(
     ui = container(
-      col(
-        spinnerOutput("spin", pulse = TRUE),
-        buttonInput("trigger", "Start/stop")
-      ) \%>\%
-        display("flex") \%>\%
-        content("around")
+      row(
+        column(
+          spinnerOutput("spin", pulse = TRUE),
+          buttonInput("trigger", "Start/stop")
+        ) \%>\%
+          display(flex = TRUE) \%>\%
+          flex(justify = "around")
+      )
     ),
     server = function(input, output) {
       observeEvent(input$trigger, {

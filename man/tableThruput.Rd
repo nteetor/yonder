@@ -39,12 +39,12 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           tableThruput(
             id = "table"
           )
         ),
-        col(
+        column(
           verbatimTextOutput("value")
         )
       )
@@ -65,13 +65,13 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           tableThruput(
             id = "table",
             borders = TRUE
           )
         ),
-        col(
+        column(
           tableThruput(
             id = "subset",
             borders = TRUE

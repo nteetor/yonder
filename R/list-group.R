@@ -50,13 +50,14 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           default = 3,
 #'           listGroupThruput(
-#'             id = "thrulist"
+#'             id = "thrulist",
+#'             componentOutput("items")
 #'           )
 #'         ),
-#'         col(
+#'         column(
 #'           rangeInput(
 #'             id = "num",
 #'             min = 0,
@@ -71,23 +72,21 @@
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$thrulist <- renderListGroup(
+#'       output$items <- renderComponent(
 #'         listGroupItem(
 #'           "Cras justo odio",
 #'           badgeOutput("badge1", 0) %>%
 #'             background(input$level)
 #'         ) %>%
-#'           display("flex") %>%
-#'           content("between") %>%
-#'           items("center"),
+#'           display(flex = TRUE) %>%
+#'           flex(justify = "between", align = "center"),
 #'         listGroupItem(
 #'           "Dapibus ac facilisis in",
 #'           badgeOutput("badge2", 0) %>%
 #'             background(input$level)
 #'         ) %>%
-#'           display("flex") %>%
-#'           content("between") %>%
-#'           items("center")
+#'           display(flex = TRUE) %>%
+#'           flex(justify = "between", align = "center")
 #'       )
 #'
 #'       output$badge1 <- renderBadge(input$num)
@@ -116,7 +115,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           class = "ml-auto",
 #'           default = 3,
 #'           listGroupThruput(
@@ -134,7 +133,7 @@
 #'             )
 #'           )
 #'         ),
-#'         col(
+#'         column(
 #'           class = "mr-auto",
 #'           htmlOutput("text")
 #'         )
@@ -179,7 +178,7 @@ listGroupItem <- function(..., value = NULL, selected = FALSE,
 
 #' @rdname listGroupThruput
 #' @export
-renderListGroup <- function(..., env = parent.frame()) {
+renderListGroup <- function(...,  env = parent.frame()) {
   itemsFun <- shiny::exprToFunction(list(...), env, FALSE)
 
   function() {

@@ -5,8 +5,7 @@
 \alias{formRow}
 \title{Add labels, help text, and formatting to inputs}
 \usage{
-formGroup(label, input, help = NULL, ..., default = NULL, sm = NULL,
-  md = NULL, lg = NULL, xl = NULL)
+formGroup(label, input, help = NULL, ..., width = NULL)
 
 formRow(...)
 }
@@ -25,10 +24,8 @@ attributes to the parent element.
 For \strong{formRow}, any number of \code{formGroup}s or additional named arguments
 passed as HTML attributes to the parent element.}
 
-\item{default, sm, md, lg, xl}{These arguments are taken directly from \code{\link[=col]{col()}}
-because \code{formGroup}s can replicate column behaviour in order to build
-highly flexible forms. To best understand these arguments please refer to
-the \code{col} help page.}
+\item{width}{A \link{responsive} argument. One of \code{1:12} or "auto" specifying a
+column width for the form group, defaults to \code{NULL}.}
 }
 \description{
 Form groups are a way of labelling an input. Form rows are similar to
@@ -43,48 +40,43 @@ applications for devices and screens of varying sizes.
 if (interactive()) {
   shinyApp(
     ui = container(
-      row(
-        col(
-          md = 6,
-          card(
-            formRow(
-              formGroup(
-                md = 6,
-                label = "Email",
-                emailInput(
-                  id = "email",
-                  placeholder = "e@mail.com"
-                )
-              ),
-              formGroup(
-                md = 6,
-                label = "Password",
-                passwordInput(
-                  id = "password",
-                  placeholder = "123456"
-                ),
-                help = "Please consider something
-                  better than 123456"
-              )
+      center = TRUE,
+      card(
+        formRow(
+          formGroup(
+            width = c(md = 6),
+            label = "Email",
+            emailInput(
+              id = "email",
+              placeholder = "e@mail.com"
+            )
+          ),
+          formGroup(
+            width = c(md = 6),
+            label = "Password",
+            passwordInput(
+              id = "password",
+              placeholder = "123456"
             ),
-            formGroup(
-              label = "Username",
-              groupInput(
-                id = "username",
-                left = "@"
-              )
-            ),
-            buttonInput(
-              id = "go",
-              label = "Go!"
-            ) \%>\%
-              background("blue")
-          ) \%>\%
-            margins(3) \%>\%
-            background("grey", +2)
+            help = "Please consider something better than 123456"
+          )
+        ),
+        formGroup(
+          label = "Username",
+          groupInput(
+            id = "username",
+            left = "@"
+          )
+        ),
+        buttonInput(
+          id = "go",
+          label = "Go!"
         ) \%>\%
-          margins("auto")
-      )
+          background("blue")
+      ) \%>\%
+        margin(3) \%>\%
+        background("grey")
+
     ),
     server = function(input, output) {
     }

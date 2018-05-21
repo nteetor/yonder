@@ -1,112 +1,148 @@
-#' Grid system and responsive layout
+#' Grid layout
 #'
-#' Build apps using the grid layout: containers, rows, and columns (oh my).
+#' @description
 #'
-#' @param ... Any number of child elements or named arguments passed as HTML
-#'   attributes to the parent element. `row`s need to be placed inside a
-#'   `container`. A `row` typically contains only `col`s. A `col` may contain
-#'   other `col`s or other elements.
+#' These functions are the foundation of any application. Grid elements are
+#' nested as follows: `container > row > column ~ column`. Columns may be nested
+#' within columns. Columns may be created with an explicit width, 1 through 12.
+#' To fit a column automatically to its content use `width = "auto"`. To divide
+#' the space in a row evenly amongst all columns leave `width` as `NULL`. For
+#' examples and usage tips see the sections below.
 #'
-#' @param default A number 1 through 12 or `"auto"` specifying the default
-#'   width of the column. Columns with width `"auto"` equally divide space or
-#'   fill remaining space when used with other columns.
+#' @param ... Any number of tags elements passed as child elements or named
+#'   arguments passed as HTML attributes to the parent element.
 #'
-#' @param sm Like `default`, but the width is applied once the viewport is 576
-#'   pixels wide, think phone in landscape mode.
+#' @param width A [responsive] argument. One of `1:12` or `"auto", defaults to
+#'   `NULL`.
 #'
-#' @param md Like `default`, but the width is applied once the viewport is 768
-#'   pixels wide, think tablets.
+#' @param gutters One of `TRUE` or `FALSE` specifying if columns inside the row
+#'   are padded, defaults to `TRUE`. If `FALSE` column content renders flush
+#'   against the border of the column. Most often you will want to leave this
+#'   `gutters` as `TRUE`.
 #'
-#' @param lg Like `default`, but the width is applied once the viewport is 992
-#'   pixels wide, think desktop.
+#' @param center One of `TRUE` or `FALSE` specifying if the container is
+#'   responsively centered or if the container occupies the entire width of the
+#'   viewport, defaults to `FALSE`.
 #'
-#' @param xl Like `default`, but the width is applied once the viewport is 1200
-#'   pixels wide, think large desktop.
+#' @section Equal width columns:
 #'
-#' @param fluid One of `TRUE` or `FALSE` specifying if the container occupies
-#'   the entire width of the viewport, defaults to `TRUE`, in which case the
-#'   container occupies the full width of the viewport.
+#' ```
+#' container(
+#'   row(
+#'     column(
+#'       "Aliquam erat volutpat."
+#'     ),
+#'     column(
+#'       "Mauris mollis tincidunt felis."
+#'     ),
+#'     column(
+#'       "Cum sociis natoque penatibus et magnis dis parturient montes,",
+#'       "nascetur ridiculus mus."
+#'     )
+#'   )
+#' )
+#' ```
+#'
+#' @section Shiny's panel with sidebar layout:
+#'
+#' ```
+#' container(
+#'   row(
+#'     column(
+#'       width = 4
+#'     ),
+#'     column()
+#'   )
+#' )
+#' ```
+#'
+#' @section Mobile friendly grids:
+#'
+#' Use `column()`s [responsive] `width` argument to make mobile friendly
+#' applications.
+#'
+#' ```
+#' container(
+#'   row(
+#'     column(
+#'       width = c(sm = 4),
+#'       "Mauris ac felis vel velit tristique imperdiet."
+#'     ),
+#'     column(
+#'       width = c(sm = 4),
+#'       "Nam vestibulum accumsan nisl."
+#'     ),
+#'     column(
+#'       width = c(sm = 4),
+#'       "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
+#'     )
+#'   )
+#' )
+#' ```
+#'
+#' ```
+#' container(
+#'   row(
+#'     column(
+#'       width = c(sm = 4)
+#'     ),
+#'     column(
+#'       width = c(sm = 8)
+#'     )
+#'   )
+#' )
+#' ```
+#'
+#' @section Fit columns to their content:
+#'
+#' ```
+#' container(
+#'   row(
+#'     column(),
+#'     column(
+#'       width = "auto",
+#'       "Cras placerat accumsan nulla.  Aenean in sem ac leo mollis blandit."
+#'     ),
+#'     column()
+#'   )
+#' )
+#' ```
 #'
 #' @export
 #' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         col("1 of 2") %>%
-#'           border(),
-#'         col("2 of 2") %>%
-#'           border()
-#'       ),
-#'       row(
-#'         lapply(
-#'           1:3,
-#'           . %>%
-#'             paste("of 3") %>%
-#'             col() %>%
-#'             border()
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
 #'
-#'     }
-#'   )
-#' }
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         col("1 or 3") %>%
-#'           border(),
-#'         col("2 of 3", default = 6) %>%
-#'           border(),
-#'         col("3 of 3") %>%
-#'           border()
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'
-#'     }
-#'   )
-#' }
-#'
-col <- function(..., default = NULL, sm = NULL, md = NULL, lg = NULL,
-                xl = NULL) {
-  args <- dropNulls(list(default = default, sm = sm, md = md, lg = lg, xl = xl))
+column <- function(..., width = NULL) {
+  width <- ensureBreakpoints(width, c(1:12, "auto"))
 
-  if (length(args) == 0) {
-    return(tagAddClass(tags$div(...), "col"))
+  classes <- createResponsiveClasses(width, "col")
+
+  if (!length(classes)) {
+    classes <- "col"
   }
 
-  classes <- responsives(
-    prefix = "col",
-    values = args,
-    possible = c(as.character(1:12), "auto")
-  )
+  tag <- tags$div(..., include("core"))
 
-  classes <- sub("-(sm|md|lg|xl)-auto", "", classes)
-  classes <- sort(unique(c("col", classes)))
-
-  tagAddClass(tags$div(...), collate(classes))
+  tagAddClass(tag, classes)
 }
 
-#' @rdname col
+#' @rdname column
 #' @export
-row <- function(...) {
+row <- function(..., gutters = TRUE) {
   tags$div(
-    class = "row",
+    class = collate(
+      "row",
+      if (!gutters) "no-gutter"
+    ),
     ...,
     include("core")
   )
 }
 
-#' @rdname col
+#' @rdname column
 #' @export
-container <- function(..., fluid = TRUE) {
+container <- function(..., center = FALSE) {
   tags$div(
-    class = if (fluid) "container-fluid" else "container",
+    class = if (center) "container" else "container-fluid",
     ...,
     include("core")
   )

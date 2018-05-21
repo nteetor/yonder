@@ -29,15 +29,93 @@
 #' @export
 #' @examples
 #'
+#' card("Praesent fermentum tempor tellus.")
+#'
+#'
+#' card(
+#'   title = "Mauris mollis tincidunt felis.",
+#'   subtitle = "Phasellus at dui in ligula mollis ultricies.",
+#'   "Nullam tempus. Mauris mollis tincidunt felis.",
+#'   "Nullam libero mauris, consequat quis, varius et, dictum id, arcu."
+#' )
+#'
+#'
+#' card(
+#'   listGroupThruput(
+#'     id = NULL,
+#'     listGroupItem(
+#'       "Pellentesque tristique imperdiet tortor."
+#'     ),
+#'     listGroupItem(
+#'       "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+#'     ),
+#'     listGroupItem(
+#'       "Phasellus purus."
+#'     )
+#'   )
+#' )
+#'
+#'
+#' card(
+#'   header = "Nunc rutrum turpis sed pede.",
+#'   title = "Sed bibendum.",
+#'   "Etiam vel neque nec dui dignissim bibendum. Etiam vel neque nec dui dignissim bibendum.",
+#'   buttonInput(id = NULL, label = "Phasellus purus")
+#' )
+#'
+#'
+#' card(
+#'   header = tabTabs(
+#'     id = "myCardTabs",
+#'     labels = c("Phasellus", "Donec", "Fusce")
+#'   ),
+#'   tabContent(
+#'     tabs = "myCardTabs",
+#'     tabPane(
+#'       "Phasellus purus. Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
+#'     ),
+#'     tabPane(
+#'       "Donec at pede. Praesent augue."
+#'     ),
+#'     tabPanel(
+#'       "Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio."
+#'     )
+#'   )
+#' )
+#'
+#'
+#' card(
+#'   header = div("Donec pretium posuere tellus.") %>%
+#'     background("teal"),
+#'   "Donec hendrerit tempor tellus.",
+#'   "Cras placerat accumsan nulla."
+#' )
+#'
 card <- function(..., header = NULL, title = NULL, subtitle = NULL,
                  image = NULL, footer = NULL) {
   args <- list(...)
   attrs <- attribs(args)
 
+  title <- if (!is.null(title)) {
+    if (is_tag(title)) {
+      tagAddClass(title, "card-title")
+    } else {
+      tags$h5(class = "card-title", title)
+    }
+  }
+
+  subtitle <- if (!is.null(subtitle)) {
+    if (is_tag(subtitle)) {
+      tagAddClass(subtitle, "card-subtitle")
+    } else {
+      tags$h6(class = "card-subtitle", subtitle)
+    }
+  }
+
   isListGroup <- function(x) tagHasClass(x, "list-group")
 
-  elems <- lapply(
-    elements(args),
+  body <- lapply(
+    dropNulls(c(list(title, subtitle), elements(args))),
     function(el) {
       if (isListGroup(el)) {
         return(tagAddClass(el, "list-group-flush"))
@@ -54,10 +132,10 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
     }
   )
 
-  if (length(elems)) {
-    elems <- Reduce(
-      x = elems[-1],
-      init = list(elems[[1]]),
+  if (length(body)) {
+    body <- Reduce(
+      x = body[-1],
+      init = list(body[[1]]),
       function(acc, el) {
         if (isListGroup(acc[[length(acc)]])) {
           c(acc, list(el))
@@ -88,22 +166,6 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
     }
   }
 
-  title <- if (!is.null(title)) {
-    if (is_tag(title)) {
-      tagAddClass(title, "card-title")
-    } else {
-      tags$h5(class = "card-title", title)
-    }
-  }
-
-  subtitle <- if (!is.null(subtitle)) {
-    if (is_tag(subtitle)) {
-      tagAddClass(subtitle, "card-subtitle")
-    } else {
-      tags$h6(class = "card-subtitle", subtitle)
-    }
-  }
-
   image <- if (!is.null(image)) {
     tagAddClass(image, "card-img-top")
   }
@@ -119,21 +181,34 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
   tags$div(
     class = "card",
     header,
-    image,
-    if (!is.null(title) || !is.null(subtitle)) {
-      tags$div(
-        class = "card-body",
-        title,
-        subtitle
-      )
-    },
-    elems,
+    body,
     footer
   )
 }
 
 #' @rdname card
 #' @export
+#' @examples
+#'
+#' deck(
+#'   card(
+#'     title = "Nullam tristique",
+#'     "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+#'     "Nunc rutrum turpis sed pede.",
+#'     footer = "Cras placerat accumsan nulla."
+#'   ),
+#'   card(
+#'     title = "Integer placerat",
+#'     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit tempor tellus.",
+#'     footer = "Cras placerat accumsan nulla."
+#'   ),
+#'   card(
+#'     title = "Phasellus neque",
+#'     "Donec at pede. Etiam vel neque nec dui dignissim bibendum.",
+#'     footer = "Cras placerat accumsan nulla."
+#'   )
+#' )
+#'
 deck <- function(...) {
   tags$div(
     class = "card-deck",

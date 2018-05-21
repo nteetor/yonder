@@ -21,7 +21,7 @@ is_strictly_list <- function(x) {
 
 conjoin <- function(x, con = "or") {
   if (length(x) == 1) {
-    return(x)
+    return(as.character(x))
   }
 
   if (length(x) == 2) {
@@ -51,7 +51,7 @@ re <- function(string, pattern, len0 = TRUE) {
     return(TRUE)
   }
 
-  grepl(pattern, paste0("^", string, "$"))
+  grepl(paste0("^(", pattern, ")$"), string)
 }
 
 ID <- function(x) {
@@ -111,21 +111,6 @@ elements <- function(x) {
   unname(x[names2(x) == ""])
 }
 
-# Join HTML attribute values
-#
-# A function to join HTML attribute values with `htmltools` in mind. If all
-# arguments are `NULL`, `NULL` is returned so the attribute can be dropped. If
-# all arguments are the empty string, `NULL` is returned so the attribute can
-# be dropped. If all arguments are `NA`, then `NA` is returned to preserve a
-# boolean attribute. Otherwise, all arguments are collapsed together into a
-# single string suitable for an HTML attribute.
-#
-# @param ... Any number of arguments to combine together as a single HTML
-#   attribute value.
-#
-# @param collapse A character string specifying how the arguments are pasted
-#   together, passed to `paste`, defaults to `" "`.
-#
 collate <- function(..., collapse = " ") {
   args <- unique(c(...))
 
@@ -140,43 +125,157 @@ collate <- function(..., collapse = " ") {
   }
 }
 
-responsives <- function(prefix, values, possible) {
-  call <- as.character(sys.call(-1))[1]
+msgInvalidValues <- function(fun, argument, invalid) {
+  if (is.character(invalid)) {
+    invalid <- paste0('"', invalid, '"')
+  }
 
-  if (length(values) == 0) {
+  sprintf(
+    "invalid call to `%s()`, argument `%s` contains unexpected value%s %s",
+    as.character(fun),
+    as.character(argument),
+    if (length(invalid) > 1) "s" else "",
+    conjoin(as.character(invalid), con = "and")
+  )
+}
+
+msgInvalidBreakpoints <- function(fun, argument, invalid) {
+  sprintf(
+    "invalid call to `%s()`, argument `%s` contains unexpected breakpoint%s %s",
+    as.character(fun),
+    as.character(argument),
+    if (length(invalid) > 1) "s" else "",
+    conjoin(paste0("`", invalid, "`"))
+  )
+}
+
+msgInvalidTooManyValues <- function(fun, argument, invalid) {
+  sprintf(
+    "invalid call to `%s()`, argument `%s` breakpoint%s %s contain%s too many values",
+    as.character(fun),
+    as.character(argument),
+    if (length(invalid) > 1) "s" else "",
+    conjoin(paste0("`", invalid, "`"), con = "and"),
+    if (length(invalid) > 1) "" else "s"
+  )
+}
+
+msgDuplicateBreakpoints <- function(fun, duplicates, arguments) {
+  fun <- as.character(fun)
+  duplicates <- as.character(duplicates)
+  arguments <- as.character(arguments)
+
+  sprintf(
+    "invalid call to `%s()`, %s breakpoint%s specified in multiple arguments %s",
+    fun,
+    conjoin(sprintf("`%s`", duplicates), con = "and"),
+    if (length(duplicates) > 1) "s" else "",
+    conjoin(sprintf("`%s`", arguments), con = "and")
+  )
+}
+
+checkDuplicateBreakpoints <- function(...) {
+  passed <- as.character(as.list(substitute(list(...)))[-1])
+  args <- list(...)
+  flat <- unlist(list(...))
+
+  if (any(duplicated(names(flat)))) {
+    dups <- names(flat)[duplicated(names(flat))]
+    points <- passed[vapply(args, function(a) any(names(a) %in% dups), logical(1))]
+    caller <-  sys.call(-1)[[1]]
+
     stop(
-      "invalid `", call, "` arguments, at least one argument must not be NULL",
+      msgDuplicateBreakpoints(caller, dups, points),
+      call. = FALSE
+    )
+  }
+}
+
+ensureBreakpoints <- function(values, possible) {
+  if (is.null(values)) {
+    return(list())
+  }
+
+  values <- as.list(values)
+  caller <- sys.call(-1)[[1]]
+  passed <- match.call()$values
+
+  if (length(values) == 1 && names2(values) == "") {
+    names(values) <- "default"
+  }
+
+  if (length(invalid <- getInvalidBreakpoints(values))) {
+    stop(
+      msgInvalidBreakpoints(caller, passed, invalid),
       call. = FALSE
     )
   }
 
-  breakpoints <- names2(values)
-  allowed <- paste(possible, collapse = "|")
+  if (length(invalid <- getInvalidLengths(values))) {
+    stop(
+      msgInvalidTooManyValues(caller, passed, invalid),
+      call. = FALSE
+    )
+  }
+
+  if (length(invalid <- getInvalidValues(values, possible))) {
+    stop(
+      msgInvalidValues(caller, passed, invalid),
+      call. = FALSE
+    )
+  }
+
+  names(values) <- vapply(
+    names2(values),
+    function(nm) if (nm == "xs") "default" else nm,
+    character(1)
+  )
+
+  values
+}
+
+getInvalidBreakpoints <- function(values) {
+  if (length(values) == 0) {
+    return(NULL)
+  }
+
+  names2(values)[!re(names2(values), "default|xs|sm|md|lg|xl")]
+}
+
+getInvalidLengths <- function(values) {
+  if (length(values) == 0) {
+    return(NULL)
+  }
+
+  names2(values)[vapply(values, length, numeric(1)) > 1]
+}
+
+getInvalidValues <- function(values, possible) {
+  if (length(values) == 0) {
+    return(NULL)
+  }
+
+  unlist(values)[!vapply(values, `%in%`, logical(1), possible)]
+}
+
+createResponsiveClasses <- function(values, prefix) {
+  if (!length(values)) {
+    return(NULL)
+  }
 
   vapply(
-    breakpoints,
-    function(point) {
-      val <- values[[point]]
+    names2(values),
+    function(breakpoint) {
+      value <- values[[breakpoint]]
 
-      if (!re(val, allowed)) {
-        if (is.character(possible)) {
-          possible <- paste0('"', possible, '"')
-        }
-
-        stop(
-          "invalid `", call, "` argument, `", point, "` must be one of ",
-          conjoin(possible),
-          call. = FALSE
-        )
-      }
-
-      if (point == "default") {
-        paste0(prefix, "-", val)
+      if (breakpoint == "default") {
+        paste0(prefix, "-", value)
       } else {
-        paste0(prefix, "-", point, "-", val)
+        paste0(prefix, "-", breakpoint, "-", value)
       }
     },
-    character(1)
+    character(1),
+    USE.NAMES = FALSE
   )
 }
 

@@ -2,31 +2,29 @@
 % Please edit documentation in R/tooltip.R
 \name{tooltip}
 \alias{tooltip}
-\alias{popover}
-\title{Add Tooltips and Popovers}
+\title{Tooltips}
 \usage{
-tooltip(content, text, placement = "top")
-
-popover(content, text, placement = "top")
+tooltip(.tag, text, placement = "top")
 }
 \arguments{
-\item{content}{The tag to add a tooltip or popover to.}
+\item{.tag}{A tag element.}
 
-\item{text}{The tooltip or popover text.}
+\item{text}{The tooltip text.}
 
-\item{placement}{A character vector specifying where the tooltip or popover
-is placed, defaults to top, one of \code{"left"}, \code{"top"}, \code{"right"}, or
-\code{"bottom"}.}
+\item{placement}{One of \code{"top"}, \code{"right"}, \code{"bottom"}, or \code{"left"}
+specifying what side of the tag element the tooltip appears on.}
 }
 \description{
 Both functions are a means of adding help text to HTML components. Tooltips
-appear on hover and popovers appear when the element is clicked.
+appear on hover. To add tooltips to text first wrap the text in a \code{span()} tag
+element.
 }
 \examples{
 
-popover(
-  buttonInput("Click me!"),
-  "This text appears when the button is clicked"
+div(
+  "The island of ",
+  span("Yll") \%>\%
+    tooltip("An island of south of the Commonwealth")
 )
 
 }

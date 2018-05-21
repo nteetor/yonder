@@ -5,12 +5,12 @@
 \alias{height}
 \title{Tag element width and height}
 \usage{
-width(tag, percentage = NULL, max = NULL)
+width(.tag, percentage = NULL, max = NULL)
 
-height(tag, percentage = NULL, max = NULL)
+height(.tag, percentage = NULL, max = NULL)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{.tag}{A tag element.}
 
 \item{percentage}{One of 25, 50, 75, or 100 specifying width or height as a
 percentage of a parent element's width or height.}
@@ -23,6 +23,7 @@ Utility functions to change a tag element's width or height. Widths and
 heights are specified as percentages of the parent object's width or height.
 }
 \examples{
+
 tags$div() \%>\%
   width(25) \%>\%
   height(100)
@@ -36,12 +37,12 @@ Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{padding}},
-  \code{\link{rounded}}, \code{\link{text}}
+  \code{\link{rounded}}
 
 Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{padding}},
-  \code{\link{rounded}}, \code{\link{text}}
+  \code{\link{rounded}}
 }
 \concept{utilities}

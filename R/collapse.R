@@ -18,9 +18,9 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       fluid = FALSE,
+#'       center = TRUE,
 #'       buttonInput("toggle", "Toggle the card") %>%
-#'         margins(3),
+#'         margin(3),
 #'       card(
 #'         "\"The Time Traveller (for so it will be convenient to speak
 #'          of him) was expounding a recondite matter to us. His grey eyes
@@ -44,14 +44,14 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       fluid = FALSE,
+#'       center = TRUE,
 #'       buttonInput(
 #'         id = "toggle",
 #'         label = "Client-side toggle",
 #'         `data-target` = "#mycollapse",
 #'         `data-toggle` = "collapse"
 #'       ) %>%
-#'         margins(3),
+#'         margin(3),
 #'       card(
 #'         "If you do not need server-side control with the `*Collapse()`
 #'          functions consider setting up a client-side collapse with

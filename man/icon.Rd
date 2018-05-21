@@ -24,19 +24,18 @@ included.
 if (interactive()) {
   shinyApp(
     ui = container(
-      fluid = FALSE,
+      center = TRUE,
       selectInput(
         id = "name",
         choices = unique(icons$name)
       ) \%>\%
-        margins(3),
+        margin(3),
       div(
         htmlOutput("icon")
       ) \%>\%
-        margins(3) \%>\%
-        display("flex") \%>\%
-        direction("column") \%>\%
-        items("center")
+        margin(3) \%>\%
+        display(flex = TRUE) \%>\%
+        flex(direction = "column", align = "center")
     ),
     server = function(input, output) {
       output$icon <- renderUI({
@@ -58,12 +57,12 @@ if (interactive()) {
               unique(icons[icons$set == s, ]$name),
               function(nm) {
                 icon(nm, set = s) \%>\%
-                  margins(2)
+                  margin(2)
               }
             )
           ) \%>\%
-            display("flex") \%>\%
-            wrap("wrap")
+            display(flex = TRUE) \%>\%
+            flex(wrap = TRUE)
         }
       )
     ),

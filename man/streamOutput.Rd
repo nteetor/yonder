@@ -32,10 +32,10 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           buttonInput(id = "trigger", "Go!")
         ),
-        col(
+        column(
           streamOutput(
             id = "stream"
           )

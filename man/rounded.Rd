@@ -4,10 +4,10 @@
 \alias{rounded}
 \title{Round tag element corners}
 \usage{
-rounded(tag, sides = "all")
+rounded(.tag, sides = "all")
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{.tag}{A tag element.}
 
 \item{sides}{One of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"}, \code{"circle"},
 \code{"all"} or \code{"none"}, defaults to \code{"all"}, specifying which and how the
@@ -26,6 +26,6 @@ Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{padding}},
-  \code{\link{text}}, \code{\link{width}}
+  \code{\link{width}}
 }
 \concept{utilities}

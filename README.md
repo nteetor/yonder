@@ -7,8 +7,9 @@ Build Bootstrap 4 applications with the familiar Shiny toolkit.
 dull is a set of UI and server functions built on top of Bootstrap 4. On the UI
 side dull features Font Awesome 5, aftertheflood's Spark font, flatpickr
 calendar widgets, and refreshed IonRange sliders. On the server side dull
-includes tools for showing alerts, modals, [popovers](http://getbootstrap.com/docs/4.0/components/popovers/)
-, validating and freezing input values, and more!
+includes tools for showing alerts, modals,
+[popovers](http://getbootstrap.com/docs/4.0/components/popovers/), validating
+and freezing input values, and more!
 
 ## A first example
 
@@ -19,8 +20,8 @@ shinyApp(
   ui = container(
     h2("Iris k-means clustering"),
     row(
-      col(
-        default = 4,
+      column(
+        width = 4,
         card(
           formGroup(
             "X variable",
@@ -52,8 +53,8 @@ shinyApp(
         ) %>%
           background("grey")
       ),
-      col(
-        default = 8,
+      column(
+        width = 8,
         plotOutput("plot1")
       )
     )

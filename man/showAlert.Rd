@@ -42,7 +42,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       buttonInput("show", "Alert!") \%>\%
-        margins(3)
+        margin(3)
     ),
     server = function(input, output) {
       observeEvent(input$show, {
@@ -58,18 +58,18 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           groupInput(
             id = "text",
             right = buttonInput("clear", icon("times")) \%>\%
               background("red")
           )
         ),
-        col(
+        column(
           verbatimTextOutput("value")
         )
       ) \%>\%
-        margins(3)
+        margin(3)
     ),
     server = function(input, output) {
       oldValue <- NULL
@@ -94,7 +94,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       buttonInput("add", "Alert") \%>\%
-        margins(3),
+        margin(3),
       buttonInput("first", "Remove first alert"),
       buttonInput(
         id = "reds",
@@ -130,18 +130,18 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           groupInput(
             id = "text",
             right = buttonInput("clear", icon("times")) \%>\%
               background("red")
           )
         ),
-        col(
+        column(
           verbatimTextOutput("value")
         )
       ) \%>\%
-        margins(3)
+        margin(3)
     ),
     server = function(input, output) {
       oldValue <- NULL

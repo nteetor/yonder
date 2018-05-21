@@ -4,10 +4,10 @@
 \alias{background}
 \title{Tag element background color}
 \usage{
-background(tag, color)
+background(.tag, color)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{.tag}{A tag element.}
 
 \item{color}{A character string specifying the background color, see below
 for all possible values.}
@@ -58,17 +58,17 @@ if (interactive()) {
 
   shinyApp(
     ui = container(
-      fluid = FALSE,
+      center = TRUE,
       lapply(
         colors,
         background,
         tag = div() \%>\%
           padding(5) \%>\%
-          margins(2)
+          margin(2)
       )
     ) \%>\%
-      display("flex") \%>\%
-      wrap("wrap"),
+      display(flex = TRUE) \%>\%
+      flex(wrap = TRUE),
     server = function(input, output) {
 
     }
@@ -80,7 +80,6 @@ if (interactive()) {
 Other utilities: \code{\link{affix}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{padding}},
-  \code{\link{rounded}}, \code{\link{text}},
-  \code{\link{width}}
+  \code{\link{rounded}}, \code{\link{width}}
 }
 \concept{utilities}

@@ -1,9 +1,9 @@
 #' Display a popover
 #'
 #' Popovers are small windows of content associated with a tag element. Use
-#' `howPopover()` to add a popover to any tag element with an HTML id. This
+#' `showPopover()` to add a popover to any tag element with an HTML id. This
 #' allows you to add explanations for inputs. Furthermore the [linkInput()]
-#' makes explanations of semi-plain text possible. Popovers are hidden with
+#' makes adding popovers to semi-plain text possible. Popovers are hidden with
 #' `closePopover()`.
 #'
 #' @param id A character string specifying the HTML id of a popover's target tag

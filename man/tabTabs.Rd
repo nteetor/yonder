@@ -53,7 +53,6 @@ tabTabs(
   values = c("home", "about", "blog")
 )
 
-
 tabContent(
   tabs = "myTabs",
   tabPane(
@@ -92,7 +91,7 @@ if (interactive()) {
           )
         )
       ) \%>\%
-        margins(4) \%>\%
+        margin(4) \%>\%
         width(50)
     ),
     server = function(input, output) {
@@ -108,7 +107,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           default = 4,
           card(
             p("Nullam quis risus eget urna mollis ornare vel eu leo. Nullam
@@ -116,12 +115,12 @@ if (interactive()) {
           ) \%>\%
             background("grey")
         ),
-        col(
+        column(
           tabTabs(
             id = "myTabs",
             labels = c("Home", "About", "Posts")
           ) \%>\%
-            margins(c(0, 0, 5, 0)),
+            margin(bottom = 5),
           tabContent(
             tabs = "myTabs",
             tabPane(

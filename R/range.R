@@ -122,7 +122,7 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
 #'   shinyApp(
 #'     ui = container(
 #'       intervalInput("gray") %>%
-#'         margins(c(0, 0, 4, 0)),
+#'         margin(bottom = 4),
 #'       intervalInput("green", default = c(25, 75), draggable = TRUE)
 #'     ),
 #'     server = function(input, output) {

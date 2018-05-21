@@ -36,7 +36,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           selectInput(
             id = "select",
             choices = c("Choose one", "One", "Two", "Three"),
@@ -44,7 +44,7 @@ if (interactive()) {
             multiple = TRUE
           )
         ),
-        col(
+        column(
           d4(
             textOutput("value")
           )

@@ -61,13 +61,13 @@ textualInput <- function(id, value, placeholder, readonly, help, type,
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           p("For best results open in a browser") %>%
 #'             font(weight = "bold")
 #'         )
 #'       ),
 #'       row(
-#'         col(
+#'         column(
 #'           h6("Text input:"),
 #'           textInput(id = "text"),
 #'           h6("Search input:"),
@@ -84,7 +84,7 @@ textualInput <- function(id, value, placeholder, readonly, help, type,
 #'           numberInput(id = "num") %>%
 #'             background("green")
 #'         ),
-#'         col(
+#'         column(
 #'           verbatimTextOutput("values")
 #'         )
 #'       )
@@ -211,12 +211,12 @@ fieldset <- function(legend, ...) {
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           loginInput(
 #'             id = "login"
 #'           )
 #'         ),
-#'         col(
+#'         column(
 #'           verbatimTextOutput("value")
 #'         )
 #'       )
@@ -283,12 +283,12 @@ loginInput <- function(id, ...) {
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           tags$form(
 #'             addressInput("address")
 #'           )
 #'         ),
-#'         col(
+#'         column(
 #'           verbatimTextOutput("value")
 #'         )
 #'       )

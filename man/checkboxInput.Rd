@@ -39,7 +39,7 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           checkboxInput(
             id = "checkbox",
             choice = "Are you there?",
@@ -50,7 +50,7 @@ if (interactive()) {
             choice = "Hello"
           )
         ),
-        col(
+        column(
           d4(
             textOutput("value")
           )
@@ -77,7 +77,7 @@ if (interactive()) {
         buttonInput("choices", "Update checkbox text"),
         buttonInput("values", "Update checkbox value")
       ) \%>\%
-        display("flex")
+        display(flex = TRUE)
     ),
     server = function(input, output) {
       output$checkvalue <- renderPrint({

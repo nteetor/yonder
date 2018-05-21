@@ -1,3 +1,5 @@
+globalVariables("icons")
+
 #' Icon elements
 #'
 #' Include an icon in your application. For now only Font Awesome icons are
@@ -21,19 +23,18 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       fluid = FALSE,
+#'       center = TRUE,
 #'       selectInput(
 #'         id = "name",
 #'         choices = unique(icons$name)
 #'       ) %>%
-#'         margins(3),
+#'         margin(3),
 #'       div(
 #'         htmlOutput("icon")
 #'       ) %>%
-#'         margins(3) %>%
-#'         display("flex") %>%
-#'         direction("column") %>%
-#'         items("center")
+#'         margin(3) %>%
+#'         display(flex = TRUE) %>%
+#'         flex(direction = "column", align = "center")
 #'     ),
 #'     server = function(input, output) {
 #'       output$icon <- renderUI({
@@ -55,12 +56,12 @@
 #'               unique(icons[icons$set == s, ]$name),
 #'               function(nm) {
 #'                 icon(nm, set = s) %>%
-#'                   margins(2)
+#'                   margin(2)
 #'               }
 #'             )
 #'           ) %>%
-#'             display("flex") %>%
-#'             wrap("wrap")
+#'             display(flex = TRUE) %>%
+#'             flex(wrap = TRUE)
 #'         }
 #'       )
 #'     ),
@@ -178,12 +179,14 @@ icon <- function(name, set = NULL, ...) {
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
-#'       col(
-#'         spinnerOutput("spin", pulse = TRUE),
-#'         buttonInput("trigger", "Start/stop")
-#'       ) %>%
-#'         display("flex") %>%
-#'         content("around")
+#'       row(
+#'         column(
+#'           spinnerOutput("spin", pulse = TRUE),
+#'           buttonInput("trigger", "Start/stop")
+#'         ) %>%
+#'           display(flex = TRUE) %>%
+#'           flex(justify = "around")
+#'       )
 #'     ),
 #'     server = function(input, output) {
 #'       observeEvent(input$trigger, {

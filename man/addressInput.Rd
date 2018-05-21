@@ -18,12 +18,12 @@ if (interactive()) {
   shinyApp(
     ui = container(
       row(
-        col(
+        column(
           tags$form(
             addressInput("address")
           )
         ),
-        col(
+        column(
           verbatimTextOutput("value")
         )
       )

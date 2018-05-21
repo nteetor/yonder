@@ -2,43 +2,32 @@
 % Please edit documentation in R/utilities.R
 \name{display}
 \alias{display}
-\title{Element display property, inline, block, and more}
+\title{Tag element display}
 \usage{
-display(tag, default = NULL, sm = NULL, md = NULL, lg = NULL,
-  xl = NULL, print = NULL)
+display(.tag, render = NULL, print = NULL)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{.tag}{A tag element.}
 
-\item{default}{One of \code{"inline"}, \code{"inline-block"}, \code{"block"}, \code{"table"},
-\code{"table-cell"}, \code{"flex"}, \code{"inline-flex"}, or \code{"none"} specifying the
-default display property of the element.}
-
-\item{sm}{Like \code{default}, but the display property is applied once the
-viewport is 576 pixels wide, think phone in landscape mode.}
-
-\item{md}{Like \code{default}, but the display property is applied once the
-viewport is 768 pixels wide, think tablets.}
-
-\item{lg}{Like \code{default}, but the display property is applied once the
-viewport is 992 pixels wide, think desktop.}
-
-\item{xl}{Like \code{default}, but the display property is applied once the
-viewport is 1200 pixels wide, think large desktop.}
-
-\item{print}{Like \code{default}, but the display property is applied when the
-page is printed.}
+\item{render, print}{A \link{responsive} argument. One of \code{"inline"}, \code{"block"},
+\code{"inline-block"}, \code{"flex"}, \code{"inline-flex"}, or \code{"none"}, defaults to
+\code{NULL}.}
 }
 \description{
-The \code{display} utility is used to apply Bootstrap classes to adjust a tag
-element's display property. This can be used to hide an element on small
-screens or convert an element from inline to block on large screens. Use the
-\code{print} argument to change the display property of an element during
-printing.
+Use the \code{display()} utility to adjust how a tag element is rendered. All
+arguments are responsive allowing you to hide elements on small screens or
+convert elements from inline to block on large screens. Most of the time
+you will use the \code{render} argument. However if you want to control how an
+element appears (or does not appear) when the page is printed use the \code{print}
+argument.
 }
 \examples{
-tags$div() \%>\%
-  display(default = "none", md = "block")
+
+display(div(), render = c(xs = "none", md = "block"))
+
+display(div(), render = c(xs = "inline", sm = "block"))
+
+display(div(), print = "none")
 
 }
 \seealso{
@@ -46,6 +35,6 @@ Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{float}}, \code{\link{font}},
   \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{text}}, \code{\link{width}}
+  \code{\link{width}}
 }
 \concept{utilities}

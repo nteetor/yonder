@@ -23,7 +23,7 @@
 #'   shinyApp(
 #'     ui = container(
 #'       row(
-#'         col(
+#'         column(
 #'           buttonInput(
 #'             id = "button",
 #'             label = list(
