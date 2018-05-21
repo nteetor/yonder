@@ -14,6 +14,7 @@ Depends:
     R (>= 3.0.0),
     shiny
 Imports:
+    utils,
     htmltools,
     magrittr,
     jsonlite,

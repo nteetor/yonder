@@ -1,3 +1,5 @@
+globalVariables("icons")
+
 #' Icon elements
 #'
 #' Include an icon in your application. For now only Font Awesome icons are
