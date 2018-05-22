@@ -16,6 +16,9 @@ package:
 # Build settings -------
 collections_dir: collections
 markdown: kramdown
+sass:
+  sass_dir: _sass
+  style: compressed
 plugins:
   - jekyll-redirect-from
 
