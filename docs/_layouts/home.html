@@ -5,15 +5,20 @@
     {% include header.html %}
 
   </head>
-
-  {% include navbar.html %}
-
   <body>
     <div class="container-fluid">
-      <div class="mx-auto">
-        <h3>{{ site.title }}</h3>
+      <div class="row h-100">
 
-        <p>{{ site.description }}</p>
+        {% include sidebar.html %}
+
+        <div class="col-8 pt-4">
+          <h3>{{ site.title }}</h3>
+
+          <p>{{ site.description }}</p>
+        </div>
+
+        {% include navbar.html %}
+
     </div>
   </body>
 </html>

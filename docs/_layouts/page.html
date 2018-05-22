@@ -6,15 +6,12 @@
 
   </head>
   <body>
-
-    {% include navbar.html %}
-
-    <div class="container">
-      <div class="row">
+    <div class="container-fluid">
+      <div class="row h-100">
 
         {% include sidebar.html %}
 
-        <div class="col-12 col-sm-10">
+        <div class="page-body col-8 pt-4">
           <h1>{{ page.roxygen.title }}</h1>
           <p class="lead">
             {{ page.roxygen.description | markdownify }}
@@ -35,11 +32,14 @@
             {{ section.content | markdownify }}
           {% endfor %}
 
-          <h2 id="source">Source</h2>
-          <p>
-            {% highlight R %}{{ page.roxygen.source }}{% endhighlight %}
-          </p>
+          <!-- <h2 id="source">Source</h2> -->
+          <!-- <p> -->
+          <!--   {% highlight R %}{{ page.roxygen.source }}{% endhighlight %} -->
+          <!-- </p> -->
         </div>
+
+        {% include navbar.html %}
+
       </div>
     </div>
   </body>

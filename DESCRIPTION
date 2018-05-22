@@ -5,6 +5,7 @@ Version: 0.0.5
 Authors@R: person(given = "Nathan", family = "Teetor", email = "nathanteetor@gmail.com", role = c("aut", "cre"))
 Description: A new toolset to build shiny applications with Bootstrap 4.
 License: MIT + file LICENSE
+URL: https://github.com/nteetor/dull
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)

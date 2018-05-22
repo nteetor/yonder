@@ -1,10 +1,15 @@
-@import url("https://fonts.googleapis.com/css?family=Lora:400,400i,700|Noto+Serif:400,400i,700");
+@import url("https://fonts.googleapis.com/css?family=Cabin:400,400i,700|Open+Sans:400,400i,700");
 @import url(https://cdn.rawgit.com/tonsky/FiraCode/1.205/distr/fira_code.css);
+html, body {
+  height: 100%; }
+  html > .container-fluid, body > .container-fluid {
+    height: 100%; }
+
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Noto Serif', serif; }
+  font-family: 'Cabin', sans-serif; }
 
 body {
-  font-family: 'Lora', cursive; }
+  font-family: 'Open Sans', sans-serif; }
 
 code {
   font-family: 'Fira Code';
@@ -220,10 +225,9 @@ code {
   color: #628b97; }
 
 /* Name.Variable.Magic */
+.page-body {
+  max-height: 100%;
+  overflow: scroll; }
+
 .sidebar a:hover {
   text-decoration: none; }
-.sidebar .font-weight-bold::before {
-  content: "=>";
-  font-family: 'Fira Code';
-  font-size: 0.75em;
-  font-weight: 500; }

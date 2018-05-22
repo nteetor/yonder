@@ -15,36 +15,11 @@
 
   </head>
   <body>
+    <div class="container-fluid">
+      <div class="row h-100">
 
-    <!--<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
-  <a class="navbar-brand" href="/dull">
-    dull
-  </a>
-
-  <ul class="navbar-nav ml-sm-3">
-    <li class="nav-item">
-      <a class="nav-link " href="/dull/">Home<a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="/dull/docs/0.0.5/">Documentation</a>
-    </li>
-  </ul>
-</header>
--->
-<header class="container">
-  <div class="d-flex flex-column align-items-center">
-      <h4>dull</h4>
-      <div>
-        <a class="mx-sm-3 " href="/dull/">Home<a>
-        <a class="mx-sm-3 font-weight-bold" href="/dull/docs/0.0.5/">Documentation</a>
-      </div>
-  </div>
-</header>
-
-    <div class="container">
-      <div class="row">
-
-        <div class="sidebar col-12 col-sm-2 p-2">
+        <div class="sidebar col-2 h-100 p-4 bg-light shadow-sm">
+  <h5 class="pb-3">dull</h5>
   <dl>
     
 
@@ -96,19 +71,19 @@
 
     
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/outputs/sparkline-output">
         sparklineOutput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/outputs/progress-output">
         progressOutput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/outputs/stream-output">
         streamOutput
       </a>
@@ -132,7 +107,7 @@
   </dl>
 </div>
 
-        <div class="col-12 col-sm-10">
+        <div class="page-body col-8 pt-4">
           <h1></h1>
           <p class="lead">
             
@@ -146,9 +121,9 @@
 
           
 
-          <h2 id="source">Source</h2>
-          <p>
-            
+          <!-- <h2 id="source">Source</h2> -->
+          <!-- <p> -->
+          <!--   
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">sendStream</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="p">,</span><span class="w"> </span><span class="n">session</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">getDefaultReactiveDomain</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.character</span><span class="p">(</span><span class="n">id</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
         </span><span class="n">stop</span><span class="p">(</span><span class="s2">"invalid `sendStream` argument, `id` must be a character string"</span><span class="p">,</span><span class="w"> 
@@ -156,9 +131,31 @@
     </span><span class="p">}</span><span class="w">
     </span><span class="n">session</span><span class="o">$</span><span class="n">sendProgress</span><span class="p">(</span><span class="s2">"dull-stream"</span><span class="p">,</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">content</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">content</span><span class="p">))</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
-
-          </p>
+ -->
+          <!-- </p> -->
         </div>
+
+        <!--<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
+  <a class="navbar-brand" href="/dull">
+    dull
+  </a>
+
+  <ul class="navbar-nav ml-sm-3">
+    <li class="nav-item">
+      <a class="nav-link " href="/dull/">Home<a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/dull/docs/0.0.5/">Documentation</a>
+    </li>
+  </ul>
+</header>
+-->
+<div class="col-2 h-100 pt-4 d-flex flex-column align-items-end">
+  <a class="" href="/dull/">Home</a>
+  <a class="font-weight-bold" href="/dull/docs/0.0.5/">Documentation</a>
+  <a href="https://github.com/nteetor/dull">GitHub</a>
+</div>
+
       </div>
     </div>
   </body>

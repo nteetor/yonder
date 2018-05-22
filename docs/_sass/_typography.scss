@@ -2,11 +2,4 @@
   a:hover {
     text-decoration: none;
   }
-
-  .font-weight-bold::before {
-    content: "=>";
-    font-family: 'Fira Code';
-    font-size: 0.75em;
-    font-weight: 500;
-  }
 }

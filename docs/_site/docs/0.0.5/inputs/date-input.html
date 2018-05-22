@@ -15,36 +15,11 @@
 
   </head>
   <body>
+    <div class="container-fluid">
+      <div class="row h-100">
 
-    <!--<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
-  <a class="navbar-brand" href="/dull">
-    dull
-  </a>
-
-  <ul class="navbar-nav ml-sm-3">
-    <li class="nav-item">
-      <a class="nav-link " href="/dull/">Home<a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="/dull/docs/0.0.5/">Documentation</a>
-    </li>
-  </ul>
-</header>
--->
-<header class="container">
-  <div class="d-flex flex-column align-items-center">
-      <h4>dull</h4>
-      <div>
-        <a class="mx-sm-3 " href="/dull/">Home<a>
-        <a class="mx-sm-3 font-weight-bold" href="/dull/docs/0.0.5/">Documentation</a>
-      </div>
-  </div>
-</header>
-
-    <div class="container">
-      <div class="row">
-
-        <div class="sidebar col-12 col-sm-2 p-2">
+        <div class="sidebar col-2 h-100 p-4 bg-light shadow-sm">
+  <h5 class="pb-3">dull</h5>
   <dl>
     
 
@@ -72,85 +47,85 @@
 
     
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/text-input">
         textInput
       </a>
     </dd>
     
-    <dd>
-      <a class="text-muted font-weight-bold" href="/dull/docs/0.0.5/inputs/date-input">
+    <dd class="pl-1 border-bottom border-dark">
+      <a class="text-muted" href="/dull/docs/0.0.5/inputs/date-input">
         dateInput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/range-input">
         rangeInput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/select-input">
         selectInput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/checkbar-input">
         checkbarInput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/button-input">
         buttonInput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/button-group-input">
         buttonGroupInput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/checkbox-input">
         checkboxInput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/dropdown-input">
         dropdownInput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/group-input">
         groupInput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/file-input">
         fileInput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/form-input">
         formInput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/list-group-thruput">
         listGroupThruput
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/inputs/radio-input">
         radioInput
       </a>
@@ -198,7 +173,7 @@
   </dl>
 </div>
 
-        <div class="col-12 col-sm-10">
+        <div class="page-body col-8 pt-4">
           <h1>Date time input</h1>
           <p class="lead">
             <p>A date time picker. Alternatively, use the date time range picker to select
@@ -247,9 +222,9 @@ element.</p>
 
           
 
-          <h2 id="source">Source</h2>
-          <p>
-            
+          <!-- <h2 id="source">Source</h2> -->
+          <!-- <p> -->
+          <!--   
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dateInput</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">id</span><span class="p">,</span><span class="w"> </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">selected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> 
     </span><span class="n">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">multiple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="o">!</span><span class="nf">is.null</span><span class="p">(</span><span class="n">choices</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
@@ -295,9 +270,31 @@ element.</p>
         </span><span class="n">`data-mode`</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">multiple</span><span class="p">)</span><span class="w"> 
             </span><span class="s2">"multiple"</span><span class="p">,</span><span class="w"> </span><span class="n">...</span><span class="p">,</span><span class="w"> </span><span class="n">include</span><span class="p">(</span><span class="s2">"flatpickr"</span><span class="p">))</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
-
-          </p>
+ -->
+          <!-- </p> -->
         </div>
+
+        <!--<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
+  <a class="navbar-brand" href="/dull">
+    dull
+  </a>
+
+  <ul class="navbar-nav ml-sm-3">
+    <li class="nav-item">
+      <a class="nav-link " href="/dull/">Home<a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/dull/docs/0.0.5/">Documentation</a>
+    </li>
+  </ul>
+</header>
+-->
+<div class="col-2 h-100 pt-4 d-flex flex-column align-items-end">
+  <a class="" href="/dull/">Home</a>
+  <a class="font-weight-bold" href="/dull/docs/0.0.5/">Documentation</a>
+  <a href="https://github.com/nteetor/dull">GitHub</a>
+</div>
+
       </div>
     </div>
   </body>

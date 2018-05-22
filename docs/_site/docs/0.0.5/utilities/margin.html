@@ -15,36 +15,11 @@
 
   </head>
   <body>
+    <div class="container-fluid">
+      <div class="row h-100">
 
-    <!--<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
-  <a class="navbar-brand" href="/dull">
-    dull
-  </a>
-
-  <ul class="navbar-nav ml-sm-3">
-    <li class="nav-item">
-      <a class="nav-link " href="/dull/">Home<a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link active" href="/dull/docs/0.0.5/">Documentation</a>
-    </li>
-  </ul>
-</header>
--->
-<header class="container">
-  <div class="d-flex flex-column align-items-center">
-      <h4>dull</h4>
-      <div>
-        <a class="mx-sm-3 " href="/dull/">Home<a>
-        <a class="mx-sm-3 font-weight-bold" href="/dull/docs/0.0.5/">Documentation</a>
-      </div>
-  </div>
-</header>
-
-    <div class="container">
-      <div class="row">
-
-        <div class="sidebar col-12 col-sm-2 p-2">
+        <div class="sidebar col-2 h-100 p-4 bg-light shadow-sm">
+  <h5 class="pb-3">dull</h5>
   <dl>
     
 
@@ -108,91 +83,91 @@
 
     
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/update-choices">
         updateChoices
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/font">
         font
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/background">
         background
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/border">
         border
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/rounded">
         rounded
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/float">
         float
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/affix">
         affix
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/display">
         display
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/padding">
         padding
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/width">
         width
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/show-popover">
         showPopover
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/flex">
         flex
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/send-modal">
         sendModal
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/tooltip">
         tooltip
       </a>
     </dd>
     
-    <dd>
+    <dd class="pl-1">
       <a class="text-muted" href="/dull/docs/0.0.5/utilities/mark-invalid">
         markInvalid
       </a>
@@ -204,7 +179,7 @@
   </dl>
 </div>
 
-        <div class="col-12 col-sm-10">
+        <div class="page-body col-8 pt-4">
           <h1></h1>
           <p class="lead">
             
@@ -218,9 +193,9 @@
 
           
 
-          <h2 id="source">Source</h2>
-          <p>
-            
+          <!-- <h2 id="source">Source</h2> -->
+          <!-- <p> -->
+          <!--   
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">margin</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">bottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> 
     </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="n">possibles</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">0</span><span class="o">:</span><span class="m">5</span><span class="p">,</span><span class="w"> </span><span class="s2">"auto"</span><span class="p">)</span><span class="w">
@@ -243,9 +218,31 @@
     </span><span class="p">}</span><span class="w">
     </span><span class="n">tagAddClass</span><span class="p">(</span><span class="n">.tag</span><span class="p">,</span><span class="w"> </span><span class="n">classes</span><span class="p">)</span><span class="w">
 </span><span class="p">}</span></code></pre></figure>
-
-          </p>
+ -->
+          <!-- </p> -->
         </div>
+
+        <!--<header class="navbar navbar-expand navbar-dark bg-dark sticky-top shadow-sm">
+  <a class="navbar-brand" href="/dull">
+    dull
+  </a>
+
+  <ul class="navbar-nav ml-sm-3">
+    <li class="nav-item">
+      <a class="nav-link " href="/dull/">Home<a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link active" href="/dull/docs/0.0.5/">Documentation</a>
+    </li>
+  </ul>
+</header>
+-->
+<div class="col-2 h-100 pt-4 d-flex flex-column align-items-end">
+  <a class="" href="/dull/">Home</a>
+  <a class="font-weight-bold" href="/dull/docs/0.0.5/">Documentation</a>
+  <a href="https://github.com/nteetor/dull">GitHub</a>
+</div>
+
       </div>
     </div>
   </body>

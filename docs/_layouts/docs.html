@@ -1,24 +1,25 @@
 <!doctype html>
 <html lang="en">
   <head>
+
     {% include header.html %}
+
   </head>
   <body>
-
-    {% include navbar.html %}
-
-    <div class="container">
-      <div class="row">
+    <div class="container-fluid">
+      <div class="row h-100">
 
         {% include sidebar.html %}
 
-        <div class="col">
+        <div class="col-8 pt-4">
           <h1>{{ page.title }}</h1>
 
           {% for desc in page.description %}
           <p>{{ desc }}</p>
           {% endfor %}
         </div>
+
+        {% include navbar.html %}
 
       </div>
     </div>

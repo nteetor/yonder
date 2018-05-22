@@ -1,4 +1,5 @@
-<div class="sidebar col-12 col-sm-2 p-2">
+<div class="sidebar col-2 h-100 p-4 bg-light shadow-sm">
+  <h5 class="pb-3">{{ site.package.name }}</h5>
   <dl>
     {% assign collections = site.collections | where_exp:"coll", "coll.label != 'posts'" %}
 
@@ -14,8 +15,8 @@
 
     {% if page.layout == "page" and page.collection == name %}
     {% for item in page.sections %}
-    <dd>
-      <a class="text-muted{% if page.slug == item.slug %} font-weight-bold{% endif %}" href="{{ site.baseurl }}/docs/{{ site.package.version }}/{{ page.collection }}/{{ item.slug }}">
+    <dd class="pl-1{% if page.slug == item.slug %} border-bottom border-dark{% endif %}">
+      <a class="text-muted" href="{{ site.baseurl }}/docs/{{ site.package.version }}/{{ page.collection }}/{{ item.slug }}">
         {{ item.name }}
       </a>
     </dd>

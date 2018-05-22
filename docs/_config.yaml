@@ -11,6 +11,7 @@ url: https://nteetor.github.io/
 package:
   name: dull
   version: 0.0.5
+  url: https://github.com/nteetor/dull
 
 # Build settings -------
 collections_dir: collections
