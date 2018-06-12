@@ -5,26 +5,32 @@
 \alias{renderTable}
 \title{Table thruput}
 \usage{
-tableThruput(id, ..., borders = FALSE, compact = FALSE,
+tableThruput(id, ..., borders = "rows", striped = FALSE, compact = FALSE,
   responsive = FALSE, editable = FALSE)
 
 renderTable(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying the id of the table thruput.}
+\item{id}{A character string specifying the id of the table thruput. This id
+is used as both an input and output reactive.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{borders}{One of \code{TRUE} or \code{FALSE} specifying if the table renders with
-cell borders, defaults to \code{FALSE}.}
+\item{borders}{One of \code{"rows"}, \code{"all"}, or \code{"none"} specifying what borders
+are applied to the table, defaults to \code{"rows"}. \code{"rows"} will apply borders
+between table rows. \code{"all"} will apply borders between table rows and
+columns. \code{"none"} removes all borders from the table.}
+
+\item{striped}{One \code{TRUE} or \code{FALSE} specifying if the table rows alternate
+between light and darker backgrounds.}
 
 \item{compact}{One of \code{TRUE} or \code{FALSE} specifying if the table cells are
 rendered with less space, defaults to \code{FALSE}.}
 
 \item{responsive}{One of \code{TRUE} or \code{FALSE} specifying if the table is allowed
 to scroll horizontally, default to \code{FALSE}. This is useful when fitting
-wide tables on small screens.}
+wide tables onto small viewports.}
 
 \item{expr}{An expression which returns a data frame or \code{NULL}. If a data
 frame is returned the table thruput is re-rendered, otherwise if \code{NULL} the
@@ -37,7 +43,9 @@ current table is left as is.}
 expression.}
 }
 \description{
-Render a table. Thruputs are a new reactive object.
+Use \code{tableThruput()} to create a table output you can update with
+\code{renderTable()}. Access selected table columns by referencing the same
+table id as an input.
 }
 \examples{
 if (interactive()) {
@@ -48,7 +56,8 @@ if (interactive()) {
           width = 6,
           tableThruput(
             id = "table1",
-            responsive = TRUE
+            responsive = TRUE,
+            editable = TRUE
           )
         ),
         column(
@@ -76,14 +85,14 @@ if (interactive()) {
         column(
           tableThruput(
             id = "table1",
-            borders = TRUE,
+            borders = "all",
             responsive = TRUE
           )
         ),
         column(
           tableThruput(
             id = "table2",
-            borders = TRUE,
+            borders = "all",
             responsive = TRUE
           )
         )

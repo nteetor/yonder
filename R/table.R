@@ -1,18 +1,26 @@
 #' Table thruput
 #'
-#' Render a table. Thruputs are a new reactive object.
+#' Use `tableThruput()` to create a table output you can update with
+#' `renderTable()`. Access selected table columns by referencing the same
+#' table id as an input.
 #'
-#' @param id A character string specifying the id of the table thruput.
+#' @param id A character string specifying the id of the table thruput. This id
+#'   is used as both an input and output reactive.
 #'
-#' @param borders One of `TRUE` or `FALSE` specifying if the table renders with
-#'   cell borders, defaults to `FALSE`.
+#' @param borders One of `"rows"`, `"all"`, or `"none"` specifying what borders
+#'   are applied to the table, defaults to `"rows"`. `"rows"` will apply borders
+#'   between table rows. `"all"` will apply borders between table rows and
+#'   columns. `"none"` removes all borders from the table.
+#'
+#' @param striped One `TRUE` or `FALSE` specifying if the table rows alternate
+#'   between light and darker backgrounds.
 #'
 #' @param compact One of `TRUE` or `FALSE` specifying if the table cells are
 #'   rendered with less space, defaults to `FALSE`.
 #'
 #' @param responsive One of `TRUE` or `FALSE` specifying if the table is allowed
 #'   to scroll horizontally, default to `FALSE`. This is useful when fitting
-#'   wide tables on small screens.
+#'   wide tables onto small viewports.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
@@ -66,14 +74,14 @@
 #'         column(
 #'           tableThruput(
 #'             id = "table1",
-#'             borders = TRUE,
+#'             borders = "all",
 #'             responsive = TRUE
 #'           )
 #'         ),
 #'         column(
 #'           tableThruput(
 #'             id = "table2",
-#'             borders = TRUE,
+#'             borders = "all",
 #'             responsive = TRUE
 #'           )
 #'         )
@@ -91,8 +99,9 @@
 #'   )
 #' }
 #'
-tableThruput <- function(id, ..., borders = FALSE, compact = FALSE,
-                         responsive = FALSE, editable = FALSE) {
+tableThruput <- function(id, ..., borders = "rows", striped = FALSE,
+                         compact = FALSE, responsive = FALSE,
+                         editable = FALSE) {
   if (!is.null(id) && !is.character(id)) {
     stop(
       "invalid `tableThruput` argument, `id` must be a character string or ",
@@ -119,7 +128,9 @@ tableThruput <- function(id, ..., borders = FALSE, compact = FALSE,
     class = collate(
       "dull-table-thruput",
       "table",
-      if (borders) "table-bordered",
+      if (borders == "all") "table-bordered"
+      else if (borders == "none") "table-borderless",
+      if (striped) "table-striped",
       if (compact) "table-sm"
     ),
     id = id,
