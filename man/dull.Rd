@@ -8,6 +8,13 @@
 \description{
 More freedom to the programmer, more to come.
 }
+\seealso{
+Useful links:
+\itemize{
+  \item \url{https://github.com/nteetor/dull}
+}
+
+}
 \author{
 \strong{Maintainer}: Nathan Teetor \email{nathanteetor@gmail.com}
 

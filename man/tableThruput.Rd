@@ -5,12 +5,16 @@
 \alias{renderTable}
 \title{Table thruput}
 \usage{
-tableThruput(id, borders = FALSE, compact = FALSE, ...)
+tableThruput(id, ..., borders = FALSE, compact = FALSE,
+  responsive = FALSE, editable = FALSE)
 
 renderTable(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the table thruput.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
 \item{borders}{One of \code{TRUE} or \code{FALSE} specifying if the table renders with
 cell borders, defaults to \code{FALSE}.}
@@ -18,8 +22,9 @@ cell borders, defaults to \code{FALSE}.}
 \item{compact}{One of \code{TRUE} or \code{FALSE} specifying if the table cells are
 rendered with less space, defaults to \code{FALSE}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
+\item{responsive}{One of \code{TRUE} or \code{FALSE} specifying if the table is allowed
+to scroll horizontally, default to \code{FALSE}. This is useful when fitting
+wide tables on small screens.}
 
 \item{expr}{An expression which returns a data frame or \code{NULL}. If a data
 frame is returned the table thruput is re-rendered, otherwise if \code{NULL} the
@@ -40,22 +45,25 @@ if (interactive()) {
     ui = container(
       row(
         column(
+          width = 6,
           tableThruput(
-            id = "table"
+            id = "table1",
+            responsive = TRUE
           )
         ),
         column(
+          width = 6,
           verbatimTextOutput("value")
         )
       )
     ),
     server = function(input, output) {
-      output$table <- renderTable({
-        iris[1:10, ]
+      output$table1 <- renderTable({
+        iris
       })
 
       output$value <- renderPrint({
-        input$table
+        input$table1
       })
     }
   )
@@ -67,25 +75,27 @@ if (interactive()) {
       row(
         column(
           tableThruput(
-            id = "table",
-            borders = TRUE
+            id = "table1",
+            borders = TRUE,
+            responsive = TRUE
           )
         ),
         column(
           tableThruput(
-            id = "subset",
-            borders = TRUE
+            id = "table2",
+            borders = TRUE,
+            responsive = TRUE
           )
         )
       )
     ),
     server = function(input, output) {
-      output$table <- renderTable({
+      output$table1 <- renderTable({
         mtcars[1:10, ]
       })
 
-      output$subset <- renderTable({
-        input$table
+      output$table2 <- renderTable({
+        input$table1
       })
     }
   )

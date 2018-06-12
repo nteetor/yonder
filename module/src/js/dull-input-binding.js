@@ -8,7 +8,7 @@
   };
 
   this.getType = function(el) {
-    return false;
+    return this.Type ? this.Type : false;
   };
 
   // may not be worth it to have this method already created

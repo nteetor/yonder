@@ -10,6 +10,10 @@
 #' @param compact One of `TRUE` or `FALSE` specifying if the table cells are
 #'   rendered with less space, defaults to `FALSE`.
 #'
+#' @param responsive One of `TRUE` or `FALSE` specifying if the table is allowed
+#'   to scroll horizontally, default to `FALSE`. This is useful when fitting
+#'   wide tables on small screens.
+#'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
 #'
@@ -30,22 +34,26 @@
 #'     ui = container(
 #'       row(
 #'         column(
+#'           width = 6,
 #'           tableThruput(
-#'             id = "table"
+#'             id = "table1",
+#'             responsive = TRUE,
+#'             editable = TRUE
 #'           )
 #'         ),
 #'         column(
+#'           width = 6,
 #'           verbatimTextOutput("value")
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$table <- renderTable({
-#'         iris[1:10, ]
+#'       output$table1 <- renderTable({
+#'         iris
 #'       })
 #'
 #'       output$value <- renderPrint({
-#'         input$table
+#'         input$table1
 #'       })
 #'     }
 #'   )
@@ -57,31 +65,34 @@
 #'       row(
 #'         column(
 #'           tableThruput(
-#'             id = "table",
-#'             borders = TRUE
+#'             id = "table1",
+#'             borders = TRUE,
+#'             responsive = TRUE
 #'           )
 #'         ),
 #'         column(
 #'           tableThruput(
-#'             id = "subset",
-#'             borders = TRUE
+#'             id = "table2",
+#'             borders = TRUE,
+#'             responsive = TRUE
 #'           )
 #'         )
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$table <- renderTable({
+#'       output$table1 <- renderTable({
 #'         mtcars[1:10, ]
 #'       })
 #'
-#'       output$subset <- renderTable({
-#'         input$table
+#'       output$table2 <- renderTable({
+#'         input$table1
 #'       })
 #'     }
 #'   )
 #' }
 #'
-tableThruput <- function(id, borders = FALSE, compact = FALSE, ...) {
+tableThruput <- function(id, ..., borders = FALSE, compact = FALSE,
+                         responsive = FALSE, editable = FALSE) {
   if (!is.null(id) && !is.character(id)) {
     stop(
       "invalid `tableThruput` argument, `id` must be a character string or ",
@@ -93,13 +104,13 @@ tableThruput <- function(id, borders = FALSE, compact = FALSE, ...) {
   shiny::registerInputHandler(
     type = "dull.table.input",
     fun = function(x, session, name) {
-      frame <- jsonlite::fromJSON(x)
+      x <- jsonlite::fromJSON(x)
 
-      if (NROW(frame) == 0 || NCOL(frame) == 0) {
+      if (!(NROW(x) || NCOL(x))) {
         return(NULL)
       }
 
-      frame
+      x
     },
     force = TRUE
   )
@@ -108,41 +119,28 @@ tableThruput <- function(id, borders = FALSE, compact = FALSE, ...) {
     class = collate(
       "dull-table-thruput",
       "table",
-      if (is.character(id)) "table-hover",
-      "table-responsive",
       if (borders) "table-bordered",
       if (compact) "table-sm"
     ),
     id = id,
-    ...
+    `data-responsive` = if (responsive) "true",
+    `data-editable` = if (editable) "true" else "false",
+    ...,
+    include("core")
+    # include("chabudai")
   )
 }
 
 #' @rdname tableThruput
 #' @export
 renderTable <- function(expr, env = parent.frame(), quoted = FALSE) {
-  dfFunc <- shiny::exprToFunction(expr, env, quoted)
+  installExprFunction(expr, "func", env, quoted)
 
-  function() {
-    df <- dfFunc()
-
-    if (is.null(df)) {
-      return(list())
-    }
-
-    if (!is.data.frame(df)) {
-      stop(
-        "invalid `renderTable` value, `expr` returned ", class(df),
-        ", expecting data frame",
-        call. = FALSE
-      )
-    }
-
-    return(
-      list(
-        columns = as.list(colnames(df) %||% rep("", NCOL(df))),
-        data = jsonlite::toJSON(df)
-      )
-    )
-  }
+  createRenderFunction(
+    func,
+    function(data, session, name) {
+      list(data = jsonlite::toJSON(data, na = "string"))
+    },
+    tableOutput
+  )
 }
