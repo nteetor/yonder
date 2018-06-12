@@ -4,9 +4,6 @@ $.extend(tableOutputBinding, {
   find: function(scope) {
     return $(scope).find(".dull-table-thruput[id]");
   },
-  getId: function(el) {
-    return el.id;
-  },
   renderValue: function(el, msg) {
     if (msg.data) {
       $(el).table({ "data": msg.data });
