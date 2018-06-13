@@ -50,6 +50,22 @@
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
+#'       listGroupThruput(
+#'         id = NULL,
+#'         listGroupItem(
+#'           rangeInput("slider1")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
 #'       row(
 #'         column(
 #'           default = 3,
