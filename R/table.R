@@ -37,6 +37,7 @@
 #'
 #' @export
 #' @examples
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
@@ -56,6 +57,10 @@
 #'       )
 #'     ),
 #'     server = function(input, output) {
+#'       observeEvent(input$table1, once = TRUE, {
+#'         showAlert("Click a table cell to edit the value!", color = "amber")
+#'       })
+#'
 #'       output$table1 <- renderTable({
 #'         iris
 #'       })

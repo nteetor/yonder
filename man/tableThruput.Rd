@@ -48,6 +48,7 @@ Use \code{tableThruput()} to create a table output you can update with
 table id as an input.
 }
 \examples{
+
 if (interactive()) {
   shinyApp(
     ui = container(
@@ -67,6 +68,10 @@ if (interactive()) {
       )
     ),
     server = function(input, output) {
+      observeEvent(input$table1, once = TRUE, {
+        showAlert("Click a table cell to edit the value!", color = "amber")
+      })
+
       output$table1 <- renderTable({
         iris
       })
