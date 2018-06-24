@@ -14,7 +14,9 @@ include <- function(resource) {
         tags$script(src = "dull/file-saver/FileSaver.min.js"),
         tags$script(src = "dull/dull/js/dull.min.js"),
         tags$link(rel = "stylesheet", href = "dull/dull/css/dull.min.css"),
-        tags$script(src = "dull/velocity/velocity.min.js")
+        tags$script(src = "dull/velocity/velocity.min.js"),
+        tags$link(rel = "stylesheet", href = "dull/chabudai/css/chabudai.min.css"),
+        tags$script(src = "dull/chabudai/js/chabudai.min.js")
       ),
       `ion slider` = tags$head(
         tags$link(
@@ -55,6 +57,15 @@ include <- function(resource) {
           href = "dull/material-design/material-icons.css"
         )
       )
+      # chabudai = tags$head(
+      #   tags$link(
+      #     rel = "stylesheet",
+      #     href = "dull/chabudai/css/chabudai.min.css"
+      #   ),
+      #   tags$script(
+      #     src = "dull/chabudai/js/chabudai.min.js"
+      #   )
+      # )
     )
   )
 }

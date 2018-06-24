@@ -98,6 +98,14 @@
 #' }
 #'
 checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
+  if (length(choice) > 1) {
+    stop(
+      "invalid `checkboxInput()` argument, expecting `choice` to have a ",
+      "length of 1",
+      call. = FALSE
+    )
+  }
+
   value <- as.character(value)
   self <- ID("checkbox")
 

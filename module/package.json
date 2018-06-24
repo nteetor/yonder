@@ -65,7 +65,13 @@
     "bootstrap-css-minify": "cleancss --level 1 --output lib/css/bootstrap.min.css lib/css/bootstrap.css",
     "bootstrap-css-vend": "cp lib/css/bootstrap.min.css ../inst/www/bootstrap/css/",
     "bootstrap-css": "npm-run-all bootstrap-css-compile bootstrap-css-prefix bootstrap-css-minify bootstrap-css-vend",
-    "bootstrap": "npm-run-all bootstrap-js bootstrap-css"
+    "bootstrap": "npm-run-all bootstrap-js bootstrap-css",
+    "chabudai-git-clone": "cd vendors && test -d chabudai || git clone https://github.com/nteetor/chabudai.git",
+    "chabudai-git-checkout": "cd vendors/chabudai && git fetch --all && git checkout master && git reset --hard origin/master && git checkout tags/$(git describe --tags --abbrev=0)",
+    "chabudai-git": "npm-run-all chabudai-git-clone chabudai-git-checkout",
+    "chabudai-js-vend": "cp vendors/chabudai/dist/js/chabudai.min.js ../inst/www/chabudai/js/",
+    "chabudai-css-vend": "cp vendors/chabudai/dist/css/chabudai.min.css ../inst/www/chabudai/css/",
+    "chabudai": "npm-run-all chabudai-git chabudai-js-vend chabudai-css-vend"
   },
   "browserslist": [
     "last 1 major version",

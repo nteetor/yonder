@@ -1202,10 +1202,7 @@
   overflow-y: scroll;
 }
 
-.dull-table-thruput tbody tr {
-  cursor: pointer;
-}
-
+/* disable style-lint */
 .font-size-2x {
   font-size: 2rem !important;
 }

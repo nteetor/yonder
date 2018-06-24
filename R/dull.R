@@ -3,7 +3,7 @@
 #' More freedom to the programmer, more to come.
 #'
 #' @importFrom shiny observe getDefaultReactiveDomain tagAppendAttributes tags
-#'   HTML
+#'   HTML installExprFunction createRenderFunction
 #' @importFrom rlang dots_list
 #'
 #' @name dull
