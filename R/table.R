@@ -120,7 +120,7 @@ tableThruput <- function(id, ..., borders = "rows", striped = FALSE,
     fun = function(x, session, name) {
       x <- jsonlite::fromJSON(x)
 
-      if (!(NROW(x) || NCOL(x))) {
+      if (NROW(x) == 0 || NCOL(x) == 0) {
         return(NULL)
       }
 
