@@ -22,6 +22,9 @@
 #'   to scroll horizontally, default to `FALSE`. This is useful when fitting
 #'   wide tables onto small viewports.
 #'
+#' @param editable One of `TRUE` or `FALSE` specifying if the user can edit
+#'   table cells, defaults to `FALSE`.
+#'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
 #'

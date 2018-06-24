@@ -32,6 +32,9 @@ rendered with less space, defaults to \code{FALSE}.}
 to scroll horizontally, default to \code{FALSE}. This is useful when fitting
 wide tables onto small viewports.}
 
+\item{editable}{One of \code{TRUE} or \code{FALSE} specifying if the user can edit
+table cells, defaults to \code{FALSE}.}
+
 \item{expr}{An expression which returns a data frame or \code{NULL}. If a data
 frame is returned the table thruput is re-rendered, otherwise if \code{NULL} the
 current table is left as is.}
