@@ -160,6 +160,6 @@ renderTable <- function(expr, env = parent.frame(), quoted = FALSE) {
     function(data, session, name) {
       list(data = jsonlite::toJSON(data, na = "string"))
     },
-    tableOutput
+    tableThruput
   )
 }

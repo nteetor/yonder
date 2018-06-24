@@ -1,3 +1,6 @@
+# necessary for `createRenderFunction()`
+globalVariables("func")
+
 # plain utils ----
 
 `%||%` <- function(a, b) if (is.null(a)) b else a
