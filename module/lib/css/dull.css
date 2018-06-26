@@ -1283,5 +1283,14 @@ html {
 }
 
 body {
+  height: 100%;
   min-height: 100%;
+}
+
+.scroll-x {
+  overflow-x: scroll;
+}
+
+.scroll-y {
+  overflow-y: scroll;
 }
