@@ -7,25 +7,15 @@ $.extend(sparklineOutputBinding, {
   getId: function(el) {
     return el.id;
   },
-  renderValue: function(el, data) {
-    if (data.values !== undefined) {
-      var $el = $(el);
+  renderValue: function(el, msg) {
+    if (msg.data !== undefined) {
+      let labels = el.dataset.labels;
 
-      var labels = $el.data("labels");
-
-      $el.text(function(i, c) {
-        var contents = "{" + data.values.join(",") + "}";
-
-        // if (labels) {
-        //   contents = data.raw[0] + contents + data.raw[data.raw.length - 1];
-        // }
-
-        if (c === "") {
-          return contents;
-        } else {
-          return c.replace(/{[0-9,]*}/, contents);
-        }
-      });
+      if (labels) {
+        el.innerHTML = `${ msg.from }{${ msg.data.join(",") }}${ msg.to }`;
+      } else {
+        el.innerHTML = `{${ msg.data.join(",") }}`;
+      }
     }
   },
   renderError: function(el, data) {

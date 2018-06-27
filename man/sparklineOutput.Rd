@@ -7,12 +7,12 @@
 \usage{
 sparklineOutput(id, type = "bar", labels = TRUE, ...)
 
-renderSparkline(values, env = parent.frame(), quoted = FALSE)
+renderSparkline(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the sparkline output.}
 
-\item{type}{One of \code{"bar"}, \code{"dot"}, or \code{"line"} specifying the type of
+\item{type}{One of \code{"bar"}, \code{"dot"}, or \code{"dotline"} specifying the type of
 chart to render, defaults to \code{"bar"}.}
 
 \item{labels}{If \code{TRUE}, the first and last value of the sparkline data
@@ -21,19 +21,32 @@ are used as labels, defaults to \code{TRUE}.}
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{values}{A numeric vector of values specifying the sparkline data
-points. Bar and dot sparklines expect values to be between 0 and 100 and
-line sparklines expect values to be between 0 and 10.}
+\item{expr}{An expression which returns a numeric vector specifying the
+values of the sparkline. These values will be scaled to 0 through 100.}
 
-\item{env}{The environment in which to evaluate \code{values}.}
+\item{env}{The environment in which to evaluate \code{expr}, defaults to the
+calling environment.}
 
-\item{quoted}{One of \code{TRUE} or \code{FALSE} specifying if \code{values} is a quoted
+\item{quoted}{One of \code{TRUE} or \code{FALSE} specifying if \code{expr} is a quoted
 expression.}
 }
 \description{
 Display concise, reactive inline bar, line, or dot charts.
 }
 \examples{
+
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      sparklineOutput("bars")
+    ),
+    server = function(input, output) {
+      output$bars <- renderSparkline({
+        c(30, 20, 44, 50, 90)
+      })
+    }
+  )
+}
 
 }
 \seealso{

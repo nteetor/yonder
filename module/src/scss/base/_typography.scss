@@ -1,53 +1,65 @@
 @font-face {
-  font-family: 'spark-line-medium';
-  src: url('/dull/spark/spark-dotline-medium.eot');
+  font-family: 'Sparks-Dotline-Medium';
+  src: url('/dull/aftertheflood/Sparks-Dotline-Medium.eot');
   src:
-    url('/dull/spark/spark-dotline-medium.eot?#iefix') format('embedded-opentype'),
-    url('/dull/spark/spark-dotline-medium.woff2') format('woff2'),
-    url('/dull/spark/spark-dotline-medium.woff') format('woff'),
-    url('/dull/spark/spark-dotline-medium.ttf') format('truetype'),
-    url('/dull/spark/spark-dotline-medium.svg#spark-dotline-medium') format('svg');
+    url('/dull/aftertheflood/Sparks-Dotline-Medium.eot?#iefix') format('embedded-opentype'),
+    url('/dull/aftertheflood/Sparks-Dotline-Medium.woff2') format('woff2'),
+    url('/dull/aftertheflood/Sparks-Dotline-Medium.woff') format('woff'),
+    url('/dull/aftertheflood/Sparks-Dotline-Medium.ttf') format('truetype'),
+    url('/dull/aftertheflood/Sparks-Dotline-Medium.svg#Sparks-Dotline-Medium') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'spark-bar-medium';
-  src: url('/dull/spark/spark-bar-medium.eot');
+  font-family: 'Sparks-Dot-Medium';
+  src: url('output/eot/Sparks-Dot-Medium.eot');
   src:
-    url('/dull/spark/spark-bar-medium.eot?#iefix') format('embedded-opentype'),
-    url('/dull/spark/spark-bar-medium.woff2') format('woff2'),
-    url('/dull/spark/spark-bar-medium.woff') format('woff'),
-    url('/dull/spark/spark-bar-medium.ttf') format('truetype'),
-    url('/dull/spark/spark-bar-medium.svg#spark-bar-medium') format('svg');
+    url('/dull/aftertheflood/Sparks-Dot-Medium.eot?#iefix') format('embedded-opentype'),
+    url('/dull/aftertheflood/Sparks-Dot-Medium.woff2') format('woff2'),
+    url('/dull/aftertheflood/Sparks-Dot-Medium.woff') format('woff'),
+    url('/dull/aftertheflood/Sparks-Dot-Medium.ttf') format('truetype'),
+    url('/dull/aftertheflood/Sparks-Dot-Medium.svg#Sparks-Dot-Medium') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'spark-dot-medium';
-  src: url('/dull/spark/spark-dot-medium.eot');
+  font-family: 'Sparks-Bar-Medium';
+  src: url('/dull/aftertheflood/Sparks-Bar-Medium.eot');
   src:
-    url('/dull/spark/spark-dot-medium.eot?#iefix') format('embedded-opentype'),
-    url('/dull/spark/spark-dot-medium.woff2') format('woff2'),
-    url('/dull/spark/spark-dot-medium.woff') format('woff'),
-    url('/dull/spark/spark-dot-medium.ttf') format('truetype'),
-    url('/dull/spark/spark-dot-medium.svg#spark-dot-medium') format('svg');
+    url('/dull/aftertheflood/Sparks-Bar-Medium.eot?#iefix') format('embedded-opentype'),
+    url('/dull/aftertheflood/Sparks-Bar-Medium.woff2') format('woff2'),
+    url('/dull/aftertheflood/Sparks-Bar-Medium.woff') format('woff'),
+    url('/dull/aftertheflood/Sparks-Bar-Medium.ttf') format('truetype'),
+    url('/dull/aftertheflood/Sparks-Bar-Medium.svg#Sparks-Bar-Medium') format('svg');
   font-weight: normal;
   font-style: normal;
 }
 
-.spark-line-medium {
-  font-family: 'spark-line-medium', sans-serif;
-  letter-spacing: 0 em;
+%sparks {
+  text-rendering: optimizeLegibility;
+  font-variant-ligatures: contextual;
+  font-feature-settings: 'calt' 1, 'kern' 1;
+  font-kerning: normal;
+  -webkit-font-feature-settings: 'calt', 'kern';
+  -moz-font-feature-settings: 'calt=1', 'kern=1';
 }
 
-.spark-bar-medium {
-  font-family: 'spark-bar-medium', sans-serif;
-  letter-spacing: 0 em;
+.sparks-dot {
+  font-family: Sparks-Dot-Medium, sans-serif;
+
+  @extend %sparks;
 }
 
-.spark-dot-medium {
-  font-family: 'spark-dot-medium', sans-serif;
-  letter-spacing: 0 em;
+.sparks-bar {
+  font-family: Sparks-Bar-Medium, sans-serif;
+
+  @extend %sparks;
+}
+
+.sparks-dotline {
+  font-family: Sparks-Dotline-Medium, sans-serif;
+
+  @extend %sparks;
 }
