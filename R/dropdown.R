@@ -156,7 +156,7 @@ dropdownItem <- function(base) {
     return(base)
   }
 
-  if (tagIs(base, paste0("h", 1:6))) {
+  if (tagIs(base, c("h1", "h2", "h3", "h4", "h5", "h6"))) {
     return(tagAddClass(base, "dropdown-header"))
   }
 
