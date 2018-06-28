@@ -1,4 +1,10 @@
 {
-  "presets": ["env"],
-  comments: false
+  "presets": [
+    ["env", {
+      modules: false
+    }]
+  ],
+  comments: false,
+  compact: true,
+  minified: true
 }

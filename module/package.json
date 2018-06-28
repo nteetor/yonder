@@ -37,7 +37,7 @@
   "scripts": {
     "test": "echo \"Sorry, nothing here\"",
     "js-lint": "eslint src/js/**/*.js",
-    "js-compile": "babel --compact --minified --no-comments --out-file lib/js/dull.min.js src/js/**/*.js",
+    "js-compile": "babel --out-file lib/js/dull.min.js src/js/**/*.js",
     "js-vend": "cp lib/js/dull.min.js ../inst/www/dull/js/",
     "js": "npm-run-all js-lint js-compile js-vend",
     "css-lint": "stylelint --syntax scss src/scss/**/*.scss",
