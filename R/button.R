@@ -74,8 +74,7 @@
 #'         label = list(
 #'           "Increment badge",
 #'           badgeOutput(
-#'             id = "badge",
-#'             content = 0
+#'             id = "badge"
 #'           ) %>%
 #'             background("green")
 #'         )

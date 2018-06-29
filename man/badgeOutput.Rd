@@ -5,22 +5,23 @@
 \alias{renderBadge}
 \title{Badge outputs}
 \usage{
-badgeOutput(id, content, ...)
+badgeOutput(id, ...)
 
-renderBadge(content, env = parent.frame(), quoted = FALSE)
+renderBadge(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the badge output.}
 
-\item{content}{A character string specifying the content of the badge or an
-expression which returns a character string.}
-
 \item{...}{Additional named argument passed as HTML attributes to the parent
 element.}
 
-\item{env}{The environment in which to evaluate \code{content}.}
+\item{expr}{An expression which returns a character string specifying the
+label of the badge.}
 
-\item{quoted}{One of \code{TRUE} or \code{FALSE} specifying if \code{content} is a quoted
+\item{env}{The environment in which to evaluate \code{expr}, defaults to the
+calling environment.}
+
+\item{quoted}{One of \code{TRUE} or \code{FALSE} specifying if \code{expr} is a quoted
 expression.}
 }
 \description{
@@ -29,16 +30,17 @@ displaying dynamically changing counts or tickers, drawing attention to new
 options, or tagging content.
 }
 \examples{
+
 if (interactive()) {
   shinyApp(
     ui = container(
       row(
         column(
           buttonInput(
-            id = "button",
+            id = "mybutton",
             label = list(
               "Number of clicks: ",
-              badgeOutput("clicks", 0) \%>\%
+              badgeOutput("clicks") \%>\%
                 background("red")
             )
           )
@@ -47,7 +49,7 @@ if (interactive()) {
     ),
     server = function(input, output) {
       output$clicks <- renderBadge({
-        input$button
+        input$mybutton
       })
     }
   )

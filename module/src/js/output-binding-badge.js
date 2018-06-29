@@ -7,11 +7,9 @@ $.extend(badgeOutputBinding, {
   getId: function(el) {
     return el.id;
   },
-  renderValue: function(el, data) {
-    var $el = $(el);
-
-    if (data.value !== null && data.value !== undefined) {
-      $el.text(data.value);
+  renderValue: function(el, msg) {
+    if (msg.data !== undefined) {
+      el.innerHTML = msg.data;
     }
   },
   renderError: function(el, data) {
