@@ -86,6 +86,10 @@
   }
 }
 
+.dull-badge-output:empty {
+  display: contents;
+}
+
 .dull-checkbox-input {
   margin-bottom: 0;
 }
