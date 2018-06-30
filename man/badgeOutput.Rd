@@ -43,16 +43,11 @@ if (interactive()) {
               badgeOutput("clicks") \%>\%
                 background("red")
             )
-          ),
-          badgeOutput("another")
+          )
         )
       )
     ),
     server = function(input, output) {
-      output$another <- renderBadge({
-        200
-      })
-
       output$clicks <- renderBadge({
         input$mybutton
       })
