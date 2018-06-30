@@ -12,7 +12,7 @@ Provide context to the bug and list any explorations you made. Reproducible exam
 
 ### Features
 
-Have an idea, big or small, for the package? Let the team know! Feature suggestions encourage development, give the team an idea how you and others use the package, and we cannot possibly even if the suggestion is not incorporated into the package. 
+Have an idea, big or small, for the package? Let the team know! Feature suggestions encourage development, give the team an idea how you and others use the package, and let you help shape the creative direction of the package.  
 
 ## Submitting a pull request
 
