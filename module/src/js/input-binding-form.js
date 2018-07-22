@@ -1,4 +1,4 @@
-var formInputBinding = new Shiny.InputBinding();
+export let formInputBinding = new Shiny.InputBinding();
 
 $.extend(formInputBinding, {
   Events: [
@@ -7,7 +7,7 @@ $.extend(formInputBinding, {
   find: function(scope) {
     let $input = $(scope).find(".dull-form-input[id]");
 
-    if (!$input.children("button[type='submit']").length) {
+    if (!$input.children("button[data-type='submit']").length) {
       return null;
     }
 
@@ -15,4 +15,4 @@ $.extend(formInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(formInputBinding, "dull.formInput");
+// Shiny.inputBindings.register(formInputBinding, "dull.formInput");

@@ -1,4 +1,4 @@
-var dropdownInputBinding = new Shiny.InputBinding();
+export let dropdownInputBinding = new Shiny.InputBinding();
 
 $.extend(dropdownInputBinding, {
   Selector: {
@@ -24,4 +24,4 @@ $.extend(dropdownInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(dropdownInputBinding, "dull.dropdownInput");
+// Shiny.inputBindings.register(dropdownInputBinding, "dull.dropdownInput");

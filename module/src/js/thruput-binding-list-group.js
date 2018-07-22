@@ -1,20 +1,5 @@
-$(() => {
-  $(".dull-list-group-thruput[id]").on("click", ".list-group-item:not(.disabled)", function(e) {
-    e.preventDefault();
-
-    let $parent = $(this).closest(".dull-list-group-thruput");
-
-    if (!$parent.data("multiple")) {
-      $parent.children(".list-group-item.active").removeClass("active");
-    }
-
-    $(this).toggleClass("active")
-      .trigger("change");
-  });
-});
-
 // input
-let listGroupInputBinding = new Shiny.InputBinding();
+export let listGroupInputBinding = new Shiny.InputBinding();
 
 $.extend(listGroupInputBinding, {
   find: (scope) => $(scope).find(".dull-list-group-thruput[id]"),
@@ -28,7 +13,9 @@ $.extend(listGroupInputBinding, {
       .get();
   },
 
-  getState: (el, data) => ({ value: this.getValue(el) }),
+  getState: function(el, data) {
+    return { value: this.getValue(el) };
+  },
 
   subscribe: (el, callback) => {
     $(el).on("change.listGroupInputBinding", (e) => callback());
@@ -37,10 +24,10 @@ $.extend(listGroupInputBinding, {
   unsubscribe: (el) => $(el).off(".listGroupInputBinding")
 });
 
-Shiny.inputBindings.register(listGroupInputBinding, "dull.listGroupInput");
+// Shiny.inputBindings.register(listGroupInputBinding, "dull.listGroupInput");
 
 // output
-let listGroupOutputBinding = new Shiny.OutputBinding();
+export let listGroupOutputBinding = new Shiny.OutputBinding();
 
 $.extend(listGroupOutputBinding, {
   find: (scope) => $(scope).find(".dull-list-group-thruput[id]"),
@@ -56,4 +43,4 @@ $.extend(listGroupOutputBinding, {
   }
 });
 
-Shiny.outputBindings.register(listGroupOutputBinding, "dull.listGroupOutput");
+// Shiny.outputBindings.register(listGroupOutputBinding, "dull.listGroupOutput");

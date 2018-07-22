@@ -1,4 +1,4 @@
-var radiobarInputBinding = new Shiny.InputBinding();
+export let radiobarInputBinding = new Shiny.InputBinding();
 
 $.extend(radiobarInputBinding, {
   Selector: {
@@ -23,4 +23,4 @@ $.extend(radiobarInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(radiobarInputBinding, "radiobarInput");
+// Shiny.inputBindings.register(radiobarInputBinding, "radiobarInput");

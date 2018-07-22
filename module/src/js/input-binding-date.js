@@ -1,4 +1,4 @@
-var dateInputBinding = new Shiny.InputBinding();
+export let dateInputBinding = new Shiny.InputBinding();
 
 $.extend(dateInputBinding, {
   Selector: {
@@ -41,4 +41,4 @@ $.extend(dateInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(dateInputBinding, "dull.dateInput");
+// Shiny.inputBindings.register(dateInputBinding, "dull.dateInput");

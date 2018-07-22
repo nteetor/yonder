@@ -1,10 +1,4 @@
-$(() => {
-  $(".dull-file-input").on("click", ".input-group-append", function(e) {
-    $(e.delegateTarget).find("input[type='file']").trigger("click");
-  });
-});
-
-let fileInputBinding = new Shiny.InputBinding();
+export let fileInputBinding = new Shiny.InputBinding();
 
 $.extend(fileInputBinding, {
   Selector: {
@@ -105,4 +99,4 @@ $.extend(fileInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(fileInputBinding, "dull.fileInput");
+// Shiny.inputBindings.register(fileInputBinding, "dull.fileInput");

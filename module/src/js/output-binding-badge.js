@@ -1,4 +1,4 @@
-var badgeOutputBinding = new Shiny.OutputBinding();
+export let badgeOutputBinding = new Shiny.OutputBinding();
 
 $.extend(badgeOutputBinding, {
   find: function(scope) {
@@ -20,4 +20,4 @@ $.extend(badgeOutputBinding, {
   }
 });
 
-Shiny.outputBindings.register(badgeOutputBinding, "dull.badgeOutput");
+// Shiny.outputBindings.register(badgeOutputBinding, "dull.badgeOutput");

@@ -1,4 +1,4 @@
-let buttonGroupInputBinding = new Shiny.InputBinding();
+export let buttonGroupInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonGroupInputBinding, {
   Selector: {
@@ -22,4 +22,4 @@ $.extend(buttonGroupInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(buttonGroupInputBinding, "dull.buttonGroup");
+// Shiny.inputBindings.register(buttonGroupInputBinding, "dull.buttonGroup");

@@ -1,4 +1,4 @@
-var navInputBinding = new Shiny.InputBinding();
+export let navInputBinding = new Shiny.InputBinding();
 
 $.extend(navInputBinding, {
   find: function(scope) {
@@ -20,4 +20,4 @@ $.extend(navInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(navInputBinding, "dull.navInput");
+// Shiny.inputBindings.register(navInputBinding, "dull.navInput");

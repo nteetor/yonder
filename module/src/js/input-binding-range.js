@@ -1,4 +1,4 @@
-var rangeInputBinding = new Shiny.InputBinding();
+export let rangeInputBinding = new Shiny.InputBinding();
 
 $.extend(rangeInputBinding, {
   Selector: {
@@ -58,4 +58,4 @@ $.extend(rangeInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(rangeInputBinding, "dull.rangeInput");
+// Shiny.inputBindings.register(rangeInputBinding, "dull.rangeInput");

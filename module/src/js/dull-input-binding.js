@@ -1,4 +1,4 @@
-(function() {
+export function dullInputBinding() {
   this.find = function(scope) {
     return scope.querySelectorAll(`${ this.Selector.SELF }[id]`);
   };
@@ -37,21 +37,22 @@
   };
 
   this.subscribe = function(el, callback) {
+    if (this.isFormElement(el)) {
+      $(el).closest(".dull-form-input[id]").on("submit", e => callback());
+      return;
+    }
+
     if (this.Events === undefined || !this.Events.length) {
       return;
     }
 
-    if (this.isFormElement(el)) {
-      $(el).closest(".dull-form-input[id]").on("submit", e => callback());
-    } else {
-      for (const event of (this.Events || [])) {
-        $(el).on(`${ event.type }.dull`, (e) => {
-          if (event.callback) {
-            event.callback(el);
-          }
-          callback(event.debounce || false);
-        });
-      }
+    for (const event of (this.Events || [])) {
+      $(el).on(`${ event.type }.dull`, (e) => {
+        if (event.callback) {
+          event.callback(el);
+        }
+        callback(event.debounce || false);
+      });
     }
   };
 
@@ -218,4 +219,6 @@
   this.isFormElement = function(el) {
     return $(el).parents(".dull-form-input[id]").length > 0;
   };
-}).call(Shiny.InputBinding.prototype);
+}
+
+//.call(Shiny.InputBinding.prototype);

@@ -1,4 +1,4 @@
-var groupInputBinding = new Shiny.InputBinding();
+export let groupInputBinding = new Shiny.InputBinding();
 
 $.extend(groupInputBinding, {
   Selector: {
@@ -18,4 +18,4 @@ $.extend(groupInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(groupInputBinding, "dull.groupInput");
+// Shiny.inputBindings.register(groupInputBinding, "dull.groupInput");

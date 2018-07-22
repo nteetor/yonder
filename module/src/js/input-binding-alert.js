@@ -1,8 +1,4 @@
-var alertInputBinding = new Shiny.InputBinding();
-
-$(() => $("body").append(
-  $("<div class='dull-alert-container' id='alert-container'></div>")
-));
+export let alertInputBinding = new Shiny.InputBinding();
 
 $.extend(alertInputBinding, {
   Selector: {
@@ -101,4 +97,4 @@ $.extend(alertInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(alertInputBinding, "dull.alertInput");
+//Shiny.inputBindings.register(alertInputBinding, "dull.alertInput");

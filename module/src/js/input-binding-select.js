@@ -1,4 +1,4 @@
-var selectInputBinding = new Shiny.InputBinding();
+export let selectInputBinding = new Shiny.InputBinding();
 
 $.extend(selectInputBinding, {
   Selector: {
@@ -16,4 +16,4 @@ $.extend(selectInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(selectInputBinding, "dull.selectInput");
+// Shiny.inputBindings.register(selectInputBinding, "dull.selectInput");

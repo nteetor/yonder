@@ -1,4 +1,4 @@
-let tabsInputBinding = new Shiny.InputBinding();
+export let tabsInputBinding = new Shiny.InputBinding();
 
 $.extend(tabsInputBinding, {
   Selector: {
@@ -57,4 +57,4 @@ $.extend(tabsInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(tabsInputBinding, "dull.tabsInput");
+// Shiny.inputBindings.register(tabsInputBinding, "dull.tabsInput");

@@ -1,4 +1,4 @@
-var sparklineOutputBinding = new Shiny.OutputBinding();
+export let sparklineOutputBinding = new Shiny.OutputBinding();
 
 $.extend(sparklineOutputBinding, {
   find: function(scope) {
@@ -26,4 +26,4 @@ $.extend(sparklineOutputBinding, {
   }
 });
 
-Shiny.outputBindings.register(sparklineOutputBinding, "dull.sparklineOutput");
+// Shiny.outputBindings.register(sparklineOutputBinding, "dull.sparklineOutput");

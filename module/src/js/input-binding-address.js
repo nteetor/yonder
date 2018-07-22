@@ -1,4 +1,4 @@
-var addressInputBinding = new Shiny.InputBinding();
+export const addressInputBinding = new Shiny.InputBinding();
 
 $.extend(addressInputBinding, {
   find: function(scope) {
@@ -35,4 +35,4 @@ $.extend(addressInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(addressInputBinding, "dull.addressInput");
+// Shiny.inputBindings.register(addressInputBinding, "dull.addressInput");

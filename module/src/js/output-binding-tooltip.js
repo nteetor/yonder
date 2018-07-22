@@ -1,8 +1,4 @@
-/**
- * WORK IN PROGRESS
- */
-
-var tooltipBinding = new Shiny.OutputBinding();
+export var tooltipBinding = new Shiny.OutputBinding();
 
 $.extend(tooltipBinding, {
   find: function(scope) {

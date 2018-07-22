@@ -1,4 +1,4 @@
-var checkbarInputBinding = new Shiny.InputBinding();
+export let checkbarInputBinding = new Shiny.InputBinding();
 
 $.extend(checkbarInputBinding, {
   Selector: {
@@ -16,4 +16,4 @@ $.extend(checkbarInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(checkbarInputBinding, "dull.checkbarInput");
+// Shiny.inputBindings.register(checkbarInputBinding, "dull.checkbarInput");

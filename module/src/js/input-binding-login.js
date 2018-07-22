@@ -1,4 +1,4 @@
-var loginInputBinding = new Shiny.InputBinding();
+export let loginInputBinding = new Shiny.InputBinding();
 
 $.extend(loginInputBinding, {
   find: function(scope) {
@@ -29,4 +29,4 @@ $.extend(loginInputBinding, {
   }
 });
 
-Shiny.inputBindings.register(loginInputBinding, "dull.loginInput");
+// Shiny.inputBindings.register(loginInputBinding, "dull.loginInput");
