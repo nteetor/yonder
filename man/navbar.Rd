@@ -66,4 +66,3 @@ if (interactive()) {
 Other layout: \code{\link{column}}, \code{\link{fieldset}},
   \code{\link{formGroup}}, \code{\link{tabTabs}}
 }
-\concept{layout}

@@ -71,7 +71,7 @@
 #'         buttonInput("choices", "Update checkbox text"),
 #'         buttonInput("values", "Update checkbox value")
 #'       ) %>%
-#'         display(flex = TRUE)
+#'         display("flex")
 #'     ),
 #'     server = function(input, output) {
 #'       output$checkvalue <- renderPrint({

@@ -185,4 +185,3 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}, \code{\link{textInput}}
 }
-\concept{inputs}

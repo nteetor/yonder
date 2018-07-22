@@ -24,4 +24,3 @@ Other layout: \code{\link{column}},
   \code{\link{formGroup}}, \code{\link{navbar}},
   \code{\link{tabTabs}}
 }
-\concept{layout}

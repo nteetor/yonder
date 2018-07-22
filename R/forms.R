@@ -81,7 +81,10 @@
 #'     ),
 #'     server = function(input, output) {
 #'       output$value <- renderPrint({
-#'         str(input$form)
+#'         list(
+#'           email = input$email, password = input$password,
+#'           options = input$options, checked = input$checkbox
+#'         )
 #'       })
 #'     }
 #'   )
@@ -99,7 +102,7 @@
 #'             textInput(id = "text"),
 #'             rangeInput(id = "range")
 #'           ) %>%
-#'             border("grey", -1) %>%
+#'             border("grey") %>%
 #'             padding(3) %>%
 #'             margin(bottom = 3),
 #'           h5("This input is unaffected"),
@@ -108,7 +111,7 @@
 #'         column(
 #'           h5("Form elements values:"),
 #'           verbatimTextOutput("elements") %>%
-#'             padding(c(0, 0, 3, 0)),
+#'             padding(bottom = 3),
 #'           h5("Unaffected text input value:"),
 #'           textOutput("unaffected")
 #'         )

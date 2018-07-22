@@ -82,4 +82,3 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{listGroupThruput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}, \code{\link{textInput}}
 }
-\concept{inputs}

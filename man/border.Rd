@@ -83,4 +83,3 @@ Other utilities: \code{\link{affix}},
   \code{\link{tooltip}}, \code{\link{updateChoices}},
   \code{\link{width}}
 }
-\concept{utilities}

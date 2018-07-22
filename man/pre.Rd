@@ -20,4 +20,3 @@ The \code{pre} function adds a maximum height and scroll bar to the standard
 \seealso{
 Other content: \code{\link{blockquote}}, \code{\link{img}}
 }
-\concept{content}

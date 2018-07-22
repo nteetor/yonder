@@ -85,4 +85,3 @@ Other utilities: \code{\link{affix}}, \code{\link{border}},
   \code{\link{showPopover}}, \code{\link{tooltip}},
   \code{\link{updateChoices}}, \code{\link{width}}
 }
-\concept{utilities}

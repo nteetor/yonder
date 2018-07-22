@@ -51,4 +51,3 @@ Other utilities: \code{\link{affix}},
   \code{\link{showPopover}}, \code{\link{tooltip}},
   \code{\link{updateChoices}}
 }
-\concept{utilities}

@@ -79,7 +79,10 @@ if (interactive()) {
     ),
     server = function(input, output) {
       output$value <- renderPrint({
-        str(input$form)
+        list(
+          email = input$email, password = input$password,
+          options = input$options, checked = input$checkbox
+        )
       })
     }
   )
@@ -97,7 +100,7 @@ if (interactive()) {
             textInput(id = "text"),
             rangeInput(id = "range")
           ) \%>\%
-            border("grey", -1) \%>\%
+            border("grey") \%>\%
             padding(3) \%>\%
             margin(bottom = 3),
           h5("This input is unaffected"),
@@ -106,7 +109,7 @@ if (interactive()) {
         column(
           h5("Form elements values:"),
           verbatimTextOutput("elements") \%>\%
-            padding(c(0, 0, 3, 0)),
+            padding(bottom = 3),
           h5("Unaffected text input value:"),
           textOutput("unaffected")
         )
@@ -136,4 +139,3 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}, \code{\link{textInput}}
 }
-\concept{inputs}

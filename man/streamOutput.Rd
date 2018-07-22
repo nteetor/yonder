@@ -64,4 +64,3 @@ Other outputs: \code{\link{progressOutput}},
 Other outputs: \code{\link{progressOutput}},
   \code{\link{sparklineOutput}}
 }
-\concept{outputs}

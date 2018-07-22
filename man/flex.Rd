@@ -49,37 +49,37 @@ Because horizontal placement the browser default you may not often use
 useful as shown in the following example. On small screens the flex items are
 placed vertically and can occupy the full width of the mobile device. On
 medium or larger screens the items are placed horizontally once again.\preformatted{div(
-  div("A flex item") \%>\%
-    padding(3) \%>\%
+  div("A flex item") %>%
+    padding(3) %>%
     border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
+  div("A flex item") %>%
+    padding(3) %>%
     border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
+  div("A flex item") %>%
+    padding(3) %>%
     border()
-) \%>\%
-  display(flex = TRUE) \%>\%
+) %>%
+  display(flex = TRUE) %>%
   flex(
     direction = list(xs = "column", md = "row")
-  ) \%>\%
-  background("grey") \%>\%
+  ) %>%
+  background("grey") %>%
   border()
 }
 
 Here is a simpler example of a flex container with its children placed into
 columns.\preformatted{div(
-  div("A flex item") \%>\%
-    padding(3) \%>\%
+  div("A flex item") %>%
+    padding(3) %>%
     border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
+  div("A flex item") %>%
+    padding(3) %>%
     border(),
-  div("A flex item") \%>\%
-     padding(3) \%>\%
+  div("A flex item") %>%
+     padding(3) %>%
      border()
-) \%>\%
-  display(flex = TRUE) \%>\%
+) %>%
+  display(flex = TRUE) %>%
   flex(direction = "column")
 }
 }
@@ -168,4 +168,3 @@ Other utilities: \code{\link{affix}},
   \code{\link{tooltip}}, \code{\link{updateChoices}},
   \code{\link{width}}
 }
-\concept{utilities}

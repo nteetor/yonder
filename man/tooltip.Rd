@@ -38,4 +38,3 @@ Other utilities: \code{\link{affix}},
   \code{\link{showPopover}}, \code{\link{updateChoices}},
   \code{\link{width}}
 }
-\concept{utilities}

@@ -171,4 +171,3 @@ Other layout: \code{\link{column}}, \code{\link{fieldset}},
 Other layout: \code{\link{column}}, \code{\link{fieldset}},
   \code{\link{formGroup}}, \code{\link{navbar}}
 }
-\concept{layout}

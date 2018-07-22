@@ -77,7 +77,7 @@ if (interactive()) {
         buttonInput("choices", "Update checkbox text"),
         buttonInput("values", "Update checkbox value")
       ) \%>\%
-        display(flex = TRUE)
+        display("flex")
     ),
     server = function(input, output) {
       output$checkvalue <- renderPrint({
@@ -113,4 +113,3 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}, \code{\link{textInput}}
 }
-\concept{inputs}

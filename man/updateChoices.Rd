@@ -50,4 +50,3 @@ Other utilities: \code{\link{affix}},
   \code{\link{showPopover}}, \code{\link{tooltip}},
   \code{\link{width}}
 }
-\concept{utilities}

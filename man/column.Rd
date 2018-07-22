@@ -129,4 +129,3 @@ Other layout: \code{\link{fieldset}},
   \code{\link{formGroup}}, \code{\link{navbar}},
   \code{\link{tabTabs}}
 }
-\concept{layout}

@@ -19,9 +19,9 @@ wrapped around a picture.
 }
 \section{Newspaper layout}{
 \preformatted{div(
-  icon("table-tennis") \%>\%
-    font(size = "5x") \%>\%
-    padding(2) \%>\%
+  icon("table-tennis") %>%
+    font(size = "5x") %>%
+    padding(2) %>%
     float("left"),
   p(
     "Fusce commodo. Nullam tempus. Nunc rutrum turpis sed pede.",
@@ -55,4 +55,3 @@ Other utilities: \code{\link{affix}},
   \code{\link{tooltip}}, \code{\link{updateChoices}},
   \code{\link{width}}
 }
-\concept{utilities}
