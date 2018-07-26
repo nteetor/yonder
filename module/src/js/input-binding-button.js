@@ -7,16 +7,19 @@ $.extend(buttonInputBinding, {
     LABEL: ".dull-button-input"
   },
   Events: [
-    { type: "click", callback: (el) => $(el).data().value++ }
+    {
+      type: "click",
+      callback: el => el.setAttribute("data-value", el.getAttribute("data-value") + 1)
+    }
   ],
   initialize: function(el) {
-    $(el).data("value", 0);
+    el.setAttribute("data-value", 0);
   },
   getType: function(el) {
     return "dull.button";
   },
   getValue: function(el) {
-    return $(el).data("value");
+    return el.getAttribute("data-value");
   }
 });
 
