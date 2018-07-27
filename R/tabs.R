@@ -148,6 +148,42 @@
 #'   )
 #' }
 #'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       tabTabs(
+#'         id = "toplevel",
+#'         labels = c("Home", "Explore")
+#'       ),
+#'       tabContent(
+#'         tabs = "toplevel",
+#'         tabPane(
+#'           card(
+#'             header = tabTabs(
+#'               id = "cardtabs",
+#'               labels = c("This", "That", "Other")
+#'             ),
+#'             tabContent(
+#'               tabs = "cardtabs",
+#'               tabPane(
+#'                 p("A card")
+#'               ),
+#'               tabPane(),
+#'               tabPane()
+#'             )
+#'           )
+#'         ),
+#'         tabPane(
+#'           p("Another tab")
+#'         )
+#'       )
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
+#'
 tabTabs <- function(id, labels, values = labels, active = values[1], ...) {
   if (length(labels) == 0) {
     stop(

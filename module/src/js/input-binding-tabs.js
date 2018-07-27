@@ -12,7 +12,7 @@ $.extend(tabsInputBinding, {
     let id = el.id;
     let $tabs = $(el).find(".nav-link");
     let $panes = $(`.tab-content[data-tabs="${ id }"] > .tab-pane`);
-    let active = $tabs.index(".active");
+    let active = $tabs.map((i, e) => e.classList.contains("active")).get().indexOf(true);
 
     if ($tabs.length === 0 || $panes.length === 0) {
       throw "tabs input: missing tabs or panes";
@@ -32,7 +32,7 @@ $.extend(tabsInputBinding, {
 
       $pane.removeAttr("data-tabs");
 
-      if (index == active) {
+      if (index === active) {
         $pane.addClass("show active");
       }
     });
@@ -43,16 +43,9 @@ $.extend(tabsInputBinding, {
       $tab.attr({
         "id": `${ id }-tab-${ index }`,
         "data-toggle": "tab",
-        "data-target": `#${ id }-pane-${ index }`,
+        "href": `#${ id }-pane-${ index }`,
         "aria-controls": `${ id }-pane-${ index }`
       });
-
-      $tab.tab();
-
-      /*$tab.on("click", (e) => {
-        e.preventDefault();
-        $tab.tab("show");
-      });*/
     });
   }
 });
