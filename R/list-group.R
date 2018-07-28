@@ -70,8 +70,7 @@
 #'         column(
 #'           default = 3,
 #'           listGroupThruput(
-#'             id = "thrulist",
-#'             componentOutput("items")
+#'             id = "thrulist"
 #'           )
 #'         ),
 #'         column(
@@ -89,20 +88,20 @@
 #'       )
 #'     ),
 #'     server = function(input, output) {
-#'       output$items <- renderComponent(
+#'       output$thrulist <- renderListGroup(
 #'         listGroupItem(
 #'           "Cras justo odio",
 #'           badgeOutput("badge1", 0) %>%
 #'             background(input$level)
 #'         ) %>%
-#'           display(flex = TRUE) %>%
+#'           display("flex") %>%
 #'           flex(justify = "between", align = "center"),
 #'         listGroupItem(
 #'           "Dapibus ac facilisis in",
 #'           badgeOutput("badge2", 0) %>%
 #'             background(input$level)
 #'         ) %>%
-#'           display(flex = TRUE) %>%
+#'           display("flex") %>%
 #'           flex(justify = "between", align = "center")
 #'       )
 #'
@@ -196,13 +195,23 @@ listGroupItem <- function(..., value = NULL, selected = FALSE,
 #' @rdname listGroupThruput
 #' @export
 renderListGroup <- function(...,  env = parent.frame()) {
-  itemsFun <- shiny::exprToFunction(list(...), env, FALSE)
+  installExprFunction(list(...), "func", env, FALSE, label = "list group items")
 
-  function() {
-    items <- lapply(itemsFun(), function(i) HTML(as.character(i)))
-
-    list(
-      items = items
-    )
-  }
+  createRenderFunction(
+    func,
+    function(data, session, name) {
+      list(
+        items = lapply(
+          data,
+          function(x) {
+            if (is.function(x)) {
+              HTML(as.character(x()))
+            } else {
+              HTML(as.character(x))
+            }
+          }
+        )
+      )
+    }
+  )
 }

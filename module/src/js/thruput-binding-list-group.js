@@ -34,12 +34,14 @@ $.extend(listGroupOutputBinding, {
 
   getId: (el) => el.id,
 
-  renderValue: (el, data) => {
-    if (data.items) {
-      let items = data.items.join("\n");
-
-      Shiny.renderContent(el, items);
+  renderValue: (el, items) => {
+    if (!data.items) {
+      return;
     }
+
+    let items = data.items.join("\n");
+
+    Shiny.renderContent(el, items);
   }
 });
 

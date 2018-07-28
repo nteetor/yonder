@@ -77,8 +77,7 @@ if (interactive()) {
         column(
           default = 3,
           listGroupThruput(
-            id = "thrulist",
-            componentOutput("items")
+            id = "thrulist"
           )
         ),
         column(
@@ -96,20 +95,20 @@ if (interactive()) {
       )
     ),
     server = function(input, output) {
-      output$items <- renderComponent(
+      output$thrulist <- renderListGroup(
         listGroupItem(
           "Cras justo odio",
           badgeOutput("badge1", 0) \%>\%
             background(input$level)
         ) \%>\%
-          display(flex = TRUE) \%>\%
+          display("flex") \%>\%
           flex(justify = "between", align = "center"),
         listGroupItem(
           "Dapibus ac facilisis in",
           badgeOutput("badge2", 0) \%>\%
             background(input$level)
         ) \%>\%
-          display(flex = TRUE) \%>\%
+          display("flex") \%>\%
           flex(justify = "between", align = "center")
       )
 
@@ -185,3 +184,4 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}, \code{\link{textInput}}
 }
+\concept{inputs}
