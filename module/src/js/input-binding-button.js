@@ -9,7 +9,7 @@ $.extend(buttonInputBinding, {
   Events: [
     {
       type: "click",
-      callback: el => el.setAttribute("data-value", el.getAttribute("data-value") + 1)
+      callback: el => el.setAttribute("data-value", +el.getAttribute("data-value") + 1)
     }
   ],
   initialize: function(el) {
