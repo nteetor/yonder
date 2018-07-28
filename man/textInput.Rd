@@ -117,3 +117,4 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{listGroupThruput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}}
 }
+\concept{inputs}

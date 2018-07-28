@@ -7,15 +7,15 @@
 \title{Ranges, intervals, and custom sliders}
 \usage{
 rangeInput(id, min = 0, max = 100, default = min, step = 1,
-  ticks = TRUE, fill = TRUE, labels = 4, snap = FALSE, prefix = NULL,
-  suffix = NULL)
-
-intervalInput(id, min = 0, max = 100, default = c(min, max), step = 1,
-  draggable = FALSE, ticks = TRUE, labels = 4, snap = FALSE,
+  ticks = TRUE, fill = TRUE, labels = 4, snap = FALSE,
   prefix = NULL, suffix = NULL)
 
-sliderInput(id, choices, values = choices, selected = NULL, ticks = TRUE,
-  fill = FALSE, prefix = NULL, suffix = NULL)
+intervalInput(id, min = 0, max = 100, default = c(min, max),
+  step = 1, draggable = FALSE, ticks = TRUE, labels = 4,
+  snap = FALSE, prefix = NULL, suffix = NULL)
+
+sliderInput(id, choices, values = choices, selected = NULL,
+  ticks = TRUE, fill = FALSE, prefix = NULL, suffix = NULL)
 }
 \arguments{
 \item{id}{A character string specifying the id of the range input or \code{NULL}.}
@@ -166,3 +166,4 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{listGroupThruput}}, \code{\link{radioInput}},
   \code{\link{selectInput}}, \code{\link{textInput}}
 }
+\concept{inputs}

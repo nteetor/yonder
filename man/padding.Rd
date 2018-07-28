@@ -33,11 +33,11 @@ child elements.
 
 In most modern browsers you want to horizontally center a tag element
 using the \link{flex} layout. Alternatively, you can horizontally center an element
-using \code{margin(<TAG>, right = "auto", left = "auto")}.\preformatted{div("Nam a sapien. Integer placerat tristique nisl.") %>%
-  width(50) %>%
-  height(25) %>%
-  margin(top = 2, r = "auto", b = 2, l = "auto") %>%
-  padding(3) %>%
+using \code{margin(<TAG>, right = "auto", left = "auto")}.\preformatted{div("Nam a sapien. Integer placerat tristique nisl.") \%>\%
+  width(50) \%>\%
+  height(25) \%>\%
+  margin(top = 2, r = "auto", b = 2, l = "auto") \%>\%
+  padding(3) \%>\%
   background("amber")
 )
 }
@@ -64,13 +64,13 @@ Not great. But, with some styling we can make this form sparkle. Notice
 we are also adjusting the default submit button added to the form input.\preformatted{formInput(
   id = NULL,
   inline = TRUE,
-  textInput(id = NULL, placeholder = "Sam Vimes") %>%
+  textInput(id = NULL, placeholder = "Sam Vimes") \%>\%
     margin(r = c(sm = 2), b = 2),
-  groupInput(id = NULL, right = "@", placeholder = "Username") %>%
+  groupInput(id = NULL, right = "@", placeholder = "Username") \%>\%
     margin(r = c(sm = 2), b = 2),
-  checkboxInput(id = NULL, choice = "Remember me") %>%
+  checkboxInput(id = NULL, choice = "Remember me") \%>\%
     margin(r = c(sm = 2), b = 2),
-  submit = submitInput() %>%
+  submit = submitInput() \%>\%
     margin(b = 2)
 )
 }
@@ -115,3 +115,4 @@ Other utilities: \code{\link{affix}},
   \code{\link{tooltip}}, \code{\link{updateChoices}},
   \code{\link{width}}
 }
+\concept{utilities}

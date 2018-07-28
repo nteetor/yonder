@@ -56,3 +56,4 @@ Other outputs: \code{\link{progressOutput}},
 Other outputs: \code{\link{progressOutput}},
   \code{\link{streamOutput}}
 }
+\concept{outputs}

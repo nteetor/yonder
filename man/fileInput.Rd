@@ -4,8 +4,8 @@
 \alias{fileInput}
 \title{Upload user files}
 \usage{
-fileInput(id, placeholder = "Choose file", left = NULL, right = "Browse",
-  ..., multiple = TRUE, accept = NULL)
+fileInput(id, placeholder = "Choose file", left = NULL,
+  right = "Browse", ..., multiple = TRUE, accept = NULL)
 }
 \arguments{
 \item{id}{A character string specifying the HTML id of the file input.}
@@ -107,3 +107,4 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}, \code{\link{textInput}}
 }
+\concept{inputs}

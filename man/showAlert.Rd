@@ -25,10 +25,7 @@ for possible colors see \link{background}.}
 \item{action}{A character string specifying a reactive id. If specified a
 button is added to the alert. If clicked the reactive value
 \code{input[[action]]} is set to \code{TRUE}. When the alert is removed
-\code{input[[action]]} is reset to \code{NULL}.
-
-[[action]: R:[action
-[[action]: R:[action}
+\code{input[[action]]} is reset to \code{NULL}.}
 }
 \description{
 Use \code{showAlert} to let the user know of successes or to call attention to

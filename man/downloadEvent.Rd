@@ -4,7 +4,8 @@
 \alias{downloadEvent}
 \title{Trigger a download}
 \usage{
-downloadEvent(event, filename, handler, domain = getDefaultReactiveDomain())
+downloadEvent(event, filename, handler,
+  domain = getDefaultReactiveDomain())
 }
 \arguments{
 \item{event}{A reactive input value (e.g. \code{input$click}), a call to a

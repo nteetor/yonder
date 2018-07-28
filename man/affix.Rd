@@ -34,3 +34,4 @@ Other utilities: \code{\link{background}},
   \code{\link{tooltip}}, \code{\link{updateChoices}},
   \code{\link{width}}
 }
+\concept{utilities}

@@ -35,3 +35,4 @@ blockquote(
 \seealso{
 Other content: \code{\link{img}}, \code{\link{pre}}
 }
+\concept{content}

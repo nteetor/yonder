@@ -4,7 +4,6 @@
 \name{dull}
 \alias{dull}
 \alias{dull-package}
-\alias{dull-package}
 \title{A new approach to shiny applications}
 \description{
 More freedom to the programmer, more to come.

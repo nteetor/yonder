@@ -160,6 +160,42 @@ if (interactive()) {
   )
 }
 
+if (interactive()) {
+  shinyApp(
+    ui = container(
+      tabTabs(
+        id = "toplevel",
+        labels = c("Home", "Explore")
+      ),
+      tabContent(
+        tabs = "toplevel",
+        tabPane(
+          card(
+            header = tabTabs(
+              id = "cardtabs",
+              labels = c("This", "That", "Other")
+            ),
+            tabContent(
+              tabs = "cardtabs",
+              tabPane(
+                p("A card")
+              ),
+              tabPane(),
+              tabPane()
+            )
+          )
+        ),
+        tabPane(
+          p("Another tab")
+        )
+      )
+    ),
+    server = function(input, output) {
+
+    }
+  )
+}
+
 }
 \seealso{
 Other layout: \code{\link{column}}, \code{\link{fieldset}},
@@ -171,3 +207,4 @@ Other layout: \code{\link{column}}, \code{\link{fieldset}},
 Other layout: \code{\link{column}}, \code{\link{fieldset}},
   \code{\link{formGroup}}, \code{\link{navbar}}
 }
+\concept{layout}

@@ -5,8 +5,8 @@
 \alias{deck}
 \title{Cards, blocks of content}
 \usage{
-card(..., header = NULL, title = NULL, subtitle = NULL, image = NULL,
-  footer = NULL)
+card(..., header = NULL, title = NULL, subtitle = NULL,
+  image = NULL, footer = NULL)
 
 deck(...)
 }

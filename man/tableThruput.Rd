@@ -5,8 +5,8 @@
 \alias{renderTable}
 \title{Table thruput}
 \usage{
-tableThruput(id, ..., borders = "rows", striped = FALSE, compact = FALSE,
-  responsive = FALSE, editable = FALSE)
+tableThruput(id, ..., borders = "rows", striped = FALSE,
+  compact = FALSE, responsive = FALSE, editable = FALSE)
 
 renderTable(expr, env = parent.frame(), quoted = FALSE)
 }

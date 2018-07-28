@@ -5,8 +5,8 @@
 \alias{dateRangeInput}
 \title{Date time input}
 \usage{
-dateInput(id, choices = NULL, selected = NULL, min = NULL, max = NULL,
-  multiple = FALSE, ...)
+dateInput(id, choices = NULL, selected = NULL, min = NULL,
+  max = NULL, multiple = FALSE, ...)
 
 dateRangeInput(id, choices = NULL, selected = NULL, min = NULL,
   max = NULL, ...)
@@ -116,3 +116,4 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}, \code{\link{textInput}}
 }
+\concept{inputs}

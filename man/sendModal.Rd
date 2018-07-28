@@ -5,7 +5,8 @@
 \alias{closeModal}
 \title{Modal dialogs}
 \usage{
-sendModal(title, body, footer = NULL, session = getDefaultReactiveDomain())
+sendModal(title, body, footer = NULL,
+  session = getDefaultReactiveDomain())
 
 closeModal(session = getDefaultReactiveDomain())
 }
@@ -93,3 +94,4 @@ Other utilities: \code{\link{affix}},
   \code{\link{tooltip}}, \code{\link{updateChoices}},
   \code{\link{width}}
 }
+\concept{utilities}

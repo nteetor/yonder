@@ -100,3 +100,4 @@ if (interactive()) {
 Other outputs: \code{\link{sparklineOutput}},
   \code{\link{streamOutput}}
 }
+\concept{outputs}

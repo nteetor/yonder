@@ -5,7 +5,8 @@
 \alias{closePopover}
 \title{Display a popover}
 \usage{
-showPopover(id, content, title = NULL, placement = "top", duration = 4)
+showPopover(id, content, title = NULL, placement = "top",
+  duration = 4)
 
 closePopover(id)
 }
@@ -81,3 +82,4 @@ Other utilities: \code{\link{affix}},
   \code{\link{tooltip}}, \code{\link{updateChoices}},
   \code{\link{width}}
 }
+\concept{utilities}

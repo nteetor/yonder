@@ -91,3 +91,4 @@ Other layout: \code{\link{column}}, \code{\link{fieldset}},
 Other layout: \code{\link{column}}, \code{\link{fieldset}},
   \code{\link{navbar}}, \code{\link{tabTabs}}
 }
+\concept{layout}
