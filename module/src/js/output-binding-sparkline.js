@@ -9,7 +9,7 @@ $.extend(sparklineOutputBinding, {
   },
   renderValue: function(el, msg) {
     if (msg.data !== undefined) {
-      let labels = el.dataset.labels;
+      let labels = el.getAttribute("data-labels");
 
       if (labels) {
         el.innerHTML = `${ msg.from }{${ msg.data.join(",") }}${ msg.to }`;

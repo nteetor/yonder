@@ -8,7 +8,7 @@ $.extend(dateInputBinding, {
     { type: "dateinput:close" }
   ],
   initialize: function(el) {
-    let data = el.dataset;
+    let data = $(el).data();
     let config = {
       onClose: (selected, str, inst) => $(el).trigger("dateinput:close")
     };

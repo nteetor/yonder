@@ -148,16 +148,15 @@ $(() => {
 
   if (collapsibles.length) {
     $(collapsibles).wrap(function() {
-      let data = this.dataset;
       let attrs = {};
 
-      for (let key of Object.keys(data)) {
-        if (key.match(/^collapse/)) {
-          let newkey = key.replace(/([A-Z])/g, "-$1")
+      for (const attr of this.attributes) {
+        if (attr.name.match(/^data[-]collapse/)) {
+          let newkey = attr.name.replace(/([A-Z])/g, "-$1")
               .toLowerCase()
-              .replace(/^collapse-/, "");
+              .replace(/^data-collapse-/, "");
 
-          attrs[newkey] = data[key];
+          attrs[newkey] = attr.value;
         }
       }
 
