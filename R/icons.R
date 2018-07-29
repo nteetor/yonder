@@ -33,13 +33,13 @@ globalVariables("icons")
 #'         htmlOutput("icon")
 #'       ) %>%
 #'         margin(3) %>%
-#'         display(flex = TRUE) %>%
+#'         display("flex") %>%
 #'         flex(direction = "column", align = "center")
 #'     ),
 #'     server = function(input, output) {
 #'       output$icon <- renderUI({
 #'         icon(input$name) %>%
-#'           font("8x")
+#'           font(size = "8x")
 #'       })
 #'     }
 #'   )
@@ -60,7 +60,7 @@ globalVariables("icons")
 #'               }
 #'             )
 #'           ) %>%
-#'             display(flex = TRUE) %>%
+#'             display("flex") %>%
 #'             flex(wrap = TRUE)
 #'         }
 #'       )
@@ -184,7 +184,7 @@ icon <- function(name, set = NULL, ...) {
 #'           spinnerOutput("spin", pulse = TRUE),
 #'           buttonInput("trigger", "Start/stop")
 #'         ) %>%
-#'           display(flex = TRUE) %>%
+#'           display("flex") %>%
 #'           flex(justify = "around")
 #'       )
 #'     ),

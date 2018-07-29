@@ -81,7 +81,7 @@ if (interactive()) {
         background("grey") \%>\%
         font(tail(colors, 1))
     ) \%>\%
-      display(flex = TRUE) \%>\%
+      display("flex") \%>\%
       flex(wrap = TRUE),
     server = function(input, output) {
 

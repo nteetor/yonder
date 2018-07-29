@@ -111,7 +111,7 @@ NULL
 #'     padding(3) %>%
 #'     border()
 #' ) %>%
-#'   display(flex = TRUE) %>%
+#'   display("flex") %>%
 #'   flex(
 #'     direction = list(xs = "column", md = "row")
 #'   ) %>%
@@ -134,7 +134,7 @@ NULL
 #'      padding(3) %>%
 #'      border()
 #' ) %>%
-#'   display(flex = TRUE) %>%
+#'   display("flex") %>%
 #'   flex(direction = "column")
 #' ```
 #' @section `justify`:

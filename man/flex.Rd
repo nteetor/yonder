@@ -59,7 +59,7 @@ medium or larger screens the items are placed horizontally once again.\preformat
     padding(3) \%>\%
     border()
 ) \%>\%
-  display(flex = TRUE) \%>\%
+  display("flex") \%>\%
   flex(
     direction = list(xs = "column", md = "row")
   ) \%>\%
@@ -79,7 +79,7 @@ columns.\preformatted{div(
      padding(3) \%>\%
      border()
 ) \%>\%
-  display(flex = TRUE) \%>\%
+  display("flex") \%>\%
   flex(direction = "column")
 }
 }

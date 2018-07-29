@@ -34,13 +34,13 @@ if (interactive()) {
         htmlOutput("icon")
       ) \%>\%
         margin(3) \%>\%
-        display(flex = TRUE) \%>\%
+        display("flex") \%>\%
         flex(direction = "column", align = "center")
     ),
     server = function(input, output) {
       output$icon <- renderUI({
         icon(input$name) \%>\%
-          font("8x")
+          font(size = "8x")
       })
     }
   )
@@ -61,7 +61,7 @@ if (interactive()) {
               }
             )
           ) \%>\%
-            display(flex = TRUE) \%>\%
+            display("flex") \%>\%
             flex(wrap = TRUE)
         }
       )
