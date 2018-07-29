@@ -172,7 +172,8 @@ listGroupThruput <- function(id, ..., multiple = TRUE, flush = FALSE) {
     ),
     `data-multiple` = if (multiple) "true" else "false",
     id = id,
-    ...
+    ...,
+    include("core")
   )
 }
 
