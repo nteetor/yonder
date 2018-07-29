@@ -2,7 +2,7 @@ export let checkboxInputBinding = new Shiny.InputBinding();
 
 $.extend(checkboxInputBinding, {
   Selector: {
-    SELF: ".dull-checkbox-input",
+    SELF: ".yonder-checkbox[id]",
     VALUE: ".custom-control-input",
     LABEL: ".custom-control-label",
     SELECTED: ".custom-control-input:checked:not(:disabled)",
@@ -27,5 +27,3 @@ $.extend(checkboxInputBinding, {
     };
   }
 });
-
-// Shiny.inputBindings.register(checkboxInputBinding, "dull.checkboxInput");

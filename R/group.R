@@ -181,20 +181,20 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
   }
 
   shiny::registerInputHandler(
-    type = "dull.group.input",
+    type = "yonder.group",
     fun = function(x, session, name) paste0(x, collapse = ""),
     force = TRUE
   )
 
   tags$div(
-    class = "dull-group-input input-group",
+    class = "yonder-group input-group",
     id = id,
     if (!is.null(left)) {
       tags$div(
         class = "input-group-prepend",
         if (is.character(left)) {
           lapply(left, tags$span, class = "input-group-text")
-        } else if (tagHasClass(left, "dull-dropdown-input")) {
+        } else if (tagHasClass(left, "yonder-dropdown")) {
           left$children
         } else {
           # list of buttons
@@ -213,7 +213,7 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
         class = "input-group-append",
         if (is.character(right)) {
           lapply(right, tags$span, class = "input-group-text")
-        } else if (tagHasClass(right, "dull-dropdown-input")) {
+        } else if (tagHasClass(right, "yonder-dropdown")) {
           right$children
         } else {
           # list of buttons
@@ -232,5 +232,5 @@ isValidAddon <- function(tag) {
 
   is.character(tag) ||
    tagIs(tag, "button") ||
-   tagHasClass(tag, "dull-dropdown-input")
+   tagHasClass(tag, "yonder-dropdown")
 }

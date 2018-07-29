@@ -24,5 +24,3 @@ $.extend(tooltipBinding, {
 
   }
 });
-
-//Shiny.outputBindings.register(tooltipBinding, "dull.tooltip");

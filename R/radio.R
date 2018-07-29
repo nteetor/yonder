@@ -94,7 +94,7 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
   ids <- ID(rep.int("radio", length(choices)))
 
   tags$div(
-    class = "dull-radio-input",
+    class = "yonder-radio",
     id = id,
     if (!is.null(choices)) {
       lapply(

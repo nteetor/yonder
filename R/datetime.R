@@ -120,10 +120,10 @@ dateInput <- function(id, choices = NULL, selected = NULL, min = NULL,
     choices <- paste(vapply(choices, as.character, character(1)), collapse = "\\,")
   }
 
-  shiny::registerInputHandler("dull.date", dateHandler, TRUE)
+  shiny::registerInputHandler("yonder.date", dateHandler, TRUE)
 
   tags$input(
-    class = "dull-date-input form-control",
+    class = "yonder-date form-control",
     id = id,
     type = "text",
     `data-default-date` = selected,
@@ -220,10 +220,10 @@ dateRangeInput <- function(id, choices = NULL, selected = NULL, min = NULL,
     choices <- paste(vapply(choices, as.character, character(1)), collapse = "\\,")
   }
 
-  shiny::registerInputHandler("dull.date", dateHandler, TRUE)
+  shiny::registerInputHandler("yonder.date", dateHandler, TRUE)
 
   tags$input(
-    class = "dull-date-input form-control",
+    class = "yonder-date form-control",
     id = id,
     type = "text",
     `data-default-date` = selected,
@@ -234,6 +234,7 @@ dateRangeInput <- function(id, choices = NULL, selected = NULL, min = NULL,
     `data-date-format` = "Y-m-d",
     `data-mode` = "range",
     ...,
+    include("core"),
     include("flatpickr")
   )
 }

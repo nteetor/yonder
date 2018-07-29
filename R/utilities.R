@@ -14,7 +14,7 @@
 )
 
 colorUtility <- function(tag, base, color) {
-  if (tagHasClass(tag, "dull-checkbar-input|dull-radiobar-input")) {
+  if (tagHasClass(tag, "yonder-checkbar|yonder-radiobar")) {
     tag$children[[1]] <- lapply(
       tag$children[[1]],
       colorUtility,
@@ -25,7 +25,7 @@ colorUtility <- function(tag, base, color) {
     return(tag)
   }
 
-  if (tagHasClass(tag, "dull-dropdown-input")) {
+  if (tagHasClass(tag, "yonder-dropdown")) {
     tag$children[[1]] <- colorUtility(
       tag$children[[1]],
       base = base,

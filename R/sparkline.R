@@ -54,7 +54,7 @@ sparklineOutput <- function(id, type = "bar", labels = TRUE, ...) {
 
   tags$span(
     class = collate(
-      "dull-sparkline-output",
+      "yonder-sparkline",
       paste0("sparks-", type)
     ),
     id = id,

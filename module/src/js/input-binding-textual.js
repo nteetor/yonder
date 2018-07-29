@@ -2,7 +2,7 @@ export let textualInputBinding = new Shiny.InputBinding();
 
 $.extend(textualInputBinding, {
   Selector: {
-    SELF: ".dull-textual-input",
+    SELF: ".yonder-textual[id]",
     VALIDATE: "input"
   },
   Events: [
@@ -27,9 +27,9 @@ $.extend(textualInputBinding, {
     var $type = $("input", el).attr("type");
 
     if ($type === "date") {
-      return "dull.date.input";
+      return "yonder.date";
     } else if ($type === "time") {
-      return "dull.time.input";
+      return "yonder.time";
     }
 
     return false;
@@ -44,5 +44,3 @@ $.extend(textualInputBinding, {
     };
   }
 });
-
-// Shiny.inputBindings.register(textualInputBinding, "dull.textualInput");

@@ -2,7 +2,7 @@ export let navInputBinding = new Shiny.InputBinding();
 
 $.extend(navInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-nav[id]");
+    return $(scope).find(".yonder-nav[id]");
   },
   getValue: function(el) {
     return $(".nav", el).find(".active").data("value");
@@ -19,5 +19,3 @@ $.extend(navInputBinding, {
     $(el).off(".navInputBinding");
   }
 });
-
-// Shiny.inputBindings.register(navInputBinding, "dull.navInput");

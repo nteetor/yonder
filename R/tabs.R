@@ -228,7 +228,7 @@ tabTabs <- function(id, labels, values = labels, active = values[1], ...) {
   active <- match2(active, values)
 
   tags$ul(
-    class = "dull-tabs-input nav nav-tabs",
+    class = "yonder-tabs nav nav-tabs",
     role = "tablist",
     id = id,
     ...,

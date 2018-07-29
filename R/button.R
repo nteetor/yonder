@@ -91,14 +91,14 @@
 #'
 buttonInput <- function(id, label, block = FALSE, ...) {
   shiny::registerInputHandler(
-    type = "dull.button",
+    type = "yonder.button",
     fun = function(x, session, name) as.numeric(x),
     force = TRUE
   )
 
   tags$button(
     class = collate(
-      "dull-button-input",
+      "yonder-button",
       "btn",
       if (block) "btn-block",
       "btn-grey"
@@ -117,7 +117,7 @@ buttonInput <- function(id, label, block = FALSE, ...) {
 submitInput <- function(label = "Submit", block = FALSE, ...) {
   tags$button(
     class = collate(
-      "dull-submit",
+      "yonder-submit",
       "btn",
       "btn-blue",
       if (block) "btn-block"
@@ -155,7 +155,7 @@ submitInput <- function(label = "Submit", block = FALSE, ...) {
 #'
 linkInput <- function(id, text, ...) {
   shiny::registerInputHandler(
-    type = "dull.link",
+    type = "yonder.link",
     fun = function(x, session, name) {
       if (x$value == 0) {
         return(NULL)
@@ -169,7 +169,7 @@ linkInput <- function(id, text, ...) {
   )
 
   tags$span(
-    class = "dull-link-input",
+    class = "yonder-link",
     id = id,
     tags$u(text),
     ...
@@ -264,7 +264,7 @@ buttonGroupInput <- function(id, labels, values = labels) {
   }
 
   tags$div(
-    class = "dull-button-group-input btn-group",
+    class = "yonder-button-group btn-group",
     id = id,
     role = "group",
     Map(

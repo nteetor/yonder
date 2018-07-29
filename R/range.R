@@ -92,7 +92,7 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
                        ticks = TRUE, fill = TRUE, labels = 4, snap = FALSE,
                        prefix = NULL, suffix = NULL) {
   tags$div(
-    class = "dull-range-input bg-grey",
+    class = "yonder-range bg-grey",
     id = id,
     tags$input(
       class = "range",
@@ -140,7 +140,7 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
                           ticks = TRUE, labels = 4, snap = FALSE,
                           prefix = NULL, suffix = NULL) {
   tags$div(
-    class = "dull-range-input bg-grey",
+    class = "yonder-range bg-grey",
     id = id,
     tags$input(
       class = "range",
@@ -198,7 +198,7 @@ sliderInput <- function(id, choices, values = choices, selected = NULL,
   selected <- encode_commas(selected)
 
   tags$div(
-    class = "dull-range-input bg-grey",
+    class = "yonder-range bg-grey",
     id = id,
     tags$input(
       class = "range",

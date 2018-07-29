@@ -2,7 +2,7 @@ export let loginInputBinding = new Shiny.InputBinding();
 
 $.extend(loginInputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-login-input[id]");
+    return $(scope).find(".yonder-login[id]");
   },
   getValue: function(el) {
     var values = $(el).find(".form-control").map((i, e) => $(e).val()).get();
@@ -28,5 +28,3 @@ $.extend(loginInputBinding, {
     $(el).off(".loginInputBinding");
   }
 });
-
-// Shiny.inputBindings.register(loginInputBinding, "dull.loginInput");

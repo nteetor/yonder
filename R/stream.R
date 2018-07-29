@@ -50,7 +50,7 @@
 streamOutput <- function(id, ...) {
   tags$ul(
     class = collate(
-      "dull-stream-output",
+      "yonder-stream",
       "list-group"
     ),
     id = id,
@@ -71,7 +71,7 @@ sendStream <- function(id, content,
   }
 
   session$sendProgress(
-    "dull-stream",
+    "yonder-stream",
     list(
       id = id,
       content = content

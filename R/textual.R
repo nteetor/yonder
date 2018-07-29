@@ -5,7 +5,7 @@ textualInput <- function(id, value, placeholder, readonly, help, type,
   }
 
   tags$div(
-    class = "dull-textual-input",
+    class = "yonder-textual",
     id = id,
     tags$input(
       class = collate(
@@ -235,7 +235,7 @@ loginInput <- function(id, ...) {
   ids <- ID(rep.int("login", 2))
 
   tags$div(
-    class = "dull-login-input col",
+    class = "yonder-login col",
     id = id,
     tags$div(
       class = "form-group",
@@ -306,7 +306,7 @@ addressInput <- function(id) {
   ids <- ID(rep.int("address", 5))
 
   tags$div(
-    class = "dull-address-input",
+    class = "yonder-address",
     id = id,
     tags$div(
       class = "form-group",

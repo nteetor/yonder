@@ -119,7 +119,7 @@ tableThruput <- function(id, ..., borders = "rows", striped = FALSE,
   }
 
   shiny::registerInputHandler(
-    type = "dull.table.input",
+    type = "yonder.table",
     fun = function(x, session, name) {
       x <- jsonlite::fromJSON(x)
 
@@ -134,7 +134,7 @@ tableThruput <- function(id, ..., borders = "rows", striped = FALSE,
 
   tags$table(
     class = collate(
-      "dull-table-thruput",
+      "yonder-table",
       "table",
       if (borders == "all") "table-bordered"
       else if (borders == "none") "table-borderless",

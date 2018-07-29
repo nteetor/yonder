@@ -86,7 +86,7 @@ downloadEvent <- function(event, filename, handler,
       return()
     }
 
-    domain$sendCustomMessage("dull:download", list(
+    domain$sendCustomMessage("yonder:download", list(
       token = domain$token,
       key = key,
       filename = shiny::isolate(filenameFunc())

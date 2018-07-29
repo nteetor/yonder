@@ -2,7 +2,7 @@ export let radiobarInputBinding = new Shiny.InputBinding();
 
 $.extend(radiobarInputBinding, {
   Selector: {
-    SELF: ".dull-radiobar-input",
+    SELF: ".yonder-radiobar[id]",
     VALUE: ".btn input",
     LABEL: ".btn > span",
     SELECTED: ".btn input:checked"
@@ -22,5 +22,3 @@ $.extend(radiobarInputBinding, {
     $(el).off(".radiobarInputBinding");
   }
 });
-
-// Shiny.inputBindings.register(radiobarInputBinding, "radiobarInput");

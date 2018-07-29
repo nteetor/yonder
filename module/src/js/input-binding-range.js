@@ -2,7 +2,7 @@ export let rangeInputBinding = new Shiny.InputBinding();
 
 $.extend(rangeInputBinding, {
   Selector: {
-    SELF: ".dull-range-input"
+    SELF: ".yonder-range[id]"
   },
   Events: [
     { type: "change" }
@@ -57,5 +57,3 @@ $.extend(rangeInputBinding, {
     $input.data("ionRangeSlider").destroy();
   }
 });
-
-// Shiny.inputBindings.register(rangeInputBinding, "dull.rangeInput");

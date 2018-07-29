@@ -2,7 +2,7 @@ export let sparklineOutputBinding = new Shiny.OutputBinding();
 
 $.extend(sparklineOutputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-sparkline-output[id]");
+    return $(scope).find(".yonder-sparkline[id]");
   },
   getId: function(el) {
     return el.id;
@@ -25,5 +25,3 @@ $.extend(sparklineOutputBinding, {
 
   }
 });
-
-// Shiny.outputBindings.register(sparklineOutputBinding, "dull.sparklineOutput");

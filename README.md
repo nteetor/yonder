@@ -1,20 +1,19 @@
-# dull
+# yonder
 
-Build Bootstrap 4 applications with the familiar Shiny toolkit.
+A reactive web framework built on [shiny](https://github.com/rstudio/shiny).
 
 ## Introduction
 
-dull is a set of UI and server functions built on top of Bootstrap 4. On the UI
-side dull features Font Awesome 5, aftertheflood's Spark font, flatpickr
-calendar widgets, and refreshed IonRange sliders. On the server side dull
-includes tools for showing alerts, modals,
-[popovers](http://getbootstrap.com/docs/4.0/components/popovers/), validating
-and freezing input values, and more!
+yonder is designed to make building pragmatic applications fun and rewarding. On
+the UI side yonder features Font Awesome 5, aftertheflood's Spark font,
+flatpickr calendar widgets, refreshed IonRange sliders, and Bootstrap 4. On the
+server side yonder includes tools for showing alerts and toasts, displaying
+modal and popovers, validating and freezing input values, and more!
 
 ## A first example
 
 ```R
-library(dull)
+library(yonder)
 
 shinyApp(
   ui = container(
@@ -86,11 +85,11 @@ shinyApp(
 
 ## Installation
 
-dull is still a work in progress and may be downloaded from GitHub.
+yonder is still a work in progress and may be downloaded from GitHub.
 
 ```R
 # install.packages("devtools")
-devtools::install_github("nteetor/dull")
+devtools::install_github("nteetor/yonder")
 ```
 
 ## Related work

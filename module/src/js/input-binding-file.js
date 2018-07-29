@@ -2,7 +2,7 @@ export let fileInputBinding = new Shiny.InputBinding();
 
 $.extend(fileInputBinding, {
   Selector: {
-    SELF: ".dull-file-input"
+    SELF: ".yonder-file[id]"
   },
   getValue: function(el) {
     return null;
@@ -98,5 +98,3 @@ $.extend(fileInputBinding, {
     $(el).off(".fileInputBinding");
   }
 });
-
-// Shiny.inputBindings.register(fileInputBinding, "dull.fileInput");

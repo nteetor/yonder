@@ -89,7 +89,7 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
   selected <- match2(selected, values, default = TRUE)
 
   tags$div(
-    class = "dull-select-input",
+    class = "yonder-select",
     id = id,
     tags$select(
       class = "custom-select",

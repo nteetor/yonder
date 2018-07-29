@@ -1,7 +1,7 @@
 #' Check- and radiobar inputs
 #'
 #' Checkbar and radiobar inputs behave like the counter parts, checkbox and
-#' radio inputs. The -bar inputs are a stylistic variation. However, dull
+#' radio inputs. The -bar inputs are a stylistic variation. However, yonder
 #' checkbox inputs are singletons, thus the checkbar input is more akin to
 #' shiny's checkbox group input.
 #'
@@ -133,7 +133,7 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL) {
 
   tags$div(
     class = collate(
-      "dull-checkbar-input",
+      "yonder-checkbar",
       if (length(choices) > 1) "btn-group",
       "btn-group-toggle"
     ),
@@ -177,7 +177,7 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL) {
   selected <- match2(selected, values)
 
   tags$div(
-    class = "dull-radiobar-input btn-group btn-group-toggle",
+    class = "yonder-radiobar btn-group btn-group-toggle",
     id = id,
     `data-toggle` = "buttons",
     lapply(

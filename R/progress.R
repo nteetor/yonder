@@ -85,7 +85,7 @@
 #'
 progressOutput <- function(...) {
   tags$div(
-    class = "dull-progress-output progress",
+    class = "yonder-progress progress",
     ...,
     include("core")
   )
@@ -105,7 +105,6 @@ bar <- function(id, value, label = NULL, striped = FALSE, ...) {
 
   tags$div(
     class = collate(
-      "dull-bar-output",
       "progress-bar",
       if (striped) "progress-bar-striped"
     ),
@@ -124,7 +123,7 @@ bar <- function(id, value, label = NULL, striped = FALSE, ...) {
 sendBar <- function(id, value, label = NULL,
                     session = getDefaultReactiveDomain()) {
   session$sendProgress(
-    "dull-progress",
+    "yonder-progress",
     dropNulls(
       list(
         id = id,

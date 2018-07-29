@@ -123,7 +123,7 @@ updateCollapse <- function(id, type) {
     )
   }
 
-  domain$sendCustomMessage("dull:collapse", list(
+  domain$sendCustomMessage("yonder:collapse", list(
     type = type,
     data = list(
       id = id

@@ -2,7 +2,7 @@ export let alertInputBinding = new Shiny.InputBinding();
 
 $.extend(alertInputBinding, {
   Selector: {
-    SELF: ".dull-alert-container"
+    SELF: ".yonder-alert-container"
   },
   Alerts: [],
   getValue: function(el) {
@@ -19,7 +19,7 @@ $.extend(alertInputBinding, {
       let alertAttrs = data.attrs || {};
       let alertClass = data.color ? `alert-${ data.color }` : "";
 
-      let $alert = $(`<div class="alert ${ alertClass } fade show dull-alert" role="alert">${ data.text }</div>`);
+      let $alert = $(`<div class="alert ${ alertClass } fade show yonder-alert" role="alert">${ data.text }</div>`);
 
       if (data.action) {
         $alert.append($(`<button class="btn btn-link alert-action">${ data.action }</button>`));
@@ -96,5 +96,3 @@ $.extend(alertInputBinding, {
     }
   }
 });
-
-//Shiny.inputBindings.register(alertInputBinding, "dull.alertInput");

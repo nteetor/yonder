@@ -1,11 +1,11 @@
-Package: dull
+Package: yonder
 Type: Package
-Title: Shiny Reimagined With Bootstrap 4
+Title: A Reactive Web Framework Built on Shiny
 Version: 0.0.5
 Authors@R: person(given = "Nathan", family = "Teetor", email = "nathanteetor@gmail.com", role = c("aut", "cre"))
 Description: A new toolset to build shiny applications with Bootstrap 4.
 License: MIT + file LICENSE
-URL: https://github.com/nteetor/dull
+URL: https://github.com/nteetor/yonder
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
@@ -25,7 +25,7 @@ Suggests:
     knitr,
     rmarkdown
 Collate:
-    dull.R
+    yonder.R
     pipe.R
     utils.R
     includes.R

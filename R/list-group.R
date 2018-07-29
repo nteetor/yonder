@@ -167,7 +167,7 @@
 listGroupThruput <- function(id, ..., multiple = TRUE, flush = FALSE) {
   tags$div(
     class = collate(
-      "dull-list-group-thruput list-group",
+      "yonder-list-group list-group",
       if (flush) "list-group-flush"
     ),
     `data-multiple` = if (multiple) "true" else "false",

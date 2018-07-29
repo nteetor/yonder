@@ -67,7 +67,7 @@
 sendModal <- function(title, body, footer = NULL,
                       session = getDefaultReactiveDomain()) {
   session$sendCustomMessage(
-    "dull:modal",
+    "yonder:modal",
     list(
       title = htmltools::HTML(as.character(title)),
       body = htmltools::HTML(as.character(body)),
@@ -81,7 +81,7 @@ sendModal <- function(title, body, footer = NULL,
 #' @export
 closeModal <- function(session = getDefaultReactiveDomain()) {
   session$sendCustomMessage(
-    "dull:modal",
+    "yonder:modal",
     list(
       close = TRUE
     )

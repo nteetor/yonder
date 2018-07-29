@@ -203,7 +203,7 @@ icon <- function(name, set = NULL, ...) {
 spinnerOutput <- function(id, type = "circle", pulse = FALSE, ...) {
   tags$i(
     class = collate(
-      "dull-spinner-output",
+      "yonder-spinner",
       "fas",
       switch(
         type,
@@ -224,7 +224,7 @@ spinnerOutput <- function(id, type = "circle", pulse = FALSE, ...) {
 #' @rdname spinnerOutput
 #' @export
 startSpinner <- function(id, session = getDefaultReactiveDomain()) {
-  session$sendProgress("dull-spinner", list(
+  session$sendProgress("yonder-spinner", list(
     id = id,
     action = "start"
   ))
@@ -233,7 +233,7 @@ startSpinner <- function(id, session = getDefaultReactiveDomain()) {
 #' @rdname spinnerOutput
 #' @export
 stopSpinner <- function(id, session = getDefaultReactiveDomain()) {
-  session$sendProgress("dull-spinner", list(
+  session$sendProgress("yonder-spinner", list(
     id = id,
     action = "stop"
   ))

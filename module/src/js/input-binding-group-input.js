@@ -2,7 +2,7 @@ export let groupInputBinding = new Shiny.InputBinding();
 
 $.extend(groupInputBinding, {
   Selector: {
-    SELF: ".dull-group-input",
+    SELF: ".yonder-group[id]",
     VALUE: "input",
     SELECTED: ".input-group-prepend .input-group-text, input, .input-group-append .input-group-text",
   },
@@ -11,11 +11,9 @@ $.extend(groupInputBinding, {
     { type: "change", debounce: true }
   ],
   getType: function(el) {
-    return "dull.group.input";
+    return "yonder.group";
   },
   getState: function(el) {
     return { value: this.getValue(el) };
   }
 });
-
-// Shiny.inputBindings.register(groupInputBinding, "dull.groupInput");

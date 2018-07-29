@@ -131,7 +131,7 @@ fileInput <- function(id, placeholder = "Choose file", left = NULL,
   }
 
   tags$div(
-    class = "dull-file-input input-group",
+    class = "yonder-file input-group",
     id = id,
     ...,
     left,

@@ -2,12 +2,12 @@ import babel from "rollup-plugin-babel";
 import { terser } from "rollup-plugin-terser";
 
 export default {
-  input: "src/js/dull.js",
+  input: "src/js/yonder.js",
   output: {
-    file: "dist/js/dull.min.js",
+    file: "dist/js/yonder.min.js",
     format: "iife",
     sourcemap: "inline",
-    name: "dull"
+    name: "yonder"
   },
   plugins: [
     babel({

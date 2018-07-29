@@ -26,7 +26,7 @@ there is no default option.}
 }
 \description{
 Checkbar and radiobar inputs behave like the counter parts, checkbox and
-radio inputs. The -bar inputs are a stylistic variation. However, dull
+radio inputs. The -bar inputs are a stylistic variation. However, yonder
 checkbox inputs are singletons, thus the checkbar input is more akin to
 shiny's checkbox group input.
 }

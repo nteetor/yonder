@@ -2,9 +2,9 @@ export let buttonInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonInputBinding, {
   Selector: {
-    SELF: ".dull-button-input",
-    VALUE: ".dull-button-input",
-    LABEL: ".dull-button-input"
+    SELF: ".yonder-button[id]",
+    VALUE: ".yonder-button",
+    LABEL: ".yonder-button"
   },
   Events: [
     {
@@ -16,11 +16,9 @@ $.extend(buttonInputBinding, {
     el.setAttribute("data-value", 0);
   },
   getType: function(el) {
-    return "dull.button";
+    return "yonder.button";
   },
   getValue: function(el) {
     return el.getAttribute("data-value");
   }
 });
-
-// Shiny.inputBindings.register(buttonInputBinding, "dull.buttonInput");

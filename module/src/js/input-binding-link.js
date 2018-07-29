@@ -2,7 +2,7 @@ export let linkInputBinding = new Shiny.InputBinding();
 
 $.extend(linkInputBinding, {
   Selector: {
-    SELF: ".dull-link-input"
+    SELF: ".yonder-link[id]"
   },
   Events: [
     {
@@ -14,7 +14,7 @@ $.extend(linkInputBinding, {
     el.setAttribute("data-value", 0);
   },
   getType: function(el) {
-    return "dull.link";
+    return "yonder.link";
   },
   getValue: function(el) {
     return {
@@ -23,5 +23,3 @@ $.extend(linkInputBinding, {
     };
   }
 });
-
-// Shiny.inputBindings.register(linkInputBindng, "dull.linkInput");

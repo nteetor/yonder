@@ -63,7 +63,7 @@ showPopover <- function(id, content, title = NULL, placement = "top",
     )
   }
 
-  domain$sendCustomMessage("dull:popover", list(
+  domain$sendCustomMessage("yonder:popover", list(
     type = "show",
     id = id,
     data = list(
@@ -88,7 +88,7 @@ closePopover <- function(id) {
     )
   }
 
-  domain$sendCustomMessage("dull:popover", list(
+  domain$sendCustomMessage("yonder:popover", list(
     type = "close",
     id = id
   ))

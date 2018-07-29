@@ -2,7 +2,7 @@ export let buttonGroupInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonGroupInputBinding, {
   Selector: {
-    SELF: ".dull-button-group-input",
+    SELF: ".yonder-button-group[id]",
     VALUE: ".btn",
     LABEL: ".btn"
   },
@@ -21,5 +21,3 @@ $.extend(buttonGroupInputBinding, {
     $(el).off(".buttonGroupInputBinding", "button");
   }
 });
-
-// Shiny.inputBindings.register(buttonGroupInputBinding, "dull.buttonGroup");

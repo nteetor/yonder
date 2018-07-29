@@ -2,7 +2,7 @@ export let radioInputBinding = new Shiny.InputBinding();
 
 $.extend(radioInputBinding, {
   Selector: {
-    SELF: ".dull-radio-input",
+    SELF: ".yonder-radio[id]",
     VALUE: ".custom-control-input",
     LABEL: ".custom-control-label",
     SELECTED: ".custom-control-input:checked:not(:disabled)",
@@ -15,5 +15,3 @@ $.extend(radioInputBinding, {
     return { value: this.getValue(el) };
   }
 });
-
-// Shiny.inputBindings.register(radioInputBinding, "dull.radioInput");

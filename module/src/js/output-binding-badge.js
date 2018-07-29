@@ -2,7 +2,7 @@ export let badgeOutputBinding = new Shiny.OutputBinding();
 
 $.extend(badgeOutputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-badge-output[id]");
+    return $(scope).find(".yonder-badge[id]");
   },
   getId: function(el) {
     return el.id;
@@ -19,5 +19,3 @@ $.extend(badgeOutputBinding, {
 
   }
 });
-
-// Shiny.outputBindings.register(badgeOutputBinding, "dull.badgeOutput");

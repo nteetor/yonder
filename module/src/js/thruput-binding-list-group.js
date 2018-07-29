@@ -2,7 +2,7 @@
 export let listGroupInputBinding = new Shiny.InputBinding();
 
 $.extend(listGroupInputBinding, {
-  find: (scope) => $(scope).find(".dull-list-group-thruput[id]"),
+  find: (scope) => $(scope).find(".yonder-list-groupl[id]"),
 
   getId: (el) => el.id,
 
@@ -24,17 +24,15 @@ $.extend(listGroupInputBinding, {
   unsubscribe: (el) => $(el).off(".listGroupInputBinding")
 });
 
-// Shiny.inputBindings.register(listGroupInputBinding, "dull.listGroupInput");
-
 // output
 export let listGroupOutputBinding = new Shiny.OutputBinding();
 
 $.extend(listGroupOutputBinding, {
-  find: (scope) => $(scope).find(".dull-list-group-thruput[id]"),
+  find: (scope) => $(scope).find(".yonder-list-group[id]"),
 
   getId: (el) => el.id,
 
-  renderValue: (el, items) => {
+  renderValue: (el, data) => {
     if (!data.items) {
       return;
     }
@@ -44,5 +42,3 @@ $.extend(listGroupOutputBinding, {
     Shiny.renderContent(el, items);
   }
 });
-
-// Shiny.outputBindings.register(listGroupOutputBinding, "dull.listGroupOutput");

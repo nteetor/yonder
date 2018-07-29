@@ -25,7 +25,7 @@ $.extend(formInputBinding, {
     submit.setAttribute("data-value", 0);
   },
   find: function(scope) {
-    let $input = $(scope).find(".dull-form-input[id]");
+    let $input = $(scope).find(".yonder-form[id]");
 
     if (!$input.children("button[data-type='submit']").length) {
       return null;
@@ -43,5 +43,3 @@ $.extend(formInputBinding, {
     return +submit.getAttribute("data-value");
   }
 });
-
-// Shiny.inputBindings.register(formInputBinding, "dull.formInput");

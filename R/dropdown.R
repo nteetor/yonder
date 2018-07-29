@@ -95,7 +95,7 @@ dropdownInput <- function(id, label, ..., direction = "down", split = FALSE) {
 
   tags$div(
     class = collate(
-      "dull-dropdown-input",
+      "yonder-dropdown",
       "btn-group",
       paste0("drop", direction)
     ),

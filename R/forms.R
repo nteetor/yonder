@@ -131,7 +131,7 @@
 formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
   tags$form(
     class = collate(
-      "dull-form-input",
+      "yonder-form",
       if (inline) "form-inline"
     ),
     id = id,

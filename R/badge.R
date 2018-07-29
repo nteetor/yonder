@@ -54,7 +54,7 @@ badgeOutput <- function(id, ...) {
   }
 
   tags$span(
-    class = "dull-badge-output badge",
+    class = "yonder-badge badge",
     id = id,
     ...,
     include("core")

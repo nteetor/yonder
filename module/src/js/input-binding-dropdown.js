@@ -2,7 +2,7 @@ export let dropdownInputBinding = new Shiny.InputBinding();
 
 $.extend(dropdownInputBinding, {
   Selector: {
-    SELF: ".dull-dropdown-input",
+    SELF: ".yonder-dropdown[id]",
     LABEL: ".dropdown-item",
     VALUE: ".dropdown-item"
   },
@@ -23,5 +23,3 @@ $.extend(dropdownInputBinding, {
     return;
   }
 });
-
-// Shiny.inputBindings.register(dropdownInputBinding, "dull.dropdownInput");

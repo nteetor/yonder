@@ -2,7 +2,7 @@ export let selectInputBinding = new Shiny.InputBinding();
 
 $.extend(selectInputBinding, {
   Selector: {
-    SELF: ".dull-select-input",
+    SELF: ".yonder-select[id]",
     VALUE: "option",
     LABEL: "option",
     SELECTED: "option:checked",
@@ -15,5 +15,3 @@ $.extend(selectInputBinding, {
     return { value: this.getValue(el) };
   }
 });
-
-// Shiny.inputBindings.register(selectInputBinding, "dull.selectInput");

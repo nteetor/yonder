@@ -2,7 +2,7 @@ export let tabsInputBinding = new Shiny.InputBinding();
 
 $.extend(tabsInputBinding, {
   Selector: {
-    SELF: ".dull-tabs-input[id]",
+    SELF: ".yonder-tabs[id]",
     SELECTED: ".nav-item > .active:not(.disabled)"
   },
   Events: [
@@ -49,5 +49,3 @@ $.extend(tabsInputBinding, {
     });
   }
 });
-
-// Shiny.inputBindings.register(tabsInputBinding, "dull.tabsInput");

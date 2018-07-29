@@ -2,9 +2,9 @@ export let tableInputBinding = new Shiny.InputBinding();
 
 $.extend(tableInputBinding, {
   Selector: {
-    SELF: ".dull-table-thruput"
+    SELF: ".yonder-table[id]"
   },
-  Type: "dull.table.input",
+  Type: "yonder.table",
   Events: [
     { type: "chabudai:select" },
     { type: "chabudai:edited" }
@@ -17,13 +17,11 @@ $.extend(tableInputBinding, {
   }
 });
 
-// Shiny.inputBindings.register(tableInputBinding, "dull.tableInput");
-
 export let tableOutputBinding = new Shiny.OutputBinding();
 
 $.extend(tableOutputBinding, {
   find: function(scope) {
-    return $(scope).find(".dull-table-thruput[id]");
+    return $(scope).find(".yonder-table[id]");
   },
   renderValue: function(el, msg) {
     if (msg.data) {
@@ -31,5 +29,3 @@ $.extend(tableOutputBinding, {
     }
   }
 });
-
-// Shiny.outputBindings.register(tableOutputBinding, "dull.tableOutput");

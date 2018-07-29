@@ -3,7 +3,7 @@
  * https://github.com/Dogfalo/materialize/blob/master/sass/components/_toast.scss
  */
 
-.dull-alert-container {
+.yonder-alert-container {
   display: block;
   position: fixed;
   z-index: 9001;       // ugh, z-index
@@ -26,7 +26,7 @@
   }
 }
 
-.dull-alert {
+.yonder-alert {
   top: 35px;
   width: auto;
   margin-top: 10px;

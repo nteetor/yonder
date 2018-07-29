@@ -1,8 +1,8 @@
 {
-  "name": "dull",
+  "name": "yonder",
   "version": "0.0.5",
-  "description": "Reimagine shiny applications.",
-  "main": "lib/js/dull.min.js",
+  "description": "A reactive framework built on shiny.",
+  "main": "dist/js/yonder.min.js",
   "dependencies": {
     "bootstrap": "^4.1.2",
     "feather-icons": "^4.7.3",
@@ -41,14 +41,14 @@
   "scripts": {
     "test": "echo \"Sorry, nothing here\"",
     "js-lint": "eslint src/js/**/*.js",
-    "js-vend": "cp dist/js/{dull.min.js,dull.min.js.map} ../inst/www/dull/js/",
+    "js-vend": "cp dist/js/{yonder.min.js,yonder.min.js.map} ../inst/www/yonder/js/",
     "js-build": "rollup --config build/rollup.config.js --sourcemap",
     "js": "npm-run-all js-lint js-build js-vend",
     "css-lint": "stylelint --syntax scss src/scss/**/*.scss",
-    "css-compile": "node-sass --quiet --output-style expanded src/scss/dull.scss dist/css/dull.css",
-    "css-prefix": "postcss --config build/postcss.config.js --replace dist/css/dull.css",
-    "css-minify": "cleancss --level 1 --output dist/css/dull.min.css dist/css/dull.css",
-    "css-vend": "cp dist/css/dull.min.css ../inst/www/dull/css/",
+    "css-compile": "node-sass --quiet --output-style expanded src/scss/yonder.scss dist/css/yonder.css",
+    "css-prefix": "postcss --config build/postcss.config.js --replace dist/css/yonder.css",
+    "css-minify": "cleancss --level 1 --output dist/css/yonder.min.css dist/css/yonder.css",
+    "css-vend": "cp dist/css/yonder.min.css ../inst/www/yonder/css/",
     "css": "npm-run-all css-lint css-compile css-prefix css-prefix css-minify css-vend",
     "font-awesome-git-clone": "cd vendors && test -d Font-Awesome || git clone https://github.com/FortAwesome/Font-Awesome.git",
     "font-awesome-git-checkout": "cd vendors/Font-Awesome && git fetch --all && git checkout master && git reset --hard origin/master && git checkout tags/$(git describe --tags --abbrev=0)",
@@ -91,7 +91,7 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/nteetor/dull.git"
+    "url": "https://github.com/nteetor/yonder.git"
   },
   "keywords": [
     "shiny",
@@ -100,7 +100,7 @@
   "author": "Nathan Teetor <nathanteetor@gmail.com>",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/nteetor/dull/issues"
+    "url": "https://github.com/nteetor/yonder/issues"
   },
-  "homepage": "https://github.com/nteetor/dull#readme"
+  "homepage": "https://github.com/nteetor/yonder#readme"
 }
