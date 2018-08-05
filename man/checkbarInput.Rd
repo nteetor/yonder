@@ -31,6 +31,7 @@ checkbox inputs are singletons, thus the checkbar input is more akin to
 shiny's checkbox group input.
 }
 \examples{
+
 if (interactive()) {
   shinyApp(
     ui = container(
@@ -89,7 +90,8 @@ if (interactive()) {
               "Radio 3"
             ),
             selected = "Radio 1"
-          )
+          ) \%>\%
+            background("blue")
         ),
         column(
           verbatimTextOutput("value")

@@ -5,7 +5,7 @@
 #' checkbox inputs are singletons, thus the checkbar input is more akin to
 #' shiny's checkbox group input.
 #'
-#'@param id A character string specifying the id of the check- or radiobar
+#' @param id A character string specifying the id of the check- or radiobar
 #'   input.
 #'
 #' @param choices A character vector or flat list of character strings
@@ -22,6 +22,7 @@
 #' @family inputs
 #' @export
 #' @examples
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
@@ -80,7 +81,8 @@
 #'               "Radio 3"
 #'             ),
 #'             selected = "Radio 1"
-#'           )
+#'           ) %>%
+#'             background("blue")
 #'         ),
 #'         column(
 #'           verbatimTextOutput("value")
