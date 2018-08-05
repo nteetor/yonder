@@ -268,6 +268,8 @@ background <- function(.tag, color) {
     base <- "alert"
   } else if (tagHasClass(.tag, "badge")) {
     base <- "badge"
+  } else if (tagHasClass(.tag, "yonder-radiobar|yonder-checkbar")) {
+    base <- "btn"
   } else if (tagHasClass(.tag, "btn")) {
     base <- "btn"
   } else if (tagHasClass(.tag, "list-group-item")) {
