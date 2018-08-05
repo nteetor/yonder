@@ -121,3 +121,13 @@ $list-group-active-border-color:  $list-group-active-bg;
 @import '../../../node_modules/bootstrap/scss/carousel';
 @import '../../../node_modules/bootstrap/scss/utilities';
 @import '../../../node_modules/bootstrap/scss/print';
+
+// border and bg-transparent combo styling
+@each $color, $value in $theme-colors {
+  .border-#{$color}.bg-transparent {
+    &:hover {
+      color: color-yiq($value) !important;
+      background-color: $value !important;
+    }
+  }
+}
