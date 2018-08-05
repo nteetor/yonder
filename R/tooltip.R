@@ -1,8 +1,7 @@
 #' Tooltips
 #'
-#' Both functions are a means of adding help text to HTML components. Tooltips
-#' appear on hover. To add tooltips to text first wrap the text in a `span()` tag
-#' element.
+#' Add a tooltip to a tag element. Tooltips may be placed above, below, left, or right of
+#' an element.
 #'
 #' @param .tag A tag element.
 #'
@@ -20,6 +19,19 @@
 #'   span("Yll") %>%
 #'     tooltip("An island of south of the Commonwealth")
 #' )
+#'
+#' if (interactive()) {
+#'   shinyApp(
+#'     ui = container(
+#'       checkboxInput("add", "Add more") %>%
+#'         display("inline-block") %>%
+#'         tooltip("How to know")
+#'     ),
+#'     server = function(input, output) {
+#'
+#'     }
+#'   )
+#' }
 #'
 tooltip <- function(.tag, text, placement = "top") {
   if (!is_tag(.tag)) {
