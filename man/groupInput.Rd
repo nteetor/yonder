@@ -17,7 +17,7 @@ input group, defaults to \code{NULL}.}
 group, defaults to \code{NULL}.}
 
 \item{left, right}{A character vector specifying static addons or
-\code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdownInput]{dropdownInput()}} elements specifying dynamic addons.
+\code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons.
 Addon's affect the reactive value of the group input, see the Details
 section below for more information.}
 
@@ -173,9 +173,9 @@ if (interactive()) {
 Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkbarInput}},
   \code{\link{checkboxInput}}, \code{\link{dateInput}},
-  \code{\link{dropdownInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{listGroupThruput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}, \code{\link{textInput}}
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{listGroupThruput}}, \code{\link{radioInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
+  \code{\link{textInput}}
 }
 \concept{inputs}

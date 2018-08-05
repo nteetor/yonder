@@ -1,21 +1,18 @@
-#' Dropdown input
+#' Dropdown menus
 #'
-#' Dropdown inputs, or dropdown menus, a similar to form inputs. The dropdown
-#' input has no value per say, but acts as an intelligent container for button
-#' and form inputs.
-#'
-#' @param id A character string specifying the id of the dropdown input.
+#' Dropdown menus are a container for buttons, text, and form inputs. See
+#' argument `...` for details on composing dropdown menus.
 #'
 #' @param label A character string specifying the label of the dropdown's
 #'   button.
 #'
 #' @param ... Character strings or vectors, header tag elements, button inputs,
 #'   or form inputs specifying the elements of the dropdown. These elements may
-#'   be grouped into lists, in which case menu dividers are placed before,
-#'   after, or between the lists of elements. `h6()` is the recommended heading
-#'   level for menu headers. Character vectors are converted into paragraphs of
-#'   text. To format menu text use `p()` and any utility functions instead.
-#'   Named arguments are passed HTML attributes to the parent element.
+#'   be grouped into lists to create a menu with sections. `h6()` is the
+#'   recommended heading level for menu headers. Character vectors are converted
+#'   into paragraphs of text. To format menu text use `p()` and utility
+#'   functions.  Named arguments are passed HTML attributes to the parent
+#'   element.
 #'
 #' @param direction One of `"up"`, `"right"`, `"down"`, or `"left"` specifying
 #'   the direction in which the menu opens, defaults to `"down"`.
@@ -25,31 +22,38 @@
 #'   modification which properly spaces the dropdown toggle icon and aligns the
 #'   dropdown menu to the toggle icon.
 #'
-#' @family inputs
 #' @export
 #' @examples
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(
 #'       row(
 #'         column(
-#'           dropdownInput(
-#'             id = NULL,
+#'           dropdown(
 #'             label = "Dropdown",
 #'             split = TRUE,
 #'             formInput(
-#'               id = NULL,
-#'               submit = NULL,
-#'               textInput(
-#'                 id = "email",
-#'                 placeholder = "email@example.com"
+#'               id = "login",
+#'               formGroup(
+#'                 label = "Email address",
+#'                 textInput(
+#'                   id = "email",
+#'                   placeholder = "email@example.com"
+#'                 )
 #'               ),
-#'               textInput(
-#'                 id = "password",
-#'                 placeholder = "Password"
+#'               formGroup(
+#'                 label = "Password",
+#'                 passwordInput(
+#'                   id = "password",
+#'                   placeholder = "*****"
+#'                 )
+#'               ),
+#'               submit = submitInput(
+#'                 label = "Sign in"
 #'               )
 #'             ) %>%
-#'               padding(3),
+#'               padding(3, 4, 3, 4),
 #'             list(
 #'               buttonInput(
 #'                 id = "signup",
@@ -80,10 +84,10 @@
 #'   )
 #' }
 #'
-dropdownInput <- function(id, label, ..., direction = "down", split = FALSE) {
+dropdown <- function(label, ..., direction = "down") {
   if (!re(direction, "up|right|down|left", len0 = FALSE)) {
     stop(
-      "invalid `dropdownInput` arguments, `direction` must be one of ",
+      "invalid `dropdown` arguments, `direction` must be one of ",
       '"up", "right", "down", or "left"',
       call. = FALSE
     )
@@ -95,17 +99,9 @@ dropdownInput <- function(id, label, ..., direction = "down", split = FALSE) {
 
   tags$div(
     class = collate(
-      "yonder-dropdown",
-      "btn-group",
+      "dropdown",
       paste0("drop", direction)
     ),
-    id = id,
-    if (split) {
-      tags$button(
-        class = "btn btn-grey",
-        label
-      )
-    },
     tags$button(
       class = collate(
         "btn",
@@ -163,7 +159,7 @@ dropdownItem <- function(base) {
   if (tagIs(base, "a") || tagIs(base, "button")) {
     cregex <- paste(.colors, collapse = "|")
 
-    base <- tagDropClass(base, paste0("btn(-", cregex, ")?"))
+    base <- tagDropClass(base, paste0("btn(-(", cregex, "))?"))
     base <- tagAddClass(base, "dropdown-item")
 
     return(base)

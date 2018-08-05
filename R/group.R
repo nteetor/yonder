@@ -17,7 +17,7 @@
 #'   group, defaults to `NULL`.
 #'
 #' @param left,right A character vector specifying static addons or
-#'   [buttonInput()] or [dropdownInput()] elements specifying dynamic addons.
+#'   [buttonInput()] or [dropdown()] elements specifying dynamic addons.
 #'   Addon's affect the reactive value of the group input, see the Details
 #'   section below for more information.
 #'
@@ -143,7 +143,7 @@
 #'               id = "right",
 #'               label = "Search"
 #'             ) %>%
-#'               background("white") %>%
+#'               background("transparent") %>%
 #'               border("blue")
 #'           )
 #'         ),
@@ -167,7 +167,7 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
   if (!is.null(left) && !isValidAddon(left)) {
     stop(
       "invalid `groupInput` argument, `left` must be a character string, ",
-      "buttonInput(), or dropdownInput()",
+      "buttonInput(), or dropdown()",
       call. = FALSE
     )
   }
@@ -175,7 +175,7 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
   if (!is.null(right) && !isValidAddon(right)) {
     stop(
       "invalid `groupInput` argument, `right` must be a character string, ",
-      "buttonInput(), or dropdownInput()",
+      "buttonInput(), or dropdown()",
       call. = FALSE
     )
   }
@@ -194,7 +194,7 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
         class = "input-group-prepend",
         if (is.character(left)) {
           lapply(left, tags$span, class = "input-group-text")
-        } else if (tagHasClass(left, "yonder-dropdown")) {
+        } else if (tagHasClass(left, "dropdown")) {
           left$children
         } else {
           # list of buttons
@@ -213,7 +213,7 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
         class = "input-group-append",
         if (is.character(right)) {
           lapply(right, tags$span, class = "input-group-text")
-        } else if (tagHasClass(right, "yonder-dropdown")) {
+        } else if (tagHasClass(right, "dropdown")) {
           right$children
         } else {
           # list of buttons
@@ -232,5 +232,5 @@ isValidAddon <- function(tag) {
 
   is.character(tag) ||
    tagIs(tag, "button") ||
-   tagHasClass(tag, "yonder-dropdown")
+   tagHasClass(tag, "dropdown")
 }

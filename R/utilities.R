@@ -25,7 +25,7 @@ colorUtility <- function(tag, base, color) {
     return(tag)
   }
 
-  if (tagHasClass(tag, "yonder-dropdown")) {
+  if (tagHasClass(tag, "dropdown")) {
     tag$children[[1]] <- colorUtility(
       tag$children[[1]],
       base = base,

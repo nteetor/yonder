@@ -7,7 +7,6 @@ import { buttonInputBinding } from "./input-binding-button.js";
 import { checkbarInputBinding } from "./input-binding-checkbar.js";
 import { checkboxInputBinding } from "./input-binding-checkbox.js";
 import { dateInputBinding } from "./input-binding-date.js";
-import { dropdownInputBinding } from "./input-binding-dropdown.js";
 import { fileInputBinding } from "./input-binding-file.js";
 import { formInputBinding } from "./input-binding-form.js";
 import { groupInputBinding } from "./input-binding-group-input.js";
@@ -36,7 +35,6 @@ const inputBindings = {
   "yonder.checkbarInput": checkbarInputBinding,
   "yonder.checkboxInput": checkboxInputBinding,
   "yonder.dateInput": dateInputBinding,
-  "yonder.dropdownInput": dropdownInputBinding,
   "yonder.fileInput": fileInputBinding,
   "yonder.formInput": formInputBinding,
   "yonder.groupInput": groupInputBinding,
