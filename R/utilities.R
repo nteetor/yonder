@@ -522,7 +522,7 @@ shadow <- function(.tag, size = "regular") {
 float <- function(.tag, side) {
   side <- ensureBreakpoints(side, c("left", "right"))
 
-  classes <- createResponsiveClasses(side)
+  classes <- createResponsiveClasses(side, "float")
 
   tagAddClass(.tag, classes)
 }
