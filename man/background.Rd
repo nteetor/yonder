@@ -62,7 +62,7 @@ if (interactive()) {
       lapply(
         colors,
         background,
-        tag = div() \%>\%
+        .tag = div() \%>\%
           padding(5) \%>\%
           margin(2)
       )

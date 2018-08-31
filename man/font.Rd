@@ -73,7 +73,7 @@ if (interactive()) {
       lapply(
         head(colors, -1),
         font,
-        tag = div("Pellentesque tristique imperdiet tortor.") \%>\%
+        .tag = div("Pellentesque tristique imperdiet tortor.") \%>\%
           padding(5)
       ),
       div("Pellentesque tristique imperdiet tortor.") \%>\%

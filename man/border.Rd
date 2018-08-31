@@ -43,7 +43,6 @@ The following border colors are available,
 h1("") \%>\%
   border("grey")
 
-
 div("Vivamus id enim.") \%>\%
   border("orange")
 
@@ -59,7 +58,7 @@ if (interactive()) {
       lapply(
         colors,
         border,
-        tag = div() \%>\%
+        .tag = div() \%>\%
           padding(5) \%>\%
           margin(2)
       )

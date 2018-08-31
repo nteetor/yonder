@@ -149,7 +149,7 @@ if (interactive()) {
               id = "right",
               label = "Search"
             ) \%>\%
-              background("white") \%>\%
+              background("transparent") \%>\%
               border("blue")
           )
         ),

@@ -110,7 +110,7 @@ colorUtility <- function(tag, base, color) {
 #'       lapply(
 #'         head(colors, -1),
 #'         font,
-#'         tag = div("Pellentesque tristique imperdiet tortor.") %>%
+#'         .tag = div("Pellentesque tristique imperdiet tortor.") %>%
 #'           padding(5)
 #'       ),
 #'       div("Pellentesque tristique imperdiet tortor.") %>%
@@ -240,7 +240,7 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, align = NULL) {
 #'       lapply(
 #'         colors,
 #'         background,
-#'         tag = div() %>%
+#'         .tag = div() %>%
 #'           padding(5) %>%
 #'           margin(2)
 #'       )
@@ -320,7 +320,6 @@ background <- function(.tag, color) {
 #' h1("") %>%
 #'   border("grey")
 #'
-#'
 #' div("Vivamus id enim.") %>%
 #'   border("orange")
 #'
@@ -336,7 +335,7 @@ background <- function(.tag, color) {
 #'       lapply(
 #'         colors,
 #'         border,
-#'         tag = div() %>%
+#'         .tag = div() %>%
 #'           padding(5) %>%
 #'           margin(2)
 #'       )
@@ -867,6 +866,7 @@ height <- function(.tag, percentage = NULL, max = NULL) {
 #'   the tag's content, defaults to `"y"`, in which case horizontal scroll is
 #'   applied.
 #'
+#' @export
 #' @examples
 #'
 #' div(

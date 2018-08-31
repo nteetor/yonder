@@ -84,7 +84,7 @@
 #'   )
 #' }
 #'
-dropdown <- function(label, ..., direction = "down") {
+dropdown <- function(label, ..., direction = "down", split = FALSE) {
   if (!re(direction, "up|right|down|left", len0 = FALSE)) {
     stop(
       "invalid `dropdown` arguments, `direction` must be one of ",
@@ -96,6 +96,7 @@ dropdown <- function(label, ..., direction = "down") {
   args <- dots_list(...)
   items <- elements(args)
   attrs <- attribs(args)
+  split <- as.logical(split)
 
   tags$div(
     class = collate(

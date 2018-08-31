@@ -4,7 +4,7 @@
 \alias{dropdown}
 \title{Dropdown menus}
 \usage{
-dropdown(label, ..., direction = "down")
+dropdown(label, ..., direction = "down", split = FALSE)
 }
 \arguments{
 \item{label}{A character string specifying the label of the dropdown's
