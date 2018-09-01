@@ -30,6 +30,7 @@
 #' page.
 #'
 #' @family inputs
+#' @export
 #' @examples
 #'
 #' if (interactive()) {
