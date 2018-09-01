@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+  <head>
+
+    {% include header.html %}
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row h-100">
+
+        {% include sidebar.html %}
+
+        <div class="page-body col-8 pt-4">
+          <h1>{{ page.roxygen.title }}</h1>
+          <p class="lead">
+            {{ page.roxygen.description | markdownify }}
+          </p>
+
+          <h2 id="params">Arguments</h2>
+          {% if page.roxygen.parameters %}
+          <dl class="row">
+            {% for param in page.roxygen.parameters %}
+            <dt id="params-{{ param.name }}" class="col-sm-3">{{ param.name }}</dt>
+            <dd class="col-sm-9">{{ param.description | markdownify }}</dd>
+            {% endfor %}
+          </dl>
+          {% else %}
+          <p>None</p>
+          {% endif %}
+
+          {% for section in page.roxygen.sections %}
+          <h2 id="{{ section.title | slugify }}">{{ section.title | markdownify }}</h2>
+          {{ section.body | markdownify }}
+          {% endfor %}
+
+          {% for example in page.roxygen.examples %}
+          <div>
+            <h2 class="d-inline-block">{{ example.title }}</h2>
+            <a class="ml-3" href="#example-{{ example.title | slugify }}" data-toggle="collapse">source</a>
+          </div>
+
+          <div id="example-{{ example.title | slugify }}" class="collapse">{% highlight r %}{{ example.source }}{% endhighlight %}</div>
+
+          {{ example.output }}
+          {% endfor %}
+
+        </div>
+
+        {% include navbar.html %}
+
+      </div>
+    </div>
+  </body>
+</html>

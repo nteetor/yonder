@@ -1,0 +1,28 @@
+# Welcome to Jekyll!
+
+# Site variables -------
+title: A Reactive Web Framework Built on Shiny
+email: nathanteetor@gmail.com
+description: A new toolset to build shiny applications with Bootstrap 4.
+baseurl: /yonder
+url: https://nteetor.github.io/
+versions: [0.0.5]
+
+# Package variables ----
+package:
+  name: yonder
+  version: 0.0.5
+  url: https://github.com/nteetor/yonder
+
+# Build settings -------
+collections_dir: collections
+markdown: kramdown
+sass:
+  sass_dir: _sass
+  style: compressed
+
+# Excluded files -------
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
