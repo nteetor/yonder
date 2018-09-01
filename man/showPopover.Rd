@@ -70,9 +70,9 @@ Other utilities: \code{\link{affix}},
   \code{\link{flex}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{markInvalid}},
   \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{sendModal}}, \code{\link{shadow}},
-  \code{\link{tooltip}}, \code{\link{updateChoices}},
-  \code{\link{width}}
+  \code{\link{scroll}}, \code{\link{sendModal}},
+  \code{\link{shadow}}, \code{\link{tooltip}},
+  \code{\link{updateChoices}}, \code{\link{width}}
 
 Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
@@ -80,8 +80,8 @@ Other utilities: \code{\link{affix}},
   \code{\link{flex}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{markInvalid}},
   \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{sendModal}}, \code{\link{shadow}},
-  \code{\link{tooltip}}, \code{\link{updateChoices}},
-  \code{\link{width}}
+  \code{\link{scroll}}, \code{\link{sendModal}},
+  \code{\link{shadow}}, \code{\link{tooltip}},
+  \code{\link{updateChoices}}, \code{\link{width}}
 }
 \concept{utilities}

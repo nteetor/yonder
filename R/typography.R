@@ -77,7 +77,7 @@ d <- function(level, ...) {
 #'   width of its parent container, defaults to `TRUE`, in which case the
 #'   jumbotron fills the width of its parent container.
 #'
-#' @family contentut
+#' @family content
 #' @export
 #' @examples
 #' if (interactive()) {

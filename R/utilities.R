@@ -867,6 +867,7 @@ height <- function(.tag, percentage = NULL, max = NULL) {
 #'   the tag's content, defaults to `"y"`, in which case vertical scroll is
 #'   applied.
 #'
+#' @family utilities
 #' @export
 #' @examples
 #'
