@@ -123,3 +123,10 @@ deck(
 )
 
 }
+\seealso{
+Other content: \code{\link{blockquote}},
+  \code{\link{dropdown}}, \code{\link{icon}},
+  \code{\link{img}}, \code{\link{jumbotron}},
+  \code{\link{pre}}, \code{\link{typography}}
+}
+\concept{content}

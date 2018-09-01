@@ -8,7 +8,6 @@
 \alias{telephoneInput}
 \alias{passwordInput}
 \alias{numberInput}
-\alias{colorInput}
 \title{Textual inputs}
 \usage{
 textInput(id, value = NULL, placeholder = NULL, size = NULL,
@@ -30,9 +29,6 @@ passwordInput(id, value = NULL, placeholder = NULL, size = NULL,
   readonly = FALSE, help = NULL, ...)
 
 numberInput(id, value = NULL, placeholder = NULL, size = NULL,
-  readonly = FALSE, help = NULL, ...)
-
-colorInput(id, value = NULL, placeholder = NULL, size = NULL,
   readonly = FALSE, help = NULL, ...)
 }
 \arguments{
@@ -109,12 +105,13 @@ if (interactive()) {
 
 }
 \seealso{
-Other inputs: \code{\link{buttonGroupInput}},
+Other inputs: \code{\link{addressInput}},
+  \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkbarInput}},
   \code{\link{checkboxInput}}, \code{\link{dateInput}},
   \code{\link{fileInput}}, \code{\link{formInput}},
   \code{\link{groupInput}}, \code{\link{listGroupThruput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}
+  \code{\link{loginInput}}, \code{\link{radioInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}}
 }
 \concept{inputs}

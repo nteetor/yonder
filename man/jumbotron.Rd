@@ -41,3 +41,10 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other content: \code{\link{blockquote}},
+  \code{\link{card}}, \code{\link{dropdown}},
+  \code{\link{icon}}, \code{\link{img}}, \code{\link{pre}},
+  \code{\link{typography}}
+}
+\concept{content}

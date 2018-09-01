@@ -58,10 +58,12 @@ if (interactive()) {
 
 }
 \seealso{
-Other outputs: \code{\link{progressOutput}},
+Other outputs: \code{\link{badgeOutput}},
+  \code{\link{progressOutput}},
   \code{\link{sparklineOutput}}
 
-Other outputs: \code{\link{progressOutput}},
+Other outputs: \code{\link{badgeOutput}},
+  \code{\link{progressOutput}},
   \code{\link{sparklineOutput}}
 }
 \concept{outputs}

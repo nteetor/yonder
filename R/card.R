@@ -26,6 +26,7 @@
 #' @param footer A character string or tag element specifying the footer of the
 #'   card, defaults to `NULL`, in which case a footer is not added.
 #'
+#' @family content
 #' @export
 #' @examples
 #'

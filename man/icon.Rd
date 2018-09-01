@@ -75,4 +75,10 @@ if (interactive()) {
 }
 \seealso{
 For more on Font Awesome check out \url{https://fontawesome.com}.
+
+Other content: \code{\link{blockquote}},
+  \code{\link{card}}, \code{\link{dropdown}},
+  \code{\link{img}}, \code{\link{jumbotron}},
+  \code{\link{pre}}, \code{\link{typography}}
 }
+\concept{content}

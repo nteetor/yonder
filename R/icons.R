@@ -17,6 +17,7 @@ globalVariables("icons")
 #'
 #' For more on Font Awesome check out \url{https://fontawesome.com}.
 #'
+#' @family content
 #' @export
 #' @examples
 #'

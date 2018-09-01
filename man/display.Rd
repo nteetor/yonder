@@ -33,10 +33,11 @@ display(div(), print = "none")
 \seealso{
 Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
-  \code{\link{flex}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{markInvalid}},
-  \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{sendModal}}, \code{\link{showPopover}},
+  \code{\link{collapse}}, \code{\link{flex}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{markInvalid}}, \code{\link{padding}},
+  \code{\link{rounded}}, \code{\link{sendModal}},
+  \code{\link{shadow}}, \code{\link{showPopover}},
   \code{\link{tooltip}}, \code{\link{updateChoices}},
   \code{\link{width}}
 }

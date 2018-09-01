@@ -10,7 +10,7 @@ scroll(.tag, direction = "y")
 \item{.tag}{A tag element.}
 
 \item{direction}{One of \code{"x"} or \code{"y"} specifying which direction to scroll
-the tag's content, defaults to \code{"y"}, in which case horizontal scroll is
+the tag's content, defaults to \code{"y"}, in which case vertical scroll is
 applied.}
 }
 \description{

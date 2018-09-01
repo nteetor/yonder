@@ -15,6 +15,7 @@
 #' @param ... Child elements or named arguments passed as HTML attributes
 #'   to the parent element.
 #'
+#' @family content
 #' @name typography
 #' @export
 #' @examples
@@ -23,7 +24,7 @@
 #'     ui = container(
 #'       d1("Eye-catching!"),
 #'       d3("Wowza."),
-#'       d5("You'll never guess what happens next."),
+#'       d4("You'll never guess what happens next."),
 #'       h1("This is an <h1> heading for comparision")
 #'     ),
 #'     server = function(input, output) {
@@ -76,6 +77,7 @@ d <- function(level, ...) {
 #'   width of its parent container, defaults to `TRUE`, in which case the
 #'   jumbotron fills the width of its parent container.
 #'
+#' @family contentut
 #' @export
 #' @examples
 #' if (interactive()) {

@@ -4,14 +4,17 @@
 \alias{addressInput}
 \title{Address input}
 \usage{
-addressInput(id)
+addressInput(id, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the address input.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the
+top-level element.}
 }
 \description{
-An address input which includes a street field, apartment or unit field, city
-field, state field, and a zip code field.
+A composite input which includes a street field, apartment or unit field,
+city field, state field, and a zip code field.
 }
 \examples{
 if (interactive()) {
@@ -37,3 +40,14 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{dateInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{groupInput}}, \code{\link{listGroupThruput}},
+  \code{\link{loginInput}}, \code{\link{radioInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
+  \code{\link{textInput}}
+}
+\concept{inputs}

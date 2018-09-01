@@ -434,6 +434,7 @@ rounded <- function(.tag, sides = "all") {
 #' @param size One of `"none"`, `"small"`, `"regular"`, or `"large"` specifying
 #'   the amount of shadow added, defaults to `"regular"`.
 #'
+#' @family utilities
 #' @export
 #' @examples
 #'
@@ -863,7 +864,7 @@ height <- function(.tag, percentage = NULL, max = NULL) {
 #' @param .tag A tag element.
 #'
 #' @param direction One of `"x"` or `"y"` specifying which direction to scroll
-#'   the tag's content, defaults to `"y"`, in which case horizontal scroll is
+#'   the tag's content, defaults to `"y"`, in which case vertical scroll is
 #'   applied.
 #'
 #' @export

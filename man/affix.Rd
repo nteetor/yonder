@@ -26,11 +26,12 @@ tags$div("A simple banner") \%>\%
 }
 \seealso{
 Other utilities: \code{\link{background}},
-  \code{\link{border}}, \code{\link{display}},
-  \code{\link{flex}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{markInvalid}},
-  \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{sendModal}}, \code{\link{showPopover}},
+  \code{\link{border}}, \code{\link{collapse}},
+  \code{\link{display}}, \code{\link{flex}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{markInvalid}}, \code{\link{padding}},
+  \code{\link{rounded}}, \code{\link{sendModal}},
+  \code{\link{shadow}}, \code{\link{showPopover}},
   \code{\link{tooltip}}, \code{\link{updateChoices}},
   \code{\link{width}}
 }

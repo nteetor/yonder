@@ -63,8 +63,14 @@ if (interactive()) {
 
 }
 \seealso{
-Other content: \code{\link{blockquote}}, \code{\link{pre}}
+Other content: \code{\link{blockquote}},
+  \code{\link{card}}, \code{\link{dropdown}},
+  \code{\link{icon}}, \code{\link{jumbotron}},
+  \code{\link{pre}}, \code{\link{typography}}
 
-Other content: \code{\link{blockquote}}, \code{\link{pre}}
+Other content: \code{\link{blockquote}},
+  \code{\link{card}}, \code{\link{dropdown}},
+  \code{\link{icon}}, \code{\link{jumbotron}},
+  \code{\link{pre}}, \code{\link{typography}}
 }
 \concept{content}

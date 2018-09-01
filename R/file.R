@@ -55,7 +55,7 @@
 #'         id = "upload",
 #'         left = buttonInput(NULL, "Upload") %>%
 #'           background("white") %>%
-#'           border("green", -1)
+#'           border("green")
 #'       ) %>%
 #'         margin("auto", 0, "auto", 0)
 #'     ),

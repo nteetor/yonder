@@ -37,7 +37,7 @@ if (interactive()) {
     ui = container(
       d1("Eye-catching!"),
       d3("Wowza."),
-      d5("You'll never guess what happens next."),
+      d4("You'll never guess what happens next."),
       h1("This is an <h1> heading for comparision")
     ),
     server = function(input, output) {
@@ -47,3 +47,10 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other content: \code{\link{blockquote}},
+  \code{\link{card}}, \code{\link{dropdown}},
+  \code{\link{icon}}, \code{\link{img}},
+  \code{\link{jumbotron}}, \code{\link{pre}}
+}
+\concept{content}

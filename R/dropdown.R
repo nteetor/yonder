@@ -22,6 +22,7 @@
 #'   modification which properly spaces the dropdown toggle icon and aligns the
 #'   dropdown menu to the toggle icon.
 #'
+#' @family content
 #' @export
 #' @examples
 #'

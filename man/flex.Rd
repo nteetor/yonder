@@ -161,10 +161,11 @@ of items within a flex container element.
 \seealso{
 Other utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
-  \code{\link{display}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{markInvalid}},
-  \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{sendModal}}, \code{\link{showPopover}},
+  \code{\link{collapse}}, \code{\link{display}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{markInvalid}}, \code{\link{padding}},
+  \code{\link{rounded}}, \code{\link{sendModal}},
+  \code{\link{shadow}}, \code{\link{showPopover}},
   \code{\link{tooltip}}, \code{\link{updateChoices}},
   \code{\link{width}}
 }

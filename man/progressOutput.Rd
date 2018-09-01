@@ -97,7 +97,7 @@ if (interactive()) {
 
 }
 \seealso{
-Other outputs: \code{\link{sparklineOutput}},
-  \code{\link{streamOutput}}
+Other outputs: \code{\link{badgeOutput}},
+  \code{\link{sparklineOutput}}, \code{\link{streamOutput}}
 }
 \concept{outputs}

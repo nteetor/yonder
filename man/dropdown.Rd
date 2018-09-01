@@ -92,3 +92,10 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other content: \code{\link{blockquote}},
+  \code{\link{card}}, \code{\link{icon}},
+  \code{\link{img}}, \code{\link{jumbotron}},
+  \code{\link{pre}}, \code{\link{typography}}
+}
+\concept{content}

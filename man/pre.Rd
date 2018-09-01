@@ -18,6 +18,9 @@ The \code{pre} function adds a maximum height and scroll bar to the standard
 
 }
 \seealso{
-Other content: \code{\link{blockquote}}, \code{\link{img}}
+Other content: \code{\link{blockquote}},
+  \code{\link{card}}, \code{\link{dropdown}},
+  \code{\link{icon}}, \code{\link{img}},
+  \code{\link{jumbotron}}, \code{\link{typography}}
 }
 \concept{content}

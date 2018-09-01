@@ -12,6 +12,7 @@
 #' @param ... Additional named arguments passed as HTML attributes to the
 #'   collapsible div.
 #'
+#' @family utilities
 #' @export
 #' @examples
 #'

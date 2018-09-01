@@ -149,13 +149,6 @@ numberInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
   textualInput(id, value, placeholder, readonly, help, "number", size = size, ...)
 }
 
-#' @rdname textInput
-#' @export
-colorInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
-                       readonly = FALSE, help = NULL, ...) {
-  textualInput(id, value, placeholder, readonly, help, "color", size = size, ...)
-}
-
 #' Group and label multiple inputs
 #'
 #' Use `fieldset` to associate and label inputs. Good for screen readers and
@@ -199,13 +192,14 @@ fieldset <- function(legend, ...) {
 
 #' Login input
 #'
-#' A complex input which consists of a username field and a password field.
+#' A composite input which consists of a username field and a password field.
 #'
 #' @param id A character string specifying the HTML id of the login input.
 #'
 #' @param ... Additional named arguments passed as HTML attibutes to the login
 #'   input.
 #'
+#' @family inputs
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -273,11 +267,15 @@ loginInput <- function(id, ...) {
 
 #' Address input
 #'
-#' An address input which includes a street field, apartment or unit field, city
-#' field, state field, and a zip code field.
+#' A composite input which includes a street field, apartment or unit field,
+#' city field, state field, and a zip code field.
 #'
 #' @param id A character string specifying the id of the address input.
 #'
+#' @param ... Additional named arguments passed as HTML attributes to the
+#'   top-level element.
+#'
+#' @family inputs
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -302,12 +300,13 @@ loginInput <- function(id, ...) {
 #'   )
 #' }
 #'
-addressInput <- function(id) {
+addressInput <- function(id, ...) {
   ids <- ID(rep.int("address", 5))
 
   tags$div(
     class = "yonder-address",
     id = id,
+    ...,
     tags$div(
       class = "form-group",
       tags$label(
