@@ -15,20 +15,20 @@ roxygen:
     description: A tag element.
   - name: top
     description: |-
-      A [responsive] argument. One of `0:5` or `"auto"`. 0 removes all
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `0:5` or `"auto"`. 0 removes all
         space and 5 adds the most space.
 
         If an **unnamed** value is passed as `top` `margin()` and `padding()` will
         apply the spcified spacing to **all** sides.
   - name: right,bottom,left
     description: |-
-      A [responsive] argument. One of `0:5` or `"auto"`. 0
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `0:5` or `"auto"`. 0
       removes all space and 5 adds the most space.
   sections:
   - title: Centering an element
     body: |-
       In most modern browsers you want to horizontally center a tag element
-      using the [flex] layout. Alternatively, you can horizontally center an element
+      using the [flex](/yonder/0.0.5/flex.html) layout. Alternatively, you can horizontally center an element
       using `margin(<TAG>, right = "auto", left = "auto")`.
 
       ```

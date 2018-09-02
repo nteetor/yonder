@@ -27,7 +27,7 @@ roxygen:
       `NULL`, in which case the font weight is unchanged.
   - name: align
     description: |-
-      A [responsive] argument. One of `"left"`, `"center"`, `"right"`,
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `"left"`, `"center"`, `"right"`,
       or `"justify"`.
   sections: ~
   return: ~

@@ -13,7 +13,7 @@ roxygen:
     description: A tag element.
   - name: side
     description: |-
-      A [responsive] argument. One of `"left"` or `"right"` specifying
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `"left"` or `"right"` specifying
       the side to float the element.
   sections:
   - title: Newspaper layout

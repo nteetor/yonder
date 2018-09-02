@@ -18,7 +18,7 @@ roxygen:
   - name: session
     description: |-
       A `session` object passed to the shiny server function,
-      defaults to [getDefaultReactiveDomain()].
+      defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain().html).
   - name: '...'
     description: |-
       Additional named arguments passed as HTML attributes to the

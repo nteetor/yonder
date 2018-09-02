@@ -7,38 +7,38 @@ roxygen:
   description: |-
     Use `flex()` to control how a flex container tag element places its flex
     items or child tag elements. For more on turning a tag element into a flex
-    container see [display()]. By default tag elements within a flex container
+    container see [display()](/yonder/0.0.5/display().html). By default tag elements within a flex container
     are treated as flex items.
   parameters:
   - name: tag
     description: A tag element.
   - name: direction
     description: |-
-      A [responsive] argument. One of `"row"` or `"column"`
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `"row"` or `"column"`
       specifying the placement of flex items, defaults to `NULL`. If `"row"`
       items are placed vertically, if `"column"` items are placed horizontally.
       Browsers place items vertically by default.
   - name: reverse
     description: |-
-      A [responsive] argument. One of `TRUE` or `FALSE` specifying
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `TRUE` or `FALSE` specifying
       if flex items are placed in reverse order, defaults to `NULL`. If `TRUE`
       items are placed from right to left when `direction` is `"row"` or bottom
       to top when `direction` is `"column"`.
   - name: justify
     description: |-
-      A [responsive] argument. One of `"start"`, `"end"`,
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `"start"`, `"end"`,
       `"center"`, `"between"`, or `"around"` specifying how items are
       horizontally aligned, defaults to `NULL`. See the **justify** section below
       for more on how the different values affect horizontal spacing.
   - name: align
     description: |-
-      A [responsive] argument. One of `"start"`, `"end"`, `"center"`,
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `"start"`, `"end"`, `"center"`,
       `"baseline"`, or `"stretch"` specifying how items are vertically aligned,
       defaults to `NULL`. See the **align** section below for more on how the
       different values affect vertical spacing.
   - name: wrap
     description: |-
-      A [responsive] argument. One of `TRUE` or `FALSE` specifying
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `TRUE` or `FALSE` specifying
       whether to wrap flex items inside the flex containter, `tag`, defaults
       to `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
       not wrap. See the **wrap** section below for more.

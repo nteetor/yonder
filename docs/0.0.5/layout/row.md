@@ -18,7 +18,7 @@ roxygen:
       arguments passed as HTML attributes to the parent element.
   - name: width
     description: |-
-      A [responsive] argument. One of `1:12` or `"auto"`, defaults to
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `1:12` or `"auto"`, defaults to
       `NULL`.
   - name: gutters
     description: |-
@@ -64,7 +64,7 @@ roxygen:
       ```
   - title: Mobile friendly grids
     body: |-
-      Use `column()`s [responsive] `width` argument to make mobile friendly
+      Use `column()`s [responsive](/yonder/0.0.5/responsive.html) `width` argument to make mobile friendly
       applications.
 
       ```

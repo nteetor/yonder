@@ -16,7 +16,7 @@ roxygen:
     description: |-
       A character string or button element placed prepended or
         appended respectively to the file input. For more information refer to
-        [groupInput()].
+        [groupInput()](/yonder/0.0.5/groupInput().html).
 
         Clicking on an element specified by `right` also opens the file input
         dialog.

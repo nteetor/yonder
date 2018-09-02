@@ -31,7 +31,7 @@ roxygen:
       the card, defaults to `NULL`, in which case a subtitle is not added.
   - name: image
     description: |-
-      An [img()] element specifying an image to add to the card,
+      An [img()](/yonder/0.0.5/img().html) element specifying an image to add to the card,
       defaults to `NULL`, in which case an image is not added.
   - name: footer
     description: |-

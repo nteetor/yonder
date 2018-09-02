@@ -24,13 +24,13 @@ roxygen:
   - name: color
     description: |-
       A character string specifying the color of the alert,
-      for possible colors see [background].
+      for possible colors see [background](/yonder/0.0.5/background.html).
   - name: action
     description: |-
       A character string specifying a reactive id. If specified a
       button is added to the alert. If clicked the reactive value
-      `input[[action]]` is set to `TRUE`. When the alert is removed
-      `input[[action]]` is reset to `NULL`.
+      `input[[action](/yonder/0.0.5/[action.html)]` is set to `TRUE`. When the alert is removed
+      `input[[action](/yonder/0.0.5/[action.html)]` is reset to `NULL`.
   sections: ~
   return: ~
   family: ~

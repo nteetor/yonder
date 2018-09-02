@@ -21,7 +21,7 @@ roxygen:
       Additional named argument passed as HTML attributes to the
       parent element.
   - name: session
-    description: A reactive context, defaults to [getDefaultReactiveDomain())].
+    description: A reactive context, defaults to [getDefaultReactiveDomain())](/yonder/0.0.5/getDefaultReactiveDomain()).html).
   sections: ~
   return: ~
   family: ~

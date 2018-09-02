@@ -24,7 +24,7 @@ roxygen:
     description: |-
       A submit button or tags containing a submit button. The submit
       button will trigger the update of input form elements. Defaults to
-      [submitInput()].
+      [submitInput()](/yonder/0.0.5/submitInput().html).
   - name: inline
     description: |-
       One of `TRUE` or `FALSE`, if `TRUE` the form and its child

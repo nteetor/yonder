@@ -3,10 +3,23 @@
   <dl>
     {% assign families = site.pages | where_exp:"item", "item.roxygen" | group_by_exp:"item", "item.roxygen.family" %}
     {% for family in families %}
-    <dt>{{ family.name }}</dt>
-    {% for doc in family.items %}
-    <dd><a href="{{ doc.url | absolute_url }}">{{ doc.this }}</a></dd>
+
+    {% assign index = family.items | where: "layout", "index" | first %}
+
+    <dt>
+      <a class="text-dark" href="{{ index.url | absolute_url }}">{{ family.name }}</a>
+    </dt>
+
+    {% assign docs = family.items | where: "layout", "page" %}
+
+    {% if page.url contains family.name %}
+    {% for doc in docs %}
+    <dd>
+      <a href="{{ doc.url | absolute_url }}">{{ doc.this }}</a>
+    </dd>
     {% endfor %}
+    {% endif %}
+
     {% endfor %}
   </dl>
 </div>

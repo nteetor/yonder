@@ -26,6 +26,10 @@ Suggests:
     rmarkdown
 Collate:
     yonder.R
+    layout.R
+    content.R
+    inputs.R
+    outputs.Rd
     pipe.R
     utils.R
     includes.R

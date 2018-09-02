@@ -19,7 +19,7 @@ roxygen:
       Custom tags to include at the bottom of the modal, defaults to
       `NULL`.
   - name: session
-    description: A reactive context, defaults to [getDefaultReactiveDomain()].
+    description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain().html).
   sections: ~
   return: ~
   family: utilities

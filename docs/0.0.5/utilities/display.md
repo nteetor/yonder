@@ -16,7 +16,7 @@ roxygen:
     description: A tag element.
   - name: render,print
     description: |-
-      A [responsive] argument. One of `"inline"`, `"block"`,
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `"inline"`, `"block"`,
       `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`, defaults to
       `NULL`.
   sections: ~

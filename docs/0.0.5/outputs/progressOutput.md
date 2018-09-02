@@ -29,7 +29,7 @@ roxygen:
       If `TRUE`, the progress bar has a striped gradient, defaults
       to `FALSE`.
   - name: session
-    description: A reactive context, defaults to [getDefaultReactiveDomain()].
+    description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain().html).
   sections: ~
   return: ~
   family: outputs

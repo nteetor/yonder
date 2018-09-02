@@ -1,3 +1,13 @@
+#' Utilities
+#'
+#' Modify tag elements.
+#'
+#' @noRd
+#' @family utilities
+#' @name index
+#' @layout index
+NULL
+
 .colors <- c(
   "red",
   "purple",

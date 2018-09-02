@@ -7,7 +7,7 @@ roxygen:
   description: |-
     Popovers are small windows of content associated with a tag element. Use
     `showPopover()` to add a popover to any tag element with an HTML id. This
-    allows you to add explanations for inputs. Furthermore the [linkInput()]
+    allows you to add explanations for inputs. Furthermore the [linkInput()](/yonder/0.0.5/linkInput().html)
     makes adding popovers to semi-plain text possible. Popovers are hidden with
     `closePopover()`.
   parameters:
