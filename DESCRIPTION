@@ -29,7 +29,7 @@ Collate:
     layout.R
     content.R
     inputs.R
-    outputs.Rd
+    outputs.R
     pipe.R
     utils.R
     includes.R
