@@ -20,7 +20,7 @@ other assitive technologies.
 
 }
 \seealso{
-Other layout: \code{\link{column}},
+Other layout: \code{\link{column}}, \code{\link{flex}},
   \code{\link{formGroup}}, \code{\link{navbar}},
   \code{\link{tabTabs}}
 }

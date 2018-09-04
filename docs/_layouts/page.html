@@ -12,13 +12,12 @@
         {% include sidebar.html %}
 
         <div class="page-body col-8 pt-4">
-          <h1>{{ page.roxygen.title }}</h1>
-          <p class="lead">
-            {{ page.roxygen.description | markdownify }}
-          </p>
+          <h2>{{ page.roxygen.title }}</h2>
+
+          {{ page.roxygen.description | markdownify }}
 
           {% if page.roxygen.parameters.size > 0 %}
-          <h2 id="params">Arguments</h2>
+          <h3 id="params">Arguments</h3>
           <dl class="row">
             {% for param in page.roxygen.parameters %}
             <dt id="params-{{ param.name }}" class="col-sm-3">{{ param.name }}</dt>
@@ -33,14 +32,22 @@
           {% endfor %}
 
           {% for example in page.roxygen.examples %}
-          <div>
-            <h2 class="d-inline-block">{{ example.title }}</h2>
-            <a class="ml-3" href="#example-{{ example.title | slugify }}" data-toggle="collapse">source</a>
+          <div class="mb-4">
+            <h3 class="d-inline-block">{{ example.title }}</h3>
+
+            <div
+              id="{{ example.title | slugify }}"
+              class="mb-4 ml-1 pl-2 border-left border-black"
+              >{% highlight r %}{{ example.source }}{% endhighlight %}
+            </div>
+
+            {% for output in example.output %}
+            <div class="mb-2">
+              {{ output }}
+            </div>
+            {% endfor %}
+
           </div>
-
-          <div id="example-{{ example.title | slugify }}" class="collapse">{% highlight r %}{{ example.source }}{% endhighlight %}</div>
-
-          {{ example.output }}
           {% endfor %}
 
         </div>

@@ -35,7 +35,8 @@ roxygen:
           "Patrick Rothfuss,", tags$cite("The Wise Man's Fear")
         )
       )
-    output: |-
+    output:
+    - |-
       <blockquote class="blockquote">
         Anyone can love a thing because.
         That's as easy as putting a penny in your pocket.

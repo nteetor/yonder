@@ -119,3 +119,7 @@ if (interactive()) {
 }
 
 }
+\seealso{
+Other thruputs: \code{\link{listGroupThruput}}
+}
+\concept{thruputs}

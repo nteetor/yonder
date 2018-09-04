@@ -1,0 +1,427 @@
+<!doctype html>
+<html>
+  <head>
+
+    <meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link rel="stylesheet" href="/yonder/assets/css/bootstrap.min.css">
+<link rel="stylesheet" href="/yonder/assets/css/yonder.min.css">
+<link rel="stylesheet" href="/yonder/assets/css/main.css">
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+
+<script src="/yonder/assets/js/bootstrap.min.js"></script>
+
+  </head>
+  <body>
+    <div class="container-fluid">
+      <div class="row h-100">
+
+        <div class="sidebar col-2 h-100 p-4 bg-grey">
+  <h5 class="pb-3">yonder</h5>
+  <dl>
+    
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href=""></a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/inputs/">inputs</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/design/">design</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/content/">content</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href="">server</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/layout/">layout</a>
+    </dt>
+
+    
+
+    
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/layout/column.html"
+         alt="Grid layout">
+        column
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/layout/container.html"
+         alt="Grid layout">
+        container
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/layout/fieldset.html"
+         alt="Group and label multiple inputs">
+        fieldset
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/layout/flex.html"
+         alt="Flex layout">
+        flex
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/layout/formGroup.html"
+         alt="Add labels, help text, and formatting to inputs">
+        formGroup
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/layout/formRow.html"
+         alt="Add labels, help text, and formatting to inputs">
+        formRow
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/layout/navbar.html"
+         alt="Page and content navigation">
+        navbar
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/layout/row.html"
+         alt="Grid layout">
+        row
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/layout/tabContent.html"
+         alt="Tabbable content">
+        tabContent
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/layout/tabPane.html"
+         alt="Tabbable content">
+        tabPane
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/layout/tabTabs.html"
+         alt="Tabbable content">
+        tabTabs
+      </a>
+    </dd>
+    
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/thruputs/">thruputs</a>
+    </dt>
+
+    
+
+    
+
+    
+  </dl>
+</div>
+
+        <div class="page-body col-8 pt-4">
+          <h2>Flex layout</h2>
+
+          <p>Use <code class="highlighter-rouge">flex()</code> to control how a flex container tag element places its flex
+items or child tag elements. For more on turning a tag element into a flex
+container see <a href="/yonder/0.0.5/display().html">display()</a>. By default tag elements within a flex container
+are treated as flex items.</p>
+
+
+          
+          <h3 id="params">Arguments</h3>
+          <dl class="row">
+            
+            <dt id="params-tag" class="col-sm-3">tag</dt>
+            <dd class="col-sm-9"><p>A tag element.</p>
+</dd>
+            
+            <dt id="params-direction" class="col-sm-3">direction</dt>
+            <dd class="col-sm-9"><p>A <a href="/yonder/0.0.5/responsive.html">responsive</a> argument. One of <code class="highlighter-rouge">"row"</code> or <code class="highlighter-rouge">"column"</code>
+specifying the placement of flex items, defaults to <code class="highlighter-rouge">NULL</code>. If <code class="highlighter-rouge">"row"</code>
+items are placed vertically, if <code class="highlighter-rouge">"column"</code> items are placed horizontally.
+Browsers place items vertically by default.</p>
+</dd>
+            
+            <dt id="params-reverse" class="col-sm-3">reverse</dt>
+            <dd class="col-sm-9"><p>A <a href="/yonder/0.0.5/responsive.html">responsive</a> argument. One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying
+if flex items are placed in reverse order, defaults to <code class="highlighter-rouge">NULL</code>. If <code class="highlighter-rouge">TRUE</code>
+items are placed from right to left when <code class="highlighter-rouge">direction</code> is <code class="highlighter-rouge">"row"</code> or bottom
+to top when <code class="highlighter-rouge">direction</code> is <code class="highlighter-rouge">"column"</code>.</p>
+</dd>
+            
+            <dt id="params-justify" class="col-sm-3">justify</dt>
+            <dd class="col-sm-9"><p>A <a href="/yonder/0.0.5/responsive.html">responsive</a> argument. One of <code class="highlighter-rouge">"start"</code>, <code class="highlighter-rouge">"end"</code>,
+<code class="highlighter-rouge">"center"</code>, <code class="highlighter-rouge">"between"</code>, or <code class="highlighter-rouge">"around"</code> specifying how items are
+horizontally aligned, defaults to <code class="highlighter-rouge">NULL</code>. See the <strong>justify</strong> section below
+for more on how the different values affect horizontal spacing.</p>
+</dd>
+            
+            <dt id="params-align" class="col-sm-3">align</dt>
+            <dd class="col-sm-9"><p>A <a href="/yonder/0.0.5/responsive.html">responsive</a> argument. One of <code class="highlighter-rouge">"start"</code>, <code class="highlighter-rouge">"end"</code>, <code class="highlighter-rouge">"center"</code>,
+<code class="highlighter-rouge">"baseline"</code>, or <code class="highlighter-rouge">"stretch"</code> specifying how items are vertically aligned,
+defaults to <code class="highlighter-rouge">NULL</code>. See the <strong>align</strong> section below for more on how the
+different values affect vertical spacing.</p>
+</dd>
+            
+            <dt id="params-wrap" class="col-sm-3">wrap</dt>
+            <dd class="col-sm-9"><p>A <a href="/yonder/0.0.5/responsive.html">responsive</a> argument. One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying
+whether to wrap flex items inside the flex containter, <code class="highlighter-rouge">tag</code>, defaults
+to <code class="highlighter-rouge">NULL</code>. If <code class="highlighter-rouge">TRUE</code> items wrap inside the container, if <code class="highlighter-rouge">FALSE</code> items will
+not wrap. See the <strong>wrap</strong> section below for more.</p>
+</dd>
+            
+          </dl>
+          
+
+          
+          <h2 id="direction"><p><code class="highlighter-rouge">direction</code></p>
+</h2>
+          <p>Because horizontal placement the browser default you may not often use
+<code class="highlighter-rouge">flex(.., direction = "row")</code>.  The responsive arguments are potentially more
+useful as shown in the following example. On small screens the flex items are
+placed vertically and can occupy the full width of the mobile device. On
+medium or larger screens the items are placed horizontally once again.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>div(
+  div("A flex item") %&gt;%
+    padding(3) %&gt;%
+    border(),
+  div("A flex item") %&gt;%
+    padding(3) %&gt;%
+    border(),
+  div("A flex item") %&gt;%
+    padding(3) %&gt;%
+    border()
+) %&gt;%
+  display("flex") %&gt;%
+  flex(
+    direction = list(xs = "column", md = "row")
+  ) %&gt;%
+  background("grey") %&gt;%
+  border()
+</code></pre></div></div>
+
+<p>Here is a simpler example of a flex container with its children placed into
+columns.</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>div(
+  div("A flex item") %&gt;%
+    padding(3) %&gt;%
+    border(),
+  div("A flex item") %&gt;%
+    padding(3) %&gt;%
+    border(),
+  div("A flex item") %&gt;%
+     padding(3) %&gt;%
+     border()
+) %&gt;%
+  display("flex") %&gt;%
+  flex(direction = "column")
+</code></pre></div></div>
+
+          
+          <h2 id="justify"><p><code class="highlighter-rouge">justify</code></p>
+</h2>
+          <p>Below you can see how the possible <code class="highlighter-rouge">justify</code> values change the horizontal
+spacing of items within a flex container element.</p>
+
+<p><code class="highlighter-rouge">"start"</code></p>
+
+<p><code class="highlighter-rouge">| Item 1 | Item 2 | Item 3 | ================= |</code></p>
+
+<p><code class="highlighter-rouge">"end"</code></p>
+
+<p><code class="highlighter-rouge">| ================= | Item 1 | Item 2 | Item 3 |</code></p>
+
+<p><code class="highlighter-rouge">"center"</code></p>
+
+<p><code class="highlighter-rouge">| ======= | Item 1 | Item 2 | Item 3 | ======= |</code></p>
+
+<p><code class="highlighter-rouge">"between"</code></p>
+
+<p><code class="highlighter-rouge">| Item 1 | ======= | Item 2 | ======= | Item 3 |</code></p>
+
+<p><code class="highlighter-rouge">"around"</code></p>
+
+<p><code class="highlighter-rouge">| == | Item 1 | == | Item 2 | == | Item 3 | == |</code></p>
+
+          
+          <h2 id="align"><p><code class="highlighter-rouge">align</code></p>
+</h2>
+          <p>Below you can see how the possible <code class="highlighter-rouge">align</code> values change the vertial spacing
+of items within a flex container element.</p>
+
+<p><strong><code class="highlighter-rouge">"start"</code></strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| Item 1 | Item 2 | Item 3 | ================== |
+|        |        |        |                    |
+|        |        |        |                    |
+</code></pre></div></div>
+
+<p><strong><code class="highlighter-rouge">"end"</code></strong>,</p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|        |        |        |                    |
+|        |        |        |                    |
+| Item 1 | Item 2 | Item 3 | ================== |
+</code></pre></div></div>
+
+<p><strong><code class="highlighter-rouge">"center"</code></strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>|        |        |        |                    |
+| Item 1 | Item 2 | Item 3 | ================== |
+|        |        |        |                    |
+</code></pre></div></div>
+
+<p><strong><code class="highlighter-rouge">"baseline"</code></strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| Item 1 | Item 2 | Item 3 | ================== |
+|        |        |        |                    |
+|        |        |        |                    |
+</code></pre></div></div>
+
+<p><strong><code class="highlighter-rouge">"stretch"</code></strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| It     | It     | It     | ================== |
+|   em   |   em   |   em   |                    |
+|      1 |      2 |      3 |                    |
+</code></pre></div></div>
+
+          
+          <h2 id="wrap"><p><code class="highlighter-rouge">wrap</code></p>
+</h2>
+          <p><strong><code class="highlighter-rouge">FALSE</code></strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| Item | Item | Item | Item | Item | Item |
+| 1    | 2    | 3    | 4    | 5    | 6    |
+</code></pre></div></div>
+
+<p><strong><code class="highlighter-rouge">TRUE</code></strong></p>
+
+<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>| Item 1 | Item 2 | Item 3 | Item 4 | === |
+| Item 5 | Item 6 | ===================== |
+</code></pre></div></div>
+
+          
+
+          
+
+        </div>
+
+        
+<div class="col-2 h-100 pt-4 d-flex flex-column align-items-end">
+  <a href="/yonder/">Home</a>
+  
+  <div class="dropdown dropleft">
+    <button class="btn btn-link dropdown-toggle pr-0" data-toggle="dropdown">Documentation</button>
+
+    <div class="dropdown-menu">
+      
+      <a href="http://localhost:4000/yonder/0.0.5"
+         class="dropdown-item active"
+         >0.0.5</a>
+      
+    </div>
+  </div>
+  <a href="https://github.com/nteetor/yonder">GitHub</a>
+</div>
+
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,4 +1,4 @@
-<div class="sidebar col-2 h-100 p-4 bg-light shadow-sm">
+<div class="sidebar col-2 h-100 p-4 bg-grey">
   <h5 class="pb-3">{{ site.package.name }}</h5>
   <dl>
     {% assign families = site.pages | where_exp:"item", "item.roxygen" | group_by_exp:"item", "item.roxygen.family" %}
@@ -15,7 +15,10 @@
     {% if page.url contains family.name %}
     {% for doc in docs %}
     <dd>
-      <a href="{{ doc.url | absolute_url }}">{{ doc.this }}</a>
+      <a href="{{ doc.url | absolute_url }}"
+         alt="{{ doc.roxygen.title }}">
+        {{ doc.this }}
+      </a>
     </dd>
     {% endfor %}
     {% endif %}

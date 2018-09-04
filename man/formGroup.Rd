@@ -86,9 +86,11 @@ if (interactive()) {
 }
 \seealso{
 Other layout: \code{\link{column}}, \code{\link{fieldset}},
-  \code{\link{navbar}}, \code{\link{tabTabs}}
+  \code{\link{flex}}, \code{\link{navbar}},
+  \code{\link{tabTabs}}
 
 Other layout: \code{\link{column}}, \code{\link{fieldset}},
-  \code{\link{navbar}}, \code{\link{tabTabs}}
+  \code{\link{flex}}, \code{\link{navbar}},
+  \code{\link{tabTabs}}
 }
 \concept{layout}

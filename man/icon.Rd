@@ -77,8 +77,9 @@ if (interactive()) {
 For more on Font Awesome check out \url{https://fontawesome.com}.
 
 Other content: \code{\link{blockquote}},
-  \code{\link{card}}, \code{\link{dropdown}},
-  \code{\link{img}}, \code{\link{jumbotron}},
-  \code{\link{pre}}, \code{\link{typography}}
+  \code{\link{card}}, \code{\link{d1}},
+  \code{\link{dropdown}}, \code{\link{img}},
+  \code{\link{jumbotron}}, \code{\link{pre}},
+  \code{\link{showPopover}}, \code{\link{tooltip}}
 }
 \concept{content}

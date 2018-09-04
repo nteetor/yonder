@@ -176,13 +176,6 @@ if (interactive()) {
 Boostrap 4 list group documentation:
 \url{https://getbootstrap.com/docs/4.0/components/list-group/}
 
-Other inputs: \code{\link{addressInput}},
-  \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{dateInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{loginInput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}, \code{\link{textInput}}
+Other thruputs: \code{\link{tableThruput}}
 }
-\concept{inputs}
+\concept{thruputs}

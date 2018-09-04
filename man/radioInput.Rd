@@ -79,8 +79,8 @@ Other inputs: \code{\link{addressInput}},
   \code{\link{buttonInput}}, \code{\link{checkbarInput}},
   \code{\link{checkboxInput}}, \code{\link{dateInput}},
   \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{listGroupThruput}},
-  \code{\link{loginInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}, \code{\link{textInput}}
+  \code{\link{groupInput}}, \code{\link{loginInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
+  \code{\link{textInput}}
 }
 \concept{inputs}

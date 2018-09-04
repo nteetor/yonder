@@ -1,6 +1,6 @@
 ---
 this: row
-filename: R/container.R
+filename: R/layout.R
 layout: page
 roxygen:
   title: Grid layout

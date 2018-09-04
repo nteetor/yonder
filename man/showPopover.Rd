@@ -64,24 +64,14 @@ if (interactive()) {
 
 }
 \seealso{
-Other utilities: \code{\link{affix}},
-  \code{\link{background}}, \code{\link{border}},
-  \code{\link{collapse}}, \code{\link{display}},
-  \code{\link{flex}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{markInvalid}},
-  \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{scroll}}, \code{\link{sendModal}},
-  \code{\link{shadow}}, \code{\link{tooltip}},
-  \code{\link{updateChoices}}, \code{\link{width}}
+Other content: \code{\link{blockquote}},
+  \code{\link{card}}, \code{\link{d1}},
+  \code{\link{dropdown}}, \code{\link{icon}},
+  \code{\link{img}}, \code{\link{jumbotron}},
+  \code{\link{pre}}, \code{\link{tooltip}}
 
-Other utilities: \code{\link{affix}},
-  \code{\link{background}}, \code{\link{border}},
-  \code{\link{collapse}}, \code{\link{display}},
-  \code{\link{flex}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{markInvalid}},
-  \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{scroll}}, \code{\link{sendModal}},
-  \code{\link{shadow}}, \code{\link{tooltip}},
-  \code{\link{updateChoices}}, \code{\link{width}}
+Other utilities: \code{\link{collapse}},
+  \code{\link{markInvalid}}, \code{\link{updateChoices}}
 }
+\concept{content}
 \concept{utilities}

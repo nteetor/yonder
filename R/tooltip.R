@@ -1,7 +1,7 @@
 #' Tooltips
 #'
-#' Add a tooltip to a tag element. Tooltips may be placed above, below, left, or right of
-#' an element.
+#' Add a tooltip to a tag element. Tooltips may be placed above, below, left, or
+#' right of an element.
 #'
 #' @param .tag A tag element.
 #'
@@ -10,7 +10,7 @@
 #' @param placement One of `"top"`, `"right"`, `"bottom"`, or `"left"`
 #'   specifying what side of the tag element the tooltip appears on.
 #'
-#' @family utilities
+#' @family content
 #' @export
 #' @examples
 #'

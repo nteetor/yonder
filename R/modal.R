@@ -13,7 +13,7 @@
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
-#' @family utilities
+#' @family server
 #' @export
 #' @examples
 #' if (interactive()) {
@@ -76,7 +76,6 @@ sendModal <- function(title, body, footer = NULL,
   )
 }
 
-#' @family utilities
 #' @rdname sendModal
 #' @export
 closeModal <- function(session = getDefaultReactiveDomain()) {

@@ -38,6 +38,7 @@
 #' @param quoted One of `TRUE` or `FALSE` specifying if `expr` is a quoted
 #'   expression.
 #'
+#' @family thruputs
 #' @export
 #' @examples
 #'

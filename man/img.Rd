@@ -64,13 +64,15 @@ if (interactive()) {
 }
 \seealso{
 Other content: \code{\link{blockquote}},
-  \code{\link{card}}, \code{\link{dropdown}},
-  \code{\link{icon}}, \code{\link{jumbotron}},
-  \code{\link{pre}}, \code{\link{typography}}
+  \code{\link{card}}, \code{\link{d1}},
+  \code{\link{dropdown}}, \code{\link{icon}},
+  \code{\link{jumbotron}}, \code{\link{pre}},
+  \code{\link{showPopover}}, \code{\link{tooltip}}
 
 Other content: \code{\link{blockquote}},
-  \code{\link{card}}, \code{\link{dropdown}},
-  \code{\link{icon}}, \code{\link{jumbotron}},
-  \code{\link{pre}}, \code{\link{typography}}
+  \code{\link{card}}, \code{\link{d1}},
+  \code{\link{dropdown}}, \code{\link{icon}},
+  \code{\link{jumbotron}}, \code{\link{pre}},
+  \code{\link{showPopover}}, \code{\link{tooltip}}
 }
 \concept{content}

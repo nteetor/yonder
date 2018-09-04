@@ -15,8 +15,8 @@ tooltip(.tag, text, placement = "top")
 specifying what side of the tag element the tooltip appears on.}
 }
 \description{
-Add a tooltip to a tag element. Tooltips may be placed above, below, left, or right of
-an element.
+Add a tooltip to a tag element. Tooltips may be placed above, below, left, or
+right of an element.
 }
 \examples{
 
@@ -41,14 +41,10 @@ if (interactive()) {
 
 }
 \seealso{
-Other utilities: \code{\link{affix}},
-  \code{\link{background}}, \code{\link{border}},
-  \code{\link{collapse}}, \code{\link{display}},
-  \code{\link{flex}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{markInvalid}},
-  \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{scroll}}, \code{\link{sendModal}},
-  \code{\link{shadow}}, \code{\link{showPopover}},
-  \code{\link{updateChoices}}, \code{\link{width}}
+Other content: \code{\link{blockquote}},
+  \code{\link{card}}, \code{\link{d1}},
+  \code{\link{dropdown}}, \code{\link{icon}},
+  \code{\link{img}}, \code{\link{jumbotron}},
+  \code{\link{pre}}, \code{\link{showPopover}}
 }
-\concept{utilities}
+\concept{content}

@@ -49,7 +49,7 @@
     "css-prefix": "postcss --config build/postcss.config.js --replace dist/css/yonder.css",
     "css-minify": "cleancss --level 1 --output dist/css/yonder.min.css dist/css/yonder.css",
     "css-vend": "cp dist/css/yonder.min.css ../inst/www/yonder/css/",
-    "css": "npm-run-all css-lint css-compile css-prefix css-prefix css-minify css-vend",
+    "css": "npm-run-all css-lint css-compile css-prefix css-minify css-vend",
     "font-awesome-git-clone": "cd vendors && test -d Font-Awesome || git clone https://github.com/FortAwesome/Font-Awesome.git",
     "font-awesome-git-checkout": "cd vendors/Font-Awesome && git fetch --all && git checkout master && git reset --hard origin/master && git checkout tags/$(git describe --tags --abbrev=0)",
     "font-awesome-git": "npm-run-all font-awesome-git-clone font-awesome-git-checkout",

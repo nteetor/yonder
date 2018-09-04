@@ -189,26 +189,27 @@ roxygen:
         )
       }
     output:
-    - "function (req) \n{\n    if (!identical(req$REQUEST_METHOD, \"GET\")) \n        return(NULL)\n
-      \   if (!isTRUE(grepl(uiPattern, req$PATH_INFO))) \n        return(NULL)\n    textConn
-      <- file(open = \"w+\")\n    on.exit(close(textConn))\n    showcaseMode <- .globals$showcaseDefault\n
-      \   if (.globals$showcaseOverride) {\n        mode <- showcaseModeOfReq(req)\n
-      \       if (!is.null(mode)) \n            showcaseMode <- mode\n    }\n    testMode
-      <- .globals$testMode %OR% FALSE\n    bookmarkStore <- getShinyOption(\"bookmarkStore\",
-      default = \"disable\")\n    if (bookmarkStore == \"disable\") {\n        restoreContext
-      <- RestoreContext$new()\n    }\n    else {\n        restoreContext <- RestoreContext$new(req$QUERY_STRING)\n
-      \   }\n    withRestoreContext(restoreContext, {\n        uiValue <- NULL\n        if
-      (is.function(ui)) {\n            if (length(formals(ui)) > 0) {\n                uiValue
-      <- ..stacktraceon..(ui(req))\n            }\n            else {\n                uiValue
-      <- ..stacktraceon..(ui())\n            }\n        }\n        else {\n            if
-      (getCurrentRestoreContext()$active) {\n                warning(\"Trying to restore
-      saved app state, but UI code must be a function for this to work! See ?enableBookmarking\")\n
-      \           }\n            uiValue <- ui\n        }\n    })\n    if (is.null(uiValue))
-      \n        return(NULL)\n    renderPage(uiValue, textConn, showcaseMode, testMode)\n
-      \   html <- paste(readLines(textConn, encoding = \"UTF-8\"), collapse = \"\\n\")\n
-      \   return(httpResponse(200, content = enc2utf8(html)))\n}"
-    - "function () \n{\n    server\n}"
-    - 'NULL'
-    - list()
-    - list(appDir = "/Users/nteetor/git/zeppelin", bookmarkStore = NULL)
+    - |-
+      <ul class="yonder-tabs nav nav-tabs" role="tablist" id="myTabs">
+        <li class="nav-item">
+          <a class="nav-link active" data-tabs="tab" data-value="home" aria-selected="true">Home</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-tabs="tab" data-value="about" aria-selected="false">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" data-tabs="tab" data-value="blog" aria-selected="false">Posts</a>
+        </li>
+      </ul>
+    - |-
+      <div class="tab-content" data-tabs="myTabs">
+        <div class="tab-pane fade" role="tab-panel">
+          <h1>Pane 1</h1>
+          <p>Lorem Dapibus Malesuada Cras Cursus</p>
+        </div>
+        <div class="tab-pane fade" role="tab-panel">
+          <h1>Pane 2</h1>
+          <p>Magna Aenean Mattis Ultricies Ridiculus</p>
+        </div>
+      </div>
 ---

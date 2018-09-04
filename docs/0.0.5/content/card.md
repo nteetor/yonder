@@ -96,7 +96,63 @@ roxygen:
         "Donec hendrerit tempor tellus.",
         "Cras placerat accumsan nulla."
       )
-    output: |-
+    output:
+    - |-
+      <div class="card">
+        <div class="card-body">
+          <p class="card-text">Praesent fermentum tempor tellus.</p>
+        </div>
+      </div>
+    - |-
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title">Mauris mollis tincidunt felis.</h5>
+          <h6 class="card-subtitle">Phasellus at dui in ligula mollis ultricies.</h6>
+          <p class="card-text">Nullam tempus. Mauris mollis tincidunt felis.</p>
+          <p class="card-text">Nullam libero mauris, consequat quis, varius et, dictum id, arcu.</p>
+        </div>
+      </div>
+    - |-
+      <div class="card">
+        <div class="yonder-list-group list-group list-group-flush" data-multiple="true">
+          <a class="list-group-item">Pellentesque tristique imperdiet tortor.</a>
+          <a class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a>
+          <a class="list-group-item">Phasellus purus.</a>
+        </div>
+      </div>
+    - |-
+      <div class="card">
+        <div class="card-header">Nunc rutrum turpis sed pede.</div>
+        <div class="card-body">
+          <h5 class="card-title">Sed bibendum.</h5>
+          <p class="card-text">Etiam vel neque nec dui dignissim bibendum. Etiam vel neque nec dui dignissim bibendum.</p>
+          <button class="yonder-button btn btn-grey" type="button" role="button">Phasellus purus</button>
+        </div>
+      </div>
+    - |-
+      <div class="card">
+        <div class="card-header">
+          <ul class="yonder-tabs nav nav-tabs card-header-tabs" role="tablist" id="myCardTabs">
+            <li class="nav-item">
+              <a class="nav-link active" data-tabs="tab" data-value="Phasellus" aria-selected="true">Phasellus</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-tabs="tab" data-value="Donec" aria-selected="false">Donec</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" data-tabs="tab" data-value="Fusce" aria-selected="false">Fusce</a>
+            </li>
+          </ul>
+        </div>
+        <div class="card-body">
+          <div class="tab-content" data-tabs="myCardTabs">
+            <div class="tab-pane fade" role="tab-panel">Phasellus purus. Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.</div>
+            <div class="tab-pane fade" role="tab-panel">Donec at pede. Praesent augue.</div>
+            <div class="tab-pane" title="Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio." data-value="Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio."></div>
+          </div>
+        </div>
+      </div>
+    - |-
       <div class="card">
         <div class="bg-teal card-header">Donec pretium posuere tellus.</div>
         <div class="card-body">

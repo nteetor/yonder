@@ -223,7 +223,7 @@ NULL
 #' | Item 5 | Item 6 | ===================== |
 #' ```
 #'
-#' @family utilities
+#' @family layout
 #' @export
 #' @examples
 #'

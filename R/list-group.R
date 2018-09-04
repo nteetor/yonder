@@ -43,7 +43,7 @@
 #' Boostrap 4 list group documentation:
 #' \url{https://getbootstrap.com/docs/4.0/components/list-group/}
 #'
-#' @family inputs
+#' @family thruputs
 #' @export
 #' @examples
 #'

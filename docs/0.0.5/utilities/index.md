@@ -4,7 +4,7 @@ filename: R/utilities.R
 layout: index
 roxygen:
   title: Utilities
-  description: Modify tag elements.
+  description: Server-side functions.
   parameters: []
   sections: ~
   return: ~

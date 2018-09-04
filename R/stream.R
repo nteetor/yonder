@@ -2,9 +2,8 @@
 #'
 #' The stream output is used to send updates to the user during long-running
 #' processes. Unlike conventional reactive outputs, the stream output does not
-#' have a render function instead messages are sent with `sendStreamMessage`.
-#' This allows message to "render" during long-running observers or other
-#' processes.
+#' have a render function instead messages are sent with `sendStream`.  This
+#' allows message to "render" during long-running observers or other processes.
 #'
 #' @param id A character string specifying the id of the stream output.
 #'
@@ -58,7 +57,6 @@ streamOutput <- function(id, ...) {
   )
 }
 
-#' @family outputs
 #' @rdname streamOutput
 #' @export
 sendStream <- function(id, content,

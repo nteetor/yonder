@@ -24,7 +24,7 @@
 #'   removed. When `NULL` is specified the popover can be removed with
 #'   `closePopover()`.
 #'
-#' @family utilities
+#' @family content
 #' @export
 #' @examples
 #'
