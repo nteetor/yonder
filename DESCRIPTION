@@ -34,6 +34,7 @@ Collate:
     includes.R
     tags.R
     update.R
+    utilities.R
     icons.R
     textual.R
     datetime.R
