@@ -4,7 +4,7 @@
 \alias{jumbotron}
 \title{Jumbotron}
 \usage{
-jumbotron(title, subtitle, ..., fluid = TRUE)
+jumbotron(title, subtitle, ..., fluid = FALSE)
 }
 \arguments{
 \item{title}{A character string specifying the jumbotron's title.}
@@ -15,14 +15,14 @@ jumbotron(title, subtitle, ..., fluid = TRUE)
 attributes to the parent element.}
 
 \item{fluid}{One of \code{TRUE} or \code{FALSE} specifying if the jumbotron fills the
-width of its parent container, defaults to \code{TRUE}.}
+width of its parent container, defaults to \code{FALSE}.}
 }
 \description{
 Highlight messages.
 }
 \examples{
 
-## Landing pages
+## Landing page welcome
 
 jumbotron(
   title = "Welcome, welcome!",

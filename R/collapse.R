@@ -16,57 +16,21 @@
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       center = TRUE,
-#'       buttonInput("toggle", "Toggle the card") %>%
-#'         margin(3),
-#'       card(
-#'         "\"The Time Traveller (for so it will be convenient to speak
-#'          of him) was expounding a recondite matter to us. His grey eyes
-#'          shone and twinkled, and his usually pale face was flushed and
-#'          animated. The fire burned brightly, and the soft radiance of
-#'          the incandescent lights in the lilies of silver caught the
-#'          bubbles that flashed and passed in our glasses.\""
-#'       ) %>%
-#'         background("grey") %>%
-#'         collapse("mycollapse")
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$toggle, {
-#'         toggleCollapse("mycollapse")
-#'       })
-#'     }
-#'   )
-#' }
+#' ## Making an element collapsible
 #'
+#' # On the server side you will need to call `hideCollapse` or
+#' # `toggleCollapse`
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       center = TRUE,
-#'       buttonInput(
-#'         id = "toggle",
-#'         label = "Client-side toggle",
-#'         `data-target` = "#mycollapse",
-#'         `data-toggle` = "collapse"
-#'       ) %>%
-#'         margin(3),
-#'       card(
-#'         "If you do not need server-side control with the `*Collapse()`
-#'          functions consider setting up a client-side collapse with
-#'          `data-target` and `data-toggle='collapse'`, see
-#'          https://getbootstrap.com/docs/4.1/components/collapse/
-#'          for more about these attributes"
-#'       ) %>%
-#'         collapse("mycollapse")
-#'     ),
-#'     server = function(input, output) {
-#'
-#'     }
-#'   )
-#' }
+#' card(
+#'   '"The Time Traveller (for so it will be convenient to speak
+#'     of him) was expounding a recondite matter to us. His grey eyes
+#'     shone and twinkled, and his usually pale face was flushed and
+#'     animated. The fire burned brightly, and the soft radiance of
+#'     the incandescent lights in the lilies of silver caught the
+#'     bubbles that flashed and passed in our glasses."'
+#' ) %>%
+#'   background("grey") %>%
+#'   collapse("an-html-id")  # pass this id to the `*Collapse` function
 #'
 collapse <- function(tag, id, ...) {
   args <- list(...)

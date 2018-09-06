@@ -22,12 +22,7 @@
 #'   `input[[action]]` is set to `TRUE`. When the alert is removed
 #'   `input[[action]]` is reset to `NULL`.
 #'
-#'
-#' @seealso
-#'
-#' Boostrap 4 alert documentation:
-#' \url{https://getbootstrap.com/docs/4.0/components/alerts/}
-#'
+#' @family utilities
 #' @export
 #' @examples
 #'
@@ -45,7 +40,6 @@
 #'     }
 #'   )
 #' }
-#'
 #'
 #' if (interactive()) {
 #'   shinyApp(

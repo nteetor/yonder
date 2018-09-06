@@ -7,6 +7,7 @@ roxygen:
   description: |-
     A reactive checkbox input. When a checkbox input is unchecked the reactive
     value is `NULL`. When checked the checkbox input reactive value is `value`.
+    Unlike shiny, yonder's checkbox inputs are a singleton value.
   parameters:
   - name: id
     description: |-
@@ -34,80 +35,19 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
+  - title: Start checked
     source: |-
       checkboxInput(
-        id = "pellentesque",
-        choice = "Cras placerat accumsan nulla"
+        id = NULL,
+        choice = "Suspendisse potenti",
+        checked = TRUE
       )
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                checkboxInput(
-                  id = "checkbox",
-                  choice = "Are you there?",
-                  value = "yes"
-                ),
-                checkboxInput(
-                  id = "hello",
-                  choice = "Hello"
-                )
-              ),
-              column(
-                d4(
-                  textOutput("value")
-                )
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$value <- renderText({
-              input$checkbox
-            })
-          }
-        )
-      }
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            checkboxInput("foo", "Hello, world!", "hello"),
-            textOutput("checkvalue", inline = TRUE),
-            textInput("label", placeholder = "New checkbox text"),
-            textInput("value", placeholder = "New checkbox value"),
-            tags$div(
-              buttonInput("choices", "Update checkbox text"),
-              buttonInput("values", "Update checkbox value")
-            ) %>%
-              display("flex")
-          ),
-          server = function(input, output) {
-            output$checkvalue <- renderPrint({
-              if (is.null(input$foo)) {
-                markInvalid("foo", "Please check")
-              } else {
-                markValid("foo")
-              }
-              input$foo
-            })
-            observeEvent(input$choices, {
-              req(input$label)
-              updateChoices("foo", hello = input$label)
-            })
-            observeEvent(input$values, {
-              req(input$value, input$foo)
-              updateValues("foo", !!(input$foo) := input$value)
-            })
-          }
-        )
-      }
     output:
     - |-
-      <div class="yonder-checkbox" id="pellentesque">
+      <div class="yonder-checkbox">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-621-338" data-value="Cras placerat accumsan nulla"/>
-          <label class="custom-control-label" for="checkbox-621-338">Cras placerat accumsan nulla</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-934-607" data-value="Suspendisse potenti" checked/>
+          <label class="custom-control-label" for="checkbox-934-607">Suspendisse potenti</label>
           <div class="invalid-feedback"></div>
           <div class="valid-feedback"></div>
         </div>

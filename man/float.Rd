@@ -24,7 +24,7 @@ wrapped around a picture.
 div(
   div() \%>\%
     padding(5) \%>\%
-    margin(2) \%>\%
+    margin(right = 2) \%>\%
     background("amber") \%>\%
     float("left"),
   p(

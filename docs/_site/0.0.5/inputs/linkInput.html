@@ -5,14 +5,19 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="/yonder/assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="/yonder/assets/css/yonder.min.css">
+<link rel="stylesheet" href="/yonder/www/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
 <link rel="stylesheet" href="/yonder/assets/css/main.css">
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 
-<script src="/yonder/assets/js/bootstrap.min.js"></script>
+<script src="/yonder/www/bootstrap/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="/yonder/www/ion-rangeslider/css/ion.rangeSlider.css">
+
+<script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
+<link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
   </head>
   <body>
@@ -23,18 +28,6 @@
   <h5 class="pb-3">yonder</h5>
   <dl>
     
-    
-
-    
-
-    <dt>
-      <a class="text-dark" href=""></a>
-    </dt>
-
-    
-
-    
-
     
 
     
@@ -70,7 +63,7 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/checkbarInput.html"
-         alt="Check- and radiobar inputs">
+         alt="Checkbar and radiobar inputs">
         checkbarInput
       </a>
     </dd>
@@ -84,14 +77,14 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/dateInput.html"
-         alt="Date time input">
+         alt="Date and time inputs">
         dateInput
       </a>
     </dd>
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/dateRangeInput.html"
-         alt="Date time input">
+         alt="Date and time inputs">
         dateRangeInput
       </a>
     </dd>
@@ -168,7 +161,7 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/radiobarInput.html"
-         alt="Check- and radiobar inputs">
+         alt="Checkbar and radiobar inputs">
         radiobarInput
       </a>
     </dd>
@@ -272,18 +265,6 @@
     
 
     <dt>
-      <a class="text-dark" href="">server</a>
-    </dt>
-
-    
-
-    
-
-    
-
-    
-
-    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
     </dt>
 
@@ -296,7 +277,31 @@
     
 
     <dt>
+      <a class="text-dark" href="">server</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/layout/">layout</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href=""></a>
     </dt>
 
     
@@ -327,8 +332,8 @@ The reactive value of a button input is the number of times it has been
 clicked.</p>
 
 <p>A submit input is a special type of button used to control HTML form
-submission. Unlike shiny’s <code class="highlighter-rouge">submitButton</code>, <code class="highlighter-rouge">submitInput</code> will not freeze all
-reactive inputs on the page.</p>
+submission. Unlike shiny’s <code class="highlighter-rouge">submitButton</code>, yonder’s submit inputs will not
+freeze all reactive inputs on the page.</p>
 
 
           
@@ -366,67 +371,113 @@ element.</p>
           
 
           
+          
           <div class="mb-4">
-            <h3 class="d-inline-block"></h3>
+            <h3 class="d-inline-block">Simple vs block button</h3>
 
             <div
-              id=""
+              id="simple-vs-block-button"
               class="mb-4 ml-1 pl-2 border-left border-black"
               >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">row</span><span class="p">(</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">buttonInput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"button"</span><span class="p">,</span><span class="w">
-            </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Click me!"</span><span class="w">
-          </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-            </span><span class="n">background</span><span class="p">(</span><span class="s2">"green"</span><span class="p">)</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">d</span><span class="m">4</span><span class="p">(</span><span class="w">
-            </span><span class="n">textOutput</span><span class="p">(</span><span class="s2">"clicks"</span><span class="p">)</span><span class="w">
-          </span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">clicks</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderText</span><span class="p">({</span><span class="w">
-        </span><span class="n">input</span><span class="o">$</span><span class="n">button</span><span class="w">
-      </span><span class="p">})</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">center</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
-      </span><span class="n">buttonInput</span><span class="p">(</span><span class="w">
-        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"button"</span><span class="p">,</span><span class="w">
-        </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">
-          </span><span class="s2">"Increment badge"</span><span class="p">,</span><span class="w">
-          </span><span class="n">badgeOutput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"badge"</span><span class="w">
-          </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-            </span><span class="n">background</span><span class="p">(</span><span class="s2">"green"</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-        </span><span class="n">background</span><span class="p">(</span><span class="s2">"amber"</span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">badge</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderBadge</span><span class="p">({</span><span class="w">
-        </span><span class="n">input</span><span class="o">$</span><span class="n">button</span><span class="w">
-      </span><span class="p">})</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">buttonInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Simple"</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">background</span><span class="p">(</span><span class="s2">"green"</span><span class="p">)</span><span class="w">
+</span><span class="c1"># Block buttons will fill the width of their parent element</span><span class="w">
+</span><span class="n">buttonInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Block"</span><span class="p">,</span><span class="w">
+  </span><span class="n">block</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">background</span><span class="p">(</span><span class="s2">"red"</span><span class="p">)</span></code></pre></figure>
 
             </div>
 
             
+            <div class="mb-2">
+              <button class="yonder-button btn btn-green" type="button" role="button">Simple</button>
+            </div>
+            
+            <div class="mb-2">
+              <button class="yonder-button btn btn-block btn-red" type="button" role="button">Block</button>
+            </div>
+            
 
           </div>
+          
+          
+          
+          <div class="mb-4">
+            <h3 class="d-inline-block">A submit button</h3>
+
+            <div
+              id="a-submit-button"
+              class="mb-4 ml-1 pl-2 border-left border-black"
+              >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">submitInput</span><span class="p">()</span></code></pre></figure>
+
+            </div>
+
+            
+            <div class="mb-2">
+              <button class="yonder-submit btn btn-blue" data-type="submit" role="button">Submit</button>
+            </div>
+            
+
+          </div>
+          
+          
+          
+          <div class="mb-4">
+            <h3 class="d-inline-block">Possible colors</h3>
+
+            <div
+              id="possible-colors"
+              class="mb-4 ml-1 pl-2 border-left border-black"
+              >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">colors</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+  </span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="s2">"purple"</span><span class="p">,</span><span class="w"> </span><span class="s2">"indigo"</span><span class="p">,</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">,</span><span class="w"> </span><span class="s2">"cyan"</span><span class="p">,</span><span class="w"> </span><span class="s2">"teal"</span><span class="p">,</span><span class="w"> </span><span class="s2">"green"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"yellow"</span><span class="p">,</span><span class="w"> </span><span class="s2">"amber"</span><span class="p">,</span><span class="w"> </span><span class="s2">"orange"</span><span class="p">,</span><span class="w"> </span><span class="s2">"grey"</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">lapply</span><span class="p">(</span><span class="w">
+    </span><span class="n">colors</span><span class="p">,</span><span class="w">
+    </span><span class="k">function</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="n">buttonInput</span><span class="p">(</span><span class="w">
+        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+        </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">color</span><span class="w">
+      </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+        </span><span class="n">background</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+        </span><span class="n">margin</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="n">wrap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span></code></pre></figure>
+
+            </div>
+
+            
+            <div class="mb-2">
+              <div class="d-flex flex-wrap">
+  <button class="yonder-button btn btn-red m-2" type="button" role="button">red</button>
+  <button class="yonder-button btn btn-purple m-2" type="button" role="button">purple</button>
+  <button class="yonder-button btn btn-indigo m-2" type="button" role="button">indigo</button>
+  <button class="yonder-button btn btn-blue m-2" type="button" role="button">blue</button>
+  <button class="yonder-button btn btn-cyan m-2" type="button" role="button">cyan</button>
+  <button class="yonder-button btn btn-teal m-2" type="button" role="button">teal</button>
+  <button class="yonder-button btn btn-green m-2" type="button" role="button">green</button>
+  <button class="yonder-button btn btn-yellow m-2" type="button" role="button">yellow</button>
+  <button class="yonder-button btn btn-amber m-2" type="button" role="button">amber</button>
+  <button class="yonder-button btn btn-orange m-2" type="button" role="button">orange</button>
+  <button class="yonder-button btn btn-grey m-2" type="button" role="button">grey</button>
+</div>
+            </div>
+            
+
+          </div>
+          
           
 
         </div>
@@ -451,5 +502,31 @@ element.</p>
 
       </div>
     </div>
+
+    <script>
+      $(() => {
+      document.querySelectorAll(".yonder-date").forEach((el) => {
+      let data = $(el).data();
+      let config = {};
+
+      if (data.mode === "multiple" && data.altFormat === "alt-format") {
+      config.altFormat = "M j, Y";
+      config.conjunction = "; ";
+      }
+
+      if (data.defaultDate && (data.mode === "range" || data.mode === "multiple")) {
+      config.defaultDate = data.defaultDate.split("\\,");
+      el.removeAttribute("data-default-date");
+      }
+
+      if (data.enable) {
+      config.enable = data.enable.split("\\,");
+      el.removeAttribute("data-enable");
+      }
+
+      flatpickr(el, config);
+      });
+      });
+    </script>
   </body>
 </html>

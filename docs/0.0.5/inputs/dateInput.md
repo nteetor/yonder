@@ -3,7 +3,7 @@ this: dateInput
 filename: R/datetime.R
 layout: page
 roxygen:
-  title: Date time input
+  title: Date and time inputs
   description: |-
     A date time picker. Alternatively, use the date time range picker to select
     a range of dates. The value of the date range picker is always two dates.
@@ -41,40 +41,44 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
+  - title: Preselect a date
     source: |-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                h6("Single date input:"),
-                dateInput(
-                  id = "singledate"
-                ),
-                h6("Multiple dates input:") %>%
-                  margin(3, 0, 2, 0),
-                dateInput(
-                  id = "multdate",
-                  choices = Sys.Date() + (-4:4),
-                  selected = Sys.Date() + 1,
-                  multiple = TRUE
-                )
-              ),
-              column(
-                verbatimTextOutput("values")
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$values <- renderPrint({
-              list(
-                single = input$singledate,
-                multiple = input$multdate
-              )
-            })
-          }
-        )
-      }
-    output: []
+      dateInput(
+        id = NULL,
+        selected = Sys.Date() + 1
+      )
+    output:
+    - <input class="yonder-date form-control" type="text" data-default-date="2018-09-07"
+      data-date-format="Y-m-d"/>
+  - title: Set a min and max
+    source: |-
+      dateInput(
+        id = NULL,
+        min = Sys.Date() - 3,
+        max = Sys.Date() + 3
+      )
+    output:
+    - <input class="yonder-date form-control" type="text" data-min-date="2018-09-03"
+      data-max-date="2018-09-09" data-date-format="Y-m-d"/>
+  - title: Select multiple dates
+    source: |-
+      dateInput(
+        id = NULL,
+        choices = Sys.Date() + seq(-6, 6, by = 2),
+        selected = Sys.Date() + 1,
+        multiple = TRUE
+      )
+    output:
+    - <input class="yonder-date form-control" type="text" data-default-date="2018-09-07"
+      data-enable="2018-08-31\,2018-09-02\,2018-09-04\,2018-09-06\,2018-09-08\,2018-09-10\,2018-09-12"
+      data-date-format="Y-m-d" data-mode="multiple"/>
+  - title: Date ranges
+    source: |-
+      dateRangeInput(
+        id = NULL,
+        selected = c(Sys.Date(), Sys.Date() + 3)
+      )
+    output:
+    - <input class="yonder-date form-control" type="text" data-default-date="2018-09-06\,2018-09-09"
+      data-date-format="Y-m-d" data-mode="range"/>
 ---

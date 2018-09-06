@@ -43,96 +43,152 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
+  - title: A simple card
     source: |-
-      card("Praesent fermentum tempor tellus.")
-      card(
-        title = "Mauris mollis tincidunt felis.",
-        subtitle = "Phasellus at dui in ligula mollis ultricies.",
-        "Nullam tempus. Mauris mollis tincidunt felis.",
-        "Nullam libero mauris, consequat quis, varius et, dictum id, arcu."
+      column(
+        width = 4,
+        card("Praesent fermentum tempor tellus.")
       )
-      card(
-        listGroupThruput(
-          id = NULL,
-          listGroupItem(
-            "Pellentesque tristique imperdiet tortor."
-          ),
-          listGroupItem(
-            "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
-          ),
-          listGroupItem(
-            "Phasellus purus."
+    output:
+    - |-
+      <div class="col-4">
+        <div class="card">
+          <div class="card-body">
+            <p class="card-text">Praesent fermentum tempor tellus.</p>
+          </div>
+        </div>
+      </div>
+  - title: Adding a title, subtitle
+    source: |-
+      column(
+        width = 4,
+        card(
+          title = "Mauris mollis tincidunt felis.",
+          subtitle = "Phasellus at dui in ligula mollis ultricies.",
+          "Nullam tempus. Mauris mollis tincidunt felis.",
+          "Nullam libero mauris, consequat quis, varius et, dictum id, arcu."
+        )
+      )
+    output:
+    - |-
+      <div class="col-4">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Mauris mollis tincidunt felis.</h5>
+            <h6 class="card-subtitle">Phasellus at dui in ligula mollis ultricies.</h6>
+            <p class="card-text">Nullam tempus. Mauris mollis tincidunt felis.</p>
+            <p class="card-text">Nullam libero mauris, consequat quis, varius et, dictum id, arcu.</p>
+          </div>
+        </div>
+      </div>
+  - title: Styling cards
+    source: |-
+      deck(
+        card(
+          header = div("Donec pretium posuere tellus") %>%
+            background("teal"),
+          "Donec hendrerit tempor tellus.",
+          "Cras placerat accumsan nulla."
+        ),
+        card(
+          "Aliquam posuere.",
+          "Phasellus neque orci, porta a, aliquet quis, semper a, massa.",
+          "Pellentesque dapibus suscipit ligula."
+        ) %>%
+          border("orange"),
+        card(
+          header = div("Phasellus lacus") %>%
+            background("indigo"),
+          "Etiam laoreet quam sed arcu.",
+          "Etiam vel tortor sodales tellus ultricies commodo.",
+          footer = "Nam euismod tellus id erat."
+        ) %>%
+            background("grey")
+      )
+    output:
+    - |-
+      <div class="card-deck">
+        <div class="card">
+          <div class="bg-teal card-header">Donec pretium posuere tellus</div>
+          <div class="card-body">
+            <p class="card-text">Donec hendrerit tempor tellus.</p>
+            <p class="card-text">Cras placerat accumsan nulla.</p>
+          </div>
+        </div>
+        <div class="card border-orange border">
+          <div class="card-body">
+            <p class="card-text">Aliquam posuere.</p>
+            <p class="card-text">Phasellus neque orci, porta a, aliquet quis, semper a, massa.</p>
+            <p class="card-text">Pellentesque dapibus suscipit ligula.</p>
+          </div>
+        </div>
+        <div class="card bg-grey">
+          <div class="bg-indigo card-header">Phasellus lacus</div>
+          <div class="card-body">
+            <p class="card-text">Etiam laoreet quam sed arcu.</p>
+            <p class="card-text">Etiam vel tortor sodales tellus ultricies commodo.</p>
+          </div>
+          <div class="card-footer">Nam euismod tellus id erat.</div>
+        </div>
+      </div>
+  - title: Cards with list groups
+    source: |-
+      column(
+        width = 4,
+        card(
+          listGroupThruput(
+            id = "important",
+            flush = TRUE,
+            listGroupItem(
+              "Pellentesque tristique imperdiet tortor."
+            ),
+            listGroupItem(
+              "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+            ),
+            listGroupItem(
+              "Phasellus purus."
+            )
           )
         )
       )
-      card(
-        header = "Nunc rutrum turpis sed pede.",
-        title = "Sed bibendum.",
-        "Etiam vel neque nec dui dignissim bibendum. Etiam vel neque nec dui dignissim bibendum.",
-        buttonInput(id = NULL, label = "Phasellus purus")
-      )
+    output:
+    - |-
+      <div class="col-4">
+        <div class="card">
+          <div class="yonder-list-group list-group list-group-flush" data-multiple="true" id="important">
+            <a class="list-group-item">Pellentesque tristique imperdiet tortor.</a>
+            <a class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a>
+            <a class="list-group-item">Phasellus purus.</a>
+          </div>
+        </div>
+      </div>
+  - title: Tabbed content in cards
+    source: |-
       card(
         header = tabTabs(
-          id = "myCardTabs",
+          id = "example-card-tabs",
           labels = c("Phasellus", "Donec", "Fusce")
         ),
         tabContent(
-          tabs = "myCardTabs",
+          tabs = "example-card-tabs",  # same as the id in `tabTabs`
           tabPane(
-            "Phasellus purus. Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
+            "Phasellus purus.",
+            "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
           ),
           tabPane(
             "Donec at pede. Praesent augue."
           ),
           tabPanel(
-            "Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio."
+            "Fusce suscipit, wisi nec facilisis facilisis,",
+            "est dui fermentum leo, quis tempor ligula erat quis odio."
           )
         )
-      )
-      card(
-        header = div("Donec pretium posuere tellus.") %>%
-          background("teal"),
-        "Donec hendrerit tempor tellus.",
-        "Cras placerat accumsan nulla."
       )
     output:
     - |-
       <div class="card">
-        <div class="card-body">
-          <p class="card-text">Praesent fermentum tempor tellus.</p>
-        </div>
-      </div>
-    - |-
-      <div class="card">
-        <div class="card-body">
-          <h5 class="card-title">Mauris mollis tincidunt felis.</h5>
-          <h6 class="card-subtitle">Phasellus at dui in ligula mollis ultricies.</h6>
-          <p class="card-text">Nullam tempus. Mauris mollis tincidunt felis.</p>
-          <p class="card-text">Nullam libero mauris, consequat quis, varius et, dictum id, arcu.</p>
-        </div>
-      </div>
-    - |-
-      <div class="card">
-        <div class="yonder-list-group list-group list-group-flush" data-multiple="true">
-          <a class="list-group-item">Pellentesque tristique imperdiet tortor.</a>
-          <a class="list-group-item">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a>
-          <a class="list-group-item">Phasellus purus.</a>
-        </div>
-      </div>
-    - |-
-      <div class="card">
-        <div class="card-header">Nunc rutrum turpis sed pede.</div>
-        <div class="card-body">
-          <h5 class="card-title">Sed bibendum.</h5>
-          <p class="card-text">Etiam vel neque nec dui dignissim bibendum. Etiam vel neque nec dui dignissim bibendum.</p>
-          <button class="yonder-button btn btn-grey" type="button" role="button">Phasellus purus</button>
-        </div>
-      </div>
-    - |-
-      <div class="card">
         <div class="card-header">
-          <ul class="yonder-tabs nav nav-tabs card-header-tabs" role="tablist" id="myCardTabs">
+          <ul class="yonder-tabs nav nav-tabs card-header-tabs" role="tablist" id="example-card-tabs">
             <li class="nav-item">
               <a class="nav-link active" data-tabs="tab" data-value="Phasellus" aria-selected="true">Phasellus</a>
             </li>
@@ -145,19 +201,14 @@ roxygen:
           </ul>
         </div>
         <div class="card-body">
-          <div class="tab-content" data-tabs="myCardTabs">
-            <div class="tab-pane fade" role="tab-panel">Phasellus purus. Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.</div>
+          <div class="tab-content" data-tabs="example-card-tabs">
+            <div class="tab-pane fade" role="tab-panel">
+              Phasellus purus.
+              Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.
+            </div>
             <div class="tab-pane fade" role="tab-panel">Donec at pede. Praesent augue.</div>
-            <div class="tab-pane" title="Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio." data-value="Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio."></div>
+            <div class="tab-pane" title="Fusce suscipit, wisi nec facilisis facilisis," data-value="Fusce suscipit, wisi nec facilisis facilisis,">est dui fermentum leo, quis tempor ligula erat quis odio.</div>
           </div>
-        </div>
-      </div>
-    - |-
-      <div class="card">
-        <div class="bg-teal card-header">Donec pretium posuere tellus.</div>
-        <div class="card-body">
-          <p class="card-text">Donec hendrerit tempor tellus.</p>
-          <p class="card-text">Cras placerat accumsan nulla.</p>
         </div>
       </div>
 ---

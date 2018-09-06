@@ -26,82 +26,17 @@ element.}
 \description{
 A reactive checkbox input. When a checkbox input is unchecked the reactive
 value is \code{NULL}. When checked the checkbox input reactive value is \code{value}.
+Unlike shiny, yonder's checkbox inputs are a singleton value.
 }
 \examples{
 
+## Start checked
+
 checkboxInput(
-  id = "pellentesque",
-  choice = "Cras placerat accumsan nulla"
+  id = NULL,
+  choice = "Suspendisse potenti",
+  checked = TRUE
 )
-
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        column(
-          checkboxInput(
-            id = "checkbox",
-            choice = "Are you there?",
-            value = "yes"
-          ),
-          checkboxInput(
-            id = "hello",
-            choice = "Hello"
-          )
-        ),
-        column(
-          d4(
-            textOutput("value")
-          )
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$value <- renderText({
-        input$checkbox
-      })
-    }
-  )
-}
-
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      checkboxInput("foo", "Hello, world!", "hello"),
-      textOutput("checkvalue", inline = TRUE),
-      textInput("label", placeholder = "New checkbox text"),
-      textInput("value", placeholder = "New checkbox value"),
-      tags$div(
-        buttonInput("choices", "Update checkbox text"),
-        buttonInput("values", "Update checkbox value")
-      ) \%>\%
-        display("flex")
-    ),
-    server = function(input, output) {
-      output$checkvalue <- renderPrint({
-        if (is.null(input$foo)) {
-          markInvalid("foo", "Please check")
-        } else {
-          markValid("foo")
-        }
-
-        input$foo
-      })
-
-      observeEvent(input$choices, {
-        req(input$label)
-        updateChoices("foo", hello = input$label)
-      })
-
-      observeEvent(input$values, {
-        req(input$value, input$foo)
-        updateValues("foo", !!(input$foo) := input$value)
-      })
-    }
-  )
-}
 
 }
 \seealso{

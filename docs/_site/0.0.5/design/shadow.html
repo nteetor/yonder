@@ -5,14 +5,19 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="/yonder/assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="/yonder/assets/css/yonder.min.css">
+<link rel="stylesheet" href="/yonder/www/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
 <link rel="stylesheet" href="/yonder/assets/css/main.css">
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 
-<script src="/yonder/assets/js/bootstrap.min.js"></script>
+<script src="/yonder/www/bootstrap/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="/yonder/www/ion-rangeslider/css/ion.rangeSlider.css">
+
+<script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
+<link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
   </head>
   <body>
@@ -23,18 +28,6 @@
   <h5 class="pb-3">yonder</h5>
   <dl>
     
-    
-
-    
-
-    <dt>
-      <a class="text-dark" href=""></a>
-    </dt>
-
-    
-
-    
-
     
 
     
@@ -181,18 +174,6 @@
     
 
     <dt>
-      <a class="text-dark" href="">server</a>
-    </dt>
-
-    
-
-    
-
-    
-
-    
-
-    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
     </dt>
 
@@ -205,7 +186,31 @@
     
 
     <dt>
+      <a class="text-dark" href="">server</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/layout/">layout</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href=""></a>
     </dt>
 
     
@@ -257,6 +262,7 @@ the amount of shadow added, defaults to <code class="highlighter-rouge">"regular
           
 
           
+          
           <div class="mb-4">
             <h3 class="d-inline-block">Styling a navbar</h3>
 
@@ -284,10 +290,10 @@ the amount of shadow added, defaults to <code class="highlighter-rouge">"regular
               <div>
   <nav class="navbar navbar-expand-lg navbar-light bg-cyan shadow-sm mb-3">
     <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-82-532" aria-controls="navContent-82-532" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-640-455" aria-controls="navContent-640-455" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars fa-fw"></i>
     </button>
-    <div class="collapse navbar-collapse" id="navContent-82-532"></div>
+    <div class="collapse navbar-collapse" id="navContent-640-455"></div>
   </nav>
   <p>
     Cras mattis consectetur purus sit amet fermentum. Donec sed 
@@ -300,6 +306,8 @@ the amount of shadow added, defaults to <code class="highlighter-rouge">"regular
             
 
           </div>
+          
+          
           
           <div class="mb-4">
             <h3 class="d-inline-block">Different shadows</h3>
@@ -333,6 +341,7 @@ the amount of shadow added, defaults to <code class="highlighter-rouge">"regular
 
           </div>
           
+          
 
         </div>
 
@@ -356,5 +365,31 @@ the amount of shadow added, defaults to <code class="highlighter-rouge">"regular
 
       </div>
     </div>
+
+    <script>
+      $(() => {
+      document.querySelectorAll(".yonder-date").forEach((el) => {
+      let data = $(el).data();
+      let config = {};
+
+      if (data.mode === "multiple" && data.altFormat === "alt-format") {
+      config.altFormat = "M j, Y";
+      config.conjunction = "; ";
+      }
+
+      if (data.defaultDate && (data.mode === "range" || data.mode === "multiple")) {
+      config.defaultDate = data.defaultDate.split("\\,");
+      el.removeAttribute("data-default-date");
+      }
+
+      if (data.enable) {
+      config.enable = data.enable.split("\\,");
+      el.removeAttribute("data-enable");
+      }
+
+      flatpickr(el, config);
+      });
+      });
+    </script>
   </body>
 </html>

@@ -71,13 +71,13 @@ d <- function(level, ...) {
 #'   attributes to the parent element.
 #'
 #' @param fluid One of `TRUE` or `FALSE` specifying if the jumbotron fills the
-#'   width of its parent container, defaults to `TRUE`.
+#'   width of its parent container, defaults to `FALSE`.
 #'
 #' @family content
 #' @export
 #' @examples
 #'
-#' ## Landing pages
+#' ## Landing page welcome
 #'
 #' jumbotron(
 #'   title = "Welcome, welcome!",
@@ -88,7 +88,7 @@ d <- function(level, ...) {
 #'   )
 #' )
 #'
-jumbotron <- function(title, subtitle, ..., fluid = TRUE) {
+jumbotron <- function(title, subtitle, ..., fluid = FALSE) {
   tags$div(
     class = collate(
       "jumbotron",

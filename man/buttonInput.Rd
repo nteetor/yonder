@@ -6,7 +6,7 @@
 \alias{linkInput}
 \title{Button and submit inputs}
 \usage{
-buttonInput(id, label, block = FALSE, ...)
+buttonInput(id, label, ..., block = FALSE)
 
 submitInput(label = "Submit", block = FALSE, ...)
 
@@ -18,12 +18,12 @@ linkInput(id, text, ...)
 \item{label}{A character string specifying the label text on the button
 input.}
 
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
+
 \item{block}{If \code{TRUE}, the input is block-level instead of inline, defaults
 to \code{FALSE}. A block-level element will occupy the entire width of its
 parent element.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
 
 \item{text}{A character string specifying the text displayed as part of the
 link input.}
@@ -34,64 +34,55 @@ The reactive value of a button input is the number of times it has been
 clicked.
 
 A submit input is a special type of button used to control HTML form
-submission. Unlike shiny's \code{submitButton}, \code{submitInput} will not freeze all
-reactive inputs on the page.
+submission. Unlike shiny's \code{submitButton}, yonder's submit inputs will not
+freeze all reactive inputs on the page.
 }
 \details{
 A submit input is automatically included as part of a \code{\link{formInput}}.
 }
 \examples{
+## Simple vs block button
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        column(
-          buttonInput(
-            id = "button",
-            label = "Click me!"
-          ) \%>\%
-            background("green")
-        ),
-        column(
-          d4(
-            textOutput("clicks")
-          )
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$clicks <- renderText({
-        input$button
-      })
-    }
-  )
-}
+buttonInput(
+  id = NULL,
+  label = "Simple"
+) \%>\%
+  background("green")
 
+# Block buttons will fill the width of their parent element
+buttonInput(
+  id = NULL,
+  label = "Block",
+  block = TRUE
+) \%>\%
+  background("red")
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      center = TRUE,
+## A submit button
+
+submitInput()
+
+## Possible colors
+
+colors <- c(
+  "red", "purple", "indigo", "blue", "cyan", "teal", "green",
+  "yellow", "amber", "orange", "grey"
+)
+
+div(
+  lapply(
+    colors,
+    function(color) {
       buttonInput(
-        id = "button",
-        label = list(
-          "Increment badge",
-          badgeOutput(
-            id = "badge"
-          ) \%>\%
-            background("green")
-        )
+        id = NULL,
+        label = color
       ) \%>\%
-        background("amber")
-    ),
-    server = function(input, output) {
-      output$badge <- renderBadge({
-        input$button
-      })
+        background(color) \%>\%
+        margin(2)
     }
   )
-}
+) \%>\%
+  display("flex") \%>\%
+  flex(wrap = TRUE)
 
 
 if (interactive()) {
@@ -113,9 +104,6 @@ if (interactive()) {
 
 }
 \seealso{
-Bootstrap 4 button documentation:
-\url{https://getbootstrap.com/docs/4.0/components/buttons/}
-
 Other inputs: \code{\link{addressInput}},
   \code{\link{buttonGroupInput}},
   \code{\link{checkbarInput}}, \code{\link{checkboxInput}},

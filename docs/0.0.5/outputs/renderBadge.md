@@ -33,30 +33,60 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
+  - title: Buttons with badges
     source: |-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                buttonInput(
-                  id = "mybutton",
-                  label = list(
-                    "Number of clicks: ",
-                    badgeOutput("clicks") %>%
-                      background("red")
-                  )
-                )
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$clicks <- renderBadge({
-              input$mybutton
-            })
+      # Typically, you would use `renderBadge()` to update a badge's
+      # value. Here we are hard-coding a default value of 7.
+      buttonInput(
+        id = NULL,
+        label = "Process",
+        badgeOutput(
+          id = NULL,
+          7
+        ) %>%
+          background("cyan")
+      )
+    output:
+    - |-
+      <button class="yonder-button btn btn-grey" type="button" role="button">
+        Process
+        <span class="yonder-badge badge badge-cyan">7</span>
+      </button>
+  - title: Possible colors
+    source: |-
+      colors <- c(
+        "red", "purple", "indigo", "blue", "cyan", "teal", "green",
+        "yellow", "amber", "orange", "grey", "white"
+      )
+      div(
+        lapply(
+          colors,
+          function(color) {
+            badgeOutput(
+              id = NULL,
+              color
+            ) %>%
+              background(color) %>%
+              margin(2)
           }
         )
-      }
-    output: []
+      ) %>%
+        display("flex") %>%
+        flex(wrap = TRUE)
+    output:
+    - |-
+      <div class="d-flex flex-wrap">
+        <span class="yonder-badge badge badge-red m-2">red</span>
+        <span class="yonder-badge badge badge-purple m-2">purple</span>
+        <span class="yonder-badge badge badge-indigo m-2">indigo</span>
+        <span class="yonder-badge badge badge-blue m-2">blue</span>
+        <span class="yonder-badge badge badge-cyan m-2">cyan</span>
+        <span class="yonder-badge badge badge-teal m-2">teal</span>
+        <span class="yonder-badge badge badge-green m-2">green</span>
+        <span class="yonder-badge badge badge-yellow m-2">yellow</span>
+        <span class="yonder-badge badge badge-amber m-2">amber</span>
+        <span class="yonder-badge badge badge-orange m-2">orange</span>
+        <span class="yonder-badge badge badge-grey m-2">grey</span>
+        <span class="yonder-badge badge badge-white m-2">white</span>
+      </div>
 ---

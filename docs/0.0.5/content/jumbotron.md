@@ -17,14 +17,14 @@ roxygen:
   - name: fluid
     description: |-
       One of `TRUE` or `FALSE` specifying if the jumbotron fills the
-      width of its parent container, defaults to `TRUE`.
+      width of its parent container, defaults to `FALSE`.
   sections: ~
   return: ~
   family: content
   name: ~
   rdname: ~
   examples:
-  - title: Landing pages
+  - title: Landing page welcome
     source: |-
       jumbotron(
         title = "Welcome, welcome!",
@@ -36,7 +36,7 @@ roxygen:
       )
     output:
     - |-
-      <div class="jumbotron jumbotron-fluid">
+      <div class="jumbotron">
         <h1 class="display-3">Welcome, welcome!</h1>
         <p class="lead">This simple jumbotron-style component calls attention to a new feature</p>
         <hr class="my-4"/>

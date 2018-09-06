@@ -3,7 +3,7 @@
 \name{dateInput}
 \alias{dateInput}
 \alias{dateRangeInput}
-\title{Date time input}
+\title{Date and time inputs}
 \usage{
 dateInput(id, choices = NULL, selected = NULL, min = NULL,
   max = NULL, multiple = FALSE, ...)
@@ -40,75 +40,39 @@ a range of dates. The value of the date range picker is always two dates.
 }
 \examples{
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        column(
-          h6("Single date input:"),
-          dateInput(
-            id = "singledate"
-          ),
-          h6("Multiple dates input:") \%>\%
-            margin(3, 0, 2, 0),
-          dateInput(
-            id = "multdate",
-            choices = Sys.Date() + (-4:4),
-            selected = Sys.Date() + 1,
-            multiple = TRUE
-          )
-        ),
-        column(
-          verbatimTextOutput("values")
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$values <- renderPrint({
-        list(
-          single = input$singledate,
-          multiple = input$multdate
-        )
-      })
-    }
-  )
-}
+## Preselect a date
 
+dateInput(
+  id = NULL,
+  selected = Sys.Date() + 1
+)
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        column(
-          dateRangeInput(
-            id = "daterange",
-            selected = c(Sys.Date(), Sys.Date() + 3)
-          )
-        ),
-        column(
-          verbatimTextOutput("values")
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$values <- renderPrint({
-        input$daterange
-      })
-    }
-  )
-}
+## Set a min and max
+
+dateInput(
+  id = NULL,
+  min = Sys.Date() - 3,
+  max = Sys.Date() + 3
+)
+
+## Select multiple dates
+
+dateInput(
+  id = NULL,
+  choices = Sys.Date() + seq(-6, 6, by = 2),
+  selected = Sys.Date() + 1,
+  multiple = TRUE
+)
+
+## Date ranges
+
+dateRangeInput(
+  id = NULL,
+  selected = c(Sys.Date(), Sys.Date() + 3)
+)
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
-  \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{loginInput}}, \code{\link{radioInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
-
 Other inputs: \code{\link{addressInput}},
   \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkbarInput}},

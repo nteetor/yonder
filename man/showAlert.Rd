@@ -50,7 +50,6 @@ if (interactive()) {
   )
 }
 
-
 if (interactive()) {
   shinyApp(
     ui = container(
@@ -166,6 +165,8 @@ if (interactive()) {
 
 }
 \seealso{
-Boostrap 4 alert documentation:
-\url{https://getbootstrap.com/docs/4.0/components/alerts/}
+Other utilities: \code{\link{collapse}},
+  \code{\link{markInvalid}}, \code{\link{showPopover}},
+  \code{\link{updateChoices}}
 }
+\concept{utilities}

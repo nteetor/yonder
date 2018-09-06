@@ -1,21 +1,19 @@
-#' Check- and radiobar inputs
+#' Checkbar and radiobar inputs
 #'
-#' Checkbar and radiobar inputs behave like the counter parts, checkbox and
-#' radio inputs. The -bar inputs are a stylistic variation. However, yonder
-#' checkbox inputs are singletons, thus the checkbar input is more akin to
-#' shiny's checkbox group input.
+#' These inputs behave similarly to their counter parts, checkbox and radio
+#' inputs. However, yonder's checkbox input is a singleton value, thus the
+#' checkbar input is more akin to shiny's checkbox group input.
 #'
-#' @param id A character string specifying the id of the check- or radiobar
-#'   input.
+#' @param id A character string specifying the id of the input.
 #'
 #' @param choices A character vector or flat list of character strings
-#'   specifying the labels of the check- or radiobar options.
+#'   specifying the labels of the checkbar or radiobar options.
 #'
 #' @param values A character vector, flat list of character strings, or object
-#'   to coerce to either, specifying the values of the check- or radiobar
+#'   to coerce to either, specifying the values of the checkbar or radiobar
 #'   options, defaults to `choices`.
 #'
-#' @param selected One or more of `values` indicating which of the check- or
+#' @param selected One or more of `values` indicating which of the checkbar or
 #'   radiobar options are selected by default, defaults to `NULL`, in which case
 #'   there is no default option.
 #'
@@ -23,104 +21,33 @@
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           checkbarInput(
-#'             id = "blue",
-#'             choices = c(
-#'               "Check 1",
-#'               "Check 2",
-#'               "Check 3"
-#'             ),
-#'             selected = "Check 1"
-#'           ) %>%
-#'             background("blue") %>%
-#'             margin(2),
-#'          checkbarInput(
-#'             id = "indigo",
-#'             choices = c(
-#'               "Check 1",
-#'               "Check 2",
-#'               "Check 3"
-#'             ),
-#'             selected = "Check 2"
-#'           ) %>%
-#'             background("indigo") %>%
-#'             margin(2)
-#'         ),
-#'         column(
-#'           verbatimTextOutput("values")
-#'         )
-#'       )
+#' ## An alternative to checkbox groups
 #'
-#'     ),
-#'     server = function(input, output) {
-#'       output$values <- renderPrint({
-#'         list(
-#'           `blue` = input$blue,
-#'           indigo = input$indigo
-#'         )
-#'       })
-#'     }
-#'   )
-#' }
+#' checkbarInput(
+#'   id = NULL,
+#'   choices = c(
+#'     "Check 1",
+#'     "Check 2",
+#'     "Check 3"
+#'   ),
+#'   selected = "Check 1"
+#' ) %>%
+#'   background("blue") %>%
+#'   margin(2)
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           radiobarInput(
-#'             id = "radiobar",
-#'             choices = c(
-#'               "Radio 1",
-#'               "Radio 2",
-#'               "Radio 3"
-#'             ),
-#'             selected = "Radio 1"
-#'           ) %>%
-#'             background("blue")
-#'         ),
-#'         column(
-#'           verbatimTextOutput("value")
-#'         )
-#'       )
+#' ## Radiobars in comparison
 #'
-#'     ),
-#'     server = function(input, output) {
-#'       output$value <- renderPrint({
-#'         input$radiobar
-#'       })
-#'     }
-#'   )
-#' }
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       checkbarInput("foo", c("hello, world!", "goodnight, moon"), c("world", "moon")),
-#'       textOutput("selected"),
-#'       buttonInput("labels", "Change labels"),
-#'       buttonInput("values", "Change values")
-#'     ),
-#'     server = function(input, output) {
-#'       output$selected <- renderPrint({
-#'         input$foo
-#'       })
-#'
-#'       observeEvent(input$labels, {
-#'         updateChoices("foo", world = "goodbye, world!", moon = "morning, moon")
-#'       })
-#'
-#'       observeEvent(input$values, {
-#'         updateValues("foo", world = "planet", moon = "spacestation")
-#'       })
-#'     }
-#'   )
-#' }
+#' radiobarInput(
+#'   id = NULL,
+#'   choices = c(
+#'     "fusce sagittis",
+#'     "libero non molestie",
+#'     "magna orci",
+#'     "ultrices dolor"
+#'   ),
+#'   selected = "ultrices dolor"
+#' ) %>%
+#'   background("grey")
 #'
 checkbarInput <- function(id, choices, values = choices, selected = NULL) {
   if (length(choices) != length(values)) {

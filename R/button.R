@@ -7,8 +7,8 @@
 #' clicked.
 #'
 #' A submit input is a special type of button used to control HTML form
-#' submission. Unlike shiny's `submitButton`, `submitInput` will not freeze all
-#' reactive inputs on the page.
+#' submission. Unlike shiny's `submitButton`, yonder's submit inputs will not
+#' freeze all reactive inputs on the page.
 #'
 #' @param id A character string specifying the id of the button or link input.
 #'
@@ -29,67 +29,53 @@
 #'
 #' A submit input is automatically included as part of a [`formInput`].
 #'
-#' @seealso
-#'
-#' Bootstrap 4 button documentation:
-#' \url{https://getbootstrap.com/docs/4.0/components/buttons/}
-#'
 #' @family inputs
 #' @export
 #' @examples
+#' ## Simple vs block button
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           buttonInput(
-#'             id = "button",
-#'             label = "Click me!"
-#'           ) %>%
-#'             background("green")
-#'         ),
-#'         column(
-#'           d4(
-#'             textOutput("clicks")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$clicks <- renderText({
-#'         input$button
-#'       })
-#'     }
-#'   )
-#' }
+#' buttonInput(
+#'   id = NULL,
+#'   label = "Simple"
+#' ) %>%
+#'   background("green")
 #'
+#' # Block buttons will fill the width of their parent element
+#' buttonInput(
+#'   id = NULL,
+#'   label = "Block",
+#'   block = TRUE
+#' ) %>%
+#'   background("red")
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       center = TRUE,
+#' ## A submit button
+#'
+#' submitInput()
+#'
+#' ## Possible colors
+#'
+#' colors <- c(
+#'   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
+#'   "yellow", "amber", "orange", "grey"
+#' )
+#'
+#' div(
+#'   lapply(
+#'     colors,
+#'     function(color) {
 #'       buttonInput(
-#'         id = "button",
-#'         label = list(
-#'           "Increment badge",
-#'           badgeOutput(
-#'             id = "badge"
-#'           ) %>%
-#'             background("green")
-#'         )
+#'         id = NULL,
+#'         label = color
 #'       ) %>%
-#'         background("amber")
-#'     ),
-#'     server = function(input, output) {
-#'       output$badge <- renderBadge({
-#'         input$button
-#'       })
+#'         background(color) %>%
+#'         margin(2)
 #'     }
 #'   )
-#' }
+#' ) %>%
+#'   display("flex") %>%
+#'   flex(wrap = TRUE)
 #'
-buttonInput <- function(id, label, block = FALSE, ...) {
+buttonInput <- function(id, label, ..., block = FALSE) {
   shiny::registerInputHandler(
     type = "yonder.button",
     fun = function(x, session, name) as.numeric(x),

@@ -5,14 +5,19 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="/yonder/assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="/yonder/assets/css/yonder.min.css">
+<link rel="stylesheet" href="/yonder/www/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
 <link rel="stylesheet" href="/yonder/assets/css/main.css">
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 
-<script src="/yonder/assets/js/bootstrap.min.js"></script>
+<script src="/yonder/www/bootstrap/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="/yonder/www/ion-rangeslider/css/ion.rangeSlider.css">
+
+<script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
+<link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
   </head>
   <body>
@@ -23,18 +28,6 @@
   <h5 class="pb-3">yonder</h5>
   <dl>
     
-    
-
-    
-
-    <dt>
-      <a class="text-dark" href=""></a>
-    </dt>
-
-    
-
-    
-
     
 
     
@@ -202,18 +195,6 @@
     
 
     <dt>
-      <a class="text-dark" href="">server</a>
-    </dt>
-
-    
-
-    
-
-    
-
-    
-
-    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
     </dt>
 
@@ -226,7 +207,31 @@
     
 
     <dt>
+      <a class="text-dark" href="">server</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/layout/">layout</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href=""></a>
     </dt>
 
     
@@ -293,77 +298,7 @@ dropdown menu to the toggle icon.</p>
           
 
           
-          <div class="mb-4">
-            <h3 class="d-inline-block"></h3>
-
-            <div
-              id=""
-              class="mb-4 ml-1 pl-2 border-left border-black"
-              >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">row</span><span class="p">(</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">dropdown</span><span class="p">(</span><span class="w">
-            </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Dropdown"</span><span class="p">,</span><span class="w">
-            </span><span class="n">split</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
-            </span><span class="n">formInput</span><span class="p">(</span><span class="w">
-              </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"login"</span><span class="p">,</span><span class="w">
-              </span><span class="n">formGroup</span><span class="p">(</span><span class="w">
-                </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Email address"</span><span class="p">,</span><span class="w">
-                </span><span class="n">textInput</span><span class="p">(</span><span class="w">
-                  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"email"</span><span class="p">,</span><span class="w">
-                  </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"email@example.com"</span><span class="w">
-                </span><span class="p">)</span><span class="w">
-              </span><span class="p">),</span><span class="w">
-              </span><span class="n">formGroup</span><span class="p">(</span><span class="w">
-                </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Password"</span><span class="p">,</span><span class="w">
-                </span><span class="n">passwordInput</span><span class="p">(</span><span class="w">
-                  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"password"</span><span class="p">,</span><span class="w">
-                  </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"*****"</span><span class="w">
-                </span><span class="p">)</span><span class="w">
-              </span><span class="p">),</span><span class="w">
-              </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">submitInput</span><span class="p">(</span><span class="w">
-                </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Sign in"</span><span class="w">
-              </span><span class="p">)</span><span class="w">
-            </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-              </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">),</span><span class="w">
-            </span><span class="nf">list</span><span class="p">(</span><span class="w">
-              </span><span class="n">buttonInput</span><span class="p">(</span><span class="w">
-                </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"signup"</span><span class="p">,</span><span class="w">
-                </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"New? Sign up"</span><span class="w">
-              </span><span class="p">),</span><span class="w">
-              </span><span class="n">buttonInput</span><span class="p">(</span><span class="w">
-                </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"forgot"</span><span class="p">,</span><span class="w">
-                </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Forgot password?"</span><span class="w">
-              </span><span class="p">)</span><span class="w">
-            </span><span class="p">)</span><span class="w">
-          </span><span class="p">)</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">verbatimTextOutput</span><span class="p">(</span><span class="s2">"values"</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderPrint</span><span class="p">(</span><span class="w">
-        </span><span class="nf">list</span><span class="p">(</span><span class="w">
-          </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">email</span><span class="p">,</span><span class="w">
-          </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">password</span><span class="p">,</span><span class="w">
-          </span><span class="n">signup</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">signup</span><span class="p">,</span><span class="w">
-          </span><span class="n">forgot</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">forgot</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
-
-            </div>
-
-            
-
-          </div>
+          
           
 
         </div>
@@ -388,5 +323,31 @@ dropdown menu to the toggle icon.</p>
 
       </div>
     </div>
+
+    <script>
+      $(() => {
+      document.querySelectorAll(".yonder-date").forEach((el) => {
+      let data = $(el).data();
+      let config = {};
+
+      if (data.mode === "multiple" && data.altFormat === "alt-format") {
+      config.altFormat = "M j, Y";
+      config.conjunction = "; ";
+      }
+
+      if (data.defaultDate && (data.mode === "range" || data.mode === "multiple")) {
+      config.defaultDate = data.defaultDate.split("\\,");
+      el.removeAttribute("data-default-date");
+      }
+
+      if (data.enable) {
+      config.enable = data.enable.split("\\,");
+      el.removeAttribute("data-enable");
+      }
+
+      flatpickr(el, config);
+      });
+      });
+    </script>
   </body>
 </html>

@@ -24,12 +24,15 @@ Functions to update choices, values, and selected choices.
 }
 \seealso{
 Other utilities: \code{\link{collapse}},
-  \code{\link{markInvalid}}, \code{\link{showPopover}}
+  \code{\link{markInvalid}}, \code{\link{showAlert}},
+  \code{\link{showPopover}}
 
 Other utilities: \code{\link{collapse}},
-  \code{\link{markInvalid}}, \code{\link{showPopover}}
+  \code{\link{markInvalid}}, \code{\link{showAlert}},
+  \code{\link{showPopover}}
 
 Other utilities: \code{\link{collapse}},
-  \code{\link{markInvalid}}, \code{\link{showPopover}}
+  \code{\link{markInvalid}}, \code{\link{showAlert}},
+  \code{\link{showPopover}}
 }
 \concept{utilities}

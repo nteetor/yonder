@@ -5,14 +5,19 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="/yonder/assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="/yonder/assets/css/yonder.min.css">
+<link rel="stylesheet" href="/yonder/www/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
 <link rel="stylesheet" href="/yonder/assets/css/main.css">
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 
-<script src="/yonder/assets/js/bootstrap.min.js"></script>
+<script src="/yonder/www/bootstrap/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="/yonder/www/ion-rangeslider/css/ion.rangeSlider.css">
+
+<script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
+<link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
   </head>
   <body>
@@ -23,18 +28,6 @@
   <h5 class="pb-3">yonder</h5>
   <dl>
     
-    
-
-    
-
-    <dt>
-      <a class="text-dark" href=""></a>
-    </dt>
-
-    
-
-    
-
     
 
     
@@ -88,18 +81,6 @@
     
 
     <dt>
-      <a class="text-dark" href="">server</a>
-    </dt>
-
-    
-
-    
-
-    
-
-    
-
-    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
     </dt>
 
@@ -112,7 +93,31 @@
     
 
     <dt>
+      <a class="text-dark" href="">server</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/layout/">layout</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href=""></a>
     </dt>
 
     
@@ -240,129 +245,7 @@ selected, defaults to <code class="highlighter-rouge">FALSE</code>.</p>
           
 
           
-          <div class="mb-4">
-            <h3 class="d-inline-block"></h3>
-
-            <div
-              id=""
-              class="mb-4 ml-1 pl-2 border-left border-black"
-              >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">listGroupThruput</span><span class="p">(</span><span class="w">
-        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
-        </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
-          </span><span class="n">rangeInput</span><span class="p">(</span><span class="s2">"slider1"</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">row</span><span class="p">(</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w">
-          </span><span class="n">listGroupThruput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"thrulist"</span><span class="w">
-          </span><span class="p">)</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">rangeInput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"num"</span><span class="p">,</span><span class="w">
-            </span><span class="n">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">
-            </span><span class="n">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w">
-            </span><span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="w">
-          </span><span class="p">),</span><span class="w">
-          </span><span class="n">sliderInput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"level"</span><span class="p">,</span><span class="w">
-            </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="s2">"orange"</span><span class="p">,</span><span class="w"> </span><span class="s2">"green"</span><span class="p">,</span><span class="w"> </span><span class="s2">"cyan"</span><span class="p">)</span><span class="w">
-          </span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">thrulist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderListGroup</span><span class="p">(</span><span class="w">
-        </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
-          </span><span class="s2">"Cras justo odio"</span><span class="p">,</span><span class="w">
-          </span><span class="n">badgeOutput</span><span class="p">(</span><span class="s2">"badge1"</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-            </span><span class="n">background</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">level</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-          </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-          </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"between"</span><span class="p">,</span><span class="w"> </span><span class="n">align</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"center"</span><span class="p">),</span><span class="w">
-        </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
-          </span><span class="s2">"Dapibus ac facilisis in"</span><span class="p">,</span><span class="w">
-          </span><span class="n">badgeOutput</span><span class="p">(</span><span class="s2">"badge2"</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-            </span><span class="n">background</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">level</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-          </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-          </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"between"</span><span class="p">,</span><span class="w"> </span><span class="n">align</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"center"</span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">badge1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderBadge</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">num</span><span class="p">)</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">badge2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderBadge</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">num</span><span class="p">)</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span><span class="n">lessons</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">
-  </span><span class="n">stars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
-    </span><span class="s2">"The stars and moon are far too bright"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Their beam and smile splashing o'er all"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"To illuminate while turning my sight"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"From the shadows wherein deeper shadows fall"</span><span class="w">
-  </span><span class="p">),</span><span class="w">
-  </span><span class="n">joy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
-    </span><span class="s2">"A single step, her hand aloft"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"More than a step, a joyful bound"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"The moment, precious, small, soft"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"And within a truth was found"</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">)</span><span class="w">
-</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">row</span><span class="p">(</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"ml-auto"</span><span class="p">,</span><span class="w">
-          </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w">
-          </span><span class="n">listGroupThruput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lesson"</span><span class="p">,</span><span class="w">
-            </span><span class="n">multiple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w">
-            </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
-              </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"stars"</span><span class="p">,</span><span class="w">
-              </span><span class="n">h</span><span class="m">5</span><span class="p">(</span><span class="s2">"Stars"</span><span class="p">),</span><span class="w">
-              </span><span class="n">lessons</span><span class="p">[[</span><span class="s2">"stars"</span><span class="p">]][</span><span class="m">1</span><span class="p">]</span><span class="w">
-            </span><span class="p">),</span><span class="w">
-            </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
-              </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"joy"</span><span class="p">,</span><span class="w">
-              </span><span class="n">h</span><span class="m">5</span><span class="p">(</span><span class="s2">"Joy"</span><span class="p">),</span><span class="w">
-              </span><span class="n">lessons</span><span class="p">[[</span><span class="s2">"joy"</span><span class="p">]][</span><span class="m">1</span><span class="p">]</span><span class="w">
-            </span><span class="p">)</span><span class="w">
-          </span><span class="p">)</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"mr-auto"</span><span class="p">,</span><span class="w">
-          </span><span class="n">htmlOutput</span><span class="p">(</span><span class="s2">"text"</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">text</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderText</span><span class="p">({</span><span class="w">
-        </span><span class="n">req</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">lesson</span><span class="p">)</span><span class="w">
-        </span><span class="n">HTML</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">lessons</span><span class="p">[[</span><span class="n">input</span><span class="o">$</span><span class="n">lesson</span><span class="p">]],</span><span class="w"> </span><span class="n">collapse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"&lt;/br&gt;"</span><span class="p">))</span><span class="w">
-      </span><span class="p">})</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
-
-            </div>
-
-            
-
-          </div>
+          
           
 
         </div>
@@ -387,5 +270,31 @@ selected, defaults to <code class="highlighter-rouge">FALSE</code>.</p>
 
       </div>
     </div>
+
+    <script>
+      $(() => {
+      document.querySelectorAll(".yonder-date").forEach((el) => {
+      let data = $(el).data();
+      let config = {};
+
+      if (data.mode === "multiple" && data.altFormat === "alt-format") {
+      config.altFormat = "M j, Y";
+      config.conjunction = "; ";
+      }
+
+      if (data.defaultDate && (data.mode === "range" || data.mode === "multiple")) {
+      config.defaultDate = data.defaultDate.split("\\,");
+      el.removeAttribute("data-default-date");
+      }
+
+      if (data.enable) {
+      config.enable = data.enable.split("\\,");
+      el.removeAttribute("data-enable");
+      }
+
+      flatpickr(el, config);
+      });
+      });
+    </script>
   </body>
 </html>

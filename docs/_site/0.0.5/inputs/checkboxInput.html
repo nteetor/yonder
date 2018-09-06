@@ -5,14 +5,19 @@
     <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
-<link rel="stylesheet" href="/yonder/assets/css/bootstrap.min.css">
-<link rel="stylesheet" href="/yonder/assets/css/yonder.min.css">
+<link rel="stylesheet" href="/yonder/www/bootstrap/css/bootstrap.min.css">
+<link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
 <link rel="stylesheet" href="/yonder/assets/css/main.css">
 
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
 
-<script src="/yonder/assets/js/bootstrap.min.js"></script>
+<script src="/yonder/www/bootstrap/js/bootstrap.min.js"></script>
+
+<link rel="stylesheet" href="/yonder/www/ion-rangeslider/css/ion.rangeSlider.css">
+
+<script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
+<link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
   </head>
   <body>
@@ -23,18 +28,6 @@
   <h5 class="pb-3">yonder</h5>
   <dl>
     
-    
-
-    
-
-    <dt>
-      <a class="text-dark" href=""></a>
-    </dt>
-
-    
-
-    
-
     
 
     
@@ -70,7 +63,7 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/checkbarInput.html"
-         alt="Check- and radiobar inputs">
+         alt="Checkbar and radiobar inputs">
         checkbarInput
       </a>
     </dd>
@@ -84,14 +77,14 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/dateInput.html"
-         alt="Date time input">
+         alt="Date and time inputs">
         dateInput
       </a>
     </dd>
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/dateRangeInput.html"
-         alt="Date time input">
+         alt="Date and time inputs">
         dateRangeInput
       </a>
     </dd>
@@ -168,7 +161,7 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/radiobarInput.html"
-         alt="Check- and radiobar inputs">
+         alt="Checkbar and radiobar inputs">
         radiobarInput
       </a>
     </dd>
@@ -272,18 +265,6 @@
     
 
     <dt>
-      <a class="text-dark" href="">server</a>
-    </dt>
-
-    
-
-    
-
-    
-
-    
-
-    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
     </dt>
 
@@ -296,7 +277,31 @@
     
 
     <dt>
+      <a class="text-dark" href="">server</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/layout/">layout</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href=""></a>
     </dt>
 
     
@@ -323,7 +328,8 @@
           <h2>Checkbox inputs</h2>
 
           <p>A reactive checkbox input. When a checkbox input is unchecked the reactive
-value is <code class="highlighter-rouge">NULL</code>. When checked the checkbox input reactive value is <code class="highlighter-rouge">value</code>.</p>
+value is <code class="highlighter-rouge">NULL</code>. When checked the checkbox input reactive value is <code class="highlighter-rouge">value</code>.
+Unlike shiny, yonder’s checkbox inputs are a singleton value.</p>
 
 
           
@@ -362,88 +368,28 @@ element.</p>
           
 
           
+          
           <div class="mb-4">
-            <h3 class="d-inline-block"></h3>
+            <h3 class="d-inline-block">Start checked</h3>
 
             <div
-              id=""
+              id="start-checked"
               class="mb-4 ml-1 pl-2 border-left border-black"
               >
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">checkboxInput</span><span class="p">(</span><span class="w">
-  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pellentesque"</span><span class="p">,</span><span class="w">
-  </span><span class="n">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Cras placerat accumsan nulla"</span><span class="w">
-</span><span class="p">)</span><span class="w">
-</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">row</span><span class="p">(</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">checkboxInput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"checkbox"</span><span class="p">,</span><span class="w">
-            </span><span class="n">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Are you there?"</span><span class="p">,</span><span class="w">
-            </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"yes"</span><span class="w">
-          </span><span class="p">),</span><span class="w">
-          </span><span class="n">checkboxInput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"hello"</span><span class="p">,</span><span class="w">
-            </span><span class="n">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Hello"</span><span class="w">
-          </span><span class="p">)</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">d</span><span class="m">4</span><span class="p">(</span><span class="w">
-            </span><span class="n">textOutput</span><span class="p">(</span><span class="s2">"value"</span><span class="p">)</span><span class="w">
-          </span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">value</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderText</span><span class="p">({</span><span class="w">
-        </span><span class="n">input</span><span class="o">$</span><span class="n">checkbox</span><span class="w">
-      </span><span class="p">})</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span><span class="w">
-</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">checkboxInput</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Hello, world!"</span><span class="p">,</span><span class="w"> </span><span class="s2">"hello"</span><span class="p">),</span><span class="w">
-      </span><span class="n">textOutput</span><span class="p">(</span><span class="s2">"checkvalue"</span><span class="p">,</span><span class="w"> </span><span class="n">inline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">),</span><span class="w">
-      </span><span class="n">textInput</span><span class="p">(</span><span class="s2">"label"</span><span class="p">,</span><span class="w"> </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"New checkbox text"</span><span class="p">),</span><span class="w">
-      </span><span class="n">textInput</span><span class="p">(</span><span class="s2">"value"</span><span class="p">,</span><span class="w"> </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"New checkbox value"</span><span class="p">),</span><span class="w">
-      </span><span class="n">tags</span><span class="o">$</span><span class="n">div</span><span class="p">(</span><span class="w">
-        </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"choices"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Update checkbox text"</span><span class="p">),</span><span class="w">
-        </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"values"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Update checkbox value"</span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-        </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">checkvalue</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderPrint</span><span class="p">({</span><span class="w">
-        </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">is.null</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">foo</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="n">markInvalid</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Please check"</span><span class="p">)</span><span class="w">
-        </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
-          </span><span class="n">markValid</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">)</span><span class="w">
-        </span><span class="p">}</span><span class="w">
-        </span><span class="n">input</span><span class="o">$</span><span class="n">foo</span><span class="w">
-      </span><span class="p">})</span><span class="w">
-      </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">choices</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">req</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">label</span><span class="p">)</span><span class="w">
-        </span><span class="n">updateChoices</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">,</span><span class="w"> </span><span class="n">hello</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">label</span><span class="p">)</span><span class="w">
-      </span><span class="p">})</span><span class="w">
-      </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">values</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">req</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">value</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">foo</span><span class="p">)</span><span class="w">
-        </span><span class="n">updateValues</span><span class="p">(</span><span class="s2">"foo"</span><span class="p">,</span><span class="w"> </span><span class="o">!!</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">foo</span><span class="p">)</span><span class="w"> </span><span class="o">:=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">value</span><span class="p">)</span><span class="w">
-      </span><span class="p">})</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Suspendisse potenti"</span><span class="p">,</span><span class="w">
+  </span><span class="n">checked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
 
             </div>
 
             
             <div class="mb-2">
-              <div class="yonder-checkbox" id="pellentesque">
+              <div class="yonder-checkbox">
   <div class="custom-control custom-checkbox">
-    <input class="custom-control-input" type="checkbox" id="checkbox-621-338" data-value="Cras placerat accumsan nulla"/>
-    <label class="custom-control-label" for="checkbox-621-338">Cras placerat accumsan nulla</label>
+    <input class="custom-control-input" type="checkbox" id="checkbox-934-607" data-value="Suspendisse potenti" checked/>
+    <label class="custom-control-label" for="checkbox-934-607">Suspendisse potenti</label>
     <div class="invalid-feedback"></div>
     <div class="valid-feedback"></div>
   </div>
@@ -452,6 +398,7 @@ element.</p>
             
 
           </div>
+          
           
 
         </div>
@@ -476,5 +423,31 @@ element.</p>
 
       </div>
     </div>
+
+    <script>
+      $(() => {
+      document.querySelectorAll(".yonder-date").forEach((el) => {
+      let data = $(el).data();
+      let config = {};
+
+      if (data.mode === "multiple" && data.altFormat === "alt-format") {
+      config.altFormat = "M j, Y";
+      config.conjunction = "; ";
+      }
+
+      if (data.defaultDate && (data.mode === "range" || data.mode === "multiple")) {
+      config.defaultDate = data.defaultDate.split("\\,");
+      el.removeAttribute("data-default-date");
+      }
+
+      if (data.enable) {
+      config.enable = data.enable.split("\\,");
+      el.removeAttribute("data-enable");
+      }
+
+      flatpickr(el, config);
+      });
+      });
+    </script>
   </body>
 </html>

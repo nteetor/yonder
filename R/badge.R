@@ -22,32 +22,46 @@
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           buttonInput(
-#'             id = "mybutton",
-#'             label = list(
-#'               "Number of clicks: ",
-#'               badgeOutput("clicks") %>%
-#'                 background("red")
-#'             )
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$clicks <- renderBadge({
-#'         input$mybutton
-#'       })
+#' ## Buttons with badges
+#'
+#' # Typically, you would use `renderBadge()` to update a badge's
+#' # value. Here we are hard-coding a default value of 7.
+#'
+#' buttonInput(
+#'   id = NULL,
+#'   label = "Process",
+#'   badgeOutput(
+#'     id = NULL,
+#'     7
+#'   ) %>%
+#'     background("cyan")
+#' )
+#'
+#' ## Possible colors
+#'
+#' colors <- c(
+#'   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
+#'   "yellow", "amber", "orange", "grey", "white"
+#' )
+#'
+#' div(
+#'   lapply(
+#'     colors,
+#'     function(color) {
+#'       badgeOutput(
+#'         id = NULL,
+#'         color
+#'       ) %>%
+#'         background(color) %>%
+#'         margin(2)
 #'     }
 #'   )
-#' }
+#' ) %>%
+#'   display("flex") %>%
+#'   flex(wrap = TRUE)
 #'
 badgeOutput <- function(id, ...) {
-  if (!is.character(id)) {
+  if (!is.null(id) && !is.character(id)) {
     stop(
       "invalid `badgeOutput()` argument, `id` must be a character string",
       call. = FALSE

@@ -40,66 +40,92 @@ is placed around any number of cards. Additionally, grouping cards with
 }
 \examples{
 
-card("Praesent fermentum tempor tellus.")
+## A simple card
 
-
-card(
-  title = "Mauris mollis tincidunt felis.",
-  subtitle = "Phasellus at dui in ligula mollis ultricies.",
-  "Nullam tempus. Mauris mollis tincidunt felis.",
-  "Nullam libero mauris, consequat quis, varius et, dictum id, arcu."
+column(
+  width = 4,
+  card("Praesent fermentum tempor tellus.")
 )
 
+## Adding a title, subtitle
 
-card(
-  listGroupThruput(
-    id = NULL,
-    listGroupItem(
-      "Pellentesque tristique imperdiet tortor."
-    ),
-    listGroupItem(
-      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
-    ),
-    listGroupItem(
-      "Phasellus purus."
+column(
+  width = 4,
+  card(
+    title = "Mauris mollis tincidunt felis.",
+    subtitle = "Phasellus at dui in ligula mollis ultricies.",
+    "Nullam tempus. Mauris mollis tincidunt felis.",
+    "Nullam libero mauris, consequat quis, varius et, dictum id, arcu."
+  )
+)
+
+## Styling cards
+
+deck(
+  card(
+    header = div("Donec pretium posuere tellus") \%>\%
+      background("teal"),
+    "Donec hendrerit tempor tellus.",
+    "Cras placerat accumsan nulla."
+  ),
+  card(
+    "Aliquam posuere.",
+    "Phasellus neque orci, porta a, aliquet quis, semper a, massa.",
+    "Pellentesque dapibus suscipit ligula."
+  ) \%>\%
+    border("orange"),
+  card(
+    header = div("Phasellus lacus") \%>\%
+      background("indigo"),
+    "Etiam laoreet quam sed arcu.",
+    "Etiam vel tortor sodales tellus ultricies commodo.",
+    footer = "Nam euismod tellus id erat."
+  ) \%>\%
+      background("grey")
+)
+
+## Cards with list groups
+
+column(
+  width = 4,
+  card(
+    listGroupThruput(
+      id = "important",
+      flush = TRUE,
+      listGroupItem(
+        "Pellentesque tristique imperdiet tortor."
+      ),
+      listGroupItem(
+        "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+      ),
+      listGroupItem(
+        "Phasellus purus."
+      )
     )
   )
 )
 
-
-card(
-  header = "Nunc rutrum turpis sed pede.",
-  title = "Sed bibendum.",
-  "Etiam vel neque nec dui dignissim bibendum. Etiam vel neque nec dui dignissim bibendum.",
-  buttonInput(id = NULL, label = "Phasellus purus")
-)
-
+## Tabbed content in cards
 
 card(
   header = tabTabs(
-    id = "myCardTabs",
+    id = "example-card-tabs",
     labels = c("Phasellus", "Donec", "Fusce")
   ),
   tabContent(
-    tabs = "myCardTabs",
+    tabs = "example-card-tabs",  # same as the id in `tabTabs`
     tabPane(
-      "Phasellus purus. Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
+      "Phasellus purus.",
+      "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
     ),
     tabPane(
       "Donec at pede. Praesent augue."
     ),
     tabPanel(
-      "Fusce suscipit, wisi nec facilisis facilisis, est dui fermentum leo, quis tempor ligula erat quis odio."
+      "Fusce suscipit, wisi nec facilisis facilisis,",
+      "est dui fermentum leo, quis tempor ligula erat quis odio."
     )
   )
-)
-
-
-card(
-  header = div("Donec pretium posuere tellus.") \%>\%
-    background("teal"),
-  "Donec hendrerit tempor tellus.",
-  "Cras placerat accumsan nulla."
 )
 
 
