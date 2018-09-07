@@ -32,66 +32,63 @@ roxygen:
     description: |-
       A character vector of possible MIME types or file extensions,
       defaults to `NULL`, in which case any file type may be selected.
-  sections: ~
+  sections:
+  - title: Uploading a file
+    body: |-
+      ```R
+      shinyApp(
+        ui = container(
+          fileInput("upload") %>%
+            margin(0, "auto", 0, "auto")
+        ),
+        server = function(input, output) {
+          observe({
+            req(input$upload)
+
+            print(input$upload)
+          })
+        }
+      )
+      ```
   return: ~
   family: inputs
   name: ~
   rdname: ~
   examples:
-  - title: ''
+  - title: Standard file input
+    source: fileInput(id = NULL)
+    output:
+    - |-
+      <div class="yonder-file input-group">
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" multiple/>
+          <label class="custom-file-label">Choose file</label>
+        </div>
+        <div class="input-group-append">
+          <span class="input-group-text">Browse</span>
+        </div>
+      </div>
+  - title: Adding another button
     source: |-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            fileInput("upload") %>%
-              margin(0, "auto", 0, "auto")
-          ),
-          server = function(input, output) {
-            observe({
-              req(input$upload)
-              print(input$upload)
-            })
-          }
-        )
-      }
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            fileInput(
-              id = "upload",
-              left = buttonInput(NULL, "Upload") %>%
-                background("white") %>%
-                border("green")
-            ) %>%
-              margin("auto", 0, "auto", 0)
-          ),
-          server = function(input, output) {
-            observe({
-              req(input$upload)
-              for (path in input$upload$datapath) {
-                cat(readLines(path), "\n")
-              }
-            })
-          }
-        )
-      }
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            fileInput("upload1") %>%
-              margin(3),
-            fileInput("upload2") %>%
-              margin(3)
-          ),
-          server = function(input, output) {
-            observeEvent(input$upload1, {
-              cat("Upload 1:", input$upload1$name, "\n")
-            })
-            observeEvent(input$upload2, {
-              cat("Upload 2:", input$upload2$name, "\n")
-            })
-          }
-        )
-      }
-    output: []
+      fileInput(
+        id = NULL,
+        left = buttonInput(NULL, "Upload") %>%
+          background("transparent") %>%
+          border("green")
+      ) %>%
+        margin("auto", 0, "auto", 0)
+    output:
+    - |-
+      <div class="yonder-file input-group mt-auto mr-0 mb-auto ml-0">
+        <div class="input-group-prepend">
+          <button class="yonder-button btn btn-grey bg-transparent border-green border" type="button" role="button">Upload</button>
+        </div>
+        <div class="custom-file">
+          <input type="file" class="custom-file-input" multiple/>
+          <label class="custom-file-label">Choose file</label>
+        </div>
+        <div class="input-group-append">
+          <span class="input-group-text">Browse</span>
+        </div>
+      </div>
 ---

@@ -29,67 +29,42 @@
 #' current version of Bootstrap file inputs can be pushed off the side of a
 #' page.
 #'
+#' @section Uploading a file:
+#'
+#' ```R
+#' shinyApp(
+#'   ui = container(
+#'     fileInput("upload") %>%
+#'       margin(0, "auto", 0, "auto")
+#'   ),
+#'   server = function(input, output) {
+#'     observe({
+#'       req(input$upload)
+#'
+#'       print(input$upload)
+#'     })
+#'   }
+#' )
+#' ```
+#'
 #' @family inputs
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       fileInput("upload") %>%
-#'         margin(0, "auto", 0, "auto")
-#'     ),
-#'     server = function(input, output) {
-#'       observe({
-#'         req(input$upload)
-#'         print(input$upload)
-#'       })
-#'     }
-#'   )
-#' }
+#' ## Standard file input
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       fileInput(
-#'         id = "upload",
-#'         left = buttonInput(NULL, "Upload") %>%
-#'           background("white") %>%
-#'           border("green")
-#'       ) %>%
-#'         margin("auto", 0, "auto", 0)
-#'     ),
-#'     server = function(input, output) {
-#'       observe({
-#'         req(input$upload)
+#' fileInput(id = NULL)
 #'
-#'         for (path in input$upload$datapath) {
-#'           cat(readLines(path), "\n")
-#'         }
-#'       })
-#'     }
-#'   )
-#' }
+#' ## Adding another button
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       fileInput("upload1") %>%
-#'         margin(3),
-#'       fileInput("upload2") %>%
-#'         margin(3)
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$upload1, {
-#'         cat("Upload 1:", input$upload1$name, "\n")
-#'       })
+#' fileInput(
+#'   id = NULL,
+#'   left = buttonInput(NULL, "Upload") %>%
+#'     background("transparent") %>%
+#'     border("green")
+#' ) %>%
+#'   margin("auto", 0, "auto", 0)
 #'
-#'       observeEvent(input$upload2, {
-#'         cat("Upload 2:", input$upload2$name, "\n")
-#'       })
-#'     }
-#'   )
-#' }
 #'
 fileInput <- function(id, placeholder = "Choose file", left = NULL,
                       right = "Browse", ..., multiple = TRUE, accept = NULL) {

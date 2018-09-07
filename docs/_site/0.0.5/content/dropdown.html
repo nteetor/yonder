@@ -276,7 +276,7 @@ or form inputs specifying the elements of the dropdown. These elements may
 be grouped into lists to create a menu with sections. <code class="highlighter-rouge">h6()</code> is the
 recommended heading level for menu headers. Character vectors are converted
 into paragraphs of text. To format menu text use <code class="highlighter-rouge">p()</code> and utility
-functions.  Named arguments are passed HTML attributes to the parent
+functions. Named arguments are passed as HTML attributes to the parent
 element.</p>
 </dd>
             
@@ -285,19 +285,221 @@ element.</p>
 the direction in which the menu opens, defaults to <code class="highlighter-rouge">"down"</code>.</p>
 </dd>
             
-            <dt id="params-split" class="col-sm-3">split</dt>
-            <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying if the dropdown toggle button
-is split into two distinct buttons, defaults to <code class="highlighter-rouge">FALSE</code>. This is a stylistic
-modification which properly spaces the dropdown toggle icon and aligns the
-dropdown menu to the toggle icon.</p>
-</dd>
-            
           </dl>
           
 
           
 
           
+          
+          <div class="mb-4">
+            <h3 class="d-inline-block">Simple options w/ buttons</h3>
+
+            <div
+              id="simple-options-w-buttons"
+              class="mb-4 ml-1 pl-2 border-left border-black"
+              >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dropdown</span><span class="p">(</span><span class="w">
+  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Choices"</span><span class="p">,</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"choice1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Choice 1"</span><span class="p">),</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"choice2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Choice 2"</span><span class="p">),</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"choice3"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Choice 3"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+            </div>
+
+            
+            <div class="mb-2">
+              <div class="dropdown">
+  <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Choices</button>
+  <div class="dropdown-menu">
+    <button class="yonder-button dropdown-item" type="button" role="button" id="choice1">Choice 1</button>
+    <button class="yonder-button dropdown-item" type="button" role="button" id="choice2">Choice 2</button>
+    <button class="yonder-button dropdown-item" type="button" role="button" id="choice3">Choice 3</button>
+  </div>
+</div>
+            </div>
+            
+
+          </div>
+          
+          
+          
+          <div class="mb-4">
+            <h3 class="d-inline-block">Grouped sections</h3>
+
+            <div
+              id="grouped-sections"
+              class="mb-4 ml-1 pl-2 border-left border-black"
+              >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dropdown</span><span class="p">(</span><span class="w">
+  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Sections"</span><span class="p">,</span><span class="w">
+  </span><span class="nf">list</span><span class="p">(</span><span class="w">
+    </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Section 1"</span><span class="p">),</span><span class="w">
+    </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"addA"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Add A"</span><span class="p">),</span><span class="w">
+    </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"addB"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Add B"</span><span class="p">)</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="nf">list</span><span class="p">(</span><span class="w">
+    </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Section 2"</span><span class="p">),</span><span class="w">
+    </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"calcC"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Calculate C"</span><span class="p">),</span><span class="w">
+    </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"calcD"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Calculate D"</span><span class="p">)</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+            </div>
+
+            
+            <div class="mb-2">
+              <div class="dropdown">
+  <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Sections</button>
+  <div class="dropdown-menu">
+    <h6 class="dropdown-header">Section 1</h6>
+    <button class="yonder-button dropdown-item" type="button" role="button" id="addA">Add A</button>
+    <button class="yonder-button dropdown-item" type="button" role="button" id="addB">Add B</button>
+    <div class="dropdown-divider"></div>
+    <h6 class="dropdown-header">Section 2</h6>
+    <button class="yonder-button dropdown-item" type="button" role="button" id="calcC">Calculate C</button>
+    <button class="yonder-button dropdown-item" type="button" role="button" id="calcD">Calculate D</button>
+  </div>
+</div>
+            </div>
+            
+
+          </div>
+          
+          
+          
+          <div class="mb-4">
+            <h3 class="d-inline-block">Direction variations</h3>
+
+            <div
+              id="direction-variations"
+              class="mb-4 ml-1 pl-2 border-left border-black"
+              >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">lapply</span><span class="p">(</span><span class="w">
+    </span><span class="nf">c</span><span class="p">(</span><span class="s2">"up"</span><span class="p">,</span><span class="w"> </span><span class="s2">"down"</span><span class="p">,</span><span class="w"> </span><span class="s2">"left"</span><span class="p">,</span><span class="w"> </span><span class="s2">"right"</span><span class="p">),</span><span class="w">
+    </span><span class="k">function</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="n">dropdown</span><span class="p">(</span><span class="w">
+        </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w">
+        </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w">
+        </span><span class="n">buttonInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="s2">"Nam euismod"</span><span class="p">),</span><span class="w">
+        </span><span class="n">buttonInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="s2">"Nunc eleifend"</span><span class="p">),</span><span class="w">
+        </span><span class="n">buttonInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="s2">"Nullam eu"</span><span class="p">)</span><span class="w">
+      </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+        </span><span class="n">margin</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span></code></pre></figure>
+
+            </div>
+
+            
+            <div class="mb-2">
+              <div class="d-flex">
+  <div class="dropdown dropup m-3">
+    <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">up</button>
+    <div class="dropdown-menu">
+      <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
+      <button class="yonder-button dropdown-item" type="button" role="button">Nunc eleifend</button>
+      <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
+    </div>
+  </div>
+  <div class="dropdown m-3">
+    <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">down</button>
+    <div class="dropdown-menu">
+      <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
+      <button class="yonder-button dropdown-item" type="button" role="button">Nunc eleifend</button>
+      <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
+    </div>
+  </div>
+  <div class="dropdown dropleft m-3">
+    <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">left</button>
+    <div class="dropdown-menu">
+      <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
+      <button class="yonder-button dropdown-item" type="button" role="button">Nunc eleifend</button>
+      <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
+    </div>
+  </div>
+  <div class="dropdown dropright m-3">
+    <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">right</button>
+    <div class="dropdown-menu">
+      <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
+      <button class="yonder-button dropdown-item" type="button" role="button">Nunc eleifend</button>
+      <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
+    </div>
+  </div>
+</div>
+            </div>
+            
+
+          </div>
+          
+          
+          
+          <div class="mb-4">
+            <h3 class="d-inline-block">Include forms</h3>
+
+            <div
+              id="include-forms"
+              class="mb-4 ml-1 pl-2 border-left border-black"
+              >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dropdown</span><span class="p">(</span><span class="w">
+  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Sign in"</span><span class="p">,</span><span class="w">
+  </span><span class="n">formInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"login"</span><span class="p">,</span><span class="w">
+    </span><span class="n">formGroup</span><span class="p">(</span><span class="w">
+      </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Email address"</span><span class="p">,</span><span class="w">
+      </span><span class="n">textInput</span><span class="p">(</span><span class="w">
+        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"email"</span><span class="p">,</span><span class="w">
+        </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"email@example.com"</span><span class="w">
+      </span><span class="p">)</span><span class="w">
+    </span><span class="p">),</span><span class="w">
+    </span><span class="n">formGroup</span><span class="p">(</span><span class="w">
+      </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Password"</span><span class="p">,</span><span class="w">
+      </span><span class="n">passwordInput</span><span class="p">(</span><span class="w">
+        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"password"</span><span class="p">,</span><span class="w">
+        </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"*****"</span><span class="w">
+      </span><span class="p">)</span><span class="w">
+    </span><span class="p">),</span><span class="w">
+    </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">submitInput</span><span class="p">(</span><span class="w">
+      </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Sign in"</span><span class="w">
+    </span><span class="p">)</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+            </div>
+
+            
+            <div class="mb-2">
+              <div class="dropdown">
+  <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Sign in</button>
+  <div class="dropdown-menu">
+    <form class="yonder-form pt-3 pr-4 pb-3 pl-4" id="login">
+      <div class="form-group">
+        Email address
+        <div class="yonder-textual" id="email">
+          <input class="form-control" type="text" placeholder="email@example.com"/>
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+      <div class="form-group">
+        Password
+        <div class="yonder-textual" id="password">
+          <input class="form-control" type="password" placeholder="*****"/>
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+      <button class="yonder-submit btn btn-blue" data-type="submit" role="button">Sign in</button>
+    </form>
+  </div>
+</div>
+            </div>
+            
+
+          </div>
           
           
 

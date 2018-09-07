@@ -3,7 +3,7 @@
 \name{dateInput}
 \alias{dateInput}
 \alias{dateRangeInput}
-\title{Date and time inputs}
+\title{Date inputs}
 \usage{
 dateInput(id, choices = NULL, selected = NULL, min = NULL,
   max = NULL, multiple = FALSE, ...)

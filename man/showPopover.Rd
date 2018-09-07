@@ -71,8 +71,8 @@ Other content: \code{\link{blockquote}},
   \code{\link{pre}}, \code{\link{tooltip}}
 
 Other utilities: \code{\link{collapse}},
-  \code{\link{markInvalid}}, \code{\link{showAlert}},
-  \code{\link{updateChoices}}
+  \code{\link{downloadEvent}}, \code{\link{markInvalid}},
+  \code{\link{showAlert}}, \code{\link{updateChoices}}
 }
 \concept{content}
 \concept{utilities}

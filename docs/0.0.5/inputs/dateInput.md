@@ -3,7 +3,7 @@ this: dateInput
 filename: R/datetime.R
 layout: page
 roxygen:
-  title: Date and time inputs
+  title: Date inputs
   description: |-
     A date time picker. Alternatively, use the date time range picker to select
     a range of dates. The value of the date range picker is always two dates.
@@ -48,7 +48,7 @@ roxygen:
         selected = Sys.Date() + 1
       )
     output:
-    - <input class="yonder-date form-control" type="text" data-default-date="2018-09-07"
+    - <input class="yonder-date form-control" type="text" data-default-date="2018-09-09"
       data-date-format="Y-m-d"/>
   - title: Set a min and max
     source: |-
@@ -58,8 +58,8 @@ roxygen:
         max = Sys.Date() + 3
       )
     output:
-    - <input class="yonder-date form-control" type="text" data-min-date="2018-09-03"
-      data-max-date="2018-09-09" data-date-format="Y-m-d"/>
+    - <input class="yonder-date form-control" type="text" data-min-date="2018-09-05"
+      data-max-date="2018-09-11" data-date-format="Y-m-d"/>
   - title: Select multiple dates
     source: |-
       dateInput(
@@ -69,8 +69,8 @@ roxygen:
         multiple = TRUE
       )
     output:
-    - <input class="yonder-date form-control" type="text" data-default-date="2018-09-07"
-      data-enable="2018-08-31\,2018-09-02\,2018-09-04\,2018-09-06\,2018-09-08\,2018-09-10\,2018-09-12"
+    - <input class="yonder-date form-control" type="text" data-default-date="2018-09-09"
+      data-enable="2018-09-02\,2018-09-04\,2018-09-06\,2018-09-08\,2018-09-10\,2018-09-12\,2018-09-14"
       data-date-format="Y-m-d" data-mode="multiple"/>
   - title: Date ranges
     source: |-
@@ -79,6 +79,6 @@ roxygen:
         selected = c(Sys.Date(), Sys.Date() + 3)
       )
     output:
-    - <input class="yonder-date form-control" type="text" data-default-date="2018-09-06\,2018-09-09"
+    - <input class="yonder-date form-control" type="text" data-default-date="2018-09-08\,2018-09-11"
       data-date-format="Y-m-d" data-mode="range"/>
 ---

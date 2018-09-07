@@ -1,4 +1,4 @@
-#' Date and time inputs
+#' Date inputs
 #'
 #' A date time picker. Alternatively, use the date time range picker to select
 #' a range of dates. The value of the date range picker is always two dates.

@@ -2,7 +2,7 @@
 % Please edit documentation in R/download.R
 \name{downloadEvent}
 \alias{downloadEvent}
-\title{Trigger a download}
+\title{Trigger downloads}
 \usage{
 downloadEvent(event, filename, handler,
   domain = getDefaultReactiveDomain())
@@ -16,39 +16,41 @@ is triggered the file download is triggered.}
 function, or a new expression inside curly braces which returns a string
 specifying the name of the downloaded file.}
 
-\item{handler}{A \strong{function} with one argument that is expected to write the
-content of the downloaded file. A temporary file is passed to the function,
-which is expected to write content (text, images, etc.) to the temporary
-file.}
+\item{handler}{A \strong{function} with one argument that write's the content of
+the downloaded file. A temporary file is passed to the function, which is
+expected to write content (text, images, etc.) to the temporary file.}
 
 \item{domain}{A shiny session object, defaults to
 \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-An alternative to \code{downloadLink} and \code{downloadHelper}. \code{downloadEvent} allows
-a custom reactive event to trigger a download. Thus, a single handler may be
-used for a complex reactive input or widget.
+\code{downloadEvent} allows a custom reactive event to trigger a file
+download.
 }
-\examples{
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      textInput("name", "File name"),
-      buttonInput("trigger", "Download")
-    ),
-    server = function(input, output) {
-      downloadEvent(input$trigger, {
-        if (is.null(input$name)) {
-          "default"
-        } else {
-          input$name
-        }
-      }, function(file) {
-        cat("hello, world!", file = file)
-      })
-    }
-  )
+\section{Downloading a file}{
+\preformatted{shinyApp(
+  ui = container(
+    textInput("name", "File name"),
+    buttonInput("trigger", "Download")
+  ),
+  server = function(input, output) {
+    downloadEvent(input$trigger, {
+      if (is.null(input$name)) {
+        "default"
+      } else {
+        input$name
+      }
+    }, function(file) {
+      cat("hello, world!", file = file)
+    })
+  }
+)
+}
 }
 
+\seealso{
+Other utilities: \code{\link{collapse}},
+  \code{\link{markInvalid}}, \code{\link{showAlert}},
+  \code{\link{showPopover}}, \code{\link{updateChoices}}
 }
+\concept{utilities}
