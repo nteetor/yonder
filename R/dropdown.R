@@ -11,81 +11,88 @@
 #'   be grouped into lists to create a menu with sections. `h6()` is the
 #'   recommended heading level for menu headers. Character vectors are converted
 #'   into paragraphs of text. To format menu text use `p()` and utility
-#'   functions.  Named arguments are passed HTML attributes to the parent
+#'   functions. Named arguments are passed as HTML attributes to the parent
 #'   element.
 #'
 #' @param direction One of `"up"`, `"right"`, `"down"`, or `"left"` specifying
 #'   the direction in which the menu opens, defaults to `"down"`.
 #'
-#' @param split One of `TRUE` or `FALSE` specifying if the dropdown toggle button
-#'   is split into two distinct buttons, defaults to `FALSE`. This is a stylistic
-#'   modification which properly spaces the dropdown toggle icon and aligns the
-#'   dropdown menu to the toggle icon.
-#'
 #' @family content
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           dropdown(
-#'             label = "Dropdown",
-#'             split = TRUE,
-#'             formInput(
-#'               id = "login",
-#'               formGroup(
-#'                 label = "Email address",
-#'                 textInput(
-#'                   id = "email",
-#'                   placeholder = "email@example.com"
-#'                 )
-#'               ),
-#'               formGroup(
-#'                 label = "Password",
-#'                 passwordInput(
-#'                   id = "password",
-#'                   placeholder = "*****"
-#'                 )
-#'               ),
-#'               submit = submitInput(
-#'                 label = "Sign in"
-#'               )
-#'             ) %>%
-#'               padding(3, 4, 3, 4),
-#'             list(
-#'               buttonInput(
-#'                 id = "signup",
-#'                 label = "New? Sign up"
-#'               ),
-#'               buttonInput(
-#'                 id = "forgot",
-#'                 label = "Forgot password?"
-#'               )
-#'             )
-#'           )
-#'         ),
-#'         column(
-#'           verbatimTextOutput("values")
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$values <- renderPrint(
-#'         list(
-#'           email = input$email,
-#'           password = input$password,
-#'           signup = input$signup,
-#'           forgot = input$forgot
-#'         )
-#'       )
+#' ## Simple options w/ buttons
+#'
+#' dropdown(
+#'   label = "Choices",
+#'   buttonInput("choice1", "Choice 1"),
+#'   buttonInput("choice2", "Choice 2"),
+#'   buttonInput("choice3", "Choice 3")
+#' )
+#'
+#' ## Grouped sections
+#'
+#' dropdown(
+#'   label = "Sections",
+#'   list(
+#'     h6("Section 1"),
+#'     buttonInput("addA", "Add A"),
+#'     buttonInput("addB", "Add B")
+#'   ),
+#'   list(
+#'     h6("Section 2"),
+#'     buttonInput("calcC", "Calculate C"),
+#'     buttonInput("calcD", "Calculate D")
+#'   )
+#' )
+#'
+#' ## Direction variations
+#'
+#' div(
+#'   lapply(
+#'     c("up", "down", "left", "right"),
+#'     function(d) {
+#'       dropdown(
+#'         label = d,
+#'         direction = d,
+#'         buttonInput(NULL, "Nam euismod"),
+#'         buttonInput(NULL, "Nunc eleifend"),
+#'         buttonInput(NULL, "Nullam eu")
+#'       ) %>%
+#'         margin(3)
 #'     }
 #'   )
-#' }
+#' ) %>%
+#'   display("flex")
 #'
-dropdown <- function(label, ..., direction = "down", split = FALSE) {
+#' ## Include forms
+#'
+#' dropdown(
+#'   label = "Sign in",
+#'   formInput(
+#'     id = "login",
+#'     formGroup(
+#'       label = "Email address",
+#'       textInput(
+#'         id = "email",
+#'         placeholder = "email@example.com"
+#'       )
+#'     ),
+#'     formGroup(
+#'       label = "Password",
+#'       passwordInput(
+#'         id = "password",
+#'         placeholder = "*****"
+#'       )
+#'     ),
+#'     submit = submitInput(
+#'       label = "Sign in"
+#'     )
+#'   ) %>%
+#'     padding(3, 4, 3, 4)
+#' )
+#'
+dropdown <- function(label, ..., direction = "down") {
   if (!re(direction, "up|right|down|left", len0 = FALSE)) {
     stop(
       "invalid `dropdown` arguments, `direction` must be one of ",
@@ -97,7 +104,6 @@ dropdown <- function(label, ..., direction = "down", split = FALSE) {
   args <- dots_list(...)
   items <- elements(args)
   attrs <- attribs(args)
-  split <- as.logical(split)
 
   tags$div(
     class = collate(
@@ -108,14 +114,13 @@ dropdown <- function(label, ..., direction = "down", split = FALSE) {
       class = collate(
         "btn",
         "btn-grey",
-        "dropdown-toggle",
-        if (split) "dropdown-toggle-split"
+        "dropdown-toggle"
       ),
       type = "button",
       `data-toggle` = "dropdown",
       `aria-haspop` = "true",
       `aria-expanded` = "false",
-      if (!split) label else tags$span(class = "sr-only", "Dropdown toggle")
+      label
     ),
     tags$div(
       class = "dropdown-menu",
@@ -147,7 +152,7 @@ dropdownItem <- function(base) {
   }
 
   if (is.character(base)) {
-    return(lapply(base, tags$p, class = "text-muted"))
+    return(tagAppendChildren(tags$p(class = "text-muted"), list = base))
   }
 
   if (tagIs(base, "p")) {

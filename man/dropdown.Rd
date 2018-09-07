@@ -4,7 +4,7 @@
 \alias{dropdown}
 \title{Dropdown menus}
 \usage{
-dropdown(label, ..., direction = "down", split = FALSE)
+dropdown(label, ..., direction = "down")
 }
 \arguments{
 \item{label}{A character string specifying the label of the dropdown's
@@ -15,16 +15,11 @@ or form inputs specifying the elements of the dropdown. These elements may
 be grouped into lists to create a menu with sections. \code{h6()} is the
 recommended heading level for menu headers. Character vectors are converted
 into paragraphs of text. To format menu text use \code{p()} and utility
-functions.  Named arguments are passed HTML attributes to the parent
+functions. Named arguments are passed as HTML attributes to the parent
 element.}
 
 \item{direction}{One of \code{"up"}, \code{"right"}, \code{"down"}, or \code{"left"} specifying
 the direction in which the menu opens, defaults to \code{"down"}.}
-
-\item{split}{One of \code{TRUE} or \code{FALSE} specifying if the dropdown toggle button
-is split into two distinct buttons, defaults to \code{FALSE}. This is a stylistic
-modification which properly spaces the dropdown toggle icon and aligns the
-dropdown menu to the toggle icon.}
 }
 \description{
 Dropdown menus are a container for buttons, text, and form inputs. See
@@ -32,64 +27,76 @@ argument \code{...} for details on composing dropdown menus.
 }
 \examples{
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        column(
-          dropdown(
-            label = "Dropdown",
-            split = TRUE,
-            formInput(
-              id = "login",
-              formGroup(
-                label = "Email address",
-                textInput(
-                  id = "email",
-                  placeholder = "email@example.com"
-                )
-              ),
-              formGroup(
-                label = "Password",
-                passwordInput(
-                  id = "password",
-                  placeholder = "*****"
-                )
-              ),
-              submit = submitInput(
-                label = "Sign in"
-              )
-            ) \%>\%
-              padding(3, 4, 3, 4),
-            list(
-              buttonInput(
-                id = "signup",
-                label = "New? Sign up"
-              ),
-              buttonInput(
-                id = "forgot",
-                label = "Forgot password?"
-              )
-            )
-          )
-        ),
-        column(
-          verbatimTextOutput("values")
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$values <- renderPrint(
-        list(
-          email = input$email,
-          password = input$password,
-          signup = input$signup,
-          forgot = input$forgot
-        )
-      )
+## Simple options w/ buttons
+
+dropdown(
+  label = "Choices",
+  buttonInput("choice1", "Choice 1"),
+  buttonInput("choice2", "Choice 2"),
+  buttonInput("choice3", "Choice 3")
+)
+
+## Grouped sections
+
+dropdown(
+  label = "Sections",
+  list(
+    h6("Section 1"),
+    buttonInput("addA", "Add A"),
+    buttonInput("addB", "Add B")
+  ),
+  list(
+    h6("Section 2"),
+    buttonInput("calcC", "Calculate C"),
+    buttonInput("calcD", "Calculate D")
+  )
+)
+
+## Direction variations
+
+div(
+  lapply(
+    c("up", "down", "left", "right"),
+    function(d) {
+      dropdown(
+        label = d,
+        direction = d,
+        buttonInput(NULL, "Nam euismod"),
+        buttonInput(NULL, "Nunc eleifend"),
+        buttonInput(NULL, "Nullam eu")
+      ) \%>\%
+        margin(3)
     }
   )
-}
+) \%>\%
+  display("flex")
+
+## Include forms
+
+dropdown(
+  label = "Sign in",
+  formInput(
+    id = "login",
+    formGroup(
+      label = "Email address",
+      textInput(
+        id = "email",
+        placeholder = "email@example.com"
+      )
+    ),
+    formGroup(
+      label = "Password",
+      passwordInput(
+        id = "password",
+        placeholder = "*****"
+      )
+    ),
+    submit = submitInput(
+      label = "Sign in"
+    )
+  ) \%>\%
+    padding(3, 4, 3, 4)
+)
 
 }
 \seealso{
