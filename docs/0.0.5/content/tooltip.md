@@ -22,13 +22,16 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
+
       div(
         "The island of ",
         span("Yll") %>%
           tooltip("An island of south of the Commonwealth")
       )
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -37,10 +40,16 @@ roxygen:
               tooltip("How to know")
           ),
           server = function(input, output) {
+
           }
         )
       }
-    output:
-    - "<div>\n  The island of \n  <span data-toggle=\"tooltip\" data-placement=\"top\"
-      title=\"An island of south of the Commonwealth\">Yll</span>\n</div>"
+  - type: code
+    value:
+    - div("The island of ", span("Yll") %>% tooltip("An island of south of the Commonwealth"))
+    - |-
+      if (interactive()) {
+          shinyApp(ui = container(checkboxInput("add", "Add more") %>% display("inline-block") %>% tooltip("How to know")), server = function(input, output) {
+          })
+      }
 ---

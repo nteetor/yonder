@@ -24,14 +24,18 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Getting started
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Getting started</h2>
+  - type: source
+    value: |2-
+
       tags$div() %>%
         width(25) %>%
         height(100)
+
       tags$div() %>%
         width(max = 75)
-    output:
-    - <div class="w-25 h-100"></div>
-    - <div class="mw-75"></div>
+  - type: output
+    value: <div class="mw-75"></div>
 ---

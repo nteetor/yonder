@@ -38,8 +38,9 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -66,5 +67,13 @@ roxygen:
           }
         )
       }
-    output: []
+  - type: code
+    value: |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(selectInput(id = "select", choices = c("Choose one", "One", "Two", "Three"), values = list(NULL, 1, 2, 3), multiple = TRUE)), column(d4(textOutput("value"))))), server = function(input, output) {
+              output$value <- renderText({
+                  input$select
+              })
+          })
+      }
 ---

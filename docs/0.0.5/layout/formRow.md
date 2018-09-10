@@ -37,53 +37,81 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
-      # to see this example in action adjust your browser window
-      # from large to small, notice how the form elements expand?
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            center = TRUE,
-            card(
-              formRow(
-                formGroup(
-                  width = c(md = 6),
-                  label = "Email",
-                  emailInput(
-                    id = "email",
-                    placeholder = "e@mail.com"
-                  )
-                ),
-                formGroup(
-                  width = c(md = 6),
-                  label = "Password",
-                  passwordInput(
-                    id = "password",
-                    placeholder = "123456"
-                  ),
-                  help = "Please consider something better than 123456"
-                )
-              ),
-              formGroup(
-                label = "Username",
-                groupInput(
-                  id = "username",
-                  left = "@"
-                )
-              ),
-              buttonInput(
-                id = "go",
-                label = "Go!"
-              ) %>%
-                background("blue")
-            ) %>%
-              margin(3) %>%
-              background("grey")
+  - type: markdown
+    value: |
+      <h2>Grid layout forms</h2>
+  - type: markdown
+    value: |
+      <p>Use responsive arguments to adjust form layouts based on viewport size. Be sure to adjust the size of your browser window between large and small.</p>
+  - type: source
+    value: |2-
+
+      card(
+        formRow(
+          formGroup(
+            width = c(md = 6),  # <-
+            label = "Email",
+            emailInput(
+              id = "email",
+              placeholder = "e@mail.com"
+            )
           ),
-          server = function(input, output) {
-          }
-        )
-      }
-    output: []
+          formGroup(
+            width = c(md = 6),  # <-
+            label = "Password",
+            passwordInput(
+              id = "password",
+              placeholder = "123456"
+            ),
+            help = "Please consider something better than 123456"
+          )
+        ),
+        formGroup(
+          label = "Username",
+          groupInput(
+            id = "username",
+            left = "@"
+          )
+        ),
+        buttonInput(
+          id = "go",
+          label = "Go!"
+        ) %>%
+          background("blue")
+      ) %>%
+        margin(3) %>%
+        background("grey")
+  - type: output
+    value: |-
+      <div class="card m-3 bg-grey">
+        <div class="card-body">
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              Email
+              <div class="yonder-textual" id="email">
+                <input class="form-control" type="email" placeholder="e@mail.com"/>
+                <div class="invalid-feedback"></div>
+              </div>
+            </div>
+            <div class="form-group col-md-6">
+              Password
+              <div class="yonder-textual" id="password">
+                <input class="form-control" type="password" placeholder="123456"/>
+                <div class="invalid-feedback"></div>
+              </div>
+              <small class="form-text text-muted">Please consider something better than 123456</small>
+            </div>
+          </div>
+          <div class="form-group">
+            Username
+            <div class="yonder-group input-group" id="username">
+              <div class="input-group-prepend">
+                <span class="input-group-text">@</span>
+              </div>
+              <input type="text" class="form-control"/>
+            </div>
+          </div>
+          <button class="yonder-button btn btn-blue" type="button" role="button" id="go">Go!</button>
+        </div>
+      </div>
 ---

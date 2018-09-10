@@ -22,12 +22,14 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
+
       div("A simple banner") %>%
         width(100) %>%
         background("grey") %>%
         affix("top")
-    output:
-    - <div class="w-100 bg-grey fixed-top">A simple banner</div>
+  - type: output
+    value: <div class="w-100 bg-grey fixed-top">A simple banner</div>
 ---

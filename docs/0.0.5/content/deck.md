@@ -43,14 +43,18 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: A simple card
-    source: |-
+  - type: markdown
+    value: |
+      <h2>A simple card</h2>
+  - type: source
+    value: |2-
+
       column(
         width = 4,
         card("Praesent fermentum tempor tellus.")
       )
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="col-4">
         <div class="card">
           <div class="card-body">
@@ -58,8 +62,12 @@ roxygen:
           </div>
         </div>
       </div>
-  - title: Adding a title, subtitle
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Adding a title, subtitle</h2>
+  - type: source
+    value: |2-
+
       column(
         width = 4,
         card(
@@ -69,8 +77,8 @@ roxygen:
           "Nullam libero mauris, consequat quis, varius et, dictum id, arcu."
         )
       )
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="col-4">
         <div class="card">
           <div class="card-body">
@@ -81,8 +89,12 @@ roxygen:
           </div>
         </div>
       </div>
-  - title: Styling cards
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Styling cards</h2>
+  - type: source
+    value: |2-
+
       deck(
         card(
           header = div("Donec pretium posuere tellus") %>%
@@ -105,8 +117,8 @@ roxygen:
         ) %>%
             background("grey")
       )
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="card-deck">
         <div class="card">
           <div class="bg-teal card-header">Donec pretium posuere tellus</div>
@@ -131,8 +143,12 @@ roxygen:
           <div class="card-footer">Nam euismod tellus id erat.</div>
         </div>
       </div>
-  - title: Cards with list groups
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Cards with list groups</h2>
+  - type: source
+    value: |2-
+
       column(
         width = 4,
         card(
@@ -151,8 +167,8 @@ roxygen:
           )
         )
       )
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="col-4">
         <div class="card">
           <div class="yonder-list-group list-group list-group-flush" data-multiple="true" id="important">
@@ -162,8 +178,12 @@ roxygen:
           </div>
         </div>
       </div>
-  - title: Tabbed content in cards
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Tabbed content in cards</h2>
+  - type: source
+    value: |2-
+
       card(
         header = tabTabs(
           id = "example-card-tabs",
@@ -184,8 +204,8 @@ roxygen:
           )
         )
       )
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="card">
         <div class="card-header">
           <ul class="yonder-tabs nav nav-tabs card-header-tabs" role="tablist" id="example-card-tabs">

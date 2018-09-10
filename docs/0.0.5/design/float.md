@@ -21,8 +21,12 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Newspaper layout
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Newspaper layout</h2>
+  - type: source
+    value: |2-
+
       div(
         div() %>%
           padding(5) %>%
@@ -45,8 +49,8 @@ roxygen:
           "Sed id ligula quis est convallis tempor."
         )
       )
-    output:
-    - "<div>\n  <div class=\"p-5 mr-2 bg-amber float-left\"></div>\n  <p>\n    Fusce
+  - type: output
+    value: "<div>\n  <div class=\"p-5 mr-2 bg-amber float-left\"></div>\n  <p>\n    Fusce
       commodo. Nullam tempus. Nunc rutrum turpis sed pede.\n    Phasellus lacus.  Cras
       placerat accumsan nulla.\n    Fusce sagittis, libero non molestie mollis, \n
       \   magna orci ultrices dolor, at vulputate neque nulla lacinia eros.\n  </p>\n

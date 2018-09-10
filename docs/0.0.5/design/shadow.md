@@ -23,8 +23,12 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Styling a navbar
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Styling a navbar</h2>
+  - type: source
+    value: |2-
+
       div(
         navbar(brand = "Navbar") %>%
           background("cyan") %>%
@@ -37,19 +41,22 @@ roxygen:
           "venenatis vestibulum."
         )
       )
-    output:
-    - "<div>\n  <nav class=\"navbar navbar-expand-lg navbar-light bg-cyan shadow-sm
+  - type: output
+    value: "<div>\n  <nav class=\"navbar navbar-expand-lg navbar-light bg-cyan shadow-sm
       mb-3\">\n    <a class=\"navbar-brand\" href=\"#\">Navbar</a>\n    <button class=\"navbar-toggler\"
-      type=\"button\" data-toggle=\"collapse\" data-target=\"#navContent-566-447\"
-      aria-controls=\"navContent-566-447\" aria-expanded=\"false\" aria-label=\"Toggle
-      navigation\">\n      <i class=\"fas fa-bars fa-fw\"></i>\n    </button>\n    <div
-      class=\"collapse navbar-collapse\" id=\"navContent-566-447\"></div>\n  </nav>\n
-      \ <p>\n    Cras mattis consectetur purus sit amet fermentum. Donec sed \n    odio
-      dui. Lorem ipsum dolor sit amet, consectetur adipiscing \n    elit. Aenean eu
-      leo quam. Pellentesque ornare sem lacinia quam \n    venenatis vestibulum.\n
-      \ </p>\n</div>"
-  - title: Different shadows
-    source: |-
+      type=\"button\" data-toggle=\"collapse\" data-target=\"#navContent-83-51\" aria-controls=\"navContent-83-51\"
+      aria-expanded=\"false\" aria-label=\"Toggle navigation\">\n      <i class=\"fas
+      fa-bars fa-fw\"></i>\n    </button>\n    <div class=\"collapse navbar-collapse\"
+      id=\"navContent-83-51\"></div>\n  </nav>\n  <p>\n    Cras mattis consectetur
+      purus sit amet fermentum. Donec sed \n    odio dui. Lorem ipsum dolor sit amet,
+      consectetur adipiscing \n    elit. Aenean eu leo quam. Pellentesque ornare sem
+      lacinia quam \n    venenatis vestibulum.\n  </p>\n</div>"
+  - type: markdown
+    value: |
+      <h2>Different shadows</h2>
+  - type: source
+    value: |2-
+
       div(
         lapply(
           c("small", "regular", "large"),
@@ -60,8 +67,8 @@ roxygen:
         )
       ) %>%
         display("flex")
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="d-flex">
         <div class="p-5 m-2 shadow-sm"></div>
         <div class="p-5 m-2 shadow"></div>

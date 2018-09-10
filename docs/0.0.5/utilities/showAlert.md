@@ -37,8 +37,10 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -53,6 +55,7 @@ roxygen:
           }
         )
       }
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -72,17 +75,45 @@ roxygen:
           ),
           server = function(input, output) {
             oldValue <- NULL
+
             output$value <- renderPrint(input$text)
+
             observeEvent(input$clear, {
               oldValue <<- input$text
               updateValues("text", "")
               showAlert("Undo clear.", color = "yellow", action = "undo")
             })
+
             observeEvent(input$undo, {
               updateValues("text", oldValue)
             })
           }
         )
       }
-    output: []
+  - type: code
+    value:
+    - |-
+      if (interactive()) {
+          shinyApp(ui = container(buttonInput("show", "Alert!") %>% margin(3)), server = function(input, output) {
+              observeEvent(input$show, {
+                  color <- sample(c("teal", "red", "orange", "blue"), 1)
+                  showAlert("Alert", color = color)
+              })
+          })
+      }
+    - |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(groupInput(id = "text", right = buttonInput("clear", icon("times")) %>% background("red"))), column(verbatimTextOutput("value"))) %>% margin(3)), server = function(input, output) {
+              oldValue <- NULL
+              output$value <- renderPrint(input$text)
+              observeEvent(input$clear, {
+                  oldValue <<- input$text
+                  updateValues("text", "")
+                  showAlert("Undo clear.", color = "yellow", action = "undo")
+              })
+              observeEvent(input$undo, {
+                  updateValues("text", oldValue)
+              })
+          })
+      }
 ---

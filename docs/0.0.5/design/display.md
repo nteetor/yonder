@@ -25,13 +25,15 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
+
       display(div(), render = c(xs = "none", md = "block"))
+
       display(div(), render = c(xs = "inline", sm = "block"))
+
       display(div(), print = "none")
-    output:
-    - <div class="d-none d-md-block"></div>
-    - <div class="d-inline d-sm-block"></div>
-    - <div class="d-print-none"></div>
+  - type: output
+    value: <div class="d-print-none"></div>
 ---

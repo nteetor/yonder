@@ -38,8 +38,10 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -52,5 +54,13 @@ roxygen:
           }
         )
       }
-    output: []
+  - type: code
+    value: |-
+      if (interactive()) {
+          shinyApp(ui = container(sparklineOutput("bars")), server = function(input, output) {
+              output$bars <- renderSparkline({
+                  c(30, 20, 44, 50, 90)
+              })
+          })
+      }
 ---

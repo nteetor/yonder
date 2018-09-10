@@ -35,19 +35,23 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Start checked
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Start checked</h2>
+  - type: source
+    value: |2-
+
       checkboxInput(
         id = NULL,
         choice = "Suspendisse potenti",
         checked = TRUE
       )
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="yonder-checkbox">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-560-466" data-value="Suspendisse potenti" checked/>
-          <label class="custom-control-label" for="checkbox-560-466">Suspendisse potenti</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-4-423" data-value="Suspendisse potenti" checked/>
+          <label class="custom-control-label" for="checkbox-4-423">Suspendisse potenti</label>
           <div class="invalid-feedback"></div>
           <div class="valid-feedback"></div>
         </div>

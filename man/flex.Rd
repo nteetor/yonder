@@ -4,11 +4,11 @@
 \alias{flex}
 \title{Flex layout}
 \usage{
-flex(tag, direction = NULL, reverse = NULL, justify = NULL,
+flex(.tag, direction = NULL, reverse = NULL, justify = NULL,
   align = NULL, wrap = NULL)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{.tag}{A tag element.}
 
 \item{direction}{A \link{responsive} argument. One of \code{"row"} or \code{"column"}
 specifying the placement of flex items, defaults to \code{NULL}. If \code{"row"}
@@ -31,7 +31,7 @@ defaults to \code{NULL}. See the \strong{align} section below for more on how th
 different values affect vertical spacing.}
 
 \item{wrap}{A \link{responsive} argument. One of \code{TRUE} or \code{FALSE} specifying
-whether to wrap flex items inside the flex containter, \code{tag}, defaults
+whether to wrap flex items inside the flex containter, \code{.tag}, defaults
 to \code{NULL}. If \code{TRUE} items wrap inside the container, if \code{FALSE} items will
 not wrap. See the \strong{wrap} section below for more.}
 }
@@ -41,14 +41,16 @@ items or child tag elements. For more on turning a tag element into a flex
 container see \code{\link[=display]{display()}}. By default tag elements within a flex container
 are treated as flex items.
 }
-\section{\code{direction}}{
+\examples{
 
+### Different `direction`s
 
-Because horizontal placement the browser default you may not often use
-\code{flex(.., direction = "row")}.  The responsive arguments are potentially more
-useful as shown in the following example. On small screens the flex items are
-placed vertically and can occupy the full width of the mobile device. On
-medium or larger screens the items are placed horizontally once again.\preformatted{div(
+# Many of `flex()`'s arguments are viewport responsive and below we will see
+# how useful this can be. On small screens the flex items are placed
+# vertically and can occupy the full width of the mobile device. On medium
+# or larger screens the items are placed horizontally once again.
+
+div(
   div("A flex item") \%>\%
     padding(3) \%>\%
     border(),
@@ -61,14 +63,16 @@ medium or larger screens the items are placed horizontally once again.\preformat
 ) \%>\%
   display("flex") \%>\%
   flex(
-    direction = list(xs = "column", md = "row")
+    direction = list(xs = "column", md = "row")  # <==
   ) \%>\%
   background("grey") \%>\%
   border()
-}
 
-Here is a simpler example of a flex container with its children placed into
-columns.\preformatted{div(
+# *Resize the browser for this example.*
+
+# You can keep items as a column by specifying only `"column"`.
+
+div(
   div("A flex item") \%>\%
     padding(3) \%>\%
     border(),
@@ -80,82 +84,100 @@ columns.\preformatted{div(
      border()
 ) \%>\%
   display("flex") \%>\%
-  flex(direction = "column")
-}
-}
+  flex(direction = "column")  # <-
 
-\section{\code{justify}}{
+### Spacing items with `justify`
 
+# Below is a series of examples showing how to change the horizontal
+# alignment of your flex items. Let's start by pushing items to the
+# beginning of their parent container.
 
-Below you can see how the possible \code{justify} values change the horizontal
-spacing of items within a flex container element.
+div(
+  replicate(
+    div("A flex item") \%>\%
+      padding(3) \%>\%
+      border(),
+    n = 5,
+    simplify = FALSE
+  )
+) \%>\%
+  display("flex") \%>\%
+  flex(justify = "start")  # <-
 
-\code{"start"}
+# We can also push items to the **end**.
 
-\code{| Item 1 | Item 2 | Item 3 | ================= |}
+div(
+  replicate(
+    div("A flex item") \%>\%
+      padding(3) \%>\%
+      border(),
+    n = 5,
+    simplify = FALSE
+  )
+) \%>\%
+  display("flex") \%>\%
+  flex(justify = "end")  # <-
 
-\code{"end"}
+# Without using a table layout we can **center** items.
 
-\code{| ================= | Item 1 | Item 2 | Item 3 |}
+div(
+  replicate(
+    div("A flex item") \%>\%
+      padding(3) \%>\%
+      border(),
+    n = 5,
+    simplify = FALSE
+  )
+) \%>\%
+  display("flex") \%>\%
+  flex(justify = "center")  # <-
 
-\code{"center"}
+# You can also put space **between** items
 
-\code{| ======= | Item 1 | Item 2 | Item 3 | ======= |}
+div(
+  replicate(
+    div("A flex item") \%>\%
+      padding(3) \%>\%
+      border(),
+    n = 5,
+    simplify = FALSE
+  )
+) \%>\%
+  display("flex") \%>\%
+  flex(justify = "between")  # <-
 
-\code{"between"}
+# ... or put space **around** items.
 
-\code{| Item 1 | ======= | Item 2 | ======= | Item 3 |}
+div(
+  replicate(
+    div("A flex item") \%>\%
+      padding(3) \%>\%
+      border(),
+    n = 5,
+    simplify = FALSE
+  )
+) \%>\%
+  display("flex") \%>\%
+  flex(justify = "around")  # <-
 
-\code{"around"}
+# *The "between" and "around" values come from the original CSS values
+# "space-between" and "space-around".*
 
-\code{| == | Item 1 | == | Item 2 | == | Item 3 | == |}
-}
+### Wrap onto new lines
 
-\section{\code{align}}{
+# Using flexbox we can also control how items wrap onto new lines.
 
-
-Below you can see how the possible \code{align} values change the vertial spacing
-of items within a flex container element.
-
-\strong{\code{"start"}}\preformatted{| Item 1 | Item 2 | Item 3 | ================== |
-|        |        |        |                    |
-|        |        |        |                    |
-}
-
-\strong{\code{"end"}},\preformatted{|        |        |        |                    |
-|        |        |        |                    |
-| Item 1 | Item 2 | Item 3 | ================== |
-}
-
-\strong{\code{"center"}}\preformatted{|        |        |        |                    |
-| Item 1 | Item 2 | Item 3 | ================== |
-|        |        |        |                    |
-}
-
-\strong{\code{"baseline"}}\preformatted{| Item 1 | Item 2 | Item 3 | ================== |
-|        |        |        |                    |
-|        |        |        |                    |
-}
-
-\strong{\code{"stretch"}}\preformatted{| It     | It     | It     | ================== |
-|   em   |   em   |   em   |                    |
-|      1 |      2 |      3 |                    |
-}
-}
-
-\section{\code{wrap}}{
-
-
-\strong{\code{FALSE}}\preformatted{| Item | Item | Item | Item | Item | Item |
-| 1    | 2    | 3    | 4    | 5    | 6    |
-}
-
-\strong{\code{TRUE}}\preformatted{| Item 1 | Item 2 | Item 3 | Item 4 | === |
-| Item 5 | Item 6 | ===================== |
-}
-}
-
-\examples{
+div(
+  replicate(
+    div("A flex item") \%>\%
+      padding(3) \%>\%
+      border(),
+    n = 5,
+    simplify = FALSE
+  )
+) \%>\%
+  display("flex") \%>\%
+  flex(wrap = TRUE)
 
 }
 \seealso{

@@ -19,8 +19,9 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -39,8 +40,17 @@ roxygen:
             output$value <- renderPrint({
               input$login
             })
+
           }
         )
       }
-    output: []
+  - type: code
+    value: |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(loginInput(id = "login")), column(verbatimTextOutput("value")))), server = function(input, output) {
+              output$value <- renderPrint({
+                  input$login
+              })
+          })
+      }
 ---

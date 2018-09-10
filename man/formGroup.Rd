@@ -35,60 +35,49 @@ applications for devices and screens of varying sizes.
 }
 \examples{
 
-# to see this example in action adjust your browser window
-# from large to small, notice how the form elements expand?
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      center = TRUE,
-      card(
-        formRow(
-          formGroup(
-            width = c(md = 6),
-            label = "Email",
-            emailInput(
-              id = "email",
-              placeholder = "e@mail.com"
-            )
-          ),
-          formGroup(
-            width = c(md = 6),
-            label = "Password",
-            passwordInput(
-              id = "password",
-              placeholder = "123456"
-            ),
-            help = "Please consider something better than 123456"
-          )
-        ),
-        formGroup(
-          label = "Username",
-          groupInput(
-            id = "username",
-            left = "@"
-          )
-        ),
-        buttonInput(
-          id = "go",
-          label = "Go!"
-        ) \%>\%
-          background("blue")
-      ) \%>\%
-        margin(3) \%>\%
-        background("grey")
+## Grid layout forms
 
+# Use responsive arguments to adjust form layouts based on viewport size.
+# Be sure to adjust the size of your browser window between large and small.
+
+card(
+  formRow(
+    formGroup(
+      width = c(md = 6),  # <-
+      label = "Email",
+      emailInput(
+        id = "email",
+        placeholder = "e@mail.com"
+      )
     ),
-    server = function(input, output) {
-    }
-  )
-}
+    formGroup(
+      width = c(md = 6),  # <-
+      label = "Password",
+      passwordInput(
+        id = "password",
+        placeholder = "123456"
+      ),
+      help = "Please consider something better than 123456"
+    )
+  ),
+  formGroup(
+    label = "Username",
+    groupInput(
+      id = "username",
+      left = "@"
+    )
+  ),
+  buttonInput(
+    id = "go",
+    label = "Go!"
+  ) \%>\%
+    background("blue")
+) \%>\%
+  margin(3) \%>\%
+  background("grey")
 
 }
 \seealso{
-Other layout: \code{\link{column}}, \code{\link{fieldset}},
-  \code{\link{flex}}, \code{\link{navbar}},
-  \code{\link{tabTabs}}
-
 Other layout: \code{\link{column}}, \code{\link{fieldset}},
   \code{\link{flex}}, \code{\link{navbar}},
   \code{\link{tabTabs}}

@@ -48,8 +48,9 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -81,5 +82,13 @@ roxygen:
           }
         )
       }
-    output: []
+  - type: code
+    value: |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(radioInput(id = "radio", choices = c("(A) Ice cream", "(B) Pumpkin pie", "(C) 3 turtle doves", "(D) (A) and (C)", "(E) All of the above"), values = LETTERS[1:5])), column(d4(textOutput("selected"))))), server = function(input, output) {
+              output$selected <- renderText({
+                  input$radio
+              })
+          })
+      }
 ---

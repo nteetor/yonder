@@ -24,7 +24,7 @@
 #' @param ... Additional named arguments passed as HTML attributes to the
 #'   parent element.
 #'
-#' @details
+#' @section `left` and `right` combinations:
 #'
 #' **`left` is character or `right` is character**
 #'
@@ -50,117 +50,48 @@
 #' @family inputs
 #' @export
 #' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           groupInput(
-#'             id = "buttongroup",
-#'             left = "@",
-#'             placeholder = "Username"
-#'           )
-#'         ),
-#'         column(
-#'           d4(
-#'             textOutput("value")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$value <- renderText({
-#'         input$buttongroup
-#'       })
-#'     }
-#'   )
-#' }
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           groupInput(
-#'             id = "groupinput",
-#'             placeholder = "Search terms",
-#'             right = buttonInput(
-#'               id = "button",
-#'               label = "Go!"
-#'             )
-#'           )
-#'         ),
-#'         column(
-#'           d4(
-#'             textOutput("value")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$value <- renderText({
-#'         input$groupinput
-#'       })
-#'     }
-#'   )
-#' }
+#' ## Simple character string addon
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           groupInput(
-#'             id = "groupinput",
-#'             left = c("$", "0.")
-#'           )
-#'         ),
-#'         column(
-#'           d4(
-#'             textOutput("value")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$value <- renderText({
-#'         input$groupinput
-#'       })
-#'     }
-#'   )
-#' }
+#' # This input will always append a "@".
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           groupInput(
-#'             id = "groupinput",
-#'             left = "@",
-#'             placeholder = "Username",
-#'             right = buttonInput(
-#'               id = "right",
-#'               label = "Search"
-#'             ) %>%
-#'               background("transparent") %>%
-#'               border("blue")
-#'           )
-#'         ),
-#'         column(
-#'           d4(
-#'             textOutput("value")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$value <- renderText({
-#'         input$groupinput
-#'       })
-#'     }
+#' groupInput(
+#'   id = NULL,
+#'   left = "@",
+#'   placeholder = "Username"
+#' )
+#'
+#' ## Text input and button combo
+#'
+#' groupInput(
+#'   id = NULL,
+#'   placeholder = "Search terms",
+#'   right = buttonInput(
+#'     id = "button",
+#'     label = "Go!"
 #'   )
-#' }
+#' )
+#'
+#' ## Combination addon
+#'
+#' groupInput(
+#'   id = NULL,
+#'   left = c("$", "0.")
+#' )
+#'
+#' ## Two addons
+#'
+#' groupInput(
+#'   id = NULL,
+#'   left = "@",
+#'   placeholder = "Username",
+#'   right = buttonInput(
+#'     id = NULL,
+#'     label = "Search"
+#'   ) %>%
+#'     background("transparent") %>%
+#'     border("blue")
+#' )
 #'
 groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
                        right = NULL, ...) {

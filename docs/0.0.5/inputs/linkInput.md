@@ -38,33 +38,52 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Simple vs block button
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Simple vs block button</h2>
+  - type: source
+    value: |2-
+
       buttonInput(
         id = NULL,
         label = "Simple"
       ) %>%
         background("green")
-      # Block buttons will fill the width of their parent element
+  - type: output
+    value: <button class="yonder-button btn btn-green" type="button" role="button">Simple</button>
+  - type: markdown
+    value: |
+      <p>Block buttons will fill the width of their parent element</p>
+  - type: source
+    value: |-
       buttonInput(
         id = NULL,
         label = "Block",
         block = TRUE
       ) %>%
         background("red")
-    output:
-    - <button class="yonder-button btn btn-green" type="button" role="button">Simple</button>
-    - <button class="yonder-button btn btn-block btn-red" type="button" role="button">Block</button>
-  - title: A submit button
-    source: submitInput()
-    output:
-    - <button class="yonder-submit btn btn-blue" data-type="submit" role="button">Submit</button>
-  - title: Possible colors
-    source: |-
+  - type: output
+    value: <button class="yonder-button btn btn-block btn-red" type="button" role="button">Block</button>
+  - type: markdown
+    value: |
+      <h2>A submit button</h2>
+  - type: source
+    value: |2-
+
+      submitInput()
+  - type: output
+    value: <button class="yonder-submit btn btn-blue" data-type="submit" role="button">Submit</button>
+  - type: markdown
+    value: |
+      <h2>Possible colors</h2>
+  - type: source
+    value: |2-
+
       colors <- c(
         "red", "purple", "indigo", "blue", "cyan", "teal", "green",
         "yellow", "amber", "orange", "grey"
       )
+
       div(
         lapply(
           colors,
@@ -80,8 +99,8 @@ roxygen:
       ) %>%
         display("flex") %>%
         flex(wrap = TRUE)
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="d-flex flex-wrap">
         <button class="yonder-button btn btn-red m-2" type="button" role="button">red</button>
         <button class="yonder-button btn btn-purple m-2" type="button" role="button">purple</button>

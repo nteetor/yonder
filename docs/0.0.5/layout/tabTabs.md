@@ -46,13 +46,16 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
+
       tabTabs(
         id = "myTabs",
         labels = c("Home", "About", "Posts"),
         values = c("home", "about", "blog")
       )
+
       tabContent(
         tabs = "myTabs",
         tabPane(
@@ -64,6 +67,8 @@ roxygen:
           tags$p("Magna Aenean Mattis Ultricies Ridiculus")
         )
       )
+
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -99,6 +104,8 @@ roxygen:
           }
         )
       }
+
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -151,9 +158,11 @@ roxygen:
               padding(3)
           ),
           server = function(input, output) {
+
           }
         )
       }
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -185,31 +194,49 @@ roxygen:
             )
           ),
           server = function(input, output) {
+
           }
         )
       }
-    output:
+  - type: code
+    value:
+    - tabTabs(id = "myTabs", labels = c("Home", "About", "Posts"), values = c("home",
+      "about", "blog"))
+    - tabContent(tabs = "myTabs", tabPane(tags$h1("Pane 1"), tags$p("Lorem Dapibus
+      Malesuada Cras Cursus")), tabPane(tags$h1("Pane 2"), tags$p("Magna Aenean Mattis
+      Ultricies Ridiculus")))
+    - "if (interactive()) {\n    shinyApp(ui = container(card(header = tabTabs(id
+      = \"tabs\", labels = c(\"Home\", \"Profile\", \"Contact\"), ), tabContent(tabs
+      = \"tabs\", tabPane(\"Vestibulum id ligula porta felis euismod semper. Cras
+      justo\\n             odio, dapibus ac facilisis in, egestas eget quam.\"), tabPane(\"Duis
+      mollis, est non commodo luctus, nisi erat porttitor ligula,\\n             eget
+      lacinia odio sem nec elit. Aenean eu leo quam. Pellentesque\\n             ornare
+      sem lacinia quam venenatis vestibulum.\"), tabPane(\"Donec ullamcorper nulla
+      non metus auctor fringilla. Nullam id\\n             dolor id nibh ultricies
+      vehicula ut id elit.\"))) %>% \n        margin(4) %>% width(50)), server = function(input,
+      output) {\n        observe({\n            showAlert(input$tabs, duration = 2,
+      color = \"grey\")\n        })\n    })\n}"
+    - "if (interactive()) {\n    shinyApp(ui = container(row(column(default = 4, card(p(\"Nullam
+      quis risus eget urna mollis ornare vel eu leo. Nullam\\n            id dolor
+      id nibh ultricies vehicula ut id elit.\")) %>% background(\"grey\")), column(tabTabs(id
+      = \"myTabs\", labels = c(\"Home\", \"About\", \"Posts\")) %>% margin(bottom
+      = 5), tabContent(tabs = \"myTabs\", tabPane(h4(\"This is home.\"), p(\"Pellentesque
+      dapibus suscipit ligula.  Donec \", \"posuere augue in quam.  Etiam vel tortor
+      \", \"sodales tellus ultricies commodo.  Suspendisse \", \n        \"potenti.
+      \ Aenean in sem ac leo mollis blandit.\"), p(\"Donec neque quam, dignissim in,
+      mollis nec, \", \"sagittis eu, wisi.  Phasellus lacus.  Etiam \", \"laoreet
+      quam sed arcu.  Phasellus at dui in ligula\", \"mollis ultricies.  Integer placerat
+      tristique nisl.\")), tabPane(h4(\"All about.\"), p(\"Pellentesque dapibus suscipit
+      ligula. \", \"Phasellus neque orci, porta a, aliquet quis, semper a, massa.
+      \", \"Nullam tristique diam non turpis. \", \"Lorem ipsum dolor sit amet, consectetuer
+      adipiscing elit.\")), \n        tabPane(h4(\"Blog items.\"), p(\"Nullam tempus.
+      \ Mauris ac felis vel velit \", \"tristique imperdiet.  Donec at pede.  Etiam
+      vel \", \"neque nec dui dignissim bibendum.  Vivamus id \", \"enim.  Phasellus
+      neque orci, porta a, aliquet \", \"quis, semper a, massa.  Phasellus purus.\")))))
+      %>% padding(3)), server = function(input, output) {\n    })\n}"
     - |-
-      <ul class="yonder-tabs nav nav-tabs" role="tablist" id="myTabs">
-        <li class="nav-item">
-          <a class="nav-link active" data-tabs="tab" data-value="home" aria-selected="true">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-tabs="tab" data-value="about" aria-selected="false">About</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" data-tabs="tab" data-value="blog" aria-selected="false">Posts</a>
-        </li>
-      </ul>
-    - |-
-      <div class="tab-content" data-tabs="myTabs">
-        <div class="tab-pane fade" role="tab-panel">
-          <h1>Pane 1</h1>
-          <p>Lorem Dapibus Malesuada Cras Cursus</p>
-        </div>
-        <div class="tab-pane fade" role="tab-panel">
-          <h1>Pane 2</h1>
-          <p>Magna Aenean Mattis Ultricies Ridiculus</p>
-        </div>
-      </div>
+      if (interactive()) {
+          shinyApp(ui = container(tabTabs(id = "toplevel", labels = c("Home", "Explore")), tabContent(tabs = "toplevel", tabPane(card(header = tabTabs(id = "cardtabs", labels = c("This", "That", "Other")), tabContent(tabs = "cardtabs", tabPane(p("A card")), tabPane(), tabPane()))), tabPane(p("Another tab")))), server = function(input, output) {
+          })
+      }
 ---

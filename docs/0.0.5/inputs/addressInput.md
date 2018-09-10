@@ -20,8 +20,9 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -43,5 +44,13 @@ roxygen:
           }
         )
       }
-    output: []
+  - type: code
+    value: |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(tags$form(addressInput("address"))), column(verbatimTextOutput("value")))), server = function(input, output) {
+              output$value <- renderPrint({
+                  input$address
+              })
+          })
+      }
 ---

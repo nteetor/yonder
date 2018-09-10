@@ -25,10 +25,15 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Making an element collapsible
-    source: |-
-      # On the server side you will need to call `hideCollapse` or
-      # `toggleCollapse`
+  - type: markdown
+    value: |
+      <h2>Making an element collapsible</h2>
+  - type: markdown
+    value: |
+      <p>On the server side you will need to call <code>hideCollapse</code> or <code>toggleCollapse</code></p>
+  - type: source
+    value: |2-
+
       card(
         '"The Time Traveller (for so it will be convenient to speak
           of him) was expounding a recondite matter to us. His grey eyes
@@ -39,8 +44,8 @@ roxygen:
       ) %>%
         background("grey") %>%
         collapse("an-html-id")  # pass this id to the `*Collapse` function
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="card bg-grey" data-collapse-id="an-html-id">
         <div class="card-body">
           <p class="card-text">"The Time Traveller (for so it will be convenient to speak

@@ -28,8 +28,9 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -53,5 +54,18 @@ roxygen:
           }
         )
       }
-    output: []
+  - type: code
+    value: |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(spinnerOutput("spin", pulse = TRUE), buttonInput("trigger", "Start/stop")) %>% display("flex") %>% flex(justify = "around"))), server = function(input, output) {
+              observeEvent(input$trigger, {
+                  if (input$trigger%%2 == 1) {
+                      startSpinner("spin")
+                  }
+                  else {
+                      stopSpinner("spin")
+                  }
+              })
+          })
+      }
 ---

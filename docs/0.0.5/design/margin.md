@@ -83,11 +83,18 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Getting started
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Getting started</h2>
+  - type: source
+    value: |2-
+
       padding(div(), c(xs = 0, sm = 2, lg = 4))
+
       margin(div(), right = c(md = "auto"))
+
       margin(div(), bottom = 3, left = 1)
+
       div(
         div() %>%
           margin(4) %>%
@@ -95,11 +102,8 @@ roxygen:
           background("grey") %>%
           border()
       )
-    output:
-    - <div class="p-0 p-sm-2 p-lg-4"></div>
-    - <div class="mr-md-auto"></div>
-    - <div class="mb-3 ml-1"></div>
-    - |-
+  - type: output
+    value: |-
       <div>
         <div class="m-4 p-4 bg-grey border"></div>
       </div>

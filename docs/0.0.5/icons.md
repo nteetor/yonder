@@ -12,7 +12,10 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: icons
-    output: []
+  - type: source
+    value: |2-
+
+      icons
+  - type: code
+    value: icons
 ---

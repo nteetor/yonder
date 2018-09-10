@@ -24,8 +24,12 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Landing page welcome
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Landing page welcome</h2>
+  - type: source
+    value: |2-
+
       jumbotron(
         title = "Welcome, welcome!",
         subtitle = "This simple jumbotron-style component calls attention to a new feature",
@@ -34,8 +38,8 @@ roxygen:
           "The best."
         )
       )
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="jumbotron">
         <h1 class="display-3">Welcome, welcome!</h1>
         <p class="lead">This simple jumbotron-style component calls attention to a new feature</p>

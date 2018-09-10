@@ -35,12 +35,17 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Possible colors
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Possible colors</h2>
+  - type: source
+    value: |2-
+
       colors <- c(
         "red", "purple", "indigo", "blue", "cyan", "teal", "green",
         "yellow", "amber", "orange", "body", "grey", "white"
       )
+
       div(
         lapply(
           head(colors, -1),
@@ -51,8 +56,8 @@ roxygen:
       ) %>%
         display("flex") %>%
         flex(wrap = TRUE)
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="d-flex flex-wrap">
         <div class="p-5 text-red">Pellentesque tristique imperdiet tortor.</div>
         <div class="p-5 text-purple">Pellentesque tristique imperdiet tortor.</div>

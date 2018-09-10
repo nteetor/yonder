@@ -36,8 +36,9 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -63,6 +64,7 @@ roxygen:
           }
         )
       }
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -83,15 +85,38 @@ roxygen:
                   id = "slower",
                   value = i
                 )
+
                 sendBar(
                   id = "faster",
                   value = min(i * 3, 50)
                 )
+
                 Sys.sleep(0.1)
               }
             })
           }
         )
       }
-    output: []
+  - type: code
+    value:
+    - |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(buttonInput(id = "inc", "Increment progress")), column(progressOutput(bar("clicks", 0, striped = TRUE) %>% background("blue"))))), server = function(input, output) {
+              observeEvent(input$inc, {
+                  sendBar(id = "clicks", value = min(input$inc/20 * 100, 100))
+              })
+          })
+      }
+    - |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(progressOutput(bar(id = "faster", value = 0) %>% background("yellow"), bar(id = "slower", value = 0))))), server = function(input, output) {
+              observe({
+                  for (i in seq(from = 0, to = 50, by = 1)) {
+                      sendBar(id = "slower", value = i)
+                      sendBar(id = "faster", value = min(i * 3, 50))
+                      Sys.sleep(0.1)
+                  }
+              })
+          })
+      }
 ---

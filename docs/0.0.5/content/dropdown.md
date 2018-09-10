@@ -31,16 +31,20 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Simple options w/ buttons
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Simple options w/ buttons</h2>
+  - type: source
+    value: |2-
+
       dropdown(
         label = "Choices",
         buttonInput("choice1", "Choice 1"),
         buttonInput("choice2", "Choice 2"),
         buttonInput("choice3", "Choice 3")
       )
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="dropdown">
         <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Choices</button>
         <div class="dropdown-menu">
@@ -49,8 +53,12 @@ roxygen:
           <button class="yonder-button dropdown-item" type="button" role="button" id="choice3">Choice 3</button>
         </div>
       </div>
-  - title: Grouped sections
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Grouped sections</h2>
+  - type: source
+    value: |2-
+
       dropdown(
         label = "Sections",
         list(
@@ -64,8 +72,8 @@ roxygen:
           buttonInput("calcD", "Calculate D")
         )
       )
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="dropdown">
         <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Sections</button>
         <div class="dropdown-menu">
@@ -78,8 +86,12 @@ roxygen:
           <button class="yonder-button dropdown-item" type="button" role="button" id="calcD">Calculate D</button>
         </div>
       </div>
-  - title: Direction variations
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Direction variations</h2>
+  - type: source
+    value: |2-
+
       div(
         lapply(
           c("up", "down", "left", "right"),
@@ -96,8 +108,8 @@ roxygen:
         )
       ) %>%
         display("flex")
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="d-flex">
         <div class="dropdown dropup m-3">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">up</button>
@@ -132,8 +144,12 @@ roxygen:
           </div>
         </div>
       </div>
-  - title: Include forms
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Include forms</h2>
+  - type: source
+    value: |2-
+
       dropdown(
         label = "Sign in",
         formInput(
@@ -158,8 +174,8 @@ roxygen:
         ) %>%
           padding(3, 4, 3, 4)
       )
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="dropdown">
         <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Sign in</button>
         <div class="dropdown-menu">

@@ -57,8 +57,10 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -70,9 +72,11 @@ roxygen:
             )
           ),
           server = function(input, output) {
+
           }
         )
       }
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -114,11 +118,14 @@ roxygen:
                 display("flex") %>%
                 flex(justify = "between", align = "center")
             )
+
             output$badge1 <- renderBadge(input$num)
             output$badge2 <- renderBadge(input$num)
           }
         )
       }
+
+
       lessons <- list(
         stars = c(
           "The stars and moon are far too bright",
@@ -133,6 +140,7 @@ roxygen:
           "And within a truth was found"
         )
       )
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -169,5 +177,33 @@ roxygen:
           }
         )
       }
-    output: []
+  - type: code
+    value:
+    - |-
+      if (interactive()) {
+          shinyApp(ui = container(listGroupThruput(id = NULL, listGroupItem(rangeInput("slider1")))), server = function(input, output) {
+          })
+      }
+    - |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(default = 3, listGroupThruput(id = "thrulist")), column(rangeInput(id = "num", min = 0, max = 20, step = 2), sliderInput(id = "level", choices = c("red", "orange", "green", "cyan"))))), server = function(input, output) {
+              output$thrulist <- renderListGroup(listGroupItem("Cras justo odio", badgeOutput("badge1", 0) %>% background(input$level)) %>% display("flex") %>% flex(justify = "between", align = "center"), listGroupItem("Dapibus ac facilisis in", badgeOutput("badge2", 0) %>% background(input$level)) %>% display("flex") %>% flex(justify = "between", align = "center"))
+              output$badge1 <- renderBadge(input$num)
+              output$badge2 <- renderBadge(input$num)
+          })
+      }
+    - lessons <- list(stars = c("The stars and moon are far too bright", "Their beam
+      and smile splashing o'er all", "To illuminate while turning my sight", "From
+      the shadows wherein deeper shadows fall"), joy = c("A single step, her hand
+      aloft", "More than a step, a joyful bound", "The moment, precious, small, soft",
+      "And within a truth was found"))
+    - |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(class = "ml-auto", default = 3, listGroupThruput(id = "lesson", multiple = FALSE, listGroupItem(value = "stars", h5("Stars"), lessons[["stars"]][1]), listGroupItem(value = "joy", h5("Joy"), lessons[["joy"]][1]))), column(class = "mr-auto", htmlOutput("text")))), server = function(input, output) {
+              output$text <- renderText({
+                  req(input$lesson)
+                  HTML(paste(lessons[[input$lesson]], collapse = "</br>"))
+              })
+          })
+      }
 ---

@@ -31,8 +31,12 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: An alternative to checkbox groups
-    source: |-
+  - type: markdown
+    value: |
+      <h2>An alternative to checkbox groups</h2>
+  - type: source
+    value: |2-
+
       checkbarInput(
         id = NULL,
         choices = c(
@@ -44,8 +48,8 @@ roxygen:
       ) %>%
         background("blue") %>%
         margin(2)
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="yonder-checkbar btn-group btn-group-toggle m-2" data-toggle="buttons">
         <label class="btn active btn-blue">
           <input type="checkbox" autocomplete="off" data-value="Check 1" checked/>
@@ -60,8 +64,12 @@ roxygen:
           <span>Check 3</span>
         </label>
       </div>
-  - title: Radiobars in comparison
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Radiobars in comparison</h2>
+  - type: source
+    value: |2-
+
       radiobarInput(
         id = NULL,
         choices = c(
@@ -73,8 +81,8 @@ roxygen:
         selected = "ultrices dolor"
       ) %>%
         background("grey")
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="yonder-radiobar btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-grey">
           <input type="radio" data-value="fusce sagittis" autocomplete="false"/>

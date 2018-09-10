@@ -22,8 +22,12 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: A simple scroll
-    source: |-
+  - type: markdown
+    value: |
+      <h2>A simple scroll</h2>
+  - type: source
+    value: |2-
+
       div(
         lapply(
           rep("Integer placerat tristique nisl.", 20),
@@ -32,8 +36,8 @@ roxygen:
       ) %>%
         height(50) %>%
         scroll()
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="h-50 scroll-y">
         <p>Integer placerat tristique nisl.</p>
         <p>Integer placerat tristique nisl.</p>

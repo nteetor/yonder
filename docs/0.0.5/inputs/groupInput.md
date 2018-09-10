@@ -33,121 +33,123 @@ roxygen:
     description: |-
       Additional named arguments passed as HTML attributes to the
       parent element.
-  sections: ~
+  sections:
+  - title: '`left` and `right` combinations'
+    body: |-
+      **`left` is character or `right` is character**
+
+      If `left` or `right` are character vectors, then the group input functions
+      like a text input. The value will update and trigger a reactive event when
+      the text box is modified. The group input's reactive value is the
+      concatention of the static addons specified by `left` or `right` and the
+      value of the text input.
+
+      **`left` is button or `right` is button**
+
+      The button does not change the value of the group input. However, the input
+      no longer triggers event when the text box is updated. Instead the value
+      is updated when a button is clicked. Static addons are still applied to the
+      group input value.
+
+      **`left` is a dropdown or `right` is a dropdown**
+
+      The value of the group input does chance depending on the clicked dropdown
+      menu item. The value of the input group is the concatentation of the
+      dropdown input value, the value of the text input, and any static addons.
   return: ~
   family: inputs
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                groupInput(
-                  id = "buttongroup",
-                  left = "@",
-                  placeholder = "Username"
-                )
-              ),
-              column(
-                d4(
-                  textOutput("value")
-                )
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$value <- renderText({
-              input$buttongroup
-            })
-          }
+  - type: markdown
+    value: |
+      <h2>Simple character string addon</h2>
+  - type: markdown
+    value: |
+      <p>This input will always append a &quot;@&quot;.</p>
+  - type: source
+    value: |2-
+
+      groupInput(
+        id = NULL,
+        left = "@",
+        placeholder = "Username"
+      )
+  - type: output
+    value: |-
+      <div class="yonder-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">@</span>
+        </div>
+        <input type="text" class="form-control" placeholder="Username"/>
+      </div>
+  - type: markdown
+    value: |
+      <h2>Text input and button combo</h2>
+  - type: source
+    value: |2-
+
+      groupInput(
+        id = NULL,
+        placeholder = "Search terms",
+        right = buttonInput(
+          id = "button",
+          label = "Go!"
         )
-      }
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                groupInput(
-                  id = "groupinput",
-                  placeholder = "Search terms",
-                  right = buttonInput(
-                    id = "button",
-                    label = "Go!"
-                  )
-                )
-              ),
-              column(
-                d4(
-                  textOutput("value")
-                )
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$value <- renderText({
-              input$groupinput
-            })
-          }
-        )
-      }
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                groupInput(
-                  id = "groupinput",
-                  left = c("$", "0.")
-                )
-              ),
-              column(
-                d4(
-                  textOutput("value")
-                )
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$value <- renderText({
-              input$groupinput
-            })
-          }
-        )
-      }
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                groupInput(
-                  id = "groupinput",
-                  left = "@",
-                  placeholder = "Username",
-                  right = buttonInput(
-                    id = "right",
-                    label = "Search"
-                  ) %>%
-                    background("transparent") %>%
-                    border("blue")
-                )
-              ),
-              column(
-                d4(
-                  textOutput("value")
-                )
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$value <- renderText({
-              input$groupinput
-            })
-          }
-        )
-      }
-    output: []
+      )
+  - type: output
+    value: |-
+      <div class="yonder-group input-group">
+        <input type="text" class="form-control" placeholder="Search terms"/>
+        <div class="input-group-append">
+          <button class="yonder-button btn btn-grey" type="button" role="button" id="button">Go!</button>
+        </div>
+      </div>
+  - type: markdown
+    value: |
+      <h2>Combination addon</h2>
+  - type: source
+    value: |2-
+
+      groupInput(
+        id = NULL,
+        left = c("$", "0.")
+      )
+  - type: output
+    value: |-
+      <div class="yonder-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">$</span>
+          <span class="input-group-text">0.</span>
+        </div>
+        <input type="text" class="form-control"/>
+      </div>
+  - type: markdown
+    value: |
+      <h2>Two addons</h2>
+  - type: source
+    value: |2-
+
+      groupInput(
+        id = NULL,
+        left = "@",
+        placeholder = "Username",
+        right = buttonInput(
+          id = NULL,
+          label = "Search"
+        ) %>%
+          background("transparent") %>%
+          border("blue")
+      )
+  - type: output
+    value: |-
+      <div class="yonder-group input-group">
+        <div class="input-group-prepend">
+          <span class="input-group-text">@</span>
+        </div>
+        <input type="text" class="form-control" placeholder="Username"/>
+        <div class="input-group-append">
+          <button class="yonder-button btn btn-grey bg-transparent border-blue border" type="button" role="button">Search</button>
+        </div>
+      </div>
 ---

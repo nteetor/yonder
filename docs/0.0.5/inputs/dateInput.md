@@ -41,44 +41,60 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Preselect a date
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Preselect a date</h2>
+  - type: source
+    value: |2-
+
       dateInput(
         id = NULL,
         selected = Sys.Date() + 1
       )
-    output:
-    - <input class="yonder-date form-control" type="text" data-default-date="2018-09-09"
+  - type: output
+    value: <input class="yonder-date form-control" type="text" data-default-date="2018-09-11"
       data-date-format="Y-m-d"/>
-  - title: Set a min and max
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Set a min and max</h2>
+  - type: source
+    value: |2-
+
       dateInput(
         id = NULL,
         min = Sys.Date() - 3,
         max = Sys.Date() + 3
       )
-    output:
-    - <input class="yonder-date form-control" type="text" data-min-date="2018-09-05"
-      data-max-date="2018-09-11" data-date-format="Y-m-d"/>
-  - title: Select multiple dates
-    source: |-
+  - type: output
+    value: <input class="yonder-date form-control" type="text" data-min-date="2018-09-07"
+      data-max-date="2018-09-13" data-date-format="Y-m-d"/>
+  - type: markdown
+    value: |
+      <h2>Select multiple dates</h2>
+  - type: source
+    value: |2-
+
       dateInput(
         id = NULL,
         choices = Sys.Date() + seq(-6, 6, by = 2),
         selected = Sys.Date() + 1,
         multiple = TRUE
       )
-    output:
-    - <input class="yonder-date form-control" type="text" data-default-date="2018-09-09"
-      data-enable="2018-09-02\,2018-09-04\,2018-09-06\,2018-09-08\,2018-09-10\,2018-09-12\,2018-09-14"
+  - type: output
+    value: <input class="yonder-date form-control" type="text" data-default-date="2018-09-11"
+      data-enable="2018-09-04\,2018-09-06\,2018-09-08\,2018-09-10\,2018-09-12\,2018-09-14\,2018-09-16"
       data-date-format="Y-m-d" data-mode="multiple"/>
-  - title: Date ranges
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Date ranges</h2>
+  - type: source
+    value: |2-
+
       dateRangeInput(
         id = NULL,
         selected = c(Sys.Date(), Sys.Date() + 3)
       )
-    output:
-    - <input class="yonder-date form-control" type="text" data-default-date="2018-09-08\,2018-09-11"
+  - type: output
+    value: <input class="yonder-date form-control" type="text" data-default-date="2018-09-10\,2018-09-13"
       data-date-format="Y-m-d" data-mode="range"/>
 ---

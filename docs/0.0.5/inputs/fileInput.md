@@ -55,10 +55,15 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Standard file input
-    source: fileInput(id = NULL)
-    output:
-    - |-
+  - type: markdown
+    value: |
+      <h2>Standard file input</h2>
+  - type: source
+    value: |2-
+
+      fileInput(id = NULL)
+  - type: output
+    value: |-
       <div class="yonder-file input-group">
         <div class="custom-file">
           <input type="file" class="custom-file-input" multiple/>
@@ -68,8 +73,12 @@ roxygen:
           <span class="input-group-text">Browse</span>
         </div>
       </div>
-  - title: Adding another button
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Adding another button</h2>
+  - type: source
+    value: |2-
+
       fileInput(
         id = NULL,
         left = buttonInput(NULL, "Upload") %>%
@@ -77,8 +86,8 @@ roxygen:
           border("green")
       ) %>%
         margin("auto", 0, "auto", 0)
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="yonder-file input-group mt-auto mr-0 mb-auto ml-0">
         <div class="input-group-prepend">
           <button class="yonder-button btn btn-grey bg-transparent border-green border" type="button" role="button">Upload</button>

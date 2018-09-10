@@ -32,101 +32,58 @@
 #' more information at [margin()]. You only need to apply extra space for larger
 #' viewports because inline forms do not take effect on small viewports.
 #'
-#' @seealso
+#' @section Frozen inputs with scope:
 #'
-#' Bootstrap 4 forms documentation:
-#' \url{https://getbootstrap.com/docs/4.0/components/forms/}
+#' ```R
+#' ui <- container(
+#'   formInput(
+#'     id = "form",
+#'     formGroup(
+#'       label = "Email",
+#'       emailInput(
+#'         id = "email"
+#'       )
+#'     ),
+#'     formGroup(
+#'       label = "Password",
+#'       passwordInput(
+#'         id = "password"
+#'       )
+#'     )
+#'   )
+#' )
+#'
+#' server <- function(input, output) { }
+#'
+#' shinyApp(ui, server)
+#' ```
 #'
 #' @family inputs
 #' @export
 #' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           formInput(
-#'             id = "form",
-#'             tags$label("Email"),
-#'             emailInput(
-#'               id = "email",
-#'               placeholder = "Email"
-#'             ),
-#'             tags$label("Password"),
-#'             passwordInput(
-#'               id = "password",
-#'               placeholder = "Password"
-#'             ),
-#'             tags$label("Radio"),
-#'             radioInput(
-#'               id = "options",
-#'               choices = c(
-#'                 "Option one",
-#'                 "Option two",
-#'                 "Option three"
-#'               )
-#'             ),
-#'             tags$label("Checkbox"),
-#'             checkboxInput(
-#'               id = "checkbox",
-#'               choice = "Simple checkbox"
-#'             ) %>%
-#'               margin(bottom = 2)
-#'           )
-#'         ),
-#'         column(
-#'           verbatimTextOutput("value")
-#'         )
+#'
+#' ### Customizing the submit button
+#'
+#' card(
+#'   header = "Please pick a flavor",
+#'   formInput(
+#'     id = NULL,
+#'     formGroup(
+#'       label = "Ice creams",
+#'       radioInput(
+#'         id = "flavorChoice",
+#'         choices = c("Mint", "Moose tracks", "Marble"),
 #'       )
 #'     ),
-#'     server = function(input, output) {
-#'       output$value <- renderPrint({
-#'         list(
-#'           email = input$email, password = input$password,
-#'           options = input$options, checked = input$checkbox
-#'         )
-#'       })
-#'     }
+#'     submit = submitInput(  # <-
+#'       label = "Make choice",
+#'       block = TRUE
+#'     ) %>%
+#'       background("teal")
 #'   )
-#' }
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           h5("A form input"),
-#'           p("Elements are non-reactive"),
-#'           formInput(
-#'             id = "myform",
-#'             textInput(id = "text"),
-#'             rangeInput(id = "range")
-#'           ) %>%
-#'             border("grey") %>%
-#'             padding(3) %>%
-#'             margin(bottom = 3),
-#'           h5("This input is unaffected"),
-#'           textInput(id = "standalone")
-#'         ),
-#'         column(
-#'           h5("Form elements values:"),
-#'           verbatimTextOutput("elements") %>%
-#'             padding(bottom = 3),
-#'           h5("Unaffected text input value:"),
-#'           textOutput("unaffected")
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$elements <- renderPrint(list(
-#'         text = input$text,
-#'         range = input$range
-#'       ))
-#'
-#'       output$unaffected <- renderPrint(input$standalone)
-#'     }
-#'   )
-#' }
+#' ) %>%
+#'   border("teal") %>%
+#'   width(50)
 #'
 formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
   tags$form(
@@ -169,53 +126,46 @@ formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
 #' @export
 #' @examples
 #'
-#' # to see this example in action adjust your browser window
-#' # from large to small, notice how the form elements expand?
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       center = TRUE,
-#'       card(
-#'         formRow(
-#'           formGroup(
-#'             width = c(md = 6),
-#'             label = "Email",
-#'             emailInput(
-#'               id = "email",
-#'               placeholder = "e@@mail.com"
-#'             )
-#'           ),
-#'           formGroup(
-#'             width = c(md = 6),
-#'             label = "Password",
-#'             passwordInput(
-#'               id = "password",
-#'               placeholder = "123456"
-#'             ),
-#'             help = "Please consider something better than 123456"
-#'           )
-#'         ),
-#'         formGroup(
-#'           label = "Username",
-#'           groupInput(
-#'             id = "username",
-#'             left = "@@"
-#'           )
-#'         ),
-#'         buttonInput(
-#'           id = "go",
-#'           label = "Go!"
-#'         ) %>%
-#'           background("blue")
-#'       ) %>%
-#'         margin(3) %>%
-#'         background("grey")
+#' ## Grid layout forms
 #'
+#' # Use responsive arguments to adjust form layouts based on viewport size.
+#' # Be sure to adjust the size of your browser window between large and small.
+#'
+#' card(
+#'   formRow(
+#'     formGroup(
+#'       width = c(md = 6),  # <-
+#'       label = "Email",
+#'       emailInput(
+#'         id = "email",
+#'         placeholder = "e@@mail.com"
+#'       )
 #'     ),
-#'     server = function(input, output) {
-#'     }
-#'   )
-#' }
+#'     formGroup(
+#'       width = c(md = 6),  # <-
+#'       label = "Password",
+#'       passwordInput(
+#'         id = "password",
+#'         placeholder = "123456"
+#'       ),
+#'       help = "Please consider something better than 123456"
+#'     )
+#'   ),
+#'   formGroup(
+#'     label = "Username",
+#'     groupInput(
+#'       id = "username",
+#'       left = "@@"
+#'     )
+#'   ),
+#'   buttonInput(
+#'     id = "go",
+#'     label = "Go!"
+#'   ) %>%
+#'     background("blue")
+#' ) %>%
+#'   margin(3) %>%
+#'   background("grey")
 #'
 formGroup <- function(label, input, help = NULL,..., width = NULL) {
   if (!is_tag(input)) {
@@ -251,7 +201,6 @@ formGroup <- function(label, input, help = NULL,..., width = NULL) {
   )
 }
 
-#' @family layout
 #' @rdname formGroup
 #' @export
 formRow <- function(...) {

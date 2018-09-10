@@ -28,8 +28,9 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -57,5 +58,16 @@ roxygen:
           }
         )
       }
-    output: []
+  - type: code
+    value: |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(buttonInput(id = "trigger", "Go!")), column(streamOutput(id = "stream")))), server = function(input, output, session) {
+              observeEvent(input$trigger, {
+                  for (i in seq_len(5)) {
+                      sendStream(id = "stream", content = paste("Update:", i))
+                      Sys.sleep(1)
+                  }
+              })
+          })
+      }
 ---

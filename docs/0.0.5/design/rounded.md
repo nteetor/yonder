@@ -22,9 +22,14 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Different sides
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Different sides</h2>
+  - type: source
+    value: |2-
+
       sides <- c("top", "right", "bottom", "left", "circle", "all")
+
       div(
         lapply(
           sides,
@@ -37,8 +42,8 @@ roxygen:
       ) %>%
         display("flex") %>%
         flex(wrap = TRUE)
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="d-flex flex-wrap">
         <div class="p-5 m-2 border-indigo border rounded-top"></div>
         <div class="p-5 m-2 border-indigo border rounded-right"></div>

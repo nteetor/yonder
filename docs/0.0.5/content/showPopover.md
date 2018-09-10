@@ -40,8 +40,10 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -58,11 +60,23 @@ roxygen:
                 duration = NULL
               )
             })
+
             observeEvent(input$close, {
               closePopover("click")
             })
           }
         )
       }
-    output: []
+  - type: code
+    value: |-
+      if (interactive()) {
+          shinyApp(ui = container(buttonInput("click", "Button"), buttonInput("close", icon("times")) %>% background("red")), server = function(input, output) {
+              observeEvent(input$click, {
+                  showPopover(id = "click", text = "This is a button!", placement = "bottom", duration = NULL)
+              })
+              observeEvent(input$close, {
+                  closePopover("click")
+              })
+          })
+      }
 ---

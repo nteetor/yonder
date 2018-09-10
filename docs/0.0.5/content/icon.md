@@ -24,8 +24,10 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -50,6 +52,7 @@ roxygen:
           }
         )
       }
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -71,8 +74,27 @@ roxygen:
             )
           ),
           server = function(input, output) {
+
           }
         )
       }
-    output: []
+  - type: code
+    value:
+    - |-
+      if (interactive()) {
+          shinyApp(ui = container(center = TRUE, selectInput(id = "name", choices = unique(icons$name)) %>% margin(3), div(htmlOutput("icon")) %>% margin(3) %>% display("flex") %>% flex(direction = "column", align = "center")), server = function(input, output) {
+              output$icon <- renderUI({
+                  icon(input$name) %>% font(size = "8x")
+              })
+          })
+      }
+    - |-
+      if (interactive()) {
+          shinyApp(ui = container(lapply(unique(icons$set), function(s) {
+              div(lapply(unique(icons[icons$set == s, ]$name), function(nm) {
+                  icon(nm, set = s) %>% margin(2)
+              })) %>% display("flex") %>% flex(wrap = TRUE)
+          })), server = function(input, output) {
+          })
+      }
 ---

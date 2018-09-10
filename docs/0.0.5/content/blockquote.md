@@ -23,8 +23,9 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
       blockquote(
         "Anyone can love a thing because.",
         "That's as easy as putting a penny in your pocket.",
@@ -35,8 +36,8 @@ roxygen:
           "Patrick Rothfuss,", tags$cite("The Wise Man's Fear")
         )
       )
-    output:
-    - |-
+  - type: output
+    value: |-
       <blockquote class="blockquote">
         Anyone can love a thing because.
         That's as easy as putting a penny in your pocket.

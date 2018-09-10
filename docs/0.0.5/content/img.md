@@ -27,8 +27,10 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -40,11 +42,22 @@ roxygen:
               rounded()
           ),
           server = function(input, output) {
+
           }
         )
       }
-      # Thank you to Wikimedia Commons
-      # Grey square provided by Johannes Rössel (Own work) [Public domain]
+  - type: code
+    value: |-
+      if (interactive()) {
+          shinyApp(ui = container(img("https://upload.wikimedia.org/wikipedia/commons/1/18/Grey_Square.svg") %>% float("left") %>% rounded(), img("https://upload.wikimedia.org/wikipedia/commons/1/18/Grey_Square.svg") %>% float("right") %>% rounded()), server = function(input, output) {
+          })
+      }
+  - type: markdown
+    value: |
+      <p>Thank you to Wikimedia Commons Grey square provided by Johannes Rössel (Own work) [Public domain]</p>
+  - type: source
+    value: |2-
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -54,8 +67,14 @@ roxygen:
             )
           ),
           server = function(input, output) {
+
           }
         )
       }
-    output: []
+  - type: code
+    value: |-
+      if (interactive()) {
+          shinyApp(ui = container(figure(image = rounded(img("http://bit.ly/2qchbEB")), caption = "Stock cat photo.")), server = function(input, output) {
+          })
+      }
 ---

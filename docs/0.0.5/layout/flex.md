@@ -10,7 +10,7 @@ roxygen:
     container see [display()](/yonder/0.0.5/display().html). By default tag elements within a flex container
     are treated as flex items.
   parameters:
-  - name: tag
+  - name: .tag
     description: A tag element.
   - name: direction
     description: |-
@@ -39,19 +39,24 @@ roxygen:
   - name: wrap
     description: |-
       A [responsive](/yonder/0.0.5/responsive.html) argument. One of `TRUE` or `FALSE` specifying
-      whether to wrap flex items inside the flex containter, `tag`, defaults
+      whether to wrap flex items inside the flex containter, `.tag`, defaults
       to `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
       not wrap. See the **wrap** section below for more.
-  sections:
-  - title: '`direction`'
-    body: |-
-      Because horizontal placement the browser default you may not often use
-      `flex(.., direction = "row")`.  The responsive arguments are potentially more
-      useful as shown in the following example. On small screens the flex items are
-      placed vertically and can occupy the full width of the mobile device. On
-      medium or larger screens the items are placed horizontally once again.
+  sections: ~
+  return: ~
+  family: layout
+  name: ~
+  rdname: ~
+  examples:
+  - type: markdown
+    value: |
+      <h3>Different <code>direction</code>s</h3>
+  - type: markdown
+    value: |
+      <p>Many of <code>flex()</code>'s arguments are viewport responsive and below we will see how useful this can be. On small screens the flex items are placed vertically and can occupy the full width of the mobile device. On medium or larger screens the items are placed horizontally once again.</p>
+  - type: source
+    value: |2-
 
-      ```
       div(
         div("A flex item") %>%
           padding(3) %>%
@@ -65,16 +70,26 @@ roxygen:
       ) %>%
         display("flex") %>%
         flex(
-          direction = list(xs = "column", md = "row")
+          direction = list(xs = "column", md = "row")  # <==
         ) %>%
         background("grey") %>%
         border()
-      ```
+  - type: output
+    value: |-
+      <div class="d-flex flex-column flex-md-row bg-grey border">
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+      </div>
+  - type: markdown
+    value: |
+      <p><em>Resize the browser for this example.</em></p>
+  - type: markdown
+    value: |
+      <p>You can keep items as a column by specifying only <code>&quot;column&quot;</code>.</p>
+  - type: source
+    value: |2-
 
-      Here is a simpler example of a flex container with its children placed into
-      columns.
-
-      ```
       div(
         div("A flex item") %>%
           padding(3) %>%
@@ -87,94 +102,177 @@ roxygen:
            border()
       ) %>%
         display("flex") %>%
-        flex(direction = "column")
-      ```
-  - title: '`justify`'
-    body: |-
-      Below you can see how the possible `justify` values change the horizontal
-      spacing of items within a flex container element.
+        flex(direction = "column")  # <-
+  - type: output
+    value: |-
+      <div class="d-flex flex-column">
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Spacing items with <code>justify</code></h3>
+  - type: markdown
+    value: |
+      <p>Below is a series of examples showing how to change the horizontal alignment of your flex items. Let's start by pushing items to the beginning of their parent container.</p>
+  - type: source
+    value: |2-
 
-      `"start"`
+      div(
+        replicate(
+          div("A flex item") %>%
+            padding(3) %>%
+            border(),
+          n = 5,
+          simplify = FALSE
+        )
+      ) %>%
+        display("flex") %>%
+        flex(justify = "start")  # <-
+  - type: output
+    value: |-
+      <div class="d-flex justify-content-start">
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+      </div>
+  - type: markdown
+    value: |
+      <p>We can also push items to the <strong>end</strong>.</p>
+  - type: source
+    value: |2-
 
-      `| Item 1 | Item 2 | Item 3 | ================= |`
+      div(
+        replicate(
+          div("A flex item") %>%
+            padding(3) %>%
+            border(),
+          n = 5,
+          simplify = FALSE
+        )
+      ) %>%
+        display("flex") %>%
+        flex(justify = "end")  # <-
+  - type: output
+    value: |-
+      <div class="d-flex justify-content-end">
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+      </div>
+  - type: markdown
+    value: |
+      <p>Without using a table layout we can <strong>center</strong> items.</p>
+  - type: source
+    value: |2-
 
-      `"end"`
+      div(
+        replicate(
+          div("A flex item") %>%
+            padding(3) %>%
+            border(),
+          n = 5,
+          simplify = FALSE
+        )
+      ) %>%
+        display("flex") %>%
+        flex(justify = "center")  # <-
+  - type: output
+    value: |-
+      <div class="d-flex justify-content-center">
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+      </div>
+  - type: markdown
+    value: |
+      <p>You can also put space <strong>between</strong> items</p>
+  - type: source
+    value: |2-
 
-      `| ================= | Item 1 | Item 2 | Item 3 |`
+      div(
+        replicate(
+          div("A flex item") %>%
+            padding(3) %>%
+            border(),
+          n = 5,
+          simplify = FALSE
+        )
+      ) %>%
+        display("flex") %>%
+        flex(justify = "between")  # <-
+  - type: output
+    value: |-
+      <div class="d-flex justify-content-between">
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+      </div>
+  - type: markdown
+    value: |
+      <p>... or put space <strong>around</strong> items.</p>
+  - type: source
+    value: |2-
 
-      `"center"`
+      div(
+        replicate(
+          div("A flex item") %>%
+            padding(3) %>%
+            border(),
+          n = 5,
+          simplify = FALSE
+        )
+      ) %>%
+        display("flex") %>%
+        flex(justify = "around")  # <-
+  - type: output
+    value: |-
+      <div class="d-flex justify-content-around">
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+      </div>
+  - type: markdown
+    value: |
+      <p><em>The &quot;between&quot; and &quot;around&quot; values come from the original CSS values &quot;space-between&quot; and &quot;space-around&quot;.</em></p>
+  - type: markdown
+    value: |
+      <h3>Wrap onto new lines</h3>
+  - type: markdown
+    value: |
+      <p>Using flexbox we can also control how items wrap onto new lines.</p>
+  - type: source
+    value: |2-
 
-      `| ======= | Item 1 | Item 2 | Item 3 | ======= |`
-
-      `"between"`
-
-      `| Item 1 | ======= | Item 2 | ======= | Item 3 |`
-
-      `"around"`
-
-      `| == | Item 1 | == | Item 2 | == | Item 3 | == |`
-  - title: '`align`'
-    body: |-
-      Below you can see how the possible `align` values change the vertial spacing
-      of items within a flex container element.
-
-      **`"start"`**
-
-      ```
-      | Item 1 | Item 2 | Item 3 | ================== |
-      |        |        |        |                    |
-      |        |        |        |                    |
-      ```
-
-      **`"end"`**,
-
-      ```
-      |        |        |        |                    |
-      |        |        |        |                    |
-      | Item 1 | Item 2 | Item 3 | ================== |
-      ```
-
-      **`"center"`**
-
-      ```
-      |        |        |        |                    |
-      | Item 1 | Item 2 | Item 3 | ================== |
-      |        |        |        |                    |
-      ```
-
-      **`"baseline"`**
-
-      ```
-      | Item 1 | Item 2 | Item 3 | ================== |
-      |        |        |        |                    |
-      |        |        |        |                    |
-      ```
-
-      **`"stretch"`**
-
-      ```
-      | It     | It     | It     | ================== |
-      |   em   |   em   |   em   |                    |
-      |      1 |      2 |      3 |                    |
-      ```
-  - title: '`wrap`'
-    body: |-
-      **`FALSE`**
-
-      ```
-      | Item | Item | Item | Item | Item | Item |
-      | 1    | 2    | 3    | 4    | 5    | 6    |
-      ```
-
-      **`TRUE`**
-
-      ```
-      | Item 1 | Item 2 | Item 3 | Item 4 | === |
-      | Item 5 | Item 6 | ===================== |
-      ```
-  return: ~
-  family: layout
-  name: ~
-  rdname: ~
-  examples: []
+      div(
+        replicate(
+          div("A flex item") %>%
+            padding(3) %>%
+            border(),
+          n = 5,
+          simplify = FALSE
+        )
+      ) %>%
+        display("flex") %>%
+        flex(wrap = TRUE)
+  - type: output
+    value: |-
+      <div class="d-flex flex-wrap">
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+        <div class="p-3 border">A flex item</div>
+      </div>
 ---

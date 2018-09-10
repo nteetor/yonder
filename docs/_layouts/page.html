@@ -32,22 +32,15 @@
           {% endfor %}
 
           {% for example in page.roxygen.examples %}
-          {% if example.title.size > 0 %}
-          <div class="mb-4">
-            <h3 class="d-inline-block">{{ example.title }}</h3>
-
-            <div
-              id="{{ example.title | slugify }}"
-              class="mb-4 ml-1 pl-2 border-left border-black"
-              >{% highlight r %}{{ example.source }}{% endhighlight %}
-            </div>
-
-            {% for output in example.output %}
-            <div class="mb-2">
-              {{ output }}
-            </div>
-            {% endfor %}
-
+          {% if example.type == "markdown" %}
+          {{ example.value }}
+          {% elsif example.type == "code" or example.type == "source" %}
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >{% highlight r %}{{ example.value }}{% endhighlight %}
+          </div>
+          {% elsif example.type == "output" %}
+          <div class="mb-5">
+            {{ example.value }}
           </div>
           {% endif %}
           {% endfor %}

@@ -59,8 +59,10 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -83,15 +85,18 @@ roxygen:
             observeEvent(input$table1, once = TRUE, {
               showAlert("Click a table cell to edit the value!", color = "amber")
             })
+
             output$table1 <- renderTable({
               iris
             })
+
             output$value <- renderPrint({
               input$table1
             })
           }
         )
       }
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -116,11 +121,38 @@ roxygen:
             output$table1 <- renderTable({
               mtcars[1:10, ]
             })
+
             output$table2 <- renderTable({
               input$table1
             })
           }
         )
       }
-    output: []
+  - type: code
+    value:
+    - |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(width = 6, tableThruput(id = "table1", responsive = TRUE, editable = TRUE)), column(width = 6, verbatimTextOutput("value")))), server = function(input, output) {
+              observeEvent(input$table1, once = TRUE, {
+                  showAlert("Click a table cell to edit the value!", color = "amber")
+              })
+              output$table1 <- renderTable({
+                  iris
+              })
+              output$value <- renderPrint({
+                  input$table1
+              })
+          })
+      }
+    - |-
+      if (interactive()) {
+          shinyApp(ui = container(row(column(tableThruput(id = "table1", borders = "all", responsive = TRUE)), column(tableThruput(id = "table2", borders = "all", responsive = TRUE)))), server = function(input, output) {
+              output$table1 <- renderTable({
+                  mtcars[1:10, ]
+              })
+              output$table2 <- renderTable({
+                  input$table1
+              })
+          })
+      }
 ---

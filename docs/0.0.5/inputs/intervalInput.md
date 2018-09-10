@@ -86,8 +86,9 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: ''
-    source: |-
+  - type: source
+    value: |2-
+
       if (interactive()) {
         shinyApp(
           ui = container(
@@ -106,8 +107,18 @@ roxygen:
               req(input$default)
               cat(paste0(rep.int("\r", nchar(input$default)), input$default))
             })
+
           }
         )
       }
-    output: []
+  - type: code
+    value: |-
+      if (interactive()) {
+          shinyApp(ui = container(rangeInput("default") %>% background("yellow"), rangeInput("blue") %>% background("blue"), rangeInput("red") %>% background("red"), rangeInput("white", step = 10, snap = TRUE) %>% background("green"), rangeInput("yellow", prefix = "$", suffix = ".00")), server = function(input, output) {
+              observe({
+                  req(input$default)
+                  cat(paste0(rep.int("\r", nchar(input$default)), input$default))
+              })
+          })
+      }
 ---

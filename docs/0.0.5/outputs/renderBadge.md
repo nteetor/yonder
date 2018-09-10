@@ -33,10 +33,15 @@ roxygen:
   name: ~
   rdname: ~
   examples:
-  - title: Buttons with badges
-    source: |-
-      # Typically, you would use `renderBadge()` to update a badge's
-      # value. Here we are hard-coding a default value of 7.
+  - type: markdown
+    value: |
+      <h2>Buttons with badges</h2>
+  - type: markdown
+    value: |
+      <p>Typically, you would use <code>renderBadge()</code> to update a badge's value. Here we are hard-coding a default value of 7.</p>
+  - type: source
+    value: |2-
+
       buttonInput(
         id = NULL,
         label = "Process",
@@ -46,18 +51,23 @@ roxygen:
         ) %>%
           background("cyan")
       )
-    output:
-    - |-
+  - type: output
+    value: |-
       <button class="yonder-button btn btn-grey" type="button" role="button">
         Process
         <span class="yonder-badge badge badge-cyan">7</span>
       </button>
-  - title: Possible colors
-    source: |-
+  - type: markdown
+    value: |
+      <h2>Possible colors</h2>
+  - type: source
+    value: |2-
+
       colors <- c(
         "red", "purple", "indigo", "blue", "cyan", "teal", "green",
         "yellow", "amber", "orange", "grey", "white"
       )
+
       div(
         lapply(
           colors,
@@ -73,8 +83,8 @@ roxygen:
       ) %>%
         display("flex") %>%
         flex(wrap = TRUE)
-    output:
-    - |-
+  - type: output
+    value: |-
       <div class="d-flex flex-wrap">
         <span class="yonder-badge badge badge-red m-2">red</span>
         <span class="yonder-badge badge badge-purple m-2">purple</span>

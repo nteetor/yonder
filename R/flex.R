@@ -64,7 +64,7 @@ NULL
 #' container see [display()]. By default tag elements within a flex container
 #' are treated as flex items.
 #'
-#' @param tag A tag element.
+#' @param .tag A tag element.
 #'
 #' @param direction A [responsive] argument. One of `"row"` or `"column"`
 #'   specifying the placement of flex items, defaults to `NULL`. If `"row"`
@@ -87,19 +87,19 @@ NULL
 #'   different values affect vertical spacing.
 #'
 #' @param wrap A [responsive] argument. One of `TRUE` or `FALSE` specifying
-#'   whether to wrap flex items inside the flex containter, `tag`, defaults
+#'   whether to wrap flex items inside the flex containter, `.tag`, defaults
 #'   to `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
 #'   not wrap. See the **wrap** section below for more.
 #'
-#' @section `direction`:
+#' @examples
 #'
-#' Because horizontal placement the browser default you may not often use
-#' `flex(.., direction = "row")`.  The responsive arguments are potentially more
-#' useful as shown in the following example. On small screens the flex items are
-#' placed vertically and can occupy the full width of the mobile device. On
-#' medium or larger screens the items are placed horizontally once again.
+#' ### Different `direction`s
 #'
-#' ```
+#' # Many of `flex()`'s arguments are viewport responsive and below we will see
+#' # how useful this can be. On small screens the flex items are placed
+#' # vertically and can occupy the full width of the mobile device. On medium
+#' # or larger screens the items are placed horizontally once again.
+#'
 #' div(
 #'   div("A flex item") %>%
 #'     padding(3) %>%
@@ -113,16 +113,15 @@ NULL
 #' ) %>%
 #'   display("flex") %>%
 #'   flex(
-#'     direction = list(xs = "column", md = "row")
+#'     direction = list(xs = "column", md = "row")  # <==
 #'   ) %>%
 #'   background("grey") %>%
 #'   border()
-#' ```
 #'
-#' Here is a simpler example of a flex container with its children placed into
-#' columns.
+#' # *Resize the browser for this example.*
 #'
-#' ```
+#' # You can keep items as a column by specifying only `"column"`.
+#'
 #' div(
 #'   div("A flex item") %>%
 #'     padding(3) %>%
@@ -135,99 +134,104 @@ NULL
 #'      border()
 #' ) %>%
 #'   display("flex") %>%
-#'   flex(direction = "column")
-#' ```
-#' @section `justify`:
+#'   flex(direction = "column")  # <-
 #'
-#' Below you can see how the possible `justify` values change the horizontal
-#' spacing of items within a flex container element.
+#' ### Spacing items with `justify`
 #'
-#' `"start"`
+#' # Below is a series of examples showing how to change the horizontal
+#' # alignment of your flex items. Let's start by pushing items to the
+#' # beginning of their parent container.
 #'
-#' `| Item 1 | Item 2 | Item 3 | ================= |`
+#' div(
+#'   replicate(
+#'     div("A flex item") %>%
+#'       padding(3) %>%
+#'       border(),
+#'     n = 5,
+#'     simplify = FALSE
+#'   )
+#' ) %>%
+#'   display("flex") %>%
+#'   flex(justify = "start")  # <-
 #'
-#' `"end"`
+#' # We can also push items to the **end**.
 #'
-#' `| ================= | Item 1 | Item 2 | Item 3 |`
+#' div(
+#'   replicate(
+#'     div("A flex item") %>%
+#'       padding(3) %>%
+#'       border(),
+#'     n = 5,
+#'     simplify = FALSE
+#'   )
+#' ) %>%
+#'   display("flex") %>%
+#'   flex(justify = "end")  # <-
 #'
-#' `"center"`
+#' # Without using a table layout we can **center** items.
 #'
-#' `| ======= | Item 1 | Item 2 | Item 3 | ======= |`
+#' div(
+#'   replicate(
+#'     div("A flex item") %>%
+#'       padding(3) %>%
+#'       border(),
+#'     n = 5,
+#'     simplify = FALSE
+#'   )
+#' ) %>%
+#'   display("flex") %>%
+#'   flex(justify = "center")  # <-
 #'
-#' `"between"`
+#' # You can also put space **between** items
 #'
-#' `| Item 1 | ======= | Item 2 | ======= | Item 3 |`
+#' div(
+#'   replicate(
+#'     div("A flex item") %>%
+#'       padding(3) %>%
+#'       border(),
+#'     n = 5,
+#'     simplify = FALSE
+#'   )
+#' ) %>%
+#'   display("flex") %>%
+#'   flex(justify = "between")  # <-
 #'
-#' `"around"`
+#' # ... or put space **around** items.
 #'
-#' `| == | Item 1 | == | Item 2 | == | Item 3 | == |`
+#' div(
+#'   replicate(
+#'     div("A flex item") %>%
+#'       padding(3) %>%
+#'       border(),
+#'     n = 5,
+#'     simplify = FALSE
+#'   )
+#' ) %>%
+#'   display("flex") %>%
+#'   flex(justify = "around")  # <-
 #'
-#' @section `align`:
+#' # *The "between" and "around" values come from the original CSS values
+#' # "space-between" and "space-around".*
 #'
-#' Below you can see how the possible `align` values change the vertial spacing
-#' of items within a flex container element.
+#' ### Wrap onto new lines
 #'
-#' **`"start"`**
+#' # Using flexbox we can also control how items wrap onto new lines.
 #'
-#' ```
-#' | Item 1 | Item 2 | Item 3 | ================== |
-#' |        |        |        |                    |
-#' |        |        |        |                    |
-#' ```
-#'
-#' **`"end"`**,
-#'
-#' ```
-#' |        |        |        |                    |
-#' |        |        |        |                    |
-#' | Item 1 | Item 2 | Item 3 | ================== |
-#' ```
-#'
-#' **`"center"`**
-#'
-#' ```
-#' |        |        |        |                    |
-#' | Item 1 | Item 2 | Item 3 | ================== |
-#' |        |        |        |                    |
-#' ```
-#'
-#' **`"baseline"`**
-#'
-#' ```
-#' | Item 1 | Item 2 | Item 3 | ================== |
-#' |        |        |        |                    |
-#' |        |        |        |                    |
-#' ```
-#'
-#' **`"stretch"`**
-#'
-#' ```
-#' | It     | It     | It     | ================== |
-#' |   em   |   em   |   em   |                    |
-#' |      1 |      2 |      3 |                    |
-#' ```
-#'
-#' @section `wrap`:
-#'
-#' **`FALSE`**
-#'
-#' ```
-#' | Item | Item | Item | Item | Item | Item |
-#' | 1    | 2    | 3    | 4    | 5    | 6    |
-#' ```
-#'
-#' **`TRUE`**
-#'
-#' ```
-#' | Item 1 | Item 2 | Item 3 | Item 4 | === |
-#' | Item 5 | Item 6 | ===================== |
-#' ```
+#' div(
+#'   replicate(
+#'     div("A flex item") %>%
+#'       padding(3) %>%
+#'       border(),
+#'     n = 5,
+#'     simplify = FALSE
+#'   )
+#' ) %>%
+#'   display("flex") %>%
+#'   flex(wrap = TRUE)
 #'
 #' @family layout
 #' @export
-#' @examples
-#'
-flex <- function(tag, direction = NULL, reverse = NULL, justify = NULL,
+flex <- function(.tag, direction = NULL, reverse = NULL, justify = NULL,
                  align = NULL, wrap = NULL) {
 
   direction <- ensureBreakpoints(direction, c("row", "column"))
@@ -259,5 +263,5 @@ flex <- function(tag, direction = NULL, reverse = NULL, justify = NULL,
     createResponsiveClasses(wrap, "flex")
   )
 
-  tagAddClass(tag, classes)
+  tagAddClass(.tag, classes)
 }
