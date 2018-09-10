@@ -53,11 +53,11 @@
 #'
 #' ## Simple character string addon
 #'
-#' # This input will always append a "@".
+#' # This input will always append a "@@".
 #'
 #' groupInput(
 #'   id = NULL,
-#'   left = "@",
+#'   left = "@@",
 #'   placeholder = "Username"
 #' )
 #'
