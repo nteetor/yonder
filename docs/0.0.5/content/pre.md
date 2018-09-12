@@ -17,5 +17,29 @@ roxygen:
   family: content
   name: ~
   rdname: ~
-  examples: []
+  examples:
+  - type: markdown
+    value: |
+      <h3>Simple example</h3>
+  - type: source
+    value: |2-
+
+      pre(
+        "shinyApp(",
+        "  ui = container(",
+        "    row(",
+        "      column(",
+        "      ",
+        "      )",
+        "    )",
+        "  )",
+        "  server = function(input, output) {",
+        "  ",
+        "  }",
+        ")"
+      )
+  - type: output
+    value: "<pre class=\"pre-scrollable\">\n  shinyApp(\n    ui = container(\n      row(\n
+      \       column(\n        \n        )\n      )\n    )\n    server = function(input,
+      output) {\n    \n    }\n  )\n</pre>"
 ---

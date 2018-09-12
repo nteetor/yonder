@@ -65,28 +65,31 @@
 #' @family inputs
 #' @export
 #' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       rangeInput("default") %>%
-#'         background("yellow"),
-#'       rangeInput("blue") %>%
-#'         background("blue"),
-#'       rangeInput("red") %>%
-#'         background("red"),
-#'       rangeInput("white", step = 10, snap = TRUE) %>%
-#'         background("green"),
-#'       rangeInput("yellow", prefix = "$", suffix = ".00")
-#'     ),
-#'     server = function(input, output) {
-#'       observe({
-#'         req(input$default)
-#'         cat(paste0(rep.int("\r", nchar(input$default)), input$default))
-#'       })
 #'
-#'     }
-#'   )
-#' }
+#' ### Range inputs
+#'
+#' # Select from a range of numeric values.
+#'
+#' rangeInput(id = NULL) %>%
+#'   background("yellow")
+#'
+#' ### Interval inputs
+#'
+#' # Select an interval from a range of numeric values.
+#'
+#' intervalInput(id = NULL) %>%
+#'     background("blue")
+#'
+#' ### sliderInput
+#'
+#' # Select a value from a set of choices using a slider.
+#'
+#' sliderInput
+#'
+#' sliderInput(
+#'   id = NULL,
+#'   choices = paste("Choice", 1:6)
+#' )
 #'
 rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
                        ticks = TRUE, fill = TRUE, labels = 4, snap = FALSE,
@@ -115,26 +118,8 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
   )
 }
 
-#' @family inputs
 #' @rdname rangeInput
 #' @export
-#' @examples
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       intervalInput("gray") %>%
-#'         margin(bottom = 4),
-#'       intervalInput("green", default = c(25, 75), draggable = TRUE)
-#'     ),
-#'     server = function(input, output) {
-#'       observe({
-#'         print(input$green)
-#'       })
-#'     }
-#'   )
-#' }
-#'
 intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
                           step = 1, draggable = FALSE,
                           ticks = TRUE, labels = 4, snap = FALSE,
@@ -163,29 +148,8 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
   )
 }
 
-#' @family inputs
 #' @rdname rangeInput
 #' @export
-#' @examples
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       sliderInput(
-#'         "slide",
-#'         choices = c("hello, world", "goodnight, moon", "greetings, earthlings"),
-#'         values = c("hello", "goodnight", "greetings"),
-#'         selected = "goodnight, moon"
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observe({
-#'         print(input$slide)
-#'       })
-#'     }
-#'   )
-#' }
-#'
 sliderInput <- function(id, choices, values = choices, selected = NULL,
                         ticks = TRUE, fill = FALSE, prefix = NULL,
                         suffix = NULL) {

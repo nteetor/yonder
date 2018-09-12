@@ -171,49 +171,75 @@
 </div>
 
         <div class="page-body col-8 pt-4">
-          <h2>Modal dialogs</h2>
+          <h2>Display a popover</h2>
 
-          <p>Modals are a flexible alert window, which disable interaction with the page
-behind them. Modals may include inputs or buttons or simply include text.</p>
+          <p>Popovers are small windows of content associated with a tag element. Use
+<code class="highlighter-rouge">showPopover()</code> to add a popover to any tag element with an HTML id. This
+allows you to add explanations for inputs. Furthermore the <a href="/yonder/0.0.5/linkInput().html">linkInput()</a>
+makes adding popovers to semi-plain text possible. Popovers are hidden with
+<code class="highlighter-rouge">closePopover()</code>.</p>
 
 
           
           <h3 id="params">Arguments</h3>
           <dl class="row">
             
+            <dt id="params-id" class="col-sm-3">id</dt>
+            <dd class="col-sm-9"><p>A character string specifying the HTML id of a popover’s target tag
+element.</p>
+</dd>
+            
+            <dt id="params-content" class="col-sm-3">content</dt>
+            <dd class="col-sm-9"><p>A character string or tag element specifying the content of
+the popover.</p>
+</dd>
+            
             <dt id="params-title" class="col-sm-3">title</dt>
-            <dd class="col-sm-9"><p>A character string specifying the modal’s title.</p>
+            <dd class="col-sm-9"><p>A character string specifying a title for the popover, defaults
+to <code class="highlighter-rouge">NULL</code>, in which case a title is not added.</p>
 </dd>
             
-            <dt id="params-body" class="col-sm-3">body</dt>
-            <dd class="col-sm-9"><p>A character string specifying the body of the modal or
-custom element to use as the body of the modal, defaults to <code class="highlighter-rouge">NULL</code>.</p>
+            <dt id="params-placement" class="col-sm-3">placement</dt>
+            <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">"top"</code>, <code class="highlighter-rouge">"left"</code>, <code class="highlighter-rouge">"bottom"</code>, or <code class="highlighter-rouge">"right"</code>
+specifying where the popover is positioned relative to the target tag
+element indicated by <code class="highlighter-rouge">id</code>.</p>
 </dd>
             
-            <dt id="params-footer" class="col-sm-3">footer</dt>
-            <dd class="col-sm-9"><p>Custom tags to include at the bottom of the modal, defaults to
-<code class="highlighter-rouge">NULL</code>.</p>
-</dd>
-            
-            <dt id="params-session" class="col-sm-3">session</dt>
-            <dd class="col-sm-9"><p>A reactive context, defaults to <a href="/yonder/0.0.5/getDefaultReactiveDomain().html">getDefaultReactiveDomain()</a>.</p>
+            <dt id="params-duration" class="col-sm-3">duration</dt>
+            <dd class="col-sm-9"><p>A positive integer specifying the duration of the popover
+in seconds or <code class="highlighter-rouge">NULL</code>, in which case the popover is not automatically
+removed. When <code class="highlighter-rouge">NULL</code> is specified the popover can be removed with
+<code class="highlighter-rouge">closePopover()</code>.</p>
 </dd>
             
           </dl>
           
 
           
-          <h3 id="displaying-a-modal"><p>Displaying a modal</p>
+          <h3 id="add-a-popover"><p>Add a popover</p>
 </h3>
-          <p>sendModal(
-  title = “A simple modal”,
-  body = paste(
-    “Cras mattis consectetur purus sit amet fermentum.”,
-    “Cras justo odio, dapibus ac facilisis in, egestas”,
-    “eget quam. Morbi leo risus, porta ac consectetur”,
-    “ac, vestibulum at eros.”
-  )
+          <p>ui &lt;- container(
+  buttonInput(“click”, “Button”),
+  buttonInput(“close”, icon(“times”)) %&gt;%
+    background(“red”)
 )</p>
+
+<p>server &lt;- function(input, output) {
+  observeEvent(input$click, {
+    showPopover(
+      id = “click”,
+      text = “This is a button!”,
+      placement = “bottom”,
+      duration = NULL
+    )
+  })</p>
+
+<p>observeEvent(input$close, {
+    closePopover(“click”)
+  })
+}</p>
+
+<p>shinyApp(ui, server)</p>
 
           
 

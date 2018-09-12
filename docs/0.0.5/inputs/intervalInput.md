@@ -86,39 +86,56 @@ roxygen:
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>Range inputs</h3>
+  - type: markdown
+    value: |
+      <p>Select from a range of numeric values.</p>
   - type: source
     value: |2-
 
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            rangeInput("default") %>%
-              background("yellow"),
-            rangeInput("blue") %>%
-              background("blue"),
-            rangeInput("red") %>%
-              background("red"),
-            rangeInput("white", step = 10, snap = TRUE) %>%
-              background("green"),
-            rangeInput("yellow", prefix = "$", suffix = ".00")
-          ),
-          server = function(input, output) {
-            observe({
-              req(input$default)
-              cat(paste0(rep.int("\r", nchar(input$default)), input$default))
-            })
-
-          }
-        )
-      }
-  - type: code
+      rangeInput(id = NULL) %>%
+        background("yellow")
+  - type: output
     value: |-
-      if (interactive()) {
-          shinyApp(ui = container(rangeInput("default") %>% background("yellow"), rangeInput("blue") %>% background("blue"), rangeInput("red") %>% background("red"), rangeInput("white", step = 10, snap = TRUE) %>% background("green"), rangeInput("yellow", prefix = "$", suffix = ".00")), server = function(input, output) {
-              observe({
-                  req(input$default)
-                  cat(paste0(rep.int("\r", nchar(input$default)), input$default))
-              })
-          })
-      }
+      <div class="yonder-range bg-yellow">
+        <input class="range" type="text" data-type="single" data-min="0" data-max="100" data-step="1" data-from="0" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Interval inputs</h3>
+  - type: markdown
+    value: |
+      <p>Select an interval from a range of numeric values.</p>
+  - type: source
+    value: |2-
+
+      intervalInput(id = NULL) %>%
+          background("blue")
+  - type: output
+    value: |-
+      <div class="yonder-range bg-blue">
+        <input class="range" type="text" data-type="double" data-min="0" data-max="100" data-from="0" data-to="100" data-drag-interval="FALSE" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
+      </div>
+  - type: markdown
+    value: |
+      <h3>sliderInput</h3>
+  - type: markdown
+    value: |
+      <p>Select a value from a set of choices using a slider.</p>
+  - type: source
+    value: |2-
+
+      sliderInput
+
+      sliderInput(
+        id = NULL,
+        choices = paste("Choice", 1:6)
+      )
+  - type: output
+    value: |-
+      <div class="yonder-range bg-grey">
+        <input class="range" type="text" data-type="single" data-values="Choice 1,Choice 2,Choice 3,Choice 4,Choice 5,Choice 6" data-choices="Choice 1,Choice 2,Choice 3,Choice 4,Choice 5,Choice 6" data-from data-grid="TRUE" data-hide-min-max="TRUE" data-no-fill="true"/>
+      </div>
 ---

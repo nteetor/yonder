@@ -25,54 +25,21 @@ custom element to use as the body of the modal, defaults to \code{NULL}.}
 Modals are a flexible alert window, which disable interaction with the page
 behind them. Modals may include inputs or buttons or simply include text.
 }
-\examples{
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      buttonInput(id = "button", "Click to show modal")
-    ),
-    server = function(input, output) {
-      observeEvent(input$button, {
-        sendModal(
-          title = "A simple modal",
-          body = paste(
-            "Cras mattis consectetur purus sit amet fermentum.",
-            "Cras justo odio, dapibus ac facilisis in, egestas",
-            "eget quam. Morbi leo risus, porta ac consectetur",
-            "ac, vestibulum at eros."
-          )
-        )
-      })
-    }
-  )
+\section{Displaying a modal}{
+
+
+sendModal(
+title = "A simple modal",
+body = paste(
+"Cras mattis consectetur purus sit amet fermentum.",
+"Cras justo odio, dapibus ac facilisis in, egestas",
+"eget quam. Morbi leo risus, porta ac consectetur",
+"ac, vestibulum at eros."
+)
+)
 }
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        class = "justify-content-center",
-        column(
-          buttonInput(id = "trigger", "Trigger modal")
-        )
-      )
-    ),
-    server = function(input, output) {
-      observeEvent(input$trigger, {
-        sendModal(
-          title = "Login",
-          body = loginInput("login")
-        )
-      })
-
-      observeEvent(input$login, {
-        if (input$login$username != "" && input$login$password != "") {
-          closeModal()
-        }
-      })
-    }
-  )
-}
-
+\seealso{
+Other server: \code{\link{showPopover}}
 }
 \concept{server}

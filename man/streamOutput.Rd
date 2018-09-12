@@ -23,10 +23,11 @@ defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.
 \description{
 The stream output is used to send updates to the user during long-running
 processes. Unlike conventional reactive outputs, the stream output does not
-have a render function instead messages are sent with \code{sendStream}.  This
+have a render function. Instead messages are sent with \code{sendStream}. This
 allows message to "render" during long-running observers or other processes.
 }
 \examples{
+
 if (interactive()) {
   shinyApp(
     ui = container(

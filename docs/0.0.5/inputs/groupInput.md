@@ -63,7 +63,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>Simple character string addon</h2>
+      <h3>Simple character string addon</h3>
   - type: markdown
     value: |
       <p>This input will always append a &quot;@&quot;.</p>
@@ -85,7 +85,7 @@ roxygen:
       </div>
   - type: markdown
     value: |
-      <h2>Text input and button combo</h2>
+      <h3>Text input and button combo</h3>
   - type: source
     value: |2-
 
@@ -95,19 +95,20 @@ roxygen:
         right = buttonInput(
           id = "button",
           label = "Go!"
-        )
+        ) %>%
+          border("transparent")
       )
   - type: output
     value: |-
       <div class="yonder-group input-group">
         <input type="text" class="form-control" placeholder="Search terms"/>
         <div class="input-group-append">
-          <button class="yonder-button btn btn-grey" type="button" role="button" id="button">Go!</button>
+          <button class="yonder-button btn btn-grey border-transparent border" type="button" role="button" id="button">Go!</button>
         </div>
       </div>
   - type: markdown
     value: |
-      <h2>Combination addon</h2>
+      <h3>Combination addon</h3>
   - type: source
     value: |2-
 
@@ -126,7 +127,7 @@ roxygen:
       </div>
   - type: markdown
     value: |
-      <h2>Two addons</h2>
+      <h3>Two addons</h3>
   - type: source
     value: |2-
 

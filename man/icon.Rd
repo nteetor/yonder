@@ -9,77 +9,38 @@ icon(name, set = NULL, ...)
 \arguments{
 \item{name}{A character string specifying the name of the icon.}
 
-\item{set}{A character string specifying the icon set to choose from, defaults
-to \code{"NULL"}, in which case all icon sets are searched.}
+\item{set}{A character string specifying the icon set to choose from,
+defaults to \code{"NULL"}, in which case all icon sets are searched.
+
+Possibles values include \code{"font awesome"}, \code{"material design"}, and
+\code{"feather"}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 }
 \description{
-Include an icon in your application. For now only Font Awesome icons are
-included.
+Include icons in your application UIs.
 }
 \examples{
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      center = TRUE,
-      selectInput(
-        id = "name",
-        choices = unique(icons$name)
-      ) \%>\%
-        margin(3),
-      div(
-        htmlOutput("icon")
-      ) \%>\%
-        margin(3) \%>\%
-        display("flex") \%>\%
-        flex(direction = "column", align = "center")
-    ),
-    server = function(input, output) {
-      output$icon <- renderUI({
-        icon(input$name) \%>\%
-          font(size = "8x")
-      })
-    }
-  )
-}
+### Font awesome
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      lapply(
-        unique(icons$set),
-        function(s) {
-          div(
-            lapply(
-              unique(icons[icons$set == s, ]$name),
-              function(nm) {
-                icon(nm, set = s) \%>\%
-                  margin(2)
-              }
-            )
-          ) \%>\%
-            display("flex") \%>\%
-            flex(wrap = TRUE)
-        }
-      )
-    ),
-    server = function(input, output) {
+icon("clone")
 
-    }
-  )
-}
+### Material design
+
+icon("mail", "material design")
+
+### Feather
+
+icon("mail", "feather")
 
 }
 \seealso{
-For more on Font Awesome check out \url{https://fontawesome.com}.
-
 Other content: \code{\link{blockquote}},
   \code{\link{card}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{img}},
   \code{\link{jumbotron}}, \code{\link{pre}},
-  \code{\link{showPopover}}, \code{\link{tooltip}}
+  \code{\link{tooltip}}
 }
 \concept{content}

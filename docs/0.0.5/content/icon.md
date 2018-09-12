@@ -4,9 +4,7 @@ filename: R/icons.R
 layout: page
 roxygen:
   title: Icon elements
-  description: |-
-    Include an icon in your application. For now only Font Awesome icons are
-    included.
+  description: Include icons in your application UIs.
   parameters:
   - name: name
     description: A character string specifying the name of the icon.
@@ -16,85 +14,45 @@ roxygen:
       element.
   - name: set
     description: |-
-      A character string specifying the icon set to choose from, defaults
-      to `"NULL"`, in which case all icon sets are searched.
+      A character string specifying the icon set to choose from,
+        defaults to `"NULL"`, in which case all icon sets are searched.
+
+        Possibles values include `"font awesome"`, `"material design"`, and
+        `"feather"`.
   sections: ~
   return: ~
   family: content
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>Font awesome</h3>
   - type: source
     value: |2-
 
+      icon("clone")
+  - type: output
+    value: <i class="fas fa-clone fa-fw"></i>
+  - type: markdown
+    value: |
+      <h3>Material design</h3>
+  - type: source
+    value: |2-
 
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            center = TRUE,
-            selectInput(
-              id = "name",
-              choices = unique(icons$name)
-            ) %>%
-              margin(3),
-            div(
-              htmlOutput("icon")
-            ) %>%
-              margin(3) %>%
-              display("flex") %>%
-              flex(direction = "column", align = "center")
-          ),
-          server = function(input, output) {
-            output$icon <- renderUI({
-              icon(input$name) %>%
-                font(size = "8x")
-            })
-          }
-        )
-      }
+      icon("mail", "material design")
+  - type: output
+    value: <i class="material-icons">mail</i>
+  - type: markdown
+    value: |
+      <h3>Feather</h3>
+  - type: source
+    value: |2-
 
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            lapply(
-              unique(icons$set),
-              function(s) {
-                div(
-                  lapply(
-                    unique(icons[icons$set == s, ]$name),
-                    function(nm) {
-                      icon(nm, set = s) %>%
-                        margin(2)
-                    }
-                  )
-                ) %>%
-                  display("flex") %>%
-                  flex(wrap = TRUE)
-              }
-            )
-          ),
-          server = function(input, output) {
-
-          }
-        )
-      }
-  - type: code
-    value:
-    - |-
-      if (interactive()) {
-          shinyApp(ui = container(center = TRUE, selectInput(id = "name", choices = unique(icons$name)) %>% margin(3), div(htmlOutput("icon")) %>% margin(3) %>% display("flex") %>% flex(direction = "column", align = "center")), server = function(input, output) {
-              output$icon <- renderUI({
-                  icon(input$name) %>% font(size = "8x")
-              })
-          })
-      }
-    - |-
-      if (interactive()) {
-          shinyApp(ui = container(lapply(unique(icons$set), function(s) {
-              div(lapply(unique(icons[icons$set == s, ]$name), function(nm) {
-                  icon(nm, set = s) %>% margin(2)
-              })) %>% display("flex") %>% flex(wrap = TRUE)
-          })), server = function(input, output) {
-          })
-      }
+      icon("mail", "feather")
+  - type: output
+    value: |-
+      <i data-feather="mail">
+        <script>feather.replace()</script>
+      </i>
 ---

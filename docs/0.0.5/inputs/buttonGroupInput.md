@@ -22,91 +22,41 @@ roxygen:
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>Default input</h3>
   - type: source
     value: |2-
 
+      buttonGroupInput(
+        id = NULL,
+        labels = c("Once", "Twice", "Thrice"),
+        values = c(1, 2, 3)
+      )
+  - type: output
+    value: |-
+      <div class="yonder-button-group btn-group" role="group">
+        <button type="button" class="btn" data-value="1">Once</button>
+        <button type="button" class="btn" data-value="2">Twice</button>
+        <button type="button" class="btn" data-value="3">Thrice</button>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Styling the button group</h3>
+  - type: source
+    value: |2-
 
-      buttonGroupInput("group", c("Once", "Twice"), c(1, 2))
-
-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                buttonGroupInput(
-                  id = "group",
-                  labels = c("Once", "Twice", "Thrice"),
-                  values = c(1, 2, 3)
-                )
-              ),
-              column(
-                verbatimTextOutput("value")
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$value <- renderPrint({
-              input$group
-            })
-          }
-        )
-      }
-
-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                buttonGroupInput(
-                  id = "bg1",
-                  labels = c("Button 1", "Button 2", "Button 3")
-                ) %>%
-                  background("blue") %>%
-                  margin(3)
-              ),
-              column(
-                buttonGroupInput(
-                  id = "bg2",
-                  labels = c("Groupee 1", "Groupee 2", "Groupee 3")
-                ) %>%
-                  background("yellow") %>%
-                  margin(3)
-              )
-            )
-          ),
-          server = function(input, output) {
-            observe({
-              print(input$bg1)
-            })
-
-            observe({
-              print(input$bg2)
-            })
-          }
-        )
-      }
-  - type: code
-    value:
-    - buttonGroupInput("group", c("Once", "Twice"), c(1, 2))
-    - |-
-      if (interactive()) {
-          shinyApp(ui = container(row(column(buttonGroupInput(id = "group", labels = c("Once", "Twice", "Thrice"), values = c(1, 2, 3))), column(verbatimTextOutput("value")))), server = function(input, output) {
-              output$value <- renderPrint({
-                  input$group
-              })
-          })
-      }
-    - |-
-      if (interactive()) {
-          shinyApp(ui = container(row(column(buttonGroupInput(id = "bg1", labels = c("Button 1", "Button 2", "Button 3")) %>% background("blue") %>% margin(3)), column(buttonGroupInput(id = "bg2", labels = c("Groupee 1", "Groupee 2", "Groupee 3")) %>% background("yellow") %>% margin(3)))), server = function(input, output) {
-              observe({
-                  print(input$bg1)
-              })
-              observe({
-                  print(input$bg2)
-              })
-          })
-      }
+      buttonGroupInput(
+        id = NULL,
+        labels = c("Button 1", "Button 2", "Button 3")
+      ) %>%
+        background("blue") %>%
+        margin(3)
+  - type: output
+    value: |-
+      <div class="yonder-button-group btn-group bg-blue m-3" role="group">
+        <button type="button" class="btn" data-value="Button 1">Button 1</button>
+        <button type="button" class="btn" data-value="Button 2">Button 2</button>
+        <button type="button" class="btn" data-value="Button 3">Button 3</button>
+      </div>
 ---

@@ -25,46 +25,32 @@
 #' @family inputs
 #' @export
 #' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           selectInput(
-#'             id = "select",
-#'             choices = c("Choose one", "One", "Two", "Three"),
-#'             values = list(NULL, 1, 2, 3),
-#'             multiple = TRUE
-#'           )
-#'         ),
-#'         column(
-#'           d4(
-#'             textOutput("value")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$value <- renderText({
-#'         input$select
-#'       })
-#'     }
-#'   )
-#' }
 #'
+#' ### Getting started
+#'
+#' selectInput(
+#'   id = NULL,
+#'   choices = c(
+#'     "Choose one",
+#'     "Choice 1",
+#'     "Choice 2",
+#'     "Choice 3"
+#'   ),
+#'   values = list(NULL, 1, 2, 3)
+#' )
 #'
 selectInput <- function(id, choices, values = choices, selected = NULL,
                         multiple = FALSE, ...) {
   if (!is.null(id) && !is.character(id)) {
     stop(
-      "invalid `selectInput` argument, `id` must be a character string or NULL",
+      "invalid `selectInput()` argument, `id` must be a character string",
       call. = FALSE
     )
   }
 
   if (length(choices) != length(values)) {
     stop(
-      "invalid `selectInput` arguments, `choices` and `values` must be the ",
+      "invalid `selectInput()` arguments, `choices` and `values` must be the ",
       "same length",
       call. = FALSE
     )
@@ -73,14 +59,14 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
   if (!is.null(selected)) {
     if (length(selected) > 1) {
       stop(
-        "invalid `selectInput` argument, `selected` must be of length 1",
+        "invalid `selectInput()` argument, `selected` must be of length 1",
         call. = FALSE
       )
     }
 
     if (!(selected %in% values)) {
       stop(
-        "invalid `selectInput` argument, `selected` must be one of `values`",
+        "invalid `selectInput()` argument, `selected` must be one of `values`",
         call. = FALSE
       )
     }

@@ -31,10 +31,18 @@ roxygen:
       One of `TRUE` or `FALSE` specifying if the container is
       responsively centered or if the container occupies the entire width of the
       viewport, defaults to `FALSE`.
-  sections:
-  - title: Equal width columns
-    body: |-
-      ```
+  sections: ~
+  return: ~
+  family: layout
+  name: ~
+  rdname: ~
+  examples:
+  - type: markdown
+    value: |
+      <h3>Equal width columns</h3>
+  - type: source
+    value: |2-
+
       container(
         row(
           column(
@@ -49,10 +57,24 @@ roxygen:
           )
         )
       )
-      ```
-  - title: Shiny's panel with sidebar layout
-    body: |-
-      ```
+  - type: output
+    value: |-
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col">Aliquam erat volutpat.</div>
+          <div class="col">Mauris mollis tincidunt felis.</div>
+          <div class="col">
+            Cum sociis natoque penatibus et magnis dis parturient montes,
+            nascetur ridiculus mus.
+          </div>
+        </div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Shiny's panel with sidebar layout</h3>
+  - type: source
+    value: |2-
+
       container(
         row(
           column(
@@ -61,13 +83,23 @@ roxygen:
           column()
         )
       )
-      ```
-  - title: Mobile friendly grids
-    body: |-
-      Use `column()`s [responsive](/yonder/0.0.5/responsive.html) `width` argument to make mobile friendly
-      applications.
+  - type: output
+    value: |-
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-4"></div>
+          <div class="col"></div>
+        </div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Mobile friendly grids</h3>
+  - type: markdown
+    value: |
+      <p>Use <code>column()</code>s [responsive] <code>width</code> argument to make mobile friendly applications.</p>
+  - type: source
+    value: |2-
 
-      ```
       container(
         row(
           column(
@@ -84,9 +116,21 @@ roxygen:
           )
         )
       )
-      ```
+  - type: output
+    value: |-
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-4">Mauris ac felis vel velit tristique imperdiet.</div>
+          <div class="col-sm-4">Nam vestibulum accumsan nisl.</div>
+          <div class="col-sm-4">Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.</div>
+        </div>
+      </div>
+  - type: markdown
+    value: |
+      <p>or</p>
+  - type: source
+    value: |2-
 
-      ```
       container(
         row(
           column(
@@ -97,10 +141,20 @@ roxygen:
           )
         )
       )
-      ```
-  - title: Fit columns to their content
-    body: |-
-      ```
+  - type: output
+    value: |-
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-sm-4"></div>
+          <div class="col-sm-8"></div>
+        </div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Fit columns to their content</h3>
+  - type: source
+    value: |2-
+
       container(
         row(
           column(),
@@ -111,10 +165,13 @@ roxygen:
           column()
         )
       )
-      ```
-  return: ~
-  family: layout
-  name: ~
-  rdname: ~
-  examples: []
+  - type: output
+    value: |-
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col"></div>
+          <div class="col-auto">Cras placerat accumsan nulla.  Aenean in sem ac leo mollis blandit.</div>
+          <div class="col"></div>
+        </div>
+      </div>
 ---

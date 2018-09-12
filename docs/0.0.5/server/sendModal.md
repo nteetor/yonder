@@ -20,83 +20,21 @@ roxygen:
       `NULL`.
   - name: session
     description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain().html).
-  sections: ~
+  sections:
+  - title: Displaying a modal
+    body: |-
+      sendModal(
+        title = "A simple modal",
+        body = paste(
+          "Cras mattis consectetur purus sit amet fermentum.",
+          "Cras justo odio, dapibus ac facilisis in, egestas",
+          "eget quam. Morbi leo risus, porta ac consectetur",
+          "ac, vestibulum at eros."
+        )
+      )
   return: ~
   family: server
   name: ~
   rdname: ~
-  examples:
-  - type: source
-    value: |2-
-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            buttonInput(id = "button", "Click to show modal")
-          ),
-          server = function(input, output) {
-            observeEvent(input$button, {
-              sendModal(
-                title = "A simple modal",
-                body = paste(
-                  "Cras mattis consectetur purus sit amet fermentum.",
-                  "Cras justo odio, dapibus ac facilisis in, egestas",
-                  "eget quam. Morbi leo risus, porta ac consectetur",
-                  "ac, vestibulum at eros."
-                )
-              )
-            })
-          }
-        )
-      }
-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              class = "justify-content-center",
-              column(
-                buttonInput(id = "trigger", "Trigger modal")
-              )
-            )
-          ),
-          server = function(input, output) {
-            observeEvent(input$trigger, {
-              sendModal(
-                title = "Login",
-                body = loginInput("login")
-              )
-            })
-
-            observeEvent(input$login, {
-              if (input$login$username != "" && input$login$password != "") {
-                closeModal()
-              }
-            })
-          }
-        )
-      }
-  - type: code
-    value:
-    - |-
-      if (interactive()) {
-          shinyApp(ui = container(buttonInput(id = "button", "Click to show modal")), server = function(input, output) {
-              observeEvent(input$button, {
-                  sendModal(title = "A simple modal", body = paste("Cras mattis consectetur purus sit amet fermentum.", "Cras justo odio, dapibus ac facilisis in, egestas", "eget quam. Morbi leo risus, porta ac consectetur", "ac, vestibulum at eros."))
-              })
-          })
-      }
-    - |-
-      if (interactive()) {
-          shinyApp(ui = container(row(class = "justify-content-center", column(buttonInput(id = "trigger", "Trigger modal")))), server = function(input, output) {
-              observeEvent(input$trigger, {
-                  sendModal(title = "Login", body = loginInput("login"))
-              })
-              observeEvent(input$login, {
-                  if (input$login$username != "" && input$login$password != "") {
-                      closeModal()
-                  }
-              })
-          })
-      }
+  examples: ~
 ---

@@ -57,74 +57,32 @@ roxygen:
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>Getting started</h3>
   - type: source
     value: |2-
 
-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            listGroupThruput(
-              id = NULL,
-              listGroupItem(
-                rangeInput("slider1")
-              )
-            )
-          ),
-          server = function(input, output) {
-
-          }
+      listGroupThruput(
+        id = NULL,
+        listGroupItem(
+          rangeInput(NULL)
         )
-      }
-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                default = 3,
-                listGroupThruput(
-                  id = "thrulist"
-                )
-              ),
-              column(
-                rangeInput(
-                  id = "num",
-                  min = 0,
-                  max = 20,
-                  step = 2
-                ),
-                sliderInput(
-                  id = "level",
-                  choices = c("red", "orange", "green", "cyan")
-                )
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$thrulist <- renderListGroup(
-              listGroupItem(
-                "Cras justo odio",
-                badgeOutput("badge1", 0) %>%
-                  background(input$level)
-              ) %>%
-                display("flex") %>%
-                flex(justify = "between", align = "center"),
-              listGroupItem(
-                "Dapibus ac facilisis in",
-                badgeOutput("badge2", 0) %>%
-                  background(input$level)
-              ) %>%
-                display("flex") %>%
-                flex(justify = "between", align = "center")
-            )
-
-            output$badge1 <- renderBadge(input$num)
-            output$badge2 <- renderBadge(input$num)
-          }
-        )
-      }
-
+      )
+  - type: output
+    value: |-
+      <div class="yonder-list-group list-group" data-multiple="true">
+        <a class="list-group-item">
+          <div class="yonder-range bg-grey">
+            <input class="range" type="text" data-type="single" data-min="0" data-max="100" data-step="1" data-from="0" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
+          </div>
+        </a>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Fancier list items</h3>
+  - type: source
+    value: |2-
 
       lessons <- list(
         stars = c(
@@ -141,69 +99,30 @@ roxygen:
         )
       )
 
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                class = "ml-auto",
-                default = 3,
-                listGroupThruput(
-                  id = "lesson",
-                  multiple = FALSE,
-                  listGroupItem(
-                    value = "stars",
-                    h5("Stars"),
-                    lessons[["stars"]][1]
-                  ),
-                  listGroupItem(
-                    value = "joy",
-                    h5("Joy"),
-                    lessons[["joy"]][1]
-                  )
-                )
-              ),
-              column(
-                class = "mr-auto",
-                htmlOutput("text")
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$text <- renderText({
-              req(input$lesson)
-              HTML(paste(lessons[[input$lesson]], collapse = "</br>"))
-            })
-          }
+      listGroupThruput(
+        id = NULL,
+        multiple = FALSE,
+        listGroupItem(
+          value = "stars",
+          h5("Stars"),
+          lessons[["stars"]][1]
+        ),
+        listGroupItem(
+          value = "joy",
+          h5("Joy"),
+          lessons[["joy"]][1]
         )
-      }
-  - type: code
-    value:
-    - |-
-      if (interactive()) {
-          shinyApp(ui = container(listGroupThruput(id = NULL, listGroupItem(rangeInput("slider1")))), server = function(input, output) {
-          })
-      }
-    - |-
-      if (interactive()) {
-          shinyApp(ui = container(row(column(default = 3, listGroupThruput(id = "thrulist")), column(rangeInput(id = "num", min = 0, max = 20, step = 2), sliderInput(id = "level", choices = c("red", "orange", "green", "cyan"))))), server = function(input, output) {
-              output$thrulist <- renderListGroup(listGroupItem("Cras justo odio", badgeOutput("badge1", 0) %>% background(input$level)) %>% display("flex") %>% flex(justify = "between", align = "center"), listGroupItem("Dapibus ac facilisis in", badgeOutput("badge2", 0) %>% background(input$level)) %>% display("flex") %>% flex(justify = "between", align = "center"))
-              output$badge1 <- renderBadge(input$num)
-              output$badge2 <- renderBadge(input$num)
-          })
-      }
-    - lessons <- list(stars = c("The stars and moon are far too bright", "Their beam
-      and smile splashing o'er all", "To illuminate while turning my sight", "From
-      the shadows wherein deeper shadows fall"), joy = c("A single step, her hand
-      aloft", "More than a step, a joyful bound", "The moment, precious, small, soft",
-      "And within a truth was found"))
-    - |-
-      if (interactive()) {
-          shinyApp(ui = container(row(column(class = "ml-auto", default = 3, listGroupThruput(id = "lesson", multiple = FALSE, listGroupItem(value = "stars", h5("Stars"), lessons[["stars"]][1]), listGroupItem(value = "joy", h5("Joy"), lessons[["joy"]][1]))), column(class = "mr-auto", htmlOutput("text")))), server = function(input, output) {
-              output$text <- renderText({
-                  req(input$lesson)
-                  HTML(paste(lessons[[input$lesson]], collapse = "</br>"))
-              })
-          })
-      }
+      )
+  - type: output
+    value: |-
+      <div class="yonder-list-group list-group" data-multiple="false">
+        <a class="list-group-item list-group-item-action" data-value="stars">
+          <h5>Stars</h5>
+          The stars and moon are far too bright
+        </a>
+        <a class="list-group-item list-group-item-action" data-value="joy">
+          <h5>Joy</h5>
+          A single step, her hand aloft
+        </a>
+      </div>
 ---

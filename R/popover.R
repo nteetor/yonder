@@ -24,34 +24,33 @@
 #'   removed. When `NULL` is specified the popover can be removed with
 #'   `closePopover()`.
 #'
-#' @family content
-#' @export
-#' @examples
+#' @section Add a popover:
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       buttonInput("click", "Button"),
-#'       buttonInput("close", icon("times")) %>%
-#'         background("red")
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$click, {
-#'         showPopover(
-#'           id = "click",
-#'           text = "This is a button!",
-#'           placement = "bottom",
-#'           duration = NULL
-#'         )
-#'       })
+#' ui <- container(
+#'   buttonInput("click", "Button"),
+#'   buttonInput("close", icon("times")) %>%
+#'     background("red")
+#' )
 #'
-#'       observeEvent(input$close, {
-#'         closePopover("click")
-#'       })
-#'     }
-#'   )
+#' server <- function(input, output) {
+#'   observeEvent(input$click, {
+#'     showPopover(
+#'       id = "click",
+#'       text = "This is a button!",
+#'       placement = "bottom",
+#'       duration = NULL
+#'     )
+#'   })
+#'
+#'   observeEvent(input$close, {
+#'     closePopover("click")
+#'   })
 #' }
 #'
+#' shinyApp(ui, server)
+#'
+#' @family server
+#' @export
 showPopover <- function(id, content, title = NULL, placement = "top",
                         duration = 4) {
   domain <- getDefaultReactiveDomain()

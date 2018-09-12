@@ -40,37 +40,30 @@ element.}
 Create a reactive radio input of one or more radio controls.
 }
 \examples{
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        column(
-          radioInput(
-            id = "radio",
-            choices = c(
-              "(A) Ice cream",
-              "(B) Pumpkin pie",
-              "(C) 3 turtle doves",
-              "(D) (A) and (C)",
-              "(E) All of the above"
-            ),
-            values = LETTERS[1:5]
-          )
-        ),
-        column(
-          d4(
-            textOutput("selected")
-          )
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$selected <- renderText({
-        input$radio
-      })
-    }
+
+### Stacked radio input
+
+radioInput(
+  id = "radio",
+  choices = c(
+    "Vehicula adipiscing mattis",
+    "Magna nullam",
+    "Aenean venenatis",
+    "Tristique quam porta"
   )
-}
+)
+
+### Inline radio input
+
+radioInput(
+  id = "radio",
+  choices = c(
+    "Choice 1",
+    "Choice 2",
+    "Choice 3"
+  ),
+  inline = TRUE
+)
 
 }
 \seealso{

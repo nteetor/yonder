@@ -16,12 +16,29 @@ The \code{pre} function adds a maximum height and scroll bar to the standard
 }
 \examples{
 
+### Simple example
+
+pre(
+  "shinyApp(",
+  "  ui = container(",
+  "    row(",
+  "      column(",
+  "      ",
+  "      )",
+  "    )",
+  "  )",
+  "  server = function(input, output) {",
+  "  ",
+  "  }",
+  ")"
+)
+
 }
 \seealso{
 Other content: \code{\link{blockquote}},
   \code{\link{card}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{icon}},
   \code{\link{img}}, \code{\link{jumbotron}},
-  \code{\link{showPopover}}, \code{\link{tooltip}}
+  \code{\link{tooltip}}
 }
 \concept{content}

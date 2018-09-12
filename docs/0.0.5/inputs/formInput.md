@@ -98,16 +98,16 @@ roxygen:
               Ice creams
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-524-603" name="flavorChoice" data-value="Mint" checked/>
-                  <label class="custom-control-label" for="radio-524-603">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-484-934" name="flavorChoice" data-value="Mint" checked/>
+                  <label class="custom-control-label" for="radio-484-934">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-67-420" name="flavorChoice" data-value="Moose tracks"/>
-                  <label class="custom-control-label" for="radio-67-420">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-695-829" name="flavorChoice" data-value="Moose tracks"/>
+                  <label class="custom-control-label" for="radio-695-829">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-345-901" name="flavorChoice" data-value="Marble"/>
-                  <label class="custom-control-label" for="radio-345-901">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-528-897" name="flavorChoice" data-value="Marble"/>
+                  <label class="custom-control-label" for="radio-528-897">Marble</label>
                 </div>
                 <div class="invalid-feedback"></div>
               </div>

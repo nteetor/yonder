@@ -20,6 +20,9 @@ defaults to \code{NULL}.}
 Stylized blockquotes, an updated builder function for \code{<blockquote>}.
 }
 \examples{
+
+### Simple example
+
 blockquote(
   "Anyone can love a thing because.",
   "That's as easy as putting a penny in your pocket.",
@@ -36,7 +39,6 @@ blockquote(
 Other content: \code{\link{card}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{icon}},
   \code{\link{img}}, \code{\link{jumbotron}},
-  \code{\link{pre}}, \code{\link{showPopover}},
-  \code{\link{tooltip}}
+  \code{\link{pre}}, \code{\link{tooltip}}
 }
 \concept{content}

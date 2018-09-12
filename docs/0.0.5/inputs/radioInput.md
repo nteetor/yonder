@@ -48,47 +48,72 @@ roxygen:
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>Stacked radio input</h3>
   - type: source
     value: |2-
 
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                radioInput(
-                  id = "radio",
-                  choices = c(
-                    "(A) Ice cream",
-                    "(B) Pumpkin pie",
-                    "(C) 3 turtle doves",
-                    "(D) (A) and (C)",
-                    "(E) All of the above"
-                  ),
-                  values = LETTERS[1:5]
-                )
-              ),
-              column(
-                d4(
-                  textOutput("selected")
-                )
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$selected <- renderText({
-              input$radio
-            })
-          }
+      radioInput(
+        id = "radio",
+        choices = c(
+          "Vehicula adipiscing mattis",
+          "Magna nullam",
+          "Aenean venenatis",
+          "Tristique quam porta"
         )
-      }
-  - type: code
+      )
+  - type: output
     value: |-
-      if (interactive()) {
-          shinyApp(ui = container(row(column(radioInput(id = "radio", choices = c("(A) Ice cream", "(B) Pumpkin pie", "(C) 3 turtle doves", "(D) (A) and (C)", "(E) All of the above"), values = LETTERS[1:5])), column(d4(textOutput("selected"))))), server = function(input, output) {
-              output$selected <- renderText({
-                  input$radio
-              })
-          })
-      }
+      <div class="yonder-radio" id="radio">
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" type="radio" id="radio-506-298" name="radio" data-value="Vehicula adipiscing mattis" checked/>
+          <label class="custom-control-label" for="radio-506-298">Vehicula adipiscing mattis</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" type="radio" id="radio-275-213" name="radio" data-value="Magna nullam"/>
+          <label class="custom-control-label" for="radio-275-213">Magna nullam</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" type="radio" id="radio-95-329" name="radio" data-value="Aenean venenatis"/>
+          <label class="custom-control-label" for="radio-95-329">Aenean venenatis</label>
+        </div>
+        <div class="custom-control custom-radio">
+          <input class="custom-control-input" type="radio" id="radio-761-571" name="radio" data-value="Tristique quam porta"/>
+          <label class="custom-control-label" for="radio-761-571">Tristique quam porta</label>
+        </div>
+        <div class="invalid-feedback"></div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Inline radio input</h3>
+  - type: source
+    value: |2-
+
+      radioInput(
+        id = "radio",
+        choices = c(
+          "Choice 1",
+          "Choice 2",
+          "Choice 3"
+        ),
+        inline = TRUE
+      )
+  - type: output
+    value: |-
+      <div class="yonder-radio" id="radio">
+        <div class="custom-control custom-radio custom-control-inline">
+          <input class="custom-control-input" type="radio" id="radio-426-50" name="radio" data-value="Choice 1" checked/>
+          <label class="custom-control-label" for="radio-426-50">Choice 1</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input class="custom-control-input" type="radio" id="radio-282-829" name="radio" data-value="Choice 2"/>
+          <label class="custom-control-label" for="radio-282-829">Choice 2</label>
+        </div>
+        <div class="custom-control custom-radio custom-control-inline">
+          <input class="custom-control-input" type="radio" id="radio-659-770" name="radio" data-value="Choice 3"/>
+          <label class="custom-control-label" for="radio-659-770">Choice 3</label>
+        </div>
+        <div class="invalid-feedback"></div>
+      </div>
 ---

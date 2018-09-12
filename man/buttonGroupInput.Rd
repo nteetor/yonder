@@ -20,67 +20,22 @@ Groups of buttons with a persisting value.
 }
 \examples{
 
-buttonGroupInput("group", c("Once", "Twice"), c(1, 2))
+### Default input
 
+buttonGroupInput(
+  id = NULL,
+  labels = c("Once", "Twice", "Thrice"),
+  values = c(1, 2, 3)
+)
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        column(
-          buttonGroupInput(
-            id = "group",
-            labels = c("Once", "Twice", "Thrice"),
-            values = c(1, 2, 3)
-          )
-        ),
-        column(
-          verbatimTextOutput("value")
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$value <- renderPrint({
-        input$group
-      })
-    }
-  )
-}
+### Styling the button group
 
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        column(
-          buttonGroupInput(
-            id = "bg1",
-            labels = c("Button 1", "Button 2", "Button 3")
-          ) \%>\%
-            background("blue") \%>\%
-            margin(3)
-        ),
-        column(
-          buttonGroupInput(
-            id = "bg2",
-            labels = c("Groupee 1", "Groupee 2", "Groupee 3")
-          ) \%>\%
-            background("yellow") \%>\%
-            margin(3)
-        )
-      )
-    ),
-    server = function(input, output) {
-      observe({
-        print(input$bg1)
-      })
-
-      observe({
-        print(input$bg2)
-      })
-    }
-  )
-}
+buttonGroupInput(
+  id = NULL,
+  labels = c("Button 1", "Button 2", "Button 3")
+) \%>\%
+  background("blue") \%>\%
+  margin(3)
 
 }
 \seealso{

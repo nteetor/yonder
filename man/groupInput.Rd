@@ -60,7 +60,7 @@ dropdown input value, the value of the text input, and any static addons.
 
 \examples{
 
-## Simple character string addon
+### Simple character string addon
 
 # This input will always append a "@".
 
@@ -70,7 +70,7 @@ groupInput(
   placeholder = "Username"
 )
 
-## Text input and button combo
+### Text input and button combo
 
 groupInput(
   id = NULL,
@@ -78,17 +78,18 @@ groupInput(
   right = buttonInput(
     id = "button",
     label = "Go!"
-  )
+  ) \%>\%
+    border("transparent")
 )
 
-## Combination addon
+### Combination addon
 
 groupInput(
   id = NULL,
   left = c("$", "0.")
 )
 
-## Two addons
+### Two addons
 
 groupInput(
   id = NULL,

@@ -36,43 +36,39 @@ allows you to add explanations for inputs. Furthermore the \code{\link[=linkInpu
 makes adding popovers to semi-plain text possible. Popovers are hidden with
 \code{closePopover()}.
 }
-\examples{
+\section{Add a popover}{
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      buttonInput("click", "Button"),
-      buttonInput("close", icon("times")) \%>\%
-        background("red")
-    ),
-    server = function(input, output) {
-      observeEvent(input$click, {
-        showPopover(
-          id = "click",
-          text = "This is a button!",
-          placement = "bottom",
-          duration = NULL
-        )
-      })
 
-      observeEvent(input$close, {
-        closePopover("click")
-      })
-    }
-  )
+ui <- container(
+buttonInput("click", "Button"),
+buttonInput("close", icon("times")) %>%
+background("red")
+)
+
+server <- function(input, output) {
+observeEvent(input$click, {
+showPopover(
+id = "click",
+text = "This is a button!",
+placement = "bottom",
+duration = NULL
+)
+})
+
+observeEvent(input$close, {
+closePopover("click")
+})
 }
 
+shinyApp(ui, server)
 }
+
 \seealso{
-Other content: \code{\link{blockquote}},
-  \code{\link{card}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{icon}},
-  \code{\link{img}}, \code{\link{jumbotron}},
-  \code{\link{pre}}, \code{\link{tooltip}}
+Other server: \code{\link{sendModal}}
 
 Other utilities: \code{\link{collapse}},
   \code{\link{downloadEvent}}, \code{\link{markInvalid}},
   \code{\link{showAlert}}, \code{\link{updateChoices}}
 }
-\concept{content}
+\concept{server}
 \concept{utilities}

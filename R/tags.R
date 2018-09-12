@@ -15,43 +15,7 @@
 #'   to the parent element.
 #'
 #' @family content
-#' @aliases figure image
 #' @export
-#' @examples
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       img("https://upload.wikimedia.org/wikipedia/commons/1/18/Grey_Square.svg") %>%
-#'         float("left") %>%
-#'         rounded(),
-#'       img("https://upload.wikimedia.org/wikipedia/commons/1/18/Grey_Square.svg") %>%
-#'         float("right") %>%
-#'         rounded()
-#'     ),
-#'     server = function(input, output) {
-#'
-#'     }
-#'   )
-#' }
-#'
-#' # Thank you to Wikimedia Commons
-#' # Grey square provided by Johannes Rössel (Own work) [Public domain]
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       figure(
-#'         image = rounded(img("http://bit.ly/2qchbEB")),
-#'         caption = "Stock cat photo."
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'
-#'     }
-#'   )
-#' }
-#'
 img <- function(src, ...) {
   tags$img(
     class = "img-fluid",
@@ -61,7 +25,6 @@ img <- function(src, ...) {
   )
 }
 
-#' @family content
 #' @rdname img
 #' @export
 figure <- function(image, caption = NULL, ...) {
@@ -102,6 +65,9 @@ figure <- function(image, caption = NULL, ...) {
 #' @family content
 #' @export
 #' @examples
+#'
+#' ### Simple example
+#'
 #' blockquote(
 #'   "Anyone can love a thing because.",
 #'   "That's as easy as putting a penny in your pocket.",
@@ -138,6 +104,23 @@ blockquote <- function(..., source = NULL, align = "left") {
 #' @family content
 #' @export
 #' @examples
+#'
+#' ### Simple example
+#'
+#' pre(
+#'   "shinyApp(",
+#'   "  ui = container(",
+#'   "    row(",
+#'   "      column(",
+#'   "      ",
+#'   "      )",
+#'   "    )",
+#'   "  )",
+#'   "  server = function(input, output) {",
+#'   "  ",
+#'   "  }",
+#'   ")"
+#' )
 #'
 pre <- function(...) {
   tags$pre(

@@ -38,79 +38,20 @@
 #' @param env The environment in which to evalute the expressions based to
 #'   `renderListGroup()`.
 #'
-#' @seealso
-#'
-#' Boostrap 4 list group documentation:
-#' \url{https://getbootstrap.com/docs/4.0/components/list-group/}
-#'
 #' @family thruputs
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       listGroupThruput(
-#'         id = NULL,
-#'         listGroupItem(
-#'           rangeInput("slider1")
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
+#' ### Getting started
 #'
-#'     }
+#' listGroupThruput(
+#'   id = NULL,
+#'   listGroupItem(
+#'     rangeInput(NULL)
 #'   )
-#' }
+#' )
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           default = 3,
-#'           listGroupThruput(
-#'             id = "thrulist"
-#'           )
-#'         ),
-#'         column(
-#'           rangeInput(
-#'             id = "num",
-#'             min = 0,
-#'             max = 20,
-#'             step = 2
-#'           ),
-#'           sliderInput(
-#'             id = "level",
-#'             choices = c("red", "orange", "green", "cyan")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$thrulist <- renderListGroup(
-#'         listGroupItem(
-#'           "Cras justo odio",
-#'           badgeOutput("badge1", 0) %>%
-#'             background(input$level)
-#'         ) %>%
-#'           display("flex") %>%
-#'           flex(justify = "between", align = "center"),
-#'         listGroupItem(
-#'           "Dapibus ac facilisis in",
-#'           badgeOutput("badge2", 0) %>%
-#'             background(input$level)
-#'         ) %>%
-#'           display("flex") %>%
-#'           flex(justify = "between", align = "center")
-#'       )
-#'
-#'       output$badge1 <- renderBadge(input$num)
-#'       output$badge2 <- renderBadge(input$num)
-#'     }
-#'   )
-#' }
-#'
+#' ### Fancier list items
 #'
 #' lessons <- list(
 #'   stars = c(
@@ -127,42 +68,20 @@
 #'   )
 #' )
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           class = "ml-auto",
-#'           default = 3,
-#'           listGroupThruput(
-#'             id = "lesson",
-#'             multiple = FALSE,
-#'             listGroupItem(
-#'               value = "stars",
-#'               h5("Stars"),
-#'               lessons[["stars"]][1]
-#'             ),
-#'             listGroupItem(
-#'               value = "joy",
-#'               h5("Joy"),
-#'               lessons[["joy"]][1]
-#'             )
-#'           )
-#'         ),
-#'         column(
-#'           class = "mr-auto",
-#'           htmlOutput("text")
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$text <- renderText({
-#'         req(input$lesson)
-#'         HTML(paste(lessons[[input$lesson]], collapse = "</br>"))
-#'       })
-#'     }
+#' listGroupThruput(
+#'   id = NULL,
+#'   multiple = FALSE,
+#'   listGroupItem(
+#'     value = "stars",
+#'     h5("Stars"),
+#'     lessons[["stars"]][1]
+#'   ),
+#'   listGroupItem(
+#'     value = "joy",
+#'     h5("Joy"),
+#'     lessons[["joy"]][1]
 #'   )
-#' }
+#' )
 #'
 listGroupThruput <- function(id, ..., multiple = TRUE, flush = FALSE) {
   tags$div(

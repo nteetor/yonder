@@ -5,7 +5,7 @@
 \alias{renderSparkline}
 \title{Sparkline output}
 \usage{
-sparklineOutput(id, type = "bar", labels = TRUE, ...)
+sparklineOutput(id, type = "bar", ..., labels = TRUE)
 
 renderSparkline(expr, env = parent.frame(), quoted = FALSE)
 }
@@ -15,11 +15,11 @@ renderSparkline(expr, env = parent.frame(), quoted = FALSE)
 \item{type}{One of \code{"bar"}, \code{"dot"}, or \code{"dotline"} specifying the type of
 chart to render, defaults to \code{"bar"}.}
 
-\item{labels}{If \code{TRUE}, the first and last value of the sparkline data
-are used as labels, defaults to \code{TRUE}.}
-
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
+
+\item{labels}{If \code{TRUE}, the first and last value of the sparkline data
+are used as labels, defaults to \code{TRUE}.}
 
 \item{expr}{An expression which returns a numeric vector specifying the
 values of the sparkline. These values will be scaled to 0 through 100.}
@@ -35,18 +35,37 @@ Display concise, reactive inline bar, line, or dot charts.
 }
 \examples{
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      sparklineOutput("bars")
-    ),
-    server = function(input, output) {
-      output$bars <- renderSparkline({
-        c(30, 20, 44, 50, 90)
-      })
-    }
-  )
-}
+### Bar chart
+
+# In this example we pass a formatted string of values to `sparklineOutput`.
+# However, in practice, you will use `renderSparkline` to update a sparkline
+# output.
+
+sparklineOutput(
+  id = NULL,
+  type = "bar",
+  "{30,20,44,50,90}"
+)
+
+### Dot chart
+
+sparklineOutput(
+  id = NULL,
+  type = "dot",
+  "{50,33,33,75,60,20}"
+)
+
+### Dotline chart
+
+# Note that although in these examples the values passed are between 0 and
+# 100, a requirement of the sparkline library used by yonder, when using
+# `renderSparkline` values are scaled for you.
+
+sparklineOutput(
+  id = NULL,
+  type = "dotline",
+  "{20,40,78,32,45,56,90,13,10}"
+)
 
 }
 \seealso{

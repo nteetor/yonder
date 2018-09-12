@@ -13,57 +13,20 @@
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
+#' @section Displaying a modal:
+#'
+#' sendModal(
+#'   title = "A simple modal",
+#'   body = paste(
+#'     "Cras mattis consectetur purus sit amet fermentum.",
+#'     "Cras justo odio, dapibus ac facilisis in, egestas",
+#'     "eget quam. Morbi leo risus, porta ac consectetur",
+#'     "ac, vestibulum at eros."
+#'   )
+#' )
+#'
 #' @family server
 #' @export
-#' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       buttonInput(id = "button", "Click to show modal")
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$button, {
-#'         sendModal(
-#'           title = "A simple modal",
-#'           body = paste(
-#'             "Cras mattis consectetur purus sit amet fermentum.",
-#'             "Cras justo odio, dapibus ac facilisis in, egestas",
-#'             "eget quam. Morbi leo risus, porta ac consectetur",
-#'             "ac, vestibulum at eros."
-#'           )
-#'         )
-#'       })
-#'     }
-#'   )
-#' }
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         class = "justify-content-center",
-#'         column(
-#'           buttonInput(id = "trigger", "Trigger modal")
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$trigger, {
-#'         sendModal(
-#'           title = "Login",
-#'           body = loginInput("login")
-#'         )
-#'       })
-#'
-#'       observeEvent(input$login, {
-#'         if (input$login$username != "" && input$login$password != "") {
-#'           closeModal()
-#'         }
-#'       })
-#'     }
-#'   )
-#' }
-#'
 sendModal <- function(title, body, footer = NULL,
                       session = getDefaultReactiveDomain()) {
   session$sendCustomMessage(

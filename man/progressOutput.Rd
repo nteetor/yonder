@@ -36,6 +36,7 @@ its own id, value, label, and attributes. Furthermore, utility functions may
 be applied to individual bars for added customization.
 }
 \examples{
+
 if (interactive()) {
   shinyApp(
     ui = container(

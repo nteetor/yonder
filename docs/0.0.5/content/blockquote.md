@@ -23,6 +23,9 @@ roxygen:
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>Simple example</h3>
   - type: source
     value: |2-
 

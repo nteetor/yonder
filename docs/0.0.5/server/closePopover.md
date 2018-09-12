@@ -34,49 +34,34 @@ roxygen:
       in seconds or `NULL`, in which case the popover is not automatically
       removed. When `NULL` is specified the popover can be removed with
       `closePopover()`.
-  sections: ~
+  sections:
+  - title: Add a popover
+    body: |-
+      ui <- container(
+        buttonInput("click", "Button"),
+        buttonInput("close", icon("times")) %>%
+          background("red")
+      )
+
+      server <- function(input, output) {
+        observeEvent(input$click, {
+          showPopover(
+            id = "click",
+            text = "This is a button!",
+            placement = "bottom",
+            duration = NULL
+          )
+        })
+
+        observeEvent(input$close, {
+          closePopover("click")
+        })
+      }
+
+      shinyApp(ui, server)
   return: ~
-  family: content
+  family: server
   name: ~
   rdname: ~
-  examples:
-  - type: source
-    value: |2-
-
-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            buttonInput("click", "Button"),
-            buttonInput("close", icon("times")) %>%
-              background("red")
-          ),
-          server = function(input, output) {
-            observeEvent(input$click, {
-              showPopover(
-                id = "click",
-                text = "This is a button!",
-                placement = "bottom",
-                duration = NULL
-              )
-            })
-
-            observeEvent(input$close, {
-              closePopover("click")
-            })
-          }
-        )
-      }
-  - type: code
-    value: |-
-      if (interactive()) {
-          shinyApp(ui = container(buttonInput("click", "Button"), buttonInput("close", icon("times")) %>% background("red")), server = function(input, output) {
-              observeEvent(input$click, {
-                  showPopover(id = "click", text = "This is a button!", placement = "bottom", duration = NULL)
-              })
-              observeEvent(input$close, {
-                  closePopover("click")
-              })
-          })
-      }
+  examples: ~
 ---

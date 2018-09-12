@@ -33,7 +33,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/inputs/">inputs</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/inputs/">inputs</a>
     </dt>
 
     
@@ -45,7 +45,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/design/">design</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/design/">design</a>
     </dt>
 
     
@@ -57,7 +57,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/outputs/">outputs</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
     </dt>
 
     
@@ -65,63 +65,63 @@
     
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/outputs/badgeOutput.html"
+      <a href="http://localhost:4000/yonder/0.0.5/outputs/badgeOutput.html"
          alt="Badge outputs">
         badgeOutput
       </a>
     </dd>
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/outputs/bar.html"
+      <a href="http://localhost:4000/yonder/0.0.5/outputs/bar.html"
          alt="Progress bars">
         bar
       </a>
     </dd>
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/outputs/progressOutput.html"
+      <a href="http://localhost:4000/yonder/0.0.5/outputs/progressOutput.html"
          alt="Progress bars">
         progressOutput
       </a>
     </dd>
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/outputs/renderBadge.html"
+      <a href="http://localhost:4000/yonder/0.0.5/outputs/renderBadge.html"
          alt="Badge outputs">
         renderBadge
       </a>
     </dd>
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/outputs/renderSparkline.html"
+      <a href="http://localhost:4000/yonder/0.0.5/outputs/renderSparkline.html"
          alt="Sparkline output">
         renderSparkline
       </a>
     </dd>
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/outputs/sendBar.html"
+      <a href="http://localhost:4000/yonder/0.0.5/outputs/sendBar.html"
          alt="Progress bars">
         sendBar
       </a>
     </dd>
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/outputs/sendStream.html"
+      <a href="http://localhost:4000/yonder/0.0.5/outputs/sendStream.html"
          alt="Stream notifications">
         sendStream
       </a>
     </dd>
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/outputs/sparklineOutput.html"
+      <a href="http://localhost:4000/yonder/0.0.5/outputs/sparklineOutput.html"
          alt="Sparkline output">
         sparklineOutput
       </a>
     </dd>
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/outputs/streamOutput.html"
+      <a href="http://localhost:4000/yonder/0.0.5/outputs/streamOutput.html"
          alt="Stream notifications">
         streamOutput
       </a>
@@ -134,7 +134,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/content/">content</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/content/">content</a>
     </dt>
 
     
@@ -146,7 +146,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/utilities/">utilities</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
     </dt>
 
     
@@ -170,7 +170,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/layout/">layout</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/layout/">layout</a>
     </dt>
 
     
@@ -194,7 +194,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/thruputs/">thruputs</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/thruputs/">thruputs</a>
     </dt>
 
     
@@ -256,35 +256,81 @@ expression.</p>
 
           
           
+          <h3>Bar chart</h3>
+
+          
+          
+          
+          <p>In this example we pass a formatted string of values to <code>sparklineOutput</code>. However, in practice, you will use <code>renderSparkline</code> to update a sparkline output.</p>
+
+          
+          
+          
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">sparklineOutput</span><span class="p">(</span><span class="s2">"bars"</span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">bars</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderSparkline</span><span class="p">({</span><span class="w">
-        </span><span class="nf">c</span><span class="p">(</span><span class="m">30</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">44</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">90</span><span class="p">)</span><span class="w">
-      </span><span class="p">})</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">sparklineOutput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bar"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"{30,20,44,50,90}"</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
 
           </div>
           
           
           
+          <div class="mb-5">
+            <span class="yonder-sparkline sparks-bar" data-labels="true">{30,20,44,50,90}</span>
+          </div>
+          
+          
+          
+          <h3>Dot chart</h3>
+
+          
+          
+          
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="n">sparklineOutput</span><span class="p">(</span><span class="s2">"bars"</span><span class="p">)),</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">output</span><span class="o">$</span><span class="n">bars</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderSparkline</span><span class="p">({</span><span class="w">
-            </span><span class="nf">c</span><span class="p">(</span><span class="m">30</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="m">44</span><span class="p">,</span><span class="w"> </span><span class="m">50</span><span class="p">,</span><span class="w"> </span><span class="m">90</span><span class="p">)</span><span class="w">
-        </span><span class="p">})</span><span class="w">
-    </span><span class="p">})</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">sparklineOutput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dot"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"{50,33,33,75,60,20}"</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
 
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <span class="yonder-sparkline sparks-dot" data-labels="true">{50,33,33,75,60,20}</span>
+          </div>
+          
+          
+          
+          <h3>Dotline chart</h3>
+
+          
+          
+          
+          <p>Note that although in these examples the values passed are between 0 and 100, a requirement of the sparkline library used by yonder, when using <code>renderSparkline</code> values are scaled for you.</p>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">sparklineOutput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">type</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"dotline"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"{20,40,78,32,45,56,90,13,10}"</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <span class="yonder-sparkline sparks-dotline" data-labels="true">{20,40,78,32,45,56,90,13,10}</span>
           </div>
           
           
@@ -300,7 +346,7 @@ expression.</p>
 
     <div class="dropdown-menu">
       
-      <a href="https://nteetor.github.io//yonder/0.0.5"
+      <a href="http://localhost:4000/yonder/0.0.5"
          class="dropdown-item active"
          >0.0.5</a>
       

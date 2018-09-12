@@ -82,84 +82,34 @@ first choice.}
 A take on shiny's \code{sliderInput}.
 }
 \examples{
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      rangeInput("default") \%>\%
-        background("yellow"),
-      rangeInput("blue") \%>\%
-        background("blue"),
-      rangeInput("red") \%>\%
-        background("red"),
-      rangeInput("white", step = 10, snap = TRUE) \%>\%
-        background("green"),
-      rangeInput("yellow", prefix = "$", suffix = ".00")
-    ),
-    server = function(input, output) {
-      observe({
-        req(input$default)
-        cat(paste0(rep.int("\\r", nchar(input$default)), input$default))
-      })
 
-    }
-  )
-}
+### Range inputs
 
+# Select from a range of numeric values.
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      intervalInput("gray") \%>\%
-        margin(bottom = 4),
-      intervalInput("green", default = c(25, 75), draggable = TRUE)
-    ),
-    server = function(input, output) {
-      observe({
-        print(input$green)
-      })
-    }
-  )
-}
+rangeInput(id = NULL) \%>\%
+  background("yellow")
 
+### Interval inputs
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      sliderInput(
-        "slide",
-        choices = c("hello, world", "goodnight, moon", "greetings, earthlings"),
-        values = c("hello", "goodnight", "greetings"),
-        selected = "goodnight, moon"
-      )
-    ),
-    server = function(input, output) {
-      observe({
-        print(input$slide)
-      })
-    }
-  )
-}
+# Select an interval from a range of numeric values.
+
+intervalInput(id = NULL) \%>\%
+    background("blue")
+
+### sliderInput
+
+# Select a value from a set of choices using a slider.
+
+sliderInput
+
+sliderInput(
+  id = NULL,
+  choices = paste("Choice", 1:6)
+)
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
-  \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{dateInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{loginInput}},
-  \code{\link{radioInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
-
-Other inputs: \code{\link{addressInput}},
-  \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{dateInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{loginInput}},
-  \code{\link{radioInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
-
 Other inputs: \code{\link{addressInput}},
   \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkbarInput}},

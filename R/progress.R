@@ -24,6 +24,7 @@
 #' @family outputs
 #' @export
 #' @examples
+#'
 #' if (interactive()) {
 #'   shinyApp(
 #'     ui = container(

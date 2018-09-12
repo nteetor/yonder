@@ -10,8 +10,6 @@ NULL
 
 #' Grid layout
 #'
-#' @description
-#'
 #' These functions are the foundation of any application. Grid elements are
 #' nested as follows: `container > row > column ~ column`. Columns may be nested
 #' within columns. Columns may be created with an explicit width, 1 through 12.
@@ -34,9 +32,12 @@ NULL
 #'   responsively centered or if the container occupies the entire width of the
 #'   viewport, defaults to `FALSE`.
 #'
-#' @section Equal width columns:
+#' @family layout
+#' @export
+#' @examples
 #'
-#' ```
+#' ### Equal width columns
+#'
 #' container(
 #'   row(
 #'     column(
@@ -51,11 +52,9 @@ NULL
 #'     )
 #'   )
 #' )
-#' ```
 #'
-#' @section Shiny's panel with sidebar layout:
+#' ###  Shiny's panel with sidebar layout
 #'
-#' ```
 #' container(
 #'   row(
 #'     column(
@@ -64,14 +63,12 @@ NULL
 #'     column()
 #'   )
 #' )
-#' ```
 #'
-#' @section Mobile friendly grids:
+#' ### Mobile friendly grids
 #'
-#' Use `column()`s [responsive] `width` argument to make mobile friendly
-#' applications.
+#' # Use `column()`s [responsive] `width` argument to make mobile friendly
+#' # applications.
 #'
-#' ```
 #' container(
 #'   row(
 #'     column(
@@ -88,9 +85,9 @@ NULL
 #'     )
 #'   )
 #' )
-#' ```
 #'
-#' ```
+#' # or
+#'
 #' container(
 #'   row(
 #'     column(
@@ -101,11 +98,9 @@ NULL
 #'     )
 #'   )
 #' )
-#' ```
 #'
-#' @section Fit columns to their content:
+#' ### Fit columns to their content
 #'
-#' ```
 #' container(
 #'   row(
 #'     column(),
@@ -116,11 +111,6 @@ NULL
 #'     column()
 #'   )
 #' )
-#' ```
-#'
-#' @family layout
-#' @export
-#' @examples
 #'
 column <- function(..., width = NULL) {
   width <- ensureBreakpoints(width, c(1:12, "auto"))
@@ -136,7 +126,6 @@ column <- function(..., width = NULL) {
   tagAddClass(tag, classes)
 }
 
-#' @family layout
 #' @rdname column
 #' @export
 row <- function(..., gutters = TRUE) {
@@ -150,7 +139,6 @@ row <- function(..., gutters = TRUE) {
   )
 }
 
-#' @family layout
 #' @rdname column
 #' @export
 container <- function(..., center = FALSE) {

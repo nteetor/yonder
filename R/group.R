@@ -51,7 +51,7 @@
 #' @export
 #' @examples
 #'
-#' ## Simple character string addon
+#' ### Simple character string addon
 #'
 #' # This input will always append a "@@".
 #'
@@ -61,7 +61,7 @@
 #'   placeholder = "Username"
 #' )
 #'
-#' ## Text input and button combo
+#' ### Text input and button combo
 #'
 #' groupInput(
 #'   id = NULL,
@@ -69,17 +69,18 @@
 #'   right = buttonInput(
 #'     id = "button",
 #'     label = "Go!"
-#'   )
+#'   ) %>%
+#'     border("transparent")
 #' )
 #'
-#' ## Combination addon
+#' ### Combination addon
 #'
 #' groupInput(
 #'   id = NULL,
 #'   left = c("$", "0.")
 #' )
 #'
-#' ## Two addons
+#' ### Two addons
 #'
 #' groupInput(
 #'   id = NULL,
@@ -97,7 +98,7 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
                        right = NULL, ...) {
   if (!is.null(left) && !isValidAddon(left)) {
     stop(
-      "invalid `groupInput` argument, `left` must be a character string, ",
+      "invalid `groupInput()` argument, `left` must be a character string, ",
       "buttonInput(), or dropdown()",
       call. = FALSE
     )
@@ -105,7 +106,7 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
 
   if (!is.null(right) && !isValidAddon(right)) {
     stop(
-      "invalid `groupInput` argument, `right` must be a character string, ",
+      "invalid `groupInput()` argument, `right` must be a character string, ",
       "buttonInput(), or dropdown()",
       call. = FALSE
     )

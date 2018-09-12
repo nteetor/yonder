@@ -39,6 +39,7 @@ roxygen:
   - type: source
     value: |2-
 
+
       if (interactive()) {
         shinyApp(
           ui = container(

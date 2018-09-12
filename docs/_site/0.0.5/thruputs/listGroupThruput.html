@@ -33,7 +33,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/inputs/">inputs</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/inputs/">inputs</a>
     </dt>
 
     
@@ -45,7 +45,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/design/">design</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/design/">design</a>
     </dt>
 
     
@@ -57,7 +57,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/outputs/">outputs</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
     </dt>
 
     
@@ -69,7 +69,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/content/">content</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/content/">content</a>
     </dt>
 
     
@@ -81,7 +81,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/utilities/">utilities</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
     </dt>
 
     
@@ -105,7 +105,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/layout/">layout</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/layout/">layout</a>
     </dt>
 
     
@@ -129,7 +129,7 @@
     
 
     <dt>
-      <a class="text-dark" href="https://nteetor.github.io//yonder/0.0.5/thruputs/">thruputs</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/thruputs/">thruputs</a>
     </dt>
 
     
@@ -137,35 +137,35 @@
     
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/thruputs/listGroupItem.html"
+      <a href="http://localhost:4000/yonder/0.0.5/thruputs/listGroupItem.html"
          alt="List group thruputs">
         listGroupItem
       </a>
     </dd>
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/thruputs/listGroupThruput.html"
+      <a href="http://localhost:4000/yonder/0.0.5/thruputs/listGroupThruput.html"
          alt="List group thruputs">
         listGroupThruput
       </a>
     </dd>
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/thruputs/renderListGroup.html"
+      <a href="http://localhost:4000/yonder/0.0.5/thruputs/renderListGroup.html"
          alt="List group thruputs">
         renderListGroup
       </a>
     </dd>
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/thruputs/renderTable.html"
+      <a href="http://localhost:4000/yonder/0.0.5/thruputs/renderTable.html"
          alt="Table thruput">
         renderTable
       </a>
     </dd>
     
     <dd>
-      <a href="https://nteetor.github.io//yonder/0.0.5/thruputs/tableThruput.html"
+      <a href="http://localhost:4000/yonder/0.0.5/thruputs/tableThruput.html"
          alt="Table thruput">
         tableThruput
       </a>
@@ -246,74 +246,44 @@ selected, defaults to <code class="highlighter-rouge">FALSE</code>.</p>
 
           
           
+          <h3>Getting started</h3>
+
+          
+          
+          
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">listGroupThruput</span><span class="p">(</span><span class="w">
-        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
-        </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
-          </span><span class="n">rangeInput</span><span class="p">(</span><span class="s2">"slider1"</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-
-    </span><span class="p">}</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">listGroupThruput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
+    </span><span class="n">rangeInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">)</span><span class="w">
   </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
 
-</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">row</span><span class="p">(</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w">
-          </span><span class="n">listGroupThruput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"thrulist"</span><span class="w">
-          </span><span class="p">)</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">rangeInput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"num"</span><span class="p">,</span><span class="w">
-            </span><span class="n">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w">
-            </span><span class="n">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w">
-            </span><span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="w">
-          </span><span class="p">),</span><span class="w">
-          </span><span class="n">sliderInput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"level"</span><span class="p">,</span><span class="w">
-            </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="s2">"orange"</span><span class="p">,</span><span class="w"> </span><span class="s2">"green"</span><span class="p">,</span><span class="w"> </span><span class="s2">"cyan"</span><span class="p">)</span><span class="w">
-          </span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">thrulist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderListGroup</span><span class="p">(</span><span class="w">
-        </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
-          </span><span class="s2">"Cras justo odio"</span><span class="p">,</span><span class="w">
-          </span><span class="n">badgeOutput</span><span class="p">(</span><span class="s2">"badge1"</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-            </span><span class="n">background</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">level</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-          </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-          </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"between"</span><span class="p">,</span><span class="w"> </span><span class="n">align</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"center"</span><span class="p">),</span><span class="w">
-        </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
-          </span><span class="s2">"Dapibus ac facilisis in"</span><span class="p">,</span><span class="w">
-          </span><span class="n">badgeOutput</span><span class="p">(</span><span class="s2">"badge2"</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-            </span><span class="n">background</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">level</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-          </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-          </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"between"</span><span class="p">,</span><span class="w"> </span><span class="n">align</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"center"</span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-list-group list-group" data-multiple="true">
+  <a class="list-group-item">
+    <div class="yonder-range bg-grey">
+      <input class="range" type="text" data-type="single" data-min="0" data-max="100" data-step="1" data-from="0" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
+    </div>
+  </a>
+</div>
+          </div>
+          
+          
+          
+          <h3>Fancier list items</h3>
 
-      </span><span class="n">output</span><span class="o">$</span><span class="n">badge1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderBadge</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">num</span><span class="p">)</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">badge2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderBadge</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">num</span><span class="p">)</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-
-</span><span class="n">lessons</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">lessons</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">
   </span><span class="n">stars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
     </span><span class="s2">"The stars and moon are far too bright"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"Their beam and smile splashing o'er all"</span><span class="p">,</span><span class="w">
@@ -328,67 +298,36 @@ selected, defaults to <code class="highlighter-rouge">FALSE</code>.</p>
   </span><span class="p">)</span><span class="w">
 </span><span class="p">)</span><span class="w">
 
-</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">row</span><span class="p">(</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"ml-auto"</span><span class="p">,</span><span class="w">
-          </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w">
-          </span><span class="n">listGroupThruput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lesson"</span><span class="p">,</span><span class="w">
-            </span><span class="n">multiple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w">
-            </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
-              </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"stars"</span><span class="p">,</span><span class="w">
-              </span><span class="n">h</span><span class="m">5</span><span class="p">(</span><span class="s2">"Stars"</span><span class="p">),</span><span class="w">
-              </span><span class="n">lessons</span><span class="p">[[</span><span class="s2">"stars"</span><span class="p">]][</span><span class="m">1</span><span class="p">]</span><span class="w">
-            </span><span class="p">),</span><span class="w">
-            </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
-              </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"joy"</span><span class="p">,</span><span class="w">
-              </span><span class="n">h</span><span class="m">5</span><span class="p">(</span><span class="s2">"Joy"</span><span class="p">),</span><span class="w">
-              </span><span class="n">lessons</span><span class="p">[[</span><span class="s2">"joy"</span><span class="p">]][</span><span class="m">1</span><span class="p">]</span><span class="w">
-            </span><span class="p">)</span><span class="w">
-          </span><span class="p">)</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"mr-auto"</span><span class="p">,</span><span class="w">
-          </span><span class="n">htmlOutput</span><span class="p">(</span><span class="s2">"text"</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">text</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderText</span><span class="p">({</span><span class="w">
-        </span><span class="n">req</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">lesson</span><span class="p">)</span><span class="w">
-        </span><span class="n">HTML</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">lessons</span><span class="p">[[</span><span class="n">input</span><span class="o">$</span><span class="n">lesson</span><span class="p">]],</span><span class="w"> </span><span class="n">collapse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"&lt;/br&gt;"</span><span class="p">))</span><span class="w">
-      </span><span class="p">})</span><span class="w">
-    </span><span class="p">}</span><span class="w">
+</span><span class="n">listGroupThruput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">multiple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w">
+  </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
+    </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"stars"</span><span class="p">,</span><span class="w">
+    </span><span class="n">h</span><span class="m">5</span><span class="p">(</span><span class="s2">"Stars"</span><span class="p">),</span><span class="w">
+    </span><span class="n">lessons</span><span class="p">[[</span><span class="s2">"stars"</span><span class="p">]][</span><span class="m">1</span><span class="p">]</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">listGroupItem</span><span class="p">(</span><span class="w">
+    </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"joy"</span><span class="p">,</span><span class="w">
+    </span><span class="n">h</span><span class="m">5</span><span class="p">(</span><span class="s2">"Joy"</span><span class="p">),</span><span class="w">
+    </span><span class="n">lessons</span><span class="p">[[</span><span class="s2">"joy"</span><span class="p">]][</span><span class="m">1</span><span class="p">]</span><span class="w">
   </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+</span><span class="p">)</span></code></pre></figure>
 
           </div>
           
           
           
-          <div class="mb-2 ml-1 pl-2 border-left border-black"
-               >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="n">listGroupThruput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="n">listGroupItem</span><span class="p">(</span><span class="n">rangeInput</span><span class="p">(</span><span class="s2">"slider1"</span><span class="p">)))),</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="p">})</span><span class="w">
-</span><span class="p">}</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="n">row</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">listGroupThruput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"thrulist"</span><span class="p">)),</span><span class="w"> </span><span class="n">column</span><span class="p">(</span><span class="n">rangeInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"num"</span><span class="p">,</span><span class="w"> </span><span class="n">min</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="p">,</span><span class="w"> </span><span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">sliderInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"level"</span><span class="p">,</span><span class="w"> </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="s2">"orange"</span><span class="p">,</span><span class="w"> </span><span class="s2">"green"</span><span class="p">,</span><span class="w"> </span><span class="s2">"cyan"</span><span class="p">))))),</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">output</span><span class="o">$</span><span class="n">thrulist</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderListGroup</span><span class="p">(</span><span class="n">listGroupItem</span><span class="p">(</span><span class="s2">"Cras justo odio"</span><span class="p">,</span><span class="w"> </span><span class="n">badgeOutput</span><span class="p">(</span><span class="s2">"badge1"</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">background</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">level</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"between"</span><span class="p">,</span><span class="w"> </span><span class="n">align</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"center"</span><span class="p">),</span><span class="w"> </span><span class="n">listGroupItem</span><span class="p">(</span><span class="s2">"Dapibus ac facilisis in"</span><span class="p">,</span><span class="w"> </span><span class="n">badgeOutput</span><span class="p">(</span><span class="s2">"badge2"</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">background</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">level</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"between"</span><span class="p">,</span><span class="w"> </span><span class="n">align</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"center"</span><span class="p">))</span><span class="w">
-        </span><span class="n">output</span><span class="o">$</span><span class="n">badge1</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderBadge</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">num</span><span class="p">)</span><span class="w">
-        </span><span class="n">output</span><span class="o">$</span><span class="n">badge2</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderBadge</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">num</span><span class="p">)</span><span class="w">
-    </span><span class="p">})</span><span class="w">
-</span><span class="p">}</span><span class="n">lessons</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">stars</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"The stars and moon are far too bright"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Their beam and smile splashing o'er all"</span><span class="p">,</span><span class="w"> </span><span class="s2">"To illuminate while turning my sight"</span><span class="p">,</span><span class="w"> </span><span class="s2">"From the shadows wherein deeper shadows fall"</span><span class="p">),</span><span class="w"> </span><span class="n">joy</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"A single step, her hand aloft"</span><span class="p">,</span><span class="w"> </span><span class="s2">"More than a step, a joyful bound"</span><span class="p">,</span><span class="w"> </span><span class="s2">"The moment, precious, small, soft"</span><span class="p">,</span><span class="w"> </span><span class="s2">"And within a truth was found"</span><span class="p">))</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="n">row</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"ml-auto"</span><span class="p">,</span><span class="w"> </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">listGroupThruput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lesson"</span><span class="p">,</span><span class="w"> </span><span class="n">multiple</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="p">,</span><span class="w"> </span><span class="n">listGroupItem</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"stars"</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="m">5</span><span class="p">(</span><span class="s2">"Stars"</span><span class="p">),</span><span class="w"> </span><span class="n">lessons</span><span class="p">[[</span><span class="s2">"stars"</span><span class="p">]][</span><span class="m">1</span><span class="p">]),</span><span class="w"> </span><span class="n">listGroupItem</span><span class="p">(</span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"joy"</span><span class="p">,</span><span class="w"> </span><span class="n">h</span><span class="m">5</span><span class="p">(</span><span class="s2">"Joy"</span><span class="p">),</span><span class="w"> </span><span class="n">lessons</span><span class="p">[[</span><span class="s2">"joy"</span><span class="p">]][</span><span class="m">1</span><span class="p">]))),</span><span class="w"> </span><span class="n">column</span><span class="p">(</span><span class="n">class</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"mr-auto"</span><span class="p">,</span><span class="w"> </span><span class="n">htmlOutput</span><span class="p">(</span><span class="s2">"text"</span><span class="p">)))),</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">output</span><span class="o">$</span><span class="n">text</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderText</span><span class="p">({</span><span class="w">
-            </span><span class="n">req</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">lesson</span><span class="p">)</span><span class="w">
-            </span><span class="n">HTML</span><span class="p">(</span><span class="n">paste</span><span class="p">(</span><span class="n">lessons</span><span class="p">[[</span><span class="n">input</span><span class="o">$</span><span class="n">lesson</span><span class="p">]],</span><span class="w"> </span><span class="n">collapse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"&lt;/br&gt;"</span><span class="p">))</span><span class="w">
-        </span><span class="p">})</span><span class="w">
-    </span><span class="p">})</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
-
+          <div class="mb-5">
+            <div class="yonder-list-group list-group" data-multiple="false">
+  <a class="list-group-item list-group-item-action" data-value="stars">
+    <h5>Stars</h5>
+    The stars and moon are far too bright
+  </a>
+  <a class="list-group-item list-group-item-action" data-value="joy">
+    <h5>Joy</h5>
+    A single step, her hand aloft
+  </a>
+</div>
           </div>
           
           
@@ -404,7 +343,7 @@ selected, defaults to <code class="highlighter-rouge">FALSE</code>.</p>
 
     <div class="dropdown-menu">
       
-      <a href="https://nteetor.github.io//yonder/0.0.5"
+      <a href="http://localhost:4000/yonder/0.0.5"
          class="dropdown-item active"
          >0.0.5</a>
       

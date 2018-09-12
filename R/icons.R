@@ -2,75 +2,34 @@ globalVariables("icons")
 
 #' Icon elements
 #'
-#' Include an icon in your application. For now only Font Awesome icons are
-#' included.
+#' Include icons in your application UIs.
 #'
 #' @param name A character string specifying the name of the icon.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
 #'
-#' @param set A character string specifying the icon set to choose from, defaults
-#'   to `"NULL"`, in which case all icon sets are searched.
+#' @param set A character string specifying the icon set to choose from,
+#'   defaults to `"NULL"`, in which case all icon sets are searched.
 #'
-#' @seealso
-#'
-#' For more on Font Awesome check out \url{https://fontawesome.com}.
+#'   Possibles values include `"font awesome"`, `"material design"`, and
+#'   `"feather"`.
 #'
 #' @family content
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       center = TRUE,
-#'       selectInput(
-#'         id = "name",
-#'         choices = unique(icons$name)
-#'       ) %>%
-#'         margin(3),
-#'       div(
-#'         htmlOutput("icon")
-#'       ) %>%
-#'         margin(3) %>%
-#'         display("flex") %>%
-#'         flex(direction = "column", align = "center")
-#'     ),
-#'     server = function(input, output) {
-#'       output$icon <- renderUI({
-#'         icon(input$name) %>%
-#'           font(size = "8x")
-#'       })
-#'     }
-#'   )
-#' }
+#' ### Font awesome
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       lapply(
-#'         unique(icons$set),
-#'         function(s) {
-#'           div(
-#'             lapply(
-#'               unique(icons[icons$set == s, ]$name),
-#'               function(nm) {
-#'                 icon(nm, set = s) %>%
-#'                   margin(2)
-#'               }
-#'             )
-#'           ) %>%
-#'             display("flex") %>%
-#'             flex(wrap = TRUE)
-#'         }
-#'       )
-#'     ),
-#'     server = function(input, output) {
+#' icon("clone")
 #'
-#'     }
-#'   )
-#' }
+#' ### Material design
+#'
+#' icon("mail", "material design")
+#'
+#' ### Feather
+#'
+#' icon("mail", "feather")
 #'
 icon <- function(name, set = NULL, ...) {
   if (length(name) != 1) {
@@ -157,85 +116,3 @@ icon <- function(name, set = NULL, ...) {
 #' @examples
 #' icons
 "icons"
-
-#' A spinner
-#'
-#' Start or stop a spinner based on process progress.
-#'
-#' @param id A character specifying the id of the spinner output.
-#'
-#' @param type One of `"circle"`, `"cog"`, `"dots"`, or `"sync"` specifying the
-#'   type of spinner, defaults to `"circle"`.
-#'
-#' @param pulse One of `TRUE` or `FALSE`, if `TRUE` the spinner rotates in 8
-#'   discrete steps, defaults to `FALSE`.
-#'
-#' @param ... Additional named argument passed as HTML attributes to the
-#'   parent element.
-#'
-#' @param session A reactive context, defaults to [getDefaultReactiveDomain())].
-#'
-#' @export
-#' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           spinnerOutput("spin", pulse = TRUE),
-#'           buttonInput("trigger", "Start/stop")
-#'         ) %>%
-#'           display("flex") %>%
-#'           flex(justify = "around")
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$trigger, {
-#'         if (input$trigger %% 2 == 1) {
-#'           startSpinner("spin")
-#'         } else {
-#'           stopSpinner("spin")
-#'         }
-#'       })
-#'     }
-#'   )
-#' }
-#'
-spinnerOutput <- function(id, type = "circle", pulse = FALSE, ...) {
-  tags$i(
-    class = collate(
-      "yonder-spinner",
-      "fas",
-      switch(
-        type,
-        circle = "fa-circle-notch",
-        cog = "fa-cog",
-        dots = "fa-spinner",
-        sync = "fa-sync"
-      ),
-      if (pulse) "fa-pulse" else "fa-spin",
-      "pause"
-    ),
-    id = id,
-    ...,
-    include("font awesome")
-  )
-}
-
-#' @rdname spinnerOutput
-#' @export
-startSpinner <- function(id, session = getDefaultReactiveDomain()) {
-  session$sendProgress("yonder-spinner", list(
-    id = id,
-    action = "start"
-  ))
-}
-
-#' @rdname spinnerOutput
-#' @export
-stopSpinner <- function(id, session = getDefaultReactiveDomain()) {
-  session$sendProgress("yonder-spinner", list(
-    id = id,
-    action = "stop"
-  ))
-}

@@ -3,7 +3,6 @@
 \name{img}
 \alias{img}
 \alias{figure}
-\alias{image}
 \title{Responsive images and figures}
 \usage{
 img(src, ...)
@@ -26,53 +25,11 @@ A small update to \code{tags$img} and \code{tags$figure}. Create responsive imag
 \code{img}. \code{figure} has specific arguments for an image child element and image
 caption.
 }
-\examples{
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      img("https://upload.wikimedia.org/wikipedia/commons/1/18/Grey_Square.svg") \%>\%
-        float("left") \%>\%
-        rounded(),
-      img("https://upload.wikimedia.org/wikipedia/commons/1/18/Grey_Square.svg") \%>\%
-        float("right") \%>\%
-        rounded()
-    ),
-    server = function(input, output) {
-
-    }
-  )
-}
-
-# Thank you to Wikimedia Commons
-# Grey square provided by Johannes Rössel (Own work) [Public domain]
-
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      figure(
-        image = rounded(img("http://bit.ly/2qchbEB")),
-        caption = "Stock cat photo."
-      )
-    ),
-    server = function(input, output) {
-
-    }
-  )
-}
-
-}
 \seealso{
 Other content: \code{\link{blockquote}},
   \code{\link{card}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{icon}},
   \code{\link{jumbotron}}, \code{\link{pre}},
-  \code{\link{showPopover}}, \code{\link{tooltip}}
-
-Other content: \code{\link{blockquote}},
-  \code{\link{card}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{icon}},
-  \code{\link{jumbotron}}, \code{\link{pre}},
-  \code{\link{showPopover}}, \code{\link{tooltip}}
+  \code{\link{tooltip}}
 }
 \concept{content}

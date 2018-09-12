@@ -38,42 +38,31 @@ roxygen:
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>Getting started</h3>
   - type: source
     value: |2-
 
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                selectInput(
-                  id = "select",
-                  choices = c("Choose one", "One", "Two", "Three"),
-                  values = list(NULL, 1, 2, 3),
-                  multiple = TRUE
-                )
-              ),
-              column(
-                d4(
-                  textOutput("value")
-                )
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$value <- renderText({
-              input$select
-            })
-          }
-        )
-      }
-  - type: code
+      selectInput(
+        id = NULL,
+        choices = c(
+          "Choose one",
+          "Choice 1",
+          "Choice 2",
+          "Choice 3"
+        ),
+        values = list(NULL, 1, 2, 3)
+      )
+  - type: output
     value: |-
-      if (interactive()) {
-          shinyApp(ui = container(row(column(selectInput(id = "select", choices = c("Choose one", "One", "Two", "Three"), values = list(NULL, 1, 2, 3), multiple = TRUE)), column(d4(textOutput("value"))))), server = function(input, output) {
-              output$value <- renderText({
-                  input$select
-              })
-          })
-      }
+      <div class="yonder-select">
+        <select class="custom-select">
+          <option selected>Choose one</option>
+          <option data-value="1">Choice 1</option>
+          <option data-value="2">Choice 2</option>
+          <option data-value="3">Choice 3</option>
+        </select>
+        <div class="invalid-feedback"></div>
+      </div>
 ---

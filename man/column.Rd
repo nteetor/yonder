@@ -36,8 +36,11 @@ To fit a column automatically to its content use \code{width = "auto"}. To divid
 the space in a row evenly amongst all columns leave \code{width} as \code{NULL}. For
 examples and usage tips see the sections below.
 }
-\section{Equal width columns}{
-\preformatted{container(
+\examples{
+
+### Equal width columns
+
+container(
   row(
     column(
       "Aliquam erat volutpat."
@@ -51,11 +54,10 @@ examples and usage tips see the sections below.
     )
   )
 )
-}
-}
 
-\section{Shiny's panel with sidebar layout}{
-\preformatted{container(
+###  Shiny's panel with sidebar layout
+
+container(
   row(
     column(
       width = 4
@@ -63,14 +65,13 @@ examples and usage tips see the sections below.
     column()
   )
 )
-}
-}
 
-\section{Mobile friendly grids}{
+### Mobile friendly grids
 
+# Use `column()`s [responsive] `width` argument to make mobile friendly
+# applications.
 
-Use \code{column()}s \link{responsive} \code{width} argument to make mobile friendly
-applications.\preformatted{container(
+container(
   row(
     column(
       width = c(sm = 4),
@@ -86,7 +87,10 @@ applications.\preformatted{container(
     )
   )
 )
-}\preformatted{container(
+
+# or
+
+container(
   row(
     column(
       width = c(sm = 4)
@@ -96,11 +100,10 @@ applications.\preformatted{container(
     )
   )
 )
-}
-}
 
-\section{Fit columns to their content}{
-\preformatted{container(
+### Fit columns to their content
+
+container(
   row(
     column(),
     column(
@@ -110,21 +113,9 @@ applications.\preformatted{container(
     column()
   )
 )
-}
-}
-
-\examples{
 
 }
 \seealso{
-Other layout: \code{\link{fieldset}}, \code{\link{flex}},
-  \code{\link{formGroup}}, \code{\link{navbar}},
-  \code{\link{tabTabs}}
-
-Other layout: \code{\link{fieldset}}, \code{\link{flex}},
-  \code{\link{formGroup}}, \code{\link{navbar}},
-  \code{\link{tabTabs}}
-
 Other layout: \code{\link{fieldset}}, \code{\link{flex}},
   \code{\link{formGroup}}, \code{\link{navbar}},
   \code{\link{tabTabs}}

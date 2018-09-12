@@ -32,33 +32,19 @@ Create a select input. Select elements often appear as a dropdown menu and
 may have one or more selected values, see \code{multiple}.
 }
 \examples{
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        column(
-          selectInput(
-            id = "select",
-            choices = c("Choose one", "One", "Two", "Three"),
-            values = list(NULL, 1, 2, 3),
-            multiple = TRUE
-          )
-        ),
-        column(
-          d4(
-            textOutput("value")
-          )
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$value <- renderText({
-        input$select
-      })
-    }
-  )
-}
 
+### Getting started
+
+selectInput(
+  id = NULL,
+  choices = c(
+    "Choose one",
+    "Choice 1",
+    "Choice 2",
+    "Choice 3"
+  ),
+  values = list(NULL, 1, 2, 3)
+)
 
 }
 \seealso{

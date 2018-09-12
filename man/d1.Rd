@@ -41,6 +41,6 @@ Other content: \code{\link{blockquote}},
   \code{\link{card}}, \code{\link{dropdown}},
   \code{\link{icon}}, \code{\link{img}},
   \code{\link{jumbotron}}, \code{\link{pre}},
-  \code{\link{showPopover}}, \code{\link{tooltip}}
+  \code{\link{tooltip}}
 }
 \concept{content}

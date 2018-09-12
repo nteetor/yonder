@@ -17,43 +17,38 @@
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = tagList(
-#'       navbar(
-#'         brand = "Navbar",
-#'         tabTabs("myTabs", c("Home", "About", "Our process")) %>%
-#'           margin(right = "auto"),
-#'         formInput(
-#'           inline = TRUE,
-#'           id = "navForm",
-#'           searchInput("search", placeholder = "Search") %>%
-#'             margin(right = c(sm = 2)),
-#'           submit = submitInput("Search") %>%
-#'             background("amber")
-#'         )
-#'       ) %>%
-#'         background("teal"),
-#'       container(
-#'         tabContent(
-#'           tabs = "myTabs",
-#'           tabPane(
-#'             h3("Home")
-#'           ),
-#'           tabPane(
-#'             h3("About")
-#'           ),
-#'           tabPane(
-#'             h3("The process")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
+#' ### Navbar with tabs
 #'
-#'     }
+#' div(
+#'   navbar(
+#'     brand = "Navbar",
+#'     tabTabs("myTabs", c("Home", "About", "Our process")) %>%
+#'       margin(right = "auto"),
+#'     formInput(
+#'       inline = TRUE,
+#'       id = "navForm",
+#'       searchInput("search", placeholder = "Search") %>%
+#'         margin(right = c(sm = 2)),
+#'       submit = submitInput("Search") %>%
+#'         background("amber")
+#'     )
+#'   ) %>%
+#'     background("teal"),
+#'   container(
+#'     tabContent(
+#'       tabs = "myTabs",
+#'       tabPane(
+#'         h3("Home")
+#'       ),
+#'       tabPane(
+#'         h3("About")
+#'       ),
+#'       tabPane(
+#'         h3("The process")
+#'       )
+#'     )
 #'   )
-#' }
+#' )
 #'
 navbar <- function(..., brand = NULL) {
   args <- list(...)
