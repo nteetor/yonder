@@ -85,11 +85,17 @@
 #' }
 #'
 progressOutput <- function(...) {
-  tags$div(
+  output <- tags$div(
     class = "yonder-progress progress",
-    ...,
-    include("core")
+    ...
   )
+
+  output <- attachDependencies(
+    output,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  output
 }
 
 #' @rdname progressOutput

@@ -27,7 +27,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>Making an element collapsible</h2>
+      <h3>Making an element collapsible</h3>
   - type: markdown
     value: |
       <p>On the server side you will need to call <code>hideCollapse</code> or <code>toggleCollapse</code></p>

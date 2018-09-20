@@ -17,36 +17,19 @@ A composite input which includes a street field, apartment or unit field,
 city field, state field, and a zip code field.
 }
 \examples{
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        column(
-          tags$form(
-            addressInput("address")
-          )
-        ),
-        column(
-          verbatimTextOutput("value")
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$value <- renderPrint({
-        input$address
-      })
-    }
-  )
-}
+
+### Fields by default
+
+addressInput(id = NULL)
 
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{dateInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{loginInput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}, \code{\link{textInput}}
+  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
+  \code{\link{dateInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{loginInput}}, \code{\link{radioInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
+  \code{\link{textInput}}
 }
 \concept{inputs}

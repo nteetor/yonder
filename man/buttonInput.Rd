@@ -41,7 +41,7 @@ freeze all reactive inputs on the page.
 A submit input is automatically included as part of a \code{\link{formInput}}.
 }
 \examples{
-## Simple vs block button
+### Simple vs block button
 
 buttonInput(
   id = NULL,
@@ -57,11 +57,11 @@ buttonInput(
 ) \%>\%
   background("red")
 
-## A submit button
+### A submit button
 
 submitInput()
 
-## Possible colors
+### Possible colors
 
 colors <- c(
   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
@@ -84,51 +84,18 @@ div(
   display("flex") \%>\%
   flex(wrap = TRUE)
 
+### Reactive links
 
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      "Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem."
-    ),
-    server = function(input, output) {
-      observeEvent(input$inline, {
-        showPopover(
-          input$inline,
-          content = "This means beef?",
-          placement = "bottom"
-        )
-      })
-    }
-  )
-}
+div("Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem.")
 
 }
 \seealso{
 Other inputs: \code{\link{addressInput}},
   \code{\link{buttonGroupInput}},
-  \code{\link{checkbarInput}}, \code{\link{checkboxInput}},
-  \code{\link{dateInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{loginInput}}, \code{\link{radioInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
-
-Other inputs: \code{\link{addressInput}},
-  \code{\link{buttonGroupInput}},
-  \code{\link{checkbarInput}}, \code{\link{checkboxInput}},
-  \code{\link{dateInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{loginInput}}, \code{\link{radioInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
-
-Other inputs: \code{\link{addressInput}},
-  \code{\link{buttonGroupInput}},
-  \code{\link{checkbarInput}}, \code{\link{checkboxInput}},
-  \code{\link{dateInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{loginInput}}, \code{\link{radioInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{checkboxInput}}, \code{\link{dateInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{groupInput}}, \code{\link{loginInput}},
+  \code{\link{radioInput}}, \code{\link{rangeInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

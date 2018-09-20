@@ -43,7 +43,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>Preselect a date</h2>
+      <h3>Preselect a date</h3>
   - type: source
     value: |2-
 
@@ -52,11 +52,11 @@ roxygen:
         selected = Sys.Date() + 1
       )
   - type: output
-    value: <input class="yonder-date form-control" type="text" data-default-date="2018-09-13"
+    value: <input class="yonder-date form-control" type="text" data-default-date="2018-09-20"
       data-date-format="Y-m-d"/>
   - type: markdown
     value: |
-      <h2>Set a min and max</h2>
+      <h3>Set a min and max</h3>
   - type: source
     value: |2-
 
@@ -66,11 +66,11 @@ roxygen:
         max = Sys.Date() + 3
       )
   - type: output
-    value: <input class="yonder-date form-control" type="text" data-min-date="2018-09-09"
-      data-max-date="2018-09-15" data-date-format="Y-m-d"/>
+    value: <input class="yonder-date form-control" type="text" data-min-date="2018-09-16"
+      data-max-date="2018-09-22" data-date-format="Y-m-d"/>
   - type: markdown
     value: |
-      <h2>Select multiple dates</h2>
+      <h3>Select multiple dates</h3>
   - type: source
     value: |2-
 
@@ -81,12 +81,12 @@ roxygen:
         multiple = TRUE
       )
   - type: output
-    value: <input class="yonder-date form-control" type="text" data-default-date="2018-09-13"
-      data-enable="2018-09-06\,2018-09-08\,2018-09-10\,2018-09-12\,2018-09-14\,2018-09-16\,2018-09-18"
+    value: <input class="yonder-date form-control" type="text" data-default-date="2018-09-20"
+      data-enable="2018-09-13\,2018-09-15\,2018-09-17\,2018-09-19\,2018-09-21\,2018-09-23\,2018-09-25"
       data-date-format="Y-m-d" data-mode="multiple"/>
   - type: markdown
     value: |
-      <h2>Date ranges</h2>
+      <h3>Date ranges</h3>
   - type: source
     value: |2-
 
@@ -95,6 +95,6 @@ roxygen:
         selected = c(Sys.Date(), Sys.Date() + 3)
       )
   - type: output
-    value: <input class="yonder-date form-control" type="text" data-default-date="2018-09-12\,2018-09-15"
+    value: <input class="yonder-date form-control" type="text" data-default-date="2018-09-19\,2018-09-22"
       data-date-format="Y-m-d" data-mode="range"/>
 ---

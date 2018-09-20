@@ -1,30 +1,36 @@
 ---
 this: checkbarInput
-filename: R/bars.R
+filename: R/checkbox.R
 layout: page
 roxygen:
-  title: Checkbar and radiobar inputs
+  title: Checkbox inputs
   description: |-
-    These inputs behave similarly to their counter parts, checkbox and radio
-    inputs. However, yonder's checkbox input is a singleton value, thus the
-    checkbar input is more akin to shiny's checkbox group input.
+    A reactive checkbox input. When a checkbox input is unchecked the reactive
+    value is `NULL`. When checked the checkbox input reactive value is `value`.
+    Unlike shiny, yonder's checkbox inputs are a singleton value.
   parameters:
   - name: id
-    description: A character string specifying the id of the input.
-  - name: choices
     description: |-
-      A character vector or flat list of character strings
-      specifying the labels of the checkbar or radiobar options.
-  - name: values
+      A character string specifying the id of the checkbox input, the
+      reactive value of the checkbox input is available to the shiny server
+      function as part of the `input` object.
+  - name: choice,choices
     description: |-
-      A character vector, flat list of character strings, or object
-      to coerce to either, specifying the values of the checkbar or radiobar
-      options, defaults to `choices`.
-  - name: selected
+      A character string or vector specifying a label for the
+      checkbox or checkbar.
+  - name: value
     description: |-
-      One or more of `values` indicating which of the checkbar or
-      radiobar options are selected by default, defaults to `NULL`, in which case
-      there is no default option.
+      A character string, object to coerce to a character string, or
+      `NULL` specifying the value of the checkbox or a new value for the
+      checkbox, defaults to `choice`.
+  - name: checked
+    description: |-
+      If `TRUE` the checkbox renders in a checked state, defaults
+      to `FALSE`.
+  - name: '...'
+    description: |-
+      Additional named arguments passed as HTML attributes to the parent
+      element.
   sections: ~
   return: ~
   family: inputs
@@ -33,7 +39,28 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>An alternative to checkbox groups</h2>
+      <h3>Start checked</h3>
+  - type: source
+    value: |2-
+
+      checkboxInput(
+        id = NULL,
+        choice = "Suspendisse potenti",
+        checked = TRUE
+      )
+  - type: output
+    value: |-
+      <div class="yonder-checkbox">
+        <div class="custom-control custom-checkbox">
+          <input class="custom-control-input" type="checkbox" id="checkbox-449-629" data-value="Suspendisse potenti" checked/>
+          <label class="custom-control-label" for="checkbox-449-629">Suspendisse potenti</label>
+          <div class="invalid-feedback"></div>
+          <div class="valid-feedback"></div>
+        </div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>An alternative to checkbox groups</h3>
   - type: source
     value: |2-
 
@@ -62,43 +89,6 @@ roxygen:
         <label class="btn btn-blue">
           <input type="checkbox" autocomplete="off" data-value="Check 3"/>
           <span>Check 3</span>
-        </label>
-      </div>
-  - type: markdown
-    value: |
-      <h2>Radiobars in comparison</h2>
-  - type: source
-    value: |2-
-
-      radiobarInput(
-        id = NULL,
-        choices = c(
-          "fusce sagittis",
-          "libero non molestie",
-          "magna orci",
-          "ultrices dolor"
-        ),
-        selected = "ultrices dolor"
-      ) %>%
-        background("grey")
-  - type: output
-    value: |-
-      <div class="yonder-radiobar btn-group btn-group-toggle" data-toggle="buttons">
-        <label class="btn btn-grey">
-          <input type="radio" data-value="fusce sagittis" autocomplete="false"/>
-          <span>fusce sagittis</span>
-        </label>
-        <label class="btn btn-grey">
-          <input type="radio" data-value="libero non molestie" autocomplete="false"/>
-          <span>libero non molestie</span>
-        </label>
-        <label class="btn btn-grey">
-          <input type="radio" data-value="magna orci" autocomplete="false"/>
-          <span>magna orci</span>
-        </label>
-        <label class="btn active btn-grey">
-          <input type="radio" data-value="ultrices dolor" autocomplete="false" checked/>
-          <span>ultrices dolor</span>
         </label>
       </div>
 ---

@@ -8,7 +8,8 @@
 #'   reactive value of the checkbox input is available to the shiny server
 #'   function as part of the `input` object.
 #'
-#' @param choice A character string specifying a label for the checkbox.
+#' @param choice,choices A character string or vector specifying a label for the
+#'   checkbox or checkbar.
 #'
 #' @param value A character string, object to coerce to a character string, or
 #'   `NULL` specifying the value of the checkbox or a new value for the
@@ -24,13 +25,27 @@
 #' @export
 #' @examples
 #'
-#' ## Start checked
+#' ### Start checked
 #'
 #' checkboxInput(
 #'   id = NULL,
 #'   choice = "Suspendisse potenti",
 #'   checked = TRUE
 #' )
+#'
+#' ### An alternative to checkbox groups
+#'
+#' checkbarInput(
+#'   id = NULL,
+#'   choices = c(
+#'     "Check 1",
+#'     "Check 2",
+#'     "Check 3"
+#'   ),
+#'   selected = "Check 1"
+#' ) %>%
+#'   background("blue") %>%
+#'   margin(2)
 #'
 checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
   if (length(choice) > 1) {
@@ -44,7 +59,7 @@ checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
   value <- as.character(value)
   self <- ID("checkbox")
 
-  tags$div(
+  input <- tags$div(
     class = "yonder-checkbox",
     id = id,
     tags$div(
@@ -67,7 +82,64 @@ checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
       tags$div(class = "invalid-feedback"),
       tags$div(class = "valid-feedback")
     ),
-    ...,
-    include("core")
+    ...
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  input
+}
+
+#' @rdname checkboxInput
+#' @export
+checkbarInput <- function(id, choices, values = choices, selected = NULL) {
+  if (length(choices) != length(values)) {
+    stop(
+      "invalid `checkbarInput` arguments, `choices` and `values` must have ",
+      "the same length",
+      call. = FALSE
+    )
+  }
+
+  selected <- match2(selected, values)
+
+  input <- tags$div(
+    class = collate(
+      "yonder-checkbar",
+      if (length(choices) > 1) "btn-group",
+      "btn-group-toggle"
+    ),
+    `data-toggle` = "buttons",
+    id = id,
+    lapply(
+      seq_along(choices),
+      function(i) {
+        tags$label(
+          class = collate(
+            "btn",
+            if (selected[[i]]) "active"
+          ),
+          tags$input(
+            type = "checkbox",
+            autocomplete = "off",
+            `data-value` = values[[i]],
+            checked = if (selected[[i]]) NA
+          ),
+          tags$span(
+            choices[[i]]
+          )
+        )
+      }
+    )
+  )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  input
 }

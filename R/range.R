@@ -94,7 +94,7 @@
 rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
                        ticks = TRUE, fill = TRUE, labels = 4, snap = FALSE,
                        prefix = NULL, suffix = NULL) {
-  tags$div(
+  input <- tags$div(
     class = "yonder-range bg-grey",
     id = id,
     tags$input(
@@ -112,10 +112,15 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
       `data-grid-num` = labels,
       `data-grid-snap` = if (isTRUE(snap)) snap,
       `data-no-fill` = if (!fill) "true"
-    ),
-    include("core"),
-    include("ion slider")
+    )
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep(), ionSliderDep())
+  )
+
+  input
 }
 
 #' @rdname rangeInput
@@ -124,7 +129,7 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
                           step = 1, draggable = FALSE,
                           ticks = TRUE, labels = 4, snap = FALSE,
                           prefix = NULL, suffix = NULL) {
-  tags$div(
+  input <- tags$div(
     class = "yonder-range bg-grey",
     id = id,
     tags$input(
@@ -142,10 +147,15 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
       `data-grid` = ticks,
       `data-grid-num` = labels,
       `data-grid-snap` = if (isTRUE(snap)) snap
-    ),
-    include("core"),
-    include("ion slider")
+    )
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep(), ionSliderDep())
+  )
+
+  input
 }
 
 #' @rdname rangeInput
@@ -161,7 +171,7 @@ sliderInput <- function(id, choices, values = choices, selected = NULL,
   choices <- encode_commas(choices)
   selected <- encode_commas(selected)
 
-  tags$div(
+  input <- tags$div(
     class = "yonder-range bg-grey",
     id = id,
     tags$input(
@@ -176,8 +186,13 @@ sliderInput <- function(id, choices, values = choices, selected = NULL,
       `data-grid` = ticks,
       `data-hide-min-max` = TRUE,
       `data-no-fill` = if (!fill) "true"
-    ),
-    include("core"),
-    include("ion slider")
+    )
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep(), ionSliderDep())
+  )
+
+  input
 }

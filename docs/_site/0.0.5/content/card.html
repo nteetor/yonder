@@ -293,7 +293,7 @@ card, defaults to <code class="highlighter-rouge">NULL</code>, in which case a f
 
           
           
-          <h2>A simple card</h2>
+          <h3>A simple card</h3>
 
           
           
@@ -321,7 +321,7 @@ card, defaults to <code class="highlighter-rouge">NULL</code>, in which case a f
           
           
           
-          <h2>Adding a title, subtitle</h2>
+          <h3>Adding a title, subtitle</h3>
 
           
           
@@ -357,7 +357,7 @@ card, defaults to <code class="highlighter-rouge">NULL</code>, in which case a f
           
           
           
-          <h2>Styling cards</h2>
+          <h3>Styling cards</h3>
 
           
           
@@ -420,7 +420,7 @@ card, defaults to <code class="highlighter-rouge">NULL</code>, in which case a f
           
           
           
-          <h2>Cards with list groups</h2>
+          <h3>Cards with list groups</h3>
 
           
           
@@ -464,7 +464,7 @@ card, defaults to <code class="highlighter-rouge">NULL</code>, in which case a f
           
           
           
-          <h2>Tabbed content in cards</h2>
+          <h3>Tabbed content in cards</h3>
 
           
           
@@ -520,6 +520,65 @@ card, defaults to <code class="highlighter-rouge">NULL</code>, in which case a f
       <div class="tab-pane fade" role="tab-panel">Donec at pede. Praesent augue.</div>
       <div class="tab-pane" title="Fusce suscipit, wisi nec facilisis facilisis," data-value="Fusce suscipit, wisi nec facilisis facilisis,">est dui fermentum leo, quis tempor ligula erat quis odio.</div>
     </div>
+  </div>
+</div>
+          </div>
+          
+          
+          
+          <h3>Deck of cards</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">deck</span><span class="p">(</span><span class="w">
+  </span><span class="n">card</span><span class="p">(</span><span class="w">
+    </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Nullam tristique"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros."</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Nunc rutrum turpis sed pede."</span><span class="p">,</span><span class="w">
+    </span><span class="n">footer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Cras placerat accumsan nulla."</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">card</span><span class="p">(</span><span class="w">
+    </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Integer placerat"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit tempor tellus."</span><span class="p">,</span><span class="w">
+    </span><span class="n">footer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Cras placerat accumsan nulla."</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">card</span><span class="p">(</span><span class="w">
+    </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Phasellus neque"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Donec at pede. Etiam vel neque nec dui dignissim bibendum."</span><span class="p">,</span><span class="w">
+    </span><span class="n">footer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Cras placerat accumsan nulla."</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="card-deck">
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Nullam tristique</h5>
+      <p class="card-text">Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.</p>
+      <p class="card-text">Nunc rutrum turpis sed pede.</p>
+    </div>
+    <div class="card-footer">Cras placerat accumsan nulla.</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Integer placerat</h5>
+      <p class="card-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit tempor tellus.</p>
+    </div>
+    <div class="card-footer">Cras placerat accumsan nulla.</div>
+  </div>
+  <div class="card">
+    <div class="card-body">
+      <h5 class="card-title">Phasellus neque</h5>
+      <p class="card-text">Donec at pede. Etiam vel neque nec dui dignissim bibendum.</p>
+    </div>
+    <div class="card-footer">Cras placerat accumsan nulla.</div>
   </div>
 </div>
           </div>

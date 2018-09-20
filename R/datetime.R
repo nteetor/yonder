@@ -29,14 +29,14 @@
 #' @export
 #' @examples
 #'
-#' ## Preselect a date
+#' ### Preselect a date
 #'
 #' dateInput(
 #'   id = NULL,
 #'   selected = Sys.Date() + 1
 #' )
 #'
-#' ## Set a min and max
+#' ### Set a min and max
 #'
 #' dateInput(
 #'   id = NULL,
@@ -44,7 +44,7 @@
 #'   max = Sys.Date() + 3
 #' )
 #'
-#' ## Select multiple dates
+#' ### Select multiple dates
 #'
 #' dateInput(
 #'   id = NULL,
@@ -53,7 +53,7 @@
 #'   multiple = TRUE
 #' )
 #'
-#' ## Date ranges
+#' ### Date ranges
 #'
 #' dateRangeInput(
 #'   id = NULL,
@@ -119,7 +119,7 @@ dateInput <- function(id, choices = NULL, selected = NULL, min = NULL,
 
   shiny::registerInputHandler("yonder.date", dateHandler, TRUE)
 
-  tags$input(
+  input <- tags$input(
     class = "yonder-date form-control",
     id = id,
     type = "text",
@@ -130,9 +130,15 @@ dateInput <- function(id, choices = NULL, selected = NULL, min = NULL,
     `data-max-date` = max,
     `data-date-format` = "Y-m-d",
     `data-mode` = if (multiple) "multiple",
-    ...,
-    include("flatpickr")
+    ...
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), flatpickrDep())
+  )
+
+  input
 }
 
 #' @rdname dateInput
@@ -193,7 +199,7 @@ dateRangeInput <- function(id, choices = NULL, selected = NULL, min = NULL,
 
   shiny::registerInputHandler("yonder.date", dateHandler, TRUE)
 
-  tags$input(
+  input <- tags$input(
     class = "yonder-date form-control",
     id = id,
     type = "text",
@@ -204,10 +210,15 @@ dateRangeInput <- function(id, choices = NULL, selected = NULL, min = NULL,
     `data-max-date` = max,
     `data-date-format` = "Y-m-d",
     `data-mode` = "range",
-    ...,
-    include("core"),
-    include("flatpickr")
+    ...
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), flatpickrDep())
+  )
+
+  input
 }
 
 dateHandler <- function(x, session, name) {

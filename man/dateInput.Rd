@@ -40,14 +40,14 @@ a range of dates. The value of the date range picker is always two dates.
 }
 \examples{
 
-## Preselect a date
+### Preselect a date
 
 dateInput(
   id = NULL,
   selected = Sys.Date() + 1
 )
 
-## Set a min and max
+### Set a min and max
 
 dateInput(
   id = NULL,
@@ -55,7 +55,7 @@ dateInput(
   max = Sys.Date() + 3
 )
 
-## Select multiple dates
+### Select multiple dates
 
 dateInput(
   id = NULL,
@@ -64,7 +64,7 @@ dateInput(
   multiple = TRUE
 )
 
-## Date ranges
+### Date ranges
 
 dateRangeInput(
   id = NULL,
@@ -75,11 +75,10 @@ dateRangeInput(
 \seealso{
 Other inputs: \code{\link{addressInput}},
   \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{loginInput}}, \code{\link{radioInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{groupInput}}, \code{\link{loginInput}},
+  \code{\link{radioInput}}, \code{\link{rangeInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

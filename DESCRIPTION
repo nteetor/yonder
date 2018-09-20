@@ -26,12 +26,12 @@ Suggests:
     rmarkdown
 Collate:
     yonder.R
+    dependencies.R
     inputs.R
     outputs.R
     thruputs.R
     pipe.R
     utils.R
-    includes.R
     tags.R
     update.R
     utilities.R
@@ -44,7 +44,6 @@ Collate:
     alerts.R
     popover.R
     badge.R
-    bars.R
     button.R
     card.R
     tabs.R

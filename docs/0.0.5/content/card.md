@@ -45,7 +45,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>A simple card</h2>
+      <h3>A simple card</h3>
   - type: source
     value: |2-
 
@@ -64,7 +64,7 @@ roxygen:
       </div>
   - type: markdown
     value: |
-      <h2>Adding a title, subtitle</h2>
+      <h3>Adding a title, subtitle</h3>
   - type: source
     value: |2-
 
@@ -91,7 +91,7 @@ roxygen:
       </div>
   - type: markdown
     value: |
-      <h2>Styling cards</h2>
+      <h3>Styling cards</h3>
   - type: source
     value: |2-
 
@@ -145,7 +145,7 @@ roxygen:
       </div>
   - type: markdown
     value: |
-      <h2>Cards with list groups</h2>
+      <h3>Cards with list groups</h3>
   - type: source
     value: |2-
 
@@ -180,7 +180,7 @@ roxygen:
       </div>
   - type: markdown
     value: |
-      <h2>Tabbed content in cards</h2>
+      <h3>Tabbed content in cards</h3>
   - type: source
     value: |2-
 
@@ -229,6 +229,56 @@ roxygen:
             <div class="tab-pane fade" role="tab-panel">Donec at pede. Praesent augue.</div>
             <div class="tab-pane" title="Fusce suscipit, wisi nec facilisis facilisis," data-value="Fusce suscipit, wisi nec facilisis facilisis,">est dui fermentum leo, quis tempor ligula erat quis odio.</div>
           </div>
+        </div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Deck of cards</h3>
+  - type: source
+    value: |2-
+
+      deck(
+        card(
+          title = "Nullam tristique",
+          "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+          "Nunc rutrum turpis sed pede.",
+          footer = "Cras placerat accumsan nulla."
+        ),
+        card(
+          title = "Integer placerat",
+          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit tempor tellus.",
+          footer = "Cras placerat accumsan nulla."
+        ),
+        card(
+          title = "Phasellus neque",
+          "Donec at pede. Etiam vel neque nec dui dignissim bibendum.",
+          footer = "Cras placerat accumsan nulla."
+        )
+      )
+  - type: output
+    value: |-
+      <div class="card-deck">
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Nullam tristique</h5>
+            <p class="card-text">Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.</p>
+            <p class="card-text">Nunc rutrum turpis sed pede.</p>
+          </div>
+          <div class="card-footer">Cras placerat accumsan nulla.</div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Integer placerat</h5>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit tempor tellus.</p>
+          </div>
+          <div class="card-footer">Cras placerat accumsan nulla.</div>
+        </div>
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Phasellus neque</h5>
+            <p class="card-text">Donec at pede. Etiam vel neque nec dui dignissim bibendum.</p>
+          </div>
+          <div class="card-footer">Cras placerat accumsan nulla.</div>
         </div>
       </div>
 ---

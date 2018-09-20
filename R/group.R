@@ -118,7 +118,7 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
     force = TRUE
   )
 
-  tags$div(
+  input <- tags$div(
     class = "yonder-group input-group",
     id = id,
     if (!is.null(left)) {
@@ -155,6 +155,13 @@ groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
     },
     ...
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  input
 }
 
 isValidAddon <- function(tag) {

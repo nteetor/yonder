@@ -63,7 +63,7 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/checkbarInput.html"
-         alt="Checkbar and radiobar inputs">
+         alt="Checkbox inputs">
         checkbarInput
       </a>
     </dd>
@@ -161,7 +161,7 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/radiobarInput.html"
-         alt="Checkbar and radiobar inputs">
+         alt="Radio inputs">
         radiobarInput
       </a>
     </dd>
@@ -342,8 +342,9 @@ reactive value of the checkbox input is available to the shiny server
 function as part of the <code class="highlighter-rouge">input</code> object.</p>
 </dd>
             
-            <dt id="params-choice" class="col-sm-3">choice</dt>
-            <dd class="col-sm-9"><p>A character string specifying a label for the checkbox.</p>
+            <dt id="params-choice,choices" class="col-sm-3">choice,choices</dt>
+            <dd class="col-sm-9"><p>A character string or vector specifying a label for the
+checkbox or checkbar.</p>
 </dd>
             
             <dt id="params-value" class="col-sm-3">value</dt>
@@ -369,7 +370,7 @@ element.</p>
 
           
           
-          <h2>Start checked</h2>
+          <h3>Start checked</h3>
 
           
           
@@ -389,11 +390,53 @@ element.</p>
           <div class="mb-5">
             <div class="yonder-checkbox">
   <div class="custom-control custom-checkbox">
-    <input class="custom-control-input" type="checkbox" id="checkbox-885-459" data-value="Suspendisse potenti" checked/>
-    <label class="custom-control-label" for="checkbox-885-459">Suspendisse potenti</label>
+    <input class="custom-control-input" type="checkbox" id="checkbox-449-629" data-value="Suspendisse potenti" checked/>
+    <label class="custom-control-label" for="checkbox-449-629">Suspendisse potenti</label>
     <div class="invalid-feedback"></div>
     <div class="valid-feedback"></div>
   </div>
+</div>
+          </div>
+          
+          
+          
+          <h3>An alternative to checkbox groups</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">checkbarInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+    </span><span class="s2">"Check 1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Check 2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Check 3"</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">selected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Check 1"</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">background</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">margin</span><span class="p">(</span><span class="m">2</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-checkbar btn-group btn-group-toggle m-2" data-toggle="buttons">
+  <label class="btn active btn-blue">
+    <input type="checkbox" autocomplete="off" data-value="Check 1" checked/>
+    <span>Check 1</span>
+  </label>
+  <label class="btn btn-blue">
+    <input type="checkbox" autocomplete="off" data-value="Check 2"/>
+    <span>Check 2</span>
+  </label>
+  <label class="btn btn-blue">
+    <input type="checkbox" autocomplete="off" data-value="Check 3"/>
+    <span>Check 3</span>
+  </label>
 </div>
           </div>
           

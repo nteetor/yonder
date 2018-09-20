@@ -2,16 +2,20 @@
 % Please edit documentation in R/checkbox.R
 \name{checkboxInput}
 \alias{checkboxInput}
+\alias{checkbarInput}
 \title{Checkbox inputs}
 \usage{
 checkboxInput(id, choice, value = choice, checked = FALSE, ...)
+
+checkbarInput(id, choices, values = choices, selected = NULL)
 }
 \arguments{
 \item{id}{A character string specifying the id of the checkbox input, the
 reactive value of the checkbox input is available to the shiny server
 function as part of the \code{input} object.}
 
-\item{choice}{A character string specifying a label for the checkbox.}
+\item{choice, choices}{A character string or vector specifying a label for the
+checkbox or checkbar.}
 
 \item{value}{A character string, object to coerce to a character string, or
 \code{NULL} specifying the value of the checkbox or a new value for the
@@ -30,7 +34,7 @@ Unlike shiny, yonder's checkbox inputs are a singleton value.
 }
 \examples{
 
-## Start checked
+### Start checked
 
 checkboxInput(
   id = NULL,
@@ -38,15 +42,28 @@ checkboxInput(
   checked = TRUE
 )
 
+### An alternative to checkbox groups
+
+checkbarInput(
+  id = NULL,
+  choices = c(
+    "Check 1",
+    "Check 2",
+    "Check 3"
+  ),
+  selected = "Check 1"
+) \%>\%
+  background("blue") \%>\%
+  margin(2)
+
 }
 \seealso{
 Other inputs: \code{\link{addressInput}},
   \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{dateInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{loginInput}}, \code{\link{radioInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{buttonInput}}, \code{\link{dateInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{groupInput}}, \code{\link{loginInput}},
+  \code{\link{radioInput}}, \code{\link{rangeInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

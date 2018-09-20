@@ -106,7 +106,7 @@ fileInput <- function(id, placeholder = "Choose file", left = NULL,
     )
   }
 
-  tags$div(
+  input <- tags$div(
     class = "yonder-file input-group",
     id = id,
     ...,
@@ -125,4 +125,11 @@ fileInput <- function(id, placeholder = "Choose file", left = NULL,
     ),
     right
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  input
 }

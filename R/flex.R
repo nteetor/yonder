@@ -113,7 +113,7 @@ NULL
 #' ) %>%
 #'   display("flex") %>%
 #'   flex(
-#'     direction = list(xs = "column", md = "row")  # <==
+#'     direction = list(xs = "column", md = "row")  # <-
 #'   ) %>%
 #'   background("grey") %>%
 #'   border()

@@ -86,16 +86,22 @@
 #'   width(50)
 #'
 formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
-  tags$form(
+  input <- tags$form(
     class = collate(
       "yonder-form",
       if (inline) "form-inline"
     ),
     id = id,
     ...,
-    submit,
-    include("core")
+    submit
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  input
 }
 
 #' Add labels, help text, and formatting to inputs
@@ -184,7 +190,7 @@ formGroup <- function(label, input, help = NULL,..., width = NULL) {
   width <- ensureBreakpoints(width, c(1:12, "auto"))
   classes <- createResponsiveClasses(width, "col")
 
-  tags$div(
+  this <- tags$div(
     class = collate(
       "form-group",
       classes
@@ -196,17 +202,29 @@ formGroup <- function(label, input, help = NULL,..., width = NULL) {
         class = "form-text text-muted",
         help
       )
-    },
-    include("core")
+    }
   )
+
+  this <- attachDependencies(
+    this,
+    bootstrapDep()
+  )
+
+  this
 }
 
 #' @rdname formGroup
 #' @export
 formRow <- function(...) {
-  tags$div(
+  this <- tags$div(
     class = "form-row",
-    ...,
-    include("core")
+    ...
   )
+
+  this <- attachDependencies(
+    this,
+    bootstrapDep()
+  )
+
+  this
 }

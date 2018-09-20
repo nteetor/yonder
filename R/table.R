@@ -133,7 +133,7 @@ tableThruput <- function(id, ..., borders = "rows", striped = FALSE,
     force = TRUE
   )
 
-  tags$table(
+  thruput <- tags$table(
     class = collate(
       "yonder-table",
       "table",
@@ -145,10 +145,15 @@ tableThruput <- function(id, ..., borders = "rows", striped = FALSE,
     id = id,
     `data-responsive` = if (responsive) "true",
     `data-editable` = if (editable) "true" else "false",
-    ...,
-    include("core")
-    # include("chabudai")
+    ...
   )
+
+  thruput <- attachDependencies(
+    thruput,
+    c(shinyDep(), yonderDep(), bootstrapDep(), chabudaiDep())
+  )
+
+  thruput
 }
 
 #' @rdname tableThruput

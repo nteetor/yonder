@@ -72,29 +72,34 @@ icon <- function(name, set = NULL, ...) {
   icon <- icons[index[1], ]
 
   if (icon$set == "font awesome") {
-    tags$i(
-      class = collate(
-        icon$prefix,
-        sprintf("fa-%s", icon$name),
+    attachDependencies(
+      tags$i(
+        class = collate(
+          icon$prefix,
+          sprintf("fa-%s", icon$name),
         "fa-fw"
+        ),
+        ...
       ),
-      ...,
-      include("font awesome")
-      # include font awesome(?)
+      fontAwesomeDep()
     )
   } else if (icon$set == "material design") {
-    tags$i(
-      class = "material-icons",
-      ...,
-      icon$name,
-      include("material icons")
+    attachDependencies(
+      tags$i(
+        class = "material-icons",
+        ...,
+        icon$name
+      ),
+      materialDesignDep()
     )
   } else if (icon$set == "feather") {
-    tags$i(
-      `data-feather` = icon$name,
-      ...,
-      tags$script("feather.replace()"),
-      include("feather")
+    attachDependencies(
+      tags$i(
+        `data-feather` = icon$name,
+        ...,
+        tags$script("feather.replace()")
+      ),
+      featherDep()
     )
   }
 }

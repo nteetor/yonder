@@ -14,8 +14,10 @@ roxygen:
       A character string specifying the id of the checkbox input, the
       reactive value of the checkbox input is available to the shiny server
       function as part of the `input` object.
-  - name: choice
-    description: A character string specifying a label for the checkbox.
+  - name: choice,choices
+    description: |-
+      A character string or vector specifying a label for the
+      checkbox or checkbar.
   - name: value
     description: |-
       A character string, object to coerce to a character string, or
@@ -37,7 +39,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>Start checked</h2>
+      <h3>Start checked</h3>
   - type: source
     value: |2-
 
@@ -50,10 +52,43 @@ roxygen:
     value: |-
       <div class="yonder-checkbox">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-885-459" data-value="Suspendisse potenti" checked/>
-          <label class="custom-control-label" for="checkbox-885-459">Suspendisse potenti</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-449-629" data-value="Suspendisse potenti" checked/>
+          <label class="custom-control-label" for="checkbox-449-629">Suspendisse potenti</label>
           <div class="invalid-feedback"></div>
           <div class="valid-feedback"></div>
         </div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>An alternative to checkbox groups</h3>
+  - type: source
+    value: |2-
+
+      checkbarInput(
+        id = NULL,
+        choices = c(
+          "Check 1",
+          "Check 2",
+          "Check 3"
+        ),
+        selected = "Check 1"
+      ) %>%
+        background("blue") %>%
+        margin(2)
+  - type: output
+    value: |-
+      <div class="yonder-checkbar btn-group btn-group-toggle m-2" data-toggle="buttons">
+        <label class="btn active btn-blue">
+          <input type="checkbox" autocomplete="off" data-value="Check 1" checked/>
+          <span>Check 1</span>
+        </label>
+        <label class="btn btn-blue">
+          <input type="checkbox" autocomplete="off" data-value="Check 2"/>
+          <span>Check 2</span>
+        </label>
+        <label class="btn btn-blue">
+          <input type="checkbox" autocomplete="off" data-value="Check 3"/>
+          <span>Check 3</span>
+        </label>
       </div>
 ---

@@ -121,7 +121,7 @@ column <- function(..., width = NULL) {
     classes <- "col"
   }
 
-  tag <- tags$div(..., include("core"))
+  tag <- attachDependencies(tags$div(...), bootstrapDep())
 
   tagAddClass(tag, classes)
 }
@@ -129,22 +129,28 @@ column <- function(..., width = NULL) {
 #' @rdname column
 #' @export
 row <- function(..., gutters = TRUE) {
-  tags$div(
+  this <- tags$div(
     class = collate(
       "row",
       if (!gutters) "no-gutter"
     ),
-    ...,
-    include("core")
+    ...
   )
+
+  this <- attachDependencies(this, bootstrapDep())
+
+  this
 }
 
 #' @rdname column
 #' @export
 container <- function(..., center = FALSE) {
-  tags$div(
+  this <- tags$div(
     class = if (center) "container" else "container-fluid",
-    ...,
-    include("core")
+    ...
   )
+
+  this <- attachDependencies(this, bootstrapDep())
+
+  this
 }

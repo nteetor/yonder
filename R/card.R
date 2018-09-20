@@ -30,14 +30,14 @@
 #' @export
 #' @examples
 #'
-#' ## A simple card
+#' ### A simple card
 #'
 #' column(
 #'   width = 4,
 #'   card("Praesent fermentum tempor tellus.")
 #' )
 #'
-#' ## Adding a title, subtitle
+#' ### Adding a title, subtitle
 #'
 #' column(
 #'   width = 4,
@@ -49,7 +49,7 @@
 #'   )
 #' )
 #'
-#' ## Styling cards
+#' ### Styling cards
 #'
 #' deck(
 #'   card(
@@ -74,7 +74,7 @@
 #'       background("grey")
 #' )
 #'
-#' ## Cards with list groups
+#' ### Cards with list groups
 #'
 #' column(
 #'   width = 4,
@@ -95,7 +95,7 @@
 #'   )
 #' )
 #'
-#' ## Tabbed content in cards
+#' ### Tabbed content in cards
 #'
 #' card(
 #'   header = tabTabs(
@@ -115,6 +115,27 @@
 #'       "Fusce suscipit, wisi nec facilisis facilisis,",
 #'       "est dui fermentum leo, quis tempor ligula erat quis odio."
 #'     )
+#'   )
+#' )
+#'
+#' ### Deck of cards
+#'
+#' deck(
+#'   card(
+#'     title = "Nullam tristique",
+#'     "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+#'     "Nunc rutrum turpis sed pede.",
+#'     footer = "Cras placerat accumsan nulla."
+#'   ),
+#'   card(
+#'     title = "Integer placerat",
+#'     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit tempor tellus.",
+#'     footer = "Cras placerat accumsan nulla."
+#'   ),
+#'   card(
+#'     title = "Phasellus neque",
+#'     "Donec at pede. Etiam vel neque nec dui dignissim bibendum.",
+#'     footer = "Cras placerat accumsan nulla."
 #'   )
 #' )
 #'
@@ -205,40 +226,27 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
     }
   }
 
-  tags$div(
+  this <- tags$div(
     class = "card",
     header,
     body,
     footer
   )
+
+  this <- attachDependencies(this, bootstrapDep())
+
+  this
 }
 
 #' @rdname card
 #' @export
-#' @examples
-#'
-#' deck(
-#'   card(
-#'     title = "Nullam tristique",
-#'     "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
-#'     "Nunc rutrum turpis sed pede.",
-#'     footer = "Cras placerat accumsan nulla."
-#'   ),
-#'   card(
-#'     title = "Integer placerat",
-#'     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit tempor tellus.",
-#'     footer = "Cras placerat accumsan nulla."
-#'   ),
-#'   card(
-#'     title = "Phasellus neque",
-#'     "Donec at pede. Etiam vel neque nec dui dignissim bibendum.",
-#'     footer = "Cras placerat accumsan nulla."
-#'   )
-#' )
-#'
 deck <- function(...) {
-  tags$div(
+  this <- tags$div(
     class = "card-deck",
     ...
   )
+
+  this <- attachDependencies(this, bootstrapDep())
+
+  this
 }

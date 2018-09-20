@@ -52,11 +52,14 @@ d <- function(level, ...) {
     )
   }
 
-  tags$h1(
+  this <- tags$h1(
     class = paste0("display-", level),
-    ...,
-    include("core")
+    ...
   )
+
+  this <- attachDependencies(this, bootstrapDep())
+
+  this
 }
 
 #' Jumbotron
@@ -89,7 +92,7 @@ d <- function(level, ...) {
 #' )
 #'
 jumbotron <- function(title, subtitle, ..., fluid = FALSE) {
-  tags$div(
+  this <- tags$div(
     class = collate(
       "jumbotron",
       if (fluid) "jumbotron-fluid"
@@ -100,7 +103,10 @@ jumbotron <- function(title, subtitle, ..., fluid = FALSE) {
       subtitle
     ),
     if (length(elements(list(...))) > 0) tags$hr(class = "my-4"),
-    ...,
-    include("core")
+    ...
   )
+
+  this <- attachDependencies(this, bootstrapDep())
+
+  this
 }

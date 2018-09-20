@@ -32,7 +32,7 @@
 #' @family inputs
 #' @export
 #' @examples
-#' ## Simple vs block button
+#' ### Simple vs block button
 #'
 #' buttonInput(
 #'   id = NULL,
@@ -48,11 +48,11 @@
 #' ) %>%
 #'   background("red")
 #'
-#' ## A submit button
+#' ### A submit button
 #'
 #' submitInput()
 #'
-#' ## Possible colors
+#' ### Possible colors
 #'
 #' colors <- c(
 #'   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
@@ -75,6 +75,10 @@
 #'   display("flex") %>%
 #'   flex(wrap = TRUE)
 #'
+#' ### Reactive links
+#'
+#' div("Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem.")
+#'
 buttonInput <- function(id, label, ..., block = FALSE) {
   shiny::registerInputHandler(
     type = "yonder.button",
@@ -82,7 +86,7 @@ buttonInput <- function(id, label, ..., block = FALSE) {
     force = TRUE
   )
 
-  tags$button(
+  input <- tags$button(
     class = collate(
       "yonder-button",
       "btn",
@@ -95,13 +99,19 @@ buttonInput <- function(id, label, ..., block = FALSE) {
     id = id,
     ...
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  input
 }
 
-#' @family inputs
 #' @rdname buttonInput
 #' @export
 submitInput <- function(label = "Submit", block = FALSE, ...) {
-  tags$button(
+  input <- tags$button(
     class = collate(
       "yonder-submit",
       "btn",
@@ -115,30 +125,17 @@ submitInput <- function(label = "Submit", block = FALSE, ...) {
     label,
     ...
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  input
 }
 
-#' @family inputs
 #' @rdname buttonInput
 #' @export
-#' @examples
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       "Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem."
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$inline, {
-#'         showPopover(
-#'           input$inline,
-#'           content = "This means beef?",
-#'           placement = "bottom"
-#'         )
-#'       })
-#'     }
-#'   )
-#' }
-#'
 linkInput <- function(id, text, ...) {
   shiny::registerInputHandler(
     type = "yonder.link",
@@ -154,12 +151,19 @@ linkInput <- function(id, text, ...) {
     force = TRUE
   )
 
-  tags$span(
+  input <- tags$span(
     class = "yonder-link",
     id = id,
     tags$u(text),
     ...
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  input
 }
 
 #' Button group inputs
@@ -204,7 +208,7 @@ buttonGroupInput <- function(id, labels, values = labels) {
     )
   }
 
-  tags$div(
+  input <- tags$div(
     class = "yonder-button-group btn-group",
     id = id,
     role = "group",
@@ -219,7 +223,13 @@ buttonGroupInput <- function(id, labels, values = labels) {
           label
         )
       }
-    ),
-    include("core")
+    )
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  input
 }

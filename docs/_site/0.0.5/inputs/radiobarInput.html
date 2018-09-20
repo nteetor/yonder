@@ -63,7 +63,7 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/checkbarInput.html"
-         alt="Checkbar and radiobar inputs">
+         alt="Checkbox inputs">
         checkbarInput
       </a>
     </dd>
@@ -161,7 +161,7 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/radiobarInput.html"
-         alt="Checkbar and radiobar inputs">
+         alt="Radio inputs">
         radiobarInput
       </a>
     </dd>
@@ -325,11 +325,9 @@
 </div>
 
         <div class="page-body col-8 pt-4">
-          <h2>Checkbar and radiobar inputs</h2>
+          <h2>Radio inputs</h2>
 
-          <p>These inputs behave similarly to their counter parts, checkbox and radio
-inputs. However, yonder’s checkbox input is a singleton value, thus the
-checkbar input is more akin to shiny’s checkbox group input.</p>
+          <p>Create a reactive radio input of one or more radio controls.</p>
 
 
           
@@ -337,24 +335,47 @@ checkbar input is more akin to shiny’s checkbox group input.</p>
           <dl class="row">
             
             <dt id="params-id" class="col-sm-3">id</dt>
-            <dd class="col-sm-9"><p>A character string specifying the id of the input.</p>
+            <dd class="col-sm-9"><p>A character string specifying the id of the radio input, the
+reactive value of the radio input is available to the shiny server
+function as part of the <code class="highlighter-rouge">input</code> object.</p>
 </dd>
             
             <dt id="params-choices" class="col-sm-3">choices</dt>
-            <dd class="col-sm-9"><p>A character vector or flat list of character strings
-specifying the labels of the checkbar or radiobar options.</p>
+            <dd class="col-sm-9"><p>A character vector specifying labels for the radio or radiobar
+input’s choices.</p>
 </dd>
             
             <dt id="params-values" class="col-sm-3">values</dt>
-            <dd class="col-sm-9"><p>A character vector, flat list of character strings, or object
-to coerce to either, specifying the values of the checkbar or radiobar
-options, defaults to <code class="highlighter-rouge">choices</code>.</p>
+            <dd class="col-sm-9"><p>A character vector, list of character strings, vector of values
+to coerce to character strings, or list of values to coerce to character
+strings specifying the values of the radio input’s choices, defaults to
+<code class="highlighter-rouge">choices</code>.</p>
 </dd>
             
             <dt id="params-selected" class="col-sm-3">selected</dt>
-            <dd class="col-sm-9"><p>One or more of <code class="highlighter-rouge">values</code> indicating which of the checkbar or
-radiobar options are selected by default, defaults to <code class="highlighter-rouge">NULL</code>, in which case
-there is no default option.</p>
+            <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">values</code> indicating the default selected value of the
+radio input, defaults to <code class="highlighter-rouge">NULL</code>, in which case the first choice is
+selected by default.</p>
+</dd>
+            
+            <dt id="params-help" class="col-sm-3">help</dt>
+            <dd class="col-sm-9"><p>A character string specifying a small help label which appears
+below the input, defaults to <code class="highlighter-rouge">NULL</code> in which case help text is not added.</p>
+</dd>
+            
+            <dt id="params-inline" class="col-sm-3">inline</dt>
+            <dd class="col-sm-9"><p>If <code class="highlighter-rouge">TRUE</code>, the radio input renders inline, defaults to <code class="highlighter-rouge">FALSE</code>,
+in which case the radio controls render on separate lines.</p>
+</dd>
+            
+            <dt id="params-disabled" class="col-sm-3">disabled</dt>
+            <dd class="col-sm-9"><p>One or more of <code class="highlighter-rouge">values</code> indicating which radio choices to
+disable, defaults to <code class="highlighter-rouge">NULL</code>, in which case all choices are enabled.</p>
+</dd>
+            
+            <dt id="params-..." class="col-sm-3">...</dt>
+            <dd class="col-sm-9"><p>Additional named arguments passed as HTML attributes to the parent
+element.</p>
 </dd>
             
           </dl>
@@ -364,49 +385,93 @@ there is no default option.</p>
 
           
           
-          <h2>An alternative to checkbox groups</h2>
+          <h3>Stacked radio input</h3>
 
           
           
           
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">checkbarInput</span><span class="p">(</span><span class="w">
-  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">radioInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"stacked"</span><span class="p">,</span><span class="w">
   </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
-    </span><span class="s2">"Check 1"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Check 2"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"Check 3"</span><span class="w">
-  </span><span class="p">),</span><span class="w">
-  </span><span class="n">selected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Check 1"</span><span class="w">
-</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-  </span><span class="n">background</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-  </span><span class="n">margin</span><span class="p">(</span><span class="m">2</span><span class="p">)</span></code></pre></figure>
+    </span><span class="s2">"Vehicula adipiscing mattis"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Magna nullam"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Aenean venenatis"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Tristique quam porta"</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
 
           </div>
           
           
           
           <div class="mb-5">
-            <div class="yonder-checkbar btn-group btn-group-toggle m-2" data-toggle="buttons">
-  <label class="btn active btn-blue">
-    <input type="checkbox" autocomplete="off" data-value="Check 1" checked/>
-    <span>Check 1</span>
-  </label>
-  <label class="btn btn-blue">
-    <input type="checkbox" autocomplete="off" data-value="Check 2"/>
-    <span>Check 2</span>
-  </label>
-  <label class="btn btn-blue">
-    <input type="checkbox" autocomplete="off" data-value="Check 3"/>
-    <span>Check 3</span>
-  </label>
+            <div class="yonder-radio" id="stacked">
+  <div class="custom-control custom-radio">
+    <input class="custom-control-input" type="radio" id="radio-41-138" name="stacked" data-value="Vehicula adipiscing mattis" checked/>
+    <label class="custom-control-label" for="radio-41-138">Vehicula adipiscing mattis</label>
+  </div>
+  <div class="custom-control custom-radio">
+    <input class="custom-control-input" type="radio" id="radio-168-566" name="stacked" data-value="Magna nullam"/>
+    <label class="custom-control-label" for="radio-168-566">Magna nullam</label>
+  </div>
+  <div class="custom-control custom-radio">
+    <input class="custom-control-input" type="radio" id="radio-276-568" name="stacked" data-value="Aenean venenatis"/>
+    <label class="custom-control-label" for="radio-276-568">Aenean venenatis</label>
+  </div>
+  <div class="custom-control custom-radio">
+    <input class="custom-control-input" type="radio" id="radio-390-480" name="stacked" data-value="Tristique quam porta"/>
+    <label class="custom-control-label" for="radio-390-480">Tristique quam porta</label>
+  </div>
+  <div class="invalid-feedback"></div>
 </div>
           </div>
           
           
           
-          <h2>Radiobars in comparison</h2>
+          <h3>Inline radio input</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">radioInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"inline"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+    </span><span class="s2">"Choice 1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Choice 2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Choice 3"</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">inline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-radio" id="inline">
+  <div class="custom-control custom-radio custom-control-inline">
+    <input class="custom-control-input" type="radio" id="radio-815-769" name="inline" data-value="Choice 1" checked/>
+    <label class="custom-control-label" for="radio-815-769">Choice 1</label>
+  </div>
+  <div class="custom-control custom-radio custom-control-inline">
+    <input class="custom-control-input" type="radio" id="radio-441-919" name="inline" data-value="Choice 2"/>
+    <label class="custom-control-label" for="radio-441-919">Choice 2</label>
+  </div>
+  <div class="custom-control custom-radio custom-control-inline">
+    <input class="custom-control-input" type="radio" id="radio-210-921" name="inline" data-value="Choice 3"/>
+    <label class="custom-control-label" for="radio-210-921">Choice 3</label>
+  </div>
+  <div class="invalid-feedback"></div>
+</div>
+          </div>
+          
+          
+          
+          <h3>Radiobars in comparison</h3>
 
           
           
