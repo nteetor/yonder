@@ -20,7 +20,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>Modifying input elements</h2>
+      <h3>Modifying input elements</h3>
   - type: source
     value: |2-
 
@@ -51,7 +51,7 @@ roxygen:
       </div>
   - type: markdown
     value: |
-      <h2>Possible colors</h2>
+      <h3>Possible colors</h3>
   - type: source
     value: |2-
 

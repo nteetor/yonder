@@ -21,7 +21,7 @@ default.
 }
 \examples{
 
-## Styling a navbar
+### Styling a navbar
 
 div(
   navbar(brand = "Navbar") \%>\%
@@ -36,7 +36,7 @@ div(
   )
 )
 
-## Different shadows
+### Different shadows
 
 div(
   lapply(

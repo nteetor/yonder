@@ -20,7 +20,7 @@ value heavily rounds all the corners of an element.
 }
 \examples{
 
-## Different sides
+### Different sides
 
 sides <- c("top", "right", "bottom", "left", "circle", "all")
 

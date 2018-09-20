@@ -40,7 +40,7 @@ The following border colors are available,
 }
 \examples{
 
-## Possible colors
+### Possible colors
 
 colors <- c(
   "red", "purple", "indigo", "blue", "cyan", "teal", "green",

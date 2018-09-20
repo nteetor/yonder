@@ -263,5 +263,7 @@ flex <- function(.tag, direction = NULL, reverse = NULL, justify = NULL,
     createResponsiveClasses(wrap, "flex")
   )
 
-  tagAddClass(.tag, classes)
+  .tag <- tagAddClass(.tag, classes)
+
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
