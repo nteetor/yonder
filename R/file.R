@@ -65,7 +65,6 @@
 #' ) %>%
 #'   margin("auto", 0, "auto", 0)
 #'
-#'
 fileInput <- function(id, placeholder = "Choose file", left = NULL,
                       right = "Browse", ..., multiple = TRUE, accept = NULL) {
   if (is_tag(left) && !tagIs(left, "button")) {

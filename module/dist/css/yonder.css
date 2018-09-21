@@ -1102,7 +1102,7 @@
 }
 
 .custom-file-label::after {
-  content: none;
+  display: none !important;
 }
 
 .nav-link {

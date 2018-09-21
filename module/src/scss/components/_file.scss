@@ -5,8 +5,6 @@
   }
 }
 
-.custom-file-label {
-  &::after {
-    content: none;
-  }
+.custom-file-label::after {
+  display: none !important;
 }

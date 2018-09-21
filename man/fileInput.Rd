@@ -70,7 +70,6 @@ fileInput(
 ) \%>\%
   margin("auto", 0, "auto", 0)
 
-
 }
 \seealso{
 Other inputs: \code{\link{addressInput}},
