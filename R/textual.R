@@ -4,7 +4,7 @@ textualInput <- function(id, value, placeholder, readonly, help, type,
     size <- switch(size, small = "sm", large = "lg")
   }
 
-  tags$div(
+  input <- tags$div(
     class = "yonder-textual",
     id = id,
     tags$input(
@@ -26,6 +26,13 @@ textualInput <- function(id, value, placeholder, readonly, help, type,
     tags$div(class = "invalid-feedback"),
     ...
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  input
 }
 
 #' Textual inputs
@@ -175,7 +182,7 @@ fieldset <- function(legend, ...) {
   attrs <- attribs(args)
   inputs <- elements(args)
 
-  tagConcatAttributes(
+  this <- tagConcatAttributes(
     tags$fieldset(
       class = "form-group",
       tags$legend(
@@ -188,6 +195,13 @@ fieldset <- function(legend, ...) {
     ),
     attrs
   )
+
+  this <- attachDependencies(
+    this,
+    c(shinyDep(), yonderDep(), bootstrapDe())
+  )
+
+  this
 }
 
 #' Login input
@@ -202,33 +216,15 @@ fieldset <- function(legend, ...) {
 #' @family inputs
 #' @export
 #' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           loginInput(
-#'             id = "login"
-#'           )
-#'         ),
-#'         column(
-#'           verbatimTextOutput("value")
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$value <- renderPrint({
-#'         input$login
-#'       })
 #'
-#'     }
-#'   )
-#' }
+#' ### Something of a shortcut
+#'
+#' loginInput(id = NULL)
 #'
 loginInput <- function(id, ...) {
   ids <- ID(rep.int("login", 2))
 
-  tags$div(
+  input <- tags$div(
     class = "yonder-login col",
     id = id,
     tags$div(
@@ -263,6 +259,13 @@ loginInput <- function(id, ...) {
     ),
     ...
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  input
 }
 
 #' Address input
@@ -278,32 +281,15 @@ loginInput <- function(id, ...) {
 #' @family inputs
 #' @export
 #' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           tags$form(
-#'             addressInput("address")
-#'           )
-#'         ),
-#'         column(
-#'           verbatimTextOutput("value")
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$value <- renderPrint({
-#'         input$address
-#'       })
-#'     }
-#'   )
-#' }
+#'
+#' ### Fields by default
+#'
+#' addressInput(id = NULL)
 #'
 addressInput <- function(id, ...) {
   ids <- ID(rep.int("address", 5))
 
-  tags$div(
+  input <- tags$div(
     class = "yonder-address",
     id = id,
     ...,
@@ -378,4 +364,11 @@ addressInput <- function(id, ...) {
       )
     )
   )
+
+  input <- attachDependencies(
+    input,
+    c(yonderDep(), shinyDep(), bootstrapDep())
+  )
+
+  input
 }

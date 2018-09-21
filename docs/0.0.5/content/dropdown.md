@@ -33,7 +33,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>Simple options w/ buttons</h2>
+      <h3>Simple options w/ buttons</h3>
   - type: source
     value: |2-
 
@@ -55,7 +55,7 @@ roxygen:
       </div>
   - type: markdown
     value: |
-      <h2>Grouped sections</h2>
+      <h3>Grouped sections</h3>
   - type: source
     value: |2-
 
@@ -88,7 +88,7 @@ roxygen:
       </div>
   - type: markdown
     value: |
-      <h2>Direction variations</h2>
+      <h3>Direction variations</h3>
   - type: source
     value: |2-
 
@@ -146,7 +146,7 @@ roxygen:
       </div>
   - type: markdown
     value: |
-      <h2>Include forms</h2>
+      <h3>Include forms</h3>
   - type: source
     value: |2-
 

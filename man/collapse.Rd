@@ -31,7 +31,7 @@ state of the element, shown or hidden, is toggled using \code{hideCollapse()},
 }
 \examples{
 
-## Making an element collapsible
+### Making an element collapsible
 
 # On the server side you will need to call `hideCollapse` or
 # `toggleCollapse`

@@ -21,7 +21,7 @@
 #' @export
 #' @examples
 #'
-#' ## Simple options w/ buttons
+#' ### Simple options w/ buttons
 #'
 #' dropdown(
 #'   label = "Choices",
@@ -30,7 +30,7 @@
 #'   buttonInput("choice3", "Choice 3")
 #' )
 #'
-#' ## Grouped sections
+#' ### Grouped sections
 #'
 #' dropdown(
 #'   label = "Sections",
@@ -46,7 +46,7 @@
 #'   )
 #' )
 #'
-#' ## Direction variations
+#' ### Direction variations
 #'
 #' div(
 #'   lapply(
@@ -65,7 +65,7 @@
 #' ) %>%
 #'   display("flex")
 #'
-#' ## Include forms
+#' ### Include forms
 #'
 #' dropdown(
 #'   label = "Sign in",
@@ -105,7 +105,7 @@ dropdown <- function(label, ..., direction = "down") {
   items <- elements(args)
   attrs <- attribs(args)
 
-  tags$div(
+  this <- tags$div(
     class = collate(
       "dropdown",
       paste0("drop", direction)
@@ -141,9 +141,15 @@ dropdown <- function(label, ..., direction = "down") {
           return(c(acc, list(obj)))
         }
       )
-    ),
-    include("core")
+    )
   )
+
+  this <- attachDependencies(
+    this,
+    bootstrapDep()
+  )
+
+  this
 }
 
 dropdownItem <- function(base) {

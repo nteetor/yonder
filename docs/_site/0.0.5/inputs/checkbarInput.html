@@ -63,7 +63,7 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/checkbarInput.html"
-         alt="Checkbar and radiobar inputs">
+         alt="Checkbox inputs">
         checkbarInput
       </a>
     </dd>
@@ -161,7 +161,7 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/radiobarInput.html"
-         alt="Checkbar and radiobar inputs">
+         alt="Radio inputs">
         radiobarInput
       </a>
     </dd>
@@ -325,11 +325,11 @@
 </div>
 
         <div class="page-body col-8 pt-4">
-          <h2>Checkbar and radiobar inputs</h2>
+          <h2>Checkbox inputs</h2>
 
-          <p>These inputs behave similarly to their counter parts, checkbox and radio
-inputs. However, yonder’s checkbox input is a singleton value, thus the
-checkbar input is more akin to shiny’s checkbox group input.</p>
+          <p>A reactive checkbox input. When a checkbox input is unchecked the reactive
+value is <code class="highlighter-rouge">NULL</code>. When checked the checkbox input reactive value is <code class="highlighter-rouge">value</code>.
+Unlike shiny, yonder’s checkbox inputs are a singleton value.</p>
 
 
           
@@ -337,24 +337,30 @@ checkbar input is more akin to shiny’s checkbox group input.</p>
           <dl class="row">
             
             <dt id="params-id" class="col-sm-3">id</dt>
-            <dd class="col-sm-9"><p>A character string specifying the id of the input.</p>
+            <dd class="col-sm-9"><p>A character string specifying the id of the checkbox input, the
+reactive value of the checkbox input is available to the shiny server
+function as part of the <code class="highlighter-rouge">input</code> object.</p>
 </dd>
             
-            <dt id="params-choices" class="col-sm-3">choices</dt>
-            <dd class="col-sm-9"><p>A character vector or flat list of character strings
-specifying the labels of the checkbar or radiobar options.</p>
+            <dt id="params-choice,choices" class="col-sm-3">choice,choices</dt>
+            <dd class="col-sm-9"><p>A character string or vector specifying a label for the
+checkbox or checkbar.</p>
 </dd>
             
-            <dt id="params-values" class="col-sm-3">values</dt>
-            <dd class="col-sm-9"><p>A character vector, flat list of character strings, or object
-to coerce to either, specifying the values of the checkbar or radiobar
-options, defaults to <code class="highlighter-rouge">choices</code>.</p>
+            <dt id="params-value" class="col-sm-3">value</dt>
+            <dd class="col-sm-9"><p>A character string, object to coerce to a character string, or
+<code class="highlighter-rouge">NULL</code> specifying the value of the checkbox or a new value for the
+checkbox, defaults to <code class="highlighter-rouge">choice</code>.</p>
 </dd>
             
-            <dt id="params-selected" class="col-sm-3">selected</dt>
-            <dd class="col-sm-9"><p>One or more of <code class="highlighter-rouge">values</code> indicating which of the checkbar or
-radiobar options are selected by default, defaults to <code class="highlighter-rouge">NULL</code>, in which case
-there is no default option.</p>
+            <dt id="params-checked" class="col-sm-3">checked</dt>
+            <dd class="col-sm-9"><p>If <code class="highlighter-rouge">TRUE</code> the checkbox renders in a checked state, defaults
+to <code class="highlighter-rouge">FALSE</code>.</p>
+</dd>
+            
+            <dt id="params-..." class="col-sm-3">...</dt>
+            <dd class="col-sm-9"><p>Additional named arguments passed as HTML attributes to the parent
+element.</p>
 </dd>
             
           </dl>
@@ -364,7 +370,37 @@ there is no default option.</p>
 
           
           
-          <h2>An alternative to checkbox groups</h2>
+          <h3>Start checked</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">checkboxInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Suspendisse potenti"</span><span class="p">,</span><span class="w">
+  </span><span class="n">checked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-checkbox">
+  <div class="custom-control custom-checkbox">
+    <input class="custom-control-input" type="checkbox" id="checkbox-449-629" data-value="Suspendisse potenti" checked/>
+    <label class="custom-control-label" for="checkbox-449-629">Suspendisse potenti</label>
+    <div class="invalid-feedback"></div>
+    <div class="valid-feedback"></div>
+  </div>
+</div>
+          </div>
+          
+          
+          
+          <h3>An alternative to checkbox groups</h3>
 
           
           
@@ -400,52 +436,6 @@ there is no default option.</p>
   <label class="btn btn-blue">
     <input type="checkbox" autocomplete="off" data-value="Check 3"/>
     <span>Check 3</span>
-  </label>
-</div>
-          </div>
-          
-          
-          
-          <h2>Radiobars in comparison</h2>
-
-          
-          
-          
-          <div class="mb-2 ml-1 pl-2 border-left border-black"
-               >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">radiobarInput</span><span class="p">(</span><span class="w">
-  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
-  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
-    </span><span class="s2">"fusce sagittis"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"libero non molestie"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"magna orci"</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"ultrices dolor"</span><span class="w">
-  </span><span class="p">),</span><span class="w">
-  </span><span class="n">selected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"ultrices dolor"</span><span class="w">
-</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-  </span><span class="n">background</span><span class="p">(</span><span class="s2">"grey"</span><span class="p">)</span></code></pre></figure>
-
-          </div>
-          
-          
-          
-          <div class="mb-5">
-            <div class="yonder-radiobar btn-group btn-group-toggle" data-toggle="buttons">
-  <label class="btn btn-grey">
-    <input type="radio" data-value="fusce sagittis" autocomplete="false"/>
-    <span>fusce sagittis</span>
-  </label>
-  <label class="btn btn-grey">
-    <input type="radio" data-value="libero non molestie" autocomplete="false"/>
-    <span>libero non molestie</span>
-  </label>
-  <label class="btn btn-grey">
-    <input type="radio" data-value="magna orci" autocomplete="false"/>
-    <span>magna orci</span>
-  </label>
-  <label class="btn active btn-grey">
-    <input type="radio" data-value="ultrices dolor" autocomplete="false" checked/>
-    <span>ultrices dolor</span>
   </label>
 </div>
           </div>

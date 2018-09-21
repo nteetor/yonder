@@ -24,7 +24,7 @@ heights are specified as percentages of the parent object's width or height.
 }
 \examples{
 
-## Getting started
+### Getting started
 
 tags$div() \%>\%
   width(25) \%>\%

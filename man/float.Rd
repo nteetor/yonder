@@ -19,7 +19,7 @@ wrapped around a picture.
 }
 \examples{
 
-## Newspaper layout
+### Newspaper layout
 
 div(
   div() \%>\%

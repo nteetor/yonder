@@ -68,12 +68,18 @@ badgeOutput <- function(id, ...) {
     )
   }
 
-  tags$span(
+  output <- tags$span(
     class = "yonder-badge badge",
     id = id,
-    ...,
-    include("core")
+    ...
   )
+
+  output <- attachDependencies(
+    output,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  output
 }
 
 #' @rdname badgeOutput

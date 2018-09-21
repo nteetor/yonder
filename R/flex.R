@@ -113,7 +113,7 @@ NULL
 #' ) %>%
 #'   display("flex") %>%
 #'   flex(
-#'     direction = list(xs = "column", md = "row")  # <==
+#'     direction = list(xs = "column", md = "row")  # <-
 #'   ) %>%
 #'   background("grey") %>%
 #'   border()
@@ -263,5 +263,7 @@ flex <- function(.tag, direction = NULL, reverse = NULL, justify = NULL,
     createResponsiveClasses(wrap, "flex")
   )
 
-  tagAddClass(.tag, classes)
+  .tag <- tagAddClass(.tag, classes)
+
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }

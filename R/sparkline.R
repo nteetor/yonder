@@ -71,19 +71,24 @@ sparklineOutput <- function(id, type = "bar", ..., labels = TRUE) {
     )
   }
 
-  tags$span(
+  output <- tags$span(
     class = collate(
       "yonder-sparkline",
       paste0("sparks-", type)
     ),
     id = id,
     `data-labels` = if (labels) "true" else "false",
-    ...,
-    include("core")
+    ...
   )
+
+  output <- attachDependencies(
+    output,
+    c(shinyDep(), yonderDep())
+  )
+
+  output
 }
 
-#' @family outputs
 #' @rdname sparklineOutput
 #' @export
 renderSparkline <- function(expr, env = parent.frame(), quoted = FALSE) {

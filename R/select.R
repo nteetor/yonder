@@ -74,7 +74,7 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
 
   selected <- match2(selected, values, default = TRUE)
 
-  tags$div(
+  input <- tags$div(
     class = "yonder-select",
     id = id,
     tags$select(
@@ -92,7 +92,13 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
       multiple = if (multiple) NA
     ),
     tags$div(class = "invalid-feedback"),
-    ...,
-    include("core")
+    ...
   )
+
+  input <- attachDependencies(
+    input,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  input
 }

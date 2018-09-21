@@ -27,7 +27,7 @@ argument \code{...} for details on composing dropdown menus.
 }
 \examples{
 
-## Simple options w/ buttons
+### Simple options w/ buttons
 
 dropdown(
   label = "Choices",
@@ -36,7 +36,7 @@ dropdown(
   buttonInput("choice3", "Choice 3")
 )
 
-## Grouped sections
+### Grouped sections
 
 dropdown(
   label = "Sections",
@@ -52,7 +52,7 @@ dropdown(
   )
 )
 
-## Direction variations
+### Direction variations
 
 div(
   lapply(
@@ -71,7 +71,7 @@ div(
 ) \%>\%
   display("flex")
 
-## Include forms
+### Include forms
 
 dropdown(
   label = "Sign in",

@@ -16,7 +16,7 @@
 #' @export
 #' @examples
 #'
-#' ## Making an element collapsible
+#' ### Making an element collapsible
 #'
 #' # On the server side you will need to call `hideCollapse` or
 #' # `toggleCollapse`
@@ -44,7 +44,7 @@ collapse <- function(tag, id, ...) {
   attrs$`data-collapse-id` <- id
 
   tag <- shiny::tagAppendChildren(tag, list = elems)
-  tag <- shiny::tagAppendChild(tag, include("core"))
+  tag <- attachDependencies(tag, c(yonderDep(), bootstrapDep()))
   tag <- tagConcatAttributes(tag, attrs)
 
   tag

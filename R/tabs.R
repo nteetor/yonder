@@ -155,7 +155,7 @@ tabTabs <- function(id, labels, values = labels, active = values[1], ...) {
 
   active <- match2(active, values)
 
-  tags$ul(
+  this <- tags$ul(
     class = "yonder-tabs nav nav-tabs",
     role = "tablist",
     id = id,
@@ -179,9 +179,15 @@ tabTabs <- function(id, labels, values = labels, active = values[1], ...) {
           )
         )
       }
-    ),
-    include("core")
+    )
   )
+
+  this <- attachDependencies(
+    this,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  this
 }
 
 #' @rdname tabTabs
@@ -194,21 +200,33 @@ tabContent <- function(tabs, ...) {
     )
   }
 
-  tags$div(
+  this <- tags$div(
     class = "tab-content",
     `data-tabs` = tabs,
-    ...,
-    include("core")
+    ...
   )
+
+  this <- attachDependencies(
+    this,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  this
 }
 
 #' @rdname tabTabs
 #' @export
 tabPane <- function(...) {
-  tags$div(
+  this <- tags$div(
     class = "tab-pane fade",
     role = "tab-panel",
-    ...,
-    include("core")
+    ...
   )
+
+  this <- attachDependencies(
+    this,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  this
 }

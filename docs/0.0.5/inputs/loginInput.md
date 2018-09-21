@@ -19,38 +19,24 @@ roxygen:
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>Something of a shortcut</h3>
   - type: source
     value: |2-
 
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                loginInput(
-                  id = "login"
-                )
-              ),
-              column(
-                verbatimTextOutput("value")
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$value <- renderPrint({
-              input$login
-            })
-
-          }
-        )
-      }
-  - type: code
+      loginInput(id = NULL)
+  - type: output
     value: |-
-      if (interactive()) {
-          shinyApp(ui = container(row(column(loginInput(id = "login")), column(verbatimTextOutput("value")))), server = function(input, output) {
-              output$value <- renderPrint({
-                  input$login
-              })
-          })
-      }
+      <div class="yonder-login col">
+        <div class="form-group">
+          <label class="form-control-label" for="login-865-226">Username</label>
+          <input id="login-865-226" type="text" class="form-control"/>
+        </div>
+        <div class="form-group">
+          <label class="form-control-label" for="login-362-839">Password</label>
+          <input id="login-865-226" type="password" class="form-control"/>
+        </div>
+        <button class="btn btn-primary">Login</button>
+      </div>
 ---

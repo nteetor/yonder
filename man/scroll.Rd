@@ -20,7 +20,7 @@ use the \code{scroll()} utility function.
 }
 \examples{
 
-## A simple scroll
+### A simple scroll
 
 div(
   lapply(

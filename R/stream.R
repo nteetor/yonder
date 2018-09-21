@@ -48,7 +48,7 @@
 #' }
 #'
 streamOutput <- function(id, ...) {
-  tags$ul(
+  output <- tags$ul(
     class = collate(
       "yonder-stream",
       "list-group"
@@ -56,6 +56,13 @@ streamOutput <- function(id, ...) {
     id = id,
     ...
   )
+
+  output <- attachDependencies(
+    output,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  output
 }
 
 #' @rdname streamOutput

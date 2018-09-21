@@ -63,7 +63,7 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/checkbarInput.html"
-         alt="Checkbar and radiobar inputs">
+         alt="Checkbox inputs">
         checkbarInput
       </a>
     </dd>
@@ -161,7 +161,7 @@
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/inputs/radiobarInput.html"
-         alt="Checkbar and radiobar inputs">
+         alt="Radio inputs">
         radiobarInput
       </a>
     </dd>
@@ -350,45 +350,31 @@ input.</p>
 
           
           
+          <h3>Something of a shortcut</h3>
+
+          
+          
+          
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">row</span><span class="p">(</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">loginInput</span><span class="p">(</span><span class="w">
-            </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"login"</span><span class="w">
-          </span><span class="p">)</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">verbatimTextOutput</span><span class="p">(</span><span class="s2">"value"</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">value</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderPrint</span><span class="p">({</span><span class="w">
-        </span><span class="n">input</span><span class="o">$</span><span class="n">login</span><span class="w">
-      </span><span class="p">})</span><span class="w">
-
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">loginInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span></code></pre></figure>
 
           </div>
           
           
           
-          <div class="mb-2 ml-1 pl-2 border-left border-black"
-               >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="n">row</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="n">loginInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"login"</span><span class="p">)),</span><span class="w"> </span><span class="n">column</span><span class="p">(</span><span class="n">verbatimTextOutput</span><span class="p">(</span><span class="s2">"value"</span><span class="p">)))),</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-        </span><span class="n">output</span><span class="o">$</span><span class="n">value</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderPrint</span><span class="p">({</span><span class="w">
-            </span><span class="n">input</span><span class="o">$</span><span class="n">login</span><span class="w">
-        </span><span class="p">})</span><span class="w">
-    </span><span class="p">})</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
-
+          <div class="mb-5">
+            <div class="yonder-login col">
+  <div class="form-group">
+    <label class="form-control-label" for="login-18-203">Username</label>
+    <input id="login-18-203" type="text" class="form-control"/>
+  </div>
+  <div class="form-group">
+    <label class="form-control-label" for="login-631-74">Password</label>
+    <input id="login-18-203" type="password" class="form-control"/>
+  </div>
+  <button class="btn btn-primary">Login</button>
+</div>
           </div>
           
           

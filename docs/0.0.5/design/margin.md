@@ -85,7 +85,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>Getting started</h2>
+      <h3>Getting started</h3>
   - type: source
     value: |2-
 

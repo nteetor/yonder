@@ -17,11 +17,13 @@
 #' @family content
 #' @export
 img <- function(src, ...) {
-  tags$img(
-    class = "img-fluid",
-    src = src,
-    ...,
-    include("core")
+  attachDependencies(
+    tags$img(
+      class = "img-fluid",
+      src = src,
+      ...
+    ),
+    bootstrapDep()
   )
 }
 
@@ -35,17 +37,19 @@ figure <- function(image, caption = NULL, ...) {
     )
   }
 
-  tags$figure(
-    class = "figure",
-    tagAddClass(image, "figure-img"),
-    if (!is.null(caption)) {
-      tags$figcaption(
-        class = "figure-caption",
-        caption
-      )
-    },
-    ...,
-    include("core")
+  attachDependencies(
+    tags$figure(
+      class = "figure",
+      tagAddClass(image, "figure-img"),
+      if (!is.null(caption)) {
+        tags$figcaption(
+          class = "figure-caption",
+          caption
+        )
+      },
+      ...
+    ),
+    bootstrapDep()
   )
 }
 
@@ -80,16 +84,18 @@ figure <- function(image, caption = NULL, ...) {
 #' )
 #'
 blockquote <- function(..., source = NULL, align = "left") {
-  tags$blockquote(
-    class = collate(
-      "blockquote",
-      if (align == "right") "blockquote-reverse"
+  attachDependencies(
+    tags$blockquote(
+      class = collate(
+        "blockquote",
+        if (align == "right") "blockquote-reverse"
+      ),
+      ...,
+      if (!is.null(source)) {
+        tags$footer(class = "blockquote-footer", source)
+      }
     ),
-    ...,
-    if (!is.null(source)) {
-      tags$footer(class = "blockquote-footer", source)
-    },
-    include("core")
+    bootstrapDep()
   )
 }
 
@@ -123,8 +129,11 @@ blockquote <- function(..., source = NULL, align = "left") {
 #' )
 #'
 pre <- function(...) {
-  tags$pre(
-    class = "pre-scrollable",
-    ...
+  attachDependencies(
+    tags$pre(
+      class = "pre-scrollable",
+      ...
+    ),
+    bootstrapDep()
   )
 }

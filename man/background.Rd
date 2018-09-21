@@ -35,7 +35,7 @@ The possible background colors are,
 }
 \examples{
 
-## Modifying input elements
+### Modifying input elements
 
 checkbarInput(
   id = NULL,
@@ -47,7 +47,7 @@ checkbarInput(
 ) \%>\%
   background("cyan")
 
-## Possible colors
+### Possible colors
 
 colors <- c(
   "red", "purple", "indigo", "blue", "cyan", "teal", "green",

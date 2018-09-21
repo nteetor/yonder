@@ -99,10 +99,13 @@ navbar <- function(..., brand = NULL) {
       class = "collapse navbar-collapse",
       id = navContentId,
       elems
-    ),
-    include("core")
+    )
   )
 
-  this <- tagConcatAttributes(this, attrs)
+  this <- attachDependencies(
+    tagConcatAttributes(this, attrs),
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
   this
 }

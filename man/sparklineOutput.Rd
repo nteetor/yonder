@@ -71,8 +71,5 @@ sparklineOutput(
 \seealso{
 Other outputs: \code{\link{badgeOutput}},
   \code{\link{progressOutput}}, \code{\link{streamOutput}}
-
-Other outputs: \code{\link{badgeOutput}},
-  \code{\link{progressOutput}}, \code{\link{streamOutput}}
 }
 \concept{outputs}

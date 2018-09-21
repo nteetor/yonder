@@ -24,7 +24,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>Different sides</h2>
+      <h3>Different sides</h3>
   - type: source
     value: |2-
 

@@ -40,7 +40,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>Simple vs block button</h2>
+      <h3>Simple vs block button</h3>
   - type: source
     value: |2-
 
@@ -66,7 +66,7 @@ roxygen:
     value: <button class="yonder-button btn btn-block btn-red" type="button" role="button">Block</button>
   - type: markdown
     value: |
-      <h2>A submit button</h2>
+      <h3>A submit button</h3>
   - type: source
     value: |2-
 
@@ -75,7 +75,7 @@ roxygen:
     value: <button class="yonder-submit btn btn-blue" data-type="submit" role="button">Submit</button>
   - type: markdown
     value: |
-      <h2>Possible colors</h2>
+      <h3>Possible colors</h3>
   - type: source
     value: |2-
 
@@ -114,4 +114,14 @@ roxygen:
         <button class="yonder-button btn btn-orange m-2" type="button" role="button">orange</button>
         <button class="yonder-button btn btn-grey m-2" type="button" role="button">grey</button>
       </div>
+  - type: markdown
+    value: |
+      <h3>Reactive links</h3>
+  - type: source
+    value: |2-
+
+      div("Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem.")
+  - type: output
+    value: "<div>\n  Curabitur \n  <span class=\"yonder-link\" id=\"inline\">\n    <u>vulputate</u>\n
+      \ </span>\n   vestibulum lorem.\n</div>"
 ---

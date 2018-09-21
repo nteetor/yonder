@@ -48,7 +48,7 @@ colorUtility <- function(tag, base, color) {
   tag <- tagDropClass(tag, sprintf("%s-(%s)", base, paste(.colors, collapse = "|")))
   tag <- tagAddClass(tag, paste0(base, "-", color))
 
-  tag
+  attachDependencies(tag, c(yonderDep(), bootstrapDep()))
 }
 
 #' Tag element font
@@ -96,7 +96,7 @@ colorUtility <- function(tag, base, color) {
 #' @export
 #' @examples
 #'
-#' ## Possible colors
+#' ### Possible colors
 #'
 #' colors <- c(
 #'   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
@@ -167,7 +167,7 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, align = NULL) {
     .tag <- tagAddClass(.tag, classes)
   }
 
-  .tag
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
 #' Tag element background color
@@ -201,7 +201,7 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, align = NULL) {
 #' @export
 #' @examples
 #'
-#' ## Modifying input elements
+#' ### Modifying input elements
 #'
 #' checkbarInput(
 #'   id = NULL,
@@ -213,7 +213,7 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, align = NULL) {
 #' ) %>%
 #'   background("cyan")
 #'
-#' ## Possible colors
+#' ### Possible colors
 #'
 #' colors <- c(
 #'   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
@@ -296,7 +296,7 @@ background <- function(.tag, color) {
 #' @export
 #' @examples
 #'
-#' ## Possible colors
+#' ### Possible colors
 #'
 #' colors <- c(
 #'   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
@@ -344,7 +344,7 @@ border <- function(.tag, color = NULL, sides = "all") {
     .tag <- tagAddClass(.tag, sprintf("border-%s", sides))
   }
 
-  .tag
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
 #' Round tag element borders
@@ -363,7 +363,7 @@ border <- function(.tag, color = NULL, sides = "all") {
 #' @export
 #' @examples
 #'
-#' ## Different sides
+#' ### Different sides
 #'
 #' sides <- c("top", "right", "bottom", "left", "circle", "all")
 #'
@@ -402,7 +402,9 @@ rounded <- function(.tag, sides = "all") {
     character(1)
   )
 
-  tagAddClass(.tag, classes)
+  .tag <- tagAddClass(.tag, classes)
+
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
 #' Add shadows to tag elements
@@ -422,7 +424,7 @@ rounded <- function(.tag, sides = "all") {
 #' @export
 #' @examples
 #'
-#' ## Styling a navbar
+#' ### Styling a navbar
 #'
 #' div(
 #'   navbar(brand = "Navbar") %>%
@@ -437,7 +439,7 @@ rounded <- function(.tag, sides = "all") {
 #'   )
 #' )
 #'
-#' ## Different shadows
+#' ### Different shadows
 #'
 #' div(
 #'   lapply(
@@ -467,7 +469,9 @@ shadow <- function(.tag, size = "regular") {
     large = "lg"
   )
 
-  tagAddClass(.tag, paste0(c("shadow", size), collapse = "-"))
+  .tag <- tagAddClass(.tag, paste0(c("shadow", size), collapse = "-"))
+
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
 #' Tag element float
@@ -485,7 +489,7 @@ shadow <- function(.tag, size = "regular") {
 #' @export
 #' @examples
 #'
-#' ## Newspaper layout
+#' ### Newspaper layout
 #'
 #' div(
 #'   div() %>%
@@ -515,7 +519,9 @@ float <- function(.tag, side) {
 
   classes <- createResponsiveClasses(side, "float")
 
-  tagAddClass(.tag, classes)
+  .tag <- tagAddClass(.tag, classes)
+
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
 #' Affix elements to top or bottom of page
@@ -549,10 +555,12 @@ affix <- function(.tag, position) {
   }
 
   if (position == "sticky") {
-    tagAddClass(.tag, "sticky-top")
+    .tag <- tagAddClass(.tag, "sticky-top")
   } else {
-    tagAddClass(.tag, paste0("fixed-", position))
+    .tag <- tagAddClass(.tag, paste0("fixed-", position))
   }
+
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
 #' Tag element display
@@ -591,7 +599,9 @@ display <- function(.tag, render = NULL, print = NULL) {
     createResponsiveClasses(print, "d-print")
   )
 
-  tagAddClass(.tag, classes)
+  .tag <- tagAddClass(.tag, classes)
+
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
 #' Tag element margin and padding
@@ -674,7 +684,7 @@ display <- function(.tag, render = NULL, print = NULL) {
 #' @export
 #' @examples
 #'
-#' ## Getting started
+#' ### Getting started
 #'
 #' padding(div(), c(xs = 0, sm = 2, lg = 4))
 #'
@@ -724,7 +734,9 @@ padding <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) 
     classes <- paste0("p", classes)
   }
 
-  tagAddClass(.tag, classes)
+  .tag <- tagAddClass(.tag, classes)
+
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
 #' @family design
@@ -763,7 +775,9 @@ margin <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
     classes <- paste0("m", classes)
   }
 
-  tagAddClass(.tag, classes)
+  .tag <- tagAddClass(.tag, classes)
+
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
 #' Tag element width and height
@@ -783,7 +797,7 @@ margin <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
 #' @export
 #' @examples
 #'
-#' ## Getting started
+#' ### Getting started
 #'
 #' tags$div() %>%
 #'   width(25) %>%
@@ -817,7 +831,9 @@ width <- function(.tag, percentage = NULL, max = NULL) {
   percentage <- if (!is.null(percentage)) paste0("w-", percentage)
   max <- if (!is.null(max)) paste0("mw-", max)
 
-  tagAddClass(.tag, c(percentage, max))
+  .tag <- tagAddClass(.tag, c(percentage, max))
+
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
 #' @family design
@@ -848,7 +864,9 @@ height <- function(.tag, percentage = NULL, max = NULL) {
   percentage <- if (!is.null(percentage)) paste0("h-", percentage)
   max <- if (!is.null(max)) paste0("mh-", max)
 
-  tagAddClass(.tag, c(percentage, max))
+  .tag <- tagAddClass(.tag, c(percentage, max))
+
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
 #' Vertical and horizontal scroll
@@ -867,7 +885,7 @@ height <- function(.tag, percentage = NULL, max = NULL) {
 #' @export
 #' @examples
 #'
-#' ## A simple scroll
+#' ### A simple scroll
 #'
 #' div(
 #'   lapply(
@@ -893,7 +911,9 @@ scroll <- function(.tag, direction = "y") {
     )
   }
 
-  tagAddClass(.tag, paste0("scroll-", direction))
+  .tag <- tagAddClass(.tag, paste0("scroll-", direction))
+
+  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
 # Apply styles to a tag

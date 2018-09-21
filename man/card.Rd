@@ -40,14 +40,14 @@ is placed around any number of cards. Additionally, grouping cards with
 }
 \examples{
 
-## A simple card
+### A simple card
 
 column(
   width = 4,
   card("Praesent fermentum tempor tellus.")
 )
 
-## Adding a title, subtitle
+### Adding a title, subtitle
 
 column(
   width = 4,
@@ -59,7 +59,7 @@ column(
   )
 )
 
-## Styling cards
+### Styling cards
 
 deck(
   card(
@@ -84,7 +84,7 @@ deck(
       background("grey")
 )
 
-## Cards with list groups
+### Cards with list groups
 
 column(
   width = 4,
@@ -105,7 +105,7 @@ column(
   )
 )
 
-## Tabbed content in cards
+### Tabbed content in cards
 
 card(
   header = tabTabs(
@@ -128,6 +128,7 @@ card(
   )
 )
 
+### Deck of cards
 
 deck(
   card(

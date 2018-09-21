@@ -23,7 +23,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>Newspaper layout</h2>
+      <h3>Newspaper layout</h3>
   - type: source
     value: |2-
 

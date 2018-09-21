@@ -84,16 +84,22 @@
 #' )
 #'
 listGroupThruput <- function(id, ..., multiple = TRUE, flush = FALSE) {
-  tags$div(
+  thruput <- tags$div(
     class = collate(
       "yonder-list-group list-group",
       if (flush) "list-group-flush"
     ),
     `data-multiple` = if (multiple) "true" else "false",
     id = id,
-    ...,
-    include("core")
+    ...
   )
+
+  thruput <- attachDependencies(
+    thruput,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  thruput
 }
 
 #' @rdname listGroupThruput

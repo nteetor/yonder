@@ -2,18 +2,21 @@
 % Please edit documentation in R/radio.R
 \name{radioInput}
 \alias{radioInput}
+\alias{radiobarInput}
 \title{Radio inputs}
 \usage{
 radioInput(id, choices, values = choices, selected = NULL,
   disabled = NULL, help = NULL, inline = FALSE)
+
+radiobarInput(id, choices, values = choices, selected = NULL)
 }
 \arguments{
 \item{id}{A character string specifying the id of the radio input, the
 reactive value of the radio input is available to the shiny server
 function as part of the \code{input} object.}
 
-\item{choices}{A character vector specifying labels for the radio input's
-choices.}
+\item{choices}{A character vector specifying labels for the radio or radiobar
+input's choices.}
 
 \item{values}{A character vector, list of character strings, vector of values
 to coerce to character strings, or list of values to coerce to character
@@ -44,7 +47,7 @@ Create a reactive radio input of one or more radio controls.
 ### Stacked radio input
 
 radioInput(
-  id = "radio",
+  id = "stacked",
   choices = c(
     "Vehicula adipiscing mattis",
     "Magna nullam",
@@ -56,24 +59,37 @@ radioInput(
 ### Inline radio input
 
 radioInput(
-  id = "radio",
+  id = "inline",
   choices = c(
     "Choice 1",
     "Choice 2",
     "Choice 3"
   ),
-  inline = TRUE
+  inline = TRUE  # <-
 )
+
+### Radiobars in comparison
+
+radiobarInput(
+  id = NULL,
+  choices = c(
+    "fusce sagittis",
+    "libero non molestie",
+    "magna orci",
+    "ultrices dolor"
+  ),
+  selected = "ultrices dolor"
+) \%>\%
+  background("grey")
 
 }
 \seealso{
 Other inputs: \code{\link{addressInput}},
   \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{dateInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{loginInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
+  \code{\link{dateInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{loginInput}}, \code{\link{rangeInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

@@ -80,7 +80,7 @@ Now we're cooking with gas!
 
 \examples{
 
-## Getting started
+### Getting started
 
 padding(div(), c(xs = 0, sm = 2, lg = 4))
 

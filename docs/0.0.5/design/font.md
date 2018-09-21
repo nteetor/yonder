@@ -37,7 +37,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h2>Possible colors</h2>
+      <h3>Possible colors</h3>
   - type: source
     value: |2-
 

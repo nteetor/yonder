@@ -16,38 +16,19 @@ input.}
 A composite input which consists of a username field and a password field.
 }
 \examples{
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        column(
-          loginInput(
-            id = "login"
-          )
-        ),
-        column(
-          verbatimTextOutput("value")
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$value <- renderPrint({
-        input$login
-      })
 
-    }
-  )
-}
+### Something of a shortcut
+
+loginInput(id = NULL)
 
 }
 \seealso{
 Other inputs: \code{\link{addressInput}},
   \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{dateInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{radioInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
+  \code{\link{dateInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{radioInput}}, \code{\link{rangeInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
 }
 \concept{inputs}
