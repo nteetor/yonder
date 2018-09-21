@@ -218,7 +218,7 @@ buttonGroupInput <- function(id, labels, values = labels) {
       function(label, value, outline) {
         tags$button(
           type = "button",
-          class = "btn",
+          class = "btn btn-grey",
           `data-value` = value,
           label
         )

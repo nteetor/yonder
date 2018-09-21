@@ -36,9 +36,9 @@ roxygen:
   - type: output
     value: |-
       <div class="yonder-button-group btn-group" role="group">
-        <button type="button" class="btn" data-value="1">Once</button>
-        <button type="button" class="btn" data-value="2">Twice</button>
-        <button type="button" class="btn" data-value="3">Thrice</button>
+        <button type="button" class="btn btn-grey" data-value="1">Once</button>
+        <button type="button" class="btn btn-grey" data-value="2">Twice</button>
+        <button type="button" class="btn btn-grey" data-value="3">Thrice</button>
       </div>
   - type: markdown
     value: |
