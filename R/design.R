@@ -24,7 +24,8 @@ NULL
 )
 
 colorUtility <- function(tag, base, color) {
-  if (tagHasClass(tag, "yonder-checkbar|yonder-radiobar")) {
+  if (tagHasClass(tag, "yonder-checkbar|yonder-radiobar") ||
+        tagHasClass(tag, "btn-group")) {
     tag$children[[1]] <- lapply(
       tag$children[[1]],
       colorUtility,
@@ -247,9 +248,9 @@ background <- function(.tag, color) {
     base <- "alert"
   } else if (tagHasClass(.tag, "badge")) {
     base <- "badge"
-  } else if (tagHasClass(.tag, "yonder-radiobar|yonder-checkbar")) {
-    base <- "btn"
-  } else if (tagHasClass(.tag, "btn")) {
+  } else if (tagHasClass(.tag, "yonder-radiobar|yonder-checkbar") ||
+               tagHasClass(.tag, "btn-group") ||
+               tagHasClass(.tag, "btn")) {
     base <- "btn"
   } else if (tagHasClass(.tag, "list-group-item")) {
     base <- "list-group-item"

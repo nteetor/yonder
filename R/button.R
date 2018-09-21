@@ -226,10 +226,8 @@ buttonGroupInput <- function(id, labels, values = labels) {
     )
   )
 
-  input <- attachDependencies(
+  attachDependencies(
     input,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  input
 }
