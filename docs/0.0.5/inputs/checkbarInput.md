@@ -52,8 +52,8 @@ roxygen:
     value: |-
       <div class="yonder-checkbox">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-505-825" data-value="Suspendisse potenti" checked/>
-          <label class="custom-control-label" for="checkbox-505-825">Suspendisse potenti</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-955-690" data-value="Suspendisse potenti" checked/>
+          <label class="custom-control-label" for="checkbox-955-690">Suspendisse potenti</label>
           <div class="invalid-feedback"></div>
           <div class="valid-feedback"></div>
         </div>
