@@ -21,84 +21,21 @@
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
-#' @family outputs
+#' @family content
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           buttonInput(id = "inc", "Increment progress")
-#'         ),
-#'         column(
-#'           progressOutput(
-#'             bar("clicks", 0, striped = TRUE) %>%
-#'               background("blue")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$inc, {
-#'         sendBar(
-#'           id = "clicks",
-#'           value = min(input$inc / 20 * 100, 100)
-#'         )
-#'       })
-#'     }
-#'   )
-#' }
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           progressOutput(
-#'             bar(id = "faster", value = 0) %>%
-#'               background("yellow"),
-#'             bar(id = "slower", value = 0)
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observe({
-#'         for (i in seq(from = 0, to = 50, by = 1)) {
-#'           sendBar(
-#'             id = "slower",
-#'             value = i
-#'           )
-#'
-#'           sendBar(
-#'             id = "faster",
-#'             value = min(i * 3, 50)
-#'           )
-#'
-#'           Sys.sleep(0.1)
-#'         }
-#'       })
-#'     }
-#'   )
-#' }
-#'
-progressOutput <- function(...) {
-  output <- tags$div(
-    class = "yonder-progress progress",
-    ...
-  )
-
-  output <- attachDependencies(
-    output,
+progressOutlet <- function(id, ...) {
+  attachDependencies(
+    tags$div(
+      class = "yonder-progress progress",
+      ...
+    ),
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  output
 }
 
-#' @rdname progressOutput
+#' @rdname progressOutlet
 #' @export
 bar <- function(id, value, label = NULL, striped = FALSE, ...) {
   if (!is.character(id) && !is.null(id)) {
@@ -125,9 +62,9 @@ bar <- function(id, value, label = NULL, striped = FALSE, ...) {
   )
 }
 
-#' @rdname progressOutput
+#' @rdname progressOutlet
 #' @export
-sendBar <- function(id, value, label = NULL,
+showBar <- function(id, bar,
                     session = getDefaultReactiveDomain()) {
   session$sendProgress(
     "yonder-progress",

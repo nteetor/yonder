@@ -64,8 +64,6 @@ shinyApp(ui, server)
 }
 
 \seealso{
-Other server: \code{\link{sendModal}}
-
 Other utilities: \code{\link{collapse}},
   \code{\link{downloadEvent}}, \code{\link{markInvalid}},
   \code{\link{showAlert}}, \code{\link{updateChoices}}

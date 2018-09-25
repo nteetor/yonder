@@ -154,6 +154,7 @@ deck(
 Other content: \code{\link{blockquote}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{icon}},
   \code{\link{img}}, \code{\link{jumbotron}},
-  \code{\link{pre}}, \code{\link{tooltip}}
+  \code{\link{modal}}, \code{\link{pre}},
+  \code{\link{progressOutlet}}, \code{\link{tooltip}}
 }
 \concept{content}

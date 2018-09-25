@@ -229,50 +229,33 @@ $(() => {
 
 $(() =>  {
   Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
-    if (msg.close === true) {
+    if (!msg.type) {
+      return false;
+    }
+
+    if (msg.type === "close") {
       $(".modal").modal("hide");
       return true;
     }
 
-    var $modal;
+    if (msg.type === "show") {
+      var $modal;
 
-    if ($(".modal").length) {
-      $modal = $(".modal");
-    } else {
-      $modal = $([
-        "<div class='modal fade' tabindex=-1 role='dialog'>",
-        "<div class='modal-dialog' role='document'>",
-        "<div class='modal-content'>",
-        "<div class='modal-header'>",
-        "<h5 class='modal-title'></h5>",
-        "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>",
-        "<span class='fa fa-times-rectangle'></span>",
-        "</button>",
-        "</div>",
-        "<div class='container-fluid'>",
-        "<div class='modal-body'></div>",
-        "</div>",
-        "</div>",
-        "</div>",
-        "</div>"
-      ].join("\n"));
+      if ($(".modal").length) {
+        $modal = $(".modal");
+      } else {
+        $modal = $("<div class='modal fade' tabindex=-1 role='dialog'></div>");
 
-      $("body").append($modal);
-    }
-
-
-    $(".modal-title", $modal).html(msg.title);
-    $(".modal-body", $modal).html(msg.body);
-
-    if (msg.footer) {
-      if (!$(".modal-footer", $modal).length) {
-        $(".modal-content", $modal).append($("<div class='modal-footer'></div>"));
+        $(document.body).append($modal);
       }
 
-      $(".modal-content", $modal).html(msg.footer);
+      $modal.html(msg.data.content);
+      $modal.modal();
+
+      return true;
     }
 
-    $modal.modal();
+    return false;
   });
 });
 
