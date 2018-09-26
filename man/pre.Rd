@@ -35,11 +35,11 @@ pre(
 
 }
 \seealso{
-Other content: \code{\link{blockquote}},
-  \code{\link{card}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{icon}},
-  \code{\link{img}}, \code{\link{jumbotron}},
-  \code{\link{modal}}, \code{\link{progressOutlet}},
-  \code{\link{tooltip}}
+Other content: \code{\link{alert}},
+  \code{\link{blockquote}}, \code{\link{card}},
+  \code{\link{d1}}, \code{\link{dropdown}},
+  \code{\link{icon}}, \code{\link{img}},
+  \code{\link{jumbotron}}, \code{\link{modal}},
+  \code{\link{progressOutlet}}, \code{\link{tooltip}}
 }
 \concept{content}

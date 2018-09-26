@@ -3,6 +3,7 @@
 export("%>%")
 export(addressInput)
 export(affix)
+export(alert)
 export(background)
 export(badgeOutput)
 export(bar)

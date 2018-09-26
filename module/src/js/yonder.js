@@ -111,31 +111,23 @@ $(() => {
 
 $.extend(Shiny.progressHandlers, {
   "yonder-progress": (msg) => {
-    var $bar = $(".yonder-progress #" + msg.id);
-
-    $bar
-      .attr("style", (i, s) => s.replace(/width: [0-9]+%/, "width: " + msg.value + "%"))
-      .attr("aria-valuenow", msg.value);
-
-    if (msg.label) {
-      $bar.text(msg.label);
+    if (!msg.type || !msg.data.outlet) {
+      return false;
     }
 
-    if (msg.context) {
-      $bar.attr("class", function(i, c) {
-        return c.replace(/bg-(?:primary|secondary|success|info|warning|danger|light|dark|white)/g, "bg-" + msg.context);
-      });
-    }
-  }
-});
+    let $outlet = $(`#${ msg.data.outlet }`);
 
-$.extend(Shiny.progressHandlers, {
-  "yonder-stream": (data) => {
-    $("<li class='list-group-item'></li>")
-      .text(data.content)
-      .hide()
-      .appendTo($("#" + data.id))
-      .fadeIn(300);
+    if (msg.type === "show") {
+      let $bar = $(msg.data.content);
+
+      if ($bar[0].id && $outlet.find(`#${ $bar[0].id }`).length) {
+        $outlet.find(`#${ $bar[0].id }`).replaceWith($bar);
+      } else {
+        $outlet.append($bar);
+      }
+
+      return true;
+    }
 
     return false;
   }

@@ -30,7 +30,7 @@ allowing subsequent observers and reactives to trigger.
 }
 \seealso{
 Other utilities: \code{\link{collapse}},
-  \code{\link{downloadEvent}}, \code{\link{showAlert}},
-  \code{\link{showPopover}}, \code{\link{updateChoices}}
+  \code{\link{downloadEvent}}, \code{\link{showPopover}},
+  \code{\link{updateChoices}}
 }
 \concept{utilities}

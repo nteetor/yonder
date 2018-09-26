@@ -5,101 +5,166 @@
 #' actionable. Actionable alerts can be used for undoing or redoing an action
 #' and more.
 #'
-#' @param text A character string specifying the message text of the alert.
+#' @param ... Character strings specifying the text of the alert or additional
+#'   named arguments passed as HTML attributes to the alert element.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the
-#'   alert element.
+#' @param title A character string or tag element specifying a heading for the
+#'  alert, defaults to `NULL`, in which case a title is not added.
 #'
 #' @param duration A positive integer or `NULL` specifying the duration of the
 #'   alert, by default the alert is removed after 4 seconds. If `NULL` the
 #'   alert is not automatically removed.
 #'
-#' @param color A character string specifying the color of the alert,
-#'   for possible colors see [background].
-#'
 #' @param action A character string specifying a reactive id. If specified a
-#'   button is added to the alert. If clicked the reactive value
-#'   `input[[action]]` is set to `TRUE`. When the alert is removed
+#'   button is added to the alert. When this button is clicked a reactive value
+#'   is triggered, `input[[action]]` is set to `TRUE`. When the alert is removed
 #'   `input[[action]]` is reset to `NULL`.
 #'
-#' @family utilities
+#' @section Displaying an alert:
+#'
+#' ```R
+#' ui <- container(
+#'   buttonInput("show", "Alert!") %>%
+#'     margin(3)
+#' )
+#'
+#' server <- function(input, output) {
+#'   observeEvent(input$show, {
+#'     color <- sample(c("teal", "red", "orange", "blue"), 1)
+#'
+#'     showAlert(
+#'       alert("Alert") %>% background(color)
+#'     )
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
+#'
+#' @section Reacting to alerts:
+#'
+#' ```R
+#' ui <- container(
+#'   row(
+#'     column(
+#'       groupInput(
+#'         id = "text",
+#'         right = buttonInput("clear", icon("times")) %>%
+#'           background("red")
+#'       )
+#'     ),
+#'     column(
+#'       verbatimTextOutput("value")
+#'     )
+#'   ) %>%
+#'     margin(3)
+#' )
+#'
+#' server <- function(input, output) {
+#'   oldValue <- NULL
+#'
+#'   output$value <- renderPrint(input$text)
+#'
+#'   observeEvent(input$clear, ignoreInit = TRUE, {
+#'     oldValue <<- input$text
+#'     updateValues("text", "")
+#'
+#'     showAlert(
+#'       alert("Undo clear.") %>%
+#'         background("yellow"),
+#'       action = "undo"
+#'     )
+#'   })
+#'
+#'   observeEvent(input$undo, {
+#'     updateValues("text", oldValue)
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
+#'
+#' @section Removing alerts:
+#'
+#' ```R
+#' ui <- container(
+#'   buttonInput("add", "Alert") %>%
+#'     margin(3),
+#'   buttonInput("first", "Remove first alert"),
+#'   buttonInput(
+#'     id = "reds",
+#'     label = "Remove red alerts",
+#'     alt = "the red ones offend the aesthetic"
+#'   ),
+#'   buttonInput("alert", "Remove 'Alert' alerts")
+#' )
+#'
+#' server <- function(input, output) {
+#'   observeEvent(input$add, {
+#'     color <- sample(c("teal", "purple", "yellow", "red"), 1)
+#'     showAlert(
+#'       alert("Alert") %>%
+#'         background(color),
+#'       duration = NULL
+#'     )
+#'   })
+#'
+#'   observeEvent(input$first, {
+#'     closeAlert(1)
+#'   })
+#'
+#'   observeEvent(input$reds, {
+#'     closeAlert(class = "alert-red")
+#'   })
+#'
+#'   observeEvent(input$alert, {
+#'     closeAlert("Alert")
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
+#'
+#' @family content
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       buttonInput("show", "Alert!") %>%
-#'         margin(3)
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$show, {
-#'         color <- sample(c("teal", "red", "orange", "blue"), 1)
-#'         showAlert("Alert", color = color)
-#'       })
-#'     }
-#'   )
-#' }
+#' ### Default alert
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           groupInput(
-#'             id = "text",
-#'             right = buttonInput("clear", icon("times")) %>%
-#'               background("red")
-#'           )
-#'         ),
-#'         column(
-#'           verbatimTextOutput("value")
-#'         )
-#'       ) %>%
-#'         margin(3)
-#'     ),
-#'     server = function(input, output) {
-#'       oldValue <- NULL
+#' alert("Donec at pede.")
 #'
-#'       output$value <- renderPrint(input$text)
+#' ### Adding more
 #'
-#'       observeEvent(input$clear, {
-#'         oldValue <<- input$text
-#'         updateValues("text", "")
-#'         showAlert("Undo clear.", color = "yellow", action = "undo")
-#'       })
+#' alert(
+#'   p("Etiam vel tortor sodales"),
+#'   hr(),
+#'   p("Fusce commodo.") %>%
+#'     margin(bottom = 0)
+#' ) %>%
+#'   background("amber")
 #'
-#'       observeEvent(input$undo, {
-#'         updateValues("text", oldValue)
-#'       })
-#'     }
-#'   )
-#' }
-#'
-showAlert <- function(text, ..., duration = 4, color = NULL, action = NULL) {
-  domain <- getDefaultReactiveDomain()
+alert <- function(..., title = NULL) {
+  title <- if (!is.null(title) && !is_tag(title)) {
+    tags$h4(class = "alert-heading", title)
+  } else {
+    title
+  }
 
-  if (is.null(domain)) {
+  tags$div(
+    class = "alert alert-grey fade show",
+    role = "alert",
+    title,
+    ...
+  )
+}
+
+#' @rdname alert
+#' @export
+showAlert <- function(alert, duration = 4, action = NULL,
+                      session = getDefaultReactiveDomain()) {
+  if (is.null(session)) {
     stop(
       "function `showAlert()` must be called in a reactive context",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(color) && !(color %in% .colors)) {
-    stop(
-      "invalid `showAlert()` argument, unrecognized `color` , see ?background ",
-      "for possible values",
-      call. = FALSE
-    )
-  }
-
-  text <- as.character(text)
-
-  if (length(text) != 1) {
-    stop(
-      "invalid `showAlert()` argument, expecting `text` to be a character ",
-      "string",
       call. = FALSE
     )
   }
@@ -114,106 +179,20 @@ showAlert <- function(text, ..., duration = 4, color = NULL, action = NULL) {
     }
   }
 
-  args <- list(...)
-  attrs <- attribs(args)
-
-  domain$sendInputMessage("alert-container", list(
+  session$sendInputMessage("alert-container", list(
     type = "show",
     data = list(
-      text = text,
+      content = HTML(as.character(alert)),
       duration = if (!is.null(duration)) duration * 1000,
-      color = color,
-      action = action,
-      attrs = if (length(attrs)) attrs
+      action = action
     )
   ))
 }
 
-#' @rdname showAlert
+#' @rdname alert
 #' @export
-#' @examples
-#'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       buttonInput("add", "Alert") %>%
-#'         margin(3),
-#'       buttonInput("first", "Remove first alert"),
-#'       buttonInput(
-#'         id = "reds",
-#'         label = "Remove red alerts",
-#'         alt = "the red ones offend the aesthetic"
-#'       ),
-#'       buttonInput("alert", "Remove 'Alert' alerts")
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$add, {
-#'         color <- sample(c("grey", "teal", "purple", "yellow", "red"), 1)
-#'         showAlert("Alert", duration = NULL, color = color)
-#'       })
-#'
-#'       observeEvent(input$first, {
-#'         closeAlert(1)
-#'       })
-#'
-#'       observeEvent(input$reds, {
-#'         closeAlert(class = "alert-red")
-#'       })
-#'
-#'       observeEvent(input$alert, {
-#'         closeAlert("Alert")
-#'       })
-#'     }
-#'   )
-#' }
-#'
-#'
-#' # this is a variation of the second example
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           groupInput(
-#'             id = "text",
-#'             right = buttonInput("clear", icon("times")) %>%
-#'               background("red")
-#'           )
-#'         ),
-#'         column(
-#'           verbatimTextOutput("value")
-#'         )
-#'       ) %>%
-#'         margin(3)
-#'     ),
-#'     server = function(input, output) {
-#'       oldValue <- NULL
-#'
-#'       output$value <- renderPrint(input$text)
-#'
-#'       observeEvent(input$clear, {
-#'         oldValue <<- input$text
-#'         updateValues("text", "")
-#'         showAlert(
-#'           text = "Undo clear.",
-#'           color = "yellow",
-#'           action = "undo",
-#'           duration = NULL
-#'         )
-#'       })
-#'
-#'       observeEvent(input$undo, {
-#'         updateValues("text", oldValue)
-#'         closeAlert(1)
-#'       })
-#'     }
-#'   )
-#' }
-#'
-closeAlert <- function(...) {
-  domain <- getDefaultReactiveDomain()
-
-  if (is.null(domain)) {
+closeAlert <- function(..., session = getDefaultReactiveDomain()) {
+  if (is.null(session)) {
     stop(
       "function `closeAlert()` must be called in a reactive context",
       call. = FALSE
@@ -241,7 +220,7 @@ closeAlert <- function(...) {
     attrs[["class"]] <- paste(attrs[["class"]], collapse = " ")
   }
 
-  domain$sendInputMessage("alert-container", list(
+  session$sendInputMessage("alert-container", list(
     type = "close",
     data = list(
       text = elems[vapply(elems, is.character, logical(1))],
