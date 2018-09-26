@@ -13,10 +13,20 @@ bar(id, value, label = NULL, striped = FALSE, ...)
 showBar(id, bar, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{id}{A character string specifying the HTML id of a progress output.}
+\item{id}{For \strong{progressOutlet} a character string specifying the id of the
+outlet.
 
-\item{...}{One or more \code{bar} elements passed to a progress output or named
-arguments passed as HTML attributes to the parent element.}
+For \strong{bar}, specifying an id allows you to update an existing bar in a
+progress outlet with \code{showBar()}. If \code{id} is \code{NULL}, \code{showBar()} will
+instead append the bar.
+
+For \strong{showBar}, a character string specifying the id of a progress outlet.}
+
+\item{...}{For \strong{progressOutlet}, one or more \code{bar} elements to include by
+default.
+
+For \strong{progresOutlet} and \strong{bar}, additional named arguments passed as
+HTML attributes to the parent element.}
 
 \item{value}{An integer between 0 and 100 specifying the initial value
 of a bar.}
@@ -35,15 +45,83 @@ pass multiple calls to \code{bar} to a progress output. Each \code{bar} componen
 its own id, value, label, and attributes. Furthermore, utility functions may
 be applied to individual bars for added customization.
 }
+\section{Example application}{
+\preformatted{ui <- container(
+  progressOutlet("tasks"),
+  buttonInput(
+    id = "inc",
+    "Increment progress"
+  ) \%>\%
+    margin(top = 3)
+) \%>\%
+  flex(direction = "column")
+
+server <- function(input, output) {
+  observeEvent(input$inc, ignoreInit = TRUE, {
+    showBar(
+      id = "tasks",
+      bar(
+        id = "laundry",
+        value = min(100, input$inc * 10)
+      ) \%>\%
+        background("amber")
+    )
+  })
+}
+
+shinyApp(ui, server)
+}
+}
+
 \examples{
+
+### Striped variant
+
+progressOutlet(
+  id = NULL,
+  bar(
+    id = NULL,
+    value = 41,
+    striped = TRUE  # <-
+  ) \%>\%
+    background("blue")
+)
+
+### Labeled bars
+
+progressOutlet(
+  id = NULL,
+  bar(
+    id = NULL,
+    value = 64,
+    label = "Trees planted"  # <-
+  ) \%>\%
+    background("green")
+)
+
+### Multiple bars
+
+progressOutlet(
+  id = NULL,  # <- this is typically not NULL
+  bar(
+    id = NULL,
+    value = 40
+  ) \%>\%
+    background("red"),
+  bar(
+    id = NULL,
+    value = 20
+  ) \%>\%
+    background("orange")
+)
 
 }
 \seealso{
-Other content: \code{\link{blockquote}},
-  \code{\link{card}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{icon}},
-  \code{\link{img}}, \code{\link{jumbotron}},
-  \code{\link{modal}}, \code{\link{pre}},
-  \code{\link{tooltip}}
+Other content: \code{\link{alert}},
+  \code{\link{blockquote}}, \code{\link{card}},
+  \code{\link{d1}}, \code{\link{dropdown}},
+  \code{\link{icon}}, \code{\link{img}},
+  \code{\link{jumbotron}}, \code{\link{modal}},
+  \code{\link{pre}}, \code{\link{tooltip}}
 }
 \concept{content}

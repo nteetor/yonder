@@ -24,8 +24,9 @@
 #'   removed. When `NULL` is specified the popover can be removed with
 #'   `closePopover()`.
 #'
-#' @section Add a popover:
+#' @section Example application:
 #'
+#' ```R
 #' ui <- container(
 #'   buttonInput("click", "Button"),
 #'   buttonInput("close", icon("times")) %>%
@@ -48,6 +49,7 @@
 #' }
 #'
 #' shinyApp(ui, server)
+#' ```
 #'
 #' @family server
 #' @export

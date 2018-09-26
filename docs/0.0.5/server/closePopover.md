@@ -35,8 +35,9 @@ roxygen:
       removed. When `NULL` is specified the popover can be removed with
       `closePopover()`.
   sections:
-  - title: Add a popover
+  - title: Example application
     body: |-
+      ```R
       ui <- container(
         buttonInput("click", "Button"),
         buttonInput("close", icon("times")) %>%
@@ -59,6 +60,7 @@ roxygen:
       }
 
       shinyApp(ui, server)
+      ```
   return: ~
   family: server
   name: ~

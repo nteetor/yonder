@@ -57,24 +57,19 @@
     
 
     <dt>
-      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
-    </dt>
-
-    
-
-    
-
-    
-
-    
-
-    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/content/">content</a>
     </dt>
 
     
 
     
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/alert.html"
+         alt="Static and actionable alerts">
+        alert
+      </a>
+    </dd>
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/content/bar.html"
@@ -94,6 +89,13 @@
       <a href="http://localhost:4000/yonder/0.0.5/content/card.html"
          alt="Cards, blocks of content">
         card
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/closeAlert.html"
+         alt="Static and actionable alerts">
+        closeAlert
       </a>
     </dd>
     
@@ -196,6 +198,13 @@
     </dd>
     
     <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/showAlert.html"
+         alt="Static and actionable alerts">
+        showAlert
+      </a>
+    </dd>
+    
+    <dd>
       <a href="http://localhost:4000/yonder/0.0.5/content/showBar.html"
          alt="Progress bars">
         showBar
@@ -223,7 +232,7 @@
     
 
     <dt>
-      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
     </dt>
 
     
@@ -236,6 +245,18 @@
 
     <dt>
       <a class="text-dark" href="">server</a>
+    </dt>
+
+    
+
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
     </dt>
 
     
@@ -296,12 +317,22 @@ be applied to individual bars for added customization.</p>
           <dl class="row">
             
             <dt id="params-id" class="col-sm-3">id</dt>
-            <dd class="col-sm-9"><p>A character string specifying the HTML id of a progress output.</p>
+            <dd class="col-sm-9"><p>For <strong>progressOutlet</strong> a character string specifying the id of the
+  outlet.</p>
+
+<p>For <strong>bar</strong>, specifying an id allows you to update an existing bar in a
+  progress outlet with <code class="highlighter-rouge">showBar()</code>. If <code class="highlighter-rouge">id</code> is <code class="highlighter-rouge">NULL</code>, <code class="highlighter-rouge">showBar()</code> will
+  instead append the bar.</p>
+
+<p>For <strong>showBar</strong>, a character string specifying the id of a progress outlet.</p>
 </dd>
             
             <dt id="params-..." class="col-sm-3">...</dt>
-            <dd class="col-sm-9"><p>One or more <code class="highlighter-rouge">bar</code> elements passed to a progress output or named
-arguments passed as HTML attributes to the parent element.</p>
+            <dd class="col-sm-9"><p>For <strong>progressOutlet</strong>, one or more <code class="highlighter-rouge">bar</code> elements to include by
+  default.</p>
+
+<p>For <strong>progresOutlet</strong> and <strong>bar</strong>, additional named arguments passed as
+  HTML attributes to the parent element.</p>
 </dd>
             
             <dt id="params-value" class="col-sm-3">value</dt>
@@ -327,7 +358,128 @@ to <code class="highlighter-rouge">FALSE</code>.</p>
           
 
           
+          <h3 id="example-application"><p>Example application</p>
+</h3>
+          <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
+  </span><span class="n">progressOutlet</span><span class="p">(</span><span class="s2">"tasks"</span><span class="p">),</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"inc"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Increment progress"</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">margin</span><span class="p">(</span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"column"</span><span class="p">)</span><span class="w">
 
+</span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">inc</span><span class="p">,</span><span class="w"> </span><span class="n">ignoreInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">showBar</span><span class="p">(</span><span class="w">
+      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tasks"</span><span class="p">,</span><span class="w">
+      </span><span class="n">bar</span><span class="p">(</span><span class="w">
+        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"laundry"</span><span class="p">,</span><span class="w">
+        </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">min</span><span class="p">(</span><span class="m">100</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">inc</span><span class="w"> </span><span class="o">*</span><span class="w"> </span><span class="m">10</span><span class="p">)</span><span class="w">
+      </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+        </span><span class="n">background</span><span class="p">(</span><span class="s2">"amber"</span><span class="p">)</span><span class="w">
+    </span><span class="p">)</span><span class="w">
+  </span><span class="p">})</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+          
+
+          
+          
+          <h3>Striped variant</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">progressOutlet</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">bar</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+    </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">41</span><span class="p">,</span><span class="w">
+    </span><span class="n">striped</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">background</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-progress progress">
+  <div class="progress-bar progress-bar-striped bg-blue" role="progressbar" style="width: 41%" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+          </div>
+          
+          
+          
+          <h3>Labeled bars</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">progressOutlet</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">bar</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+    </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">64</span><span class="p">,</span><span class="w">
+    </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Trees planted"</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">background</span><span class="p">(</span><span class="s2">"green"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-progress progress">
+  <div class="progress-bar bg-green" role="progressbar" style="width: 64%" aria-valuemin="0" aria-valuemax="100">Trees planted</div>
+</div>
+          </div>
+          
+          
+          
+          <h3>Multiple bars</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">progressOutlet</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">  </span><span class="c1"># &lt;- this is typically not NULL</span><span class="w">
+  </span><span class="n">bar</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+    </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">40</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">background</span><span class="p">(</span><span class="s2">"red"</span><span class="p">),</span><span class="w">
+  </span><span class="n">bar</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+    </span><span class="n">value</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">20</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">background</span><span class="p">(</span><span class="s2">"orange"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-progress progress">
+  <div class="progress-bar bg-red" role="progressbar" style="width: 40%" aria-valuemin="0" aria-valuemax="100"></div>
+  <div class="progress-bar bg-orange" role="progressbar" style="width: 20%" aria-valuemin="0" aria-valuemax="100"></div>
+</div>
+          </div>
+          
           
 
         </div>

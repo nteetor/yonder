@@ -36,37 +36,36 @@ allows you to add explanations for inputs. Furthermore the \code{\link[=linkInpu
 makes adding popovers to semi-plain text possible. Popovers are hidden with
 \code{closePopover()}.
 }
-\section{Add a popover}{
-
-
-ui <- container(
-buttonInput("click", "Button"),
-buttonInput("close", icon("times")) %>%
-background("red")
+\section{Example application}{
+\preformatted{ui <- container(
+  buttonInput("click", "Button"),
+  buttonInput("close", icon("times")) \%>\%
+    background("red")
 )
 
 server <- function(input, output) {
-observeEvent(input$click, {
-showPopover(
-id = "click",
-text = "This is a button!",
-placement = "bottom",
-duration = NULL
-)
-})
+  observeEvent(input$click, {
+    showPopover(
+      id = "click",
+      text = "This is a button!",
+      placement = "bottom",
+      duration = NULL
+    )
+  })
 
-observeEvent(input$close, {
-closePopover("click")
-})
+  observeEvent(input$close, {
+    closePopover("click")
+  })
 }
 
 shinyApp(ui, server)
+}
 }
 
 \seealso{
 Other utilities: \code{\link{collapse}},
   \code{\link{downloadEvent}}, \code{\link{markInvalid}},
-  \code{\link{showAlert}}, \code{\link{updateChoices}}
+  \code{\link{updateChoices}}
 }
 \concept{server}
 \concept{utilities}

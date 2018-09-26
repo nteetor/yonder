@@ -57,18 +57,6 @@
     
 
     <dt>
-      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
-    </dt>
-
-    
-
-    
-
-    
-
-    
-
-    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/content/">content</a>
     </dt>
 
@@ -81,7 +69,7 @@
     
 
     <dt>
-      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
     </dt>
 
     
@@ -114,6 +102,18 @@
       </a>
     </dd>
     
+    
+
+    
+
+    
+
+    <dt>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
+    </dt>
+
+    
+
     
 
     
@@ -202,30 +202,31 @@ removed. When <code class="highlighter-rouge">NULL</code> is specified the popov
           
 
           
-          <h3 id="add-a-popover"><p>Add a popover</p>
+          <h3 id="example-application"><p>Example application</p>
 </h3>
-          <p>ui &lt;- container(
-  buttonInput(“click”, “Button”),
-  buttonInput(“close”, icon(“times”)) %&gt;%
-    background(“red”)
-)</p>
+          <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"click"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Button"</span><span class="p">),</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"close"</span><span class="p">,</span><span class="w"> </span><span class="n">icon</span><span class="p">(</span><span class="s2">"times"</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">background</span><span class="p">(</span><span class="s2">"red"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w">
 
-<p>server &lt;- function(input, output) {
-  observeEvent(input$click, {
-    showPopover(
-      id = “click”,
-      text = “This is a button!”,
-      placement = “bottom”,
-      duration = NULL
-    )
-  })</p>
+</span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">click</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">showPopover</span><span class="p">(</span><span class="w">
+      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"click"</span><span class="p">,</span><span class="w">
+      </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"This is a button!"</span><span class="p">,</span><span class="w">
+      </span><span class="n">placement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bottom"</span><span class="p">,</span><span class="w">
+      </span><span class="n">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="w">
+    </span><span class="p">)</span><span class="w">
+  </span><span class="p">})</span><span class="w">
 
-<p>observeEvent(input$close, {
-    closePopover(“click”)
-  })
-}</p>
+  </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">close</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">closePopover</span><span class="p">(</span><span class="s2">"click"</span><span class="p">)</span><span class="w">
+  </span><span class="p">})</span><span class="w">
+</span><span class="p">}</span><span class="w">
 
-<p>shinyApp(ui, server)</p>
+</span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
 
           
 

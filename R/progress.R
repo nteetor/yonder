@@ -5,10 +5,20 @@
 #' its own id, value, label, and attributes. Furthermore, utility functions may
 #' be applied to individual bars for added customization.
 #'
-#' @param id A character string specifying the HTML id of a progress output.
+#' @param id For **progressOutlet** a character string specifying the id of the
+#'   outlet.
 #'
-#' @param ... One or more `bar` elements passed to a progress output or named
-#'   arguments passed as HTML attributes to the parent element.
+#'   For **bar**, specifying an id allows you to update an existing bar in a
+#'   progress outlet with `showBar()`. If `id` is `NULL`, `showBar()` will
+#'   instead append the bar.
+#'
+#'   For **showBar**, a character string specifying the id of a progress outlet.
+#'
+#' @param ... For **progressOutlet**, one or more `bar` elements to include by
+#'   default.
+#'
+#'   For **progresOutlet** and **bar**, additional named arguments passed as
+#'   HTML attributes to the parent element.
 #'
 #' @param value An integer between 0 and 100 specifying the initial value
 #'   of a bar.
@@ -21,13 +31,83 @@
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
+#' @section Example application:
+#'
+#' ```R
+#' ui <- container(
+#'   progressOutlet("tasks"),
+#'   buttonInput(
+#'     id = "inc",
+#'     "Increment progress"
+#'   ) %>%
+#'     margin(top = 3)
+#' ) %>%
+#'   flex(direction = "column")
+#'
+#' server <- function(input, output) {
+#'   observeEvent(input$inc, ignoreInit = TRUE, {
+#'     showBar(
+#'       id = "tasks",
+#'       bar(
+#'         id = "laundry",
+#'         value = min(100, input$inc * 10)
+#'       ) %>%
+#'         background("amber")
+#'     )
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
+#'
 #' @family content
 #' @export
 #' @examples
 #'
+#' ### Striped variant
+#'
+#' progressOutlet(
+#'   id = NULL,
+#'   bar(
+#'     id = NULL,
+#'     value = 41,
+#'     striped = TRUE  # <-
+#'   ) %>%
+#'     background("blue")
+#' )
+#'
+#' ### Labeled bars
+#'
+#' progressOutlet(
+#'   id = NULL,
+#'   bar(
+#'     id = NULL,
+#'     value = 64,
+#'     label = "Trees planted"  # <-
+#'   ) %>%
+#'     background("green")
+#' )
+#'
+#' ### Multiple bars
+#'
+#' progressOutlet(
+#'   id = NULL,  # <- this is typically not NULL
+#'   bar(
+#'     id = NULL,
+#'     value = 40
+#'   ) %>%
+#'     background("red"),
+#'   bar(
+#'     id = NULL,
+#'     value = 20
+#'   ) %>%
+#'     background("orange")
+#' )
+#'
 progressOutlet <- function(id, ...) {
   attachDependencies(
     tags$div(
+      id = id,
       class = "yonder-progress progress",
       ...
     ),
@@ -40,7 +120,8 @@ progressOutlet <- function(id, ...) {
 bar <- function(id, value, label = NULL, striped = FALSE, ...) {
   if (!is.character(id) && !is.null(id)) {
     stop(
-      "invalid `bar` argument, `id` must be a character string or NULL",
+      "invalid `bar()` argument, `id` must be a character string ",
+      "or NULL",
       call. = FALSE
     )
   }
@@ -64,16 +145,12 @@ bar <- function(id, value, label = NULL, striped = FALSE, ...) {
 
 #' @rdname progressOutlet
 #' @export
-showBar <- function(id, bar,
-                    session = getDefaultReactiveDomain()) {
-  session$sendProgress(
-    "yonder-progress",
-    dropNulls(
-      list(
-        id = id,
-        value = value,
-        label = label
-      )
+showBar <- function(id, bar, session = getDefaultReactiveDomain()) {
+  session$sendProgress("yonder-progress", list(
+    type = "show",
+    data = list(
+      outlet = id,
+      content = HTML(as.character(bar))
     )
-  )
+  ))
 }
