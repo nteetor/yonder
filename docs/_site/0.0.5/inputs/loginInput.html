@@ -19,6 +19,9 @@
 <script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
 <link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
+<link rel="stylesheet" href="/yonder/www/font-awesome/css/fa-svg-with-js.css"/>
+<script src="/yonder/www/font-awesome/js/fontawesome-all.min.js"></script>
+
   </head>
   <body>
     <div class="container-fluid">
@@ -354,12 +357,12 @@ input.</p>
           <div class="mb-5">
             <div class="yonder-login col">
   <div class="form-group">
-    <label class="form-control-label" for="login-410-733">Username</label>
-    <input id="login-410-733" type="text" class="form-control"/>
+    <label class="form-control-label" for="login-845-540">Username</label>
+    <input id="login-845-540" type="text" class="form-control"/>
   </div>
   <div class="form-group">
-    <label class="form-control-label" for="login-842-478">Password</label>
-    <input id="login-410-733" type="password" class="form-control"/>
+    <label class="form-control-label" for="login-505-387">Password</label>
+    <input id="login-845-540" type="password" class="form-control"/>
   </div>
   <button class="btn btn-primary">Login</button>
 </div>
@@ -392,6 +395,8 @@ input.</p>
 
     <script>
       $(() => {
+      $('[data-toggle="tooltip"]').tooltip();
+
       document.querySelectorAll(".yonder-date").forEach((el) => {
       let data = $(el).data();
       let config = {};

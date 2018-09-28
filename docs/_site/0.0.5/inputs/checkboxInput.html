@@ -19,6 +19,9 @@
 <script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
 <link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
+<link rel="stylesheet" href="/yonder/www/font-awesome/css/fa-svg-with-js.css"/>
+<script src="/yonder/www/font-awesome/js/fontawesome-all.min.js"></script>
+
   </head>
   <body>
     <div class="container-fluid">
@@ -378,8 +381,8 @@ element.</p>
           <div class="mb-5">
             <div class="yonder-checkbox">
   <div class="custom-control custom-checkbox">
-    <input class="custom-control-input" type="checkbox" id="checkbox-646-558" data-value="Suspendisse potenti" checked/>
-    <label class="custom-control-label" for="checkbox-646-558">Suspendisse potenti</label>
+    <input class="custom-control-input" type="checkbox" id="checkbox-24-975" data-value="Suspendisse potenti" checked/>
+    <label class="custom-control-label" for="checkbox-24-975">Suspendisse potenti</label>
     <div class="invalid-feedback"></div>
     <div class="valid-feedback"></div>
   </div>
@@ -455,6 +458,8 @@ element.</p>
 
     <script>
       $(() => {
+      $('[data-toggle="tooltip"]').tooltip();
+
       document.querySelectorAll(".yonder-date").forEach((el) => {
       let data = $(el).data();
       let config = {};

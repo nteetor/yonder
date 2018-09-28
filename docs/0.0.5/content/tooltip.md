@@ -22,34 +22,72 @@ roxygen:
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>Tooltips galore</h3>
   - type: source
     value: |2-
 
+      formGroup(
+        label = tags$label(
+          "An exciting input",
+          tooltip(span(icon("info-circle")), "What is exciting here?")
+        ),
+        radioInput(
+          id = "radios",
+          choices = c("Ready", "Set", "Go")
+        )
+      )
+  - type: output
+    value: |-
+      <div class="form-group">
+        <label>
+          An exciting input
+          <span data-toggle="tooltip" data-placement="top" title="What is exciting here?">
+            <i class="fas fa-info-circle fa-fw"></i>
+          </span>
+        </label>
+        <div class="yonder-radio" id="radios">
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="radio-193-725" name="radios" data-value="Ready" checked/>
+            <label class="custom-control-label" for="radio-193-725">Ready</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="radio-761-673" name="radios" data-value="Set"/>
+            <label class="custom-control-label" for="radio-761-673">Set</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="radio-242-643" name="radios" data-value="Go"/>
+            <label class="custom-control-label" for="radio-242-643">Go</label>
+          </div>
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Describing links (link inputs)</h3>
+  - type: source
+    value: |2-
 
       div(
-        "The island of ",
-        span("Yll") %>%
-          tooltip("An island of south of the Commonwealth")
-      )
-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            checkboxInput("add", "Add more") %>%
-              display("inline-block") %>%
-              tooltip("How to know")
-          ),
-          server = function(input, output) {
-
-          }
+        p("Nunc rutrum turpis sed pede."),
+        p(
+          "Donec posuere augue in ",
+          linkInput(NULL, "quam.") %>%
+            tooltip("This is bound to do something")
+        ),
+        p(
+          "Etiam vel tortor sodales ",
+          linkInput(NULL, "tellus") %>%
+            tooltip("Tell us more?"),
+          " ultricies commodo."
         )
-      }
-  - type: code
-    value:
-    - div("The island of ", span("Yll") %>% tooltip("An island of south of the Commonwealth"))
-    - |-
-      if (interactive()) {
-          shinyApp(ui = container(checkboxInput("add", "Add more") %>% display("inline-block") %>% tooltip("How to know")), server = function(input, output) {
-          })
-      }
+      )
+  - type: output
+    value: "<div>\n  <p>Nunc rutrum turpis sed pede.</p>\n  <p>\n    Donec posuere
+      augue in \n    <span class=\"yonder-link\" data-toggle=\"tooltip\" data-placement=\"top\"
+      title=\"This is bound to do something\">\n      <u>quam.</u>\n    </span>\n
+      \ </p>\n  <p>\n    Etiam vel tortor sodales \n    <span class=\"yonder-link\"
+      data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tell us more?\">\n      <u>tellus</u>\n
+      \   </span>\n     ultricies commodo.\n  </p>\n</div>"
 ---

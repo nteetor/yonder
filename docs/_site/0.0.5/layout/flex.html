@@ -19,6 +19,9 @@
 <script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
 <link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
+<link rel="stylesheet" href="/yonder/www/font-awesome/css/fa-svg-with-js.css"/>
+<script src="/yonder/www/font-awesome/js/fontawesome-all.min.js"></script>
+
   </head>
   <body>
     <div class="container-fluid">
@@ -600,6 +603,8 @@ not wrap. See the <strong>wrap</strong> section below for more.</p>
 
     <script>
       $(() => {
+      $('[data-toggle="tooltip"]').tooltip();
+
       document.querySelectorAll(".yonder-date").forEach((el) => {
       let data = $(el).data();
       let config = {};

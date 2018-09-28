@@ -67,20 +67,20 @@ roxygen:
     value: |-
       <div class="yonder-radio" id="stacked">
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-936-822" name="stacked" data-value="Vehicula adipiscing mattis" checked/>
-          <label class="custom-control-label" for="radio-936-822">Vehicula adipiscing mattis</label>
+          <input class="custom-control-input" type="radio" id="radio-632-849" name="stacked" data-value="Vehicula adipiscing mattis" checked/>
+          <label class="custom-control-label" for="radio-632-849">Vehicula adipiscing mattis</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-569-221" name="stacked" data-value="Magna nullam"/>
-          <label class="custom-control-label" for="radio-569-221">Magna nullam</label>
+          <input class="custom-control-input" type="radio" id="radio-88-127" name="stacked" data-value="Magna nullam"/>
+          <label class="custom-control-label" for="radio-88-127">Magna nullam</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-498-813" name="stacked" data-value="Aenean venenatis"/>
-          <label class="custom-control-label" for="radio-498-813">Aenean venenatis</label>
+          <input class="custom-control-input" type="radio" id="radio-412-401" name="stacked" data-value="Aenean venenatis"/>
+          <label class="custom-control-label" for="radio-412-401">Aenean venenatis</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-966-655" name="stacked" data-value="Tristique quam porta"/>
-          <label class="custom-control-label" for="radio-966-655">Tristique quam porta</label>
+          <input class="custom-control-input" type="radio" id="radio-952-541" name="stacked" data-value="Tristique quam porta"/>
+          <label class="custom-control-label" for="radio-952-541">Tristique quam porta</label>
         </div>
         <div class="invalid-feedback"></div>
       </div>
@@ -103,16 +103,16 @@ roxygen:
     value: |-
       <div class="yonder-radio" id="inline">
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-503-1000" name="inline" data-value="Choice 1" checked/>
-          <label class="custom-control-label" for="radio-503-1000">Choice 1</label>
+          <input class="custom-control-input" type="radio" id="radio-527-153" name="inline" data-value="Choice 1" checked/>
+          <label class="custom-control-label" for="radio-527-153">Choice 1</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-693-876" name="inline" data-value="Choice 2"/>
-          <label class="custom-control-label" for="radio-693-876">Choice 2</label>
+          <input class="custom-control-input" type="radio" id="radio-829-155" name="inline" data-value="Choice 2"/>
+          <label class="custom-control-label" for="radio-829-155">Choice 2</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-307-373" name="inline" data-value="Choice 3"/>
-          <label class="custom-control-label" for="radio-307-373">Choice 3</label>
+          <input class="custom-control-input" type="radio" id="radio-307-365" name="inline" data-value="Choice 3"/>
+          <label class="custom-control-label" for="radio-307-365">Choice 3</label>
         </div>
         <div class="invalid-feedback"></div>
       </div>
