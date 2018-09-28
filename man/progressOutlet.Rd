@@ -10,17 +10,15 @@ progressOutlet(id, ...)
 
 bar(id, value, label = NULL, striped = FALSE, ...)
 
-showBar(id, bar, session = getDefaultReactiveDomain())
+showBar(outlet, bar, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{id}{For \strong{progressOutlet} a character string specifying the id of the
-outlet.
+\item{id}{A character string specifying the id of the progress outlet or
+progress bar.
 
 For \strong{bar}, specifying an id allows you to update an existing bar in a
 progress outlet with \code{showBar()}. If \code{id} is \code{NULL}, \code{showBar()} will
-instead append the bar.
-
-For \strong{showBar}, a character string specifying the id of a progress outlet.}
+append instead of replace a progress bar.}
 
 \item{...}{For \strong{progressOutlet}, one or more \code{bar} elements to include by
 default.
@@ -36,6 +34,8 @@ of a bar.}
 
 \item{striped}{If \code{TRUE}, the progress bar has a striped gradient, defaults
 to \code{FALSE}.}
+
+\item{outlet}{A character string specifying the id of a progress outlet.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }

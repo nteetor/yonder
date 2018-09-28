@@ -5,14 +5,12 @@
 #' its own id, value, label, and attributes. Furthermore, utility functions may
 #' be applied to individual bars for added customization.
 #'
-#' @param id For **progressOutlet** a character string specifying the id of the
-#'   outlet.
+#' @param id A character string specifying the id of the progress outlet or
+#'   progress bar.
 #'
 #'   For **bar**, specifying an id allows you to update an existing bar in a
 #'   progress outlet with `showBar()`. If `id` is `NULL`, `showBar()` will
-#'   instead append the bar.
-#'
-#'   For **showBar**, a character string specifying the id of a progress outlet.
+#'   append instead of replace a progress bar.
 #'
 #' @param ... For **progressOutlet**, one or more `bar` elements to include by
 #'   default.
@@ -28,6 +26,8 @@
 #'
 #' @param striped If `TRUE`, the progress bar has a striped gradient, defaults
 #'   to `FALSE`.
+#'
+#' @param outlet A character string specifying the id of a progress outlet.
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
@@ -145,7 +145,7 @@ bar <- function(id, value, label = NULL, striped = FALSE, ...) {
 
 #' @rdname progressOutlet
 #' @export
-showBar <- function(id, bar, session = getDefaultReactiveDomain()) {
+showBar <- function(outlet, bar, session = getDefaultReactiveDomain()) {
   session$sendProgress("yonder-progress", list(
     type = "show",
     data = list(
