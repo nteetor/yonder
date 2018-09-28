@@ -313,49 +313,140 @@
 </div>
 
         <div class="page-body col-8 pt-4">
-          <h2>Headings</h2>
+          <h2>Display a popover</h2>
 
-          <p>Display headings are not meant to replace the standard HTML heading tags,
-they are a stand out alternative for eye-catching titles.</p>
+          <p>Popovers are small windows of content associated with a tag element. Use
+<code class="highlighter-rouge">popover()</code> to construct the element and <code class="highlighter-rouge">showPopover()</code> to add it to any tag
+element with an HTML id. Popovers are great for explaining inputs and giving
+hints to the users. Popovers are hidden with <code class="highlighter-rouge">closePopover()</code>.</p>
 
 
           
           <h3 id="params">Arguments</h3>
           <dl class="row">
             
-            <dt id="params-..." class="col-sm-3">...</dt>
-            <dd class="col-sm-9"><p>Character strings specifying the heading text or additional named
-arguments passed as HTML attributes to the parent element.</p>
+            <dt id="params-content" class="col-sm-3">content</dt>
+            <dd class="col-sm-9"><p>A character string or tag element specifying the content of
+the popover.</p>
+</dd>
+            
+            <dt id="params-title" class="col-sm-3">title</dt>
+            <dd class="col-sm-9"><p>A character string specifying a title for the popover, defaults
+to <code class="highlighter-rouge">NULL</code>, in which case a title is not added.</p>
+</dd>
+            
+            <dt id="params-target" class="col-sm-3">target</dt>
+            <dd class="col-sm-9"><p>A character string specifying the id of the element where the
+popover is shown.</p>
+</dd>
+            
+            <dt id="params-popover" class="col-sm-3">popover</dt>
+            <dd class="col-sm-9"><p>The popover element to show, typically a call to <code class="highlighter-rouge">popover()</code>.</p>
+</dd>
+            
+            <dt id="params-placement" class="col-sm-3">placement</dt>
+            <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">"top"</code>, <code class="highlighter-rouge">"left"</code>, <code class="highlighter-rouge">"bottom"</code>, or <code class="highlighter-rouge">"right"</code>
+specifying where the popover is positioned relative to the target tag
+element indicated by <code class="highlighter-rouge">id</code>.</p>
+</dd>
+            
+            <dt id="params-duration" class="col-sm-3">duration</dt>
+            <dd class="col-sm-9"><p>A positive integer specifying the duration of the popover
+in seconds or <code class="highlighter-rouge">NULL</code>, in which case the popover is not automatically
+removed. When <code class="highlighter-rouge">NULL</code> is specified the popover can be removed with
+<code class="highlighter-rouge">closePopover()</code>.</p>
+</dd>
+            
+            <dt id="params-id" class="col-sm-3">id</dt>
+            <dd class="col-sm-9"><p>A character string specifying the HTML id of a popover’s target tag
+element.</p>
+</dd>
+            
+            <dt id="params-session" class="col-sm-3">session</dt>
+            <dd class="col-sm-9"><p>A reactive context, defaults to <a href="/yonder/0.0.5/getDefaultReactiveDomain().html">getDefaultReactiveDomain()</a>.</p>
 </dd>
             
           </dl>
           
 
           
+          <h3 id="example-application"><p>Example application</p>
+</h3>
+          <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"showHelp"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Help!"</span><span class="p">),</span><span class="w">
+  </span><span class="n">div</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"textBlock1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Sociis natoque penatibus et magnis"</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"around"</span><span class="p">)</span><span class="w">
+
+</span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">showHelp</span><span class="p">,</span><span class="w"> </span><span class="n">ignoreInit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">showPopover</span><span class="p">(</span><span class="w">
+      </span><span class="n">target</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"textBlock1"</span><span class="p">,</span><span class="w">
+      </span><span class="n">popover</span><span class="p">(</span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Hint"</span><span class="p">,</span><span class="w"> </span><span class="s2">"I am a &lt;div&gt; element!"</span><span class="p">),</span><span class="w">
+      </span><span class="n">placement</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bottom"</span><span class="p">,</span><span class="w">
+      </span><span class="n">duration</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="w">
+    </span><span class="p">)</span><span class="w">
+  </span><span class="p">})</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+
+          
 
           
           
-          <h2>Bigger, bolder</h2>
+          <h3>Popover preview</h3>
 
           
           
           
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">d</span><span class="m">1</span><span class="p">(</span><span class="s2">"Eye-catching!"</span><span class="p">)</span><span class="w">
-
-</span><span class="n">d</span><span class="m">2</span><span class="p">(</span><span class="s2">"Just incredible"</span><span class="p">)</span><span class="w">
-
-</span><span class="n">d</span><span class="m">3</span><span class="p">(</span><span class="s2">"Wowie, zowie"</span><span class="p">)</span><span class="w">
-
-</span><span class="n">d</span><span class="m">4</span><span class="p">(</span><span class="s2">"You'll never guess what happens next."</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">popover</span><span class="p">(</span><span class="w">
+  </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Mr. Popover"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"... and his penguins"</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
 
           </div>
           
           
           
           <div class="mb-5">
-            <h1 class="display-4">You'll never guess what happens next.</h1>
+            <div class="popover" role="tooltip">
+  <div class="arrow"></div>
+  <h3 class="popover-header">Mr. Popover</h3>
+  <div class="popover-body">... and his penguins</div>
+</div>
+          </div>
+          
+          
+          
+          <h3>No title</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">popover</span><span class="p">(</span><span class="w">
+  </span><span class="s2">"Pellentesque dapibus suscipit ligula."</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="popover" role="tooltip">
+  <div class="arrow"></div>
+  <div class="popover-body">Pellentesque dapibus suscipit ligula.</div>
+</div>
           </div>
           
           
