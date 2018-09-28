@@ -62,7 +62,6 @@ Collate:
     table.R
     sparkline.R
     progress.R
-    stream.R
     tooltip.R
     content.R
     validate.R

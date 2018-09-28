@@ -14,24 +14,35 @@
 #' @export
 #' @examples
 #'
-#' div(
-#'   "The island of ",
-#'   span("Yll") %>%
-#'     tooltip("An island of south of the Commonwealth")
+#' ### Tooltips galore
+#'
+#' formGroup(
+#'   label = tags$label(
+#'     "An exciting input",
+#'     tooltip(span(icon("info-circle")), "What is exciting here?")
+#'   ),
+#'   radioInput(
+#'     id = "radios",
+#'     choices = c("Ready", "Set", "Go")
+#'   )
 #' )
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       checkboxInput("add", "Add more") %>%
-#'         display("inline-block") %>%
-#'         tooltip("How to know")
-#'     ),
-#'     server = function(input, output) {
+#' ### Describing links (link inputs)
 #'
-#'     }
+#' div(
+#'   p("Nunc rutrum turpis sed pede."),
+#'   p(
+#'     "Donec posuere augue in ",
+#'     linkInput(NULL, "quam.") %>%
+#'       tooltip("This is bound to do something")
+#'   ),
+#'   p(
+#'     "Etiam vel tortor sodales ",
+#'     linkInput(NULL, "tellus") %>%
+#'       tooltip("Tell us more?"),
+#'     " ultricies commodo."
 #'   )
-#' }
+#' )
 #'
 tooltip <- function(.tag, text, placement = "top") {
   if (!is_tag(.tag)) {
@@ -52,6 +63,7 @@ tooltip <- function(.tag, text, placement = "top") {
   .tag$attribs$`data-toggle` <- "tooltip"
   .tag$attribs$`data-placement` <- placement
   .tag$attribs$title <- as.character(text)
+
   .tag <- attachDependencies(
     .tag,
     c(shinyDep(), yonderDep(), bootstrapDep())

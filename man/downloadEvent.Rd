@@ -50,7 +50,6 @@ download.
 
 \seealso{
 Other utilities: \code{\link{collapse}},
-  \code{\link{markInvalid}}, \code{\link{showAlert}},
-  \code{\link{showPopover}}, \code{\link{updateChoices}}
+  \code{\link{markInvalid}}, \code{\link{updateChoices}}
 }
 \concept{utilities}

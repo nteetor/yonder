@@ -1,19 +1,20 @@
 #' Display a popover
 #'
 #' Popovers are small windows of content associated with a tag element. Use
-#' `showPopover()` to add a popover to any tag element with an HTML id. This
-#' allows you to add explanations for inputs. Furthermore the [linkInput()]
-#' makes adding popovers to semi-plain text possible. Popovers are hidden with
-#' `closePopover()`.
-#'
-#' @param id A character string specifying the HTML id of a popover's target tag
-#'   element.
+#' `popover()` to construct the element and `showPopover()` to add it to any tag
+#' element with an HTML id. Popovers are great for explaining inputs and giving
+#' hints to the users. Popovers are hidden with `closePopover()`.
 #'
 #' @param content A character string or tag element specifying the content of
 #'   the popover.
 #'
 #' @param title A character string specifying a title for the popover, defaults
 #'   to `NULL`, in which case a title is not added.
+#'
+#' @param target A character string specifying the id of the element where the
+#'   popover is shown.
+#'
+#' @param popover The popover element to show, typically a call to `popover()`.
 #'
 #' @param placement One of `"top"`, `"left"`, `"bottom"`, or `"right"`
 #'   specifying where the popover is positioned relative to the target tag
@@ -24,71 +25,130 @@
 #'   removed. When `NULL` is specified the popover can be removed with
 #'   `closePopover()`.
 #'
-#' @section Add a popover:
+#' @param id A character string specifying the HTML id of a popover's target tag
+#'   element.
 #'
+#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#'
+#' @section Example application:
+#'
+#' ```R
 #' ui <- container(
-#'   buttonInput("click", "Button"),
-#'   buttonInput("close", icon("times")) %>%
-#'     background("red")
-#' )
+#'   buttonInput("showHelp", "Help!"),
+#'   div(
+#'     id = "textBlock1",
+#'     "Sociis natoque penatibus et magnis"
+#'   ) %>%
+#'     padding(3)
+#' ) %>%
+#'   display("flex") %>%
+#'   flex(justify = "around")
 #'
 #' server <- function(input, output) {
-#'   observeEvent(input$click, {
+#'   observeEvent(input$showHelp, ignoreInit = TRUE, {
 #'     showPopover(
-#'       id = "click",
-#'       text = "This is a button!",
+#'       target = "textBlock1",
+#'       popover(title = "Hint", "I am a <div> element!"),
 #'       placement = "bottom",
-#'       duration = NULL
+#'       duration = 4
 #'     )
-#'   })
-#'
-#'   observeEvent(input$close, {
-#'     closePopover("click")
 #'   })
 #' }
 #'
 #' shinyApp(ui, server)
+#' ```
 #'
-#' @family server
+#' @family content
 #' @export
-showPopover <- function(id, content, title = NULL, placement = "top",
-                        duration = 4) {
-  domain <- getDefaultReactiveDomain()
+#' @examples
+#'
+#' ### Popover preview
+#'
+#' popover(
+#'   title = "Mr. Popover",
+#'   "... and his penguins"
+#' )
+#'
+#' ### No title
+#'
+#' popover(
+#'   "Pellentesque dapibus suscipit ligula."
+#' )
+#'
+popover <- function(..., title = NULL) {
+  title <- if (!is.null(title) && !is_tag(title)) {
+    tags$h3(class = "popover-header", title)
+  }
 
-  if (is.null(domain)) {
+  args <- list(...)
+  elems <- elements(args)
+  attrs <- attribs(args)
+
+  this <- tags$div(
+    class = "popover",
+    role = "tooltip",
+    tags$div(class = "arrow"),
+    title,
+    tags$div(
+      class = "popover-body",
+      elems
+    )
+  )
+
+  this <- tagConcatAttributes(this, attrs)
+
+  this <- attachDependencies(
+    this,
+    c(yonderDep(), shinyDep(), bootstrapDep())
+  )
+
+  this
+}
+
+#' @rdname popover
+#' @export
+showPopover <- function(target, popover, placement = "right", duration = NULL,
+                        session = getDefaultReactiveDomain()) {
+  if (is.null(session)) {
     stop(
       "function `showPopover()` must be called in a reactive context",
       call. = FALSE
     )
   }
 
-  domain$sendCustomMessage("yonder:popover", list(
+  if (!re(placement, "right|left|top|bottom")) {
+    stop(
+      "invalid `showPopover()` arugment, `placement` must be one of ",
+      '"top", "right", "bottom", or "left"',
+      call. = FALSE
+    )
+  }
+
+  session$sendCustomMessage("yonder:popover", list(
     type = "show",
-    id = id,
     data = list(
-      content = HTML(content),
-      title = title,
+      target = target,
+      content = HTML(as.character(popover)),
       placement = placement,
       duration = if (!is.null(duration)) duration * 1000
     )
   ))
 }
 
-#' @family utilities
-#' @rdname showPopover
+#' @rdname popover
 #' @export
-closePopover <- function(id) {
-  domain <- getDefaultReactiveDomain()
-
-  if (is.null(domain)) {
+closePopover <- function(id, session = getDefaultReactiveDomain()) {
+  if (is.null(session)) {
     stop(
       "function `closePopover()` must be called in a reactive context",
       call. = FALSE
     )
   }
 
-  domain$sendCustomMessage("yonder:popover", list(
+  session$sendCustomMessage("yonder:popover", list(
     type = "close",
-    id = id
+    data = list(
+      id = id
+    )
   ))
 }

@@ -71,7 +71,6 @@ div(
 
 }
 \seealso{
-Other outputs: \code{\link{progressOutput}},
-  \code{\link{sparklineOutput}}, \code{\link{streamOutput}}
+Other outputs: \code{\link{sparklineOutput}}
 }
 \concept{outputs}

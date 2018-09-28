@@ -111,31 +111,23 @@ $(() => {
 
 $.extend(Shiny.progressHandlers, {
   "yonder-progress": (msg) => {
-    var $bar = $(".yonder-progress #" + msg.id);
-
-    $bar
-      .attr("style", (i, s) => s.replace(/width: [0-9]+%/, "width: " + msg.value + "%"))
-      .attr("aria-valuenow", msg.value);
-
-    if (msg.label) {
-      $bar.text(msg.label);
+    if (!msg.type || !msg.data.outlet) {
+      return false;
     }
 
-    if (msg.context) {
-      $bar.attr("class", function(i, c) {
-        return c.replace(/bg-(?:primary|secondary|success|info|warning|danger|light|dark|white)/g, "bg-" + msg.context);
-      });
-    }
-  }
-});
+    let $outlet = $(`#${ msg.data.outlet }`);
 
-$.extend(Shiny.progressHandlers, {
-  "yonder-stream": (data) => {
-    $("<li class='list-group-item'></li>")
-      .text(data.content)
-      .hide()
-      .appendTo($("#" + data.id))
-      .fadeIn(300);
+    if (msg.type === "show") {
+      let $bar = $(msg.data.content);
+
+      if ($bar[0].id && $outlet.find(`#${ $bar[0].id }`).length) {
+        $outlet.find(`#${ $bar[0].id }`).replaceWith($bar);
+      } else {
+        $outlet.append($bar);
+      }
+
+      return true;
+    }
 
     return false;
   }
@@ -183,44 +175,36 @@ $(() => {
 
 $(() => {
   Shiny.addCustomMessageHandler("yonder:popover", (msg) => {
-    if (!msg.id) {
+    if (msg.data.target === undefined) {
       return;
     }
 
-    msg.id = `#${ msg.id }`;
-
     if (msg.type == "show") {
       let data = msg.data;
+      let target = `#${ data.target }`;
 
-      $(msg.id).popover({
-        title: data.title || "",
-        content: data.content,
+      $(target).popover({
+        title: () => undefined,
+        content: () => undefined,
+        template: data.content,
         placement: data.placement,
         trigger: "manual"
       });
 
       if (data.duration) {
         setTimeout(
-          () => {
-            $(document).off(".removePopover");
-            $(msg.id).popover("hide");
-          },
+          () => $(target).popover("hide"),
           data.duration
         );
-
-        $(document).one("click.removePopover", (e) => {
-          $(msg.id).popover("hide");
-        });
       }
 
-      $(msg.id).popover("show");
+      $(target).popover("show");
 
       return;
     }
 
     if (msg.type == "close") {
-      $(msg.id).popover("hide");
-      //    $(msg.id).popover("disable");
+      $(`#${ msg.data.id }`).popover("hide");
 
       return;
     }
@@ -229,50 +213,33 @@ $(() => {
 
 $(() =>  {
   Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
-    if (msg.close === true) {
+    if (!msg.type) {
+      return false;
+    }
+
+    if (msg.type === "close") {
       $(".modal").modal("hide");
       return true;
     }
 
-    var $modal;
+    if (msg.type === "show") {
+      var $modal;
 
-    if ($(".modal").length) {
-      $modal = $(".modal");
-    } else {
-      $modal = $([
-        "<div class='modal fade' tabindex=-1 role='dialog'>",
-        "<div class='modal-dialog' role='document'>",
-        "<div class='modal-content'>",
-        "<div class='modal-header'>",
-        "<h5 class='modal-title'></h5>",
-        "<button type='button' class='close' data-dismiss='modal' aria-label='Close'>",
-        "<span class='fa fa-times-rectangle'></span>",
-        "</button>",
-        "</div>",
-        "<div class='container-fluid'>",
-        "<div class='modal-body'></div>",
-        "</div>",
-        "</div>",
-        "</div>",
-        "</div>"
-      ].join("\n"));
+      if ($(".modal").length) {
+        $modal = $(".modal");
+      } else {
+        $modal = $("<div class='modal fade' tabindex=-1 role='dialog'></div>");
 
-      $("body").append($modal);
-    }
-
-
-    $(".modal-title", $modal).html(msg.title);
-    $(".modal-body", $modal).html(msg.body);
-
-    if (msg.footer) {
-      if (!$(".modal-footer", $modal).length) {
-        $(".modal-content", $modal).append($("<div class='modal-footer'></div>"));
+        $(document.body).append($modal);
       }
 
-      $(".modal-content", $modal).html(msg.footer);
+      $modal.html(msg.data.content);
+      $modal.modal();
+
+      return true;
     }
 
-    $modal.modal();
+    return false;
   });
 });
 

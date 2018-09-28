@@ -16,21 +16,14 @@ $.extend(alertInputBinding, {
     if (msg.type === "show") {
       let data = msg.data;
 
-      let alertAttrs = data.attrs || {};
-      let alertClass = data.color ? `alert-${ data.color }` : "";
-
-      let $alert = $(`<div class="alert ${ alertClass } fade show yonder-alert" role="alert">${ data.text }</div>`);
+      let $alert = $(data.content);
 
       if (data.action) {
-        $alert.append($(`<button class="btn btn-link alert-action">${ data.action }</button>`));
+        $alert.append($(`<button class="btn btn-link alert-link alert-action">${ data.action }</button>`));
         $alert.on("click", ".alert-action", (e) => {
           Shiny.onInputChange(data.action, true);
         });
       }
-
-      Object.entries(alertAttrs).forEach((item) => {
-        item[0] == "class" ? $alert.addClass(item[1]) : $alert.attr(...item);
-      });
 
       this.Alerts.push({ el: $alert, action: data.action });
 

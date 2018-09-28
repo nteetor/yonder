@@ -26,10 +26,12 @@ A small update to \code{tags$img} and \code{tags$figure}. Create responsive imag
 caption.
 }
 \seealso{
-Other content: \code{\link{blockquote}},
-  \code{\link{card}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{icon}},
-  \code{\link{jumbotron}}, \code{\link{pre}},
+Other content: \code{\link{alert}},
+  \code{\link{blockquote}}, \code{\link{card}},
+  \code{\link{d1}}, \code{\link{dropdown}},
+  \code{\link{icon}}, \code{\link{jumbotron}},
+  \code{\link{modal}}, \code{\link{popover}},
+  \code{\link{pre}}, \code{\link{progressOutlet}},
   \code{\link{tooltip}}
 }
 \concept{content}

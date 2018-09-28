@@ -19,6 +19,9 @@
 <script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
 <link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
+<link rel="stylesheet" href="/yonder/www/font-awesome/css/fa-svg-with-js.css"/>
+<script src="/yonder/www/font-awesome/js/fontawesome-all.min.js"></script>
+
   </head>
   <body>
     <div class="container-fluid">
@@ -57,24 +60,26 @@
     
 
     <dt>
-      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
-    </dt>
-
-    
-
-    
-
-    
-
-    
-
-    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/content/">content</a>
     </dt>
 
     
 
     
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/alert.html"
+         alt="Static and actionable alerts">
+        alert
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/bar.html"
+         alt="Progress bars">
+        bar
+      </a>
+    </dd>
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/content/blockquote.html"
@@ -87,6 +92,27 @@
       <a href="http://localhost:4000/yonder/0.0.5/content/card.html"
          alt="Cards, blocks of content">
         card
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/closeAlert.html"
+         alt="Static and actionable alerts">
+        closeAlert
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/closeModal.html"
+         alt="Modal dialogs">
+        closeModal
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/closePopover.html"
+         alt="Display a popover">
+        closePopover
       </a>
     </dd>
     
@@ -161,9 +187,58 @@
     </dd>
     
     <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/modal.html"
+         alt="Modal dialogs">
+        modal
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/popover.html"
+         alt="Display a popover">
+        popover
+      </a>
+    </dd>
+    
+    <dd>
       <a href="http://localhost:4000/yonder/0.0.5/content/pre.html"
          alt="Scrollable code snippets">
         pre
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/progressOutlet.html"
+         alt="Progress bars">
+        progressOutlet
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/showAlert.html"
+         alt="Static and actionable alerts">
+        showAlert
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/showBar.html"
+         alt="Progress bars">
+        showBar
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/showModal.html"
+         alt="Modal dialogs">
+        showModal
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="http://localhost:4000/yonder/0.0.5/content/showPopover.html"
+         alt="Display a popover">
+        showPopover
       </a>
     </dd>
     
@@ -181,7 +256,7 @@
     
 
     <dt>
-      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
     </dt>
 
     
@@ -193,7 +268,7 @@
     
 
     <dt>
-      <a class="text-dark" href="">server</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
     </dt>
 
     
@@ -271,38 +346,99 @@ specifying what side of the tag element the tooltip appears on.</p>
 
           
           
+          <h3>Tooltips galore</h3>
+
+          
+          
+          
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
-  </span><span class="s2">"The island of "</span><span class="p">,</span><span class="w">
-  </span><span class="n">span</span><span class="p">(</span><span class="s2">"Yll"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-    </span><span class="n">tooltip</span><span class="p">(</span><span class="s2">"An island of south of the Commonwealth"</span><span class="p">)</span><span class="w">
-</span><span class="p">)</span><span class="w">
-
-</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">checkboxInput</span><span class="p">(</span><span class="s2">"add"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Add more"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-        </span><span class="n">display</span><span class="p">(</span><span class="s2">"inline-block"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-        </span><span class="n">tooltip</span><span class="p">(</span><span class="s2">"How to know"</span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-
-    </span><span class="p">}</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">formGroup</span><span class="p">(</span><span class="w">
+  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tags</span><span class="o">$</span><span class="n">label</span><span class="p">(</span><span class="w">
+    </span><span class="s2">"An exciting input"</span><span class="p">,</span><span class="w">
+    </span><span class="n">tooltip</span><span class="p">(</span><span class="n">span</span><span class="p">(</span><span class="n">icon</span><span class="p">(</span><span class="s2">"info-circle"</span><span class="p">)),</span><span class="w"> </span><span class="s2">"What is exciting here?"</span><span class="p">)</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">radioInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"radios"</span><span class="p">,</span><span class="w">
+    </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Ready"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Set"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Go"</span><span class="p">)</span><span class="w">
   </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+</span><span class="p">)</span></code></pre></figure>
 
           </div>
           
           
           
+          <div class="mb-5">
+            <div class="form-group">
+  <label>
+    An exciting input
+    <span data-toggle="tooltip" data-placement="top" title="What is exciting here?">
+      <i class="fas fa-info-circle fa-fw"></i>
+    </span>
+  </label>
+  <div class="yonder-radio" id="radios">
+    <div class="custom-control custom-radio">
+      <input class="custom-control-input" type="radio" id="radio-193-725" name="radios" data-value="Ready" checked/>
+      <label class="custom-control-label" for="radio-193-725">Ready</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input class="custom-control-input" type="radio" id="radio-761-673" name="radios" data-value="Set"/>
+      <label class="custom-control-label" for="radio-761-673">Set</label>
+    </div>
+    <div class="custom-control custom-radio">
+      <input class="custom-control-input" type="radio" id="radio-242-643" name="radios" data-value="Go"/>
+      <label class="custom-control-label" for="radio-242-643">Go</label>
+    </div>
+    <div class="invalid-feedback"></div>
+  </div>
+</div>
+          </div>
+          
+          
+          
+          <h3>Describing links (link inputs)</h3>
+
+          
+          
+          
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="s2">"The island of "</span><span class="p">,</span><span class="w"> </span><span class="n">span</span><span class="p">(</span><span class="s2">"Yll"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">tooltip</span><span class="p">(</span><span class="s2">"An island of south of the Commonwealth"</span><span class="p">))</span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="n">checkboxInput</span><span class="p">(</span><span class="s2">"add"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Add more"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">display</span><span class="p">(</span><span class="s2">"inline-block"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">tooltip</span><span class="p">(</span><span class="s2">"How to know"</span><span class="p">)),</span><span class="w"> </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="p">})</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">p</span><span class="p">(</span><span class="s2">"Nunc rutrum turpis sed pede."</span><span class="p">),</span><span class="w">
+  </span><span class="n">p</span><span class="p">(</span><span class="w">
+    </span><span class="s2">"Donec posuere augue in "</span><span class="p">,</span><span class="w">
+    </span><span class="n">linkInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="s2">"quam."</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">tooltip</span><span class="p">(</span><span class="s2">"This is bound to do something"</span><span class="p">)</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">p</span><span class="p">(</span><span class="w">
+    </span><span class="s2">"Etiam vel tortor sodales "</span><span class="p">,</span><span class="w">
+    </span><span class="n">linkInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="s2">"tellus"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">tooltip</span><span class="p">(</span><span class="s2">"Tell us more?"</span><span class="p">),</span><span class="w">
+    </span><span class="s2">" ultricies commodo."</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
 
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div>
+  <p>Nunc rutrum turpis sed pede.</p>
+  <p>
+    Donec posuere augue in 
+    <span class="yonder-link" data-toggle="tooltip" data-placement="top" title="This is bound to do something">
+      <u>quam.</u>
+    </span>
+  </p>
+  <p>
+    Etiam vel tortor sodales 
+    <span class="yonder-link" data-toggle="tooltip" data-placement="top" title="Tell us more?">
+      <u>tellus</u>
+    </span>
+     ultricies commodo.
+  </p>
+</div>
           </div>
           
           
@@ -332,6 +468,8 @@ specifying what side of the tag element the tooltip appears on.</p>
 
     <script>
       $(() => {
+      $('[data-toggle="tooltip"]').tooltip();
+
       document.querySelectorAll(".yonder-date").forEach((el) => {
       let data = $(el).data();
       let config = {};

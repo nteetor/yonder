@@ -19,6 +19,9 @@
 <script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
 <link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
+<link rel="stylesheet" href="/yonder/www/font-awesome/css/fa-svg-with-js.css"/>
+<script src="/yonder/www/font-awesome/js/fontawesome-all.min.js"></script>
+
   </head>
   <body>
     <div class="container-fluid">
@@ -241,18 +244,6 @@
     
 
     <dt>
-      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
-    </dt>
-
-    
-
-    
-
-    
-
-    
-
-    <dt>
       <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/content/">content</a>
     </dt>
 
@@ -265,7 +256,7 @@
     
 
     <dt>
-      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
     </dt>
 
     
@@ -277,7 +268,7 @@
     
 
     <dt>
-      <a class="text-dark" href="">server</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/utilities/">utilities</a>
     </dt>
 
     
@@ -366,12 +357,12 @@ input.</p>
           <div class="mb-5">
             <div class="yonder-login col">
   <div class="form-group">
-    <label class="form-control-label" for="login-469-575">Username</label>
-    <input id="login-469-575" type="text" class="form-control"/>
+    <label class="form-control-label" for="login-845-540">Username</label>
+    <input id="login-845-540" type="text" class="form-control"/>
   </div>
   <div class="form-group">
-    <label class="form-control-label" for="login-257-481">Password</label>
-    <input id="login-469-575" type="password" class="form-control"/>
+    <label class="form-control-label" for="login-505-387">Password</label>
+    <input id="login-845-540" type="password" class="form-control"/>
   </div>
   <button class="btn btn-primary">Login</button>
 </div>
@@ -404,6 +395,8 @@ input.</p>
 
     <script>
       $(() => {
+      $('[data-toggle="tooltip"]').tooltip();
+
       document.querySelectorAll(".yonder-date").forEach((el) => {
       let data = $(el).data();
       let config = {};

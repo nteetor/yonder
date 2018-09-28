@@ -19,6 +19,9 @@
 <script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
 <link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
+<link rel="stylesheet" href="/yonder/www/font-awesome/css/fa-svg-with-js.css"/>
+<script src="/yonder/www/font-awesome/js/fontawesome-all.min.js"></script>
+
   </head>
   <body>
     <div class="container-fluid">
@@ -57,7 +60,7 @@
     
 
     <dt>
-      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/content/">content</a>
     </dt>
 
     
@@ -69,7 +72,7 @@
     
 
     <dt>
-      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/content/">content</a>
+      <a class="text-dark" href="http://localhost:4000/yonder/0.0.5/outputs/">outputs</a>
     </dt>
 
     
@@ -87,13 +90,6 @@
     
 
     
-    
-    <dd>
-      <a href="http://localhost:4000/yonder/0.0.5/utilities/closeAlert.html"
-         alt="Static and actionable alerts">
-        closeAlert
-      </a>
-    </dd>
     
     <dd>
       <a href="http://localhost:4000/yonder/0.0.5/utilities/collapse.html"
@@ -127,13 +123,6 @@
       <a href="http://localhost:4000/yonder/0.0.5/utilities/markValid.html"
          alt="Input validation">
         markValid
-      </a>
-    </dd>
-    
-    <dd>
-      <a href="http://localhost:4000/yonder/0.0.5/utilities/showAlert.html"
-         alt="Static and actionable alerts">
-        showAlert
       </a>
     </dd>
     
@@ -172,18 +161,6 @@
       </a>
     </dd>
     
-    
-
-    
-
-    
-
-    <dt>
-      <a class="text-dark" href="">server</a>
-    </dt>
-
-    
-
     
 
     
@@ -314,6 +291,8 @@ expected to write content (text, images, etc.) to the temporary file.</p>
 
     <script>
       $(() => {
+      $('[data-toggle="tooltip"]').tooltip();
+
       document.querySelectorAll(".yonder-date").forEach((el) => {
       let data = $(el).data();
       let config = {};

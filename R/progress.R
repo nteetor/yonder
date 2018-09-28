@@ -5,10 +5,18 @@
 #' its own id, value, label, and attributes. Furthermore, utility functions may
 #' be applied to individual bars for added customization.
 #'
-#' @param id A character string specifying the HTML id of a progress output.
+#' @param id A character string specifying the id of the progress outlet or
+#'   progress bar.
 #'
-#' @param ... One or more `bar` elements passed to a progress output or named
-#'   arguments passed as HTML attributes to the parent element.
+#'   For **bar**, specifying an id allows you to update an existing bar in a
+#'   progress outlet with `showBar()`. If `id` is `NULL`, `showBar()` will
+#'   append instead of replace a progress bar.
+#'
+#' @param ... For **progressOutlet**, one or more `bar` elements to include by
+#'   default.
+#'
+#'   For **progresOutlet** and **bar**, additional named arguments passed as
+#'   HTML attributes to the parent element.
 #'
 #' @param value An integer between 0 and 100 specifying the initial value
 #'   of a bar.
@@ -19,91 +27,101 @@
 #' @param striped If `TRUE`, the progress bar has a striped gradient, defaults
 #'   to `FALSE`.
 #'
+#' @param outlet A character string specifying the id of a progress outlet.
+#'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
-#' @family outputs
+#' @section Example application:
+#'
+#' ```R
+#' ui <- container(
+#'   progressOutlet("tasks"),
+#'   buttonInput(
+#'     id = "inc",
+#'     "Increment progress"
+#'   ) %>%
+#'     margin(top = 3)
+#' ) %>%
+#'   flex(direction = "column")
+#'
+#' server <- function(input, output) {
+#'   observeEvent(input$inc, ignoreInit = TRUE, {
+#'     showBar(
+#'       id = "tasks",
+#'       bar(
+#'         id = "laundry",
+#'         value = min(100, input$inc * 10)
+#'       ) %>%
+#'         background("amber")
+#'     )
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
+#'
+#' @family content
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           buttonInput(id = "inc", "Increment progress")
-#'         ),
-#'         column(
-#'           progressOutput(
-#'             bar("clicks", 0, striped = TRUE) %>%
-#'               background("blue")
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$inc, {
-#'         sendBar(
-#'           id = "clicks",
-#'           value = min(input$inc / 20 * 100, 100)
-#'         )
-#'       })
-#'     }
-#'   )
-#' }
+#' ### Striped variant
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           progressOutput(
-#'             bar(id = "faster", value = 0) %>%
-#'               background("yellow"),
-#'             bar(id = "slower", value = 0)
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observe({
-#'         for (i in seq(from = 0, to = 50, by = 1)) {
-#'           sendBar(
-#'             id = "slower",
-#'             value = i
-#'           )
+#' progressOutlet(
+#'   id = NULL,
+#'   bar(
+#'     id = NULL,
+#'     value = 41,
+#'     striped = TRUE  # <-
+#'   ) %>%
+#'     background("blue")
+#' )
 #'
-#'           sendBar(
-#'             id = "faster",
-#'             value = min(i * 3, 50)
-#'           )
+#' ### Labeled bars
 #'
-#'           Sys.sleep(0.1)
-#'         }
-#'       })
-#'     }
-#'   )
-#' }
+#' progressOutlet(
+#'   id = NULL,
+#'   bar(
+#'     id = NULL,
+#'     value = 64,
+#'     label = "Trees planted"  # <-
+#'   ) %>%
+#'     background("green")
+#' )
 #'
-progressOutput <- function(...) {
-  output <- tags$div(
-    class = "yonder-progress progress",
-    ...
-  )
-
-  output <- attachDependencies(
-    output,
+#' ### Multiple bars
+#'
+#' progressOutlet(
+#'   id = NULL,  # <- this is typically not NULL
+#'   bar(
+#'     id = NULL,
+#'     value = 40
+#'   ) %>%
+#'     background("red"),
+#'   bar(
+#'     id = NULL,
+#'     value = 20
+#'   ) %>%
+#'     background("orange")
+#' )
+#'
+progressOutlet <- function(id, ...) {
+  attachDependencies(
+    tags$div(
+      id = id,
+      class = "yonder-progress progress",
+      ...
+    ),
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  output
 }
 
-#' @rdname progressOutput
+#' @rdname progressOutlet
 #' @export
 bar <- function(id, value, label = NULL, striped = FALSE, ...) {
   if (!is.character(id) && !is.null(id)) {
     stop(
-      "invalid `bar` argument, `id` must be a character string or NULL",
+      "invalid `bar()` argument, `id` must be a character string ",
+      "or NULL",
       call. = FALSE
     )
   }
@@ -125,18 +143,14 @@ bar <- function(id, value, label = NULL, striped = FALSE, ...) {
   )
 }
 
-#' @rdname progressOutput
+#' @rdname progressOutlet
 #' @export
-sendBar <- function(id, value, label = NULL,
-                    session = getDefaultReactiveDomain()) {
-  session$sendProgress(
-    "yonder-progress",
-    dropNulls(
-      list(
-        id = id,
-        value = value,
-        label = label
-      )
+showBar <- function(outlet, bar, session = getDefaultReactiveDomain()) {
+  session$sendProgress("yonder-progress", list(
+    type = "show",
+    data = list(
+      outlet = id,
+      content = HTML(as.character(bar))
     )
-  )
+  ))
 }
