@@ -175,44 +175,36 @@ $(() => {
 
 $(() => {
   Shiny.addCustomMessageHandler("yonder:popover", (msg) => {
-    if (!msg.id) {
+    if (msg.data.target === undefined) {
       return;
     }
 
-    msg.id = `#${ msg.id }`;
-
     if (msg.type == "show") {
       let data = msg.data;
+      let target = `#${ data.target }`;
 
-      $(msg.id).popover({
-        title: data.title || "",
-        content: data.content,
+      $(target).popover({
+        title: () => undefined,
+        content: () => undefined,
+        template: data.content,
         placement: data.placement,
         trigger: "manual"
       });
 
       if (data.duration) {
         setTimeout(
-          () => {
-            $(document).off(".removePopover");
-            $(msg.id).popover("hide");
-          },
+          () => $(target).popover("hide"),
           data.duration
         );
-
-        $(document).one("click.removePopover", (e) => {
-          $(msg.id).popover("hide");
-        });
       }
 
-      $(msg.id).popover("show");
+      $(target).popover("show");
 
       return;
     }
 
     if (msg.type == "close") {
-      $(msg.id).popover("hide");
-      //    $(msg.id).popover("disable");
+      $(`#${ msg.data.id }`).popover("hide");
 
       return;
     }

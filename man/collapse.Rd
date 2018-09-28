@@ -50,7 +50,6 @@ card(
 }
 \seealso{
 Other utilities: \code{\link{downloadEvent}},
-  \code{\link{markInvalid}}, \code{\link{showPopover}},
-  \code{\link{updateChoices}}
+  \code{\link{markInvalid}}, \code{\link{updateChoices}}
 }
 \concept{utilities}
