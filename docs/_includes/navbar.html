@@ -1,15 +1,12 @@
 
 <div class="col-2 h-100 pt-4 d-flex flex-column align-items-end">
-  <a href="{{ site.baseurl }}/">Home</a>
-  {% comment %}
-  <a href="{{ site.package.version | absolute_url }}">Documentation</a>
-  {% endcomment %}
+  <a href="{{ site.baseurl }}">Home</a>
   <div class="dropdown dropleft">
     <button class="btn btn-link dropdown-toggle pr-0" data-toggle="dropdown">Documentation</button>
 
     <div class="dropdown-menu">
       {% for version in site.versions %}
-      <a href="{{ version | absolute_url }}"
+      <a href="{{ site.baseurl }}{{ version }}"
          class="dropdown-item{% if page.url contains version %} active{% endif %}"
          >{{ version }}</a>
       {% endfor %}

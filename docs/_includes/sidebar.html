@@ -7,7 +7,7 @@
     {% assign index = family.items | where: "layout", "index" | first %}
 
     <dt>
-      <a class="text-dark" href="{{ index.url | absolute_url }}">{{ family.name }}</a>
+      <a class="text-dark" href="{{ site.baseurl }}{{ index.url }}">{{ family.name }}</a>
     </dt>
 
     {% assign docs = family.items | where: "layout", "page" %}
@@ -15,7 +15,7 @@
     {% if page.url contains family.name %}
     {% for doc in docs %}
     <dd>
-      <a href="{{ doc.url | absolute_url }}"
+      <a href="{{ site.baseurl }}{{ doc.url }}"
          alt="{{ doc.roxygen.title }}">
         {{ doc.this }}
       </a>
