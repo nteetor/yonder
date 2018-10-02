@@ -15,7 +15,7 @@
 #' @param ... For **progressOutlet**, one or more `bar` elements to include by
 #'   default.
 #'
-#'   For **progresOutlet** and **bar**, additional named arguments passed as
+#'   For **progressOutlet** and **bar**, additional named arguments passed as
 #'   HTML attributes to the parent element.
 #'
 #' @param value An integer between 0 and 100 specifying the initial value

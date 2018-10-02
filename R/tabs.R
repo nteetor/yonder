@@ -20,7 +20,7 @@
 #'   defaults to `labels`.
 #'
 #' @param active One of `values` specifying which tab is initially shown,
-#'   defaults to `values[1]`.`
+#'   defaults to `values[1]`.
 #'
 #' @param ... For **tabContent**, calls to `tabPane` or named arguments passed
 #'   as HTML attributes to the parent element.

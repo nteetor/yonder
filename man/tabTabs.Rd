@@ -24,7 +24,7 @@ to specify custom values.}
 defaults to \code{labels}.}
 
 \item{active}{One of \code{values} specifying which tab is initially shown,
-defaults to \code{values[1]}.`}
+defaults to \code{values[1]}.}
 
 \item{...}{For \strong{tabContent}, calls to \code{tabPane} or named arguments passed
 as HTML attributes to the parent element.

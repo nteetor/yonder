@@ -8,7 +8,7 @@
 \usage{
 rangeInput(id, min = 0, max = 100, default = min, step = 1,
   ticks = TRUE, fill = TRUE, labels = 4, snap = FALSE,
-  prefix = NULL, suffix = NULL)
+  prefix = NULL, suffix = NULL, ...)
 
 intervalInput(id, min = 0, max = 100, default = c(min, max),
   step = 1, draggable = FALSE, ticks = TRUE, labels = 4,
@@ -90,11 +90,37 @@ A take on shiny's \code{sliderInput}.
 rangeInput(id = NULL) \%>\%
   background("yellow")
 
+### Increase the number of labels
+
+rangeInput(
+  id = NULL,
+  default = 30,
+  labels = 8
+) \%>\%
+  background("purple")
+
+### Increase thumb step
+
+# We'll hide the filled portion of the input with `fill` and change how
+# tick marks are placed with `snap`.
+
+rangeInput(
+  id = NULL,
+  step = 10,  # <-
+  snap = TRUE,
+  fill = FALSE
+) \%>\%
+  background("red")
+
 ### Interval inputs
 
-# Select an interval from a range of numeric values.
+# Select an interval from a range of numeric values. Intervals are draggable
+# by default, this can be toggled off with `draggable = FALSE`.
 
-intervalInput(id = NULL) \%>\%
+intervalInput(
+  id = NULL,
+  default = c(45, 65)
+) \%>\%
     background("blue")
 
 ### sliderInput

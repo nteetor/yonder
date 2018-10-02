@@ -23,7 +23,7 @@ append instead of replace a progress bar.}
 \item{...}{For \strong{progressOutlet}, one or more \code{bar} elements to include by
 default.
 
-For \strong{progresOutlet} and \strong{bar}, additional named arguments passed as
+For \strong{progressOutlet} and \strong{bar}, additional named arguments passed as
 HTML attributes to the parent element.}
 
 \item{value}{An integer between 0 and 100 specifying the initial value
