@@ -16,7 +16,7 @@ roxygen:
     description: |-
       A character vector of values, one for each button specified,
       defaults to `labels`.
-  sections: ~
+  sections: []
   return: ~
   family: inputs
   name: ~

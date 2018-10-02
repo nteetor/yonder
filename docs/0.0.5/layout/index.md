@@ -6,7 +6,7 @@ roxygen:
   title: Layout
   description: Application layout.
   parameters: []
-  sections: ~
+  sections: []
   return: ~
   family: layout
   name: index

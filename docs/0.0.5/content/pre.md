@@ -12,7 +12,7 @@ roxygen:
     description: |-
       Text, tag elements, or named arguments passed as HTML attributes
       to the tag.
-  sections: ~
+  sections: []
   return: ~
   family: content
   name: ~

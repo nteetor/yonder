@@ -6,7 +6,7 @@ roxygen:
   title: Design
   description: Modify and style tag elements.
   parameters: []
-  sections: ~
+  sections: []
   return: ~
   family: design
   name: index

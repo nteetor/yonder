@@ -29,7 +29,7 @@ roxygen:
     description: |-
       A [responsive](/yonder/0.0.5/responsive.html) argument. One of `"left"`, `"center"`, `"right"`,
       or `"justify"`.
-  sections: ~
+  sections: []
   return: ~
   family: design
   name: ~

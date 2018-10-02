@@ -12,11 +12,11 @@ roxygen:
   - name: '...'
     description: |-
       For **card**, character strings, tag elements, or list groups to
-        include as the body of a card or additional named arguments passed as HTML
-        attributes to the parent element.
+      include as the body of a card or additional named arguments passed as HTML
+      attributes to the parent element.
 
-        For **deck**, any number of cards or additional named arguments passed as
-        HTML attributes to the parent element.
+      For **deck**, any number of cards or additional named arguments passed as
+      HTML attributes to the parent element.
   - name: header
     description: |-
       A character string or tag element specifying the header of the
@@ -31,13 +31,13 @@ roxygen:
       the card, defaults to `NULL`, in which case a subtitle is not added.
   - name: image
     description: |-
-      An [img()](/yonder/0.0.5/img().html) element specifying an image to add to the card,
+      An [img()](/yonder/0.0.5/content/img.html) element specifying an image to add to the card,
       defaults to `NULL`, in which case an image is not added.
   - name: footer
     description: |-
       A character string or tag element specifying the footer of the
       card, defaults to `NULL`, in which case a footer is not added.
-  sections: ~
+  sections: []
   return: ~
   family: content
   name: ~

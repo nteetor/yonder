@@ -17,12 +17,12 @@ roxygen:
   - name: '...'
     description: |-
       For `listGroupThruput()`, additional named arguments passed on as
-        HTML attributes to the parent list group element.
+      HTML attributes to the parent list group element.
 
-        For `listGroupItem()`, the text or HTML content of the list group item.
+      For `listGroupItem()`, the text or HTML content of the list group item.
 
-        For `renderListGroup()`, any number of expressions which return a
-        `listGroupItem()` or calls to `listGroupItem()`.
+      For `renderListGroup()`, any number of expressions which return a
+      `listGroupItem()` or calls to `listGroupItem()`.
   - name: multiple
     description: |-
       One of `TRUE` or `FALSE` specifyng if multiple list group
@@ -51,7 +51,7 @@ roxygen:
     description: |-
       The environment in which to evalute the expressions based to
       `renderListGroup()`.
-  sections: ~
+  sections: []
   return: ~
   family: thruputs
   name: ~

@@ -7,7 +7,7 @@ roxygen:
   description: |-
     Use `flex()` to control how a flex container tag element places its flex
     items or child tag elements. For more on turning a tag element into a flex
-    container see [display()](/yonder/0.0.5/display().html). By default tag elements within a flex container
+    container see [display()](/yonder/0.0.5/design/display.html). By default tag elements within a flex container
     are treated as flex items.
   parameters:
   - name: .tag
@@ -42,7 +42,7 @@ roxygen:
       whether to wrap flex items inside the flex containter, `.tag`, defaults
       to `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
       not wrap. See the **wrap** section below for more.
-  sections: ~
+  sections: []
   return: ~
   family: layout
   name: ~

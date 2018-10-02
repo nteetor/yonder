@@ -13,18 +13,18 @@ roxygen:
   - name: id
     description: |-
       A character string specifying the id of the progress outlet or
-        progress bar.
+      progress bar.
 
-        For **bar**, specifying an id allows you to update an existing bar in a
-        progress outlet with `showBar()`. If `id` is `NULL`, `showBar()` will
-        append instead of replace a progress bar.
+      For **bar**, specifying an id allows you to update an existing bar in a
+      progress outlet with `showBar()`. If `id` is `NULL`, `showBar()` will
+      append instead of replace a progress bar.
   - name: '...'
     description: |-
       For **progressOutlet**, one or more `bar` elements to include by
-        default.
+      default.
 
-        For **progresOutlet** and **bar**, additional named arguments passed as
-        HTML attributes to the parent element.
+      For **progressOutlet** and **bar**, additional named arguments passed as
+      HTML attributes to the parent element.
   - name: value
     description: |-
       An integer between 0 and 100 specifying the initial value
@@ -40,7 +40,7 @@ roxygen:
   - name: outlet
     description: A character string specifying the id of a progress outlet.
   - name: session
-    description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain().html).
+    description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain.html).
   sections:
   - title: Example application
     body: |-

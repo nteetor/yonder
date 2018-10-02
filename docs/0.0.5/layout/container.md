@@ -31,7 +31,7 @@ roxygen:
       One of `TRUE` or `FALSE` specifying if the container is
       responsively centered or if the container occupies the entire width of the
       viewport, defaults to `FALSE`.
-  sections: ~
+  sections: []
   return: ~
   family: layout
   name: ~

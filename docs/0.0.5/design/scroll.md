@@ -16,7 +16,7 @@ roxygen:
       One of `"x"` or `"y"` specifying which direction to scroll
       the tag's content, defaults to `"y"`, in which case vertical scroll is
       applied.
-  sections: ~
+  sections: []
   return: ~
   family: design
   name: ~

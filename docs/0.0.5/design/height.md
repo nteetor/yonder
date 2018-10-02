@@ -18,7 +18,7 @@ roxygen:
     description: |-
       One of 25, 50, 75, or 100 specifying max width or max height as a
       percentage of a parent element's width or height.
-  sections: ~
+  sections: []
   return: ~
   family: design
   name: ~

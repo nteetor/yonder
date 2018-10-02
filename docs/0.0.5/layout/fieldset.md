@@ -14,7 +14,7 @@ roxygen:
     description: |-
       Any number of inputs to group or named arguments passed as HTML
       attributes to the parent element.
-  sections: ~
+  sections: []
   return: ~
   family: layout
   name: ~

@@ -6,7 +6,7 @@ roxygen:
   title: Content
   description: Build page content.
   parameters: []
-  sections: ~
+  sections: []
   return: ~
   family: content
   name: index

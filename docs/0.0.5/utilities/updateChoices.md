@@ -12,8 +12,8 @@ roxygen:
     description: |-
       Named values or unnamed values specifying which and how existing
       or new input choices, values, or which values are selected are updated,
-      values are [dots_list()](/yonder/0.0.5/dots_list().html) allowing the use of bangs and splices.
-  sections: ~
+      values are [dots_list()] allowing the use of bangs and splices.
+  sections: []
   return: ~
   family: utilities
   name: ~

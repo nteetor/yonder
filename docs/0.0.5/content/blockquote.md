@@ -17,7 +17,7 @@ roxygen:
       defaults to `NULL`.
   - name: align
     description: One of `"left"` or `"right"`, defaults to `"left"`.
-  sections: ~
+  sections: []
   return: ~
   family: content
   name: ~

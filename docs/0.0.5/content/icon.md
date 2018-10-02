@@ -15,11 +15,11 @@ roxygen:
   - name: set
     description: |-
       A character string specifying the icon set to choose from,
-        defaults to `"NULL"`, in which case all icon sets are searched.
+      defaults to `"NULL"`, in which case all icon sets are searched.
 
-        Possibles values include `"font awesome"`, `"material design"`, and
-        `"feather"`.
-  sections: ~
+      Possibles values include `"font awesome"`, `"material design"`, and
+      `"feather"`.
+  sections: []
   return: ~
   family: content
   name: ~

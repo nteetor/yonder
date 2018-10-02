@@ -20,7 +20,7 @@ roxygen:
       One or more of `"top"`, `"right"`, `"bottom"`, `"left"` or
       `"all"` or `"none"` specifying which sides to add a border to, defaults to
       `"all"`.
-  sections: ~
+  sections: []
   return: ~
   family: design
   name: ~

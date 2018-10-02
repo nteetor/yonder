@@ -30,7 +30,7 @@ roxygen:
   - name: modal
     description: A modal tag element created using `modal()`.
   - name: session
-    description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain().html).
+    description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain.html).
   sections:
   - title: Example application
     body: |-

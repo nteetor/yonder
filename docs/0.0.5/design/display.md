@@ -19,7 +19,7 @@ roxygen:
       A [responsive](/yonder/0.0.5/responsive.html) argument. One of `"inline"`, `"block"`,
       `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`, defaults to
       `NULL`.
-  sections: ~
+  sections: []
   return: ~
   family: design
   name: ~

@@ -6,7 +6,7 @@ roxygen:
   title: Icon data
   description: Data frame of icon sets, keywords, names, and additional meta information.
   parameters: []
-  sections: ~
+  sections: []
   return: ~
   family: ~
   name: ~

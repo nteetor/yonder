@@ -40,7 +40,7 @@ roxygen:
       A character string specifying the HTML id of a popover's target tag
       element.
   - name: session
-    description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain().html).
+    description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain.html).
   sections:
   - title: Example application
     body: |-

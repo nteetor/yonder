@@ -16,7 +16,7 @@ roxygen:
       One of `"top"`, `"right"`, `"bottom"`, `"left"`, `"circle"`,
       `"all"` or `"none"`, defaults to `"all"`, specifying which and how the
       the corners of the tag element are rounded.
-  sections: ~
+  sections: []
   return: ~
   family: design
   name: ~

@@ -7,7 +7,7 @@ roxygen:
   description: |-
     Create a set of tabs for controlling tab content. Tabs are separated from
     content and panes for flexible placement. In the examples below you can see
-    how this allows tabs to be used inside [card()](/yonder/0.0.5/card().html)s. The flexibility also allows
+    how this allows tabs to be used inside [card()](/yonder/0.0.5/content/card.html)s. The flexibility also allows
     tabs to be added to navbars. When building tabbed content be sure to create a
     pane for each label in your tabs and link tabs to content by the `id` and
     `tabs` arguments, see below.
@@ -29,18 +29,18 @@ roxygen:
   - name: active
     description: |-
       One of `values` specifying which tab is initially shown,
-      defaults to `values[1](/yonder/0.0.5/1.html)`.`
+      defaults to `values[1]`.
   - name: '...'
     description: |-
       For **tabContent**, calls to `tabPane` or named arguments passed
-        as HTML attributes to the parent element.
+      as HTML attributes to the parent element.
 
-        For **tabPane**, any number of tag elements or named arguments passed as
-        HTML attributes to the parent element.
+      For **tabPane**, any number of tag elements or named arguments passed as
+      HTML attributes to the parent element.
 
-        For **tabTabs**, additional named arguments passed as HTML attributes to
-        the parent element.
-  sections: ~
+      For **tabTabs**, additional named arguments passed as HTML attributes to
+      the parent element.
+  sections: []
   return: ~
   family: layout
   name: ~

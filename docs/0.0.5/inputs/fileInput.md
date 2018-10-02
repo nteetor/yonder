@@ -15,11 +15,11 @@ roxygen:
   - name: left,right
     description: |-
       A character string or button element placed prepended or
-        appended respectively to the file input. For more information refer to
-        [groupInput()](/yonder/0.0.5/groupInput().html).
+      appended respectively to the file input. For more information refer to
+      [groupInput()](/yonder/0.0.5/inputs/groupInput.html).
 
-        Clicking on an element specified by `right` also opens the file input
-        dialog.
+      Clicking on an element specified by `right` also opens the file input
+      dialog.
   - name: '...'
     description: |-
       Additional named arguments passed on as HTML attributes to the

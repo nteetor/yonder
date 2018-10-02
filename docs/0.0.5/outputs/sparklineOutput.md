@@ -32,7 +32,7 @@ roxygen:
     description: |-
       One of `TRUE` or `FALSE` specifying if `expr` is a quoted
       expression.
-  sections: ~
+  sections: []
   return: ~
   family: outputs
   name: ~

@@ -1,12 +1,12 @@
 ---
 this: index
-filename: R/thruputs.R
+filename: R/yonder.R
 layout: index
 roxygen:
-  title: Reactive thruputs
-  description: Tag elements which are both input and output.
+  title: Thruputs
+  description: Yonder includes new reactive *thruputs*.
   parameters: []
-  sections: ~
+  sections: []
   return: ~
   family: thruputs
   name: index

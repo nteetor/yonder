@@ -12,7 +12,7 @@ roxygen:
     description: |-
       A character string specifying the background color, see below
       for all possible values.
-  sections: ~
+  sections: []
   return: ~
   family: design
   name: ~

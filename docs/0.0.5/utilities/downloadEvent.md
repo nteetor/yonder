@@ -26,7 +26,7 @@ roxygen:
   - name: domain
     description: |-
       A shiny session object, defaults to
-      [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain().html).
+      [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain.html).
   sections:
   - title: Downloading a file
     body: |-

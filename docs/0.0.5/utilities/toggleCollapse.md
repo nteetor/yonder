@@ -19,7 +19,7 @@ roxygen:
     description: |-
       Additional named arguments passed as HTML attributes to the
       collapsible div.
-  sections: ~
+  sections: []
   return: ~
   family: utilities
   name: ~

@@ -27,8 +27,8 @@ roxygen:
     description: |-
       A character string specifying a reactive id. If specified a
       button is added to the alert. When this button is clicked a reactive value
-      is triggered, `input[[action](/yonder/0.0.5/[action.html)]` is set to `TRUE`. When the alert is removed
-      `input[[action](/yonder/0.0.5/[action.html)]` is reset to `NULL`.
+      is triggered, `input[[action]]` is set to `TRUE`. When the alert is removed
+      `input[[action]]` is reset to `NULL`.
   sections:
   - title: Displaying an alert
     body: |-

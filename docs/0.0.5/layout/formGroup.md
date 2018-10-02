@@ -6,7 +6,7 @@ roxygen:
   title: Add labels, help text, and formatting to inputs
   description: |-
     Form groups are a way of labelling an input. Form rows are similar to
-    [row()](/yonder/0.0.5/row().html)s, but include additional styles intended for forms. The flexibility
+    [row()](/yonder/0.0.5/row.html)s, but include additional styles intended for forms. The flexibility
     provided by form rows and groups means you can confidently develop shiny
     applications for devices and screens of varying sizes.
   parameters:
@@ -23,15 +23,15 @@ roxygen:
   - name: '...'
     description: |-
       For **formGroup**, additional named arguments passed as HTML
-        attributes to the parent element.
+      attributes to the parent element.
 
-        For **formRow**, any number of `formGroup`s or additional named arguments
-        passed as HTML attributes to the parent element.
+      For **formRow**, any number of `formGroup`s or additional named arguments
+      passed as HTML attributes to the parent element.
   - name: width
     description: |-
       A [responsive](/yonder/0.0.5/responsive.html) argument. One of `1:12` or "auto" specifying a
       column width for the form group, defaults to `NULL`.
-  sections: ~
+  sections: []
   return: ~
   family: layout
   name: ~

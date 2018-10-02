@@ -6,7 +6,7 @@ roxygen:
   title: A new approach to shiny applications
   description: More freedom to the programmer, more to come.
   parameters: []
-  sections: ~
+  sections: []
   return: ~
   family: ~
   name: yonder

@@ -21,7 +21,7 @@ roxygen:
     description: |-
       Additional tag elements or named arguments passed as HTML attributes
       to the parent element.
-  sections: ~
+  sections: []
   return: ~
   family: content
   name: ~

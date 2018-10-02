@@ -25,7 +25,7 @@ roxygen:
     description: |-
       One of `"up"`, `"right"`, `"down"`, or `"left"` specifying
       the direction in which the menu opens, defaults to `"down"`.
-  sections: ~
+  sections: []
   return: ~
   family: content
   name: ~

@@ -18,7 +18,7 @@ roxygen:
     description: |-
       One of `TRUE` or `FALSE` specifying if the jumbotron fills the
       width of its parent container, defaults to `FALSE`.
-  sections: ~
+  sections: []
   return: ~
   family: content
   name: ~

@@ -26,7 +26,7 @@ roxygen:
   - name: left,right
     description: |-
       A character vector specifying static addons or
-      [buttonInput()](/yonder/0.0.5/buttonInput().html) or [dropdown()](/yonder/0.0.5/dropdown().html) elements specifying dynamic addons.
+      [buttonInput()](/yonder/0.0.5/inputs/buttonInput.html) or [dropdown()](/yonder/0.0.5/content/dropdown.html) elements specifying dynamic addons.
       Addon's affect the reactive value of the group input, see the Details
       section below for more information.
   - name: '...'

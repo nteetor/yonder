@@ -16,7 +16,7 @@ roxygen:
     description: |-
       One of `"top"`, `"bottom"`, or `"sticky"` specifying the
       fixed behavior of an element.
-  sections: ~
+  sections: []
   return: ~
   family: design
   name: ~

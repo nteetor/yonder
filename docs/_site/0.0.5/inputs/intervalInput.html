@@ -9,18 +9,21 @@
 <link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
 <link rel="stylesheet" href="/yonder/assets/css/main.css">
 
-<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+<script src="/yonder/www/jquery/jquery.min.js"></script>
 
 <script src="/yonder/www/bootstrap/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="/yonder/www/ion-rangeslider/css/ion.rangeSlider.css">
+<link rel="stylesheet" href="/yonder/www/ion-rangeslider/css/ion.rangeSlider.skinFlat.css">
+<script src="/yonder/www/ion-rangeslider/js/ion.rangeSlider.min.js"></script>
 
 <script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
 <link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
 <link rel="stylesheet" href="/yonder/www/font-awesome/css/fa-svg-with-js.css"/>
 <script src="/yonder/www/font-awesome/js/fontawesome-all.min.js"></script>
+
+<script src="/yonder/assets/js/main.js"></script>
 
   </head>
   <body>
@@ -341,12 +344,12 @@ to <code class="highlighter-rouge">100</code>.</p>
             
             <dt id="params-default" class="col-sm-3">default</dt>
             <dd class="col-sm-9"><p>A numeric vector between <code class="highlighter-rouge">min</code> and <code class="highlighter-rouge">max</code> specifying the
-  default value of the range input.</p>
+default value of the range input.</p>
 
 <p>For <strong>rangeInput</strong>, a single number, defaults to <code class="highlighter-rouge">min</code>.</p>
 
 <p>For <strong>intervalInput</strong>, a vector of two numbers specifying the minimum and
-  maximum of the slider interval, defaults to <code class="highlighter-rouge">c(min, max)</code>.</p>
+maximum of the slider interval, defaults to <code class="highlighter-rouge">c(min, max)</code>.</p>
 </dd>
             
             <dt id="params-step" class="col-sm-3">step</dt>
@@ -385,7 +388,7 @@ otherwise if <code class="highlighter-rouge">FALSE</code> tick marks are not add
             
             <dt id="params-fill" class="col-sm-3">fill</dt>
             <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying whether the filled portion of
-  a range or slider input is shown. If <code class="highlighter-rouge">FALSE</code> the filled porition is hidden.</p>
+a range or slider input is shown. If <code class="highlighter-rouge">FALSE</code> the filled porition is hidden.</p>
 
 <p>For <strong>rangeInput</strong> the default is <code class="highlighter-rouge">TRUE</code>.</p>
 
@@ -449,19 +452,80 @@ slider value, defaults to <code class="highlighter-rouge">NULL</code>, in which 
           
           
           
-          <h3>Interval inputs</h3>
-
-          
-          
-          
-          <p>Select an interval from a range of numeric values.</p>
+          <h3>Increase the number of labels</h3>
 
           
           
           
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">intervalInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">rangeInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">30</span><span class="p">,</span><span class="w">
+  </span><span class="n">labels</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">8</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">background</span><span class="p">(</span><span class="s2">"purple"</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-range bg-purple">
+  <input class="range" type="text" data-type="single" data-min="0" data-max="100" data-step="1" data-from="30" data-prettify-separator="," data-grid="TRUE" data-grid-num="8"/>
+</div>
+          </div>
+          
+          
+          
+          <h3>Increase thumb step</h3>
+
+          
+          
+          
+          <p>We'll hide the filled portion of the input with <code>fill</code> and change how tick marks are placed with <code>snap</code>.</p>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">rangeInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">,</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
+  </span><span class="n">snap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+  </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">background</span><span class="p">(</span><span class="s2">"red"</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-range bg-red">
+  <input class="range" type="text" data-type="single" data-min="0" data-max="100" data-step="10" data-from="0" data-prettify-separator="," data-grid="TRUE" data-grid-num="4" data-grid-snap="TRUE" data-no-fill="true"/>
+</div>
+          </div>
+          
+          
+          
+          <h3>Interval inputs</h3>
+
+          
+          
+          
+          <p>Select an interval from a range of numeric values. Intervals are draggable by default, this can be toggled off with <code>draggable = FALSE</code>.</p>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">intervalInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">default</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="m">45</span><span class="p">,</span><span class="w"> </span><span class="m">65</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
     </span><span class="n">background</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">)</span></code></pre></figure>
 
           </div>
@@ -470,7 +534,7 @@ slider value, defaults to <code class="highlighter-rouge">NULL</code>, in which 
           
           <div class="mb-5">
             <div class="yonder-range bg-blue">
-  <input class="range" type="text" data-type="double" data-min="0" data-max="100" data-from="0" data-to="100" data-drag-interval="FALSE" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
+  <input class="range" type="text" data-type="double" data-min="0" data-max="100" data-from="45" data-to="65" data-drag-interval="FALSE" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
 </div>
           </div>
           

@@ -15,7 +15,7 @@ roxygen:
     description: |-
       A [responsive](/yonder/0.0.5/responsive.html) argument. One of `"left"` or `"right"` specifying
       the side to float the element.
-  sections: ~
+  sections: []
   return: ~
   family: design
   name: ~

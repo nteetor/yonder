@@ -17,7 +17,7 @@ roxygen:
     description: |-
       One of `"none"`, `"small"`, `"regular"`, or `"large"` specifying
       the amount of shadow added, defaults to `"regular"`.
-  sections: ~
+  sections: []
   return: ~
   family: design
   name: ~
@@ -44,10 +44,10 @@ roxygen:
   - type: output
     value: "<div>\n  <nav class=\"navbar navbar-expand-lg navbar-light bg-cyan shadow-sm
       mb-3\">\n    <a class=\"navbar-brand\" href=\"#\">Navbar</a>\n    <button class=\"navbar-toggler\"
-      type=\"button\" data-toggle=\"collapse\" data-target=\"#navContent-613-21\"
-      aria-controls=\"navContent-613-21\" aria-expanded=\"false\" aria-label=\"Toggle
+      type=\"button\" data-toggle=\"collapse\" data-target=\"#navContent-660-229\"
+      aria-controls=\"navContent-660-229\" aria-expanded=\"false\" aria-label=\"Toggle
       navigation\">\n      <i class=\"fas fa-bars fa-fw\"></i>\n    </button>\n    <div
-      class=\"collapse navbar-collapse\" id=\"navContent-613-21\"></div>\n  </nav>\n
+      class=\"collapse navbar-collapse\" id=\"navContent-660-229\"></div>\n  </nav>\n
       \ <p>\n    Cras mattis consectetur purus sit amet fermentum. Donec sed \n    odio
       dui. Lorem ipsum dolor sit amet, consectetur adipiscing \n    elit. Aenean eu
       leo quam. Pellentesque ornare sem lacinia quam \n    venenatis vestibulum.\n

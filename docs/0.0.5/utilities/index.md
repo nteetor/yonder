@@ -6,7 +6,7 @@ roxygen:
   title: Utilities
   description: Server-side functions.
   parameters: []
-  sections: ~
+  sections: []
   return: ~
   family: utilities
   name: index

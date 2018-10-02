@@ -57,7 +57,7 @@ roxygen:
     When: the style is applied when the viewport is at least 1200px wide, think
     large desktops.
   parameters: []
-  sections: ~
+  sections: []
   return: ~
   family: ~
   name: responsive

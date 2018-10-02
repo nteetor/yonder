@@ -21,7 +21,7 @@ roxygen:
       A character string letting the user know why an input is invalid
       or valid. For `markInvalid` this argument is required, for `markValid` the
       argument is optional.
-  sections: ~
+  sections: []
   return: ~
   family: utilities
   name: ~
