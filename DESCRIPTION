@@ -27,9 +27,6 @@ Suggests:
 Collate:
     yonder.R
     dependencies.R
-    inputs.R
-    outputs.R
-    thruputs.R
     pipe.R
     utils.R
     tags.R
