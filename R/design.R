@@ -49,7 +49,7 @@ colorUtility <- function(tag, base, color) {
   tag <- tagDropClass(tag, sprintf("%s-(%s)", base, paste(.colors, collapse = "|")))
   tag <- tagAddClass(tag, paste0(base, "-", color))
 
-  attachDependencies(tag, c(yonderDep(), bootstrapDep()))
+  attachDependencies(tag, c(yonderDep(), bootstrapDep()), append = TRUE)
 }
 
 #' Tag element font
