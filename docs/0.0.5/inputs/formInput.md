@@ -24,7 +24,7 @@ roxygen:
     description: |-
       A submit button or tags containing a submit button. The submit
       button will trigger the update of input form elements. Defaults to
-      [submitInput()](/yonder/0.0.5/submitInput.html).
+      [submitInput()](/yonder/0.0.5/inputs/submitInput.html).
   - name: inline
     description: |-
       One of `TRUE` or `FALSE`, if `TRUE` the form and its child
@@ -98,16 +98,16 @@ roxygen:
               Ice creams
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-337-497" name="flavorChoice" data-value="Mint" checked/>
-                  <label class="custom-control-label" for="radio-337-497">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-1000-262" name="flavorChoice" data-value="Mint" checked/>
+                  <label class="custom-control-label" for="radio-1000-262">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-550-512" name="flavorChoice" data-value="Moose tracks"/>
-                  <label class="custom-control-label" for="radio-550-512">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-858-847" name="flavorChoice" data-value="Moose tracks"/>
+                  <label class="custom-control-label" for="radio-858-847">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-600-982" name="flavorChoice" data-value="Marble"/>
-                  <label class="custom-control-label" for="radio-600-982">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-716-923" name="flavorChoice" data-value="Marble"/>
+                  <label class="custom-control-label" for="radio-716-923">Marble</label>
                 </div>
                 <div class="invalid-feedback"></div>
               </div>

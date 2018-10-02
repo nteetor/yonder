@@ -331,14 +331,43 @@ There are also new inputs like <a href="/yonder/0.0.5/inputs/groupInput.html">gr
 </h3>
           <ul>
   <li>
-    <p>Included input functions have an <code class="highlighter-rouge">id</code> argument instead of <code class="highlighter-rouge">inputId</code>.</p>
-
-    <p>A <code class="highlighter-rouge">NULL</code> value may be used to add an input element without binding it, i.e.
-a value is not passed back to the shiny server.</p>
+    <p>Input functions have an <code class="highlighter-rouge">id</code> argument instead of <code class="highlighter-rouge">inputId</code>.</p>
   </li>
   <li>
-    <p>Inputs do not include a <code class="highlighter-rouge">label</code> argument. To add a label to an input please
-use <a href="/yonder/0.0.5/layout/formGroup.html">formGroup()</a>.</p>
+    <p>Inputs do not include a <code class="highlighter-rouge">label</code> argument to add a text label. To add a
+label to an input please use <a href="/yonder/0.0.5/layout/formGroup.html">formGroup()</a>.</p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">shiny::sliderInput()</code> has been split into three inputs: <a href="/yonder/0.0.5/inputs/rangeInput.html">rangeInput()</a>,
+<a href="/yonder/0.0.5/inputs/intervalInput.html">intervalInput()</a>, and <a href="/yonder/0.0.5/inputs/sliderInput.html">sliderInput()</a>.</p>
+  </li>
+</ul>
+
+          
+          <h3 id="familiar-variants"><p>Familiar variants</p>
+</h3>
+          <p>Looking for …</p>
+
+<ul>
+  <li>
+    <p><code class="highlighter-rouge">radioButtons()</code> use <a href="/yonder/0.0.5/inputs/radioInput.html">radioInput()</a></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">fluidRow()</code> use <a href="/yonder/0.0.5/layout/row.html">row()</a></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">fixedPage()</code>, <code class="highlighter-rouge">fluidPage()</code> or <code class="highlighter-rouge">sidebarLayout()</code> use <a href="/yonder/0.0.5/layout/container.html">container()</a>,
+<a href="/yonder/0.0.5/layout/row.html">row()</a>, and <a href="/yonder/0.0.5/layout/column.html">column()</a></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">withProgress()</code> use <a href="/yonder/0.0.5/content/progressOutlet.html">progressOutlet()</a></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">checkboxGroupInput()</code> use <a href="/yonder/0.0.5/inputs/checkbarInput.html">checkbarInput()</a></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">updateRadioButtons()</code> or <code class="highlighter-rouge">updateTextInput()</code> use <a href="/yonder/0.0.5/utilities/updateChoices.html">updateChoices()</a> or
+<a href="/yonder/0.0.5/utilities/updateValues.html">updateValues()</a></p>
   </li>
 </ul>
 

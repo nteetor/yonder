@@ -67,10 +67,10 @@ roxygen:
       <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-teal">
           <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-104-651" aria-controls="navContent-104-651" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-336-598" aria-controls="navContent-336-598" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars fa-fw"></i>
           </button>
-          <div class="collapse navbar-collapse" id="navContent-104-651">
+          <div class="collapse navbar-collapse" id="navContent-336-598">
             <ul class="yonder-tabs nav mr-auto navbar-nav" role="tablist" id="myTabs">
               <li class="nav-item">
                 <a class="nav-link active" data-tabs="tab" data-value="Home" aria-selected="true">Home</a>

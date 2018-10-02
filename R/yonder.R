@@ -17,13 +17,31 @@
 #'
 #' @section Changes to be mindful of:
 #'
-#' * Included input functions have an `id` argument instead of `inputId`.
+#' * Input functions have an `id` argument instead of `inputId`.
 #'
-#'   A `NULL` value may be used to add an input element without binding it, i.e.
-#'   a value is not passed back to the shiny server.
+#' * Inputs do not include a `label` argument to add a text label. To add a
+#'   label to an input please use [formGroup()].
 #'
-#' * Inputs do not include a `label` argument. To add a label to an input please
-#'   use [formGroup()].
+#' * `shiny::sliderInput()` has been split into three inputs: [rangeInput()],
+#'   [intervalInput()], and [sliderInput()].
+#'
+#' @section Familiar variants:
+#'
+#' Looking for ...
+#'
+#' * `radioButtons()` use [radioInput()]
+#'
+#' * `fluidRow()` use [row()]
+#'
+#' * `fixedPage()`, `fluidPage()` or `sidebarLayout()` use [container()],
+#'   [row()], and [column()]
+#'
+#' * `withProgress()` use [progressOutlet()]
+#'
+#' * `checkboxGroupInput()` use [checkbarInput()]
+#'
+#' * `updateRadioButtons()` or `updateTextInput()` use [updateChoices()] or
+#'   [updateValues()]
 #'
 #' @noRd
 #' @family inputs
