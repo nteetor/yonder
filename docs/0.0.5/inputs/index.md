@@ -24,13 +24,6 @@ roxygen:
 
       * `radioButtons()` use [radioInput()](/yonder/0.0.5/inputs/radioInput.html)
 
-      * `fluidRow()` use [row()](/yonder/0.0.5/layout/row.html)
-
-      * `fixedPage()`, `fluidPage()` or `sidebarLayout()` use [container()](/yonder/0.0.5/layout/container.html),
-        [row()](/yonder/0.0.5/layout/row.html), and [column()](/yonder/0.0.5/layout/column.html)
-
-      * `withProgress()` use [progressOutlet()](/yonder/0.0.5/content/progressOutlet.html)
-
       * `checkboxGroupInput()` use [checkbarInput()](/yonder/0.0.5/inputs/checkbarInput.html)
 
       * `updateRadioButtons()` or `updateTextInput()` use [updateChoices()](/yonder/0.0.5/utilities/updateChoices.html) or

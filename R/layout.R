@@ -2,6 +2,15 @@
 #'
 #' Application layout.
 #'
+#' @section Familiar variants:
+#'
+#' Looking for ...
+#'
+#' * `fluidRow()` use [row()]
+#'
+#' * `fixedPage()`, `fluidPage()` or `sidebarLayout()` use [container()],
+#'   [row()], and [column()]
+#'
 #' @noRd
 #' @family layout
 #' @name index

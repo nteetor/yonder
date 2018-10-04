@@ -31,14 +31,11 @@
 #'
 #' * `radioButtons()` use [radioInput()]
 #'
-#' * `fluidRow()` use [row()]
-#'
-#' * `fixedPage()`, `fluidPage()` or `sidebarLayout()` use [container()],
-#'   [row()], and [column()]
-#'
-#' * `withProgress()` use [progressOutlet()]
-#'
 #' * `checkboxGroupInput()` use [checkbarInput()]
+#'
+#' * `numericInput()` use [numberInput()]
+#'
+#' * `submitButton()` use [submitInput()]
 #'
 #' * `updateRadioButtons()` or `updateTextInput()` use [updateChoices()] or
 #'   [updateValues()]

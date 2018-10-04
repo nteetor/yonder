@@ -2,6 +2,12 @@
 #'
 #' Build page content.
 #'
+#' @section Familiar variants:
+#'
+#' Looking for ...
+#'
+#' * `withProgress()` use [progressOutlet()]
+#'
 #' @noRd
 #' @family content
 #' @name index
