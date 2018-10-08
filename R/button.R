@@ -37,8 +37,7 @@
 #' buttonInput(
 #'   id = NULL,
 #'   label = "Simple"
-#' ) %>%
-#'   background("green")
+#' )
 #'
 #' # Block buttons will fill the width of their parent element
 #' buttonInput(
@@ -168,7 +167,7 @@ linkInput <- function(id, text, ...) {
 
 #' Button group inputs
 #'
-#' Groups of buttons with a persisting value.
+#' A set of buttons with custom values.
 #'
 #' @param id A character string specifying the id of the button group input.
 #'
@@ -199,10 +198,10 @@ linkInput <- function(id, text, ...) {
 #'   background("blue") %>%
 #'   margin(3)
 #'
-buttonGroupInput <- function(id, labels, values = labels) {
+buttonGroupInput <- function(id, labels, values = labels, ...) {
   if (length(labels) != length(values)) {
     stop(
-      "invalid `buttonGroupInput` arguments, `labels` and `values` must be ",
+      "invalid `buttonGroupInput()` arguments, `labels` and `values` must be ",
       "the same length",
       call. = FALSE
     )
@@ -223,7 +222,8 @@ buttonGroupInput <- function(id, labels, values = labels) {
           label
         )
       }
-    )
+    ),
+    ...
   )
 
   attachDependencies(

@@ -120,6 +120,7 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL) {
         tags$label(
           class = collate(
             "btn",
+            "btn-grey",
             if (selected[[i]]) "active"
           ),
           tags$input(

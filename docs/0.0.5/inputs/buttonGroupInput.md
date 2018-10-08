@@ -4,7 +4,7 @@ filename: R/button.R
 layout: page
 roxygen:
   title: Button group inputs
-  description: Groups of buttons with a persisting value.
+  description: A set of buttons with custom values.
   parameters:
   - name: id
     description: A character string specifying the id of the button group input.

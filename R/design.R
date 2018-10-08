@@ -1,6 +1,6 @@
 #' Design
 #'
-#' Modify and style tag elements.
+#' Easily modify tag elements with design utility functions.
 #'
 #' @noRd
 #' @name index

@@ -24,7 +24,7 @@ roxygen:
     description: |-
       A submit button or tags containing a submit button. The submit
       button will trigger the update of input form elements. Defaults to
-      [submitInput()](/yonder/0.0.5/inputs/submitInput.html).
+      [submitInput()](/yonder/0.0.5/submitInput.html).
   - name: inline
     description: |-
       One of `TRUE` or `FALSE`, if `TRUE` the form and its child
@@ -95,19 +95,19 @@ roxygen:
         <div class="card-body">
           <form class="yonder-form">
             <div class="form-group">
-              Ice creams
+              <label>Ice creams</label>
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-612-136" name="flavorChoice" data-value="Mint" checked/>
-                  <label class="custom-control-label" for="radio-612-136">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-524-656" name="flavorChoice" data-value="Mint" checked/>
+                  <label class="custom-control-label" for="radio-524-656">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-678-211" name="flavorChoice" data-value="Moose tracks"/>
-                  <label class="custom-control-label" for="radio-678-211">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-906-415" name="flavorChoice" data-value="Moose tracks"/>
+                  <label class="custom-control-label" for="radio-906-415">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-446-756" name="flavorChoice" data-value="Marble"/>
-                  <label class="custom-control-label" for="radio-446-756">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-458-306" name="flavorChoice" data-value="Marble"/>
+                  <label class="custom-control-label" for="radio-458-306">Marble</label>
                 </div>
                 <div class="invalid-feedback"></div>
               </div>

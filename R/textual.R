@@ -37,7 +37,9 @@ textualInput <- function(id, value, placeholder, readonly, help, type,
 
 #' Textual inputs
 #'
-#' Textual inputs.
+#' Different types of textual inputs are provided to best support mobile
+#' keyboards and assistive technologies. A password input will mask its
+#' contents. Email inputs offer client-side validation depending on the browser.
 #'
 #' @param id A character string specifying the id of the textual input, defaults
 #'   to `NULL`.
@@ -64,50 +66,34 @@ textualInput <- function(id, value, placeholder, readonly, help, type,
 #' @family inputs
 #' @export
 #' @examples
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           p("For best results open in a browser") %>%
-#'             font(weight = "bold")
-#'         )
-#'       ),
-#'       row(
-#'         column(
-#'           h6("Text input:"),
-#'           textInput(id = "text"),
-#'           h6("Search input:"),
-#'           searchInput(id = "search"),
-#'           h6("Email input:"),
-#'           emailInput(id = "email"),
-#'           h6("URL input:"),
-#'           urlInput(id = "url"),
-#'           h6("Telephone input:"),
-#'           telephoneInput(id = "tel"),
-#'           h6("Password input:"),
-#'           passwordInput(id = "pass"),
-#'           h6("Number input:"),
-#'           numberInput(id = "num") %>%
-#'             background("green")
-#'         ),
-#'         column(
-#'           verbatimTextOutput("values")
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$values <- renderPrint({
-#'         list(
-#'           text = input$text, search = input$search, email = input$email,
-#'           url = input$url, telephone = input$tel, password = input$pass,
-#'           number = input$num
-#'          )
-#'       })
-#'     }
-#'   )
-#' }
 #'
+#' ### Basic text
+#'
+#' textInput(id = "text")
+#'
+#' ### Search
+#'
+#' searchInput(id = "search")
+#'
+#' ### Email
+#'
+#' emailInput(id = "email")
+#'
+#' ### URLs
+#'
+#' urlInput(id = "url")
+#'
+#' ### Telephone numbers
+#'
+#' telephoneInput(id = "tele")
+#'
+#' ### Passwords
+#'
+#' passwordInput(id = "password")
+#'
+#' ### Numbers
+#'
+#' numberInput(id = "num")
 #'
 textInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                       readonly = FALSE, help = NULL, ...) {
@@ -154,54 +140,6 @@ passwordInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
 numberInput <- function(id, value = NULL, placeholder = NULL, size = NULL,
                         readonly = FALSE, help = NULL, ...) {
   textualInput(id, value, placeholder, readonly, help, "number", size = size, ...)
-}
-
-#' Group and label multiple inputs
-#'
-#' Use `fieldset` to associate and label inputs. Good for screen readers and
-#' other assitive technologies.
-#'
-#' @param legend A character string specifying the fieldset's legend.
-#'
-#' @param ... Any number of inputs to group or named arguments passed as HTML
-#'   attributes to the parent element.
-#'
-#' @family layout
-#' @export
-#' @examples
-#'
-fieldset <- function(legend, ...) {
-  if (!is.character(legend)) {
-    stop(
-      "invalid `fieldset` argument, `legend` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  args <- list(...)
-  attrs <- attribs(args)
-  inputs <- elements(args)
-
-  this <- tagConcatAttributes(
-    tags$fieldset(
-      class = "form-group",
-      tags$legend(
-        class = "col-form-legend",
-        legend
-      ),
-      tags$div(
-        inputs
-      )
-    ),
-    attrs
-  )
-
-  this <- attachDependencies(
-    this,
-    c(shinyDep(), yonderDep(), bootstrapDe())
-  )
-
-  this
 }
 
 #' Login input
@@ -282,7 +220,7 @@ loginInput <- function(id, ...) {
 #' @export
 #' @examples
 #'
-#' ### Fields by default
+#' ### Default fields
 #'
 #' addressInput(id = NULL)
 #'

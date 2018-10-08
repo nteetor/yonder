@@ -47,10 +47,9 @@ roxygen:
       buttonInput(
         id = NULL,
         label = "Simple"
-      ) %>%
-        background("green")
+      )
   - type: output
-    value: <button class="yonder-button btn btn-green" type="button" role="button">Simple</button>
+    value: <button class="yonder-button btn btn-grey" type="button" role="button">Simple</button>
   - type: markdown
     value: |
       <p>Block buttons will fill the width of their parent element</p>

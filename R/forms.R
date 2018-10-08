@@ -195,7 +195,7 @@ formGroup <- function(label, input, help = NULL,..., width = NULL) {
       "form-group",
       classes
     ),
-    label,
+    tags$label(label),
     input,
     if (!is.null(help)) {
       tags$small(
@@ -224,6 +224,83 @@ formRow <- function(...) {
   this <- attachDependencies(
     this,
     bootstrapDep()
+  )
+
+  this
+}
+
+#' Group and label multiple inputs
+#'
+#' Use `fieldset` to associate and label inputs. This is good for screen readers
+#' and other assistive technologies.
+#'
+#' @param legend A character string specifying the fieldset's legend.
+#'
+#' @param ... Any number of inputs to group or named arguments passed as HTML
+#'   attributes to the parent element.
+#'
+#' @family layout
+#' @export
+#' @examples
+#'
+#' ### Grouping related inputs
+#'
+#' fieldset(
+#'   legend = "Pizza order",
+#'   formGroup(
+#'     "What toppings would you like?",
+#'     div(
+#'       checkbarInput(
+#'         id = "toppings",
+#'         choices = c(
+#'           "Cheese",
+#'           "Black olives",
+#'           "Mushrooms"
+#'         )
+#'       )
+#'     )
+#'   ),
+#'   formGroup(
+#'     "Is this for delivery?",
+#'     checkboxInput(
+#'       id = "deliver",
+#'       choice = "Deliver"
+#'     )
+#'   ),
+#'   submitInput("Place order")
+#' )
+#'
+fieldset <- function(..., legend = NULL) {
+  if (!is.null(legend) && !is.character(legend)) {
+    stop(
+      "invalid `fieldset()` argument, `legend` must be a character string",
+      call. = FALSE
+    )
+  }
+
+  args <- list(...)
+  attrs <- attribs(args)
+  inputs <- elements(args)
+
+  this <- tagConcatAttributes(
+    tags$fieldset(
+      class = "form-group",
+      if (!is.null(legend)) {
+        tags$legend(
+          class = "col-form-legend",
+          legend
+        )
+      },
+      tags$div(
+        inputs
+      )
+    ),
+    attrs
+  )
+
+  this <- attachDependencies(
+    this,
+    c(shinyDep(), yonderDep(), bootstrapDep())
   )
 
   this

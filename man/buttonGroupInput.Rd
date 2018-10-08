@@ -4,7 +4,7 @@
 \alias{buttonGroupInput}
 \title{Button group inputs}
 \usage{
-buttonGroupInput(id, labels, values = labels)
+buttonGroupInput(id, labels, values = labels, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the button group input.}
@@ -16,7 +16,7 @@ for each label specified.}
 defaults to \code{labels}.}
 }
 \description{
-Groups of buttons with a persisting value.
+A set of buttons with custom values.
 }
 \examples{
 

@@ -181,14 +181,14 @@ roxygen:
         <div class="dropdown-menu">
           <form class="yonder-form pt-3 pr-4 pb-3 pl-4" id="login">
             <div class="form-group">
-              Email address
+              <label>Email address</label>
               <div class="yonder-textual" id="email">
                 <input class="form-control" type="text" placeholder="email@example.com"/>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="form-group">
-              Password
+              <label>Password</label>
               <div class="yonder-textual" id="password">
                 <input class="form-control" type="password" placeholder="*****"/>
                 <div class="invalid-feedback"></div>

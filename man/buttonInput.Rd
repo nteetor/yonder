@@ -46,8 +46,7 @@ A submit input is automatically included as part of a \code{\link{formInput}}.
 buttonInput(
   id = NULL,
   label = "Simple"
-) \%>\%
-  background("green")
+)
 
 # Block buttons will fill the width of their parent element
 buttonInput(

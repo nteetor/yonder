@@ -18,9 +18,7 @@
           </p>
 
           {% for section in page.roxygen.sections %}
-          <h3 id="{{ section.title | slugify }}"
-              class="mt-4">{{ section.title | markdownify }}
-          </h3>
+          <h3 id="{{ section.title | slugify }}">{{ section.title | markdownify }}</h3>
           {{ section.body | markdownify }}
           {% endfor %}
 

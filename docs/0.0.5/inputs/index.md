@@ -17,14 +17,18 @@ roxygen:
         label to an input please use [formGroup()](/yonder/0.0.5/layout/formGroup.html).
 
       * `shiny::sliderInput()` has been split into three inputs: [rangeInput()](/yonder/0.0.5/inputs/rangeInput.html),
-        [intervalInput()](/yonder/0.0.5/inputs/intervalInput.html), and [sliderInput()](/yonder/0.0.5/inputs/sliderInput.html).
+        [intervalInput()](/yonder/0.0.5/intervalInput.html), and [sliderInput()](/yonder/0.0.5/sliderInput.html).
   - title: Familiar variants
     body: |-
       Looking for ...
 
       * `radioButtons()` use [radioInput()](/yonder/0.0.5/inputs/radioInput.html)
 
-      * `checkboxGroupInput()` use [checkbarInput()](/yonder/0.0.5/inputs/checkbarInput.html)
+      * `checkboxGroupInput()` use [checkbarInput()](/yonder/0.0.5/checkbarInput.html)
+
+      * `numericInput()` use [numberInput()](/yonder/0.0.5/numberInput.html)
+
+      * `submitButton()` use [submitInput()](/yonder/0.0.5/submitInput.html)
 
       * `updateRadioButtons()` or `updateTextInput()` use [updateChoices()](/yonder/0.0.5/utilities/updateChoices.html) or
         [updateValues()](/yonder/0.0.5/utilities/updateValues.html)

@@ -6,7 +6,7 @@ roxygen:
   title: Add labels, help text, and formatting to inputs
   description: |-
     Form groups are a way of labelling an input. Form rows are similar to
-    [row()](/yonder/0.0.5/layout/row.html)s, but include additional styles intended for forms. The flexibility
+    [row()](/yonder/0.0.5/row.html)s, but include additional styles intended for forms. The flexibility
     provided by form rows and groups means you can confidently develop shiny
     applications for devices and screens of varying sizes.
   parameters:
@@ -87,14 +87,14 @@ roxygen:
         <div class="card-body">
           <div class="form-row">
             <div class="form-group col-md-6">
-              Email
+              <label>Email</label>
               <div class="yonder-textual" id="email">
                 <input class="form-control" type="email" placeholder="e@mail.com"/>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="form-group col-md-6">
-              Password
+              <label>Password</label>
               <div class="yonder-textual" id="password">
                 <input class="form-control" type="password" placeholder="123456"/>
                 <div class="invalid-feedback"></div>
@@ -103,7 +103,7 @@ roxygen:
             </div>
           </div>
           <div class="form-group">
-            Username
+            <label>Username</label>
             <div class="yonder-group input-group" id="username">
               <div class="input-group-prepend">
                 <span class="input-group-text">@</span>

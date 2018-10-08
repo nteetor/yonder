@@ -4,7 +4,7 @@ filename: R/design.R
 layout: index
 roxygen:
   title: Design
-  description: Modify and style tag elements.
+  description: Easily modify tag elements with design utility functions.
   parameters: []
   sections: []
   return: ~

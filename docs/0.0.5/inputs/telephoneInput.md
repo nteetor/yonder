@@ -4,7 +4,10 @@ filename: R/textual.R
 layout: page
 roxygen:
   title: Textual inputs
-  description: Textual inputs.
+  description: |-
+    Different types of textual inputs are provided to best support mobile
+    keyboards and assistive technologies. A password input will mask its
+    contents. Email inputs offer client-side validation depending on the browser.
   parameters:
   - name: id
     description: |-
@@ -41,62 +44,95 @@ roxygen:
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>Basic text</h3>
   - type: source
     value: |2-
 
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                p("For best results open in a browser") %>%
-                  font(weight = "bold")
-              )
-            ),
-            row(
-              column(
-                h6("Text input:"),
-                textInput(id = "text"),
-                h6("Search input:"),
-                searchInput(id = "search"),
-                h6("Email input:"),
-                emailInput(id = "email"),
-                h6("URL input:"),
-                urlInput(id = "url"),
-                h6("Telephone input:"),
-                telephoneInput(id = "tel"),
-                h6("Password input:"),
-                passwordInput(id = "pass"),
-                h6("Number input:"),
-                numberInput(id = "num") %>%
-                  background("green")
-              ),
-              column(
-                verbatimTextOutput("values")
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$values <- renderPrint({
-              list(
-                text = input$text, search = input$search, email = input$email,
-                url = input$url, telephone = input$tel, password = input$pass,
-                number = input$num
-               )
-            })
-          }
-        )
-      }
-  - type: code
-    value: "if (interactive()) {\n    shinyApp(ui = container(row(column(p(\"For best
-      results open in a browser\") %>% font(weight = \"bold\"))), row(column(h6(\"Text
-      input:\"), textInput(id = \"text\"), h6(\"Search input:\"), searchInput(id =
-      \"search\"), h6(\"Email input:\"), emailInput(id = \"email\"), h6(\"URL input:\"),
-      urlInput(id = \"url\"), h6(\"Telephone input:\"), telephoneInput(id = \"tel\"),
-      h6(\"Password input:\"), passwordInput(id = \"pass\"), h6(\"Number input:\"),
-      numberInput(id = \"num\") %>% background(\"green\")), column(verbatimTextOutput(\"values\")))),
-      \n        server = function(input, output) {\n            output$values <- renderPrint({\n
-      \               list(text = input$text, search = input$search, email = input$email,
-      url = input$url, telephone = input$tel, password = input$pass, number = input$num)\n
-      \           })\n        })\n}"
+      textInput(id = "text")
+  - type: output
+    value: |-
+      <div class="yonder-textual" id="text">
+        <input class="form-control" type="text"/>
+        <div class="invalid-feedback"></div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Search</h3>
+  - type: source
+    value: |2-
+
+      searchInput(id = "search")
+  - type: output
+    value: |-
+      <div class="yonder-textual" id="search">
+        <input class="form-control" type="search"/>
+        <div class="invalid-feedback"></div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Email</h3>
+  - type: source
+    value: |2-
+
+      emailInput(id = "email")
+  - type: output
+    value: |-
+      <div class="yonder-textual" id="email">
+        <input class="form-control" type="email"/>
+        <div class="invalid-feedback"></div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>URLs</h3>
+  - type: source
+    value: |2-
+
+      urlInput(id = "url")
+  - type: output
+    value: |-
+      <div class="yonder-textual" id="url">
+        <input class="form-control" type="url"/>
+        <div class="invalid-feedback"></div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Telephone numbers</h3>
+  - type: source
+    value: |2-
+
+      telephoneInput(id = "tele")
+  - type: output
+    value: |-
+      <div class="yonder-textual" id="tele">
+        <input class="form-control" type="tel"/>
+        <div class="invalid-feedback"></div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Passwords</h3>
+  - type: source
+    value: |2-
+
+      passwordInput(id = "password")
+  - type: output
+    value: |-
+      <div class="yonder-textual" id="password">
+        <input class="form-control" type="password"/>
+        <div class="invalid-feedback"></div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Numbers</h3>
+  - type: source
+    value: |2-
+
+      numberInput(id = "num")
+  - type: output
+    value: |-
+      <div class="yonder-textual" id="num">
+        <input class="form-control" type="number"/>
+        <div class="invalid-feedback"></div>
+      </div>
 ---

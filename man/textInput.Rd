@@ -55,53 +55,39 @@ defaults to \code{NULL}, in which case no help text is added.}
 element.}
 }
 \description{
-Textual inputs.
+Different types of textual inputs are provided to best support mobile
+keyboards and assistive technologies. A password input will mask its
+contents. Email inputs offer client-side validation depending on the browser.
 }
 \examples{
-if (interactive()) {
-  shinyApp(
-    ui = container(
-      row(
-        column(
-          p("For best results open in a browser") \%>\%
-            font(weight = "bold")
-        )
-      ),
-      row(
-        column(
-          h6("Text input:"),
-          textInput(id = "text"),
-          h6("Search input:"),
-          searchInput(id = "search"),
-          h6("Email input:"),
-          emailInput(id = "email"),
-          h6("URL input:"),
-          urlInput(id = "url"),
-          h6("Telephone input:"),
-          telephoneInput(id = "tel"),
-          h6("Password input:"),
-          passwordInput(id = "pass"),
-          h6("Number input:"),
-          numberInput(id = "num") \%>\%
-            background("green")
-        ),
-        column(
-          verbatimTextOutput("values")
-        )
-      )
-    ),
-    server = function(input, output) {
-      output$values <- renderPrint({
-        list(
-          text = input$text, search = input$search, email = input$email,
-          url = input$url, telephone = input$tel, password = input$pass,
-          number = input$num
-         )
-      })
-    }
-  )
-}
 
+### Basic text
+
+textInput(id = "text")
+
+### Search
+
+searchInput(id = "search")
+
+### Email
+
+emailInput(id = "email")
+
+### URLs
+
+urlInput(id = "url")
+
+### Telephone numbers
+
+telephoneInput(id = "tele")
+
+### Passwords
+
+passwordInput(id = "password")
+
+### Numbers
+
+numberInput(id = "num")
 
 }
 \seealso{

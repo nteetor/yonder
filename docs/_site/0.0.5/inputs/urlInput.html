@@ -321,7 +321,9 @@
         <div class="page-body col-8 pt-4">
           <h2>Textual inputs</h2>
 
-          <p>Textual inputs.</p>
+          <p>Different types of textual inputs are provided to best support mobile
+keyboards and assistive technologies. A password input will mask its
+contents. Email inputs offer client-side validation depending on the browser.</p>
 
 
           
@@ -371,67 +373,156 @@ element.</p>
 
           
           
+          <h3>Basic text</h3>
+
+          
+          
+          
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">shinyApp</span><span class="p">(</span><span class="w">
-    </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-      </span><span class="n">row</span><span class="p">(</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">p</span><span class="p">(</span><span class="s2">"For best results open in a browser"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-            </span><span class="n">font</span><span class="p">(</span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bold"</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">),</span><span class="w">
-      </span><span class="n">row</span><span class="p">(</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Text input:"</span><span class="p">),</span><span class="w">
-          </span><span class="n">textInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"text"</span><span class="p">),</span><span class="w">
-          </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Search input:"</span><span class="p">),</span><span class="w">
-          </span><span class="n">searchInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"search"</span><span class="p">),</span><span class="w">
-          </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Email input:"</span><span class="p">),</span><span class="w">
-          </span><span class="n">emailInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"email"</span><span class="p">),</span><span class="w">
-          </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"URL input:"</span><span class="p">),</span><span class="w">
-          </span><span class="n">urlInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"url"</span><span class="p">),</span><span class="w">
-          </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Telephone input:"</span><span class="p">),</span><span class="w">
-          </span><span class="n">telephoneInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tel"</span><span class="p">),</span><span class="w">
-          </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Password input:"</span><span class="p">),</span><span class="w">
-          </span><span class="n">passwordInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pass"</span><span class="p">),</span><span class="w">
-          </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Number input:"</span><span class="p">),</span><span class="w">
-          </span><span class="n">numberInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"num"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-            </span><span class="n">background</span><span class="p">(</span><span class="s2">"green"</span><span class="p">)</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">column</span><span class="p">(</span><span class="w">
-          </span><span class="n">verbatimTextOutput</span><span class="p">(</span><span class="s2">"values"</span><span class="p">)</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">output</span><span class="o">$</span><span class="n">values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderPrint</span><span class="p">({</span><span class="w">
-        </span><span class="nf">list</span><span class="p">(</span><span class="w">
-          </span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">text</span><span class="p">,</span><span class="w"> </span><span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">search</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">email</span><span class="p">,</span><span class="w">
-          </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="n">telephone</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">tel</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">pass</span><span class="p">,</span><span class="w">
-          </span><span class="n">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">num</span><span class="w">
-         </span><span class="p">)</span><span class="w">
-      </span><span class="p">})</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">textInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"text"</span><span class="p">)</span></code></pre></figure>
 
           </div>
           
           
           
+          <div class="mb-5">
+            <div class="yonder-textual" id="text">
+  <input class="form-control" type="text"/>
+  <div class="invalid-feedback"></div>
+</div>
+          </div>
+          
+          
+          
+          <h3>Search</h3>
+
+          
+          
+          
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">interactive</span><span class="p">())</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="n">row</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="n">p</span><span class="p">(</span><span class="s2">"For best results open in a browser"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">font</span><span class="p">(</span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bold"</span><span class="p">))),</span><span class="w"> </span><span class="n">row</span><span class="p">(</span><span class="n">column</span><span class="p">(</span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Text input:"</span><span class="p">),</span><span class="w"> </span><span class="n">textInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"text"</span><span class="p">),</span><span class="w"> </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Search input:"</span><span class="p">),</span><span class="w"> </span><span class="n">searchInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"search"</span><span class="p">),</span><span class="w"> </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Email input:"</span><span class="p">),</span><span class="w"> </span><span class="n">emailInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"email"</span><span class="p">),</span><span class="w"> </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"URL input:"</span><span class="p">),</span><span class="w"> </span><span class="n">urlInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"url"</span><span class="p">),</span><span class="w"> </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Telephone input:"</span><span class="p">),</span><span class="w"> </span><span class="n">telephoneInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tel"</span><span class="p">),</span><span class="w"> </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Password input:"</span><span class="p">),</span><span class="w"> </span><span class="n">passwordInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pass"</span><span class="p">),</span><span class="w"> </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Number input:"</span><span class="p">),</span><span class="w"> </span><span class="n">numberInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"num"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">background</span><span class="p">(</span><span class="s2">"green"</span><span class="p">)),</span><span class="w"> </span><span class="n">column</span><span class="p">(</span><span class="n">verbatimTextOutput</span><span class="p">(</span><span class="s2">"values"</span><span class="p">)))),</span><span class="w"> 
-        </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-            </span><span class="n">output</span><span class="o">$</span><span class="n">values</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">renderPrint</span><span class="p">({</span><span class="w">
-                </span><span class="nf">list</span><span class="p">(</span><span class="n">text</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">text</span><span class="p">,</span><span class="w"> </span><span class="n">search</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">search</span><span class="p">,</span><span class="w"> </span><span class="n">email</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">email</span><span class="p">,</span><span class="w"> </span><span class="n">url</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">url</span><span class="p">,</span><span class="w"> </span><span class="n">telephone</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">tel</span><span class="p">,</span><span class="w"> </span><span class="n">password</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">pass</span><span class="p">,</span><span class="w"> </span><span class="n">number</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">num</span><span class="p">)</span><span class="w">
-            </span><span class="p">})</span><span class="w">
-        </span><span class="p">})</span><span class="w">
-</span><span class="p">}</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">searchInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"search"</span><span class="p">)</span></code></pre></figure>
 
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-textual" id="search">
+  <input class="form-control" type="search"/>
+  <div class="invalid-feedback"></div>
+</div>
+          </div>
+          
+          
+          
+          <h3>Email</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">emailInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"email"</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-textual" id="email">
+  <input class="form-control" type="email"/>
+  <div class="invalid-feedback"></div>
+</div>
+          </div>
+          
+          
+          
+          <h3>URLs</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">urlInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"url"</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-textual" id="url">
+  <input class="form-control" type="url"/>
+  <div class="invalid-feedback"></div>
+</div>
+          </div>
+          
+          
+          
+          <h3>Telephone numbers</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">telephoneInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tele"</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-textual" id="tele">
+  <input class="form-control" type="tel"/>
+  <div class="invalid-feedback"></div>
+</div>
+          </div>
+          
+          
+          
+          <h3>Passwords</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">passwordInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"password"</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-textual" id="password">
+  <input class="form-control" type="password"/>
+  <div class="invalid-feedback"></div>
+</div>
+          </div>
+          
+          
+          
+          <h3>Numbers</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">numberInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"num"</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="yonder-textual" id="num">
+  <input class="form-control" type="number"/>
+  <div class="invalid-feedback"></div>
+</div>
           </div>
           
           

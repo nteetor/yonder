@@ -18,7 +18,7 @@ city field, state field, and a zip code field.
 }
 \examples{
 
-### Fields by default
+### Default fields
 
 addressInput(id = NULL)
 
