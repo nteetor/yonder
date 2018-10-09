@@ -25,15 +25,53 @@ roxygen:
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>Using flexbox</h3>
+  - type: markdown
+    value: |
+      <p>When using <code>flex()</code> be sure to set the display, too.</p>
   - type: source
     value: |2-
 
-
-      display(div(), render = c(xs = "none", md = "block"))
-
-      display(div(), render = c(xs = "inline", sm = "block"))
-
-      display(div(), print = "none")
+      div(
+        lapply(
+          1:5,
+          function(i) {
+            div() %>%
+              padding(5) %>%
+              margin(top = c(xs = 2), bottom = c(xs = 2)) %>%
+              background("blue")
+          }
+        )
+      ) %>%
+        display("flex") %>%
+        flex(
+          direction = c(xs = "column", sm = "row"),
+          justify = c(sm = "around")
+        )
   - type: output
-    value: <div class="d-print-none"></div>
+    value: |-
+      <div class="d-flex flex-column flex-sm-row justify-content-sm-around">
+        <div class="p-5 mt-2 mb-2 bg-blue"></div>
+        <div class="p-5 mt-2 mb-2 bg-blue"></div>
+        <div class="p-5 mt-2 mb-2 bg-blue"></div>
+        <div class="p-5 mt-2 mb-2 bg-blue"></div>
+        <div class="p-5 mt-2 mb-2 bg-blue"></div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Printing pages</h3>
+  - type: markdown
+    value: |
+      <p>This element is not shown when the page is printed.</p>
+  - type: source
+    value: |2-
+
+      div() %>%
+        margin(5) %>%
+        background("orange") %>%
+        display(print = "none")
+  - type: output
+    value: <div class="m-5 bg-orange d-print-none"></div>
 ---

@@ -259,26 +259,35 @@ percentage of a parent element’s width or height.</p>
 
           
           
-          <h3>Getting started</h3>
+          <h3>Percentage based widths and heights</h3>
+
+          
+          
+          
+          <p>These percentages are based on the size of the parent element.</p>
 
           
           
           
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">tags</span><span class="o">$</span><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-  </span><span class="n">width</span><span class="p">(</span><span class="m">25</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-  </span><span class="n">height</span><span class="p">(</span><span class="m">100</span><span class="p">)</span><span class="w">
-
-</span><span class="n">tags</span><span class="o">$</span><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-  </span><span class="n">width</span><span class="p">(</span><span class="n">max</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">75</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">style</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"height: 50px; width: 120px;"</span><span class="p">,</span><span class="w">
+  </span><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">width</span><span class="p">(</span><span class="m">25</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">height</span><span class="p">(</span><span class="m">100</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">background</span><span class="p">(</span><span class="s2">"yellow"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">border</span><span class="p">(</span><span class="s2">"black"</span><span class="p">)</span></code></pre></figure>
 
           </div>
           
           
           
           <div class="mb-5">
-            <div class="mw-75"></div>
+            <div style="height: 50px; width: 120px;" class="border-black border">
+  <div class="w-25 h-100 bg-yellow"></div>
+</div>
           </div>
           
           

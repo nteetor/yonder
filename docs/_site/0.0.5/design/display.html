@@ -259,20 +259,74 @@ argument.</p>
 
           
           
+          <h3>Using flexbox</h3>
+
+          
+          
+          
+          <p>When using <code>flex()</code> be sure to set the display, too.</p>
+
+          
+          
+          
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">display</span><span class="p">(</span><span class="n">div</span><span class="p">(),</span><span class="w"> </span><span class="n">render</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"block"</span><span class="p">))</span><span class="w">
-
-</span><span class="n">display</span><span class="p">(</span><span class="n">div</span><span class="p">(),</span><span class="w"> </span><span class="n">render</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"inline"</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"block"</span><span class="p">))</span><span class="w">
-
-</span><span class="n">display</span><span class="p">(</span><span class="n">div</span><span class="p">(),</span><span class="w"> </span><span class="n">print</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">lapply</span><span class="p">(</span><span class="w">
+    </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span><span class="w">
+    </span><span class="k">function</span><span class="p">(</span><span class="n">i</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+        </span><span class="n">padding</span><span class="p">(</span><span class="m">5</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+        </span><span class="n">margin</span><span class="p">(</span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">bottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+        </span><span class="n">background</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="w">
+    </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"column"</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"row"</span><span class="p">),</span><span class="w">
+    </span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"around"</span><span class="p">)</span><span class="w">
+  </span><span class="p">)</span></code></pre></figure>
 
           </div>
           
           
           
           <div class="mb-5">
-            <div class="d-print-none"></div>
+            <div class="d-flex flex-column flex-sm-row justify-content-sm-around">
+  <div class="p-5 mt-2 mb-2 bg-blue"></div>
+  <div class="p-5 mt-2 mb-2 bg-blue"></div>
+  <div class="p-5 mt-2 mb-2 bg-blue"></div>
+  <div class="p-5 mt-2 mb-2 bg-blue"></div>
+  <div class="p-5 mt-2 mb-2 bg-blue"></div>
+</div>
+          </div>
+          
+          
+          
+          <h3>Printing pages</h3>
+
+          
+          
+          
+          <p>This element is not shown when the page is printed.</p>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">margin</span><span class="p">(</span><span class="m">5</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">background</span><span class="p">(</span><span class="s2">"orange"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="n">print</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"none"</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div class="m-5 bg-orange d-print-none"></div>
           </div>
           
           

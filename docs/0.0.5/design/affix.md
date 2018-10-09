@@ -22,14 +22,23 @@ roxygen:
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>See top of page</h3>
   - type: source
     value: |2-
 
-
-      div("A simple banner") %>%
-        width(100) %>%
-        background("grey") %>%
+      div(
+        span("I'm up here!") %>%
+          padding(left = 3, right = 3) %>%
+          background("teal")
+      ) %>%
+        display("flex") %>%
+        flex(justify = "center") %>%
         affix("top")
   - type: output
-    value: <div class="w-100 bg-grey fixed-top">A simple banner</div>
+    value: |-
+      <div class="d-flex justify-content-center fixed-top">
+        <span class="pr-3 pl-3 bg-teal">I'm up here!</span>
+      </div>
 ---

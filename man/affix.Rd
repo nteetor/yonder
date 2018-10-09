@@ -20,9 +20,15 @@ Edge browsers do not support the sticky behavior.
 }
 \examples{
 
-div("A simple banner") \%>\%
-  width(100) \%>\%
-  background("grey") \%>\%
+### See top of page
+
+div(
+  span("I'm up here!") \%>\%
+    padding(left = 3, right = 3) \%>\%
+    background("teal")
+) \%>\%
+  display("flex") \%>\%
+  flex(justify = "center") \%>\%
   affix("top")
 
 }

@@ -51,6 +51,10 @@
 #'
 #' submitInput()
 #'
+#' # Or use custom text to clarify the action taken when clicked by the user.
+#'
+#' submitInput("Place order")
+#'
 #' ### Possible colors
 #'
 #' colors <- c(

@@ -26,16 +26,24 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h3>Getting started</h3>
+      <h3>Percentage based widths and heights</h3>
+  - type: markdown
+    value: |
+      <p>These percentages are based on the size of the parent element.</p>
   - type: source
     value: |2-
 
-      tags$div() %>%
-        width(25) %>%
-        height(100)
-
-      tags$div() %>%
-        width(max = 75)
+      div(
+        style = "height: 50px; width: 120px;",
+        div() %>%
+          width(25) %>%
+          height(100) %>%
+          background("yellow")
+      ) %>%
+        border("black")
   - type: output
-    value: <div class="mw-75"></div>
+    value: |-
+      <div style="height: 50px; width: 120px;" class="border-black border">
+        <div class="w-25 h-100 bg-yellow"></div>
+      </div>
 ---

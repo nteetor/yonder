@@ -24,14 +24,18 @@ heights are specified as percentages of the parent object's width or height.
 }
 \examples{
 
-### Getting started
+### Percentage based widths and heights
 
-tags$div() \%>\%
-  width(25) \%>\%
-  height(100)
+# These percentages are based on the size of the parent element.
 
-tags$div() \%>\%
-  width(max = 75)
+div(
+  style = "height: 50px; width: 120px;",
+  div() \%>\%
+    width(25) \%>\%
+    height(100) \%>\%
+    background("yellow")
+) \%>\%
+  border("black")
 
 }
 \seealso{

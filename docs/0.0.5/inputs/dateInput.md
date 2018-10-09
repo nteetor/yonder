@@ -52,7 +52,7 @@ roxygen:
         selected = Sys.Date() + 1
       )
   - type: output
-    value: <input class="yonder-date form-control" type="text" data-default-date="2018-10-09"
+    value: <input class="yonder-date form-control" type="text" data-default-date="2018-10-10"
       data-date-format="Y-m-d"/>
   - type: markdown
     value: |
@@ -66,8 +66,8 @@ roxygen:
         max = Sys.Date() + 3
       )
   - type: output
-    value: <input class="yonder-date form-control" type="text" data-min-date="2018-10-05"
-      data-max-date="2018-10-11" data-date-format="Y-m-d"/>
+    value: <input class="yonder-date form-control" type="text" data-min-date="2018-10-06"
+      data-max-date="2018-10-12" data-date-format="Y-m-d"/>
   - type: markdown
     value: |
       <h3>Select multiple dates</h3>
@@ -81,8 +81,8 @@ roxygen:
         multiple = TRUE
       )
   - type: output
-    value: <input class="yonder-date form-control" type="text" data-default-date="2018-10-09"
-      data-enable="2018-10-02\,2018-10-04\,2018-10-06\,2018-10-08\,2018-10-10\,2018-10-12\,2018-10-14"
+    value: <input class="yonder-date form-control" type="text" data-default-date="2018-10-10"
+      data-enable="2018-10-03\,2018-10-05\,2018-10-07\,2018-10-09\,2018-10-11\,2018-10-13\,2018-10-15"
       data-date-format="Y-m-d" data-mode="multiple"/>
   - type: markdown
     value: |
@@ -95,6 +95,6 @@ roxygen:
         selected = c(Sys.Date(), Sys.Date() + 3)
       )
   - type: output
-    value: <input class="yonder-date form-control" type="text" data-default-date="2018-10-08\,2018-10-11"
+    value: <input class="yonder-date form-control" type="text" data-default-date="2018-10-09\,2018-10-12"
       data-date-format="Y-m-d" data-mode="range"/>
 ---

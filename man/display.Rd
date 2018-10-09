@@ -23,11 +23,35 @@ argument.
 }
 \examples{
 
-display(div(), render = c(xs = "none", md = "block"))
+### Using flexbox
 
-display(div(), render = c(xs = "inline", sm = "block"))
+# When using `flex()` be sure to set the display, too.
 
-display(div(), print = "none")
+div(
+  lapply(
+    1:5,
+    function(i) {
+      div() \%>\%
+        padding(5) \%>\%
+        margin(top = c(xs = 2), bottom = c(xs = 2)) \%>\%
+        background("blue")
+    }
+  )
+) \%>\%
+  display("flex") \%>\%
+  flex(
+    direction = c(xs = "column", sm = "row"),
+    justify = c(sm = "around")
+  )
+
+### Printing pages
+
+# This element is not shown when the page is printed.
+
+div() \%>\%
+  margin(5) \%>\%
+  background("orange") \%>\%
+  display(print = "none")
 
 }
 \seealso{

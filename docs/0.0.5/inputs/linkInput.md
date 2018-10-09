@@ -74,6 +74,16 @@ roxygen:
     value: <button class="yonder-submit btn btn-blue" data-type="submit" role="button">Submit</button>
   - type: markdown
     value: |
+      <p>Or use custom text to clarify the action taken when clicked by the user.</p>
+  - type: source
+    value: |2-
+
+      submitInput("Place order")
+  - type: output
+    value: <button class="yonder-submit btn btn-blue" data-type="submit" role="button">Place
+      order</button>
+  - type: markdown
+    value: |
       <h3>Possible colors</h3>
   - type: source
     value: |2-

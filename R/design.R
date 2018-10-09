@@ -541,9 +541,15 @@ float <- function(.tag, side) {
 #' @export
 #' @examples
 #'
-#' div("A simple banner") %>%
-#'   width(100) %>%
-#'   background("grey") %>%
+#' ### See top of page
+#'
+#' div(
+#'   span("I'm up here!") %>%
+#'     padding(left = 3, right = 3) %>%
+#'     background("teal")
+#' ) %>%
+#'   display("flex") %>%
+#'   flex(justify = "center") %>%
 #'   affix("top")
 #'
 affix <- function(.tag, position) {
@@ -583,11 +589,35 @@ affix <- function(.tag, position) {
 #' @export
 #' @examples
 #'
-#' display(div(), render = c(xs = "none", md = "block"))
+#' ### Using flexbox
 #'
-#' display(div(), render = c(xs = "inline", sm = "block"))
+#' # When using `flex()` be sure to set the display, too.
 #'
-#' display(div(), print = "none")
+#' div(
+#'   lapply(
+#'     1:5,
+#'     function(i) {
+#'       div() %>%
+#'         padding(5) %>%
+#'         margin(top = c(xs = 2), bottom = c(xs = 2)) %>%
+#'         background("blue")
+#'     }
+#'   )
+#' ) %>%
+#'   display("flex") %>%
+#'   flex(
+#'     direction = c(xs = "column", sm = "row"),
+#'     justify = c(sm = "around")
+#'   )
+#'
+#' ### Printing pages
+#'
+#' # This element is not shown when the page is printed.
+#'
+#' div() %>%
+#'   margin(5) %>%
+#'   background("orange") %>%
+#'   display(print = "none")
 #'
 display <- function(.tag, render = NULL, print = NULL) {
   possibles <- c("inline", "block", "inline-block", "flex", "inline-flex", "none")
@@ -798,14 +828,18 @@ margin <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
 #' @export
 #' @examples
 #'
-#' ### Getting started
+#' ### Percentage based widths and heights
 #'
-#' tags$div() %>%
-#'   width(25) %>%
-#'   height(100)
+#' # These percentages are based on the size of the parent element.
 #'
-#' tags$div() %>%
-#'   width(max = 75)
+#' div(
+#'   style = "height: 50px; width: 120px;",
+#'   div() %>%
+#'     width(25) %>%
+#'     height(100) %>%
+#'     background("yellow")
+#' ) %>%
+#'   border("black")
 #'
 width <- function(.tag, percentage = NULL, max = NULL) {
   if (is.null(percentage) && is.null(max)) {
