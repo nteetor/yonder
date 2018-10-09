@@ -1,3 +1,13 @@
+#' Utilities
+#'
+#' Server-side functions.
+#'
+#' @noRd
+#' @name index
+#' @family utilities
+#' @layout index
+NULL
+
 sendUpdateMessage <- function(id, type, data) {
   if (all(names2(data) == "")) {
     data <- vapply(data, as.character, character(1), USE.NAMES = FALSE)
