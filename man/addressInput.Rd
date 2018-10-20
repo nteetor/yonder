@@ -20,7 +20,7 @@ city field, state field, and a zip code field.
 
 ### Default fields
 
-addressInput(id = NULL)
+addressInput(id = "mailing")
 
 }
 \seealso{

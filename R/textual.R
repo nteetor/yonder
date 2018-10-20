@@ -222,7 +222,7 @@ loginInput <- function(id, ...) {
 #'
 #' ### Default fields
 #'
-#' addressInput(id = NULL)
+#' addressInput(id = "mailing")
 #'
 addressInput <- function(id, ...) {
   ids <- ID(rep.int("address", 5))
