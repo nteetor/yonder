@@ -58,7 +58,7 @@ icon <- function(name, set = NULL, ...) {
   }
 
   index <- which(
-    icons$name == name & if (!is.null(set)) icons$set == set else TRUE
+    yonder::icons$name == name & if (!is.null(set)) yonder::icons$set == set else TRUE
   )
 
   if (!length(index)) {
@@ -69,7 +69,7 @@ icon <- function(name, set = NULL, ...) {
     )
   }
 
-  icon <- icons[index[1], ]
+  icon <- yonder::icons[index[1], ]
 
   if (icon$set == "font awesome") {
     attachDependencies(
