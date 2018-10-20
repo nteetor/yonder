@@ -333,16 +333,16 @@ border <- function(.tag, color = NULL, sides = "all") {
     )
   }
 
-  if (!is.null(color)) {
-    .tag <- colorUtility(.tag, "border", color)
-  }
-
   if ("all" %in% sides) {
     .tag <- tagAddClass(.tag, "border")
   } else if ("none" %in% sides) {
     .tag <- tagAddClass(.tag, "border-0")
   } else {
     .tag <- tagAddClass(.tag, sprintf("border-%s", sides))
+  }
+
+  if (!is.null(color)) {
+    .tag <- colorUtility(.tag, "border", color)
   }
 
   attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
