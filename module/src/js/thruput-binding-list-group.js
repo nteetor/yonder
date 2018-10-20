@@ -49,3 +49,6 @@ $.extend(listGroupOutputBinding, {
     Shiny.renderContent(el, items.join("\n"));
   }
 });
+
+Shiny.inputBindings.register(listGroupInputBinding, "yonder.listGroupInput");
+Shiny.outputBindings.register(listGroupOutputBinding, "yonder.listGroupOutput");

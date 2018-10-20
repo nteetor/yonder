@@ -1,5 +1,11 @@
 export let alertInputBinding = new Shiny.InputBinding();
 
+$(() => {
+  $(document.body).append(
+    $("<div class='yonder-alert-container' id='alert-container'></div>")
+  );
+});
+
 $.extend(alertInputBinding, {
   Selector: {
     SELF: ".yonder-alert-container"
@@ -89,3 +95,5 @@ $.extend(alertInputBinding, {
     }
   }
 });
+
+Shiny.inputBindings.register(alertInputBinding, "yonder.alertInput");

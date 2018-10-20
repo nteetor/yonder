@@ -43,3 +43,5 @@ $.extend(formInputBinding, {
     return +submit.getAttribute("data-value");
   }
 });
+
+Shiny.inputBindings.register(formInputBinding, "yonder.formInput");

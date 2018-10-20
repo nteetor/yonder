@@ -25,3 +25,5 @@ $.extend(sparklineOutputBinding, {
 
   }
 });
+
+Shiny.outputBindings.register(sparklineOutputBinding, "yonder.sparklineOutput");

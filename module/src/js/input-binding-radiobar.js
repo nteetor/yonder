@@ -15,3 +15,5 @@ $.extend(radiobarInputBinding, {
     return { value: this.getValue(el) };
   }
 });
+
+Shiny.inputBindings.register(radiobarInputBinding, "yonder.radiobarInput");

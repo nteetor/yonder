@@ -29,3 +29,6 @@ $.extend(tableOutputBinding, {
     }
   }
 });
+
+Shiny.inputBindings.register(tableInputBinding, "yonder.tableInput");
+Shiny.outputBindings.register(tableOutputBinding, "yonder.tableOutput");

@@ -19,3 +19,5 @@ $.extend(badgeOutputBinding, {
 
   }
 });
+
+Shiny.outputBindings.register(badgeOutputBinding, "yonder.badgeOutput");

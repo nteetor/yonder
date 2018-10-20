@@ -22,3 +22,5 @@ $.extend(buttonInputBinding, {
     return el.getAttribute("data-value");
   }
 });
+
+Shiny.inputBindings.register(buttonInputBinding, "yonder.buttonInput");

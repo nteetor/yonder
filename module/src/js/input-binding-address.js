@@ -34,3 +34,5 @@ $.extend(addressInputBinding, {
     $(el).off(".addressInputBinding");
   }
 });
+
+Shiny.inputBindings.register(addressInputBinding, "yonder.addressInput");

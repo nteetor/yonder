@@ -23,3 +23,5 @@ $.extend(linkInputBinding, {
     };
   }
 });
+
+Shiny.inputBindings.register(linkInputBinding, "yonder.linkInput");

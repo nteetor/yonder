@@ -21,3 +21,5 @@ $.extend(buttonGroupInputBinding, {
     $(el).off(".buttonGroupInputBinding", "button");
   }
 });
+
+Shiny.inputBindings.register(buttonGroupInputBinding, "yonder.buttonGroupInput");

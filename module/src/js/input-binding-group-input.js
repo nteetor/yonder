@@ -17,3 +17,5 @@ $.extend(groupInputBinding, {
     return { value: this.getValue(el) };
   }
 });
+
+Shiny.inputBindings.register(groupInputBinding, "yonder.groupInput");

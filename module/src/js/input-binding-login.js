@@ -28,3 +28,5 @@ $.extend(loginInputBinding, {
     $(el).off(".loginInputBinding");
   }
 });
+
+Shiny.inputBindings.register(loginInputBinding, "yonder.loginInput");

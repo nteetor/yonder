@@ -58,3 +58,5 @@ $.extend(rangeInputBinding, {
     $input.data("ionRangeSlider").destroy();
   }
 });
+
+Shiny.inputBindings.register(rangeInputBinding, "yonder.rangeInput");

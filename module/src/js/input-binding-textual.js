@@ -44,3 +44,5 @@ $.extend(textualInputBinding, {
     };
   }
 });
+
+Shiny.inputBindings.register(textualInputBinding, "yonder.textualInput");

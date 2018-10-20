@@ -98,3 +98,5 @@ $.extend(fileInputBinding, {
     $(el).off(".fileInputBinding");
   }
 });
+
+Shiny.inputBindings.register(fileInputBinding, "yonder.fileInput");

@@ -1,162 +1,84 @@
 import { yonderInputBinding } from "./yonder-input-binding.js";
 
-import { addressInputBinding } from "./input-binding-address.js";
-import { alertInputBinding } from "./input-binding-alert.js";
-import { buttonGroupInputBinding } from "./input-binding-button-group.js";
-import { buttonInputBinding } from "./input-binding-button.js";
-import { checkbarInputBinding } from "./input-binding-checkbar.js";
-import { checkboxInputBinding } from "./input-binding-checkbox.js";
-import { dateInputBinding } from "./input-binding-date.js";
-import { fileInputBinding } from "./input-binding-file.js";
-import { formInputBinding } from "./input-binding-form.js";
-import { groupInputBinding } from "./input-binding-group-input.js";
-import { linkInputBinding } from "./input-binding-link.js";
-import { loginInputBinding } from "./input-binding-login.js";
-import { navInputBinding } from "./input-binding-nav.js";
-import { radioInputBinding } from "./input-binding-radio.js";
-import { radiobarInputBinding } from "./input-binding-radiobar.js";
-import { rangeInputBinding } from "./input-binding-range.js";
-import { selectInputBinding } from "./input-binding-select.js";
-import { tabsInputBinding } from "./input-binding-tabs.js";
-import { textualInputBinding } from "./input-binding-textual.js";
+import "./input-binding-address.js";
+import "./input-binding-alert.js";
+import "./input-binding-button-group.js";
+import "./input-binding-button.js";
+import "./input-binding-checkbar.js";
+import "./input-binding-checkbox.js";
+import "./input-binding-date.js";
+import "./input-binding-file.js";
+import "./input-binding-form.js";
+import "./input-binding-group-input.js";
+import "./input-binding-link.js";
+import "./input-binding-login.js";
+import "./input-binding-nav.js";
+import "./input-binding-radio.js";
+import "./input-binding-radiobar.js";
+import "./input-binding-range.js";
+import "./input-binding-select.js";
+import "./input-binding-tabs.js";
+import "./input-binding-textual.js";
 
-import { badgeOutputBinding } from "./output-binding-badge.js";
-import { sparklineOutputBinding } from "./output-binding-sparkline.js";
-// import { tooltipOutputBinding } from "./output-binding-tooltip.js";
+import "./output-binding-badge.js";
+import "./output-binding-sparkline.js";
+import "./output-binding-progress.js";
 
-import { tableInputBinding, tableOutputBinding } from "./thruput-binding-table.js";
-import { listGroupInputBinding, listGroupOutputBinding } from "./thruput-binding-list-group.js";
-
-const inputBindings = {
-  "yonder.addressInput": addressInputBinding,
-  "yonder.alertInput": alertInputBinding,
-  "yonder.buttonGroupInput": buttonGroupInputBinding,
-  "yonder.buttonInput": buttonInputBinding,
-  "yonder.checkbarInput": checkbarInputBinding,
-  "yonder.checkboxInput": checkboxInputBinding,
-  "yonder.dateInput": dateInputBinding,
-  "yonder.fileInput": fileInputBinding,
-  "yonder.formInput": formInputBinding,
-  "yonder.groupInput": groupInputBinding,
-  "yonder.linkInput": linkInputBinding,
-  "yonder.loginInput": loginInputBinding,
-  "yonder.navInput": navInputBinding,
-  "yonder.radioInput": radioInputBinding,
-  "yonder.radiobarInput": radiobarInputBinding,
-  "yonder.rangeInput": rangeInputBinding,
-  "yonder.selectInput": selectInputBinding,
-  "yonder.tableInput": tableInputBinding,
-  "yonder.tabsInput": tabsInputBinding,
-  "yonder.textualInput": textualInputBinding,
-  "yonder.listGroupInput": listGroupInputBinding
-};
-
-const outputBindings = {
-  "yonder.badgeOutput": badgeOutputBinding,
-  "yonder.sparklineOutput": sparklineOutputBinding,
-  "yonder.tableOutput": tableOutputBinding,
-  "yonder.listGroupOutput": listGroupOutputBinding
-};
+import "./thruput-binding-table.js";
+import "./thruput-binding-list-group.js";
 
 yonderInputBinding.call(Shiny.InputBinding.prototype);
 
-Object.keys(inputBindings).forEach(key => {
-  Shiny.inputBindings.register(inputBindings[key], key);
-});
-
-Object.keys(outputBindings).forEach(key => {
-  Shiny.outputBindings.register(outputBindings[key], key);
-});
-
 $(() => {
   $("[data-toggle=\"tooltip\"]").tooltip();
-});
-
-$(() => {
   $("[data-toggle=\"popover\"]").popover();
-});
 
-$(() => {
   $(".yonder-file").on("click", ".input-group-append", function(e) {
     $(e.delegateTarget).find("input[type='file']").trigger("click");
   });
-});
 
-$(() => {
-  $("body").append(
-    $("<div class='yonder-alert-container' id='alert-container'></div>")
-  );
-});
-
-$(() => {
   $(".nav:not([role='tablist']) li").on("click", function(e) {
     var $this = $(this);
     $(".nav-link", $this.parent(".nav")).removeClass("active");
     $(".nav-link", $this).addClass("active");
   });
-});
 
-$(document).on("shiny:connected", function() {
-  $(".yonder-submit[data-type=\"submit\"]").attr("type", "submit");
-});
+  $(document).on("shiny:connected", function() {
+    $(".yonder-submit[data-type=\"submit\"]").attr("type", "submit");
+  });
 
-$(() => {
   $(document).on("shown.bs.modal", ".modal", function(e) {
     if (!$(".modal").find(".shiny-bound-output, .shiny-bound-input").length) {
       Shiny.initializeInputs(".modal");
       Shiny.bindAll(".modal");
     }
   });
-});
 
-$.extend(Shiny.progressHandlers, {
-  "yonder-progress": (msg) => {
-    if (!msg.type || !msg.data.outlet) {
-      return false;
-    }
+  (() => {
+    let collapsibles = document.querySelectorAll("[data-collapse-id]");
 
-    let $outlet = $(`#${ msg.data.outlet }`);
+    if (collapsibles.length) {
+      $(collapsibles).wrap(function() {
+        let attrs = {};
 
-    if (msg.type === "show") {
-      let $bar = $(msg.data.content);
+        for (const attr of this.attributes) {
+          if (attr.name.match(/^data[-]collapse/)) {
+            let newkey = attr.name.replace(/([A-Z])/g, "-$1")
+                .toLowerCase()
+                .replace(/^data-collapse-/, "");
 
-      if ($bar[0].id && $outlet.find(`#${ $bar[0].id }`).length) {
-        $outlet.find(`#${ $bar[0].id }`).replaceWith($bar);
-      } else {
-        $outlet.append($bar);
-      }
-
-      return true;
-    }
-
-    return false;
-  }
-});
-
-$(() => {
-  let collapsibles = document.querySelectorAll("[data-collapse-id]");
-
-  if (collapsibles.length) {
-    $(collapsibles).wrap(function() {
-      let attrs = {};
-
-      for (const attr of this.attributes) {
-        if (attr.name.match(/^data[-]collapse/)) {
-          let newkey = attr.name.replace(/([A-Z])/g, "-$1")
-              .toLowerCase()
-              .replace(/^data-collapse-/, "");
-
-          attrs[newkey] = attr.value;
+            attrs[newkey] = attr.value;
+          }
         }
-      }
 
-      attrs["class"] = `${ attrs["class"] ? attrs["class"] + " " : ""}collapse`;
+        attrs["class"] = `${ attrs["class"] ? attrs["class"] + " " : ""}collapse`;
 
-      return $("<div>", attrs);
-    });
+        return $("<div>", attrs);
+      });
 
-    $(document.querySelectorAll(".collapse")).collapse();
-  }
+      $(document.querySelectorAll(".collapse")).collapse();
+    }
+  })();
 
   Shiny.addCustomMessageHandler("yonder:collapse", function(msg) {
     if (!msg.type || !msg.type.match(/^(show|hide|toggle)$/)) {
@@ -171,9 +93,7 @@ $(() => {
 
     $(collapsible).collapse(msg.type);
   });
-});
 
-$(() => {
   Shiny.addCustomMessageHandler("yonder:popover", (msg) => {
     if (msg.data.target === undefined) {
       return;
@@ -209,9 +129,7 @@ $(() => {
       return;
     }
   });
-});
 
-$(() =>  {
   Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
     if (!msg.type) {
       return false;
@@ -241,9 +159,7 @@ $(() =>  {
 
     return false;
   });
-});
 
-$(() => {
   Shiny.addCustomMessageHandler("yonder:download", function(msg) {
     if (!(msg.filename && msg.token && msg.key)) {
       throw "invalid download event";
@@ -268,4 +184,5 @@ $(() => {
         });
     }
   });
+
 });

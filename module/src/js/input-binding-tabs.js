@@ -49,3 +49,5 @@ $.extend(tabsInputBinding, {
     });
   }
 });
+
+Shiny.inputBindings.register(tabsInputBinding, "yonder.tabsInput");

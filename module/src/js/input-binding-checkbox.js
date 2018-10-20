@@ -27,3 +27,5 @@ $.extend(checkboxInputBinding, {
     };
   }
 });
+
+Shiny.inputBindings.register(checkboxInputBinding, "yonder.checkboxInput");

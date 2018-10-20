@@ -15,3 +15,5 @@ $.extend(checkbarInputBinding, {
     return { value: this.getValue(el) };
   }
 });
+
+Shiny.inputBindings.register(checkbarInputBinding, "yonder.checkbarInput");

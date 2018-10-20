@@ -40,3 +40,5 @@ $.extend(dateInputBinding, {
     throw "receiveMessage not implemented for date inputs";
   }
 });
+
+Shiny.inputBindings.register(dateInputBinding, "yonder.dateInput");

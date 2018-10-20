@@ -19,3 +19,5 @@ $.extend(navInputBinding, {
     $(el).off(".navInputBinding");
   }
 });
+
+Shiny.inputBindings.register(navInputBinding, "yonder.navInput");
