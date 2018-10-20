@@ -126,6 +126,10 @@ renderListGroup <- function(...,  env = parent.frame()) {
   createRenderFunction(
     func,
     function(data, session, name) {
+      if (is_strictly_list(data)) {
+        data <- unlist(data, recursive = FALSE)
+      }
+
       list(
         items = lapply(
           data,

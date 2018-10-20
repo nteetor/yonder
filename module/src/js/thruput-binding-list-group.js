@@ -1,8 +1,15 @@
 // input
 export let listGroupInputBinding = new Shiny.InputBinding();
 
+$(() => {
+  $(".yonder-list-group[id]").on("click", ".list-group-item-action", (e) => {
+    e.target.classList.toggle("active");
+    return true;
+  });
+});
+
 $.extend(listGroupInputBinding, {
-  find: (scope) => $(scope).find(".yonder-list-groupl[id]"),
+  find: (scope) => $(scope).find(".yonder-list-group[id]"),
 
   getId: (el) => el.id,
 
@@ -37,8 +44,8 @@ $.extend(listGroupOutputBinding, {
       return;
     }
 
-    let items = data.items.join("\n");
+    let items = typeof data.items === "object" ? Object.values(data.items) : data.items;
 
-    Shiny.renderContent(el, items);
+    Shiny.renderContent(el, items.join("\n"));
   }
 });

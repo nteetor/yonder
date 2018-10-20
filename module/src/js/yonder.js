@@ -48,7 +48,7 @@ const inputBindings = {
   "yonder.tableInput": tableInputBinding,
   "yonder.tabsInput": tabsInputBinding,
   "yonder.textualInput": textualInputBinding,
-  "yonder.listGroupInputBinding": listGroupInputBinding
+  "yonder.listGroupInput": listGroupInputBinding
 };
 
 const outputBindings = {
