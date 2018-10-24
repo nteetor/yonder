@@ -35,7 +35,10 @@ roxygen:
       div(
         navbar(
           brand = "Navbar",
-          tabTabs("myTabs", c("Home", "About", "Our process")) %>%
+          navInput(
+            id = "tabs",
+            items = c("Home", "About", "Our process")
+          ) %>%
             margin(right = "auto"),
           formInput(
             inline = TRUE,
@@ -48,15 +51,14 @@ roxygen:
         ) %>%
           background("teal"),
         container(
-          tabContent(
-            tabs = "myTabs",
-            tabPane(
+          navContent(
+            navPane(
               h3("Home")
             ),
-            tabPane(
+            navPane(
               h3("About")
             ),
-            tabPane(
+            navPane(
               h3("The process")
             )
           )
@@ -67,19 +69,19 @@ roxygen:
       <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-teal">
           <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-971-634" aria-controls="navContent-971-634" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-764-773" aria-controls="navContent-764-773" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars fa-fw"></i>
           </button>
-          <div class="collapse navbar-collapse" id="navContent-971-634">
-            <ul class="yonder-tabs nav mr-auto navbar-nav" role="tablist" id="myTabs">
+          <div class="collapse navbar-collapse" id="navContent-764-773">
+            <ul class="yonder-nav nav mr-auto navbar-nav" id="tabs">
               <li class="nav-item">
-                <a class="nav-link active" data-tabs="tab" data-value="Home" aria-selected="true">Home</a>
+                <a class="nav-link active" href="#" data-value="Home">Home</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" data-tabs="tab" data-value="About" aria-selected="false">About</a>
+                <a class="nav-link" href="#" data-value="About">About</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" data-tabs="tab" data-value="Our process" aria-selected="false">Our process</a>
+                <a class="nav-link" href="#" data-value="Our process">Our process</a>
               </li>
             </ul>
             <form class="yonder-form form-inline" id="navForm">
@@ -92,16 +94,10 @@ roxygen:
           </div>
         </nav>
         <div class="container-fluid">
-          <div class="tab-content" data-tabs="myTabs">
-            <div class="tab-pane fade" role="tab-panel">
-              <h3>Home</h3>
-            </div>
-            <div class="tab-pane fade" role="tab-panel">
-              <h3>About</h3>
-            </div>
-            <div class="tab-pane fade" role="tab-panel">
-              <h3>The process</h3>
-            </div>
+          <div class="tab-content">
+            <div class="tab-pane fade" role="tab-panel" data-id="&lt;h3&gt;Home&lt;/h3&gt;"></div>
+            <div class="tab-pane fade" role="tab-panel" data-id="&lt;h3&gt;About&lt;/h3&gt;"></div>
+            <div class="tab-pane fade" role="tab-panel" data-id="&lt;h3&gt;The process&lt;/h3&gt;"></div>
           </div>
         </div>
       </div>

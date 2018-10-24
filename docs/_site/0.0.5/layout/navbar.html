@@ -6,11 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <link rel="stylesheet" href="/yonder/www/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
-<link rel="stylesheet" href="/yonder/assets/css/main.css">
 
 <script src="/yonder/www/jquery/jquery.min.js"></script>
-
+<script src="/yonder/www/popper/popper.min.js"></script>
 <script src="/yonder/www/bootstrap/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="/yonder/www/ion-rangeslider/css/ion.rangeSlider.css">
@@ -23,6 +21,10 @@
 <link rel="stylesheet" href="/yonder/www/font-awesome/css/fa-svg-with-js.css"/>
 <script src="/yonder/www/font-awesome/js/fontawesome-all.min.js"></script>
 
+<link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
+<script src="/yonder/www/yonder/js/yonder.min.js"></script>
+
+<link rel="stylesheet" href="/yonder/assets/css/main.css">
 <script src="/yonder/assets/js/main.js"></script>
 
   </head>
@@ -162,27 +164,6 @@
       </a>
     </dd>
     
-    <dd>
-      <a href="/yonder/0.0.5/layout/tabContent.html"
-         alt="Tabbable content">
-        tabContent
-      </a>
-    </dd>
-    
-    <dd>
-      <a href="/yonder/0.0.5/layout/tabPane.html"
-         alt="Tabbable content">
-        tabPane
-      </a>
-    </dd>
-    
-    <dd>
-      <a href="/yonder/0.0.5/layout/tabTabs.html"
-         alt="Tabbable content">
-        tabTabs
-      </a>
-    </dd>
-    
     
 
     
@@ -255,7 +236,10 @@ defaults to <code class="highlighter-rouge">NULL</code>, in which case nothing i
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
   </span><span class="n">navbar</span><span class="p">(</span><span class="w">
     </span><span class="n">brand</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Navbar"</span><span class="p">,</span><span class="w">
-    </span><span class="n">tabTabs</span><span class="p">(</span><span class="s2">"myTabs"</span><span class="p">,</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Home"</span><span class="p">,</span><span class="w"> </span><span class="s2">"About"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Our process"</span><span class="p">))</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">navInput</span><span class="p">(</span><span class="w">
+      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tabs"</span><span class="p">,</span><span class="w">
+      </span><span class="n">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Home"</span><span class="p">,</span><span class="w"> </span><span class="s2">"About"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Our process"</span><span class="p">)</span><span class="w">
+    </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
       </span><span class="n">margin</span><span class="p">(</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"auto"</span><span class="p">),</span><span class="w">
     </span><span class="n">formInput</span><span class="p">(</span><span class="w">
       </span><span class="n">inline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
@@ -268,15 +252,14 @@ defaults to <code class="highlighter-rouge">NULL</code>, in which case nothing i
   </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
     </span><span class="n">background</span><span class="p">(</span><span class="s2">"teal"</span><span class="p">),</span><span class="w">
   </span><span class="n">container</span><span class="p">(</span><span class="w">
-    </span><span class="n">tabContent</span><span class="p">(</span><span class="w">
-      </span><span class="n">tabs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"myTabs"</span><span class="p">,</span><span class="w">
-      </span><span class="n">tabPane</span><span class="p">(</span><span class="w">
+    </span><span class="n">navContent</span><span class="p">(</span><span class="w">
+      </span><span class="n">navPane</span><span class="p">(</span><span class="w">
         </span><span class="n">h</span><span class="m">3</span><span class="p">(</span><span class="s2">"Home"</span><span class="p">)</span><span class="w">
       </span><span class="p">),</span><span class="w">
-      </span><span class="n">tabPane</span><span class="p">(</span><span class="w">
+      </span><span class="n">navPane</span><span class="p">(</span><span class="w">
         </span><span class="n">h</span><span class="m">3</span><span class="p">(</span><span class="s2">"About"</span><span class="p">)</span><span class="w">
       </span><span class="p">),</span><span class="w">
-      </span><span class="n">tabPane</span><span class="p">(</span><span class="w">
+      </span><span class="n">navPane</span><span class="p">(</span><span class="w">
         </span><span class="n">h</span><span class="m">3</span><span class="p">(</span><span class="s2">"The process"</span><span class="p">)</span><span class="w">
       </span><span class="p">)</span><span class="w">
     </span><span class="p">)</span><span class="w">
@@ -291,19 +274,19 @@ defaults to <code class="highlighter-rouge">NULL</code>, in which case nothing i
             <div>
   <nav class="navbar navbar-expand-lg navbar-light bg-teal">
     <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-971-634" aria-controls="navContent-971-634" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-764-773" aria-controls="navContent-764-773" aria-expanded="false" aria-label="Toggle navigation">
       <i class="fas fa-bars fa-fw"></i>
     </button>
-    <div class="collapse navbar-collapse" id="navContent-971-634">
-      <ul class="yonder-tabs nav mr-auto navbar-nav" role="tablist" id="myTabs">
+    <div class="collapse navbar-collapse" id="navContent-764-773">
+      <ul class="yonder-nav nav mr-auto navbar-nav" id="tabs">
         <li class="nav-item">
-          <a class="nav-link active" data-tabs="tab" data-value="Home" aria-selected="true">Home</a>
+          <a class="nav-link active" href="#" data-value="Home">Home</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-tabs="tab" data-value="About" aria-selected="false">About</a>
+          <a class="nav-link" href="#" data-value="About">About</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link" data-tabs="tab" data-value="Our process" aria-selected="false">Our process</a>
+          <a class="nav-link" href="#" data-value="Our process">Our process</a>
         </li>
       </ul>
       <form class="yonder-form form-inline" id="navForm">
@@ -316,16 +299,10 @@ defaults to <code class="highlighter-rouge">NULL</code>, in which case nothing i
     </div>
   </nav>
   <div class="container-fluid">
-    <div class="tab-content" data-tabs="myTabs">
-      <div class="tab-pane fade" role="tab-panel">
-        <h3>Home</h3>
-      </div>
-      <div class="tab-pane fade" role="tab-panel">
-        <h3>About</h3>
-      </div>
-      <div class="tab-pane fade" role="tab-panel">
-        <h3>The process</h3>
-      </div>
+    <div class="tab-content">
+      <div class="tab-pane fade" role="tab-panel" data-id="&lt;h3&gt;Home&lt;/h3&gt;"></div>
+      <div class="tab-pane fade" role="tab-panel" data-id="&lt;h3&gt;About&lt;/h3&gt;"></div>
+      <div class="tab-pane fade" role="tab-panel" data-id="&lt;h3&gt;The process&lt;/h3&gt;"></div>
     </div>
   </div>
 </div>

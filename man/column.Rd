@@ -117,7 +117,6 @@ container(
 }
 \seealso{
 Other layout: \code{\link{fieldset}}, \code{\link{flex}},
-  \code{\link{formGroup}}, \code{\link{navbar}},
-  \code{\link{tabTabs}}
+  \code{\link{formGroup}}, \code{\link{navbar}}
 }
 \concept{layout}

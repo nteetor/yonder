@@ -47,9 +47,11 @@ export function yonderInputBinding() {
     }
 
     for (const event of (this.Events || [])) {
-      $(el).on(`${ event.type }.yonder`, (e) => {
+      $(el).on(`${ event.type }.yonder`, (event.selector || null), (e) => {
         if (event.callback) {
-          event.callback(el);
+          if (event.callback(el, event.selector && e.target || undefined) === false) {
+            return;
+          }
         }
         callback(event.debounce || false);
       });

@@ -28,7 +28,10 @@ expanded states.
 div(
   navbar(
     brand = "Navbar",
-    tabTabs("myTabs", c("Home", "About", "Our process")) \%>\%
+    navInput(
+      id = "tabs",
+      items = c("Home", "About", "Our process")
+    ) \%>\%
       margin(right = "auto"),
     formInput(
       inline = TRUE,
@@ -41,15 +44,14 @@ div(
   ) \%>\%
     background("teal"),
   container(
-    tabContent(
-      tabs = "myTabs",
-      tabPane(
+    navContent(
+      navPane(
         h3("Home")
       ),
-      tabPane(
+      navPane(
         h3("About")
       ),
-      tabPane(
+      navPane(
         h3("The process")
       )
     )
@@ -59,7 +61,6 @@ div(
 }
 \seealso{
 Other layout: \code{\link{column}}, \code{\link{fieldset}},
-  \code{\link{flex}}, \code{\link{formGroup}},
-  \code{\link{tabTabs}}
+  \code{\link{flex}}, \code{\link{formGroup}}
 }
 \concept{layout}

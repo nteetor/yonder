@@ -127,7 +127,7 @@ roxygen:
             <p class="card-text">Cras placerat accumsan nulla.</p>
           </div>
         </div>
-        <div class="card border-orange border">
+        <div class="card border border-orange">
           <div class="card-body">
             <p class="card-text">Aliquam posuere.</p>
             <p class="card-text">Phasellus neque orci, porta a, aliquet quis, semper a, massa.</p>
@@ -185,22 +185,25 @@ roxygen:
     value: |2-
 
       card(
-        header = tabTabs(
-          id = "example-card-tabs",
-          labels = c("Phasellus", "Donec", "Fusce")
+        header = navInput(
+          id = "tabs",
+          items = c("Tab 1", "Tab 2", "Tab 3"),
+          appearance = "tabs"
         ),
-        tabContent(
-          tabs = "example-card-tabs",  # same as the id in `tabTabs`
-          tabPane(
+        navContent(
+          navPane(
             "Phasellus purus.",
-            "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
+            "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.",
+            "Phasellus purus."
           ),
-          tabPane(
-            "Donec at pede. Praesent augue."
+          navPane(
+            "Donec at pede. Praesent augue.",
+            "Pellentesque tristique imperdiet tortor."
           ),
-          tabPanel(
+          navPane(
             "Fusce suscipit, wisi nec facilisis facilisis,",
-            "est dui fermentum leo, quis tempor ligula erat quis odio."
+            "est dui fermentum leo, quis tempor ligula erat quis odio.",
+            "Donec hendrerit tempor tellus."
           )
         )
       )
@@ -208,26 +211,29 @@ roxygen:
     value: |-
       <div class="card">
         <div class="card-header">
-          <ul class="yonder-tabs nav nav-tabs card-header-tabs" role="tablist" id="example-card-tabs">
+          <ul class="yonder-nav nav nav-tabs card-header-tabs" id="tabs">
             <li class="nav-item">
-              <a class="nav-link active" data-tabs="tab" data-value="Phasellus" aria-selected="true">Phasellus</a>
+              <a class="nav-link active" href="#" data-value="Tab 1">Tab 1</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-tabs="tab" data-value="Donec" aria-selected="false">Donec</a>
+              <a class="nav-link" href="#" data-value="Tab 2">Tab 2</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" data-tabs="tab" data-value="Fusce" aria-selected="false">Fusce</a>
+              <a class="nav-link" href="#" data-value="Tab 3">Tab 3</a>
             </li>
           </ul>
         </div>
         <div class="card-body">
-          <div class="tab-content" data-tabs="example-card-tabs">
-            <div class="tab-pane fade" role="tab-panel">
-              Phasellus purus.
+          <div class="tab-content">
+            <div class="tab-pane fade" role="tab-panel" data-id="Phasellus purus.">
               Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.
+              Phasellus purus.
             </div>
-            <div class="tab-pane fade" role="tab-panel">Donec at pede. Praesent augue.</div>
-            <div class="tab-pane" title="Fusce suscipit, wisi nec facilisis facilisis," data-value="Fusce suscipit, wisi nec facilisis facilisis,">est dui fermentum leo, quis tempor ligula erat quis odio.</div>
+            <div class="tab-pane fade" role="tab-panel" data-id="Donec at pede. Praesent augue.">Pellentesque tristique imperdiet tortor.</div>
+            <div class="tab-pane fade" role="tab-panel" data-id="Fusce suscipit, wisi nec facilisis facilisis,">
+              est dui fermentum leo, quis tempor ligula erat quis odio.
+              Donec hendrerit tempor tellus.
+            </div>
           </div>
         </div>
       </div>

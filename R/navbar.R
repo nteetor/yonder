@@ -22,7 +22,10 @@
 #' div(
 #'   navbar(
 #'     brand = "Navbar",
-#'     tabTabs("myTabs", c("Home", "About", "Our process")) %>%
+#'     navInput(
+#'       id = "tabs",
+#'       items = c("Home", "About", "Our process")
+#'     ) %>%
 #'       margin(right = "auto"),
 #'     formInput(
 #'       inline = TRUE,
@@ -35,15 +38,14 @@
 #'   ) %>%
 #'     background("teal"),
 #'   container(
-#'     tabContent(
-#'       tabs = "myTabs",
-#'       tabPane(
+#'     navContent(
+#'       navPane(
 #'         h3("Home")
 #'       ),
-#'       tabPane(
+#'       navPane(
 #'         h3("About")
 #'       ),
-#'       tabPane(
+#'       navPane(
 #'         h3("The process")
 #'       )
 #'     )

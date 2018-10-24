@@ -1,4 +1,4 @@
-#' Tabbable content
+#' Page navigation
 #'
 #' Create a set of tabs for controlling tab content. Tabs are separated from
 #' content and panes for flexible placement. In the examples below you can see
@@ -7,226 +7,369 @@
 #' pane for each label in your tabs and link tabs to content by the `id` and
 #' `tabs` arguments, see below.
 #'
-#' @param id A character string specifying the id of the tabs, to connect a set
-#'   of tabs to content pass the same value to `tabContent` as `tabs`. Tabs do
-#'   have a reactive value, by default the label of the active tab. To `values`
-#'   to specify custom values.
+#' @param id A character string specifying the id of a pane.
 #'
-#' @param tabs A character string specifying the id of a set of tabs.
+#' @param labels A character vector specifying the labels of the navigation
+#'   items.
 #'
-#' @param labels A character vector specifying the labels of the tabs.
+#' @param values A character vector specifying custom values for each navigation
+#'   item, defaults to `labels`.
 #'
-#' @param values A character vector specifying a custom value for each tab,
-#'   defaults to `labels`.
+#' @param fill One of `TRUE` or `FALSE` specifying if the nav input fills the
+#'   width of its parent element. If `TRUE`, the space is divided evenly among
+#'   the nav items.
 #'
-#' @param active One of `values` specifying which tab is initially shown,
-#'   defaults to `values[1]`.
+#' @param appearance One of `"pills"` or `"tabs"` specifying the appearance of
+#'   the nav input.
 #'
-#' @param ... For **tabContent**, calls to `tabPane` or named arguments passed
+#' @param ... For **navContent**, calls to `navPane()` or named arguments passed
 #'   as HTML attributes to the parent element.
 #'
-#'   For **tabPane**, any number of tag elements or named arguments passed as
-#'   HTML attributes to the parent element.
+#'   For **navInput** and **navPane**, any number of tag elements or named
+#'   arguments passed as HTML attributes to the parent element.
 #'
-#'   For **tabTabs**, additional named arguments passed as HTML attributes to
-#'   the parent element.
+#' @section App with pills:
 #'
-#' @family layout
-#' @export
-#' @examples
-#'
-#' ### A card with tabbed content
-#'
-#' card(
-#'   header = tabTabs(
+#' ```R
+#' ui <- container(
+#'   navInput(
 #'     id = "tabs",
-#'     labels = c("Home", "Profile", "Contact"),
+#'     items = paste("Tab", 1:3),
+#'     values = paste0("pane", 1:3),
+#'     appearance = "pills"
 #'   ),
-#'   tabContent(
-#'     tabs = "tabs",
-#'     tabPane(
-#'       "Vestibulum id ligula porta felis euismod semper. Cras justo
-#'              odio, dapibus ac facilisis in, egestas eget quam."
+#'   navContent(
+#'     navPane(
+#'       id = "pane1",
+#'       "Nullam tristique diam non turpis.",
+#'       "Cum sociis natoque penatibus et magnis dis parturient montes, ",
+#'       "nascetur ridiculus mus.",
+#'       "Etiam laoreet quam sed arcu.",
+#'       "Curabitur vulputate vestibulum lorem."
 #'     ),
-#'     tabPane(
-#'       "Duis mollis, est non commodo luctus, nisi erat porttitor ligula,
-#'              eget lacinia odio sem nec elit. Aenean eu leo quam. Pellentesque
-#'              ornare sem lacinia quam venenatis vestibulum."
+#'     navPane(
+#'       id = "pane2",
+#'       "Praesent fermentum tempor tellus.",
+#'       "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.",
+#'       "Phasellus lacus.",
+#'       "Nam euismod tellus id erat."
 #'     ),
-#'     tabPane(
-#'       "Donec ullamcorper nulla non metus auctor fringilla. Nullam id
-#'              dolor id nibh ultricies vehicula ut id elit."
+#'     navPane(
+#'       id = "pane3",
+#'       "Nullam eu ante vel est convallis dignissim.",
+#'       "Phasellus at dui in ligula mollis ultricies.",
+#'       "Fusce suscipit, wisi nec facilisis facilisis, est dui ",
+#'       "fermentum leo, quis tempor ligula erat quis odio.",
+#'       "Donec hendrerit tempor tellus."
 #'     )
 #'   )
-#' ) %>%
-#'   margin(4) %>%
-#'   width(50)
+#' )
 #'
-#' ### Two column layout with tabs
+#' server <- function(input, output) {
+#'   observeEvent(input$tabs, {
+#'     showPane(input$tabs)
+#'   })
+#' }
 #'
-#' row(
-#'   column(
-#'     default = 4,
-#'     card(
-#'       p("Nullam quis risus eget urna mollis ornare vel eu leo. Nullam
-#'             id dolor id nibh ultricies vehicula ut id elit.")
-#'     ) %>%
-#'       background("grey")
+#' shinyApp(ui, server)
+#' ```
+#'
+#' @section App with dropdown:
+#'
+#' ```R
+#' ui <- container(
+#'   navInput(
+#'     id = "tabs",
+#'     items = list(
+#'       "Tab 1",
+#'       dropdown(
+#'         label = "Tab 2",
+#'         buttonInput("action", "Action"),
+#'         buttonInput("another", "Another action")
+#'       ),
+#'       "Tab 3"
+#'     ),
+#'     values = paste0("pane", 1:3),
+#'     appearance = "tabs"
 #'   ),
-#'   column(
-#'     tabTabs(
-#'       id = "myTabs",
-#'       labels = c("Home", "About", "Posts")
-#'     ) %>%
-#'       margin(bottom = 5),
-#'     tabContent(
-#'       tabs = "myTabs",
-#'       tabPane(
-#'         h4("This is home."),
-#'         p("Pellentesque dapibus suscipit ligula.  Donec ",
-#'           "posuere augue in quam.  Etiam vel tortor ",
-#'           "sodales tellus ultricies commodo.  Suspendisse ",
-#'           "potenti.  Aenean in sem ac leo mollis blandit."),
-#'         p("Donec neque quam, dignissim in, mollis nec, ",
-#'           "sagittis eu, wisi.  Phasellus lacus.  Etiam ",
-#'           "laoreet quam sed arcu.  Phasellus at dui in ligula",
-#'           "mollis ultricies.  Integer placerat tristique nisl.")
-#'       ),
-#'       tabPane(
-#'         h4("All about."),
-#'         p("Pellentesque dapibus suscipit ligula. ",
-#'           "Phasellus neque orci, porta a, aliquet quis, semper a, massa. ",
-#'           "Nullam tristique diam non turpis. ",
-#'           "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.")
-#'       ),
-#'       tabPane(
-#'         h4("Blog items."),
-#'         p("Nullam tempus.  Mauris ac felis vel velit ",
-#'           "tristique imperdiet.  Donec at pede.  Etiam vel ",
-#'           "neque nec dui dignissim bibendum.  Vivamus id ",
-#'           "enim.  Phasellus neque orci, porta a, aliquet ",
-#'           "quis, semper a, massa.  Phasellus purus.")
+#'   navContent(
+#'     navPane(
+#'       id = "pane1",
+#'       "Donec at pede.",
+#'       "Pellentesque tristique imperdiet tortor.",
+#'       "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
+#'     ),
+#'     navPane(
+#'       id = "pane2",
+#'       "Nullam tristique diam non turpis.",
+#'       "Cras placerat accumsan nulla.",
+#'       "Donec at pede."
+#'     ),
+#'     navPane(
+#'       id = "pane3",
+#'       "Phasellus purus.",
+#'       "Etiam laoreet quam sed arcu.",
+#'       "Donec pretium posuere tellus."
+#'     )
+#'   )
+#' )
+#'
+#' server <- function(input, output) {
+#'   observeEvent(input$tabs, {
+#'     showPane(input$tabs)
+#'   })
+#'
+#'   observeEvent(c(input$action, input$another), {
+#'     if (input$action > 0 || input$another > 0) {
+#'       showPane("pane2")
+#'     }
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
+#'
+#' @section App with multiple sets of panes:
+#'
+#' ```R
+#' ui <- container(
+#'   navInput(
+#'     id = "tabs",
+#'     items = paste("Tab", 1:3),
+#'     values = paste0("pane", 1:3)
+#'   ),
+#'   row(
+#'     column(
+#'       navContent(
+#'         navPane(
+#'           id = "pane1",
+#'           "Aenean eu leo quam. Pellentesque ornare sem lacinia quam ",
+#'           "venenatis vestibulum. Praesent commodo cursus magna, vel ",
+#'           "scelerisque nisl consectetur et. Vivamus sagittis lacus vel ",
+#'           "augue laoreet rutrum faucibus dolor auctor."
+#'         ),
+#'         navPane(
+#'           id = "pane2",
+#'           "Nullam quis risus eget urna mollis ornare vel eu leo. ",
+#'           "Maecenas faucibus mollis interdum. Praesent commodo cursus ",
+#'           "magna, vel scelerisque nisl consectetur et."
+#'         ),
+#'         navPane(
+#'           id = "pane3",
+#'           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+#'           "Vivamus sagittis lacus vel augue laoreet rutrum faucibus ",
+#'           "dolor auctor. Etiam porta sem malesuada magna mollis euismod."
+#'         )
+#'       )
+#'     ),
+#'     column(
+#'       navContent(
+#'         navPane(
+#'           id = "pane1",
+#'           "Aenean eu leo quam. Pellentesque ornare sem lacinia quam ",
+#'           "venenatis vestibulum. Praesent commodo cursus magna, vel ",
+#'           "scelerisque nisl consectetur et. Vivamus sagittis lacus vel ",
+#'           "augue laoreet rutrum faucibus dolor auctor."
+#'         ),
+#'         navPane(
+#'           id = "pane2",
+#'           "Nullam quis risus eget urna mollis ornare vel eu leo. ",
+#'           "Maecenas faucibus mollis interdum. Praesent commodo cursus ",
+#'           "magna, vel scelerisque nisl consectetur et."
+#'         ),
+#'         navPane(
+#'           id = "pane3",
+#'           "Lorem ipsum dolor sit amet, consectetur adipiscing elit. ",
+#'           "Vivamus sagittis lacus vel augue laoreet rutrum faucibus ",
+#'           "dolor auctor. Etiam porta sem malesuada magna mollis euismod."
+#'         )
 #'       )
 #'     )
 #'   )
-#' ) %>%
-#'   padding(3)
+#' )
 #'
-tabTabs <- function(id, labels, values = labels, active = values[1], ...) {
-  if (length(labels) == 0) {
+#' server <- function(input, output) {
+#'   observeEvent(input$tabs, {
+#'     showPane(input$tabs)
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
+#'
+#' @family inputs
+#' @export
+#' @examples
+#'
+#' ### Nav styled as tabs
+#'
+#' navInput(
+#'   id = "tabs",
+#'   items = c(
+#'     "Tab 1",
+#'     "Tab 2",
+#'     "Tab 3"
+#'   ),
+#'   appearance = "tabs"
+#' )
+#'
+#' ### Nav styled as pills
+#'
+#' navInput(
+#'   id = "tabs",
+#'   items = paste("Tab", 1:3),
+#'   appearance = "pills"
+#' )
+#'
+#' ### Nav with dropdown
+#'
+#' navInput(
+#'   id = "tabs",
+#'   items = list(
+#'     "Tab 1",
+#'     dropdown(
+#'       label = "Tab 2",
+#'       buttonInput("action", "Action"),
+#'       buttonInput("another", "Another action")
+#'     ),
+#'     "Tab 2"
+#'   )
+#' )
+#'
+navInput <- function(id, items, values = items, ..., fill = FALSE,
+                     appearance = NULL) {
+  if (!is.null(appearance) && !re(appearance, "pills|tabs", FALSE)) {
     stop(
-      "invalid `tabTabs()` argument, `labels` must contain at least one ",
-      "character string",
-      call = FALSE
-    )
-  }
-
-  if (!all(is.character(labels))) {
-    stop(
-      "invalid `tabTabs()` argument, `labels` must be a character vector",
+      "invalid `navInput()` argument, `appearance` must be one of ",
+      '"pills" or "tabs"',
       call. = FALSE
     )
   }
 
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `tabTabs()` argument, `id` must be a character string or ",
-      "NULL",
-      call. = FALSE
-    )
-  }
+  values <- vapply(
+    values,
+    function(x) if (is_tag(x)) x$children[[1]]$children[[1]] else (x %||% ""),
+    character(1)
+  )
 
-  if (!is.null(active)) {
-    if (length(active) > 1) {
-      stop(
-        "invalid `tabTabs()` argument, `active` must be a single character ",
-        "string",
-        call. = FALSE
-      )
-    }
-
-    if (!(active %in% values)) {
-      stop(
-        "invalid `tabTabs()` argument, `active` must be one of `values`",
-        call. = FALSE
-      )
-    }
-  }
-
-  active <- match2(active, values)
-
-  this <- tags$ul(
-    class = "yonder-tabs nav nav-tabs",
-    role = "tablist",
+  tags$ul(
+    class = collate(
+      "yonder-nav",
+      "nav",
+      if (fill) "nav-fill",
+      if (!is.null(appearance)) paste0("nav-", appearance)
+    ),
     id = id,
-    ...,
     Map(
-      label = labels,
+      label = items,
       value = values,
-      active = active,
+      active = c(TRUE, rep.int(FALSE, length(items) - 1)),
       function(label, value, active) {
-        tags$li(
-          class = "nav-item",
-          tags$a(
-            class = collate(
-              "nav-link",
-              if (active) "active"
-            ),
-            `data-tabs` = "tab",
-            `data-value` = value,
-            `aria-selected` = if (active) "true" else "false",
-            label
-          )
-        )
+        navItem(label, value, active)
       }
     )
   )
+}
 
-  this <- attachDependencies(
-    this,
+navItem <- function(base, value = NULL, active = FALSE) {
+  value <- if (value != "") value
+
+  if (is.character(base)) {
+    base <- tags$li(
+      class = "nav-item",
+      tags$a(
+        class = collate(
+          "nav-link",
+          if (active) "active"
+        ),
+        href = "#",
+        `data-value` = value %||% base,
+        base
+      )
+    )
+
+    return(base)
+  }
+
+  if (tagHasClass(base, "dropdown")) {
+    base$children[[1]]$name <- "a"
+    base$children[[1]]$attribs$class <- "nav-link dropdown-toggle"
+    base$children[[1]]$attribs$type <- NULL
+    base$children[[1]]$attribs$`data-value` <- value %||% base$children[[1]]$children[[1]]
+    base$children[[1]]$attribs$role <- "button"
+    base$children[[1]]$attribs$href <- "#"
+
+    if (active) {
+      base$children[[1]] <- tagAddClass(base$children[[1]], "active")
+    }
+
+    base$name <- "li"
+    base <- tagAddClass(base, "nav-item")
+
+    return(base)
+  }
+
+  stop(
+    "could not convert object to nav item",
+    call. = FALSE
+  )
+}
+
+#' @rdname navInput
+#' @export
+navContent <- function(...) {
+  panes <- tags$div(
+    class = "tab-content",
+    ...
+  )
+
+  panes <- attachDependencies(
+    panes,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
 
-  this
+  panes
 }
 
-#' @rdname tabTabs
+#' @rdname navInput
 #' @export
-tabContent <- function(tabs, ...) {
-  if (!is.character(tabs)) {
+navPane <- function(id, ...) {
+  pane <- tags$div(
+    class = "tab-pane fade",
+    role = "tab-panel",
+    `data-id` = id,
+    ...
+  )
+
+  pane <- attachDependencies(
+    pane,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+
+  pane
+}
+
+#' @rdname navInput
+#' @export
+showPane <- function(id, session = getDefaultReactiveDomain()) {
+  if (is.null(session)) {
     stop(
-      "invalid `tabContent()` argument, `tabs` must be a character string",
+      "`showPane()` must be called in a reactive environment",
       call. = FALSE
     )
   }
 
-  this <- tags$div(
-    class = "tab-content",
-    `data-tabs` = tabs,
-    ...
-  )
+  if (!is.character(id)) {
+    stop(
+      "invalid `showPane()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
 
-  this <- attachDependencies(
-    this,
-    c(shinyDep(), yonderDep(), bootstrapDep())
-  )
-
-  this
-}
-
-#' @rdname tabTabs
-#' @export
-tabPane <- function(...) {
-  this <- tags$div(
-    class = "tab-pane fade",
-    role = "tab-panel",
-    ...
-  )
-
-  this <- attachDependencies(
-    this,
-    c(shinyDep(), yonderDep(), bootstrapDep())
-  )
-
-  this
+  session$sendCustomMessage("yonder:pane", list(
+    type = "show",
+    data = list(
+      target = id
+    )
+  ))
 }

@@ -103,7 +103,7 @@ roxygen:
       <div class="yonder-group input-group">
         <input type="text" class="form-control" placeholder="Search terms"/>
         <div class="input-group-append">
-          <button class="yonder-button btn btn-grey border-transparent border" type="button" role="button" id="button">Go!</button>
+          <button class="yonder-button btn btn-grey border border-transparent" type="button" role="button" id="button">Go!</button>
         </div>
       </div>
   - type: markdown
@@ -150,7 +150,7 @@ roxygen:
         </div>
         <input type="text" class="form-control" placeholder="Username"/>
         <div class="input-group-append">
-          <button class="yonder-button btn btn-grey bg-transparent border-blue border" type="button" role="button">Search</button>
+          <button class="yonder-button btn btn-grey bg-transparent border border-blue" type="button" role="button">Search</button>
         </div>
       </div>
 ---

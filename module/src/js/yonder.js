@@ -37,12 +37,6 @@ $(() => {
     $(e.delegateTarget).find("input[type='file']").trigger("click");
   });
 
-  $(".nav:not([role='tablist']) li").on("click", function(e) {
-    var $this = $(this);
-    $(".nav-link", $this.parent(".nav")).removeClass("active");
-    $(".nav-link", $this).addClass("active");
-  });
-
   $(document).on("shiny:connected", function() {
     $(".yonder-submit[data-type=\"submit\"]").attr("type", "submit");
   });

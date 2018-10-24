@@ -79,7 +79,6 @@ card(
 }
 \seealso{
 Other layout: \code{\link{column}}, \code{\link{fieldset}},
-  \code{\link{flex}}, \code{\link{navbar}},
-  \code{\link{tabTabs}}
+  \code{\link{flex}}, \code{\link{navbar}}
 }
 \concept{layout}
