@@ -18,15 +18,18 @@ roxygen:
     description: |-
       A character string or vector specifying a label for the
       checkbox or checkbar.
-  - name: value
+  - name: value,values
     description: |-
-      A character string, object to coerce to a character string, or
-      `NULL` specifying the value of the checkbox or a new value for the
-      checkbox, defaults to `choice`.
+      A character string or vector specifying values for the
+      checkbox or checkbar input, defaults to `choice` or `values`, respectively.
   - name: checked
     description: |-
       If `TRUE` the checkbox renders in a checked state, defaults
       to `FALSE`.
+  - name: selected
+    description: |-
+      One of `values` specifying the initial value of the checkbar
+      input, defaults to `NULL`, in which case no choice is selected.
   - name: '...'
     description: |-
       Additional named arguments passed as HTML attributes to the parent
@@ -52,8 +55,8 @@ roxygen:
     value: |-
       <div class="yonder-checkbox">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-406-219" data-value="Suspendisse potenti" checked/>
-          <label class="custom-control-label" for="checkbox-406-219">Suspendisse potenti</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-544-113" data-value="Suspendisse potenti" checked/>
+          <label class="custom-control-label" for="checkbox-544-113">Suspendisse potenti</label>
           <div class="invalid-feedback"></div>
           <div class="valid-feedback"></div>
         </div>

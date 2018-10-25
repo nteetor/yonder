@@ -127,7 +127,7 @@ roxygen:
             <p class="card-text">Cras placerat accumsan nulla.</p>
           </div>
         </div>
-        <div class="card border-orange border">
+        <div class="card border border-orange">
           <div class="card-body">
             <p class="card-text">Aliquam posuere.</p>
             <p class="card-text">Phasellus neque orci, porta a, aliquet quis, semper a, massa.</p>
@@ -240,13 +240,15 @@ roxygen:
       deck(
         card(
           title = "Nullam tristique",
-          "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+          "Fusce sagittis, libero non molestie mollis, magna orci ultrices ",
+          "dolor, at vulputate neque nulla lacinia eros.",
           "Nunc rutrum turpis sed pede.",
           footer = "Cras placerat accumsan nulla."
         ),
         card(
           title = "Integer placerat",
-          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit tempor tellus.",
+          "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ",
+          "hendrerit tempor tellus.",
           footer = "Cras placerat accumsan nulla."
         ),
         card(
@@ -261,7 +263,8 @@ roxygen:
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Nullam tristique</h5>
-            <p class="card-text">Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.</p>
+            <p class="card-text">Fusce sagittis, libero non molestie mollis, magna orci ultrices </p>
+            <p class="card-text">dolor, at vulputate neque nulla lacinia eros.</p>
             <p class="card-text">Nunc rutrum turpis sed pede.</p>
           </div>
           <div class="card-footer">Cras placerat accumsan nulla.</div>
@@ -269,7 +272,8 @@ roxygen:
         <div class="card">
           <div class="card-body">
             <h5 class="card-title">Integer placerat</h5>
-            <p class="card-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit tempor tellus.</p>
+            <p class="card-text">Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec </p>
+            <p class="card-text">hendrerit tempor tellus.</p>
           </div>
           <div class="card-footer">Cras placerat accumsan nulla.</div>
         </div>

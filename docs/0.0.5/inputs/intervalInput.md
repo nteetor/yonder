@@ -80,6 +80,10 @@ roxygen:
     description: |-
       A character string specifying a suffix for the range input
       slider value, defaults to `NULL`, in which case a prefix is not appended.
+  - name: '...'
+    description: |-
+      Additional named arguments passed as HTML attributes to the parent
+      element.
   sections: []
   return: ~
   family: inputs

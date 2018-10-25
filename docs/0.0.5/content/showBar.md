@@ -39,6 +39,8 @@ roxygen:
       to `FALSE`.
   - name: outlet
     description: A character string specifying the id of a progress outlet.
+  - name: bar
+    description: A bar element, typically a call to `bar()`.
   - name: session
     description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain.html).
   sections:

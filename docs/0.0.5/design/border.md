@@ -51,17 +51,17 @@ roxygen:
   - type: output
     value: |-
       <div class="d-flex flex-wrap">
-        <div class="p-5 m-2 border-red border"></div>
-        <div class="p-5 m-2 border-purple border"></div>
-        <div class="p-5 m-2 border-indigo border"></div>
-        <div class="p-5 m-2 border-blue border"></div>
-        <div class="p-5 m-2 border-cyan border"></div>
-        <div class="p-5 m-2 border-teal border"></div>
-        <div class="p-5 m-2 border-green border"></div>
-        <div class="p-5 m-2 border-yellow border"></div>
-        <div class="p-5 m-2 border-amber border"></div>
-        <div class="p-5 m-2 border-orange border"></div>
-        <div class="p-5 m-2 border-grey border"></div>
-        <div class="p-5 m-2 border-white border"></div>
+        <div class="p-5 m-2 border border-red"></div>
+        <div class="p-5 m-2 border border-purple"></div>
+        <div class="p-5 m-2 border border-indigo"></div>
+        <div class="p-5 m-2 border border-blue"></div>
+        <div class="p-5 m-2 border border-cyan"></div>
+        <div class="p-5 m-2 border border-teal"></div>
+        <div class="p-5 m-2 border border-green"></div>
+        <div class="p-5 m-2 border border-yellow"></div>
+        <div class="p-5 m-2 border border-amber"></div>
+        <div class="p-5 m-2 border border-orange"></div>
+        <div class="p-5 m-2 border border-grey"></div>
+        <div class="p-5 m-2 border border-white"></div>
       </div>
 ---

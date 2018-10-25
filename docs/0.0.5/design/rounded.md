@@ -45,11 +45,11 @@ roxygen:
   - type: output
     value: |-
       <div class="d-flex flex-wrap">
-        <div class="p-5 m-2 border-indigo border rounded-top"></div>
-        <div class="p-5 m-2 border-indigo border rounded-right"></div>
-        <div class="p-5 m-2 border-indigo border rounded-bottom"></div>
-        <div class="p-5 m-2 border-indigo border rounded-left"></div>
-        <div class="p-5 m-2 border-indigo border rounded-circle"></div>
-        <div class="p-5 m-2 border-indigo border rounded"></div>
+        <div class="p-5 m-2 border border-indigo rounded-top"></div>
+        <div class="p-5 m-2 border border-indigo rounded-right"></div>
+        <div class="p-5 m-2 border border-indigo rounded-bottom"></div>
+        <div class="p-5 m-2 border border-indigo rounded-left"></div>
+        <div class="p-5 m-2 border border-indigo rounded-circle"></div>
+        <div class="p-5 m-2 border border-indigo rounded"></div>
       </div>
 ---

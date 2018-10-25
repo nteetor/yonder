@@ -26,30 +26,30 @@ roxygen:
   - type: source
     value: |2-
 
-      addressInput(id = NULL)
+      addressInput(id = "mailing")
   - type: output
     value: |-
-      <div class="yonder-address">
+      <div class="yonder-address" id="mailing">
         <div class="form-group">
-          <label for="address-468-608" class="col-form-label">Address</label>
-          <input type="text" class="form-control" id="address-468-608" placeholder="Street address, P.O. box"/>
+          <label for="address-339-572" class="col-form-label">Address</label>
+          <input type="text" class="form-control" id="address-339-572" placeholder="Street address, P.O. box"/>
         </div>
         <div class="form-group">
-          <label for="address-674-706" class="form-control-label sr-only">Address line 2</label>
-          <input type="text" class="form-control" id="address-674-706" placeholder="Apartment, floor, unit"/>
+          <label for="address-826-527" class="form-control-label sr-only">Address line 2</label>
+          <input type="text" class="form-control" id="address-826-527" placeholder="Apartment, floor, unit"/>
         </div>
         <div class="form-row">
           <div class="form-group col-md-6 mt-auto">
-            <label class="form-control-label" for="address-796-811">City</label>
-            <input type="text" class="form-control" id="address-796-811"/>
+            <label class="form-control-label" for="address-606-198">City</label>
+            <input type="text" class="form-control" id="address-606-198"/>
           </div>
           <div class="form-group col-md-3">
-            <label class="form-control-label" for="address-901-233">State</label>
-            <input type="text" class="form-control" id="address-901-233"/>
+            <label class="form-control-label" for="address-60-916">State</label>
+            <input type="text" class="form-control" id="address-60-916"/>
           </div>
           <div class="form-group col-md-3 mt-auto">
-            <label class="form-control-label" for="address-584-688">Zip</label>
-            <input type="text" class="form-control" id="address-584-688"/>
+            <label class="form-control-label" for="address-385-858">Zip</label>
+            <input type="text" class="form-control" id="address-385-858"/>
           </div>
         </div>
       </div>

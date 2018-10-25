@@ -51,16 +51,16 @@ roxygen:
         </label>
         <div class="yonder-radio" id="radios">
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-241-55" name="radios" data-value="Ready" checked/>
-            <label class="custom-control-label" for="radio-241-55">Ready</label>
+            <input class="custom-control-input" type="radio" id="radio-574-792" name="radios" data-value="Ready" checked/>
+            <label class="custom-control-label" for="radio-574-792">Ready</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-621-579" name="radios" data-value="Set"/>
-            <label class="custom-control-label" for="radio-621-579">Set</label>
+            <input class="custom-control-input" type="radio" id="radio-894-822" name="radios" data-value="Set"/>
+            <label class="custom-control-label" for="radio-894-822">Set</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-49-581" name="radios" data-value="Go"/>
-            <label class="custom-control-label" for="radio-49-581">Go</label>
+            <input class="custom-control-input" type="radio" id="radio-411-152" name="radios" data-value="Go"/>
+            <label class="custom-control-label" for="radio-411-152">Go</label>
           </div>
           <div class="invalid-feedback"></div>
         </div>

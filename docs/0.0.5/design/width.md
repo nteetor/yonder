@@ -43,7 +43,7 @@ roxygen:
         border("black")
   - type: output
     value: |-
-      <div style="height: 50px; width: 120px;" class="border-black border">
+      <div style="height: 50px; width: 120px;" class="border border-black">
         <div class="w-25 h-100 bg-yellow"></div>
       </div>
 ---

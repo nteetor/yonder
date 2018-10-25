@@ -90,7 +90,7 @@ roxygen:
     value: |-
       <div class="yonder-file input-group mt-auto mr-0 mb-auto ml-0">
         <div class="input-group-prepend">
-          <button class="yonder-button btn btn-grey bg-transparent border-green border" type="button" role="button">Upload</button>
+          <button class="yonder-button btn btn-grey bg-transparent border border-green" type="button" role="button">Upload</button>
         </div>
         <div class="custom-file">
           <input type="file" class="custom-file-input" multiple/>
