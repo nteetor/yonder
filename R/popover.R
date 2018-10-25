@@ -5,8 +5,9 @@
 #' element with an HTML id. Popovers are great for explaining inputs and giving
 #' hints to the users. Popovers are hidden with `closePopover()`.
 #'
-#' @param content A character string or tag element specifying the content of
-#'   the popover.
+#' @param ... Character strings or tag elements specifying the content of the
+#'   popover or additional named arguments passed as HTML attributes to the
+#'   parent element.
 #'
 #' @param title A character string specifying a title for the popover, defaults
 #'   to `NULL`, in which case a title is not added.

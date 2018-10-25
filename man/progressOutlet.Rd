@@ -37,6 +37,8 @@ to \code{FALSE}.}
 
 \item{outlet}{A character string specifying the id of a progress outlet.}
 
+\item{bar}{A bar element, typically a call to \code{bar()}.}
+
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{

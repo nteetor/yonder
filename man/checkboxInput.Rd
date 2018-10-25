@@ -17,15 +17,17 @@ function as part of the \code{input} object.}
 \item{choice, choices}{A character string or vector specifying a label for the
 checkbox or checkbar.}
 
-\item{value}{A character string, object to coerce to a character string, or
-\code{NULL} specifying the value of the checkbox or a new value for the
-checkbox, defaults to \code{choice}.}
+\item{value, values}{A character string or vector specifying values for the
+checkbox or checkbar input, defaults to \code{choice} or \code{values}, respectively.}
 
 \item{checked}{If \code{TRUE} the checkbox renders in a checked state, defaults
 to \code{FALSE}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
+
+\item{selected}{One of \code{values} specifying the initial value of the checkbar
+input, defaults to \code{NULL}, in which case no choice is selected.}
 }
 \description{
 A reactive checkbox input. When a checkbox input is unchecked the reactive

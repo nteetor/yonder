@@ -181,6 +181,9 @@ linkInput <- function(id, text, ...) {
 #' @param values A character vector of values, one for each button specified,
 #'   defaults to `labels`.
 #'
+#' @param ... Additional named arguments passed as HTML attributes to the
+#'   parent element.
+#'
 #' @family inputs
 #' @export
 #' @examples

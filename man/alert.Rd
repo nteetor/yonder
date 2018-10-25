@@ -20,6 +20,8 @@ named arguments passed as HTML attributes to the alert element.}
 \item{title}{A character string or tag element specifying a heading for the
 alert, defaults to \code{NULL}, in which case a title is not added.}
 
+\item{alert}{An alert tag element, typically a call to \code{alert()}.}
+
 \item{duration}{A positive integer or \code{NULL} specifying the duration of the
 alert, by default the alert is removed after 4 seconds. If \code{NULL} the
 alert is not automatically removed.}
@@ -28,6 +30,8 @@ alert is not automatically removed.}
 button is added to the alert. When this button is clicked a reactive value
 is triggered, \code{input[[action]]} is set to \code{TRUE}. When the alert is removed
 \code{input[[action]]} is reset to \code{NULL}.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 Use \code{showAlert} to let the user know of successes or to call attention to

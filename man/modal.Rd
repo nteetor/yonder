@@ -22,6 +22,9 @@ modal.}
 \item{footer}{A character string or tag element specifying the footer of the
 modal.}
 
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element.}
+
 \item{center}{One of \code{TRUE} or \code{FALSE} specifying whether the modal is
 vertically centered on the page, defaults to \code{FALSE}.}
 
