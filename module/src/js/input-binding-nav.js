@@ -28,43 +28,45 @@ $.extend(navInputBinding, {
 });
 
 Shiny.addCustomMessageHandler("yonder:pane", (msg) => {
-  if (msg.type === undefined) {
+  if (msg.type === undefined ||
+      msg.data === undefined ||
+      msg.data.target === undefined) {
+    return;
+  }
+
+  let pane = document.getElementById(msg.data.target);
+
+  if (pane === null ||
+      !pane.parentElement.classList.contains("tab-content")) {
     return;
   }
 
   if (msg.type === "show") {
-    if (msg.data.target === undefined) {
-      return;
-    }
+    let previous = pane.parentElement.querySelector(".active");
 
-    let panes = document.querySelectorAll(`[data-id="${ msg.data.target }"]`);
+    const complete = () => {
+      const hiddenEvent = $.Event("hidden.bs.tab", {
+        relatedTarget: pane
+      });
 
-    if (panes.length === 0) {
-      return;
-    }
+      const shownEvent = $.Event("shown.bs.tab", {
+        relatedTarget: previous
+      });
 
-    for (const pane of panes) {
-      if (!pane.parentElement.classList.contains("tab-content")) {
-        continue;
-      }
+      $(previous).trigger(hiddenEvent);
+      $(pane).trigger(shownEvent);
+    };
 
-      let previous = pane.parentElement.querySelector(".active");
+    bootstrap.Tab.prototype._activate(pane, pane.parentElement, complete);
 
-      const complete = () => {
-        const hiddenEvent = $.Event("hidden.bs.tab", {
-          relatedTarget: pane
-        });
+  } else if (msg.type === "after") {
 
-        const shownEvent = $.Event("shown.bs.tab", {
-          relatedTarget: previous
-        });
+    $(pane).after(msg.data.content);
 
-        $(previous).trigger(hiddenEvent);
-        $(pane).trigger(shownEvent);
-      };
+  } else if (msg.type === "before") {
 
-      bootstrap.Tab.prototype._activate(pane, pane.parentElement, complete);
-    }
+    $(pane).before(msg.data.content);
+
   }
 });
 
