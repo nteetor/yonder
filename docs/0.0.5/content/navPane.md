@@ -5,8 +5,9 @@ layout: page
 roxygen:
   title: Navigation panes
   description: |-
-    These functions pair with [navInput()](/yonder/0.0.5/inputs/navInput.html). Use `nacContent()` and `navPane()` to
-    create the pane layout. To show a new pane use `showPane()`.
+    These functions pair with [navInput()](/yonder/0.0.5/inputs/navInput.html). Use `navContent()` and `navPane()` to
+    create the pane layout. To show a new pane use `showPane()` in the server
+    function.
   parameters:
   - name: '...'
     description: |-

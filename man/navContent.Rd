@@ -24,8 +24,9 @@ element.}
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveContext]{getDefaultReactiveContext()}}.}
 }
 \description{
-These functions pair with \code{\link[=navInput]{navInput()}}. Use \code{nacContent()} and \code{navPane()} to
-create the pane layout. To show a new pane use \code{showPane()}.
+These functions pair with \code{\link[=navInput]{navInput()}}. Use \code{navContent()} and \code{navPane()} to
+create the pane layout. To show a new pane use \code{showPane()} in the server
+function.
 }
 \section{App with pills}{
 \preformatted{ui <- container(

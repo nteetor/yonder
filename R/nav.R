@@ -142,8 +142,9 @@ navItem <- function(base, value = NULL, active = FALSE) {
 
 #' Navigation panes
 #'
-#' These functions pair with [navInput()]. Use `nacContent()` and `navPane()` to
-#' create the pane layout. To show a new pane use `showPane()`.
+#' These functions pair with [navInput()]. Use `navContent()` and `navPane()` to
+#' create the pane layout. To show a new pane use `showPane()` in the server
+#' function.
 #'
 #' @param ... For **navContent**, any number of nav panes or named arguments
 #'   passed as HTML attributes to the parent element.
