@@ -147,23 +147,9 @@
     </dd>
     
     <dd>
-      <a href="/yonder/0.0.5/inputs/navContent.html"
-         alt="Page navigation">
-        navContent
-      </a>
-    </dd>
-    
-    <dd>
       <a href="/yonder/0.0.5/inputs/navInput.html"
          alt="Page navigation">
         navInput
-      </a>
-    </dd>
-    
-    <dd>
-      <a href="/yonder/0.0.5/inputs/navPane.html"
-         alt="Page navigation">
-        navPane
       </a>
     </dd>
     
@@ -213,13 +199,6 @@
       <a href="/yonder/0.0.5/inputs/selectInput.html"
          alt="Select input">
         selectInput
-      </a>
-    </dd>
-    
-    <dd>
-      <a href="/yonder/0.0.5/inputs/showPane.html"
-         alt="Page navigation">
-        showPane
       </a>
     </dd>
     
@@ -371,15 +350,19 @@ function as part of the <code class="highlighter-rouge">input</code> object.</p>
 checkbox or checkbar.</p>
 </dd>
             
-            <dt id="params-value" class="col-sm-3">value</dt>
-            <dd class="col-sm-9"><p>A character string, object to coerce to a character string, or
-<code class="highlighter-rouge">NULL</code> specifying the value of the checkbox or a new value for the
-checkbox, defaults to <code class="highlighter-rouge">choice</code>.</p>
+            <dt id="params-value,values" class="col-sm-3">value,values</dt>
+            <dd class="col-sm-9"><p>A character string or vector specifying values for the
+checkbox or checkbar input, defaults to <code class="highlighter-rouge">choice</code> or <code class="highlighter-rouge">values</code>, respectively.</p>
 </dd>
             
             <dt id="params-checked" class="col-sm-3">checked</dt>
             <dd class="col-sm-9"><p>If <code class="highlighter-rouge">TRUE</code> the checkbox renders in a checked state, defaults
 to <code class="highlighter-rouge">FALSE</code>.</p>
+</dd>
+            
+            <dt id="params-selected" class="col-sm-3">selected</dt>
+            <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">values</code> specifying the initial value of the checkbar
+input, defaults to <code class="highlighter-rouge">NULL</code>, in which case no choice is selected.</p>
 </dd>
             
             <dt id="params-..." class="col-sm-3">...</dt>
@@ -414,8 +397,8 @@ element.</p>
           <div class="mb-5">
             <div class="yonder-checkbox">
   <div class="custom-control custom-checkbox">
-    <input class="custom-control-input" type="checkbox" id="checkbox-823-549" data-value="Suspendisse potenti" checked/>
-    <label class="custom-control-label" for="checkbox-823-549">Suspendisse potenti</label>
+    <input class="custom-control-input" type="checkbox" id="checkbox-38-246" data-value="Suspendisse potenti" checked/>
+    <label class="custom-control-label" for="checkbox-38-246">Suspendisse potenti</label>
     <div class="invalid-feedback"></div>
     <div class="valid-feedback"></div>
   </div>

@@ -147,23 +147,9 @@
     </dd>
     
     <dd>
-      <a href="/yonder/0.0.5/inputs/navContent.html"
-         alt="Page navigation">
-        navContent
-      </a>
-    </dd>
-    
-    <dd>
       <a href="/yonder/0.0.5/inputs/navInput.html"
          alt="Page navigation">
         navInput
-      </a>
-    </dd>
-    
-    <dd>
-      <a href="/yonder/0.0.5/inputs/navPane.html"
-         alt="Page navigation">
-        navPane
       </a>
     </dd>
     
@@ -213,13 +199,6 @@
       <a href="/yonder/0.0.5/inputs/selectInput.html"
          alt="Select input">
         selectInput
-      </a>
-    </dd>
-    
-    <dd>
-      <a href="/yonder/0.0.5/inputs/showPane.html"
-         alt="Page navigation">
-        showPane
       </a>
     </dd>
     
@@ -351,12 +330,9 @@
         <div class="page-body col-8 pt-4">
           <h2>Page navigation</h2>
 
-          <p>Create a set of tabs for controlling tab content. Tabs are separated from
-content and panes for flexible placement. In the examples below you can see
-how this allows tabs to be used inside <a href="/yonder/0.0.5/content/card.html">card()</a>s. The flexibility also allows
-tabs to be added to navbars. When building tabbed content be sure to create a
-pane for each label in your tabs and link tabs to content by the <code class="highlighter-rouge">id</code> and
-<code class="highlighter-rouge">tabs</code> arguments, see below.</p>
+          <p>A reactive input styled as a navigation control. The navigation input can be
+styled as links, tabs, or pills. A nav input is paired with <a href="/yonder/0.0.5/content/navContent.html">navContent()</a>
+and <a href="/yonder/0.0.5/content/showPane.html">showPane()</a> to create tabbed user interfaces.</p>
 
 
           
@@ -367,9 +343,9 @@ pane for each label in your tabs and link tabs to content by the <code class="hi
             <dd class="col-sm-9"><p>A character string specifying the id of a pane.</p>
 </dd>
             
-            <dt id="params-labels" class="col-sm-3">labels</dt>
-            <dd class="col-sm-9"><p>A character vector specifying the labels of the navigation
-items.</p>
+            <dt id="params-choices" class="col-sm-3">choices</dt>
+            <dd class="col-sm-9"><p>A character vector or list of tag elements specifying the
+navigation items of the navigation input.</p>
 </dd>
             
             <dt id="params-values" class="col-sm-3">values</dt>
@@ -389,184 +365,12 @@ the nav input.</p>
 </dd>
             
             <dt id="params-..." class="col-sm-3">...</dt>
-            <dd class="col-sm-9"><p>For <strong>navContent</strong>, calls to <code class="highlighter-rouge">navPane()</code> or named arguments passed
-as HTML attributes to the parent element.</p>
-
-<p>For <strong>navInput</strong> and <strong>navPane</strong>, any number of tag elements or named
-arguments passed as HTML attributes to the parent element.</p>
+            <dd class="col-sm-9"><p>Any number of tag elements or named arguments passed as HTML
+attributes to the parent element.</p>
 </dd>
             
           </dl>
           
-
-          
-          <h3 id="app-with-pills"><p>App with pills</p>
-</h3>
-          <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-  </span><span class="n">navInput</span><span class="p">(</span><span class="w">
-    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tabs"</span><span class="p">,</span><span class="w">
-    </span><span class="n">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"Tab"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">),</span><span class="w">
-    </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"pane"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">),</span><span class="w">
-    </span><span class="n">appearance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pills"</span><span class="w">
-  </span><span class="p">),</span><span class="w">
-  </span><span class="n">navContent</span><span class="p">(</span><span class="w">
-    </span><span class="n">navPane</span><span class="p">(</span><span class="w">
-      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane1"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Nullam tristique diam non turpis."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Cum sociis natoque penatibus et magnis dis parturient montes, "</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"nascetur ridiculus mus."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Etiam laoreet quam sed arcu."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Curabitur vulputate vestibulum lorem."</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">navPane</span><span class="p">(</span><span class="w">
-      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane2"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Praesent fermentum tempor tellus."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Phasellus lacus."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Nam euismod tellus id erat."</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">navPane</span><span class="p">(</span><span class="w">
-      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane3"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Nullam eu ante vel est convallis dignissim."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Phasellus at dui in ligula mollis ultricies."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Fusce suscipit, wisi nec facilisis facilisis, est dui "</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"fermentum leo, quis tempor ligula erat quis odio."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Donec hendrerit tempor tellus."</span><span class="w">
-    </span><span class="p">)</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">)</span><span class="w">
-
-</span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">showPane</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">)</span><span class="w">
-  </span><span class="p">})</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
-
-          
-          <h3 id="app-with-dropdown"><p>App with dropdown</p>
-</h3>
-          <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-  </span><span class="n">navInput</span><span class="p">(</span><span class="w">
-    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tabs"</span><span class="p">,</span><span class="w">
-    </span><span class="n">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">
-      </span><span class="s2">"Tab 1"</span><span class="p">,</span><span class="w">
-      </span><span class="n">dropdown</span><span class="p">(</span><span class="w">
-        </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Tab 2"</span><span class="p">,</span><span class="w">
-        </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"action"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Action"</span><span class="p">),</span><span class="w">
-        </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"another"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Another action"</span><span class="p">)</span><span class="w">
-      </span><span class="p">),</span><span class="w">
-      </span><span class="s2">"Tab 3"</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"pane"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">),</span><span class="w">
-    </span><span class="n">appearance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tabs"</span><span class="w">
-  </span><span class="p">),</span><span class="w">
-  </span><span class="n">navContent</span><span class="p">(</span><span class="w">
-    </span><span class="n">navPane</span><span class="p">(</span><span class="w">
-      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane1"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Donec at pede."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Pellentesque tristique imperdiet tortor."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Lorem ipsum dolor sit amet, consectetuer adipiscing elit."</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">navPane</span><span class="p">(</span><span class="w">
-      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane2"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Nullam tristique diam non turpis."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Cras placerat accumsan nulla."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Donec at pede."</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">navPane</span><span class="p">(</span><span class="w">
-      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane3"</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Phasellus purus."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Etiam laoreet quam sed arcu."</span><span class="p">,</span><span class="w">
-      </span><span class="s2">"Donec pretium posuere tellus."</span><span class="w">
-    </span><span class="p">)</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">)</span><span class="w">
-
-</span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">showPane</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">)</span><span class="w">
-  </span><span class="p">})</span><span class="w">
-
-  </span><span class="n">observeEvent</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">action</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">another</span><span class="p">),</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">action</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">another</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">showPane</span><span class="p">(</span><span class="s2">"pane2"</span><span class="p">)</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">})</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
-
-          
-          <h3 id="app-with-multiple-sets-of-panes"><p>App with multiple sets of panes</p>
-</h3>
-          <div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
-  </span><span class="n">navInput</span><span class="p">(</span><span class="w">
-    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tabs"</span><span class="p">,</span><span class="w">
-    </span><span class="n">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"Tab"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">),</span><span class="w">
-    </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"pane"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span><span class="w">
-  </span><span class="p">),</span><span class="w">
-  </span><span class="n">row</span><span class="p">(</span><span class="w">
-    </span><span class="n">column</span><span class="p">(</span><span class="w">
-      </span><span class="n">navContent</span><span class="p">(</span><span class="w">
-        </span><span class="n">navPane</span><span class="p">(</span><span class="w">
-          </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane1"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"Aenean eu leo quam. Pellentesque ornare sem lacinia quam "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"venenatis vestibulum. Praesent commodo cursus magna, vel "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"scelerisque nisl consectetur et. Vivamus sagittis lacus vel "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"augue laoreet rutrum faucibus dolor auctor."</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">navPane</span><span class="p">(</span><span class="w">
-          </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane2"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"Nullam quis risus eget urna mollis ornare vel eu leo. "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"Maecenas faucibus mollis interdum. Praesent commodo cursus "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"magna, vel scelerisque nisl consectetur et."</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">navPane</span><span class="p">(</span><span class="w">
-          </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane3"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"Vivamus sagittis lacus vel augue laoreet rutrum faucibus "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"dolor auctor. Etiam porta sem malesuada magna mollis euismod."</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">),</span><span class="w">
-    </span><span class="n">column</span><span class="p">(</span><span class="w">
-      </span><span class="n">navContent</span><span class="p">(</span><span class="w">
-        </span><span class="n">navPane</span><span class="p">(</span><span class="w">
-          </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane1"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"Aenean eu leo quam. Pellentesque ornare sem lacinia quam "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"venenatis vestibulum. Praesent commodo cursus magna, vel "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"scelerisque nisl consectetur et. Vivamus sagittis lacus vel "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"augue laoreet rutrum faucibus dolor auctor."</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">navPane</span><span class="p">(</span><span class="w">
-          </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane2"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"Nullam quis risus eget urna mollis ornare vel eu leo. "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"Maecenas faucibus mollis interdum. Praesent commodo cursus "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"magna, vel scelerisque nisl consectetur et."</span><span class="w">
-        </span><span class="p">),</span><span class="w">
-        </span><span class="n">navPane</span><span class="p">(</span><span class="w">
-          </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane3"</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"Lorem ipsum dolor sit amet, consectetur adipiscing elit. "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"Vivamus sagittis lacus vel augue laoreet rutrum faucibus "</span><span class="p">,</span><span class="w">
-          </span><span class="s2">"dolor auctor. Etiam porta sem malesuada magna mollis euismod."</span><span class="w">
-        </span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w">
-    </span><span class="p">)</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">)</span><span class="w">
-
-</span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-  </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">showPane</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">)</span><span class="w">
-  </span><span class="p">})</span><span class="w">
-</span><span class="p">}</span><span class="w">
-
-</span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="p">)</span><span class="w">
-</span></code></pre></div></div>
 
           
 
@@ -581,7 +385,7 @@ arguments passed as HTML attributes to the parent element.</p>
                >
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">navInput</span><span class="p">(</span><span class="w">
   </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tabs"</span><span class="p">,</span><span class="w">
-  </span><span class="n">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
     </span><span class="s2">"Tab 1"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"Tab 2"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"Tab 3"</span><span class="w">
@@ -618,7 +422,7 @@ arguments passed as HTML attributes to the parent element.</p>
                >
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">navInput</span><span class="p">(</span><span class="w">
   </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tabs"</span><span class="p">,</span><span class="w">
-  </span><span class="n">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"Tab"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">),</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"Tab"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">),</span><span class="w">
   </span><span class="n">appearance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pills"</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
 
@@ -651,7 +455,7 @@ arguments passed as HTML attributes to the parent element.</p>
                >
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">navInput</span><span class="p">(</span><span class="w">
   </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tabs"</span><span class="p">,</span><span class="w">
-  </span><span class="n">items</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">
     </span><span class="s2">"Tab 1"</span><span class="p">,</span><span class="w">
     </span><span class="n">dropdown</span><span class="p">(</span><span class="w">
       </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Tab 2"</span><span class="p">,</span><span class="w">
@@ -680,6 +484,80 @@ arguments passed as HTML attributes to the parent element.</p>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="#" data-value="Tab 2">Tab 2</a>
+  </li>
+</ul>
+          </div>
+          
+          
+          
+          <h3>Full width nav input</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">navInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tabs"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"Tab"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">),</span><span class="w">
+  </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste0</span><span class="p">(</span><span class="s2">"tab"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">),</span><span class="w">
+  </span><span class="n">appearance</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pills"</span><span class="p">,</span><span class="w">
+  </span><span class="n">fill</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <ul class="yonder-nav nav nav-fill nav-pills" id="tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#" data-value="tab1">Tab 1</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#" data-value="tab2">Tab 2</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#" data-value="tab3">Tab 3</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#" data-value="tab4">Tab 4</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#" data-value="tab5">Tab 5</a>
+  </li>
+</ul>
+          </div>
+          
+          
+          
+          <h3>Centering a nav input</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">navInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tabs"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"Tab"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"center"</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <ul class="yonder-nav nav justify-content-center" id="tabs">
+  <li class="nav-item">
+    <a class="nav-link active" href="#" data-value="Tab 1">Tab 1</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#" data-value="Tab 2">Tab 2</a>
+  </li>
+  <li class="nav-item">
+    <a class="nav-link" href="#" data-value="Tab 3">Tab 3</a>
   </li>
 </ul>
           </div>

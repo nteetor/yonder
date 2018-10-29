@@ -199,6 +199,20 @@
     </dd>
     
     <dd>
+      <a href="/yonder/0.0.5/content/navContent.html"
+         alt="Navigation panes">
+        navContent
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="/yonder/0.0.5/content/navPane.html"
+         alt="Navigation panes">
+        navPane
+      </a>
+    </dd>
+    
+    <dd>
       <a href="/yonder/0.0.5/content/popover.html"
          alt="Display a popover">
         popover
@@ -237,6 +251,13 @@
       <a href="/yonder/0.0.5/content/showModal.html"
          alt="Modal dialogs">
         showModal
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="/yonder/0.0.5/content/showPane.html"
+         alt="Navigation panes">
+        showPane
       </a>
     </dd>
     
@@ -343,6 +364,10 @@ named arguments passed as HTML attributes to the alert element.</p>
 alert, defaults to <code class="highlighter-rouge">NULL</code>, in which case a title is not added.</p>
 </dd>
             
+            <dt id="params-alert" class="col-sm-3">alert</dt>
+            <dd class="col-sm-9"><p>An alert tag element, typically a call to <code class="highlighter-rouge">alert()</code>.</p>
+</dd>
+            
             <dt id="params-duration" class="col-sm-3">duration</dt>
             <dd class="col-sm-9"><p>A positive integer or <code class="highlighter-rouge">NULL</code> specifying the duration of the
 alert, by default the alert is removed after 4 seconds. If <code class="highlighter-rouge">NULL</code> the
@@ -354,6 +379,10 @@ alert is not automatically removed.</p>
 button is added to the alert. When this button is clicked a reactive value
 is triggered, <code class="highlighter-rouge">input[[action]]</code> is set to <code class="highlighter-rouge">TRUE</code>. When the alert is removed
 <code class="highlighter-rouge">input[[action]]</code> is reset to <code class="highlighter-rouge">NULL</code>.</p>
+</dd>
+            
+            <dt id="params-session" class="col-sm-3">session</dt>
+            <dd class="col-sm-9"><p>A reactive context, defaults to <a href="/yonder/0.0.5/getDefaultReactiveDomain.html">getDefaultReactiveDomain()</a>.</p>
 </dd>
             
           </dl>

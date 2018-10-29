@@ -11,10 +11,10 @@ roxygen:
   parameters:
   - name: id
     description: A character string specifying the id of a pane.
-  - name: labels
+  - name: choices
     description: |-
-      A character vector specifying the labels of the navigation
-      items.
+      A character vector or list of tag elements specifying the
+      navigation items of the navigation input.
   - name: values
     description: |-
       A character vector specifying custom values for each navigation
@@ -46,7 +46,7 @@ roxygen:
 
       navInput(
         id = "tabs",
-        items = c(
+        choices = c(
           "Tab 1",
           "Tab 2",
           "Tab 3"
@@ -74,7 +74,7 @@ roxygen:
 
       navInput(
         id = "tabs",
-        items = paste("Tab", 1:3),
+        choices = paste("Tab", 1:3),
         appearance = "pills"
       )
   - type: output
@@ -98,7 +98,7 @@ roxygen:
 
       navInput(
         id = "tabs",
-        items = list(
+        choices = list(
           "Tab 1",
           dropdown(
             label = "Tab 2",
@@ -123,6 +123,62 @@ roxygen:
         </li>
         <li class="nav-item">
           <a class="nav-link" href="#" data-value="Tab 2">Tab 2</a>
+        </li>
+      </ul>
+  - type: markdown
+    value: |
+      <h3>Full width nav input</h3>
+  - type: source
+    value: |2-
+
+      navInput(
+        id = "tabs",
+        choices = paste("Tab", 1:5),
+        values = paste0("tab", 1:5),
+        appearance = "pills",
+        fill = TRUE
+      )
+  - type: output
+    value: |-
+      <ul class="yonder-nav nav nav-fill nav-pills" id="tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="#" data-value="tab1">Tab 1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-value="tab2">Tab 2</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-value="tab3">Tab 3</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-value="tab4">Tab 4</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-value="tab5">Tab 5</a>
+        </li>
+      </ul>
+  - type: markdown
+    value: |
+      <h3>Centering a nav input</h3>
+  - type: source
+    value: |2-
+
+      navInput(
+        id = "tabs",
+        choices = paste("Tab", 1:3)
+      ) %>%
+        flex(justify = "center")
+  - type: output
+    value: |-
+      <ul class="yonder-nav nav justify-content-center" id="tabs">
+        <li class="nav-item">
+          <a class="nav-link active" href="#" data-value="Tab 1">Tab 1</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-value="Tab 2">Tab 2</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#" data-value="Tab 3">Tab 3</a>
         </li>
       </ul>
 ---

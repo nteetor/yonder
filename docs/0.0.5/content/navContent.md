@@ -19,7 +19,7 @@ roxygen:
   - name: id
     description: A character string specifying the id of a nav pane.
   - name: session
-    description: A reactive context, defaults to [getDefaultReactiveContext()](/yonder/0.0.5/getDefaultReactiveContext.html).
+    description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain.html).
   sections:
   - title: App with pills
     body: |-
@@ -27,7 +27,7 @@ roxygen:
       ui <- container(
         navInput(
           id = "tabs",
-          items = paste("Tab", 1:3),
+          choices = paste("Tab", 1:3),
           values = paste0("pane", 1:3),
           appearance = "pills"
         ),
@@ -72,7 +72,7 @@ roxygen:
       ui <- container(
         navInput(
           id = "tabs",
-          items = list(
+          choices = list(
             "Tab 1",
             dropdown(
               label = "Tab 2",
@@ -126,7 +126,7 @@ roxygen:
       ui <- container(
         navInput(
           id = "tabs",
-          items = paste("Tab", 1:3),
+          choices = paste("Tab", 1:3),
           values = paste0("pane", 1:3)
         ),
         row(

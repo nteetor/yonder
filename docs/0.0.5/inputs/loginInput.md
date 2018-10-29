@@ -30,12 +30,12 @@ roxygen:
     value: |-
       <div class="yonder-login col">
         <div class="form-group">
-          <label class="form-control-label" for="login-338-839">Username</label>
-          <input id="login-338-839" type="text" class="form-control"/>
+          <label class="form-control-label" for="login-761-111">Username</label>
+          <input id="login-761-111" type="text" class="form-control"/>
         </div>
         <div class="form-group">
-          <label class="form-control-label" for="login-300-722">Password</label>
-          <input id="login-338-839" type="password" class="form-control"/>
+          <label class="form-control-label" for="login-439-530">Password</label>
+          <input id="login-761-111" type="password" class="form-control"/>
         </div>
         <button class="btn btn-primary">Login</button>
       </div>

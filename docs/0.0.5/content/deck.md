@@ -187,7 +187,7 @@ roxygen:
       card(
         header = navInput(
           id = "tabs",
-          items = c("Tab 1", "Tab 2", "Tab 3"),
+          choices = c("Tab 1", "Tab 2", "Tab 3"),
           appearance = "tabs"
         ),
         navContent(

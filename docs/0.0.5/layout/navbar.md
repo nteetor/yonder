@@ -37,7 +37,7 @@ roxygen:
           brand = "Navbar",
           navInput(
             id = "tabs",
-            items = c("Home", "About", "Our process")
+            choices = c("Home", "About", "Our process")
           ) %>%
             margin(right = "auto"),
           formInput(
@@ -69,10 +69,10 @@ roxygen:
       <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-teal">
           <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-334-353" aria-controls="navContent-334-353" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-477-393" aria-controls="navContent-477-393" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars fa-fw"></i>
           </button>
-          <div class="collapse navbar-collapse" id="navContent-334-353">
+          <div class="collapse navbar-collapse" id="navContent-477-393">
             <ul class="yonder-nav nav mr-auto navbar-nav" id="tabs">
               <li class="nav-item">
                 <a class="nav-link active" href="#" data-value="Home">Home</a>
