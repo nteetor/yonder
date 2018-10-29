@@ -4,11 +4,14 @@
 \alias{navInput}
 \title{Page navigation}
 \usage{
-navInput(id, items, values = items, ..., fill = FALSE,
-  appearance = NULL)
+navInput(id, choices, values = choices, ..., appearance = NULL,
+  fill = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of a pane.}
+
+\item{choices}{A character vector or list of tag elements specifying the
+navigation items of the navigation input.}
 
 \item{values}{A character vector specifying custom values for each navigation
 item, defaults to \code{labels}.}
@@ -16,15 +19,12 @@ item, defaults to \code{labels}.}
 \item{...}{Any number of tag elements or named arguments passed as HTML
 attributes to the parent element.}
 
-\item{fill}{One of \code{TRUE} or \code{FALSE} specifying if the nav input fills the
-width of its parent element. If \code{TRUE}, the space is divided evenly among
-the nav items.}
-
 \item{appearance}{One of \code{"pills"} or \code{"tabs"} specifying the appearance of
 the nav input.}
 
-\item{labels}{A character vector specifying the labels of the navigation
-items.}
+\item{fill}{One of \code{TRUE} or \code{FALSE} specifying if the nav input fills the
+width of its parent element. If \code{TRUE}, the space is divided evenly among
+the nav items.}
 }
 \description{
 A reactive input styled as a navigation control. The navigation input can be
@@ -37,7 +37,7 @@ and \code{\link[=showPane]{showPane()}} to create tabbed user interfaces.
 
 navInput(
   id = "tabs",
-  items = c(
+  choices = c(
     "Tab 1",
     "Tab 2",
     "Tab 3"
@@ -49,7 +49,7 @@ navInput(
 
 navInput(
   id = "tabs",
-  items = paste("Tab", 1:3),
+  choices = paste("Tab", 1:3),
   appearance = "pills"
 )
 
@@ -57,7 +57,7 @@ navInput(
 
 navInput(
   id = "tabs",
-  items = list(
+  choices = list(
     "Tab 1",
     dropdown(
       label = "Tab 2",
@@ -67,6 +67,24 @@ navInput(
     "Tab 2"
   )
 )
+
+### Full width nav input
+
+navInput(
+  id = "tabs",
+  choices = paste("Tab", 1:5),
+  values = paste0("tab", 1:5),
+  appearance = "pills",
+  fill = TRUE
+)
+
+### Centering a nav input
+
+navInput(
+  id = "tabs",
+  choices = paste("Tab", 1:3)
+) \%>\%
+  flex(justify = "center")
 
 }
 \seealso{

@@ -21,7 +21,7 @@ element.}
 
 \item{id}{A character string specifying the id of a nav pane.}
 
-\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveContext]{getDefaultReactiveContext()}}.}
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 These functions pair with \code{\link[=navInput]{navInput()}}. Use \code{navContent()} and \code{navPane()} to
@@ -32,7 +32,7 @@ function.
 \preformatted{ui <- container(
   navInput(
     id = "tabs",
-    items = paste("Tab", 1:3),
+    choices = paste("Tab", 1:3),
     values = paste0("pane", 1:3),
     appearance = "pills"
   ),
@@ -77,7 +77,7 @@ shinyApp(ui, server)
 \preformatted{ui <- container(
   navInput(
     id = "tabs",
-    items = list(
+    choices = list(
       "Tab 1",
       dropdown(
         label = "Tab 2",
@@ -131,7 +131,7 @@ shinyApp(ui, server)
 \preformatted{ui <- container(
   navInput(
     id = "tabs",
-    items = paste("Tab", 1:3),
+    choices = paste("Tab", 1:3),
     values = paste0("pane", 1:3)
   ),
   row(

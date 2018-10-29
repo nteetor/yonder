@@ -30,7 +30,7 @@ div(
     brand = "Navbar",
     navInput(
       id = "tabs",
-      items = c("Home", "About", "Our process")
+      choices = c("Home", "About", "Our process")
     ) \%>\%
       margin(right = "auto"),
     formInput(

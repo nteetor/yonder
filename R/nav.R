@@ -6,8 +6,8 @@
 #'
 #' @param id A character string specifying the id of a pane.
 #'
-#' @param labels A character vector specifying the labels of the navigation
-#'   items.
+#' @param choices A character vector or list of tag elements specifying the
+#'   navigation items of the navigation input.
 #'
 #' @param values A character vector specifying custom values for each navigation
 #'   item, defaults to `labels`.
@@ -30,7 +30,7 @@
 #'
 #' navInput(
 #'   id = "tabs",
-#'   items = c(
+#'   choices = c(
 #'     "Tab 1",
 #'     "Tab 2",
 #'     "Tab 3"
@@ -42,7 +42,7 @@
 #'
 #' navInput(
 #'   id = "tabs",
-#'   items = paste("Tab", 1:3),
+#'   choices = paste("Tab", 1:3),
 #'   appearance = "pills"
 #' )
 #'
@@ -50,7 +50,7 @@
 #'
 #' navInput(
 #'   id = "tabs",
-#'   items = list(
+#'   choices = list(
 #'     "Tab 1",
 #'     dropdown(
 #'       label = "Tab 2",
@@ -61,8 +61,26 @@
 #'   )
 #' )
 #'
-navInput <- function(id, items, values = items, ..., fill = FALSE,
-                     appearance = NULL) {
+#' ### Full width nav input
+#'
+#' navInput(
+#'   id = "tabs",
+#'   choices = paste("Tab", 1:5),
+#'   values = paste0("tab", 1:5),
+#'   appearance = "pills",
+#'   fill = TRUE
+#' )
+#'
+#' ### Centering a nav input
+#'
+#' navInput(
+#'   id = "tabs",
+#'   choices = paste("Tab", 1:3)
+#' ) %>%
+#'   flex(justify = "center")
+#'
+navInput <- function(id, choices, values = choices, ..., appearance = NULL,
+                     fill = FALSE) {
   if (!is.null(appearance) && !re(appearance, "pills|tabs", FALSE)) {
     stop(
       "invalid `navInput()` argument, `appearance` must be one of ",
@@ -86,9 +104,9 @@ navInput <- function(id, items, values = items, ..., fill = FALSE,
     ),
     id = id,
     Map(
-      label = items,
+      label = choices,
       value = values,
-      active = c(TRUE, rep.int(FALSE, length(items) - 1)),
+      active = c(TRUE, rep.int(FALSE, length(choices) - 1)),
       function(label, value, active) {
         navItem(label, value, active)
       }
@@ -154,7 +172,7 @@ navItem <- function(base, value = NULL, active = FALSE) {
 #'
 #' @param id A character string specifying the id of a nav pane.
 #'
-#' @param session A reactive context, defaults to [getDefaultReactiveContext()].
+#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
 #' @section App with pills:
 #'
@@ -162,7 +180,7 @@ navItem <- function(base, value = NULL, active = FALSE) {
 #' ui <- container(
 #'   navInput(
 #'     id = "tabs",
-#'     items = paste("Tab", 1:3),
+#'     choices = paste("Tab", 1:3),
 #'     values = paste0("pane", 1:3),
 #'     appearance = "pills"
 #'   ),
@@ -208,7 +226,7 @@ navItem <- function(base, value = NULL, active = FALSE) {
 #' ui <- container(
 #'   navInput(
 #'     id = "tabs",
-#'     items = list(
+#'     choices = list(
 #'       "Tab 1",
 #'       dropdown(
 #'         label = "Tab 2",
@@ -263,7 +281,7 @@ navItem <- function(base, value = NULL, active = FALSE) {
 #' ui <- container(
 #'   navInput(
 #'     id = "tabs",
-#'     items = paste("Tab", 1:3),
+#'     choices = paste("Tab", 1:3),
 #'     values = paste0("pane", 1:3)
 #'   ),
 #'   row(
