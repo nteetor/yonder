@@ -58,15 +58,6 @@ Shiny.addCustomMessageHandler("yonder:pane", (msg) => {
     };
 
     bootstrap.Tab.prototype._activate(pane, pane.parentElement, complete);
-
-  } else if (msg.type === "after") {
-
-    $(pane).after(msg.data.content);
-
-  } else if (msg.type === "before") {
-
-    $(pane).before(msg.data.content);
-
   }
 });
 

@@ -4,7 +4,6 @@
 \alias{navContent}
 \alias{navPane}
 \alias{showPane}
-\alias{insertPane}
 \title{Navigation panes}
 \usage{
 navContent(...)
@@ -12,30 +11,21 @@ navContent(...)
 navPane(id, ...)
 
 showPane(id, session = getDefaultReactiveDomain())
-
-insertPane(id, before = NULL, after = NULL,
-  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{...}{For \strong{navContent}, any number of nav panes or named arguments
 passed as HTML attributes to the parent element.
 
-For \emph{navPane}*, named attributes passed as HTML elements to the parent
+For \strong{navPane}, named attributes passed as HTML elements to the parent
 element.}
 
-\item{id}{A character string specifying the of a nav pane.}
+\item{id}{A character string specifying the id of a nav pane.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveContext]{getDefaultReactiveContext()}}.}
-
-\item{before, after}{A pane element, typically a call to \code{navPane()}, to
-insert before or after the pane specified by \code{id}. Only one of \code{before} and
-\code{after} should be specified.}
 }
 \description{
 These functions pair with \code{\link[=navInput]{navInput()}}. Use \code{nacContent()} and \code{navPane()} to
-create the pane layout. To show a new pane use \code{showPane()}. If you need to
-dynamically add panes of content use \code{insertPane()} to add new pane before or
-after an existing pane.
+create the pane layout. To show a new pane use \code{showPane()}.
 }
 \section{App with pills}{
 \preformatted{ui <- container(
@@ -206,7 +196,7 @@ shinyApp(ui, server)
 
 \examples{
 
-# Please see the sample applications above for examples showing off
+# Please see the sample applications above for examples demoing
 # `showPane()` and `afterPane()`.
 
 }

@@ -143,21 +143,15 @@ navItem <- function(base, value = NULL, active = FALSE) {
 #' Navigation panes
 #'
 #' These functions pair with [navInput()]. Use `nacContent()` and `navPane()` to
-#' create the pane layout. To show a new pane use `showPane()`. If you need to
-#' dynamically add panes of content use `insertPane()` to add new pane before or
-#' after an existing pane.
+#' create the pane layout. To show a new pane use `showPane()`.
 #'
 #' @param ... For **navContent**, any number of nav panes or named arguments
 #'   passed as HTML attributes to the parent element.
 #'
-#'   For *navPane**, named attributes passed as HTML elements to the parent
+#'   For **navPane**, named attributes passed as HTML elements to the parent
 #'   element.
 #'
-#' @param id A character string specifying the of a nav pane.
-#'
-#' @param before,after A pane element, typically a call to `navPane()`, to
-#'   insert before or after the pane specified by `id`. Only one of `before` and
-#'   `after` should be specified.
+#' @param id A character string specifying the id of a nav pane.
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveContext()].
 #'
@@ -334,7 +328,7 @@ navItem <- function(base, value = NULL, active = FALSE) {
 #' @export
 #' @examples
 #'
-#' # Please see the sample applications above for examples showing off
+#' # Please see the sample applications above for examples demoing
 #' # `showPane()` and `afterPane()`.
 #'
 navContent <- function(...) {
@@ -390,51 +384,6 @@ showPane <- function(id, session = getDefaultReactiveDomain()) {
     type = "show",
     data = list(
       target = id
-    )
-  ))
-}
-
-#' @rdname navContent
-#' @export
-insertPane <- function(id, before = NULL, after = NULL,
-                       session = getDefaultReactiveDomain()) {
-  if (is.null(session)) {
-    stop(
-      "`insertPane()` must be called in a reactive environment",
-      call. = FALSE
-    )
-  }
-
-  if (!is.character(id)) {
-    stop(
-      "invalid `insertPane()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  if (is.null(before) && is.null(after)) {
-    stop(
-      "invalid `insertPane()` call, one of `before` or `after` must be a pane ",
-      "element",
-      call. = FALSE
-    )
-  }
-
-  pane <- before %||% after
-
-  if (!is_tag(pane) || !tagHasClass(pane, "tab-pane")) {
-    stop(
-      "invalid `insertPane()` call, specified tag element must be a pane ",
-      "element",
-      call. = FALSE
-    )
-  }
-
-  session$sendCustomMessage("yonder:pane", list(
-    type = if (is.null(after)) "before" else "after",
-    data = list(
-      target = id,
-      content = as.character(pane)
     )
   ))
 }
