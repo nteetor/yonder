@@ -108,22 +108,25 @@ column(
 ### Tabbed content in cards
 
 card(
-  header = tabTabs(
-    id = "example-card-tabs",
-    labels = c("Phasellus", "Donec", "Fusce")
+  header = navInput(
+    id = "tabs",
+    items = c("Tab 1", "Tab 2", "Tab 3"),
+    appearance = "tabs"
   ),
-  tabContent(
-    tabs = "example-card-tabs",  # same as the id in `tabTabs`
-    tabPane(
+  navContent(
+    navPane(
       "Phasellus purus.",
-      "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
+      "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.",
+      "Phasellus purus."
     ),
-    tabPane(
-      "Donec at pede. Praesent augue."
+    navPane(
+      "Donec at pede. Praesent augue.",
+      "Pellentesque tristique imperdiet tortor."
     ),
-    tabPanel(
+    navPane(
       "Fusce suscipit, wisi nec facilisis facilisis,",
-      "est dui fermentum leo, quis tempor ligula erat quis odio."
+      "est dui fermentum leo, quis tempor ligula erat quis odio.",
+      "Donec hendrerit tempor tellus."
     )
   )
 )
@@ -157,8 +160,8 @@ Other content: \code{\link{alert}},
   \code{\link{blockquote}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{icon}},
   \code{\link{img}}, \code{\link{jumbotron}},
-  \code{\link{modal}}, \code{\link{popover}},
-  \code{\link{pre}}, \code{\link{progressOutlet}},
-  \code{\link{tooltip}}
+  \code{\link{modal}}, \code{\link{navContent}},
+  \code{\link{popover}}, \code{\link{pre}},
+  \code{\link{progressOutlet}}, \code{\link{tooltip}}
 }
 \concept{content}

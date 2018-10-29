@@ -6,11 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <link rel="stylesheet" href="/yonder/www/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
-<link rel="stylesheet" href="/yonder/assets/css/main.css">
 
 <script src="/yonder/www/jquery/jquery.min.js"></script>
-
+<script src="/yonder/www/popper/popper.min.js"></script>
 <script src="/yonder/www/bootstrap/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="/yonder/www/ion-rangeslider/css/ion.rangeSlider.css">
@@ -23,6 +21,10 @@
 <link rel="stylesheet" href="/yonder/www/font-awesome/css/fa-svg-with-js.css"/>
 <script src="/yonder/www/font-awesome/js/fontawesome-all.min.js"></script>
 
+<link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
+<script src="/yonder/www/yonder/js/yonder.min.js"></script>
+
+<link rel="stylesheet" href="/yonder/assets/css/main.css">
 <script src="/yonder/assets/js/main.js"></script>
 
   </head>
@@ -145,6 +147,27 @@
     </dd>
     
     <dd>
+      <a href="/yonder/0.0.5/inputs/navContent.html"
+         alt="Page navigation">
+        navContent
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="/yonder/0.0.5/inputs/navInput.html"
+         alt="Page navigation">
+        navInput
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="/yonder/0.0.5/inputs/navPane.html"
+         alt="Page navigation">
+        navPane
+      </a>
+    </dd>
+    
+    <dd>
       <a href="/yonder/0.0.5/inputs/numberInput.html"
          alt="Textual inputs">
         numberInput
@@ -190,6 +213,13 @@
       <a href="/yonder/0.0.5/inputs/selectInput.html"
          alt="Select input">
         selectInput
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="/yonder/0.0.5/inputs/showPane.html"
+         alt="Page navigation">
+        showPane
       </a>
     </dd>
     
@@ -352,34 +382,34 @@ top-level element.</p>
           
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">addressInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">addressInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"mailing"</span><span class="p">)</span></code></pre></figure>
 
           </div>
           
           
           
           <div class="mb-5">
-            <div class="yonder-address">
+            <div class="yonder-address" id="mailing">
   <div class="form-group">
-    <label for="address-468-608" class="col-form-label">Address</label>
-    <input type="text" class="form-control" id="address-468-608" placeholder="Street address, P.O. box"/>
+    <label for="address-159-831" class="col-form-label">Address</label>
+    <input type="text" class="form-control" id="address-159-831" placeholder="Street address, P.O. box"/>
   </div>
   <div class="form-group">
-    <label for="address-674-706" class="form-control-label sr-only">Address line 2</label>
-    <input type="text" class="form-control" id="address-674-706" placeholder="Apartment, floor, unit"/>
+    <label for="address-984-245" class="form-control-label sr-only">Address line 2</label>
+    <input type="text" class="form-control" id="address-984-245" placeholder="Apartment, floor, unit"/>
   </div>
   <div class="form-row">
     <div class="form-group col-md-6 mt-auto">
-      <label class="form-control-label" for="address-796-811">City</label>
-      <input type="text" class="form-control" id="address-796-811"/>
+      <label class="form-control-label" for="address-960-561">City</label>
+      <input type="text" class="form-control" id="address-960-561"/>
     </div>
     <div class="form-group col-md-3">
-      <label class="form-control-label" for="address-901-233">State</label>
-      <input type="text" class="form-control" id="address-901-233"/>
+      <label class="form-control-label" for="address-197-578">State</label>
+      <input type="text" class="form-control" id="address-197-578"/>
     </div>
     <div class="form-group col-md-3 mt-auto">
-      <label class="form-control-label" for="address-584-688">Zip</label>
-      <input type="text" class="form-control" id="address-584-688"/>
+      <label class="form-control-label" for="address-488-509">Zip</label>
+      <input type="text" class="form-control" id="address-488-509"/>
     </div>
   </div>
 </div>

@@ -42,7 +42,6 @@ Collate:
     badge.R
     button.R
     card.R
-    tabs.R
     checkbox.R
     collapse.R
     layout.R
@@ -53,6 +52,7 @@ Collate:
     forms.R
     list-group.R
     modal.R
+    nav.R
     navbar.R
     radio.R
     table.R

@@ -182,7 +182,6 @@ div(
 }
 \seealso{
 Other layout: \code{\link{column}}, \code{\link{fieldset}},
-  \code{\link{formGroup}}, \code{\link{navbar}},
-  \code{\link{tabTabs}}
+  \code{\link{formGroup}}, \code{\link{navbar}}
 }
 \concept{layout}

@@ -6,11 +6,9 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
 <link rel="stylesheet" href="/yonder/www/bootstrap/css/bootstrap.min.css">
-<link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
-<link rel="stylesheet" href="/yonder/assets/css/main.css">
 
 <script src="/yonder/www/jquery/jquery.min.js"></script>
-
+<script src="/yonder/www/popper/popper.min.js"></script>
 <script src="/yonder/www/bootstrap/js/bootstrap.min.js"></script>
 
 <link rel="stylesheet" href="/yonder/www/ion-rangeslider/css/ion.rangeSlider.css">
@@ -23,6 +21,10 @@
 <link rel="stylesheet" href="/yonder/www/font-awesome/css/fa-svg-with-js.css"/>
 <script src="/yonder/www/font-awesome/js/fontawesome-all.min.js"></script>
 
+<link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
+<script src="/yonder/www/yonder/js/yonder.min.js"></script>
+
+<link rel="stylesheet" href="/yonder/assets/css/main.css">
 <script src="/yonder/assets/js/main.js"></script>
 
   </head>
@@ -145,6 +147,27 @@
     </dd>
     
     <dd>
+      <a href="/yonder/0.0.5/inputs/navContent.html"
+         alt="Page navigation">
+        navContent
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="/yonder/0.0.5/inputs/navInput.html"
+         alt="Page navigation">
+        navInput
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="/yonder/0.0.5/inputs/navPane.html"
+         alt="Page navigation">
+        navPane
+      </a>
+    </dd>
+    
+    <dd>
       <a href="/yonder/0.0.5/inputs/numberInput.html"
          alt="Textual inputs">
         numberInput
@@ -190,6 +213,13 @@
       <a href="/yonder/0.0.5/inputs/selectInput.html"
          alt="Select input">
         selectInput
+      </a>
+    </dd>
+    
+    <dd>
+      <a href="/yonder/0.0.5/inputs/showPane.html"
+         alt="Page navigation">
+        showPane
       </a>
     </dd>
     
@@ -347,7 +377,7 @@ as HTML attributes to the parent element.</p>
             <dt id="params-submit" class="col-sm-3">submit</dt>
             <dd class="col-sm-9"><p>A submit button or tags containing a submit button. The submit
 button will trigger the update of input form elements. Defaults to
-<a href="/yonder/0.0.5/submitInput.html">submitInput()</a>.</p>
+<a href="/yonder/0.0.5/inputs/submitInput.html">submitInput()</a>.</p>
 </dd>
             
             <dt id="params-inline" class="col-sm-3">inline</dt>
@@ -423,7 +453,7 @@ span multiple lines.</p>
           
           
           <div class="mb-5">
-            <div class="card border-teal border w-50">
+            <div class="card border border-teal w-50">
   <div class="card-header">Please pick a flavor</div>
   <div class="card-body">
     <form class="yonder-form">
@@ -431,16 +461,16 @@ span multiple lines.</p>
         <label>Ice creams</label>
         <div class="yonder-radio" id="flavorChoice">
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-936-220" name="flavorChoice" data-value="Mint" checked/>
-            <label class="custom-control-label" for="radio-936-220">Mint</label>
+            <input class="custom-control-input" type="radio" id="radio-290-216" name="flavorChoice" data-value="Mint" checked/>
+            <label class="custom-control-label" for="radio-290-216">Mint</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-84-141" name="flavorChoice" data-value="Moose tracks"/>
-            <label class="custom-control-label" for="radio-84-141">Moose tracks</label>
+            <input class="custom-control-input" type="radio" id="radio-787-801" name="flavorChoice" data-value="Moose tracks"/>
+            <label class="custom-control-label" for="radio-787-801">Moose tracks</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-214-451" name="flavorChoice" data-value="Marble"/>
-            <label class="custom-control-label" for="radio-214-451">Marble</label>
+            <input class="custom-control-input" type="radio" id="radio-574-922" name="flavorChoice" data-value="Marble"/>
+            <label class="custom-control-label" for="radio-574-922">Marble</label>
           </div>
           <div class="invalid-feedback"></div>
         </div>
