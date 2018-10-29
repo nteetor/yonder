@@ -20,6 +20,9 @@
 #'
 #' @param modal A modal tag element created using `modal()`.
 #'
+#' @param ... Additional named arguments passed as HTML attributes to the
+#'   parent element.
+#'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
 #' @section Example application:

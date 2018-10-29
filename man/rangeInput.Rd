@@ -12,10 +12,10 @@ rangeInput(id, min = 0, max = 100, default = min, step = 1,
 
 intervalInput(id, min = 0, max = 100, default = c(min, max),
   step = 1, draggable = FALSE, ticks = TRUE, labels = 4,
-  snap = FALSE, prefix = NULL, suffix = NULL)
+  snap = FALSE, prefix = NULL, suffix = NULL, ...)
 
 sliderInput(id, choices, values = choices, selected = NULL,
-  ticks = TRUE, fill = FALSE, prefix = NULL, suffix = NULL)
+  ticks = TRUE, fill = FALSE, prefix = NULL, suffix = NULL, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the range input or \code{NULL}.}
@@ -62,6 +62,9 @@ slider value, defaults to \code{NULL}, in which case a prefix is not prepended.}
 
 \item{suffix}{A character string specifying a suffix for the range input
 slider value, defaults to \code{NULL}, in which case a prefix is not appended.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
 \item{draggable}{One of \code{TRUE} or \code{FALSE} specifying if the user can drag the
 interval between an interval input's two sliders defaults to \code{FALSE}. If

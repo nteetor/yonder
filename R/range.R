@@ -62,6 +62,9 @@
 #' @param suffix A character string specifying a suffix for the range input
 #'   slider value, defaults to `NULL`, in which case a prefix is not appended.
 #'
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
+#'
 #' @family inputs
 #' @export
 #' @examples
@@ -155,7 +158,7 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
 intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
                           step = 1, draggable = FALSE,
                           ticks = TRUE, labels = 4, snap = FALSE,
-                          prefix = NULL, suffix = NULL) {
+                          prefix = NULL, suffix = NULL, ...) {
   input <- tags$div(
     class = "yonder-range bg-grey",
     id = id,
@@ -174,7 +177,8 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
       `data-grid` = ticks,
       `data-grid-num` = labels,
       `data-grid-snap` = if (isTRUE(snap)) snap
-    )
+    ),
+    ...
   )
 
   input <- attachDependencies(
@@ -189,7 +193,7 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
 #' @export
 sliderInput <- function(id, choices, values = choices, selected = NULL,
                         ticks = TRUE, fill = FALSE, prefix = NULL,
-                        suffix = NULL) {
+                        suffix = NULL, ...) {
   values <- vapply(values, as.character, character(1))
 
   # need to replace commas as ion rangeslider splits the string of values on the
@@ -213,7 +217,8 @@ sliderInput <- function(id, choices, values = choices, selected = NULL,
       `data-grid` = ticks,
       `data-hide-min-max` = TRUE,
       `data-no-fill` = if (!fill) "true"
-    )
+    ),
+    ...
   )
 
   input <- attachDependencies(

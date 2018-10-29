@@ -22,6 +22,9 @@ modal.}
 \item{footer}{A character string or tag element specifying the footer of the
 modal.}
 
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element.}
+
 \item{center}{One of \code{TRUE} or \code{FALSE} specifying whether the modal is
 vertically centered on the page, defaults to \code{FALSE}.}
 
@@ -103,8 +106,8 @@ Other content: \code{\link{alert}},
   \code{\link{blockquote}}, \code{\link{card}},
   \code{\link{d1}}, \code{\link{dropdown}},
   \code{\link{icon}}, \code{\link{img}},
-  \code{\link{jumbotron}}, \code{\link{popover}},
-  \code{\link{pre}}, \code{\link{progressOutlet}},
-  \code{\link{tooltip}}
+  \code{\link{jumbotron}}, \code{\link{navContent}},
+  \code{\link{popover}}, \code{\link{pre}},
+  \code{\link{progressOutlet}}, \code{\link{tooltip}}
 }
 \concept{content}

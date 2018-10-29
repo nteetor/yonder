@@ -325,6 +325,7 @@ navItem <- function(base, value = NULL, active = FALSE) {
 #' shinyApp(ui, server)
 #' ```
 #'
+#' @family content
 #' @export
 #' @examples
 #'

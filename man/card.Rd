@@ -136,13 +136,15 @@ card(
 deck(
   card(
     title = "Nullam tristique",
-    "Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia eros.",
+    "Fusce sagittis, libero non molestie mollis, magna orci ultrices ",
+    "dolor, at vulputate neque nulla lacinia eros.",
     "Nunc rutrum turpis sed pede.",
     footer = "Cras placerat accumsan nulla."
   ),
   card(
     title = "Integer placerat",
-    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec hendrerit tempor tellus.",
+    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ",
+    "hendrerit tempor tellus.",
     footer = "Cras placerat accumsan nulla."
   ),
   card(
@@ -158,8 +160,8 @@ Other content: \code{\link{alert}},
   \code{\link{blockquote}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{icon}},
   \code{\link{img}}, \code{\link{jumbotron}},
-  \code{\link{modal}}, \code{\link{popover}},
-  \code{\link{pre}}, \code{\link{progressOutlet}},
-  \code{\link{tooltip}}
+  \code{\link{modal}}, \code{\link{navContent}},
+  \code{\link{popover}}, \code{\link{pre}},
+  \code{\link{progressOutlet}}, \code{\link{tooltip}}
 }
 \concept{content}

@@ -69,10 +69,10 @@ roxygen:
       <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-teal">
           <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-764-773" aria-controls="navContent-764-773" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-513-97" aria-controls="navContent-513-97" aria-expanded="false" aria-label="Toggle navigation">
             <i class="fas fa-bars fa-fw"></i>
           </button>
-          <div class="collapse navbar-collapse" id="navContent-764-773">
+          <div class="collapse navbar-collapse" id="navContent-513-97">
             <ul class="yonder-nav nav mr-auto navbar-nav" id="tabs">
               <li class="nav-item">
                 <a class="nav-link active" href="#" data-value="Home">Home</a>
@@ -95,9 +95,9 @@ roxygen:
         </nav>
         <div class="container-fluid">
           <div class="tab-content">
-            <div class="tab-pane fade" role="tab-panel" data-id="&lt;h3&gt;Home&lt;/h3&gt;"></div>
-            <div class="tab-pane fade" role="tab-panel" data-id="&lt;h3&gt;About&lt;/h3&gt;"></div>
-            <div class="tab-pane fade" role="tab-panel" data-id="&lt;h3&gt;The process&lt;/h3&gt;"></div>
+            <div class="tab-pane fade" role="tab-panel" id="&lt;h3&gt;Home&lt;/h3&gt;"></div>
+            <div class="tab-pane fade" role="tab-panel" id="&lt;h3&gt;About&lt;/h3&gt;"></div>
+            <div class="tab-pane fade" role="tab-panel" id="&lt;h3&gt;The process&lt;/h3&gt;"></div>
           </div>
         </div>
       </div>

@@ -29,6 +29,8 @@
 #'
 #' @param outlet A character string specifying the id of a progress outlet.
 #'
+#' @param bar A bar element, typically a call to `bar()`.
+#'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
 #' @section Example application:
@@ -149,7 +151,7 @@ showBar <- function(outlet, bar, session = getDefaultReactiveDomain()) {
   session$sendProgress("yonder-progress", list(
     type = "show",
     data = list(
-      outlet = id,
+      outlet = outlet,
       content = HTML(as.character(bar))
     )
   ))

@@ -29,6 +29,10 @@ roxygen:
       width is not adjusted.
   - name: modal
     description: A modal tag element created using `modal()`.
+  - name: '...'
+    description: |-
+      Additional named arguments passed as HTML attributes to the
+      parent element.
   - name: session
     description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain.html).
   sections:

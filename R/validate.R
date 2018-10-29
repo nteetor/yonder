@@ -16,8 +16,6 @@
 #'
 #' @family utilities
 #' @export
-#' @examples
-#'
 markInvalid <- function(id, msg) {
   domain <- getDefaultReactiveDomain()
 

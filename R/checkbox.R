@@ -11,12 +11,14 @@
 #' @param choice,choices A character string or vector specifying a label for the
 #'   checkbox or checkbar.
 #'
-#' @param value A character string, object to coerce to a character string, or
-#'   `NULL` specifying the value of the checkbox or a new value for the
-#'   checkbox, defaults to `choice`.
+#' @param value,values A character string or vector specifying values for the
+#'   checkbox or checkbar input, defaults to `choice` or `values`, respectively.
 #'
 #' @param checked If `TRUE` the checkbox renders in a checked state, defaults
 #'   to `FALSE`.
+#'
+#' @param selected One of `values` specifying the initial value of the checkbar
+#'   input, defaults to `NULL`, in which case no choice is selected.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.

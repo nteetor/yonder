@@ -16,6 +16,10 @@ roxygen:
     description: |-
       A character vector of values, one for each button specified,
       defaults to `labels`.
+  - name: '...'
+    description: |-
+      Additional named arguments passed as HTML attributes to the
+      parent element.
   sections: []
   return: ~
   family: inputs

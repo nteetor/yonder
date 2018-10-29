@@ -25,9 +25,6 @@ freeze an input. As a result, further observers or reactives using the input
 are not triggered. \code{markValid} will immediately thaw the reactive input, thus
 allowing subsequent observers and reactives to trigger.
 }
-\examples{
-
-}
 \seealso{
 Other utilities: \code{\link{collapse}},
   \code{\link{downloadEvent}}, \code{\link{updateChoices}}

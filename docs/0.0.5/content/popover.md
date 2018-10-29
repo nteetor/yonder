@@ -10,10 +10,11 @@ roxygen:
     element with an HTML id. Popovers are great for explaining inputs and giving
     hints to the users. Popovers are hidden with `closePopover()`.
   parameters:
-  - name: content
+  - name: '...'
     description: |-
-      A character string or tag element specifying the content of
-      the popover.
+      Character strings or tag elements specifying the content of the
+      popover or additional named arguments passed as HTML attributes to the
+      parent element.
   - name: title
     description: |-
       A character string specifying a title for the popover, defaults

@@ -14,6 +14,10 @@ showPopover(target, popover, placement = "right", duration = NULL,
 closePopover(id, session = getDefaultReactiveDomain())
 }
 \arguments{
+\item{...}{Character strings or tag elements specifying the content of the
+popover or additional named arguments passed as HTML attributes to the
+parent element.}
+
 \item{title}{A character string specifying a title for the popover, defaults
 to \code{NULL}, in which case a title is not added.}
 
@@ -35,9 +39,6 @@ removed. When \code{NULL} is specified the popover can be removed with
 
 \item{id}{A character string specifying the HTML id of a popover's target tag
 element.}
-
-\item{content}{A character string or tag element specifying the content of
-the popover.}
 }
 \description{
 Popovers are small windows of content associated with a tag element. Use
@@ -94,7 +95,7 @@ Other content: \code{\link{alert}},
   \code{\link{d1}}, \code{\link{dropdown}},
   \code{\link{icon}}, \code{\link{img}},
   \code{\link{jumbotron}}, \code{\link{modal}},
-  \code{\link{pre}}, \code{\link{progressOutlet}},
-  \code{\link{tooltip}}
+  \code{\link{navContent}}, \code{\link{pre}},
+  \code{\link{progressOutlet}}, \code{\link{tooltip}}
 }
 \concept{content}

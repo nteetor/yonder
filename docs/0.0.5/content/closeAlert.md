@@ -18,6 +18,8 @@ roxygen:
     description: |-
       A character string or tag element specifying a heading for the
       alert, defaults to `NULL`, in which case a title is not added.
+  - name: alert
+    description: An alert tag element, typically a call to `alert()`.
   - name: duration
     description: |-
       A positive integer or `NULL` specifying the duration of the
@@ -29,6 +31,8 @@ roxygen:
       button is added to the alert. When this button is clicked a reactive value
       is triggered, `input[[action]]` is set to `TRUE`. When the alert is removed
       `input[[action]]` is reset to `NULL`.
+  - name: session
+    description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain.html).
   sections:
   - title: Displaying an alert
     body: |-

@@ -26,5 +26,5 @@ roxygen:
   family: utilities
   name: ~
   rdname: ~
-  examples: []
+  examples: ~
 ---
