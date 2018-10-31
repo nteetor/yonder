@@ -157,7 +157,7 @@ linkInput <- function(id, text, ...) {
   input <- tags$span(
     class = "yonder-link",
     id = id,
-    tags$u(text),
+    text,
     ...
   )
 

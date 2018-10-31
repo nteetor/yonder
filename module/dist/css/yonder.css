@@ -80,6 +80,10 @@
   visibility: hidden;
 }
 
+.yonder-link:not(.badge) {
+  text-decoration: underline;
+}
+
 .yonder-checkbox {
   margin-bottom: 0;
 }
