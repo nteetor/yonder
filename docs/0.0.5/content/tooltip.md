@@ -51,16 +51,16 @@ roxygen:
         </label>
         <div class="yonder-radio" id="radios">
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-861-258" name="radios" data-value="Ready" checked/>
-            <label class="custom-control-label" for="radio-861-258">Ready</label>
+            <input class="custom-control-input" type="radio" id="radio-12-234" name="radios" data-value="Ready" checked/>
+            <label class="custom-control-label" for="radio-12-234">Ready</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-174-537" name="radios" data-value="Set"/>
-            <label class="custom-control-label" for="radio-174-537">Set</label>
+            <input class="custom-control-input" type="radio" id="radio-154-195" name="radios" data-value="Set"/>
+            <label class="custom-control-label" for="radio-154-195">Set</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-9-206" name="radios" data-value="Go"/>
-            <label class="custom-control-label" for="radio-9-206">Go</label>
+            <input class="custom-control-input" type="radio" id="radio-696-905" name="radios" data-value="Go"/>
+            <label class="custom-control-label" for="radio-696-905">Go</label>
           </div>
           <div class="invalid-feedback"></div>
         </div>
@@ -88,8 +88,8 @@ roxygen:
   - type: output
     value: "<div>\n  <p>Nunc rutrum turpis sed pede.</p>\n  <p>\n    Donec posuere
       augue in \n    <span class=\"yonder-link\" data-toggle=\"tooltip\" data-placement=\"top\"
-      title=\"This is bound to do something\">\n      <u>quam.</u>\n    </span>\n
-      \ </p>\n  <p>\n    Etiam vel tortor sodales \n    <span class=\"yonder-link\"
-      data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tell us more?\">\n      <u>tellus</u>\n
-      \   </span>\n     ultricies commodo.\n  </p>\n</div>"
+      title=\"This is bound to do something\">quam.</span>\n  </p>\n  <p>\n    Etiam
+      vel tortor sodales \n    <span class=\"yonder-link\" data-toggle=\"tooltip\"
+      data-placement=\"top\" title=\"Tell us more?\">tellus</span>\n     ultricies
+      commodo.\n  </p>\n</div>"
 ---

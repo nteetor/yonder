@@ -131,6 +131,6 @@ roxygen:
 
       div("Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem.")
   - type: output
-    value: "<div>\n  Curabitur \n  <span class=\"yonder-link\" id=\"inline\">\n    <u>vulputate</u>\n
-      \ </span>\n   vestibulum lorem.\n</div>"
+    value: "<div>\n  Curabitur \n  <span class=\"yonder-link\" id=\"inline\">vulputate</span>\n
+      \  vestibulum lorem.\n</div>"
 ---
