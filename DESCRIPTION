@@ -21,9 +21,7 @@ Imports:
     jsonlite,
     rlang
 Suggests:
-    testthat,
-    knitr,
-    rmarkdown
+    testthat
 Collate:
     yonder.R
     dependencies.R
