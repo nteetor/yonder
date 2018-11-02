@@ -113,7 +113,10 @@ modal <- function(title = NULL, body = NULL, footer = NULL, ..., center = FALSE,
       class = "close",
       `data-dismiss` = "modal",
       `aria-label` = "Close",
-      icon("times")
+      tags$span(
+        `aria-hidden` = "true",
+        "&times;"
+      )
     )
   )
 
