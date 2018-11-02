@@ -29,7 +29,6 @@ Collate:
     utils.R
     tags.R
     update.R
-    icons.R
     textual.R
     datetime.R
     range.R

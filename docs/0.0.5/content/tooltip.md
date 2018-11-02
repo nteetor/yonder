@@ -45,22 +45,22 @@ roxygen:
           <label>
             An exciting input
             <span data-toggle="tooltip" data-placement="top" title="What is exciting here?">
-              <i class="fas fa-info-circle fa-fw"></i>
+              <i class="fa fa-info-circle"></i>
             </span>
           </label>
         </label>
         <div class="yonder-radio" id="radios">
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-12-234" name="radios" data-value="Ready" checked/>
-            <label class="custom-control-label" for="radio-12-234">Ready</label>
+            <input class="custom-control-input" type="radio" id="radio-722-505" name="radios" data-value="Ready" checked/>
+            <label class="custom-control-label" for="radio-722-505">Ready</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-154-195" name="radios" data-value="Set"/>
-            <label class="custom-control-label" for="radio-154-195">Set</label>
+            <input class="custom-control-input" type="radio" id="radio-499-605" name="radios" data-value="Set"/>
+            <label class="custom-control-label" for="radio-499-605">Set</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-696-905" name="radios" data-value="Go"/>
-            <label class="custom-control-label" for="radio-696-905">Go</label>
+            <input class="custom-control-input" type="radio" id="radio-418-864" name="radios" data-value="Go"/>
+            <label class="custom-control-label" for="radio-418-864">Go</label>
           </div>
           <div class="invalid-feedback"></div>
         </div>
