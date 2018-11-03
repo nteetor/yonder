@@ -92,7 +92,7 @@ roxygen:
           <div class="modal-header">
             <h5 class="modal-title">Title</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <i class="fa fa-times"></i>
+              <span aria-hidden="true">&amp;times;</span>
             </button>
           </div>
           <div class="modal-body">Cras placerat accumsan nulla.</div>
@@ -128,7 +128,7 @@ roxygen:
           <div class="modal-header">
             <h5 class="modal-title">More complex</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <i class="fa fa-times"></i>
+              <span aria-hidden="true">&amp;times;</span>
             </button>
           </div>
           <div class="modal-body">

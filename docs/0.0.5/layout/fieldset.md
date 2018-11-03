@@ -78,8 +78,8 @@ roxygen:
             <label>Is this for delivery?</label>
             <div class="yonder-checkbox" id="deliver">
               <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox" id="checkbox-186-296" data-value="Deliver"/>
-                <label class="custom-control-label" for="checkbox-186-296">Deliver</label>
+                <input class="custom-control-input" type="checkbox" id="checkbox-826-430" data-value="Deliver"/>
+                <label class="custom-control-label" for="checkbox-826-430">Deliver</label>
                 <div class="invalid-feedback"></div>
                 <div class="valid-feedback"></div>
               </div>

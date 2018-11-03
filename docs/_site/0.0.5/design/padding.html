@@ -18,9 +18,6 @@
 <script src="/yonder/www/flatpickr/js/flatpickr.min.js"></script>
 <link rel="stylesheet" href="/yonder/www/flatpickr/css/flatpickr.min.css">
 
-<link rel="stylesheet" href="/yonder/www/font-awesome/css/fa-svg-with-js.css"/>
-<script src="/yonder/www/font-awesome/js/fontawesome-all.min.js"></script>
-
 <link rel="stylesheet" href="/yonder/www/yonder/css/yonder.min.css">
 <script src="/yonder/www/yonder/js/yonder.min.js"></script>
 
@@ -206,7 +203,7 @@
     
 
     <dt>
-      <a class="text-dark" href="/yonder"></a>
+      <a class="text-dark" href="/yonder/0.0.5/thruputs/">thruputs</a>
     </dt>
 
     
@@ -218,7 +215,7 @@
     
 
     <dt>
-      <a class="text-dark" href="/yonder/0.0.5/thruputs/">thruputs</a>
+      <a class="text-dark" href="/yonder"></a>
     </dt>
 
     
@@ -264,82 +261,72 @@ removes all space and 5 adds the most space.</p>
           
 
           
-          <h3 id="centering-an-element"><p>Centering an element</p>
-</h3>
-          <p>In most modern browsers you want to horizontally center a tag element
-using the <a href="/yonder/0.0.5/layout/flex.html">flex</a> layout. Alternatively, you can horizontally center an element
-using <code class="highlighter-rouge">margin(&lt;TAG&gt;, right = "auto", left = "auto")</code>.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>div("Nam a sapien. Integer placerat tristique nisl.") %&gt;%
-  width(50) %&gt;%
-  height(25) %&gt;%
-  margin(top = 2, r = "auto", b = 2, l = "auto") %&gt;%
-  padding(3) %&gt;%
-  background("amber")
-)
-</code></pre></div></div>
-
-          
-          <h3 id="building-an-inline-form"><p>Building an inline form</p>
-</h3>
-          <p>Inline form elements automatically use of the flex layout providing you a
-means of creating condensed sets of inputs. However you may need to adjust
-the spacing of the form’s child elements.</p>
-
-<p>Here is an inline form without any additional spacing applied.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>formInput(
-  id = NULL,
-  inline = TRUE,
-  textInput(id = NULL, placeholder = "Sam Vimes"),
-  groupInput(id = NULL, right = "@", placeholder = "Username"),
-  checkboxInput(id = NULL, choice = "Remember me")
-  )
-)
-</code></pre></div></div>
-
-<p>Not great. But, with some styling we can make this form sparkle. Notice
-we are also adjusting the default submit button added to the form input.</p>
-
-<div class="highlighter-rouge"><div class="highlight"><pre class="highlight"><code>formInput(
-  id = NULL,
-  inline = TRUE,
-  textInput(id = NULL, placeholder = "Sam Vimes") %&gt;%
-    margin(r = c(sm = 2), b = 2),
-  groupInput(id = NULL, right = "@", placeholder = "Username") %&gt;%
-    margin(r = c(sm = 2), b = 2),
-  checkboxInput(id = NULL, choice = "Remember me") %&gt;%
-    margin(r = c(sm = 2), b = 2),
-  submit = submitInput() %&gt;%
-    margin(b = 2)
-)
-</code></pre></div></div>
-
-<p>Now we’re cooking with gas!</p>
-
-          
 
           
           
-          <h3>Getting started</h3>
+          <h3>Centering an element</h3>
+
+          
+          
+          
+          <p>In most modern browsers you want to horizontally center a tag element using the flex layout. Alternatively, you can horizontally center an element using <code>margin(&lt;TAG&gt;, right = &quot;auto&quot;, left = &quot;auto&quot;)</code>.</p>
 
           
           
           
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">padding</span><span class="p">(</span><span class="n">div</span><span class="p">(),</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">lg</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">4</span><span class="p">))</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="s2">"Nam a sapien. Integer placerat tristique nisl."</span><span class="p">,</span><span class="w">
+  </span><span class="n">style</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"height: 100px; width: 200px;"</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">margin</span><span class="p">(</span><span class="n">top</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"auto"</span><span class="p">,</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="n">l</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"auto"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
+  </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">background</span><span class="p">(</span><span class="s2">"amber"</span><span class="p">)</span></code></pre></figure>
 
-</span><span class="n">margin</span><span class="p">(</span><span class="n">div</span><span class="p">(),</span><span class="w"> </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"auto"</span><span class="p">))</span><span class="w">
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <div style="height: 100px; width: 200px;" class="mt-2 mr-auto mb-2 ml-auto p-3 bg-amber">Nam a sapien. Integer placerat tristique nisl.</div>
+          </div>
+          
+          
+          
+          <h3>Building an inline form</h3>
 
-</span><span class="n">margin</span><span class="p">(</span><span class="n">div</span><span class="p">(),</span><span class="w"> </span><span class="n">bottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="p">)</span><span class="w">
+          
+          
+          
+          <p>Inline form elements automatically use of the flex layout providing you a means of creating condensed sets of inputs. However you may need to adjust the spacing of the form's child elements.</p>
 
-</span><span class="n">div</span><span class="p">(</span><span class="w">
-  </span><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-    </span><span class="n">margin</span><span class="p">(</span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-    </span><span class="n">padding</span><span class="p">(</span><span class="m">4</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-    </span><span class="n">background</span><span class="p">(</span><span class="s2">"grey"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-    </span><span class="n">border</span><span class="p">()</span><span class="w">
+          
+          
+          
+          <p>Here is an inline form without any additional spacing applied.</p>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">formInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"login"</span><span class="p">,</span><span class="w">
+  </span><span class="n">inline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+  </span><span class="n">textInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w">
+    </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"full name"</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">groupInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"username"</span><span class="p">,</span><span class="w">
+    </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"@"</span><span class="p">,</span><span class="w">
+    </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"username"</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">checkboxInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"remember"</span><span class="p">,</span><span class="w">
+    </span><span class="n">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Remember me"</span><span class="w">
+  </span><span class="p">)</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
 
           </div>
@@ -347,9 +334,87 @@ we are also adjusting the default submit button added to the form input.</p>
           
           
           <div class="mb-5">
-            <div>
-  <div class="m-4 p-4 bg-grey border"></div>
-</div>
+            <form class="yonder-form form-inline" id="login">
+  <div class="yonder-textual" id="name">
+    <input class="form-control" type="text" placeholder="full name"/>
+    <div class="invalid-feedback"></div>
+  </div>
+  <div class="yonder-group input-group" id="username">
+    <div class="input-group-prepend">
+      <span class="input-group-text">@</span>
+    </div>
+    <input type="text" class="form-control" placeholder="username"/>
+  </div>
+  <div class="yonder-checkbox" id="remember">
+    <div class="custom-control custom-checkbox">
+      <input class="custom-control-input" type="checkbox" id="checkbox-603-400" data-value="Remember me"/>
+      <label class="custom-control-label" for="checkbox-603-400">Remember me</label>
+      <div class="invalid-feedback"></div>
+      <div class="valid-feedback"></div>
+    </div>
+  </div>
+  <button class="yonder-submit btn btn-blue" data-type="submit" role="button">Submit</button>
+</form>
+          </div>
+          
+          
+          
+          <p>Not great. But, with some styling we can make this form sparkle. Notice we are also adjusting the default submit button added to the form input.</p>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">formInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"login2"</span><span class="p">,</span><span class="w">
+  </span><span class="n">inline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+  </span><span class="n">textInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w">
+    </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"full name"</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">margin</span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
+  </span><span class="n">groupInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"username"</span><span class="p">,</span><span class="w">
+    </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"@"</span><span class="p">,</span><span class="w">
+    </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"username"</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">margin</span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
+  </span><span class="n">checkboxInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"remember"</span><span class="p">,</span><span class="w">
+    </span><span class="n">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Remember me"</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">margin</span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
+  </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">submitInput</span><span class="p">(</span><span class="s2">"Log in"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">margin</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="mb-5">
+            <form class="yonder-form form-inline" id="login2">
+  <div class="yonder-textual mr-sm-2 mb-2" id="name">
+    <input class="form-control" type="text" placeholder="full name"/>
+    <div class="invalid-feedback"></div>
+  </div>
+  <div class="yonder-group input-group mr-sm-2 mb-2" id="username">
+    <div class="input-group-prepend">
+      <span class="input-group-text">@</span>
+    </div>
+    <input type="text" class="form-control" placeholder="username"/>
+  </div>
+  <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
+    <div class="custom-control custom-checkbox">
+      <input class="custom-control-input" type="checkbox" id="checkbox-385-232" data-value="Remember me"/>
+      <label class="custom-control-label" for="checkbox-385-232">Remember me</label>
+      <div class="invalid-feedback"></div>
+      <div class="valid-feedback"></div>
+    </div>
+  </div>
+  <button class="yonder-submit btn btn-blue mb-2" data-type="submit" role="button">Log in</button>
+</form>
           </div>
           
           

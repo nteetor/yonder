@@ -24,60 +24,7 @@ roxygen:
     description: |-
       A [responsive](/yonder/0.0.5/responsive.html) argument. One of `0:5` or `"auto"`. 0
       removes all space and 5 adds the most space.
-  sections:
-  - title: Centering an element
-    body: |-
-      In most modern browsers you want to horizontally center a tag element
-      using the [flex](/yonder/0.0.5/layout/flex.html) layout. Alternatively, you can horizontally center an element
-      using `margin(<TAG>, right = "auto", left = "auto")`.
-
-      ```
-      div("Nam a sapien. Integer placerat tristique nisl.") %>%
-        width(50) %>%
-        height(25) %>%
-        margin(top = 2, r = "auto", b = 2, l = "auto") %>%
-        padding(3) %>%
-        background("amber")
-      )
-      ```
-  - title: Building an inline form
-    body: |-
-      Inline form elements automatically use of the flex layout providing you a
-      means of creating condensed sets of inputs. However you may need to adjust
-      the spacing of the form's child elements.
-
-      Here is an inline form without any additional spacing applied.
-
-      ```
-      formInput(
-        id = NULL,
-        inline = TRUE,
-        textInput(id = NULL, placeholder = "Sam Vimes"),
-        groupInput(id = NULL, right = "@", placeholder = "Username"),
-        checkboxInput(id = NULL, choice = "Remember me")
-        )
-      )
-      ```
-
-      Not great. But, with some styling we can make this form sparkle. Notice
-      we are also adjusting the default submit button added to the form input.
-
-      ```
-      formInput(
-        id = NULL,
-        inline = TRUE,
-        textInput(id = NULL, placeholder = "Sam Vimes") %>%
-          margin(r = c(sm = 2), b = 2),
-        groupInput(id = NULL, right = "@", placeholder = "Username") %>%
-          margin(r = c(sm = 2), b = 2),
-        checkboxInput(id = NULL, choice = "Remember me") %>%
-          margin(r = c(sm = 2), b = 2),
-        submit = submitInput() %>%
-          margin(b = 2)
-      )
-      ```
-
-      Now we're cooking with gas!
+  sections: []
   return: ~
   family: design
   name: ~
@@ -85,26 +32,124 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h3>Getting started</h3>
+      <h3>Centering an element</h3>
+  - type: markdown
+    value: |
+      <p>In most modern browsers you want to horizontally center a tag element using the flex layout. Alternatively, you can horizontally center an element using <code>margin(&lt;TAG&gt;, right = &quot;auto&quot;, left = &quot;auto&quot;)</code>.</p>
   - type: source
     value: |2-
 
-      padding(div(), c(xs = 0, sm = 2, lg = 4))
-
-      margin(div(), right = c(md = "auto"))
-
-      margin(div(), bottom = 3, left = 1)
-
       div(
-        div() %>%
-          margin(4) %>%
-          padding(4) %>%
-          background("grey") %>%
-          border()
+        "Nam a sapien. Integer placerat tristique nisl.",
+        style = "height: 100px; width: 200px;"
+      ) %>%
+        margin(top = 2, r = "auto", b = 2, l = "auto") %>%  # <-
+        padding(3) %>%
+        background("amber")
+  - type: output
+    value: '<div style="height: 100px; width: 200px;" class="mt-2 mr-auto mb-2 ml-auto
+      p-3 bg-amber">Nam a sapien. Integer placerat tristique nisl.</div>'
+  - type: markdown
+    value: |
+      <h3>Building an inline form</h3>
+  - type: markdown
+    value: |
+      <p>Inline form elements automatically use of the flex layout providing you a means of creating condensed sets of inputs. However you may need to adjust the spacing of the form's child elements.</p>
+  - type: markdown
+    value: |
+      <p>Here is an inline form without any additional spacing applied.</p>
+  - type: source
+    value: |2-
+
+      formInput(
+        id = "login",
+        inline = TRUE,
+        textInput(
+          id = "name",
+          placeholder = "full name"
+        ),
+        groupInput(
+          id = "username",
+          left = "@",
+          placeholder = "username"
+        ),
+        checkboxInput(
+          id = "remember",
+          choice = "Remember me"
+        )
       )
   - type: output
     value: |-
-      <div>
-        <div class="m-4 p-4 bg-grey border"></div>
-      </div>
+      <form class="yonder-form form-inline" id="login">
+        <div class="yonder-textual" id="name">
+          <input class="form-control" type="text" placeholder="full name"/>
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="yonder-group input-group" id="username">
+          <div class="input-group-prepend">
+            <span class="input-group-text">@</span>
+          </div>
+          <input type="text" class="form-control" placeholder="username"/>
+        </div>
+        <div class="yonder-checkbox" id="remember">
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" type="checkbox" id="checkbox-603-400" data-value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-603-400">Remember me</label>
+            <div class="invalid-feedback"></div>
+            <div class="valid-feedback"></div>
+          </div>
+        </div>
+        <button class="yonder-submit btn btn-blue" data-type="submit" role="button">Submit</button>
+      </form>
+  - type: markdown
+    value: |
+      <p>Not great. But, with some styling we can make this form sparkle. Notice we are also adjusting the default submit button added to the form input.</p>
+  - type: source
+    value: |2-
+
+      formInput(
+        id = "login2",
+        inline = TRUE,
+        textInput(
+          id = "name",
+          placeholder = "full name"
+        ) %>%
+          margin(r = c(sm = 2), b = 2),  # <-
+        groupInput(
+          id = "username",
+          left = "@",
+          placeholder = "username"
+        ) %>%
+          margin(r = c(sm = 2), b = 2),  # <-
+        checkboxInput(
+          id = "remember",
+          choice = "Remember me"
+        ) %>%
+          margin(r = c(sm = 2), b = 2),  # <-
+        submit = submitInput("Log in") %>%
+          margin(b = 2)  # <-
+      )
+  - type: output
+    value: |-
+      <form class="yonder-form form-inline" id="login2">
+        <div class="yonder-textual mr-sm-2 mb-2" id="name">
+          <input class="form-control" type="text" placeholder="full name"/>
+          <div class="invalid-feedback"></div>
+        </div>
+        <div class="yonder-group input-group mr-sm-2 mb-2" id="username">
+          <div class="input-group-prepend">
+            <span class="input-group-text">@</span>
+          </div>
+          <input type="text" class="form-control" placeholder="username"/>
+        </div>
+        <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
+          <div class="custom-control custom-checkbox">
+            <input class="custom-control-input" type="checkbox" id="checkbox-385-232" data-value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-385-232">Remember me</label>
+            <div class="invalid-feedback"></div>
+            <div class="valid-feedback"></div>
+          </div>
+        </div>
+        <button class="yonder-submit btn btn-blue mb-2" data-type="submit" role="button">Log in</button>
+      </form>
 ---
