@@ -52,7 +52,6 @@ Collate:
     navbar.R
     radio.R
     table.R
-    sparkline.R
     progress.R
     tooltip.R
     content.R

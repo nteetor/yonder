@@ -70,7 +70,4 @@ div(
   flex(wrap = TRUE)
 
 }
-\seealso{
-Other outputs: \code{\link{sparklineOutput}}
-}
 \concept{outputs}
