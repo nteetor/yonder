@@ -656,79 +656,74 @@ display <- function(.tag, render = NULL, print = NULL) {
 #' @param right,bottom,left A [responsive] argument. One of `0:5` or `"auto"`. 0
 #'   removes all space and 5 adds the most space.
 #'
-#' @section Centering an element:
-#'
-#' In most modern browsers you want to horizontally center a tag element
-#' using the [flex] layout. Alternatively, you can horizontally center an element
-#' using `margin(<TAG>, right = "auto", left = "auto")`.
-#'
-#' ```
-#' div("Nam a sapien. Integer placerat tristique nisl.") %>%
-#'   width(50) %>%
-#'   height(25) %>%
-#'   margin(top = 2, r = "auto", b = 2, l = "auto") %>%
-#'   padding(3) %>%
-#'   background("amber")
-#' )
-#' ```
-#'
-#' @section Building an inline form:
-#'
-#' Inline form elements automatically use of the flex layout providing you a
-#' means of creating condensed sets of inputs. However you may need to adjust
-#' the spacing of the form's child elements.
-#'
-#' Here is an inline form without any additional spacing applied.
-#'
-#' ```
-#' formInput(
-#'   id = NULL,
-#'   inline = TRUE,
-#'   textInput(id = NULL, placeholder = "Sam Vimes"),
-#'   groupInput(id = NULL, right = "@", placeholder = "Username"),
-#'   checkboxInput(id = NULL, choice = "Remember me")
-#'   )
-#' )
-#' ```
-#'
-#' Not great. But, with some styling we can make this form sparkle. Notice
-#' we are also adjusting the default submit button added to the form input.
-#'
-#' ```
-#' formInput(
-#'   id = NULL,
-#'   inline = TRUE,
-#'   textInput(id = NULL, placeholder = "Sam Vimes") %>%
-#'     margin(r = c(sm = 2), b = 2),
-#'   groupInput(id = NULL, right = "@", placeholder = "Username") %>%
-#'     margin(r = c(sm = 2), b = 2),
-#'   checkboxInput(id = NULL, choice = "Remember me") %>%
-#'     margin(r = c(sm = 2), b = 2),
-#'   submit = submitInput() %>%
-#'     margin(b = 2)
-#' )
-#' ```
-#'
-#' Now we're cooking with gas!
-#'
 #' @family design
 #' @export
 #' @examples
 #'
-#' ### Getting started
+#' ### Centering an element
 #'
-#' padding(div(), c(xs = 0, sm = 2, lg = 4))
-#'
-#' margin(div(), right = c(md = "auto"))
-#'
-#' margin(div(), bottom = 3, left = 1)
+#' # In most modern browsers you want to horizontally center a tag element using
+#' # the flex layout. Alternatively, you can horizontally center an element
+#' # using `margin(<TAG>, right = "auto", left = "auto")`.
 #'
 #' div(
-#'   div() %>%
-#'     margin(4) %>%
-#'     padding(4) %>%
-#'     background("grey") %>%
-#'     border()
+#'   "Nam a sapien. Integer placerat tristique nisl.",
+#'   style = "height: 100px; width: 200px;"
+#' ) %>%
+#'   margin(top = 2, r = "auto", b = 2, l = "auto") %>%  # <-
+#'   padding(3) %>%
+#'   background("amber")
+#'
+#' ### Building an inline form
+#'
+#' # Inline form elements automatically use of the flex layout providing you a
+#' # means of creating condensed sets of inputs. However you may need to adjust
+#' # the spacing of the form's child elements.
+#'
+#' # Here is an inline form without any additional spacing applied.
+#'
+#' formInput(
+#'   id = "login",
+#'   inline = TRUE,
+#'   textInput(
+#'     id = "name",
+#'     placeholder = "full name"
+#'   ),
+#'   groupInput(
+#'     id = "username",
+#'     left = "@",
+#'     placeholder = "username"
+#'   ),
+#'   checkboxInput(
+#'     id = "remember",
+#'     choice = "Remember me"
+#'   )
+#' )
+#'
+#' # Not great. But, with some styling we can make this form sparkle. Notice
+#' # we are also adjusting the default submit button added to the form input.
+#'
+#' formInput(
+#'   id = "login2",
+#'   inline = TRUE,
+#'   textInput(
+#'     id = "name",
+#'     placeholder = "full name"
+#'   ) %>%
+#'     margin(r = c(sm = 2), b = 2),  # <-
+#'   groupInput(
+#'     id = "username",
+#'     left = "@",
+#'     placeholder = "username"
+#'   ) %>%
+#'     margin(r = c(sm = 2), b = 2),  # <-
+#'   checkboxInput(
+#'     id = "remember",
+#'     choice = "Remember me"
+#'   ) %>%
+#'     margin(r = c(sm = 2), b = 2),  # <-
+#'   submit = submitInput("Log in") %>%
+#'     margin(b = 2)  # <-
 #' )
 #'
 padding <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
@@ -770,7 +765,6 @@ padding <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) 
   attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
-#' @family design
 #' @rdname padding
 #' @export
 margin <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
