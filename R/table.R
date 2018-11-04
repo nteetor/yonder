@@ -39,74 +39,28 @@
 #'   expression.
 #'
 #' @family thruputs
+#' @requires data
 #' @export
 #' @examples
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           width = 6,
-#'           tableThruput(
-#'             id = "table1",
-#'             responsive = TRUE,
-#'             editable = TRUE
-#'           )
-#'         ),
-#'         column(
-#'           width = 6,
-#'           verbatimTextOutput("value")
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       observeEvent(input$table1, once = TRUE, {
-#'         showAlert("Click a table cell to edit the value!", color = "amber")
-#'       })
+#' ### Responsive tables
 #'
-#'       output$table1 <- renderTable({
-#'         iris
-#'       })
+#' # In practice you will use `renderTable()` to update the data in a table.
+#' # These live examples have been populated automatically for the sake of
+#' # the demo.
 #'
-#'       output$value <- renderPrint({
-#'         input$table1
-#'       })
-#'     }
-#'   )
-#' }
+#' tableThruput(
+#'   id = "table1",  # <-
+#'   responsive = TRUE
+#' )
 #'
-#' if (interactive()) {
-#'   shinyApp(
-#'     ui = container(
-#'       row(
-#'         column(
-#'           tableThruput(
-#'             id = "table1",
-#'             borders = "all",
-#'             responsive = TRUE
-#'           )
-#'         ),
-#'         column(
-#'           tableThruput(
-#'             id = "table2",
-#'             borders = "all",
-#'             responsive = TRUE
-#'           )
-#'         )
-#'       )
-#'     ),
-#'     server = function(input, output) {
-#'       output$table1 <- renderTable({
-#'         mtcars[1:10, ]
-#'       })
+#' ### Borders on rows and columns
 #'
-#'       output$table2 <- renderTable({
-#'         input$table1
-#'       })
-#'     }
-#'   )
-#' }
+#' tableThruput(
+#'   id = "table2",
+#'   borders = "all",  # <-
+#'   responsive = TRUE
+#' )
 #'
 tableThruput <- function(id, ..., borders = "rows", striped = FALSE,
                          compact = FALSE, responsive = FALSE,

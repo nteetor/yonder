@@ -2,6 +2,7 @@
 this: font
 filename: R/design.R
 layout: page
+include: ~
 roxygen:
   title: Tag element font
   description: |-

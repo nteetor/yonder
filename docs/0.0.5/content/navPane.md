@@ -2,6 +2,7 @@
 this: navPane
 filename: R/nav.R
 layout: page
+include: ~
 roxygen:
   title: Navigation panes
   description: |-

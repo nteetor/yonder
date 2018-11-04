@@ -2,6 +2,7 @@
 this: closePopover
 filename: R/popover.R
 layout: page
+include: ~
 roxygen:
   title: Display a popover
   description: |-

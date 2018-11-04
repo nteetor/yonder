@@ -2,6 +2,7 @@
 this: index
 filename: R/layout.R
 layout: index
+include: ~
 roxygen:
   title: Layout
   description: Application layout.

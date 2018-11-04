@@ -2,6 +2,7 @@
 this: figure
 filename: R/tags.R
 layout: page
+include: ~
 roxygen:
   title: Responsive images and figures
   description: |-

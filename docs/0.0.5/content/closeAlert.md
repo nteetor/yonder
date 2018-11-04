@@ -2,6 +2,7 @@
 this: closeAlert
 filename: R/alerts.R
 layout: page
+include: ~
 roxygen:
   title: Static and actionable alerts
   description: |-

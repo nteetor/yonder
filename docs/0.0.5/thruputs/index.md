@@ -2,6 +2,7 @@
 this: index
 filename: R/yonder.R
 layout: index
+include: ~
 roxygen:
   title: Thruputs
   description: Yonder includes new reactive *thruputs*.

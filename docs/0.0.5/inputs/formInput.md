@@ -2,6 +2,7 @@
 this: formInput
 filename: R/forms.R
 layout: page
+include: ~
 roxygen:
   title: Form inputs
   description: |-
@@ -98,16 +99,16 @@ roxygen:
               <label>Ice creams</label>
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-700-646" name="flavorChoice" data-value="Mint" checked/>
-                  <label class="custom-control-label" for="radio-700-646">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-210-365" name="flavorChoice" data-value="Mint" checked/>
+                  <label class="custom-control-label" for="radio-210-365">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-76-70" name="flavorChoice" data-value="Moose tracks"/>
-                  <label class="custom-control-label" for="radio-76-70">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-556-924" name="flavorChoice" data-value="Moose tracks"/>
+                  <label class="custom-control-label" for="radio-556-924">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-272-540" name="flavorChoice" data-value="Marble"/>
-                  <label class="custom-control-label" for="radio-272-540">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-933-527" name="flavorChoice" data-value="Marble"/>
+                  <label class="custom-control-label" for="radio-933-527">Marble</label>
                 </div>
                 <div class="invalid-feedback"></div>
               </div>

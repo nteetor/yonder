@@ -2,6 +2,7 @@
 this: height
 filename: R/design.R
 layout: page
+include: ~
 roxygen:
   title: Tag element width and height
   description: |-

@@ -2,6 +2,7 @@
 this: selectInput
 filename: R/select.R
 layout: page
+include: ~
 roxygen:
   title: Select input
   description: |-

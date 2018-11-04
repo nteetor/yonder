@@ -2,6 +2,7 @@
 this: groupInput
 filename: R/group.R
 layout: page
+include: ~
 roxygen:
   title: Group inputs, combination button, dropdown, and text input
   description: |-

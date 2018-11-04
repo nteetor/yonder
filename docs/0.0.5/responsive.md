@@ -2,6 +2,7 @@
 this: responsive
 filename: R/flex.R
 layout: page
+include: ~
 roxygen:
   title: Responsive arguments
   description: |-

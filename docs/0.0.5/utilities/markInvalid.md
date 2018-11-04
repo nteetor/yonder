@@ -2,6 +2,7 @@
 this: markInvalid
 filename: R/validate.R
 layout: page
+include: ~
 roxygen:
   title: Input validation
   description: |-

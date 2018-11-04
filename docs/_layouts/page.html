@@ -4,6 +4,12 @@
 
     {% include header.html %}
 
+    {% if page.include contains "data" %}
+    {% include data.html %}
+    {% endif %}
+
+    {% include scripts.html %}
+
   </head>
   <body>
     <div class="container-fluid">
@@ -39,7 +45,7 @@
                >{% highlight r %}{{ example.value }}{% endhighlight %}
           </div>
           {% elsif example.type == "output" %}
-          <div class="mb-5">
+          <div class="r-example mb-5">
             {{ example.value }}
           </div>
           {% endif %}

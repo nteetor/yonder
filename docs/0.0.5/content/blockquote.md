@@ -2,6 +2,7 @@
 this: blockquote
 filename: R/tags.R
 layout: page
+include: ~
 roxygen:
   title: Cleaner blockquotes
   description: Stylized blockquotes, an updated builder function for `<blockquote>`.

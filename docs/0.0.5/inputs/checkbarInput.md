@@ -2,6 +2,7 @@
 this: checkbarInput
 filename: R/checkbox.R
 layout: page
+include: ~
 roxygen:
   title: Checkbox inputs
   description: |-
@@ -55,8 +56,8 @@ roxygen:
     value: |-
       <div class="yonder-checkbox">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-592-741" data-value="Suspendisse potenti" checked/>
-          <label class="custom-control-label" for="checkbox-592-741">Suspendisse potenti</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-170-713" data-value="Suspendisse potenti" checked/>
+          <label class="custom-control-label" for="checkbox-170-713">Suspendisse potenti</label>
           <div class="invalid-feedback"></div>
           <div class="valid-feedback"></div>
         </div>

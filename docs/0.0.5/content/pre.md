@@ -2,6 +2,7 @@
 this: pre
 filename: R/tags.R
 layout: page
+include: ~
 roxygen:
   title: Scrollable code snippets
   description: |-

@@ -2,6 +2,7 @@
 this: column
 filename: R/layout.R
 layout: page
+include: ~
 roxygen:
   title: Grid layout
   description: |-

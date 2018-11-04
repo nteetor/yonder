@@ -2,6 +2,7 @@
 this: listGroupItem
 filename: R/list-group.R
 layout: page
+include: ~
 roxygen:
   title: List group thruputs
   description: |-

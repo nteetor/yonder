@@ -2,6 +2,7 @@
 this: tableThruput
 filename: R/table.R
 layout: page
+include: data
 roxygen:
   title: Table thruput
   description: |-
@@ -59,100 +60,33 @@ roxygen:
   name: ~
   rdname: ~
   examples:
+  - type: markdown
+    value: |
+      <h3>Responsive tables</h3>
+  - type: markdown
+    value: |
+      <p>In practice you will use <code>renderTable()</code> to update the data in a table. These live examples have been populated automatically for the sake of the demo.</p>
   - type: source
     value: |2-
 
+      tableThruput(
+        id = "table1",  # <-
+        responsive = TRUE
+      )
+  - type: output
+    value: <table class="yonder-table table" id="table1" data-responsive="true" data-editable="false"></table>
+  - type: markdown
+    value: |
+      <h3>Borders on rows and columns</h3>
+  - type: source
+    value: |2-
 
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                width = 6,
-                tableThruput(
-                  id = "table1",
-                  responsive = TRUE,
-                  editable = TRUE
-                )
-              ),
-              column(
-                width = 6,
-                verbatimTextOutput("value")
-              )
-            )
-          ),
-          server = function(input, output) {
-            observeEvent(input$table1, once = TRUE, {
-              showAlert("Click a table cell to edit the value!", color = "amber")
-            })
-
-            output$table1 <- renderTable({
-              iris
-            })
-
-            output$value <- renderPrint({
-              input$table1
-            })
-          }
-        )
-      }
-
-      if (interactive()) {
-        shinyApp(
-          ui = container(
-            row(
-              column(
-                tableThruput(
-                  id = "table1",
-                  borders = "all",
-                  responsive = TRUE
-                )
-              ),
-              column(
-                tableThruput(
-                  id = "table2",
-                  borders = "all",
-                  responsive = TRUE
-                )
-              )
-            )
-          ),
-          server = function(input, output) {
-            output$table1 <- renderTable({
-              mtcars[1:10, ]
-            })
-
-            output$table2 <- renderTable({
-              input$table1
-            })
-          }
-        )
-      }
-  - type: code
-    value:
-    - |-
-      if (interactive()) {
-          shinyApp(ui = container(row(column(width = 6, tableThruput(id = "table1", responsive = TRUE, editable = TRUE)), column(width = 6, verbatimTextOutput("value")))), server = function(input, output) {
-              observeEvent(input$table1, once = TRUE, {
-                  showAlert("Click a table cell to edit the value!", color = "amber")
-              })
-              output$table1 <- renderTable({
-                  iris
-              })
-              output$value <- renderPrint({
-                  input$table1
-              })
-          })
-      }
-    - |-
-      if (interactive()) {
-          shinyApp(ui = container(row(column(tableThruput(id = "table1", borders = "all", responsive = TRUE)), column(tableThruput(id = "table2", borders = "all", responsive = TRUE)))), server = function(input, output) {
-              output$table1 <- renderTable({
-                  mtcars[1:10, ]
-              })
-              output$table2 <- renderTable({
-                  input$table1
-              })
-          })
-      }
+      tableThruput(
+        id = "table2",
+        borders = "all",  # <-
+        responsive = TRUE
+      )
+  - type: output
+    value: <table class="yonder-table table table-bordered" id="table2" data-responsive="true"
+      data-editable="false"></table>
 ---

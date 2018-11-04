@@ -2,6 +2,7 @@
 this: rangeInput
 filename: R/range.R
 layout: page
+include: ~
 roxygen:
   title: Ranges, intervals, and custom sliders
   description: A take on shiny's `sliderInput`.

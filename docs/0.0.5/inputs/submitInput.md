@@ -2,6 +2,7 @@
 this: submitInput
 filename: R/button.R
 layout: page
+include: ~
 roxygen:
   title: Button and submit inputs
   description: |-

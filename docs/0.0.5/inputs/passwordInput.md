@@ -2,6 +2,7 @@
 this: passwordInput
 filename: R/textual.R
 layout: page
+include: ~
 roxygen:
   title: Textual inputs
   description: |-

@@ -2,6 +2,7 @@
 this: downloadEvent
 filename: R/download.R
 layout: page
+include: ~
 roxygen:
   title: Trigger downloads
   description: |-

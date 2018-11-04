@@ -2,6 +2,7 @@
 this: progressOutlet
 filename: R/progress.R
 layout: page
+include: ~
 roxygen:
   title: Progress bars
   description: |-

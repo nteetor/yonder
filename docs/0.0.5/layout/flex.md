@@ -2,6 +2,7 @@
 this: flex
 filename: R/flex.R
 layout: page
+include: ~
 roxygen:
   title: Flex layout
   description: |-

@@ -2,6 +2,7 @@
 this: index
 filename: R/content.R
 layout: index
+include: ~
 roxygen:
   title: Content
   description: Build page content.
