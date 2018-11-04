@@ -223,4 +223,6 @@ export function yonderInputBinding() {
   };
 }
 
-//.call(Shiny.InputBinding.prototype);
+if (Shiny !== undefined) {
+  yonderInputBinding.call(Shiny.InputBinding.prototype);
+}

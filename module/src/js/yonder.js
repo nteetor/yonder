@@ -1,4 +1,4 @@
-import { yonderInputBinding } from "./yonder-input-binding.js";
+import "./yonder-input-binding.js";
 
 import "./input-binding-address.js";
 import "./input-binding-alert.js";
@@ -27,65 +27,15 @@ import "./output-binding-progress.js";
 import "./thruput-binding-table.js";
 import "./thruput-binding-list-group.js";
 
-yonderInputBinding.call(Shiny.InputBinding.prototype);
+import "./modal.js";
+import "./collapsible.js";
 
 $(() => {
   $("[data-toggle=\"tooltip\"]").tooltip();
   $("[data-toggle=\"popover\"]").popover();
 
-  $(".yonder-file").on("click", ".input-group-append", function(e) {
-    $(e.delegateTarget).find("input[type='file']").trigger("click");
-  });
-
   $(document).on("shiny:connected", function() {
     $(".yonder-submit[data-type=\"submit\"]").attr("type", "submit");
-  });
-
-  $(document).on("shown.bs.modal", ".modal", function(e) {
-    if (!$(".modal").find(".shiny-bound-output, .shiny-bound-input").length) {
-      Shiny.initializeInputs(".modal");
-      Shiny.bindAll(".modal");
-    }
-  });
-
-  (() => {
-    let collapsibles = document.querySelectorAll("[data-collapse-id]");
-
-    if (collapsibles.length) {
-      $(collapsibles).wrap(function() {
-        let attrs = {};
-
-        for (const attr of this.attributes) {
-          if (attr.name.match(/^data[-]collapse/)) {
-            let newkey = attr.name.replace(/([A-Z])/g, "-$1")
-                .toLowerCase()
-                .replace(/^data-collapse-/, "");
-
-            attrs[newkey] = attr.value;
-          }
-        }
-
-        attrs["class"] = `${ attrs["class"] ? attrs["class"] + " " : ""}collapse`;
-
-        return $("<div>", attrs);
-      });
-
-      $(document.querySelectorAll(".collapse")).collapse();
-    }
-  })();
-
-  Shiny.addCustomMessageHandler("yonder:collapse", function(msg) {
-    if (!msg.type || !msg.type.match(/^(show|hide|toggle)$/)) {
-      return;
-    }
-
-    let collapsible = document.getElementById(`${ msg.data.id }`);
-
-    if (!collapsible || !collapsible.classList.contains("collapse")) {
-      return;
-    }
-
-    $(collapsible).collapse(msg.type);
   });
 
   Shiny.addCustomMessageHandler("yonder:popover", (msg) => {
@@ -122,36 +72,6 @@ $(() => {
 
       return;
     }
-  });
-
-  Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
-    if (!msg.type) {
-      return false;
-    }
-
-    if (msg.type === "close") {
-      $(".modal").modal("hide");
-      return true;
-    }
-
-    if (msg.type === "show") {
-      var $modal;
-
-      if ($(".modal").length) {
-        $modal = $(".modal");
-      } else {
-        $modal = $("<div class='modal fade' tabindex=-1 role='dialog'></div>");
-
-        $(document.body).append($modal);
-      }
-
-      $modal.html(msg.data.content);
-      $modal.modal();
-
-      return true;
-    }
-
-    return false;
   });
 
   Shiny.addCustomMessageHandler("yonder:download", function(msg) {

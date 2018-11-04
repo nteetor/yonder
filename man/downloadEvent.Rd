@@ -49,7 +49,7 @@ download.
 }
 
 \seealso{
-Other utilities: \code{\link{collapse}},
+Other utilities: \code{\link{collapsiblePane}},
   \code{\link{markInvalid}}, \code{\link{updateChoices}}
 }
 \concept{utilities}

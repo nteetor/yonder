@@ -1,97 +1,109 @@
 #' Collapsible sections
 #'
-#' The `collapse()` function allows you to make a tag element collapsible. The
-#' state of the element, shown or hidden, is toggled using `hideCollapse()`,
-#' `showCollapse()`, and `toggleCollapse()`.
+#' The `collapsible()` function wraps a tag element in a collasible div
+#' element. The state of the element, shown or hidden, is toggled using
+#' `hideCollapse()`, `showCollapse()`, and `toggleCollapse()`.
 #'
-#' @param tag A tag element.
+#' @param id A character string specifying the id of the collapsible pane. Pass
+#'   this id to the `hideCollapse()`, `showCollapse()`, or `toggleCollapse()`
+#'   to change the state of a collapsible pane.
 #'
-#' @param id A character string specifying an HTML id. Pass this id to the
-#'   `*Collapse()` functions to hide or show the collapsible element.
+#' @param ... Tag elements inside the collapsible pane or additional named
+#'   arguments passed as HTML attributes to parent element.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the
-#'   collapsible div.
+#' @details
 #'
-#' @family utilities
+#' Padding may not be applied to the collapsible pane div element. To pad a
+#' collapsible pane first wrap the pane in another element and add padding to
+#' this new element.
+#'
+#' @section App with collapse:
+#'
+#' ```R
+#' ui <- container(
+#'   buttonInput(
+#'     id = "demo",
+#'     label = "Toggle collapse"
+#'   ),
+#'   collapsiblePane(
+#'     id = "collapse",
+#'     p(
+#'       "Pellentesque condimentum, magna ut suscipit hendrerit, ",
+#'       "ipsum augue ornare nulla, non luctus diam neque sit amet urna."
+#'     ),
+#'     p(
+#'       "Praesent fermentum tempor tellus.  Vestibulum convallis, ",
+#'       "lorem a tempus semper, dui dui euismod elit, vitae placerat ",
+#'       "urna tortor vitae lacus."
+#'     )
+#'   )
+#' )
+#'
+#' server <- function(input, output) {
+#'   observeEvent(input$demo, {
+#'     togglePane("collapse")
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
+#'
+#' @family content
 #' @export
 #' @examples
 #'
-#' ### Making an element collapsible
+#' # Please see live examples
 #'
-#' # On the server side you will need to call `hideCollapse` or
-#' # `toggleCollapse`
-#'
-#' card(
-#'   '"The Time Traveller (for so it will be convenient to speak
-#'     of him) was expounding a recondite matter to us. His grey eyes
-#'     shone and twinkled, and his usually pale face was flushed and
-#'     animated. The fire burned brightly, and the soft radiance of
-#'     the incandescent lights in the lilies of silver caught the
-#'     bubbles that flashed and passed in our glasses."'
-#' ) %>%
-#'   background("grey") %>%
-#'   collapse("an-html-id")  # pass this id to the `*Collapse` function
-#'
-collapse <- function(tag, id, ...) {
-  args <- list(...)
-  attrs <- attribs(args)
-  elems <- elements(args)
-
-  if (length(attrs)) {
-    names(attrs) <- paste0("data-collapse-", names(attrs))
+collapsiblePane <- function(id, ..., show = TRUE) {
+  if (!is.character(id)) {
+    stop(
+      "inavlid `collapsiblePane()` argument, `id` must be a character string",
+      call. = FALSE
+    )
   }
 
-  attrs$`data-collapse-id` <- id
+  this <- tags$div(
+    id = id,
+    class = "collapse",
+    ...
+  )
 
-  tag <- shiny::tagAppendChildren(tag, list = elems)
-  tag <- attachDependencies(tag, c(yonderDep(), bootstrapDep()))
-  tag <- tagConcatAttributes(tag, attrs)
+  this <- attachDependencies(this, c(yonderDep(), bootstrapDep()))
 
-  tag
+  this
 }
 
-#' @rdname collapse
+#' @rdname collapsiblePane
 #' @export
-showCollapse <- function(id) {
-  updateCollapse(id, "show")
+collapsePane <- function(id, session = getDefaultReactiveDomain()) {
+  sendCollapseMessage("show", id, session)
 }
 
-#' @rdname collapse
+#' @rdname collapsiblePane
 #' @export
-hideCollapse <- function(id) {
-  updateCollapse(id, "hide")
+expandPane <- function(id, session = getDefaultReactiveDomain()) {
+  sendCollapseMessage("hide", id, session)
 }
 
-#' @rdname collapse
+#' @rdname collapsiblePane
 #' @export
-toggleCollapse <- function(id) {
-  updateCollapse(id, "toggle")
+togglePane <- function(id, session = getDefaultReactiveDomain()) {
+  sendCollapseMessage("toggle", id, session)
 }
 
 # internal
-updateCollapse <- function(id, type) {
-  if (!re(type, "show|hide|toggle", len0 = FALSE)) {
+sendCollapseMessage <- function(type, id, session) {
+  if (is.null(session)) {
     stop(
-      'invalid `updateCollapse` argument, `action` must be one "show", ',
-      '"hide", or "toggle"',
+      "`", sys.call(-1)[[1]], "()`, must be called within a reactive context",
       call. = FALSE
     )
   }
 
-  domain <- getDefaultReactiveDomain()
-
-  if (is.null(domain)) {
-    stop(
-      "invalid call to `", sys.call(-1)[[1]], "()`, must be called within a ",
-      "reactive context",
-      call. = FALSE
-    )
-  }
-
-  domain$sendCustomMessage("yonder:collapse", list(
+  session$sendCustomMessage("yonder:collapse", list(
     type = type,
     data = list(
-      id = id
+      target = id
     )
   ))
 }

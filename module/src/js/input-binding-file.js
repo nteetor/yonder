@@ -1,5 +1,9 @@
 export let fileInputBinding = new Shiny.InputBinding();
 
+$(".yonder-file").on("click", ".input-group-append", function(e) {
+  $(e.delegateTarget).find("input[type='file']").trigger("click");
+});
+
 $.extend(fileInputBinding, {
   Selector: {
     SELF: ".yonder-file[id]"

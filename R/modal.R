@@ -115,7 +115,7 @@ modal <- function(title = NULL, body = NULL, footer = NULL, ..., center = FALSE,
       `aria-label` = "Close",
       tags$span(
         `aria-hidden` = "true",
-        "&times;"
+        HTML("&times;")
       )
     )
   )
@@ -153,6 +153,13 @@ modal <- function(title = NULL, body = NULL, footer = NULL, ..., center = FALSE,
 #' @rdname modal
 #' @export
 showModal <- function(modal, session = getDefaultReactiveDomain()) {
+  if (is.null(session)) {
+    stop(
+      "`showModal()` must be called in a reactive context",
+      call. = FALSE
+    )
+  }
+
   session$sendCustomMessage("yonder:modal", list(
     type = "show",
     data = list(
@@ -164,6 +171,13 @@ showModal <- function(modal, session = getDefaultReactiveDomain()) {
 #' @rdname modal
 #' @export
 closeModal <- function(session = getDefaultReactiveDomain()) {
+  if (is.null(session)) {
+    stop(
+      "`closeModal()` must be called in a reactive context",
+      call. = FALSE
+    )
+  }
+
   session$sendCustomMessage("yonder:modal", list(
     type = "close",
     data = list()
