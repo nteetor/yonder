@@ -2,7 +2,7 @@
 this: jumbotron
 filename: R/content.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Jumbotron
   description: Highlight messages.

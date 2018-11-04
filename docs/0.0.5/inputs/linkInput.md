@@ -2,7 +2,7 @@
 this: linkInput
 filename: R/button.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Button and submit inputs
   description: |-

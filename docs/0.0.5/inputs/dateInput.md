@@ -2,7 +2,7 @@
 this: dateInput
 filename: R/datetime.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Date inputs
   description: |-

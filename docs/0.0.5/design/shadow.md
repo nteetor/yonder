@@ -2,7 +2,7 @@
 this: shadow
 filename: R/design.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Add shadows to tag elements
   description: |-
@@ -45,10 +45,10 @@ roxygen:
   - type: output
     value: "<div>\n  <nav class=\"navbar navbar-expand-lg navbar-light bg-cyan shadow-sm
       mb-3\">\n    <a class=\"navbar-brand\" href=\"#\">Navbar</a>\n    <button class=\"navbar-toggler\"
-      type=\"button\" data-toggle=\"collapse\" data-target=\"#navContent-361-783\"
-      aria-controls=\"navContent-361-783\" aria-expanded=\"false\" aria-label=\"Toggle
+      type=\"button\" data-toggle=\"collapse\" data-target=\"#navContent-604-575\"
+      aria-controls=\"navContent-604-575\" aria-expanded=\"false\" aria-label=\"Toggle
       navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n
-      \   <div class=\"collapse navbar-collapse\" id=\"navContent-361-783\"></div>\n
+      \   <div class=\"collapse navbar-collapse\" id=\"navContent-604-575\"></div>\n
       \ </nav>\n  <p>\n    Cras mattis consectetur purus sit amet fermentum. Donec
       sed \n    odio dui. Lorem ipsum dolor sit amet, consectetur adipiscing \n    elit.
       Aenean eu leo quam. Pellentesque ornare sem lacinia quam \n    venenatis vestibulum.\n

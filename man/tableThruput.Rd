@@ -71,6 +71,14 @@ tableThruput(
   responsive = TRUE
 )
 
+### Edit table values
+
+tableThruput(
+  id = "table3",
+  editable = TRUE,  # <-
+  responsive = TRUE
+)
+
 }
 \seealso{
 Other thruputs: \code{\link{listGroupThruput}}

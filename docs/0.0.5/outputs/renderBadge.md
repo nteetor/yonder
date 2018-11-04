@@ -2,7 +2,7 @@
 this: renderBadge
 filename: R/badge.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Badge outputs
   description: |-

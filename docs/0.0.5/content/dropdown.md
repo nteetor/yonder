@@ -2,7 +2,7 @@
 this: dropdown
 filename: R/dropdown.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Dropdown menus
   description: |-

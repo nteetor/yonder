@@ -2,7 +2,7 @@
 this: updateSelected
 filename: R/update.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Update choices, values, selected choices
   description: Functions to update choices, values, and selected choices.

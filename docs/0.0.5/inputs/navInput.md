@@ -2,7 +2,7 @@
 this: navInput
 filename: R/nav.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Page navigation
   description: |-

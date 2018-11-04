@@ -2,7 +2,7 @@
 this: deck
 filename: R/card.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Cards, blocks of content
   description: |-

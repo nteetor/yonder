@@ -2,7 +2,7 @@
 this: urlInput
 filename: R/textual.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Textual inputs
   description: |-

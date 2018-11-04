@@ -2,7 +2,7 @@
 this: index
 filename: R/update.R
 layout: index
-include: ~
+requires: ~
 roxygen:
   title: Utilities
   description: Server-side functions.

@@ -2,7 +2,7 @@
 this: fileInput
 filename: R/file.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Upload user files
   description: Upload files to the server.

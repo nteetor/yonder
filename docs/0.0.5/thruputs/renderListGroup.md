@@ -2,7 +2,7 @@
 this: renderListGroup
 filename: R/list-group.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: List group thruputs
   description: |-

@@ -2,7 +2,7 @@
 this: navbar
 filename: R/navbar.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Page and content navigation
   description: |-
@@ -70,10 +70,10 @@ roxygen:
       <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-teal">
           <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-488-153" aria-controls="navContent-488-153" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-661-53" aria-controls="navContent-661-53" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navContent-488-153">
+          <div class="collapse navbar-collapse" id="navContent-661-53">
             <ul class="yonder-nav nav mr-auto navbar-nav" id="tabs">
               <li class="nav-item">
                 <a class="nav-link active" href="#" data-value="Home">Home</a>

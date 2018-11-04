@@ -2,7 +2,7 @@
 this: tooltip
 filename: R/tooltip.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Tooltips
   description: |-
@@ -52,16 +52,16 @@ roxygen:
         </label>
         <div class="yonder-radio" id="radios">
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-239-57" name="radios" data-value="Ready" checked/>
-            <label class="custom-control-label" for="radio-239-57">Ready</label>
+            <input class="custom-control-input" type="radio" id="radio-433-287" name="radios" data-value="Ready" checked/>
+            <label class="custom-control-label" for="radio-433-287">Ready</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-257-813" name="radios" data-value="Set"/>
-            <label class="custom-control-label" for="radio-257-813">Set</label>
+            <input class="custom-control-input" type="radio" id="radio-667-552" name="radios" data-value="Set"/>
+            <label class="custom-control-label" for="radio-667-552">Set</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-282-111" name="radios" data-value="Go"/>
-            <label class="custom-control-label" for="radio-282-111">Go</label>
+            <input class="custom-control-input" type="radio" id="radio-260-978" name="radios" data-value="Go"/>
+            <label class="custom-control-label" for="radio-260-978">Go</label>
           </div>
           <div class="invalid-feedback"></div>
         </div>

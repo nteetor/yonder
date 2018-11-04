@@ -2,7 +2,7 @@
 this: scroll
 filename: R/design.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Vertical and horizontal scroll
   description: |-

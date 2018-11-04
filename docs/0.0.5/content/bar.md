@@ -2,7 +2,7 @@
 this: bar
 filename: R/progress.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Progress bars
   description: |-

@@ -2,7 +2,7 @@
 this: padding
 filename: R/design.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Tag element margin and padding
   description: |-
@@ -94,8 +94,8 @@ roxygen:
         </div>
         <div class="yonder-checkbox" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-515-462" data-value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-515-462">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-845-868" data-value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-845-868">Remember me</label>
             <div class="invalid-feedback"></div>
             <div class="valid-feedback"></div>
           </div>
@@ -145,8 +145,8 @@ roxygen:
         </div>
         <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-450-156" data-value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-450-156">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-457-214" data-value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-457-214">Remember me</label>
             <div class="invalid-feedback"></div>
             <div class="valid-feedback"></div>
           </div>

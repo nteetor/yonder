@@ -62,6 +62,14 @@
 #'   responsive = TRUE
 #' )
 #'
+#' ### Edit table values
+#'
+#' tableThruput(
+#'   id = "table3",
+#'   editable = TRUE,  # <-
+#'   responsive = TRUE
+#' )
+#'
 tableThruput <- function(id, ..., borders = "rows", striped = FALSE,
                          compact = FALSE, responsive = FALSE,
                          editable = FALSE) {

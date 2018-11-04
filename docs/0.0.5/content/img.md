@@ -2,7 +2,7 @@
 this: img
 filename: R/tags.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Responsive images and figures
   description: |-

@@ -2,7 +2,7 @@
 this: buttonGroupInput
 filename: R/button.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Button group inputs
   description: A set of buttons with custom values.

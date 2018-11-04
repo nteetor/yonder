@@ -2,7 +2,7 @@
 this: float
 filename: R/design.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Tag element float
   description: |-

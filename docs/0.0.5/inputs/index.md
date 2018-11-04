@@ -2,7 +2,7 @@
 this: index
 filename: R/yonder.R
 layout: index
-include: ~
+requires: ~
 roxygen:
   title: Inputs
   description: |-

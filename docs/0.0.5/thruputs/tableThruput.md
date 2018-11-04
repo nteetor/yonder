@@ -2,7 +2,7 @@
 this: tableThruput
 filename: R/table.R
 layout: page
-include: data
+requires: data
 roxygen:
   title: Table thruput
   description: |-
@@ -89,4 +89,17 @@ roxygen:
   - type: output
     value: <table class="yonder-table table table-bordered" id="table2" data-responsive="true"
       data-editable="false"></table>
+  - type: markdown
+    value: |
+      <h3>Edit table values</h3>
+  - type: source
+    value: |2-
+
+      tableThruput(
+        id = "table3",
+        editable = TRUE,  # <-
+        responsive = TRUE
+      )
+  - type: output
+    value: <table class="yonder-table table" id="table3" data-responsive="true" data-editable="true"></table>
 ---

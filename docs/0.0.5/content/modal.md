@@ -2,7 +2,7 @@
 this: modal
 filename: R/modal.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Modal dialogs
   description: |-

@@ -2,7 +2,7 @@
 this: background
 filename: R/design.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Tag element background color
   description: Use `background()` to change the background color of a tag element.

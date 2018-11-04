@@ -2,7 +2,7 @@
 this: showCollapse
 filename: R/collapse.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Collapsible sections
   description: |-

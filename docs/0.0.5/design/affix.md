@@ -2,7 +2,7 @@
 this: affix
 filename: R/design.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Affix elements to top or bottom of page
   description: |-

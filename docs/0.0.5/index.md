@@ -2,7 +2,7 @@
 this: index
 filename: R/yonder.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: A new approach to shiny applications
   description: More freedom to the programmer, more to come.

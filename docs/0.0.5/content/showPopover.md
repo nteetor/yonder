@@ -2,7 +2,7 @@
 this: showPopover
 filename: R/popover.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Display a popover
   description: |-

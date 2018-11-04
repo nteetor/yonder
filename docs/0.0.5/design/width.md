@@ -2,7 +2,7 @@
 this: width
 filename: R/design.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Tag element width and height
   description: |-

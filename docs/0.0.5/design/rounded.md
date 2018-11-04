@@ -2,7 +2,7 @@
 this: rounded
 filename: R/design.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Round tag element borders
   description: |-

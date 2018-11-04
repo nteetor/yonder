@@ -2,7 +2,7 @@
 this: formRow
 filename: R/forms.R
 layout: page
-include: ~
+requires: ~
 roxygen:
   title: Add labels, help text, and formatting to inputs
   description: |-
