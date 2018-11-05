@@ -2,10 +2,30 @@ Package: yonder
 Type: Package
 Title: A Reactive Web Framework Built on Shiny
 Version: 0.0.5
-Authors@R: person(given = "Nathan", family = "Teetor", email = "nathanteetor@gmail.com", role = c("aut", "cre"))
+Authors@R: c(
+    person("Nathan", "Teetor", role = c("aut", "cre"),
+      email = "nathanteetor@gmail.com"),
+    person(family = "JS Foundation", role = "cph",
+      comment = "jQuery library"),
+    person(family = "The Bootstrap Authors", role = "cph",
+      comment = "Bootstrap library"),
+    person(family = "Twitter, Inc", role = "cph",
+      comment = "Bootstrap library"),
+    person("Denis", "Ineshin", role = c("ctb", "cph"),
+      comment = "ion.rangeSlider library"),
+    person("Eli", "Grey", role = c("ctb", "cph"),
+      comment = "FileSaver.js library"),
+    person("Gregory", "Petrosyan", role = c("ctb", "cph"),
+      comment = "flatpicker library"),
+    person("Federico", "Zivolo", role = c("ctb", "cph"),
+      comment = "popper.js library"),
+    person("Julian", "Shapiro", role = c("ctb", "cph"),
+      comment = "Velocity library")
+    )
 Description: A new toolset to build shiny applications with Bootstrap 4.
-License: MIT + file LICENSE
+License: GPL-3 + file LICENSE
 URL: https://github.com/nteetor/yonder
+BugReports: https://github.com/nteetor/yonder/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
