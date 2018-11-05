@@ -160,11 +160,11 @@ alert(
 }
 \seealso{
 Other content: \code{\link{blockquote}},
-  \code{\link{card}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{img}},
-  \code{\link{jumbotron}}, \code{\link{modal}},
-  \code{\link{navContent}}, \code{\link{popover}},
-  \code{\link{pre}}, \code{\link{progressOutlet}},
-  \code{\link{tooltip}}
+  \code{\link{card}}, \code{\link{collapsiblePane}},
+  \code{\link{d1}}, \code{\link{dropdown}},
+  \code{\link{img}}, \code{\link{jumbotron}},
+  \code{\link{modal}}, \code{\link{navContent}},
+  \code{\link{popover}}, \code{\link{pre}},
+  \code{\link{progressOutlet}}, \code{\link{tooltip}}
 }
 \concept{content}

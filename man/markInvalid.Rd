@@ -26,7 +26,7 @@ are not triggered. \code{markValid} will immediately thaw the reactive input, th
 allowing subsequent observers and reactives to trigger.
 }
 \seealso{
-Other utilities: \code{\link{collapsiblePane}},
-  \code{\link{downloadEvent}}, \code{\link{updateChoices}}
+Other utilities: \code{\link{downloadEvent}},
+  \code{\link{updateChoices}}
 }
 \concept{utilities}

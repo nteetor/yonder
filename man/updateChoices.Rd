@@ -23,13 +23,13 @@ values are \code{\link[=dots_list]{dots_list()}} allowing the use of bangs and s
 Functions to update choices, values, and selected choices.
 }
 \seealso{
-Other utilities: \code{\link{collapsiblePane}},
-  \code{\link{downloadEvent}}, \code{\link{markInvalid}}
+Other utilities: \code{\link{downloadEvent}},
+  \code{\link{markInvalid}}
 
-Other utilities: \code{\link{collapsiblePane}},
-  \code{\link{downloadEvent}}, \code{\link{markInvalid}}
+Other utilities: \code{\link{downloadEvent}},
+  \code{\link{markInvalid}}
 
-Other utilities: \code{\link{collapsiblePane}},
-  \code{\link{downloadEvent}}, \code{\link{markInvalid}}
+Other utilities: \code{\link{downloadEvent}},
+  \code{\link{markInvalid}}
 }
 \concept{utilities}
