@@ -21,11 +21,11 @@ Useful links:
 
 Other contributors:
 \itemize{
-  \item  JS Foundation (jQuery library) [copyright holder]
   \item  The Bootstrap Authors (Bootstrap library) [copyright holder]
   \item  Twitter, Inc (Bootstrap library) [copyright holder]
-  \item Denis Ineshin (ion.rangeSlider library) [contributor, copyright holder]
   \item Eli Grey (FileSaver.js library) [contributor, copyright holder]
+  \item Denis Ineshin (ion.rangeSlider library) [contributor, copyright holder]
+  \item  JS Foundation (jQuery library) [copyright holder]
   \item Gregory Petrosyan (flatpicker library) [contributor, copyright holder]
   \item Federico Zivolo (popper.js library) [contributor, copyright holder]
   \item Julian Shapiro (Velocity library) [contributor, copyright holder]
