@@ -11,7 +11,7 @@ More freedom to the programmer, more to come.
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/nteetor/yonder}
+  \item \url{https://nteetor.github.io/yonder}
   \item Report bugs at \url{https://github.com/nteetor/yonder/issues}
 }
 
@@ -28,7 +28,7 @@ Other contributors:
   \item  JS Foundation (jQuery library) [copyright holder]
   \item Gregory Petrosyan (flatpicker library) [contributor, copyright holder]
   \item Federico Zivolo (popper.js library) [contributor, copyright holder]
-  \item Julian Shapiro (Velocity library) [contributor, copyright holder]
+  \item Julian Shapiro (Velocity.js library) [contributor, copyright holder]
 }
 
 }

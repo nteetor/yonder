@@ -20,24 +20,26 @@ Authors@R: c(
     person("Federico", "Zivolo", role = c("ctb", "cph"),
       comment = "popper.js library"),
     person("Julian", "Shapiro", role = c("ctb", "cph"),
-      comment = "Velocity library")
+      comment = "Velocity.js library")
     )
 Description: A new toolset to build shiny applications with Bootstrap 4.
+    Includes refreshed reactive inputs, outputs, and new thruputs. Design
+    utilities may be used to create responsive layouts for devices of all
+    sizes.
 License: GPL-3 | file LICENSE
-URL: https://github.com/nteetor/yonder
+URL: https://nteetor.github.io/yonder
 BugReports: https://github.com/nteetor/yonder/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.0
 Depends:
-    R (>= 3.0.0),
+    R (>= 3.0.2),
     shiny
 Imports:
-    utils,
     htmltools,
-    magrittr,
     jsonlite,
+    magrittr,
     rlang
 Suggests:
     testthat
