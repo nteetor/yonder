@@ -4,6 +4,9 @@
 title: A Reactive Web Framework Built on Shiny
 email: nathanteetor@gmail.com
 description: A new toolset to build shiny applications with Bootstrap 4.
+    Includes refreshed reactive inputs, outputs, and new thruputs. Design
+    utilities may be used to create responsive layouts for devices of all
+    sizes.
 baseurl: /yonder
 url: https://nteetor.github.io/
 versions: [0.0.5]
@@ -12,7 +15,7 @@ versions: [0.0.5]
 package:
   name: yonder
   version: 0.0.5
-  url: https://github.com/nteetor/yonder
+  url: https://nteetor.github.io/yonder
 
 # Build settings -------
 collections_dir: collections

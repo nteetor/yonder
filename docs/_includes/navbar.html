@@ -6,7 +6,7 @@
 
     <div class="dropdown-menu">
       {% for version in site.versions %}
-      <a href="{{ site.baseurl }}{{ version }}"
+      <a href="{{ site.baseurl }}/{{ version }}"
          class="dropdown-item{% if page.url contains version %} active{% endif %}"
          >{{ version }}</a>
       {% endfor %}
