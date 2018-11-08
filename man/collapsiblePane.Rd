@@ -7,7 +7,7 @@
 \alias{togglePane}
 \title{Collapsible sections}
 \usage{
-collapsiblePane(id, ..., show = TRUE)
+collapsiblePane(id, ..., show = FALSE)
 
 collapsePane(id, session = getDefaultReactiveDomain())
 
@@ -22,6 +22,11 @@ to change the state of a collapsible pane.}
 
 \item{...}{Tag elements inside the collapsible pane or additional named
 arguments passed as HTML attributes to parent element.}
+
+\item{show}{One of \code{TRUE} or \code{FALSE} specifying if the collapsible pane
+is shown when the page renders, defaults to \code{FALSE}.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 The \code{collapsible()} function wraps a tag element in a collasible div

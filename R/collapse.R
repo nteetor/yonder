@@ -8,8 +8,13 @@
 #'   this id to the `hideCollapse()`, `showCollapse()`, or `toggleCollapse()`
 #'   to change the state of a collapsible pane.
 #'
+#' @param show One of `TRUE` or `FALSE` specifying if the collapsible pane
+#'   is shown when the page renders, defaults to `FALSE`.
+#'
 #' @param ... Tag elements inside the collapsible pane or additional named
 #'   arguments passed as HTML attributes to parent element.
+#'
+#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
 #' @details
 #'
@@ -54,7 +59,7 @@
 #'
 #' # Please see live examples
 #'
-collapsiblePane <- function(id, ..., show = TRUE) {
+collapsiblePane <- function(id, ..., show = FALSE) {
   if (!is.character(id)) {
     stop(
       "inavlid `collapsiblePane()` argument, `id` must be a character string",
@@ -62,15 +67,18 @@ collapsiblePane <- function(id, ..., show = TRUE) {
     )
   }
 
-  this <- tags$div(
+  pane <- tags$div(
     id = id,
-    class = "collapse",
+    class = collate(
+      "collapse",
+      if (show) "show"
+    ),
     ...
   )
 
-  this <- attachDependencies(this, c(yonderDep(), bootstrapDep()))
+  pane <- attachDependencies(pane, c(yonderDep(), bootstrapDep()))
 
-  this
+  pane
 }
 
 #' @rdname collapsiblePane
