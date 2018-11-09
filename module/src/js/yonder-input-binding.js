@@ -49,7 +49,7 @@ export function yonderInputBinding() {
     for (const event of (this.Events || [])) {
       $(el).on(`${ event.type }.yonder`, (event.selector || null), (e) => {
         if (event.callback) {
-          if (event.callback(el, event.selector && e.target || undefined) === false) {
+          if (event.callback(el, event.selector && e.target || undefined, this) === false) {
             return;
           }
         }

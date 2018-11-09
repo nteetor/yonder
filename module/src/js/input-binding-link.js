@@ -6,20 +6,21 @@ $.extend(linkInputBinding, {
   },
   Events: [
     {
-      type: "click",
-      callback: el => el.setAttribute("data-value", +el.getAttribute("data-value") + 1)
+      "type": "click",
+      "callback": (el, _, self) => self._VALUES[el.id] += 1
     }
   ],
+  _VALUES: {},
   initialize: function(el) {
-    el.setAttribute("data-value", 0);
+    this._VALUES[el.id] = 0;
   },
   getType: function(el) {
     return "yonder.link";
   },
   getValue: function(el) {
     return {
-      value: el.getAttribute("data-value"),
-      id: el.id
+      "value": this._VALUES[el.id],
+      "id": el.id
     };
   }
 });

@@ -6,20 +6,27 @@ $.extend(buttonGroupInputBinding, {
     VALUE: ".btn",
     LABEL: ".btn"
   },
-  _value: null,
+  Events: [
+    {
+      "type": "click",
+      "selector": "button",
+      "callback": (el, target, self) => self._VALUES[el.id] = target.getAttribute("data-value")
+    }
+  ],
+  _VALUES: {},
+  getType: (el) => "yonder.buttonGroup",
   getValue: function(el) {
-    return this._value;
+    return { "force": Date.now(), "value": this._VALUES[el.id] };
   },
-  subscribe: function(el, callback) {
-    var self = this;
-    $(el).on("click.buttonGroupInputBinding", "button", function(e) {
-      self._value = $(this).data("value");
-      callback();
-    });
-  },
-  unsubscribe: function(el) {
-    $(el).off(".buttonGroupInputBinding", "button");
-  }
+  // subscribe: function(el, callback) {
+  //   $(el).on("click.buttonGroupInputBinding", "button", (e) => {
+  //     this._VALUES[el.id] = e.target.getAttribute("data-value");
+  //     callback();
+  //   });
+  // },
+  // unsubscribe: function(el) {
+  //   $(el).off(".buttonGroupInputBinding", "button");
+  // }
 });
 
 Shiny.inputBindings.register(buttonGroupInputBinding, "yonder.buttonGroupInput");

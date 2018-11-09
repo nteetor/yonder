@@ -85,7 +85,9 @@
 buttonInput <- function(id, label, ..., block = FALSE) {
   shiny::registerInputHandler(
     type = "yonder.button",
-    fun = function(x, session, name) as.numeric(x),
+    fun = function(x, session, name) {
+      if (x != 0) as.numeric(x)
+    },
     force = TRUE
   )
 
@@ -213,6 +215,14 @@ buttonGroupInput <- function(id, labels, values = labels, ...) {
       call. = FALSE
     )
   }
+
+  shiny::registerInputHandler(
+    type = "yonder.buttonGroup",
+    fun = function(x, session, name) {
+      if (length(x) > 1) x[[2]]
+    },
+    force = TRUE
+  )
 
   input <- tags$div(
     class = "yonder-button-group btn-group",
