@@ -637,8 +637,6 @@ display <- function(.tag, render = NULL, print = NULL) {
 
 #' Tag element margin and padding
 #'
-#' @description
-#'
 #' Use the `margin()` and `padding()` utilities to change the margin or padding
 #' of a tag element.  The margin of a tag element is the space outside and
 #' around the tag element, its border, and its content.  The padding of a tag
@@ -805,95 +803,105 @@ margin <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
   attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
-#' Tag element width and height
+#' Tag element width
 #'
-#' Utility functions to change a tag element's width or height. Widths and
-#' heights are specified as percentages of the parent object's width or height.
+#' Utility function to change a tag element's width. Widths are specified
+#' relative to the font size of page (browser default is 16px), relative to
+#' their parent element (i.e. 1/2 the width of their parent), or relative to the
+#' element's content.
 #'
 #' @param .tag A tag element.
 #'
-#' @param percentage One of 25, 50, 75, or 100 specifying width or height as a
-#'   percentage of a parent element's width or height.
+#' @param size A character string or number specifying the width of the tag
+#'   element. Possible values:
 #'
-#' @param max One of 25, 50, 75, or 100 specifying max width or max height as a
-#'   percentage of a parent element's width or height.
+#'   An integer between 1 and 20, in which case the width of the element is
+#'   relative to the font size of the page.
+#'
+#'   One of "1/2", "1/3", "2/3", "1/4", "3/4", "1/5", "2/5", "3/5", "4/5", or
+#'   "full", in which case the element's width is a percentage of its parent's
+#'   width. The height of the parent element must be specified for percentage
+#'   widths to work. Percentages do not account for margins or padding and may
+#'   cause an element to extend beyond its parent.
+#'
+#'   Or "auto", in which case the element's width is determined by the browser.
+#'   The browser will take into account the width, padding, margins, and border
+#'   of the tag element's parent to keep the element from extending beyond its
+#'   parent.
 #'
 #' @family design
 #' @export
 #' @examples
 #'
-#' ### Percentage based widths and heights
+#' ### Numeric values
 #'
-#' # These percentages are based on the size of the parent element.
+#' # When specifying a numeric value the width of the element is relative to the
+#' # default font size of the page.
+#'
+#' lapply(
+#'   1:20,
+#'   width,
+#'   .tag = div() %>%
+#'     border("black") %>%
+#'     height(4)
+#' )
+#'
+#' ### Fractional values
+#'
+#' # When specifying a fraction the element's width is a percentage of its
+#' # parent's width.
 #'
 #' div(
-#'   style = "height: 50px; width: 120px;",
 #'   div() %>%
-#'     width(25) %>%
-#'     height(100) %>%
-#'     background("yellow")
+#'     margin(b = 3) %>%
+#'     border("red") %>%
+#'     width("1/3")
 #' ) %>%
-#'   border("black")
+#'   width(20)
 #'
-width <- function(.tag, percentage = NULL, max = NULL) {
-  if (is.null(percentage) && is.null(max)) {
-    stop(
-      "invalid `width` arguments, `percentage` and `max` may not both be NULL",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(percentage) && !(percentage %in% c(25, 50, 75, 100))) {
-    stop(
-      "invalid `width` argument, `percentage` must be one of 25, 50, 75, or 100",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(max) && !(max %in% c(25, 50, 75, 100))) {
-    stop(
-      "invalid `width` argument, `max` must be one of 25, 50, 75, or 100",
-      call. = FALSE
-    )
-  }
-
-  percentage <- if (!is.null(percentage)) paste0("w-", percentage)
-  max <- if (!is.null(max)) paste0("mw-", max)
-
-  .tag <- tagAddClass(.tag, c(percentage, max))
+width <- function(.tag, size) {
+  .tag <- tagAddClass(.tag, paste("w-", size))
 
   attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
+#' Tag element height
+#'
+#' Utility function to change a tag element's height. Height is specified
+#' relative to the font size of page (browser default is 16px), relative to
+#' their parent element, or relative to the element's content.
+#'
+#' @param .tag A tag element.
+#'
+#' @param size A character string or number specifying the height of the tag
+#'   element. Possible values:
+#'
+#'   An integer between 1 and 20, in which case the height of the element is
+#'   relative to the font size of the page.
+#'
+#'   "full", in which case the element's height is a percentage of its parent's
+#'   height. The height of the parent element must also be specified.
+#'   Percentages do not account for margins or padding and may cause an element
+#'   to extend beyond its parent.
+#'
+#'   "auto", in which case the element's height is determined by the browser.
+#'   The browser will take into account the height, padding, margins, and border
+#'   of the tag element's parent to keep the element from extending beyond its
+#'   parent.
+#'
+#'   "screen", in which case the element's height is determined by the height of
+#'   the viewport.
+#'
 #' @family design
-#' @rdname width
 #' @export
-height <- function(.tag, percentage = NULL, max = NULL) {
-  if (is.null(percentage) && is.null(max)) {
-    stop(
-      "invalid `height` arguments, `percentage` and `max` may not both be NULL",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(percentage) && !(percentage %in% c(25, 50, 75, 100))) {
-    stop(
-      "invalid `height` argument, `percentage` must be one of 25, 50, 75, or 100",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(max) && !(max %in% c(25, 50, 75, 100))) {
-    stop(
-      "invalid `height` argument, `max` must be one of 25, 50, 75, or 100",
-      call. = FALSE
-    )
-  }
-
-  percentage <- if (!is.null(percentage)) paste0("h-", percentage)
-  max <- if (!is.null(max)) paste0("mh-", max)
-
-  .tag <- tagAddClass(.tag, c(percentage, max))
+#'
+#' ### Relative heights
+#'
+#' div() %>%
+#'   height(3)
+#'
+height <- function(.tag, size) {
+  .tag <- tagAddClass(.tag, paste0("h-", size))
 
   attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }

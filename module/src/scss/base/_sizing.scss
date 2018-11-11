@@ -1,0 +1,13 @@
+// width
+@each $size, $length in $widths {
+  .w-#{$size} {
+    width: $length !important;
+  }
+}
+
+// height
+@each $size, $length in $heights {
+  .h-#{$size} {
+    height: $length !important;
+  }
+}

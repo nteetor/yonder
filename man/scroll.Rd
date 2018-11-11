@@ -36,8 +36,8 @@ div(
 Other design: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{padding}},
-  \code{\link{rounded}}, \code{\link{shadow}},
-  \code{\link{width}}
+  \code{\link{font}}, \code{\link{height}},
+  \code{\link{padding}}, \code{\link{rounded}},
+  \code{\link{shadow}}, \code{\link{width}}
 }
 \concept{design}
