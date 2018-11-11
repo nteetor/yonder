@@ -91,7 +91,7 @@ roxygen:
         width(50)
   - type: output
     value: |-
-      <div class="card border border-teal w-50">
+      <div class="card border border-teal w- 50">
         <div class="card-header">Please pick a flavor</div>
         <div class="card-body">
           <form class="yonder-form">
@@ -99,16 +99,16 @@ roxygen:
               <label>Ice creams</label>
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-807-720" name="flavorChoice" data-value="Mint" checked/>
-                  <label class="custom-control-label" for="radio-807-720">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-181-200" name="flavorChoice" data-value="Mint" checked/>
+                  <label class="custom-control-label" for="radio-181-200">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-589-286" name="flavorChoice" data-value="Moose tracks"/>
-                  <label class="custom-control-label" for="radio-589-286">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-829-725" name="flavorChoice" data-value="Moose tracks"/>
+                  <label class="custom-control-label" for="radio-829-725">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-176-858" name="flavorChoice" data-value="Marble"/>
-                  <label class="custom-control-label" for="radio-176-858">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-172-619" name="flavorChoice" data-value="Marble"/>
+                  <label class="custom-control-label" for="radio-172-619">Marble</label>
                 </div>
                 <div class="invalid-feedback"></div>
               </div>

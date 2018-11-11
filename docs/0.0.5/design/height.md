@@ -4,47 +4,38 @@ filename: R/design.R
 layout: page
 requires: ~
 roxygen:
-  title: Tag element width and height
+  title: Tag element height
   description: |-
-    Utility functions to change a tag element's width or height. Widths and
-    heights are specified as percentages of the parent object's width or height.
+    Utility function to change a tag element's height. Height is specified
+    relative to the font size of page (browser default is 16px), relative to
+    their parent element, or relative to the element's content.
   parameters:
   - name: .tag
     description: A tag element.
-  - name: percentage
+  - name: size
     description: |-
-      One of 25, 50, 75, or 100 specifying width or height as a
-      percentage of a parent element's width or height.
-  - name: max
-    description: |-
-      One of 25, 50, 75, or 100 specifying max width or max height as a
-      percentage of a parent element's width or height.
+      A character string or number specifying the height of the tag
+      element. Possible values:
+
+      An integer between 1 and 20, in which case the height of the element is
+      relative to the font size of the page.
+
+      "full", in which case the element's height is a percentage of its parent's
+      height. The height of the parent element must also be specified.
+      Percentages do not account for margins or padding and may cause an element
+      to extend beyond its parent.
+
+      "auto", in which case the element's height is determined by the browser.
+      The browser will take into account the height, padding, margins, and border
+      of the tag element's parent to keep the element from extending beyond its
+      parent.
+
+      "screen", in which case the element's height is determined by the height of
+      the viewport.
   sections: []
   return: ~
   family: design
   name: ~
   rdname: ~
-  examples:
-  - type: markdown
-    value: |
-      <h3>Percentage based widths and heights</h3>
-  - type: markdown
-    value: |
-      <p>These percentages are based on the size of the parent element.</p>
-  - type: source
-    value: |2-
-
-      div(
-        style = "height: 50px; width: 120px;",
-        div() %>%
-          width(25) %>%
-          height(100) %>%
-          background("yellow")
-      ) %>%
-        border("black")
-  - type: output
-    value: |-
-      <div style="height: 50px; width: 120px;" class="border border-black">
-        <div class="w-25 h-100 bg-yellow"></div>
-      </div>
+  examples: ~
 ---

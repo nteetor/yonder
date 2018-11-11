@@ -15,10 +15,16 @@ roxygen:
       A character string specifying the id of the collapsible pane. Pass
       this id to the `hideCollapse()`, `showCollapse()`, or `toggleCollapse()`
       to change the state of a collapsible pane.
+  - name: show
+    description: |-
+      One of `TRUE` or `FALSE` specifying if the collapsible pane
+      is shown when the page renders, defaults to `FALSE`.
   - name: '...'
     description: |-
       Tag elements inside the collapsible pane or additional named
       arguments passed as HTML attributes to parent element.
+  - name: session
+    description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain.html).
   sections:
   - title: App with collapse
     body: |-
