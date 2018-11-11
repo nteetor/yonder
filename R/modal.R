@@ -163,7 +163,8 @@ showModal <- function(modal, session = getDefaultReactiveDomain()) {
   session$sendCustomMessage("yonder:modal", list(
     type = "show",
     data = list(
-      content = HTML(as.character(modal))
+      content = HTML(as.character(modal)),
+      dependencies = processDeps(modal, session)
     )
   ))
 }

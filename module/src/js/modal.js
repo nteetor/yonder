@@ -27,6 +27,10 @@ Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
       modal = document.body.querySelector(".modal");
     }
 
+    if (msg.data.dependencies !== undefined) {
+      Shiny.renderDependencies(msg.data.dependencies);
+    }
+
     Shiny.initializeInputs(modal);
     Shiny.bindAll(modal);
 

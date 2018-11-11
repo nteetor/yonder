@@ -3,7 +3,8 @@
 #' More freedom to the programmer, more to come.
 #'
 #' @importFrom htmltools HTML htmlDependency attachDependencies
-#'   suppressDependencies tags tagAppendAttributes tagAppendChildren
+#'   suppressDependencies resolveDependencies findDependencies tags
+#'   tagAppendAttributes tagAppendChildren surroundSingletons takeSingletons
 #' @importFrom shiny observe getDefaultReactiveDomain installExprFunction
 #'   createRenderFunction
 #' @importFrom rlang dots_list

@@ -323,6 +323,24 @@ registerDebugHook <- function(name, where, label) {
   }
 }
 
+# https://github.com/rstudio/shiny/blob/c332c051f33fe325f6c2e75426daaabb6366d50a/R/html-deps.R#L43
+processDeps <- function(tags, session) {
+  ui <- takeSingletons(tags, session$singletons, desingleton = FALSE)$ui
+  ui <- surroundSingletons(ui)
+
+  dependencies <- lapply(
+    resolveDependencies(findDependencies(ui)),
+    createWebDependency
+  )
+  names(dependencies) <- NULL
+
+  # list(
+  #   html = doRenderTags(ui),
+  #   deps = dependencies
+  # )
+  dependencies
+}
+
 # tag utils ----
 
 is_tag <- function(x) {
