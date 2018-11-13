@@ -20,8 +20,14 @@ $.extend(navInputBinding, {
       type: "click",
       selector: ".dropdown-item",
       callback: (el, target) => {
-        el.querySelector(".nav-link.active").classList.remove("active");
+        let active = el.querySelectorAll(".nav-link.active, .dropdown-item.active");
+
+        for (const act of active) {
+          act.classList.remove("active");
+        }
+
         target.parentNode.parentNode.firstElementChild.classList.add("active");
+        target.classList.add("active");
       }
     }
   ]
