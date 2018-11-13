@@ -10,6 +10,8 @@ Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
       return false;
     }
 
+    Shiny.unbindAll(modal);
+
     $(modal).modal("hide");
 
     return true;
