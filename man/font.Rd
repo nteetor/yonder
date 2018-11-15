@@ -4,68 +4,69 @@
 \alias{font}
 \title{Tag element font}
 \usage{
-font(.tag, color = NULL, size = NULL, weight = NULL, align = NULL)
+font(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
+  align = NULL)
 }
 \arguments{
 \item{.tag}{A tag element.}
 
-\item{color}{A character string specifying the text color of the tag element,
-defaults to \code{NULL} in which case the text color is unchanged.}
+\item{color}{One \code{"red"}, \code{"purple"}, \code{"indigo"}, \code{"blue"}, \code{"cyan"},
+\code{"teal"}, \code{"green"}, \code{"yellow"}, \code{"amber"}, \code{"orange"}, \code{"body"}, \code{"grey"},
+\code{"black"} or \code{"white" specifying the color the tag element's text, defaults to }NULL`.}
 
-\item{size}{One of \code{"2x"}, \code{"3x"}, ..., or \code{"10x"} specifying a factor to
-increase a tag element's font size by (e.g. \code{"2x"} is double the base font
-size), defaults to \code{NULL}, in which case the font size is unchanged.}
+\item{size}{One of \code{"xs"}, \code{"sm"}, \code{"base"}, \code{"lg"}, \code{"xl"} specifying a font
+size relative to the default base page font size, defaults to \code{NULL}.}
 
 \item{weight}{One of \code{"bold"}, \code{"normal"}, \code{"light"}, \code{"italic"}, or
 \code{"monospace"} specifying the font weight of the element's text, defaults to
-\code{NULL}, in which case the font weight is unchanged.}
+\code{NULL}.}
+
+\item{case}{One of \code{"upper"}, \code{"lower"}, or \code{"title"} specifying a
+transformation of the tag element's text, default to \code{NULL}.}
 
 \item{align}{A \link{responsive} argument. One of \code{"left"}, \code{"center"}, \code{"right"},
-or \code{"justify"}.}
+or \code{"justify"}, specifying the alignment of the tag element's text, defaults
+to \code{NULL}.}
 }
 \description{
-The \code{font()} utility may be used to change the color, size, or weight of a
-tag element's text font. Font size's are changed relative to the base font
-size of the web page.
-}
-\details{
-The possible font colors are,
-\itemize{
-\item red
-\item purple
-\item indigo
-\item blue
-\item cyan
-\item teal
-\item green
-\item yellow
-\item amber
-\item orange
-\item body (this "color" sets the tag element's font color to the default body
-color)
-\item grey
-\item white
-}
+The \code{font()} utility modifies the color, size, weight, case, or alignment of
+a tag element's text. All arguments default to \code{NULL}, in which case they are
+ignored.  For example, \code{font(size = "lg")} increases font size without
+affecting color, weight, case, or alignment.
 }
 \examples{
 
-### Possible colors
+### Changing text color
 
-colors <- c(
-  "red", "purple", "indigo", "blue", "cyan", "teal", "green",
-  "yellow", "amber", "orange", "body", "grey", "white"
-)
-
-div(
-  lapply(
-    head(colors, -1),
-    font,
-    .tag = div("Pellentesque tristique imperdiet tortor.") \%>\%
-      padding(5)
+card(
+  header = h3("Important!") \%>\%
+    font(color = "amber"),
+  div(
+    "This is a reminder."
   )
 ) \%>\%
-  display("flex") \%>\%
-  flex(wrap = TRUE)
+  border(color = "amber")
+
+### Changing font size
+
+div(
+  p("Donec at pede.") \%>\%
+    font(size = "xs"),
+  p("Donec at pede.") \%>\%
+    font(size = "sm"),
+  p("Donec at pede.") \%>\%
+    font(size = "base"),
+  p("Donec at pede.") \%>\%
+    font(size = "lg"),
+  p("Donec at pede.") \%>\%
+    font(size = "xl")
+)
+
+### Changing font weight
+
+p("Curabitur lacinia pulvinar nibh.") \%>\%
+  font(weight = "bold")
+
 
 }
 \seealso{

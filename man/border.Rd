@@ -4,56 +4,56 @@
 \alias{border}
 \title{Tag element borders}
 \usage{
-border(.tag, color = NULL, sides = "all")
+border(.tag, color = NULL, sides = "all", round = NULL)
 }
 \arguments{
 \item{.tag}{A tag element.}
 
-\item{color}{A character string specifying the border color, defaults to
-\code{NULL}, in which case the browser default is used. See below for possible
-border colors.}
+\item{color}{One of \code{"red"}, \code{"purple"}, \code{"indigo"}, \code{"blue"}, \code{"cyan"},
+\code{"teal"}, \code{"green"}, \code{"yellow"}, \code{"amber"}, \code{"orange"}, \code{"grey"}, \code{"white"}
+specifying the border color, defaults to \code{NULL}.}
 
 \item{sides}{One or more of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"} or
 \code{"all"} or \code{"none"} specifying which sides to add a border to, defaults to
 \code{"all"}.}
+
+\item{round}{One or more of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"},
+\code{"circle"}, \code{"all"}, or \code{"none"} specifying how to round the border(s) of a
+tag element, defaults to \code{NULL}, in which case the argument is ignored.}
 }
 \description{
-Use \code{border()} to add borders to a tag element or change the color of a tag
-element's border.
-}
-\details{
-The following border colors are available,
-\itemize{
-\item red
-\item purple
-\item indigo
-\item blue
-\item cyan
-\item teal
-\item green
-\item yellow
-\item amber
-\item orange
-\item grey
-\item white
-}
+Use \code{border()} to add or modify tag element borders.
 }
 \examples{
 
-### Possible colors
+### Change border color
 
-colors <- c(
-  "red", "purple", "indigo", "blue", "cyan", "teal", "green",
-  "yellow", "amber", "orange", "grey", "white"
+div(
+  div() \%>\%
+    height(3) \%>\%
+    width(3) \%>\%
+    border("green"),
+  div() \%>\%
+    height(3) \%>\%
+    width(3) \%>\%
+    border(
+      color = "blue",
+      sides = c("left", "right")
+    )
 )
+
+### Round sides
+
+sides <- c("top", "right", "bottom", "left", "circle", "all")
 
 div(
   lapply(
-    colors,
-    border,
+    sides,
+    rounded,
     .tag = div() \%>\%
-      padding(5) \%>\%
-      margin(2)
+      height(3) \%>\%
+      width(3) \%>\%
+      border("black")
   )
 ) \%>\%
   display("flex") \%>\%

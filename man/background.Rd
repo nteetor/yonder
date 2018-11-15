@@ -9,29 +9,13 @@ background(.tag, color)
 \arguments{
 \item{.tag}{A tag element.}
 
-\item{color}{A character string specifying the background color, see below
-for all possible values.}
+\item{color}{One of \code{"red"}, \code{"purple"}, \code{"indigo"}, \code{"blue"}, \code{"cyan"},
+\code{"teal"}, \code{"green"}, \code{"yellow"}, \code{"amber"}, \code{"orange"}, \code{"grey"},
+\code{"white"}, or \code{"transparent}" character string specifying the background
+color.}
 }
 \description{
-Use \code{background()} to change the background color of a tag element.
-}
-\details{
-The possible background colors are,
-\itemize{
-\item red
-\item purple
-\item indigo
-\item blue
-\item cyan
-\item teal
-\item green
-\item yellow
-\item amber
-\item orange
-\item grey
-\item white
-\item transparent
-}
+Use \code{background()} to modify the background color of a tag element.
 }
 \examples{
 

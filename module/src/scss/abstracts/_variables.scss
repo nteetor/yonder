@@ -100,6 +100,16 @@ $heights: (
   'screen': 100vh
 );
 
+// text
+
+$font-sizes: (
+  'xs': .75rem,
+  'sm': .875rem,
+  'base': 1rem,
+  'lg': 1.125rem,
+  'xl': 1.25rem
+);
+
 // range
 
 $range-border-radius: .25rem;

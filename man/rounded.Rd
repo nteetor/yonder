@@ -8,10 +8,6 @@ rounded(.tag, sides = "all")
 }
 \arguments{
 \item{.tag}{A tag element.}
-
-\item{sides}{One of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"}, \code{"circle"},
-\code{"all"} or \code{"none"}, defaults to \code{"all"}, specifying which and how the
-the corners of the tag element are rounded.}
 }
 \description{
 The \code{rounded} utility function applies Bootstrap classes to an element. The
@@ -20,22 +16,6 @@ value heavily rounds all the corners of an element.
 }
 \examples{
 
-### Different sides
-
-sides <- c("top", "right", "bottom", "left", "circle", "all")
-
-div(
-  lapply(
-    sides,
-    rounded,
-    .tag = div() \%>\%
-      padding(5) \%>\%
-      margin(2) \%>\%
-      border("indigo")
-  )
-) \%>\%
-  display("flex") \%>\%
-  flex(wrap = TRUE)
 
 }
 \seealso{

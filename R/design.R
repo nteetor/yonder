@@ -54,88 +54,97 @@ colorUtility <- function(tag, base, color) {
 
 #' Tag element font
 #'
-#' The `font()` utility may be used to change the color, size, or weight of a
-#' tag element's text font. Font size's are changed relative to the base font
-#' size of the web page.
+#' The `font()` utility modifies the color, size, weight, case, or alignment of
+#' a tag element's text. All arguments default to `NULL`, in which case they are
+#' ignored.  For example, `font(size = "lg")` increases font size without
+#' affecting color, weight, case, or alignment.
 #'
 #' @param .tag A tag element.
 #'
-#' @param color A character string specifying the text color of the tag element,
-#'   defaults to `NULL` in which case the text color is unchanged.
+#' @param color One `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
+#'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"body"`, `"grey"`,
+#'   `"black"` or `"white" specifying the color the tag element's text, defaults
+#'   to `NULL`.
 #'
-#' @param size One of `"2x"`, `"3x"`, ..., or `"10x"` specifying a factor to
-#'   increase a tag element's font size by (e.g. `"2x"` is double the base font
-#'   size), defaults to `NULL`, in which case the font size is unchanged.
+#' @param size One of `"xs"`, `"sm"`, `"base"`, `"lg"`, `"xl"` specifying a font
+#'   size relative to the default base page font size, defaults to `NULL`.
 #'
 #' @param weight One of `"bold"`, `"normal"`, `"light"`, `"italic"`, or
 #'   `"monospace"` specifying the font weight of the element's text, defaults to
-#'   `NULL`, in which case the font weight is unchanged.
+#'   `NULL`.
+#'
+#'@param case One of `"upper"`, `"lower"`, or `"title"` specifying a
+#'   transformation of the tag element's text, default to `NULL`.
 #'
 #' @param align A [responsive] argument. One of `"left"`, `"center"`, `"right"`,
-#'   or `"justify"`.
-#'
-#' @details
-#'
-#' The possible font colors are,
-#'
-#' * red
-#' * purple
-#' * indigo
-#' * blue
-#' * cyan
-#' * teal
-#' * green
-#' * yellow
-#' * amber
-#' * orange
-#' * body (this "color" sets the tag element's font color to the default body
-#'   color)
-#' * grey
-#' * white
+#'   or `"justify"`, specifying the alignment of the tag element's text, defaults
+#'   to `NULL`.
 #'
 #' @family design
 #' @export
 #' @examples
 #'
-#' ### Possible colors
+#' ### Changing text color
 #'
-#' colors <- c(
-#'   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
-#'   "yellow", "amber", "orange", "body", "grey", "white"
-#' )
-#'
-#' div(
-#'   lapply(
-#'     head(colors, -1),
-#'     font,
-#'     .tag = div("Pellentesque tristique imperdiet tortor.") %>%
-#'       padding(5)
+#' card(
+#'   header = h3("Important!") %>%
+#'     font(color = "amber"),
+#'   div(
+#'     "This is a reminder."
 #'   )
 #' ) %>%
-#'   display("flex") %>%
-#'   flex(wrap = TRUE)
+#'   border(color = "amber")
 #'
-font <- function(.tag, color = NULL, size = NULL, weight = NULL, align = NULL) {
+#' ### Changing font size
+#'
+#' div(
+#'   p("Donec at pede.") %>%
+#'     font(size = "xs"),
+#'   p("Donec at pede.") %>%
+#'     font(size = "sm"),
+#'   p("Donec at pede.") %>%
+#'     font(size = "base"),
+#'   p("Donec at pede.") %>%
+#'     font(size = "lg"),
+#'   p("Donec at pede.") %>%
+#'     font(size = "xl")
+#' )
+#'
+#' ### Changing font weight
+#'
+#' p("Curabitur lacinia pulvinar nibh.") %>%
+#'   font(weight = "bold")
+#'
+#'
+font <- function(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
+                 align = NULL) {
   if (color != "body" && !re(color, paste(.colors, collapse = "|"))) {
     stop(
-      "invalid `text` argument, `color` is invalid, see ?background ",
-      "details for possible colors",
+      "invalid `font()` argument, `color`",
+      call. = FALSE
+    )
+  }
+
+  if (!re(size, "xs|sm|base|lg|xl")) {
+    stop(
+      "invalid `font()` argument, `size` must be one of ",
+      '"xs", "sm", "base", "lg", "xl"',
       call. = FALSE
     )
   }
 
   if (!re(weight, "bold|normal|light|italic|monospace")) {
     stop(
-      "invalid `text` argument, `weight` must be one of ",
+      "invalid `font()` argument, `weight` must be one of ",
       '"bold", "normal", "light", "italic", or "monospace"',
       call. = FALSE
     )
   }
 
-  if (!re(size, "([2-9]|10)x")) {
+  if (!re(case, "lower|upper|title")) {
     stop(
-      "invalid `size` argument, `size` must be one of ",
-      '"2x" through "10px"',
+      "invalid `font()` argument, `case` must be one of ",
+      '"lower", "upper", or "title"',
       call. = FALSE
     )
   }
@@ -148,19 +157,34 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, align = NULL) {
 
   if (!is.null(size)) {
     size <- paste0("font-size-", size)
-    .tag <- tagDropClass(.tag, "font-size-([2-9]|10)x")
+    .tag <- tagDropClass(.tag, "font-size-(xs|sm|base|lg|xl)")
     .tag <- tagAddClass(.tag, size)
   }
 
   if (!is.null(weight)) {
     if (re(weight, "bold|normal|light")) {
       weight <- paste0("font-weight-", weight)
-    } else {
+    } else if (weight == "italic") {
       weight <- paste0("font-", weight)
+    } else {
+      weight <- paste0("text-", weight)
     }
 
-    .tag <- tagDropClass(.tag, "font-(weight-(bold|normal|light)|italic|monospace)")
+    .tag <- tagDropClass(.tag, "(font-weight-(bold|normal|light))|font-italic|text-monospace)")
     .tag <- tagAddClass(.tag, weight)
+  }
+
+  if (!is.null(case)) {
+    if (case == "upper")
+      case <- "uppercase"
+    else if (case == "lower") {
+      case <- "lowercase"
+    } else {
+      case <- "capitalize"
+    }
+
+    .tag <- tagDropClass(.tag, "text-(lowercase|uppercase|capitalize)")
+    .tag <- tagAddClass(.tag, case)
   }
 
   if (length(align)) {
@@ -173,30 +197,14 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, align = NULL) {
 
 #' Tag element background color
 #'
-#' Use `background()` to change the background color of a tag element.
+#' Use `background()` to modify the background color of a tag element.
 #'
 #' @param .tag A tag element.
 #'
-#' @param color A character string specifying the background color, see below
-#'   for all possible values.
-#'
-#' @details
-#'
-#' The possible background colors are,
-#'
-#' * red
-#' * purple
-#' * indigo
-#' * blue
-#' * cyan
-#' * teal
-#' * green
-#' * yellow
-#' * amber
-#' * orange
-#' * grey
-#' * white
-#' * transparent
+#' @param color One of `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
+#'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`,
+#'   `"white"`, or `"transparent`" character string specifying the background
+#'   color.
 #'
 #' @family design
 #' @export
@@ -236,8 +244,9 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, align = NULL) {
 background <- function(.tag, color) {
   if (!(color %in% c(.colors, "transparent"))) {
     stop(
-      "invalid `background` argument, `color` is invalid, see ?background ",
-      "details for possible colors",
+      "invalid `background()` argument, unknown `color` ",
+      '"', color, '"',
+      " see ?background for possible colors",
       call. = FALSE
     )
   }
@@ -263,64 +272,65 @@ background <- function(.tag, color) {
 
 #' Tag element borders
 #'
-#' Use `border()` to add borders to a tag element or change the color of a tag
-#' element's border.
+#' Use `border()` to add or modify tag element borders.
 #'
 #' @param .tag A tag element.
 #'
-#' @param color A character string specifying the border color, defaults to
-#'   `NULL`, in which case the browser default is used. See below for possible
-#'   border colors.
+#' @param color One of `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
+#'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`, `"white"`
+#'   specifying the border color, defaults to `NULL`.
 #'
 #' @param sides One or more of `"top"`, `"right"`, `"bottom"`, `"left"` or
 #'   `"all"` or `"none"` specifying which sides to add a border to, defaults to
 #'   `"all"`.
 #'
-#' @details
-#'
-#' The following border colors are available,
-#'
-#' * red
-#' * purple
-#' * indigo
-#' * blue
-#' * cyan
-#' * teal
-#' * green
-#' * yellow
-#' * amber
-#' * orange
-#' * grey
-#' * white
+#' @param round One or more of `"top"`, `"right"`, `"bottom"`, `"left"`,
+#'   `"circle"`, `"all"`, or `"none"` specifying how to round the border(s) of a
+#'   tag element, defaults to `NULL`, in which case the argument is ignored.
 #'
 #' @family design
 #' @export
 #' @examples
 #'
-#' ### Possible colors
+#' ### Change border color
 #'
-#' colors <- c(
-#'   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
-#'   "yellow", "amber", "orange", "grey", "white"
+#' div(
+#'   div() %>%
+#'     height(3) %>%
+#'     width(3) %>%
+#'     border("green"),
+#'   div() %>%
+#'     height(3) %>%
+#'     width(3) %>%
+#'     border(
+#'       color = "blue",
+#'       sides = c("left", "right")
+#'     )
 #' )
+#'
+#' ### Round sides
+#'
+#' sides <- c("top", "right", "bottom", "left", "circle", "all")
 #'
 #' div(
 #'   lapply(
-#'     colors,
-#'     border,
+#'     sides,
+#'     rounded,
 #'     .tag = div() %>%
-#'       padding(5) %>%
-#'       margin(2)
+#'       height(3) %>%
+#'       width(3) %>%
+#'       border("black")
 #'   )
 #' ) %>%
 #'   display("flex") %>%
 #'   flex(wrap = TRUE)
 #'
-border <- function(.tag, color = NULL, sides = "all") {
-  if (!re(color, paste(color, collapse = "|"))) {
+border <- function(.tag, color = NULL, sides = "all", round = NULL) {
+  if (!re(color, paste(.color, collapse = "|"))) {
     stop(
-      "invalid `border()` argument, `color` is invalid, see ?border ",
-      "details for possible colors",
+      "invalid `border()` argument, unknown `color` ",
+      '"', color, '"',
+      "see ?border for possible colors",
       call. = FALSE
     )
   }
@@ -329,6 +339,14 @@ border <- function(.tag, color = NULL, sides = "all") {
     stop(
       "invalid `border()` argument, `sides` must be one of ",
       '"top", "right", "bottom", "left", "all", or "none"',
+      call. = FALSE
+    )
+  }
+
+  if (!all(re(round, "top|right|bottom|left|circle|all|none"))) {
+    stop(
+      "invalid `border()` argument, `round` must be one of ",
+      '"top", "right", "bottom", "left", "circle", "all", or "none"',
       call. = FALSE
     )
   }
@@ -345,6 +363,15 @@ border <- function(.tag, color = NULL, sides = "all") {
     .tag <- colorUtility(.tag, "border", color)
   }
 
+  if (!is.null(round)) {
+    round <- paste0("rounded-", round)
+
+    round[round == "rounded-none"] <- "rounded-0"
+    round[round == "rounded-all"] <- "rounded"
+
+    .tag <- tagAddClass(.tag, round)
+  }
+
   attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
 
@@ -356,54 +383,16 @@ border <- function(.tag, color = NULL, sides = "all") {
 #'
 #' @param .tag A tag element.
 #'
-#' @param sides One of `"top"`, `"right"`, `"bottom"`, `"left"`, `"circle"`,
-#'   `"all"` or `"none"`, defaults to `"all"`, specifying which and how the
-#'   the corners of the tag element are rounded.
+
 #'
 #' @family design
 #' @export
 #' @examples
 #'
-#' ### Different sides
-#'
-#' sides <- c("top", "right", "bottom", "left", "circle", "all")
-#'
-#' div(
-#'   lapply(
-#'     sides,
-#'     rounded,
-#'     .tag = div() %>%
-#'       padding(5) %>%
-#'       margin(2) %>%
-#'       border("indigo")
-#'   )
-#' ) %>%
-#'   display("flex") %>%
-#'   flex(wrap = TRUE)
+
 #'
 rounded <- function(.tag, sides = "all") {
-  if (!all(re(sides, "top|right|bottom|left|circle|all|none", len0 = FALSE))) {
-    stop(
-      "invalid `rounded` argument, `sides` must be one of ",
-      '"top", "right", "bottom", "left", "circle", "all", or "none"',
-      call. = FALSE
-    )
-  }
 
-  classes <- vapply(
-    sides,
-    function(s) {
-      switch(
-        s,
-        none = "rounded-0",
-        all = "rounded",
-        paste0("rounded-", s)
-      )
-    },
-    character(1)
-  )
-
-  .tag <- tagAddClass(.tag, classes)
 
   attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }

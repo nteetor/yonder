@@ -1,14 +1,4 @@
-$font-sizes: (
-  "2x": 2rem,
-  "3x": 3rem,
-  "4x": 4rem,
-  "5x": 5rem,
-  "6x": 6rem,
-  "7x": 7rem,
-  "8x": 8rem,
-  "9x": 9rem,
-  "10x": 10rem
-);
+// text
 
 @each $name, $value in $font-sizes {
   .font-size-#{$name} {
