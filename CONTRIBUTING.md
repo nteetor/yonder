@@ -41,7 +41,7 @@ A commit message consists of a header, a body, and a possible footer, separated 
 | docs  | documentation |
 | style | formatting, missing semi colons, … |
 | test  | adding missing tests |
-| chore | maintainance |
+| chore | maintenance |
 
 #### `<scope>`
 
