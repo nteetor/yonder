@@ -32,7 +32,7 @@ BugReports: https://github.com/nteetor/yonder/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.0
+RoxygenNote: 6.1.1
 Depends:
     R (>= 3.0.2),
     shiny
