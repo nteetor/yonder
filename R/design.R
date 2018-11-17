@@ -20,6 +20,7 @@ NULL
   "amber",
   "orange",
   "grey",
+  "black",
   "white"
 )
 
@@ -62,9 +63,9 @@ colorUtility <- function(tag, base, color) {
 #' @param .tag A tag element.
 #'
 #' @param color One `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
-#'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"body"`, `"grey"`,
-#'   `"black"` or `"white" specifying the color the tag element's text, defaults
-#'   to `NULL`.
+#'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`,
+#'   `"black"`, or `"white"` specifying the color the tag element's text,
+#'   defaults to `NULL`.
 #'
 #' @param size One of `"xs"`, `"sm"`, `"base"`, `"lg"`, `"xl"` specifying a font
 #'   size relative to the default base page font size, defaults to `NULL`.
@@ -118,9 +119,10 @@ colorUtility <- function(tag, base, color) {
 #'
 font <- function(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
                  align = NULL) {
-  if (color != "body" && !re(color, paste(.colors, collapse = "|"))) {
+  if (!re(color, paste(.colors, collapse = "|"))) {
     stop(
-      "invalid `font()` argument, `color`",
+      "invalid `font()` argument, `color` unknown ",
+      '"', color, '", see ?font for possible values',
       call. = FALSE
     )
   }
@@ -203,7 +205,7 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
 #'
 #' @param color One of `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
 #'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`,
-#'   `"white"`, or `"transparent`" character string specifying the background
+#'   `"white"`, or `"transparent"` character string specifying the background
 #'   color.
 #'
 #' @family design
@@ -245,8 +247,7 @@ background <- function(.tag, color) {
   if (!(color %in% c(.colors, "transparent"))) {
     stop(
       "invalid `background()` argument, unknown `color` ",
-      '"', color, '"',
-      " see ?background for possible colors",
+      '"', color, '", see ?background for possible colors',
       call. = FALSE
     )
   }
@@ -315,27 +316,26 @@ background <- function(.tag, color) {
 #' div(
 #'   lapply(
 #'     sides,
-#'     rounded,
+#'     border,
 #'     .tag = div() %>%
 #'       height(3) %>%
-#'       width(3) %>%
-#'       border("black")
+#'       width(3),
+#'     color = "black"
 #'   )
 #' ) %>%
 #'   display("flex") %>%
 #'   flex(wrap = TRUE)
 #'
 border <- function(.tag, color = NULL, sides = "all", round = NULL) {
-  if (!re(color, paste(.color, collapse = "|"))) {
+  if (!re(color, paste(.colors, collapse = "|"))) {
     stop(
       "invalid `border()` argument, unknown `color` ",
-      '"', color, '"',
-      "see ?border for possible colors",
+      '"', color, '", see ?border for possible colors',
       call. = FALSE
     )
   }
 
-  if (!all(re(sides, "top|right|bottom|left|all|none", len0 = FALSE))) {
+  if (!all(re(sides, "top|right|bottom|left|all|none|circle", len0 = FALSE))) {
     stop(
       "invalid `border()` argument, `sides` must be one of ",
       '"top", "right", "bottom", "left", "all", or "none"',
@@ -371,28 +371,6 @@ border <- function(.tag, color = NULL, sides = "all", round = NULL) {
 
     .tag <- tagAddClass(.tag, round)
   }
-
-  attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
-}
-
-#' Round tag element borders
-#'
-#' The `rounded` utility function applies Bootstrap classes to an element. The
-#' styles are applied by sides, e.g. `"left"` or `"bottom"`. The `"circle"`
-#' value heavily rounds all the corners of an element.
-#'
-#' @param .tag A tag element.
-#'
-
-#'
-#' @family design
-#' @export
-#' @examples
-#'
-
-#'
-rounded <- function(.tag, sides = "all") {
-
 
   attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
@@ -630,18 +608,17 @@ display <- function(.tag, render = NULL, print = NULL) {
 #' of a tag element.  The margin of a tag element is the space outside and
 #' around the tag element, its border, and its content.  The padding of a tag
 #' element is the space between the tag element's border and its content or
-#' child elements.
+#' child elements. All arguments default to `NULL`, in which case they are
+#' ignored.
 #'
 #' @param .tag A tag element.
 #'
-#' @param top A [responsive] argument. One of `0:5` or `"auto"`. 0 removes all
+#' @param all A [responsive] argument. One of `0:5` or `"auto"` specifying
+#'   a margin or padding for all sides of the tag element. 0 removes all
 #'   space and 5 adds the most space.
 #'
-#'   If an **unnamed** value is passed as `top` `margin()` and `padding()` will
-#'   apply the spcified spacing to **all** sides.
-#'
-#' @param right,bottom,left A [responsive] argument. One of `0:5` or `"auto"`. 0
-#'   removes all space and 5 adds the most space.
+#' @param top,right,bottom,left A [responsive] argument. One of `0:5` or
+#'   `"auto"`. 0 removes all space and 5 adds the most space.
 #'
 #' @family design
 #' @export
@@ -713,24 +690,11 @@ display <- function(.tag, render = NULL, print = NULL) {
 #'     margin(b = 2)  # <-
 #' )
 #'
-padding <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
+padding <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
+                    left = NULL) {
   possibles <- c(0:5, "auto")
-  this <- sys.call()
 
-  # all padding case
-  if (all(re(names2(this), "\\.tag|")) && length(this) == 3) {
-    all <- tryCatch(
-      ensureBreakpoints(top, possibles),
-      error = function(e) stop(
-        "invalid call to `padding()`, unexpected argument value ", top,
-        call. = FALSE
-      )
-    )
-
-    classes <- createResponsiveClasses(all, "p")
-    return(tagAddClass(.tag, classes))
-  }
-
+  all <- ensureBreakpoints(all, possibles)
   top <- ensureBreakpoints(top, possibles)
   right <- ensureBreakpoints(right, possibles)
   bottom <- ensureBreakpoints(bottom, possibles)
@@ -747,6 +711,8 @@ padding <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) 
     classes <- paste0("p", classes)
   }
 
+  classes <- c(createResponsiveClasses(all, "p"), classes)
+
   .tag <- tagAddClass(.tag, classes)
 
   attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
@@ -754,23 +720,11 @@ padding <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) 
 
 #' @rdname padding
 #' @export
-margin <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
+margin <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
+                   left = NULL) {
   possibles <- c(0:5, "auto")
-  this <- sys.call()
 
-  # all sides case
-  if (all(re(names2(this), "\\.tag|")) && length(this) == 3) {
-    all <- tryCatch(
-      ensureBreakpoints(top, possibles),
-      error = function(e) stop(
-        "invalid call to `margin()`, unexpected argument value ", top,
-        call. = FALSE
-      )
-    )
-    classes <- createResponsiveClasses(all, "m")
-    return(tagAddClass(.tag, classes))
-  }
-
+  all <- ensureBreakpoints(top, possibles)
   top <- ensureBreakpoints(top, possibles)
   right <- ensureBreakpoints(right, possibles)
   bottom <- ensureBreakpoints(bottom, possibles)
@@ -786,6 +740,8 @@ margin <- function(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL) {
   if (!is.null(classes)) {
     classes <- paste0("m", classes)
   }
+
+  classes <- c(createResponsiveClasses(all, "m"), classes)
 
   .tag <- tagAddClass(.tag, classes)
 
@@ -883,11 +839,21 @@ width <- function(.tag, size) {
 #'
 #' @family design
 #' @export
+#' @examples
 #'
 #' ### Relative heights
 #'
-#' div() %>%
-#'   height(3)
+#' div(
+#'   lapply(
+#'     seq(2, 20, by = 2),
+#'     function(h) {
+#'       div() %>%
+#'         height(h) %>%  # <-
+#'         border("black") %>%
+#'         margin(t = 3)
+#'     }
+#'   )
+#' )
 #'
 height <- function(.tag, size) {
   .tag <- tagAddClass(.tag, paste0("h-", size))

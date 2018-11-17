@@ -66,7 +66,7 @@ Other design: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{height}},
-  \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{scroll}}, \code{\link{shadow}}
+  \code{\link{padding}}, \code{\link{scroll}},
+  \code{\link{shadow}}
 }
 \concept{design}

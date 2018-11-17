@@ -11,8 +11,9 @@ font(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
 \item{.tag}{A tag element.}
 
 \item{color}{One \code{"red"}, \code{"purple"}, \code{"indigo"}, \code{"blue"}, \code{"cyan"},
-\code{"teal"}, \code{"green"}, \code{"yellow"}, \code{"amber"}, \code{"orange"}, \code{"body"}, \code{"grey"},
-\code{"black"} or \code{"white" specifying the color the tag element's text, defaults to }NULL`.}
+\code{"teal"}, \code{"green"}, \code{"yellow"}, \code{"amber"}, \code{"orange"}, \code{"grey"},
+\code{"black"}, or \code{"white"} specifying the color the tag element's text,
+defaults to \code{NULL}.}
 
 \item{size}{One of \code{"xs"}, \code{"sm"}, \code{"base"}, \code{"lg"}, \code{"xl"} specifying a font
 size relative to the default base page font size, defaults to \code{NULL}.}
@@ -74,7 +75,7 @@ Other design: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{height}}, \code{\link{padding}},
-  \code{\link{rounded}}, \code{\link{scroll}},
-  \code{\link{shadow}}, \code{\link{width}}
+  \code{\link{scroll}}, \code{\link{shadow}},
+  \code{\link{width}}
 }
 \concept{design}

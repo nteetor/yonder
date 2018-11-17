@@ -33,12 +33,29 @@ Utility function to change a tag element's height. Height is specified
 relative to the font size of page (browser default is 16px), relative to
 their parent element, or relative to the element's content.
 }
+\examples{
+
+### Relative heights
+
+div(
+  lapply(
+    seq(2, 20, by = 2),
+    function(h) {
+      div() \%>\%
+        height(h) \%>\%  # <-
+        border("black") \%>\%
+        margin(t = 3)
+    }
+  )
+)
+
+}
 \seealso{
 Other design: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{padding}},
-  \code{\link{rounded}}, \code{\link{scroll}},
-  \code{\link{shadow}}, \code{\link{width}}
+  \code{\link{scroll}}, \code{\link{shadow}},
+  \code{\link{width}}
 }
 \concept{design}

@@ -5,28 +5,29 @@
 \alias{margin}
 \title{Tag element margin and padding}
 \usage{
-padding(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL)
+padding(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
+  left = NULL)
 
-margin(.tag, top = NULL, right = NULL, bottom = NULL, left = NULL)
+margin(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
+  left = NULL)
 }
 \arguments{
 \item{.tag}{A tag element.}
 
-\item{top}{A \link{responsive} argument. One of \code{0:5} or \code{"auto"}. 0 removes all
-space and 5 adds the most space.
+\item{all}{A \link{responsive} argument. One of \code{0:5} or \code{"auto"} specifying
+a margin or padding for all sides of the tag element. 0 removes all
+space and 5 adds the most space.}
 
-If an \strong{unnamed} value is passed as \code{top} \code{margin()} and \code{padding()} will
-apply the spcified spacing to \strong{all} sides.}
-
-\item{right, bottom, left}{A \link{responsive} argument. One of \code{0:5} or \code{"auto"}. 0
-removes all space and 5 adds the most space.}
+\item{top, right, bottom, left}{A \link{responsive} argument. One of \code{0:5} or
+\code{"auto"}. 0 removes all space and 5 adds the most space.}
 }
 \description{
 Use the \code{margin()} and \code{padding()} utilities to change the margin or padding
 of a tag element.  The margin of a tag element is the space outside and
 around the tag element, its border, and its content.  The padding of a tag
 element is the space between the tag element's border and its content or
-child elements.
+child elements. All arguments default to \code{NULL}, in which case they are
+ignored.
 }
 \examples{
 
@@ -102,7 +103,7 @@ Other design: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{height}},
-  \code{\link{rounded}}, \code{\link{scroll}},
-  \code{\link{shadow}}, \code{\link{width}}
+  \code{\link{scroll}}, \code{\link{shadow}},
+  \code{\link{width}}
 }
 \concept{design}

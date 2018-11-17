@@ -70,7 +70,7 @@
 #'     id = "button",
 #'     label = "Go!"
 #'   ) %>%
-#'     border("transparent")
+#'     background("transparent")
 #' )
 #'
 #' ### Combination addon

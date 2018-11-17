@@ -49,11 +49,11 @@ sides <- c("top", "right", "bottom", "left", "circle", "all")
 div(
   lapply(
     sides,
-    rounded,
+    border,
     .tag = div() \%>\%
       height(3) \%>\%
-      width(3) \%>\%
-      border("black")
+      width(3),
+    color = "black"
   )
 ) \%>\%
   display("flex") \%>\%
@@ -65,7 +65,7 @@ Other design: \code{\link{affix}},
   \code{\link{background}}, \code{\link{display}},
   \code{\link{float}}, \code{\link{font}},
   \code{\link{height}}, \code{\link{padding}},
-  \code{\link{rounded}}, \code{\link{scroll}},
-  \code{\link{shadow}}, \code{\link{width}}
+  \code{\link{scroll}}, \code{\link{shadow}},
+  \code{\link{width}}
 }
 \concept{design}

@@ -11,7 +11,7 @@ background(.tag, color)
 
 \item{color}{One of \code{"red"}, \code{"purple"}, \code{"indigo"}, \code{"blue"}, \code{"cyan"},
 \code{"teal"}, \code{"green"}, \code{"yellow"}, \code{"amber"}, \code{"orange"}, \code{"grey"},
-\code{"white"}, or \code{"transparent}" character string specifying the background
+\code{"white"}, or \code{"transparent"} character string specifying the background
 color.}
 }
 \description{
@@ -55,8 +55,7 @@ div(
 Other design: \code{\link{affix}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{height}},
-  \code{\link{padding}}, \code{\link{rounded}},
-  \code{\link{scroll}}, \code{\link{shadow}},
-  \code{\link{width}}
+  \code{\link{padding}}, \code{\link{scroll}},
+  \code{\link{shadow}}, \code{\link{width}}
 }
 \concept{design}
