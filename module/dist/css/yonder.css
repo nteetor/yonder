@@ -78,6 +78,11 @@
   margin-bottom: 1rem;
 }
 
+.form-group .yonder-checkbar {
+  display: -ms-flexbox;
+  display: flex;
+}
+
 /* based on flatpickr airbnb theme */
 .flatpickr-calendar {
   overflow: hidden;
@@ -1094,6 +1099,11 @@
   animation-play-state: paused;
 }
 
+.form-group .yonder-radiobar {
+  display: -ms-flexbox;
+  display: flex;
+}
+
 .yonder-range {
   background-color: initial !important;
 }
@@ -1198,6 +1208,14 @@ body {
 
 .border.border-black {
   border-color: #000 !important;
+}
+
+button {
+  cursor: pointer;
+}
+
+button:disabled {
+  cursor: not-allowed;
 }
 
 .scroll-x {
