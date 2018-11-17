@@ -59,7 +59,7 @@ roxygen:
         margin(3)
   - type: output
     value: |-
-      <div class="yonder-button-group btn-group m-3" role="group">
+      <div class="yonder-button-group btn-group" role="group">
         <button type="button" class="btn btn-blue" data-value="Button 1">Button 1</button>
         <button type="button" class="btn btn-blue" data-value="Button 2">Button 2</button>
         <button type="button" class="btn btn-blue" data-value="Button 3">Button 3</button>

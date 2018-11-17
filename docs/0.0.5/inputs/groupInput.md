@@ -97,14 +97,14 @@ roxygen:
           id = "button",
           label = "Go!"
         ) %>%
-          border("transparent")
+          background("transparent")
       )
   - type: output
     value: |-
       <div class="yonder-group input-group">
         <input type="text" class="form-control" placeholder="Search terms"/>
         <div class="input-group-append">
-          <button class="yonder-button btn btn-grey border border-transparent" type="button" role="button" id="button">Go!</button>
+          <button class="yonder-button btn btn-grey bg-transparent" type="button" role="button" id="button">Go!</button>
         </div>
       </div>
   - type: markdown

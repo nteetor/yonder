@@ -110,7 +110,7 @@
     
     <dd>
       <a href="/yonder/0.0.5/design/height.html"
-         alt="Tag element width and height">
+         alt="Tag element height">
         height
       </a>
     </dd>
@@ -130,13 +130,6 @@
     </dd>
     
     <dd>
-      <a href="/yonder/0.0.5/design/rounded.html"
-         alt="Round tag element borders">
-        rounded
-      </a>
-    </dd>
-    
-    <dd>
       <a href="/yonder/0.0.5/design/scroll.html"
          alt="Vertical and horizontal scroll">
         scroll
@@ -152,7 +145,7 @@
     
     <dd>
       <a href="/yonder/0.0.5/design/width.html"
-         alt="Tag element width and height">
+         alt="Tag element width">
         width
       </a>
     </dd>
@@ -212,7 +205,7 @@
     
 
     <dt>
-      <a class="text-dark" href="/yonder/0.0.5/thruputs/">thruputs</a>
+      <a class="text-dark" href="/yonder"></a>
     </dt>
 
     
@@ -224,7 +217,7 @@
     
 
     <dt>
-      <a class="text-dark" href="/yonder"></a>
+      <a class="text-dark" href="/yonder/0.0.5/thruputs/">thruputs</a>
     </dt>
 
     
@@ -236,10 +229,12 @@
 </div>
 
         <div class="page-body col-8 pt-4">
-          <h2>Tag element width and height</h2>
+          <h2>Tag element width</h2>
 
-          <p>Utility functions to change a tag element’s width or height. Widths and
-heights are specified as percentages of the parent object’s width or height.</p>
+          <p>Utility function to change a tag element’s width. Widths are specified
+relative to the font size of page (browser default is 16px), relative to
+their parent element (i.e. 1/2 the width of their parent), or relative to the
+element’s content.</p>
 
 
           
@@ -250,14 +245,23 @@ heights are specified as percentages of the parent object’s width or height.</
             <dd class="col-sm-9"><p>A tag element.</p>
 </dd>
             
-            <dt id="params-percentage" class="col-sm-3">percentage</dt>
-            <dd class="col-sm-9"><p>One of 25, 50, 75, or 100 specifying width or height as a
-percentage of a parent element’s width or height.</p>
-</dd>
-            
-            <dt id="params-max" class="col-sm-3">max</dt>
-            <dd class="col-sm-9"><p>One of 25, 50, 75, or 100 specifying max width or max height as a
-percentage of a parent element’s width or height.</p>
+            <dt id="params-size" class="col-sm-3">size</dt>
+            <dd class="col-sm-9"><p>A character string or number specifying the width of the tag
+element. Possible values:</p>
+
+<p>An integer between 1 and 20, in which case the width of the element is
+relative to the font size of the page.</p>
+
+<p>One of “1/2”, “1/3”, “2/3”, “1/4”, “3/4”, “1/5”, “2/5”, “3/5”, “4/5”, or
+“full”, in which case the element’s width is a percentage of its parent’s
+width. The height of the parent element must be specified for percentage
+widths to work. Percentages do not account for margins or padding and may
+cause an element to extend beyond its parent.</p>
+
+<p>Or “auto”, in which case the element’s width is determined by the browser.
+The browser will take into account the width, padding, margins, and border
+of the tag element’s parent to keep the element from extending beyond its
+parent.</p>
 </dd>
             
           </dl>
@@ -267,12 +271,61 @@ percentage of a parent element’s width or height.</p>
 
           
           
-          <h3>Percentage based widths and heights</h3>
+          <h3>Numeric values</h3>
 
           
           
           
-          <p>These percentages are based on the size of the parent element.</p>
+          <p>When specifying a numeric value the width of the element is relative to the default font size of the page.</p>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">lapply</span><span class="p">(</span><span class="w">
+  </span><span class="m">1</span><span class="o">:</span><span class="m">20</span><span class="p">,</span><span class="w">
+  </span><span class="n">width</span><span class="p">,</span><span class="w">
+  </span><span class="n">.tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">border</span><span class="p">(</span><span class="s2">"black"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">height</span><span class="p">(</span><span class="m">4</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="r-example mb-5">
+            <div class="border border-black h-4 w- 1"></div>
+<div class="border border-black h-4 w- 2"></div>
+<div class="border border-black h-4 w- 3"></div>
+<div class="border border-black h-4 w- 4"></div>
+<div class="border border-black h-4 w- 5"></div>
+<div class="border border-black h-4 w- 6"></div>
+<div class="border border-black h-4 w- 7"></div>
+<div class="border border-black h-4 w- 8"></div>
+<div class="border border-black h-4 w- 9"></div>
+<div class="border border-black h-4 w- 10"></div>
+<div class="border border-black h-4 w- 11"></div>
+<div class="border border-black h-4 w- 12"></div>
+<div class="border border-black h-4 w- 13"></div>
+<div class="border border-black h-4 w- 14"></div>
+<div class="border border-black h-4 w- 15"></div>
+<div class="border border-black h-4 w- 16"></div>
+<div class="border border-black h-4 w- 17"></div>
+<div class="border border-black h-4 w- 18"></div>
+<div class="border border-black h-4 w- 19"></div>
+<div class="border border-black h-4 w- 20"></div>
+          </div>
+          
+          
+          
+          <h3>Fractional values</h3>
+
+          
+          
+          
+          <p>When specifying a fraction the element's width is a percentage of its parent's width.</p>
 
           
           
@@ -280,21 +333,20 @@ percentage of a parent element’s width or height.</p>
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
-  </span><span class="n">style</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"height: 50px; width: 120px;"</span><span class="p">,</span><span class="w">
   </span><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-    </span><span class="n">width</span><span class="p">(</span><span class="m">25</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-    </span><span class="n">height</span><span class="p">(</span><span class="m">100</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-    </span><span class="n">background</span><span class="p">(</span><span class="s2">"yellow"</span><span class="p">)</span><span class="w">
+    </span><span class="n">margin</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">border</span><span class="p">(</span><span class="s2">"red"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">width</span><span class="p">(</span><span class="s2">"1/3"</span><span class="p">)</span><span class="w">
 </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-  </span><span class="n">border</span><span class="p">(</span><span class="s2">"black"</span><span class="p">)</span></code></pre></figure>
+  </span><span class="n">width</span><span class="p">(</span><span class="m">20</span><span class="p">)</span></code></pre></figure>
 
           </div>
           
           
           
           <div class="r-example mb-5">
-            <div style="height: 50px; width: 120px;" class="border border-black">
-  <div class="w-25 h-100 bg-yellow"></div>
+            <div class="w- 20">
+  <div class="mb-3 border border-red w- 1/3"></div>
 </div>
           </div>
           

@@ -99,16 +99,16 @@ roxygen:
               <label>Ice creams</label>
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-181-200" name="flavorChoice" data-value="Mint" checked/>
-                  <label class="custom-control-label" for="radio-181-200">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-725-275" name="flavorChoice" data-value="Mint" checked/>
+                  <label class="custom-control-label" for="radio-725-275">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-829-725" name="flavorChoice" data-value="Moose tracks"/>
-                  <label class="custom-control-label" for="radio-829-725">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-128-210" name="flavorChoice" data-value="Moose tracks"/>
+                  <label class="custom-control-label" for="radio-128-210">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-172-619" name="flavorChoice" data-value="Marble"/>
-                  <label class="custom-control-label" for="radio-172-619">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-948-129" name="flavorChoice" data-value="Marble"/>
+                  <label class="custom-control-label" for="radio-948-129">Marble</label>
                 </div>
                 <div class="invalid-feedback"></div>
               </div>

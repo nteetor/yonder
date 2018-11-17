@@ -89,7 +89,7 @@ roxygen:
         margin("auto", 0, "auto", 0)
   - type: output
     value: |-
-      <div class="yonder-file input-group mt-auto mr-0 mb-auto ml-0">
+      <div class="yonder-file input-group m-0 mt-0 mr-auto mb-0">
         <div class="input-group-prepend">
           <button class="yonder-button btn btn-grey bg-transparent border border-green" type="button" role="button">Upload</button>
         </div>

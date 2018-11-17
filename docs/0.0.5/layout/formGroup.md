@@ -84,7 +84,7 @@ roxygen:
         background("grey")
   - type: output
     value: |-
-      <div class="card m-3 bg-grey">
+      <div class="card bg-grey">
         <div class="card-body">
           <div class="form-row">
             <div class="form-group col-md-6">

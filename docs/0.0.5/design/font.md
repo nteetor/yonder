@@ -6,30 +6,37 @@ requires: ~
 roxygen:
   title: Tag element font
   description: |-
-    The `font()` utility may be used to change the color, size, or weight of a
-    tag element's text font. Font size's are changed relative to the base font
-    size of the web page.
+    The `font()` utility modifies the color, size, weight, case, or alignment of
+    a tag element's text. All arguments default to `NULL`, in which case they are
+    ignored.  For example, `font(size = "lg")` increases font size without
+    affecting color, weight, case, or alignment.
   parameters:
   - name: .tag
     description: A tag element.
   - name: color
     description: |-
-      A character string specifying the text color of the tag element,
-      defaults to `NULL` in which case the text color is unchanged.
+      One `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
+      `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`,
+      `"black"`, or `"white"` specifying the color the tag element's text,
+      defaults to `NULL`.
   - name: size
     description: |-
-      One of `"2x"`, `"3x"`, ..., or `"10x"` specifying a factor to
-      increase a tag element's font size by (e.g. `"2x"` is double the base font
-      size), defaults to `NULL`, in which case the font size is unchanged.
+      One of `"xs"`, `"sm"`, `"base"`, `"lg"`, `"xl"` specifying a font
+      size relative to the default base page font size, defaults to `NULL`.
   - name: weight
     description: |-
       One of `"bold"`, `"normal"`, `"light"`, `"italic"`, or
       `"monospace"` specifying the font weight of the element's text, defaults to
-      `NULL`, in which case the font weight is unchanged.
+      `NULL`.
+  - name: case
+    description: |-
+      One of `"upper"`, `"lower"`, or `"title"` specifying a
+      transformation of the tag element's text, default to `NULL`.
   - name: align
     description: |-
       A [responsive](/yonder/0.0.5/responsive.html) argument. One of `"left"`, `"center"`, `"right"`,
-      or `"justify"`.
+      or `"justify"`, specifying the alignment of the tag element's text, defaults
+      to `NULL`.
   sections: []
   return: ~
   family: design
@@ -38,39 +45,61 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h3>Possible colors</h3>
+      <h3>Changing text color</h3>
   - type: source
     value: |2-
 
-      colors <- c(
-        "red", "purple", "indigo", "blue", "cyan", "teal", "green",
-        "yellow", "amber", "orange", "body", "grey", "white"
-      )
-
-      div(
-        lapply(
-          head(colors, -1),
-          font,
-          .tag = div("Pellentesque tristique imperdiet tortor.") %>%
-            padding(5)
+      card(
+        header = h3("Important!") %>%
+          font(color = "amber"),
+        div(
+          "This is a reminder."
         )
       ) %>%
-        display("flex") %>%
-        flex(wrap = TRUE)
+        border(color = "amber")
   - type: output
     value: |-
-      <div class="d-flex flex-wrap">
-        <div class="p-5 text-red">Pellentesque tristique imperdiet tortor.</div>
-        <div class="p-5 text-purple">Pellentesque tristique imperdiet tortor.</div>
-        <div class="p-5 text-indigo">Pellentesque tristique imperdiet tortor.</div>
-        <div class="p-5 text-blue">Pellentesque tristique imperdiet tortor.</div>
-        <div class="p-5 text-cyan">Pellentesque tristique imperdiet tortor.</div>
-        <div class="p-5 text-teal">Pellentesque tristique imperdiet tortor.</div>
-        <div class="p-5 text-green">Pellentesque tristique imperdiet tortor.</div>
-        <div class="p-5 text-yellow">Pellentesque tristique imperdiet tortor.</div>
-        <div class="p-5 text-amber">Pellentesque tristique imperdiet tortor.</div>
-        <div class="p-5 text-orange">Pellentesque tristique imperdiet tortor.</div>
-        <div class="p-5 text-body">Pellentesque tristique imperdiet tortor.</div>
-        <div class="p-5 text-grey">Pellentesque tristique imperdiet tortor.</div>
+      <div class="card border border-amber">
+        <h3 class="text-amber card-header">Important!</h3>
+        <div class="card-body">
+          <div>This is a reminder.</div>
+        </div>
       </div>
+  - type: markdown
+    value: |
+      <h3>Changing font size</h3>
+  - type: source
+    value: |2-
+
+      div(
+        p("Donec at pede.") %>%
+          font(size = "xs"),
+        p("Donec at pede.") %>%
+          font(size = "sm"),
+        p("Donec at pede.") %>%
+          font(size = "base"),
+        p("Donec at pede.") %>%
+          font(size = "lg"),
+        p("Donec at pede.") %>%
+          font(size = "xl")
+      )
+  - type: output
+    value: |-
+      <div>
+        <p class="font-size-xs">Donec at pede.</p>
+        <p class="font-size-sm">Donec at pede.</p>
+        <p class="font-size-base">Donec at pede.</p>
+        <p class="font-size-lg">Donec at pede.</p>
+        <p class="font-size-xl">Donec at pede.</p>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Changing font weight</h3>
+  - type: source
+    value: |2-
+
+      p("Curabitur lacinia pulvinar nibh.") %>%
+        font(weight = "bold")
+  - type: output
+    value: <p class="font-weight-bold">Curabitur lacinia pulvinar nibh.</p>
 ---

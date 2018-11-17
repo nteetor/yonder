@@ -110,7 +110,7 @@
     
     <dd>
       <a href="/yonder/0.0.5/design/height.html"
-         alt="Tag element width and height">
+         alt="Tag element height">
         height
       </a>
     </dd>
@@ -130,13 +130,6 @@
     </dd>
     
     <dd>
-      <a href="/yonder/0.0.5/design/rounded.html"
-         alt="Round tag element borders">
-        rounded
-      </a>
-    </dd>
-    
-    <dd>
       <a href="/yonder/0.0.5/design/scroll.html"
          alt="Vertical and horizontal scroll">
         scroll
@@ -152,7 +145,7 @@
     
     <dd>
       <a href="/yonder/0.0.5/design/width.html"
-         alt="Tag element width and height">
+         alt="Tag element width">
         width
       </a>
     </dd>
@@ -212,7 +205,7 @@
     
 
     <dt>
-      <a class="text-dark" href="/yonder/0.0.5/thruputs/">thruputs</a>
+      <a class="text-dark" href="/yonder"></a>
     </dt>
 
     
@@ -224,7 +217,7 @@
     
 
     <dt>
-      <a class="text-dark" href="/yonder"></a>
+      <a class="text-dark" href="/yonder/0.0.5/thruputs/">thruputs</a>
     </dt>
 
     
@@ -238,8 +231,7 @@
         <div class="page-body col-8 pt-4">
           <h2>Tag element borders</h2>
 
-          <p>Use <code class="highlighter-rouge">border()</code> to add borders to a tag element or change the color of a tag
-element’s border.</p>
+          <p>Use <code class="highlighter-rouge">border()</code> to add or modify tag element borders.</p>
 
 
           
@@ -251,15 +243,21 @@ element’s border.</p>
 </dd>
             
             <dt id="params-color" class="col-sm-3">color</dt>
-            <dd class="col-sm-9"><p>A character string specifying the border color, defaults to
-<code class="highlighter-rouge">NULL</code>, in which case the browser default is used. See below for possible
-border colors.</p>
+            <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">"red"</code>, <code class="highlighter-rouge">"purple"</code>, <code class="highlighter-rouge">"indigo"</code>, <code class="highlighter-rouge">"blue"</code>, <code class="highlighter-rouge">"cyan"</code>,
+<code class="highlighter-rouge">"teal"</code>, <code class="highlighter-rouge">"green"</code>, <code class="highlighter-rouge">"yellow"</code>, <code class="highlighter-rouge">"amber"</code>, <code class="highlighter-rouge">"orange"</code>, <code class="highlighter-rouge">"grey"</code>, <code class="highlighter-rouge">"white"</code>
+specifying the border color, defaults to <code class="highlighter-rouge">NULL</code>.</p>
 </dd>
             
             <dt id="params-sides" class="col-sm-3">sides</dt>
             <dd class="col-sm-9"><p>One or more of <code class="highlighter-rouge">"top"</code>, <code class="highlighter-rouge">"right"</code>, <code class="highlighter-rouge">"bottom"</code>, <code class="highlighter-rouge">"left"</code> or
 <code class="highlighter-rouge">"all"</code> or <code class="highlighter-rouge">"none"</code> specifying which sides to add a border to, defaults to
 <code class="highlighter-rouge">"all"</code>.</p>
+</dd>
+            
+            <dt id="params-round" class="col-sm-3">round</dt>
+            <dd class="col-sm-9"><p>One or more of <code class="highlighter-rouge">"top"</code>, <code class="highlighter-rouge">"right"</code>, <code class="highlighter-rouge">"bottom"</code>, <code class="highlighter-rouge">"left"</code>,
+<code class="highlighter-rouge">"circle"</code>, <code class="highlighter-rouge">"all"</code>, or <code class="highlighter-rouge">"none"</code> specifying how to round the border(s) of a
+tag element, defaults to <code class="highlighter-rouge">NULL</code>, in which case the argument is ignored.</p>
 </dd>
             
           </dl>
@@ -269,25 +267,57 @@ border colors.</p>
 
           
           
-          <h3>Possible colors</h3>
+          <h3>Change border color</h3>
 
           
           
           
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">colors</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
-  </span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="s2">"purple"</span><span class="p">,</span><span class="w"> </span><span class="s2">"indigo"</span><span class="p">,</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">,</span><span class="w"> </span><span class="s2">"cyan"</span><span class="p">,</span><span class="w"> </span><span class="s2">"teal"</span><span class="p">,</span><span class="w"> </span><span class="s2">"green"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"yellow"</span><span class="p">,</span><span class="w"> </span><span class="s2">"amber"</span><span class="p">,</span><span class="w"> </span><span class="s2">"orange"</span><span class="p">,</span><span class="w"> </span><span class="s2">"grey"</span><span class="p">,</span><span class="w"> </span><span class="s2">"white"</span><span class="w">
-</span><span class="p">)</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">height</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">width</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">border</span><span class="p">(</span><span class="s2">"green"</span><span class="p">),</span><span class="w">
+  </span><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">height</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">width</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">border</span><span class="p">(</span><span class="w">
+      </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">,</span><span class="w">
+      </span><span class="n">sides</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"left"</span><span class="p">,</span><span class="w"> </span><span class="s2">"right"</span><span class="p">)</span><span class="w">
+    </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="r-example mb-5">
+            <div>
+  <div class="h-3 w- 3 border border-green"></div>
+  <div class="h-3 w- 3 border-left border-right border-blue"></div>
+</div>
+          </div>
+          
+          
+          
+          <h3>Round sides</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">sides</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"top"</span><span class="p">,</span><span class="w"> </span><span class="s2">"right"</span><span class="p">,</span><span class="w"> </span><span class="s2">"bottom"</span><span class="p">,</span><span class="w"> </span><span class="s2">"left"</span><span class="p">,</span><span class="w"> </span><span class="s2">"circle"</span><span class="p">,</span><span class="w"> </span><span class="s2">"all"</span><span class="p">)</span><span class="w">
 
 </span><span class="n">div</span><span class="p">(</span><span class="w">
   </span><span class="n">lapply</span><span class="p">(</span><span class="w">
-    </span><span class="n">colors</span><span class="p">,</span><span class="w">
+    </span><span class="n">sides</span><span class="p">,</span><span class="w">
     </span><span class="n">border</span><span class="p">,</span><span class="w">
     </span><span class="n">.tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-      </span><span class="n">padding</span><span class="p">(</span><span class="m">5</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-      </span><span class="n">margin</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="w">
+      </span><span class="n">height</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">width</span><span class="p">(</span><span class="m">3</span><span class="p">),</span><span class="w">
+    </span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"black"</span><span class="w">
   </span><span class="p">)</span><span class="w">
 </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
@@ -299,18 +329,12 @@ border colors.</p>
           
           <div class="r-example mb-5">
             <div class="d-flex flex-wrap">
-  <div class="p-5 m-2 border border-red"></div>
-  <div class="p-5 m-2 border border-purple"></div>
-  <div class="p-5 m-2 border border-indigo"></div>
-  <div class="p-5 m-2 border border-blue"></div>
-  <div class="p-5 m-2 border border-cyan"></div>
-  <div class="p-5 m-2 border border-teal"></div>
-  <div class="p-5 m-2 border border-green"></div>
-  <div class="p-5 m-2 border border-yellow"></div>
-  <div class="p-5 m-2 border border-amber"></div>
-  <div class="p-5 m-2 border border-orange"></div>
-  <div class="p-5 m-2 border border-grey"></div>
-  <div class="p-5 m-2 border border-white"></div>
+  <div class="h-3 w- 3 border-top border-black"></div>
+  <div class="h-3 w- 3 border-right border-black"></div>
+  <div class="h-3 w- 3 border-bottom border-black"></div>
+  <div class="h-3 w- 3 border-left border-black"></div>
+  <div class="h-3 w- 3 border-circle border-black"></div>
+  <div class="h-3 w- 3 border border-black"></div>
 </div>
           </div>
           

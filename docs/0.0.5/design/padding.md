@@ -10,21 +10,20 @@ roxygen:
     of a tag element.  The margin of a tag element is the space outside and
     around the tag element, its border, and its content.  The padding of a tag
     element is the space between the tag element's border and its content or
-    child elements.
+    child elements. All arguments default to `NULL`, in which case they are
+    ignored.
   parameters:
   - name: .tag
     description: A tag element.
-  - name: top
+  - name: all
     description: |-
-      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `0:5` or `"auto"`. 0 removes all
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `0:5` or `"auto"` specifying
+      a margin or padding for all sides of the tag element. 0 removes all
       space and 5 adds the most space.
-
-      If an **unnamed** value is passed as `top` `margin()` and `padding()` will
-      apply the spcified spacing to **all** sides.
-  - name: right,bottom,left
+  - name: top,right,bottom,left
     description: |-
-      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `0:5` or `"auto"`. 0
-      removes all space and 5 adds the most space.
+      A [responsive](/yonder/0.0.5/responsive.html) argument. One of `0:5` or
+      `"auto"`. 0 removes all space and 5 adds the most space.
   sections: []
   return: ~
   family: design
@@ -48,8 +47,8 @@ roxygen:
         padding(3) %>%
         background("amber")
   - type: output
-    value: '<div style="height: 100px; width: 200px;" class="mt-2 mr-auto mb-2 ml-auto
-      p-3 bg-amber">Nam a sapien. Integer placerat tristique nisl.</div>'
+    value: '<div style="height: 100px; width: 200px;" class="m-2 mt-2 mr-auto mb-2
+      ml-auto p-3 bg-amber">Nam a sapien. Integer placerat tristique nisl.</div>'
   - type: markdown
     value: |
       <h3>Building an inline form</h3>
@@ -94,8 +93,8 @@ roxygen:
         </div>
         <div class="yonder-checkbox" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-554-433" data-value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-554-433">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-547-697" data-value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-547-697">Remember me</label>
             <div class="invalid-feedback"></div>
             <div class="valid-feedback"></div>
           </div>
@@ -145,8 +144,8 @@ roxygen:
         </div>
         <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-680-723" data-value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-680-723">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-524-625" data-value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-524-625">Remember me</label>
             <div class="invalid-feedback"></div>
             <div class="valid-feedback"></div>
           </div>

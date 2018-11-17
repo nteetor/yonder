@@ -48,28 +48,28 @@ roxygen:
     value: |2-
 
       checkboxInput(
-        id = NULL,
+        id = "potenti",
         choice = "Suspendisse potenti",
         checked = TRUE
       )
   - type: output
     value: |-
-      <div class="yonder-checkbox">
+      <div class="yonder-checkbox" id="potenti">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-691-235" data-value="Suspendisse potenti" checked/>
-          <label class="custom-control-label" for="checkbox-691-235">Suspendisse potenti</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-144-397" data-value="Suspendisse potenti" checked/>
+          <label class="custom-control-label" for="checkbox-144-397">Suspendisse potenti</label>
           <div class="invalid-feedback"></div>
           <div class="valid-feedback"></div>
         </div>
       </div>
   - type: markdown
     value: |
-      <h3>An alternative to checkbox groups</h3>
+      <h3>Checkbar, checkbox group</h3>
   - type: source
     value: |2-
 
       checkbarInput(
-        id = NULL,
+        id = "checks",
         choices = c(
           "Check 1",
           "Check 2",
@@ -81,7 +81,7 @@ roxygen:
         margin(2)
   - type: output
     value: |-
-      <div class="yonder-checkbar btn-group btn-group-toggle m-2" data-toggle="buttons">
+      <div class="yonder-checkbar btn-group btn-group-toggle" data-toggle="buttons" id="checks">
         <label class="btn active btn-blue">
           <input type="checkbox" autocomplete="off" data-value="Check 1" checked/>
           <span>Check 1</span>
@@ -94,5 +94,41 @@ roxygen:
           <input type="checkbox" autocomplete="off" data-value="Check 3"/>
           <span>Check 3</span>
         </label>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Labeling a checkbar</h3>
+  - type: source
+    value: |2-
+
+      formGroup(
+        label = "Toppings",
+        checkbarInput(
+          id = "fixins",
+          choices = c(
+            "Sprinkles",
+            "Nuts",
+            "Fudge"
+          )
+        )
+      )
+  - type: output
+    value: |-
+      <div class="form-group">
+        <label>Toppings</label>
+        <div class="yonder-checkbar btn-group btn-group-toggle" data-toggle="buttons" id="fixins">
+          <label class="btn btn-grey">
+            <input type="checkbox" autocomplete="off" data-value="Sprinkles"/>
+            <span>Sprinkles</span>
+          </label>
+          <label class="btn btn-grey">
+            <input type="checkbox" autocomplete="off" data-value="Nuts"/>
+            <span>Nuts</span>
+          </label>
+          <label class="btn btn-grey">
+            <input type="checkbox" autocomplete="off" data-value="Fudge"/>
+            <span>Fudge</span>
+          </label>
+        </div>
       </div>
 ---

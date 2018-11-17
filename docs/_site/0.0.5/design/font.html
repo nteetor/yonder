@@ -110,7 +110,7 @@
     
     <dd>
       <a href="/yonder/0.0.5/design/height.html"
-         alt="Tag element width and height">
+         alt="Tag element height">
         height
       </a>
     </dd>
@@ -130,13 +130,6 @@
     </dd>
     
     <dd>
-      <a href="/yonder/0.0.5/design/rounded.html"
-         alt="Round tag element borders">
-        rounded
-      </a>
-    </dd>
-    
-    <dd>
       <a href="/yonder/0.0.5/design/scroll.html"
          alt="Vertical and horizontal scroll">
         scroll
@@ -152,7 +145,7 @@
     
     <dd>
       <a href="/yonder/0.0.5/design/width.html"
-         alt="Tag element width and height">
+         alt="Tag element width">
         width
       </a>
     </dd>
@@ -212,7 +205,7 @@
     
 
     <dt>
-      <a class="text-dark" href="/yonder/0.0.5/thruputs/">thruputs</a>
+      <a class="text-dark" href="/yonder"></a>
     </dt>
 
     
@@ -224,7 +217,7 @@
     
 
     <dt>
-      <a class="text-dark" href="/yonder"></a>
+      <a class="text-dark" href="/yonder/0.0.5/thruputs/">thruputs</a>
     </dt>
 
     
@@ -238,9 +231,10 @@
         <div class="page-body col-8 pt-4">
           <h2>Tag element font</h2>
 
-          <p>The <code class="highlighter-rouge">font()</code> utility may be used to change the color, size, or weight of a
-tag element’s text font. Font size’s are changed relative to the base font
-size of the web page.</p>
+          <p>The <code class="highlighter-rouge">font()</code> utility modifies the color, size, weight, case, or alignment of
+a tag element’s text. All arguments default to <code class="highlighter-rouge">NULL</code>, in which case they are
+ignored.  For example, <code class="highlighter-rouge">font(size = "lg")</code> increases font size without
+affecting color, weight, case, or alignment.</p>
 
 
           
@@ -252,25 +246,32 @@ size of the web page.</p>
 </dd>
             
             <dt id="params-color" class="col-sm-3">color</dt>
-            <dd class="col-sm-9"><p>A character string specifying the text color of the tag element,
-defaults to <code class="highlighter-rouge">NULL</code> in which case the text color is unchanged.</p>
+            <dd class="col-sm-9"><p>One <code class="highlighter-rouge">"red"</code>, <code class="highlighter-rouge">"purple"</code>, <code class="highlighter-rouge">"indigo"</code>, <code class="highlighter-rouge">"blue"</code>, <code class="highlighter-rouge">"cyan"</code>,
+<code class="highlighter-rouge">"teal"</code>, <code class="highlighter-rouge">"green"</code>, <code class="highlighter-rouge">"yellow"</code>, <code class="highlighter-rouge">"amber"</code>, <code class="highlighter-rouge">"orange"</code>, <code class="highlighter-rouge">"grey"</code>,
+<code class="highlighter-rouge">"black"</code>, or <code class="highlighter-rouge">"white" specifying the color the tag element's text,
+defaults to </code>NULL`.</p>
 </dd>
             
             <dt id="params-size" class="col-sm-3">size</dt>
-            <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">"2x"</code>, <code class="highlighter-rouge">"3x"</code>, …, or <code class="highlighter-rouge">"10x"</code> specifying a factor to
-increase a tag element’s font size by (e.g. <code class="highlighter-rouge">"2x"</code> is double the base font
-size), defaults to <code class="highlighter-rouge">NULL</code>, in which case the font size is unchanged.</p>
+            <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">"xs"</code>, <code class="highlighter-rouge">"sm"</code>, <code class="highlighter-rouge">"base"</code>, <code class="highlighter-rouge">"lg"</code>, <code class="highlighter-rouge">"xl"</code> specifying a font
+size relative to the default base page font size, defaults to <code class="highlighter-rouge">NULL</code>.</p>
 </dd>
             
             <dt id="params-weight" class="col-sm-3">weight</dt>
             <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">"bold"</code>, <code class="highlighter-rouge">"normal"</code>, <code class="highlighter-rouge">"light"</code>, <code class="highlighter-rouge">"italic"</code>, or
 <code class="highlighter-rouge">"monospace"</code> specifying the font weight of the element’s text, defaults to
-<code class="highlighter-rouge">NULL</code>, in which case the font weight is unchanged.</p>
+<code class="highlighter-rouge">NULL</code>.</p>
+</dd>
+            
+            <dt id="params-case" class="col-sm-3">case</dt>
+            <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">"upper"</code>, <code class="highlighter-rouge">"lower"</code>, or <code class="highlighter-rouge">"title"</code> specifying a
+transformation of the tag element’s text, default to <code class="highlighter-rouge">NULL</code>.</p>
 </dd>
             
             <dt id="params-align" class="col-sm-3">align</dt>
             <dd class="col-sm-9"><p>A <a href="/yonder/0.0.5/responsive.html">responsive</a> argument. One of <code class="highlighter-rouge">"left"</code>, <code class="highlighter-rouge">"center"</code>, <code class="highlighter-rouge">"right"</code>,
-or <code class="highlighter-rouge">"justify"</code>.</p>
+or <code class="highlighter-rouge">"justify"</code>, specifying the alignment of the tag element’s text, defaults
+to <code class="highlighter-rouge">NULL</code>.</p>
 </dd>
             
           </dl>
@@ -280,48 +281,89 @@ or <code class="highlighter-rouge">"justify"</code>.</p>
 
           
           
-          <h3>Possible colors</h3>
+          <h3>Changing text color</h3>
 
           
           
           
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">colors</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
-  </span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="s2">"purple"</span><span class="p">,</span><span class="w"> </span><span class="s2">"indigo"</span><span class="p">,</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">,</span><span class="w"> </span><span class="s2">"cyan"</span><span class="p">,</span><span class="w"> </span><span class="s2">"teal"</span><span class="p">,</span><span class="w"> </span><span class="s2">"green"</span><span class="p">,</span><span class="w">
-  </span><span class="s2">"yellow"</span><span class="p">,</span><span class="w"> </span><span class="s2">"amber"</span><span class="p">,</span><span class="w"> </span><span class="s2">"orange"</span><span class="p">,</span><span class="w"> </span><span class="s2">"body"</span><span class="p">,</span><span class="w"> </span><span class="s2">"grey"</span><span class="p">,</span><span class="w"> </span><span class="s2">"white"</span><span class="w">
-</span><span class="p">)</span><span class="w">
-
-</span><span class="n">div</span><span class="p">(</span><span class="w">
-  </span><span class="n">lapply</span><span class="p">(</span><span class="w">
-    </span><span class="n">head</span><span class="p">(</span><span class="n">colors</span><span class="p">,</span><span class="w"> </span><span class="m">-1</span><span class="p">),</span><span class="w">
-    </span><span class="n">font</span><span class="p">,</span><span class="w">
-    </span><span class="n">.tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">div</span><span class="p">(</span><span class="s2">"Pellentesque tristique imperdiet tortor."</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-      </span><span class="n">padding</span><span class="p">(</span><span class="m">5</span><span class="p">)</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">card</span><span class="p">(</span><span class="w">
+  </span><span class="n">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="m">3</span><span class="p">(</span><span class="s2">"Important!"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">font</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"amber"</span><span class="p">),</span><span class="w">
+  </span><span class="n">div</span><span class="p">(</span><span class="w">
+    </span><span class="s2">"This is a reminder."</span><span class="w">
   </span><span class="p">)</span><span class="w">
 </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-  </span><span class="n">flex</span><span class="p">(</span><span class="n">wrap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span></code></pre></figure>
+  </span><span class="n">border</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"amber"</span><span class="p">)</span></code></pre></figure>
 
           </div>
           
           
           
           <div class="r-example mb-5">
-            <div class="d-flex flex-wrap">
-  <div class="p-5 text-red">Pellentesque tristique imperdiet tortor.</div>
-  <div class="p-5 text-purple">Pellentesque tristique imperdiet tortor.</div>
-  <div class="p-5 text-indigo">Pellentesque tristique imperdiet tortor.</div>
-  <div class="p-5 text-blue">Pellentesque tristique imperdiet tortor.</div>
-  <div class="p-5 text-cyan">Pellentesque tristique imperdiet tortor.</div>
-  <div class="p-5 text-teal">Pellentesque tristique imperdiet tortor.</div>
-  <div class="p-5 text-green">Pellentesque tristique imperdiet tortor.</div>
-  <div class="p-5 text-yellow">Pellentesque tristique imperdiet tortor.</div>
-  <div class="p-5 text-amber">Pellentesque tristique imperdiet tortor.</div>
-  <div class="p-5 text-orange">Pellentesque tristique imperdiet tortor.</div>
-  <div class="p-5 text-body">Pellentesque tristique imperdiet tortor.</div>
-  <div class="p-5 text-grey">Pellentesque tristique imperdiet tortor.</div>
+            <div class="card border border-amber">
+  <h3 class="text-amber card-header">Important!</h3>
+  <div class="card-body">
+    <div>This is a reminder.</div>
+  </div>
 </div>
+          </div>
+          
+          
+          
+          <h3>Changing font size</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">p</span><span class="p">(</span><span class="s2">"Donec at pede."</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">font</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"xs"</span><span class="p">),</span><span class="w">
+  </span><span class="n">p</span><span class="p">(</span><span class="s2">"Donec at pede."</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">font</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"sm"</span><span class="p">),</span><span class="w">
+  </span><span class="n">p</span><span class="p">(</span><span class="s2">"Donec at pede."</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">font</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"base"</span><span class="p">),</span><span class="w">
+  </span><span class="n">p</span><span class="p">(</span><span class="s2">"Donec at pede."</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">font</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lg"</span><span class="p">),</span><span class="w">
+  </span><span class="n">p</span><span class="p">(</span><span class="s2">"Donec at pede."</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">font</span><span class="p">(</span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"xl"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="r-example mb-5">
+            <div>
+  <p class="font-size-xs">Donec at pede.</p>
+  <p class="font-size-sm">Donec at pede.</p>
+  <p class="font-size-base">Donec at pede.</p>
+  <p class="font-size-lg">Donec at pede.</p>
+  <p class="font-size-xl">Donec at pede.</p>
+</div>
+          </div>
+          
+          
+          
+          <h3>Changing font weight</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">p</span><span class="p">(</span><span class="s2">"Curabitur lacinia pulvinar nibh."</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">font</span><span class="p">(</span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"bold"</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="r-example mb-5">
+            <p class="font-weight-bold">Curabitur lacinia pulvinar nibh.</p>
           </div>
           
           

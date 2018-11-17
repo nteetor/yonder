@@ -5,22 +5,25 @@ layout: page
 requires: ~
 roxygen:
   title: Tag element borders
-  description: |-
-    Use `border()` to add borders to a tag element or change the color of a tag
-    element's border.
+  description: Use `border()` to add or modify tag element borders.
   parameters:
   - name: .tag
     description: A tag element.
   - name: color
     description: |-
-      A character string specifying the border color, defaults to
-      `NULL`, in which case the browser default is used. See below for possible
-      border colors.
+      One of `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
+      `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`, `"white"`
+      specifying the border color, defaults to `NULL`.
   - name: sides
     description: |-
       One or more of `"top"`, `"right"`, `"bottom"`, `"left"` or
       `"all"` or `"none"` specifying which sides to add a border to, defaults to
       `"all"`.
+  - name: round
+    description: |-
+      One or more of `"top"`, `"right"`, `"bottom"`, `"left"`,
+      `"circle"`, `"all"`, or `"none"` specifying how to round the border(s) of a
+      tag element, defaults to `NULL`, in which case the argument is ignored.
   sections: []
   return: ~
   family: design
@@ -29,22 +32,45 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h3>Possible colors</h3>
+      <h3>Change border color</h3>
   - type: source
     value: |2-
 
-      colors <- c(
-        "red", "purple", "indigo", "blue", "cyan", "teal", "green",
-        "yellow", "amber", "orange", "grey", "white"
+      div(
+        div() %>%
+          height(3) %>%
+          width(3) %>%
+          border("green"),
+        div() %>%
+          height(3) %>%
+          width(3) %>%
+          border(
+            color = "blue",
+            sides = c("left", "right")
+          )
       )
+  - type: output
+    value: |-
+      <div>
+        <div class="h-3 w- 3 border border-green"></div>
+        <div class="h-3 w- 3 border-left border-right border-blue"></div>
+      </div>
+  - type: markdown
+    value: |
+      <h3>Round sides</h3>
+  - type: source
+    value: |2-
+
+      sides <- c("top", "right", "bottom", "left", "circle", "all")
 
       div(
         lapply(
-          colors,
+          sides,
           border,
           .tag = div() %>%
-            padding(5) %>%
-            margin(2)
+            height(3) %>%
+            width(3),
+          color = "black"
         )
       ) %>%
         display("flex") %>%
@@ -52,17 +78,11 @@ roxygen:
   - type: output
     value: |-
       <div class="d-flex flex-wrap">
-        <div class="p-5 m-2 border border-red"></div>
-        <div class="p-5 m-2 border border-purple"></div>
-        <div class="p-5 m-2 border border-indigo"></div>
-        <div class="p-5 m-2 border border-blue"></div>
-        <div class="p-5 m-2 border border-cyan"></div>
-        <div class="p-5 m-2 border border-teal"></div>
-        <div class="p-5 m-2 border border-green"></div>
-        <div class="p-5 m-2 border border-yellow"></div>
-        <div class="p-5 m-2 border border-amber"></div>
-        <div class="p-5 m-2 border border-orange"></div>
-        <div class="p-5 m-2 border border-grey"></div>
-        <div class="p-5 m-2 border border-white"></div>
+        <div class="h-3 w- 3 border-top border-black"></div>
+        <div class="h-3 w- 3 border-right border-black"></div>
+        <div class="h-3 w- 3 border-bottom border-black"></div>
+        <div class="h-3 w- 3 border-left border-black"></div>
+        <div class="h-3 w- 3 border-circle border-black"></div>
+        <div class="h-3 w- 3 border border-black"></div>
       </div>
 ---

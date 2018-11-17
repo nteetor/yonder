@@ -37,5 +37,36 @@ roxygen:
   family: design
   name: ~
   rdname: ~
-  examples: ~
+  examples:
+  - type: markdown
+    value: |
+      <h3>Relative heights</h3>
+  - type: source
+    value: |2-
+
+      div(
+        lapply(
+          seq(2, 20, by = 2),
+          function(h) {
+            div() %>%
+              height(h) %>%  # <-
+              border("black") %>%
+              margin(t = 3)
+          }
+        )
+      )
+  - type: output
+    value: |-
+      <div>
+        <div class="h-2 border border-black m-3 mt-3"></div>
+        <div class="h-4 border border-black m-3 mt-3"></div>
+        <div class="h-6 border border-black m-3 mt-3"></div>
+        <div class="h-8 border border-black m-3 mt-3"></div>
+        <div class="h-10 border border-black m-3 mt-3"></div>
+        <div class="h-12 border border-black m-3 mt-3"></div>
+        <div class="h-14 border border-black m-3 mt-3"></div>
+        <div class="h-16 border border-black m-3 mt-3"></div>
+        <div class="h-18 border border-black m-3 mt-3"></div>
+        <div class="h-20 border border-black m-3 mt-3"></div>
+      </div>
 ---

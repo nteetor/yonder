@@ -310,7 +310,7 @@
     
 
     <dt>
-      <a class="text-dark" href="/yonder/0.0.5/thruputs/">thruputs</a>
+      <a class="text-dark" href="/yonder"></a>
     </dt>
 
     
@@ -322,7 +322,7 @@
     
 
     <dt>
-      <a class="text-dark" href="/yonder"></a>
+      <a class="text-dark" href="/yonder/0.0.5/thruputs/">thruputs</a>
     </dt>
 
     
@@ -391,7 +391,7 @@ element.</p>
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">checkboxInput</span><span class="p">(</span><span class="w">
-  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"potenti"</span><span class="p">,</span><span class="w">
   </span><span class="n">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Suspendisse potenti"</span><span class="p">,</span><span class="w">
   </span><span class="n">checked</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
@@ -401,10 +401,10 @@ element.</p>
           
           
           <div class="r-example mb-5">
-            <div class="yonder-checkbox">
+            <div class="yonder-checkbox" id="potenti">
   <div class="custom-control custom-checkbox">
-    <input class="custom-control-input" type="checkbox" id="checkbox-789-543" data-value="Suspendisse potenti" checked/>
-    <label class="custom-control-label" for="checkbox-789-543">Suspendisse potenti</label>
+    <input class="custom-control-input" type="checkbox" id="checkbox-56-474" data-value="Suspendisse potenti" checked/>
+    <label class="custom-control-label" for="checkbox-56-474">Suspendisse potenti</label>
     <div class="invalid-feedback"></div>
     <div class="valid-feedback"></div>
   </div>
@@ -413,7 +413,7 @@ element.</p>
           
           
           
-          <h3>An alternative to checkbox groups</h3>
+          <h3>Checkbar, checkbox group</h3>
 
           
           
@@ -421,7 +421,7 @@ element.</p>
           <div class="mb-2 ml-1 pl-2 border-left border-black"
                >
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">checkbarInput</span><span class="p">(</span><span class="w">
-  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"checks"</span><span class="p">,</span><span class="w">
   </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
     </span><span class="s2">"Check 1"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"Check 2"</span><span class="p">,</span><span class="w">
@@ -437,7 +437,7 @@ element.</p>
           
           
           <div class="r-example mb-5">
-            <div class="yonder-checkbar btn-group btn-group-toggle m-2" data-toggle="buttons">
+            <div class="yonder-checkbar btn-group btn-group-toggle m-2" data-toggle="buttons" id="checks">
   <label class="btn active btn-blue">
     <input type="checkbox" autocomplete="off" data-value="Check 1" checked/>
     <span>Check 1</span>
@@ -450,6 +450,51 @@ element.</p>
     <input type="checkbox" autocomplete="off" data-value="Check 3"/>
     <span>Check 3</span>
   </label>
+</div>
+          </div>
+          
+          
+          
+          <h3>Labeling a checkbar</h3>
+
+          
+          
+          
+          <div class="mb-2 ml-1 pl-2 border-left border-black"
+               >
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">formGroup</span><span class="p">(</span><span class="w">
+  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Toppings"</span><span class="p">,</span><span class="w">
+  </span><span class="n">checkbarInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"fixins"</span><span class="p">,</span><span class="w">
+    </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+      </span><span class="s2">"Sprinkles"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"Nuts"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"Fudge"</span><span class="w">
+    </span><span class="p">)</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+          </div>
+          
+          
+          
+          <div class="r-example mb-5">
+            <div class="form-group">
+  <label>Toppings</label>
+  <div class="yonder-checkbar btn-group btn-group-toggle" data-toggle="buttons" id="fixins">
+    <label class="btn btn-grey">
+      <input type="checkbox" autocomplete="off" data-value="Sprinkles"/>
+      <span>Sprinkles</span>
+    </label>
+    <label class="btn btn-grey">
+      <input type="checkbox" autocomplete="off" data-value="Nuts"/>
+      <span>Nuts</span>
+    </label>
+    <label class="btn btn-grey">
+      <input type="checkbox" autocomplete="off" data-value="Fudge"/>
+      <span>Fudge</span>
+    </label>
+  </div>
 </div>
           </div>
           

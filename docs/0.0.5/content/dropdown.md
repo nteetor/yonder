@@ -26,6 +26,10 @@ roxygen:
     description: |-
       One of `"up"`, `"right"`, `"down"`, or `"left"` specifying
       the direction in which the menu opens, defaults to `"down"`.
+  - name: align
+    description: |-
+      One of `"left"` or `"right"` specifying which side of the button
+      to align the dropdown menu to, defaults to `"left"`.
   sections: []
   return: ~
   family: content
@@ -112,7 +116,7 @@ roxygen:
   - type: output
     value: |-
       <div class="d-flex">
-        <div class="dropdown dropup m-3">
+        <div class="dropdown dropup">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">up</button>
           <div class="dropdown-menu">
             <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
@@ -120,7 +124,7 @@ roxygen:
             <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
           </div>
         </div>
-        <div class="dropdown m-3">
+        <div class="dropdown">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">down</button>
           <div class="dropdown-menu">
             <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
@@ -128,7 +132,7 @@ roxygen:
             <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
           </div>
         </div>
-        <div class="dropdown dropleft m-3">
+        <div class="dropdown dropleft">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">left</button>
           <div class="dropdown-menu">
             <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
@@ -136,7 +140,7 @@ roxygen:
             <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
           </div>
         </div>
-        <div class="dropdown dropright m-3">
+        <div class="dropdown dropright">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">right</button>
           <div class="dropdown-menu">
             <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
@@ -180,7 +184,7 @@ roxygen:
       <div class="dropdown">
         <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Sign in</button>
         <div class="dropdown-menu">
-          <form class="yonder-form pt-3 pr-4 pb-3 pl-4" id="login">
+          <form class="yonder-form p-3 pt-4 pr-3 pb-4" id="login">
             <div class="form-group">
               <label>Email address</label>
               <div class="yonder-textual" id="email">
