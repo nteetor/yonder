@@ -17,6 +17,9 @@
 #' @param direction One of `"up"`, `"right"`, `"down"`, or `"left"` specifying
 #'   the direction in which the menu opens, defaults to `"down"`.
 #'
+#' @param align One of `"left"` or `"right"` specifying which side of the button
+#'   to align the dropdown menu to, defaults to `"left"`.
+#'
 #' @family content
 #' @export
 #' @examples
@@ -92,11 +95,19 @@
 #'     padding(3, 4, 3, 4)
 #' )
 #'
-dropdown <- function(label, ..., direction = "down") {
+dropdown <- function(label, ..., direction = "down", align = "left") {
   if (!re(direction, "up|right|down|left", len0 = FALSE)) {
     stop(
-      "invalid `dropdown` arguments, `direction` must be one of ",
+      "invalid `dropdown()` argument, `direction` must be one of ",
       '"up", "right", "down", or "left"',
+      call. = FALSE
+    )
+  }
+
+  if (!re(align, "left|right", len0 = FALSE)) {
+    stop(
+      "invalid `dropdown()` argument, `align` must be one of ",
+      '"left" or "right"',
       call. = FALSE
     )
   }
@@ -123,7 +134,10 @@ dropdown <- function(label, ..., direction = "down") {
       label
     ),
     tags$div(
-      class = "dropdown-menu",
+      class = collate(
+        "dropdown-menu",
+        if (align == "right") "dropdown-menu-right"
+      ),
       Reduce(
         x = lapply(items, dropdownItem),
         function(acc, obj) {

@@ -4,7 +4,7 @@
 \alias{dropdown}
 \title{Dropdown menus}
 \usage{
-dropdown(label, ..., direction = "down")
+dropdown(label, ..., direction = "down", align = "left")
 }
 \arguments{
 \item{label}{A character string specifying the label of the dropdown's
@@ -20,6 +20,9 @@ element.}
 
 \item{direction}{One of \code{"up"}, \code{"right"}, \code{"down"}, or \code{"left"} specifying
 the direction in which the menu opens, defaults to \code{"down"}.}
+
+\item{align}{One of \code{"left"} or \code{"right"} specifying which side of the button
+to align the dropdown menu to, defaults to \code{"left"}.}
 }
 \description{
 Dropdown menus are a container for buttons, text, and form inputs. See
