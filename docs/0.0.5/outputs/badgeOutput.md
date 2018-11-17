@@ -87,17 +87,17 @@ roxygen:
   - type: output
     value: |-
       <div class="d-flex flex-wrap">
-        <span class="yonder-badge badge badge-red">red</span>
-        <span class="yonder-badge badge badge-purple">purple</span>
-        <span class="yonder-badge badge badge-indigo">indigo</span>
-        <span class="yonder-badge badge badge-blue">blue</span>
-        <span class="yonder-badge badge badge-cyan">cyan</span>
-        <span class="yonder-badge badge badge-teal">teal</span>
-        <span class="yonder-badge badge badge-green">green</span>
-        <span class="yonder-badge badge badge-yellow">yellow</span>
-        <span class="yonder-badge badge badge-amber">amber</span>
-        <span class="yonder-badge badge badge-orange">orange</span>
-        <span class="yonder-badge badge badge-grey">grey</span>
-        <span class="yonder-badge badge badge-white">white</span>
+        <span class="yonder-badge badge badge-red m-2">red</span>
+        <span class="yonder-badge badge badge-purple m-2">purple</span>
+        <span class="yonder-badge badge badge-indigo m-2">indigo</span>
+        <span class="yonder-badge badge badge-blue m-2">blue</span>
+        <span class="yonder-badge badge badge-cyan m-2">cyan</span>
+        <span class="yonder-badge badge badge-teal m-2">teal</span>
+        <span class="yonder-badge badge badge-green m-2">green</span>
+        <span class="yonder-badge badge badge-yellow m-2">yellow</span>
+        <span class="yonder-badge badge badge-amber m-2">amber</span>
+        <span class="yonder-badge badge badge-orange m-2">orange</span>
+        <span class="yonder-badge badge badge-grey m-2">grey</span>
+        <span class="yonder-badge badge badge-white m-2">white</span>
       </div>
 ---

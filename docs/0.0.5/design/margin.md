@@ -47,8 +47,8 @@ roxygen:
         padding(3) %>%
         background("amber")
   - type: output
-    value: '<div style="height: 100px; width: 200px;" class="m-2 mt-2 mr-auto mb-2
-      ml-auto p-3 bg-amber">Nam a sapien. Integer placerat tristique nisl.</div>'
+    value: '<div style="height: 100px; width: 200px;" class="mt-2 mr-auto mb-2 ml-auto
+      p-3 bg-amber">Nam a sapien. Integer placerat tristique nisl.</div>'
   - type: markdown
     value: |
       <h3>Building an inline form</h3>
@@ -93,8 +93,8 @@ roxygen:
         </div>
         <div class="yonder-checkbox" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-547-697" data-value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-547-697">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-402-330" data-value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-402-330">Remember me</label>
             <div class="invalid-feedback"></div>
             <div class="valid-feedback"></div>
           </div>
@@ -144,8 +144,8 @@ roxygen:
         </div>
         <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-524-625" data-value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-524-625">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-862-900" data-value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-862-900">Remember me</label>
             <div class="invalid-feedback"></div>
             <div class="valid-feedback"></div>
           </div>

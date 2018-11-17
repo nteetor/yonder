@@ -36,9 +36,9 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="row h-100">
+      <div class="row">
 
-        <div class="sidebar col-2 h-100 p-4 bg-grey">
+        <div class="sidebar col-2 h-screen p-4 bg-grey">
   <h5 class="pb-3">yonder</h5>
   <dl>
     
@@ -228,14 +228,15 @@
   </dl>
 </div>
 
-        <div class="page-body col-8 pt-4">
+        <div class="page-body col-8 h-screen pt-4">
           <h2>Tag element margin and padding</h2>
 
           <p>Use the <code class="highlighter-rouge">margin()</code> and <code class="highlighter-rouge">padding()</code> utilities to change the margin or padding
 of a tag element.  The margin of a tag element is the space outside and
 around the tag element, its border, and its content.  The padding of a tag
 element is the space between the tag element’s border and its content or
-child elements.</p>
+child elements. All arguments default to <code class="highlighter-rouge">NULL</code>, in which case they are
+ignored.</p>
 
 
           
@@ -246,17 +247,15 @@ child elements.</p>
             <dd class="col-sm-9"><p>A tag element.</p>
 </dd>
             
-            <dt id="params-top" class="col-sm-3">top</dt>
-            <dd class="col-sm-9"><p>A <a href="/yonder/0.0.5/responsive.html">responsive</a> argument. One of <code class="highlighter-rouge">0:5</code> or <code class="highlighter-rouge">"auto"</code>. 0 removes all
+            <dt id="params-all" class="col-sm-3">all</dt>
+            <dd class="col-sm-9"><p>A <a href="/yonder/0.0.5/responsive.html">responsive</a> argument. One of <code class="highlighter-rouge">0:5</code> or <code class="highlighter-rouge">"auto"</code> specifying
+a margin or padding for all sides of the tag element. 0 removes all
 space and 5 adds the most space.</p>
-
-<p>If an <strong>unnamed</strong> value is passed as <code class="highlighter-rouge">top</code> <code class="highlighter-rouge">margin()</code> and <code class="highlighter-rouge">padding()</code> will
-apply the spcified spacing to <strong>all</strong> sides.</p>
 </dd>
             
-            <dt id="params-right,bottom,left" class="col-sm-3">right,bottom,left</dt>
-            <dd class="col-sm-9"><p>A <a href="/yonder/0.0.5/responsive.html">responsive</a> argument. One of <code class="highlighter-rouge">0:5</code> or <code class="highlighter-rouge">"auto"</code>. 0
-removes all space and 5 adds the most space.</p>
+            <dt id="params-top,right,bottom,left" class="col-sm-3">top,right,bottom,left</dt>
+            <dd class="col-sm-9"><p>A <a href="/yonder/0.0.5/responsive.html">responsive</a> argument. One of <code class="highlighter-rouge">0:5</code> or
+<code class="highlighter-rouge">"auto"</code>. 0 removes all space and 5 adds the most space.</p>
 </dd>
             
           </dl>
@@ -349,8 +348,8 @@ removes all space and 5 adds the most space.</p>
   </div>
   <div class="yonder-checkbox" id="remember">
     <div class="custom-control custom-checkbox">
-      <input class="custom-control-input" type="checkbox" id="checkbox-934-964" data-value="Remember me"/>
-      <label class="custom-control-label" for="checkbox-934-964">Remember me</label>
+      <input class="custom-control-input" type="checkbox" id="checkbox-402-330" data-value="Remember me"/>
+      <label class="custom-control-label" for="checkbox-402-330">Remember me</label>
       <div class="invalid-feedback"></div>
       <div class="valid-feedback"></div>
     </div>
@@ -409,8 +408,8 @@ removes all space and 5 adds the most space.</p>
   </div>
   <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
     <div class="custom-control custom-checkbox">
-      <input class="custom-control-input" type="checkbox" id="checkbox-715-944" data-value="Remember me"/>
-      <label class="custom-control-label" for="checkbox-715-944">Remember me</label>
+      <input class="custom-control-input" type="checkbox" id="checkbox-862-900" data-value="Remember me"/>
+      <label class="custom-control-label" for="checkbox-862-900">Remember me</label>
       <div class="invalid-feedback"></div>
       <div class="valid-feedback"></div>
     </div>

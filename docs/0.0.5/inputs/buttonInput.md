@@ -112,17 +112,17 @@ roxygen:
   - type: output
     value: |-
       <div class="d-flex flex-wrap">
-        <button class="yonder-button btn btn-red" type="button" role="button">red</button>
-        <button class="yonder-button btn btn-purple" type="button" role="button">purple</button>
-        <button class="yonder-button btn btn-indigo" type="button" role="button">indigo</button>
-        <button class="yonder-button btn btn-blue" type="button" role="button">blue</button>
-        <button class="yonder-button btn btn-cyan" type="button" role="button">cyan</button>
-        <button class="yonder-button btn btn-teal" type="button" role="button">teal</button>
-        <button class="yonder-button btn btn-green" type="button" role="button">green</button>
-        <button class="yonder-button btn btn-yellow" type="button" role="button">yellow</button>
-        <button class="yonder-button btn btn-amber" type="button" role="button">amber</button>
-        <button class="yonder-button btn btn-orange" type="button" role="button">orange</button>
-        <button class="yonder-button btn btn-grey" type="button" role="button">grey</button>
+        <button class="yonder-button btn btn-red m-2" type="button" role="button">red</button>
+        <button class="yonder-button btn btn-purple m-2" type="button" role="button">purple</button>
+        <button class="yonder-button btn btn-indigo m-2" type="button" role="button">indigo</button>
+        <button class="yonder-button btn btn-blue m-2" type="button" role="button">blue</button>
+        <button class="yonder-button btn btn-cyan m-2" type="button" role="button">cyan</button>
+        <button class="yonder-button btn btn-teal m-2" type="button" role="button">teal</button>
+        <button class="yonder-button btn btn-green m-2" type="button" role="button">green</button>
+        <button class="yonder-button btn btn-yellow m-2" type="button" role="button">yellow</button>
+        <button class="yonder-button btn btn-amber m-2" type="button" role="button">amber</button>
+        <button class="yonder-button btn btn-orange m-2" type="button" role="button">orange</button>
+        <button class="yonder-button btn btn-grey m-2" type="button" role="button">grey</button>
       </div>
   - type: markdown
     value: |

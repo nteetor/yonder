@@ -15,13 +15,13 @@ element. Possible values:
 An integer between 1 and 20, in which case the width of the element is
 relative to the font size of the page.
 
-One of "1/2", "1/3", "2/3", "1/4", "3/4", "1/5", "2/5", "3/5", "4/5", or
-"full", in which case the element's width is a percentage of its parent's
-width. The height of the parent element must be specified for percentage
-widths to work. Percentages do not account for margins or padding and may
-cause an element to extend beyond its parent.
+\code{"1/2"}, \code{"1/3"}, \code{"2/3"}, \code{"1/4"}, \code{"3/4"}, \code{"1/5"}, \code{"2/5"}, \code{"3/5"},
+\code{"4/5"}, or \code{"full"}, in which case the element's width is a percentage of
+its parent's width. The height of the parent element must be specified for
+percentage widths to work. Percentages do not account for margins or
+padding and may cause an element to extend beyond its parent.
 
-Or "auto", in which case the element's width is determined by the browser.
+\code{"auto"}, in which case the element's width is determined by the browser.
 The browser will take into account the width, padding, margins, and border
 of the tag element's parent to keep the element from extending beyond its
 parent.}

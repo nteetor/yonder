@@ -21,13 +21,13 @@ roxygen:
       An integer between 1 and 20, in which case the width of the element is
       relative to the font size of the page.
 
-      One of "1/2", "1/3", "2/3", "1/4", "3/4", "1/5", "2/5", "3/5", "4/5", or
-      "full", in which case the element's width is a percentage of its parent's
-      width. The height of the parent element must be specified for percentage
-      widths to work. Percentages do not account for margins or padding and may
-      cause an element to extend beyond its parent.
+      `"1/2"`, `"1/3"`, `"2/3"`, `"1/4"`, `"3/4"`, `"1/5"`, `"2/5"`, `"3/5"`,
+      `"4/5"`, or `"full"`, in which case the element's width is a percentage of
+      its parent's width. The height of the parent element must be specified for
+      percentage widths to work. Percentages do not account for margins or
+      padding and may cause an element to extend beyond its parent.
 
-      Or "auto", in which case the element's width is determined by the browser.
+      `"auto"`, in which case the element's width is determined by the browser.
       The browser will take into account the width, padding, margins, and border
       of the tag element's parent to keep the element from extending beyond its
       parent.
@@ -55,26 +55,26 @@ roxygen:
       )
   - type: output
     value: |-
-      <div class="border border-black h-4 w- 1"></div>
-      <div class="border border-black h-4 w- 2"></div>
-      <div class="border border-black h-4 w- 3"></div>
-      <div class="border border-black h-4 w- 4"></div>
-      <div class="border border-black h-4 w- 5"></div>
-      <div class="border border-black h-4 w- 6"></div>
-      <div class="border border-black h-4 w- 7"></div>
-      <div class="border border-black h-4 w- 8"></div>
-      <div class="border border-black h-4 w- 9"></div>
-      <div class="border border-black h-4 w- 10"></div>
-      <div class="border border-black h-4 w- 11"></div>
-      <div class="border border-black h-4 w- 12"></div>
-      <div class="border border-black h-4 w- 13"></div>
-      <div class="border border-black h-4 w- 14"></div>
-      <div class="border border-black h-4 w- 15"></div>
-      <div class="border border-black h-4 w- 16"></div>
-      <div class="border border-black h-4 w- 17"></div>
-      <div class="border border-black h-4 w- 18"></div>
-      <div class="border border-black h-4 w- 19"></div>
-      <div class="border border-black h-4 w- 20"></div>
+      <div class="border border-black h-4 w-1"></div>
+      <div class="border border-black h-4 w-2"></div>
+      <div class="border border-black h-4 w-3"></div>
+      <div class="border border-black h-4 w-4"></div>
+      <div class="border border-black h-4 w-5"></div>
+      <div class="border border-black h-4 w-6"></div>
+      <div class="border border-black h-4 w-7"></div>
+      <div class="border border-black h-4 w-8"></div>
+      <div class="border border-black h-4 w-9"></div>
+      <div class="border border-black h-4 w-10"></div>
+      <div class="border border-black h-4 w-11"></div>
+      <div class="border border-black h-4 w-12"></div>
+      <div class="border border-black h-4 w-13"></div>
+      <div class="border border-black h-4 w-14"></div>
+      <div class="border border-black h-4 w-15"></div>
+      <div class="border border-black h-4 w-16"></div>
+      <div class="border border-black h-4 w-17"></div>
+      <div class="border border-black h-4 w-18"></div>
+      <div class="border border-black h-4 w-19"></div>
+      <div class="border border-black h-4 w-20"></div>
   - type: markdown
     value: |
       <h3>Fractional values</h3>
@@ -93,7 +93,7 @@ roxygen:
         width(20)
   - type: output
     value: |-
-      <div class="w- 20">
-        <div class="mb-3 border border-red w- 1/3"></div>
+      <div class="w-20">
+        <div class="mb-3 border border-red w-1/3"></div>
       </div>
 ---

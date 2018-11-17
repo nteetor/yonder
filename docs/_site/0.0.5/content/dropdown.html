@@ -36,9 +36,9 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="row h-100">
+      <div class="row">
 
-        <div class="sidebar col-2 h-100 p-4 bg-grey">
+        <div class="sidebar col-2 h-screen p-4 bg-grey">
   <h5 class="pb-3">yonder</h5>
   <dl>
     
@@ -368,7 +368,7 @@
   </dl>
 </div>
 
-        <div class="page-body col-8 pt-4">
+        <div class="page-body col-8 h-screen pt-4">
           <h2>Dropdown menus</h2>
 
           <p>Dropdown menus are a container for buttons, text, and form inputs. See
@@ -397,6 +397,11 @@ element.</p>
             <dt id="params-direction" class="col-sm-3">direction</dt>
             <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">"up"</code>, <code class="highlighter-rouge">"right"</code>, <code class="highlighter-rouge">"down"</code>, or <code class="highlighter-rouge">"left"</code> specifying
 the direction in which the menu opens, defaults to <code class="highlighter-rouge">"down"</code>.</p>
+</dd>
+            
+            <dt id="params-align" class="col-sm-3">align</dt>
+            <dd class="col-sm-9"><p>One of <code class="highlighter-rouge">"left"</code> or <code class="highlighter-rouge">"right"</code> specifying which side of the button
+to align the dropdown menu to, defaults to <code class="highlighter-rouge">"left"</code>.</p>
 </dd>
             
           </dl>
@@ -586,7 +591,7 @@ the direction in which the menu opens, defaults to <code class="highlighter-roug
             <div class="dropdown">
   <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Sign in</button>
   <div class="dropdown-menu">
-    <form class="yonder-form pt-3 pr-4 pb-3 pl-4" id="login">
+    <form class="yonder-form p-3 pt-4 pr-3 pb-4" id="login">
       <div class="form-group">
         <label>Email address</label>
         <div class="yonder-textual" id="email">

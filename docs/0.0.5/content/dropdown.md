@@ -116,7 +116,7 @@ roxygen:
   - type: output
     value: |-
       <div class="d-flex">
-        <div class="dropdown dropup">
+        <div class="dropdown dropup m-3">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">up</button>
           <div class="dropdown-menu">
             <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
@@ -124,7 +124,7 @@ roxygen:
             <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
           </div>
         </div>
-        <div class="dropdown">
+        <div class="dropdown m-3">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">down</button>
           <div class="dropdown-menu">
             <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
@@ -132,7 +132,7 @@ roxygen:
             <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
           </div>
         </div>
-        <div class="dropdown dropleft">
+        <div class="dropdown dropleft m-3">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">left</button>
           <div class="dropdown-menu">
             <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
@@ -140,7 +140,7 @@ roxygen:
             <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
           </div>
         </div>
-        <div class="dropdown dropright">
+        <div class="dropdown dropright m-3">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">right</button>
           <div class="dropdown-menu">
             <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>

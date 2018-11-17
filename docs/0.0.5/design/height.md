@@ -20,17 +20,17 @@ roxygen:
       An integer between 1 and 20, in which case the height of the element is
       relative to the font size of the page.
 
-      "full", in which case the element's height is a percentage of its parent's
-      height. The height of the parent element must also be specified.
+      `"full"`, in which case the element's height is a percentage of its
+      parent's height. The height of the parent element must also be specified.
       Percentages do not account for margins or padding and may cause an element
       to extend beyond its parent.
 
-      "auto", in which case the element's height is determined by the browser.
+      `"auto"`, in which case the element's height is determined by the browser.
       The browser will take into account the height, padding, margins, and border
       of the tag element's parent to keep the element from extending beyond its
       parent.
 
-      "screen", in which case the element's height is determined by the height of
+      `"screen"`, in which case the element's height is determined by the height of
       the viewport.
   sections: []
   return: ~
@@ -40,7 +40,7 @@ roxygen:
   examples:
   - type: markdown
     value: |
-      <h3>Relative heights</h3>
+      <h3>Numeric values</h3>
   - type: source
     value: |2-
 
@@ -48,25 +48,28 @@ roxygen:
         lapply(
           seq(2, 20, by = 2),
           function(h) {
-            div() %>%
+            div(h) %>%
+              width(2) %>%
               height(h) %>%  # <-
-              border("black") %>%
-              margin(t = 3)
+              padding(l = 1) %>%
+              border("black")
           }
         )
-      )
+      ) %>%
+        display("flex") %>%
+        flex(justify = "between")
   - type: output
     value: |-
-      <div>
-        <div class="h-2 border border-black m-3 mt-3"></div>
-        <div class="h-4 border border-black m-3 mt-3"></div>
-        <div class="h-6 border border-black m-3 mt-3"></div>
-        <div class="h-8 border border-black m-3 mt-3"></div>
-        <div class="h-10 border border-black m-3 mt-3"></div>
-        <div class="h-12 border border-black m-3 mt-3"></div>
-        <div class="h-14 border border-black m-3 mt-3"></div>
-        <div class="h-16 border border-black m-3 mt-3"></div>
-        <div class="h-18 border border-black m-3 mt-3"></div>
-        <div class="h-20 border border-black m-3 mt-3"></div>
+      <div class="d-flex justify-content-between">
+        <div class="w-2 h-2 pl-1 border border-black">2</div>
+        <div class="w-2 h-4 pl-1 border border-black">4</div>
+        <div class="w-2 h-6 pl-1 border border-black">6</div>
+        <div class="w-2 h-8 pl-1 border border-black">8</div>
+        <div class="w-2 h-10 pl-1 border border-black">10</div>
+        <div class="w-2 h-12 pl-1 border border-black">12</div>
+        <div class="w-2 h-14 pl-1 border border-black">14</div>
+        <div class="w-2 h-16 pl-1 border border-black">16</div>
+        <div class="w-2 h-18 pl-1 border border-black">18</div>
+        <div class="w-2 h-20 pl-1 border border-black">20</div>
       </div>
 ---

@@ -36,9 +36,9 @@
   </head>
   <body>
     <div class="container-fluid">
-      <div class="row h-100">
+      <div class="row">
 
-        <div class="sidebar col-2 h-100 p-4 bg-grey">
+        <div class="sidebar col-2 h-screen p-4 bg-grey">
   <h5 class="pb-3">yonder</h5>
   <dl>
     
@@ -228,7 +228,7 @@
   </dl>
 </div>
 
-        <div class="page-body col-8 pt-4">
+        <div class="page-body col-8 h-screen pt-4">
           <h2>Tag element width</h2>
 
           <p>Utility function to change a tag element’s width. Widths are specified
@@ -252,13 +252,13 @@ element. Possible values:</p>
 <p>An integer between 1 and 20, in which case the width of the element is
 relative to the font size of the page.</p>
 
-<p>One of “1/2”, “1/3”, “2/3”, “1/4”, “3/4”, “1/5”, “2/5”, “3/5”, “4/5”, or
-“full”, in which case the element’s width is a percentage of its parent’s
-width. The height of the parent element must be specified for percentage
-widths to work. Percentages do not account for margins or padding and may
-cause an element to extend beyond its parent.</p>
+<p><code class="highlighter-rouge">"1/2"</code>, <code class="highlighter-rouge">"1/3"</code>, <code class="highlighter-rouge">"2/3"</code>, <code class="highlighter-rouge">"1/4"</code>, <code class="highlighter-rouge">"3/4"</code>, <code class="highlighter-rouge">"1/5"</code>, <code class="highlighter-rouge">"2/5"</code>, <code class="highlighter-rouge">"3/5"</code>,
+<code class="highlighter-rouge">"4/5"</code>, or <code class="highlighter-rouge">"full"</code>, in which case the element’s width is a percentage of
+its parent’s width. The height of the parent element must be specified for
+percentage widths to work. Percentages do not account for margins or
+padding and may cause an element to extend beyond its parent.</p>
 
-<p>Or “auto”, in which case the element’s width is determined by the browser.
+<p><code class="highlighter-rouge">"auto"</code>, in which case the element’s width is determined by the browser.
 The browser will take into account the width, padding, margins, and border
 of the tag element’s parent to keep the element from extending beyond its
 parent.</p>
@@ -296,26 +296,26 @@ parent.</p>
           
           
           <div class="r-example mb-5">
-            <div class="border border-black h-4 w- 1"></div>
-<div class="border border-black h-4 w- 2"></div>
-<div class="border border-black h-4 w- 3"></div>
-<div class="border border-black h-4 w- 4"></div>
-<div class="border border-black h-4 w- 5"></div>
-<div class="border border-black h-4 w- 6"></div>
-<div class="border border-black h-4 w- 7"></div>
-<div class="border border-black h-4 w- 8"></div>
-<div class="border border-black h-4 w- 9"></div>
-<div class="border border-black h-4 w- 10"></div>
-<div class="border border-black h-4 w- 11"></div>
-<div class="border border-black h-4 w- 12"></div>
-<div class="border border-black h-4 w- 13"></div>
-<div class="border border-black h-4 w- 14"></div>
-<div class="border border-black h-4 w- 15"></div>
-<div class="border border-black h-4 w- 16"></div>
-<div class="border border-black h-4 w- 17"></div>
-<div class="border border-black h-4 w- 18"></div>
-<div class="border border-black h-4 w- 19"></div>
-<div class="border border-black h-4 w- 20"></div>
+            <div class="border border-black h-4 w-1"></div>
+<div class="border border-black h-4 w-2"></div>
+<div class="border border-black h-4 w-3"></div>
+<div class="border border-black h-4 w-4"></div>
+<div class="border border-black h-4 w-5"></div>
+<div class="border border-black h-4 w-6"></div>
+<div class="border border-black h-4 w-7"></div>
+<div class="border border-black h-4 w-8"></div>
+<div class="border border-black h-4 w-9"></div>
+<div class="border border-black h-4 w-10"></div>
+<div class="border border-black h-4 w-11"></div>
+<div class="border border-black h-4 w-12"></div>
+<div class="border border-black h-4 w-13"></div>
+<div class="border border-black h-4 w-14"></div>
+<div class="border border-black h-4 w-15"></div>
+<div class="border border-black h-4 w-16"></div>
+<div class="border border-black h-4 w-17"></div>
+<div class="border border-black h-4 w-18"></div>
+<div class="border border-black h-4 w-19"></div>
+<div class="border border-black h-4 w-20"></div>
           </div>
           
           
@@ -345,8 +345,8 @@ parent.</p>
           
           
           <div class="r-example mb-5">
-            <div class="w- 20">
-  <div class="mb-3 border border-red w- 1/3"></div>
+            <div class="w-20">
+  <div class="mb-3 border border-red w-1/3"></div>
 </div>
           </div>
           

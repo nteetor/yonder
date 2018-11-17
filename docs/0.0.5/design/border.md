@@ -52,8 +52,8 @@ roxygen:
   - type: output
     value: |-
       <div>
-        <div class="h-3 w- 3 border border-green"></div>
-        <div class="h-3 w- 3 border-left border-right border-blue"></div>
+        <div class="h-3 w-3 border border-green"></div>
+        <div class="h-3 w-3 border-left border-right border-blue"></div>
       </div>
   - type: markdown
     value: |
@@ -78,11 +78,11 @@ roxygen:
   - type: output
     value: |-
       <div class="d-flex flex-wrap">
-        <div class="h-3 w- 3 border-top border-black"></div>
-        <div class="h-3 w- 3 border-right border-black"></div>
-        <div class="h-3 w- 3 border-bottom border-black"></div>
-        <div class="h-3 w- 3 border-left border-black"></div>
-        <div class="h-3 w- 3 border-circle border-black"></div>
-        <div class="h-3 w- 3 border border-black"></div>
+        <div class="h-3 w-3 border-top border-black"></div>
+        <div class="h-3 w-3 border-right border-black"></div>
+        <div class="h-3 w-3 border-bottom border-black"></div>
+        <div class="h-3 w-3 border-left border-black"></div>
+        <div class="h-3 w-3 border-circle border-black"></div>
+        <div class="h-3 w-3 border border-black"></div>
       </div>
 ---

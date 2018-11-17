@@ -54,11 +54,11 @@ roxygen:
   - type: output
     value: |-
       <div class="d-flex flex-column flex-sm-row justify-content-sm-around">
-        <div class="p-5 m-2 mt-2 mb-2 bg-blue"></div>
-        <div class="p-5 m-2 mt-2 mb-2 bg-blue"></div>
-        <div class="p-5 m-2 mt-2 mb-2 bg-blue"></div>
-        <div class="p-5 m-2 mt-2 mb-2 bg-blue"></div>
-        <div class="p-5 m-2 mt-2 mb-2 bg-blue"></div>
+        <div class="p-5 mt-2 mb-2 bg-blue"></div>
+        <div class="p-5 mt-2 mb-2 bg-blue"></div>
+        <div class="p-5 mt-2 mb-2 bg-blue"></div>
+        <div class="p-5 mt-2 mb-2 bg-blue"></div>
+        <div class="p-5 mt-2 mb-2 bg-blue"></div>
       </div>
   - type: markdown
     value: |
@@ -74,5 +74,5 @@ roxygen:
         background("orange") %>%
         display(print = "none")
   - type: output
-    value: <div class="bg-orange d-print-none"></div>
+    value: <div class="m-5 bg-orange d-print-none"></div>
 ---

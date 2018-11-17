@@ -56,8 +56,8 @@ roxygen:
     value: |-
       <div class="yonder-checkbox" id="potenti">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-144-397" data-value="Suspendisse potenti" checked/>
-          <label class="custom-control-label" for="checkbox-144-397">Suspendisse potenti</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-890-730" data-value="Suspendisse potenti" checked/>
+          <label class="custom-control-label" for="checkbox-890-730">Suspendisse potenti</label>
           <div class="invalid-feedback"></div>
           <div class="valid-feedback"></div>
         </div>
@@ -81,7 +81,7 @@ roxygen:
         margin(2)
   - type: output
     value: |-
-      <div class="yonder-checkbar btn-group btn-group-toggle" data-toggle="buttons" id="checks">
+      <div class="yonder-checkbar btn-group btn-group-toggle m-2" data-toggle="buttons" id="checks">
         <label class="btn active btn-blue">
           <input type="checkbox" autocomplete="off" data-value="Check 1" checked/>
           <span>Check 1</span>

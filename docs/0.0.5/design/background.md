@@ -77,17 +77,17 @@ roxygen:
   - type: output
     value: |-
       <div class="d-flex flex-wrap">
-        <div class="p-5 bg-red"></div>
-        <div class="p-5 bg-purple"></div>
-        <div class="p-5 bg-indigo"></div>
-        <div class="p-5 bg-blue"></div>
-        <div class="p-5 bg-cyan"></div>
-        <div class="p-5 bg-teal"></div>
-        <div class="p-5 bg-green"></div>
-        <div class="p-5 bg-yellow"></div>
-        <div class="p-5 bg-amber"></div>
-        <div class="p-5 bg-orange"></div>
-        <div class="p-5 bg-grey"></div>
-        <div class="p-5 bg-white"></div>
+        <div class="p-5 m-2 bg-red"></div>
+        <div class="p-5 m-2 bg-purple"></div>
+        <div class="p-5 m-2 bg-indigo"></div>
+        <div class="p-5 m-2 bg-blue"></div>
+        <div class="p-5 m-2 bg-cyan"></div>
+        <div class="p-5 m-2 bg-teal"></div>
+        <div class="p-5 m-2 bg-green"></div>
+        <div class="p-5 m-2 bg-yellow"></div>
+        <div class="p-5 m-2 bg-amber"></div>
+        <div class="p-5 m-2 bg-orange"></div>
+        <div class="p-5 m-2 bg-grey"></div>
+        <div class="p-5 m-2 bg-white"></div>
       </div>
 ---

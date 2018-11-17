@@ -724,7 +724,7 @@ margin <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
                    left = NULL) {
   possibles <- c(0:5, "auto")
 
-  all <- ensureBreakpoints(top, possibles)
+  all <- ensureBreakpoints(all, possibles)
   top <- ensureBreakpoints(top, possibles)
   right <- ensureBreakpoints(right, possibles)
   bottom <- ensureBreakpoints(bottom, possibles)
@@ -763,13 +763,13 @@ margin <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 #'   An integer between 1 and 20, in which case the width of the element is
 #'   relative to the font size of the page.
 #'
-#'   One of "1/2", "1/3", "2/3", "1/4", "3/4", "1/5", "2/5", "3/5", "4/5", or
-#'   "full", in which case the element's width is a percentage of its parent's
-#'   width. The height of the parent element must be specified for percentage
-#'   widths to work. Percentages do not account for margins or padding and may
-#'   cause an element to extend beyond its parent.
+#'   `"1/2"`, `"1/3"`, `"2/3"`, `"1/4"`, `"3/4"`, `"1/5"`, `"2/5"`, `"3/5"`,
+#'   `"4/5"`, or `"full"`, in which case the element's width is a percentage of
+#'   its parent's width. The height of the parent element must be specified for
+#'   percentage widths to work. Percentages do not account for margins or
+#'   padding and may cause an element to extend beyond its parent.
 #'
-#'   Or "auto", in which case the element's width is determined by the browser.
+#'   `"auto"`, in which case the element's width is determined by the browser.
 #'   The browser will take into account the width, padding, margins, and border
 #'   of the tag element's parent to keep the element from extending beyond its
 #'   parent.
@@ -805,7 +805,7 @@ margin <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 #'   width(20)
 #'
 width <- function(.tag, size) {
-  .tag <- tagAddClass(.tag, paste("w-", size))
+  .tag <- tagAddClass(.tag, paste0("w-", size))
 
   attachDependencies(.tag, c(yonderDep(), bootstrapDep()))
 }
@@ -824,36 +824,39 @@ width <- function(.tag, size) {
 #'   An integer between 1 and 20, in which case the height of the element is
 #'   relative to the font size of the page.
 #'
-#'   "full", in which case the element's height is a percentage of its parent's
-#'   height. The height of the parent element must also be specified.
+#'   `"full"`, in which case the element's height is a percentage of its
+#'   parent's height. The height of the parent element must also be specified.
 #'   Percentages do not account for margins or padding and may cause an element
 #'   to extend beyond its parent.
 #'
-#'   "auto", in which case the element's height is determined by the browser.
+#'   `"auto"`, in which case the element's height is determined by the browser.
 #'   The browser will take into account the height, padding, margins, and border
 #'   of the tag element's parent to keep the element from extending beyond its
 #'   parent.
 #'
-#'   "screen", in which case the element's height is determined by the height of
+#'   `"screen"`, in which case the element's height is determined by the height of
 #'   the viewport.
 #'
 #' @family design
 #' @export
 #' @examples
 #'
-#' ### Relative heights
+#' ### Numeric values
 #'
 #' div(
 #'   lapply(
 #'     seq(2, 20, by = 2),
 #'     function(h) {
-#'       div() %>%
+#'       div(h) %>%
+#'         width(2) %>%
 #'         height(h) %>%  # <-
-#'         border("black") %>%
-#'         margin(t = 3)
+#'         padding(l = 1) %>%
+#'         border("black")
 #'     }
 #'   )
-#' )
+#' ) %>%
+#'   display("flex") %>%
+#'   flex(justify = "between")
 #'
 height <- function(.tag, size) {
   .tag <- tagAddClass(.tag, paste0("h-", size))
