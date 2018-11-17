@@ -30,15 +30,15 @@
 #' ### Start checked
 #'
 #' checkboxInput(
-#'   id = NULL,
+#'   id = "potenti",
 #'   choice = "Suspendisse potenti",
 #'   checked = TRUE
 #' )
 #'
-#' ### An alternative to checkbox groups
+#' ### Checkbar, checkbox group
 #'
 #' checkbarInput(
-#'   id = NULL,
+#'   id = "checks",
 #'   choices = c(
 #'     "Check 1",
 #'     "Check 2",
@@ -48,6 +48,20 @@
 #' ) %>%
 #'   background("blue") %>%
 #'   margin(2)
+#'
+#' ### Labeling a checkbar
+#'
+#' formGroup(
+#'   label = "Toppings",
+#'   checkbarInput(
+#'     id = "fixins",
+#'     choices = c(
+#'       "Sprinkles",
+#'       "Nuts",
+#'       "Fudge"
+#'     )
+#'   )
+#' )
 #'
 checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
   if (length(choice) > 1) {

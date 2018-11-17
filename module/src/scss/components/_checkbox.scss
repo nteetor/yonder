@@ -6,3 +6,9 @@
     margin-bottom: 1rem;
   }
 }
+
+.yonder-checkbar {
+  .form-group & {
+    display: flex;
+  }
+}
