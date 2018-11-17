@@ -6,7 +6,7 @@
 #'   suppressDependencies resolveDependencies findDependencies tags
 #'   tagAppendAttributes tagAppendChildren surroundSingletons takeSingletons
 #' @importFrom shiny observe getDefaultReactiveDomain installExprFunction
-#'   createRenderFunction
+#'   createRenderFunction createWebDependency
 #' @importFrom rlang dots_list
 #'
 #' @name yonder
