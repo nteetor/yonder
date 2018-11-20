@@ -62,155 +62,97 @@ export function yonderInputBinding() {
     $(el).off("yonder");
   };
 
-  this.updateChoices = function(el, map) {
-    if (!this.hasSelector("VALUE") || !this.hasSelector("LABEL")) {
-      return;
-    }
-
-    if (this.Selector.VALUE === this.Selector.SELF) {
-      let value = map[$(el).data("value")];
-
-      if (value !== undefined) {
-        $(el).html(value);
-      }
-
-      return;
-    }
-
-    let $inputs = $(el).find(`${ this.Selector.VALUE }`);
-    let $labels = $(el).find(`${ this.Selector.LABEL }`);
-
-    if ($inputs.length != $labels.length) {
-      console.error("updateChoices: mismatched number of inputs and labels");
-      return;
-    }
-
-    $inputs.each((index, input) => {
-      let $input = $(input);
-      let $label = $($labels.get(index));
-
-      let value = map[$input.data("value")];
-
-      if (value !== undefined) {
-        $label.html(value);
-      }
-    });
-  };
-
-  this.updateValues = function(el, map) {
-    if (!this.hasSelector("VALUE")) {
-      return;
-    }
-
-    if (typeof map == "string" || Array.isArray(map)) {
-      let $inputs = $(el).find(`${ this.Selector.VALUE }`);
-      let value = typeof map == "string" ? [map] : map;
-
-      if ($inputs.has(":not(input[type='text'])").length) {
-        console.error("updateValues: expecting all inputs to be text if new values are unnamed");
-        return;
-      }
-
-      if ($inputs.length != value.length) {
-        console.error("updateValues: mismatched number of inputs and values");
-        return;
-      }
-
-      $inputs.each((index, input) => {
-        let $input = $(input);
-        $input.val(value[index]);
-        $input.trigger("change");
-      });
-
-      return;
-    }
-
-    if (this.Selector.VALUE === this.Selector.SELF) {
-      let value = map[$input.data("value")];
-
-      if (value !== undefined) {
-        $input.data("value", value);
-      }
-
-      return;
-    }
-
-    let $inputs = $(el).find(`${ this.Selector.VALUE }`);
-
-    $inputs.each((index, input) => {
-      let $input = $(input);
-
-      let value = map[$input.data("value")];
-
-      if (value !== undefined) {
-        $input.data("value", value);
-      }
-    });
-  };
-
-  this.markValid = function(el, data) {
+  this._invalidate = function(el, data) {
     if (!this.hasSelector("VALIDATE")) {
       return;
     }
 
-    let $input = $(el).find(this.Selector.VALIDATE);
-    $input.removeClass("is-invalid").addClass("is-valid");
-    let $feedback = $(el).find(".valid-feedback");
-    if ($feedback.length) {
-      $feedback.text(data.msg);
+    let input = el.querySelector(this.Selector.VALIDATE);
+
+    input.classList.remove("is-valid");
+    input.classList.add("is-invalid");
+
+    let feedback = el.querySelector(".invalid-feedback");
+    if (feedback !== null) {
+      feedback.innerHTML = data.message;
     }
   };
 
-  this.markInvalid = function(el, data) {
+  this._validate = function(el, data) {
     if (!this.hasSelector("VALIDATE")) {
       return;
     }
 
-    let $input = $(el).find(this.Selector.VALIDATE);
-    $input.removeClass("is-valid").addClass("is-invalid");
-    let $feedback = $(el).find(".invalid-feedback");
-    if ($feedback.length) {
-      $feedback.text(data.msg);
+    let input = el.querySelector(this.Selector.VALIDATE);
+
+    input.classList.remove("is-invalid");
+
+    let feedback = el.querySelector(".invalid-feedback");
+    if (feedback !== null) {
+      feedback.innerHTML = "";
     }
   };
 
   this.receiveMessage = function(el, msg) {
-    if (!msg.type) {
-      return;
+    if (!msg.type || msg.data === undefined) {
+      return false;
     }
 
     let [action, type = null] = msg.type.split(":");
 
     if (action === "update") {
-      if (!type || msg.data === undefined) {
-        return;
+      if (this._update === undefined) {
+        console.warn("_update method not defined");
+        return false;
       }
 
-      if (type === "choices") {
-        this.updateChoices(el, msg.data);
-      }
+      this._update(el, msg.data);
 
-      if (type === "values") {
-        this.updateValues(el, msg.data);
-      }
-
-      return;
+      return true;
     }
 
-    if (action === "mark") {
-      if (!type) {
-        return;
+    if (action === "enable")  {
+      if (this._enable === undefined) {
+        console.warn("_enable method not defined");
+        return false;
       }
 
-      if (type === "valid") {
-        this.markValid(el, msg.data);
+      this._enable(el, msg.data);
+
+      return true;
+    }
+
+    if (action === "disable") {
+      if (this._disable === undefined) {
+        console.warn("_disable method not defined");
+        return false;
       }
 
-      if (type === "invalid") {
-        this.markInvalid(el, msg.data);
+      this._disable(el, msg.data);
+
+      return true;
+    }
+
+    if (action === "invalidate") {
+      if (this._invalidate === undefined) {
+        console.warn("_invalidate method not defined");
+        return false;
       }
 
-      return;
+      this._invalidate(el, msg.data);
+
+      return true;
+    }
+
+    if (action === "validate") {
+      if (this._validate === undefined) {
+        console.warn("_validate method not defined");
+        return false;
+      }
+
+      this._validate(el, msg.data);
+
+      return true;
     }
   };
 

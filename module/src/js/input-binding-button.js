@@ -3,8 +3,7 @@ export let buttonInputBinding = new Shiny.InputBinding();
 $.extend(buttonInputBinding, {
   Selector: {
     SELF: ".yonder-button[id]",
-    VALUE: ".yonder-button",
-    LABEL: ".yonder-button"
+    VALUE: ".btn"
   },
   Events: [
     {
@@ -21,6 +20,19 @@ $.extend(buttonInputBinding, {
   },
   getValue: function(el) {
     return this._VALUES[el.id];
+  },
+  _update: function(el, data) {
+    if (data.values === undefined) {
+      return false;
+    }
+
+    if (data.choices.length) {
+      el.innerHTML = data.choices[0];
+    }
+
+    if (data.values.length) {
+      this._VALUES[el.id] = +(data.values[1]);
+    }
   }
 });
 
