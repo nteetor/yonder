@@ -7,7 +7,7 @@
 \usage{
 checkboxInput(id, choice, value = choice, checked = FALSE, ...)
 
-checkbarInput(id, choices, values = choices, selected = NULL)
+checkbarInput(id, choices, values = choices, selected = NULL, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the checkbox input, the

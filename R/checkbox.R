@@ -111,7 +111,7 @@ checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
 
 #' @rdname checkboxInput
 #' @export
-checkbarInput <- function(id, choices, values = choices, selected = NULL) {
+checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
   if (length(choices) != length(values)) {
     stop(
       "invalid `checkbarInput` arguments, `choices` and `values` must have ",
@@ -150,7 +150,8 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL) {
           )
         )
       }
-    )
+    ),
+    ...
   )
 
   input <- attachDependencies(
