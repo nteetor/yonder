@@ -21,8 +21,7 @@ checkbox or checkbar input, defaults to \code{choice} or \code{values}, respecti
 \item{checked}{If \code{TRUE} the checkbox renders in a checked state, defaults
 to \code{FALSE}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 
 \item{selected}{One of \code{values} specifying the initial value of the checkbar
 input, defaults to \code{NULL}, in which case no choice is selected.}

@@ -21,8 +21,7 @@ input group, defaults to \code{NULL}.}
 Addon's affect the reactive value of the group input, see the Details
 section below for more information.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 }
 \description{
 A group input is a combination reactive input which may consist of one or two

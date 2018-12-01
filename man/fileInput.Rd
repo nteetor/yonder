@@ -20,8 +20,7 @@ appended respectively to the file input. For more information refer to
 Clicking on an element specified by \code{right} also opens the file input
 dialog.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 
 \item{multiple}{One of \code{TRUE} or \code{FALSE} specifying whether or not the user
 can upload multiple files at once, defaults to \code{TRUE}.}

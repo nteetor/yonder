@@ -34,8 +34,7 @@ below the input, defaults to \code{NULL} in which case help text is not added.}
 \item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
 in which case the radio controls render on separate lines.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 }
 \description{
 Create a reactive radio input of one or more radio controls.

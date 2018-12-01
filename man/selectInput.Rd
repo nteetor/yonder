@@ -24,8 +24,7 @@ default.}
 selected, otherwise a single value is selected at a time,
 defaults to \code{FALSE}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 }
 \description{
 Create a select input. Select elements often appear as a dropdown menu and

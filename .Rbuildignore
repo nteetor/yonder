@@ -3,5 +3,6 @@
 ^module$
 ^docs$
 ^bin$
+^man-roxygen$
 ^LICENSE\.md$
 ^CONTRIBUTING\.md$

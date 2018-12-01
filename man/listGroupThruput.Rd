@@ -44,9 +44,6 @@ selected, defaults to \code{FALSE}.}
 
 \item{env}{The environment in which to evalute the expressions based to
 \code{renderListGroup()}.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
 }
 \description{
 A way of handling and outlining content as a list. List groups function

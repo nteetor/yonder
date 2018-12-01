@@ -11,8 +11,7 @@
 #' its child inputs. This can be useful if you want to use a `formInput()`
 #' solely for page layout.
 #'
-#' @param ... Any number of unnamed arguments (inputs or tag elements) passed as
-#'   child elements of the form.
+#' @templateVar ... Any number of unnamed arguments (inputs or tag elements) passed as child elements of the form.
 #'
 #' @param submit A submit button or tags containing a submit button. The submit
 #'   button will trigger the update of input form elements. Defaults to

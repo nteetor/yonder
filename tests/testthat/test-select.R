@@ -1,6 +1,6 @@
 context("selectInput()")
 
-test_example("../../man/selectInput.Rd")
+# test_example("../../man/selectInput.Rd")
 
 test_that("update", {
   skip("interactive")

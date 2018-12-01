@@ -32,6 +32,9 @@
 #' @param quoted One of `TRUE` or `FALSE` specifying if `expr` is a quoted
 #'   expression.
 #'
+#' @param ... Additional named arguments passed on HTML attributes to the parent
+#'   element.
+#'
 #' @template thruput
 #' @requires data
 #' @export

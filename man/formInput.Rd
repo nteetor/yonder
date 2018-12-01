@@ -9,8 +9,9 @@ formInput(id, ..., submit = submitInput(), inline = FALSE)
 \arguments{
 \item{id}{A character string specifying the reactive id of the input.}
 
-\item{...}{Any number of unnamed arguments (inputs or tag elements) passed as
-child elements of the form.}
+\item{...}{Any number of unnamed arguments (inputs or tag elements) passed as child elements of the form.
+
+Additional named arguments passed as HTML attributes to the parent element.}
 
 \item{submit}{A submit button or tags containing a submit button. The submit
 button will trigger the update of input form elements. Defaults to
@@ -20,9 +21,6 @@ button will trigger the update of input form elements. Defaults to
 elements are rendered in a horizontal row, defaults to \code{FALSE}. On small
 viewports, think mobile device, \code{inline} has no effect and the form will
 span multiple lines.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
 }
 \description{
 Form inputs are a new reactive input. Form inputs are an alternative to

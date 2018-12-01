@@ -19,8 +19,7 @@ items.}
 \item{values}{A character vector specifying the values of the menu's items,
 defaults to \code{choices}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 
 \item{direction}{One of \code{"up"}, \code{"right"}, \code{"down"}, or \code{"left"} specifying
 which direction the menu opens, defaults to \code{"down"}.}

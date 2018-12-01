@@ -15,8 +15,7 @@ for each label specified.}
 \item{values}{A character vector of values, one for each button specified,
 defaults to \code{labels}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 }
 \description{
 A set of buttons with custom values.

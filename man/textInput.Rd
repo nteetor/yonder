@@ -33,8 +33,7 @@ specifying the default value of the textual input.}
 \item{placeholder}{A character string specifying placeholder text for the
 input, defaults to \code{NULL}, in which case there is no placeholder text.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 }
 \description{
 Different types of textual inputs are provided to best support mobile

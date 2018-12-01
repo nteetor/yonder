@@ -16,8 +16,7 @@ navigation items of the navigation input.}
 \item{values}{A character vector specifying custom values for each navigation
 item, defaults to \code{labels}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 
 \item{appearance}{One of \code{"pills"} or \code{"tabs"} specifying the appearance of
 the nav input.}

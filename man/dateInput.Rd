@@ -31,8 +31,7 @@ respectively.}
 may be selected, if \code{TRUE} the user may select multiple dates and a vector
 of one or more dates is returned as the reactive value.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 }
 \description{
 A date time picker. Alternatively, use the date time range picker to select

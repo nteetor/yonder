@@ -18,8 +18,7 @@ linkInput(id, text, ...)
 \item{label}{A character string specifying the label text on the button
 input.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 
 \item{block}{If \code{TRUE}, the input is block-level instead of inline, defaults
 to \code{FALSE}. A block-level element will occupy the entire width of its
