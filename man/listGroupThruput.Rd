@@ -13,8 +13,7 @@ listGroupItem(..., value = NULL, selected = FALSE, disabled = FALSE)
 renderListGroup(..., env = parent.frame())
 }
 \arguments{
-\item{id}{A character vector specifying the reactive id of the list group
-thruput.}
+\item{id}{A character string specifying the reactive id of the thruput.}
 
 \item{...}{For \code{listGroupThruput()}, additional named arguments passed on as
 HTML attributes to the parent list group element.
@@ -45,6 +44,9 @@ selected, defaults to \code{FALSE}.}
 
 \item{env}{The environment in which to evalute the expressions based to
 \code{renderListGroup()}.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 }
 \description{
 A way of handling and outlining content as a list. List groups function

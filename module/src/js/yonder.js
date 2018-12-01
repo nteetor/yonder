@@ -1,7 +1,5 @@
 import "./yonder-input-binding.js";
 
-import "./input-binding-address.js";
-import "./input-binding-alert.js";
 import "./input-binding-button-group.js";
 import "./input-binding-button.js";
 import "./input-binding-checkbar.js";
@@ -11,22 +9,21 @@ import "./input-binding-file.js";
 import "./input-binding-form.js";
 import "./input-binding-group-input.js";
 import "./input-binding-link.js";
-import "./input-binding-login.js";
+import "./input-binding-menu.js";
 import "./input-binding-nav.js";
 import "./input-binding-radio.js";
 import "./input-binding-radiobar.js";
 import "./input-binding-range.js";
 import "./input-binding-select.js";
-import "./input-binding-tabs.js";
 import "./input-binding-textual.js";
 
 import "./output-binding-badge.js";
-import "./output-binding-sparkline.js";
 import "./output-binding-progress.js";
 
 import "./thruput-binding-table.js";
 import "./thruput-binding-list-group.js";
 
+import "./alert.js";
 import "./modal.js";
 import "./collapsible.js";
 

@@ -12,7 +12,7 @@ NULL
 #'
 #' Input utilities.
 #'
-#' @param id A character string.
+#' @param id A character string specifying the reactive id of an input.
 #'
 #' @param choices A character vector, tag element, or list specifying choices
 #'   for the input.
@@ -26,8 +26,22 @@ NULL
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
+#' @section Combinations of `choices` and `values`:
+#'
+#' **choices** and **values** specified: the input's choices and values are
+#' updated.
+#'
+#' **choices** is specified and **values** is `NULL`: `values` defaults to
+#' `choices`.
+#'
+#' **choices** is `NULL` and **values** is specified: use this case for inputs
+#' without choices, e.g. a text input, to update only the current value.
+#'
+#' **choices** and **values** both `NULL`: used to preserve choices and values
+#' while changing the selected choice with `selected`.
+#'
 #' @export
-updateInput <- function(id, choices, values = choices, selected = NULL,
+updateInput <- function(id, choices = NULL, values = NULL, selected = NULL,
                         session = getDefaultReactiveDomain()) {
   if (is.null(session)) {
     stop(
@@ -36,26 +50,25 @@ updateInput <- function(id, choices, values = choices, selected = NULL,
     )
   }
 
-  values <- as.character(values)
-
-  if (is_tag(choices)) {
-    choices <- list(choices)
-  } else if (!is.null(choices) && !is_strictly_list(choices)) {
-    choices <- as.list(choices)
+  if (!is.null(choices)) {
+    if (is_tag(choices)) {
+      choices <- list(choices)
+    } else if (!is_strictly_list(choices)) {
+      choices <- as.list(choices)
+    }
   }
 
-  if (length(choices) != length(values)) {
+  if (!is.null(values)) {
+    values <- lapply(values, as.character)
+  }
+
+  if (!is.null(choices) && !is.null(values) &&
+        length(choices) != length(values)) {
     stop(
-      "invalid `updateInput()` arguments, `choices` and `values` must be the ",
-      "same length",
+      "invalid `updateInput()` arguments, `choices` and `values` must be ",
+      "the same length",
       call. = FALSE
     )
-  }
-
-  values <- as.list(values)
-
-  if (!is.null(selected)) {
-    selected <- which(match2(selected, values, default = TRUE))
   }
 
   session$sendInputMessage(id, list(
@@ -72,7 +85,7 @@ updateInput <- function(id, choices, values = choices, selected = NULL,
 #'
 #' Prevent interacting with input choices.
 #'
-#' @param id A character string.
+#' @param id A character string specifying the reactive id of an input.
 #'
 #' @param values A vector specifying values to enable or disable.
 #'
@@ -85,7 +98,7 @@ updateInput <- function(id, choices, values = choices, selected = NULL,
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
 #' @export
-enableInput <- function(id, values, invert = FALSE,
+enableInput <- function(id, values = NULL, invert = FALSE,
                         session = getDefaultReactiveDomain()) {
   values <- as.list(as.character(values))
 
@@ -100,7 +113,7 @@ enableInput <- function(id, values, invert = FALSE,
 
 #' @rdname enableInput
 #' @export
-disableInput <- function(id, values, invert = FALSE, reset = FALSE,
+disableInput <- function(id, values = NULL, invert = FALSE, reset = FALSE,
                          session = getDefaultReactiveDomain()) {
   values <- as.list(as.character(values))
 
@@ -124,12 +137,20 @@ disableInput <- function(id, values, invert = FALSE, reset = FALSE,
 #' the reactive input, thus allowing subsequent observers and reactives to
 #' trigger.
 #'
-#' @param id A character string.
+#' @param id A character string specifying the reactive id of an input.
 #'
 #' @param message A character string specifying the message.
 #'
+#' @template session
+#'
 #' @export
 invalidateInput <- function(id, message, session = getDefaultReactiveDomain()) {
+  if (is.null(session)) {
+    stop(
+
+    )
+  }
+
   session$sendInputMessage(id, list(
     type = "invalidate",
     data = list(
@@ -144,6 +165,11 @@ invalidateInput <- function(id, message, session = getDefaultReactiveDomain()) {
 #' @rdname invalidateInput
 #' @export
 validateInput <- function(id, session = getDefaultReactiveDomain()) {
+  if (is.null(session)) {
+    stop(
+    )
+  }
+
   session$sendInputMessage(id, list(
     type = "validate",
     data = list()
@@ -152,4 +178,3 @@ validateInput <- function(id, session = getDefaultReactiveDomain()) {
 
   invisible()
 }
-

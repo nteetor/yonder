@@ -22,6 +22,23 @@ $.extend(linkInputBinding, {
       "value": this._VALUES[el.id],
       "id": el.id
     };
+  },
+  _update: function(el, data) {
+    if (data.choices !== null) {
+      el.innerHTML = data.choices[0];
+    }
+
+    if (data.values !== null) {
+      this._VALUES[el.id] = data.values[0];
+    }
+  },
+  _disable: function(el, data) {
+    el.classList.add("disabled");
+    $(el).on("click.disable", e => false);
+  },
+  _enable: function(el, data) {
+    el.classList.remove("disabled");
+    $(el).off(".disable");
   }
 });
 

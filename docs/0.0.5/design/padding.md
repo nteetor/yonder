@@ -93,8 +93,8 @@ roxygen:
         </div>
         <div class="yonder-checkbox" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-402-330" data-value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-402-330">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-636-930" data-value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-636-930">Remember me</label>
             <div class="invalid-feedback"></div>
             <div class="valid-feedback"></div>
           </div>
@@ -144,8 +144,8 @@ roxygen:
         </div>
         <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-862-900" data-value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-862-900">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-571-693" data-value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-571-693">Remember me</label>
             <div class="invalid-feedback"></div>
             <div class="valid-feedback"></div>
           </div>

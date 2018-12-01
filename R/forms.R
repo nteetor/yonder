@@ -11,10 +11,8 @@
 #' its child inputs. This can be useful if you want to use a `formInput()`
 #' solely for page layout.
 #'
-#' @param id A character string specifying an id for the form input.
-#'
-#' @param ... Any number of inputs, tags, or additional named arguments passed
-#'   as HTML attributes to the parent element.
+#' @param ... Any number of unnamed arguments (inputs or tag elements) passed as
+#'   child elements of the form.
 #'
 #' @param submit A submit button or tags containing a submit button. The submit
 #'   button will trigger the update of input form elements. Defaults to
@@ -58,7 +56,7 @@
 #' shinyApp(ui, server)
 #' ```
 #'
-#' @family inputs
+#' @template input
 #' @export
 #' @examples
 #'

@@ -8,7 +8,7 @@ navInput(id, choices, values = choices, ..., appearance = NULL,
   fill = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying the id of a pane.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{choices}{A character vector or list of tag elements specifying the
 navigation items of the navigation input.}
@@ -16,8 +16,8 @@ navigation items of the navigation input.}
 \item{values}{A character vector specifying custom values for each navigation
 item, defaults to \code{labels}.}
 
-\item{...}{Any number of tag elements or named arguments passed as HTML
-attributes to the parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element.}
 
 \item{appearance}{One of \code{"pills"} or \code{"tabs"} specifying the appearance of
 the nav input.}
@@ -31,12 +31,21 @@ A reactive input styled as a navigation control. The navigation input can be
 styled as links, tabs, or pills. A nav input is paired with \code{\link[=navContent]{navContent()}}
 and \code{\link[=showPane]{showPane()}} to create tabbed user interfaces.
 }
+\section{Reactive value}{
+
+
+A click on a navigation link triggers a single character string.
+
+A click on a dropdown item triggers a character vector of two values, the
+value of the nav link and the value of the dropdown item.
+}
+
 \examples{
 
 ### Nav styled as tabs
 
 navInput(
-  id = "tabs",
+  id = "tabs1",
   choices = c(
     "Tab 1",
     "Tab 2",
@@ -48,7 +57,7 @@ navInput(
 ### Nav styled as pills
 
 navInput(
-  id = "tabs",
+  id = "tabs2",
   choices = paste("Tab", 1:3),
   appearance = "pills"
 )
@@ -56,22 +65,26 @@ navInput(
 ### Nav with dropdown
 
 navInput(
-  id = "tabs",
+  id = "tabs3",
   choices = list(
     "Tab 1",
-    dropdown(
+    menuInput(
+      id = NULL,  # <- ignored
       label = "Tab 2",
-      buttonInput("action", "Action"),
-      buttonInput("another", "Another action")
+      choices = c(
+        "Action",
+        "Another action"
+      )
     ),
     "Tab 2"
-  )
+  ),
+  values = c("tab1", "tab2", "tab3")
 )
 
 ### Full width nav input
 
 navInput(
-  id = "tabs",
+  id = "tabs4",
   choices = paste("Tab", 1:5),
   values = paste0("tab", 1:5),
   appearance = "pills",
@@ -81,19 +94,19 @@ navInput(
 ### Centering a nav input
 
 navInput(
-  id = "tabs",
+  id = "tabs5",
   choices = paste("Tab", 1:3)
 ) \%>\%
   flex(justify = "center")
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
+Other inputs: \code{\link{badgeOutput}},
   \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{dateInput}}, \code{\link{fileInput}},
   \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{loginInput}}, \code{\link{radioInput}},
+  \code{\link{menuInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }

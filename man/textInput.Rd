@@ -10,30 +10,22 @@
 \alias{numberInput}
 \title{Textual inputs}
 \usage{
-textInput(id, value = NULL, placeholder = NULL, size = NULL,
-  readonly = FALSE, help = NULL, ...)
+textInput(id, value = NULL, placeholder = NULL, ...)
 
-searchInput(id, value = NULL, placeholder = NULL, size = NULL,
-  readonly = FALSE, help = NULL, ...)
+searchInput(id, value = NULL, placeholder = NULL, ...)
 
-emailInput(id, value = NULL, placeholder = NULL, size = NULL,
-  readonly = FALSE, help = NULL, ...)
+emailInput(id, value = NULL, placeholder = NULL, ...)
 
-urlInput(id, value = NULL, placeholder = NULL, size = NULL,
-  readonly = FALSE, help = NULL, ...)
+urlInput(id, value = NULL, placeholder = NULL, ...)
 
-telephoneInput(id, value = NULL, placeholder = NULL, size = NULL,
-  readonly = FALSE, help = NULL, ...)
+telephoneInput(id, value = NULL, placeholder = NULL, ...)
 
-passwordInput(id, value = NULL, placeholder = NULL, size = NULL,
-  readonly = FALSE, help = NULL, ...)
+passwordInput(id, value = NULL, placeholder = NULL, ...)
 
-numberInput(id, value = NULL, placeholder = NULL, size = NULL,
-  readonly = FALSE, help = NULL, ...)
+numberInput(id, value = NULL, placeholder = NULL, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the textual input, defaults
-to \code{NULL}.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{value}{A character string or a value coerced to a character string
 specifying the default value of the textual input.}
@@ -41,18 +33,8 @@ specifying the default value of the textual input.}
 \item{placeholder}{A character string specifying placeholder text for the
 input, defaults to \code{NULL}, in which case there is no placeholder text.}
 
-\item{size}{One of \code{"small"} or \code{"large"} specifying the size transformation
-of the input, defaults to \code{NULL}, in which case the input's size is
-unchanged.}
-
-\item{readonly}{If \code{TRUE}, the textual input is read-only preventing
-modification of the value, defaults \code{FALSE}.}
-
-\item{help}{A character string specifying the help text of the textual input,
-defaults to \code{NULL}, in which case no help text is added.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element.}
 }
 \description{
 Different types of textual inputs are provided to best support mobile
@@ -91,12 +73,12 @@ numberInput(id = "num")
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
+Other inputs: \code{\link{badgeOutput}},
   \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{dateInput}}, \code{\link{fileInput}},
   \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{loginInput}}, \code{\link{navInput}},
+  \code{\link{menuInput}}, \code{\link{navInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}
 }

@@ -3,8 +3,6 @@
 #' Create a select input. Select elements often appear as a dropdown menu and
 #' may have one or more selected values, see `multiple`.
 #'
-#' @param id A character string specifying the id of the select input.
-#'
 #' @param choices A character vector specifying the labels of the select input
 #'   options.
 #'
@@ -19,10 +17,7 @@
 #'   selected, otherwise a single value is selected at a time,
 #'   defaults to `FALSE`.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the parent
-#'   element.
-#'
-#' @family inputs
+#' @template input
 #' @export
 #' @examples
 #'

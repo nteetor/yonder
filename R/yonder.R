@@ -24,6 +24,9 @@
 #' * Inputs do not include a `label` argument to add a text label. To add a
 #'   label to an input please use [formGroup()].
 #'
+#'   [menuInput()] is an exception and does include a `label` argument. This
+#'   argument controls the label or text of the menu trigger button.
+#'
 #' * `shiny::sliderInput()` has been split into three inputs: [rangeInput()],
 #'   [intervalInput()], and [sliderInput()].
 #'

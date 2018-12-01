@@ -2,9 +2,10 @@ export let checkbarInputBinding = new Shiny.InputBinding();
 
 $.extend(checkbarInputBinding, {
   Selector: {
-    SELF: ".yonder-checkbar[id]",
+    SELF: ".yonder-checkbar",
+    CHOICE: ".btn span",
     VALUE: ".btn input",
-    SELECTED: ".btn:not(.disabled) input:checked"
+    SELECTED: "input:checked"
   },
   Events: [
     { type: "change", selector: ".btn" }
@@ -13,67 +14,43 @@ $.extend(checkbarInputBinding, {
     return { value: this.getValue(el) };
   },
   _update: function(el, data) {
-    let buttons = el.querySelectorAll(".btn");
+    let children = el.querySelectorAll(".btn");
 
-    if (!buttons.length) {
-      return false;
-    }
-
-    let template = buttons[0].cloneNode(true);
-    template.classList.remove("active");
-
-    for (const child of buttons) {
-      el.removeChild(child);
-    }
-
-    for (var i = data.choices.length - 1; i >= 0; i--) {
-      template.querySelector("span").innerHTML = data.choices[i];
-
-      template
-        .querySelector("input")
-        .setAttribute("data-value", data.values[i]);
-
-      el.insertBefore(template.cloneNode(true), el.firstChild);
-    }
-
-    if (data.selected !== null) {
-      let selected = el.querySelector(`.btn:nth-child(${ data.selected })`);
-
-      if (selected !== null) {
-        selected.classList.add("active");
-      }
-    }
-
-    return true;
+    children.forEach((child, i) => {
+      child.querySelector("span").innerHTML = data.choices[i];
+      child.querySelector("input").setAttribute("data-value", data.values[i]);
+    });
   },
   _enable: function(el, data) {
-    let buttons = el.querySelectorAll(".btn");
+    let children = el.querySelectorAll(".btn");
 
-    for (const button of buttons) {
-      let value = button.querySelector("input").getAttribute("data-value");
-      let index = data.values.indexOf(value);
+    children.forEach(child => {
+      let input = child.querySelector("input");
+      let value = input.getAttribute("data-value");
+      let index = data.values ? data.values.indexOf(value) : 0;
 
       if ((index > -1) === !data.invert) {
-        button.classList.remove("disabled");
-        button.querySelector("input").removeAttribute("disabled");
+        child.classList.remove("disabled");
+        input.removeAttribute("disabled");
       }
-    }
+    });
   },
-  _disable: function(el, data) {
-    let buttons = el.querySelectorAll(".btn");
+  _enable: function(el, data) {
+    let children = el.querySelectorAll(this.Selector.CHILD);
 
-    for (const button of buttons) {
-      let value = button.querySelector("input").getAttribute("data-value");
-      let index = data.values.indexOf(value);
+    children.forEach(child => {
+      let input = child.querySelector("input");
+      let value = input.getAttribute("data-value");
+      let index = data.values ? data.values.indexOf(value) : 0;
 
       if ((index > -1) === !data.invert) {
-        button.classList.add("disabled");
-        button.querySelector("input").setAttribute("disabled", "");
+        child.classList.add("disabled");
+        input.setAttribute("disabled", "");
       } else if (data.reset) {
-        button.classList.remove("disabled");
-        button.querySelector("input").removeAttribute("disabled");
+        child.classList.remove("disabled");
+        input.removeAttribute("disabled");
       }
-    }
+    });
   }
 });
 

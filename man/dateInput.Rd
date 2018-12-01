@@ -12,7 +12,7 @@ dateRangeInput(id, choices = NULL, selected = NULL, min = NULL,
   max = NULL, ...)
 }
 \arguments{
-\item{id}{A character specifying the id of the datetime input.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{choices}{Date objects or character strings specifying the set of
 dates the user may choose from, defaults to \code{NULL} in which case the user
@@ -31,8 +31,8 @@ respectively.}
 may be selected, if \code{TRUE} the user may select multiple dates and a vector
 of one or more dates is returned as the reactive value.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element.}
 }
 \description{
 A date time picker. Alternatively, use the date time range picker to select
@@ -73,11 +73,11 @@ dateRangeInput(
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
+Other inputs: \code{\link{badgeOutput}},
   \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{loginInput}},
+  \code{\link{groupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}

@@ -4,11 +4,11 @@
 \alias{updateInput}
 \title{Update input}
 \usage{
-updateInput(id, choices, values = choices, selected = NULL,
+updateInput(id, choices = NULL, values = NULL, selected = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{id}{A character string.}
+\item{id}{A character string specifying the reactive id of an input.}
 
 \item{choices}{A character vector, tag element, or list specifying choices
 for the input.}
@@ -25,3 +25,19 @@ automatically select a choice if not specified.}
 \description{
 Input utilities.
 }
+\section{Combinations of \code{choices} and \code{values}}{
+
+
+\strong{choices} and \strong{values} specified: the input's choices and values are
+updated.
+
+\strong{choices} is specified and \strong{values} is \code{NULL}: \code{values} defaults to
+\code{choices}.
+
+\strong{choices} is \code{NULL} and \strong{values} is specified: use this case for inputs
+without choices, e.g. a text input, to update only the current value.
+
+\strong{choices} and \strong{values} both \code{NULL}: used to preserve choices and values
+while changing the selected choice with \code{selected}.
+}
+

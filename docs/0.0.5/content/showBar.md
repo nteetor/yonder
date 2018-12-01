@@ -85,9 +85,9 @@ roxygen:
     value: |2-
 
       progressOutlet(
-        id = NULL,
+        id = "progress1",
         bar(
-          id = NULL,
+          id = "task1",
           value = 41,
           striped = TRUE  # <-
         ) %>%
@@ -95,8 +95,8 @@ roxygen:
       )
   - type: output
     value: |-
-      <div class="yonder-progress progress">
-        <div class="progress-bar progress-bar-striped bg-blue" role="progressbar" style="width: 41%" aria-valuemin="0" aria-valuemax="100"></div>
+      <div id="progress1" class="yonder-progress progress">
+        <div class="progress-bar progress-bar-striped bg-blue" id="task1" role="progressbar" style="width: 41%" aria-valuemin="0" aria-valuemax="100"></div>
       </div>
   - type: markdown
     value: |
@@ -105,9 +105,9 @@ roxygen:
     value: |2-
 
       progressOutlet(
-        id = NULL,
+        id = "progress2",
         bar(
-          id = NULL,
+          id = "task2",
           value = 64,
           label = "Trees planted"  # <-
         ) %>%
@@ -115,8 +115,8 @@ roxygen:
       )
   - type: output
     value: |-
-      <div class="yonder-progress progress">
-        <div class="progress-bar bg-green" role="progressbar" style="width: 64%" aria-valuemin="0" aria-valuemax="100">Trees planted</div>
+      <div id="progress2" class="yonder-progress progress">
+        <div class="progress-bar bg-green" id="task2" role="progressbar" style="width: 64%" aria-valuemin="0" aria-valuemax="100">Trees planted</div>
       </div>
   - type: markdown
     value: |
@@ -125,22 +125,22 @@ roxygen:
     value: |2-
 
       progressOutlet(
-        id = NULL,  # <- this is typically not NULL
+        id = "progress3",
         bar(
-          id = NULL,
+          id = "task3",
           value = 40
         ) %>%
           background("red"),
         bar(
-          id = NULL,
+          id = "task4",
           value = 20
         ) %>%
           background("orange")
       )
   - type: output
     value: |-
-      <div class="yonder-progress progress">
-        <div class="progress-bar bg-red" role="progressbar" style="width: 40%" aria-valuemin="0" aria-valuemax="100"></div>
-        <div class="progress-bar bg-orange" role="progressbar" style="width: 20%" aria-valuemin="0" aria-valuemax="100"></div>
+      <div id="progress3" class="yonder-progress progress">
+        <div class="progress-bar bg-red" id="task3" role="progressbar" style="width: 40%" aria-valuemin="0" aria-valuemax="100"></div>
+        <div class="progress-bar bg-orange" id="task4" role="progressbar" style="width: 20%" aria-valuemin="0" aria-valuemax="100"></div>
       </div>
 ---

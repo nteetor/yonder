@@ -4,10 +4,6 @@
 #' value is `NULL`. When checked the checkbox input reactive value is `value`.
 #' Unlike shiny, yonder's checkbox inputs are a singleton value.
 #'
-#' @param id A character string specifying the id of the checkbox input, the
-#'   reactive value of the checkbox input is available to the shiny server
-#'   function as part of the `input` object.
-#'
 #' @param choice,choices A character string or vector specifying a label for the
 #'   checkbox or checkbar.
 #'
@@ -20,10 +16,7 @@
 #' @param selected One of `values` specifying the initial value of the checkbar
 #'   input, defaults to `NULL`, in which case no choice is selected.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the parent
-#'   element.
-#'
-#' @family inputs
+#' @template input
 #' @export
 #' @examples
 #'

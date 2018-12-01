@@ -17,23 +17,16 @@ export function yonderInputBinding() {
       return null;
     }
 
-    let values = $(el).find(`${ this.Selector.SELECTED }`)
-        .map((i, e) => {
-          let $e = $(e);
+    let selected = el.querySelectorAll(this.Selector.SELECTED);
 
-          if ($e.is("[data-value]")) {
-            return $e.data("value");
-          }
+    if (!selected.length) {
+      return null;
+    }
 
-          if ($e.is("input")) {
-            return $e.val();
-          }
-
-          return $e.text();
-        })
-        .get();
-
-    return values === undefined ? null : values;
+    return Array.prototype.map.call(
+      selected,
+      s => s.getAttribute("data-value") || s.value
+    );
   };
 
   this.subscribe = function(el, callback) {
@@ -50,6 +43,7 @@ export function yonderInputBinding() {
       $(el).on(`${ event.type }.yonder`, (event.selector || null), (e) => {
         if (event.callback) {
           if (event.callback(el, event.selector && e.target || undefined, this) === false) {
+            e.preventDefault();
             return;
           }
         }
@@ -62,8 +56,21 @@ export function yonderInputBinding() {
     $(el).off("yonder");
   };
 
+  this._update = (el, data) => {
+    console.warn("no _update method");
+  };
+
+  this._enable = (el, data) => {
+    console.warn("no _enable method");
+  };
+
+  this._disabled = (el, data) => {
+    console.warn("no _disable method");
+  };
+
   this._invalidate = function(el, data) {
     if (!this.hasSelector("VALIDATE")) {
+      console.warn("no _invalidate method");
       return;
     }
 
@@ -80,6 +87,7 @@ export function yonderInputBinding() {
 
   this._validate = function(el, data) {
     if (!this.hasSelector("VALIDATE")) {
+      console.warn("no _validate method");
       return;
     }
 
@@ -100,60 +108,52 @@ export function yonderInputBinding() {
 
     let [action, type = null] = msg.type.split(":");
 
-    if (action === "update") {
-      if (this._update === undefined) {
-        console.warn("_update method not defined");
-        return false;
-      }
+    switch (action) {
+      case "update":
+        let choices = msg.data.choices;
+        let values = msg.data.values;
+        let selected = msg.data.selected;
 
-      this._update(el, msg.data);
+        if (!choices && values && this.Selector.CHOICE) {
+          choices = Array.prototype.slice.call(
+            el.querySelectorAll(this.Selector.CHOICE),
+            0,
+            values.length
+          );
+        } else if (choices && !values && this.Selector.VALUE) {
+          values = Array.prototype.slice.call(
+            el.querySelectorAll(this.Selector.VALUE),
+            0,
+            choices.length
+          );
+        }
 
-      return true;
+        this._update(el, {
+          "choices": choices,
+          "values": values,
+          "selected": selected
+        });
+
+        break;
+
+      case "enable":
+        this._enable(el, msg.data);
+        break;
+
+      case "disable":
+        this._disable(el, msg.data);
+        break;
+
+      case "invalidate":
+        this._invalidate(el, msg.data);
+        break;
+
+      case "validate":
+        this._validate(el, msg.data);
+        break;
     }
 
-    if (action === "enable")  {
-      if (this._enable === undefined) {
-        console.warn("_enable method not defined");
-        return false;
-      }
-
-      this._enable(el, msg.data);
-
-      return true;
-    }
-
-    if (action === "disable") {
-      if (this._disable === undefined) {
-        console.warn("_disable method not defined");
-        return false;
-      }
-
-      this._disable(el, msg.data);
-
-      return true;
-    }
-
-    if (action === "invalidate") {
-      if (this._invalidate === undefined) {
-        console.warn("_invalidate method not defined");
-        return false;
-      }
-
-      this._invalidate(el, msg.data);
-
-      return true;
-    }
-
-    if (action === "validate") {
-      if (this._validate === undefined) {
-        console.warn("_validate method not defined");
-        return false;
-      }
-
-      this._validate(el, msg.data);
-
-      return true;
-    }
+    return false;
   };
 
   this.hasSelector = function(key) {

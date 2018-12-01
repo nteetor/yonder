@@ -13,13 +13,13 @@ submitInput(label = "Submit", block = FALSE, ...)
 linkInput(id, text, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the button or link input.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{label}{A character string specifying the label text on the button
 input.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element.}
 
 \item{block}{If \code{TRUE}, the input is block-level instead of inline, defaults
 to \code{FALSE}. A block-level element will occupy the entire width of its
@@ -93,11 +93,11 @@ div("Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem.")
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
+Other inputs: \code{\link{badgeOutput}},
   \code{\link{buttonGroupInput}},
   \code{\link{checkboxInput}}, \code{\link{dateInput}},
   \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{loginInput}},
+  \code{\link{groupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}

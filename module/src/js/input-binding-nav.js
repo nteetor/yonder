@@ -1,36 +1,60 @@
 export let navInputBinding = new Shiny.InputBinding();
 
-$(".yonder-nav .nav-link").on("click", ".nav-link", e => e.preventDefault());
-
 $.extend(navInputBinding, {
   Selector: {
     SELF: ".yonder-nav[id]",
-    SELECTED: ".nav-link.active"
+    CHILD: ".nav-item",
+    CHOICE: ".nav-link",
+    VALUE: ".nav-link",
+    SELECTED: ".active"
   },
   Events: [
     {
       type: "click",
-      selector: ".nav-link:not(.dropdown-toggle)",
+      selector: "a",
+      callback: el => false
+    },
+    {
+      type: "click",
+      selector: ".nav-link:not(.dropdown-toggle):not(.disabled)",
       callback: (el, target) => {
-        el.querySelector(".nav-link.active").classList.remove("active");
+        el.querySelectorAll(".active").forEach(a => a.classList.remove("active"));
         target.classList.add("active");
       }
     },
     {
       type: "click",
-      selector: ".dropdown-item",
+      selector: ".dropdown-item:not(.disabled)",
       callback: (el, target) => {
-        let active = el.querySelectorAll(".nav-link.active, .dropdown-item.active");
-
-        for (const act of active) {
-          act.classList.remove("active");
-        }
+        el.querySelectorAll(".active").forEach(a => a.classList.remove("active"));
 
         target.parentNode.parentNode.firstElementChild.classList.add("active");
         target.classList.add("active");
       }
     }
-  ]
+  ],
+  _disable: function(el, data) {
+    el.querySelectorAll("[data-value]").forEach(child => {
+      let value = child.getAttribute("data-value");
+      let index = data.values ? data.values.indexOf(value) : 0;
+
+      if ((index > -1) === !data.invert) {
+        child.classList.add("disabled");
+      } else if (data.reset) {
+        child.classList.remove("disabled");
+      }
+    });
+  },
+  _enable: function(el, data) {
+    el.querySelectorAll("[data-value]").forEach(child => {
+      let value = child.getAttribute("data-value");
+      let index = data.values ? data.values.indexOf(value) : 0;
+
+      if ((index > -1) === !data.invert) {
+        child.classList.remove("disabled");
+      }
+    });
+  }
 });
 
 Shiny.addCustomMessageHandler("yonder:pane", (msg) => {

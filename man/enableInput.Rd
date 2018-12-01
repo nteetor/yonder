@@ -5,14 +5,14 @@
 \alias{disableInput}
 \title{Enable, disable input}
 \usage{
-enableInput(id, values, invert = FALSE,
+enableInput(id, values = NULL, invert = FALSE,
   session = getDefaultReactiveDomain())
 
-disableInput(id, values, invert = FALSE, reset = FALSE,
+disableInput(id, values = NULL, invert = FALSE, reset = FALSE,
   session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{id}{A character string.}
+\item{id}{A character string specifying the reactive id of an input.}
 
 \item{values}{A vector specifying values to enable or disable.}
 

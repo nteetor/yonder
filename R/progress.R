@@ -69,9 +69,9 @@
 #' ### Striped variant
 #'
 #' progressOutlet(
-#'   id = NULL,
+#'   id = "progress1",
 #'   bar(
-#'     id = NULL,
+#'     id = "task1",
 #'     value = 41,
 #'     striped = TRUE  # <-
 #'   ) %>%
@@ -81,9 +81,9 @@
 #' ### Labeled bars
 #'
 #' progressOutlet(
-#'   id = NULL,
+#'   id = "progress2",
 #'   bar(
-#'     id = NULL,
+#'     id = "task2",
 #'     value = 64,
 #'     label = "Trees planted"  # <-
 #'   ) %>%
@@ -93,14 +93,14 @@
 #' ### Multiple bars
 #'
 #' progressOutlet(
-#'   id = NULL,  # <- this is typically not NULL
+#'   id = "progress3",
 #'   bar(
-#'     id = NULL,
+#'     id = "task3",
 #'     value = 40
 #'   ) %>%
 #'     background("red"),
 #'   bar(
-#'     id = NULL,
+#'     id = "task4",
 #'     value = 20
 #'   ) %>%
 #'     background("orange")

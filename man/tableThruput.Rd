@@ -11,8 +11,7 @@ tableThruput(id, ..., borders = "rows", striped = FALSE,
 renderTable(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying the id of the table thruput. This id
-is used as both an input and output reactive.}
+\item{id}{A character string specifying the reactive id of the thruput.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}

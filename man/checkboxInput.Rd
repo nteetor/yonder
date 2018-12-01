@@ -10,9 +10,7 @@ checkboxInput(id, choice, value = choice, checked = FALSE, ...)
 checkbarInput(id, choices, values = choices, selected = NULL, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the checkbox input, the
-reactive value of the checkbox input is available to the shiny server
-function as part of the \code{input} object.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{choice, choices}{A character string or vector specifying a label for the
 checkbox or checkbar.}
@@ -23,8 +21,8 @@ checkbox or checkbar input, defaults to \code{choice} or \code{values}, respecti
 \item{checked}{If \code{TRUE} the checkbox renders in a checked state, defaults
 to \code{FALSE}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element.}
 
 \item{selected}{One of \code{values} specifying the initial value of the checkbar
 input, defaults to \code{NULL}, in which case no choice is selected.}
@@ -74,11 +72,11 @@ formGroup(
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
+Other inputs: \code{\link{badgeOutput}},
   \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{dateInput}},
   \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{loginInput}},
+  \code{\link{groupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}

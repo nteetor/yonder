@@ -1,6 +1,6 @@
 ---
 this: index
-filename: R/update.R
+filename: R/inputs.R
 layout: index
 requires: ~
 roxygen:

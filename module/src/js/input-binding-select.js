@@ -3,8 +3,10 @@ export let selectInputBinding = new Shiny.InputBinding();
 $.extend(selectInputBinding, {
   Selector: {
     SELF: ".yonder-select[id]",
-    VALUE: "option",
-    SELECTED: "option:checked",
+    CHILD: "option",
+    CHOICE: null,
+    VALUE: null,
+    SELECTED: "option:checked:not(:disabled)",
     VALIDATE: "select"
   },
   Events: [
@@ -27,16 +29,18 @@ $.extend(selectInputBinding, {
 
     for (var i = 0; i < data.choices.length; i++) {
       template.innerHTML = data.choices[i];
-      template.value = data.values[i];
+      template.setAttribute("data-value", data.values[i]);
 
       select.appendChild(template.cloneNode(true));
     }
 
-    select
-      .querySelector(`option:nth-child(${ data.selected })`)
-      .setAttribute("selected", "");
-
-    return true;
+    if (data.selected) {
+      select
+        .querySelector(`option:nth-child(${ data.selected })`)
+        .setAttribute("selected", "");
+    } else {
+      select.querySelector("option").setAttribute("selected", "");
+    }
   },
   _enable: function(el, data) {
     let options = el.querySelectorAll("option");

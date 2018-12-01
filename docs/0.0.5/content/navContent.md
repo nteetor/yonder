@@ -6,7 +6,7 @@ requires: ~
 roxygen:
   title: Navigation panes
   description: |-
-    These functions pair with [navInput()](/yonder/0.0.5/inputs/navInput.html). Use `navContent()` and `navPane()` to
+    These functions pair with [navInput()](/yonder/0.0.5/navInput.html). Use `navContent()` and `navPane()` to
     create the pane layout. To show a new pane use `showPane()` in the server
     function.
   parameters:
@@ -18,7 +18,7 @@ roxygen:
       For **navPane**, named attributes passed as HTML elements to the parent
       element.
   - name: id
-    description: A character string specifying the id of a nav pane.
+    description: A character string specifying the id of the nav pane.
   - name: session
     description: A reactive context, defaults to [getDefaultReactiveDomain()](/yonder/0.0.5/getDefaultReactiveDomain.html).
   sections:

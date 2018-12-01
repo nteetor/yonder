@@ -7,7 +7,7 @@
 buttonGroupInput(id, labels, values = labels, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the button group input.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{labels}{A character vector of labels, a button is added to the group
 for each label specified.}
@@ -42,11 +42,11 @@ buttonGroupInput(
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
+Other inputs: \code{\link{badgeOutput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{dateInput}}, \code{\link{fileInput}},
   \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{loginInput}}, \code{\link{navInput}},
+  \code{\link{menuInput}}, \code{\link{navInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}, \code{\link{textInput}}
 }

@@ -10,7 +10,7 @@
 #' submission. Unlike shiny's `submitButton`, yonder's submit inputs will not
 #' freeze all reactive inputs on the page.
 #'
-#' @param id A character string specifying the id of the button or link input.
+#' @template input
 #'
 #' @param label A character string specifying the label text on the button
 #'   input.
@@ -22,14 +22,10 @@
 #' @param text A character string specifying the text displayed as part of the
 #'   link input.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the parent
-#'   element.
-#'
 #' @details
 #'
 #' A submit input is automatically included as part of a [`formInput`].
 #'
-#' @family inputs
 #' @export
 #' @examples
 #' ### Simple vs block button
@@ -175,18 +171,13 @@ linkInput <- function(id, text, ...) {
 #'
 #' A set of buttons with custom values.
 #'
-#' @param id A character string specifying the id of the button group input.
-#'
 #' @param labels A character vector of labels, a button is added to the group
 #'   for each label specified.
 #'
 #' @param values A character vector of values, one for each button specified,
 #'   defaults to `labels`.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the
-#'   parent element.
-#'
-#' @family inputs
+#' @template input
 #' @export
 #' @examples
 #'

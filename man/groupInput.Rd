@@ -4,17 +4,17 @@
 \alias{groupInput}
 \title{Group inputs, combination button, dropdown, and text input}
 \usage{
-groupInput(id, placeholder = NULL, value = NULL, left = NULL,
+groupInput(id, value = NULL, placeholder = NULL, left = NULL,
   right = NULL, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the group input.}
-
-\item{placeholder}{A character string specifying placeholder text for the
-input group, defaults to \code{NULL}.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{value}{A character string specifying an initial value for the input
 group, defaults to \code{NULL}.}
+
+\item{placeholder}{A character string specifying placeholder text for the
+input group, defaults to \code{NULL}.}
 
 \item{left, right}{A character vector specifying static addons or
 \code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons.
@@ -105,11 +105,11 @@ groupInput(
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
+Other inputs: \code{\link{badgeOutput}},
   \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{dateInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{loginInput}},
+  \code{\link{formInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}

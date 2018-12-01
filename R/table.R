@@ -4,9 +4,6 @@
 #' `renderTable()`. Access selected table columns by referencing the same
 #' table id as an input.
 #'
-#' @param id A character string specifying the id of the table thruput. This id
-#'   is used as both an input and output reactive.
-#'
 #' @param borders One of `"rows"`, `"all"`, or `"none"` specifying what borders
 #'   are applied to the table, defaults to `"rows"`. `"rows"` will apply borders
 #'   between table rows. `"all"` will apply borders between table rows and
@@ -25,9 +22,6 @@
 #' @param editable One of `TRUE` or `FALSE` specifying if the user can edit
 #'   table cells, defaults to `FALSE`.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the parent
-#'   element.
-#'
 #' @param expr An expression which returns a data frame or `NULL`. If a data
 #'   frame is returned the table thruput is re-rendered, otherwise if `NULL` the
 #'   current table is left as is.
@@ -38,7 +32,7 @@
 #' @param quoted One of `TRUE` or `FALSE` specifying if `expr` is a quoted
 #'   expression.
 #'
-#' @family thruputs
+#' @template thruput
 #' @requires data
 #' @export
 #' @examples

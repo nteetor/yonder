@@ -5,9 +5,6 @@
 #' values from its active (selected) list group items. List group items are
 #' selected or unselected by clicking on them.
 #'
-#' @param id A character vector specifying the reactive id of the list group
-#'   thruput.
-#'
 #' @param ... For `listGroupThruput()`, additional named arguments passed on as
 #'   HTML attributes to the parent list group element.
 #'
@@ -38,7 +35,7 @@
 #' @param env The environment in which to evalute the expressions based to
 #'   `renderListGroup()`.
 #'
-#' @family thruputs
+#' @template thruput
 #' @export
 #' @examples
 #'

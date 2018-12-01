@@ -2,8 +2,6 @@
 #'
 #' A take on shiny's `sliderInput`.
 #'
-#' @param id A character string specifying the id of the range input or `NULL`.
-#'
 #' @param min A number specifying the minimum value of the range input, defaults
 #'   to `0`.
 #'
@@ -62,10 +60,7 @@
 #' @param suffix A character string specifying a suffix for the range input
 #'   slider value, defaults to `NULL`, in which case a prefix is not appended.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the parent
-#'   element.
-#'
-#' @family inputs
+#' @template input
 #' @export
 #' @examples
 #'

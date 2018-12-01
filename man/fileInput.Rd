@@ -8,7 +8,7 @@ fileInput(id, placeholder = "Choose file", left = NULL,
   right = "Browse", ..., multiple = TRUE, accept = NULL)
 }
 \arguments{
-\item{id}{A character string specifying the HTML id of the file input.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{placeholder}{A character string specifying the text inside the file
 input, defaults to \code{"Choose file"}.}
@@ -20,7 +20,7 @@ appended respectively to the file input. For more information refer to
 Clicking on an element specified by \code{right} also opens the file input
 dialog.}
 
-\item{...}{Additional named arguments passed on as HTML attributes to the
+\item{...}{Additional named arguments passed as HTML attributes to the
 parent element.}
 
 \item{multiple}{One of \code{TRUE} or \code{FALSE} specifying whether or not the user
@@ -72,11 +72,11 @@ fileInput(
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
+Other inputs: \code{\link{badgeOutput}},
   \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{dateInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{loginInput}},
+  \code{\link{groupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}

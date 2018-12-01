@@ -6,12 +6,17 @@ $(".yonder-file").on("click", ".input-group-append", function(e) {
 
 $.extend(fileInputBinding, {
   Selector: {
-    SELF: ".yonder-file[id]"
+    SELF: ".yonder-file[id]",
+    VALIDATE: "input[type='file']"
   },
-  getValue: function(el) {
-    return null;
+  getValue: el => null,
+  _enable: function(el, data) {
+    el.querySelector("input[type='file']").removeAttribute("disabled");
   },
-  sendFile: function(uri, job, file, final, el) {
+  _disable: function(el, data) {
+    el.querySelector("input[type='file']").setAttribute("disabled", "");
+  },
+  _sendFile: function(uri, job, file, final, el) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", uri, true);
     xhr.setRequestHeader("Content-Type", "application/octet-stream");
@@ -35,13 +40,13 @@ $.extend(fileInputBinding, {
 
     xhr.send(file);
   },
-  doUpload: function(el, files) {
+  _doUpload: function(el, files) {
     if (!files) {
       return;
     }
 
     let info = $.map(files, (f) => {
-      return {name: f.name, size: f.size, type: f.type };
+      return { "name": f.name, "size": f.size, "type": f.type };
     });
 
     Shiny.shinyapp.makeRequest(
@@ -52,7 +57,7 @@ $.extend(fileInputBinding, {
         let uri = res.uploadUrl;
 
         for (var i = 0; i < files.length; i++) {
-          this.sendFile(uri, job, files[i], i === (files.length - 1), el);
+          this._sendFile(uri, job, files[i], i === (files.length - 1), el);
         }
       },
       (err) => {
@@ -71,11 +76,11 @@ $.extend(fileInputBinding, {
 
     if ($(el).find(".btn").length) {
       $(el).on("click.fileInputBinding", ".btn", (e) => {
-        this.doUpload(el, input.files);
+        this._doUpload(el, input.files);
       });
     } else {
       $(el).on("change.fileInputBinding", (e) => {
-        this.doUpload(el, input.files);
+        this._doUpload(el, input.files);
       });
     }
 
@@ -92,9 +97,9 @@ $.extend(fileInputBinding, {
       e.preventDefault();
 
       if (input.hasAttribute("multiple")) {
-        this.doUpload(el, e.originalEvent.dataTransfer.files);
+        this._doUpload(el, e.originalEvent.dataTransfer.files);
       } else {
-        this.doUpload(el, e.originalEvent.dataTransfer.files[0]);
+        this._doUpload(el, e.originalEvent.dataTransfer.files[0]);
       }
     });
   },

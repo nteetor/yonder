@@ -4,8 +4,6 @@
 #' styled as links, tabs, or pills. A nav input is paired with [navContent()]
 #' and [showPane()] to create tabbed user interfaces.
 #'
-#' @param id A character string specifying the id of a pane.
-#'
 #' @param choices A character vector or list of tag elements specifying the
 #'   navigation items of the navigation input.
 #'
@@ -19,17 +17,21 @@
 #' @param appearance One of `"pills"` or `"tabs"` specifying the appearance of
 #'   the nav input.
 #'
-#' @param ... Any number of tag elements or named arguments passed as HTML
-#'   attributes to the parent element.
+#' @section Reactive value:
 #'
-#' @family inputs
+#' A click on a navigation link triggers a single character string.
+#'
+#' A click on a dropdown item triggers a character vector of two values, the
+#' value of the nav link and the value of the dropdown item.
+#'
+#' @template input
 #' @export
 #' @examples
 #'
 #' ### Nav styled as tabs
 #'
 #' navInput(
-#'   id = "tabs",
+#'   id = "tabs1",
 #'   choices = c(
 #'     "Tab 1",
 #'     "Tab 2",
@@ -41,7 +43,7 @@
 #' ### Nav styled as pills
 #'
 #' navInput(
-#'   id = "tabs",
+#'   id = "tabs2",
 #'   choices = paste("Tab", 1:3),
 #'   appearance = "pills"
 #' )
@@ -49,22 +51,26 @@
 #' ### Nav with dropdown
 #'
 #' navInput(
-#'   id = "tabs",
+#'   id = "tabs3",
 #'   choices = list(
 #'     "Tab 1",
-#'     dropdown(
+#'     menuInput(
+#'       id = NULL,  # <- ignored
 #'       label = "Tab 2",
-#'       buttonInput("action", "Action"),
-#'       buttonInput("another", "Another action")
+#'       choices = c(
+#'         "Action",
+#'         "Another action"
+#'       )
 #'     ),
 #'     "Tab 2"
-#'   )
+#'   ),
+#'   values = c("tab1", "tab2", "tab3")
 #' )
 #'
 #' ### Full width nav input
 #'
 #' navInput(
-#'   id = "tabs",
+#'   id = "tabs4",
 #'   choices = paste("Tab", 1:5),
 #'   values = paste0("tab", 1:5),
 #'   appearance = "pills",
@@ -74,7 +80,7 @@
 #' ### Centering a nav input
 #'
 #' navInput(
-#'   id = "tabs",
+#'   id = "tabs5",
 #'   choices = paste("Tab", 1:3)
 #' ) %>%
 #'   flex(justify = "center")
@@ -91,7 +97,7 @@ navInput <- function(id, choices, values = choices, ..., appearance = NULL,
 
   values <- vapply(
     values,
-    function(x) if (is_tag(x)) x$children[[1]]$children[[1]] else (x %||% ""),
+    function(x) if (is_tag(x)) x$children[[1]]$children[[1]] else x,
     character(1)
   )
 
@@ -104,19 +110,15 @@ navInput <- function(id, choices, values = choices, ..., appearance = NULL,
     ),
     id = id,
     Map(
-      label = choices,
+      base = choices,
       value = values,
       active = c(TRUE, rep.int(FALSE, length(choices) - 1)),
-      function(label, value, active) {
-        navItem(label, value, active)
-      }
+      navItem
     )
   )
 }
 
-navItem <- function(base, value = NULL, active = FALSE) {
-  value <- if (value != "") value
-
+navItem <- function(base, value, active) {
   if (is.character(base)) {
     base <- tags$li(
       class = "nav-item",
@@ -126,7 +128,7 @@ navItem <- function(base, value = NULL, active = FALSE) {
           if (active) "active"
         ),
         href = "#",
-        `data-value` = value %||% base,
+        `data-value` = value,
         base
       )
     )
@@ -134,26 +136,25 @@ navItem <- function(base, value = NULL, active = FALSE) {
     return(base)
   }
 
-  if (tagHasClass(base, "dropdown")) {
-    base$children[[1]]$name <- "a"
+  if (tagHasClass(base, "yonder-menu")) {
     base$children[[1]]$attribs$class <- "nav-link dropdown-toggle"
     base$children[[1]]$attribs$type <- NULL
-    base$children[[1]]$attribs$`data-value` <- value %||% base$children[[1]]$children[[1]]
-    base$children[[1]]$attribs$role <- "button"
-    base$children[[1]]$attribs$href <- "#"
+    base$children[[1]]$attribs$`data-value` <- value
 
     if (active) {
       base$children[[1]] <- tagAddClass(base$children[[1]], "active")
     }
 
     base$name <- "li"
+    base$attribs$id <- NULL
     base <- tagAddClass(base, "nav-item")
 
     return(base)
   }
 
   stop(
-    "could not convert object to nav item",
+    "invalid `navInput()` arguments, could not construct nav items from ",
+    "`choices` and `values`",
     call. = FALSE
   )
 }
@@ -170,7 +171,7 @@ navItem <- function(base, value = NULL, active = FALSE) {
 #'   For **navPane**, named attributes passed as HTML elements to the parent
 #'   element.
 #'
-#' @param id A character string specifying the id of a nav pane.
+#' @param id A character string specifying the id of the nav pane.
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'

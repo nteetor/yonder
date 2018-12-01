@@ -10,9 +10,11 @@ invalidateInput(id, message, session = getDefaultReactiveDomain())
 validateInput(id, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{id}{A character string.}
+\item{id}{A character string specifying the reactive id of an input.}
 
 \item{message}{A character string specifying the message.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 \code{invalidateInput()} and \code{validateInput()} are new utilities for conveying

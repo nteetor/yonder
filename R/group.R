@@ -8,8 +8,6 @@
 #' to the user. Buttons and dropdowns may be included to control when the group
 #' input's reactive value updates. See Details for more information.
 #'
-#' @param id A character string specifying the id of the group input.
-#'
 #' @param placeholder A character string specifying placeholder text for the
 #'   input group, defaults to `NULL`.
 #'
@@ -20,9 +18,6 @@
 #'   [buttonInput()] or [dropdown()] elements specifying dynamic addons.
 #'   Addon's affect the reactive value of the group input, see the Details
 #'   section below for more information.
-#'
-#' @param ... Additional named arguments passed as HTML attributes to the
-#'   parent element.
 #'
 #' @section `left` and `right` combinations:
 #'
@@ -47,7 +42,7 @@
 #' menu item. The value of the input group is the concatentation of the
 #' dropdown input value, the value of the text input, and any static addons.
 #'
-#' @family inputs
+#' @template input
 #' @export
 #' @examples
 #'
@@ -94,7 +89,7 @@
 #'     border("blue")
 #' )
 #'
-groupInput <- function(id, placeholder = NULL, value = NULL, left = NULL,
+groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
                        right = NULL, ...) {
   if (!is.null(left) && !isValidAddon(left)) {
     stop(

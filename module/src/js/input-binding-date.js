@@ -2,7 +2,7 @@ export let dateInputBinding = new Shiny.InputBinding();
 
 $.extend(dateInputBinding, {
   Selector: {
-    SELF: ".yonder-date[id]"
+    SELF: ".yonder-date"
   },
   Events: [
     { type: "dateinput:close" }
@@ -32,12 +32,16 @@ $.extend(dateInputBinding, {
   },
   getType: () => "yonder.date",
   getValue: (el) => el._flatpickr.selectedDates,
-  receiveMessage: function(el, msg) {
-    if (msg.type === null) {
-      return;
+  _update: function(el, data) {
+    if (data.selected) {
+      el._flatpickr.setDate(data.selected, true);
     }
-
-    throw "receiveMessage not implemented for date inputs";
+  },
+  _enable: function(el, data) {
+    el._flatpickr.set("enable", data.values);
+  },
+  _disable: function(el, data) {
+    el._flatpickr.set("disable", data.values);
   }
 });
 

@@ -10,29 +10,14 @@ $.extend(textualInputBinding, {
     { type: "input", debounce: true }
   ],
   getValue: function(el) {
-    var $input = $(el).find("input");
-    var val = $input.val() === undefined ? null : $input.val();
+    let input = el.querySelector("input");
+    let value = input.value;
 
-    if (val === null) {
-      return null;
+    if (input.type === "number") {
+      return parseInt(value, 10);
     }
 
-    if ($input.attr("type") === "number") {
-      return parseInt(val, 10);
-    }
-
-    return val;
-  },
-  getType: function(el) {
-    var $type = $("input", el).attr("type");
-
-    if ($type === "date") {
-      return "yonder.date";
-    } else if ($type === "time") {
-      return "yonder.time";
-    }
-
-    return false;
+    return value;
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
@@ -42,6 +27,15 @@ $.extend(textualInputBinding, {
       policy: "debounce",
       delay: 250
     };
+  },
+  _update: function(el, data) {
+    data.values && (el.querySelector("input").value = data.values[0]);
+  },
+  _disable: function(el, data) {
+    el.querySelector("input").setAttribute("disabled", "");
+  },
+  _enable: function(el, data) {
+    el.querySelector("input").removeAttribute("disabled");
   }
 });
 

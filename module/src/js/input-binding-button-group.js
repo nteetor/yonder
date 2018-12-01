@@ -2,7 +2,8 @@ export let buttonGroupInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonGroupInputBinding, {
   Selector: {
-    "SELF": ".yonder-button-group[id]",
+    "SELF": ".yonder-button-group",
+    "CHOICE": ".btn",
     "VALUE": ".btn"
   },
   Events: [
@@ -18,33 +19,41 @@ $.extend(buttonGroupInputBinding, {
     return { "force": Date.now(), "value": this._VALUES[el.id] };
   },
   _update: (el, data) => {
-    let children = document.querySelectorAll(".btn"); // modularize?
+    let children = document.querySelectorAll(".btn");
 
-    if (!children.length) {
-      return false;
-    }
+    children.forEach((child, i) => {
+      child.innerHTML = data.choices[i];
+      child.setAttribute("data-value", data.values[i]);
+    });
+  },
+  _enable: function(el, data) {
+    let children = el.querySelectorAll(this.Selector.CHILD);
 
-    let choices, values;
+    children.forEach(child => {
+      let value = child.querySelector(this.Selector.VALUE).getAttribute("data-value");
+      let index = data.values ? data.values.indexOf(value) : 0;
 
-    if (data.choices === null) {
-      choices = children.forEach(child => child.innerHTML);
-    }
+      if ((index > -1) === !data.invert) {
+        child.classList.remove("disabled");
+        child.querySelector(this.Selector.VALUE).removeAttribute("disabled");
+      }
+    });
+  },
+  _disable: function(el, data) {
+    let children = el.querySelectorAll(this.Selector.CHILD);
 
-    let template = children[0].cloneNode();
+    children.forEach(child => {
+      let value = child.querySelector(this.Selector.VALUE).getAttribute("data-value");
+      let index = data.values ? data.values.indexOf(value) : 0;
 
-    for (const child of children) {
-      el.removeChild(child);
-    }
-
-    for (const i in data.values) {
-      const [name, value] = data.values[i];
-
-      template.setAttribute("data-value", value);
-      template.innerHTML = name;
-      el.appendChild(template.cloneNode(true));
-    }
-
-    return true;
+      if ((index > -1) === !data.invert) {
+        child.classList.add("disabled");
+        child.querySelector(this.Selector.VALUE).setAttribute("disabled", "");
+      } else if (data.reset) {
+        child.classList.remove("disabled");
+        child.querySelector(this.Selector.VALUE).removeAttribute("disabled");
+      }
+    });
   }
 });
 

@@ -15,6 +15,29 @@ $.extend(groupInputBinding, {
   },
   getState: function(el) {
     return { value: this.getValue(el) };
+  },
+  _update: function(el, data) {
+    if (!data.values) {
+      return;
+    }
+    let input = el.querySelector("input");
+    input.value = data.values[0];
+  },
+  _enable: function(el, data) {
+    let input = el.querySelector("input");
+    input.removeAttribute("disabled");
+  },
+  _disable: function(el, data) {
+    let input = el.querySelector("input");
+    input.setAttribute("disabled", "");
+  },
+  _validate: function(el, data) {
+    let input = el.querySelector("input");
+    input.classList.remove("is-invalid");
+  },
+  _invalidate: function(el, data) {
+    let input = el.querySelector("input");
+    input.classList.add("is-invalid");
   }
 });
 

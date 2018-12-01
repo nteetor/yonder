@@ -25,22 +25,16 @@ $.extend(formInputBinding, {
     submit.setAttribute("data-value", 0);
   },
   find: function(scope) {
-    let $input = $(scope).find(".yonder-form[id]");
+    let forms = scope.querySelectorAll(".yonder-form[id]");
 
-    if (!$input.children("button[data-type='submit']").length) {
-      return null;
-    }
-
-    return $input;
+    return Array.prototype.slice.call(forms).filter(form => {
+      return form.querySelector("button[data-type='submit']") !== null;
+    });
   },
   getValue: function(el) {
     let submit = el.querySelector("button[data-type='submit']");
 
-    if (submit === null) {
-      return;
-    }
-
-    return +submit.getAttribute("data-value");
+    return submit && +submit.getAttribute("data-value");
   }
 });
 

@@ -3,8 +3,6 @@
 #' A date time picker. Alternatively, use the date time range picker to select
 #' a range of dates. The value of the date range picker is always two dates.
 #'
-#' @param id A character specifying the id of the datetime input.
-#'
 #' @param choices Date objects or character strings specifying the set of
 #'   dates the user may choose from, defaults to `NULL` in which case the user
 #'   may choose any date.
@@ -22,10 +20,7 @@
 #'   may be selected, if `TRUE` the user may select multiple dates and a vector
 #'   of one or more dates is returned as the reactive value.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the parent
-#'   element.
-#'
-#' @family inputs
+#' @template input
 #' @export
 #' @examples
 #'

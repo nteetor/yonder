@@ -10,7 +10,7 @@ badgeOutput(id, ...)
 renderBadge(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying the id of the badge output.}
+\item{id}{A character string specifying the reactive id of the output.}
 
 \item{...}{Additional named argument passed as HTML attributes to the parent
 element.}
@@ -70,4 +70,13 @@ div(
   flex(wrap = TRUE)
 
 }
-\concept{outputs}
+\seealso{
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
+  \code{\link{dateInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{menuInput}}, \code{\link{navInput}},
+  \code{\link{radioInput}}, \code{\link{rangeInput}},
+  \code{\link{selectInput}}, \code{\link{textInput}}
+}
+\concept{inputs}
