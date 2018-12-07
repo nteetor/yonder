@@ -84,13 +84,13 @@ collapsiblePane <- function(id, ..., show = FALSE) {
 #' @rdname collapsiblePane
 #' @export
 collapsePane <- function(id, session = getDefaultReactiveDomain()) {
-  sendCollapseMessage("show", id, session)
+  sendCollapseMessage("hide", id, session)
 }
 
 #' @rdname collapsiblePane
 #' @export
 expandPane <- function(id, session = getDefaultReactiveDomain()) {
-  sendCollapseMessage("hide", id, session)
+  sendCollapseMessage("show", id, session)
 }
 
 #' @rdname collapsiblePane
