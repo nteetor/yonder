@@ -111,7 +111,10 @@ menuInput <- function(id, label, choices, values = choices, ...,
       label
     ),
     tags$div(
-      class = "dropdown-menu",
+      class = collate(
+        "dropdown-menu",
+        if (align == "right") "dropdown-menu-right"
+      ),
       Map(
         choice = choices,
         value = values,
