@@ -35,6 +35,19 @@
 #' @param ... Additional named arguments passed on HTML attributes to the parent
 #'   element.
 #'
+#' @section Example application:
+#'
+#' shinyApp(
+#'   ui = container(
+#'     tableThruput(id = "tableExample", responsive = TRUE)
+#'   ),
+#'   server = function(input, output) {
+#'     output$tableExample <- renderTable({
+#'       iris
+#'     })
+#'   }
+#' )
+#'
 #' @template thruput
 #' @requires data
 #' @export

@@ -7,7 +7,8 @@ button {
 }
 
 .dropdown-item,
-.nav-link {
+.nav-link,
+.list-group-item-action {
   cursor: pointer;
 
   &.disabled {

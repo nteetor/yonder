@@ -1,61 +1,37 @@
-#' List group thruputs
+#' List group inputs
 #'
-#' A way of handling and outlining content as a list. List groups function
-#' similarly to checkbox groups. A list group returns a reactive vector of
-#' values from its active (selected) list group items. List group items are
-#' selected or unselected by clicking on them.
+#' List group inputs are an actionable list of items. They behave similarly to
+#' checkboxes or radios, that is, users may select one or more items from the
+#' list. However, list group items may include highly variable content.
 #'
-#' @param ... For `listGroupThruput()`, additional named arguments passed on as
-#'   HTML attributes to the parent list group element.
+#' @param choices A vector of character strings or list of tag elements specifying
+#'   the content of the list group's items.
 #'
-#'   For `listGroupItem()`, the text or HTML content of the list group item.
-#'
-#'   For `renderListGroup()`, any number of expressions which return a
-#'   `listGroupItem()` or calls to `listGroupItem()`.
+#' @param values A character vector specifying the values of the list items,
+#'   defaults to `choices`.
 #'
 #' @param multiple One of `TRUE` or `FALSE` specifyng if multiple list group
 #'   items may be selected, defaults to `TRUE`.
 #'
 #' @param flush One of `TRUE` or `FALSE` specifying if the list group is
-#'   rendered without a border, defaults to `FALSE`. Removing the list group
-#'   border is useful when rendering a list group inside a custom parent
-#'   container, e.g. inside a `card()`.
+#'   rendered without an outside border, defaults to `FALSE`. Removing the list
+#'   group border is useful when rendering a list group inside a custom parent
+#'   container, e.g. inside a [card()].
 #'
-#' @param value A character string specifying the value of the list group item,
-#'   defaults to `NULL`, in which case the list group item has no value. List
-#'   group items without a value are not actionable, i.e. they cannot be
-#'   selected.
+#' @section Complex list items:
 #'
-#' @param selected `TRUE` or `FALSE` specifying if the list group item is
-#'   selected by default, defaults to `FALSE`.
+#' The following application demonstrates the flexibility of a list
+#' group input. Here each list item contains a collasible pane. We
+#' can hook up the server such that selecting a list item expands the
+#' corresponding collapsible pane.
 #'
-#' @param disabled `TRUE` or `FALSE` specifying if the list group item can be
-#'   selected, defaults to `FALSE`.
-#'
-#' @param env The environment in which to evalute the expressions based to
-#'   `renderListGroup()`.
-#'
-#' @template thruput
-#' @export
-#' @examples
-#'
-#' ### Getting started
-#'
-#' listGroupThruput(
-#'   id = NULL,
-#'   listGroupItem(
-#'     rangeInput(NULL)
-#'   )
-#' )
-#'
-#' ### Fancier list items
-#'
+#' ```R
 #' lessons <- list(
 #'   stars = c(
 #'     "The stars and moon are far too bright",
 #'     "Their beam and smile splashing o'er all",
-#'     "To illuminate while turning my sight",
-#'     "From the shadows wherein deeper shadows fall"
+#'     "To illuminate while turning sight",
+#'     "From shadows wherein deeper shadows fall"
 #'   ),
 #'   joy = c(
 #'     "A single step, her hand aloft",
@@ -65,80 +41,174 @@
 #'   )
 #' )
 #'
-#' listGroupThruput(
-#'   id = NULL,
-#'   multiple = FALSE,
-#'   listGroupItem(
-#'     value = "stars",
-#'     h5("Stars"),
-#'     lessons[["stars"]][1]
-#'   ),
-#'   listGroupItem(
-#'     value = "joy",
-#'     h5("Joy"),
-#'     lessons[["joy"]][1]
+#' ui <- container(
+#'   listGroupInput(
+#'     id = "poems",
+#'     multiple = FALSE,
+#'     choices = list(
+#'       list(
+#'         h5("Stars"),
+#'         collapsiblePane(
+#'           id = "stars",
+#'           lapply(lessons[["stars"]], tags$p)
+#'         )
+#'       ),
+#'       list(
+#'         h5("Joy"),
+#'         collapsiblePane(
+#'           id = "joy",
+#'           lapply(lessons[["joy"]], tags$p)
+#'         )
+#'       )
+#'     ),
+#'     values = c("stars", "joy")
 #'   )
 #' )
 #'
-listGroupThruput <- function(id, ..., multiple = TRUE, flush = FALSE) {
-  thruput <- tags$div(
+#' server <- function(input, output) {
+#'   observeEvent(input$poems, {
+#'     if (input$poems == "stars") {
+#'       collapsePane("joy")
+#'       expandPane("stars")
+#'     } else {
+#'       collapsePane("stars")
+#'       expandPane("joy")
+#'     }
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
+#'
+#' @section Navigation with a list group:
+#'
+#' A list group can also control a set of panes. Be sure to set `multiple =
+#' FALSE`. This layout is reminiscent of a table of contents.
+#'
+#' ```R
+#' ui <- container(
+#'   row(
+#'     column(
+#'       width = 3,
+#'       listGroupInput(
+#'         id = "nav",
+#'         multiple = FALSE,
+#'         selected = "pane1",
+#'         choices = c(
+#'           "Item 1",
+#'           "Item 2",
+#'           "Item 3"
+#'         ),
+#'         values = c(
+#'           "pane1",
+#'           "pane2",
+#'           "pane3"
+#'         )
+#'       )
+#'     ),
+#'     column(
+#'       navContent(
+#'         navPane(
+#'           id = "pane1",
+#'           p("Pellentesque tristique imperdiet tortor.")
+#'         ),
+#'         navPane(
+#'           id = "pane2",
+#'           p("Sed bibendum. Donec pretium posuere tellus.")
+#'         ),
+#'         navPane(
+#'           id = "pane3",
+#'           p("Pellentesque tristique imperdiet tortor.")
+#'         )
+#'       )
+#'     )
+#'   )
+#' )
+#'
+#' server <- function(input, output) {
+#'   observeEvent(input$nav, {
+#'     showPane(input$nav)
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
+#'
+#' @template input
+#' @export
+#' @examples
+#'
+#' ### A simple list group
+#'
+#' This list group is not actionable as `id` is `NULL`.
+#'
+#' listGroupInput(
+#'   id = NULL,
+#'   choices = paste("Item", 1:5)
+#' )
+#'
+#' ## An actionable list group
+#'
+#' In this example we specify an `id` thus creating an actionable list group.
+#'
+#' listGroupInput(
+#'   id = "list1",
+#'   choices = paste("Item", 1:5)
+#' )
+#'
+#' ## List group within a card
+#'
+#' card(
+#'   header = h6("Pick an item"),
+#'   listGroupInput(
+#'     id = "list2",
+#'     flush = TRUE,
+#'     choices = paste("Item", 1:5),
+#'   )
+#' )
+#'
+listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
+                           multiple = TRUE, flush = FALSE) {
+  if (is.null(id)) {
+    parentElement <- tags$ul
+    childElement <- tags$li
+  } else {
+    parentElement <- tags$div
+    childElement <- tags$a
+  }
+
+  selected <- if (is.null(id)) FALSE else match2(selected, values)
+
+  this <- parentElement(
     class = collate(
       "yonder-list-group list-group",
       if (flush) "list-group-flush"
     ),
     `data-multiple` = if (multiple) "true" else "false",
     id = id,
+    Map(
+      choice = choices,
+      value = values,
+      select = selected,
+      function(choice, value, select) {
+        childElement(
+          class = collate(
+            "list-group-item",
+            if (!is.null(id)) "list-group-item-action",
+            if (select) "active"
+          ),
+          `data-value` = value,
+          choice
+        )
+      }
+    ),
     ...
   )
 
-  thruput <- attachDependencies(
-    thruput,
+  this <- attachDependencies(
+    this,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
 
-  thruput
-}
-
-#' @rdname listGroupThruput
-#' @export
-listGroupItem <- function(..., value = NULL, selected = FALSE,
-                          disabled = FALSE) {
-  tags$a(
-    class = collate(
-      "list-group-item",
-      if (!is.null(value)) "list-group-item-action",
-      if (selected) "active",
-      if (disabled) "disabled"
-    ),
-    `data-value` = value,
-    ...
-  )
-}
-
-#' @rdname listGroupThruput
-#' @export
-renderListGroup <- function(...,  env = parent.frame()) {
-  installExprFunction(list(...), "func", env, FALSE, label = "list group items")
-
-  createRenderFunction(
-    func,
-    function(data, session, name) {
-      if (is_strictly_list(data)) {
-        data <- unlist(data, recursive = FALSE)
-      }
-
-      list(
-        items = lapply(
-          data,
-          function(x) {
-            if (is.function(x)) {
-              HTML(as.character(x()))
-            } else {
-              HTML(as.character(x))
-            }
-          }
-        )
-      )
-    }
-  )
+  this
 }

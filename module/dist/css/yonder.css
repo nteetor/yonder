@@ -1211,12 +1211,14 @@ button:disabled {
 }
 
 .dropdown-item,
-.nav-link {
+.nav-link,
+.list-group-item-action {
   cursor: pointer;
 }
 
 .dropdown-item.disabled,
-.nav-link.disabled {
+.nav-link.disabled,
+.list-group-item-action.disabled {
   cursor: not-allowed;
 }
 

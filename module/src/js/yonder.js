@@ -9,6 +9,7 @@ import "./input-binding-file.js";
 import "./input-binding-form.js";
 import "./input-binding-group-input.js";
 import "./input-binding-link.js";
+import "./input-binding-list-group.js";
 import "./input-binding-menu.js";
 import "./input-binding-nav.js";
 import "./input-binding-radio.js";
@@ -21,11 +22,11 @@ import "./output-binding-badge.js";
 import "./output-binding-progress.js";
 
 import "./thruput-binding-table.js";
-import "./thruput-binding-list-group.js";
 
 import "./alert.js";
-import "./modal.js";
 import "./collapsible.js";
+import "./element.js";
+import "./modal.js";
 
 $(() => {
   $("[data-toggle=\"tooltip\"]").tooltip();

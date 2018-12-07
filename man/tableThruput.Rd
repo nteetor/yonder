@@ -49,6 +49,21 @@ Use \code{tableThruput()} to create a table output you can update with
 \code{renderTable()}. Access selected table columns by referencing the same
 table id as an input.
 }
+\section{Example application}{
+
+
+shinyApp(
+ui = container(
+tableThruput(id = "tableExample", responsive = TRUE)
+),
+server = function(input, output) {
+output$tableExample <- renderTable({
+iris
+})
+}
+)
+}
+
 \examples{
 
 ### Responsive tables
@@ -78,8 +93,5 @@ tableThruput(
   responsive = TRUE
 )
 
-}
-\seealso{
-Other thruputs: \code{\link{listGroupThruput}}
 }
 \concept{thruputs}
