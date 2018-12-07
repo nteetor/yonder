@@ -408,3 +408,20 @@ showPane <- function(id, session = getDefaultReactiveDomain()) {
     )
   ))
 }
+
+hidePane <- function(id, session = getDefaultReactiveDomain()) {
+  if (is.null(session)) {
+
+  }
+
+  if (!is.character(id)) {
+
+  }
+
+  session$sendCustomMessage("yonder:pane", list(
+    type = "hide",
+    data = list(
+      target = id
+    )
+  ))
+}
