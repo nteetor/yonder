@@ -79,17 +79,18 @@
 #' column(
 #'   width = 4,
 #'   card(
-#'     listGroupThruput(
+#'     listGroupInput(
 #'       id = "important",
 #'       flush = TRUE,
-#'       listGroupItem(
-#'         "Pellentesque tristique imperdiet tortor."
-#'       ),
-#'       listGroupItem(
-#'         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit."
-#'       ),
-#'       listGroupItem(
+#'       choices = c(
+#'         "Pellentesque tristique imperdiet tortor.",
+#'         "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
 #'         "Phasellus purus."
+#'       ),
+#'       values = c(
+#'         "choice1",
+#'         "choice2",
+#'         "choice3"
 #'       )
 #'     )
 #'   )

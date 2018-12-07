@@ -10,6 +10,9 @@
 #' @param values A character vector specifying the values of the list items,
 #'   defaults to `choices`.
 #'
+#' @param selected One or more of `values` specifying which choices are selected
+#'   by default, defaults to `NULL`, in which case no choice is selected.
+#'
 #' @param multiple One of `TRUE` or `FALSE` specifyng if multiple list group
 #'   items may be selected, defaults to `TRUE`.
 #'
@@ -140,7 +143,7 @@
 #'
 #' ### A simple list group
 #'
-#' This list group is not actionable as `id` is `NULL`.
+#' # This list group is not actionable as `id` is `NULL`.
 #'
 #' listGroupInput(
 #'   id = NULL,
@@ -149,7 +152,7 @@
 #'
 #' ## An actionable list group
 #'
-#' In this example we specify an `id` thus creating an actionable list group.
+#' # In this example we specify an `id` thus creating an actionable list group.
 #'
 #' listGroupInput(
 #'   id = "list1",

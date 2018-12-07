@@ -16,6 +16,9 @@ the content of the list group's items.}
 \item{values}{A character vector specifying the values of the list items,
 defaults to \code{choices}.}
 
+\item{selected}{One or more of \code{values} specifying which choices are selected
+by default, defaults to \code{NULL}, in which case no choice is selected.}
+
 \item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 
 \item{multiple}{One of \code{TRUE} or \code{FALSE} specifyng if multiple list group
@@ -148,7 +151,7 @@ shinyApp(ui, server)
 
 ### A simple list group
 
-This list group is not actionable as `id` is `NULL`.
+# This list group is not actionable as `id` is `NULL`.
 
 listGroupInput(
   id = NULL,
@@ -157,7 +160,7 @@ listGroupInput(
 
 ## An actionable list group
 
-In this example we specify an `id` thus creating an actionable list group.
+# In this example we specify an `id` thus creating an actionable list group.
 
 listGroupInput(
   id = "list1",
