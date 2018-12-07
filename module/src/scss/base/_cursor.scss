@@ -6,9 +6,10 @@ button {
   }
 }
 
+.btn,
 .dropdown-item,
-.nav-link,
-.list-group-item-action {
+.list-group-item-action,
+.nav-link {
   cursor: pointer;
 
   &.disabled {

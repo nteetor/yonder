@@ -17,10 +17,18 @@ $.extend(radiobarInputBinding, {
   _update: function(el, data) {
     let children = el.querySelectorAll(".btn");
 
-    children.forEach((child, i) => {
-      child.querySelector("span").innerHTML = data.choices[i];
-      child.querySelector("input").setAttribute("data-value", data.values[i]);
-    });
+    if (data.choices) {
+      children.forEach((child, i) => {
+        child.querySelector("span").innerHTML = data.choices[i];
+        child.querySelector("input").setAttribute("data-value", data.values[i]);
+      });
+    }
+
+    if (data.selected) {
+      el.querySelector(".active").classList.remove(".active");
+      el.querySelector(`input[data-value=${ data.selected }]`)
+        .parentNode.classList.add("active");
+    }
   },
   _enable: function(el, data) {
     let children = el.querySelectorAll(".btn");
