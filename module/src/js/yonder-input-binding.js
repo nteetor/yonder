@@ -64,7 +64,7 @@ export function yonderInputBinding() {
     console.warn("no _enable method");
   };
 
-  this._disabled = (el, data) => {
+  this._disable = (el, data) => {
     console.warn("no _disable method");
   };
 

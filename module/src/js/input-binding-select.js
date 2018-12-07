@@ -20,7 +20,7 @@ $.extend(selectInputBinding, {
     let options = select.querySelectorAll("option");
 
     if (!options.length) {
-      return false;
+      return;
     }
 
     let template = options[0].cloneNode();
