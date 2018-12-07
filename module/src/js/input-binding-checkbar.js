@@ -35,8 +35,8 @@ $.extend(checkbarInputBinding, {
       }
     });
   },
-  _enable: function(el, data) {
-    let children = el.querySelectorAll(this.Selector.CHILD);
+  _disable: function(el, data) {
+    let children = el.querySelectorAll(".btn");
 
     children.forEach(child => {
       let input = child.querySelector("input");
