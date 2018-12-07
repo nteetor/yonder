@@ -92,7 +92,7 @@ Shiny.addCustomMessageHandler("yonder:pane", (msg) => {
     return;
   }
 
-  if (msg.type === "type") {
+  if (msg.type === "show") {
     _show(document.getElementById(msg.data.target));
   }
 });
