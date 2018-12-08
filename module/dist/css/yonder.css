@@ -1210,15 +1210,17 @@ button:disabled {
   cursor: not-allowed;
 }
 
+.btn,
 .dropdown-item,
-.nav-link,
-.list-group-item-action {
+.list-group-item-action,
+.nav-link {
   cursor: pointer;
 }
 
+.btn.disabled,
 .dropdown-item.disabled,
-.nav-link.disabled,
-.list-group-item-action.disabled {
+.list-group-item-action.disabled,
+.nav-link.disabled {
   cursor: not-allowed;
 }
 
