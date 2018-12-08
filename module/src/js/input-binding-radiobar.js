@@ -25,7 +25,7 @@ $.extend(radiobarInputBinding, {
     }
 
     if (data.selected) {
-      el.querySelector(".active").classList.remove(".active");
+      el.querySelector(".active").classList.remove("active");
       el.querySelector(`input[data-value=${ data.selected }]`)
         .parentNode.classList.add("active");
     }
