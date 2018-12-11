@@ -19,12 +19,16 @@ $.extend(buttonGroupInputBinding, {
     return { "force": Date.now(), "value": this._VALUES[el.id] };
   },
   _update: (el, data) => {
-    let children = document.querySelectorAll(".btn");
+    if (data.choices) {
+      let children = document.querySelectorAll(".btn");
 
-    children.forEach((child, i) => {
-      child.innerHTML = data.choices[i];
-      child.setAttribute("data-value", data.values[i]);
-    });
+      children.forEach((child, i) => {
+        child.innerHTML = data.choices[i];
+        child.setAttribute("data-value", data.values[i]);
+      });
+    }
+
+    // can't "select"
   },
   _enable: function(el, data) {
     let children = el.querySelectorAll(this.Selector.CHILD);

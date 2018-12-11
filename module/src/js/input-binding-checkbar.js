@@ -14,12 +14,27 @@ $.extend(checkbarInputBinding, {
     return { value: this.getValue(el) };
   },
   _update: function(el, data) {
-    let children = el.querySelectorAll(".btn");
+    if (data.choices) {
+      let children = el.querySelectorAll(".btn");
 
-    children.forEach((child, i) => {
-      child.querySelector("span").innerHTML = data.choices[i];
-      child.querySelector("input").setAttribute("data-value", data.values[i]);
-    });
+      children.forEach((child, i) => {
+        child.querySelector("span").innerHTML = data.choices[i];
+        child.querySelector("input").setAttribute("data-value", data.values[i]);
+      });
+    }
+
+    if (data.selected) {
+      let current = el.querySelector(".active");
+
+      if (current !== null) {
+        current.classList.remove("active");
+      }
+
+      data.selected
+        .map(s => el.querySelector(`label[data-value="${ s }"]`))
+        .filter(child => child !== null)
+        .forEach(child => child.classList.add("active"));
+    }
   },
   _enable: function(el, data) {
     let children = el.querySelectorAll(".btn");

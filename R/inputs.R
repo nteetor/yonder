@@ -71,6 +71,10 @@ updateInput <- function(id, choices = NULL, values = NULL, selected = NULL,
     )
   }
 
+  if (!is.null(selected)) {
+    selected <- as.list(selected)
+  }
+
   session$sendInputMessage(id, list(
     type = "update",
     data = list(

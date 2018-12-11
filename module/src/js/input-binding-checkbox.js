@@ -24,10 +24,18 @@ $.extend(checkboxInputBinding, {
   _update: function(el, data) {
     if (data.choices) {
       el.querySelector(this.Selector.CHOICE).innerHTML = data.choices[0];
+      el.querySelector(this.Selector.VALUE).setAttribute("data-value", data.values[0]);
     }
 
-    if (data.values) {
-      el.querySelector(this.Selector.VALUE).setAttribute("data-value", data.values[0]);
+    if (data.selected) {
+      let target = el.querySelector(this.Selector.VALUE);
+      let value = target.getAttribute("data-value");
+
+      if (value === data.selected && !target.hasAttribute("checked")) {
+        target.setAttribute("checked", "");
+      } else if (value !== data.selected && target.hasAttribute("checked")) {
+        target.removeAttribute("checked");
+      }
     }
   },
   _enable: function(el, data) {

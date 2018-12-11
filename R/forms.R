@@ -5,7 +5,9 @@
 #' Form inputs are a new reactive input. Form inputs are an alternative to
 #' shiny's submit buttons. A form input is comprised of any number of
 #' inputs. The value of these inputs will not change until the form input's
-#' submit button is clicked. A form input has no value.
+#' submit input is clicked. A form input's reactive value also depends on the
+#' submit input. This allows you to distinguish between different clicks if
+#' your form includes multiple submit inputs.
 #'
 #' **Important** if `id` or `submit` are `NULL` the form input will not freeze
 #' its child inputs. This can be useful if you want to use a `formInput()`
@@ -83,6 +85,14 @@
 #'   width(50)
 #'
 formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
+  shiny::registerInputHandler(
+    type = "yonder.form",
+    fun = function(x, session, name) {
+      if (length(x) > 0) x[[2]]
+    },
+    force = TRUE
+  )
+
   input <- tags$form(
     class = collate(
       "yonder-form",

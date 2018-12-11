@@ -5,28 +5,24 @@ $.extend(buttonInputBinding, {
     SELF: ".yonder-button"
   },
   Events: [
-    {
-      "type": "click",
-      "callback": (el, _, self) => self._VALUES[el.id] += 1
-    }
+    { "type": "click", callback: el => el.value = +el.value + 1 }
   ],
-  _VALUES: {},
+  Type: "yonder.button",
   initialize: function(el) {
-    this._VALUES[el.id] = 0;
-  },
-  getType: function(el) {
-    return "yonder.button";
+    el.value = 0;
   },
   getValue: function(el) {
-    return this._VALUES[el.id];
+    return { force: Date.now(), value: el.value };
   },
   _update: function(el, data) {
     if (data.choices) {
       el.innerHTML = data.choices[0];
-    }
 
-    if (data.values) {
-      this._VALUES[el.id] = +(data.values[0]);
+      if (data.values[0] === 0) {
+        el.value = 0;
+      } else {
+        el.value = +data.values[0] || el.value;
+      }
     }
   },
   _enable: function(el, data) {
