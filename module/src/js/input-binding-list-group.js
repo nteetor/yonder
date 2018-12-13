@@ -1,49 +1,71 @@
 export let listGroupInputBinding = new Shiny.InputBinding();
 
-$(document).on("click", ".list-group-item-action", (e) => {
-  let parent = e.currentTarget.parentNode;
-
-  if (parent.getAttribute("data-multiple") === "false") {
-    parent.querySelectorAll(".list-group-item-action.active").forEach(child => {
-      child.classList.remove("active");
-    });
-  }
-
-  e.currentTarget.classList.toggle("active");
-});
-
 $.extend(listGroupInputBinding, {
   Selector: {
     SELF: ".yonder-list-group",
+    VALUE: ".list-group-item-action:not(.disabled)",
     SELECTED: ".list-group-item-action.active:not(.disabled)"
   },
   Events: [
-    { type: "click" }
-  ],
-  _update: (el, data) => {
-    let children = el.querySelectorAll(".list-group-item");
-
-    if (data.choices) {
-      children.forEach((child, i) => {
-        child.innerHTML = data.choices[i];
-        child.setAttribute("data-value", data.values[i]);
-      });
-    }
-
-    if (data.selected) {
-      let current = el.querySelector(".list-group-item.active");
-      if (current !== null) {
-        current.classList.remove("active");
-      }
-
-      let selected = data.selected.length ? data.selected : [data.selected];
-      children.forEach(child => {
-        if (selected.indexOf(child.getAttribute("data-value")) > -1) {
-          child.classList.add("active");
+    {
+      type: "click",
+      selector: ".list-group-item-action:not(.disabled)",
+      callback: (el, target, self) => {
+        if (el.getAttribute("data-multiple") === "false") {
+          el.querySelectorAll(self.Selector.VALUE).forEach(child => {
+            child.classList.remove("active");
+          });
         }
-      });
+
+        target.classList.toggle("active");
+      }
     }
+  ],
+  _value: (el, newValue, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`.list-group-item[data-value="${ currentValue }"]`);
+      if (target !== null) {
+        target.setAttribute("data-value", newValue);
+      }
+    } else {
+      let possibles = el.querySelectorAll(".list-group-item");
+
+      if (index < possibles.length) {
+        possibles[index].setAttribute("data-value", newValue);
+      }
+    }
+  },
+  _choice: (el, newLabel, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`.list-group-item[data-value"${ currentValue }"]`);
+      if (target !== null) {
+        target.innerHTML = newLabel;
+      }
+    } else {
+      let possibles = el.querySelectorAll(".list-group-item");
+
+      if (index < possibles.length) {
+        possibles[index].innerHTML = newLabel;
+      }
+    }
+  },
+  _select: (el, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`.list-group-item[data-value="${ currentValue }"]`);
+      if (target !== null) {
+        target.classList.add("active");
+      }
+    } else {
+      let possibles = el.querySelectorAll(".list-group-item");
+      if (index < possibles.length) {
+        possibles[index].classList.add("active");
+      }
+    }
+  },
+  _clear: (el) => {
+    el.querySelectorAll(".list-group-item").forEach(li => li.classList.remove("active"));
   }
 });
+
 
 Shiny.inputBindings.register(listGroupInputBinding, "yonder.listGroupInput");

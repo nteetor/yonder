@@ -65,6 +65,13 @@ menuInput <- function(id, label, choices, values = choices, ...,
     )
   }
 
+  if (missing(choices) && missing(values) && !missing(label)) {
+    stop(
+      "invalid `menuInput()` argument, `label` must be specified",
+      call. = FALSE
+    )
+  }
+
   if (length(choices) != length(values)) {
     stop(
       "invalid `menuInput()` arguments, `choices` and `values` must be the ",
@@ -103,11 +110,12 @@ menuInput <- function(id, label, choices, values = choices, ...,
       paste0("drop", direction)
     ),
     id = id,
-    tags$a(
+    tags$button(
       class = "btn btn-grey dropdown-toggle",
-      href = "#",
-      role = "button",
+      type = "button",
       `data-toggle` = "dropdown",
+      `aria-haspopup` = "true",
+      `aria-expanded` = "false",
       label
     ),
     tags$div(
@@ -119,10 +127,10 @@ menuInput <- function(id, label, choices, values = choices, ...,
         choice = choices,
         value = values,
         function(choice, value) {
-          tags$a(
+          tags$button(
             class = "dropdown-item",
-            href = "#",
-            `data-value` = value,
+            type = "button",
+            value = value,
             choice
           )
         }

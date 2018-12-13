@@ -3,10 +3,7 @@ export let navInputBinding = new Shiny.InputBinding();
 $.extend(navInputBinding, {
   Selector: {
     SELF: ".yonder-nav[id]",
-    CHILD: ".nav-item",
-    CHOICE: ".nav-link",
-    VALUE: ".nav-link",
-    SELECTED: ".active"
+    SELECTED: ".nav-link.active:not(.disabled)"
   },
   Events: [
     {
@@ -33,6 +30,53 @@ $.extend(navInputBinding, {
       }
     }
   ],
+  _value: function(el, newValue, currentValue, index) {
+    if (currentValue !== null) {
+      let target = el.querySelector(`.nav-link[data-value="${ currentValue  }"]`);
+
+      if (target !== null) {
+        target.setAttribute("data-value", newValue);
+      }
+    } else {
+      let possibles = el.querySelectorAll(".nav-link");
+
+      if (index < possibles.length) {
+        possibles[index].setAttribute("data-value", newValue);
+      }
+    }
+  },
+  _choice: function(el, newLabel, currentValue, index) {
+    if (currentValue !== null) {
+      let child = el.querySelector(`.nav-link[data-value="${ currentValue }"]`);
+
+      if (child !== null) {
+        child.innerHTML = newLabel;
+      }
+    } else {
+      let possibles = el.querySelectorAll(".nav-link");
+
+      if (index < possibles.length) {
+        possibles[index].innerHTML = newLabel;
+      }
+    }
+  },
+  _select: (el, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`.nav-link[data-value="${ currentValue }"]`);
+      if (target !== null) {
+        target.classList.add("active");
+      }
+    } else {
+      let children = el.querySelectorAll(".nav-link");
+      if (index < children.length) {
+        children[index].classList.add("active");
+      }
+    }
+  },
+  _clear: (el) => {
+    el.querySelectorAll(".nav-link.active")
+      .forEach(nl => nl.classList.remove("active"));
+  },
   _disable: function(el, data) {
     el.querySelectorAll("[data-value]").forEach(child => {
       let value = child.getAttribute("data-value");

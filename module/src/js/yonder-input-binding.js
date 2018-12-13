@@ -14,7 +14,6 @@ export function yonderInputBinding() {
     return this.Type || false;
   };
 
-  // may not be worth it to have this method already created
   this.getValue = function(el) {
     if (!this.Selector.hasOwnProperty("SELECTED")) {
       return null;
@@ -26,7 +25,10 @@ export function yonderInputBinding() {
       return null;
     }
 
-    return selected.map(s => s.getAttribute("data-value") || s.value);
+    return selected.map(s => {
+      let value = s.getAttribute("data-value") || s.value;
+      return value === undefined ? null : value;
+    });
   };
 
   this.getState = function(el, data) {
@@ -122,31 +124,33 @@ export function yonderInputBinding() {
       return false;
     }
 
-    let [action, type = null] = msg.type.split(":");
-
-    switch (action) {
+    switch (msg.type) {
     case "update":
-      let choices = msg.data.choices;
       let values = msg.data.values;
+      let choices = msg.data.choices;
       let selected = msg.data.selected;
 
-      if (!choices && values && this.Selector.CHOICE) {
-        choices = Array.prototype.slice.call(
-          el.querySelectorAll(this.Selector.CHOICE),
-          0,
-          values.length
-        );
-      } else if (choices && !values && this.Selector.VALUE) {
-        values = Array.prototype.slice.call(
-          el.querySelectorAll(this.Selector.VALUE),
-          0,
-          choices.length
-        );
+      if (values || choices || selected) {
+        this._clear(el);
       }
 
-      let data = { choices: choices, values: values, selected: selected };
+      if (values) {
+        values.forEach(([value, current], i) => {
+          this._value(el, value, current, i);
+        });
+      }
 
-      this._update(el, data);
+      if (choices) {
+        choices.forEach(([value, current], i) => {
+          this._choice(el, value, current, i);
+        });
+      }
+
+      if (selected) {
+        selected.forEach(value => {
+          this._select(el, value);
+        });
+      }
 
       break;
 

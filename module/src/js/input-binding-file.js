@@ -1,9 +1,5 @@
 export let fileInputBinding = new Shiny.InputBinding();
 
-$(".yonder-file").on("click", ".input-group-append", function(e) {
-  $(e.delegateTarget).find("input[type='file']").trigger("click");
-});
-
 $.extend(fileInputBinding, {
   Selector: {
     SELF: ".yonder-file[id]",
@@ -45,7 +41,7 @@ $.extend(fileInputBinding, {
       return;
     }
 
-    let info = $.map(files, (f) => {
+    let info = Array.prototype.map.call(files, (f) => {
       return { "name": f.name, "size": f.size, "type": f.type };
     });
 
@@ -66,33 +62,34 @@ $.extend(fileInputBinding, {
     );
   },
   subscribe: function(el, callback) {
-    let $input = $(el).find("input[type='file']");
+    let $el = $(el);
+    let input = el.querySelector("input[type='file']");
 
-    if (!$input.length) {
-      return;
-    }
+    $el.on("click.yonder", ".input-group-prepend, .input-group-append", (e) => {
+      input.click();
+    });
 
-    let input = $input.get(0);
-
-    if ($(el).find(".btn").length) {
-      $(el).on("click.fileInputBinding", ".btn", (e) => {
+    if (el.querySelector("button") !== null) {
+      $el.on("click.yonder", "button", (e) => {
         this._doUpload(el, input.files);
       });
     } else {
-      $(el).on("change.fileInputBinding", (e) => {
+      $el.on("change.yonder", (e) => {
         this._doUpload(el, input.files);
       });
     }
 
-    $(el).on("dragover.fileInputBinding", (e) => {
+    $el.on("dragover.yonder", (e) => {
       e.stopPropagation();
       e.preventDefault();
     });
-    $(el).on("dragenter.fileInputBinding", (e) => {
+
+    $el.on("dragenter.yonder", (e) => {
       e.stopPropagation();
       e.preventDefault();
     });
-    $(el).on("drop.fileInputBinding", (e) => {
+
+    $el.on("drop.yonder", (e) => {
       e.stopPropagation();
       e.preventDefault();
 
@@ -102,9 +99,6 @@ $.extend(fileInputBinding, {
         this._doUpload(el, e.originalEvent.dataTransfer.files[0]);
       }
     });
-  },
-  unsubscribe: function(el) {
-    $(el).off(".fileInputBinding");
   }
 });
 

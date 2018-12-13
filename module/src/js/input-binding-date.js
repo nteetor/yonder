@@ -7,6 +7,7 @@ $.extend(dateInputBinding, {
   Events: [
     { type: "dateinput:close" }
   ],
+  Type: "yonder.date",
   initialize: function(el) {
     let data = $(el).data();
     let config = {
@@ -30,7 +31,6 @@ $.extend(dateInputBinding, {
 
     flatpickr(el, config);
   },
-  getType: () => "yonder.date",
   getValue: (el) => el._flatpickr.selectedDates,
   _update: function(el, data) {
     if (data.selected) {

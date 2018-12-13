@@ -69,7 +69,7 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
 
   selected <- match2(selected, values, default = TRUE)
 
-  input <- tags$div(
+  element <- tags$div(
     class = "yonder-select",
     id = id,
     tags$select(
@@ -78,7 +78,7 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
         seq_along(choices),
         function(i) {
           tags$option(
-            `data-value` = values[[i]],
+            value = values[[i]],
             choices[[i]],
             selected = if (selected[[i]]) NA
           )
@@ -90,10 +90,8 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
     ...
   )
 
-  input <- attachDependencies(
-    input,
+  attachDependencies(
+    element,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  input
 }

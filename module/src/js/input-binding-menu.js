@@ -3,61 +3,94 @@ export let menuInputBinding = new Shiny.InputBinding();
 $.extend(menuInputBinding, {
   Selector: {
     SELF: ".yonder-menu",
-    CHOICE: ".dropdown-item",
-    VALUE: ".dropdown-item",
-    SELECTED: ".active"
+    SELECTED: ".dropdown-item.active"
   },
   Events: [
     {
       type: "click",
-      selector: "a",
-      callback: el => false
+      selector: ".dropdown-item:not(.disabled)",
+      callback: (el, target) => {
+        let active = el.querySelector(".dropdown-item.active");
+        if (active) {
+          active.classList.remove("active");
+        }
+        target.classList.add("active");
+      }
     },
     {
-      type: "click",
-      selector: ".dropdown-item:not(.disabled)",
-      callback: (el, target, self) => self._VALUES[el.id] = target.getAttribute("data-value")
+      type: "change",
+      selector: ".dropdown-item:not(.disabled)"
     }
   ],
-  _VALUES: {},
+  Type: "yonder.menu",
   find: function(scope) {
     return scope.querySelectorAll(`:not(.nav) > ${ this.Selector.SELF }[id]`);
   },
-  initialize: function(el) {
-    this._VALUES[el.id] = null;
-  },
-  getType: el => "yonder.menu",
   getValue: function(el) {
-    return { force: Date.now(), value: this._VALUES[el.id] };
+    let selected = el.querySelector(".dropdown-item.active");
+    return { force: Date.now(), value: selected && selected.value };
   },
-  _update: function(el, data) {
-    let children = el.querySelectorAll(this.Selector.CHOICE);
-
-    children.forEach((child, i) => {
-      child.innerText = data.choices[i];
-      child.setAttribute("data-value", data.values[i]);
-    });
+  _value: (el, newValue, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`.dropdown-item[value="${ currentValue }"]`);
+      if (target !== null) {
+        target.value = newValue;
+      }
+    } else {
+      let possibles = el.querySelectorAll(".dropdown-item");
+      if (index < possibles.length) {
+        possibles[index].value = newValue;
+      }
+    }
+  },
+  _choice: (el, newLabel, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`.dropdown-item[value="${ currentValue }"]`);
+      if (target !== null) {
+        target.innerHTML = newLabel;
+      }
+    } else {
+      let possibles = el.querySelectorAll(".dropdown-item");
+      if (index < possibles.length) {
+        possibles[index].innerHTML = newLabel;
+      }
+    }
+  },
+  _select: (el, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`.dropdown-item[value="${ currentValue }"]`);
+      if (target !== null) {
+        target.classList.add("active");
+      }
+    } else {
+      let possibles = el.querySelectorAll(".dropdown-item");
+      if (index < possibles.length) {
+        possibles[index].classList.add("active");
+      }
+    }
+  },
+  _clear: (el) => {
+    el.querySelectorAll(".dropdown-item.active")
+      .forEach(di => di.classList.remove("active"));
   },
   _enable: function(el, data) {
-    let children = el.querySelectorAll(this.Selector.CHOICE);
+    let children = el.querySelectorAll(".dropdown-item");
 
     children.forEach(child => {
-      let value = child.getAttribute("data-value");
-      let index = data.values ? data.values.indexOf(value) : 0;
+      let enable = !data.values.length || data.values.indexOf(child.value) > -1;
 
-      if ((index > -1) === !data.invert) {
+      if (enable && !data.invert) {
         child.classList.remove("disabled");
       }
     });
   },
   _disable: function(el, data) {
-    let children = el.querySelectorAll(this.Selector.CHOICE);
+    let children = el.querySelectorAll(".dropdown-item");
 
     children.forEach(child => {
-      let value = child.getAttribute("data-value");
-      let index = data.values ? data.values.indexOf(value) : 0;
+      let disable = !data.values.length || data.values.indexOf(child.value) > -1;
 
-      if ((index > -1) === !data.invert) {
+      if (disable && !data.invert) {
         child.classList.add("disabled");
       } else if (data.reset) {
         child.classList.remove("disabled");

@@ -111,7 +111,7 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
               type = "radio",
               id = ids[[i]],
               name = id,
-              `data-value` = values[[i]],
+              value = values[[i]],
               checked = if (selected[[i]]) NA,
               disabled = if (disabled[[i]]) NA
             ),

@@ -2,71 +2,76 @@ export let selectInputBinding = new Shiny.InputBinding();
 
 $.extend(selectInputBinding, {
   Selector: {
-    SELF: ".yonder-select[id]",
-    CHILD: "option",
-    CHOICE: null,
-    VALUE: null,
+    SELF: ".yonder-select",
     SELECTED: "option:checked:not(:disabled)",
     VALIDATE: "select"
   },
   Events: [
     { type: "change" }
   ],
-  getState: function(el, data) {
-    return { value: this.getValue(el) };
-  },
-  _update: function(el, data) {
-    let select = el.querySelector("select");
-    let options = select.querySelectorAll("option");
-
-    if (!options.length) {
-      return;
-    }
-
-    let template = options[0].cloneNode();
-    template.removeAttribute("selected");
-    select.innerHTML = "";
-
-    for (var i = 0; i < data.choices.length; i++) {
-      template.innerHTML = data.choices[i];
-      template.setAttribute("data-value", data.values[i]);
-
-      select.appendChild(template.cloneNode(true));
-    }
-
-    if (data.selected) {
-      select
-        .querySelector(`option:nth-child(${ data.selected })`)
-        .setAttribute("selected", "");
+  _value: (el, newValue, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`option[value="${ currentValue }"]`);
+      if (target !== null) {
+        target.value = newValue;
+      }
     } else {
-      select.querySelector("option").setAttribute("selected", "");
-    }
-  },
-  _enable: function(el, data) {
-    let options = el.querySelectorAll("option");
+      let possibles = el.querySelectorAll("option");
 
-    for (const option of options) {
-      let value = option.getAttribute("data-value");
-      let index = data.values.indexOf(value);
-
-      if ((index > -1) === !data.invert) {
-        option.removeAttribute("disabled");
+      if (index < possibles.length) {
+        possibles[index].value = newValue;
       }
     }
   },
-  _disable: function(el, data) {
-    let options = el.querySelectorAll("option");
+  _choice: (el, newLabel, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`option[value="${ currentValue }"]`);
+      if (target !== null) {
+        target.innerHTML = newLabel;
+      }
+    } else {
+      let possibles = el.querySelectorAll("option");
 
-    for (const option of options) {
-      let value = option.getAttribute("data-value");
-      let index = data.values.indexOf(value);
+      if (index < possibles.length) {
+        possibles[index].innerHTML = newLabel;
+      }
+    }
+  },
+  _select: (el, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`option[value="${ currentValue }"]`);
+      if (target !== null) {
+        target.setAttribute("selected", "");
+      }
+    } else {
+      let possibles = el.querySelectorAll("option");
+      if (index < possibles.length) {
+        possibles[index].setAttribute("selected", "");
+      }
+    }
+  },
+  _clear: (el) => {
+    el.querySelectorAll("option").forEach(op => op.removeAttribute("selected"));
+  },
+  _enable: (el, data) => {
+    el.querySelectorAll("option").forEach(opt => {
+      let enable = !data.values.length || data.values.indexOf(opt.value);
 
-      if ((index > -1) === !data.invert) {
-        option.setAttribute("disabled", "");
+      if (enable && !data.invert) {
+        opt.removeAttribute("disabled");
+      }
+    });
+  },
+  _disable: (el, data) => {
+    el.querySelectorAll("option").forEach(opt => {
+      let disable = !data.values.length || data.values.indexOf(opt.value);
+
+      if (disable && !data.invert) {
+        opt.setAttribute("disabled", "");
       } else if (data.reset) {
-        option.removeAttribute("disabled");
+        opt.removeAttribute("disabled");
       }
-    }
+    });
   }
 });
 

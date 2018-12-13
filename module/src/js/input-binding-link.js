@@ -6,39 +6,33 @@ $.extend(linkInputBinding, {
   },
   Events: [
     {
-      "type": "click",
-      "callback": (el, _, self) => self._VALUES[el.id] += 1
+      type: "click",
+      callback: (el) => el.value = +el.value + 1
     }
   ],
-  _VALUES: {},
+  Type: "yonder.link",
   initialize: function(el) {
-    this._VALUES[el.id] = 0;
-  },
-  getType: function(el) {
-    return "yonder.link";
+    el.value = 0;
   },
   getValue: function(el) {
-    return {
-      "value": this._VALUES[el.id],
-      "id": el.id
-    };
+    return { value: +el.value, id: el.id };
   },
   _update: function(el, data) {
-    if (data.choices !== null) {
+    if (data.choices.length) {
       el.innerHTML = data.choices[0];
     }
 
-    if (data.values !== null) {
-      this._VALUES[el.id] = data.values[0];
+    if (data.values.length) {
+      el.value = data.values[0];
     }
   },
   _disable: function(el, data) {
     el.classList.add("disabled");
-    $(el).on("click.disable", e => false);
+    el.setAttribute("disabled", "");
   },
   _enable: function(el, data) {
     el.classList.remove("disabled");
-    $(el).off(".disable");
+    el.removeAttribute("disabled");
   }
 });
 

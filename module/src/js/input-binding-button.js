@@ -5,31 +5,40 @@ $.extend(buttonInputBinding, {
     SELF: ".yonder-button"
   },
   Events: [
-    { "type": "click", callback: el => el.value = +el.value + 1 }
+    {
+      type: "click",
+      callback: el => el.value = +el.value + 1
+    }
   ],
-  Type: "yonder.button",
-  initialize: function(el) {
+  initialize: (el) => {
     el.value = 0;
   },
-  getValue: function(el) {
-    return { force: Date.now(), value: el.value };
+  getValue: (el) => {
+    return el.value > 0 ? +el.value : null;
   },
-  _update: function(el, data) {
-    if (data.choices) {
-      el.innerHTML = data.choices[0];
-
-      if (data.values[0] === 0) {
-        el.value = 0;
-      } else {
-        el.value = +data.values[0] || el.value;
-      }
+  _choice: (el, newLabel, currentValue, index) => {
+    el.innerHTML = newLabel;
+  },
+  _value: (el, newValue, currentValue, index) => {
+    if (+newValue === +newValue) {
+      el.value = newValue;
     }
   },
-  _enable: function(el, data) {
-    el.classList.remove("disabled");
+  _select: (el, currentValue, index) => {
+    // cannot select
   },
-  _disable: function(el, data) {
-    el.classList.add("disabled");
+  _clear: (el) => {
+    // no need to do anything
+  },
+  _enable: (el, data) => {
+    if (!data.invert) {
+      el.classList.remove("disabled");
+    }
+  },
+  _disable: (el, data) => {
+    if (!data.invert) {
+      el.classList.add("disabled");
+    }
   }
 });
 

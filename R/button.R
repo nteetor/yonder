@@ -80,15 +80,7 @@
 #' div("Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem.")
 #'
 buttonInput <- function(id, label, ..., block = FALSE) {
-  shiny::registerInputHandler(
-    type = "yonder.button",
-    fun = function(x, session, name) {
-      if (length(x) > 0) x[[2]]
-    },
-    force = TRUE
-  )
-
-  input <- tags$button(
+  element <- tags$button(
     class = collate(
       "yonder-button",
       "btn",
@@ -102,18 +94,16 @@ buttonInput <- function(id, label, ..., block = FALSE) {
     ...
   )
 
-  input <- attachDependencies(
-    input,
+  attachDependencies(
+    element,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  input
 }
 
 #' @rdname buttonInput
 #' @export
 submitInput <- function(label = "Submit", value = label, block = FALSE, ...) {
-  input <- tags$button(
+  element <- tags$button(
     class = collate(
       "yonder-submit",
       "btn",
@@ -126,12 +116,10 @@ submitInput <- function(label = "Submit", value = label, block = FALSE, ...) {
     ...
   )
 
-  input <- attachDependencies(
-    input,
+  attachDependencies(
+    element,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  input
 }
 
 #' @rdname buttonInput
@@ -151,19 +139,17 @@ linkInput <- function(id, text, ...) {
     force = TRUE
   )
 
-  input <- tags$span(
-    class = "yonder-link",
+  element <- tags$button(
+    class = "yonder-link btn btn-link",
     id = id,
     text,
     ...
   )
 
-  input <- attachDependencies(
-    input,
+  attachDependencies(
+    element,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  input
 }
 
 #' Button group inputs
@@ -214,7 +200,7 @@ buttonGroupInput <- function(id, labels, values = labels, ...) {
     force = TRUE
   )
 
-  input <- tags$div(
+  element <- tags$div(
     class = "yonder-button-group btn-group",
     id = id,
     role = "group",
@@ -234,7 +220,7 @@ buttonGroupInput <- function(id, labels, values = labels, ...) {
   )
 
   attachDependencies(
-    input,
+    element,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
 }

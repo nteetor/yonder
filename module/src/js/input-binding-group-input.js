@@ -10,11 +10,11 @@ $.extend(groupInputBinding, {
     { type: "input", debounce: true },
     { type: "change", debounce: true }
   ],
-  getType: function(el) {
-    return "yonder.group";
-  },
-  getState: function(el) {
-    return { value: this.getValue(el) };
+  Type: "yonder.group",
+  getValue: function(el) {
+    return Array.prototype.slice.call(el.querySelectorAll(this.Selector.SELECTED))
+      .map(s => /^(DIV|SPAN)$/.test(s.tagName) ? s.innerText : (s.value || null))
+      .filter(value => value !== null);
   },
   _update: function(el, data) {
     if (data.values) {
@@ -23,32 +23,16 @@ $.extend(groupInputBinding, {
     }
   },
   _enable: function(el, data) {
-    let input = el.querySelector("input");
-
-    if (input !== null) {
-      input.removeAttribute("disabled");
-    }
+    el.querySelector("input").removeAttribute("disabled");
   },
   _disable: function(el, data) {
-    let input = el.querySelector("input");
-
-    if (input !== null) {
-      input.setAttribute("disabled", "");
-    }
+    el.querySelector("input").setAttribute("disabled", "");
   },
   _validate: function(el, data) {
-    let input = el.querySelector("input");
-
-    if (input !== null) {
-      input.classList.remove("is-invalid");
-    }
+    el.querySelector("input").classList.remove("is-invalid");
   },
   _invalidate: function(el, data) {
-    let input = el.querySelector("input");
-
-    if (input !== null) {
-      input.classList.add("is-invalid");
-    }
+    el.querySelector("input").classList.add("is-invalid");
   }
 });
 

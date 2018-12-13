@@ -20,15 +20,30 @@
 #' @export
 #' @examples
 #'
-#' ### Start checked
+#' ### One option
 #'
 #' checkboxInput(
-#'   id = "potenti",
-#'   choice = "Suspendisse potenti",
-#'   checked = TRUE
+#'   id = "checkbox1",
+#'   choices = "Choice 1",
+#'   selected = "Choice 1"
 #' )
 #'
-#' ### Checkbar, checkbox group
+#' ### Multiple options
+#'
+#' checkboxInput(
+#'   id = "checkbox2",
+#'   choices = c("Choice 1", "Choice 2")
+#' )
+#'
+#' ### Inline checkbox
+#'
+#' checkboxInput(
+#'   id = "checkbox3",
+#'   choices = c("Choice 1", "Choice 2", "Choice 3"),
+#'   inline = TRUE
+#' )
+#'
+#' ### Checkbar
 #'
 #' checkbarInput(
 #'   id = "checks",
@@ -56,58 +71,11 @@
 #'   )
 #' )
 #'
-checkboxInput <- function(id, choice, value = choice, checked = FALSE, ...) {
-  if (length(choice) > 1) {
-    stop(
-      "invalid `checkboxInput()` argument, expecting `choice` to have a ",
-      "length of 1",
-      call. = FALSE
-    )
-  }
-
-  value <- as.character(value)
-  self <- ID("checkbox")
-
-  input <- tags$div(
-    class = "yonder-checkbox",
-    id = id,
-    tags$div(
-      class = collate(
-        "custom-control",
-        "custom-checkbox"
-      ),
-      tags$input(
-        class = "custom-control-input",
-        type = "checkbox",
-        id = self,
-        `data-value` = value,
-        checked = if (checked) NA
-      ),
-      tags$label(
-        class = "custom-control-label",
-        `for` = self,
-        choice
-      ),
-      tags$div(class = "invalid-feedback"),
-      tags$div(class = "valid-feedback")
-    ),
-    ...
-  )
-
-  input <- attachDependencies(
-    input,
-    c(shinyDep(), yonderDep(), bootstrapDep())
-  )
-
-  input
-}
-
-#' @rdname checkboxInput
-#' @export
-checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
+checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
+                          inline = FALSE) {
   if (length(choices) != length(values)) {
     stop(
-      "invalid `checkbarInput` arguments, `choices` and `values` must have ",
+      "invalid `checkboxInput()` argument, `choices` and `values` must have ",
       "the same length",
       call. = FALSE
     )
@@ -115,7 +83,62 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
 
   selected <- match2(selected, values)
 
-  input <- tags$div(
+  element <- tags$div(
+    class = "yonder-checkbox",
+    id = id,
+    Map(
+      choice = choices,
+      value = values,
+      select = selected,
+      function(choice, value, select) {
+        this <- ID("checkbox")
+
+        tags$div(
+          class = collate(
+            "custom-control",
+            "custom-checkbox",
+            if (inline) "custom-control-inline"
+          ),
+          tags$input(
+            class = "custom-control-input",
+            type = "checkbox",
+            id = this,
+            name = id,
+            value = value,
+            checked = if (select) NA
+          ),
+          tags$label(
+            class = "custom-control-label",
+            `for` = this,
+            choice
+          ),
+          tags$div(class = "invalid-feedback")
+        )
+      }
+    ),
+    ...
+  )
+
+  attachDependencies(
+    element,
+    c(shinyDep(), yonderDep(), bootstrapDep())
+  )
+}
+
+#' @rdname checkboxInput
+#' @export
+checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
+  if (length(choices) != length(values)) {
+    stop(
+      "invalid `checkbarInput()` arguments, `choices` and `values` must have ",
+      "the same length",
+      call. = FALSE
+    )
+  }
+
+  selected <- match2(selected, values)
+
+  element <- tags$div(
     class = collate(
       "yonder-checkbar",
       if (length(choices) > 1) "btn-group",
@@ -135,22 +158,18 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
           tags$input(
             type = "checkbox",
             autocomplete = "off",
-            `data-value` = values[[i]],
+            value = values[[i]],
             checked = if (selected[[i]]) NA
           ),
-          tags$span(
-            choices[[i]]
-          )
+          choices[[i]]
         )
       }
     ),
     ...
   )
 
-  input <- attachDependencies(
-    input,
+  attachDependencies(
+    element,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  input
 }

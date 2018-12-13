@@ -17,8 +17,18 @@ NULL
 #' @param choices A character vector, tag element, or list specifying choices
 #'   for the input.
 #'
-#' @param values An object specifying values for the input, this object is
-#'   coerced to a character vector.
+#'   If `choices` is an **unnamed** vector, list, or element then the input's
+#'   choices are updated sequentially.
+#'
+#'   If `choices` is a **named** vector or list then the input's choices are
+#'   matched by value. The names of `choices` refer to one or more possible
+#'   values of the input and the values of `choices` are the new choice labels.
+#'
+#' @param values An atomic vector or list of atomic singleton values, values
+#'   will be coerced to character strings.
+#'
+#'   If `values` is an **unnamed** vector or list then the input's values are
+#'   updated sequentially.
 #'
 #' @param selected One of `values` specifying which choice to select, defaults
 #'   to `NULL`, in which case a choice is not selected. Note that browsers may
@@ -26,19 +36,10 @@ NULL
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
-#' @section Combinations of `choices` and `values`:
+#' @details
 #'
-#' **choices** and **values** specified: the input's choices and values are
-#' updated.
-#'
-#' **choices** is specified and **values** is `NULL`: `values` defaults to
-#' `choices`.
-#'
-#' **choices** is `NULL` and **values** is specified: use this case for inputs
-#' without choices, e.g. a text input, to update only the current value.
-#'
-#' **choices** and **values** both `NULL`: used to preserve choices and values
-#' while changing the selected choice with `selected`.
+#' If specifying new values with `values`, both `choices` and `selected` need to
+#' refer to these new values.
 #'
 #' @export
 updateInput <- function(id, choices = NULL, values = NULL, selected = NULL,
@@ -50,29 +51,43 @@ updateInput <- function(id, choices = NULL, values = NULL, selected = NULL,
     )
   }
 
-  if (!is.null(choices)) {
-    if (is_tag(choices)) {
-      choices <- list(choices)
-    } else if (!is_strictly_list(choices)) {
-      choices <- as.list(choices)
+  # encapsulate tag element so we can compare lengths of `choices` and `values`
+  if (is_tag(choices)) {
+    choices <- list(choices)
+  }
+
+  if (!is.null(choices) && !is.null(values)) {
+    if (is.null(names(choices)) && is.null(names(values))) {
+      if (length(choices) != length(values)) {
+        stop(
+          "invalid `updateInput()` arguments, `choices` and `values` must be ",
+          "the same length if unnamed",
+          call. = FALSE
+        )
+      }
     }
   }
 
-  if (!is.null(values)) {
-    values <- lapply(values, as.character)
+  if (!is.null(choices)) {
+    choices <- Map(
+      function(value, name) list(HTML(as.character(value)), name),
+      choices,
+      names(choices) %||% rep.int(list(NULL), length(choices)),
+      USE.NAMES = FALSE
+    )
   }
 
-  if (!is.null(choices) && !is.null(values) &&
-        length(choices) != length(values)) {
-    stop(
-      "invalid `updateInput()` arguments, `choices` and `values` must be ",
-      "the same length",
-      call. = FALSE
+  if (!is.null(values)) {
+    values <- Map(
+      function(value, name) list(as.character(value), name),
+      values,
+      names(values) %||% rep.int(list(NULL), length(values)),
+      USE.NAMES = FALSE
     )
   }
 
   if (!is.null(selected)) {
-    selected <- as.list(selected)
+    selected <- lapply(selected, as.character)
   }
 
   session$sendInputMessage(id, list(
@@ -104,7 +119,7 @@ updateInput <- function(id, choices = NULL, values = NULL, selected = NULL,
 #' @export
 enableInput <- function(id, values = NULL, invert = FALSE,
                         session = getDefaultReactiveDomain()) {
-  values <- as.list(as.character(values))
+  values <- lapply(values, as.character)
 
   session$sendInputMessage(id, list(
     type = "enable",
@@ -119,7 +134,7 @@ enableInput <- function(id, values = NULL, invert = FALSE,
 #' @export
 disableInput <- function(id, values = NULL, invert = FALSE, reset = FALSE,
                          session = getDefaultReactiveDomain()) {
-  values <- as.list(as.character(values))
+  values <- lapply(values, as.character)
 
   session$sendInputMessage(id, list(
     type = "disable",

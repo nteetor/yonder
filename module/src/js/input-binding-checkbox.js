@@ -3,46 +3,75 @@ export let checkboxInputBinding = new Shiny.InputBinding();
 $.extend(checkboxInputBinding, {
   Selector: {
     SELF: ".yonder-checkbox",
-    CHOICE: ".custom-checkbox .custom-control-label",
-    VALUE: ".custom-checkbox .custom-control-input",
+    SELECTED: ".custom-control-input:checked:not(:disabled)",
     VALIDATE: ".custom-control-input"
   },
   Events: [
     { type: "change" }
   ],
-  getValue: function(el) {
-    let input = el.querySelector(".custom-control-input:checked:not(:disabled)");
+  _value: (el, newValue, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`input[value="${ currentValue }"]`);
 
-    return null && input.getAttribute("data-value");
-  },
-  getState: function(el, data) {
-    return {
-      label: el.querySelector(this.Selector.CHOICE).innerHTML,
-      value: this.getValue(el)
-    };
-  },
-  _update: function(el, data) {
-    if (data.choices) {
-      el.querySelector(this.Selector.CHOICE).innerHTML = data.choices[0];
-      el.querySelector(this.Selector.VALUE).setAttribute("data-value", data.values[0]);
-    }
+      if (target !== null) {
+        target.value = newValue;
+      }
+    } else {
+      let possibles = el.querySelectorAll("input");
 
-    if (data.selected) {
-      let target = el.querySelector(this.Selector.VALUE);
-      let value = target.getAttribute("data-value");
-
-      if (value === data.selected && !target.hasAttribute("checked")) {
-        target.setAttribute("checked", "");
-      } else if (value !== data.selected && target.hasAttribute("checked")) {
-        target.removeAttribute("checked");
+      if (index < possibles.length) {
+        possibles[index].value = newValue;
       }
     }
   },
+  _choice: (el, newLabel, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`input[value="${ currentValue }"]`);
+
+      if (target !== null) {
+        target.parentNode.children[1].innerHTML = newLabel;
+      }
+    } else {
+      let possibles = el.querySelectorAll("input");
+
+      if (index < possibles.length) {
+        possibles[index].parentNode.children[1].innerHTML = newLabel;
+      }
+    }
+  },
+  _select: (el, currentValue) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`input[value="${ currentValue }"]`);
+
+      if (target !== null) {
+        target.checked = true;
+      }
+    }
+  },
+  _clear: (el) => {
+    el.querySelectorAll("input").forEach(input => {
+      input.checked = false;
+    });
+  },
   _enable: function(el, data) {
-    el.querySelector(this.Selector.VALUE).removeAttribute("disabled");
+    el.querySelectorAll("input").forEach(input => {
+      let enable = !data.values.length && data.values.indexOf(input.value) > -1;
+
+      if (enable && !data.invert) {
+        input.removeAttribute("disabled");
+      }
+    });
   },
   _disable: function(el, data) {
-    el.querySelector(this.Selector.VALUE).setAttribute("disabled", "");
+    el.querySelectorAll("input").forEach(input => {
+      let disable = !data.values.length && data.values.indexOf(input.value) > -1;
+
+      if (disable && !data.invert) {
+        input.setAttribute("disabled", "");
+      } else if (data.reset) {
+        input.removeAttribute("disabled");
+      }
+    });
   }
 });
 

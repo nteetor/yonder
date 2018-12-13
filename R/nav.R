@@ -101,7 +101,7 @@ navInput <- function(id, choices, values = choices, ..., appearance = NULL,
     character(1)
   )
 
-  tags$ul(
+  input <- tags$ul(
     class = collate(
       "yonder-nav",
       "nav",
@@ -116,6 +116,10 @@ navInput <- function(id, choices, values = choices, ..., appearance = NULL,
       navItem
     )
   )
+
+  input <- attachDependencies(input, c(yonderDep(), shinyDep(), bootstrapDep()))
+
+  input
 }
 
 navItem <- function(base, value, active) {
