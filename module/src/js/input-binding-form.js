@@ -5,8 +5,8 @@ $.extend(formInputBinding, {
     {
       type: "click",
       selector: ".yonder-submit",
-      callback: (el, target, self) => {
-        self._VALUES[el.id] = target.value;
+      callback: (el, e, self) => {
+        self._VALUES[el.id] = e.target.value;
         $(el.querySelectorAll(".shiny-bound-input")).trigger("submission.yonder");
       }
     }
@@ -23,7 +23,13 @@ $.extend(formInputBinding, {
   },
   getValue: function(el) {
     return { force: Date.now(), value: this._VALUES[el.id] };
-  }
+  },
+  _value: () => null,
+  _choice: () => null,
+  _select: () => null,
+  _clear: () => null,
+  _enable: () => null,
+  _disable: () => null
 });
 
 Shiny.inputBindings.register(formInputBinding, "yonder.formInput");

@@ -5,7 +5,6 @@
 #' @noRd
 #' @name index
 #' @family design
-#' @layout index
 NULL
 
 .colors <- c(

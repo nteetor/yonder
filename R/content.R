@@ -11,7 +11,6 @@
 #' @noRd
 #' @family content
 #' @name index
-#' @layout index
 NULL
 
 #' Headings
@@ -19,20 +18,26 @@ NULL
 #' Display headings are not meant to replace the standard HTML heading tags,
 #' they are a stand out alternative for eye-catching titles.
 #'
-#' @param ... Character strings specifying the heading text or additional named
-#'   arguments passed as HTML attributes to the parent element.
+#' @param ... Any number of character strings or tag elements or named arguments
+#'   passed as HTML attributes to the parent element.
 #'
 #' @family content
 #' @export
 #' @examples
 #'
-#' ## Bigger, bolder
+#' ### d1
 #'
 #' d1("Eye-catching!")
 #'
+#' ### d2
+#'
 #' d2("Just incredible")
 #'
+#' ### d3
+#'
 #' d3("Wowie, zowie")
+#'
+#' ### d4
 #'
 #' d4("You'll never guess what happens next.")
 #'
@@ -51,21 +56,15 @@ d3 <- function(...) d(3, ...)
 d4 <- function(...) d(4, ...)
 
 d <- function(level, ...) {
-  if (!(level %in% 1:4)) {
-    stop(
-      "invalid `d` argument, `level` must be one of 1, 2, 3, or 4",
-      call. = FALSE
-    )
-  }
-
-  this <- tags$h1(
+  element <- tags$h1(
     class = paste0("display-", level),
     ...
   )
 
-  this <- attachDependencies(this, bootstrapDep())
-
-  this
+  attachDependencies(
+    element,
+    bootstrapDep()
+  )
 }
 
 #' Jumbotron
@@ -86,7 +85,7 @@ d <- function(level, ...) {
 #' @export
 #' @examples
 #'
-#' ## Landing page welcome
+#' ### Landing page welcome
 #'
 #' jumbotron(
 #'   title = "Welcome, welcome!",
@@ -98,7 +97,7 @@ d <- function(level, ...) {
 #' )
 #'
 jumbotron <- function(title, subtitle, ..., fluid = FALSE) {
-  this <- tags$div(
+  element <- tags$div(
     class = collate(
       "jumbotron",
       if (fluid) "jumbotron-fluid"
@@ -112,7 +111,8 @@ jumbotron <- function(title, subtitle, ..., fluid = FALSE) {
     ...
   )
 
-  this <- attachDependencies(this, bootstrapDep())
-
-  this
+  attachDependencies(
+    element,
+    bootstrapDep()
+  )
 }

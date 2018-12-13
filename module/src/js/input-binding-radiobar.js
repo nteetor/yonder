@@ -3,60 +3,75 @@ export let radiobarInputBinding = new Shiny.InputBinding();
 $.extend(radiobarInputBinding, {
   Selector: {
     SELF: ".yonder-radiobar[id]",
-    VALUE: ".btn input",
-    LABEL: ".btn > span",
-    SELECTED: ".btn input:checked"
+    SELECTED: "input:checked:not(:disabled)"
   },
   Events: [
     { type: "click" },
     { type: "change" }
   ],
-  getState: function(el, data) {
-    return { value: this.getValue(el) };
+  _value: (el, newValue, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`input[value="${ currentValue }"]`);
+
+      if (target !== null) {
+        target.value = newValue;
+      }
+    } else {
+      let inputs = el.querySelectorAll("input");
+
+      if (index < inputs.length) {
+        inputs[index].value = newValue;
+      }
+    }
   },
-  _update: function(el, data) {
-    let children = el.querySelectorAll(".btn");
+  _choice: (el, newLabel, currentValue, index) => {
+    if (currentValue !== null)  {
+      let target = el.querySelector(`input[value="${ currentValue }"]`);
 
-    if (data.choices) {
-      children.forEach((child, i) => {
-        child.querySelector("span").innerHTML = data.choices[i];
-        child.querySelector("input").setAttribute("data-value", data.values[i]);
-      });
-    }
+      if (target !== null) {
+        target.parentNode.children[1].innerHTML = newLabel;
+      }
+    } else {
+      let inputs = el.querySelectorAll("input");
 
-    if (data.selected) {
-      el.querySelector(".active").classList.remove("active");
-      el.querySelector(`input[data-value=${ data.selected }]`)
-        .parentNode.classList.add("active");
+      if (index < inputs.length) {
+        inputs[index].parentNode.children[1].innerHTML = newLabel;
+      }
     }
+  },
+  _select: (el, currentValue) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`input[value="${ currentValue }"]`);
+
+      if (target !== null) {
+        target.checked = true;
+      }
+    }
+  },
+  _clear: (el) => {
+    el.querySelectorAll("input:checked").forEach(i => i.checked = false);
   },
   _enable: function(el, data) {
-    let children = el.querySelectorAll(".btn");
+    let values = data.values;
+    el.querySelectorAll("input").forEach(input => {
+      let enable = !values.length || values.indexOf(input.value) > -1;
 
-    children.forEach(child => {
-      let input = child.querySelector("input");
-      let value = input.getAttribute("data-value");
-      let index = data.values ? data.values.indexOf(value) : 0;
-
-      if ((index > -1) === !data.invert) {
-        child.classList.remove("disabled");
+      if (enable && !data.invert) {
+        input.parentNode.classList.remove("disabled");
         input.removeAttribute("disabled");
       }
     });
   },
   _disable: function(el, data) {
-    let children = el.querySelectorAll(".btn");
+    let values = data.values;
+    el.querySelectorAll("input").forEach(input => {
+      let disable = !values.length || values.indexOf(input.value) > -1;
 
-    children.forEach(child => {
-      let input = child.querySelector("input");
-      let value = input.getAttribute("data-value");
-      let index = data.values ? data.values.indexOf(value) : 0;
-
-      if ((index > -1) === !data.invert) {
-        child.classList.add("disabled");
+      if (disable && !data.invert) {
+        input.parentNode.classList.add("disabled");
         input.setAttribute("disabled", "");
       } else if (data.reset) {
-        child.classList.remove("disabled");
+        input.parentNode.classList.remove("disabled");
         input.removeAttribute("disabled");
       }
     });

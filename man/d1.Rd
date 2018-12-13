@@ -16,8 +16,8 @@ d3(...)
 d4(...)
 }
 \arguments{
-\item{...}{Character strings specifying the heading text or additional named
-arguments passed as HTML attributes to the parent element.}
+\item{...}{Any number of character strings or tag elements or named arguments
+passed as HTML attributes to the parent element.}
 }
 \description{
 Display headings are not meant to replace the standard HTML heading tags,
@@ -25,13 +25,19 @@ they are a stand out alternative for eye-catching titles.
 }
 \examples{
 
-## Bigger, bolder
+### d1
 
 d1("Eye-catching!")
 
+### d2
+
 d2("Just incredible")
 
+### d3
+
 d3("Wowie, zowie")
+
+### d4
 
 d4("You'll never guess what happens next.")
 

@@ -2,25 +2,16 @@ export let textualInputBinding = new Shiny.InputBinding();
 
 $.extend(textualInputBinding, {
   Selector: {
-    SELF: ".yonder-textual[id]",
+    SELF: ".yonder-textual",
     VALIDATE: "input"
   },
   Events: [
     { type: "change", debounce: true },
     { type: "input", debounce: true }
   ],
-  getValue: function(el) {
-    let input = el.querySelector("input");
-    let value = input.value;
-
-    if (input.type === "number") {
-      return parseInt(value, 10);
-    }
-
-    return value;
-  },
-  getState: function(el, data) {
-    return { value: this.getValue(el) };
+  getValue: (el) => {
+    let input = el.children[0];
+    return input.type === "number" ? parseInput(input.value, 10) : input.value;
   },
   getRatePolicy: function() {
     return {
@@ -28,14 +19,17 @@ $.extend(textualInputBinding, {
       delay: 250
     };
   },
-  _update: function(el, data) {
-    data.values && (el.querySelector("input").value = data.values[0]);
+  _value: (el, newValue, currentValue, index) => {
+    el.children[0].value = newValue;
   },
-  _disable: function(el, data) {
-    el.querySelector("input").setAttribute("disabled", "");
+  _choice: () => null,
+  _select: () => null,
+  _clear: () => null,
+  _disable: (el, data) => {
+    el.children[0].setAttribute("disabled", "");
   },
-  _enable: function(el, data) {
-    el.querySelector("input").removeAttribute("disabled");
+  _enable: (el, data) => {
+    el.children[0].removeAttribute("disabled");
   }
 });
 

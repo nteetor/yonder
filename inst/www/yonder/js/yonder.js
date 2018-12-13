@@ -197,65 +197,86 @@
   var buttonGroupInputBinding = new Shiny.InputBinding();
   $.extend(buttonGroupInputBinding, {
     Selector: {
-      "SELF": ".yonder-button-group",
-      "CHOICE": ".btn",
-      "VALUE": ".btn"
+      SELF: ".yonder-button-group"
     },
     Events: [{
-      "type": "click",
-      "selector": "button",
-      "callback": function callback(el, target, self) {
-        return self._VALUES[el.id] = target.getAttribute("data-value");
+      type: "click",
+      selector: "button",
+      callback: function callback(el, e, self) {
+        self._VALUES[el.id] = e.target.value;
       }
     }],
     _VALUES: {},
     getType: function getType(el) {
       return "yonder.buttonGroup";
     },
+    initialize: function initialize(el) {
+      this._VALUES[el.id] = null;
+    },
     getValue: function getValue(el) {
       return {
-        "force": Date.now(),
-        "value": this._VALUES[el.id]
+        force: Date.now(),
+        value: this._VALUES[el.id]
       };
     },
-    _update: function _update(el, data) {
-      if (data.choices) {
-        var children = document.querySelectorAll(".btn");
-        children.forEach(function (child, i) {
-          child.innerHTML = data.choices[i];
-          child.setAttribute("data-value", data.values[i]);
-        });
-      } // can't "select"
+    _choice: function _choice(el, newLabel, currentValue, index) {
+      if (currentValue !== null) {
+        var target = el.querySelector("button[value=\"" + currentValue + "\"]");
 
+        if (target !== null) {
+          target.innerHTML = newLabel;
+        }
+      } else {
+        var buttons = el.querySelectorAll("button");
+
+        if (index < buttons.length) {
+          buttons[index].innerHTML = newLabel;
+        }
+      }
+    },
+    _value: function _value(el, newValue, currentValue, index) {
+      if (currentValue !== null) {
+        var target = el.querySelector("button[value=\"" + currentValue + "\"]");
+
+        if (target !== null) {
+          target.value = newValue;
+        }
+      } else {
+        var buttons = el.querySelectorAll("button");
+
+        if (index < buttons.length) {
+          buttons[index].value = newValue;
+        }
+      }
+    },
+    _select: function _select() {
+      return null;
+    },
+    _clear: function _clear() {
+      return null;
     },
     _enable: function _enable(el, data) {
-      var _this = this;
+      var values = data.values;
+      el.querySelectorAll("button").forEach(function (button) {
+        var enable = !values.length || values.indexOf(button.value) > -1;
 
-      var children = el.querySelectorAll(this.Selector.CHILD);
-      children.forEach(function (child) {
-        var value = child.querySelector(_this.Selector.VALUE).getAttribute("data-value");
-        var index = data.values ? data.values.indexOf(value) : 0;
-
-        if (index > -1 === !data.invert) {
-          child.classList.remove("disabled");
-          child.querySelector(_this.Selector.VALUE).removeAttribute("disabled");
+        if (enable && !data.invert) {
+          button.classList.remove("disabled");
+          button.removeAttribute("disabled");
         }
       });
     },
     _disable: function _disable(el, data) {
-      var _this2 = this;
+      var values = data.values;
+      el.querySelectorAll("button").forEach(function (button) {
+        var disable = !values.length || values.indexOf(button.value) > -1;
 
-      var children = el.querySelectorAll(this.Selector.CHILD);
-      children.forEach(function (child) {
-        var value = child.querySelector(_this2.Selector.VALUE).getAttribute("data-value");
-        var index = data.values ? data.values.indexOf(value) : 0;
-
-        if (index > -1 === !data.invert) {
-          child.classList.add("disabled");
-          child.querySelector(_this2.Selector.VALUE).setAttribute("disabled", "");
+        if (disable && !data.invert) {
+          button.classList.add("disabled");
+          button.setAttribute("disabled", "");
         } else if (data.reset) {
-          child.classList.remove("disabled");
-          child.querySelector(_this2.Selector.VALUE).removeAttribute("disabled");
+          button.classList.remove("disabled");
+          button.removeAttribute("disabled");
         }
       });
     }
@@ -277,7 +298,7 @@
       el.value = 0;
     },
     getValue: function getValue(el) {
-      return el.value > 0 ? +el.value : null;
+      return +el.value > 0 ? +el.value : null;
     },
     _choice: function _choice(el, newLabel, currentValue, index) {
       el.innerHTML = newLabel;
@@ -538,7 +559,7 @@
   var fileInputBinding = new Shiny.InputBinding();
   $.extend(fileInputBinding, {
     Selector: {
-      SELF: ".yonder-file[id]",
+      SELF: ".yonder-file",
       VALIDATE: "input[type='file']"
     },
     Events: [{
@@ -552,7 +573,7 @@
       type: "click",
       selector: "button",
       callback: function callback(el, _, self) {
-        self._doUpload(el);
+        return self._doUpload(el);
       }
     }, {
       type: "dragover",
@@ -576,6 +597,18 @@
       }
     }],
     getValue: function getValue(el) {
+      return null;
+    },
+    _value: function _value() {
+      return null;
+    },
+    _choice: function _choice() {
+      return null;
+    },
+    _select: function _select() {
+      return null;
+    },
+    _clear: function _clear() {
       return null;
     },
     _enable: function _enable(el, data) {
@@ -646,8 +679,8 @@
     Events: [{
       type: "click",
       selector: ".yonder-submit",
-      callback: function callback(el, target, self) {
-        self._VALUES[el.id] = target.value;
+      callback: function callback(el, e, self) {
+        self._VALUES[el.id] = e.target.value;
         $(el.querySelectorAll(".shiny-bound-input")).trigger("submission.yonder");
       }
     }],
@@ -667,6 +700,24 @@
         force: Date.now(),
         value: this._VALUES[el.id]
       };
+    },
+    _value: function _value() {
+      return null;
+    },
+    _choice: function _choice() {
+      return null;
+    },
+    _select: function _select() {
+      return null;
+    },
+    _clear: function _clear() {
+      return null;
+    },
+    _enable: function _enable() {
+      return null;
+    },
+    _disable: function _disable() {
+      return null;
     }
   });
   Shiny.inputBindings.register(formInputBinding, "yonder.formInput");
@@ -675,8 +726,8 @@
   $.extend(groupInputBinding, {
     Selector: {
       SELF: ".yonder-group[id]",
-      VALUE: "input",
-      SELECTED: ".input-group-prepend .input-group-text, input, .input-group-append .input-group-text"
+      SELECTED: ".input-group-prepend .input-group-text, input, .input-group-append .input-group-text",
+      VALIDATE: "input"
     },
     Events: [{
       type: "input",
@@ -693,23 +744,23 @@
         return value !== null;
       });
     },
-    _update: function _update(el, data) {
-      if (data.values) {
-        var input = el.querySelector("input");
-        input.value = data.values[0];
-      }
+    _value: function _value(el, newValue, currentValue, index) {
+      el.querySelector("input").value = newValue;
+    },
+    _choice: function _choice() {
+      return null;
+    },
+    _select: function _select() {
+      return null;
+    },
+    _clear: function _clear() {
+      return null;
     },
     _enable: function _enable(el, data) {
       el.querySelector("input").removeAttribute("disabled");
     },
     _disable: function _disable(el, data) {
       el.querySelector("input").setAttribute("disabled", "");
-    },
-    _validate: function _validate(el, data) {
-      el.querySelector("input").classList.remove("is-invalid");
-    },
-    _invalidate: function _invalidate(el, data) {
-      el.querySelector("input").classList.add("is-invalid");
     }
   });
   Shiny.inputBindings.register(groupInputBinding, "yonder.groupInput");
@@ -730,19 +781,19 @@
       el.value = 0;
     },
     getValue: function getValue(el) {
-      return {
-        value: +el.value,
-        id: el.id
-      };
+      return +el.value > 0 ? +el.value : null;
     },
-    _update: function _update(el, data) {
-      if (data.choices.length) {
-        el.innerHTML = data.choices[0];
-      }
-
-      if (data.values.length) {
-        el.value = data.values[0];
-      }
+    _value: function _value(el, newValue, currentValue, index) {
+      el.value = newValue;
+    },
+    _choice: function _choice(el, newLabel, currentValue, index) {
+      el.innerHTML = newLabel;
+    },
+    _select: function _select() {
+      return null;
+    },
+    _clear: function _clear() {
+      return null;
     },
     _disable: function _disable(el, data) {
       el.classList.add("disabled");
@@ -759,20 +810,19 @@
   $.extend(listGroupInputBinding, {
     Selector: {
       SELF: ".yonder-list-group",
-      VALUE: ".list-group-item-action:not(.disabled)",
       SELECTED: ".list-group-item-action.active:not(.disabled)"
     },
     Events: [{
       type: "click",
       selector: ".list-group-item-action:not(.disabled)",
-      callback: function callback(el, target, self) {
+      callback: function callback(el, e, self) {
         if (el.getAttribute("data-multiple") === "false") {
-          el.querySelectorAll(self.Selector.VALUE).forEach(function (child) {
-            child.classList.remove("active");
+          el.querySelectorAll(".list-group-item-action:not(.disabled)").forEach(function (li) {
+            return li.classList.remove("active");
           });
         }
 
-        target.classList.toggle("active");
+        e.target.classList.toggle("active");
       }
     }],
     _value: function _value(el, newValue, currentValue, index) {
@@ -823,6 +873,28 @@
     _clear: function _clear(el) {
       el.querySelectorAll(".list-group-item").forEach(function (li) {
         return li.classList.remove("active");
+      });
+    },
+    _enable: function _enable(el, data) {
+      var values = data.values;
+      el.querySelectorAll(".list-group-item").forEach(function (li) {
+        var enable = !values.length || values.indexOf(li.getAttribute("data-value")) > -1;
+
+        if (enable && !data.invert) {
+          li.classList.remove("disabled");
+        }
+      });
+    },
+    _disable: function _disable(el, data) {
+      var values = data.values;
+      el.querySelectorAll(".list-group-item").forEach(function (li) {
+        var disable = !values.length || values.indexOf(li.getAttribute("data-value")) > -1;
+
+        if (disable && !data.invert) {
+          li.classList.add("disabled");
+        } else if (data.reset) {
+          li.classList.remove("disabled");
+        }
       });
     }
   });
@@ -912,24 +984,22 @@
       });
     },
     _enable: function _enable(el, data) {
-      var children = el.querySelectorAll(".dropdown-item");
-      children.forEach(function (child) {
-        var enable = !data.values.length || data.values.indexOf(child.value) > -1;
+      el.querySelectorAll(".dropdown-item").forEach(function (di) {
+        var enable = !data.values.length || data.values.indexOf(di.value) > -1;
 
         if (enable && !data.invert) {
-          child.classList.remove("disabled");
+          di.classList.remove("disabled");
         }
       });
     },
     _disable: function _disable(el, data) {
-      var children = el.querySelectorAll(".dropdown-item");
-      children.forEach(function (child) {
-        var disable = !data.values.length || data.values.indexOf(child.value) > -1;
+      el.querySelectorAll(".dropdown-item").forEach(function (di) {
+        var disable = !data.values.length || data.values.indexOf(di.value) > -1;
 
         if (disable && !data.invert) {
-          child.classList.add("disabled");
+          di.classList.add("disabled");
         } else if (data.reset) {
-          child.classList.remove("disabled");
+          di.classList.remove("disabled");
         }
       });
     }
@@ -944,16 +1014,10 @@
     },
     Events: [{
       type: "click",
-      selector: "a",
-      callback: function callback(el) {
-        return false;
-      }
-    }, {
-      type: "click",
       selector: ".nav-link:not(.dropdown-toggle):not(.disabled)",
       callback: function callback(el, target) {
         el.querySelectorAll(".active").forEach(function (a) {
-          return a.classList.remove("active");
+          a.classList.remove("active");
         });
         target.classList.add("active");
       }
@@ -962,7 +1026,7 @@
       selector: ".dropdown-item:not(.disabled)",
       callback: function callback(el, target) {
         el.querySelectorAll(".active").forEach(function (a) {
-          return a.classList.remove("active");
+          a.classList.remove("active");
         });
         target.parentNode.parentNode.firstElementChild.classList.add("active");
         target.classList.add("active");
@@ -1019,28 +1083,27 @@
       });
     },
     _disable: function _disable(el, data) {
-      el.querySelectorAll("[data-value]").forEach(function (child) {
-        var value = child.getAttribute("data-value");
-        var index = data.values ? data.values.indexOf(value) : 0;
+      el.querySelectorAll(".nav-link").forEach(function (nl) {
+        var disabled = !data.values.length || data.values.indexOf(nl.value) > -1;
 
-        if (index > -1 === !data.invert) {
-          child.classList.add("disabled");
+        if (disabled && !data.invert) {
+          nl.classList.add("disabled");
         } else if (data.reset) {
-          child.classList.remove("disabled");
+          nl.classList.remove("disabled");
         }
       });
     },
     _enable: function _enable(el, data) {
-      el.querySelectorAll("[data-value]").forEach(function (child) {
-        var value = child.getAttribute("data-value");
-        var index = data.values ? data.values.indexOf(value) : 0;
+      el.querySelectorAll(".nav-link").forEach(function (nl) {
+        var enable = !data.values.length || data.values.indexOf(nl.value) > -1;
 
-        if (index > -1 === !data.invert) {
-          child.classList.remove("disabled");
+        if (enable && !data.invert) {
+          nl.classList.remove("disabled");
         }
       });
     }
   });
+  Shiny.inputBindings.register(navInputBinding, "yonder.navInput");
   Shiny.addCustomMessageHandler("yonder:pane", function (msg) {
     var _show = function _show(pane) {
       if (pane === null || !pane.parentElement.classList.contains("tab-content")) {
@@ -1074,7 +1137,6 @@
       _show(document.getElementById(msg.data.target));
     }
   });
-  Shiny.inputBindings.register(navInputBinding, "yonder.navInput");
 
   var radioInputBinding = new Shiny.InputBinding();
   $.extend(radioInputBinding, {
@@ -1135,24 +1197,22 @@
       el.querySelector(this.Selector.SELECTED).removeAttribute("checked");
     },
     _enable: function _enable(el, data) {
-      var children = el.querySelectorAll(".custom-control-input");
-      children.forEach(function (child) {
-        var enable = !data.values.length || data.values.indexOf(child.value) > -1;
+      el.querySelectorAll(".custom-control-input").forEach(function (input) {
+        var enable = !data.values.length || data.values.indexOf(input.value) > -1;
 
         if (enable && !data.invert) {
-          child.classList.removeAttribute("disabled");
+          input.classList.removeAttribute("disabled");
         }
       });
     },
     _disable: function _disable(el, data) {
-      var children = el.querySelectorAll(".custom-control-input");
-      children.forEach(function (child) {
-        var disable = !data.values.length || data.values.indexOf(child.value) > -1;
+      el.querySelectorAll(".custom-control-input").forEach(function (input) {
+        var disable = !data.values.length || data.values.indexOf(input.value) > -1;
 
         if (disable && !data.invert) {
-          child.setAttribute("disabled", "");
+          input.setAttribute("disabled", "");
         } else if (data.reset) {
-          child.removeAttribute("disabled");
+          input.removeAttribute("disabled");
         }
       });
     }
@@ -1163,60 +1223,78 @@
   $.extend(radiobarInputBinding, {
     Selector: {
       SELF: ".yonder-radiobar[id]",
-      VALUE: ".btn input",
-      LABEL: ".btn > span",
-      SELECTED: ".btn input:checked"
+      SELECTED: "input:checked:not(:disabled)"
     },
     Events: [{
       type: "click"
     }, {
       type: "change"
     }],
-    getState: function getState(el, data) {
-      return {
-        value: this.getValue(el)
-      };
+    _value: function _value(el, newValue, currentValue, index) {
+      if (currentValue !== null) {
+        var target = el.querySelector("input[value=\"" + currentValue + "\"]");
+
+        if (target !== null) {
+          target.value = newValue;
+        }
+      } else {
+        var inputs = el.querySelectorAll("input");
+
+        if (index < inputs.length) {
+          inputs[index].value = newValue;
+        }
+      }
     },
-    _update: function _update(el, data) {
-      var children = el.querySelectorAll(".btn");
+    _choice: function _choice(el, newLabel, currentValue, index) {
+      if (currentValue !== null) {
+        var target = el.querySelector("input[value=\"" + currentValue + "\"]");
 
-      if (data.choices) {
-        children.forEach(function (child, i) {
-          child.querySelector("span").innerHTML = data.choices[i];
-          child.querySelector("input").setAttribute("data-value", data.values[i]);
-        });
-      }
+        if (target !== null) {
+          target.parentNode.children[1].innerHTML = newLabel;
+        }
+      } else {
+        var inputs = el.querySelectorAll("input");
 
-      if (data.selected) {
-        el.querySelector(".active").classList.remove("active");
-        el.querySelector("input[data-value=" + data.selected + "]").parentNode.classList.add("active");
+        if (index < inputs.length) {
+          inputs[index].parentNode.children[1].innerHTML = newLabel;
+        }
       }
+    },
+    _select: function _select(el, currentValue) {
+      if (currentValue !== null) {
+        var target = el.querySelector("input[value=\"" + currentValue + "\"]");
+
+        if (target !== null) {
+          target.checked = true;
+        }
+      }
+    },
+    _clear: function _clear(el) {
+      el.querySelectorAll("input:checked").forEach(function (i) {
+        return i.checked = false;
+      });
     },
     _enable: function _enable(el, data) {
-      var children = el.querySelectorAll(".btn");
-      children.forEach(function (child) {
-        var input = child.querySelector("input");
-        var value = input.getAttribute("data-value");
-        var index = data.values ? data.values.indexOf(value) : 0;
+      var values = data.values;
+      el.querySelectorAll("input").forEach(function (input) {
+        var enable = !values.length || values.indexOf(input.value) > -1;
 
-        if (index > -1 === !data.invert) {
-          child.classList.remove("disabled");
+        if (enable && !data.invert) {
+          input.parentNode.classList.remove("disabled");
           input.removeAttribute("disabled");
         }
       });
     },
     _disable: function _disable(el, data) {
-      var children = el.querySelectorAll(".btn");
-      children.forEach(function (child) {
-        var input = child.querySelector("input");
-        var value = input.getAttribute("data-value");
-        var index = data.values ? data.values.indexOf(value) : 0;
+      var values = data.values;
+      el.querySelectorAll("input").forEach(function (input) {
+        var disable = !values.length || values.indexOf(input.value) > -1;
 
-        if (index > -1 === !data.invert) {
-          child.classList.add("disabled");
+        if (disable && !data.invert) {
+          input.parentNode.classList.add("disabled");
           input.setAttribute("disabled", "");
         } else if (data.reset) {
-          child.classList.remove("disabled");
+          input.parentNode.classList.remove("disabled");
           input.removeAttribute("disabled");
         }
       });
@@ -1368,7 +1446,7 @@
   var textualInputBinding = new Shiny.InputBinding();
   $.extend(textualInputBinding, {
     Selector: {
-      SELF: ".yonder-textual[id]",
+      SELF: ".yonder-textual",
       VALIDATE: "input"
     },
     Events: [{
@@ -1379,19 +1457,8 @@
       debounce: true
     }],
     getValue: function getValue(el) {
-      var input = el.querySelector("input");
-      var value = input.value;
-
-      if (input.type === "number") {
-        return parseInt(value, 10);
-      }
-
-      return value;
-    },
-    getState: function getState(el, data) {
-      return {
-        value: this.getValue(el)
-      };
+      var input = el.children[0];
+      return input.type === "number" ? parseInput(input.value, 10) : input.value;
     },
     getRatePolicy: function getRatePolicy() {
       return {
@@ -1399,14 +1466,23 @@
         delay: 250
       };
     },
-    _update: function _update(el, data) {
-      data.values && (el.querySelector("input").value = data.values[0]);
+    _value: function _value(el, newValue, currentValue, index) {
+      el.children[0].value = newValue;
+    },
+    _choice: function _choice() {
+      return null;
+    },
+    _select: function _select() {
+      return null;
+    },
+    _clear: function _clear() {
+      return null;
     },
     _disable: function _disable(el, data) {
-      el.querySelector("input").setAttribute("disabled", "");
+      el.children[0].setAttribute("disabled", "");
     },
     _enable: function _enable(el, data) {
-      el.querySelector("input").removeAttribute("disabled");
+      el.children[0].removeAttribute("disabled");
     }
   });
   Shiny.inputBindings.register(textualInputBinding, "yonder.textualInput");

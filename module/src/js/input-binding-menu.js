@@ -74,26 +74,22 @@ $.extend(menuInputBinding, {
       .forEach(di => di.classList.remove("active"));
   },
   _enable: function(el, data) {
-    let children = el.querySelectorAll(".dropdown-item");
-
-    children.forEach(child => {
-      let enable = !data.values.length || data.values.indexOf(child.value) > -1;
+    el.querySelectorAll(".dropdown-item").forEach(di => {
+      let enable = !data.values.length || data.values.indexOf(di.value) > -1;
 
       if (enable && !data.invert) {
-        child.classList.remove("disabled");
+        di.classList.remove("disabled");
       }
     });
   },
   _disable: function(el, data) {
-    let children = el.querySelectorAll(".dropdown-item");
-
-    children.forEach(child => {
-      let disable = !data.values.length || data.values.indexOf(child.value) > -1;
+    el.querySelectorAll(".dropdown-item").forEach(di => {
+      let disable = !data.values.length || data.values.indexOf(di.value) > -1;
 
       if (disable && !data.invert) {
-        child.classList.add("disabled");
+        di.classList.add("disabled");
       } else if (data.reset) {
-        child.classList.remove("disabled");
+        di.classList.remove("disabled");
       }
     });
   }

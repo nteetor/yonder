@@ -16,8 +16,8 @@ disableInput(id, values = NULL, invert = FALSE, reset = FALSE,
 
 \item{values}{A vector specifying values to enable or disable.}
 
-\item{invert}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} choices which do \strong{not}
-have a matching value are enabled or disabled, defaults to \code{FALSE}.}
+\item{invert}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} choices which do \emph{not} have
+a matching value are enabled or disabled, defaults to \code{FALSE}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 

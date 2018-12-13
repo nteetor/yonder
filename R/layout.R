@@ -14,7 +14,6 @@
 #' @noRd
 #' @family layout
 #' @name index
-#' @layout index
 NULL
 
 #' Grid layout

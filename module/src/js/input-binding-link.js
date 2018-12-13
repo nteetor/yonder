@@ -14,18 +14,17 @@ $.extend(linkInputBinding, {
   initialize: function(el) {
     el.value = 0;
   },
-  getValue: function(el) {
-    return { value: +el.value, id: el.id };
+  getValue: (el) => {
+    return +el.value > 0 ? +el.value : null;
   },
-  _update: function(el, data) {
-    if (data.choices.length) {
-      el.innerHTML = data.choices[0];
-    }
-
-    if (data.values.length) {
-      el.value = data.values[0];
-    }
+  _value: (el, newValue, currentValue, index) => {
+    el.value = newValue;
   },
+  _choice: (el, newLabel, currentValue, index) => {
+    el.innerHTML = newLabel;
+  },
+  _select: () => null,
+  _clear: () => null,
   _disable: function(el, data) {
     el.classList.add("disabled");
     el.setAttribute("disabled", "");

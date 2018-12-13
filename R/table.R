@@ -49,7 +49,6 @@
 #' )
 #'
 #' @template thruput
-#' @requires data
 #' @export
 #' @examples
 #'

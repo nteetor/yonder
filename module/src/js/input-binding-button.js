@@ -14,7 +14,7 @@ $.extend(buttonInputBinding, {
     el.value = 0;
   },
   getValue: (el) => {
-    return el.value > 0 ? +el.value : null;
+    return +el.value > 0 ? +el.value : null;
   },
   _choice: (el, newLabel, currentValue, index) => {
     el.innerHTML = newLabel;

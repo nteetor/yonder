@@ -4,7 +4,7 @@
 \alias{navInput}
 \title{Page navigation}
 \usage{
-navInput(id, choices, values = choices, ..., appearance = NULL,
+navInput(id, choices, values = choices, ..., appearance = "links",
   fill = FALSE)
 }
 \arguments{
@@ -18,8 +18,8 @@ item, defaults to \code{labels}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 
-\item{appearance}{One of \code{"pills"} or \code{"tabs"} specifying the appearance of
-the nav input.}
+\item{appearance}{One of \code{"links"}, \code{"pills"}, or \code{"tabs"} specifying the
+appearance of the nav input, defaults to \code{"links"}.}
 
 \item{fill}{One of \code{TRUE} or \code{FALSE} specifying if the nav input fills the
 width of its parent element. If \code{TRUE}, the space is divided evenly among

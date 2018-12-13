@@ -11,10 +11,20 @@ updateInput(id, choices = NULL, values = NULL, selected = NULL,
 \item{id}{A character string specifying the reactive id of an input.}
 
 \item{choices}{A character vector, tag element, or list specifying choices
-for the input.}
+for the input.
 
-\item{values}{An object specifying values for the input, this object is
-coerced to a character vector.}
+If \code{choices} is an \strong{unnamed} vector, list, or element then the input's
+choices are updated sequentially.
+
+If \code{choices} is a \strong{named} vector or list then the input's choices are
+matched by value. The names of \code{choices} refer to one or more possible
+values of the input and the values of \code{choices} are the new choice labels.}
+
+\item{values}{An atomic vector or list of atomic singleton values, values
+will be coerced to character strings.
+
+If \code{values} is an \strong{unnamed} vector or list then the input's values are
+updated sequentially.}
 
 \item{selected}{One of \code{values} specifying which choice to select, defaults
 to \code{NULL}, in which case a choice is not selected. Note that browsers may
@@ -23,21 +33,12 @@ automatically select a choice if not specified.}
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-Input utilities.
+Modify an input's choices, values, or selected choices. Importantly, an
+input's choices and selected choices are updated after any values are
+updated. Thus, \code{choices} and \code{selected} must refer to the new, updated
+values.
 }
-\section{Combinations of \code{choices} and \code{values}}{
-
-
-\strong{choices} and \strong{values} specified: the input's choices and values are
-updated.
-
-\strong{choices} is specified and \strong{values} is \code{NULL}: \code{values} defaults to
-\code{choices}.
-
-\strong{choices} is \code{NULL} and \strong{values} is specified: use this case for inputs
-without choices, e.g. a text input, to update only the current value.
-
-\strong{choices} and \strong{values} both \code{NULL}: used to preserve choices and values
-while changing the selected choice with \code{selected}.
+\details{
+If specifying new values with \code{values}, both \code{choices} and \code{selected} need to
+refer to these new values.
 }
-

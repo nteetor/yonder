@@ -5,12 +5,14 @@
 #' @noRd
 #' @name index
 #' @family utilities
-#' @layout index
 NULL
 
 #' Update input
 #'
-#' Input utilities.
+#' Modify an input's choices, values, or selected choices. Importantly, an
+#' input's choices and selected choices are updated after any values are
+#' updated. Thus, `choices` and `selected` must refer to the new, updated
+#' values.
 #'
 #' @param id A character string specifying the reactive id of an input.
 #'
@@ -34,7 +36,7 @@ NULL
 #'   to `NULL`, in which case a choice is not selected. Note that browsers may
 #'   automatically select a choice if not specified.
 #'
-#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#' @template session
 #'
 #' @details
 #'
@@ -108,13 +110,13 @@ updateInput <- function(id, choices = NULL, values = NULL, selected = NULL,
 #'
 #' @param values A vector specifying values to enable or disable.
 #'
-#' @param invert One of `TRUE` or `FALSE`, if `TRUE` choices which do __not__
-#'   have a matching value are enabled or disabled, defaults to `FALSE`.
+#' @param invert One of `TRUE` or `FALSE`, if `TRUE` choices which do _not_ have
+#'   a matching value are enabled or disabled, defaults to `FALSE`.
 #'
 #' @param reset One of `TRUE` or `FALSE`, if `TRUE` choices are all enabled
 #'   prior to disabling choices, defaults to `FALSE`.
 #'
-#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#' @template session
 #'
 #' @export
 enableInput <- function(id, values = NULL, invert = FALSE,
@@ -166,7 +168,8 @@ disableInput <- function(id, values = NULL, invert = FALSE, reset = FALSE,
 invalidateInput <- function(id, message, session = getDefaultReactiveDomain()) {
   if (is.null(session)) {
     stop(
-
+      "invalid `invalidateInput()` argument, `session` is NULL",
+      call. = FALSE
     )
   }
 
@@ -186,6 +189,8 @@ invalidateInput <- function(id, message, session = getDefaultReactiveDomain()) {
 validateInput <- function(id, session = getDefaultReactiveDomain()) {
   if (is.null(session)) {
     stop(
+      "invalid `validateInput()` argument, `session` is NULL",
+      call. = FALSE
     )
   }
 

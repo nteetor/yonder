@@ -104,7 +104,7 @@ menuInput <- function(id, label, choices, values = choices, ...,
     force = TRUE
   )
 
-  input <- tags$div(
+  element <- tags$div(
     class = collate(
       "yonder-menu",
       paste0("drop", direction)
@@ -138,7 +138,8 @@ menuInput <- function(id, label, choices, values = choices, ...,
     )
   )
 
-  input <- attachDependencies(input, c(yonderDep(), shinyDep(), bootstrapDep()))
-
-  input
+  attachDependencies(
+    element,
+    c(yonderDep(), shinyDep(), bootstrapDep())
+  )
 }

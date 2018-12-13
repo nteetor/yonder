@@ -14,8 +14,8 @@
 #'   width of its parent element. If `TRUE`, the space is divided evenly among
 #'   the nav items.
 #'
-#' @param appearance One of `"pills"` or `"tabs"` specifying the appearance of
-#'   the nav input.
+#' @param appearance One of `"links"`, `"pills"`, or `"tabs"` specifying the
+#'   appearance of the nav input, defaults to `"links"`.
 #'
 #' @section Reactive value:
 #'
@@ -85,12 +85,12 @@
 #' ) %>%
 #'   flex(justify = "center")
 #'
-navInput <- function(id, choices, values = choices, ..., appearance = NULL,
+navInput <- function(id, choices, values = choices, ..., appearance = "links",
                      fill = FALSE) {
-  if (!is.null(appearance) && !re(appearance, "pills|tabs", FALSE)) {
+  if (!is.null(appearance) && !re(appearance, "links|pills|tabs", FALSE)) {
     stop(
       "invalid `navInput()` argument, `appearance` must be one of ",
-      '"pills" or "tabs"',
+      '"links", "pills", or "tabs"',
       call. = FALSE
     )
   }
@@ -101,7 +101,7 @@ navInput <- function(id, choices, values = choices, ..., appearance = NULL,
     character(1)
   )
 
-  input <- tags$ul(
+  element <- tags$ul(
     class = collate(
       "yonder-nav",
       "nav",
@@ -117,22 +117,23 @@ navInput <- function(id, choices, values = choices, ..., appearance = NULL,
     )
   )
 
-  input <- attachDependencies(input, c(yonderDep(), shinyDep(), bootstrapDep()))
-
-  input
+  attachDependencies(
+    element,
+    c(yonderDep(), shinyDep(), bootstrapDep())
+  )
 }
 
 navItem <- function(base, value, active) {
   if (is.character(base)) {
     base <- tags$li(
       class = "nav-item",
-      tags$a(
+      tags$button(
         class = collate(
-          "nav-link",
+          "nav-link btn btn-link",
           if (active) "active"
         ),
         href = "#",
-        `data-value` = value,
+        value = value,
         base
       )
     )
@@ -141,9 +142,9 @@ navItem <- function(base, value, active) {
   }
 
   if (tagHasClass(base, "yonder-menu")) {
-    base$children[[1]]$attribs$class <- "nav-link dropdown-toggle"
+    base$children[[1]]$attribs$class <- "nav-link btn btn-link dropdown-toggle"
     base$children[[1]]$attribs$type <- NULL
-    base$children[[1]]$attribs$`data-value` <- value
+    base$children[[1]]$attribs$value <- value
 
     if (active) {
       base$children[[1]] <- tagAddClass(base$children[[1]], "active")

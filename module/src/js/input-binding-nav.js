@@ -8,14 +8,12 @@ $.extend(navInputBinding, {
   Events: [
     {
       type: "click",
-      selector: "a",
-      callback: el => false
-    },
-    {
-      type: "click",
       selector: ".nav-link:not(.dropdown-toggle):not(.disabled)",
       callback: (el, target) => {
-        el.querySelectorAll(".active").forEach(a => a.classList.remove("active"));
+        el.querySelectorAll(".active").forEach(a => {
+          a.classList.remove("active");
+        });
+
         target.classList.add("active");
       }
     },
@@ -23,7 +21,9 @@ $.extend(navInputBinding, {
       type: "click",
       selector: ".dropdown-item:not(.disabled)",
       callback: (el, target) => {
-        el.querySelectorAll(".active").forEach(a => a.classList.remove("active"));
+        el.querySelectorAll(".active").forEach(a => {
+          a.classList.remove("active");
+        });
 
         target.parentNode.parentNode.firstElementChild.classList.add("active");
         target.classList.add("active");
@@ -78,28 +78,28 @@ $.extend(navInputBinding, {
       .forEach(nl => nl.classList.remove("active"));
   },
   _disable: function(el, data) {
-    el.querySelectorAll("[data-value]").forEach(child => {
-      let value = child.getAttribute("data-value");
-      let index = data.values ? data.values.indexOf(value) : 0;
+    el.querySelectorAll(".nav-link").forEach(nl => {
+      let disabled = !data.values.length || data.values.indexOf(nl.value) > -1;
 
-      if ((index > -1) === !data.invert) {
-        child.classList.add("disabled");
+      if (disabled && !data.invert) {
+        nl.classList.add("disabled");
       } else if (data.reset) {
-        child.classList.remove("disabled");
+        nl.classList.remove("disabled");
       }
     });
   },
   _enable: function(el, data) {
-    el.querySelectorAll("[data-value]").forEach(child => {
-      let value = child.getAttribute("data-value");
-      let index = data.values ? data.values.indexOf(value) : 0;
+    el.querySelectorAll(".nav-link").forEach(nl => {
+      let enable = !data.values.length || data.values.indexOf(nl.value) > -1;
 
-      if ((index > -1) === !data.invert) {
-        child.classList.remove("disabled");
+      if (enable && !data.invert) {
+        nl.classList.remove("disabled");
       }
     });
   }
 });
+
+Shiny.inputBindings.register(navInputBinding, "yonder.navInput");
 
 Shiny.addCustomMessageHandler("yonder:pane", (msg) => {
   let _show = function(pane) {
@@ -140,5 +140,3 @@ Shiny.addCustomMessageHandler("yonder:pane", (msg) => {
     _show(document.getElementById(msg.data.target));
   }
 });
-
-Shiny.inputBindings.register(navInputBinding, "yonder.navInput");

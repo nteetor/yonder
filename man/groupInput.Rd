@@ -64,7 +64,7 @@ dropdown input value, the value of the text input, and any static addons.
 # This input will always append a "@".
 
 groupInput(
-  id = NULL,
+  id = "group1",
   left = "@",
   placeholder = "Username"
 )
@@ -72,7 +72,7 @@ groupInput(
 ### Text input and button combo
 
 groupInput(
-  id = NULL,
+  id = "group2",,
   placeholder = "Search terms",
   right = buttonInput(
     id = "button",
@@ -84,14 +84,14 @@ groupInput(
 ### Combination addon
 
 groupInput(
-  id = NULL,
+  id = "group3",
   left = c("$", "0.")
 )
 
 ### Two addons
 
 groupInput(
-  id = NULL,
+  id = "group4",
   left = "@",
   placeholder = "Username",
   right = buttonInput(

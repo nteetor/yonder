@@ -125,20 +125,6 @@ submitInput <- function(label = "Submit", value = label, block = FALSE, ...) {
 #' @rdname buttonInput
 #' @export
 linkInput <- function(id, text, ...) {
-  shiny::registerInputHandler(
-    type = "yonder.link",
-    fun = function(x, session, name) {
-      if (x$value == 0) {
-        return(NULL)
-      }
-
-      id <- x$id
-      attr(id, "clicks") <- x$value
-      id
-    },
-    force = TRUE
-  )
-
   element <- tags$button(
     class = "yonder-link btn btn-link",
     id = id,
@@ -211,7 +197,7 @@ buttonGroupInput <- function(id, labels, values = labels, ...) {
         tags$button(
           type = "button",
           class = "btn btn-grey",
-          `data-value` = value,
+          value = value,
           label
         )
       }

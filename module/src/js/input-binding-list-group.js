@@ -3,21 +3,19 @@ export let listGroupInputBinding = new Shiny.InputBinding();
 $.extend(listGroupInputBinding, {
   Selector: {
     SELF: ".yonder-list-group",
-    VALUE: ".list-group-item-action:not(.disabled)",
     SELECTED: ".list-group-item-action.active:not(.disabled)"
   },
   Events: [
     {
       type: "click",
       selector: ".list-group-item-action:not(.disabled)",
-      callback: (el, target, self) => {
+      callback: (el, e, self) => {
         if (el.getAttribute("data-multiple") === "false") {
-          el.querySelectorAll(self.Selector.VALUE).forEach(child => {
-            child.classList.remove("active");
-          });
+          el.querySelectorAll(".list-group-item-action:not(.disabled)")
+            .forEach(li => li.classList.remove("active"));
         }
 
-        target.classList.toggle("active");
+        e.target.classList.toggle("active");
       }
     }
   ],
@@ -64,8 +62,29 @@ $.extend(listGroupInputBinding, {
   },
   _clear: (el) => {
     el.querySelectorAll(".list-group-item").forEach(li => li.classList.remove("active"));
+  },
+  _enable: (el, data) => {
+    let values = data.values;
+    el.querySelectorAll(".list-group-item").forEach(li => {
+      let enable = !values.length || values.indexOf(li.getAttribute("data-value")) > -1;
+
+      if (enable && !data.invert) {
+        li.classList.remove("disabled");
+      }
+    });
+  },
+  _disable: (el, data) => {
+    let values = data.values;
+    el.querySelectorAll(".list-group-item").forEach(li => {
+      let disable = !values.length || values.indexOf(li.getAttribute("data-value")) > -1;
+
+      if (disable && !data.invert) {
+        li.classList.add("disabled");
+      } else if (data.reset) {
+        li.classList.remove("disabled");
+      }
+    });
   }
 });
-
 
 Shiny.inputBindings.register(listGroupInputBinding, "yonder.listGroupInput");

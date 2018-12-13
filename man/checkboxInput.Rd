@@ -5,43 +5,63 @@
 \alias{checkbarInput}
 \title{Checkbox inputs}
 \usage{
-checkboxInput(id, choice, value = choice, checked = FALSE, ...)
+checkboxInput(id, choices, values = choices, selected = NULL, ...,
+  inline = FALSE)
 
 checkbarInput(id, choices, values = choices, selected = NULL, ...)
 }
 \arguments{
 \item{id}{A character string specifying the reactive id of the input.}
 
-\item{choice, choices}{A character string or vector specifying a label for the
+\item{choices}{A character string or vector specifying a label for the
 checkbox or checkbar.}
 
-\item{value, values}{A character string or vector specifying values for the
+\item{values}{A character string or vector specifying values for the
 checkbox or checkbar input, defaults to \code{choice} or \code{values}, respectively.}
 
-\item{checked}{If \code{TRUE} the checkbox renders in a checked state, defaults
-to \code{FALSE}.}
+\item{selected}{One or more of \code{values} specifying which choices are
+selected by default, defaults to \code{NULL}, in which case no choices are
+initially selected.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 
-\item{selected}{One of \code{values} specifying the initial value of the checkbar
-input, defaults to \code{NULL}, in which case no choice is selected.}
+\item{inline}{One of \code{TRUE} or \code{FALSE} specifying if the checkbox input
+choices render inline or stacked, defaults to \code{FALSE}, in which case the
+choices are stacked.}
 }
 \description{
-A reactive checkbox input. When a checkbox input is unchecked the reactive
-value is \code{NULL}. When checked the checkbox input reactive value is \code{value}.
-Unlike shiny, yonder's checkbox inputs are a singleton value.
+Reactive checkbox and checkbar inputs. Users may select one or more choices.
+The checkbox input appears as a standard checkbox or set of checkboxes. The
+checkbar input appears similar to a group of buttons, but with a checked or
+highlighted state. When a checkbox or checkbar input has no selected choices
+the reactive value is \code{NULL}.
 }
 \examples{
 
-### Start checked
+### One option
 
 checkboxInput(
-  id = "potenti",
-  choice = "Suspendisse potenti",
-  checked = TRUE
+  id = "checkbox1",
+  choices = "Choice 1",
+  selected = "Choice 1"
 )
 
-### Checkbar, checkbox group
+### Multiple options
+
+checkboxInput(
+  id = "checkbox2",
+  choices = c("Choice 1", "Choice 2")
+)
+
+### Inline checkbox
+
+checkboxInput(
+  id = "checkbox3",
+  choices = c("Choice 1", "Choice 2", "Choice 3"),
+  inline = TRUE
+)
+
+### Checkbar
 
 checkbarInput(
   id = "checks",

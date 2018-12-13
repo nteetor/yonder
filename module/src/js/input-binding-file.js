@@ -2,7 +2,7 @@ export let fileInputBinding = new Shiny.InputBinding();
 
 $.extend(fileInputBinding, {
   Selector: {
-    SELF: ".yonder-file[id]",
+    SELF: ".yonder-file",
     VALIDATE: "input[type='file']"
   },
   Events: [
@@ -17,9 +17,7 @@ $.extend(fileInputBinding, {
     {
       type: "click",
       selector: "button",
-      callback: (el, _, self) => {
-        self._doUpload(el);
-      }
+      callback: (el, _, self) => self._doUpload(el)
     },
     {
       type: "dragover",
@@ -46,6 +44,10 @@ $.extend(fileInputBinding, {
     }
   ],
   getValue: el => null,
+  _value: () => null,
+  _choice: () => null,
+  _select: () => null,
+  _clear: () => null,
   _enable: function(el, data) {
     el.querySelector("input[type='file']").removeAttribute("disabled");
   },

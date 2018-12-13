@@ -52,26 +52,22 @@ $.extend(radioInputBinding, {
     el.querySelector(this.Selector.SELECTED).removeAttribute("checked");
   },
   _enable: (el, data) => {
-    let children = el.querySelectorAll(".custom-control-input");
-
-    children.forEach(child => {
-      let enable = !data.values.length || data.values.indexOf(child.value) > -1;
+    el.querySelectorAll(".custom-control-input").forEach(input => {
+      let enable = !data.values.length || data.values.indexOf(input.value) > -1;
 
       if (enable && !data.invert) {
-        child.classList.removeAttribute("disabled");
+        input.classList.removeAttribute("disabled");
       }
     });
   },
   _disable: (el, data) => {
-    let children = el.querySelectorAll(".custom-control-input");
-
-    children.forEach(child => {
-      let disable = !data.values.length || data.values.indexOf(child.value) > -1;
+    el.querySelectorAll(".custom-control-input").forEach(input => {
+      let disable = !data.values.length || data.values.indexOf(input.value) > -1;
 
       if (disable && !data.invert) {
-        child.setAttribute("disabled", "");
+        input.setAttribute("disabled", "");
       } else if (data.reset) {
-        child.removeAttribute("disabled");
+        input.removeAttribute("disabled");
       }
     });
   }
