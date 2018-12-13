@@ -144,7 +144,7 @@ navInput <- function(id, choices, values = choices, selected = NULL, ...,
       "yonder-nav",
       "nav",
       if (fill) "nav-fill",
-      if (!is.null(appearance)) paste0("nav-", appearance)
+      if (appearance != "links") paste0("nav-", appearance)
     ),
     id = id,
     Map(
