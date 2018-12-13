@@ -919,20 +919,15 @@
         e.target.classList.add("active");
       }
     }, {
-      type: "change",
-      selector: ".dropdown-item:not(.disabled)"
+      type: "nav.reset",
+      callback: function callback(el) {
+        var active = el.querySelector(".dropdown-item.active");
+
+        if (active !== null) {
+          active.classList.remove("active");
+        }
+      }
     }],
-    Type: "yonder.menu",
-    find: function find(scope) {
-      return scope.querySelectorAll(":not(.nav) > " + this.Selector.SELF + "[id]");
-    },
-    getValue: function getValue(el) {
-      var selected = el.querySelector(".dropdown-item.active");
-      return {
-        force: Date.now(),
-        value: selected && selected.value
-      };
-    },
     _value: function _value(el, newValue, currentValue, index) {
       if (currentValue !== null) {
         var target = el.querySelector(".dropdown-item[value=\"" + currentValue + "\"]");
@@ -1016,7 +1011,14 @@
       type: "click",
       selector: ".nav-link:not(.dropdown-toggle):not(.disabled)",
       callback: function callback(el, e) {
-        el.querySelectorAll(".active").forEach(function (a) {
+        var activeItem = el.querySelector(".dropdown-item.active");
+
+        if (activeItem !== null) {
+          // trigger reset on menu input
+          $(activeItem.parentNode.parentNode).trigger("nav.reset");
+        }
+
+        el.querySelectorAll(".nav-link.active").forEach(function (a) {
           a.classList.remove("active");
         });
         e.target.classList.add("active");

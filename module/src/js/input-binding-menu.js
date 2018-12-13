@@ -18,18 +18,15 @@ $.extend(menuInputBinding, {
       }
     },
     {
-      type: "change",
-      selector: ".dropdown-item:not(.disabled)"
+      type: "nav.reset",
+      callback: (el) => {
+        let active = el.querySelector(".dropdown-item.active");
+        if (active !== null) {
+          active.classList.remove("active");
+        }
+      }
     }
   ],
-  Type: "yonder.menu",
-  find: function(scope) {
-    return scope.querySelectorAll(`:not(.nav) > ${ this.Selector.SELF }[id]`);
-  },
-  getValue: function(el) {
-    let selected = el.querySelector(".dropdown-item.active");
-    return { force: Date.now(), value: selected && selected.value };
-  },
   _value: (el, newValue, currentValue, index) => {
     if (currentValue !== null) {
       let target = el.querySelector(`.dropdown-item[value="${ currentValue }"]`);

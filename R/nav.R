@@ -2,7 +2,10 @@
 #'
 #' A reactive input styled as a navigation control. The navigation input can be
 #' styled as links, tabs, or pills. A nav input is paired with [navContent()]
-#' and [showPane()] to create tabbed user interfaces.
+#' and [showPane()] to create tabbed user interfaces. Observers and reactives
+#' are triggered when a nav choice or menu item is clicked. The reactive value
+#' of a nav input is `NULL` or a singleton character string. The value of any
+#' menus in the nav input must be retrieved with its own reactive id.
 #'
 #' @param choices A character vector or list of tag elements specifying the
 #'   navigation items of the navigation input.
@@ -20,12 +23,33 @@
 #' @param appearance One of `"links"`, `"pills"`, or `"tabs"` specifying the
 #'   appearance of the nav input, defaults to `"links"`.
 #'
-#' @section Reactive value:
+#' @section Including a menu:
 #'
-#' A click on a navigation link triggers a single character string.
+#' Use the reactive id of any nav menus to know when a menu item is clicked.
 #'
-#' A click on a dropdown item triggers a character vector of two values, the
-#' value of the nav link and the value of the dropdown item.
+#' ```R
+#' ui <- navInput(
+#'   id = "navigation",
+#'   choices = list(
+#'     "Item 1",
+#'     "Item 2",
+#'     menuInput(
+#'       id = "navMenu",  # <-
+#'       label = "Item 3",
+#'       choices = c("Choice 1", "Choice 2")
+#'     )
+#'   ),
+#'   values = c("item1", "item2", "item3")
+#' )
+#'
+#' server <- function(input, output) {
+#'   observeEvent(input$navMenu, {
+#'     cat(paste("Click menu item:", input$navMenu, "\n"))
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
 #'
 #' @template input
 #' @export
@@ -164,7 +188,6 @@ navItem <- function(base, value, active) {
     }
 
     base$name <- "li"
-    base$attribs$id <- NULL
     base <- tagAddClass(base, "nav-item")
 
     return(base)
@@ -376,12 +399,10 @@ navContent <- function(...) {
     ...
   )
 
-  panes <- attachDependencies(
+  attachDependencies(
     panes,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  panes
 }
 
 #' @rdname navContent
@@ -394,12 +415,10 @@ navPane <- function(id, ...) {
     ...
   )
 
-  pane <- attachDependencies(
+  attachDependencies(
     pane,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  pane
 }
 
 #' @rdname navContent
@@ -407,7 +426,7 @@ navPane <- function(id, ...) {
 showPane <- function(id, session = getDefaultReactiveDomain()) {
   if (is.null(session)) {
     stop(
-      "`showPane()` must be called in a reactive environment",
+      "invalid `showPane()` argument, `session` is NULL",
       call. = FALSE
     )
   }

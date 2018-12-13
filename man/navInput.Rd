@@ -31,15 +31,36 @@ the nav items.}
 \description{
 A reactive input styled as a navigation control. The navigation input can be
 styled as links, tabs, or pills. A nav input is paired with \code{\link[=navContent]{navContent()}}
-and \code{\link[=showPane]{showPane()}} to create tabbed user interfaces.
+and \code{\link[=showPane]{showPane()}} to create tabbed user interfaces. Observers and reactives
+are triggered when a nav choice or menu item is clicked. The reactive value
+of a nav input is \code{NULL} or a singleton character string. The value of any
+menus in the nav input must be retrieved with its own reactive id.
 }
-\section{Reactive value}{
+\section{Including a menu}{
 
 
-A click on a navigation link triggers a single character string.
+Use the reactive id of any nav menus to know when a menu item is clicked.\preformatted{ui <- navInput(
+  id = "navigation",
+  choices = list(
+    "Item 1",
+    "Item 2",
+    menuInput(
+      id = "navMenu",  # <-
+      label = "Item 3",
+      choices = c("Choice 1", "Choice 2")
+    )
+  ),
+  values = c("item1", "item2", "item3")
+)
 
-A click on a dropdown item triggers a character vector of two values, the
-value of the nav link and the value of the dropdown item.
+server <- function(input, output) {
+  observeEvent(input$navMenu, {
+    cat(paste("Click menu item:", input$navMenu, "\n"))
+  })
+}
+
+shinyApp(ui, server)
+}
 }
 
 \examples{

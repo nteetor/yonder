@@ -10,7 +10,13 @@ $.extend(navInputBinding, {
       type: "click",
       selector: ".nav-link:not(.dropdown-toggle):not(.disabled)",
       callback: (el, e) => {
-        el.querySelectorAll(".active").forEach(a => {
+        let activeItem = el.querySelector(".dropdown-item.active");
+        if (activeItem !== null) {
+          // trigger reset on menu input
+          $(activeItem.parentNode.parentNode).trigger("nav.reset");
+        }
+
+        el.querySelectorAll(".nav-link.active").forEach(a => {
           a.classList.remove("active");
         });
 

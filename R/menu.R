@@ -1,9 +1,8 @@
 #' Menu input
 #'
 #' A togglable dropdown menu input. Menu inputs may be used as standalone
-#' reactive inputs or within a [navInput()]. When used within a nav input the
-#' `id` argument is ignored and may be set to `NULL`. For building custom,
-#' more complex dropdown elements please see [dropdown()].
+#' reactive inputs or within a [navInput()]. For building custom, more complex
+#' dropdown elements please see [dropdown()].
 #'
 #' @param label A character string or tag element specifying the label of the
 #'   menu's toggle button.
@@ -95,14 +94,6 @@ menuInput <- function(id, label, choices, values = choices, ...,
       call. = FALSE
     )
   }
-
-  shiny::registerInputHandler(
-    type = "yonder.menu",
-    fun = function(x, session, data) {
-      if (length(x) > 1) x[[2]]
-    },
-    force = TRUE
-  )
 
   element <- tags$div(
     class = collate(

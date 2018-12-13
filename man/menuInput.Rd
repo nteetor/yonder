@@ -29,9 +29,8 @@ toggle button the menu aligns to, defaults to \code{"left"}.`}
 }
 \description{
 A togglable dropdown menu input. Menu inputs may be used as standalone
-reactive inputs or within a \code{\link[=navInput]{navInput()}}. When used within a nav input the
-\code{id} argument is ignored and may be set to \code{NULL}. For building custom,
-more complex dropdown elements please see \code{\link[=dropdown]{dropdown()}}.
+reactive inputs or within a \code{\link[=navInput]{navInput()}}. For building custom, more complex
+dropdown elements please see \code{\link[=dropdown]{dropdown()}}.
 }
 \examples{
 
