@@ -909,14 +909,14 @@
     Events: [{
       type: "click",
       selector: ".dropdown-item:not(.disabled)",
-      callback: function callback(el, target) {
+      callback: function callback(el, e) {
         var active = el.querySelector(".dropdown-item.active");
 
-        if (active) {
+        if (active !== null) {
           active.classList.remove("active");
         }
 
-        target.classList.add("active");
+        e.target.classList.add("active");
       }
     }, {
       type: "change",
@@ -1015,21 +1015,21 @@
     Events: [{
       type: "click",
       selector: ".nav-link:not(.dropdown-toggle):not(.disabled)",
-      callback: function callback(el, target) {
+      callback: function callback(el, e) {
         el.querySelectorAll(".active").forEach(function (a) {
           a.classList.remove("active");
         });
-        target.classList.add("active");
+        e.target.classList.add("active");
       }
     }, {
       type: "click",
       selector: ".dropdown-item:not(.disabled)",
-      callback: function callback(el, target) {
+      callback: function callback(el, e) {
         el.querySelectorAll(".active").forEach(function (a) {
           a.classList.remove("active");
         });
-        target.parentNode.parentNode.firstElementChild.classList.add("active");
-        target.classList.add("active");
+        e.target.parentNode.parentNode.children[0].classList.add("active");
+        e.target.classList.add("active");
       }
     }],
     _value: function _value(el, newValue, currentValue, index) {

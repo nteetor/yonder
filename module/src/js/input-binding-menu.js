@@ -9,12 +9,12 @@ $.extend(menuInputBinding, {
     {
       type: "click",
       selector: ".dropdown-item:not(.disabled)",
-      callback: (el, target) => {
+      callback: (el, e) => {
         let active = el.querySelector(".dropdown-item.active");
-        if (active) {
+        if (active !== null) {
           active.classList.remove("active");
         }
-        target.classList.add("active");
+        e.target.classList.add("active");
       }
     },
     {

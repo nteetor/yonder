@@ -9,24 +9,24 @@ $.extend(navInputBinding, {
     {
       type: "click",
       selector: ".nav-link:not(.dropdown-toggle):not(.disabled)",
-      callback: (el, target) => {
+      callback: (el, e) => {
         el.querySelectorAll(".active").forEach(a => {
           a.classList.remove("active");
         });
 
-        target.classList.add("active");
+        e.target.classList.add("active");
       }
     },
     {
       type: "click",
       selector: ".dropdown-item:not(.disabled)",
-      callback: (el, target) => {
+      callback: (el, e) => {
         el.querySelectorAll(".active").forEach(a => {
           a.classList.remove("active");
         });
 
-        target.parentNode.parentNode.firstElementChild.classList.add("active");
-        target.classList.add("active");
+        e.target.parentNode.parentNode.children[0].classList.add("active");
+        e.target.classList.add("active");
       }
     }
   ],
