@@ -5,6 +5,46 @@ $.extend(fileInputBinding, {
     SELF: ".yonder-file[id]",
     VALIDATE: "input[type='file']"
   },
+  Events: [
+    {
+      type: "change",
+      callback: (el, _, self) => {
+        if (el.querySelector("button") !== null) return;
+
+        self._doUpload(el);
+      }
+    },
+    {
+      type: "click",
+      selector: "button",
+      callback: (el, _, self) => {
+        self._doUpload(el);
+      }
+    },
+    {
+      type: "dragover",
+      callback: (_, e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    },
+    {
+      type: "dragcenter",
+      callback: (_, e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    },
+    {
+      type: "drop",
+      callback: (el, e, self) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        self._doUpload(el, e.originalEvent.dataTransfer.files);
+      }
+    }
+  ],
   getValue: el => null,
   _enable: function(el, data) {
     el.querySelector("input[type='file']").removeAttribute("disabled");
@@ -23,9 +63,7 @@ $.extend(fileInputBinding, {
           "uploadEnd",
           [job, el.id],
           (res) => {
-            let $input = $(el).find("input[type='file']");
-            $input.val("");
-            $input.text("Choose file");
+            el.querySelector("input[type='file']").value = "";
           },
           (err) => {
             console.error(`uploadEnd request failed for ${ el.id }: ${ err }`);
@@ -37,12 +75,24 @@ $.extend(fileInputBinding, {
     xhr.send(file);
   },
   _doUpload: function(el, files) {
+    let input = el.querySelector("input[type='file']");
+
+    if (files === undefined) {
+      files = input.files;
+    }
+
     if (!files) {
       return;
     }
 
-    let info = Array.prototype.map.call(files, (f) => {
-      return { "name": f.name, "size": f.size, "type": f.type };
+    if (!input.hasAttribute("multiple")) {
+      files = Array.prototype.slice.call(files, 0, 1);
+    } else {
+      files = Array.prototype.slice.call(files);
+    }
+
+    let info = files.map(f => {
+      return { name: f.name, size: f.size, type: f.type };
     });
 
     Shiny.shinyapp.makeRequest(
@@ -60,45 +110,6 @@ $.extend(fileInputBinding, {
         console.error(`uploadInit request failed for ${ el.id }: ${ err }`);
       }
     );
-  },
-  subscribe: function(el, callback) {
-    let $el = $(el);
-    let input = el.querySelector("input[type='file']");
-
-    $el.on("click.yonder", ".input-group-prepend, .input-group-append", (e) => {
-      input.click();
-    });
-
-    if (el.querySelector("button") !== null) {
-      $el.on("click.yonder", "button", (e) => {
-        this._doUpload(el, input.files);
-      });
-    } else {
-      $el.on("change.yonder", (e) => {
-        this._doUpload(el, input.files);
-      });
-    }
-
-    $el.on("dragover.yonder", (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-    });
-
-    $el.on("dragenter.yonder", (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-    });
-
-    $el.on("drop.yonder", (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-
-      if (input.hasAttribute("multiple")) {
-        this._doUpload(el, e.originalEvent.dataTransfer.files);
-      } else {
-        this._doUpload(el, e.originalEvent.dataTransfer.files[0]);
-      }
-    });
   }
 });
 

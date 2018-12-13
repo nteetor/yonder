@@ -38,12 +38,7 @@ export function yonderInputBinding() {
   this.attachHandler = function(el, type, selector, handler, callback, debounce) {
     $(el).on(`${ type }.yonder`, (selector || null), (e) => {
       if (handler) {
-        let result = handler(el, selector && e.target || undefined, this);
-
-        if (result === false) {
-          e.preventDefault();
-          return;
-        }
+        handler(el, e, this);
       }
 
       if (callback) {

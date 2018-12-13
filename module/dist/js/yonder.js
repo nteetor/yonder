@@ -48,12 +48,7 @@
 
       $(el).on(type + ".yonder", selector || null, function (e) {
         if (handler) {
-          var result = handler(el, selector && e.target || undefined, _this);
-
-          if (result === false) {
-            e.preventDefault();
-            return;
-          }
+          handler(el, e, _this);
         }
 
         if (callback) {
@@ -546,6 +541,40 @@
       SELF: ".yonder-file[id]",
       VALIDATE: "input[type='file']"
     },
+    Events: [{
+      type: "change",
+      callback: function callback(el, _, self) {
+        if (el.querySelector("button") !== null) return;
+
+        self._doUpload(el);
+      }
+    }, {
+      type: "click",
+      selector: "button",
+      callback: function callback(el, _, self) {
+        self._doUpload(el);
+      }
+    }, {
+      type: "dragover",
+      callback: function callback(_, e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    }, {
+      type: "dragcenter",
+      callback: function callback(_, e) {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    }, {
+      type: "drop",
+      callback: function callback(el, e, self) {
+        e.stopPropagation();
+        e.preventDefault();
+
+        self._doUpload(el, e.originalEvent.dataTransfer.files);
+      }
+    }],
     getValue: function getValue(el) {
       return null;
     },
@@ -563,9 +592,7 @@
       xhr.onreadystatechange = function () {
         if (xhr.readyState == XMLHttpRequest.DONE && xhr.status == 200 && final) {
           Shiny.shinyapp.makeRequest("uploadEnd", [job, el.id], function (res) {
-            var $input = $(el).find("input[type='file']");
-            $input.val("");
-            $input.text("Choose file");
+            el.querySelector("input[type='file']").value = "";
           }, function (err) {
             console.error("uploadEnd request failed for " + el.id + ": " + err);
           });
@@ -577,15 +604,27 @@
     _doUpload: function _doUpload(el, files) {
       var _this = this;
 
+      var input = el.querySelector("input[type='file']");
+
+      if (files === undefined) {
+        files = input.files;
+      }
+
       if (!files) {
         return;
       }
 
-      var info = Array.prototype.map.call(files, function (f) {
+      if (!input.hasAttribute("multiple")) {
+        files = Array.prototype.slice.call(files, 0, 1);
+      } else {
+        files = Array.prototype.slice.call(files);
+      }
+
+      var info = files.map(function (f) {
         return {
-          "name": f.name,
-          "size": f.size,
-          "type": f.type
+          name: f.name,
+          size: f.size,
+          type: f.type
         };
       });
       Shiny.shinyapp.makeRequest("uploadInit", [info], function (res) {
@@ -597,44 +636,6 @@
         }
       }, function (err) {
         console.error("uploadInit request failed for " + el.id + ": " + err);
-      });
-    },
-    subscribe: function subscribe(el, callback) {
-      var _this2 = this;
-
-      var $el = $(el);
-      var input = el.querySelector("input[type='file']");
-      $el.on("click.yonder", ".input-group-prepend, .input-group-append", function (e) {
-        input.click();
-      });
-
-      if (el.querySelector("button") !== null) {
-        $el.on("click.yonder", "button", function (e) {
-          _this2._doUpload(el, input.files);
-        });
-      } else {
-        $el.on("change.yonder", function (e) {
-          _this2._doUpload(el, input.files);
-        });
-      }
-
-      $el.on("dragover.yonder", function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-      });
-      $el.on("dragenter.yonder", function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-      });
-      $el.on("drop.yonder", function (e) {
-        e.stopPropagation();
-        e.preventDefault();
-
-        if (input.hasAttribute("multiple")) {
-          _this2._doUpload(el, e.originalEvent.dataTransfer.files);
-        } else {
-          _this2._doUpload(el, e.originalEvent.dataTransfer.files[0]);
-        }
       });
     }
   });
