@@ -4,8 +4,8 @@
 \alias{navInput}
 \title{Page navigation}
 \usage{
-navInput(id, choices, values = choices, ..., appearance = "links",
-  fill = FALSE)
+navInput(id, choices, values = choices, selected = NULL, ...,
+  appearance = "links", fill = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the reactive id of the input.}
@@ -14,7 +14,10 @@ navInput(id, choices, values = choices, ..., appearance = "links",
 navigation items of the navigation input.}
 
 \item{values}{A character vector specifying custom values for each navigation
-item, defaults to \code{labels}.}
+item, defaults to \code{choices}.}
+
+\item{selected}{One of \code{values} specifying which choice is selected by
+default, defaults to \code{NULL}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 

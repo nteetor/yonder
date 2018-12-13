@@ -1009,7 +1009,7 @@
   var navInputBinding = new Shiny.InputBinding();
   $.extend(navInputBinding, {
     Selector: {
-      SELF: ".yonder-nav[id]",
+      SELF: ".yonder-nav",
       SELECTED: ".nav-link.active:not(.disabled)"
     },
     Events: [{

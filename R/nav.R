@@ -8,7 +8,10 @@
 #'   navigation items of the navigation input.
 #'
 #' @param values A character vector specifying custom values for each navigation
-#'   item, defaults to `labels`.
+#'   item, defaults to `choices`.
+#'
+#' @param selected One of `values` specifying which choice is selected by
+#'   default, defaults to `NULL`.
 #'
 #' @param fill One of `TRUE` or `FALSE` specifying if the nav input fills the
 #'   width of its parent element. If `TRUE`, the space is divided evenly among
@@ -85,8 +88,8 @@
 #' ) %>%
 #'   flex(justify = "center")
 #'
-navInput <- function(id, choices, values = choices, ..., appearance = "links",
-                     fill = FALSE) {
+navInput <- function(id, choices, values = choices, selected = NULL, ...,
+                     appearance = "links", fill = FALSE) {
   if (!is.null(appearance) && !re(appearance, "links|pills|tabs", FALSE)) {
     stop(
       "invalid `navInput()` argument, `appearance` must be one of ",
@@ -95,11 +98,22 @@ navInput <- function(id, choices, values = choices, ..., appearance = "links",
     )
   }
 
-  values <- vapply(
-    values,
-    function(x) if (is_tag(x)) x$children[[1]]$children[[1]] else x,
-    character(1)
-  )
+  if (!is.atomic(values)) {
+    stop(
+      "invalid `navInput()` argument, `values` must be a character vector",
+      call. = FALSE
+    )
+  }
+
+  if (!is.null(selected) && length(selected) > 1) {
+    stop(
+      "invalid `navInput()` argument, `selected` must be a single character ",
+      "string",
+      call. = FALSE
+    )
+  }
+
+  selected <- match2(selected, values)
 
   element <- tags$ul(
     class = collate(
@@ -112,7 +126,7 @@ navInput <- function(id, choices, values = choices, ..., appearance = "links",
     Map(
       base = choices,
       value = values,
-      active = c(TRUE, rep.int(FALSE, length(choices) - 1)),
+      active = selected,
       navItem
     )
   )
@@ -132,7 +146,6 @@ navItem <- function(base, value, active) {
           "nav-link btn btn-link",
           if (active) "active"
         ),
-        href = "#",
         value = value,
         base
       )
