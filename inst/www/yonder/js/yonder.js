@@ -505,57 +505,6 @@
   });
   Shiny.inputBindings.register(checkboxInputBinding, "yonder.checkboxInput");
 
-  var dateInputBinding = new Shiny.InputBinding();
-  $.extend(dateInputBinding, {
-    Selector: {
-      SELF: ".yonder-date"
-    },
-    Events: [{
-      type: "dateinput:close"
-    }],
-    Type: "yonder.date",
-    initialize: function initialize(el) {
-      var data = $(el).data();
-      var config = {
-        onClose: function onClose(selected, str, inst) {
-          return $(el).trigger("dateinput:close");
-        }
-      };
-
-      if (data.mode === "multiple" && data.altFormat === "alt-format") {
-        config.altFormat = "M j, Y";
-        config.conjunction = "; ";
-      }
-
-      if (data.defaultDate && (data.mode === "range" || data.mode === "multiple")) {
-        config.defaultDate = data.defaultDate.split("\\,");
-        el.removeAttribute("data-default-date");
-      }
-
-      if (data.enable) {
-        config.enable = data.enable.split("\\,");
-        el.removeAttribute("data-enable");
-      }
-
-      flatpickr(el, config);
-    },
-    getValue: function getValue(el) {
-      return el._flatpickr.selectedDates;
-    },
-    _update: function _update(el, data) {
-      if (data.selected) {
-        el._flatpickr.setDate(data.selected, true);
-      }
-    },
-    _enable: function _enable(el, data) {
-      el._flatpickr.set("enable", data.values);
-    },
-    _disable: function _disable(el, data) {
-      el._flatpickr.set("disable", data.values);
-    }
-  });
-  Shiny.inputBindings.register(dateInputBinding, "yonder.dateInput");
-
   var fileInputBinding = new Shiny.InputBinding();
   $.extend(fileInputBinding, {
     Selector: {
