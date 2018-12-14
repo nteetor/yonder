@@ -260,7 +260,7 @@
       el.querySelectorAll("button").forEach(function (button) {
         var enable = !values.length || values.indexOf(button.value) > -1;
 
-        if (enable && !data.invert) {
+        if (enable !== data.invert) {
           button.classList.remove("disabled");
           button.removeAttribute("disabled");
         }
@@ -271,12 +271,14 @@
       el.querySelectorAll("button").forEach(function (button) {
         var disable = !values.length || values.indexOf(button.value) > -1;
 
-        if (disable && !data.invert) {
-          button.classList.add("disabled");
-          button.setAttribute("disabled", "");
-        } else if (data.reset) {
+        if (data.reset) {
           button.classList.remove("disabled");
           button.removeAttribute("disabled");
+        }
+
+        if (disable !== data.invert) {
+          button.classList.add("disabled");
+          button.setAttribute("disabled", "");
         }
       });
     }
@@ -385,13 +387,6 @@
           target.parentNode.classList.add("active");
           target.setAttribute("selected", "");
         }
-      } else {
-        var possibles = el.querySelectorAll("input");
-
-        if (index < possibles.length) {
-          possibles[index].parentNode.classList.add("active");
-          possibles[index].setAttribute("selected", "");
-        }
       }
     },
     _clear: function _clear(el) {
@@ -405,7 +400,7 @@
       el.querySelectorAll(".btn").forEach(function (btn) {
         var enable = !values.length || values.indexOf(btn.children[0].value) > -1;
 
-        if (enable && !data.invert) {
+        if (enable !== data.invert) {
           btn.classList.remove("disabled");
           btn.children[0].removeAttribute("disabled");
         }
@@ -416,12 +411,14 @@
       el.querySelectorAll(".btn").forEach(function (btn) {
         var disable = !values.length || values.indexOf(btn.children[0].value) > -1;
 
-        if (disable && !data.invert) {
-          btn.classList.add("disabled");
-          btn.children[0].setAttribute("disabled", "");
-        } else if (data.reset) {
+        if (data.reset) {
           btn.classList.remove("disabled");
           btn.children[0].removeAttribute("disabled");
+        }
+
+        if (disable !== data.invert) {
+          btn.classList.add("disabled");
+          btn.children[0].setAttribute("disabled", "");
         }
       });
     }
@@ -486,7 +483,7 @@
       el.querySelectorAll("input").forEach(function (input) {
         var enable = !data.values.length && data.values.indexOf(input.value) > -1;
 
-        if (enable && !data.invert) {
+        if (enable !== data.invert) {
           input.removeAttribute("disabled");
         }
       });
@@ -495,10 +492,12 @@
       el.querySelectorAll("input").forEach(function (input) {
         var disable = !data.values.length && data.values.indexOf(input.value) > -1;
 
-        if (disable && !data.invert) {
-          input.setAttribute("disabled", "");
-        } else if (data.reset) {
+        if (data.reset) {
           input.removeAttribute("disabled");
+        }
+
+        if (disable !== data.invert) {
+          input.setAttribute("disabled", "");
         }
       });
     }
@@ -829,7 +828,7 @@
       el.querySelectorAll(".list-group-item").forEach(function (li) {
         var enable = !values.length || values.indexOf(li.getAttribute("data-value")) > -1;
 
-        if (enable && !data.invert) {
+        if (enable !== data.invert) {
           li.classList.remove("disabled");
         }
       });
@@ -839,10 +838,12 @@
       el.querySelectorAll(".list-group-item").forEach(function (li) {
         var disable = !values.length || values.indexOf(li.getAttribute("data-value")) > -1;
 
-        if (disable && !data.invert) {
-          li.classList.add("disabled");
-        } else if (data.reset) {
+        if (data.reset) {
           li.classList.remove("disabled");
+        }
+
+        if (disable !== data.invert) {
+          li.classList.add("disabled");
         }
       });
     }
@@ -931,7 +932,7 @@
       el.querySelectorAll(".dropdown-item").forEach(function (di) {
         var enable = !data.values.length || data.values.indexOf(di.value) > -1;
 
-        if (enable && !data.invert) {
+        if (enable !== data.invert) {
           di.classList.remove("disabled");
         }
       });
@@ -940,10 +941,12 @@
       el.querySelectorAll(".dropdown-item").forEach(function (di) {
         var disable = !data.values.length || data.values.indexOf(di.value) > -1;
 
-        if (disable && !data.invert) {
-          di.classList.add("disabled");
-        } else if (data.reset) {
+        if (data.reset) {
           di.classList.remove("disabled");
+        }
+
+        if (disable !== data.invert) {
+          di.classList.add("disabled");
         }
       });
     }
@@ -1037,10 +1040,12 @@
       el.querySelectorAll(".nav-link").forEach(function (nl) {
         var disabled = !data.values.length || data.values.indexOf(nl.value) > -1;
 
-        if (disabled && !data.invert) {
-          nl.classList.add("disabled");
-        } else if (data.reset) {
+        if (data.reset) {
           nl.classList.remove("disabled");
+        }
+
+        if (disabled !== data.invert) {
+          nl.classList.add("disabled");
         }
       });
     },
@@ -1048,7 +1053,7 @@
       el.querySelectorAll(".nav-link").forEach(function (nl) {
         var enable = !data.values.length || data.values.indexOf(nl.value) > -1;
 
-        if (enable && !data.invert) {
+        if (enable !== data.invert) {
           nl.classList.remove("disabled");
         }
       });
@@ -1151,7 +1156,7 @@
       el.querySelectorAll(".custom-control-input").forEach(function (input) {
         var enable = !data.values.length || data.values.indexOf(input.value) > -1;
 
-        if (enable && !data.invert) {
+        if (enable !== data.invert) {
           input.classList.removeAttribute("disabled");
         }
       });
@@ -1160,10 +1165,12 @@
       el.querySelectorAll(".custom-control-input").forEach(function (input) {
         var disable = !data.values.length || data.values.indexOf(input.value) > -1;
 
-        if (disable && !data.invert) {
-          input.setAttribute("disabled", "");
-        } else if (data.reset) {
+        if (data.reset) {
           input.removeAttribute("disabled");
+        }
+
+        if (disable !== data.invert) {
+          input.setAttribute("disabled", "");
         }
       });
     }
@@ -1230,7 +1237,7 @@
       el.querySelectorAll("input").forEach(function (input) {
         var enable = !values.length || values.indexOf(input.value) > -1;
 
-        if (enable && !data.invert) {
+        if (enable !== data.invert) {
           input.parentNode.classList.remove("disabled");
           input.removeAttribute("disabled");
         }
@@ -1241,12 +1248,14 @@
       el.querySelectorAll("input").forEach(function (input) {
         var disable = !values.length || values.indexOf(input.value) > -1;
 
-        if (disable && !data.invert) {
-          input.parentNode.classList.add("disabled");
-          input.setAttribute("disabled", "");
-        } else if (data.reset) {
+        if (data.reset) {
           input.parentNode.classList.remove("disabled");
           input.removeAttribute("disabled");
+        }
+
+        if (disable !== data.invert) {
+          input.parentNode.classList.add("disabled");
+          input.setAttribute("disabled", "");
         }
       });
     }
@@ -1375,7 +1384,7 @@
       el.querySelectorAll("option").forEach(function (opt) {
         var enable = !data.values.length || data.values.indexOf(opt.value);
 
-        if (enable && !data.invert) {
+        if (enable !== data.invert) {
           opt.removeAttribute("disabled");
         }
       });
@@ -1384,10 +1393,12 @@
       el.querySelectorAll("option").forEach(function (opt) {
         var disable = !data.values.length || data.values.indexOf(opt.value);
 
-        if (disable && !data.invert) {
-          opt.setAttribute("disabled", "");
-        } else if (data.reset) {
+        if (data.reset) {
           opt.removeAttribute("disabled");
+        }
+
+        if (disable !== data.invert) {
+          opt.setAttribute("disabled", "");
         }
       });
     }

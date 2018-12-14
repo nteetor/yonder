@@ -59,7 +59,7 @@ $.extend(buttonGroupInputBinding, {
     el.querySelectorAll("button").forEach(button => {
       let enable = !values.length || values.indexOf(button.value) > -1;
 
-      if (enable && !data.invert) {
+      if (enable !== data.invert) {
         button.classList.remove("disabled");
         button.removeAttribute("disabled");
       }
@@ -71,12 +71,14 @@ $.extend(buttonGroupInputBinding, {
     el.querySelectorAll("button").forEach(button => {
       let disable = !values.length || values.indexOf(button.value) > -1;
 
-      if (disable && !data.invert) {
-        button.classList.add("disabled");
-        button.setAttribute("disabled", "");
-      } else if (data.reset) {
+      if (data.reset) {
         button.classList.remove("disabled");
         button.removeAttribute("disabled");
+      }
+
+      if (disable !== data.invert) {
+        button.classList.add("disabled");
+        button.setAttribute("disabled", "");
       }
     });
   }

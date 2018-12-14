@@ -74,7 +74,7 @@ $.extend(menuInputBinding, {
     el.querySelectorAll(".dropdown-item").forEach(di => {
       let enable = !data.values.length || data.values.indexOf(di.value) > -1;
 
-      if (enable && !data.invert) {
+      if (enable !== data.invert) {
         di.classList.remove("disabled");
       }
     });
@@ -83,10 +83,12 @@ $.extend(menuInputBinding, {
     el.querySelectorAll(".dropdown-item").forEach(di => {
       let disable = !data.values.length || data.values.indexOf(di.value) > -1;
 
-      if (disable && !data.invert) {
-        di.classList.add("disabled");
-      } else if (data.reset) {
+      if (data.reset) {
         di.classList.remove("disabled");
+      }
+
+      if (disable !== data.invert) {
+        di.classList.add("disabled");
       }
     });
   }

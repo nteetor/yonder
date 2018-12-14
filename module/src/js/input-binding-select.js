@@ -57,7 +57,7 @@ $.extend(selectInputBinding, {
     el.querySelectorAll("option").forEach(opt => {
       let enable = !data.values.length || data.values.indexOf(opt.value);
 
-      if (enable && !data.invert) {
+      if (enable !== data.invert) {
         opt.removeAttribute("disabled");
       }
     });
@@ -66,10 +66,12 @@ $.extend(selectInputBinding, {
     el.querySelectorAll("option").forEach(opt => {
       let disable = !data.values.length || data.values.indexOf(opt.value);
 
-      if (disable && !data.invert) {
-        opt.setAttribute("disabled", "");
-      } else if (data.reset) {
+      if (data.reset) {
         opt.removeAttribute("disabled");
+      }
+
+      if (disable !== data.invert) {
+        opt.setAttribute("disabled", "");
       }
     });
   }

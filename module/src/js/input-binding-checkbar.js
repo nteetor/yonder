@@ -54,13 +54,6 @@ $.extend(checkbarInputBinding, {
         target.parentNode.classList.add("active");
         target.setAttribute("selected", "");
       }
-    } else {
-      let possibles = el.querySelectorAll("input");
-
-      if (index < possibles.length) {
-        possibles[index].parentNode.classList.add("active");
-        possibles[index].setAttribute("selected", "");
-      }
     }
   },
   _clear: (el) => {
@@ -74,7 +67,7 @@ $.extend(checkbarInputBinding, {
     el.querySelectorAll(".btn").forEach(btn => {
       let enable = !values.length || values.indexOf(btn.children[0].value) > -1;
 
-      if (enable && !data.invert) {
+      if (enable !== data.invert) {
         btn.classList.remove("disabled");
         btn.children[0].removeAttribute("disabled");
       }
@@ -85,12 +78,14 @@ $.extend(checkbarInputBinding, {
     el.querySelectorAll(".btn").forEach(btn => {
       let disable = !values.length || values.indexOf(btn.children[0].value) > -1;
 
-      if (disable && !data.invert) {
-        btn.classList.add("disabled");
-        btn.children[0].setAttribute("disabled", "");
-      } else if (data.reset) {
+      if (data.reset) {
         btn.classList.remove("disabled");
         btn.children[0].removeAttribute("disabled");
+      }
+
+      if (disable !== data.invert) {
+        btn.classList.add("disabled");
+        btn.children[0].setAttribute("disabled", "");
       }
     });
   }

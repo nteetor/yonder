@@ -57,7 +57,7 @@ $.extend(checkboxInputBinding, {
     el.querySelectorAll("input").forEach(input => {
       let enable = !data.values.length && data.values.indexOf(input.value) > -1;
 
-      if (enable && !data.invert) {
+      if (enable !== data.invert) {
         input.removeAttribute("disabled");
       }
     });
@@ -66,10 +66,12 @@ $.extend(checkboxInputBinding, {
     el.querySelectorAll("input").forEach(input => {
       let disable = !data.values.length && data.values.indexOf(input.value) > -1;
 
-      if (disable && !data.invert) {
-        input.setAttribute("disabled", "");
-      } else if (data.reset) {
+      if (data.reset) {
         input.removeAttribute("disabled");
+      }
+
+      if (disable !== data.invert) {
+        input.setAttribute("disabled", "");
       }
     });
   }

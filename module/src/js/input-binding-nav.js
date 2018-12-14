@@ -87,10 +87,12 @@ $.extend(navInputBinding, {
     el.querySelectorAll(".nav-link").forEach(nl => {
       let disabled = !data.values.length || data.values.indexOf(nl.value) > -1;
 
-      if (disabled && !data.invert) {
-        nl.classList.add("disabled");
-      } else if (data.reset) {
+      if (data.reset) {
         nl.classList.remove("disabled");
+      }
+
+      if (disabled !== data.invert) {
+        nl.classList.add("disabled");
       }
     });
   },
@@ -98,7 +100,7 @@ $.extend(navInputBinding, {
     el.querySelectorAll(".nav-link").forEach(nl => {
       let enable = !data.values.length || data.values.indexOf(nl.value) > -1;
 
-      if (enable && !data.invert) {
+      if (enable !== data.invert) {
         nl.classList.remove("disabled");
       }
     });

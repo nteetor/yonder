@@ -68,7 +68,7 @@ $.extend(listGroupInputBinding, {
     el.querySelectorAll(".list-group-item").forEach(li => {
       let enable = !values.length || values.indexOf(li.getAttribute("data-value")) > -1;
 
-      if (enable && !data.invert) {
+      if (enable !== data.invert) {
         li.classList.remove("disabled");
       }
     });
@@ -78,10 +78,12 @@ $.extend(listGroupInputBinding, {
     el.querySelectorAll(".list-group-item").forEach(li => {
       let disable = !values.length || values.indexOf(li.getAttribute("data-value")) > -1;
 
-      if (disable && !data.invert) {
-        li.classList.add("disabled");
-      } else if (data.reset) {
+      if (data.reset) {
         li.classList.remove("disabled");
+      }
+
+      if (disable !== data.invert) {
+        li.classList.add("disabled");
       }
     });
   }
