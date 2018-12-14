@@ -1649,8 +1649,8 @@
       }
 
       container.innerHTML = data.content;
-      Shiny.initializeInputs(container);
       Shiny.bindAll(container);
+      Shiny.initializeInputs(container);
     };
 
     var _remove = function _remove(data) {
@@ -1663,8 +1663,6 @@
       Shiny.unbindAll(container);
       container.innerHTML = "";
     };
-
-    console.log(msg);
 
     if (!msg.type) {
       return;

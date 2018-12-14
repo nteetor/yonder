@@ -12,8 +12,8 @@ Shiny.addCustomMessageHandler("yonder:element", (msg) => {
 
     container.innerHTML = data.content;
 
-    Shiny.initializeInputs(container);
     Shiny.bindAll(container);
+    Shiny.initializeInputs(container);
   };
 
   let _remove = (data) => {
@@ -27,8 +27,6 @@ Shiny.addCustomMessageHandler("yonder:element", (msg) => {
 
     container.innerHTML = "";
   };
-
-  console.log(msg);
 
   if (!msg.type) {
     return;
