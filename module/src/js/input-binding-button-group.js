@@ -9,7 +9,7 @@ $.extend(buttonGroupInputBinding, {
       type: "click",
       selector: "button",
       callback: (el, e, self) => {
-        self._VALUES[el.id] = e.target.value;
+        self._VALUES[el.id] = e.currentTarget.value;
       }
     }
   ],

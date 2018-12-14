@@ -20,7 +20,7 @@ $.extend(navInputBinding, {
           a.classList.remove("active");
         });
 
-        e.target.classList.add("active");
+        e.currentTarget.classList.add("active");
       }
     },
     {
@@ -31,8 +31,8 @@ $.extend(navInputBinding, {
           a.classList.remove("active");
         });
 
-        e.target.parentNode.parentNode.children[0].classList.add("active");
-        e.target.classList.add("active");
+        e.currentTarget.parentNode.parentNode.children[0].classList.add("active");
+        e.currentTarget.classList.add("active");
       }
     }
   ],

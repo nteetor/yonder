@@ -203,7 +203,7 @@
       type: "click",
       selector: "button",
       callback: function callback(el, e, self) {
-        self._VALUES[el.id] = e.target.value;
+        self._VALUES[el.id] = e.currentTarget.value;
       }
     }],
     _VALUES: {},
@@ -629,7 +629,7 @@
       type: "click",
       selector: ".yonder-submit",
       callback: function callback(el, e, self) {
-        self._VALUES[el.id] = e.target.value;
+        self._VALUES[el.id] = e.currentTarget.value;
         $(el.querySelectorAll(".shiny-bound-input")).trigger("submission.yonder");
       }
     }],
@@ -865,7 +865,7 @@
           active.classList.remove("active");
         }
 
-        e.target.classList.add("active");
+        e.currentTarget.classList.add("active");
       }
     }, {
       type: "nav.reset",
@@ -970,7 +970,7 @@
         el.querySelectorAll(".nav-link.active").forEach(function (a) {
           a.classList.remove("active");
         });
-        e.target.classList.add("active");
+        e.currentTarget.classList.add("active");
       }
     }, {
       type: "click",
@@ -979,8 +979,8 @@
         el.querySelectorAll(".active").forEach(function (a) {
           a.classList.remove("active");
         });
-        e.target.parentNode.parentNode.children[0].classList.add("active");
-        e.target.classList.add("active");
+        e.currentTarget.parentNode.parentNode.children[0].classList.add("active");
+        e.currentTarget.classList.add("active");
       }
     }],
     _value: function _value(el, newValue, currentValue, index) {

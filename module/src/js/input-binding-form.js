@@ -6,7 +6,7 @@ $.extend(formInputBinding, {
       type: "click",
       selector: ".yonder-submit",
       callback: (el, e, self) => {
-        self._VALUES[el.id] = e.target.value;
+        self._VALUES[el.id] = e.currentTarget.value;
         $(el.querySelectorAll(".shiny-bound-input")).trigger("submission.yonder");
       }
     }

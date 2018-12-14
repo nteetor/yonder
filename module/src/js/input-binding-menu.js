@@ -14,7 +14,7 @@ $.extend(menuInputBinding, {
         if (active !== null) {
           active.classList.remove("active");
         }
-        e.target.classList.add("active");
+        e.currentTarget.classList.add("active");
       }
     },
     {
