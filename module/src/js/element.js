@@ -10,10 +10,11 @@ Shiny.addCustomMessageHandler("yonder:element", (msg) => {
       return;
     }
 
+    Shiny.unbindAll(container);
     container.innerHTML = data.content;
 
-    Shiny.bindAll(container);
     Shiny.initializeInputs(container);
+    Shiny.bindAll(container);
   };
 
   let _remove = (data) => {
