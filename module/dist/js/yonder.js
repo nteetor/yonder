@@ -771,7 +771,7 @@
           });
         }
 
-        e.target.classList.toggle("active");
+        e.currentTarget.classList.toggle("active");
       }
     }],
     _value: function _value(el, newValue, currentValue, index) {

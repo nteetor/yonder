@@ -15,7 +15,7 @@ $.extend(listGroupInputBinding, {
             .forEach(li => li.classList.remove("active"));
         }
 
-        e.target.classList.toggle("active");
+        e.currentTarget.classList.toggle("active");
       }
     }
   ],
