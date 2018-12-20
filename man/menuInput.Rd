@@ -50,10 +50,10 @@ menuInput(
 
 navInput(
   id = "nav1",
-  choice = list(
+  choices = list(
     "Tab 1",
     menuInput(
-      id = NULL,  # <- ignored
+      id = "navOptions",
       label = "Tab 2",
       choices = c(
         "Option 1",
@@ -63,7 +63,8 @@ navInput(
     ),
     "Tab 3",
     "Tab 4"
-  )
+  ),
+  values = paste0("tab", 1:4)
 )
 
 }
