@@ -169,7 +169,7 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL) {
           tags$input(
             name = id,
             type = "radio",
-            `data-value` = values[[i]],
+            value = values[[i]],
             autocomplete = "false",
             checked = if (selected[[i]]) NA
           ),
