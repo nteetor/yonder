@@ -1,0 +1,267 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>formgroup.md</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <style>
+          .sidebar, .content {
+          height: 100vh;
+          overflow-y: scroll;
+          }
+        </style>
+        <div class="sidebar col col-auto">
+          <div class="sidebar">
+  <dl>
+    
+    
+    
+    <dt>
+      <a href="/design/affix.html"
+        >/design</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/content/alert.html"
+        >/content</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/outputs/badgeoutput.html"
+        >/outputs</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/inputs/buttongroupinput.html"
+        >/inputs</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/layout/column.html"
+        >/layout</a>
+    </dt>
+    
+    
+    <dd class="mb-1">
+      <a href=/layout/column.html>column</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/container.html>container</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/fieldset.html>fieldset</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/flex.html>flex</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/formgroup.html>formgroup</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/formrow.html>formrow</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/>index</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/navbar.html>navbar</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/row.html>row</a>
+    </dd>
+    
+    
+    
+    <dt>
+      <a href="/disableinput.html"
+        ></a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/utilities/downloadevent.html"
+        >/utilities</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/ui%20rendering/elementoutput.html"
+        >/ui rendering</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/thruputs/"
+        >/thruputs</a>
+    </dt>
+    
+    
+  </dl>
+</div>
+
+        </div>
+        <div class="content col">
+          <h2><p>Add labels, help text, and formatting to inputs</p>
+</h2>
+<p><p>Form groups are a way of labelling an input. Form rows are similar to
+[row()]s, but include additional styles intended for forms. The flexibility
+provided by form rows and groups means you can confidently develop shiny
+applications for devices and screens of varying sizes.</p>
+</p>
+
+<dl>
+  
+  <dt><p>label</p>
+</dt>
+  <dd><p>A character string specifying a label for the input or <code class="highlighter-rouge">NULL</code>
+in which case a label is not added.</p>
+</dd>
+  
+  <dt><p>input</p>
+</dt>
+  <dd><p>A tag element specifying the input to label.</p>
+</dd>
+  
+  <dt><p>help</p>
+</dt>
+  <dd><p>A character string specifying help text for the input, defaults
+to <code class="highlighter-rouge">NULL</code>, in which case help text is not added.</p>
+</dd>
+  
+  <dt><p>…</p>
+</dt>
+  <dd><p>For <strong>formGroup</strong>, additional named arguments passed as HTML
+  attributes to the parent element.</p>
+
+<p>For <strong>formRow</strong>, any number of <code class="highlighter-rouge">formGroup</code>s or additional named arguments
+  passed as HTML attributes to the parent element.</p>
+</dd>
+  
+  <dt><p>width</p>
+</dt>
+  <dd><p>A [responsive] argument. One of <code class="highlighter-rouge">1:12</code> or “auto” specifying a
+column width for the form group, defaults to <code class="highlighter-rouge">NULL</code>.</p>
+</dd>
+  
+</dl>
+
+
+
+
+<h2><h1 id="grid-layout-forms">Grid layout forms</h1>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"></code></pre></figure>
+
+  <div></div>
+  
+</div>
+
+<h2><p>Use responsive arguments to adjust form layouts based on viewport size. Be sure to adjust the size of your browser window between large and small.</p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">card</span><span class="p">(</span><span class="w">
+  </span><span class="n">formRow</span><span class="p">(</span><span class="w">
+    </span><span class="n">formGroup</span><span class="p">(</span><span class="w">
+      </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">),</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
+      </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Email"</span><span class="p">,</span><span class="w">
+      </span><span class="n">emailInput</span><span class="p">(</span><span class="w">
+        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"email"</span><span class="p">,</span><span class="w">
+        </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"e@mail.com"</span><span class="w">
+      </span><span class="p">)</span><span class="w">
+    </span><span class="p">),</span><span class="w">
+    </span><span class="n">formGroup</span><span class="p">(</span><span class="w">
+      </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">6</span><span class="p">),</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
+      </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Password"</span><span class="p">,</span><span class="w">
+      </span><span class="n">passwordInput</span><span class="p">(</span><span class="w">
+        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"password"</span><span class="p">,</span><span class="w">
+        </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"123456"</span><span class="w">
+      </span><span class="p">),</span><span class="w">
+      </span><span class="n">help</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Please consider something better than 123456"</span><span class="w">
+    </span><span class="p">)</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">formGroup</span><span class="p">(</span><span class="w">
+    </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Username"</span><span class="p">,</span><span class="w">
+    </span><span class="n">groupInput</span><span class="p">(</span><span class="w">
+      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"username"</span><span class="p">,</span><span class="w">
+      </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"@"</span><span class="w">
+    </span><span class="p">)</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"go"</span><span class="p">,</span><span class="w">
+    </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Go!"</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">background</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">margin</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">background</span><span class="p">(</span><span class="s2">"grey"</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="card m-3 bg-grey">
+  <div class="card-body">
+    <div class="form-row">
+      <div class="form-group col-md-6">
+        <label>Email</label>
+        <div class="yonder-textual" id="email">
+          <input class="form-control" type="email" placeholder="e@mail.com"/>
+          <div class="invalid-feedback"></div>
+        </div>
+      </div>
+      <div class="form-group col-md-6">
+        <label>Password</label>
+        <div class="yonder-textual" id="password">
+          <input class="form-control" type="password" placeholder="123456"/>
+          <div class="invalid-feedback"></div>
+        </div>
+        <small class="form-text text-muted">Please consider something better than 123456</small>
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Username</label>
+      <div class="yonder-group input-group" id="username">
+        <div class="input-group-prepend">
+          <span class="input-group-text">@</span>
+        </div>
+        <input type="text" class="form-control"/>
+      </div>
+    </div>
+    <button class="yonder-button btn btn-blue" type="button" role="button" id="go">Go!</button>
+  </div>
+</div></div>
+  
+</div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

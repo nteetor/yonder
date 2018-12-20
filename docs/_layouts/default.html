@@ -1,0 +1,24 @@
+---
+---
+<!doctype html>
+<html lang="en">
+  {% include head.html %}
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <style>
+          .sidebar, .content {
+          height: 100vh;
+          overflow-y: scroll;
+          }
+        </style>
+        <div class="sidebar col col-auto">
+          {% include sidebar.html %}
+        </div>
+        <div class="content col">
+          {{ content }}
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,27 @@
+---
+layout: default
+---
+<h2>{{ page.title | markdownify }}</h2>
+<p>{{ page.description | markdownify }}</p>
+
+<dl>
+  {% for param in page.parameters %}
+  <dt>{{ param.name | markdownify }}</dt>
+  <dd>{{ param.description | markdownify }}</dd>
+  {% endfor %}
+</dl>
+
+{% for section in page.sections %}
+<h2>{{ section.title | markdownify }}</h2>
+<p>{{ section.body | markdownify }}</p>
+{% endfor %}
+
+{% for example in page.examples %}
+<h2>{{ example.title | markdownify }}</h2>
+<div>
+  {% for piece in example.body %}
+  {% highlight r %}{{ piece.code }}{% endhighlight %}
+  <div>{{ piece.output }}</div>
+  {% endfor %}
+</div>
+{% endfor %}

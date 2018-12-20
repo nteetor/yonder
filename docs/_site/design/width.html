@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>width.md</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <style>
+          .sidebar, .content {
+          height: 100vh;
+          overflow-y: scroll;
+          }
+        </style>
+        <div class="sidebar col col-auto">
+          <div class="sidebar">
+  <dl>
+    
+    
+    
+    <dt>
+      <a href="/design/affix.html"
+        >/design</a>
+    </dt>
+    
+    
+    <dd class="mb-1">
+      <a href=/design/affix.html>affix</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/design/background.html>background</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/design/border.html>border</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/design/display.html>display</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/design/float.html>float</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/design/font.html>font</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/design/height.html>height</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/design/>index</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/design/margin.html>margin</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/design/padding.html>padding</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/design/scroll.html>scroll</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/design/shadow.html>shadow</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/design/width.html>width</a>
+    </dd>
+    
+    
+    
+    <dt>
+      <a href="/content/alert.html"
+        >/content</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/outputs/badgeoutput.html"
+        >/outputs</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/inputs/buttongroupinput.html"
+        >/inputs</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/layout/column.html"
+        >/layout</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/disableinput.html"
+        ></a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/utilities/downloadevent.html"
+        >/utilities</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/ui%20rendering/elementoutput.html"
+        >/ui rendering</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/thruputs/"
+        >/thruputs</a>
+    </dt>
+    
+    
+  </dl>
+</div>
+
+        </div>
+        <div class="content col">
+          <h2><p>Tag element width</p>
+</h2>
+<p><p>Utility function to change a tag element’s width. Widths are specified
+relative to the font size of page (browser default is 16px), relative to
+their parent element (i.e. 1/2 the width of their parent), or relative to the
+element’s content.</p>
+</p>
+
+<dl>
+  
+  <dt><p>.tag</p>
+</dt>
+  <dd><p>A tag element.</p>
+</dd>
+  
+  <dt><p>size</p>
+</dt>
+  <dd><p>A character string or number specifying the width of the tag
+  element. Possible values:</p>
+
+<p>An integer between 1 and 20, in which case the width of the element is
+  relative to the font size of the page.</p>
+
+<p><code class="highlighter-rouge">"1/2"</code>, <code class="highlighter-rouge">"1/3"</code>, <code class="highlighter-rouge">"2/3"</code>, <code class="highlighter-rouge">"1/4"</code>, <code class="highlighter-rouge">"3/4"</code>, <code class="highlighter-rouge">"1/5"</code>, <code class="highlighter-rouge">"2/5"</code>, <code class="highlighter-rouge">"3/5"</code>,
+  <code class="highlighter-rouge">"4/5"</code>, or <code class="highlighter-rouge">"full"</code>, in which case the element’s width is a percentage of
+  its parent’s width. The height of the parent element must be specified for
+  percentage widths to work. Percentages do not account for margins or
+  padding and may cause an element to extend beyond its parent.</p>
+
+<p><code class="highlighter-rouge">"auto"</code>, in which case the element’s width is determined by the browser.
+  The browser will take into account the width, padding, margins, and border
+  of the tag element’s parent to keep the element from extending beyond its
+  parent.</p>
+</dd>
+  
+</dl>
+
+
+
+
+<h2><h2 id="numeric-values">Numeric values</h2>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"></code></pre></figure>
+
+  <div></div>
+  
+</div>
+
+<h2><p>When specifying a numeric value the width of the element is relative to the default font size of the page.</p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">lapply</span><span class="p">(</span><span class="w">
+  </span><span class="m">1</span><span class="o">:</span><span class="m">20</span><span class="p">,</span><span class="w">
+  </span><span class="n">width</span><span class="p">,</span><span class="w">
+  </span><span class="n">.tag</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">border</span><span class="p">(</span><span class="s2">"black"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">height</span><span class="p">(</span><span class="m">4</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+  <div>list(name = "div", attribs = list(class = "border border-black h-4 w-1"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-2"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-3"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-4"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-5"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-6"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-7"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-8"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-9"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-10"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-11"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-12"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-13"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-14"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-15"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-16"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-17"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-18"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-19"), children = list())list(name = "div", attribs = list(class = "border border-black h-4 w-20"), children = list())</div>
+  
+</div>
+
+<h2><h2 id="fractional-values">Fractional values</h2>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"></code></pre></figure>
+
+  <div></div>
+  
+</div>
+
+<h2><p>When specifying a fraction the element’s width is a percentage of its parent’s width.</p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">div</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">margin</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">border</span><span class="p">(</span><span class="s2">"red"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">width</span><span class="p">(</span><span class="s2">"1/3"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">width</span><span class="p">(</span><span class="m">20</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="w-20">
+  <div class="mb-3 border border-red w-1/3"></div>
+</div></div>
+  
+</div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

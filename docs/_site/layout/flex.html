@@ -1,0 +1,469 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>flex.md</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <style>
+          .sidebar, .content {
+          height: 100vh;
+          overflow-y: scroll;
+          }
+        </style>
+        <div class="sidebar col col-auto">
+          <div class="sidebar">
+  <dl>
+    
+    
+    
+    <dt>
+      <a href="/design/affix.html"
+        >/design</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/content/alert.html"
+        >/content</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/outputs/badgeoutput.html"
+        >/outputs</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/inputs/buttongroupinput.html"
+        >/inputs</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/layout/column.html"
+        >/layout</a>
+    </dt>
+    
+    
+    <dd class="mb-1">
+      <a href=/layout/column.html>column</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/container.html>container</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/fieldset.html>fieldset</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/flex.html>flex</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/formgroup.html>formgroup</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/formrow.html>formrow</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/>index</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/navbar.html>navbar</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/layout/row.html>row</a>
+    </dd>
+    
+    
+    
+    <dt>
+      <a href="/disableinput.html"
+        ></a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/utilities/downloadevent.html"
+        >/utilities</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/ui%20rendering/elementoutput.html"
+        >/ui rendering</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/thruputs/"
+        >/thruputs</a>
+    </dt>
+    
+    
+  </dl>
+</div>
+
+        </div>
+        <div class="content col">
+          <h2><p>Flex layout</p>
+</h2>
+<p><p>Use <code class="highlighter-rouge">flex()</code> to control how a flex container tag element places its flex
+items or child tag elements. For more on turning a tag element into a flex
+container see [display()]. By default tag elements within a flex container
+are treated as flex items.</p>
+</p>
+
+<dl>
+  
+  <dt><p>.tag</p>
+</dt>
+  <dd><p>A tag element.</p>
+</dd>
+  
+  <dt><p>direction</p>
+</dt>
+  <dd><p>A [responsive] argument. One of <code class="highlighter-rouge">"row"</code> or <code class="highlighter-rouge">"column"</code>
+specifying the placement of flex items, defaults to <code class="highlighter-rouge">NULL</code>. If <code class="highlighter-rouge">"row"</code>
+items are placed vertically, if <code class="highlighter-rouge">"column"</code> items are placed horizontally.
+Browsers place items vertically by default.</p>
+</dd>
+  
+  <dt><p>reverse</p>
+</dt>
+  <dd><p>A [responsive] argument. One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying
+if flex items are placed in reverse order, defaults to <code class="highlighter-rouge">NULL</code>. If <code class="highlighter-rouge">TRUE</code>
+items are placed from right to left when <code class="highlighter-rouge">direction</code> is <code class="highlighter-rouge">"row"</code> or bottom
+to top when <code class="highlighter-rouge">direction</code> is <code class="highlighter-rouge">"column"</code>.</p>
+</dd>
+  
+  <dt><p>justify</p>
+</dt>
+  <dd><p>A [responsive] argument. One of <code class="highlighter-rouge">"start"</code>, <code class="highlighter-rouge">"end"</code>,
+<code class="highlighter-rouge">"center"</code>, <code class="highlighter-rouge">"between"</code>, or <code class="highlighter-rouge">"around"</code> specifying how items are
+horizontally aligned, defaults to <code class="highlighter-rouge">NULL</code>. See the <strong>justify</strong> section below
+for more on how the different values affect horizontal spacing.</p>
+</dd>
+  
+  <dt><p>align</p>
+</dt>
+  <dd><p>A [responsive] argument. One of <code class="highlighter-rouge">"start"</code>, <code class="highlighter-rouge">"end"</code>, <code class="highlighter-rouge">"center"</code>,
+<code class="highlighter-rouge">"baseline"</code>, or <code class="highlighter-rouge">"stretch"</code> specifying how items are vertically aligned,
+defaults to <code class="highlighter-rouge">NULL</code>. See the <strong>align</strong> section below for more on how the
+different values affect vertical spacing.</p>
+</dd>
+  
+  <dt><p>wrap</p>
+</dt>
+  <dd><p>A [responsive] argument. One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying
+whether to wrap flex items inside the flex containter, <code class="highlighter-rouge">.tag</code>, defaults
+to <code class="highlighter-rouge">NULL</code>. If <code class="highlighter-rouge">TRUE</code> items wrap inside the container, if <code class="highlighter-rouge">FALSE</code> items will
+not wrap. See the <strong>wrap</strong> section below for more.</p>
+</dd>
+  
+</dl>
+
+
+
+
+<h2><h2 id="different-directions">Different <code class="highlighter-rouge">direction</code>s</h2>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"></code></pre></figure>
+
+  <div></div>
+  
+</div>
+
+<h2><p>Many of <code class="highlighter-rouge">flex()</code>’s arguments are viewport responsive and below we will see how useful this can be. On small screens the flex items are placed vertically and can occupy the full width of the mobile device. On medium or larger screens the items are placed horizontally once again.</p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">div</span><span class="p">(</span><span class="s2">"A flex item"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">border</span><span class="p">(),</span><span class="w">
+  </span><span class="n">div</span><span class="p">(</span><span class="s2">"A flex item"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">border</span><span class="p">(),</span><span class="w">
+  </span><span class="n">div</span><span class="p">(</span><span class="s2">"A flex item"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">border</span><span class="p">()</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="w">
+    </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="n">xs</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"column"</span><span class="p">,</span><span class="w"> </span><span class="n">md</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"row"</span><span class="p">)</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
+  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">background</span><span class="p">(</span><span class="s2">"grey"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">border</span><span class="p">()</span></code></pre></figure>
+
+  <div><div class="d-flex flex-column flex-md-row bg-grey border">
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+</div></div>
+  
+</div>
+
+<h2><p><em>Resize the browser for this example.</em></p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"></code></pre></figure>
+
+  <div></div>
+  
+</div>
+
+<h2><p>You can keep items as a column by specifying only <code class="highlighter-rouge">"column"</code>.</p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">div</span><span class="p">(</span><span class="s2">"A flex item"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">border</span><span class="p">(),</span><span class="w">
+  </span><span class="n">div</span><span class="p">(</span><span class="s2">"A flex item"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">border</span><span class="p">(),</span><span class="w">
+  </span><span class="n">div</span><span class="p">(</span><span class="s2">"A flex item"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+     </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+     </span><span class="n">border</span><span class="p">()</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"column"</span><span class="p">)</span><span class="w">  </span><span class="c1"># &lt;-</span></code></pre></figure>
+
+  <div><div class="d-flex flex-column">
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+</div></div>
+  
+</div>
+
+<h2><h2 id="spacing-items-with-justify">Spacing items with <code class="highlighter-rouge">justify</code></h2>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"></code></pre></figure>
+
+  <div></div>
+  
+</div>
+
+<h2><p>Below is a series of examples showing how to change the horizontal alignment of your flex items. Let’s start by pushing items to the beginning of their parent container.</p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">replicate</span><span class="p">(</span><span class="w">
+    </span><span class="n">div</span><span class="p">(</span><span class="s2">"A flex item"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">border</span><span class="p">(),</span><span class="w">
+    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w">
+    </span><span class="n">simplify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"start"</span><span class="p">)</span><span class="w">  </span><span class="c1"># &lt;-</span></code></pre></figure>
+
+  <div><div class="d-flex justify-content-start">
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+</div></div>
+  
+</div>
+
+<h2><p>We can also push items to the <strong>end</strong>.</p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">replicate</span><span class="p">(</span><span class="w">
+    </span><span class="n">div</span><span class="p">(</span><span class="s2">"A flex item"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">border</span><span class="p">(),</span><span class="w">
+    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w">
+    </span><span class="n">simplify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"end"</span><span class="p">)</span><span class="w">  </span><span class="c1"># &lt;-</span></code></pre></figure>
+
+  <div><div class="d-flex justify-content-end">
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+</div></div>
+  
+</div>
+
+<h2><p>Without using a table layout we can <strong>center</strong> items.</p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">replicate</span><span class="p">(</span><span class="w">
+    </span><span class="n">div</span><span class="p">(</span><span class="s2">"A flex item"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">border</span><span class="p">(),</span><span class="w">
+    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w">
+    </span><span class="n">simplify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"center"</span><span class="p">)</span><span class="w">  </span><span class="c1"># &lt;-</span></code></pre></figure>
+
+  <div><div class="d-flex justify-content-center">
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+</div></div>
+  
+</div>
+
+<h2><p>You can also put space <strong>between</strong> items</p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">replicate</span><span class="p">(</span><span class="w">
+    </span><span class="n">div</span><span class="p">(</span><span class="s2">"A flex item"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">border</span><span class="p">(),</span><span class="w">
+    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w">
+    </span><span class="n">simplify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"between"</span><span class="p">)</span><span class="w">  </span><span class="c1"># &lt;-</span></code></pre></figure>
+
+  <div><div class="d-flex justify-content-between">
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+</div></div>
+  
+</div>
+
+<h2><p>… or put space <strong>around</strong> items.</p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">replicate</span><span class="p">(</span><span class="w">
+    </span><span class="n">div</span><span class="p">(</span><span class="s2">"A flex item"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">border</span><span class="p">(),</span><span class="w">
+    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w">
+    </span><span class="n">simplify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="n">justify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"around"</span><span class="p">)</span><span class="w">  </span><span class="c1"># &lt;-</span></code></pre></figure>
+
+  <div><div class="d-flex justify-content-around">
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+</div></div>
+  
+</div>
+
+<h2><p><em>The “between” and “around” values come from the original CSS values “space-between” and “space-around”.</em></p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"></code></pre></figure>
+
+  <div></div>
+  
+</div>
+
+<h2><h2 id="wrap-onto-new-lines">Wrap onto new lines</h2>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"></code></pre></figure>
+
+  <div></div>
+  
+</div>
+
+<h2><p>Using flexbox we can also control how items wrap onto new lines.</p>
+</h2>
+<div>
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">replicate</span><span class="p">(</span><span class="w">
+    </span><span class="n">div</span><span class="p">(</span><span class="s2">"A flex item"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">border</span><span class="p">(),</span><span class="w">
+    </span><span class="n">n</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">5</span><span class="p">,</span><span class="w">
+    </span><span class="n">simplify</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">FALSE</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="n">wrap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="d-flex flex-wrap">
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+  <div class="p-3 border">A flex item</div>
+</div></div>
+  
+</div>
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

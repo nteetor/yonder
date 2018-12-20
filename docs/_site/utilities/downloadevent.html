@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>downloadevent.md</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css" integrity="sha384-9gVQ4dYFwwWSjIDZnLEWnxCjeSWFphJiwGPXr1jddIhOegiu1FwO5qRGvFXOdJZ4" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.0/umd/popper.min.js" integrity="sha384-cs/chFZiN24E4KMATLdqdvsezGxaGsi4hLGOzlXwp5UZB1LY//20VyM2taTB4QvJ" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js" integrity="sha384-uefMccjFJAIv6A+rW+L4AHf99KvxDjWSu1z9VI8SKNVmz4sk7buKt/6v9KI65qnm" crossorigin="anonymous"></script>
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <style>
+          .sidebar, .content {
+          height: 100vh;
+          overflow-y: scroll;
+          }
+        </style>
+        <div class="sidebar col col-auto">
+          <div class="sidebar">
+  <dl>
+    
+    
+    
+    <dt>
+      <a href="/design/affix.html"
+        >/design</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/content/alert.html"
+        >/content</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/outputs/badgeoutput.html"
+        >/outputs</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/inputs/buttongroupinput.html"
+        >/inputs</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/layout/column.html"
+        >/layout</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/disableinput.html"
+        ></a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/utilities/downloadevent.html"
+        >/utilities</a>
+    </dt>
+    
+    
+    <dd class="mb-1">
+      <a href=/utilities/downloadevent.html>downloadevent</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a href=/utilities/>index</a>
+    </dd>
+    
+    
+    
+    <dt>
+      <a href="/ui%20rendering/elementoutput.html"
+        >/ui rendering</a>
+    </dt>
+    
+    
+    <dt>
+      <a href="/thruputs/"
+        >/thruputs</a>
+    </dt>
+    
+    
+  </dl>
+</div>
+
+        </div>
+        <div class="content col">
+          <h2><p>Trigger downloads</p>
+</h2>
+<p><p><code class="highlighter-rouge">downloadEvent</code> allows a custom reactive event to trigger a file
+download.</p>
+</p>
+
+<dl>
+  
+  <dt><p>event</p>
+</dt>
+  <dd><p>A reactive input value (e.g. <code class="highlighter-rouge">input$click</code>), a call to a
+reactive expression, or a new expression inside curly braces. When <code class="highlighter-rouge">event</code>
+is triggered the file download is triggered.</p>
+</dd>
+  
+  <dt><p>filename</p>
+</dt>
+  <dd><p>A reactive input value, a call to a reactive expression, a
+function, or a new expression inside curly braces which returns a string
+specifying the name of the downloaded file.</p>
+</dd>
+  
+  <dt><p>handler</p>
+</dt>
+  <dd><p>A <strong>function</strong> with one argument that write’s the content of
+the downloaded file. A temporary file is passed to the function, which is
+expected to write content (text, images, etc.) to the temporary file.</p>
+</dd>
+  
+  <dt><p>domain</p>
+</dt>
+  <dd><p>A shiny session object, defaults to
+[getDefaultReactiveDomain()].</p>
+</dd>
+  
+</dl>
+
+
+<h2><p>Downloading a file</p>
+</h2>
+<p><div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">shinyApp</span><span class="p">(</span><span class="w">
+  </span><span class="n">ui</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
+    </span><span class="n">textInput</span><span class="p">(</span><span class="s2">"name"</span><span class="p">,</span><span class="w"> </span><span class="s2">"File name"</span><span class="p">),</span><span class="w">
+    </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"trigger"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Download"</span><span class="p">)</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">server</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">downloadEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">trigger</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="nf">is.null</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">name</span><span class="p">))</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="s2">"default"</span><span class="w">
+      </span><span class="p">}</span><span class="w"> </span><span class="k">else</span><span class="w"> </span><span class="p">{</span><span class="w">
+        </span><span class="n">input</span><span class="o">$</span><span class="n">name</span><span class="w">
+      </span><span class="p">}</span><span class="w">
+    </span><span class="p">},</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">file</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="n">cat</span><span class="p">(</span><span class="s2">"hello, world!"</span><span class="p">,</span><span class="w"> </span><span class="n">file</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">file</span><span class="p">)</span><span class="w">
+    </span><span class="p">})</span><span class="w">
+  </span><span class="p">}</span><span class="w">
+</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+</p>
+
+
+
+
+        </div>
+      </div>
+    </div>
+  </body>
+</html>
