@@ -45,11 +45,15 @@ $.extend(radiobarInputBinding, {
 
       if (target !== null) {
         target.checked = true;
+        target.parentNode.classList.add("active");
       }
     }
   },
   _clear: (el) => {
-    el.querySelectorAll("input:checked").forEach(i => i.checked = false);
+    el.querySelectorAll("input:checked").forEach(input => {
+      input.checked = false;
+      input.parentNode.classList.remove("active");
+    });
   },
   _enable: function(el, data) {
     let values = data.values;

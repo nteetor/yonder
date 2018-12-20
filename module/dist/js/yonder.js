@@ -1224,12 +1224,14 @@
 
         if (target !== null) {
           target.checked = true;
+          target.parentNode.classList.add("active");
         }
       }
     },
     _clear: function _clear(el) {
-      el.querySelectorAll("input:checked").forEach(function (i) {
-        return i.checked = false;
+      el.querySelectorAll("input:checked").forEach(function (input) {
+        input.checked = false;
+        input.parentNode.classList.remove("active");
       });
     },
     _enable: function _enable(el, data) {
