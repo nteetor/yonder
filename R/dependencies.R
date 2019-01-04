@@ -99,7 +99,7 @@ ionSliderDep <- function() {
       name = "ion-slider",
       version = "2.2.0",
       src = c(
-        file = system("www/ion-rangeslider", package = "yonder"),
+        file = system.file("www/ion-rangeslider", package = "yonder"),
         href = "yonder/ion-rangeslider"
       ),
       stylesheet = c(
