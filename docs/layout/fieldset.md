@@ -14,9 +14,10 @@ parameters:
 family: layout
 export: ''
 examples:
-- title: '## Grouping related inputs'
+- title: Grouping related inputs
   body:
-  - code: |-
+  - type: code
+    content: |-
       fieldset(
         legend = "Pizza order",
         formGroup(
@@ -68,8 +69,8 @@ examples:
             <label>Is this for delivery?</label>
             <div class="yonder-checkbox" id="deliver">
               <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox" id="checkbox-302-265" name="deliver" value="Deliver"/>
-                <label class="custom-control-label" for="checkbox-302-265">Deliver</label>
+                <input class="custom-control-input" type="checkbox" id="checkbox-734-707" name="deliver" value="Deliver"/>
+                <label class="custom-control-label" for="checkbox-734-707">Deliver</label>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -77,5 +78,7 @@ examples:
           <button class="yonder-submit btn btn-blue" role="button" value="Place order">Place order</button>
         </div>
       </fieldset>
+rdname: fieldset
+sections: []
 layout: doc
 ---

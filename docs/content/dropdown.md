@@ -29,9 +29,10 @@ parameters:
 family: content
 export: ''
 examples:
-- title: '## Simple options w/ buttons'
+- title: Simple options w/ buttons
   body:
-  - code: |-
+  - type: code
+    content: |-
       dropdown(
         label = "Choices",
         buttonInput("choice1", "Choice 1"),
@@ -47,9 +48,10 @@ examples:
           <button class="yonder-button dropdown-item" type="button" role="button" id="choice3">Choice 3</button>
         </div>
       </div>
-- title: '## Grouped sections'
+- title: Grouped sections
   body:
-  - code: |-
+  - type: code
+    content: |-
       dropdown(
         label = "Sections",
         list(
@@ -76,9 +78,10 @@ examples:
           <button class="yonder-button dropdown-item" type="button" role="button" id="calcD">Calculate D</button>
         </div>
       </div>
-- title: '## Direction variations'
+- title: Direction variations
   body:
-  - code: |-
+  - type: code
+    content: |-
       div(
         lapply(
           c("up", "down", "left", "right"),
@@ -130,9 +133,10 @@ examples:
           </div>
         </div>
       </div>
-- title: '## Include forms'
+- title: Include forms
   body:
-  - code: |-
+  - type: code
+    content: |-
       dropdown(
         label = "Sign in",
         formInput(
@@ -180,5 +184,7 @@ examples:
           </form>
         </div>
       </div>
+rdname: dropdown
+sections: []
 layout: doc
 ---

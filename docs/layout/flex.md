@@ -11,45 +11,45 @@ parameters:
   description: A tag element.
 - name: direction
   description: |-
-    A [responsive] argument. One of `"row"` or `"column"`
+    A [responsive](/responsive.html) argument. One of `"row"` or `"column"`
     specifying the placement of flex items, defaults to `NULL`. If `"row"`
     items are placed vertically, if `"column"` items are placed horizontally.
     Browsers place items vertically by default.
 - name: reverse
   description: |-
-    A [responsive] argument. One of `TRUE` or `FALSE` specifying
+    A [responsive](/responsive.html) argument. One of `TRUE` or `FALSE` specifying
     if flex items are placed in reverse order, defaults to `NULL`. If `TRUE`
     items are placed from right to left when `direction` is `"row"` or bottom
     to top when `direction` is `"column"`.
 - name: justify
   description: |-
-    A [responsive] argument. One of `"start"`, `"end"`,
+    A [responsive](/responsive.html) argument. One of `"start"`, `"end"`,
     `"center"`, `"between"`, or `"around"` specifying how items are
     horizontally aligned, defaults to `NULL`. See the **justify** section below
     for more on how the different values affect horizontal spacing.
 - name: align
   description: |-
-    A [responsive] argument. One of `"start"`, `"end"`, `"center"`,
+    A [responsive](/responsive.html) argument. One of `"start"`, `"end"`, `"center"`,
     `"baseline"`, or `"stretch"` specifying how items are vertically aligned,
     defaults to `NULL`. See the **align** section below for more on how the
     different values affect vertical spacing.
 - name: wrap
   description: |-
-    A [responsive] argument. One of `TRUE` or `FALSE` specifying
+    A [responsive](/responsive.html) argument. One of `TRUE` or `FALSE` specifying
     whether to wrap flex items inside the flex containter, `.tag`, defaults
     to `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
     not wrap. See the **wrap** section below for more.
 examples:
-- title: '## Different `direction`s'
+- title: Different `direction`s
   body:
-  - code: ''
-    output: []
-- title: Many of `flex()`'s arguments are viewport responsive and below we will see
-    how useful this can be. On small screens the flex items are placed vertically
-    and can occupy the full width of the mobile device. On medium or larger screens
-    the items are placed horizontally once again.
-  body:
-  - code: |-
+  - type: text
+    content: Many of `flex()`'s arguments are viewport responsive and below we will
+      see how useful this can be. On small screens the flex items are placed vertically
+      and can occupy the full width of the mobile device. On medium or larger screens
+      the items are placed horizontally once again.
+    output: ~
+  - type: code
+    content: |-
       div(
         div("A flex item") %>%
           padding(3) %>%
@@ -73,13 +73,14 @@ examples:
         <div class="p-3 border">A flex item</div>
         <div class="p-3 border">A flex item</div>
       </div>
-- title: '*Resize the browser for this example.*'
-  body:
-  - code: ''
-    output: []
-- title: You can keep items as a column by specifying only `"column"`.
-  body:
-  - code: |-
+  - type: text
+    content: '*Resize the browser for this example.*'
+    output: ~
+  - type: text
+    content: You can keep items as a column by specifying only `"column"`.
+    output: ~
+  - type: code
+    content: |-
       div(
         div("A flex item") %>%
           padding(3) %>%
@@ -99,15 +100,15 @@ examples:
         <div class="p-3 border">A flex item</div>
         <div class="p-3 border">A flex item</div>
       </div>
-- title: '## Spacing items with `justify`'
+- title: Spacing items with `justify`
   body:
-  - code: ''
-    output: []
-- title: Below is a series of examples showing how to change the horizontal alignment
-    of your flex items. Let's start by pushing items to the beginning of their parent
-    container.
-  body:
-  - code: |-
+  - type: text
+    content: Below is a series of examples showing how to change the horizontal alignment
+      of your flex items. Let's start by pushing items to the beginning of their parent
+      container.
+    output: ~
+  - type: code
+    content: |-
       div(
         replicate(
           div("A flex item") %>%
@@ -127,9 +128,11 @@ examples:
         <div class="p-3 border">A flex item</div>
         <div class="p-3 border">A flex item</div>
       </div>
-- title: We can also push items to the **end**.
-  body:
-  - code: |-
+  - type: text
+    content: We can also push items to the **end**.
+    output: ~
+  - type: code
+    content: |-
       div(
         replicate(
           div("A flex item") %>%
@@ -149,9 +152,11 @@ examples:
         <div class="p-3 border">A flex item</div>
         <div class="p-3 border">A flex item</div>
       </div>
-- title: Without using a table layout we can **center** items.
-  body:
-  - code: |-
+  - type: text
+    content: Without using a table layout we can **center** items.
+    output: ~
+  - type: code
+    content: |-
       div(
         replicate(
           div("A flex item") %>%
@@ -171,9 +176,11 @@ examples:
         <div class="p-3 border">A flex item</div>
         <div class="p-3 border">A flex item</div>
       </div>
-- title: You can also put space **between** items
-  body:
-  - code: |-
+  - type: text
+    content: You can also put space **between** items
+    output: ~
+  - type: code
+    content: |-
       div(
         replicate(
           div("A flex item") %>%
@@ -193,9 +200,11 @@ examples:
         <div class="p-3 border">A flex item</div>
         <div class="p-3 border">A flex item</div>
       </div>
-- title: '... or put space **around** items.'
-  body:
-  - code: |-
+  - type: text
+    content: '... or put space **around** items.'
+    output: ~
+  - type: code
+    content: |-
       div(
         replicate(
           div("A flex item") %>%
@@ -215,18 +224,17 @@ examples:
         <div class="p-3 border">A flex item</div>
         <div class="p-3 border">A flex item</div>
       </div>
-- title: '*The "between" and "around" values come from the original CSS values "space-between"
-    and "space-around".*'
+  - type: text
+    content: '*The "between" and "around" values come from the original CSS values
+      "space-between" and "space-around".*'
+    output: ~
+- title: Wrap onto new lines
   body:
-  - code: ''
-    output: []
-- title: '## Wrap onto new lines'
-  body:
-  - code: ''
-    output: []
-- title: Using flexbox we can also control how items wrap onto new lines.
-  body:
-  - code: |-
+  - type: text
+    content: Using flexbox we can also control how items wrap onto new lines.
+    output: ~
+  - type: code
+    content: |-
       div(
         replicate(
           div("A flex item") %>%
@@ -248,5 +256,7 @@ examples:
       </div>
 family: layout
 export: ''
+rdname: flex
+sections: []
 layout: doc
 ---

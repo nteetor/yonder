@@ -16,19 +16,21 @@ parameters:
 family: design
 export: ''
 examples:
-- title: '## A simple scroll'
+- title: A simple scroll
   body:
-  - code: |-
+  - type: code
+    content: |-
       div(
         lapply(
           rep("Integer placerat tristique nisl.", 20),
           p
         )
       ) %>%
-        height(50) %>%
+        height(20) %>%
+        border() %>%
         scroll()
     output: |-
-      <div class="h-50 scroll-y">
+      <div class="h-20 border scroll-y">
         <p>Integer placerat tristique nisl.</p>
         <p>Integer placerat tristique nisl.</p>
         <p>Integer placerat tristique nisl.</p>
@@ -50,5 +52,7 @@ examples:
         <p>Integer placerat tristique nisl.</p>
         <p>Integer placerat tristique nisl.</p>
       </div>
+rdname: scroll
+sections: []
 layout: doc
 ---

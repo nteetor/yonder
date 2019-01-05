@@ -63,18 +63,9 @@
 #' @export
 #' @examples
 #'
-#' ### Popover preview
+#' ### Examples
 #'
-#' popover(
-#'   title = "Mr. Popover",
-#'   "... and his penguins"
-#' )
-#'
-#' ### No title
-#'
-#' popover(
-#'   "Pellentesque dapibus suscipit ligula."
-#' )
+#' # Please see example application above.
 #'
 popover <- function(..., title = NULL) {
   title <- if (!is.null(title) && !is_tag(title)) {

@@ -27,14 +27,14 @@ parameters:
 family: outputs
 export: ''
 examples:
-- title: '# Buttons with badges'
+- title: Buttons with badges
   body:
-  - code: ''
-    output: []
-- title: Typically, you would use `renderBadge()` to update a badge's value. Here
-    we are hard-coding a default value of 7.
-  body:
-  - code: |-
+  - type: text
+    content: Typically, you would use `renderBadge()` to update a badge's value. Here
+      we are hard-coding a default value of 7.
+    output: ~
+  - type: code
+    content: |-
       buttonInput(
         id = NULL,
         label = "Process",
@@ -49,9 +49,10 @@ examples:
         Process
         <span class="yonder-badge badge badge-cyan">7</span>
       </button>
-- title: '# Possible colors'
+- title: Possible colors
   body:
-  - code: |-
+  - type: code
+    content: |-
       colors <- c(
         "red", "purple", "indigo", "blue", "cyan", "teal", "green",
         "yellow", "amber", "orange", "grey", "white"
@@ -87,5 +88,7 @@ examples:
         <span class="yonder-badge badge badge-grey m-2">grey</span>
         <span class="yonder-badge badge badge-white m-2">white</span>
       </div>
+rdname: renderBadge
+sections: []
 layout: doc
 ---

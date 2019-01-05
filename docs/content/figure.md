@@ -20,5 +20,7 @@ parameters:
     to the parent element.
 family: content
 export: ''
+rdname: figure
+sections: []
 layout: doc
 ---

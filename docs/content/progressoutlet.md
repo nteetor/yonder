@@ -39,7 +39,7 @@ parameters:
 - name: bar
   description: A bar element, typically a call to `bar()`.
 - name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()].
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](/getDefaultReactiveDomain.html).
 sections:
 - title: Example application
   body: |-
@@ -72,9 +72,10 @@ sections:
 family: content
 export: ''
 examples:
-- title: '## Striped variant'
+- title: Striped variant
   body:
-  - code: |-
+  - type: code
+    content: |-
       progressOutlet(
         id = "progress1",
         bar(
@@ -88,9 +89,10 @@ examples:
       <div id="progress1" class="yonder-progress progress">
         <div class="progress-bar progress-bar-striped bg-blue" id="task1" role="progressbar" style="width: 41%" aria-valuemin="0" aria-valuemax="100"></div>
       </div>
-- title: '## Labeled bars'
+- title: Labeled bars
   body:
-  - code: |-
+  - type: code
+    content: |-
       progressOutlet(
         id = "progress2",
         bar(
@@ -104,9 +106,10 @@ examples:
       <div id="progress2" class="yonder-progress progress">
         <div class="progress-bar bg-green" id="task2" role="progressbar" style="width: 64%" aria-valuemin="0" aria-valuemax="100">Trees planted</div>
       </div>
-- title: '## Multiple bars'
+- title: Multiple bars
   body:
-  - code: |-
+  - type: code
+    content: |-
       progressOutlet(
         id = "progress3",
         bar(
@@ -125,5 +128,6 @@ examples:
         <div class="progress-bar bg-red" id="task3" role="progressbar" style="width: 40%" aria-valuemin="0" aria-valuemax="100"></div>
         <div class="progress-bar bg-orange" id="task4" role="progressbar" style="width: 20%" aria-valuemin="0" aria-valuemax="100"></div>
       </div>
+rdname: progressOutlet
 layout: doc
 ---

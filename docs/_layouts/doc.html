@@ -12,16 +12,24 @@ layout: default
 </dl>
 
 {% for section in page.sections %}
-<h2>{{ section.title | markdownify }}</h2>
+<h4>{{ section.title | markdownify }}</h4>
 <p>{{ section.body | markdownify }}</p>
 {% endfor %}
 
 {% for example in page.examples %}
-<h2>{{ example.title | markdownify }}</h2>
-<div>
+{% if example.title %}
+<h4>{{ example.title | markdownify }}</h4>
+{% endif %}
+<div class="mb-2">
   {% for piece in example.body %}
-  {% highlight r %}{{ piece.code }}{% endhighlight %}
+  {% if piece.type == "code" %}
+  {% highlight r %}{{ piece.content }}{% endhighlight %}
   <div>{{ piece.output }}</div>
+  {% elsif piece.type == "text" %}
+  <p>{{ piece.content | markdownify }}</p>
+  {% elsif piece.type == "literal" %}
+  {{ piece.content }}
+  {% endif %}
   {% endfor %}
 </div>
 {% endfor %}

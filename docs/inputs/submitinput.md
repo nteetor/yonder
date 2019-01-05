@@ -37,15 +37,20 @@ parameters:
 family: inputs
 export: ''
 examples:
-- title: |-
-    buttonInput(
-      id = NULL,
-      label = "Simple"
-    )
-  body: []
-- title: Block buttons will fill the width of their parent element
+- title: Simple vs block button
   body:
-  - code: |-
+  - type: code
+    content: |-
+      buttonInput(
+        id = NULL,
+        label = "Simple"
+      )
+    output: <button class="yonder-button btn btn-grey" type="button" role="button">Simple</button>
+  - type: text
+    content: Block buttons will fill the width of their parent element
+    output: ~
+  - type: code
+    content: |-
       buttonInput(
         id = NULL,
         label = "Block",
@@ -53,18 +58,22 @@ examples:
       ) %>%
         background("red")
     output: <button class="yonder-button btn btn-block btn-red" type="button" role="button">Block</button>
-- title: '## A submit button'
+- title: A submit button
   body:
-  - code: submitInput()
+  - type: code
+    content: submitInput()
     output: <button class="yonder-submit btn btn-blue" role="button" value="Submit">Submit</button>
-- title: Or use custom text to clarify the action taken when clicked by the user.
-  body:
-  - code: submitInput("Place order")
+  - type: text
+    content: Or use custom text to clarify the action taken when clicked by the user.
+    output: ~
+  - type: code
+    content: submitInput("Place order")
     output: <button class="yonder-submit btn btn-blue" role="button" value="Place
       order">Place order</button>
-- title: '## Possible colors'
+- title: Possible colors
   body:
-  - code: |-
+  - type: code
+    content: |-
       colors <- c(
         "red", "purple", "indigo", "blue", "cyan", "teal", "green",
         "yellow", "amber", "orange", "grey"
@@ -99,10 +108,13 @@ examples:
         <button class="yonder-button btn btn-orange m-2" type="button" role="button">orange</button>
         <button class="yonder-button btn btn-grey m-2" type="button" role="button">grey</button>
       </div>
-- title: '## Reactive links'
+- title: Reactive links
   body:
-  - code: div("Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem.")
+  - type: code
+    content: div("Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem.")
     output: "<div>\n  Curabitur \n  <button class=\"yonder-link btn btn-link\" id=\"inline\">vulputate</button>\n
       \  vestibulum lorem.\n</div>"
+rdname: submitInput
+sections: []
 layout: doc
 ---

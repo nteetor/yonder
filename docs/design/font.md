@@ -4,7 +4,7 @@ title: Tag element font
 description: |-
   The `font()` utility modifies the color, size, weight, case, or alignment of
   a tag element's text. All arguments default to `NULL`, in which case they are
-  ignored.  For example, `font(size = "lg")` increases font size without
+  ignored.  For example, `font(.., size = "lg")` increases font size without
   affecting color, weight, case, or alignment.
 parameters:
 - name: .tag
@@ -30,15 +30,16 @@ parameters:
     transformation of the tag element's text, default to `NULL`.
 - name: align
   description: |-
-    A [responsive] argument. One of `"left"`, `"center"`, `"right"`,
+    A [responsive](/responsive.html) argument. One of `"left"`, `"center"`, `"right"`,
     or `"justify"`, specifying the alignment of the tag element's text, defaults
     to `NULL`.
 family: design
 export: ''
 examples:
-- title: '## Changing text color'
+- title: Changing text color
   body:
-  - code: |-
+  - type: code
+    content: |-
       card(
         header = h3("Important!") %>%
           font(color = "amber"),
@@ -54,34 +55,44 @@ examples:
           <div>This is a reminder.</div>
         </div>
       </div>
-- title: '## Changing font size'
+- title: Changing font size
   body:
-  - code: |-
+  - type: code
+    content: |-
       div(
-        p("Donec at pede.") %>%
+        p("Extra small") %>%
           font(size = "xs"),
-        p("Donec at pede.") %>%
+        p("Small") %>%
           font(size = "sm"),
-        p("Donec at pede.") %>%
+        p("Medium") %>%
           font(size = "base"),
-        p("Donec at pede.") %>%
+        p("Large") %>%
           font(size = "lg"),
-        p("Donec at pede.") %>%
+        p("Extra large") %>%
           font(size = "xl")
       )
     output: |-
       <div>
-        <p class="font-size-xs">Donec at pede.</p>
-        <p class="font-size-sm">Donec at pede.</p>
-        <p class="font-size-base">Donec at pede.</p>
-        <p class="font-size-lg">Donec at pede.</p>
-        <p class="font-size-xl">Donec at pede.</p>
+        <p class="font-size-xs">Extra small</p>
+        <p class="font-size-sm">Small</p>
+        <p class="font-size-base">Medium</p>
+        <p class="font-size-lg">Large</p>
+        <p class="font-size-xl">Extra large</p>
       </div>
-- title: '## Changing font weight'
+- title: Changing font weight
   body:
-  - code: |-
+  - type: text
+    content: Make an element's text bold, italic, light, or monospace.
+    output: ~
+  - type: code
+    content: |-
       p("Curabitur lacinia pulvinar nibh.") %>%
         font(weight = "bold")
-    output: <p class="font-weight-bold">Curabitur lacinia pulvinar nibh.</p>
+
+      p("Proin quam nisl, tincidunt et.") %>%
+        font(weight = "light")
+    output: <p class="font-weight-light">Proin quam nisl, tincidunt et.</p>
+rdname: font
+sections: []
 layout: doc
 ---

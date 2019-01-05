@@ -66,9 +66,10 @@ sections:
 family: inputs
 export: ''
 examples:
-- title: '## Nav styled as tabs'
+- title: Nav styled as tabs
   body:
-  - code: |-
+  - type: code
+    content: |-
       navInput(
         id = "tabs1",
         choices = c(
@@ -76,12 +77,13 @@ examples:
           "Tab 2",
           "Tab 3"
         ),
+        selected = "Tab 1",
         appearance = "tabs"
       )
     output: |-
       <ul class="yonder-nav nav nav-tabs" id="tabs1">
         <li class="nav-item">
-          <button class="nav-link btn btn-link" value="Tab 1">Tab 1</button>
+          <button class="nav-link btn btn-link active" value="Tab 1">Tab 1</button>
         </li>
         <li class="nav-item">
           <button class="nav-link btn btn-link" value="Tab 2">Tab 2</button>
@@ -90,18 +92,20 @@ examples:
           <button class="nav-link btn btn-link" value="Tab 3">Tab 3</button>
         </li>
       </ul>
-- title: '## Nav styled as pills'
+- title: Nav styled as pills
   body:
-  - code: |-
+  - type: code
+    content: |-
       navInput(
         id = "tabs2",
         choices = paste("Tab", 1:3),
+        selected = "Tab 1",
         appearance = "pills"
       )
     output: |-
       <ul class="yonder-nav nav nav-pills" id="tabs2">
         <li class="nav-item">
-          <button class="nav-link btn btn-link" value="Tab 1">Tab 1</button>
+          <button class="nav-link btn btn-link active" value="Tab 1">Tab 1</button>
         </li>
         <li class="nav-item">
           <button class="nav-link btn btn-link" value="Tab 2">Tab 2</button>
@@ -110,9 +114,10 @@ examples:
           <button class="nav-link btn btn-link" value="Tab 3">Tab 3</button>
         </li>
       </ul>
-- title: '## Nav with dropdown'
+- title: Nav with dropdown
   body:
-  - code: |-
+  - type: code
+    content: |-
       navInput(
         id = "tabs3",
         choices = list(
@@ -145,9 +150,10 @@ examples:
           <button class="nav-link btn btn-link" value="tab3">Tab 2</button>
         </li>
       </ul>
-- title: '## Full width nav input'
+- title: Full width nav input
   body:
-  - code: |-
+  - type: code
+    content: |-
       navInput(
         id = "tabs4",
         choices = paste("Tab", 1:5),
@@ -173,9 +179,10 @@ examples:
           <button class="nav-link btn btn-link" value="tab5">Tab 5</button>
         </li>
       </ul>
-- title: '## Centering a nav input'
+- title: Centering a nav input
   body:
-  - code: |-
+  - type: code
+    content: |-
       navInput(
         id = "tabs5",
         choices = paste("Tab", 1:3)
@@ -193,5 +200,6 @@ examples:
           <button class="nav-link btn btn-link" value="Tab 3">Tab 3</button>
         </li>
       </ul>
+rdname: navInput
 layout: doc
 ---

@@ -57,7 +57,10 @@
 #' @export
 #' @examples
 #'
-#' # Please see live examples
+#' ### Examples
+#'
+#' # As these are server-side utilities, please run the example applications
+#' # above.
 #'
 collapsiblePane <- function(id, ..., show = FALSE) {
   if (!is.character(id)) {

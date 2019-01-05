@@ -16,9 +16,10 @@ parameters:
 family: design
 export: ''
 examples:
-- title: '## See top of page'
+- title: See top of page
   body:
-  - code: |-
+  - type: code
+    content: |-
       div(
         span("I'm up here!") %>%
           padding(left = 3, right = 3) %>%
@@ -31,5 +32,7 @@ examples:
       <div class="d-flex justify-content-center fixed-top">
         <span class="pr-3 pl-3 bg-teal">I'm up here!</span>
       </div>
+rdname: affix
+sections: []
 layout: doc
 ---

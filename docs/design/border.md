@@ -23,9 +23,10 @@ parameters:
 family: design
 export: ''
 examples:
-- title: '## Change border color'
+- title: Change border color
   body:
-  - code: |-
+  - type: code
+    content: |-
       div(
         div() %>%
           height(3) %>%
@@ -44,9 +45,10 @@ examples:
         <div class="h-3 w-3 border border-green"></div>
         <div class="h-3 w-3 border-left border-right border-blue"></div>
       </div>
-- title: '## Round sides'
+- title: Round sides
   body:
-  - code: |-
+  - type: code
+    content: |-
       sides <- c("top", "right", "bottom", "left", "circle", "all")
 
       div(
@@ -70,5 +72,7 @@ examples:
         <div class="h-3 w-3 border-circle border-black"></div>
         <div class="h-3 w-3 border border-black"></div>
       </div>
+rdname: border
+sections: []
 layout: doc
 ---

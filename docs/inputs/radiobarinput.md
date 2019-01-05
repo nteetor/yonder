@@ -38,9 +38,10 @@ parameters:
 family: inputs
 export: ''
 examples:
-- title: '## Stacked radio input'
+- title: Stacked radio input
   body:
-  - code: |-
+  - type: code
+    content: |-
       radioInput(
         id = "stacked",
         choices = c(
@@ -53,26 +54,27 @@ examples:
     output: |-
       <div class="yonder-radio" id="stacked">
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-275-20" name="stacked" value="Vehicula adipiscing mattis" checked/>
-          <label class="custom-control-label" for="radio-275-20">Vehicula adipiscing mattis</label>
+          <input class="custom-control-input" type="radio" id="radio-575-784" name="stacked" value="Vehicula adipiscing mattis" checked/>
+          <label class="custom-control-label" for="radio-575-784">Vehicula adipiscing mattis</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-53-248" name="stacked" value="Magna nullam"/>
-          <label class="custom-control-label" for="radio-53-248">Magna nullam</label>
+          <input class="custom-control-input" type="radio" id="radio-292-824" name="stacked" value="Magna nullam"/>
+          <label class="custom-control-label" for="radio-292-824">Magna nullam</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-585-317" name="stacked" value="Aenean venenatis"/>
-          <label class="custom-control-label" for="radio-585-317">Aenean venenatis</label>
+          <input class="custom-control-input" type="radio" id="radio-799-955" name="stacked" value="Aenean venenatis"/>
+          <label class="custom-control-label" for="radio-799-955">Aenean venenatis</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-816-20" name="stacked" value="Tristique quam porta"/>
-          <label class="custom-control-label" for="radio-816-20">Tristique quam porta</label>
+          <input class="custom-control-input" type="radio" id="radio-957-408" name="stacked" value="Tristique quam porta"/>
+          <label class="custom-control-label" for="radio-957-408">Tristique quam porta</label>
         </div>
         <div class="invalid-feedback"></div>
       </div>
-- title: '## Inline radio input'
+- title: Inline radio input
   body:
-  - code: |-
+  - type: code
+    content: |-
       radioInput(
         id = "inline",
         choices = c(
@@ -85,22 +87,23 @@ examples:
     output: |-
       <div class="yonder-radio" id="inline">
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-630-506" name="inline" value="Choice 1" checked/>
-          <label class="custom-control-label" for="radio-630-506">Choice 1</label>
+          <input class="custom-control-input" type="radio" id="radio-817-988" name="inline" value="Choice 1" checked/>
+          <label class="custom-control-label" for="radio-817-988">Choice 1</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-277-956" name="inline" value="Choice 2"/>
-          <label class="custom-control-label" for="radio-277-956">Choice 2</label>
+          <input class="custom-control-input" type="radio" id="radio-3-29" name="inline" value="Choice 2"/>
+          <label class="custom-control-label" for="radio-3-29">Choice 2</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-687-547" name="inline" value="Choice 3"/>
-          <label class="custom-control-label" for="radio-687-547">Choice 3</label>
+          <input class="custom-control-input" type="radio" id="radio-535-45" name="inline" value="Choice 3"/>
+          <label class="custom-control-label" for="radio-535-45">Choice 3</label>
         </div>
         <div class="invalid-feedback"></div>
       </div>
-- title: '## Radiobars in comparison'
+- title: Radiobars in comparison
   body:
-  - code: |-
+  - type: code
+    content: |-
       radiobarInput(
         id = NULL,
         choices = c(
@@ -115,21 +118,23 @@ examples:
     output: |-
       <div class="yonder-radiobar btn-group btn-group-toggle" data-toggle="buttons">
         <label class="btn btn-grey">
-          <input type="radio" data-value="fusce sagittis" autocomplete="false"/>
+          <input type="radio" value="fusce sagittis" autocomplete="false"/>
           <span>fusce sagittis</span>
         </label>
         <label class="btn btn-grey">
-          <input type="radio" data-value="libero non molestie" autocomplete="false"/>
+          <input type="radio" value="libero non molestie" autocomplete="false"/>
           <span>libero non molestie</span>
         </label>
         <label class="btn btn-grey">
-          <input type="radio" data-value="magna orci" autocomplete="false"/>
+          <input type="radio" value="magna orci" autocomplete="false"/>
           <span>magna orci</span>
         </label>
         <label class="btn active btn-grey">
-          <input type="radio" data-value="ultrices dolor" autocomplete="false" checked/>
+          <input type="radio" value="ultrices dolor" autocomplete="false" checked/>
           <span>ultrices dolor</span>
         </label>
       </div>
+rdname: radiobarInput
+sections: []
 layout: doc
 ---

@@ -12,9 +12,10 @@ parameters:
 family: content
 export: ''
 examples:
-- title: '## Simple example'
+- title: Simple example
   body:
-  - code: |-
+  - type: code
+    content: |-
       pre(
         "shinyApp(",
         "  ui = container(",
@@ -32,5 +33,7 @@ examples:
     output: "<pre class=\"pre-scrollable\">\n  shinyApp(\n    ui = container(\n      row(\n
       \       column(\n        \n        )\n      )\n    )\n    server = function(input,
       output) {\n    \n    }\n  )\n</pre>"
+rdname: pre
+sections: []
 layout: doc
 ---

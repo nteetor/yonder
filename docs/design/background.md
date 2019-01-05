@@ -14,9 +14,10 @@ parameters:
 family: design
 export: ''
 examples:
-- title: '## Modifying input elements'
+- title: Modifying input elements
   body:
-  - code: |-
+  - type: code
+    content: |-
       checkbarInput(
         id = NULL,
         choices = c(
@@ -41,9 +42,10 @@ examples:
           Lorem ipsum dolor sit amet.
         </label>
       </div>
-- title: '## Possible colors'
+- title: Possible colors
   body:
-  - code: |-
+  - type: code
+    content: |-
       colors <- c(
         "red", "purple", "indigo", "blue", "cyan", "teal", "green",
         "yellow", "amber", "orange", "grey", "white"
@@ -75,5 +77,7 @@ examples:
         <div class="p-5 m-2 bg-grey"></div>
         <div class="p-5 m-2 bg-white"></div>
       </div>
+rdname: background
+sections: []
 layout: doc
 ---

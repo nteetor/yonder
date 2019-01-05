@@ -64,6 +64,7 @@
 #'     "Tab 2",
 #'     "Tab 3"
 #'   ),
+#'   selected = "Tab 1",
 #'   appearance = "tabs"
 #' )
 #'
@@ -72,6 +73,7 @@
 #' navInput(
 #'   id = "tabs2",
 #'   choices = paste("Tab", 1:3),
+#'   selected = "Tab 1",
 #'   appearance = "pills"
 #' )
 #'
@@ -390,8 +392,10 @@ navItem <- function(base, value, active) {
 #' @export
 #' @examples
 #'
-#' # Please see the sample applications above for examples demoing
-#' # `showPane()` and `afterPane()`.
+#' ### Examples
+#'
+#' # Because these are server-side utilities please see the example applications
+#' # above.
 #'
 navContent <- function(...) {
   panes <- tags$div(

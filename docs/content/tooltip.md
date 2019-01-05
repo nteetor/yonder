@@ -16,9 +16,10 @@ parameters:
 family: content
 export: ''
 examples:
-- title: '## Tooltips galore'
+- title: Tooltips galore
   body:
-  - code: |-
+  - type: code
+    content: |-
       formGroup(
         label = tags$label(
           "An exciting input",
@@ -41,23 +42,24 @@ examples:
         </label>
         <div class="yonder-radio" id="radios">
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-629-946" name="radios" value="Ready" checked/>
-            <label class="custom-control-label" for="radio-629-946">Ready</label>
+            <input class="custom-control-input" type="radio" id="radio-213-893" name="radios" value="Ready" checked/>
+            <label class="custom-control-label" for="radio-213-893">Ready</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-175-276" name="radios" value="Set"/>
-            <label class="custom-control-label" for="radio-175-276">Set</label>
+            <input class="custom-control-input" type="radio" id="radio-773-113" name="radios" value="Set"/>
+            <label class="custom-control-label" for="radio-773-113">Set</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-515-876" name="radios" value="Go"/>
-            <label class="custom-control-label" for="radio-515-876">Go</label>
+            <input class="custom-control-input" type="radio" id="radio-895-640" name="radios" value="Go"/>
+            <label class="custom-control-label" for="radio-895-640">Go</label>
           </div>
           <div class="invalid-feedback"></div>
         </div>
       </div>
-- title: '## Describing links (link inputs)'
+- title: Describing links (link inputs)
   body:
-  - code: |-
+  - type: code
+    content: |-
       div(
         p("Nunc rutrum turpis sed pede."),
         p(
@@ -78,5 +80,7 @@ examples:
       \ </p>\n  <p>\n    Etiam vel tortor sodales \n    <button class=\"yonder-link
       btn btn-link\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tell us
       more?\">tellus</button>\n     ultricies commodo.\n  </p>\n</div>"
+rdname: tooltip
+sections: []
 layout: doc
 ---

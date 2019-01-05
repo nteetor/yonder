@@ -20,9 +20,10 @@ parameters:
 family: layout
 export: ''
 examples:
-- title: '## Navbar with tabs'
+- title: Navbar with tabs
   body:
-  - code: |-
+  - type: code
+    content: |-
       div(
         navbar(
           brand = "Navbar",
@@ -59,10 +60,10 @@ examples:
       <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-teal">
           <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-522-64" aria-controls="navContent-522-64" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-130-898" aria-controls="navContent-130-898" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navContent-522-64">
+          <div class="collapse navbar-collapse" id="navContent-130-898">
             <ul class="yonder-nav nav mr-auto navbar-nav" id="tabs">
               <li class="nav-item">
                 <button class="nav-link btn btn-link" value="Home">Home</button>
@@ -91,5 +92,7 @@ examples:
           </div>
         </div>
       </div>
+rdname: navbar
+sections: []
 layout: doc
 ---

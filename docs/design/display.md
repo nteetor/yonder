@@ -13,19 +13,19 @@ parameters:
   description: A tag element.
 - name: render,print
   description: |-
-    A [responsive] argument. One of `"inline"`, `"block"`,
+    A [responsive](/responsive.html) argument. One of `"inline"`, `"block"`,
     `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`, defaults to
     `NULL`.
 family: design
 export: ''
 examples:
-- title: '## Using flexbox'
+- title: Using flexbox
   body:
-  - code: ''
-    output: []
-- title: When using `flex()` be sure to set the display, too.
-  body:
-  - code: |-
+  - type: text
+    content: When using `flex()` be sure to set the display, too.
+    output: ~
+  - type: code
+    content: |-
       div(
         lapply(
           1:5,
@@ -50,17 +50,19 @@ examples:
         <div class="p-5 mt-2 mb-2 bg-blue"></div>
         <div class="p-5 mt-2 mb-2 bg-blue"></div>
       </div>
-- title: '## Printing pages'
+- title: Printing pages
   body:
-  - code: ''
-    output: []
-- title: This element is not shown when the page is printed.
-  body:
-  - code: |-
+  - type: text
+    content: This element is not shown when the page is printed.
+    output: ~
+  - type: code
+    content: |-
       div() %>%
-        margin(5) %>%
+        height(4) %>%
         background("orange") %>%
-        display(print = "none")
-    output: <div class="m-5 bg-orange d-print-none"></div>
+        display(print = "none")  # <-
+    output: <div class="h-4 bg-orange d-print-none"></div>
+rdname: display
+sections: []
 layout: doc
 ---

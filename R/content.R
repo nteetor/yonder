@@ -10,7 +10,6 @@
 #'
 #' @noRd
 #' @family content
-#' @name index
 NULL
 
 #' Headings

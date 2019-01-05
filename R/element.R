@@ -15,7 +15,7 @@
 #' These functions are experimental and are subject to change. Additionally, they
 #' may be moved from this package entirely.
 #'
-#' @family ui rendering
+#' @family rendering
 #' @keywords internal
 #' @export
 elementOutput <- function(id, ...) {

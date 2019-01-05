@@ -47,7 +47,6 @@
 #'
 #' @noRd
 #' @family inputs
-#' @name index
 NULL
 
 #' Outputs
@@ -56,7 +55,6 @@ NULL
 #'
 #' @noRd
 #' @family outputs
-#' @name index
 NULL
 
 #' Thruputs
@@ -65,5 +63,4 @@ NULL
 #'
 #' @noRd
 #' @family thruputs
-#' @name index
 NULL

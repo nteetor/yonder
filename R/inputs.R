@@ -3,7 +3,6 @@
 #' Server-side functions.
 #'
 #' @noRd
-#' @name index
 #' @family utilities
 NULL
 

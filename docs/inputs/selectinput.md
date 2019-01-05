@@ -31,9 +31,10 @@ parameters:
 family: inputs
 export: ''
 examples:
-- title: '## Getting started'
+- title: Getting started
   body:
-  - code: |-
+  - type: code
+    content: |-
       selectInput(
         id = NULL,
         choices = c(
@@ -54,5 +55,7 @@ examples:
         </select>
         <div class="invalid-feedback"></div>
       </div>
+rdname: selectInput
+sections: []
 layout: doc
 ---

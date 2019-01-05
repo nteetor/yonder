@@ -26,19 +26,19 @@ parameters:
       passed as HTML attributes to the parent element.
 - name: width
   description: |-
-    A [responsive] argument. One of `1:12` or "auto" specifying a
+    A [responsive](/responsive.html) argument. One of `1:12` or "auto" specifying a
     column width for the form group, defaults to `NULL`.
 family: layout
 export: ''
 examples:
-- title: '# Grid layout forms'
+- title: Grid layout forms
   body:
-  - code: ''
-    output: []
-- title: Use responsive arguments to adjust form layouts based on viewport size. Be
-    sure to adjust the size of your browser window between large and small.
-  body:
-  - code: |-
+  - type: text
+    content: Use responsive arguments to adjust form layouts based on viewport size.
+      Be sure to adjust the size of your browser window between large and small.
+    output: ~
+  - type: code
+    content: |-
       card(
         formRow(
           formGroup(
@@ -106,5 +106,7 @@ examples:
           <button class="yonder-button btn btn-blue" type="button" role="button" id="go">Go!</button>
         </div>
       </div>
+rdname: formRow
+sections: []
 layout: doc
 ---

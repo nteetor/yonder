@@ -20,7 +20,7 @@ parameters:
     Tag elements inside the collapsible pane or additional named
     arguments passed as HTML attributes to parent element.
 - name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()].
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](/getDefaultReactiveDomain.html).
 details: |-
   Padding may not be applied to the collapsible pane div element. To pad a
   collapsible pane first wrap the pane in another element and add padding to
@@ -59,7 +59,12 @@ sections:
 family: content
 export: ''
 examples:
-- title: Please see live examples
-  body: []
+- title: Examples
+  body:
+  - type: text
+    content: As these are server-side utilities, please run the example applications
+      above.
+    output: ~
+rdname: collapsiblePane
 layout: doc
 ---

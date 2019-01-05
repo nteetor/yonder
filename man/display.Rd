@@ -49,9 +49,9 @@ div(
 # This element is not shown when the page is printed.
 
 div() \%>\%
-  margin(5) \%>\%
+  height(4) \%>\%
   background("orange") \%>\%
-  display(print = "none")
+  display(print = "none")  # <-
 
 }
 \seealso{

@@ -3,24 +3,25 @@ name: float
 title: Tag element float
 description: |-
   Use `float()` to float an element to the left or right side of its parent
-  element. A classic example using floats is a newspaper layout where text is
-  wrapped around a picture.
+  element. A newspaper layout is a classic usage where an image is floated with
+  text wrapped around.
 parameters:
 - name: .tag
   description: A tag element.
 - name: side
   description: |-
-    A [responsive] argument. One of `"left"` or `"right"` specifying
+    A [responsive](/responsive.html) argument. One of `"left"` or `"right"` specifying
     the side to float the element.
 family: design
 export: ''
 examples:
-- title: '## Newspaper layout'
+- title: Newspaper layout
   body:
-  - code: |-
+  - type: code
+    content: |-
       div(
         div() %>%
-          padding(5) %>%
+          height(3) %>%
           margin(right = 2) %>%
           background("amber") %>%
           float("left"),
@@ -40,7 +41,7 @@ examples:
           "Sed id ligula quis est convallis tempor."
         )
       )
-    output: "<div>\n  <div class=\"p-5 mr-2 bg-amber float-left\"></div>\n  <p>\n
+    output: "<div>\n  <div class=\"h-3 mr-2 bg-amber float-left\"></div>\n  <p>\n
       \   Fusce commodo. Nullam tempus. Nunc rutrum turpis sed pede.\n    Phasellus
       lacus.  Cras placerat accumsan nulla.\n    Fusce sagittis, libero non molestie
       mollis, \n    magna orci ultrices dolor, at vulputate neque nulla lacinia eros.\n
@@ -48,5 +49,7 @@ examples:
       \   lacinia purus, et dictum nunc justo sit amet elit.\n  </p>\n  <p>\n    Proin
       neque massa, cursus ut, gravida ut, lobortis eget, lacus.\n    Aliquam posuere.\n
       \   Sed id ligula quis est convallis tempor.\n  </p>\n</div>"
+rdname: float
+sections: []
 layout: doc
 ---

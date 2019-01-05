@@ -197,8 +197,10 @@ shinyApp(ui, server)
 
 \examples{
 
-# Please see the sample applications above for examples demoing
-# `showPane()` and `afterPane()`.
+### Examples
+
+# Because these are server-side utilities please see the example applications
+# above.
 
 }
 \seealso{

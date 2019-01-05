@@ -38,7 +38,7 @@ parameters:
     A character string specifying the HTML id of a popover's target tag
     element.
 - name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()].
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](/getDefaultReactiveDomain.html).
 sections:
 - title: Example application
   body: |-
@@ -70,29 +70,11 @@ sections:
 family: content
 export: ''
 examples:
-- title: '## Popover preview'
+- title: Examples
   body:
-  - code: |-
-      popover(
-        title = "Mr. Popover",
-        "... and his penguins"
-      )
-    output: |-
-      <div class="popover" role="tooltip">
-        <div class="arrow"></div>
-        <h3 class="popover-header">Mr. Popover</h3>
-        <div class="popover-body">... and his penguins</div>
-      </div>
-- title: '## No title'
-  body:
-  - code: |-
-      popover(
-        "Pellentesque dapibus suscipit ligula."
-      )
-    output: |-
-      <div class="popover" role="tooltip">
-        <div class="arrow"></div>
-        <div class="popover-body">Pellentesque dapibus suscipit ligula.</div>
-      </div>
+  - type: text
+    content: Please see example application above.
+    output: ~
+rdname: popover
 layout: doc
 ---

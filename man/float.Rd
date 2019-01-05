@@ -14,8 +14,8 @@ the side to float the element.}
 }
 \description{
 Use \code{float()} to float an element to the left or right side of its parent
-element. A classic example using floats is a newspaper layout where text is
-wrapped around a picture.
+element. A newspaper layout is a classic usage where an image is floated with
+text wrapped around.
 }
 \examples{
 
@@ -23,7 +23,7 @@ wrapped around a picture.
 
 div(
   div() \%>\%
-    padding(5) \%>\%
+    height(3) \%>\%
     margin(right = 2) \%>\%
     background("amber") \%>\%
     float("left"),

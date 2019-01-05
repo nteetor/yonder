@@ -50,18 +50,17 @@ Use \code{tableThruput()} to create a table output you can update with
 table id as an input.
 }
 \section{Example application}{
-
-
-shinyApp(
-ui = container(
-tableThruput(id = "tableExample", responsive = TRUE)
-),
-server = function(input, output) {
-output$tableExample <- renderTable({
-iris
-})
-}
+\preformatted{shinyApp(
+  ui = container(
+    tableThruput(id = "tableExample", responsive = TRUE)
+  ),
+  server = function(input, output) {
+    output$tableExample <- renderTable({
+      iris
+    })
+  }
 )
+}
 }
 
 \examples{
@@ -71,6 +70,14 @@ iris
 # In practice you will use `renderTable()` to update the data in a table.
 # These live examples have been populated automatically for the sake of
 # the demo.
+
+\% <script>
+\% $(function() {
+\%   $(".yonder-table").each(function() {
+\%     $(this).table({ data: iris });
+\%   });
+\% });
+\% </script>
 
 tableThruput(
   id = "table1",  # <-

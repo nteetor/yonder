@@ -83,22 +83,23 @@ parameters:
 family: inputs
 export: ''
 examples:
-- title: '## Range inputs'
+- title: Range inputs
   body:
-  - code: ''
-    output: []
-- title: Select from a range of numeric values.
-  body:
-  - code: |-
+  - type: text
+    content: Select from a range of numeric values.
+    output: ~
+  - type: code
+    content: |-
       rangeInput(id = NULL) %>%
         background("yellow")
     output: |-
       <div class="yonder-range bg-yellow">
         <input class="range" type="text" data-type="single" data-min="0" data-max="100" data-step="1" data-from="0" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
       </div>
-- title: '## Increase the number of labels'
+- title: Increase the number of labels
   body:
-  - code: |-
+  - type: code
+    content: |-
       rangeInput(
         id = NULL,
         default = 30,
@@ -109,14 +110,14 @@ examples:
       <div class="yonder-range bg-purple">
         <input class="range" type="text" data-type="single" data-min="0" data-max="100" data-step="1" data-from="30" data-prettify-separator="," data-grid="TRUE" data-grid-num="8"/>
       </div>
-- title: '## Increase thumb step'
+- title: Increase thumb step
   body:
-  - code: ''
-    output: []
-- title: We'll hide the filled portion of the input with `fill` and change how tick
-    marks are placed with `snap`.
-  body:
-  - code: |-
+  - type: text
+    content: We'll hide the filled portion of the input with `fill` and change how
+      tick marks are placed with `snap`.
+    output: ~
+  - type: code
+    content: |-
       rangeInput(
         id = NULL,
         step = 10,  # <-
@@ -128,14 +129,14 @@ examples:
       <div class="yonder-range bg-red">
         <input class="range" type="text" data-type="single" data-min="0" data-max="100" data-step="10" data-from="0" data-prettify-separator="," data-grid="TRUE" data-grid-num="4" data-grid-snap="TRUE" data-no-fill="true"/>
       </div>
-- title: '## Interval inputs'
+- title: Interval inputs
   body:
-  - code: ''
-    output: []
-- title: Select an interval from a range of numeric values. Intervals are draggable
-    by default, this can be toggled off with `draggable = FALSE`.
-  body:
-  - code: |-
+  - type: text
+    content: Select an interval from a range of numeric values. Intervals are draggable
+      by default, this can be toggled off with `draggable = FALSE`.
+    output: ~
+  - type: code
+    content: |-
       intervalInput(
         id = NULL,
         default = c(45, 65)
@@ -145,13 +146,13 @@ examples:
       <div class="yonder-range bg-blue">
         <input class="range" type="text" data-type="double" data-min="0" data-max="100" data-from="45" data-to="65" data-drag-interval="FALSE" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
       </div>
-- title: '## sliderInput'
+- title: sliderInput
   body:
-  - code: ''
-    output: []
-- title: Select a value from a set of choices using a slider.
-  body:
-  - code: |-
+  - type: text
+    content: Select a value from a set of choices using a slider.
+    output: ~
+  - type: code
+    content: |-
       sliderInput
 
       sliderInput(
@@ -162,5 +163,7 @@ examples:
       <div class="yonder-range bg-grey">
         <input class="range" type="text" data-type="single" data-values="Choice 1,Choice 2,Choice 3,Choice 4,Choice 5,Choice 6" data-choices="Choice 1,Choice 2,Choice 3,Choice 4,Choice 5,Choice 6" data-from data-grid="TRUE" data-hide-min-max="TRUE" data-no-fill="true"/>
       </div>
+rdname: intervalInput
+sections: []
 layout: doc
 ---

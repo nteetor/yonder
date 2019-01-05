@@ -37,6 +37,7 @@
 #'
 #' @section Example application:
 #'
+#' ```R
 #' shinyApp(
 #'   ui = container(
 #'     tableThruput(id = "tableExample", responsive = TRUE)
@@ -47,6 +48,7 @@
 #'     })
 #'   }
 #' )
+#' ```
 #'
 #' @template thruput
 #' @export
@@ -57,6 +59,14 @@
 #' # In practice you will use `renderTable()` to update the data in a table.
 #' # These live examples have been populated automatically for the sake of
 #' # the demo.
+#'
+#' % <script>
+#' % $(function() {
+#' %   $(".yonder-table").each(function() {
+#' %     $(this).table({ data: iris });
+#' %   });
+#' % });
+#' % </script>
 #'
 #' tableThruput(
 #'   id = "table1",  # <-

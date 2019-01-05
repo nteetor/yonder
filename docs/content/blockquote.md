@@ -17,9 +17,10 @@ parameters:
 family: content
 export: ''
 examples:
-- title: '## Simple example'
+- title: Simple example
   body:
-  - code: |-
+  - type: code
+    content: |-
       blockquote(
         "Anyone can love a thing because.",
         "That's as easy as putting a penny in your pocket.",
@@ -44,5 +45,7 @@ examples:
           </span>
         </footer>
       </blockquote>
+rdname: blockquote
+sections: []
 layout: doc
 ---

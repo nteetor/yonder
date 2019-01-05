@@ -17,5 +17,7 @@ parameters:
 - name: session
   description: A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.
 export: ''
+rdname: invalidateInput
+sections: []
 layout: doc
 ---

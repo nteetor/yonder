@@ -18,9 +18,10 @@ parameters:
 family: content
 export: ''
 examples:
-- title: '## Landing page welcome'
+- title: Landing page welcome
   body:
-  - code: |-
+  - type: code
+    content: |-
       jumbotron(
         title = "Welcome, welcome!",
         subtitle = "This simple jumbotron-style component calls attention to a new feature",
@@ -39,5 +40,7 @@ examples:
           The best.
         </p>
       </div>
+rdname: jumbotron
+sections: []
 layout: doc
 ---

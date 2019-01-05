@@ -3,7 +3,6 @@
 #' Easily modify tag elements with design utility functions.
 #'
 #' @noRd
-#' @name index
 #' @family design
 NULL
 
@@ -56,7 +55,7 @@ colorUtility <- function(tag, base, color) {
 #'
 #' The `font()` utility modifies the color, size, weight, case, or alignment of
 #' a tag element's text. All arguments default to `NULL`, in which case they are
-#' ignored.  For example, `font(size = "lg")` increases font size without
+#' ignored.  For example, `font(.., size = "lg")` increases font size without
 #' affecting color, weight, case, or alignment.
 #'
 #' @param .tag A tag element.
@@ -98,23 +97,27 @@ colorUtility <- function(tag, base, color) {
 #' ### Changing font size
 #'
 #' div(
-#'   p("Donec at pede.") %>%
+#'   p("Extra small") %>%
 #'     font(size = "xs"),
-#'   p("Donec at pede.") %>%
+#'   p("Small") %>%
 #'     font(size = "sm"),
-#'   p("Donec at pede.") %>%
+#'   p("Medium") %>%
 #'     font(size = "base"),
-#'   p("Donec at pede.") %>%
+#'   p("Large") %>%
 #'     font(size = "lg"),
-#'   p("Donec at pede.") %>%
+#'   p("Extra large") %>%
 #'     font(size = "xl")
 #' )
 #'
 #' ### Changing font weight
 #'
+#' # Make an element's text bold, italic, light, or monospace.
+#'
 #' p("Curabitur lacinia pulvinar nibh.") %>%
 #'   font(weight = "bold")
 #'
+#' p("Proin quam nisl, tincidunt et.") %>%
+#'   font(weight = "light")
 #'
 font <- function(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
                  align = NULL) {
@@ -444,8 +447,8 @@ shadow <- function(.tag, size = "regular") {
 #' Tag element float
 #'
 #' Use `float()` to float an element to the left or right side of its parent
-#' element. A classic example using floats is a newspaper layout where text is
-#' wrapped around a picture.
+#' element. A newspaper layout is a classic usage where an image is floated with
+#' text wrapped around.
 #'
 #' @param .tag A tag element.
 #'
@@ -460,7 +463,7 @@ shadow <- function(.tag, size = "regular") {
 #'
 #' div(
 #'   div() %>%
-#'     padding(5) %>%
+#'     height(3) %>%
 #'     margin(right = 2) %>%
 #'     background("amber") %>%
 #'     float("left"),
@@ -581,9 +584,9 @@ affix <- function(.tag, position) {
 #' # This element is not shown when the page is printed.
 #'
 #' div() %>%
-#'   margin(5) %>%
+#'   height(4) %>%
 #'   background("orange") %>%
-#'   display(print = "none")
+#'   display(print = "none")  # <-
 #'
 display <- function(.tag, render = NULL, print = NULL) {
   possibles <- c("inline", "block", "inline-block", "flex", "inline-flex", "none")
@@ -627,7 +630,7 @@ display <- function(.tag, render = NULL, print = NULL) {
 #'
 #' # In most modern browsers you want to horizontally center a tag element using
 #' # the flex layout. Alternatively, you can horizontally center an element
-#' # using `margin(<TAG>, right = "auto", left = "auto")`.
+#' # using `margin(.., right = "auto", left = "auto")`.
 #'
 #' div(
 #'   "Nam a sapien. Integer placerat tristique nisl.",
@@ -635,12 +638,12 @@ display <- function(.tag, render = NULL, print = NULL) {
 #' ) %>%
 #'   margin(top = 2, r = "auto", b = 2, l = "auto") %>%  # <-
 #'   padding(3) %>%
-#'   background("amber")
+#'   background("indigo")
 #'
 #' ### Building an inline form
 #'
-#' # Inline form elements automatically use of the flex layout providing you a
-#' # means of creating condensed sets of inputs. However you may need to adjust
+#' # Inline form elements automatically use the flex layout providing you a
+#' # means of creating condensed sets of inputs. However, you may need to adjust
 #' # the spacing of the form's child elements.
 #'
 #' # Here is an inline form without any additional spacing applied.
@@ -663,8 +666,9 @@ display <- function(.tag, render = NULL, print = NULL) {
 #'   )
 #' )
 #'
-#' # Not great. But, with some styling we can make this form sparkle. Notice
-#' # we are also adjusting the default submit button added to the form input.
+#' # Without any adjustments the layout is not great. But, with some styling we
+#' # can make this form sparkle. Notice we are also adjusting the default submit
+#' # button added to the form input.
 #'
 #' formInput(
 #'   id = "login2",
@@ -782,26 +786,30 @@ margin <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 #' # When specifying a numeric value the width of the element is relative to the
 #' # default font size of the page.
 #'
-#' lapply(
-#'   1:20,
-#'   width,
-#'   .tag = div() %>%
-#'     border("black") %>%
-#'     height(4)
-#' )
+#' div(
+#'   lapply(
+#'     1:20,
+#'     width,
+#'     .tag = div() %>%
+#'       border("black") %>%
+#'       height(4)
+#'   )
+#' ) %>%
+#'   flex(
+#'     direction = "column",
+#'     justify = "between"
+#'   )
 #'
 #' ### Fractional values
 #'
-#' # When specifying a fraction the element's width is a percentage of its
-#' # parent's width.
+#' # When specifying width as a fraction the element's width is a percentage of
+#' # its parent's width.
 #'
-#' div(
-#'   div() %>%
-#'     margin(b = 3) %>%
-#'     border("red") %>%
-#'     width("1/3")
-#' ) %>%
-#'   width(20)
+#' div() %>%
+#'   margin(b = 3) %>%
+#'   background("red") %>%
+#'   height(5) %>%
+#'   width("1/3")  # <-
 #'
 width <- function(.tag, size) {
   .tag <- tagAddClass(.tag, paste0("w-", size))
@@ -887,7 +895,8 @@ height <- function(.tag, size) {
 #'     p
 #'   )
 #' ) %>%
-#'   height(50) %>%
+#'   height(20) %>%
+#'   border() %>%
 #'   scroll()
 #'
 scroll <- function(.tag, direction = "y") {

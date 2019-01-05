@@ -21,7 +21,7 @@ parameters:
 - name: left,right
   description: |-
     A character vector specifying static addons or
-    [buttonInput()] or [dropdown()] elements specifying dynamic addons.
+    [buttonInput()](/inputs/buttonInput.html) or [dropdown()](/content/dropdown.html) elements specifying dynamic addons.
     Addon's affect the reactive value of the group input, see the Details
     section below for more information.
 - name: id
@@ -55,13 +55,13 @@ sections:
 family: inputs
 export: ''
 examples:
-- title: '## Simple character string addon'
+- title: Simple character string addon
   body:
-  - code: ''
-    output: []
-- title: This input will always append a "@".
-  body:
-  - code: |-
+  - type: text
+    content: This input will always append a "@".
+    output: ~
+  - type: code
+    content: |-
       groupInput(
         id = "group1",
         left = "@",
@@ -74,9 +74,10 @@ examples:
         </div>
         <input type="text" class="form-control" placeholder="Username"/>
       </div>
-- title: '## Text input and button combo'
+- title: Text input and button combo
   body:
-  - code: |-
+  - type: code
+    content: |-
       groupInput(
         id = "group2",,
         placeholder = "Search terms",
@@ -93,9 +94,10 @@ examples:
           <button class="yonder-button btn btn-grey bg-transparent" type="button" role="button" id="button">Go!</button>
         </div>
       </div>
-- title: '## Combination addon'
+- title: Combination addon
   body:
-  - code: |-
+  - type: code
+    content: |-
       groupInput(
         id = "group3",
         left = c("$", "0.")
@@ -108,9 +110,10 @@ examples:
         </div>
         <input type="text" class="form-control"/>
       </div>
-- title: '## Two addons'
+- title: Two addons
   body:
-  - code: |-
+  - type: code
+    content: |-
       groupInput(
         id = "group4",
         left = "@",
@@ -132,5 +135,6 @@ examples:
           <button class="yonder-button btn btn-grey bg-transparent border border-blue" type="button" role="button">Search</button>
         </div>
       </div>
+rdname: groupInput
 layout: doc
 ---

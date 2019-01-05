@@ -30,80 +30,65 @@ parameters:
 family: design
 export: ''
 examples:
-- title: '## Numeric values'
+- title: Numeric values
   body:
-  - code: ''
-    output: []
-- title: When specifying a numeric value the width of the element is relative to the
-    default font size of the page.
-  body:
-  - code: |-
-      lapply(
-        1:20,
-        width,
-        .tag = div() %>%
-          border("black") %>%
-          height(4)
-      )
-    output:
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-1"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-2"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-3"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-4"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-5"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-6"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-7"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-8"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-9"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-10"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-11"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-12"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-13"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-14"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-15"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-16"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-17"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-18"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-19"), children
-      = list())
-    - list(name = "div", attribs = list(class = "border border-black h-4 w-20"), children
-      = list())
-- title: '## Fractional values'
-  body:
-  - code: ''
-    output: []
-- title: When specifying a fraction the element's width is a percentage of its parent's
-    width.
-  body:
-  - code: |-
+  - type: text
+    content: When specifying a numeric value the width of the element is relative
+      to the default font size of the page.
+    output: ~
+  - type: code
+    content: |-
       div(
-        div() %>%
-          margin(b = 3) %>%
-          border("red") %>%
-          width("1/3")
+        lapply(
+          1:20,
+          width,
+          .tag = div() %>%
+            border("black") %>%
+            height(4)
+        )
       ) %>%
-        width(20)
+        flex(
+          direction = "column",
+          justify = "between"
+        )
     output: |-
-      <div class="w-20">
-        <div class="mb-3 border border-red w-1/3"></div>
+      <div class="flex-column justify-content-between">
+        <div class="border border-black h-4 w-1"></div>
+        <div class="border border-black h-4 w-2"></div>
+        <div class="border border-black h-4 w-3"></div>
+        <div class="border border-black h-4 w-4"></div>
+        <div class="border border-black h-4 w-5"></div>
+        <div class="border border-black h-4 w-6"></div>
+        <div class="border border-black h-4 w-7"></div>
+        <div class="border border-black h-4 w-8"></div>
+        <div class="border border-black h-4 w-9"></div>
+        <div class="border border-black h-4 w-10"></div>
+        <div class="border border-black h-4 w-11"></div>
+        <div class="border border-black h-4 w-12"></div>
+        <div class="border border-black h-4 w-13"></div>
+        <div class="border border-black h-4 w-14"></div>
+        <div class="border border-black h-4 w-15"></div>
+        <div class="border border-black h-4 w-16"></div>
+        <div class="border border-black h-4 w-17"></div>
+        <div class="border border-black h-4 w-18"></div>
+        <div class="border border-black h-4 w-19"></div>
+        <div class="border border-black h-4 w-20"></div>
       </div>
+- title: Fractional values
+  body:
+  - type: text
+    content: When specifying width as a fraction the element's width is a percentage
+      of its parent's width.
+    output: ~
+  - type: code
+    content: |-
+      div() %>%
+        margin(b = 3) %>%
+        background("red") %>%
+        height(5) %>%
+        width("1/3")  # <-
+    output: <div class="mb-3 bg-red h-5 w-1/3"></div>
+rdname: width
+sections: []
 layout: doc
 ---

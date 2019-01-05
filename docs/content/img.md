@@ -20,5 +20,7 @@ parameters:
     to the parent element.
 family: content
 export: ''
+rdname: img
+sections: []
 layout: doc
 ---

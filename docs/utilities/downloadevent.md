@@ -23,7 +23,7 @@ parameters:
 - name: domain
   description: |-
     A shiny session object, defaults to
-    [getDefaultReactiveDomain()].
+    [getDefaultReactiveDomain()](/getDefaultReactiveDomain.html).
 sections:
 - title: Downloading a file
   body: |-
@@ -48,5 +48,6 @@ sections:
     ```
 family: utilities
 export: ''
+rdname: downloadEvent
 layout: doc
 ---

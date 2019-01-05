@@ -38,5 +38,7 @@ details: |-
   If specifying new values with `values`, both `choices` and `selected` need to
   refer to these new values.
 export: ''
+rdname: updateInput
+sections: []
 layout: doc
 ---

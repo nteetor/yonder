@@ -19,9 +19,10 @@ parameters:
 family: inputs
 export: ''
 examples:
-- title: '## Default input'
+- title: Default input
   body:
-  - code: |-
+  - type: code
+    content: |-
       buttonGroupInput(
         id = NULL,
         labels = c("Once", "Twice", "Thrice"),
@@ -33,9 +34,10 @@ examples:
         <button type="button" class="btn btn-grey" value="2">Twice</button>
         <button type="button" class="btn btn-grey" value="3">Thrice</button>
       </div>
-- title: '## Styling the button group'
+- title: Styling the button group
   body:
-  - code: |-
+  - type: code
+    content: |-
       buttonGroupInput(
         id = NULL,
         labels = c("Button 1", "Button 2", "Button 3")
@@ -48,5 +50,7 @@ examples:
         <button type="button" class="btn btn-blue" value="Button 2">Button 2</button>
         <button type="button" class="btn btn-blue" value="Button 3">Button 3</button>
       </div>
+rdname: buttonGroupInput
+sections: []
 layout: doc
 ---

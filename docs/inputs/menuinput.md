@@ -34,9 +34,10 @@ parameters:
 family: inputs
 export: ''
 examples:
-- title: '## A simple menu'
+- title: A simple menu
   body:
-  - code: |-
+  - type: code
+    content: |-
       menuInput(
         id = "menu1",
         label = "Menu",
@@ -55,9 +56,10 @@ examples:
           <button class="dropdown-item" type="button" value="Choice 3">Choice 3</button>
         </div>
       </div>
-- title: '## Use in navigation'
+- title: Use in navigation
   body:
-  - code: |-
+  - type: code
+    content: |-
       navInput(
         id = "nav1",
         choices = list(
@@ -96,5 +98,7 @@ examples:
           <button class="nav-link btn btn-link" value="tab4">Tab 4</button>
         </li>
       </ul>
+rdname: menuInput
+sections: []
 layout: doc
 ---

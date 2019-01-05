@@ -28,7 +28,7 @@ parameters:
     the card, defaults to `NULL`, in which case a subtitle is not added.
 - name: image
   description: |-
-    An [img()] element specifying an image to add to the card,
+    An [img()](/content/img.html) element specifying an image to add to the card,
     defaults to `NULL`, in which case an image is not added.
 - name: footer
   description: |-
@@ -37,9 +37,10 @@ parameters:
 family: content
 export: ''
 examples:
-- title: '## A simple card'
+- title: A simple card
   body:
-  - code: |-
+  - type: code
+    content: |-
       column(
         width = 4,
         card("Praesent fermentum tempor tellus.")
@@ -52,9 +53,10 @@ examples:
           </div>
         </div>
       </div>
-- title: '## Adding a title, subtitle'
+- title: Adding a title, subtitle
   body:
-  - code: |-
+  - type: code
+    content: |-
       column(
         width = 4,
         card(
@@ -75,9 +77,10 @@ examples:
           </div>
         </div>
       </div>
-- title: '## Styling cards'
+- title: Styling cards
   body:
-  - code: |-
+  - type: code
+    content: |-
       deck(
         card(
           header = div("Donec pretium posuere tellus") %>%
@@ -125,9 +128,10 @@ examples:
           <div class="card-footer">Nam euismod tellus id erat.</div>
         </div>
       </div>
-- title: '## Cards with list groups'
+- title: Cards with list groups
   body:
-  - code: |-
+  - type: code
+    content: |-
       column(
         width = 4,
         card(
@@ -157,9 +161,10 @@ examples:
           </div>
         </div>
       </div>
-- title: '## Tabbed content in cards'
+- title: Tabbed content in cards
   body:
-  - code: |-
+  - type: code
+    content: |-
       card(
         header = navInput(
           id = "tabs",
@@ -212,9 +217,10 @@ examples:
           </div>
         </div>
       </div>
-- title: '## Deck of cards'
+- title: Deck of cards
   body:
-  - code: |-
+  - type: code
+    content: |-
       deck(
         card(
           title = "Nullam tristique",
@@ -262,5 +268,7 @@ examples:
           <div class="card-footer">Cras placerat accumsan nulla.</div>
         </div>
       </div>
+rdname: deck
+sections: []
 layout: doc
 ---

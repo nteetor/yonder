@@ -32,7 +32,7 @@ to \code{NULL}.}
 \description{
 The \code{font()} utility modifies the color, size, weight, case, or alignment of
 a tag element's text. All arguments default to \code{NULL}, in which case they are
-ignored.  For example, \code{font(size = "lg")} increases font size without
+ignored.  For example, \code{font(.., size = "lg")} increases font size without
 affecting color, weight, case, or alignment.
 }
 \examples{
@@ -51,23 +51,27 @@ card(
 ### Changing font size
 
 div(
-  p("Donec at pede.") \%>\%
+  p("Extra small") \%>\%
     font(size = "xs"),
-  p("Donec at pede.") \%>\%
+  p("Small") \%>\%
     font(size = "sm"),
-  p("Donec at pede.") \%>\%
+  p("Medium") \%>\%
     font(size = "base"),
-  p("Donec at pede.") \%>\%
+  p("Large") \%>\%
     font(size = "lg"),
-  p("Donec at pede.") \%>\%
+  p("Extra large") \%>\%
     font(size = "xl")
 )
 
 ### Changing font weight
 
+# Make an element's text bold, italic, light, or monospace.
+
 p("Curabitur lacinia pulvinar nibh.") \%>\%
   font(weight = "bold")
 
+p("Proin quam nisl, tincidunt et.") \%>\%
+  font(weight = "light")
 
 }
 \seealso{

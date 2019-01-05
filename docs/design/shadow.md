@@ -17,9 +17,10 @@ parameters:
 family: design
 export: ''
 examples:
-- title: '## Styling a navbar'
+- title: Styling a navbar
   body:
-  - code: |-
+  - type: code
+    content: |-
       div(
         navbar(brand = "Navbar") %>%
           background("cyan") %>%
@@ -34,17 +35,18 @@ examples:
       )
     output: "<div>\n  <nav class=\"navbar navbar-expand-lg navbar-light bg-cyan shadow-sm
       mb-3\">\n    <a class=\"navbar-brand\" href=\"#\">Navbar</a>\n    <button class=\"navbar-toggler\"
-      type=\"button\" data-toggle=\"collapse\" data-target=\"#navContent-496-360\"
-      aria-controls=\"navContent-496-360\" aria-expanded=\"false\" aria-label=\"Toggle
+      type=\"button\" data-toggle=\"collapse\" data-target=\"#navContent-932-898\"
+      aria-controls=\"navContent-932-898\" aria-expanded=\"false\" aria-label=\"Toggle
       navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n
-      \   <div class=\"collapse navbar-collapse\" id=\"navContent-496-360\"></div>\n
+      \   <div class=\"collapse navbar-collapse\" id=\"navContent-932-898\"></div>\n
       \ </nav>\n  <p>\n    Cras mattis consectetur purus sit amet fermentum. Donec
       sed \n    odio dui. Lorem ipsum dolor sit amet, consectetur adipiscing \n    elit.
       Aenean eu leo quam. Pellentesque ornare sem lacinia quam \n    venenatis vestibulum.\n
       \ </p>\n</div>"
-- title: '## Different shadows'
+- title: Different shadows
   body:
-  - code: |-
+  - type: code
+    content: |-
       div(
         lapply(
           c("small", "regular", "large"),
@@ -61,5 +63,7 @@ examples:
         <div class="p-5 m-2 shadow"></div>
         <div class="p-5 m-2 shadow-lg"></div>
       </div>
+rdname: shadow
+sections: []
 layout: doc
 ---

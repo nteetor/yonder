@@ -27,7 +27,7 @@ parameters:
     One of `TRUE` or `FALSE` specifying if the list group is
     rendered without an outside border, defaults to `FALSE`. Removing the list
     group border is useful when rendering a list group inside a custom parent
-    container, e.g. inside a [card()].
+    container, e.g. inside a [card()](/content/card.html).
 - name: id
   description: A character string specifying the reactive id of the input.
 - name: '...'
@@ -151,13 +151,13 @@ sections:
 family: inputs
 export: ''
 examples:
-- title: '## A simple list group'
+- title: A simple list group
   body:
-  - code: ''
-    output: []
-- title: This list group is not actionable as `id` is `NULL`.
-  body:
-  - code: |-
+  - type: text
+    content: This list group is not actionable as `id` is `NULL`.
+    output: ~
+  - type: code
+    content: |-
       listGroupInput(
         id = NULL,
         choices = paste("Item", 1:5)
@@ -170,13 +170,13 @@ examples:
         <li class="list-group-item" data-value="Item 4">Item 4</li>
         <li class="list-group-item" data-value="Item 5">Item 5</li>
       </ul>
-- title: '# An actionable list group'
+- title: An actionable list group
   body:
-  - code: ''
-    output: []
-- title: In this example we specify an `id` thus creating an actionable list group.
-  body:
-  - code: |-
+  - type: text
+    content: In this example we specify an `id` thus creating an actionable list group.
+    output: ~
+  - type: code
+    content: |-
       listGroupInput(
         id = "list1",
         choices = paste("Item", 1:5)
@@ -189,9 +189,10 @@ examples:
         <a class="list-group-item list-group-item-action" data-value="Item 4">Item 4</a>
         <a class="list-group-item list-group-item-action" data-value="Item 5">Item 5</a>
       </div>
-- title: '# List group within a card'
+- title: List group within a card
   body:
-  - code: |-
+  - type: code
+    content: |-
       card(
         header = h6("Pick an item"),
         listGroupInput(
@@ -211,5 +212,6 @@ examples:
           <a class="list-group-item list-group-item-action" data-value="Item 5">Item 5</a>
         </div>
       </div>
+rdname: listGroupInput
 layout: doc
 ---

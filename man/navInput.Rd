@@ -74,6 +74,7 @@ navInput(
     "Tab 2",
     "Tab 3"
   ),
+  selected = "Tab 1",
   appearance = "tabs"
 )
 
@@ -82,6 +83,7 @@ navInput(
 navInput(
   id = "tabs2",
   choices = paste("Tab", 1:3),
+  selected = "Tab 1",
   appearance = "pills"
 )
 

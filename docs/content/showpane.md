@@ -16,7 +16,7 @@ parameters:
 - name: id
   description: A character string specifying the id of the nav pane.
 - name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()].
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](/getDefaultReactiveDomain.html).
 sections:
 - title: App with pills
   body: |-
@@ -188,8 +188,12 @@ sections:
 family: content
 export: ''
 examples:
-- title: Please see the sample applications above for examples demoing `showPane()`
-    and `afterPane()`.
-  body: []
+- title: Examples
+  body:
+  - type: text
+    content: Because these are server-side utilities please see the example applications
+      above.
+    output: ~
+rdname: showPane
 layout: doc
 ---

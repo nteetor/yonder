@@ -31,7 +31,7 @@ parameters:
     Additional named arguments passed as HTML attributes to the
     parent element.
 - name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()].
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](/getDefaultReactiveDomain.html).
 sections:
 - title: Example application
   body: |-
@@ -65,9 +65,10 @@ sections:
 family: content
 export: ''
 examples:
-- title: '## Simple modal'
+- title: Simple modal
   body:
-  - code: |-
+  - type: code
+    content: |-
       modal(
         title = "Title",
         body = "Cras placerat accumsan nulla.",
@@ -92,9 +93,10 @@ examples:
           </div>
         </div>
       </div>
-- title: '## Modal with container body'
+- title: Modal with container body
   body:
-  - code: |-
+  - type: code
+    content: |-
       modal(
         size = "large",
         title = "More complex",
@@ -132,5 +134,6 @@ examples:
           </div>
         </div>
       </div>
+rdname: closeModal
 layout: doc
 ---

@@ -28,5 +28,5 @@ If your application needs to dynamically render elements consider using
 These functions are experimental and are subject to change. Additionally, they
 may be moved from this package entirely.
 }
-\concept{ui rendering}
+\concept{rendering}
 \keyword{internal}

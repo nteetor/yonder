@@ -35,7 +35,7 @@ ignored.
 
 # In most modern browsers you want to horizontally center a tag element using
 # the flex layout. Alternatively, you can horizontally center an element
-# using `margin(<TAG>, right = "auto", left = "auto")`.
+# using `margin(.., right = "auto", left = "auto")`.
 
 div(
   "Nam a sapien. Integer placerat tristique nisl.",
@@ -43,12 +43,12 @@ div(
 ) \%>\%
   margin(top = 2, r = "auto", b = 2, l = "auto") \%>\%  # <-
   padding(3) \%>\%
-  background("amber")
+  background("indigo")
 
 ### Building an inline form
 
-# Inline form elements automatically use of the flex layout providing you a
-# means of creating condensed sets of inputs. However you may need to adjust
+# Inline form elements automatically use the flex layout providing you a
+# means of creating condensed sets of inputs. However, you may need to adjust
 # the spacing of the form's child elements.
 
 # Here is an inline form without any additional spacing applied.
@@ -71,8 +71,9 @@ formInput(
   )
 )
 
-# Not great. But, with some styling we can make this form sparkle. Notice
-# we are also adjusting the default submit button added to the form input.
+# Without any adjustments the layout is not great. But, with some styling we
+# can make this form sparkle. Notice we are also adjusting the default submit
+# button added to the form input.
 
 formInput(
   id = "login2",

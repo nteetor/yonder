@@ -31,9 +31,10 @@ parameters:
 family: design
 export: ''
 examples:
-- title: '## Numeric values'
+- title: Numeric values
   body:
-  - code: |-
+  - type: code
+    content: |-
       div(
         lapply(
           seq(2, 20, by = 2),
@@ -61,5 +62,7 @@ examples:
         <div class="w-2 h-18 pl-1 border border-black">18</div>
         <div class="w-2 h-20 pl-1 border border-black">20</div>
       </div>
+rdname: height
+sections: []
 layout: doc
 ---

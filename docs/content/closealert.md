@@ -29,7 +29,7 @@ parameters:
     is triggered, `input[[action]]` is set to `TRUE`. When the alert is removed
     `input[[action]]` is reset to `NULL`.
 - name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()].
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](/getDefaultReactiveDomain.html).
 sections:
 - title: Displaying an alert
   body: |-
@@ -136,13 +136,15 @@ sections:
 family: content
 export: ''
 examples:
-- title: '## Default alert'
+- title: Default alert
   body:
-  - code: alert("Donec at pede.")
+  - type: code
+    content: alert("Donec at pede.")
     output: <div class="alert alert-grey fade show" role="alert">Donec at pede.</div>
-- title: '## Adding more'
+- title: Adding more
   body:
-  - code: |-
+  - type: code
+    content: |-
       alert(
         p("Etiam vel tortor sodales"),
         hr(),
@@ -156,5 +158,6 @@ examples:
         <hr/>
         <p class="mb-0">Fusce commodo.</p>
       </div>
+rdname: closeAlert
 layout: doc
 ---

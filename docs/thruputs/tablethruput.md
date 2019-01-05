@@ -51,6 +51,7 @@ parameters:
 sections:
 - title: Example application
   body: |-
+    ```R
     shinyApp(
       ui = container(
         tableThruput(id = "tableExample", responsive = TRUE)
@@ -61,25 +62,31 @@ sections:
         })
       }
     )
+    ```
 family: thruputs
 export: ''
 examples:
-- title: '## Responsive tables'
+- title: Responsive tables
   body:
-  - code: ''
-    output: []
-- title: In practice you will use `renderTable()` to update the data in a table. These
-    live examples have been populated automatically for the sake of the demo.
-  body:
-  - code: |-
+  - type: text
+    content: In practice you will use `renderTable()` to update the data in a table.
+      These live examples have been populated automatically for the sake of the demo.
+    output: ~
+  - type: literal
+    content: '<script> $(function() {   $(".yonder-table").each(function() {     $(this).table({
+      data: iris });   }); }); </script>'
+    output: ~
+  - type: code
+    content: |-
       tableThruput(
         id = "table1",  # <-
         responsive = TRUE
       )
     output: <table class="yonder-table table" id="table1" data-responsive="true" data-editable="false"></table>
-- title: '## Borders on rows and columns'
+- title: Borders on rows and columns
   body:
-  - code: |-
+  - type: code
+    content: |-
       tableThruput(
         id = "table2",
         borders = "all",  # <-
@@ -87,14 +94,16 @@ examples:
       )
     output: <table class="yonder-table table table-bordered" id="table2" data-responsive="true"
       data-editable="false"></table>
-- title: '## Edit table values'
+- title: Edit table values
   body:
-  - code: |-
+  - type: code
+    content: |-
       tableThruput(
         id = "table3",
         editable = TRUE,  # <-
         responsive = TRUE
       )
     output: <table class="yonder-table table" id="table3" data-responsive="true" data-editable="true"></table>
+rdname: tableThruput
 layout: doc
 ---

@@ -10,11 +10,11 @@ parameters:
 - name: left,right
   description: |-
     A character string or button element placed prepended or
-      appended respectively to the file input. For more information refer to
-      [groupInput()].
+    appended respectively to the file input. For more information refer to
+    [groupInput()](/inputs/groupInput.html).
 
-      Clicking on an element specified by `right` also opens the file input
-      dialog.
+    Clicking on an element specified by `right` also opens the file input
+    dialog.
 - name: multiple
   description: |-
     One of `TRUE` or `FALSE` specifying whether or not the user
@@ -53,9 +53,10 @@ sections:
 family: inputs
 export: ''
 examples:
-- title: '# Standard file input'
+- title: Standard file input
   body:
-  - code: fileInput(id = NULL)
+  - type: code
+    content: fileInput(id = NULL)
     output: |-
       <div class="yonder-file input-group">
         <div class="custom-file">
@@ -67,9 +68,10 @@ examples:
           <span class="input-group-text">Browse</span>
         </div>
       </div>
-- title: '# Adding another button'
+- title: Adding another button
   body:
-  - code: |-
+  - type: code
+    content: |-
       fileInput(
         id = NULL,
         left = buttonInput(NULL, "Upload") %>%
@@ -91,5 +93,6 @@ examples:
           <span class="input-group-text">Browse</span>
         </div>
       </div>
+rdname: fileInput
 layout: doc
 ---

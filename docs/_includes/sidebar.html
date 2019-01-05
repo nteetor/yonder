@@ -1,16 +1,26 @@
-<div class="sidebar">
+<div class="sidebar pr-4">
   <dl>
     {% assign this = page %}
     {% assign families = site.pages | group_by: "dir" %}
     {% for family in families %}
-    <dt>
-      <a href="{{ family.items.first.url }}"
-        >{{ family.name | url_decode | replace_regex: '/$', '' }}</a>
+
+    {% if family.name == "/assets/css/" %}
+    {% continue %}
+    {% endif %}
+
+    <dt {% if this.dir == family.items.first.dir and forloop.first != true %}
+        class = "mt-3"
+        {% endif %}>
+      <a class="text-dark"
+         href="{{ family.items.first.url }}"
+         >{{ family.name | url_decode | replace_regex: '/', '' | capitalize }}</a>
     </dt>
     {% if this.dir == family.items.first.dir %}
     {% for item in family.items %}
-    <dd class="mb-1">
-      <a href={{ item.url }}>{{ item.name | replace_regex: '.md$', '' }}</a>
+    <dd class="{% if forloop.last == true %}mb-3{% else %}mb-1{% endif %}">
+      <a class="text-muted"
+         href={{ item.url }}
+         >{{ item.rdname }}</a>
     </dd>
     {% endfor %}
     {% endif %}

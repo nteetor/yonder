@@ -21,7 +21,7 @@ parameters:
   description: |-
     A submit button or tags containing a submit button. The submit
     button will trigger the update of input form elements. Defaults to
-    [submitInput()].
+    [submitInput()](/inputs/submitInput.html).
 - name: inline
   description: |-
     One of `TRUE` or `FALSE`, if `TRUE` the form and its child
@@ -69,9 +69,10 @@ sections:
 family: inputs
 export: ''
 examples:
-- title: '## Customizing the submit button'
+- title: Customizing the submit button
   body:
-  - code: |-
+  - type: code
+    content: |-
       card(
         header = "Please pick a flavor",
         formInput(
@@ -101,16 +102,16 @@ examples:
               <label>Ice creams</label>
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-132-215" name="flavorChoice" value="Mint" checked/>
-                  <label class="custom-control-label" for="radio-132-215">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-188-244" name="flavorChoice" value="Mint" checked/>
+                  <label class="custom-control-label" for="radio-188-244">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-942-322" name="flavorChoice" value="Moose tracks"/>
-                  <label class="custom-control-label" for="radio-942-322">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-128-785" name="flavorChoice" value="Moose tracks"/>
+                  <label class="custom-control-label" for="radio-128-785">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-331-417" name="flavorChoice" value="Marble"/>
-                  <label class="custom-control-label" for="radio-331-417">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-826-702" name="flavorChoice" value="Marble"/>
+                  <label class="custom-control-label" for="radio-826-702">Marble</label>
                 </div>
                 <div class="invalid-feedback"></div>
               </div>
@@ -119,5 +120,6 @@ examples:
           </form>
         </div>
       </div>
+rdname: formInput
 layout: doc
 ---

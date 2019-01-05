@@ -28,7 +28,8 @@ div(
     p
   )
 ) \%>\%
-  height(50) \%>\%
+  height(20) \%>\%
+  border() \%>\%
   scroll()
 
 }

@@ -22,61 +22,70 @@ parameters:
 family: inputs
 export: ''
 examples:
-- title: '## Basic text'
+- title: Basic text
   body:
-  - code: textInput(id = "text")
+  - type: code
+    content: textInput(id = "text")
     output: |-
       <div class="yonder-textual" id="text">
         <input class="form-control" type="text"/>
         <div class="invalid-feedback"></div>
       </div>
-- title: '## Search'
+- title: Search
   body:
-  - code: searchInput(id = "search")
+  - type: code
+    content: searchInput(id = "search")
     output: |-
       <div class="yonder-textual" id="search">
         <input class="form-control" type="search"/>
         <div class="invalid-feedback"></div>
       </div>
-- title: '## Email'
+- title: Email
   body:
-  - code: emailInput(id = "email")
+  - type: code
+    content: emailInput(id = "email")
     output: |-
       <div class="yonder-textual" id="email">
         <input class="form-control" type="email"/>
         <div class="invalid-feedback"></div>
       </div>
-- title: '## URLs'
+- title: URLs
   body:
-  - code: urlInput(id = "url")
+  - type: code
+    content: urlInput(id = "url")
     output: |-
       <div class="yonder-textual" id="url">
         <input class="form-control" type="url"/>
         <div class="invalid-feedback"></div>
       </div>
-- title: '## Telephone numbers'
+- title: Telephone numbers
   body:
-  - code: telephoneInput(id = "tele")
+  - type: code
+    content: telephoneInput(id = "tele")
     output: |-
       <div class="yonder-textual" id="tele">
         <input class="form-control" type="tel"/>
         <div class="invalid-feedback"></div>
       </div>
-- title: '## Passwords'
+- title: Passwords
   body:
-  - code: passwordInput(id = "password")
+  - type: code
+    content: passwordInput(id = "password")
     output: |-
       <div class="yonder-textual" id="password">
         <input class="form-control" type="password"/>
         <div class="invalid-feedback"></div>
       </div>
-- title: '## Numbers'
+- title: Numbers
   body:
-  - code: numberInput(id = "num")
+  - type: code
+    content: numberInput(id = "num")
     output: |-
       <div class="yonder-textual" id="num">
         <input class="form-control" type="number"/>
         <div class="invalid-feedback"></div>
       </div>
+rdname: textInput
+sections: []
 layout: doc
 ---
