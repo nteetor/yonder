@@ -5,15 +5,15 @@ A reactive web framework built on [shiny](https://github.com/rstudio/shiny).
 ## Introduction
 
 yonder is designed to make building pragmatic applications fun and rewarding. On
-the UI side yonder features Font Awesome 5, aftertheflood's Spark font,
-flatpickr calendar widgets, refreshed IonRange sliders, and Bootstrap 4. On the
-server side yonder includes tools for showing alerts and toasts, displaying
-modal and popovers, validating and freezing input values, and more!
+the UI side yonder features refreshed IonRange sliders, new reactive inputs such as
+`navInput()` and `dropdownInput()`, and Bootstrap 4.2. On the server side yonder
+includes tools for showing alerts and toasts, displaying modal and popovers,
+validating and freezing input values, hiding and showing panes of content, and more!
 
 ## Examples
 
 For examples of inputs and elements built using yonder please check out
-the documentation, https://nteetor.github.io/yonder/0.0.5/inputs/. 
+the documentation, https://nteetor.github.io/yonder/.
 
 ## Installation
 
