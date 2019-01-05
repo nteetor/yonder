@@ -1,4 +1,7 @@
 export function yonderInputBinding() {
+  this.Selector = {};
+  this.Events = [];
+
   this.find = function(scope) {
     return scope.querySelectorAll(`${ this.Selector.SELF }[id]`);
   };
@@ -8,221 +11,165 @@ export function yonderInputBinding() {
   };
 
   this.getType = function(el) {
-    return this.Type ? this.Type : false;
+    return this.Type || false;
   };
 
-  // may not be worth it to have this method already created
   this.getValue = function(el) {
-    if (!this.hasSelector("SELECTED")) {
+    if (!this.Selector.hasOwnProperty("SELECTED")) {
       return null;
     }
 
-    let values = $(el).find(`${ this.Selector.SELECTED }`)
-        .map((i, e) => {
-          let $e = $(e);
+    let selected = Array.prototype.slice.call(el.querySelectorAll(this.Selector.SELECTED));
 
-          if ($e.is("[data-value]")) {
-            return $e.data("value");
-          }
+    if (!selected.length) {
+      return null;
+    }
 
-          if ($e.is("input")) {
-            return $e.val();
-          }
+    return selected.map(s => {
+      let value = s.getAttribute("data-value") || s.value;
+      return value === undefined ? null : value;
+    });
+  };
 
-          return $e.text();
-        })
-        .get();
+  this.getState = function(el, data) {
+    return { value: this.getValue(el) };
+  };
 
-    return values === undefined ? null : values;
+  this.attachHandler = function(el, type, selector, handler, callback, debounce) {
+    $(el).on(`${ type }.yonder`, (selector || null), (e) => {
+      if (handler) {
+        handler(el, e, this);
+      }
+
+      if (callback) {
+        callback(debounce || false);
+      }
+    });
   };
 
   this.subscribe = function(el, callback) {
-    if (this.isFormElement(el)) {
-      $(el).closest(".yonder-form[id]").on("submit", e => callback());
-      return;
+    let $el = $(el);
+
+    let formElement = false;
+    if ($el.parent().closest(".yonder-form[id]").length) {
+      $el.on("submission.yonder", e => callback());
+      formElement = true;
     }
 
-    if (this.Events === undefined || !this.Events.length) {
-      return;
-    }
-
-    for (const event of (this.Events || [])) {
-      $(el).on(`${ event.type }.yonder`, (event.selector || null), (e) => {
-        if (event.callback) {
-          if (event.callback(el, event.selector && e.target || undefined, this) === false) {
-            return;
-          }
-        }
-        callback(event.debounce || false);
-      });
-    }
+    this.Events.forEach(event => {
+      this.attachHandler(
+        el,
+        event.type, event.selector, event.callback,
+        formElement ? null : callback, event.debounce
+      );
+    });
   };
 
   this.unsubscribe = function(el) {
     $(el).off("yonder");
   };
 
-  this.updateChoices = function(el, map) {
-    if (!this.hasSelector("VALUE") || !this.hasSelector("LABEL")) {
-      return;
-    }
-
-    if (this.Selector.VALUE === this.Selector.SELF) {
-      let value = map[$(el).data("value")];
-
-      if (value !== undefined) {
-        $(el).html(value);
-      }
-
-      return;
-    }
-
-    let $inputs = $(el).find(`${ this.Selector.VALUE }`);
-    let $labels = $(el).find(`${ this.Selector.LABEL }`);
-
-    if ($inputs.length != $labels.length) {
-      console.error("updateChoices: mismatched number of inputs and labels");
-      return;
-    }
-
-    $inputs.each((index, input) => {
-      let $input = $(input);
-      let $label = $($labels.get(index));
-
-      let value = map[$input.data("value")];
-
-      if (value !== undefined) {
-        $label.html(value);
-      }
-    });
+  this._update = (el, data) => {
+    console.warn("no _update method");
   };
 
-  this.updateValues = function(el, map) {
-    if (!this.hasSelector("VALUE")) {
-      return;
-    }
-
-    if (typeof map == "string" || Array.isArray(map)) {
-      let $inputs = $(el).find(`${ this.Selector.VALUE }`);
-      let value = typeof map == "string" ? [map] : map;
-
-      if ($inputs.has(":not(input[type='text'])").length) {
-        console.error("updateValues: expecting all inputs to be text if new values are unnamed");
-        return;
-      }
-
-      if ($inputs.length != value.length) {
-        console.error("updateValues: mismatched number of inputs and values");
-        return;
-      }
-
-      $inputs.each((index, input) => {
-        let $input = $(input);
-        $input.val(value[index]);
-        $input.trigger("change");
-      });
-
-      return;
-    }
-
-    if (this.Selector.VALUE === this.Selector.SELF) {
-      let value = map[$input.data("value")];
-
-      if (value !== undefined) {
-        $input.data("value", value);
-      }
-
-      return;
-    }
-
-    let $inputs = $(el).find(`${ this.Selector.VALUE }`);
-
-    $inputs.each((index, input) => {
-      let $input = $(input);
-
-      let value = map[$input.data("value")];
-
-      if (value !== undefined) {
-        $input.data("value", value);
-      }
-    });
+  this._enable = (el, data) => {
+    console.warn("no _enable method");
   };
 
-  this.markValid = function(el, data) {
-    if (!this.hasSelector("VALIDATE")) {
+  this._disable = (el, data) => {
+    console.warn("no _disable method");
+  };
+
+  this._invalidate = function(el, data) {
+    if (!this.Selector.hasOwnProperty("VALIDATE")) {
+      console.warn("input does not support invalidation");
       return;
     }
 
-    let $input = $(el).find(this.Selector.VALIDATE);
-    $input.removeClass("is-invalid").addClass("is-valid");
-    let $feedback = $(el).find(".valid-feedback");
-    if ($feedback.length) {
-      $feedback.text(data.msg);
+    let input = el.querySelector(this.Selector.VALIDATE);
+
+    input.classList.remove("is-valid");
+    input.classList.add("is-invalid");
+
+    let feedback = el.querySelector(".invalid-feedback");
+    if (feedback !== null) {
+      feedback.innerHTML = data.message;
     }
   };
 
-  this.markInvalid = function(el, data) {
-    if (!this.hasSelector("VALIDATE")) {
+  this._validate = function(el, data) {
+    if (!this.Selector.hasOwnProperty("VALIDATE")) {
+      console.warn("input does not support validation");
       return;
     }
 
-    let $input = $(el).find(this.Selector.VALIDATE);
-    $input.removeClass("is-valid").addClass("is-invalid");
-    let $feedback = $(el).find(".invalid-feedback");
-    if ($feedback.length) {
-      $feedback.text(data.msg);
+    let input = el.querySelector(this.Selector.VALIDATE);
+
+    input.classList.remove("is-invalid");
+
+    let feedback = el.querySelector(".invalid-feedback");
+    if (feedback !== null) {
+      feedback.innerHTML = "";
     }
   };
 
   this.receiveMessage = function(el, msg) {
-    if (!msg.type) {
-      return;
+    if (!msg.type || msg.data === undefined) {
+      return false;
     }
 
-    let [action, type = null] = msg.type.split(":");
+    switch (msg.type) {
+    case "update":
+      let values = msg.data.values;
+      let choices = msg.data.choices;
+      let selected = msg.data.selected;
 
-    if (action === "update") {
-      if (!type || msg.data === undefined) {
-        return;
+      if (values || choices || selected) {
+        this._clear(el);
       }
 
-      if (type === "choices") {
-        this.updateChoices(el, msg.data);
+      if (values) {
+        values.forEach(([value, current], i) => {
+          this._value(el, value, current, i);
+        });
       }
 
-      if (type === "values") {
-        this.updateValues(el, msg.data);
+      if (choices) {
+        choices.forEach(([value, current], i) => {
+          this._choice(el, value, current, i);
+        });
       }
 
-      return;
+      if (selected) {
+        selected.forEach(value => {
+          this._select(el, value);
+        });
+      }
+
+      break;
+
+    case "enable":
+      this._enable(el, msg.data);
+      break;
+
+    case "disable":
+      this._disable(el, msg.data);
+      break;
+
+    case "invalidate":
+      this._invalidate(el, msg.data);
+      break;
+
+    case "validate":
+      this._validate(el, msg.data);
+      break;
     }
 
-    if (action === "mark") {
-      if (!type) {
-        return;
-      }
-
-      if (type === "valid") {
-        this.markValid(el, msg.data);
-      }
-
-      if (type === "invalid") {
-        this.markInvalid(el, msg.data);
-      }
-
-      return;
-    }
-  };
-
-  this.hasSelector = function(key) {
-    return this.Selector !== undefined && this.Selector[key] !== undefined;
-  };
-
-  this.isFormElement = function(el) {
-    return $(el).parents(".yonder-form[id]").length > 0;
+    return false;
   };
 }
 
-if (Shiny !== undefined) {
+if (Shiny) {
   yonderInputBinding.call(Shiny.InputBinding.prototype);
 }

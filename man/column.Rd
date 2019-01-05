@@ -60,9 +60,26 @@ container(
 container(
   row(
     column(
-      width = 4
+      width = 4,
+      card(
+        title = "Sidebar",
+        formGroup(
+          label = "Control 1",
+          selectInput("control1", "...")
+        ),
+        formGroup(
+          label = "Control 2",
+          selectInput("control2", "...")
+        ),
+        formGroup(
+          label = "Control 3",
+          selectInput("control3", "...")
+        )
+      )
     ),
-    column()
+    column(
+      d4("Main panel")
+    )
   )
 )
 
@@ -93,10 +110,12 @@ container(
 container(
   row(
     column(
-      width = c(sm = 4)
+      width = c(sm = 4),
+      "Aenean in sem ac leo mollis blandit."
     ),
     column(
-      width = c(sm = 8)
+      width = c(sm = 8),
+      "Nulla posuere. In id erat non orci commodo lobortis."
     )
   )
 )
@@ -108,7 +127,7 @@ container(
     column(),
     column(
       width = "auto",
-      "Cras placerat accumsan nulla.  Aenean in sem ac leo mollis blandit."
+      "Cras placerat accumsan nulla. Aenean in sem ac leo mollis blandit."
     ),
     column()
   )

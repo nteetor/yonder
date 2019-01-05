@@ -4,25 +4,24 @@
 \alias{groupInput}
 \title{Group inputs, combination button, dropdown, and text input}
 \usage{
-groupInput(id, placeholder = NULL, value = NULL, left = NULL,
+groupInput(id, value = NULL, placeholder = NULL, left = NULL,
   right = NULL, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the group input.}
-
-\item{placeholder}{A character string specifying placeholder text for the
-input group, defaults to \code{NULL}.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{value}{A character string specifying an initial value for the input
 group, defaults to \code{NULL}.}
+
+\item{placeholder}{A character string specifying placeholder text for the
+input group, defaults to \code{NULL}.}
 
 \item{left, right}{A character vector specifying static addons or
 \code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons.
 Addon's affect the reactive value of the group input, see the Details
 section below for more information.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 }
 \description{
 A group input is a combination reactive input which may consist of one or two
@@ -65,7 +64,7 @@ dropdown input value, the value of the text input, and any static addons.
 # This input will always append a "@".
 
 groupInput(
-  id = NULL,
+  id = "group1",
   left = "@",
   placeholder = "Username"
 )
@@ -73,7 +72,7 @@ groupInput(
 ### Text input and button combo
 
 groupInput(
-  id = NULL,
+  id = "group2",,
   placeholder = "Search terms",
   right = buttonInput(
     id = "button",
@@ -85,14 +84,14 @@ groupInput(
 ### Combination addon
 
 groupInput(
-  id = NULL,
+  id = "group3",
   left = c("$", "0.")
 )
 
 ### Two addons
 
 groupInput(
-  id = NULL,
+  id = "group4",
   left = "@",
   placeholder = "Username",
   right = buttonInput(
@@ -105,11 +104,10 @@ groupInput(
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
-  \code{\link{buttonGroupInput}},
+Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{dateInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{loginInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}

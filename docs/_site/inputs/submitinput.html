@@ -1,0 +1,541 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>yonder - submitInput</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+
+  
+  
+  <script src="/assets/js/jquery.min.js" type="text/javascript"></script>
+  
+  
+  
+  <script src="/assets/js/popper.min.js" type="text/javascript"></script>
+  
+  
+  
+  <link rel="stylesheet" href="/assets/css/bootstrap.min.css">
+  
+  
+  
+  <script src="/assets/js/bootstrap.min.js" type="text/javascript"></script>
+  
+  
+  
+  <link rel="stylesheet" href="/assets/css/chabudai.min.css">
+  
+  
+  
+  <script src="/assets/js/chabudai.min.js" type="text/javascript"></script>
+  
+  
+  
+  <script src="/assets/js/FileSaver.min.js" type="text/javascript"></script>
+  
+  
+  
+  <link rel="stylesheet" href="/assets/css/ion.rangeSlider.css">
+  
+  
+  
+  <link rel="stylesheet" href="/assets/css/ion.rangeSlider.skinFlat.css">
+  
+  
+  
+  <script src="/assets/js/ion.rangeSlider.min.js" type="text/javascript"></script>
+  
+  
+  
+  <script src="/assets/js/velocity.min.js" type="text/javascript"></script>
+  
+  
+  
+  <link rel="stylesheet" href="/assets/css/yonder.min.css">
+  
+  
+  
+  <script src="/assets/js/yonder.js" type="text/javascript"></script>
+  
+  
+  
+  <script src="/assets/js/yonder.min.js" type="text/javascript"></script>
+  
+  
+  
+  <script src="/assets/js/iris-json-1a43713a8838.js" type="text/javascript"></script>
+  
+  
+
+  <link rel="stylesheet" href="/assets/css/main.css">
+</head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <style>
+          .sidebar, .content {
+          height: 100vh;
+          overflow-y: scroll;
+          }
+        </style>
+        <div class="sidebar col col-auto">
+          <div class="sidebar pr-4">
+  <dl>
+    
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href="/design/affix.html"
+         >Design</a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href="/content/alert.html"
+         >Content</a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href="/outputs/badgeoutput.html"
+         >Outputs</a>
+    </dt>
+    
+    
+
+    
+
+    <dt 
+        class = "mt-3"
+        >
+      <a class="text-dark"
+         href="/inputs/buttongroupinput.html"
+         >Inputs</a>
+    </dt>
+    
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/buttongroupinput.html
+         >buttonGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/buttoninput.html
+         >buttonInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/checkbarinput.html
+         >checkbarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/checkboxinput.html
+         >checkboxInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/emailinput.html
+         >emailInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/fileinput.html
+         >fileInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/forminput.html
+         >formInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/groupinput.html
+         >groupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/intervalinput.html
+         >intervalInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/linkinput.html
+         >linkInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/listgroupinput.html
+         >listGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/menuinput.html
+         >menuInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/navinput.html
+         >navInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/numberinput.html
+         >numberInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/passwordinput.html
+         >passwordInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/radiobarinput.html
+         >radiobarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/radioinput.html
+         >radioInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/rangeinput.html
+         >rangeInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/searchinput.html
+         >searchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/selectinput.html
+         >selectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/sliderinput.html
+         >sliderInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/submitinput.html
+         >submitInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/telephoneinput.html
+         >telephoneInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/inputs/textinput.html
+         >textInput</a>
+    </dd>
+    
+    <dd class="mb-3">
+      <a class="text-muted"
+         href=/inputs/urlinput.html
+         >urlInput</a>
+    </dd>
+    
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href="/layout/column.html"
+         >Layout</a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href="/disableinput.html"
+         ></a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href="/utilities/downloadevent.html"
+         >Utilities</a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href="/rendering/elementoutput.html"
+         >Rendering</a>
+    </dt>
+    
+    
+
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href="/thruputs/rendertable.html"
+         >Thruputs</a>
+    </dt>
+    
+    
+  </dl>
+</div>
+
+        </div>
+        <div class="content col">
+          <h2><p>Button and submit inputs</p>
+</h2>
+<p><p>Button inputs are useful as triggers for reactive or observer expressions.
+The reactive value of a button input begins as <code class="highlighter-rouge">NULL</code>, but subsequently is
+the number of clicks.</p>
+
+<p>A submit input is a special type of button used to control form input
+submission. Because of their specific usage, submit inputs do not require an
+<code class="highlighter-rouge">id</code>, but may have a specified <code class="highlighter-rouge">value</code>. Submit inputs will <em>not</em> freeze all
+reactive inputs, see [formInput()].</p>
+</p>
+
+<dl>
+  
+  <dt><p>id</p>
+</dt>
+  <dd><p>A character string specifying the reactive id of the input.</p>
+</dd>
+  
+  <dt><p>…</p>
+</dt>
+  <dd><p>Additional named arguments passed as HTML attributes to the parent element.</p>
+</dd>
+  
+  <dt><p>label</p>
+</dt>
+  <dd><p>A character string specifying the label text on the button
+input.</p>
+</dd>
+  
+  <dt><p>value</p>
+</dt>
+  <dd><p>A character string specifying the value of a submit input,
+defaults to <code class="highlighter-rouge">label</code>. This value is used to distinguish form submission
+types in the case where a form input has multiple submit inputs.</p>
+</dd>
+  
+  <dt><p>block</p>
+</dt>
+  <dd><p>If <code class="highlighter-rouge">TRUE</code>, the input is block-level instead of inline, defaults
+to <code class="highlighter-rouge">FALSE</code>. A block-level element will occupy the entire width of its
+parent element.</p>
+</dd>
+  
+  <dt><p>text</p>
+</dt>
+  <dd><p>A character string specifying the text displayed as part of the
+link input.</p>
+</dd>
+  
+</dl>
+
+
+
+
+
+<h4><p>Simple vs block button</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">buttonInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Simple"</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+  <div><button class="yonder-button btn btn-grey" type="button" role="button">Simple</button></div>
+  
+  
+  
+  <p><p>Block buttons will fill the width of their parent element</p>
+</p>
+  
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">buttonInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Block"</span><span class="p">,</span><span class="w">
+  </span><span class="n">block</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">background</span><span class="p">(</span><span class="s2">"red"</span><span class="p">)</span></code></pre></figure>
+
+  <div><button class="yonder-button btn btn-block btn-red" type="button" role="button">Block</button></div>
+  
+  
+</div>
+
+
+<h4><p>A submit button</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">submitInput</span><span class="p">()</span></code></pre></figure>
+
+  <div><button class="yonder-submit btn btn-blue" role="button" value="Submit">Submit</button></div>
+  
+  
+  
+  <p><p>Or use custom text to clarify the action taken when clicked by the user.</p>
+</p>
+  
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">submitInput</span><span class="p">(</span><span class="s2">"Place order"</span><span class="p">)</span></code></pre></figure>
+
+  <div><button class="yonder-submit btn btn-blue" role="button" value="Place order">Place order</button></div>
+  
+  
+</div>
+
+
+<h4><p>Possible colors</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">colors</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+  </span><span class="s2">"red"</span><span class="p">,</span><span class="w"> </span><span class="s2">"purple"</span><span class="p">,</span><span class="w"> </span><span class="s2">"indigo"</span><span class="p">,</span><span class="w"> </span><span class="s2">"blue"</span><span class="p">,</span><span class="w"> </span><span class="s2">"cyan"</span><span class="p">,</span><span class="w"> </span><span class="s2">"teal"</span><span class="p">,</span><span class="w"> </span><span class="s2">"green"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"yellow"</span><span class="p">,</span><span class="w"> </span><span class="s2">"amber"</span><span class="p">,</span><span class="w"> </span><span class="s2">"orange"</span><span class="p">,</span><span class="w"> </span><span class="s2">"grey"</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+</span><span class="n">div</span><span class="p">(</span><span class="w">
+  </span><span class="n">lapply</span><span class="p">(</span><span class="w">
+    </span><span class="n">colors</span><span class="p">,</span><span class="w">
+    </span><span class="k">function</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+      </span><span class="n">buttonInput</span><span class="p">(</span><span class="w">
+        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+        </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">color</span><span class="w">
+      </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+        </span><span class="n">background</span><span class="p">(</span><span class="n">color</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+        </span><span class="n">margin</span><span class="p">(</span><span class="m">2</span><span class="p">)</span><span class="w">
+    </span><span class="p">}</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">flex</span><span class="p">(</span><span class="n">wrap</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="d-flex flex-wrap">
+  <button class="yonder-button btn btn-red m-2" type="button" role="button">red</button>
+  <button class="yonder-button btn btn-purple m-2" type="button" role="button">purple</button>
+  <button class="yonder-button btn btn-indigo m-2" type="button" role="button">indigo</button>
+  <button class="yonder-button btn btn-blue m-2" type="button" role="button">blue</button>
+  <button class="yonder-button btn btn-cyan m-2" type="button" role="button">cyan</button>
+  <button class="yonder-button btn btn-teal m-2" type="button" role="button">teal</button>
+  <button class="yonder-button btn btn-green m-2" type="button" role="button">green</button>
+  <button class="yonder-button btn btn-yellow m-2" type="button" role="button">yellow</button>
+  <button class="yonder-button btn btn-amber m-2" type="button" role="button">amber</button>
+  <button class="yonder-button btn btn-orange m-2" type="button" role="button">orange</button>
+  <button class="yonder-button btn btn-grey m-2" type="button" role="button">grey</button>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Reactive links</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="s2">"Curabitur "</span><span class="p">,</span><span class="w"> </span><span class="n">linkInput</span><span class="p">(</span><span class="s2">"inline"</span><span class="p">,</span><span class="w"> </span><span class="s2">"vulputate"</span><span class="p">),</span><span class="w"> </span><span class="s2">" vestibulum lorem."</span><span class="p">)</span></code></pre></figure>
+
+  <div><div>
+  Curabitur 
+  <button class="yonder-link btn btn-link" id="inline">vulputate</button>
+   vestibulum lorem.
+</div></div>
+  
+  
+</div>
+
+
+          <div class="d-flex justify-content-center">
+            <a class="text-muted p-3"
+               href="https://github.com/nteetor"
+               >github</a>
+            <a class="text-muted p-3"
+               href="https://twitter.com/ntweetor"
+               >twitter</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

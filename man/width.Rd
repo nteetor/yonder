@@ -39,26 +39,30 @@ element's content.
 # When specifying a numeric value the width of the element is relative to the
 # default font size of the page.
 
-lapply(
-  1:20,
-  width,
-  .tag = div() \%>\%
-    border("black") \%>\%
-    height(4)
-)
+div(
+  lapply(
+    1:20,
+    width,
+    .tag = div() \%>\%
+      border("black") \%>\%
+      height(4)
+  )
+) \%>\%
+  flex(
+    direction = "column",
+    justify = "between"
+  )
 
 ### Fractional values
 
-# When specifying a fraction the element's width is a percentage of its
-# parent's width.
+# When specifying width as a fraction the element's width is a percentage of
+# its parent's width.
 
-div(
-  div() \%>\%
-    margin(b = 3) \%>\%
-    border("red") \%>\%
-    width("1/3")
-) \%>\%
-  width(20)
+div() \%>\%
+  margin(b = 3) \%>\%
+  background("red") \%>\%
+  height(5) \%>\%
+  width("1/3")  # <-
 
 }
 \seealso{

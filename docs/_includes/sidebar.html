@@ -1,28 +1,29 @@
-<div class="sidebar col-2 h-screen p-4 bg-grey">
-  <h5 class="pb-3">{{ site.package.name }}</h5>
+<div class="sidebar pr-4">
   <dl>
-    {% assign families = site.pages | where_exp:"item", "item.roxygen" | group_by_exp:"item", "item.roxygen.family" %}
+    {% assign this = page %}
+    {% assign families = site.pages | group_by: "dir" %}
     {% for family in families %}
 
-    {% assign index = family.items | where: "layout", "index" | first %}
+    {% if family.name == "/assets/css/" %}
+    {% continue %}
+    {% endif %}
 
-    <dt>
-      <a class="text-dark" href="{{ site.baseurl }}{{ index.url }}">{{ family.name }}</a>
+    <dt {% if this.dir == family.items.first.dir and forloop.first != true %}
+        class = "mt-3"
+        {% endif %}>
+      <a class="text-dark"
+         href="{{ family.items.first.url }}"
+         >{{ family.name | url_decode | replace_regex: '/', '' | capitalize }}</a>
     </dt>
-
-    {% assign docs = family.items | where: "layout", "page" %}
-
-    {% if page.url contains family.name %}
-    {% for doc in docs %}
-    <dd>
-      <a href="{{ site.baseurl }}{{ doc.url }}"
-         alt="{{ doc.roxygen.title }}">
-        {{ doc.this }}
-      </a>
+    {% if this.dir == family.items.first.dir %}
+    {% for item in family.items %}
+    <dd class="{% if forloop.last == true %}mb-3{% else %}mb-1{% endif %}">
+      <a class="text-muted"
+         href={{ item.url }}
+         >{{ item.rdname }}</a>
     </dd>
     {% endfor %}
     {% endif %}
-
     {% endfor %}
   </dl>
 </div>

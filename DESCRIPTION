@@ -43,39 +43,3 @@ Imports:
     rlang
 Suggests:
     testthat
-Collate:
-    yonder.R
-    dependencies.R
-    pipe.R
-    utils.R
-    tags.R
-    update.R
-    textual.R
-    datetime.R
-    range.R
-    select.R
-    design.R
-    alerts.R
-    popover.R
-    badge.R
-    button.R
-    card.R
-    checkbox.R
-    collapse.R
-    layout.R
-    dropdown.R
-    group.R
-    file.R
-    flex.R
-    forms.R
-    list-group.R
-    modal.R
-    nav.R
-    navbar.R
-    radio.R
-    table.R
-    progress.R
-    tooltip.R
-    content.R
-    validate.R
-    download.R

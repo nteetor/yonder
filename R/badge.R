@@ -4,8 +4,6 @@
 #' displaying dynamically changing counts or tickers, drawing attention to new
 #' options, or tagging content.
 #'
-#' @param id A character string specifying the id of the badge output.
-#'
 #' @param ... Additional named argument passed as HTML attributes to the parent
 #'   element.
 #'
@@ -18,7 +16,7 @@
 #' @param quoted One of `TRUE` or `FALSE` specifying if `expr` is a quoted
 #'   expression.
 #'
-#' @family outputs
+#' @template output
 #' @export
 #' @examples
 #'

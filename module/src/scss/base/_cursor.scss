@@ -5,3 +5,14 @@ button {
     cursor: not-allowed;
   }
 }
+
+.btn,
+.dropdown-item,
+.list-group-item-action,
+.nav-link {
+  cursor: pointer;
+
+  &.disabled {
+    cursor: not-allowed;
+  }
+}

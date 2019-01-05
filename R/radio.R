@@ -2,10 +2,6 @@
 #'
 #' Create a reactive radio input of one or more radio controls.
 #'
-#' @param id A character string specifying the id of the radio input, the
-#'   reactive value of the radio input is available to the shiny server
-#'   function as part of the `input` object.
-#'
 #' @param choices A character vector specifying labels for the radio or radiobar
 #'   input's choices.
 #'
@@ -27,10 +23,7 @@
 #' @param disabled One or more of `values` indicating which radio choices to
 #'   disable, defaults to `NULL`, in which case all choices are enabled.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the parent
-#'   element.
-#'
-#' @family inputs
+#' @template input
 #' @export
 #' @examples
 #'
@@ -118,7 +111,7 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
               type = "radio",
               id = ids[[i]],
               name = id,
-              `data-value` = values[[i]],
+              value = values[[i]],
               checked = if (selected[[i]]) NA,
               disabled = if (disabled[[i]]) NA
             ),
@@ -176,7 +169,7 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL) {
           tags$input(
             name = id,
             type = "radio",
-            `data-value` = values[[i]],
+            value = values[[i]],
             autocomplete = "false",
             checked = if (selected[[i]]) NA
           ),

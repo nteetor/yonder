@@ -19,7 +19,7 @@ passed as HTML attributes to the parent element.
 For \strong{navPane}, named attributes passed as HTML elements to the parent
 element.}
 
-\item{id}{A character string specifying the id of a nav pane.}
+\item{id}{A character string specifying the id of the nav pane.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
@@ -197,8 +197,10 @@ shinyApp(ui, server)
 
 \examples{
 
-# Please see the sample applications above for examples demoing
-# `showPane()` and `afterPane()`.
+### Examples
+
+# Because these are server-side utilities please see the example applications
+# above.
 
 }
 \seealso{

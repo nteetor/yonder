@@ -8,37 +8,38 @@
 \usage{
 buttonInput(id, label, ..., block = FALSE)
 
-submitInput(label = "Submit", block = FALSE, ...)
+submitInput(label = "Submit", value = label, block = FALSE, ...)
 
 linkInput(id, text, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the button or link input.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{label}{A character string specifying the label text on the button
 input.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 
 \item{block}{If \code{TRUE}, the input is block-level instead of inline, defaults
 to \code{FALSE}. A block-level element will occupy the entire width of its
 parent element.}
+
+\item{value}{A character string specifying the value of a submit input,
+defaults to \code{label}. This value is used to distinguish form submission
+types in the case where a form input has multiple submit inputs.}
 
 \item{text}{A character string specifying the text displayed as part of the
 link input.}
 }
 \description{
 Button inputs are useful as triggers for reactive or observer expressions.
-The reactive value of a button input is the number of times it has been
-clicked.
+The reactive value of a button input begins as \code{NULL}, but subsequently is
+the number of clicks.
 
-A submit input is a special type of button used to control HTML form
-submission. Unlike shiny's \code{submitButton}, yonder's submit inputs will not
-freeze all reactive inputs on the page.
-}
-\details{
-A submit input is automatically included as part of a \code{\link{formInput}}.
+A submit input is a special type of button used to control form input
+submission. Because of their specific usage, submit inputs do not require an
+\code{id}, but may have a specified \code{value}. Submit inputs will \emph{not} freeze all
+reactive inputs, see \code{\link[=formInput]{formInput()}}.
 }
 \examples{
 ### Simple vs block button
@@ -93,11 +94,10 @@ div("Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem.")
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
-  \code{\link{buttonGroupInput}},
-  \code{\link{checkboxInput}}, \code{\link{dateInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{loginInput}},
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{checkboxInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}

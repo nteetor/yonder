@@ -2,25 +2,43 @@ export let buttonInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonInputBinding, {
   Selector: {
-    SELF: ".yonder-button[id]",
-    VALUE: ".yonder-button",
-    LABEL: ".yonder-button"
+    SELF: ".yonder-button"
   },
   Events: [
     {
-      "type": "click",
-      "callback": (el, _, self) => self._VALUES[el.id] += 1
+      type: "click",
+      callback: el => el.value = +el.value + 1
     }
   ],
-  _VALUES: {},
-  initialize: function(el) {
-    this._VALUES[el.id] = 0;
+  initialize: (el) => {
+    el.value = 0;
   },
-  getType: function(el) {
-    return "yonder.button";
+  getValue: (el) => {
+    return +el.value > 0 ? +el.value : null;
   },
-  getValue: function(el) {
-    return this._VALUES[el.id];
+  _choice: (el, newLabel, currentValue, index) => {
+    el.innerHTML = newLabel;
+  },
+  _value: (el, newValue, currentValue, index) => {
+    if (+newValue === +newValue) {
+      el.value = newValue;
+    }
+  },
+  _select: (el, currentValue, index) => {
+    // cannot select
+  },
+  _clear: (el) => {
+    // no need to do anything
+  },
+  _enable: (el, data) => {
+    if (!data.invert) {
+      el.classList.remove("disabled");
+    }
+  },
+  _disable: (el, data) => {
+    if (!data.invert) {
+      el.classList.add("disabled");
+    }
   }
 });
 

@@ -7,7 +7,7 @@
 buttonGroupInput(id, labels, values = labels, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the button group input.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{labels}{A character vector of labels, a button is added to the group
 for each label specified.}
@@ -15,8 +15,7 @@ for each label specified.}
 \item{values}{A character vector of values, one for each button specified,
 defaults to \code{labels}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 }
 \description{
 A set of buttons with custom values.
@@ -42,12 +41,12 @@ buttonGroupInput(
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{dateInput}}, \code{\link{fileInput}},
+Other inputs: \code{\link{buttonInput}},
+  \code{\link{checkboxInput}}, \code{\link{fileInput}},
   \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{loginInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}, \code{\link{textInput}}
+  \code{\link{listGroupInput}}, \code{\link{menuInput}},
+  \code{\link{navInput}}, \code{\link{radioInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
+  \code{\link{textInput}}
 }
 \concept{inputs}

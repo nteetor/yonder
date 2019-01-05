@@ -3,8 +3,6 @@
 #' Create a select input. Select elements often appear as a dropdown menu and
 #' may have one or more selected values, see `multiple`.
 #'
-#' @param id A character string specifying the id of the select input.
-#'
 #' @param choices A character vector specifying the labels of the select input
 #'   options.
 #'
@@ -19,10 +17,7 @@
 #'   selected, otherwise a single value is selected at a time,
 #'   defaults to `FALSE`.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the parent
-#'   element.
-#'
-#' @family inputs
+#' @template input
 #' @export
 #' @examples
 #'
@@ -74,7 +69,7 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
 
   selected <- match2(selected, values, default = TRUE)
 
-  input <- tags$div(
+  element <- tags$div(
     class = "yonder-select",
     id = id,
     tags$select(
@@ -83,7 +78,7 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
         seq_along(choices),
         function(i) {
           tags$option(
-            `data-value` = values[[i]],
+            value = values[[i]],
             choices[[i]],
             selected = if (selected[[i]]) NA
           )
@@ -95,10 +90,8 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
     ...
   )
 
-  input <- attachDependencies(
-    input,
+  attachDependencies(
+    element,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  input
 }

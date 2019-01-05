@@ -1,53 +1,121 @@
 export let navInputBinding = new Shiny.InputBinding();
 
-$(".yonder-nav .nav-link").on("click", ".nav-link", e => e.preventDefault());
-
 $.extend(navInputBinding, {
   Selector: {
-    SELF: ".yonder-nav[id]",
-    SELECTED: ".nav-link.active"
+    SELF: ".yonder-nav",
+    SELECTED: ".nav-link.active:not(.disabled)"
   },
   Events: [
     {
       type: "click",
-      selector: ".nav-link:not(.dropdown-toggle)",
-      callback: (el, target) => {
-        el.querySelector(".nav-link.active").classList.remove("active");
-        target.classList.add("active");
+      selector: ".nav-link:not(.dropdown-toggle):not(.disabled)",
+      callback: (el, e) => {
+        let activeItem = el.querySelector(".dropdown-item.active");
+        if (activeItem !== null) {
+          // trigger reset on menu input
+          $(activeItem.parentNode.parentNode).trigger("nav.reset");
+        }
+
+        el.querySelectorAll(".nav-link.active").forEach(a => {
+          a.classList.remove("active");
+        });
+
+        e.currentTarget.classList.add("active");
       }
     },
     {
       type: "click",
-      selector: ".dropdown-item",
-      callback: (el, target) => {
-        let active = el.querySelectorAll(".nav-link.active, .dropdown-item.active");
+      selector: ".dropdown-item:not(.disabled)",
+      callback: (el, e) => {
+        el.querySelectorAll(".active").forEach(a => {
+          a.classList.remove("active");
+        });
 
-        for (const act of active) {
-          act.classList.remove("active");
-        }
-
-        target.parentNode.parentNode.firstElementChild.classList.add("active");
-        target.classList.add("active");
+        e.currentTarget.parentNode.parentNode.children[0].classList.add("active");
+        e.currentTarget.classList.add("active");
       }
     }
-  ]
+  ],
+  _value: function(el, newValue, currentValue, index) {
+    if (currentValue !== null) {
+      let target = el.querySelector(`.nav-link[data-value="${ currentValue  }"]`);
+
+      if (target !== null) {
+        target.setAttribute("data-value", newValue);
+      }
+    } else {
+      let possibles = el.querySelectorAll(".nav-link");
+
+      if (index < possibles.length) {
+        possibles[index].setAttribute("data-value", newValue);
+      }
+    }
+  },
+  _choice: function(el, newLabel, currentValue, index) {
+    if (currentValue !== null) {
+      let child = el.querySelector(`.nav-link[data-value="${ currentValue }"]`);
+
+      if (child !== null) {
+        child.innerHTML = newLabel;
+      }
+    } else {
+      let possibles = el.querySelectorAll(".nav-link");
+
+      if (index < possibles.length) {
+        possibles[index].innerHTML = newLabel;
+      }
+    }
+  },
+  _select: (el, currentValue, index) => {
+    if (currentValue !== null) {
+      let target = el.querySelector(`.nav-link[data-value="${ currentValue }"]`);
+      if (target !== null) {
+        target.classList.add("active");
+      }
+    } else {
+      let children = el.querySelectorAll(".nav-link");
+      if (index < children.length) {
+        children[index].classList.add("active");
+      }
+    }
+  },
+  _clear: (el) => {
+    el.querySelectorAll(".nav-link.active")
+      .forEach(nl => nl.classList.remove("active"));
+  },
+  _disable: function(el, data) {
+    el.querySelectorAll(".nav-link").forEach(nl => {
+      let disabled = !data.values.length || data.values.indexOf(nl.value) > -1;
+
+      if (data.reset) {
+        nl.classList.remove("disabled");
+      }
+
+      if (disabled !== data.invert) {
+        nl.classList.add("disabled");
+      }
+    });
+  },
+  _enable: function(el, data) {
+    el.querySelectorAll(".nav-link").forEach(nl => {
+      let enable = !data.values.length || data.values.indexOf(nl.value) > -1;
+
+      if (enable !== data.invert) {
+        nl.classList.remove("disabled");
+      }
+    });
+  }
 });
 
+Shiny.inputBindings.register(navInputBinding, "yonder.navInput");
+
 Shiny.addCustomMessageHandler("yonder:pane", (msg) => {
-  if (msg.type === undefined ||
-      msg.data === undefined ||
-      msg.data.target === undefined) {
-    return;
-  }
+  let _show = function(pane) {
+    if (pane === null ||
+        !pane.parentElement.classList.contains("tab-content")) {
+      return;
+    }
 
-  let pane = document.getElementById(msg.data.target);
-
-  if (pane === null ||
-      !pane.parentElement.classList.contains("tab-content")) {
-    return;
-  }
-
-  if (msg.type === "show") {
     let previous = pane.parentElement.querySelector(".active");
 
     const complete = () => {
@@ -64,7 +132,19 @@ Shiny.addCustomMessageHandler("yonder:pane", (msg) => {
     };
 
     bootstrap.Tab.prototype._activate(pane, pane.parentElement, complete);
+  };
+
+  // let _hide = function(pane) {
+  //   let current = pane.parent
+  // };
+
+  if (msg.type === undefined ||
+      msg.data === undefined ||
+      msg.data.target === undefined) {
+    return;
+  }
+
+  if (msg.type === "show") {
+    _show(document.getElementById(msg.data.target));
   }
 });
-
-Shiny.inputBindings.register(navInputBinding, "yonder.navInput");

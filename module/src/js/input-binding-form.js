@@ -3,45 +3,33 @@ export let formInputBinding = new Shiny.InputBinding();
 $.extend(formInputBinding, {
   Events: [
     {
-      type: "submit",
-      callback: el => {
-        let submit = el.querySelector("button[data-type='submit']");
-
-        if (submit === null) {
-          return;
-        }
-
-        submit.setAttribute("data-value", +submit.getAttribute("data-value") + 1);
+      type: "click",
+      selector: ".yonder-submit",
+      callback: (el, e, self) => {
+        self._VALUES[el.id] = e.currentTarget.value;
+        $(el.querySelectorAll(".shiny-bound-input")).trigger("submission.yonder");
       }
     }
   ],
-  initialize: function(el) {
-    let submit = el.querySelector("button[data-type='submit']");
-
-    if (submit === null) {
-      return;
-    }
-
-    submit.setAttribute("data-value", 0);
-  },
+  Type: "yonder.form",
+  _VALUES: {},
   find: function(scope) {
-    let $input = $(scope).find(".yonder-form[id]");
+    let forms = Array.prototype.slice.call(scope.querySelectorAll(".yonder-form[id]"));
 
-    if (!$input.children("button[data-type='submit']").length) {
-      return null;
-    }
-
-    return $input;
+    return forms.filter(f => f.querySelector(".yonder-submit") !== null);
+  },
+  initialize: function(el) {
+    this._VALUES[el.id] = null;
   },
   getValue: function(el) {
-    let submit = el.querySelector("button[data-type='submit']");
-
-    if (submit === null) {
-      return;
-    }
-
-    return +submit.getAttribute("data-value");
-  }
+    return { force: Date.now(), value: this._VALUES[el.id] };
+  },
+  _value: () => null,
+  _choice: () => null,
+  _select: () => null,
+  _clear: () => null,
+  _enable: () => null,
+  _disable: () => null
 });
 
 Shiny.inputBindings.register(formInputBinding, "yonder.formInput");

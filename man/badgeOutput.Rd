@@ -10,7 +10,7 @@ badgeOutput(id, ...)
 renderBadge(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying the id of the badge output.}
+\item{id}{A character string specifying the reactive id of the output.}
 
 \item{...}{Additional named argument passed as HTML attributes to the parent
 element.}

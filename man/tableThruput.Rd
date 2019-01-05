@@ -11,10 +11,9 @@ tableThruput(id, ..., borders = "rows", striped = FALSE,
 renderTable(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying the id of the table thruput. This id
-is used as both an input and output reactive.}
+\item{id}{A character string specifying the reactive id of the thruput.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
+\item{...}{Additional named arguments passed on HTML attributes to the parent
 element.}
 
 \item{borders}{One of \code{"rows"}, \code{"all"}, or \code{"none"} specifying what borders
@@ -50,6 +49,20 @@ Use \code{tableThruput()} to create a table output you can update with
 \code{renderTable()}. Access selected table columns by referencing the same
 table id as an input.
 }
+\section{Example application}{
+\preformatted{shinyApp(
+  ui = container(
+    tableThruput(id = "tableExample", responsive = TRUE)
+  ),
+  server = function(input, output) {
+    output$tableExample <- renderTable({
+      iris
+    })
+  }
+)
+}
+}
+
 \examples{
 
 ### Responsive tables
@@ -57,6 +70,14 @@ table id as an input.
 # In practice you will use `renderTable()` to update the data in a table.
 # These live examples have been populated automatically for the sake of
 # the demo.
+
+% <script>
+% $(function() {
+%   $(".yonder-table").each(function() {
+%     $(this).table({ data: iris });
+%   });
+% });
+% </script>
 
 tableThruput(
   id = "table1",  # <-
@@ -79,8 +100,5 @@ tableThruput(
   responsive = TRUE
 )
 
-}
-\seealso{
-Other thruputs: \code{\link{listGroupThruput}}
 }
 \concept{thruputs}

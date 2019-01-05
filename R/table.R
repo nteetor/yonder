@@ -4,9 +4,6 @@
 #' `renderTable()`. Access selected table columns by referencing the same
 #' table id as an input.
 #'
-#' @param id A character string specifying the id of the table thruput. This id
-#'   is used as both an input and output reactive.
-#'
 #' @param borders One of `"rows"`, `"all"`, or `"none"` specifying what borders
 #'   are applied to the table, defaults to `"rows"`. `"rows"` will apply borders
 #'   between table rows. `"all"` will apply borders between table rows and
@@ -25,9 +22,6 @@
 #' @param editable One of `TRUE` or `FALSE` specifying if the user can edit
 #'   table cells, defaults to `FALSE`.
 #'
-#' @param ... Additional named arguments passed as HTML attributes to the parent
-#'   element.
-#'
 #' @param expr An expression which returns a data frame or `NULL`. If a data
 #'   frame is returned the table thruput is re-rendered, otherwise if `NULL` the
 #'   current table is left as is.
@@ -38,8 +32,25 @@
 #' @param quoted One of `TRUE` or `FALSE` specifying if `expr` is a quoted
 #'   expression.
 #'
-#' @family thruputs
-#' @requires data
+#' @param ... Additional named arguments passed on HTML attributes to the parent
+#'   element.
+#'
+#' @section Example application:
+#'
+#' ```R
+#' shinyApp(
+#'   ui = container(
+#'     tableThruput(id = "tableExample", responsive = TRUE)
+#'   ),
+#'   server = function(input, output) {
+#'     output$tableExample <- renderTable({
+#'       iris
+#'     })
+#'   }
+#' )
+#' ```
+#'
+#' @template thruput
 #' @export
 #' @examples
 #'
@@ -48,6 +59,14 @@
 #' # In practice you will use `renderTable()` to update the data in a table.
 #' # These live examples have been populated automatically for the sake of
 #' # the demo.
+#'
+#' % <script>
+#' % $(function() {
+#' %   $(".yonder-table").each(function() {
+#' %     $(this).table({ data: iris });
+#' %   });
+#' % });
+#' % </script>
 #'
 #' tableThruput(
 #'   id = "table1",  # <-

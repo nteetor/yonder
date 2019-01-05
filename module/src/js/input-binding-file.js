@@ -1,17 +1,60 @@
 export let fileInputBinding = new Shiny.InputBinding();
 
-$(".yonder-file").on("click", ".input-group-append", function(e) {
-  $(e.delegateTarget).find("input[type='file']").trigger("click");
-});
-
 $.extend(fileInputBinding, {
   Selector: {
-    SELF: ".yonder-file[id]"
+    SELF: ".yonder-file",
+    VALIDATE: "input[type='file']"
   },
-  getValue: function(el) {
-    return null;
+  Events: [
+    {
+      type: "change",
+      callback: (el, _, self) => {
+        if (el.querySelector("button") !== null) return;
+
+        self._doUpload(el);
+      }
+    },
+    {
+      type: "click",
+      selector: "button",
+      callback: (el, _, self) => self._doUpload(el)
+    },
+    {
+      type: "dragover",
+      callback: (_, e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    },
+    {
+      type: "dragcenter",
+      callback: (_, e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }
+    },
+    {
+      type: "drop",
+      callback: (el, e, self) => {
+        e.stopPropagation();
+        e.preventDefault();
+
+        self._doUpload(el, e.originalEvent.dataTransfer.files);
+      }
+    }
+  ],
+  getValue: el => null,
+  _value: () => null,
+  _choice: () => null,
+  _select: () => null,
+  _clear: () => null,
+  _enable: function(el, data) {
+    el.querySelector("input[type='file']").removeAttribute("disabled");
   },
-  sendFile: function(uri, job, file, final, el) {
+  _disable: function(el, data) {
+    el.querySelector("input[type='file']").setAttribute("disabled", "");
+  },
+  _sendFile: function(uri, job, file, final, el) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", uri, true);
     xhr.setRequestHeader("Content-Type", "application/octet-stream");
@@ -22,9 +65,7 @@ $.extend(fileInputBinding, {
           "uploadEnd",
           [job, el.id],
           (res) => {
-            let $input = $(el).find("input[type='file']");
-            $input.val("");
-            $input.text("Choose file");
+            el.querySelector("input[type='file']").value = "";
           },
           (err) => {
             console.error(`uploadEnd request failed for ${ el.id }: ${ err }`);
@@ -35,13 +76,25 @@ $.extend(fileInputBinding, {
 
     xhr.send(file);
   },
-  doUpload: function(el, files) {
+  _doUpload: function(el, files) {
+    let input = el.querySelector("input[type='file']");
+
+    if (files === undefined) {
+      files = input.files;
+    }
+
     if (!files) {
       return;
     }
 
-    let info = $.map(files, (f) => {
-      return {name: f.name, size: f.size, type: f.type };
+    if (!input.hasAttribute("multiple")) {
+      files = Array.prototype.slice.call(files, 0, 1);
+    } else {
+      files = Array.prototype.slice.call(files);
+    }
+
+    let info = files.map(f => {
+      return { name: f.name, size: f.size, type: f.type };
     });
 
     Shiny.shinyapp.makeRequest(
@@ -52,54 +105,13 @@ $.extend(fileInputBinding, {
         let uri = res.uploadUrl;
 
         for (var i = 0; i < files.length; i++) {
-          this.sendFile(uri, job, files[i], i === (files.length - 1), el);
+          this._sendFile(uri, job, files[i], i === (files.length - 1), el);
         }
       },
       (err) => {
         console.error(`uploadInit request failed for ${ el.id }: ${ err }`);
       }
     );
-  },
-  subscribe: function(el, callback) {
-    let $input = $(el).find("input[type='file']");
-
-    if (!$input.length) {
-      return;
-    }
-
-    let input = $input.get(0);
-
-    if ($(el).find(".btn").length) {
-      $(el).on("click.fileInputBinding", ".btn", (e) => {
-        this.doUpload(el, input.files);
-      });
-    } else {
-      $(el).on("change.fileInputBinding", (e) => {
-        this.doUpload(el, input.files);
-      });
-    }
-
-    $(el).on("dragover.fileInputBinding", (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-    });
-    $(el).on("dragenter.fileInputBinding", (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-    });
-    $(el).on("drop.fileInputBinding", (e) => {
-      e.stopPropagation();
-      e.preventDefault();
-
-      if (input.hasAttribute("multiple")) {
-        this.doUpload(el, e.originalEvent.dataTransfer.files);
-      } else {
-        this.doUpload(el, e.originalEvent.dataTransfer.files[0]);
-      }
-    });
-  },
-  unsubscribe: function(el) {
-    $(el).off(".fileInputBinding");
   }
 });
 

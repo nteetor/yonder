@@ -70,7 +70,10 @@ shinyApp(ui, server)
 
 \examples{
 
-# Please see live examples
+### Examples
+
+# As these are server-side utilities, please run the example applications
+# above.
 
 }
 \seealso{

@@ -48,8 +48,4 @@ download.
 }
 }
 
-\seealso{
-Other utilities: \code{\link{markInvalid}},
-  \code{\link{updateChoices}}
-}
 \concept{utilities}

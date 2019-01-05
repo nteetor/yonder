@@ -3,18 +3,30 @@ export let groupInputBinding = new Shiny.InputBinding();
 $.extend(groupInputBinding, {
   Selector: {
     SELF: ".yonder-group[id]",
-    VALUE: "input",
     SELECTED: ".input-group-prepend .input-group-text, input, .input-group-append .input-group-text",
+    VALIDATE: "input"
   },
   Events: [
     { type: "input", debounce: true },
     { type: "change", debounce: true }
   ],
-  getType: function(el) {
-    return "yonder.group";
+  Type: "yonder.group",
+  getValue: function(el) {
+    return Array.prototype.slice.call(el.querySelectorAll(this.Selector.SELECTED))
+      .map(s => /^(DIV|SPAN)$/.test(s.tagName) ? s.innerText : (s.value || null))
+      .filter(value => value !== null);
   },
-  getState: function(el) {
-    return { value: this.getValue(el) };
+  _value: (el, newValue, currentValue, index) => {
+    el.querySelector("input").value = newValue;
+  },
+  _choice: () => null,
+  _select: () => null,
+  _clear: () => null,
+  _enable: function(el, data) {
+    el.querySelector("input").removeAttribute("disabled");
+  },
+  _disable: function(el, data) {
+    el.querySelector("input").setAttribute("disabled", "");
   }
 });
 

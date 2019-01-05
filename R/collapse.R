@@ -57,7 +57,10 @@
 #' @export
 #' @examples
 #'
-#' # Please see live examples
+#' ### Examples
+#'
+#' # As these are server-side utilities, please run the example applications
+#' # above.
 #'
 collapsiblePane <- function(id, ..., show = FALSE) {
   if (!is.character(id)) {
@@ -84,13 +87,13 @@ collapsiblePane <- function(id, ..., show = FALSE) {
 #' @rdname collapsiblePane
 #' @export
 collapsePane <- function(id, session = getDefaultReactiveDomain()) {
-  sendCollapseMessage("show", id, session)
+  sendCollapseMessage("hide", id, session)
 }
 
 #' @rdname collapsiblePane
 #' @export
 expandPane <- function(id, session = getDefaultReactiveDomain()) {
-  sendCollapseMessage("hide", id, session)
+  sendCollapseMessage("show", id, session)
 }
 
 #' @rdname collapsiblePane

@@ -6,22 +6,32 @@ $.extend(linkInputBinding, {
   },
   Events: [
     {
-      "type": "click",
-      "callback": (el, _, self) => self._VALUES[el.id] += 1
+      type: "click",
+      callback: (el) => el.value = +el.value + 1
     }
   ],
-  _VALUES: {},
+  Type: "yonder.link",
   initialize: function(el) {
-    this._VALUES[el.id] = 0;
+    el.value = 0;
   },
-  getType: function(el) {
-    return "yonder.link";
+  getValue: (el) => {
+    return +el.value > 0 ? +el.value : null;
   },
-  getValue: function(el) {
-    return {
-      "value": this._VALUES[el.id],
-      "id": el.id
-    };
+  _value: (el, newValue, currentValue, index) => {
+    el.value = newValue;
+  },
+  _choice: (el, newLabel, currentValue, index) => {
+    el.innerHTML = newLabel;
+  },
+  _select: () => null,
+  _clear: () => null,
+  _disable: function(el, data) {
+    el.classList.add("disabled");
+    el.setAttribute("disabled", "");
+  },
+  _enable: function(el, data) {
+    el.classList.remove("disabled");
+    el.removeAttribute("disabled");
   }
 });
 

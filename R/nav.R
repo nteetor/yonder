@@ -2,69 +2,104 @@
 #'
 #' A reactive input styled as a navigation control. The navigation input can be
 #' styled as links, tabs, or pills. A nav input is paired with [navContent()]
-#' and [showPane()] to create tabbed user interfaces.
-#'
-#' @param id A character string specifying the id of a pane.
+#' and [showPane()] to create tabbed user interfaces. Observers and reactives
+#' are triggered when a nav choice or menu item is clicked. The reactive value
+#' of a nav input is `NULL` or a singleton character string. The value of any
+#' menus in the nav input must be retrieved with its own reactive id.
 #'
 #' @param choices A character vector or list of tag elements specifying the
 #'   navigation items of the navigation input.
 #'
 #' @param values A character vector specifying custom values for each navigation
-#'   item, defaults to `labels`.
+#'   item, defaults to `choices`.
+#'
+#' @param selected One of `values` specifying which choice is selected by
+#'   default, defaults to `NULL`.
 #'
 #' @param fill One of `TRUE` or `FALSE` specifying if the nav input fills the
 #'   width of its parent element. If `TRUE`, the space is divided evenly among
 #'   the nav items.
 #'
-#' @param appearance One of `"pills"` or `"tabs"` specifying the appearance of
-#'   the nav input.
+#' @param appearance One of `"links"`, `"pills"`, or `"tabs"` specifying the
+#'   appearance of the nav input, defaults to `"links"`.
 #'
-#' @param ... Any number of tag elements or named arguments passed as HTML
-#'   attributes to the parent element.
+#' @section Including a menu:
 #'
-#' @family inputs
+#' Use the reactive id of any nav menus to know when a menu item is clicked.
+#'
+#' ```R
+#' ui <- navInput(
+#'   id = "navigation",
+#'   choices = list(
+#'     "Item 1",
+#'     "Item 2",
+#'     menuInput(
+#'       id = "navMenu",  # <-
+#'       label = "Item 3",
+#'       choices = c("Choice 1", "Choice 2")
+#'     )
+#'   ),
+#'   values = c("item1", "item2", "item3")
+#' )
+#'
+#' server <- function(input, output) {
+#'   observeEvent(input$navMenu, {
+#'     cat(paste("Click menu item:", input$navMenu, "\n"))
+#'   })
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
+#'
+#' @template input
 #' @export
 #' @examples
 #'
 #' ### Nav styled as tabs
 #'
 #' navInput(
-#'   id = "tabs",
+#'   id = "tabs1",
 #'   choices = c(
 #'     "Tab 1",
 #'     "Tab 2",
 #'     "Tab 3"
 #'   ),
+#'   selected = "Tab 1",
 #'   appearance = "tabs"
 #' )
 #'
 #' ### Nav styled as pills
 #'
 #' navInput(
-#'   id = "tabs",
+#'   id = "tabs2",
 #'   choices = paste("Tab", 1:3),
+#'   selected = "Tab 1",
 #'   appearance = "pills"
 #' )
 #'
 #' ### Nav with dropdown
 #'
 #' navInput(
-#'   id = "tabs",
+#'   id = "tabs3",
 #'   choices = list(
 #'     "Tab 1",
-#'     dropdown(
+#'     menuInput(
+#'       id = NULL,  # <- ignored
 #'       label = "Tab 2",
-#'       buttonInput("action", "Action"),
-#'       buttonInput("another", "Another action")
+#'       choices = c(
+#'         "Action",
+#'         "Another action"
+#'       )
 #'     ),
 #'     "Tab 2"
-#'   )
+#'   ),
+#'   values = c("tab1", "tab2", "tab3")
 #' )
 #'
 #' ### Full width nav input
 #'
 #' navInput(
-#'   id = "tabs",
+#'   id = "tabs4",
 #'   choices = paste("Tab", 1:5),
 #'   values = paste0("tab", 1:5),
 #'   appearance = "pills",
@@ -74,59 +109,70 @@
 #' ### Centering a nav input
 #'
 #' navInput(
-#'   id = "tabs",
+#'   id = "tabs5",
 #'   choices = paste("Tab", 1:3)
 #' ) %>%
 #'   flex(justify = "center")
 #'
-navInput <- function(id, choices, values = choices, ..., appearance = NULL,
-                     fill = FALSE) {
-  if (!is.null(appearance) && !re(appearance, "pills|tabs", FALSE)) {
+navInput <- function(id, choices, values = choices, selected = NULL, ...,
+                     appearance = "links", fill = FALSE) {
+  if (!is.null(appearance) && !re(appearance, "links|pills|tabs", FALSE)) {
     stop(
       "invalid `navInput()` argument, `appearance` must be one of ",
-      '"pills" or "tabs"',
+      '"links", "pills", or "tabs"',
       call. = FALSE
     )
   }
 
-  values <- vapply(
-    values,
-    function(x) if (is_tag(x)) x$children[[1]]$children[[1]] else (x %||% ""),
-    character(1)
-  )
+  if (!is.atomic(values)) {
+    stop(
+      "invalid `navInput()` argument, `values` must be a character vector",
+      call. = FALSE
+    )
+  }
 
-  tags$ul(
+  if (!is.null(selected) && length(selected) > 1) {
+    stop(
+      "invalid `navInput()` argument, `selected` must be a single character ",
+      "string",
+      call. = FALSE
+    )
+  }
+
+  selected <- match2(selected, values)
+
+  element <- tags$ul(
     class = collate(
       "yonder-nav",
       "nav",
       if (fill) "nav-fill",
-      if (!is.null(appearance)) paste0("nav-", appearance)
+      if (appearance != "links") paste0("nav-", appearance)
     ),
     id = id,
     Map(
-      label = choices,
+      base = choices,
       value = values,
-      active = c(TRUE, rep.int(FALSE, length(choices) - 1)),
-      function(label, value, active) {
-        navItem(label, value, active)
-      }
+      active = selected,
+      navItem
     )
+  )
+
+  attachDependencies(
+    element,
+    c(yonderDep(), shinyDep(), bootstrapDep())
   )
 }
 
-navItem <- function(base, value = NULL, active = FALSE) {
-  value <- if (value != "") value
-
+navItem <- function(base, value, active) {
   if (is.character(base)) {
     base <- tags$li(
       class = "nav-item",
-      tags$a(
+      tags$button(
         class = collate(
-          "nav-link",
+          "nav-link btn btn-link",
           if (active) "active"
         ),
-        href = "#",
-        `data-value` = value %||% base,
+        value = value,
         base
       )
     )
@@ -134,13 +180,10 @@ navItem <- function(base, value = NULL, active = FALSE) {
     return(base)
   }
 
-  if (tagHasClass(base, "dropdown")) {
-    base$children[[1]]$name <- "a"
-    base$children[[1]]$attribs$class <- "nav-link dropdown-toggle"
+  if (tagHasClass(base, "yonder-menu")) {
+    base$children[[1]]$attribs$class <- "nav-link btn btn-link dropdown-toggle"
     base$children[[1]]$attribs$type <- NULL
-    base$children[[1]]$attribs$`data-value` <- value %||% base$children[[1]]$children[[1]]
-    base$children[[1]]$attribs$role <- "button"
-    base$children[[1]]$attribs$href <- "#"
+    base$children[[1]]$attribs$value <- value
 
     if (active) {
       base$children[[1]] <- tagAddClass(base$children[[1]], "active")
@@ -153,7 +196,8 @@ navItem <- function(base, value = NULL, active = FALSE) {
   }
 
   stop(
-    "could not convert object to nav item",
+    "invalid `navInput()` arguments, could not construct nav items from ",
+    "`choices` and `values`",
     call. = FALSE
   )
 }
@@ -170,7 +214,7 @@ navItem <- function(base, value = NULL, active = FALSE) {
 #'   For **navPane**, named attributes passed as HTML elements to the parent
 #'   element.
 #'
-#' @param id A character string specifying the id of a nav pane.
+#' @param id A character string specifying the id of the nav pane.
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
@@ -348,8 +392,10 @@ navItem <- function(base, value = NULL, active = FALSE) {
 #' @export
 #' @examples
 #'
-#' # Please see the sample applications above for examples demoing
-#' # `showPane()` and `afterPane()`.
+#' ### Examples
+#'
+#' # Because these are server-side utilities please see the example applications
+#' # above.
 #'
 navContent <- function(...) {
   panes <- tags$div(
@@ -357,12 +403,10 @@ navContent <- function(...) {
     ...
   )
 
-  panes <- attachDependencies(
+  attachDependencies(
     panes,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  panes
 }
 
 #' @rdname navContent
@@ -375,12 +419,10 @@ navPane <- function(id, ...) {
     ...
   )
 
-  pane <- attachDependencies(
+  attachDependencies(
     pane,
     c(shinyDep(), yonderDep(), bootstrapDep())
   )
-
-  pane
 }
 
 #' @rdname navContent
@@ -388,7 +430,7 @@ navPane <- function(id, ...) {
 showPane <- function(id, session = getDefaultReactiveDomain()) {
   if (is.null(session)) {
     stop(
-      "`showPane()` must be called in a reactive environment",
+      "invalid `showPane()` argument, `session` is NULL",
       call. = FALSE
     )
   }
@@ -402,6 +444,23 @@ showPane <- function(id, session = getDefaultReactiveDomain()) {
 
   session$sendCustomMessage("yonder:pane", list(
     type = "show",
+    data = list(
+      target = id
+    )
+  ))
+}
+
+hidePane <- function(id, session = getDefaultReactiveDomain()) {
+  if (is.null(session)) {
+
+  }
+
+  if (!is.character(id)) {
+
+  }
+
+  session$sendCustomMessage("yonder:pane", list(
+    type = "hide",
     data = list(
       target = id
     )

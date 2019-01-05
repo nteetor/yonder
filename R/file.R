@@ -2,8 +2,6 @@
 #'
 #' Upload files to the server.
 #'
-#' @param id A character string specifying the HTML id of the file input.
-#'
 #' @param placeholder A character string specifying the text inside the file
 #'   input, defaults to `"Choose file"`.
 #'
@@ -13,9 +11,6 @@
 #'
 #'   Clicking on an element specified by `right` also opens the file input
 #'   dialog.
-#'
-#' @param ... Additional named arguments passed on as HTML attributes to the
-#'   parent element.
 #'
 #' @param multiple One of `TRUE` or `FALSE` specifying whether or not the user
 #'   can upload multiple files at once, defaults to `TRUE`.
@@ -47,7 +42,7 @@
 #' )
 #' ```
 #'
-#' @family inputs
+#' @template input
 #' @export
 #' @examples
 #'
@@ -120,6 +115,9 @@ fileInput <- function(id, placeholder = "Choose file", left = NULL,
       tags$label(
         class = "custom-file-label",
         placeholder
+      ),
+      tags$div(
+        class = "invalid-feedback"
       )
     ),
     right

@@ -75,18 +75,9 @@ shinyApp(ui, server)
 
 \examples{
 
-### Popover preview
+### Examples
 
-popover(
-  title = "Mr. Popover",
-  "... and his penguins"
-)
-
-### No title
-
-popover(
-  "Pellentesque dapibus suscipit ligula."
-)
+# Please see example application above.
 
 }
 \seealso{

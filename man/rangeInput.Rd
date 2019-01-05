@@ -18,7 +18,7 @@ sliderInput(id, choices, values = choices, selected = NULL,
   ticks = TRUE, fill = FALSE, prefix = NULL, suffix = NULL, ...)
 }
 \arguments{
-\item{id}{A character string specifying the id of the range input or \code{NULL}.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{min}{A number specifying the minimum value of the range input, defaults
 to \code{0}.}
@@ -63,8 +63,7 @@ slider value, defaults to \code{NULL}, in which case a prefix is not prepended.}
 \item{suffix}{A character string specifying a suffix for the range input
 slider value, defaults to \code{NULL}, in which case a prefix is not appended.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 
 \item{draggable}{One of \code{TRUE} or \code{FALSE} specifying if the user can drag the
 interval between an interval input's two sliders defaults to \code{FALSE}. If
@@ -139,12 +138,11 @@ sliderInput(
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
-  \code{\link{buttonGroupInput}},
+Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{dateInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{loginInput}}, \code{\link{navInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{groupInput}}, \code{\link{listGroupInput}},
+  \code{\link{menuInput}}, \code{\link{navInput}},
   \code{\link{radioInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }

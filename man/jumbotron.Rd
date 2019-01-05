@@ -22,7 +22,7 @@ Highlight messages.
 }
 \examples{
 
-## Landing page welcome
+### Landing page welcome
 
 jumbotron(
   title = "Welcome, welcome!",

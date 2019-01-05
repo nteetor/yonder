@@ -1076,10 +1076,6 @@
   border-right: 0;
 }
 
-.yonder-dropdown a {
-  cursor: pointer;
-}
-
 .yonder-file .input-group-text,
 .yonder-file .custom-file-input {
   cursor: pointer;
@@ -1087,10 +1083,6 @@
 
 .custom-file-label::after {
   display: none !important;
-}
-
-.nav-link {
-  cursor: pointer;
 }
 
 .fa-spin.pause,
@@ -1215,6 +1207,20 @@ button {
 }
 
 button:disabled {
+  cursor: not-allowed;
+}
+
+.btn,
+.dropdown-item,
+.list-group-item-action,
+.nav-link {
+  cursor: pointer;
+}
+
+.btn.disabled,
+.dropdown-item.disabled,
+.list-group-item-action.disabled,
+.nav-link.disabled {
   cursor: not-allowed;
 }
 

@@ -11,9 +11,7 @@ radioInput(id, choices, values = choices, selected = NULL,
 radiobarInput(id, choices, values = choices, selected = NULL)
 }
 \arguments{
-\item{id}{A character string specifying the id of the radio input, the
-reactive value of the radio input is available to the shiny server
-function as part of the \code{input} object.}
+\item{id}{A character string specifying the reactive id of the input.}
 
 \item{choices}{A character vector specifying labels for the radio or radiobar
 input's choices.}
@@ -36,8 +34,7 @@ below the input, defaults to \code{NULL} in which case help text is not added.}
 \item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
 in which case the radio controls render on separate lines.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 }
 \description{
 Create a reactive radio input of one or more radio controls.
@@ -84,12 +81,11 @@ radiobarInput(
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
-  \code{\link{buttonGroupInput}},
+Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{dateInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
-  \code{\link{loginInput}}, \code{\link{navInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{groupInput}}, \code{\link{listGroupInput}},
+  \code{\link{menuInput}}, \code{\link{navInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }

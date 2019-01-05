@@ -7,10 +7,11 @@
 formInput(id, ..., submit = submitInput(), inline = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying an id for the form input.}
+\item{id}{A character string specifying the reactive id of the input.}
 
-\item{...}{Any number of inputs, tags, or additional named arguments passed
-as HTML attributes to the parent element.}
+\item{...}{Any number of unnamed arguments (inputs or tag elements) passed as child elements of the form.
+
+Additional named arguments passed as HTML attributes to the parent element.}
 
 \item{submit}{A submit button or tags containing a submit button. The submit
 button will trigger the update of input form elements. Defaults to
@@ -25,7 +26,9 @@ span multiple lines.}
 Form inputs are a new reactive input. Form inputs are an alternative to
 shiny's submit buttons. A form input is comprised of any number of
 inputs. The value of these inputs will not change until the form input's
-submit button is clicked. A form input has no value.
+submit input is clicked. A form input's reactive value also depends on the
+submit input. This allows you to distinguish between different clicks if
+your form includes multiple submit inputs.
 
 \strong{Important} if \code{id} or \code{submit} are \code{NULL} the form input will not freeze
 its child inputs. This can be useful if you want to use a \code{formInput()}
@@ -89,11 +92,10 @@ card(
 
 }
 \seealso{
-Other inputs: \code{\link{addressInput}},
-  \code{\link{buttonGroupInput}},
+Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{dateInput}}, \code{\link{fileInput}},
-  \code{\link{groupInput}}, \code{\link{loginInput}},
+  \code{\link{fileInput}}, \code{\link{groupInput}},
+  \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
