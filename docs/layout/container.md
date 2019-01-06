@@ -15,7 +15,7 @@ parameters:
     arguments passed as HTML attributes to the parent element.
 - name: width
   description: |-
-    A [responsive](/responsive.html) argument. One of `1:12` or `"auto"`, defaults to
+    A [responsive](yonder/responsive.html) argument. One of `1:12` or `"auto"`, defaults to
     `NULL`.
 - name: gutters
   description: |-
@@ -134,8 +134,8 @@ examples:
 - title: Mobile friendly grids
   body:
   - type: text
-    content: Use `column()`s [responsive](/responsive.html) `width` argument to make
-      mobile friendly applications.
+    content: Use `column()`s [responsive](yonder/responsive.html) `width` argument
+      to make mobile friendly applications.
     output: ~
   - type: code
     content: |-

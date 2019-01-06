@@ -16,7 +16,7 @@ parameters:
 - name: id
   description: A character string specifying the id of the nav pane.
 - name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()](/getDefaultReactiveDomain.html).
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](yonder/getDefaultReactiveDomain.html).
 sections:
 - title: App with pills
   body: |-

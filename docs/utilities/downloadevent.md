@@ -23,7 +23,7 @@ parameters:
 - name: domain
   description: |-
     A shiny session object, defaults to
-    [getDefaultReactiveDomain()](/getDefaultReactiveDomain.html).
+    [getDefaultReactiveDomain()](yonder/getDefaultReactiveDomain.html).
 sections:
 - title: Downloading a file
   body: |-

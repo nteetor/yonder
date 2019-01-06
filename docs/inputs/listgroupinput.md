@@ -27,7 +27,7 @@ parameters:
     One of `TRUE` or `FALSE` specifying if the list group is
     rendered without an outside border, defaults to `FALSE`. Removing the list
     group border is useful when rendering a list group inside a custom parent
-    container, e.g. inside a [card()](/content/card.html).
+    container, e.g. inside a [card()](yonder/content/card.html).
 - name: id
   description: A character string specifying the reactive id of the input.
 - name: '...'

@@ -39,7 +39,7 @@ parameters:
 - name: bar
   description: A bar element, typically a call to `bar()`.
 - name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()](/getDefaultReactiveDomain.html).
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](yonder/getDefaultReactiveDomain.html).
 sections:
 - title: Example application
   body: |-

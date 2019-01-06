@@ -21,7 +21,7 @@ parameters:
 - name: left,right
   description: |-
     A character vector specifying static addons or
-    [buttonInput()](/inputs/buttonInput.html) or [dropdown()](/content/dropdown.html) elements specifying dynamic addons.
+    [buttonInput()](yonder/inputs/buttonInput.html) or [dropdown()](yonder/content/dropdown.html) elements specifying dynamic addons.
     Addon's affect the reactive value of the group input, see the Details
     section below for more information.
 - name: id

@@ -30,7 +30,7 @@ parameters:
     transformation of the tag element's text, default to `NULL`.
 - name: align
   description: |-
-    A [responsive](/responsive.html) argument. One of `"left"`, `"center"`, `"right"`,
+    A [responsive](yonder/responsive.html) argument. One of `"left"`, `"center"`, `"right"`,
     or `"justify"`, specifying the alignment of the tag element's text, defaults
     to `NULL`.
 family: design

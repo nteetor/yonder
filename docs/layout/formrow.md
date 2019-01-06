@@ -26,7 +26,7 @@ parameters:
       passed as HTML attributes to the parent element.
 - name: width
   description: |-
-    A [responsive](/responsive.html) argument. One of `1:12` or "auto" specifying a
+    A [responsive](yonder/responsive.html) argument. One of `1:12` or "auto" specifying a
     column width for the form group, defaults to `NULL`.
 family: layout
 export: ''
