@@ -13,12 +13,12 @@ parameters:
   description: A tag element.
 - name: all
   description: |-
-    A [responsive](yonder/responsive.html) argument. One of `0:5` or `"auto"` specifying
+    A [responsive](responsive.html) argument. One of `0:5` or `"auto"` specifying
     a margin or padding for all sides of the tag element. 0 removes all
     space and 5 adds the most space.
 - name: top,right,bottom,left
   description: |-
-    A [responsive](yonder/responsive.html) argument. One of `0:5` or
+    A [responsive](responsive.html) argument. One of `0:5` or
     `"auto"`. 0 removes all space and 5 adds the most space.
 family: design
 export: ''
@@ -84,8 +84,8 @@ examples:
         </div>
         <div class="yonder-checkbox" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-814-702" name="remember" value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-814-702">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-427-312" name="remember" value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-427-312">Remember me</label>
             <div class="invalid-feedback"></div>
           </div>
         </div>
@@ -134,8 +134,8 @@ examples:
         </div>
         <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-879-392" name="remember" value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-879-392">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-337-45" name="remember" value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-337-45">Remember me</label>
             <div class="invalid-feedback"></div>
           </div>
         </div>

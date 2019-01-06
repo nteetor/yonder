@@ -13,7 +13,7 @@ parameters:
   description: A tag element.
 - name: render,print
   description: |-
-    A [responsive](yonder/responsive.html) argument. One of `"inline"`, `"block"`,
+    A [responsive](responsive.html) argument. One of `"inline"`, `"block"`,
     `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`, defaults to
     `NULL`.
 family: design

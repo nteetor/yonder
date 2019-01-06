@@ -21,7 +21,7 @@ parameters:
   description: |-
     A submit button or tags containing a submit button. The submit
     button will trigger the update of input form elements. Defaults to
-    [submitInput()](yonder/inputs/submitInput.html).
+    [submitInput()](inputs/submitInput.html).
 - name: inline
   description: |-
     One of `TRUE` or `FALSE`, if `TRUE` the form and its child
@@ -102,16 +102,16 @@ examples:
               <label>Ice creams</label>
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-162-968" name="flavorChoice" value="Mint" checked/>
-                  <label class="custom-control-label" for="radio-162-968">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-840-712" name="flavorChoice" value="Mint" checked/>
+                  <label class="custom-control-label" for="radio-840-712">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-495-961" name="flavorChoice" value="Moose tracks"/>
-                  <label class="custom-control-label" for="radio-495-961">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-806-285" name="flavorChoice" value="Moose tracks"/>
+                  <label class="custom-control-label" for="radio-806-285">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-914-608" name="flavorChoice" value="Marble"/>
-                  <label class="custom-control-label" for="radio-914-608">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-592-278" name="flavorChoice" value="Marble"/>
+                  <label class="custom-control-label" for="radio-592-278">Marble</label>
                 </div>
                 <div class="invalid-feedback"></div>
               </div>
