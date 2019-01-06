@@ -38,7 +38,7 @@ parameters:
     A character string specifying the HTML id of a popover's target tag
     element.
 - name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()](getDefaultReactiveDomain.html).
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](getdefaultreactivedomain.html).
 sections:
 - title: Example application
   body: |-

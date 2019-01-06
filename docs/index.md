@@ -6,8 +6,8 @@ description: Yonder is a set of tools for flexible and creative shiny applicatio
 sections:
 - title: Inputs
   body: |-
-    Yonder provides many familiar inputs like [selectInput()](inputs/selectInput.html) or [radioInput()](inputs/radioInput.html).
-    There are also new inputs like [groupInput()](inputs/groupInput.html) or [formInput()](inputs/formInput.html).
+    Yonder provides many familiar inputs like [selectInput()](inputs/selectinput.html) or [radioInput()](inputs/radioinput.html).
+    There are also new inputs like [groupInput()](inputs/groupinput.html) or [formInput()](inputs/forminput.html).
 
     **Changes to be mindful of**
 
@@ -16,24 +16,24 @@ sections:
     * Input functions do not include a `label` argument for the purpose of adding
       a label above the input. Button and menu inputs do include a `label`
       argument, but these arguments refer to button labels. If you would like to
-      add a label above an input please use [formGroup()](layout/formGroup.html).
+      add a label above an input please use [formGroup()](layout/formgroup.html).
 
-    * `shiny::sliderInput()` has been split into three inputs: [rangeInput()](inputs/rangeInput.html),
-      [intervalInput()](inputs/intervalInput.html), and [sliderInput()](inputs/sliderInput.html).
+    * `shiny::sliderInput()` has been split into three inputs: [rangeInput()](inputs/rangeinput.html),
+      [intervalInput()](inputs/intervalinput.html), and [sliderInput()](inputs/sliderinput.html).
 
     **Familiar variants**
 
     Looking for ... ?
 
-    * `radioButtons()` use [radioInput()](inputs/radioInput.html)
+    * `radioButtons()` use [radioInput()](inputs/radioinput.html)
 
-    * `checkboxGroupInput()` use [checkbarInput()](inputs/checkbarInput.html)
+    * `checkboxGroupInput()` use [checkbarInput()](inputs/checkbarinput.html)
 
-    * `numericInput()` use [numberInput()](inputs/numberInput.html)
+    * `numericInput()` use [numberInput()](inputs/numberinput.html)
 
-    * `submitButton()` use [submitInput()](inputs/submitInput.html)
+    * `submitButton()` use [submitInput()](inputs/submitinput.html)
 
-    * `updateRadioButtons()`, `updateTextInput()`, etc. use [updateInput()](utilities/updateInput.html)
+    * `updateRadioButtons()`, `updateTextInput()`, etc. use [updateInput()](utilities/updateinput.html)
 - title: Layout
   body: |-
     Included are a handful of tools for building applications for devices and

@@ -29,7 +29,7 @@ parameters:
     is triggered, `input[[action]]` is set to `TRUE`. When the alert is removed
     `input[[action]]` is reset to `NULL`.
 - name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()](getDefaultReactiveDomain.html).
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](getdefaultreactivedomain.html).
 sections:
 - title: Displaying an alert
   body: |-
