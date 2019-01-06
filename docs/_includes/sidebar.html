@@ -1,7 +1,8 @@
 <div class="sidebar pr-4">
   <dl>
     {% assign this = page %}
-    {% assign families = site.pages | group_by: "dir" %}
+    {% assign families = site.pages | group_by: "dir" | where_exp:"f","f.name != '/'" %}
+
     {% for family in families %}
 
     {% if family.name == "/assets/css/" %}
@@ -13,7 +14,7 @@
         {% endif %}>
       <a class="text-dark"
          href="{{ family.items.first.url }}"
-         >{{ family.name | url_decode | replace_regex: '/', '' | capitalize }}</a>
+         >{{ family.name | url_decode | replace: '/', '' | capitalize }}</a>
     </dt>
     {% if this.dir == family.items.first.dir %}
     {% for item in family.items %}

@@ -1,38 +1,35 @@
-#' A new approach to shiny applications
-#'
-#' More freedom to the programmer, more to come.
-#'
 #' @importFrom htmltools HTML htmlDependency attachDependencies
 #'   suppressDependencies resolveDependencies findDependencies tags
 #'   tagAppendAttributes tagAppendChildren surroundSingletons takeSingletons
 #' @importFrom shiny observe getDefaultReactiveDomain installExprFunction
 #'   createRenderFunction createWebDependency
 #' @importFrom rlang dots_list
-#'
-#' @name yonder
-"_PACKAGE"
+NULL
 
-#' Inputs
+#' A new approach to shiny applications
+#'
+#' Yonder is a set of tools for flexible and creative shiny application design.
+#'
+#' @section Inputs:
 #'
 #' Yonder provides many familiar inputs like [selectInput()] or [radioInput()].
 #' There are also new inputs like [groupInput()] or [formInput()].
 #'
-#' @section Changes to be mindful of:
+#' **Changes to be mindful of**
 #'
 #' * Input functions have an `id` argument instead of `inputId`.
 #'
-#' * Inputs do not include a `label` argument to add a text label. To add a
-#'   label to an input please use [formGroup()].
-#'
-#'   [menuInput()] is an exception and does include a `label` argument. This
-#'   argument controls the label or text of the menu trigger button.
+#' * Input functions do not include a `label` argument for the purpose of adding
+#'   a label above the input. Button and menu inputs do include a `label`
+#'   argument, but these arguments refer to button labels. If you would like to
+#'   add a label above an input please use [formGroup()].
 #'
 #' * `shiny::sliderInput()` has been split into three inputs: [rangeInput()],
 #'   [intervalInput()], and [sliderInput()].
 #'
-#' @section Familiar variants:
+#' **Familiar variants**
 #'
-#' Looking for ...
+#' Looking for ... ?
 #'
 #' * `radioButtons()` use [radioInput()]
 #'
@@ -42,25 +39,23 @@
 #'
 #' * `submitButton()` use [submitInput()]
 #'
-#' * `updateRadioButtons()` or `updateTextInput()` use [updateChoices()] or
-#'   [updateValues()]
+#' * `updateRadioButtons()`, `updateTextInput()`, etc. use [updateInput()]
 #'
-#' @noRd
-#' @family inputs
-NULL
-
-#' Outputs
+#' @section Layout:
 #'
-#' Reactive outputs.
+#' Included are a handful of tools for building applications for devices and
+#' screens of varying sizes. For real control over spacing elements be sure to
+#' check out [flex()], which gives you the power of flexbox layout.
 #'
-#' @noRd
-#' @family outputs
-NULL
-
-#' Thruputs
+#' **Familiar variants**
 #'
-#' Yonder includes new reactive *thruputs*.
+#' Looking for ... ?
 #'
-#' @noRd
-#' @family thruputs
-NULL
+#' * `fluidRow()` use [row()]
+#'
+#' * `fixedPage()`, `fluidPage()`, or `sidebarLayout()` use [container()],
+#'   [row()], and [column()]
+#'
+#' * `navbarPage()` use [navbar()]
+#'
+"_PACKAGE"

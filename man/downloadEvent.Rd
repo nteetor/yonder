@@ -48,4 +48,7 @@ download.
 }
 }
 
+\seealso{
+Other utilities: \code{\link{updateInput}}
+}
 \concept{utilities}

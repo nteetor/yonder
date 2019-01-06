@@ -42,3 +42,7 @@ values.
 If specifying new values with \code{values}, both \code{choices} and \code{selected} need to
 refer to these new values.
 }
+\seealso{
+Other utilities: \code{\link{downloadEvent}}
+}
+\concept{utilities}

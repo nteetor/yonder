@@ -1,17 +1,3 @@
-#' Content
-#'
-#' Build page content.
-#'
-#' @section Familiar variants:
-#'
-#' Looking for ...
-#'
-#' * `withProgress()` use [progressOutlet()]
-#'
-#' @noRd
-#' @family content
-NULL
-
 #' Headings
 #'
 #' Display headings are not meant to replace the standard HTML heading tags,

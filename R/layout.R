@@ -1,20 +1,3 @@
-#' Layout
-#'
-#' Application layout.
-#'
-#' @section Familiar variants:
-#'
-#' Looking for ...
-#'
-#' * `fluidRow()` use [row()]
-#'
-#' * `fixedPage()`, `fluidPage()` or `sidebarLayout()` use [container()],
-#'   [row()], and [column()]
-#'
-#' @noRd
-#' @family layout
-NULL
-
 #' Grid layout
 #'
 #' These functions are the foundation of any application. Grid elements are

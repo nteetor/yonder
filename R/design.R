@@ -1,11 +1,3 @@
-#' Design
-#'
-#' Easily modify tag elements with design utility functions.
-#'
-#' @noRd
-#' @family design
-NULL
-
 .colors <- c(
   "red",
   "purple",

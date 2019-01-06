@@ -1,11 +1,3 @@
-#' Utilities
-#'
-#' Server-side functions.
-#'
-#' @noRd
-#' @family utilities
-NULL
-
 #' Update input
 #'
 #' Modify an input's choices, values, or selected choices. Importantly, an
@@ -42,6 +34,7 @@ NULL
 #' If specifying new values with `values`, both `choices` and `selected` need to
 #' refer to these new values.
 #'
+#' @family utilities
 #' @export
 updateInput <- function(id, choices = NULL, values = NULL, selected = NULL,
                         session = getDefaultReactiveDomain()) {

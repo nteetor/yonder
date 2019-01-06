@@ -37,6 +37,7 @@ parameters:
 details: |-
   If specifying new values with `values`, both `choices` and `selected` need to
   refer to these new values.
+family: utilities
 export: ''
 rdname: updateInput
 sections: []
