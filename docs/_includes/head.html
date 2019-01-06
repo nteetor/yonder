@@ -11,9 +11,9 @@
 
   {% for file in site.hyderogen.assets %}
   {% if file.ext == "css" %}
-  <link rel="stylesheet" href="{{ file.path }}">
+  <link rel="stylesheet" href={{ site.baseurl }}{{ file.path }}>
   {% elsif file.ext == "js" %}
-  <script src="{{ file.path }}" type="text/javascript"></script>
+  <script src={{ site.baseurl }}{{ file.path }} type="text/javascript"></script>
   {% endif %}
   {% endfor %}
 

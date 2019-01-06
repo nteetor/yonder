@@ -40,7 +40,7 @@ incremental: false
 detach: false
 port: 4000
 host: 127.0.0.1
-baseurl: "" # does not include hostname
+baseurl: /yonder # does not include hostname
 show_dir_listing: false
 
 # Outputting
@@ -105,5 +105,5 @@ hyderogen:
   - ext: js
     path: /assets/js/yonder.min.js
   - ext: js
-    path: /assets/js/iris-json-def3f389f6e.js
+    path: /assets/js/iris-json-196235184cfe.js
 

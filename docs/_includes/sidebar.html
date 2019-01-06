@@ -13,14 +13,14 @@
         class = "mt-3"
         {% endif %}>
       <a class="text-dark"
-         href="{{ family.items.first.url }}"
+         href={{ site.baseurl }}{{ family.items.first.url }}
          >{{ family.name | url_decode | replace: '/', '' | capitalize }}</a>
     </dt>
     {% if this.dir == family.items.first.dir %}
     {% for item in family.items %}
     <dd class="{% if forloop.last == true %}mb-3{% else %}mb-1{% endif %}">
       <a class="text-muted"
-         href={{ item.url }}
+         href={{ site.baseurl }}{{ item.url }}
          >{{ item.rdname }}</a>
     </dd>
     {% endfor %}
