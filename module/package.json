@@ -5,7 +5,7 @@
   "main": "dist/js/yonder.min.js",
   "dependencies": {
     "@babel/polyfill": "^7.0.0",
-    "bootstrap": "^4.1.3",
+    "bootstrap": "^4.2.1",
     "file-saver": "^1.3.8",
     "flatpickr": "^4.5.2",
     "ion-rangeslider": "^2.2.0",

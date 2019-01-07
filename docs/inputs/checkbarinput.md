@@ -46,8 +46,8 @@ examples:
     output: |-
       <div class="yonder-checkbox" id="checkbox1">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-708-835" name="checkbox1" value="Choice 1" checked/>
-          <label class="custom-control-label" for="checkbox-708-835">Choice 1</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-855-256" name="checkbox1" value="Choice 1" checked/>
+          <label class="custom-control-label" for="checkbox-855-256">Choice 1</label>
           <div class="invalid-feedback"></div>
         </div>
       </div>
@@ -62,13 +62,13 @@ examples:
     output: |-
       <div class="yonder-checkbox" id="checkbox2">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-832-831" name="checkbox2" value="Choice 1"/>
-          <label class="custom-control-label" for="checkbox-832-831">Choice 1</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-658-561" name="checkbox2" value="Choice 1"/>
+          <label class="custom-control-label" for="checkbox-658-561">Choice 1</label>
           <div class="invalid-feedback"></div>
         </div>
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-983-390" name="checkbox2" value="Choice 2"/>
-          <label class="custom-control-label" for="checkbox-983-390">Choice 2</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-850-159" name="checkbox2" value="Choice 2"/>
+          <label class="custom-control-label" for="checkbox-850-159">Choice 2</label>
           <div class="invalid-feedback"></div>
         </div>
       </div>
@@ -84,18 +84,18 @@ examples:
     output: |-
       <div class="yonder-checkbox" id="checkbox3">
         <div class="custom-control custom-checkbox custom-control-inline">
-          <input class="custom-control-input" type="checkbox" id="checkbox-767-67" name="checkbox3" value="Choice 1"/>
-          <label class="custom-control-label" for="checkbox-767-67">Choice 1</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-933-214" name="checkbox3" value="Choice 1"/>
+          <label class="custom-control-label" for="checkbox-933-214">Choice 1</label>
           <div class="invalid-feedback"></div>
         </div>
         <div class="custom-control custom-checkbox custom-control-inline">
-          <input class="custom-control-input" type="checkbox" id="checkbox-740-469" name="checkbox3" value="Choice 2"/>
-          <label class="custom-control-label" for="checkbox-740-469">Choice 2</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-962-786" name="checkbox3" value="Choice 2"/>
+          <label class="custom-control-label" for="checkbox-962-786">Choice 2</label>
           <div class="invalid-feedback"></div>
         </div>
         <div class="custom-control custom-checkbox custom-control-inline">
-          <input class="custom-control-input" type="checkbox" id="checkbox-127-445" name="checkbox3" value="Choice 3"/>
-          <label class="custom-control-label" for="checkbox-127-445">Choice 3</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-895-712" name="checkbox3" value="Choice 3"/>
+          <label class="custom-control-label" for="checkbox-895-712">Choice 3</label>
           <div class="invalid-feedback"></div>
         </div>
       </div>
