@@ -32,6 +32,7 @@ Other content: \code{\link{alert}},
   \code{\link{dropdown}}, \code{\link{jumbotron}},
   \code{\link{modal}}, \code{\link{navContent}},
   \code{\link{popover}}, \code{\link{pre}},
-  \code{\link{progressOutlet}}, \code{\link{tooltip}}
+  \code{\link{progressOutlet}}, \code{\link{toast}},
+  \code{\link{tooltip}}
 }
 \concept{content}

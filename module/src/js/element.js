@@ -38,6 +38,6 @@ Shiny.addCustomMessageHandler("yonder:element", (msg) => {
   } else if (msg.type === "remove") {
     _remove(msg.data);
   } else {
-    console.warn(`no element method _${ msg.type }`);
+    console.warn(`no element ${ msg.type } method`);
   }
 });

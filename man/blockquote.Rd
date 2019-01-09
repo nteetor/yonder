@@ -42,6 +42,6 @@ Other content: \code{\link{alert}}, \code{\link{card}},
   \code{\link{jumbotron}}, \code{\link{modal}},
   \code{\link{navContent}}, \code{\link{popover}},
   \code{\link{pre}}, \code{\link{progressOutlet}},
-  \code{\link{tooltip}}
+  \code{\link{toast}}, \code{\link{tooltip}}
 }
 \concept{content}

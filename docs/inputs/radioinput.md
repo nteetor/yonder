@@ -54,20 +54,20 @@ examples:
     output: |-
       <div class="yonder-radio" id="stacked">
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-756-477" name="stacked" value="Vehicula adipiscing mattis" checked/>
-          <label class="custom-control-label" for="radio-756-477">Vehicula adipiscing mattis</label>
+          <input class="custom-control-input" type="radio" id="radio-857-362" name="stacked" value="Vehicula adipiscing mattis" checked/>
+          <label class="custom-control-label" for="radio-857-362">Vehicula adipiscing mattis</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-322-193" name="stacked" value="Magna nullam"/>
-          <label class="custom-control-label" for="radio-322-193">Magna nullam</label>
+          <input class="custom-control-input" type="radio" id="radio-424-485" name="stacked" value="Magna nullam"/>
+          <label class="custom-control-label" for="radio-424-485">Magna nullam</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-178-814" name="stacked" value="Aenean venenatis"/>
-          <label class="custom-control-label" for="radio-178-814">Aenean venenatis</label>
+          <input class="custom-control-input" type="radio" id="radio-732-559" name="stacked" value="Aenean venenatis"/>
+          <label class="custom-control-label" for="radio-732-559">Aenean venenatis</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-904-403" name="stacked" value="Tristique quam porta"/>
-          <label class="custom-control-label" for="radio-904-403">Tristique quam porta</label>
+          <input class="custom-control-input" type="radio" id="radio-544-96" name="stacked" value="Tristique quam porta"/>
+          <label class="custom-control-label" for="radio-544-96">Tristique quam porta</label>
         </div>
         <div class="invalid-feedback"></div>
       </div>
@@ -87,16 +87,16 @@ examples:
     output: |-
       <div class="yonder-radio" id="inline">
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-682-649" name="inline" value="Choice 1" checked/>
-          <label class="custom-control-label" for="radio-682-649">Choice 1</label>
+          <input class="custom-control-input" type="radio" id="radio-460-811" name="inline" value="Choice 1" checked/>
+          <label class="custom-control-label" for="radio-460-811">Choice 1</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-220-581" name="inline" value="Choice 2"/>
-          <label class="custom-control-label" for="radio-220-581">Choice 2</label>
+          <input class="custom-control-input" type="radio" id="radio-55-466" name="inline" value="Choice 2"/>
+          <label class="custom-control-label" for="radio-55-466">Choice 2</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-286-482" name="inline" value="Choice 3"/>
-          <label class="custom-control-label" for="radio-286-482">Choice 3</label>
+          <input class="custom-control-input" type="radio" id="radio-365-430" name="inline" value="Choice 3"/>
+          <label class="custom-control-label" for="radio-365-430">Choice 3</label>
         </div>
         <div class="invalid-feedback"></div>
       </div>

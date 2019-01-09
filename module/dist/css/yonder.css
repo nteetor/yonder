@@ -1,66 +1,6 @@
 /*!
  * yonder
  */
-/*
- * Based on toasts from materializecss
- * https://github.com/Dogfalo/materialize/blob/master/sass/components/_toast.scss
- */
-.yonder-alert-container {
-  display: block;
-  position: fixed;
-  z-index: 9001;
-}
-
-@media only screen and (max-width: 576px) {
-  .yonder-alert-container {
-    bottom: 0%;
-    min-width: 100%;
-  }
-}
-
-@media only screen and (min-width: 577px) and (max-width: 768px) {
-  .yonder-alert-container {
-    bottom: 7%;
-    right: 5%;
-    max-width: 90%;
-  }
-}
-
-@media only screen and (min-width: 769px) {
-  .yonder-alert-container {
-    top: 10%;
-    right: 7%;
-    max-width: 86%;
-  }
-}
-
-.alert {
-  font-size: 1.1rem;
-  cursor: default;
-}
-
-.alert .alert-action {
-  margin-left: 3rem;
-  margin-right: -20px;
-  background: transparent;
-  border: 0;
-  color: inherit;
-  font-weight: 500;
-  text-transform: uppercase;
-}
-
-.alert .alert-action:focus {
-  outline: none;
-  box-shadow: none;
-}
-
-@media only screen and (max-width: 576px) {
-  .alert {
-    width: 100%;
-    border-radius: 0;
-  }
-}
-
 .yonder-badge:empty {
   display: inline-block;
   visibility: hidden;
@@ -1189,6 +1129,12 @@
 }
 
 /* disable style-lint */
+.yonder-toast-container {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 html {
   height: 100%;
 }

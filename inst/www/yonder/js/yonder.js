@@ -1527,98 +1527,6 @@
   Shiny.inputBindings.register(tableInputBinding, "yonder.tableInput");
   Shiny.outputBindings.register(tableOutputBinding, "yonder.tableOutput");
 
-  var alertInputBinding = new Shiny.InputBinding();
-  $(function () {
-    $(document.body).append($("<div class='yonder-alert-container' id='alert-container'></div>"));
-  });
-  $.extend(alertInputBinding, {
-    Selector: {
-      SELF: ".yonder-alert-container"
-    },
-    Alerts: [],
-    getValue: function getValue(el) {
-      return null;
-    },
-    receiveMessage: function receiveMessage(el, msg) {
-      var _this = this;
-
-      if (msg.type === undefined) {
-        return;
-      }
-
-      if (msg.type === "show") {
-        var data = msg.data;
-        var $alert = $(data.content);
-
-        if (data.action) {
-          $alert.append($("<button class=\"btn btn-link alert-link alert-action\">" + data.action + "</button>"));
-          $alert.on("click", ".alert-action", function (e) {
-            Shiny.onInputChange(data.action, true);
-          });
-        }
-
-        this.Alerts.push({
-          el: $alert,
-          action: data.action
-        });
-        $alert.appendTo($(this.Selector.SELF)).velocity({
-          top: 0,
-          opacity: 1
-        }, {
-          duration: 300,
-          easing: "easeOutCubic",
-          queue: false
-        });
-
-        if (data.duration !== null) {
-          setTimeout(function () {
-            if (_this.Alerts.length === 0) {
-              return;
-            }
-
-            var item = _this.Alerts.shift();
-
-            if (item.action) {
-              Shiny.onInputChange(item.action, null);
-            }
-
-            item.el.remove();
-          }, data.duration);
-        }
-
-        return;
-      }
-
-      if (msg.type === "close") {
-        if (this.Alerts.length === 0) {
-          return;
-        }
-
-        var _data = msg.data;
-        var indeces = typeof _data.index === "number" ? [_data.index] : _data.index;
-        var text = typeof _data.text === "string" ? [_data.text] : _data.text;
-        var selector = Object.entries(_data.attrs).map(function (item) {
-          return "[" + item[0] + (item[1] ? (item[0] === "class" ? "*=" : "=") + item[1] : "") + "]";
-        }).join("");
-        this.Alerts = this.Alerts.filter(function (alert, index) {
-          var $el = $(alert.el);
-
-          if (indeces.includes(index) || text.includes($el.text()) || $el.is(selector)) {
-            if (alert.action) {
-              Shiny.onInputChange(alert.action, null);
-            }
-
-            $el.remove();
-            return false;
-          }
-
-          return true;
-        });
-      }
-    }
-  });
-  Shiny.inputBindings.register(alertInputBinding, "yonder.alertInput");
-
   Shiny.addCustomMessageHandler("yonder:collapse", function (msg) {
     if (msg.type === undefined || msg.data === undefined || msg.data.target === undefined) {
       return false;
@@ -1676,7 +1584,7 @@
     } else if (msg.type === "remove") {
       _remove(msg.data);
     } else {
-      console.warn("no element method _" + msg.type);
+      console.warn("no element " + msg.type + " method");
     }
   });
 
@@ -1718,6 +1626,47 @@
     }
 
     return false;
+  });
+
+  $(function () {
+    document.body.insertAdjacentHTML("beforeend", "<div class='yonder-toast-container'></div>");
+    $(".yonder-toast-container").on("hidden.bs.toast", ".toast", function (e) {
+      if (e.currentTarget.hasAttribute("data-action")) {
+        var action = e.currentTarget.getAttribute("data-action");
+        Shiny.onInputChange(action, true);
+        setTimeout(function () {
+          return Shiny.onInputChange(action, null);
+        }, 100);
+      }
+
+      e.delegateTarget.removeChild(e.currentTarget);
+    });
+  });
+  Shiny.addCustomMessageHandler("yonder:toast", function (msg) {
+    var _show = function _show(data) {
+      document.querySelector(".yonder-toast-container").insertAdjacentHTML("beforeend", data.content);
+      $(".yonder-toast-container > .toast:last-child").toast("show");
+    };
+
+    var _close = function _close(data) {
+      var toasts = document.querySelectorAll(".yonder-toast-container .toast");
+
+      if (toasts.length) {
+        $(toasts).toast("hide");
+      }
+    };
+
+    if (!msg.type) {
+      return;
+    }
+
+    if (msg.type === "show") {
+      _show(msg.data);
+    } else if (msg.type === "close") {
+      _close(msg.data);
+    } else {
+      console.warn("no toast " + msg.type + " method");
+    }
   });
 
   $(function () {
