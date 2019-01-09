@@ -58,6 +58,7 @@ Other content: \code{\link{alert}},
   \code{\link{dropdown}}, \code{\link{img}},
   \code{\link{jumbotron}}, \code{\link{modal}},
   \code{\link{navContent}}, \code{\link{popover}},
-  \code{\link{pre}}, \code{\link{progressOutlet}}
+  \code{\link{pre}}, \code{\link{progressOutlet}},
+  \code{\link{toast}}
 }
 \concept{content}

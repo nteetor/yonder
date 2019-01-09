@@ -22,10 +22,10 @@ import "./output-binding-progress.js";
 
 import "./thruput-binding-table.js";
 
-import "./alert.js";
 import "./collapsible.js";
 import "./element.js";
 import "./modal.js";
+import "./toast.js";
 
 $(() => {
   $("[data-toggle=\"tooltip\"]").tooltip();
