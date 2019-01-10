@@ -239,6 +239,7 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
     footer
   )
 
+  this <- tagConcatAttributes(this, attribs(args))
   this <- attachDependencies(this, bootstrapDep())
 
   this
