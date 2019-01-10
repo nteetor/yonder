@@ -10,7 +10,7 @@ $.extend(linkInputBinding, {
       callback: (el) => el.value = +el.value + 1
     }
   ],
-  Type: "yonder.link",
+  // Type: "yonder.link",
   initialize: function(el) {
     el.value = 0;
   },
