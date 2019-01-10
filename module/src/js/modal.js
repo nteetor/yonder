@@ -1,45 +1,46 @@
+$(() => {
+  $(document).on("hidden.bs.modal", ".modal", (e) => {
+    Shiny.unbindAll(e.currentTarget);
+  });
+});
+
 Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
   if (msg.type === undefined) {
     return false;
   }
 
-  if (msg.type === "close") {
+  let _close = function(data) {
     let modal = document.body.querySelector(".modal");
-
-    if (modal === null) {
-      return false;
-    }
-
-    Shiny.unbindAll(modal);
-
     $(modal).modal("hide");
+  };
 
-    return true;
-  }
-
-  if (msg.type === "show") {
+  let _show = function(data) {
     let modal = document.body.querySelector(".modal");
 
     if (modal !== null) {
-      modal.innerHTML = msg.data.content;
+      modal.innerHTML = data.content;
     } else {
       $(document.body).append(
-        $(`<div class="modal fade" tabindex=-1 role="dialog">${ msg.data.content }</div>`)
+        $(`<div class="modal fade" tabindex=-1 role="dialog">${ data.content }</div>`)
       );
       modal = document.body.querySelector(".modal");
     }
 
-    if (msg.data.dependencies !== undefined) {
-      Shiny.renderDependencies(msg.data.dependencies);
+    if (data.dependencies !== undefined) {
+      Shiny.renderDependencies(data.dependencies);
     }
 
     Shiny.initializeInputs(modal);
     Shiny.bindAll(modal);
 
     $(modal).modal("show");
+  };
 
-    return true;
+  if (msg.type === "close") {
+    _close(msg.data);
+  } else if (msg.type === "show"){
+    _show(msg.data);
+  } else {
+    console.warn(`no modal ${ msg.type } method`);
   }
-
-  return false;
 });

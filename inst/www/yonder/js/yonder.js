@@ -724,7 +724,7 @@
         return el.value = +el.value + 1;
       }
     }],
-    Type: "yonder.link",
+    // Type: "yonder.link",
     initialize: function initialize(el) {
       el.value = 0;
     },
@@ -1588,44 +1588,47 @@
     }
   });
 
+  $(function () {
+    $(document).on("hidden.bs.modal", ".modal", function (e) {
+      Shiny.unbindAll(e.currentTarget);
+    });
+  });
   Shiny.addCustomMessageHandler("yonder:modal", function (msg) {
     if (msg.type === undefined) {
       return false;
     }
 
-    if (msg.type === "close") {
+    var _close = function _close(data) {
+      var modal = document.body.querySelector(".modal");
+      $(modal).modal("hide");
+    };
+
+    var _show = function _show(data) {
       var modal = document.body.querySelector(".modal");
 
-      if (modal === null) {
-        return false;
-      }
-
-      Shiny.unbindAll(modal);
-      $(modal).modal("hide");
-      return true;
-    }
-
-    if (msg.type === "show") {
-      var _modal = document.body.querySelector(".modal");
-
-      if (_modal !== null) {
-        _modal.innerHTML = msg.data.content;
+      if (modal !== null) {
+        modal.innerHTML = data.content;
       } else {
-        $(document.body).append($("<div class=\"modal fade\" tabindex=-1 role=\"dialog\">" + msg.data.content + "</div>"));
-        _modal = document.body.querySelector(".modal");
+        $(document.body).append($("<div class=\"modal fade\" tabindex=-1 role=\"dialog\">" + data.content + "</div>"));
+        modal = document.body.querySelector(".modal");
       }
 
-      if (msg.data.dependencies !== undefined) {
-        Shiny.renderDependencies(msg.data.dependencies);
+      if (data.dependencies !== undefined) {
+        Shiny.renderDependencies(data.dependencies);
       }
 
-      Shiny.initializeInputs(_modal);
-      Shiny.bindAll(_modal);
-      $(_modal).modal("show");
-      return true;
+      Shiny.initializeInputs(modal);
+      Shiny.bindAll(modal);
+      $(modal).modal("show");
+    };
+
+    if (msg.type === "close") {
+      _close(msg.data);
+    } else if (msg.type === "show") {
+      _show(msg.data);
+    } else {
+      console.warn("no modal " + msg.type + " method");
     }
-
-    return false;
   });
 
   $(function () {
