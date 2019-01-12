@@ -4,14 +4,17 @@
 \alias{fileInput}
 \title{Upload user files}
 \usage{
-fileInput(id, placeholder = "Choose file", left = NULL,
-  right = "Browse", ..., multiple = TRUE, accept = NULL)
+fileInput(id, placeholder = "Choose file", browse = "Browse",
+  left = NULL, right = NULL, ..., multiple = TRUE, accept = NULL)
 }
 \arguments{
 \item{id}{A character string specifying the reactive id of the input.}
 
 \item{placeholder}{A character string specifying the text inside the file
 input, defaults to \code{"Choose file"}.}
+
+\item{browse}{A character string specifying the label of file input, defaults
+to \code{"Browse"}.}
 
 \item{left, right}{A character string or button element placed prepended or
 appended respectively to the file input. For more information refer to
@@ -55,19 +58,25 @@ page.
 
 \examples{
 
-## Standard file input
+### Standard file input
 
-fileInput(id = NULL)
+fileInput(id = "file1")
 
-## Adding another button
+### Adding a button
 
 fileInput(
-  id = NULL,
-  left = buttonInput(NULL, "Upload") \%>\%
-    background("transparent") \%>\%
-    border("green")
-) \%>\%
-  margin("auto", 0, "auto", 0)
+  id = "file2",
+  left = buttonInput("upload", "Upload") \%>\%
+    background("green")
+)
+
+### Customizing text
+
+fileInput(
+  id = "file3",
+  placeholder = "Pick a file",
+  browse = "Go go go!"
+)
 
 }
 \seealso{

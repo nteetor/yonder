@@ -5,6 +5,9 @@
 #' @param placeholder A character string specifying the text inside the file
 #'   input, defaults to `"Choose file"`.
 #'
+#' @param browse A character string specifying the label of file input, defaults
+#'   to `"Browse"`.
+#'
 #' @param left,right A character string or button element placed prepended or
 #'   appended respectively to the file input. For more information refer to
 #'   [groupInput()].
@@ -46,22 +49,29 @@
 #' @export
 #' @examples
 #'
-#' ## Standard file input
+#' ### Standard file input
 #'
-#' fileInput(id = NULL)
+#' fileInput(id = "file1")
 #'
-#' ## Adding another button
+#' ### Adding a button
 #'
 #' fileInput(
-#'   id = NULL,
-#'   left = buttonInput(NULL, "Upload") %>%
-#'     background("transparent") %>%
-#'     border("green")
-#' ) %>%
-#'   margin("auto", 0, "auto", 0)
+#'   id = "file2",
+#'   left = buttonInput("upload", "Upload") %>%
+#'     background("green")
+#' )
 #'
-fileInput <- function(id, placeholder = "Choose file", left = NULL,
-                      right = "Browse", ..., multiple = TRUE, accept = NULL) {
+#' ### Customizing text
+#'
+#' fileInput(
+#'   id = "file3",
+#'   placeholder = "Pick a file",
+#'   browse = "Go go go!"
+#' )
+#'
+fileInput <- function(id, placeholder = "Choose file", browse = "Browse",
+                      left = NULL, right = NULL, ...,
+                      multiple = TRUE, accept = NULL) {
   if (is_tag(left) && !tagIs(left, "button")) {
     stop(
       "invalid `fileInput()` argument, `left` must be a button element or ",
@@ -74,6 +84,13 @@ fileInput <- function(id, placeholder = "Choose file", left = NULL,
     stop(
       "invalid `fileInput()` argument, `right` must be a button element or ",
       "character string",
+      call. = FALSE
+    )
+  }
+
+  if (!is.character(browse)) {
+    stop(
+      "invalid `fileInput()` argument, `browse` must be a character string",
       call. = FALSE
     )
   }
@@ -114,6 +131,7 @@ fileInput <- function(id, placeholder = "Choose file", left = NULL,
       ),
       tags$label(
         class = "custom-file-label",
+        `data-browse` = browse,
         placeholder
       ),
       tags$div(
