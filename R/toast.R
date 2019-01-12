@@ -158,7 +158,7 @@ toast <- function(..., header = NULL) {
 
   attachDependencies(
     this,
-    c(bootstrapDep(), yonderDep())
+    yonderDep()
   )
 }
 

@@ -123,10 +123,8 @@ fileInput <- function(id, placeholder = "Choose file", left = NULL,
     right
   )
 
-  input <- attachDependencies(
+  attachDependencies(
     input,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
-
-  input
 }

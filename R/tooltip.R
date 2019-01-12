@@ -64,10 +64,8 @@ tooltip <- function(.tag, text, placement = "top") {
   .tag$attribs$`data-placement` <- placement
   .tag$attribs$title <- as.character(text)
 
-  .tag <- attachDependencies(
+  attachDependencies(
     .tag,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
-
-  .tag
 }

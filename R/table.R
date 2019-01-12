@@ -129,12 +129,10 @@ tableThruput <- function(id, ..., borders = "rows", striped = FALSE,
     ...
   )
 
-  thruput <- attachDependencies(
+  attachDependencies(
     thruput,
-    c(shinyDep(), yonderDep(), bootstrapDep(), chabudaiDep())
+    c(yonderDep(), chabudaiDep())
   )
-
-  thruput
 }
 
 #' @rdname tableThruput

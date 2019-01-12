@@ -72,12 +72,10 @@ badgeOutput <- function(id, ...) {
     ...
   )
 
-  output <- attachDependencies(
+  attachDependencies(
     output,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
-
-  output
 }
 
 #' @rdname badgeOutput

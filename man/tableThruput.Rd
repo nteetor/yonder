@@ -71,13 +71,13 @@ table id as an input.
 # These live examples have been populated automatically for the sake of
 # the demo.
 
-\% <script>
-\% $(function() {
-\%   $(".yonder-table").each(function() {
-\%     $(this).table({ data: iris });
-\%   });
-\% });
-\% </script>
+% <script>
+% $(function() {
+%   $(".yonder-table").each(function() {
+%     $(this).table({ data: iris });
+%   });
+% });
+% </script>
 
 tableThruput(
   id = "table1",  # <-

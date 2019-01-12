@@ -125,7 +125,7 @@ checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
 
   attachDependencies(
     element,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
 }
 
@@ -174,6 +174,6 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
 
   attachDependencies(
     element,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
 }

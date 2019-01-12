@@ -106,10 +106,10 @@ navbar <- function(..., brand = NULL) {
     )
   )
 
-  this <- attachDependencies(
-    tagConcatAttributes(this, attrs),
-    c(shinyDep(), yonderDep(), bootstrapDep())
-  )
+  this <- tagConcatAttributes(this, attrs)
 
-  this
+  attachDependencies(
+    this,
+    yonderDep()
+  )
 }

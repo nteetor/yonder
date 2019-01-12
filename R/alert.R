@@ -40,6 +40,6 @@ alert <- function(..., title = NULL) {
       title,
       ...
     ),
-    bootstrapDep()
+    yonderDep()
   )
 }

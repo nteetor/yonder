@@ -103,12 +103,10 @@ formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
     submit
   )
 
-  input <- attachDependencies(
+  attachDependencies(
     input,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
-
-  input
 }
 
 #' Add labels, help text, and formatting to inputs
@@ -212,12 +210,10 @@ formGroup <- function(label, input, help = NULL,..., width = NULL) {
     }
   )
 
-  this <- attachDependencies(
+  attachDependencies(
     this,
-    bootstrapDep()
+    yonderDep()
   )
-
-  this
 }
 
 #' @rdname formGroup
@@ -228,12 +224,10 @@ formRow <- function(...) {
     ...
   )
 
-  this <- attachDependencies(
+  attachDependencies(
     this,
-    bootstrapDep()
+    yonderDep()
   )
-
-  this
 }
 
 #' Group and label multiple inputs
@@ -305,10 +299,8 @@ fieldset <- function(..., legend = NULL) {
     attrs
   )
 
-  this <- attachDependencies(
+  attachDependencies(
     this,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
-
-  this
 }

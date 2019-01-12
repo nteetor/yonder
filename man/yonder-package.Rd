@@ -73,9 +73,7 @@ Other contributors:
   \item Eli Grey (FileSaver.js library) [contributor, copyright holder]
   \item Denis Ineshin (ion.rangeSlider library) [contributor, copyright holder]
   \item  JS Foundation (jQuery library) [copyright holder]
-  \item Gregory Petrosyan (flatpicker library) [contributor, copyright holder]
   \item Federico Zivolo (popper.js library) [contributor, copyright holder]
-  \item Julian Shapiro (Velocity.js library) [contributor, copyright holder]
 }
 
 }

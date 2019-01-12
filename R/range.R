@@ -140,12 +140,10 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
     ...
   )
 
-  input <- attachDependencies(
+  attachDependencies(
     input,
-    c(shinyDep(), yonderDep(), bootstrapDep(), ionSliderDep())
+    c(yonderDep(), ionSliderDep())
   )
-
-  input
 }
 
 #' @rdname rangeInput
@@ -176,12 +174,10 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
     ...
   )
 
-  input <- attachDependencies(
+  attachDependencies(
     input,
-    c(shinyDep(), yonderDep(), bootstrapDep(), ionSliderDep())
+    c(yonderDep(), ionSliderDep())
   )
-
-  input
 }
 
 #' @rdname rangeInput
@@ -216,10 +212,8 @@ sliderInput <- function(id, choices, values = choices, selected = NULL,
     ...
   )
 
-  input <- attachDependencies(
+  attachDependencies(
     input,
-    c(shinyDep(), yonderDep(), bootstrapDep(), ionSliderDep())
+    c(yonderDep(), ionSliderDep())
   )
-
-  input
 }

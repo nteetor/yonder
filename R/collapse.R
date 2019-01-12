@@ -79,9 +79,7 @@ collapsiblePane <- function(id, ..., show = FALSE) {
     ...
   )
 
-  pane <- attachDependencies(pane, c(yonderDep(), bootstrapDep()))
-
-  pane
+  attachDependencies(pane, yonderDep())
 }
 
 #' @rdname collapsiblePane

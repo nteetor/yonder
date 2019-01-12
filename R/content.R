@@ -48,7 +48,7 @@ d <- function(level, ...) {
 
   attachDependencies(
     element,
-    bootstrapDep()
+    yonderDep()
   )
 }
 
@@ -98,6 +98,6 @@ jumbotron <- function(title, subtitle, ..., fluid = FALSE) {
 
   attachDependencies(
     element,
-    bootstrapDep()
+    yonderDep()
   )
 }

@@ -130,36 +130,35 @@ column <- function(..., width = NULL) {
     classes <- "col"
   }
 
-  tag <- attachDependencies(tags$div(...), bootstrapDep())
-
-  tagAddClass(tag, classes)
+  attachDependencies(
+    tagAddClass(tags$div(...), classes),
+    yonderDep()
+  )
 }
 
 #' @rdname column
 #' @export
 row <- function(..., gutters = TRUE) {
-  this <- tags$div(
-    class = collate(
-      "row",
-      if (!gutters) "no-gutter"
+  attachDependencies(
+    tags$div(
+      class = collate(
+        "row",
+        if (!gutters) "no-gutter"
+      ),
+      ...
     ),
-    ...
+    yonderDep()
   )
-
-  this <- attachDependencies(this, bootstrapDep())
-
-  this
 }
 
 #' @rdname column
 #' @export
 container <- function(..., center = FALSE) {
-  this <- tags$div(
-    class = if (center) "container" else "container-fluid",
-    ...
+  attachDependencies(
+    tags$div(
+      class = if (center) "container" else "container-fluid",
+      ...
+    ),
+    yonderDep()
   )
-
-  this <- attachDependencies(this, bootstrapDep())
-
-  this
 }

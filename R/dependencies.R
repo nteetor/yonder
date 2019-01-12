@@ -7,7 +7,6 @@ yonderDep <- function() {
         file = system.file("www/yonder", package = "yonder"),
         href = "yonder/yonder"
       ),
-      stylesheet = "css/yonder.min.css",
       script = "js/yonder.min.js"
     ),
     htmlDependency(
@@ -19,34 +18,6 @@ yonderDep <- function() {
       ),
       script = "FileSaver.min.js"
     ),
-    htmlDependency(
-      name = "velocity",
-      version = "1.5.1",
-      src = c(
-        file = system.file("www/velocity", package = "yonder"),
-        href = "yonder/velocity"
-      ),
-      script = "velocity.min.js"
-    )
-  )
-}
-
-shinyDep <- function() {
-  c(
-    attr(suppressDependencies("shiny"), "html_dependencies")[[1]],
-    list(
-      htmlDependency(
-        name = "shiny",
-        version = "3.3.3",
-        src = c(href = "shared"),
-        script = "shiny.min.js"
-      )
-    )
-  )
-}
-
-bootstrapDep <- function() {
-  list(
     htmlDependency(
       name = "popper",
       version = "1.14.3",
@@ -67,13 +38,28 @@ bootstrapDep <- function() {
     ),
     htmlDependency(
       name = "bootstrap",
-      version = "4.1.2",
+      version = "4.2.1",
       src = c(
         file = system.file("www/bootstrap", package = "yonder"),
         href = "yonder/bootstrap"
       ),
       stylesheet = "css/bootstrap.min.css",
       script = "js/bootstrap.min.js"
+    ),
+    htmlDependency(
+      name = "shiny",
+      version = "3.3.3",
+      src = c(href = "shared"),
+      script = "shiny.min.js"
+    )
+  )
+}
+
+shinyDep <- function() {
+  c(
+    attr(suppressDependencies("shiny"), "html_dependencies")[[1]],
+    list(
+
     )
   )
 }

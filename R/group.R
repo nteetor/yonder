@@ -151,12 +151,10 @@ groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
     ...
   )
 
-  input <- attachDependencies(
+  attachDependencies(
     input,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
-
-  input
 }
 
 isValidAddon <- function(tag) {

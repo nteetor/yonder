@@ -133,12 +133,10 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
     }
   )
 
-  input <- attachDependencies(
+  attachDependencies(
     input,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
-
-  input
 }
 
 #' @rdname radioInput
@@ -181,10 +179,8 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL) {
     )
   )
 
-  input <- attachDependencies(
+  attachDependencies(
     input,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
-
-  input
 }

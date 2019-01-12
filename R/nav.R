@@ -159,7 +159,7 @@ navInput <- function(id, choices, values = choices, selected = NULL, ...,
 
   attachDependencies(
     element,
-    c(yonderDep(), shinyDep(), bootstrapDep())
+    yonderDep()
   )
 }
 
@@ -405,7 +405,7 @@ navContent <- function(...) {
 
   attachDependencies(
     panes,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
 }
 
@@ -421,7 +421,7 @@ navPane <- function(id, ...) {
 
   attachDependencies(
     pane,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
 }
 

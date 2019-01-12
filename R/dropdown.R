@@ -158,12 +158,10 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
     )
   )
 
-  this <- attachDependencies(
+  attachDependencies(
     this,
-    bootstrapDep()
+    yonderDep()
   )
-
-  this
 }
 
 dropdownItem <- function(base) {

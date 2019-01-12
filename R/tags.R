@@ -23,7 +23,7 @@ img <- function(src, ...) {
       src = src,
       ...
     ),
-    bootstrapDep()
+    yonderDep()
   )
 }
 
@@ -49,7 +49,7 @@ figure <- function(image, caption = NULL, ...) {
       },
       ...
     ),
-    bootstrapDep()
+    yonderDep()
   )
 }
 
@@ -95,7 +95,7 @@ blockquote <- function(..., source = NULL, align = "left") {
         tags$footer(class = "blockquote-footer", source)
       }
     ),
-    bootstrapDep()
+    yonderDep()
   )
 }
 
@@ -134,6 +134,6 @@ pre <- function(...) {
       class = "pre-scrollable",
       ...
     ),
-    bootstrapDep()
+    yonderDep()
   )
 }

@@ -89,12 +89,10 @@ popover <- function(..., title = NULL) {
 
   this <- tagConcatAttributes(this, attrs)
 
-  this <- attachDependencies(
+  attachDependencies(
     this,
-    c(yonderDep(), shinyDep(), bootstrapDep())
+    yonderDep()
   )
-
-  this
 }
 
 #' @rdname popover

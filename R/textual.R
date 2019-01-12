@@ -83,23 +83,19 @@ numberInput <- function(id, value = NULL, placeholder = NULL, ...) {
 }
 
 textualInput <- function(id, value, placeholder, ..., type) {
-  input <- tags$div(
-    class = "yonder-textual",
-    id = id,
-    tags$input(
-      class = "form-control",
-      type = type,
-      value = value,
-      placeholder = placeholder
+  attachDependencies(
+    tags$div(
+      class = "yonder-textual",
+      id = id,
+      tags$input(
+        class = "form-control",
+        type = type,
+        value = value,
+        placeholder = placeholder
+      ),
+      tags$div(class = "invalid-feedback"),
+      ...
     ),
-    tags$div(class = "invalid-feedback"),
-    ...
+    yonderDep()
   )
-
-  input <- attachDependencies(
-    input,
-    c(shinyDep(), yonderDep(), bootstrapDep())
-  )
-
-  input
 }

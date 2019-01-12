@@ -208,10 +208,8 @@ listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
     ...
   )
 
-  this <- attachDependencies(
+  attachDependencies(
     this,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
-
-  this
 }

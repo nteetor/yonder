@@ -97,13 +97,7 @@ hyderogen:
   - ext: js
     path: /assets/js/ion.rangeSlider.min.js
   - ext: js
-    path: /assets/js/velocity.min.js
-  - ext: css
-    path: /assets/css/yonder.min.css
-  - ext: js
-    path: /assets/js/yonder.js
-  - ext: js
     path: /assets/js/yonder.min.js
   - ext: js
-    path: /assets/js/iris-json-2debf131531.js
+    path: /assets/js/iris-json-c1d313c3b10.js
 

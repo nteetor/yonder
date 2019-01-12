@@ -56,14 +56,6 @@ license "https://raw.githubusercontent.com/eligrey/FileSaver.js/master/LICENSE.m
         "file-saver"
 
 #
-# flatpickr
-#
-header "flatpickr"
-
-license "https://raw.githubusercontent.com/flatpickr/flatpickr/master/LICENSE.md" \
-        "flatpickr"
-
-#
 # ion.rangeSlider
 #
 header "ion.rangeSlider"
@@ -86,14 +78,6 @@ header "popper.js"
 
 license "https://raw.githubusercontent.com/FezVrasta/popper.js/master/LICENSE.md" \
         "popper"
-
-#
-# velocity.js
-#
-header "Velocity.js"
-
-license "https://raw.githubusercontent.com/julianshapiro/velocity/master/LICENSE.md" \
-        "velocity"
 
 #
 # yonder

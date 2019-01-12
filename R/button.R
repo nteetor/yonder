@@ -96,7 +96,7 @@ buttonInput <- function(id, label, ..., block = FALSE) {
 
   attachDependencies(
     element,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
 }
 
@@ -118,7 +118,7 @@ submitInput <- function(label = "Submit", value = label, block = FALSE, ...) {
 
   attachDependencies(
     element,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
 }
 
@@ -134,7 +134,7 @@ linkInput <- function(id, text, ...) {
 
   attachDependencies(
     element,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
 }
 
@@ -207,6 +207,6 @@ buttonGroupInput <- function(id, labels, values = labels, ...) {
 
   attachDependencies(
     element,
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    yonderDep()
   )
 }

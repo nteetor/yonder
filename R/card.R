@@ -240,9 +240,8 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
   )
 
   this <- tagConcatAttributes(this, attribs(args))
-  this <- attachDependencies(this, bootstrapDep())
 
-  this
+  attachDependencies(this, yonderDep())
 }
 
 #' @rdname card
@@ -253,7 +252,5 @@ deck <- function(...) {
     ...
   )
 
-  this <- attachDependencies(this, bootstrapDep())
-
-  this
+  attachDependencies(this, yonderDep())
 }

@@ -24,9 +24,7 @@ elementOutput <- function(id, ...) {
     ...
   )
 
-  output <- attachDependencies(output, c(yonderDep(), shinyDep()))
-
-  output
+  attachDependencies(output, yonderDep())
 }
 
 #' @rdname elementOutput

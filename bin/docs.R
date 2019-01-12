@@ -24,9 +24,6 @@ site_assets <- c(
     "inst/www/ion-rangeslider/css/ion.rangeSlider.css",
     "inst/www/ion-rangeslider/css/ion.rangeSlider.skinFlat.css",
     "inst/www/ion-rangeslider/js/ion.rangeSlider.min.js",
-    "inst/www/velocity/velocity.min.js",
-    "inst/www/yonder/css/yonder.min.css",
-    "inst/www/yonder/js/yonder.js",
     "inst/www/yonder/js/yonder.min.js"
   )),
   iris_json

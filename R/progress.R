@@ -107,13 +107,15 @@
 #' )
 #'
 progressOutlet <- function(id, ...) {
+  this <- tags$div(
+    id = id,
+    class = "yonder-progress progress",
+    ...
+  )
+
   attachDependencies(
-    tags$div(
-      id = id,
-      class = "yonder-progress progress",
-      ...
-    ),
-    c(shinyDep(), yonderDep(), bootstrapDep())
+    this,
+    yonderDep()
   )
 }
 

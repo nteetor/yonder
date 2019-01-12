@@ -132,6 +132,6 @@ menuInput <- function(id, label, choices, values = choices, ...,
 
   attachDependencies(
     element,
-    c(yonderDep(), shinyDep(), bootstrapDep())
+    yonderDep()
   )
 }
