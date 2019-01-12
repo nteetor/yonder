@@ -11,8 +11,9 @@
 #'   be grouped into lists to create a menu with sections. `h6()` is the
 #'   recommended heading level for menu headers. Character vectors are converted
 #'   into paragraphs of text. To format menu text use `p()` and utility
-#'   functions. Named arguments are passed as HTML attributes to the parent
-#'   element.
+#'   functions.
+#'
+#'   Named arguments are passed as HTML attributes to the parent element.
 #'
 #' @param direction One of `"up"`, `"right"`, `"down"`, or `"left"` specifying
 #'   the direction in which the menu opens, defaults to `"down"`.
@@ -112,9 +113,8 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
     )
   }
 
-  args <- dots_list(...)
+  args <- list(...)
   items <- elements(args)
-  attrs <- attribs(args)
 
   this <- tags$div(
     class = collate(
@@ -157,6 +157,8 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
       )
     )
   )
+
+  this <- tagConcatAttributes(this, attribs(args))
 
   attachDependencies(
     this,

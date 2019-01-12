@@ -35,7 +35,6 @@ Depends:
 Imports:
     htmltools,
     jsonlite,
-    magrittr,
-    rlang
+    magrittr
 Suggests:
     testthat
