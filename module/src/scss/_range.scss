@@ -1,6 +1,6 @@
 // range
 
-.yonder-range {
+.irs {
   background-color: initial !important;
 
   .irs-line-mid,
@@ -93,12 +93,5 @@
 
   .irs-grid-text {
     color: $gray-700;
-  }
-}
-
-.range-nobar {
-  .irs-bar,
-  .irs-bar-edge {
-    background-color: $gray-200 !important;
   }
 }

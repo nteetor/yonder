@@ -1,0 +1,8 @@
+@each $prop, $abbrev in (width: w, height: h) {
+  @each $size, $length in $sizes {
+    .#{$abbrev}-#{$size} { #{$prop}: $length !important; }
+  }
+}
+
+.w-screen { width: 100vw !important; }
+.h-full { height: 100vh !important; }

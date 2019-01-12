@@ -1,0 +1,21 @@
+// colors
+$theme-colors: (
+  'red':     $red,
+  'purple':  $purple,
+  'indigo':  $indigo,
+  'blue':    $blue,
+  'cyan':    $cyan,
+  'teal':    $teal,
+  'green':   $green,
+  'yellow':  $yellow,
+  'amber':   $amber,
+  'orange':  $orange,
+  'grey':    $gray-100,
+  'white':   $white,
+  'black':   $black
+);
+
+$colors: ();
+
+// sizing
+$sizes: map-remove($sizes, 25, 50, 75, 100);

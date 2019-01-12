@@ -1,10 +1,4 @@
-// Variables
-
 // colors
-
-$white: #fff;
-$black: #000;
-
 $red:         #f44336;
 $pink:        #e91e63;
 $purple:      #9c27b0;
@@ -26,19 +20,8 @@ $blue-grey:   #607d8b;
 $grey:        #9e9e9e;
 $gray:        $grey;
 
-$gray-100: #f5f5f5;
-$gray-200: #eee;
-$gray-300: #e0e0e0;
-$gray-400: #bdbdbd;
-$gray-500: $grey;
-$gray-600: #757575;
-$gray-700: #616161;
-$gray-800: #424242;
-$gray-900: #212121;
-
-// width
-
-$widths: (
+// sizing
+$sizes: (
   '1': 1rem,
   '2': 2rem,
   '3': 3rem,
@@ -72,44 +55,18 @@ $widths: (
   'full': 100%
 );
 
-// height
+// links
+$link-color: $blue;
 
-$heights: (
-  '1': 1rem,
-  '2': 2rem,
-  '3': 3rem,
-  '4': 4rem,
-  '5': 5rem,
-  '6': 6rem,
-  '7': 7rem,
-  '8': 8rem,
-  '9': 9rem,
-  '10': 10rem,
-  '11': 11rem,
-  '12': 12rem,
-  '13': 13rem,
-  '14': 14rem,
-  '15': 15rem,
-  '16': 16rem,
-  '17': 17rem,
-  '18': 18rem,
-  '19': 19rem,
-  '20': 20rem,
-  'auto': auto,
-  'full': 100%,
-  'screen': 100vh
-);
-
-// text
+// fonts
+$font-size-base: 1rem;
+$font-size-lg: 1.125rem;
+$font-size-sm: .875rem;
 
 $font-sizes: (
   'xs': .75rem,
-  'sm': .875rem,
-  'base': 1rem,
-  'lg': 1.125rem,
+  'sm': $font-size-sm,
+  'base': $font-size-base,
+  'lg': $font-size-lg,
   'xl': 1.25rem
 );
-
-// range
-
-$range-border-radius: .25rem;

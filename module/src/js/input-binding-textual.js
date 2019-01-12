@@ -11,7 +11,7 @@ $.extend(textualInputBinding, {
   ],
   getValue: (el) => {
     let input = el.children[0];
-    return input.type === "number" ? parseInput(input.value, 10) : input.value;
+    return input.type === "number" ? parseInt(input.value, 10) : input.value;
   },
   getRatePolicy: function() {
     return {

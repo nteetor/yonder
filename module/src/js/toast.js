@@ -1,10 +1,10 @@
 $(() => {
   document.body.insertAdjacentHTML(
     "beforeend",
-    "<div class='yonder-toast-container'></div>"
+    "<div class='toasts'></div>"
   );
 
-  $(".yonder-toast-container").on("hidden.bs.toast", ".toast", (e) => {
+  $(".toasts").on("hidden.bs.toast", ".toast", (e) => {
     if (e.currentTarget.hasAttribute("data-action")) {
       let action = e.currentTarget.getAttribute("data-action");
       Shiny.onInputChange(action, true);
@@ -18,14 +18,14 @@ $(() => {
 Shiny.addCustomMessageHandler("yonder:toast", (msg) => {
   let _show = function(data) {
     document
-      .querySelector(".yonder-toast-container")
+      .querySelector(".toasts")
       .insertAdjacentHTML("beforeend", data.content);
 
-    $(".yonder-toast-container > .toast:last-child").toast("show");
+    $(".toasts > .toast:last-child").toast("show");
   };
 
   let _close = function(data) {
-    let toasts = document.querySelectorAll(".yonder-toast-container .toast");
+    let toasts = document.querySelectorAll(".toasts .toast");
 
     if (toasts.length) {
       $(toasts).toast("hide");

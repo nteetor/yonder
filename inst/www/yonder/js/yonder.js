@@ -1422,7 +1422,7 @@
     }],
     getValue: function getValue(el) {
       var input = el.children[0];
-      return input.type === "number" ? parseInput(input.value, 10) : input.value;
+      return input.type === "number" ? parseInt(input.value, 10) : input.value;
     },
     getRatePolicy: function getRatePolicy() {
       return {
@@ -1632,8 +1632,8 @@
   });
 
   $(function () {
-    document.body.insertAdjacentHTML("beforeend", "<div class='yonder-toast-container'></div>");
-    $(".yonder-toast-container").on("hidden.bs.toast", ".toast", function (e) {
+    document.body.insertAdjacentHTML("beforeend", "<div class='toasts'></div>");
+    $(".toasts").on("hidden.bs.toast", ".toast", function (e) {
       if (e.currentTarget.hasAttribute("data-action")) {
         var action = e.currentTarget.getAttribute("data-action");
         Shiny.onInputChange(action, true);
@@ -1647,12 +1647,12 @@
   });
   Shiny.addCustomMessageHandler("yonder:toast", function (msg) {
     var _show = function _show(data) {
-      document.querySelector(".yonder-toast-container").insertAdjacentHTML("beforeend", data.content);
-      $(".yonder-toast-container > .toast:last-child").toast("show");
+      document.querySelector(".toasts").insertAdjacentHTML("beforeend", data.content);
+      $(".toasts > .toast:last-child").toast("show");
     };
 
     var _close = function _close(data) {
-      var toasts = document.querySelectorAll(".yonder-toast-container .toast");
+      var toasts = document.querySelectorAll(".toasts .toast");
 
       if (toasts.length) {
         $(toasts).toast("hide");
