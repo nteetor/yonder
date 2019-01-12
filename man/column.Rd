@@ -2,15 +2,15 @@
 % Please edit documentation in R/layout.R
 \name{column}
 \alias{column}
-\alias{row}
+\alias{columns}
 \alias{container}
 \title{Grid layout}
 \usage{
 column(..., width = NULL)
 
-row(..., gutters = TRUE)
+columns(...)
 
-container(..., center = FALSE)
+container(..., centered = FALSE)
 }
 \arguments{
 \item{...}{Any number of tags elements passed as child elements or named
@@ -19,29 +19,25 @@ arguments passed as HTML attributes to the parent element.}
 \item{width}{A \link{responsive} argument. One of \code{1:12} or \code{"auto"}, defaults to
 \code{NULL}.}
 
-\item{gutters}{One of \code{TRUE} or \code{FALSE} specifying if columns inside the row
-are padded, defaults to \code{TRUE}. If \code{FALSE} column content renders flush
-against the border of the column. Most often you will want to leave this
-\code{gutters} as \code{TRUE}.}
-
-\item{center}{One of \code{TRUE} or \code{FALSE} specifying if the container is
-responsively centered or if the container occupies the entire width of the
-viewport, defaults to \code{FALSE}.}
+\item{centered}{One of \code{TRUE} or \code{FALSE} specifying how a container fills the
+browser or viewport window. If \code{TRUE} the container is responsively
+centered, otherwise, if \code{FALSE}, the container occupies the entire width of
+the viewport, defaults to \code{FALSE}.}
 }
 \description{
 These functions are the foundation of any application. Grid elements are
-nested as follows: \code{container > row > column ~ column}. Columns may be nested
-within columns. Columns may be created with an explicit width, 1 through 12.
-To fit a column automatically to its content use \code{width = "auto"}. To divide
-the space in a row evenly amongst all columns leave \code{width} as \code{NULL}. For
-examples and usage tips see the sections below.
+nested as follows: \code{container() > columns() > column() ~ column()}. A
+\code{column()} may be created with an explicit width, 1 through 12. To fit a
+column automatically to its content use \code{width = "auto"}. To divide the space
+in a row evenly amongst all columns leave \code{width} as \code{NULL}. For examples and
+usage tips see the sections below.
 }
 \examples{
 
 ### Equal width columns
 
 container(
-  row(
+  columns(
     column(
       "Aliquam erat volutpat."
     ),
@@ -58,7 +54,7 @@ container(
 ###  Shiny's panel with sidebar layout
 
 container(
-  row(
+  columns(
     column(
       width = 4,
       card(
@@ -89,7 +85,7 @@ container(
 # applications.
 
 container(
-  row(
+  columns(
     column(
       width = c(sm = 4),
       "Mauris ac felis vel velit tristique imperdiet."
@@ -108,7 +104,7 @@ container(
 # or
 
 container(
-  row(
+  columns(
     column(
       width = c(sm = 4),
       "Aenean in sem ac leo mollis blandit."
@@ -123,7 +119,7 @@ container(
 ### Fit columns to their content
 
 container(
-  row(
+  columns(
     column(),
     column(
       width = "auto",

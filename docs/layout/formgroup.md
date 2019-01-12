@@ -3,9 +3,9 @@ name: formGroup
 title: Add labels, help text, and formatting to inputs
 description: |-
   Form groups are a way of labelling an input. Form rows are similar to
-  [row()]s, but include additional styles intended for forms. The flexibility
-  provided by form rows and groups means you can confidently develop shiny
-  applications for devices and screens of varying sizes.
+  [columns()]s, but include additional styles intended for forms. The
+  flexibility provided by form rows and groups means you can confidently
+  develop shiny applications for devices and screens of varying sizes.
 parameters:
 - name: label
   description: |-

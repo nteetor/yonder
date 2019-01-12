@@ -116,7 +116,7 @@ blockquote <- function(..., source = NULL, align = "left") {
 #' pre(
 #'   "shinyApp(",
 #'   "  ui = container(",
-#'   "    row(",
+#'   "    columns(",
 #'   "      column(",
 #'   "      ",
 #'   "      )",

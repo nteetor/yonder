@@ -48,9 +48,9 @@ check out \code{\link[=flex]{flex()}}, which gives you the power of flexbox layo
 
 Looking for ... ?
 \itemize{
-\item \code{fluidRow()} use \code{\link[=row]{row()}}
+\item \code{fluidRow()} or \code{fixedRow()} use \code{\link[=columns]{columns()}}
 \item \code{fixedPage()}, \code{fluidPage()}, or \code{sidebarLayout()} use \code{\link[=container]{container()}},
-\code{\link[=row]{row()}}, and \code{\link[=column]{column()}}
+\code{\link[=columns]{columns()}}, and \code{\link[=column]{column()}}
 \item \code{navbarPage()} use \code{\link[=navbar]{navbar()}}
 }
 }

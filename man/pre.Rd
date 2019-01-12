@@ -21,7 +21,7 @@ The \code{pre} function adds a maximum height and scroll bar to the standard
 pre(
   "shinyApp(",
   "  ui = container(",
-  "    row(",
+  "    columns(",
   "      column(",
   "      ",
   "      )",

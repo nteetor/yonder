@@ -35,10 +35,10 @@ examples:
       )
     output: "<div>\n  <nav class=\"navbar navbar-expand-lg navbar-light bg-cyan shadow-sm
       mb-3\">\n    <a class=\"navbar-brand\" href=\"#\">Navbar</a>\n    <button class=\"navbar-toggler\"
-      type=\"button\" data-toggle=\"collapse\" data-target=\"#navContent-258-394\"
-      aria-controls=\"navContent-258-394\" aria-expanded=\"false\" aria-label=\"Toggle
+      type=\"button\" data-toggle=\"collapse\" data-target=\"#navContent-273-911\"
+      aria-controls=\"navContent-273-911\" aria-expanded=\"false\" aria-label=\"Toggle
       navigation\">\n      <span class=\"navbar-toggler-icon\"></span>\n    </button>\n
-      \   <div class=\"collapse navbar-collapse\" id=\"navContent-258-394\"></div>\n
+      \   <div class=\"collapse navbar-collapse\" id=\"navContent-273-911\"></div>\n
       \ </nav>\n  <p>\n    Cras mattis consectetur purus sit amet fermentum. Donec
       sed \n    odio dui. Lorem ipsum dolor sit amet, consectetur adipiscing \n    elit.
       Aenean eu leo quam. Pellentesque ornare sem lacinia quam \n    venenatis vestibulum.\n

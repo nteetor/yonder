@@ -89,7 +89,7 @@ modal(
   size = "large",
   title = "More complex",
   body = container(
-    row(
+    columns(
       column("Cras placerat accumsan nulla."),
       column("Curabitur lacinia pulvinar nibh."),
       column(

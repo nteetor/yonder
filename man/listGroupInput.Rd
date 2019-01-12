@@ -99,7 +99,7 @@ shinyApp(ui, server)
 
 
 A list group can also control a set of panes. Be sure to set \code{multiple = FALSE}. This layout is reminiscent of a table of contents.\preformatted{ui <- container(
-  row(
+  columns(
     column(
       width = 3,
       listGroupInput(

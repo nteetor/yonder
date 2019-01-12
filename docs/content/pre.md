@@ -19,7 +19,7 @@ examples:
       pre(
         "shinyApp(",
         "  ui = container(",
-        "    row(",
+        "    columns(",
         "      column(",
         "      ",
         "      )",
@@ -30,7 +30,7 @@ examples:
         "  }",
         ")"
       )
-    output: "<pre class=\"pre-scrollable\">\n  shinyApp(\n    ui = container(\n      row(\n
+    output: "<pre class=\"pre-scrollable\">\n  shinyApp(\n    ui = container(\n      columns(\n
       \       column(\n        \n        )\n      )\n    )\n    server = function(input,
       output) {\n    \n    }\n  )\n</pre>"
 rdname: pre

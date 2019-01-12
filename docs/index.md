@@ -44,10 +44,10 @@ sections:
 
     Looking for ... ?
 
-    * `fluidRow()` use [row()](layout/row.html)
+    * `fluidRow()` or `fixedRow()` use [columns()](layout/columns.html)
 
     * `fixedPage()`, `fluidPage()`, or `sidebarLayout()` use [container()](layout/container.html),
-      [row()](layout/row.html), and [column()](layout/column.html)
+      [columns()](layout/columns.html), and [column()](layout/column.html)
 
     * `navbarPage()` use [navbar()](layout/navbar.html)
 rdname: _PACKAGE

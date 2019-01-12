@@ -102,7 +102,7 @@ sections:
 
     ```R
     ui <- container(
-      row(
+      columns(
         column(
           width = 3,
           listGroupInput(

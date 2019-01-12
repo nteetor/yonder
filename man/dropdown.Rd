@@ -15,8 +15,9 @@ or form inputs specifying the elements of the dropdown. These elements may
 be grouped into lists to create a menu with sections. \code{h6()} is the
 recommended heading level for menu headers. Character vectors are converted
 into paragraphs of text. To format menu text use \code{p()} and utility
-functions. Named arguments are passed as HTML attributes to the parent
-element.}
+functions.
+
+Named arguments are passed as HTML attributes to the parent element.}
 
 \item{direction}{One of \code{"up"}, \code{"right"}, \code{"down"}, or \code{"left"} specifying
 the direction in which the menu opens, defaults to \code{"down"}.}

@@ -1,11 +1,11 @@
 #' Grid layout
 #'
 #' These functions are the foundation of any application. Grid elements are
-#' nested as follows: `container > row > column ~ column`. Columns may be nested
-#' within columns. Columns may be created with an explicit width, 1 through 12.
-#' To fit a column automatically to its content use `width = "auto"`. To divide
-#' the space in a row evenly amongst all columns leave `width` as `NULL`. For
-#' examples and usage tips see the sections below.
+#' nested as follows: `container() > columns() > column() ~ column()`. A
+#' `column()` may be created with an explicit width, 1 through 12. To fit a
+#' column automatically to its content use `width = "auto"`. To divide the space
+#' in a row evenly amongst all columns leave `width` as `NULL`. For examples and
+#' usage tips see the sections below.
 #'
 #' @param ... Any number of tags elements passed as child elements or named
 #'   arguments passed as HTML attributes to the parent element.
@@ -13,14 +13,10 @@
 #' @param width A [responsive] argument. One of `1:12` or `"auto"`, defaults to
 #'   `NULL`.
 #'
-#' @param gutters One of `TRUE` or `FALSE` specifying if columns inside the row
-#'   are padded, defaults to `TRUE`. If `FALSE` column content renders flush
-#'   against the border of the column. Most often you will want to leave this
-#'   `gutters` as `TRUE`.
-#'
-#' @param center One of `TRUE` or `FALSE` specifying if the container is
-#'   responsively centered or if the container occupies the entire width of the
-#'   viewport, defaults to `FALSE`.
+#' @param centered One of `TRUE` or `FALSE` specifying how a container fills the
+#'   browser or viewport window. If `TRUE` the container is responsively
+#'   centered, otherwise, if `FALSE`, the container occupies the entire width of
+#'   the viewport, defaults to `FALSE`.
 #'
 #' @family layout
 #' @export
@@ -29,7 +25,7 @@
 #' ### Equal width columns
 #'
 #' container(
-#'   row(
+#'   columns(
 #'     column(
 #'       "Aliquam erat volutpat."
 #'     ),
@@ -46,7 +42,7 @@
 #' ###  Shiny's panel with sidebar layout
 #'
 #' container(
-#'   row(
+#'   columns(
 #'     column(
 #'       width = 4,
 #'       card(
@@ -77,7 +73,7 @@
 #' # applications.
 #'
 #' container(
-#'   row(
+#'   columns(
 #'     column(
 #'       width = c(sm = 4),
 #'       "Mauris ac felis vel velit tristique imperdiet."
@@ -96,7 +92,7 @@
 #' # or
 #'
 #' container(
-#'   row(
+#'   columns(
 #'     column(
 #'       width = c(sm = 4),
 #'       "Aenean in sem ac leo mollis blandit."
@@ -111,7 +107,7 @@
 #' ### Fit columns to their content
 #'
 #' container(
-#'   row(
+#'   columns(
 #'     column(),
 #'     column(
 #'       width = "auto",
@@ -138,13 +134,20 @@ column <- function(..., width = NULL) {
 
 #' @rdname column
 #' @export
-row <- function(..., gutters = TRUE) {
+columns <- function(...) {
+  cols <- elements(list(...))
+
+  if (!all(vapply(cols, tagHasClass, logical(1), class = "col[-]?[-a-z0-9]*"))) {
+    stop(
+      "invalid `columns()` argument, all direct child tag elements ",
+      "must be calls to `column()`",
+      call. = FALSE
+    )
+  }
+
   attachDependencies(
     tags$div(
-      class = collate(
-        "row",
-        if (!gutters) "no-gutter"
-      ),
+      class = "row",
       ...
     ),
     yonderDep()
@@ -153,10 +156,10 @@ row <- function(..., gutters = TRUE) {
 
 #' @rdname column
 #' @export
-container <- function(..., center = FALSE) {
+container <- function(..., centered = FALSE) {
   attachDependencies(
     tags$div(
-      class = if (center) "container" else "container-fluid",
+      class = if (centered) "container" else "container-fluid",
       ...
     ),
     yonderDep()

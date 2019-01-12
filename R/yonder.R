@@ -3,7 +3,6 @@
 #'   tagAppendAttributes tagAppendChildren surroundSingletons takeSingletons
 #' @importFrom shiny observe getDefaultReactiveDomain installExprFunction
 #'   createRenderFunction createWebDependency
-#' @importFrom rlang dots_list
 NULL
 
 #' A new approach to shiny applications
@@ -51,10 +50,10 @@ NULL
 #'
 #' Looking for ... ?
 #'
-#' * `fluidRow()` use [row()]
+#' * `fluidRow()` or `fixedRow()` use [columns()]
 #'
 #' * `fixedPage()`, `fluidPage()`, or `sidebarLayout()` use [container()],
-#'   [row()], and [column()]
+#'   [columns()], and [column()]
 #'
 #' * `navbarPage()` use [navbar()]
 #'

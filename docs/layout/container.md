@@ -3,11 +3,11 @@ name: container
 title: Grid layout
 description: |-
   These functions are the foundation of any application. Grid elements are
-  nested as follows: `container > row > column ~ column`. Columns may be nested
-  within columns. Columns may be created with an explicit width, 1 through 12.
-  To fit a column automatically to its content use `width = "auto"`. To divide
-  the space in a row evenly amongst all columns leave `width` as `NULL`. For
-  examples and usage tips see the sections below.
+  nested as follows: `container() > columns() > column() ~ column()`. A
+  `column()` may be created with an explicit width, 1 through 12. To fit a
+  column automatically to its content use `width = "auto"`. To divide the space
+  in a row evenly amongst all columns leave `width` as `NULL`. For examples and
+  usage tips see the sections below.
 parameters:
 - name: '...'
   description: |-
@@ -17,17 +17,12 @@ parameters:
   description: |-
     A [responsive](responsive.html) argument. One of `1:12` or `"auto"`, defaults to
     `NULL`.
-- name: gutters
+- name: centered
   description: |-
-    One of `TRUE` or `FALSE` specifying if columns inside the row
-    are padded, defaults to `TRUE`. If `FALSE` column content renders flush
-    against the border of the column. Most often you will want to leave this
-    `gutters` as `TRUE`.
-- name: center
-  description: |-
-    One of `TRUE` or `FALSE` specifying if the container is
-    responsively centered or if the container occupies the entire width of the
-    viewport, defaults to `FALSE`.
+    One of `TRUE` or `FALSE` specifying how a container fills the
+    browser or viewport window. If `TRUE` the container is responsively
+    centered, otherwise, if `FALSE`, the container occupies the entire width of
+    the viewport, defaults to `FALSE`.
 family: layout
 export: ''
 examples:
@@ -36,7 +31,7 @@ examples:
   - type: code
     content: |-
       container(
-        row(
+        columns(
           column(
             "Aliquam erat volutpat."
           ),
@@ -65,7 +60,7 @@ examples:
   - type: code
     content: |-
       container(
-        row(
+        columns(
           column(
             width = 4,
             card(
@@ -140,7 +135,7 @@ examples:
   - type: code
     content: |-
       container(
-        row(
+        columns(
           column(
             width = c(sm = 4),
             "Mauris ac felis vel velit tristique imperdiet."
@@ -169,7 +164,7 @@ examples:
   - type: code
     content: |-
       container(
-        row(
+        columns(
           column(
             width = c(sm = 4),
             "Aenean in sem ac leo mollis blandit."
@@ -192,7 +187,7 @@ examples:
   - type: code
     content: |-
       container(
-        row(
+        columns(
           column(),
           column(
             width = "auto",

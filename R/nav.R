@@ -328,7 +328,7 @@ navItem <- function(base, value, active) {
 #'     choices = paste("Tab", 1:3),
 #'     values = paste0("pane", 1:3)
 #'   ),
-#'   row(
+#'   columns(
 #'     column(
 #'       navContent(
 #'         navPane(
