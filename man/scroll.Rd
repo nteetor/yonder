@@ -34,7 +34,7 @@ div(
 
 }
 \seealso{
-Other design: \code{\link{affix}},
+Other design: \code{\link{active}}, \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{height}},
