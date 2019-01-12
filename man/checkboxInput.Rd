@@ -2,11 +2,14 @@
 % Please edit documentation in R/checkbox.R
 \name{checkboxInput}
 \alias{checkboxInput}
+\alias{switchInput}
 \alias{checkbarInput}
 \title{Checkbox inputs}
 \usage{
 checkboxInput(id, choices, values = choices, selected = NULL, ...,
   inline = FALSE)
+
+switchInput(id, choices, values = choices, selected = NULL, ...)
 
 checkbarInput(id, choices, values = choices, selected = NULL, ...)
 }
@@ -34,7 +37,8 @@ Reactive checkbox and checkbar inputs. Users may select one or more choices.
 The checkbox input appears as a standard checkbox or set of checkboxes. The
 checkbar input appears similar to a group of buttons, but with a checked or
 highlighted state. When a checkbox or checkbar input has no selected choices
-the reactive value is \code{NULL}.
+the reactive value is \code{NULL}. Switch inputs differ from checkboxes only in
+appearance.
 }
 \examples{
 
@@ -88,6 +92,15 @@ formGroup(
     )
   )
 )
+
+### Switches
+
+switchInput(
+  id = "switch1",
+  choices = paste("Switch choice", 1:3),
+  selected = "Switch choice 3"
+) \%>\%
+  active("indigo")
 
 }
 \seealso{

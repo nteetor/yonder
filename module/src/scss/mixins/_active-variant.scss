@@ -54,28 +54,25 @@
   }
 }
 
-@mixin checkbox-active-variant() {
+@mixin custom-control-active-variant() {
   @each $color, $value in $theme-colors {
-    .active-#{$color} .custom-checkbox {
-      .custom-control-input:checked ~ .custom-control-label {
-        &::before {
-          background-color: $value;
-          border-color: $value;
-          box-shadow: inset 0 1px 1px rgba($value, .75);
+    .active-#{$color} {
+      .custom-checkbox, .custom-radio {
+        .custom-control-input:checked ~ .custom-control-label {
+          &::before {
+            background-color: $value;
+            border-color: $value;
+            box-shadow: inset 0 1px 1px rgba($value, .75);
+          }
         }
       }
-    }
-  }
-}
 
-@mixin radio-active-variant() {
-  @each $color, $value in $theme-colors {
-    .active-#{$color} .custom-radio {
-      .custom-control-input:checked ~ .custom-control-label {
-        &::before {
-          background-color: $value;
-          border-color: $value;
-          box-shadow: inset 0 1px 1px rgba($value, .75);
+      .custom-switch {
+        .custom-control-input:checked ~ .custom-control-label {
+          &::before {
+            background-color: $value;
+            border-color: $value;
+          }
         }
       }
     }

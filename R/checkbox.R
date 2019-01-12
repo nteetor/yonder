@@ -4,7 +4,8 @@
 #' The checkbox input appears as a standard checkbox or set of checkboxes. The
 #' checkbar input appears similar to a group of buttons, but with a checked or
 #' highlighted state. When a checkbox or checkbar input has no selected choices
-#' the reactive value is `NULL`.
+#' the reactive value is `NULL`. Switch inputs differ from checkboxes only in
+#' appearance.
 #'
 #' @param choices A character string or vector specifying a label for the
 #'   checkbox or checkbar.
@@ -75,6 +76,15 @@
 #'   )
 #' )
 #'
+#' ### Switches
+#'
+#' switchInput(
+#'   id = "switch1",
+#'   choices = paste("Switch choice", 1:3),
+#'   selected = "Switch choice 3"
+#' ) %>%
+#'   active("indigo")
+#'
 checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
                           inline = FALSE) {
   if (length(choices) != length(values)) {
@@ -127,6 +137,18 @@ checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
     element,
     yonderDep()
   )
+}
+
+#' @rdname checkboxInput
+#' @export
+switchInput <- function(id, choices, values = choices, selected = NULL, ...) {
+  input <- checkboxInput(id, choices, values, selected, inline = FALSE, ...)
+
+  input[["children"]][[1]] <- lapply(input[["children"]][[1]], function(child) {
+    tagAddClass(tagDropClass(child, "custom-checkbox"), "custom-switch")
+  })
+
+  input
 }
 
 #' @rdname checkboxInput
