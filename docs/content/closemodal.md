@@ -21,9 +21,9 @@ parameters:
     vertically centered on the page, defaults to `FALSE`.
 - name: size
   description: |-
-    One of `"small"` or `"large"` specifying whether to shrink or
-    grow the width of the modal, defaults to `NULL`, in which case the modal's
-    width is not adjusted.
+    One of `"small"`, `"large"`, or `"xl"` (extra large) specifying
+    whether to shrink or grow the width of the modal, defaults to `NULL`, in
+    which case the width is not adjusted.
 - name: modal
   description: A modal tag element created using `modal()`.
 - name: '...'

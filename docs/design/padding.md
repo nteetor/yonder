@@ -11,15 +11,18 @@ description: |-
 parameters:
 - name: .tag
   description: A tag element.
-- name: all
+- name: all,top,right,bottom,left
   description: |-
-    A [responsive](responsive.html) argument. One of `0:5` or `"auto"` specifying
-    a margin or padding for all sides of the tag element. 0 removes all
-    space and 5 adds the most space.
-- name: top,right,bottom,left
-  description: |-
-    A [responsive](responsive.html) argument. One of `0:5` or
-    `"auto"`. 0 removes all space and 5 adds the most space.
+    A [responsive](responsive.html) argument.
+
+    For **padding()**, one of `0:5` or `"auto"` specifying padding for one or
+    more sides of the tag element. 0 removes all inner space and 5 adds the
+    most space.
+
+    For **margin()**, one of `-5:5` or `"auto"` specifying a margin for one or
+    more sides of the tag element. 0 removes all outer space, 5 adds the
+    most space, and negative values will consume space pulling the element in
+    that direction.
 family: design
 export: ''
 examples:
@@ -84,8 +87,8 @@ examples:
         </div>
         <div class="yonder-checkbox" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-867-221" name="remember" value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-867-221">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-916-299" name="remember" value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-916-299">Remember me</label>
             <div class="invalid-feedback"></div>
           </div>
         </div>
@@ -134,8 +137,8 @@ examples:
         </div>
         <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-649-752" name="remember" value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-649-752">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-705-678" name="remember" value="Remember me"/>
+            <label class="custom-control-label" for="checkbox-705-678">Remember me</label>
             <div class="invalid-feedback"></div>
           </div>
         </div>

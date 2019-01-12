@@ -102,16 +102,16 @@ examples:
               <label>Ice creams</label>
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-644-328" name="flavorChoice" value="Mint" checked/>
-                  <label class="custom-control-label" for="radio-644-328">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-512-280" name="flavorChoice" value="Mint" checked/>
+                  <label class="custom-control-label" for="radio-512-280">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-458-580" name="flavorChoice" value="Moose tracks"/>
-                  <label class="custom-control-label" for="radio-458-580">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-236-873" name="flavorChoice" value="Moose tracks"/>
+                  <label class="custom-control-label" for="radio-236-873">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-867-697" name="flavorChoice" value="Marble"/>
-                  <label class="custom-control-label" for="radio-867-697">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-393-145" name="flavorChoice" value="Marble"/>
+                  <label class="custom-control-label" for="radio-393-145">Marble</label>
                 </div>
                 <div class="invalid-feedback"></div>
               </div>

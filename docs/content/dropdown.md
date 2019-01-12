@@ -12,12 +12,13 @@ parameters:
 - name: '...'
   description: |-
     Character strings or vectors, header tag elements, button inputs,
-    or form inputs specifying the elements of the dropdown. These elements may
-    be grouped into lists to create a menu with sections. `h6()` is the
-    recommended heading level for menu headers. Character vectors are converted
-    into paragraphs of text. To format menu text use `p()` and utility
-    functions. Named arguments are passed as HTML attributes to the parent
-    element.
+      or form inputs specifying the elements of the dropdown. These elements may
+      be grouped into lists to create a menu with sections. `h6()` is the
+      recommended heading level for menu headers. Character vectors are converted
+      into paragraphs of text. To format menu text use `p()` and utility
+      functions.
+
+      Named arguments are passed as HTML attributes to the parent element.
 - name: direction
   description: |-
     One of `"up"`, `"right"`, `"down"`, or `"left"` specifying

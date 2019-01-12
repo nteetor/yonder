@@ -57,7 +57,7 @@
   
   
   
-  <script src=/yonder/assets/js/iris-json-1523537f297.js type="text/javascript"></script>
+  <script src=/yonder/assets/js/iris-json-2f1c33409952.js type="text/javascript"></script>
   
   
 
@@ -256,6 +256,12 @@
     
     <dd class="mb-1">
       <a class="text-muted"
+         href=/yonder/inputs/switchinput.html
+         >switchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
          href=/yonder/inputs/telephoneinput.html
          >telephoneInput</a>
     </dd>
@@ -335,6 +341,12 @@
 input, defaults to <code class="highlighter-rouge">"Choose file"</code>.</p>
 </dd>
   
+  <dt><p>browse</p>
+</dt>
+  <dd><p>A character string specifying the label of file input, defaults
+to <code class="highlighter-rouge">"Browse"</code>.</p>
+</dd>
+  
   <dt><p>left,right</p>
 </dt>
   <dd><p>A character string or button element placed prepended or
@@ -398,16 +410,13 @@ defaults to <code class="highlighter-rouge">NULL</code>, in which case any file 
   
   
   
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fileInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fileInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"file1"</span><span class="p">)</span></code></pre></figure>
 
-  <div><div class="yonder-file input-group">
+  <div><div class="yonder-file input-group" id="file1">
   <div class="custom-file">
     <input type="file" class="custom-file-input" multiple/>
-    <label class="custom-file-label">Choose file</label>
+    <label class="custom-file-label" data-browse="Browse">Choose file</label>
     <div class="invalid-feedback"></div>
-  </div>
-  <div class="input-group-append">
-    <span class="input-group-text">Browse</span>
   </div>
 </div></div>
   
@@ -415,7 +424,7 @@ defaults to <code class="highlighter-rouge">NULL</code>, in which case any file 
 </div>
 
 
-<h4><p>Adding another button</p>
+<h4><p>Adding a button</p>
 </h4>
 
 <div class="mb-2">
@@ -423,24 +432,44 @@ defaults to <code class="highlighter-rouge">NULL</code>, in which case any file 
   
   
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fileInput</span><span class="p">(</span><span class="w">
-  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
-  </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buttonInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="s2">"Upload"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-    </span><span class="n">background</span><span class="p">(</span><span class="s2">"transparent"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-    </span><span class="n">border</span><span class="p">(</span><span class="s2">"green"</span><span class="p">)</span><span class="w">
-</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-  </span><span class="n">margin</span><span class="p">(</span><span class="s2">"auto"</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">,</span><span class="w"> </span><span class="s2">"auto"</span><span class="p">,</span><span class="w"> </span><span class="m">0</span><span class="p">)</span></code></pre></figure>
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"file2"</span><span class="p">,</span><span class="w">
+  </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"upload"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Upload"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">background</span><span class="p">(</span><span class="s2">"green"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
 
-  <div><div class="yonder-file input-group m-auto mt-0 mr-auto mb-0">
+  <div><div class="yonder-file input-group" id="file2">
   <div class="input-group-prepend">
-    <button class="yonder-button btn btn-grey bg-transparent border border-green" type="button" role="button">Upload</button>
+    <button class="yonder-button btn btn-green" type="button" role="button" id="upload">Upload</button>
   </div>
   <div class="custom-file">
     <input type="file" class="custom-file-input" multiple/>
-    <label class="custom-file-label">Choose file</label>
+    <label class="custom-file-label" data-browse="Browse">Choose file</label>
     <div class="invalid-feedback"></div>
   </div>
-  <div class="input-group-append">
-    <span class="input-group-text">Browse</span>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Customizing text</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">fileInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"file3"</span><span class="p">,</span><span class="w">
+  </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Pick a file"</span><span class="p">,</span><span class="w">
+  </span><span class="n">browse</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Go go go!"</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-file input-group" id="file3">
+  <div class="custom-file">
+    <input type="file" class="custom-file-input" multiple/>
+    <label class="custom-file-label" data-browse="Go go go!">Pick a file</label>
+    <div class="invalid-feedback"></div>
   </div>
 </div></div>
   
