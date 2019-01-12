@@ -634,12 +634,16 @@ display <- function(.tag, render = NULL, print = NULL) {
 #'
 #' @param .tag A tag element.
 #'
-#' @param all A [responsive] argument. One of `0:5` or `"auto"` specifying
-#'   a margin or padding for all sides of the tag element. 0 removes all
-#'   space and 5 adds the most space.
+#' @param all,top,right,bottom,left A [responsive] argument.
 #'
-#' @param top,right,bottom,left A [responsive] argument. One of `0:5` or
-#'   `"auto"`. 0 removes all space and 5 adds the most space.
+#'   For **padding()**, one of `0:5` or `"auto"` specifying padding for one or
+#'   more sides of the tag element. 0 removes all inner space and 5 adds the
+#'   most space.
+#'
+#'   For **margin()**, one of `-5:5` or `"auto"` specifying a margin for one or
+#'   more sides of the tag element. 0 removes all outer space, 5 adds the
+#'   most space, and negative values will consume space pulling the element in
+#'   that direction.
 #'
 #' @family design
 #' @export
@@ -744,13 +748,17 @@ padding <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 #' @export
 margin <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
                    left = NULL) {
-  possibles <- c(0:5, "auto")
+  possibles <- c(0:5, "auto", paste0("n", 1:5))
 
-  all <- ensureBreakpoints(all, possibles)
-  top <- ensureBreakpoints(top, possibles)
-  right <- ensureBreakpoints(right, possibles)
-  bottom <- ensureBreakpoints(bottom, possibles)
-  left <- ensureBreakpoints(left, possibles)
+  fixNegative <- function(x) {
+    if (x < 0) paste0("n", abs(x)) else x
+  }
+
+  all <- ensureBreakpoints(all, possibles, fixNegative)
+  top <- ensureBreakpoints(top, possibles, fixNegative)
+  right <- ensureBreakpoints(right, possibles, fixNegative)
+  bottom <- ensureBreakpoints(bottom, possibles, fixNegative)
+  left <- ensureBreakpoints(left, possibles, fixNegative)
 
   classes <- c(
     createResponsiveClasses(top, "t"),

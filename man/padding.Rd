@@ -14,12 +14,16 @@ margin(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 \arguments{
 \item{.tag}{A tag element.}
 
-\item{all}{A \link{responsive} argument. One of \code{0:5} or \code{"auto"} specifying
-a margin or padding for all sides of the tag element. 0 removes all
-space and 5 adds the most space.}
+\item{all, top, right, bottom, left}{A \link{responsive} argument.
 
-\item{top, right, bottom, left}{A \link{responsive} argument. One of \code{0:5} or
-\code{"auto"}. 0 removes all space and 5 adds the most space.}
+For \strong{padding()}, one of \code{0:5} or \code{"auto"} specifying padding for one or
+more sides of the tag element. 0 removes all inner space and 5 adds the
+most space.
+
+For \strong{margin()}, one of \code{-5:5} or \code{"auto"} specifying a margin for one or
+more sides of the tag element. 0 removes all outer space, 5 adds the
+most space, and negative values will consume space pulling the element in
+that direction.}
 }
 \description{
 Use the \code{margin()} and \code{padding()} utilities to change the margin or padding

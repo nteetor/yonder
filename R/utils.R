@@ -194,12 +194,12 @@ checkDuplicateBreakpoints <- function(...) {
   }
 }
 
-ensureBreakpoints <- function(values, possible) {
+ensureBreakpoints <- function(values, possible, transform = NULL) {
   if (is.null(values)) {
     return(list())
   }
 
-  values <- as.list(values)
+  values <- if (is.null(transform)) as.list(values) else lapply(values, transform)
   caller <- sys.call(-1)[[1]]
   passed <- match.call()$values
 
