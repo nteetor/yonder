@@ -14,9 +14,9 @@
 #' @param center One of `TRUE` or `FALSE` specifying whether the modal is
 #'   vertically centered on the page, defaults to `FALSE`.
 #'
-#' @param size One of `"small"` or `"large"` specifying whether to shrink or
-#'   grow the width of the modal, defaults to `NULL`, in which case the modal's
-#'   width is not adjusted.
+#' @param size One of `"small"`, `"large"`, or `"xl"` (extra large) specifying
+#'   whether to shrink or grow the width of the modal, defaults to `NULL`, in
+#'   which case the width is not adjusted.
 #'
 #' @param modal A modal tag element created using `modal()`.
 #'
@@ -90,10 +90,10 @@
 #'
 modal <- function(title = NULL, body = NULL, footer = NULL, ..., center = FALSE,
                   size = NULL) {
-  if (!is.null(size) && (size != "small" && size != "large")) {
+  if (!is.null(size) && !re(size, "small|large|xl")) {
     stop(
       "invalid `modal()` argument, `size` must be one of ",
-      '"small" or "large"',
+      '"small", "large", or "xl"',
       call. = FALSE
     )
   }
@@ -137,7 +137,10 @@ modal <- function(title = NULL, body = NULL, footer = NULL, ..., center = FALSE,
       "modal-dialog",
       if (center) "modal-dialog-centered",
       if (!is.null(size)) {
-        paste0("modal-", if (size == "small") "sm" else "lg")
+        paste0(
+          "modal-",
+          if (size == "small") "sm" else if (size == "large") "lg" else size
+        )
       }
     ),
     role = "document",

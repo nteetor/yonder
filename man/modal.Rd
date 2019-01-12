@@ -28,9 +28,9 @@ parent element.}
 \item{center}{One of \code{TRUE} or \code{FALSE} specifying whether the modal is
 vertically centered on the page, defaults to \code{FALSE}.}
 
-\item{size}{One of \code{"small"} or \code{"large"} specifying whether to shrink or
-grow the width of the modal, defaults to \code{NULL}, in which case the modal's
-width is not adjusted.}
+\item{size}{One of \code{"small"}, \code{"large"}, or \code{"xl"} (extra large) specifying
+whether to shrink or grow the width of the modal, defaults to \code{NULL}, in
+which case the width is not adjusted.}
 
 \item{modal}{A modal tag element created using \code{modal()}.}
 
