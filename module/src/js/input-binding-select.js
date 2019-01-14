@@ -9,49 +9,24 @@ $.extend(selectInputBinding, {
   Events: [
     { type: "change" }
   ],
-  _value: (el, newValue, currentValue, index) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`option[value="${ currentValue }"]`);
-      if (target !== null) {
-        target.value = newValue;
-      }
-    } else {
-      let possibles = el.querySelectorAll("option");
+  _update: (el, data) => {
+    let template = el.querySelector("option").cloneNode();
+    template.removeAttribute("selected");
+    template.removeAttribute("disabled");
 
-      if (index < possibles.length) {
-        possibles[index].value = newValue;
-      }
-    }
-  },
-  _choice: (el, newLabel, currentValue, index) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`option[value="${ currentValue }"]`);
-      if (target !== null) {
-        target.innerHTML = newLabel;
-      }
-    } else {
-      let possibles = el.querySelectorAll("option");
+    el.innerHTML = "";
 
-      if (index < possibles.length) {
-        possibles[index].innerHTML = newLabel;
+    data.choices.forEach((choice, i) => {
+      let child = template.cloneNode();
+      child.innerText = choice;
+      child.value = data.values[i];
+
+      if (data.selected.indexOf(data.values[i]) > -1) {
+        child.setAttribute("selected", "");
       }
-    }
-  },
-  _select: (el, currentValue, index) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`option[value="${ currentValue }"]`);
-      if (target !== null) {
-        target.setAttribute("selected", "");
-      }
-    } else {
-      let possibles = el.querySelectorAll("option");
-      if (index < possibles.length) {
-        possibles[index].setAttribute("selected", "");
-      }
-    }
-  },
-  _clear: (el) => {
-    el.querySelectorAll("option").forEach(op => op.removeAttribute("selected"));
+
+      el.appendChild(child);
+    });
   },
   _enable: (el, data) => {
     el.querySelectorAll("option").forEach(opt => {

@@ -19,12 +19,9 @@ $.extend(textualInputBinding, {
       delay: 250
     };
   },
-  _value: (el, newValue, currentValue, index) => {
-    el.children[0].value = newValue;
+  _update: (el, data) => {
+    el.children[0].value = data.values[0];
   },
-  _choice: () => null,
-  _select: () => null,
-  _clear: () => null,
   _disable: (el, data) => {
     el.children[0].setAttribute("disabled", "");
   },

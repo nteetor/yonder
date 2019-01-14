@@ -121,32 +121,7 @@ export function yonderInputBinding() {
 
     switch (msg.type) {
     case "update":
-      let values = msg.data.values;
-      let choices = msg.data.choices;
-      let selected = msg.data.selected;
-
-      if (values || choices || selected) {
-        this._clear(el);
-      }
-
-      if (values) {
-        values.forEach(([value, current], i) => {
-          this._value(el, value, current, i);
-        });
-      }
-
-      if (choices) {
-        choices.forEach(([value, current], i) => {
-          this._choice(el, value, current, i);
-        });
-      }
-
-      if (selected) {
-        selected.forEach(value => {
-          this._select(el, value);
-        });
-      }
-
+      this._update(el, msg.data);
       break;
 
     case "enable":

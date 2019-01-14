@@ -2,29 +2,18 @@
 % Please edit documentation in R/inputs.R
 \name{updateInput}
 \alias{updateInput}
-\title{Update input}
+\title{Update input choices and values}
 \usage{
-updateInput(id, choices = NULL, values = NULL, selected = NULL,
+updateInput(id, choices, values = choices, selected = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of an input.}
+\item{id}{A character string specifying the id of an input.}
 
-\item{choices}{A character vector, tag element, or list specifying choices
-for the input.
+\item{choices}{A character vector or list of tag elements specifying new
+choices for the input.}
 
-If \code{choices} is an \strong{unnamed} vector, list, or element then the input's
-choices are updated sequentially.
-
-If \code{choices} is a \strong{named} vector or list then the input's choices are
-matched by value. The names of \code{choices} refer to one or more possible
-values of the input and the values of \code{choices} are the new choice labels.}
-
-\item{values}{An atomic vector or list of atomic singleton values, values
-will be coerced to character strings.
-
-If \code{values} is an \strong{unnamed} vector or list then the input's values are
-updated sequentially.}
+\item{values}{An atomic vector specifying new values for the input.}
 
 \item{selected}{One of \code{values} specifying which choice to select, defaults
 to \code{NULL}, in which case a choice is not selected. Note that browsers may
@@ -33,15 +22,31 @@ automatically select a choice if not specified.}
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-Modify an input's choices, values, or selected choices. Importantly, an
-input's choices and selected choices are updated after any values are
-updated. Thus, \code{choices} and \code{selected} must refer to the new, updated
-values.
+Use \code{updateInput()} to replace an input's choices and values. Optionally,
+a new choices may be selected.
 }
-\details{
-If specifying new values with \code{values}, both \code{choices} and \code{selected} need to
-refer to these new values.
+\section{Button inputs}{
+
+
+When updating a button input if \code{values} equals \code{choices}, the default value
+for \code{values}, the value of the button input is left as is.
+
+Passing a non-numeric value will reset the button input's value.
 }
+
+\section{File inputs}{
+
+
+Files inputs do not currently support \code{updateInput()}.
+}
+
+\section{Form inputs}{
+
+
+Form inputs do not support \code{updateInput()}, instead update the specific
+inputs within the form.
+}
+
 \seealso{
 Other utilities: \code{\link{downloadEvent}}
 }

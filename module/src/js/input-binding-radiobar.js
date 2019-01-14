@@ -9,50 +9,30 @@ $.extend(radiobarInputBinding, {
     { type: "click" },
     { type: "change" }
   ],
-  _value: (el, newValue, currentValue, index) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`input[value="${ currentValue }"]`);
+  _update: (el, data) => {
+    let template = el.querySelector(".btn").cloneNode(true);
+    template.classList.remove("active");
+    template.classList.remove("disabled");
 
-      if (target !== null) {
-        target.value = newValue;
-      }
-    } else {
-      let inputs = el.querySelectorAll("input");
+    let input = template.children[0].cloneNode();
+    input.removeAttribute("checked", "");
 
-      if (index < inputs.length) {
-        inputs[index].value = newValue;
-      }
-    }
-  },
-  _choice: (el, newLabel, currentValue, index) => {
-    if (currentValue !== null)  {
-      let target = el.querySelector(`input[value="${ currentValue }"]`);
+    template.innerHTML = "";
+    template.appendNode(input);
 
-      if (target !== null) {
-        target.parentNode.children[1].innerHTML = newLabel;
-      }
-    } else {
-      let inputs = el.querySelectorAll("input");
+    el.innerHTML = "";
 
-      if (index < inputs.length) {
-        inputs[index].parentNode.children[1].innerHTML = newLabel;
-      }
-    }
-  },
-  _select: (el, currentValue) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`input[value="${ currentValue }"]`);
+    data.choices.forEach((choice, i) => {
+      let child = template.cloneNode(true);
+      child.insertAdjacentHTML("beforeend", choice);
+      child.children[0].value = data.values[i];
 
-      if (target !== null) {
-        target.checked = true;
-        target.parentNode.classList.add("active");
+      if (data.selected.indexOf(data.values[i]) > -1) {
+        child.classList.add("active");
+        child.children[0].setAttribute("checked", "");
       }
-    }
-  },
-  _clear: (el) => {
-    el.querySelectorAll("input:checked").forEach(input => {
-      input.checked = false;
-      input.parentNode.classList.remove("active");
+
+      el.appendChild(child);
     });
   },
   _enable: function(el, data) {

@@ -9,48 +9,22 @@ $.extend(checkboxInputBinding, {
   Events: [
     { type: "change" }
   ],
-  _value: (el, newValue, currentValue, index) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`input[value="${ currentValue }"]`);
+  _update: (el, data) => {
+    let template = el.querySelector(".custom-checkbox").cloneNode(true);
+    template.children[0].checked = false;
 
-      if (target !== null) {
-        target.value = newValue;
-      }
-    } else {
-      let possibles = el.querySelectorAll("input");
+    el.innerHTML = "";
 
-      if (index < possibles.length) {
-        possibles[index].value = newValue;
-      }
-    }
-  },
-  _choice: (el, newLabel, currentValue, index) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`input[value="${ currentValue }"]`);
+    data.choices.forEach((choice, i) => {
+      let child = template.cloneNode(true);
+      child.children[0].value = data.values[i];
+      child.children[1].innerHTML = choice;
 
-      if (target !== null) {
-        target.parentNode.children[1].innerHTML = newLabel;
+      if (data.selected.indexOf(data.values[i]) > -1) {
+        child.children[0].checked = true;
       }
-    } else {
-      let possibles = el.querySelectorAll("input");
 
-      if (index < possibles.length) {
-        possibles[index].parentNode.children[1].innerHTML = newLabel;
-      }
-    }
-  },
-  _select: (el, currentValue) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`input[value="${ currentValue }"]`);
-
-      if (target !== null) {
-        target.checked = true;
-      }
-    }
-  },
-  _clear: (el) => {
-    el.querySelectorAll("input").forEach(input => {
-      input.checked = false;
+      el.appendChild(child);
     });
   },
   _enable: function(el, data) {

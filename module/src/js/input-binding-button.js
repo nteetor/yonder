@@ -16,19 +16,12 @@ $.extend(buttonInputBinding, {
   getValue: (el) => {
     return +el.value > 0 ? +el.value : null;
   },
-  _choice: (el, newLabel, currentValue, index) => {
-    el.innerHTML = newLabel;
-  },
-  _value: (el, newValue, currentValue, index) => {
-    if (+newValue === +newValue) {
-      el.value = newValue;
+  _update: (el, data) => {
+    el.innerHTML = data.choices[0];
+
+    if (data.choices !== data.values) {
+      el.value = parseInt(data.values[0], 10) || 0;
     }
-  },
-  _select: (el, currentValue, index) => {
-    // cannot select
-  },
-  _clear: (el) => {
-    // no need to do anything
   },
   _enable: (el, data) => {
     if (!data.invert) {

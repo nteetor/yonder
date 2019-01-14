@@ -1,88 +1,88 @@
-#' Update input
+#' Update input choices and values
 #'
-#' Modify an input's choices, values, or selected choices. Importantly, an
-#' input's choices and selected choices are updated after any values are
-#' updated. Thus, `choices` and `selected` must refer to the new, updated
-#' values.
+#' Use `updateInput()` to replace an input's choices and values. Optionally,
+#' a new choices may be selected.
 #'
-#' @param id A character string specifying the reactive id of an input.
+#' @param id A character string specifying the id of an input.
 #'
-#' @param choices A character vector, tag element, or list specifying choices
-#'   for the input.
+#' @param choices A character vector or list of tag elements specifying new
+#'   choices for the input.
 #'
-#'   If `choices` is an **unnamed** vector, list, or element then the input's
-#'   choices are updated sequentially.
-#'
-#'   If `choices` is a **named** vector or list then the input's choices are
-#'   matched by value. The names of `choices` refer to one or more possible
-#'   values of the input and the values of `choices` are the new choice labels.
-#'
-#' @param values An atomic vector or list of atomic singleton values, values
-#'   will be coerced to character strings.
-#'
-#'   If `values` is an **unnamed** vector or list then the input's values are
-#'   updated sequentially.
+#' @param values An atomic vector specifying new values for the input.
 #'
 #' @param selected One of `values` specifying which choice to select, defaults
 #'   to `NULL`, in which case a choice is not selected. Note that browsers may
 #'   automatically select a choice if not specified.
 #'
+#' @section Button inputs:
+#'
+#' When updating a button input if `values` equals `choices`, the default value
+#' for `values`, the value of the button input is left as is.
+#'
+#' Passing a non-numeric value will reset the button input's value.
+#'
+#' @section File inputs:
+#'
+#' Files inputs do not currently support `updateInput()`.
+#'
+#' @section Form inputs:
+#'
+#' Form inputs do not support `updateInput()`, instead update the specific
+#' inputs within the form.
+#'
 #' @template session
-#'
-#' @details
-#'
-#' If specifying new values with `values`, both `choices` and `selected` need to
-#' refer to these new values.
 #'
 #' @family utilities
 #' @export
-updateInput <- function(id, choices = NULL, values = NULL, selected = NULL,
+updateInput <- function(id, choices, values = choices, selected = NULL,
                         session = getDefaultReactiveDomain()) {
-  if (is.null(session)) {
+  if (missing(choices)) {
     stop(
-      "invalid call to `updateInput()`, must be called in a reactive context",
+      "invalid `updateInput()` argument, `choices` must be specified",
       call. = FALSE
     )
   }
 
-  # encapsulate tag element so we can compare lengths of `choices` and `values`
-  if (is_tag(choices)) {
-    choices <- list(choices)
-  }
-
-  if (!is.null(choices) && !is.null(values)) {
-    if (is.null(names(choices)) && is.null(names(values))) {
-      if (length(choices) != length(values)) {
-        stop(
-          "invalid `updateInput()` arguments, `choices` and `values` must be ",
-          "the same length if unnamed",
-          call. = FALSE
-        )
-      }
-    }
-  }
-
-  if (!is.null(choices)) {
-    choices <- Map(
-      function(value, name) list(HTML(as.character(value)), name),
-      choices,
-      names(choices) %||% rep.int(list(NULL), length(choices)),
-      USE.NAMES = FALSE
+  if (is.null(session)) {
+    stop(
+      "invalid `updateInput()` argument, `session` is NULL",
+      call. = FALSE
     )
   }
 
-  if (!is.null(values)) {
-    values <- Map(
-      function(value, name) list(as.character(value), name),
-      values,
-      names(values) %||% rep.int(list(NULL), length(values)),
-      USE.NAMES = FALSE
+  if (length(choices) == 0) {
+    stop(
+      "invalid `updateInput()` argument, `choices` must be contain at ",
+      "least one value",
+      call. = FALSE
     )
   }
 
-  if (!is.null(selected)) {
-    selected <- lapply(selected, as.character)
+  if (!is_strictly_list(choices) && !is.atomic(choices)) {
+    stop(
+      "invalid `updateInput()` argument, `choices` must be a list or vector",
+      call. = FALSE
+    )
   }
+
+  if (length(choices) != length(values)) {
+    stop(
+      "invalid `updateInput()` arguments, `choices` and `values` must ",
+      "contain the same number of values",
+      call. = FALSE
+    )
+  }
+
+  if (!is.null(selected) && !(selected %in% values)) {
+    stop(
+      "invalid `updateInput()` argument, `selected` must be one of `values`",
+      call. = FALSE
+    )
+  }
+
+  choices <- lapply(choices, function(x) HTML(as.character(x)))
+  values <- lapply(values, as.character)
+  selected <- lapply(selected, function(x) HTML(as.character(x)))
 
   session$sendInputMessage(id, list(
     type = "update",

@@ -27,48 +27,24 @@ $.extend(menuInputBinding, {
       }
     }
   ],
-  _value: (el, newValue, currentValue, index) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`.dropdown-item[value="${ currentValue }"]`);
-      if (target !== null) {
-        target.value = newValue;
+  _update: (el, data) => {
+    let template = el.querySelector(".dropdown-item").cloneNode();
+    template.removeClass("disabled");
+    template.removeClass("active");
+
+    el.innerHTML = "";
+
+    data.choices.forEach((choice, i) => {
+      let child = template.cloneNode();
+      child.innerHTML = choice;
+      child.value = data.values[i];
+
+      if (data.selected.indexOf(data.values[i]) > -1) {
+        child.classList.add("active");
       }
-    } else {
-      let possibles = el.querySelectorAll(".dropdown-item");
-      if (index < possibles.length) {
-        possibles[index].value = newValue;
-      }
-    }
-  },
-  _choice: (el, newLabel, currentValue, index) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`.dropdown-item[value="${ currentValue }"]`);
-      if (target !== null) {
-        target.innerHTML = newLabel;
-      }
-    } else {
-      let possibles = el.querySelectorAll(".dropdown-item");
-      if (index < possibles.length) {
-        possibles[index].innerHTML = newLabel;
-      }
-    }
-  },
-  _select: (el, currentValue, index) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`.dropdown-item[value="${ currentValue }"]`);
-      if (target !== null) {
-        target.classList.add("active");
-      }
-    } else {
-      let possibles = el.querySelectorAll(".dropdown-item");
-      if (index < possibles.length) {
-        possibles[index].classList.add("active");
-      }
-    }
-  },
-  _clear: (el) => {
-    el.querySelectorAll(".dropdown-item.active")
-      .forEach(di => di.classList.remove("active"));
+
+      el.appendChild(child);
+    });
   },
   _enable: function(el, data) {
     el.querySelectorAll(".dropdown-item").forEach(di => {

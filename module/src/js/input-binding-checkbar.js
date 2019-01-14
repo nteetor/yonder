@@ -8,58 +8,29 @@ $.extend(checkbarInputBinding, {
   Events: [
     { type: "change", selector: ".btn" }
   ],
-  _value: (el, newValue, currentValue, index) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`input[value="${ currentValue }"]`);
-      if (target !== null) {
-        target.value = newValue;
-      }
-    } else {
-      let possibles = el.querySelectorAll("input");
-      if (index < possibles.length) {
-        possibles[index].value = newValue;
-      }
-    }
-  },
-  _choice: (el, newLabel, currentValue, index) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`input[value="${ currentValue }"]`);
+  _update: (el, data) => {
+    let template = el.querySelector(".btn").cloneNode(true);
+    template.classList.remove("active");
+    template.classList.remove("disabled");
+    template.children[0].removeAttribute("disabled");
 
-      if (target !== null) {
-        let btn = target.parentNode;
-        let input = target.cloneNode();
+    let input = template.children[0].cloneNode();
+    template.innerHTML = "";
+    template.appendChild(input);
 
-        btn.innerHTML = "";
-        btn.appendChild(input);
-        btn.insertAdjacentText("beforeend", newLabel);
+    el.innerHTML = "";
+
+    data.choices.forEach((choice, i) => {
+      let child = template.cloneNode(true);
+      child.insertAdjacentHTML("beforeend", choice);
+      child.children[0].value = data.values[i];
+
+      if (data.selected.indexOf(data.values[i]) > -1) {
+        child.classList.add("active");
+        child.children[0].checked = true;
       }
-    } else {
-      let possibles = el.querySelectorAll("input");
 
-      if (index < possibles.length) {
-        let btn = possibles[index].parentNode;
-        let input = possibles[index].cloneNode();
-
-        btn.innerHTML = "";
-        btn.appendChild(input);
-        btn.insertAdjacentText("beforeend", newLabel);
-      }
-    }
-  },
-  _select: (el, currentValue, index) => {
-    if (currentValue !== null) {
-      let target = el.querySelector(`input[value="${ currentValue }"]`);
-
-      if (target !== null) {
-        target.parentNode.classList.add("active");
-        target.setAttribute("selected", "");
-      }
-    }
-  },
-  _clear: (el) => {
-    el.querySelectorAll(".btn").forEach(btn => {
-      btn.classList.remove("active");
-      btn.children[0].setAttribute("selected", "");
+      el.appendChild(child);
     });
   },
   _enable: function(el, data) {

@@ -16,12 +16,9 @@ $.extend(groupInputBinding, {
       .map(s => /^(DIV|SPAN)$/.test(s.tagName) ? s.innerText : (s.value || null))
       .filter(value => value !== null);
   },
-  _value: (el, newValue, currentValue, index) => {
-    el.querySelector("input").value = newValue;
+  _update: (el, data) => {
+    el.querySelector("input").value = data.values[0];
   },
-  _choice: () => null,
-  _select: () => null,
-  _clear: () => null,
   _enable: function(el, data) {
     el.querySelector("input").removeAttribute("disabled");
   },

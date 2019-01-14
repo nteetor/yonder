@@ -10,21 +10,16 @@ $.extend(linkInputBinding, {
       callback: (el) => el.value = +el.value + 1
     }
   ],
-  // Type: "yonder.link",
   initialize: function(el) {
     el.value = 0;
   },
   getValue: (el) => {
     return +el.value > 0 ? +el.value : null;
   },
-  _value: (el, newValue, currentValue, index) => {
-    el.value = newValue;
+  _update: (el, data) => {
+    el.value = data.values[0];
+    el.innerText = data.choices[0];
   },
-  _choice: (el, newLabel, currentValue, index) => {
-    el.innerHTML = newLabel;
-  },
-  _select: () => null,
-  _clear: () => null,
   _disable: function(el, data) {
     el.classList.add("disabled");
     el.setAttribute("disabled", "");

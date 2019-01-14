@@ -48,14 +48,13 @@ $.extend(rangeInputBinding, {
   getState: function(el, data) {
     return { value: this.getValue(el) };
   },
-  receiveMessage: function(el, msg) {
-    console.error("receiveMessage: not implemented for range input");
-    return;
+  _update: (el, data) => {
+    $("input[type='text']", el).data("ionRangeSlider").update({
+      values: data.values
+    });
   },
   dispose: function(el) {
-    var $input = $("input[type='text']", el);
-
-    $input.data("ionRangeSlider").destroy();
+    $("input[type='text']", el).data("ionRangeSlider").destroy();
   }
 });
 

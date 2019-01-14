@@ -139,7 +139,7 @@ navInput <- function(id, choices, values = choices, selected = NULL, ...,
     )
   }
 
-  selected <- match2(selected, values)
+  selected <- match2(values, selected)
 
   element <- tags$ul(
     class = collate(
