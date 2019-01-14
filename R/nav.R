@@ -14,7 +14,7 @@
 #'   item, defaults to `choices`.
 #'
 #' @param selected One of `values` specifying which choice is selected by
-#'   default, defaults to `NULL`.
+#'   default, defaults to `values[[1]]`.
 #'
 #' @param fill One of `TRUE` or `FALSE` specifying if the nav input fills the
 #'   width of its parent element. If `TRUE`, the space is divided evenly among
@@ -114,7 +114,7 @@
 #' ) %>%
 #'   flex(justify = "center")
 #'
-navInput <- function(id, choices, values = choices, selected = NULL, ...,
+navInput <- function(id, choices, values = choices, selected = values[[1]], ...,
                      appearance = "links", fill = FALSE) {
   if (!is.null(appearance) && !re(appearance, "links|pills|tabs", FALSE)) {
     stop(
@@ -139,7 +139,7 @@ navInput <- function(id, choices, values = choices, selected = NULL, ...,
     )
   }
 
-  selected <- match2(values, selected)
+  selected <- match2(selected, values)
 
   element <- tags$ul(
     class = collate(

@@ -4,7 +4,7 @@
 \alias{navInput}
 \title{Page navigation}
 \usage{
-navInput(id, choices, values = choices, selected = NULL, ...,
+navInput(id, choices, values = choices, selected = values[[1]], ...,
   appearance = "links", fill = FALSE)
 }
 \arguments{
@@ -17,7 +17,7 @@ navigation items of the navigation input.}
 item, defaults to \code{choices}.}
 
 \item{selected}{One of \code{values} specifying which choice is selected by
-default, defaults to \code{NULL}.}
+default, defaults to \code{values[[1]]}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 
