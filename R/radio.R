@@ -69,22 +69,22 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
                        disabled = NULL, help = NULL, inline = FALSE) {
   if (!is.null(selected) && !(selected %in% values)) {
     stop(
-      "invalid `radioInput` argument, `selected` must be one of `values`",
+      "invalid `radioInput()` argument, `selected` must be one of `values`",
       call. = FALSE
     )
   }
 
   if (!is.null(disabled) && !(disabled %in% values)) {
     stop(
-      "invalid `radioInput` argument, `disabled` must be one of `values`",
+      "invalid `radioInput()` argument, `disabled` must be one of `values`",
       call. = FALSE
     )
   }
 
   if (length(choices) != length(values)) {
     stop(
-      "invalid `radioInput` arguments, `choices` and `values` must be the same ",
-      "length",
+      "invalid `radioInput()` arguments, `choices` and `values` must be the ",
+      "same length",
       call. = FALSE
     )
   }
@@ -144,7 +144,7 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
 radiobarInput <- function(id, choices, values = choices, selected = NULL) {
   if (length(choices) != length(values)) {
     stop(
-      "invalid `radiobarInput` arguments, `choices` and `values` must be ",
+      "invalid `radiobarInput()` arguments, `choices` and `values` must be ",
       "the same length",
       call. = FALSE
     )
@@ -162,6 +162,7 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL) {
         tags$label(
           class = collate(
             "btn",
+            "btn-grey",
             if (selected[[i]]) "active"
           ),
           tags$input(
