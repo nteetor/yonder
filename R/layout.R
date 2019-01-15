@@ -136,6 +136,7 @@ column <- function(..., width = NULL) {
 #' @export
 columns <- function(...) {
   cols <- elements(list(...))
+  cols <- cols[!vapply(cols, is.null, logical(1))]
 
   if (!all(vapply(cols, tagHasClass, logical(1), class = "col[-]?[-a-z0-9]*"))) {
     stop(
