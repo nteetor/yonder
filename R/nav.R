@@ -164,7 +164,26 @@ navInput <- function(id, choices, values = choices, selected = values[[1]], ...,
 }
 
 navItem <- function(base, value, active) {
-  if (is.character(base)) {
+  if (tagHasClass(base, "yonder-menu")) {
+    base$children[[1]] <- tagDropClass(
+      base$children[[1]],
+      paste0("btn-(?:", paste0(.colors, collapse = "|"), ")")
+    )
+    base$children[[1]] <- tagAddClass(base$children[[1]], "nav-link btn-link")
+    base$children[[1]]$attribs$type <- NULL
+    base$children[[1]]$attribs$value <- value
+
+    if (active) {
+      base$children[[1]] <- tagAddClass(base$children[[1]], "active")
+    }
+
+    base$name <- "li"
+    base <- tagAddClass(base, "nav-item")
+
+    return(base)
+  }
+
+  if (is.character(base) || is_tag(base)) {
     base <- tags$li(
       class = "nav-item",
       tags$button(
@@ -176,21 +195,6 @@ navItem <- function(base, value, active) {
         base
       )
     )
-
-    return(base)
-  }
-
-  if (tagHasClass(base, "yonder-menu")) {
-    base$children[[1]]$attribs$class <- "nav-link btn btn-link dropdown-toggle"
-    base$children[[1]]$attribs$type <- NULL
-    base$children[[1]]$attribs$value <- value
-
-    if (active) {
-      base$children[[1]] <- tagAddClass(base$children[[1]], "active")
-    }
-
-    base$name <- "li"
-    base <- tagAddClass(base, "nav-item")
 
     return(base)
   }
