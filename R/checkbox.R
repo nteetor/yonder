@@ -167,13 +167,9 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
   selected <- match2(selected, values)
 
   element <- tags$div(
-    class = collate(
-      "yonder-checkbar",
-      if (length(choices) > 1) "btn-group",
-      "btn-group-toggle"
-    ),
-    `data-toggle` = "buttons",
+    class = "yonder-checkbar btn-group btn-group-toggle d-flex",
     id = id,
+    `data-toggle` = "buttons",
     lapply(
       seq_along(choices),
       function(i) {

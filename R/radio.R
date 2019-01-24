@@ -148,7 +148,7 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL, ...) {
   selected <- match2(selected, values)
 
   input <- tags$div(
-    class = "yonder-radiobar btn-group btn-group-toggle",
+    class = "yonder-radiobar btn-group btn-group-toggle d-flex",
     id = id,
     `data-toggle` = "buttons",
     ...,
