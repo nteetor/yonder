@@ -204,6 +204,7 @@ formGroup <- function(label, input, help = NULL,..., width = NULL) {
       "form-group",
       classes
     ),
+    ...,
     tags$label(label),
     input,
     if (!is.null(help)) {
