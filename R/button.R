@@ -11,7 +11,7 @@
 #' `id`, but may have a specified `value`. Submit inputs will _not_ freeze all
 #' reactive inputs, see [formInput()].
 #'
-#' @template input
+#' @param id A character string specifying the id of the reactive input.
 #'
 #' @param label A character string specifying the label text on the button
 #'   input.
@@ -27,6 +27,10 @@
 #' @param text A character string specifying the text displayed as part of the
 #'   link input.
 #'
+#' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element.
+#'
+#' @family inputs
 #' @export
 #' @examples
 #' ### Simple vs block button
@@ -142,13 +146,15 @@ linkInput <- function(id, text, ...) {
 #'
 #' A set of buttons with custom values.
 #'
+#' @inheritParams buttonInput
+#'
 #' @param labels A character vector of labels, a button is added to the group
 #'   for each label specified.
 #'
 #' @param values A character vector of values, one for each button specified,
 #'   defaults to `labels`.
 #'
-#' @template input
+#' @family inputs
 #' @export
 #' @examples
 #'

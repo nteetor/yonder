@@ -12,7 +12,7 @@ disableInput(id, values = NULL, invert = FALSE, reset = FALSE,
   session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of an input.}
+\item{id}{A character string specifying the id of an input.}
 
 \item{values}{A vector specifying values to enable or disable.}
 
@@ -27,3 +27,8 @@ prior to disabling choices, defaults to \code{FALSE}.}
 \description{
 Prevent interacting with input choices.
 }
+\seealso{
+Other utilities: \code{\link{downloadEvent}},
+  \code{\link{invalidateInput}}, \code{\link{updateInput}}
+}
+\concept{utilities}

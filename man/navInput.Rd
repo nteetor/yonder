@@ -8,7 +8,7 @@ navInput(id, choices, values = choices, selected = values[[1]], ...,
   appearance = "links", fill = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of the input.}
+\item{id}{A character string specifying the id of the reactive input.}
 
 \item{choices}{A character vector or list of tag elements specifying the
 navigation items of the navigation input.}
@@ -19,7 +19,8 @@ item, defaults to \code{choices}.}
 \item{selected}{One of \code{values} specifying which choice is selected by
 default, defaults to \code{values[[1]]}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
 \item{appearance}{One of \code{"links"}, \code{"pills"}, or \code{"tabs"} specifying the
 appearance of the nav input, defaults to \code{"links"}.}
@@ -132,6 +133,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{groupInput}}, \code{\link{listGroupInput}},
   \code{\link{menuInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

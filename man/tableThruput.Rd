@@ -11,9 +11,9 @@ tableThruput(id, ..., borders = "rows", striped = FALSE,
 renderTable(expr, env = parent.frame(), quoted = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of the thruput.}
+\item{id}{A character string specifying the id of the reactive input.}
 
-\item{...}{Additional named arguments passed on HTML attributes to the parent
+\item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
 \item{borders}{One of \code{"rows"}, \code{"all"}, or \code{"none"} specifying what borders

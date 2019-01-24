@@ -8,7 +8,7 @@ menuInput(id, label, choices, values = choices, ...,
   direction = "down", align = "left")
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of the input.}
+\item{id}{A character string specifying the id of the reactive input.}
 
 \item{label}{A character string or tag element specifying the label of the
 menu's toggle button.}
@@ -19,7 +19,8 @@ items.}
 \item{values}{A character vector specifying the values of the menu's items,
 defaults to \code{choices}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
 \item{direction}{One of \code{"up"}, \code{"right"}, \code{"down"}, or \code{"left"} specifying
 which direction the menu opens, defaults to \code{"down"}.}
@@ -75,6 +76,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{groupInput}}, \code{\link{listGroupInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

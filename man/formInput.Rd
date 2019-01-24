@@ -7,9 +7,10 @@
 formInput(id, ..., submit = submitInput(), inline = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of the input.}
+\item{id}{A character string specifying the id of the reactive input.}
 
-\item{...}{Any number of unnamed arguments (inputs or tag elements) passed as child elements of the form.
+\item{...}{Any number of unnamed arguments (inputs or tag elements) passed as
+child elements of the form.
 
 Additional named arguments passed as HTML attributes to the parent element.}
 
@@ -30,9 +31,8 @@ submit input is clicked. A form input's reactive value also depends on the
 submit input. This allows you to distinguish between different clicks if
 your form includes multiple submit inputs.
 
-\strong{Important} if \code{id} or \code{submit} are \code{NULL} the form input will not freeze
-its child inputs. This can be useful if you want to use a \code{formInput()}
-solely for page layout.
+If \code{id} or \code{submit} are \code{NULL} the form input will not freeze its child
+inputs.
 }
 \details{
 When \code{inline} is \code{TRUE} you may want to adjust the right margin of each child
@@ -98,6 +98,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

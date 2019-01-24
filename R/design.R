@@ -171,11 +171,11 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
 
   if (!is.null(case)) {
     if (case == "upper")
-      case <- "uppercase"
+      case <- "text-uppercase"
     else if (case == "lower") {
-      case <- "lowercase"
+      case <- "text-lowercase"
     } else {
-      case <- "capitalize"
+      case <- "text-capitalize"
     }
 
     .tag <- tagDropClass(.tag, "text-(lowercase|uppercase|capitalize)")

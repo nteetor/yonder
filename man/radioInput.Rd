@@ -5,13 +5,13 @@
 \alias{radiobarInput}
 \title{Radio inputs}
 \usage{
-radioInput(id, choices, values = choices, selected = NULL,
-  disabled = NULL, help = NULL, inline = FALSE)
+radioInput(id, choices, values = choices, selected = NULL, ...,
+  disabled = NULL, inline = FALSE)
 
-radiobarInput(id, choices, values = choices, selected = NULL)
+radiobarInput(id, choices, values = choices, selected = NULL, ...)
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of the input.}
+\item{id}{A character string specifying the id of the reactive input.}
 
 \item{choices}{A character vector specifying labels for the radio or radiobar
 input's choices.}
@@ -25,16 +25,14 @@ strings specifying the values of the radio input's choices, defaults to
 radio input, defaults to \code{NULL}, in which case the first choice is
 selected by default.}
 
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
+
 \item{disabled}{One or more of \code{values} indicating which radio choices to
 disable, defaults to \code{NULL}, in which case all choices are enabled.}
 
-\item{help}{A character string specifying a small help label which appears
-below the input, defaults to \code{NULL} in which case help text is not added.}
-
 \item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
 in which case the radio controls render on separate lines.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
 }
 \description{
 Create a reactive radio input of one or more radio controls.
@@ -87,6 +85,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{groupInput}}, \code{\link{listGroupInput}},
   \code{\link{menuInput}}, \code{\link{navInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

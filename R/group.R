@@ -8,6 +8,8 @@
 #' to the user. Buttons and dropdowns may be included to control when the group
 #' input's reactive value updates. See Details for more information.
 #'
+#' @inheritParams buttonInput
+#'
 #' @param placeholder A character string specifying placeholder text for the
 #'   input group, defaults to `NULL`.
 #'
@@ -42,7 +44,7 @@
 #' menu item. The value of the input group is the concatentation of the
 #' dropdown input value, the value of the text input, and any static addons.
 #'
-#' @template input
+#' @family inputs
 #' @export
 #' @examples
 #'
@@ -79,7 +81,7 @@
 #'
 #' groupInput(
 #'   id = "group4",
-#'   left = "@",
+#'   left = "@@",
 #'   placeholder = "Username",
 #'   right = buttonInput(
 #'     id = NULL,

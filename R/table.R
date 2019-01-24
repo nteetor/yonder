@@ -4,6 +4,8 @@
 #' `renderTable()`. Access selected table columns by referencing the same
 #' table id as an input.
 #'
+#' @inheritParams buttonInput
+#'
 #' @param borders One of `"rows"`, `"all"`, or `"none"` specifying what borders
 #'   are applied to the table, defaults to `"rows"`. `"rows"` will apply borders
 #'   between table rows. `"all"` will apply borders between table rows and
@@ -32,9 +34,6 @@
 #' @param quoted One of `TRUE` or `FALSE` specifying if `expr` is a quoted
 #'   expression.
 #'
-#' @param ... Additional named arguments passed on HTML attributes to the parent
-#'   element.
-#'
 #' @section Example application:
 #'
 #' ```R
@@ -50,7 +49,7 @@
 #' )
 #' ```
 #'
-#' @template thruput
+#' @family thruputs
 #' @export
 #' @examples
 #'

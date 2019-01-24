@@ -2,6 +2,8 @@
 #'
 #' Upload files to the server.
 #'
+#' @inheritParams buttonInput
+#'
 #' @param placeholder A character string specifying the text inside the file
 #'   input, defaults to `"Choose file"`.
 #'
@@ -45,7 +47,7 @@
 #' )
 #' ```
 #'
-#' @template input
+#' @family inputs
 #' @export
 #' @examples
 #'

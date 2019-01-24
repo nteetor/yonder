@@ -4,6 +4,8 @@
 #' reactive inputs or within a [navInput()]. For building custom, more complex
 #' dropdown elements please see [dropdown()].
 #'
+#' @inheritParams buttonInput
+#'
 #' @param label A character string or tag element specifying the label of the
 #'   menu's toggle button.
 #'
@@ -19,7 +21,7 @@
 #' @param align One or `"right"` or `"left"` specifying which side of the
 #'   toggle button the menu aligns to, defaults to `"left"`.`
 #'
-#' @template input
+#' @family inputs
 #' @export
 #' @examples
 #'

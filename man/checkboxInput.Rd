@@ -14,7 +14,7 @@ switchInput(id, choices, values = choices, selected = NULL, ...)
 checkbarInput(id, choices, values = choices, selected = NULL, ...)
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of the input.}
+\item{id}{A character string specifying the id of the reactive input.}
 
 \item{choices}{A character string or vector specifying a label for the
 checkbox or checkbar.}
@@ -26,7 +26,8 @@ checkbox or checkbar input, defaults to \code{choice} or \code{values}, respecti
 selected by default, defaults to \code{NULL}, in which case no choices are
 initially selected.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
 \item{inline}{One of \code{TRUE} or \code{FALSE} specifying if the checkbox input
 choices render inline or stacked, defaults to \code{FALSE}, in which case the
@@ -110,6 +111,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

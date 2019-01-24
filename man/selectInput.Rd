@@ -8,7 +8,7 @@ selectInput(id, choices, values = choices, selected = NULL,
   multiple = FALSE, ...)
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of the input.}
+\item{id}{A character string specifying the id of the reactive input.}
 
 \item{choices}{A character vector specifying the labels of the select input
 options.}
@@ -24,7 +24,8 @@ default.}
 selected, otherwise a single value is selected at a time,
 defaults to \code{FALSE}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 }
 \description{
 Create a select input. Select elements often appear as a dropdown menu and
@@ -53,6 +54,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{groupInput}}, \code{\link{listGroupInput}},
   \code{\link{menuInput}}, \code{\link{navInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{textInput}}
+  \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

@@ -7,6 +7,8 @@
 #' the reactive value is `NULL`. Switch inputs differ from checkboxes only in
 #' appearance.
 #'
+#' @inheritParams buttonInput
+#'
 #' @param choices A character string or vector specifying a label for the
 #'   checkbox or checkbar.
 #'
@@ -21,7 +23,7 @@
 #'   choices render inline or stacked, defaults to `FALSE`, in which case the
 #'   choices are stacked.
 #'
-#' @template input
+#' @family inputs
 #' @export
 #' @examples
 #'

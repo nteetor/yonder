@@ -4,13 +4,15 @@
 #' keyboards and assistive technologies. A password input will mask its
 #' contents. Email inputs offer client-side validation depending on the browser.
 #'
+#' @inheritParams buttonInput
+#'
 #' @param value A character string or a value coerced to a character string
 #'   specifying the default value of the textual input.
 #'
 #' @param placeholder A character string specifying placeholder text for the
 #'   input, defaults to `NULL`, in which case there is no placeholder text.
 #'
-#' @template input
+#' @family inputs
 #' @export
 #' @examples
 #'

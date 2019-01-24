@@ -25,7 +25,7 @@ passwordInput(id, value = NULL, placeholder = NULL, ...)
 numberInput(id, value = NULL, placeholder = NULL, ...)
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of the input.}
+\item{id}{A character string specifying the id of the reactive input.}
 
 \item{value}{A character string or a value coerced to a character string
 specifying the default value of the textual input.}
@@ -33,7 +33,8 @@ specifying the default value of the textual input.}
 \item{placeholder}{A character string specifying placeholder text for the
 input, defaults to \code{NULL}, in which case there is no placeholder text.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 }
 \description{
 Different types of textual inputs are provided to best support mobile
@@ -78,6 +79,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{groupInput}}, \code{\link{listGroupInput}},
   \code{\link{menuInput}}, \code{\link{navInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}
+  \code{\link{selectInput}}, \code{\link{sliderInput}}
 }
 \concept{inputs}

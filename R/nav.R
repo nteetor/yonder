@@ -7,6 +7,8 @@
 #' of a nav input is `NULL` or a singleton character string. The value of any
 #' menus in the nav input must be retrieved with its own reactive id.
 #'
+#' @inheritParams buttonInput
+#'
 #' @param choices A character vector or list of tag elements specifying the
 #'   navigation items of the navigation input.
 #'
@@ -51,7 +53,7 @@
 #' shinyApp(ui, server)
 #' ```
 #'
-#' @template input
+#' @family inputs
 #' @export
 #' @examples
 #'

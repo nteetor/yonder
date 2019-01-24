@@ -9,11 +9,15 @@
 #' submit input. This allows you to distinguish between different clicks if
 #' your form includes multiple submit inputs.
 #'
-#' **Important** if `id` or `submit` are `NULL` the form input will not freeze
-#' its child inputs. This can be useful if you want to use a `formInput()`
-#' solely for page layout.
+#' If `id` or `submit` are `NULL` the form input will not freeze its child
+#' inputs.
 #'
-#' @templateVar ... Any number of unnamed arguments (inputs or tag elements) passed as child elements of the form.
+#' @inheritParams buttonInput
+#'
+#' @param ... Any number of unnamed arguments (inputs or tag elements) passed as
+#'   child elements of the form.
+#'
+#'   Additional named arguments passed as HTML attributes to the parent element.
 #'
 #' @param submit A submit button or tags containing a submit button. The submit
 #'   button will trigger the update of input form elements. Defaults to
@@ -57,7 +61,7 @@
 #' shinyApp(ui, server)
 #' ```
 #'
-#' @template input
+#' @family inputs
 #' @export
 #' @examples
 #'

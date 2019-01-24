@@ -3,6 +3,8 @@
 #' Create a select input. Select elements often appear as a dropdown menu and
 #' may have one or more selected values, see `multiple`.
 #'
+#' @inheritParams buttonInput
+#'
 #' @param choices A character vector specifying the labels of the select input
 #'   options.
 #'
@@ -17,7 +19,7 @@
 #'   selected, otherwise a single value is selected at a time,
 #'   defaults to `FALSE`.
 #'
-#' @template input
+#' @family inputs
 #' @export
 #' @examples
 #'

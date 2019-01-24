@@ -14,6 +14,8 @@
 #'   to `NULL`, in which case a choice is not selected. Note that browsers may
 #'   automatically select a choice if not specified.
 #'
+#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#'
 #' @section Button inputs:
 #'
 #' When updating a button input if `values` equals `choices`, the default value
@@ -29,8 +31,6 @@
 #'
 #' Form inputs do not support `updateInput()`, instead update the specific
 #' inputs within the form.
-#'
-#' @template session
 #'
 #' @family utilities
 #' @export
@@ -98,7 +98,7 @@ updateInput <- function(id, choices, values = choices, selected = NULL,
 #'
 #' Prevent interacting with input choices.
 #'
-#' @param id A character string specifying the reactive id of an input.
+#' @inheritParams updateInput
 #'
 #' @param values A vector specifying values to enable or disable.
 #'
@@ -108,8 +108,7 @@ updateInput <- function(id, choices, values = choices, selected = NULL,
 #' @param reset One of `TRUE` or `FALSE`, if `TRUE` choices are all enabled
 #'   prior to disabling choices, defaults to `FALSE`.
 #'
-#' @template session
-#'
+#' @family utilities
 #' @export
 enableInput <- function(id, values = NULL, invert = FALSE,
                         session = getDefaultReactiveDomain()) {
@@ -150,14 +149,15 @@ disableInput <- function(id, values = NULL, invert = FALSE, reset = FALSE,
 #' the reactive input, thus allowing subsequent observers and reactives to
 #' trigger.
 #'
-#' @param id A character string specifying the reactive id of an input.
+#' @inheritParams updateInput
 #'
-#' @param message A character string specifying the message.
+#' @param message A character string specifying the message, default to `NULL`,
+#'   in which case the input is highlighted, but no message is shown.
 #'
-#' @template session
-#'
+#' @family utilities
 #' @export
-invalidateInput <- function(id, message, session = getDefaultReactiveDomain()) {
+invalidateInput <- function(id, message = NULL,
+                            session = getDefaultReactiveDomain()) {
   if (is.null(session)) {
     stop(
       "invalid `invalidateInput()` argument, `session` is NULL",

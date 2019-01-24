@@ -48,6 +48,7 @@ inputs within the form.
 }
 
 \seealso{
-Other utilities: \code{\link{downloadEvent}}
+Other utilities: \code{\link{downloadEvent}},
+  \code{\link{enableInput}}, \code{\link{invalidateInput}}
 }
 \concept{utilities}

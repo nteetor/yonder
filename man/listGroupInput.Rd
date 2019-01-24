@@ -8,7 +8,7 @@ listGroupInput(id, choices, values = choices, selected = NULL, ...,
   multiple = TRUE, flush = FALSE)
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of the input.}
+\item{id}{A character string specifying the id of the reactive input.}
 
 \item{choices}{A vector of character strings or list of tag elements specifying
 the content of the list group's items.}
@@ -19,7 +19,8 @@ defaults to \code{choices}.}
 \item{selected}{One or more of \code{values} specifying which choices are selected
 by default, defaults to \code{NULL}, in which case no choice is selected.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
 \item{multiple}{One of \code{TRUE} or \code{FALSE} specifyng if multiple list group
 items may be selected, defaults to \code{TRUE}.}
@@ -186,6 +187,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{groupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

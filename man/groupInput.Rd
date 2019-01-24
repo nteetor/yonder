@@ -8,7 +8,7 @@ groupInput(id, value = NULL, placeholder = NULL, left = NULL,
   right = NULL, ...)
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of the input.}
+\item{id}{A character string specifying the id of the reactive input.}
 
 \item{value}{A character string specifying an initial value for the input
 group, defaults to \code{NULL}.}
@@ -21,7 +21,8 @@ input group, defaults to \code{NULL}.}
 Addon's affect the reactive value of the group input, see the Details
 section below for more information.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 }
 \description{
 A group input is a combination reactive input which may consist of one or two
@@ -110,6 +111,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

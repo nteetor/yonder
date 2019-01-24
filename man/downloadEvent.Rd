@@ -49,6 +49,7 @@ download.
 }
 
 \seealso{
-Other utilities: \code{\link{updateInput}}
+Other utilities: \code{\link{enableInput}},
+  \code{\link{invalidateInput}}, \code{\link{updateInput}}
 }
 \concept{utilities}

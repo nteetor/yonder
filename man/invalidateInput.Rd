@@ -5,14 +5,16 @@
 \alias{validateInput}
 \title{Validate, invalidate input}
 \usage{
-invalidateInput(id, message, session = getDefaultReactiveDomain())
+invalidateInput(id, message = NULL,
+  session = getDefaultReactiveDomain())
 
 validateInput(id, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of an input.}
+\item{id}{A character string specifying the id of an input.}
 
-\item{message}{A character string specifying the message.}
+\item{message}{A character string specifying the message, default to \code{NULL},
+in which case the input is highlighted, but no message is shown.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
@@ -25,3 +27,8 @@ using the input are not triggered. \code{validateInput()} will immediately thaw
 the reactive input, thus allowing subsequent observers and reactives to
 trigger.
 }
+\seealso{
+Other utilities: \code{\link{downloadEvent}},
+  \code{\link{enableInput}}, \code{\link{updateInput}}
+}
+\concept{utilities}

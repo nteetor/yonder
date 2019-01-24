@@ -2,6 +2,8 @@
 #'
 #' Create a reactive radio input of one or more radio controls.
 #'
+#' @inheritParams buttonInput
+#'
 #' @param choices A character vector specifying labels for the radio or radiobar
 #'   input's choices.
 #'
@@ -14,16 +16,13 @@
 #'   radio input, defaults to `NULL`, in which case the first choice is
 #'   selected by default.
 #'
-#' @param help A character string specifying a small help label which appears
-#'   below the input, defaults to `NULL` in which case help text is not added.
-#'
 #' @param inline If `TRUE`, the radio input renders inline, defaults to `FALSE`,
 #'   in which case the radio controls render on separate lines.
 #'
 #' @param disabled One or more of `values` indicating which radio choices to
 #'   disable, defaults to `NULL`, in which case all choices are enabled.
 #'
-#' @template input
+#' @family inputs
 #' @export
 #' @examples
 #'
@@ -65,8 +64,8 @@
 #' ) %>%
 #'   background("grey")
 #'
-radioInput <- function(id, choices, values = choices, selected = NULL,
-                       disabled = NULL, help = NULL, inline = FALSE) {
+radioInput <- function(id, choices, values = choices, selected = NULL, ...,
+                       disabled = NULL, inline = FALSE) {
   if (!is.null(selected) && !(selected %in% values)) {
     stop(
       "invalid `radioInput()` argument, `selected` must be one of `values`",
@@ -96,41 +95,37 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
   input <- tags$div(
     class = "yonder-radio",
     id = id,
-    if (!is.null(choices)) {
-      lapply(
-        seq_along(choices),
-        function(i) {
-          tags$div(
-            class = collate(
-              "custom-control",
-              "custom-radio",
-              if (inline) "custom-control-inline"
-            ),
-            tags$input(
-              class = "custom-control-input",
-              type = "radio",
-              id = ids[[i]],
-              name = id,
-              value = values[[i]],
-              checked = if (selected[[i]]) NA,
-              disabled = if (disabled[[i]]) NA
-            ),
-            tags$label(
-              class = "custom-control-label",
-              `for` = ids[[i]],
-              choices[[i]]
-            )
+    Map(
+      choice = choices,
+      value = values,
+      select = selected,
+      disable = disabled,
+      .id = ids,
+      function(choice, value, select, disable, .id) {
+        tags$div(
+          class = collate(
+            "custom-control",
+            "custom-radio",
+            if (inline) "custom-control-inline"
+          ),
+          tags$input(
+            class = "custom-control-input",
+            type = "radio",
+            id = .id,
+            name = id,
+            value = value,
+            checked = if (select) NA,
+            disabled = if (disable) NA
+          ),
+          tags$label(
+            class = "custom-control-label",
+            `for` = .id,
+            choice
           )
-        }
-      )
-    },
-    tags$div(class = "invalid-feedback"),
-    if (!is.null(help)) {
-      tags$small(
-        class = "form-text text-muted",
-        help
-      )
-    }
+        )
+      }
+    ),
+    tags$div(class = "invalid-feedback")
   )
 
   attachDependencies(
@@ -141,7 +136,7 @@ radioInput <- function(id, choices, values = choices, selected = NULL,
 
 #' @rdname radioInput
 #' @export
-radiobarInput <- function(id, choices, values = choices, selected = NULL) {
+radiobarInput <- function(id, choices, values = choices, selected = NULL, ...) {
   if (length(choices) != length(values)) {
     stop(
       "invalid `radiobarInput()` arguments, `choices` and `values` must be ",
@@ -156,25 +151,26 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL) {
     class = "yonder-radiobar btn-group btn-group-toggle",
     id = id,
     `data-toggle` = "buttons",
-    lapply(
-      seq_along(choices),
-      function(i) {
+    ...,
+    Map(
+      choice = choices,
+      value = values,
+      select = selected,
+      function(choice, value, select) {
         tags$label(
           class = collate(
             "btn",
             "btn-grey",
-            if (selected[[i]]) "active"
+            if (select) "active"
           ),
           tags$input(
             name = id,
             type = "radio",
-            value = values[[i]],
+            value = value,
             autocomplete = "false",
-            checked = if (selected[[i]]) NA
+            checked = if (select) NA
           ),
-          tags$span(
-            choices[[i]]
-          )
+          choice
         )
       }
     )

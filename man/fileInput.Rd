@@ -8,7 +8,7 @@ fileInput(id, placeholder = "Choose file", browse = "Browse",
   left = NULL, right = NULL, ..., multiple = TRUE, accept = NULL)
 }
 \arguments{
-\item{id}{A character string specifying the reactive id of the input.}
+\item{id}{A character string specifying the id of the reactive input.}
 
 \item{placeholder}{A character string specifying the text inside the file
 input, defaults to \code{"Choose file"}.}
@@ -23,7 +23,8 @@ appended respectively to the file input. For more information refer to
 Clicking on an element specified by \code{right} also opens the file input
 dialog.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent element.}
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
 \item{multiple}{One of \code{TRUE} or \code{FALSE} specifying whether or not the user
 can upload multiple files at once, defaults to \code{TRUE}.}
@@ -86,6 +87,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+  \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}
