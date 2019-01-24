@@ -65,9 +65,10 @@ menuInput <- function(id, label, choices, values = choices, ...,
     )
   }
 
-  if (missing(choices) && missing(values) && !missing(label)) {
+  if (missing(label) || missing(choices)) {
     stop(
-      "invalid `menuInput()` argument, `label` must be specified",
+      "invalid `menuInput()` arguments, you may be missing `label` or ",
+      "`choices`",
       call. = FALSE
     )
   }
