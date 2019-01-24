@@ -222,7 +222,7 @@ navItem <- function(base, value, active) {
 #'
 #' @param id A character string specifying the id of the nav pane.
 #'
-#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#' @inheritParams updateInput
 #'
 #' @section App with pills:
 #'

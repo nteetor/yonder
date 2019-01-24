@@ -31,7 +31,7 @@
 #'
 #' @param bar A bar element, typically a call to `bar()`.
 #'
-#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#' @inheritParams updateInput
 #'
 #' @section Example application:
 #'

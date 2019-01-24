@@ -14,7 +14,7 @@
 #' @param ... Tag elements inside the collapsible pane or additional named
 #'   arguments passed as HTML attributes to parent element.
 #'
-#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#' @inheritParams updateInput
 #'
 #' @details
 #'

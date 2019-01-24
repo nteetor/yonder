@@ -29,7 +29,7 @@
 #' @param id A character string specifying the HTML id of a popover's target tag
 #'   element.
 #'
-#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#' @inheritParams updateInput
 #'
 #' @section Example application:
 #'

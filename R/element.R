@@ -8,7 +8,7 @@
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
 #'
-#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#' @inheritParams updateInput
 #'
 #' @details
 #'

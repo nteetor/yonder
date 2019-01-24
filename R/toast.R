@@ -23,7 +23,7 @@
 #' @param action A character string specifying a reactive id. If specified, the
 #'   hiding or closing of the toast will set the reactive id `action` to `TRUE`.
 #'
-#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#' @inheritParams updateInput
 #'
 #' @section Showing notifications:
 #'
