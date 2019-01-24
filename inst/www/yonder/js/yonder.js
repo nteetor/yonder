@@ -1254,34 +1254,34 @@
       return false;
     }
 
-    var _close = function _close(data) {
-      var modal = document.body.querySelector(".modal");
-      $(modal).modal("hide");
+    var _show = function _show(data) {
+      $(document.getElementById(data.id)).modal("show");
     };
 
-    var _show = function _show(data) {
-      var modal = document.body.querySelector(".modal");
-
-      if (modal !== null) {
-        modal.innerHTML = data.content;
-      } else {
-        $(document.body).append($("<div class=\"modal fade\" tabindex=-1 role=\"dialog\">" + data.content + "</div>"));
-        modal = document.body.querySelector(".modal");
-      }
+    var _register = function _register(data) {
+      var modal = document.createElement("div");
+      modal.classList.add("modal");
+      modal.classList.add("fade");
+      modal.setAttribute("tabindex", -1);
+      modal.setAttribute("role", "dialog");
+      modal.setAttribute("id", data.id);
 
       if (data.dependencies !== undefined) {
         Shiny.renderDependencies(data.dependencies);
       }
 
+      document.body.appendChild(modal);
+      modal.insertAdjacentHTML("afterbegin", data.content);
       Shiny.initializeInputs(modal);
       Shiny.bindAll(modal);
-      $(modal).modal("show");
     };
 
-    if (msg.type === "close") {
+    if (msg.type === "hide") {
       _close(msg.data);
     } else if (msg.type === "show") {
       _show(msg.data);
+    } else if (msg.type === "register") {
+      _register(msg.data);
     } else {
       console.warn("no modal " + msg.type + " method");
     }

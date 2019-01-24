@@ -1,7 +1,11 @@
 #' Modal dialogs
 #'
 #' Modals are a flexible alert window, which disable interaction with the page
-#' behind them. Modals may include inputs or buttons or simply text.
+#' behind them. Modals may include inputs or buttons or simply text. To use
+#' one or more modals you must first register the modal from the server with
+#' `registerModal()`. This will assocaite the modal with an id at which point
+#' the rest of your application's server may hide or show the modal with
+#' `showModal()` and `hideModal()`, respectively, by referring to this id.
 #'
 #' @param title A character string or tag element specifying the title of the
 #'   modal.
@@ -17,6 +21,8 @@
 #' @param size One of `"small"`, `"large"`, or `"xl"` (extra large) specifying
 #'   whether to shrink or grow the width of the modal, defaults to `NULL`, in
 #'   which case the width is not adjusted.
+#'
+#' @param id A character string specifying the id to associate with the modal.
 #'
 #' @param modal A modal tag element created using `modal()`.
 #'
@@ -37,8 +43,9 @@
 #' )
 #'
 #' server <- function(input, output) {
-#'   observeEvent(input$trigger, ignoreInit = TRUE, {
-#'     showModal(
+#'   isolate(
+#'     registerModal(
+#'       id = "modal1",
 #'       modal(
 #'         title = "A simple modal",
 #'         body = paste(
@@ -49,6 +56,10 @@
 #'         )
 #'       )
 #'     )
+#'   )
+#'
+#'   observeEvent(input$trigger, ignoreInit = TRUE, {
+#'     showModal("modal1")
 #'   })
 #' }
 #'
@@ -155,7 +166,41 @@ modal <- function(title = NULL, body = NULL, footer = NULL, ..., center = FALSE,
 
 #' @rdname modal
 #' @export
-showModal <- function(modal, session = getDefaultReactiveDomain()) {
+registerModal <- function(id, modal, session = getDefaultReactiveDomain()) {
+  if (!is.character(id)) {
+    stop(
+      "invalid `registerModal()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
+  if (is.null(session)) {
+    stop(
+      "invalid `registerModal()` argument, `session` is NULL",
+      call. = FALSE
+    )
+  }
+
+  session$sendCustomMessage("yonder:modal", list(
+    type = "register",
+    data = list(
+      id = id,
+      content = HTML(as.character(modal)),
+      dependencies = processDeps(modal, session)
+    )
+  ))
+}
+
+#' @rdname modal
+#' @export
+showModal <- function(id, session = getDefaultReactiveDomain()) {
+  if (!is.character(id)) {
+    stop(
+      "invalid `showModal()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   if (is.null(session)) {
     stop(
       "invalid `showModal()` argument, `session` is NULL",
@@ -166,24 +211,32 @@ showModal <- function(modal, session = getDefaultReactiveDomain()) {
   session$sendCustomMessage("yonder:modal", list(
     type = "show",
     data = list(
-      content = HTML(as.character(modal)),
-      dependencies = processDeps(modal, session)
+      id = id
     )
   ))
 }
 
 #' @rdname modal
 #' @export
-closeModal <- function(session = getDefaultReactiveDomain()) {
+hideModal <- function(id, session = getDefaultReactiveDomain()) {
+  if (!is.character(id)) {
+    stop(
+      "invalid `hideModal()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   if (is.null(session)) {
     stop(
-      "invalid `closeModal()` argument, `session` is NULL",
+      "invalid `hideModal()` argument, `session` is NULL",
       call. = FALSE
     )
   }
 
   session$sendCustomMessage("yonder:modal", list(
     type = "close",
-    data = list()
+    data = list(
+      id = id
+    )
   ))
 }

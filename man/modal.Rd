@@ -2,16 +2,19 @@
 % Please edit documentation in R/modal.R
 \name{modal}
 \alias{modal}
+\alias{registerModal}
 \alias{showModal}
-\alias{closeModal}
+\alias{hideModal}
 \title{Modal dialogs}
 \usage{
 modal(title = NULL, body = NULL, footer = NULL, ...,
   center = FALSE, size = NULL)
 
-showModal(modal, session = getDefaultReactiveDomain())
+registerModal(id, modal, session = getDefaultReactiveDomain())
 
-closeModal(session = getDefaultReactiveDomain())
+showModal(id, session = getDefaultReactiveDomain())
+
+hideModal(id, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{title}{A character string or tag element specifying the title of the
@@ -32,13 +35,19 @@ vertically centered on the page, defaults to \code{FALSE}.}
 whether to shrink or grow the width of the modal, defaults to \code{NULL}, in
 which case the width is not adjusted.}
 
+\item{id}{A character string specifying the id to associate with the modal.}
+
 \item{modal}{A modal tag element created using \code{modal()}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 Modals are a flexible alert window, which disable interaction with the page
-behind them. Modals may include inputs or buttons or simply text.
+behind them. Modals may include inputs or buttons or simply text. To use
+one or more modals you must first register the modal from the server with
+\code{registerModal()}. This will assocaite the modal with an id at which point
+the rest of your application's server may hide or show the modal with
+\code{showModal()} and \code{hideModal()}, respectively, by referring to this id.
 }
 \section{Example application}{
 \preformatted{ui <- container(
@@ -50,8 +59,9 @@ behind them. Modals may include inputs or buttons or simply text.
 )
 
 server <- function(input, output) {
-  observeEvent(input$trigger, ignoreInit = TRUE, {
-    showModal(
+  isolate(
+    registerModal(
+      id = "modal1",
       modal(
         title = "A simple modal",
         body = paste(
@@ -62,6 +72,10 @@ server <- function(input, output) {
         )
       )
     )
+  )
+
+  observeEvent(input$trigger, ignoreInit = TRUE, {
+    showModal("modal1")
   })
 }
 
