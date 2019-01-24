@@ -101,7 +101,7 @@ showPopover <- function(target, popover, placement = "right", duration = NULL,
                         session = getDefaultReactiveDomain()) {
   if (is.null(session)) {
     stop(
-      "function `showPopover()` must be called in a reactive context",
+      "invalid `showPopover()` argument, `session` is NULL",
       call. = FALSE
     )
   }
@@ -130,7 +130,7 @@ showPopover <- function(target, popover, placement = "right", duration = NULL,
 closePopover <- function(id, session = getDefaultReactiveDomain()) {
   if (is.null(session)) {
     stop(
-      "function `closePopover()` must be called in a reactive context",
+      "invalid `closePopover()` argument, `session` is NULL",
       call. = FALSE
     )
   }

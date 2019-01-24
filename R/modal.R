@@ -158,7 +158,7 @@ modal <- function(title = NULL, body = NULL, footer = NULL, ..., center = FALSE,
 showModal <- function(modal, session = getDefaultReactiveDomain()) {
   if (is.null(session)) {
     stop(
-      "`showModal()` must be called in a reactive context",
+      "invalid `showModal()` argument, `session` is NULL",
       call. = FALSE
     )
   }
@@ -177,7 +177,7 @@ showModal <- function(modal, session = getDefaultReactiveDomain()) {
 closeModal <- function(session = getDefaultReactiveDomain()) {
   if (is.null(session)) {
     stop(
-      "`closeModal()` must be called in a reactive context",
+      "invalid `closeModal()` argument, `session` is NULL",
       call. = FALSE
     )
   }
