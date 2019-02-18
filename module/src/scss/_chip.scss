@@ -1,0 +1,92 @@
+.yonder-chip {
+  width: 100%;
+  display: block;
+
+  & > input[data-toggle="dropdown"] {
+    margin-bottom: .25rem;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+    max-height: 20rem;
+    overflow-y: scroll;
+
+    .filtered,
+    .selected {
+      display: none;
+    }
+  }
+
+  .dropdown-item {
+    white-space: normal;
+    cursor: pointer;
+  }
+}
+
+.chips {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+.chips-inline {
+  flex-direction: row;
+  flex-wrap: wrap;
+
+  .chip + .chip {
+    margin-right: .5rem;
+  }
+}
+
+.chips-block {
+  flex-direction: column;
+
+  .chip {
+    width: 100%;
+  }
+
+  .chip-close {
+    margin-right: .25rem;
+  }
+}
+
+.chip {
+  display: none;
+  align-items: center;
+  padding: .25rem;
+  margin: .25rem 0;
+  // @include font-size($badge-font-size);
+  font-size: $badge-font-size;
+  font-weight: $badge-font-weight;
+  line-height: 1;
+  white-space: normal;
+  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  border: 1px solid transparent;
+  @include border-radius($badge-border-radius);
+  // @include transition($badge-transition);
+  cursor: pointer;
+
+  &.active {
+    display: flex;
+  }
+}
+
+.chip-content {
+  flex-grow: 1;
+}
+
+.chip-close {
+  margin-left: .5rem;
+  text-shadow: 0 1px 0 #fff;
+  float: right;
+  font-weight: 700;
+  line-height: 1;
+  opacity: .65;
+  transform: translateY(-10%); // I don't like this.
+}
+
+@each $color, $value in $theme-colors {
+  .chips-#{$color} .chip {
+    @include chip-variant($value);
+  }
+}

@@ -15,10 +15,20 @@
 )
 
 colorUtility <- function(tag, base, color) {
-  if (tagHasClass(tag, "yonder-checkbar|yonder-radiobar|btn-group|list-group")) {
+  if (tagHasClass(tag, "yonder-(?:checkbar|radiobar|button-group|list-group)")) {
     tag$children[[1]] <- lapply(
       tag$children[[1]],
       colorUtility,
+      base = base,
+      color = color
+    )
+
+    return(tag)
+  }
+
+  if (tagHasClass(tag, "yonder-chip")) {
+    tag$children[[3]] <- colorUtility(
+      tag = tag$children[[3]],
       base = base,
       color = color
     )
@@ -251,12 +261,12 @@ background <- function(.tag, color) {
     base <- "alert"
   } else if (tagHasClass(.tag, "badge")) {
     base <- "badge"
-  } else if (tagHasClass(.tag, "yonder-radiobar|yonder-checkbar") ||
-               tagHasClass(.tag, "btn-group") ||
-               tagHasClass(.tag, "btn")) {
+  } else if (tagHasClass(.tag, "yonder-(?:radiobar|checkbar|button-group|button|submit)")) {
     base <- "btn"
   } else if (tagHasClass(.tag, "list-group")) {
     base <- "list-group-item"
+  } else if (tagHasClass(.tag, "yonder-chip")) {
+    base <- "chips"
   } else {
     base <- "bg"
   }

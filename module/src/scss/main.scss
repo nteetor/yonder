@@ -3,7 +3,8 @@
  */
 
 @import 'variables';
-@import 'mixins/active-variant';
+@import 'mixins/active';
+@import 'mixins/chip';
 
 // links
 $link-color: $blue;
@@ -53,8 +54,8 @@ $form-feedback-invalid-color:  $red;
 @import '../../node_modules/bootstrap/scss/modal';
 @import '../../node_modules/bootstrap/scss/tooltip';
 @import '../../node_modules/bootstrap/scss/popover';
-@import '../../node_modules/bootstrap/scss/carousel';
 @import '../../node_modules/bootstrap/scss/spinners';
+@import 'chip';
 
 @import '../../node_modules/bootstrap/scss/utilities/align';
 @import '../../node_modules/bootstrap/scss/utilities/background';

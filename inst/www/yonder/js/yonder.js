@@ -158,7 +158,7 @@
     };
   }
 
-  if (Shiny) {
+  if (typeof Shiny !== "undefined") {
     yonderInputBinding.call(Shiny.InputBinding.prototype);
   }
 
@@ -294,6 +294,23 @@
         el.appendChild(child);
       });
     },
+    _select: function _select(el, data) {
+      el.querySelectAll(".btn").forEach(function (child) {
+        var value = child.children[0].value;
+
+        if (data.reset) {
+          child.classList.remove("active");
+          child.children[0].checked = false;
+        }
+
+        var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
+
+        if (match !== data.invert) {
+          child.classList.add("active");
+          child.children[0].checked = true;
+        }
+      });
+    },
     _enable: function _enable(el, data) {
       var values = data.values;
       el.querySelectorAll(".btn").forEach(function (btn) {
@@ -350,6 +367,21 @@
         el.appendChild(child);
       });
     },
+    _select: function _select(el, data) {
+      el.querySelectorAll(".custom-checkbox").forEach(function (child) {
+        var value = child.children[0].value;
+
+        if (data.reset) {
+          child.children[0].checked = false;
+        }
+
+        var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
+
+        if (match !== data.invert) {
+          child.children[0].checked = true;
+        }
+      });
+    },
     _enable: function _enable(el, data) {
       el.querySelectorAll("input").forEach(function (input) {
         var enable = !data.values.length && data.values.indexOf(input.value) > -1;
@@ -374,6 +406,110 @@
     }
   });
   Shiny.inputBindings.register(checkboxInputBinding, "yonder.checkboxInput");
+
+  var chipInputBinding = new Shiny.InputBinding();
+  $.extend(chipInputBinding, {
+    Selector: {
+      SELF: ".yonder-chip",
+      SELECTED: ".active"
+    },
+    Events: [{
+      type: "input",
+      callback: function callback(el, event, self) {
+        var value = event.currentTarget.value;
+        self.filterItems(el, value);
+
+        if (self.visibleItems(el) === 0) {
+          $(el.querySelector("input[data-toggle='dropdown']")).dropdown("hide");
+        } else {
+          $(el.querySelector("input[data-toggle='dropdown']")).dropdown("show");
+        }
+      }
+    }, {
+      type: "input change",
+      callback: function callback(el, event, self) {
+        el.querySelector("input[data-toggle='dropdown']").dropdown("update");
+      }
+    }, {
+      type: "hide.bs.dropdown",
+      callback: function callback(el, event, self) {
+        if (el.querySelector("input:focus") === null) {
+          el.querySelector("input").value = "";
+          self.filterItems(el, "");
+        }
+      }
+    }, {
+      type: "click",
+      selector: ".dropdown-item",
+      callback: function callback(el, event, self) {
+        event.stopPropagation();
+        var item = event.currentTarget;
+        var label = item.innerText;
+        var value = item.value;
+        var input = el.querySelector("input");
+        var max = +el.getAttribute("data-max");
+        item.classList.add("selected");
+        el.querySelectorAll(".chip[value=\"" + value + "\"]").forEach(function (chip) {
+          return chip.classList.add("active");
+        });
+
+        if (self.visibleItems(el) === 0) {
+          input.dropdown("hide");
+        }
+
+        input.focus();
+
+        if (max === -1 || self.selectedItems(el) < max) {
+          self.enableToggle(el);
+        }
+      }
+    }, {
+      type: "click",
+      selector: ".chip",
+      callback: function callback(el, event, self) {
+        var chip = event.currentTarget;
+        var value = chip.value;
+        var max = +el.getAttribute("data-max");
+        chip.classList.remove("active");
+        el.querySelectorAll(".dropdown-item[value='" + value + "']").forEach(function (item) {
+          return item.classList.remove("selected");
+        });
+        $(el.querySelector("input[data-toggle='dropdown']")).dropdown("update");
+
+        if (max === -1 || self.selectedItems(el) < max) {
+          self.enableToggle(el);
+        }
+      }
+    }],
+    enableToggle: function enableToggle(el) {
+      var input = el.querySelector("input");
+      input.removeAttribute("disabled");
+      input.classList.remove("disabled");
+    },
+    disableToggle: function disableToggle(el) {
+      var input = el.querySelector("input");
+      input.setAttribute("disabled", "");
+      input.classList.add("disabled");
+    },
+    filterItems: function filterItems(el, value) {
+      el.querySelectorAll(".dropdown-item").forEach(function (item) {
+        var match = item.innerText.toLowerCase().indexOf(value) !== -1;
+
+        if (match) {
+          item.classList.remove("filtered");
+        } else {
+          item.classList.add("filtered");
+        }
+      });
+    },
+    visibleItems: function visibleItems(el) {
+      return el.querySelectorAll(":not(.selected), :not(.filtered)").length;
+    },
+    selectedItems: function selectedItems(el) {
+      return el.querySelectorAll(".selected").length;
+    }
+  });
+  Shiny.inputBindings.register(chipInputBinding, "yonder.chipInput");
 
   var fileInputBinding = new Shiny.InputBinding();
   $.extend(fileInputBinding, {
@@ -643,6 +779,21 @@
         el.appendChild(child);
       });
     },
+    _select: function _select(el, data) {
+      el.querySelectorAll(".list-group-item").forEach(function (child) {
+        var value = child.getAttribute("data-value");
+
+        if (data.reset) {
+          child.classList.remove("active");
+        }
+
+        var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
+
+        if (match !== data.invert) {
+          child.classList.add("active");
+        }
+      });
+    },
     _enable: function _enable(el, data) {
       var values = data.values;
       el.querySelectorAll(".list-group-item").forEach(function (li) {
@@ -713,6 +864,21 @@
         }
 
         el.appendChild(child);
+      });
+    },
+    _select: function _select(el, data) {
+      el.querySelectorAll(".dropdown-item").forEach(function (child) {
+        var value = child.value;
+
+        if (data.reset) {
+          child.classList.remove("active");
+        }
+
+        var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
+
+        if (match !== data.inverted) {
+          child.classList.add("active");
+        }
       });
     },
     _enable: function _enable(el, data) {
@@ -790,6 +956,21 @@
         el.appendChild(child);
       });
     },
+    _select: function _select(el, data) {
+      el.querySelectorAll(".nav-link").forEach(function (child) {
+        var value = child.value;
+
+        if (data.reset) {
+          child.classList.remove("active");
+        }
+
+        var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
+
+        if (match !== data.invert) {
+          child.classList.add("active");
+        }
+      });
+    },
     _disable: function _disable(el, data) {
       el.querySelectorAll(".nav-link").forEach(function (nl) {
         var disabled = !data.values.length || data.values.indexOf(nl.value) > -1;
@@ -860,7 +1041,7 @@
     }],
     _update: function _update(el, data) {
       var template = el.querySelector(".custom-radio").cloneNode(true);
-      template.children[0].removeAttribute("checked", "");
+      template.children[0].removeAttribute("checked");
       el.innerHTML = "";
       data.chocies.forEach(function (choice, i) {
         var child = template.cloneNode(true);
@@ -872,6 +1053,21 @@
         }
 
         el.appendChild(child);
+      });
+    },
+    _select: function _select(el, data) {
+      el.querySelectorAll(".custom-control-input").forEach(function (child) {
+        var value = child.value;
+
+        if (data.reset) {
+          child.removeAttribute("checked");
+        }
+
+        var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
+
+        if (match !== data.invert) {
+          child.setAttribute("checked", "");
+        }
       });
     },
     _enable: function _enable(el, data) {
@@ -915,7 +1111,7 @@
       template.classList.remove("active");
       template.classList.remove("disabled");
       var input = template.children[0].cloneNode();
-      input.removeAttribute("checked", "");
+      input.removeAttribute("checked");
       template.innerHTML = "";
       template.appendNode(input);
       el.innerHTML = "";
@@ -930,6 +1126,23 @@
         }
 
         el.appendChild(child);
+      });
+    },
+    _select: function _select(el, data) {
+      el.querySelectorAll(".btn").forEach(function (child) {
+        var value = child.children[0].value;
+
+        if (data.reset) {
+          child.classList.remove("active");
+          child.children[0].removeAttribute("checked");
+        }
+
+        var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
+
+        if (match !== data.invert) {
+          child.classList.add("active");
+          child.children[0].setAttribute("checked", "");
+        }
       });
     },
     _enable: function _enable(el, data) {
@@ -972,14 +1185,15 @@
     }],
     initialize: function initialize(el) {
       var $el = $(el);
-      var $input = $el.find("input[type='text']");
+      var $input = $(el.querySelector(".irs-hidden-input"));
       $input.ionRangeSlider();
       var bgclasses = $el.attr("class").split(/\s+/).filter(function (c) {
-        return /^bg-[a-z-]+$/.test(c);
+        return /^bg-[a-z-]+$/g.test(c);
       }).join(" ");
 
       if (bgclasses) {
-        $el.find(".irs-slider,.irs-bar,.irs-bar-edge,.irs-to,.irs-from,.irs-single,.irs-slider").addClass(bgclasses);
+        var components = ".irs-slider,.irs-bar,.irs-bar-edge,.irs-to,.irs-from,.irs-single,.irs-slider";
+        $el.find(components).addClass(bgclasses);
         $el.removeClass(bgclasses);
       }
 
@@ -994,14 +1208,16 @@
       var $input = $("input[type='text']", el);
       var data = $input.data("ionRangeSlider");
 
-      if ($input.data("type") == "double") {
+      if ($input.data("type") === "double") {
         return [data.result.from, data.result.to];
-      } else if ($input.data("type") == "single") {
+      } else if ($input.data("type") === "single") {
         if (data.result.from_value !== null) {
           return data.result.from_value.replace("&#44;", ",");
         } else {
           return data.result.from;
         }
+      } else {
+        return null;
       }
     },
     getState: function getState(el, data) {
@@ -1010,12 +1226,15 @@
       };
     },
     _update: function _update(el, data) {
-      $("input[type='text']", el).data("ionRangeSlider").update({
+      $(el.querySelector(".irs-hidden-input")).data("ionRangeSlider").update({
         values: data.values
       });
     },
+    _select: function _select(el, data) {
+      $(el.querySelector(".irs-hidden-input")).data("ionRangeSlider"); // need to check if input is a numeric range input or choices slider
+    },
     dispose: function dispose(el) {
-      $("input[type='text']", el).data("ionRangeSlider").destroy();
+      $(el.querySelector(".irs-hidden-input")).data("ionRangeSlider").destroy();
     }
   });
   Shiny.inputBindings.register(rangeInputBinding, "yonder.rangeInput");
@@ -1041,10 +1260,25 @@
         child.value = data.values[i];
 
         if (data.selected.indexOf(data.values[i]) > -1) {
-          child.setAttribute("selected", "");
+          el.querySelector("select").value = child.value;
         }
 
         el.appendChild(child);
+      });
+    },
+    _select: function _select(el, data) {
+      el.querySelectorAll("option").forEach(function (child) {
+        var value = child.value;
+
+        if (data.reset === true) {
+          child.removeAttribute("selected");
+        }
+
+        var match = data.fixed ? data.pattern.indexOf(value) : RegExp(data.pattern, "i").test(value);
+
+        if (match !== data.invert) {
+          el.querySelector("select").value = value;
+        }
       });
     },
     _enable: function _enable(el, data) {
