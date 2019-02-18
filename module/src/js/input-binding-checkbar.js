@@ -33,6 +33,24 @@ $.extend(checkbarInputBinding, {
       el.appendChild(child);
     });
   },
+  _select: function(el, data) {
+    el.querySelectAll(".btn").forEach(child => {
+      let value = child.children[0].value;
+
+      if (data.reset) {
+        child.classList.remove("active");
+        child.children[0].checked = false;
+      }
+
+      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
+          RegExp(data.pattern, "i").test(value);
+
+      if (match !== data.invert) {
+        child.classList.add("active");
+        child.children[0].checked = true;
+      }
+    });
+  },
   _enable: function(el, data) {
     let values = data.values;
     el.querySelectorAll(".btn").forEach(btn => {

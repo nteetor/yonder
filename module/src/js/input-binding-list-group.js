@@ -38,6 +38,22 @@ $.extend(listGroupInputBinding, {
       el.appendChild(child);
     });
   },
+  _select: function(el, data) {
+    el.querySelectorAll(".list-group-item").forEach(child => {
+      let value = child.getAttribute("data-value");
+
+      if (data.reset) {
+        child.classList.remove("active");
+      }
+
+      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
+          RegExp(data.pattern, "i").test(value);
+
+      if (match !== data.invert) {
+        child.classList.add("active");
+      }
+    });
+  },
   _enable: (el, data) => {
     let values = data.values;
     el.querySelectorAll(".list-group-item").forEach(li => {

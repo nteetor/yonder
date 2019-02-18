@@ -55,6 +55,22 @@ $.extend(navInputBinding, {
       el.appendChild(child);
     });
   },
+  _select: (el, data) => {
+    el.querySelectorAll(".nav-link").forEach(child => {
+      let value = child.value;
+
+      if (data.reset) {
+        child.classList.remove("active");
+      }
+
+      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
+          RegExp(data.pattern, "i").test(value);
+
+      if (match !== data.invert) {
+        child.classList.add("active");
+      }
+    });
+  },
   _disable: function(el, data) {
     el.querySelectorAll(".nav-link").forEach(nl => {
       let disabled = !data.values.length || data.values.indexOf(nl.value) > -1;

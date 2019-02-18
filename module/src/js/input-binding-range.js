@@ -9,18 +9,19 @@ $.extend(rangeInputBinding, {
   ],
   initialize: (el) => {
     let $el = $(el);
-    let $input = $el.find("input[type='text']");
+    let $input = $(el.querySelector(".irs-hidden-input"));
 
     $input.ionRangeSlider();
 
     let bgclasses = $el.attr("class")
         .split(/\s+/)
-        .filter(c => /^bg-[a-z-]+$/.test(c))
+        .filter(c => /^bg-[a-z-]+$/g.test(c))
         .join(" ");
 
     if (bgclasses) {
-      $el.find(".irs-slider,.irs-bar,.irs-bar-edge,.irs-to,.irs-from,.irs-single,.irs-slider")
-        .addClass(bgclasses);
+      let components = ".irs-slider,.irs-bar,.irs-bar-edge,.irs-to,.irs-from,.irs-single,.irs-slider";
+
+      $el.find(components).addClass(bgclasses);
       $el.removeClass(bgclasses);
     }
 
@@ -35,26 +36,32 @@ $.extend(rangeInputBinding, {
     var $input = $("input[type='text']", el);
     var data = $input.data("ionRangeSlider");
 
-    if ($input.data("type") == "double") {
+    if ($input.data("type") === "double") {
       return [data.result.from, data.result.to];
-    } else if ($input.data("type") == "single") {
+    } else if ($input.data("type") === "single") {
       if (data.result.from_value !== null) {
         return data.result.from_value.replace("&#44;", ",");
       } else {
         return data.result.from;
       }
+    } else {
+      return null;
     }
   },
   getState: function(el, data) {
     return { value: this.getValue(el) };
   },
   _update: (el, data) => {
-    $("input[type='text']", el).data("ionRangeSlider").update({
+    $(el.querySelector(".irs-hidden-input")).data("ionRangeSlider").update({
       values: data.values
     });
   },
+  _select: (el, data) => {
+    $(el.querySelector(".irs-hidden-input")).data("ionRangeSlider");
+    // need to check if input is a numeric range input or choices slider
+  },
   dispose: function(el) {
-    $("input[type='text']", el).data("ionRangeSlider").destroy();
+    $(el.querySelector(".irs-hidden-input")).data("ionRangeSlider").destroy();
   }
 });
 

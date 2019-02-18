@@ -145,6 +145,6 @@ export function yonderInputBinding() {
   };
 }
 
-if (Shiny) {
+if (typeof Shiny !== "undefined") {
   yonderInputBinding.call(Shiny.InputBinding.prototype);
 }

@@ -15,7 +15,7 @@ $.extend(radiobarInputBinding, {
     template.classList.remove("disabled");
 
     let input = template.children[0].cloneNode();
-    input.removeAttribute("checked", "");
+    input.removeAttribute("checked");
 
     template.innerHTML = "";
     template.appendNode(input);
@@ -33,6 +33,24 @@ $.extend(radiobarInputBinding, {
       }
 
       el.appendChild(child);
+    });
+  },
+  _select: function(el, data) {
+    el.querySelectorAll(".btn").forEach(child => {
+      let value = child.children[0].value;
+
+      if (data.reset) {
+        child.classList.remove("active");
+        child.children[0].removeAttribute("checked");
+      }
+
+      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
+          RegExp(data.pattern, "i").test(value);
+
+      if (match !== data.invert) {
+        child.classList.add("active");
+        child.children[0].setAttribute("checked", "");
+      }
     });
   },
   _enable: function(el, data) {

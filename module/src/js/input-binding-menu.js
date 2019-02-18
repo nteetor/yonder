@@ -46,6 +46,22 @@ $.extend(menuInputBinding, {
       el.appendChild(child);
     });
   },
+  _select: (el, data) => {
+    el.querySelectorAll(".dropdown-item").forEach(child => {
+      let value = child.value;
+
+      if (data.reset) {
+        child.classList.remove("active");
+      }
+
+      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
+          RegExp(data.pattern, "i").test(value);
+
+      if (match !== data.inverted) {
+        child.classList.add("active");
+      }
+    });
+  },
   _enable: function(el, data) {
     el.querySelectorAll(".dropdown-item").forEach(di => {
       let enable = !data.values.length || data.values.indexOf(di.value) > -1;

@@ -22,10 +22,26 @@ $.extend(selectInputBinding, {
       child.value = data.values[i];
 
       if (data.selected.indexOf(data.values[i]) > -1) {
-        child.setAttribute("selected", "");
+        el.querySelector("select").value = child.value;
       }
 
       el.appendChild(child);
+    });
+  },
+  _select: (el, data) => {
+    el.querySelectorAll("option").forEach(child => {
+      let value = child.value;
+
+      if (data.reset === true) {
+        child.removeAttribute("selected");
+      }
+
+      let match = data.fixed ? data.pattern.indexOf(value) :
+          RegExp(data.pattern, "i").test(value);
+
+      if (match !== data.invert) {
+        el.querySelector("select").value = value;
+      }
     });
   },
   _enable: (el, data) => {

@@ -11,7 +11,7 @@ $.extend(radioInputBinding, {
   ],
   _update: (el, data) => {
     let template = el.querySelector(".custom-radio").cloneNode(true);
-    template.children[0].removeAttribute("checked", "");
+    template.children[0].removeAttribute("checked");
 
     el.innerHTML = "";
 
@@ -25,6 +25,22 @@ $.extend(radioInputBinding, {
       }
 
       el.appendChild(child);
+    });
+  },
+  _select: (el, data) => {
+    el.querySelectorAll(".custom-control-input").forEach(child => {
+      let value = child.value;
+
+      if (data.reset) {
+        child.removeAttribute("checked");
+      }
+
+      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
+          RegExp(data.pattern, "i").test(value);
+
+      if (match !== data.invert) {
+        child.setAttribute("checked", "");
+      }
     });
   },
   _enable: (el, data) => {

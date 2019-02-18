@@ -94,6 +94,65 @@ updateInput <- function(id, choices, values = choices, selected = NULL,
   ))
 }
 
+#' Change input selection
+#'
+#' Use `changeInput()` to change an input's selected values. Values may be
+#' selected using regular expression pattern matching or exact matches, see
+#' `fixed`.
+#'
+#' @inheritParams updateInput
+#'
+#' @param pattern A character string specifying a regular expression, if `fixed`
+#'   is `FALSE`, values which match the expression will be selected. If `fixed`
+#'   is `TRUE`, a character vector of one or more values specifying exact values
+#'   to select.
+#'
+#' @param fixed One of `TRUE` or `FALSE` specifying if `pattern` is interpreted
+#'   as a regular expression or a vector of character literals, defaults to
+#'   `FALSE`.
+#'
+#' @param invert One of `TRUE` or `FALSE` specifying how values are matched,
+#'   if `TRUE` values which do _not_ match `pattern` will be selected, defaults
+#'   to `FALSE`.
+#'
+#' @param reset One of `TRUE` or `FALSE` indicating how to handle any currently
+#'   selected values, if `TRUE` the current selection is dropped before
+#'   selecting new values, defaults to `TRUE`.
+#'
+#' @export
+changeInput <- function(id, pattern, fixed = FALSE, invert = FALSE,
+                        reset = TRUE) {
+  if (!is.character(pattern)) {
+    stop(
+      "invalid `changeInput()` argument, `pattern` must be character string or ",
+      "vector",
+      call. = FALSE
+    )
+  }
+
+  if (!fixed && length(pattern) > 1) {
+    stop(
+      "invalid `changeInput()` argument, if `fixed` is FALSE then `pattern` ",
+      "must be a single character string",
+      call. = FALSE
+    )
+  }
+
+  if (fixed) {
+    pattern <- unname(as.list(pattern))
+  }
+
+  session$sendInputMessage(id, list(
+    type = "change",
+    data = list(
+      pattern = pattern,
+      fixed = fixed,
+      invert = invert,
+      reset = reset
+    )
+  ))
+}
+
 #' Enable, disable input
 #'
 #' Prevent interacting with input choices.
