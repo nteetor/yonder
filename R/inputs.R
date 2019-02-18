@@ -121,7 +121,7 @@ updateInput <- function(id, choices, values = choices, selected = NULL,
 #'
 #' @export
 changeInput <- function(id, pattern, fixed = FALSE, invert = FALSE,
-                        reset = TRUE) {
+                        reset = TRUE, session = getDefaultReactiveDomain()) {
   if (!is.character(pattern)) {
     stop(
       "invalid `changeInput()` argument, `pattern` must be character string or ",

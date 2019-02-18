@@ -65,11 +65,11 @@ chipInput <- function(id, choices, values = choices, selected = NULL, ...,
         ),
         ## href = "javascript:void(0)",
         value = value,
-        span(
+        tags$span(
           class = "chip-content",
           choice
         ),
-        span(
+        tags$span(
           class = "chip-close",
           HTML("&times;")
         )

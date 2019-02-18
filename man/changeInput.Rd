@@ -4,7 +4,8 @@
 \alias{changeInput}
 \title{Change input selection}
 \usage{
-changeInput(id, pattern, fixed = FALSE, invert = FALSE, reset = TRUE)
+changeInput(id, pattern, fixed = FALSE, invert = FALSE, reset = TRUE,
+  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of an input.}
@@ -25,6 +26,8 @@ to \code{FALSE}.}
 \item{reset}{One of \code{TRUE} or \code{FALSE} indicating how to handle any currently
 selected values, if \code{TRUE} the current selection is dropped before
 selecting new values, defaults to \code{TRUE}.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 Use \code{changeInput()} to change an input's selected values. Values may be
