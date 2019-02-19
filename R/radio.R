@@ -65,21 +65,7 @@
 #'   background("grey")
 #'
 radioInput <- function(id, choices, values = choices, selected = NULL, ...,
-                       disabled = NULL, inline = FALSE) {
-  if (!is.null(selected) && !(selected %in% values)) {
-    stop(
-      "invalid `radioInput()` argument, `selected` must be one of `values`",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(disabled) && !(disabled %in% values)) {
-    stop(
-      "invalid `radioInput()` argument, `disabled` must be one of `values`",
-      call. = FALSE
-    )
-  }
-
+                       inline = FALSE) {
   if (length(choices) != length(values)) {
     stop(
       "invalid `radioInput()` arguments, `choices` and `values` must be the ",
@@ -88,43 +74,43 @@ radioInput <- function(id, choices, values = choices, selected = NULL, ...,
     )
   }
 
-  selected <- match2(selected, values, default = TRUE)
-  disabled <- match2(disabled, values)
-  ids <- ID(rep.int("radio", length(choices)))
+  selected <- values %in% selected
+
+  radios <- Map(
+    choice = choices,
+    value = values,
+    select = selected,
+    function(choice, value, select) {
+      child_id <- generate_id("radio")
+
+      tags$div(
+        class = collate(
+          "custom-control",
+          "custom-radio",
+          if (inline) "custom-control-inline"
+        ),
+        tags$input(
+          class = "custom-control-input",
+          type = "radio",
+          id = child_id,
+          name = id,
+          value = value,
+          checked = if (select) NA,
+          disabled = if (disable) NA
+        ),
+        tags$label(
+          class = "custom-control-label",
+          `for` = child_id,
+          choice
+        )
+      )
+    }
+  )
 
   input <- tags$div(
     class = "yonder-radio",
     id = id,
-    Map(
-      choice = choices,
-      value = values,
-      select = selected,
-      disable = disabled,
-      .id = ids,
-      function(choice, value, select, disable, .id) {
-        tags$div(
-          class = collate(
-            "custom-control",
-            "custom-radio",
-            if (inline) "custom-control-inline"
-          ),
-          tags$input(
-            class = "custom-control-input",
-            type = "radio",
-            id = .id,
-            name = id,
-            value = value,
-            checked = if (select) NA,
-            disabled = if (disable) NA
-          ),
-          tags$label(
-            class = "custom-control-label",
-            `for` = .id,
-            choice
-          )
-        )
-      }
-    ),
+    radios,
     tags$div(class = "invalid-feedback")
   )
 
@@ -145,35 +131,37 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL, ...) {
     )
   }
 
-  selected <- match2(selected, values)
+  selected <- values %in% selected
+
+  radios <- Map(
+    choice = choices,
+    value = values,
+    select = selected,
+    function(choice, value, select) {
+      tags$label(
+        class = collate(
+          "btn",
+          "btn-grey",
+          if (select) "active"
+        ),
+        tags$input(
+          name = id,
+          type = "radio",
+          value = value,
+          autocomplete = "false",
+          checked = if (select) NA
+        ),
+        choice
+      )
+    }
+  )
 
   input <- tags$div(
     class = "yonder-radiobar btn-group btn-group-toggle d-flex",
     id = id,
     `data-toggle` = "buttons",
     ...,
-    Map(
-      choice = choices,
-      value = values,
-      select = selected,
-      function(choice, value, select) {
-        tags$label(
-          class = collate(
-            "btn",
-            "btn-grey",
-            if (select) "active"
-          ),
-          tags$input(
-            name = id,
-            type = "radio",
-            value = value,
-            autocomplete = "false",
-            checked = if (select) NA
-          ),
-          choice
-        )
-      }
-    )
+    radios
   )
 
   attachDependencies(

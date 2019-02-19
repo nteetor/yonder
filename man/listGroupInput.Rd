@@ -5,7 +5,7 @@
 \title{List group inputs}
 \usage{
 listGroupInput(id, choices, values = choices, selected = NULL, ...,
-  multiple = TRUE, flush = FALSE)
+  layout = "vertical", fill = FALSE, flush = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -22,13 +22,22 @@ by default, defaults to \code{NULL}, in which case no choice is selected.}
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{multiple}{One of \code{TRUE} or \code{FALSE} specifyng if multiple list group
-items may be selected, defaults to \code{TRUE}.}
+\item{layout}{A \link{responsive} argument. One of \code{"vertical"} or \code{"horizontal"}
+specifying how list items are laid out, defaults to \code{"vertical"}. Note, if
+\code{layout} is \code{"horizontal"} and the \code{flush} argument is ignored.}
+
+\item{fill}{One of \code{TRUE} or \code{FALSE} specifying if a horizontal list group
+extends to fill the width of its parent element, defaults to \code{FALSE}. If
+\code{TRUE} space is evenly divided for equal width list group items. This
+argument is ignored if \code{layout} is not \code{"horizontal"}.}
 
 \item{flush}{One of \code{TRUE} or \code{FALSE} specifying if the list group is
 rendered without an outside border, defaults to \code{FALSE}. Removing the list
 group border is useful when rendering a list group inside a custom parent
 container, e.g. inside a \code{\link[=card]{card()}}.}
+
+\item{multiple}{One of \code{TRUE} or \code{FALSE} specifyng if multiple list group
+items may be selected, defaults to \code{TRUE}.}
 }
 \description{
 List group inputs are an actionable list of items. They behave similarly to

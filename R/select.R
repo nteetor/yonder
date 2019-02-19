@@ -16,8 +16,8 @@
 #'   default.
 #'
 #' @param multiple One of `TRUE` or `FALSE`, if `TRUE` multiple values may be
-#'   selected, otherwise a single value is selected at a time,
-#'   defaults to `FALSE`.
+#'   selected, otherwise a single value is selected at a time, defaults to
+#'   `FALSE`.
 #'
 #' @family inputs
 #' @export
@@ -37,7 +37,7 @@
 #' )
 #'
 selectInput <- function(id, choices, values = choices, selected = NULL,
-                        multiple = FALSE, ...) {
+                        ..., multiple = FALSE) {
   if (!is.null(id) && !is.character(id)) {
     stop(
       "invalid `selectInput()` argument, `id` must be a character string",
@@ -53,47 +53,35 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
     )
   }
 
-  if (!is.null(selected)) {
-    if (length(selected) > 1) {
-      stop(
-        "invalid `selectInput()` argument, `selected` must be of length 1",
-        call. = FALSE
+  selected <- values %in% selected
+
+  options <- Map(
+    choice = choices,
+    value = values,
+    select = selected,
+    function(choice, value, select) {
+      tags$option(
+        selected = if (select) NA,
+        value = value,
+        choice
       )
     }
+  )
 
-    if (!(selected %in% values)) {
-      stop(
-        "invalid `selectInput()` argument, `selected` must be one of `values`",
-        call. = FALSE
-      )
-    }
-  }
-
-  selected <- match2(selected, values, default = TRUE)
-
-  element <- tags$div(
+  input <- tags$div(
     class = "yonder-select",
     id = id,
     tags$select(
       class = "custom-select",
-      lapply(
-        seq_along(choices),
-        function(i) {
-          tags$option(
-            value = values[[i]],
-            choices[[i]],
-            selected = if (selected[[i]]) NA
-          )
-        }
-      ),
-      multiple = if (multiple) NA
+      multiple = if (multiple) NA,
+      options
     ),
     tags$div(class = "invalid-feedback"),
     ...
   )
 
   attachDependencies(
-    element,
+    input,
     yonderDep()
   )
 }

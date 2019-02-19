@@ -4,8 +4,8 @@
 \alias{selectInput}
 \title{Select input}
 \usage{
-selectInput(id, choices, values = choices, selected = NULL,
-  multiple = FALSE, ...)
+selectInput(id, choices, values = choices, selected = NULL, ...,
+  multiple = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -20,12 +20,12 @@ options, defaults to \code{chocies}.}
 input, defaults to \code{NULL}. If \code{NULL} the first value is selected by
 default.}
 
-\item{multiple}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} multiple values may be
-selected, otherwise a single value is selected at a time,
-defaults to \code{FALSE}.}
-
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
+
+\item{multiple}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} multiple values may be
+selected, otherwise a single value is selected at a time, defaults to
+\code{FALSE}.}
 }
 \description{
 Create a select input. Select elements often appear as a dropdown menu and

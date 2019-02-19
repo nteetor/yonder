@@ -9,15 +9,6 @@ encode_commas <- function(x) {
   gsub(",", "&#44;", x, fixed = TRUE)
 }
 
-# check that a date string is in the format YYYY-mm-dd
-is_ymd <- function(x) {
-  grepl("\\d{4}-\\d{2}-\\d{2}", x)
-}
-
-is_date <- function(x) {
-  inherits(x, c("Date", "POSIXlt", "POSIXt"))
-}
-
 is_strictly_list <- function(x) {
   length(class(x)) == 1 && class(x) == "list"
 }
@@ -34,19 +25,6 @@ conjoin <- function(x, con = "or") {
   paste0(paste(x[-length(x)], collapse = ", "), ", ", con, " ", x[length(x)])
 }
 
-`map*` <- function(x, f) {
-  if (length(x) == 1) {
-    return(f(x))
-  }
-
-  lapply(
-    x,
-    function(i) {
-      `map*`(i, f)
-    }
-  )
-}
-
 re <- function(string, pattern, len0 = TRUE) {
   if (length(string) == 0 && len0) {
     # because grepl("", <regex>) returns TRUE, extend this to
@@ -54,50 +32,15 @@ re <- function(string, pattern, len0 = TRUE) {
     return(TRUE)
   }
 
-  grepl(paste0("^(", pattern, ")$"), string)
+  grepl(paste0("^(?:", pattern, ")$"), string)
 }
 
-ID <- function(x) {
-  vapply(
-    x,
-    function(i) {
-      paste0(
-        paste0(i, collapse = "-"), "-",
-        paste0(sample(seq_len(1000), 2, TRUE), collapse = "-")
-      )
-    },
-    character(1),
-    USE.NAMES = FALSE
-  )
+generate_id <- function(prefix) {
+  paste(c(prefix, sample(1000, 2, TRUE)), collapse = "-")
 }
 
 names2 <- function(x) {
   names(x) %||% rep.int("", length(x))
-}
-
-match2 <- function(x, values, default = FALSE) {
-  if (is.null(x)) {
-    if (length(values) == 0) {
-      return(NULL)
-    }
-
-    if (default) {
-      return(c(TRUE, vector("logical", length(values) - 1)))
-    } else {
-      return(vector("logical", length(values)))
-    }
-  }
-
-  vapply(
-    values,
-    function(v) {
-      if (is.null(v)) {
-        return(FALSE)
-      }
-      v %in% x
-    },
-    logical(1)
-  )
 }
 
 attribs <- function(x) {
@@ -258,7 +201,7 @@ getInvalidValues <- function(values, possible) {
     return(NULL)
   }
 
-  unlist(values)[!vapply(values, `%in%`, logical(1), possible)]
+  unlist(values)[!(unlist(values) %in% possible)]
 }
 
 createResponsiveClasses <- function(values, prefix) {
@@ -361,13 +304,12 @@ tagHasClass <- function(x, class) {
     return(FALSE)
   }
 
-  grepl(
-    paste0(
-      c("^", "^", "\\s", "\\s"), class, c("$", "\\s", "\\s", "$"),
-      collapse = "|"
-    ),
-    x$attribs$class
+  regex <- paste0(
+    c("^", "^", "\\s", "\\s"), class, c("$", "\\s", "\\s", "$"),
+    collapse = "|"
   )
+
+  grepl(regex, x$attribs$class)
 }
 
 tagRename <- function(tag, name) {
@@ -410,11 +352,14 @@ tagAddClass <- function(x, class) {
 }
 
 tagDropClass <- function(x, regex) {
+  stopifnot(is_tag(x))
+
   if (is.null(x$attribs$class)) {
     return(x)
   }
 
   x$attribs$class <- gsub(regex, "", x$attribs$class)
   x$attribs$class <- gsub("\\s+", " ", x$attribs$class)
+
   x
 }

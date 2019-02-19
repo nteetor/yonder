@@ -18,6 +18,15 @@
 #' @param multiple One of `TRUE` or `FALSE` specifyng if multiple list group
 #'   items may be selected, defaults to `TRUE`.
 #'
+#' @param layout A [responsive] argument. One of `"vertical"` or `"horizontal"`
+#'   specifying how list items are laid out, defaults to `"vertical"`. Note, if
+#'   `layout` is `"horizontal"` and the `flush` argument is ignored.
+#'
+#' @param fill One of `TRUE` or `FALSE` specifying if a horizontal list group
+#'   extends to fill the width of its parent element, defaults to `FALSE`. If
+#'   `TRUE` space is evenly divided for equal width list group items. This
+#'   argument is ignored if `layout` is not `"horizontal"`.
+#'
 #' @param flush One of `TRUE` or `FALSE` specifying if the list group is
 #'   rendered without an outside border, defaults to `FALSE`. Removing the list
 #'   group border is useful when rendering a list group inside a custom parent
@@ -173,45 +182,55 @@
 #' )
 #'
 listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
-                           multiple = TRUE, flush = FALSE) {
-  if (is.null(id)) {
-    parentElement <- tags$ul
-    childElement <- tags$li
-  } else {
-    parentElement <- tags$div
-    childElement <- tags$a
+                           layout = "vertical", fill = FALSE, flush = FALSE) {
+  if (length(values) != length(choices)) {
+    stop(
+      "invalid `listGroupInput()` arguments, `choices` and `values` must be ",
+      "the same length",
+      call. = FALSE
+    )
   }
 
-  selected <- if (is.null(id)) FALSE else match2(selected, values)
+  layout <- ensureBreakpoints(layout, c("vertical", "horizontal"))
+  classes <- createResponsiveClasses(layout, "list-group")
 
-  this <- parentElement(
+  # drop vertical classes as they do not actually exist
+  classes <- classes[!grepl("vertical", classes, fixed = TRUE)]
+
+  selected <- values %in% selected
+
+  items <- Map(
+    choice = choices,
+    value = values,
+    select = selected,
+    function(choice, value, select) {
+      tags$button(
+        class = collate(
+          "list-group-item",
+          "list-group-item-action",
+          if (fill && length(classes) > 0) "flex-fill",
+          if (select) "active"
+        ),
+        value = value,
+        choice
+      )
+    }
+  )
+
+  input <- div(
     class = collate(
-      "yonder-list-group list-group",
-      if (flush) "list-group-flush"
+      "yonder-list-group",
+      "list-group",
+      classes,
+      if (flush && length(classes) == 0) "list-group-flush"
     ),
-    `data-multiple` = if (multiple) "true" else "false",
     id = id,
-    Map(
-      choice = choices,
-      value = values,
-      select = selected,
-      function(choice, value, select) {
-        childElement(
-          class = collate(
-            "list-group-item",
-            if (!is.null(id)) "list-group-item-action",
-            if (select) "active"
-          ),
-          `data-value` = value,
-          choice
-        )
-      }
-    ),
+    items,
     ...
   )
 
   attachDependencies(
-    this,
+    input,
     yonderDep()
   )
 }

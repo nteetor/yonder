@@ -97,41 +97,43 @@ checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
     )
   }
 
-  selected <- match2(selected, values)
+  selected <- values %in% selected
+
+  checkboxes <- Map(
+    choice = choices,
+    value = values,
+    select = selected,
+    function(choice, value, select) {
+      child_id <- generate_id("checkbox")
+
+      tags$div(
+        class = collate(
+          "custom-control",
+          "custom-checkbox",
+          if (inline) "custom-control-inline"
+        ),
+        tags$input(
+          class = "custom-control-input",
+          type = "checkbox",
+          id = child_id,
+          name = id,
+          value = value,
+          checked = if (select) NA
+        ),
+        tags$label(
+          class = "custom-control-label",
+          `for` = this,
+          choice
+        ),
+        tags$div(class = "invalid-feedback")
+      )
+    }
+  )
 
   element <- tags$div(
     class = "yonder-checkbox",
     id = id,
-    Map(
-      choice = choices,
-      value = values,
-      select = selected,
-      function(choice, value, select) {
-        this <- ID("checkbox")
-
-        tags$div(
-          class = collate(
-            "custom-control",
-            "custom-checkbox",
-            if (inline) "custom-control-inline"
-          ),
-          tags$input(
-            class = "custom-control-input",
-            type = "checkbox",
-            id = this,
-            name = id,
-            value = value,
-            checked = if (select) NA
-          ),
-          tags$label(
-            class = "custom-control-label",
-            `for` = this,
-            choice
-          ),
-          tags$div(class = "invalid-feedback")
-        )
-      }
-    ),
+    checkboxes,
     ...
   )
 
@@ -164,31 +166,35 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
     )
   }
 
-  selected <- match2(selected, values)
+  selected <- values %in% selected
+
+  checkboxes <- Map(
+    choice = choices,
+    value = values,
+    select = selected,
+    function(choice, value, select) {
+      tags$label(
+        class = collate(
+          "btn",
+          "btn-grey",
+          if (select) "active"
+        ),
+        tags$input(
+          type = "checkbox",
+          autocomplete = "off",
+          value = value,
+          checked = if (select) NA
+        ),
+        choice
+      )
+    }
+  )
 
   element <- tags$div(
     class = "yonder-checkbar btn-group btn-group-toggle d-flex",
     id = id,
     `data-toggle` = "buttons",
-    lapply(
-      seq_along(choices),
-      function(i) {
-        tags$label(
-          class = collate(
-            "btn",
-            "btn-grey",
-            if (selected[[i]]) "active"
-          ),
-          tags$input(
-            type = "checkbox",
-            autocomplete = "off",
-            value = values[[i]],
-            checked = if (selected[[i]]) NA
-          ),
-          choices[[i]]
-        )
-      }
-    ),
+    checkboxes,
     ...
   )
 

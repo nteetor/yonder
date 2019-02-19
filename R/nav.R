@@ -141,9 +141,16 @@ navInput <- function(id, choices, values = choices, selected = values[[1]], ...,
     )
   }
 
-  selected <- match2(selected, values)
+  selected <- values %in% selected
 
-  element <- tags$ul(
+  items <- Map(
+    choice = choices,
+    value = values,
+    select = selected,
+    navItem
+  )
+
+  input <- tags$ul(
     class = collate(
       "yonder-nav",
       "nav",
@@ -151,54 +158,51 @@ navInput <- function(id, choices, values = choices, selected = values[[1]], ...,
       if (appearance != "links") paste0("nav-", appearance)
     ),
     id = id,
-    Map(
-      base = choices,
-      value = values,
-      active = selected,
-      navItem
-    )
+    items
   )
 
   attachDependencies(
-    element,
+    input,
     yonderDep()
   )
 }
 
-navItem <- function(base, value, active) {
-  if (tagHasClass(base, "yonder-menu")) {
-    base$children[[1]] <- tagDropClass(
-      base$children[[1]],
+navItem <- function(choice, value, select) {
+  if (tagHasClass(choice, "yonder-menu")) {
+    choice$children[[1]] <- tagDropClass(
+      choice$children[[1]],
       paste0("btn-(?:", paste0(.colors, collapse = "|"), ")")
     )
-    base$children[[1]] <- tagAddClass(base$children[[1]], "nav-link btn-link")
-    base$children[[1]]$attribs$type <- NULL
-    base$children[[1]]$attribs$value <- value
+    choice$children[[1]] <- tagAddClass(choice$children[[1]], "nav-link btn-link")
+    choice$children[[1]]$attribs$type <- NULL
+    choice$children[[1]]$attribs$value <- value
 
-    if (active) {
-      base$children[[1]] <- tagAddClass(base$children[[1]], "active")
+    if (select) {
+      choice$children[[1]] <- tagAddClass(choice$children[[1]], "active")
     }
 
-    base$name <- "li"
-    base <- tagAddClass(base, "nav-item")
+    choice$name <- "li"
+    choice <- tagAddClass(choice, "nav-item")
 
-    return(base)
+    return(choice)
   }
 
-  if (is.character(base) || is_tag(base)) {
-    base <- tags$li(
+  if (is.character(choice) || is_tag(choice)) {
+    choice <- tags$li(
       class = "nav-item",
       tags$button(
         class = collate(
-          "nav-link btn btn-link",
-          if (active) "active"
+          "nav-link",
+          "btn",
+          "btn-link",
+          if (select) "active"
         ),
         value = value,
-        base
+        choice
       )
     )
 
-    return(base)
+    return(choice)
   }
 
   stop(
