@@ -747,19 +747,22 @@
   $.extend(listGroupInputBinding, {
     Selector: {
       SELF: ".yonder-list-group",
-      SELECTED: ".list-group-item-action.active:not(.disabled)"
+      SELECTED: ".active:not(.disabled)"
     },
     Events: [{
       type: "click",
-      selector: ".list-group-item-action:not(.disabled)",
-      callback: function callback(el, e, self) {
-        if (el.getAttribute("data-multiple") === "false") {
-          el.querySelectorAll(".list-group-item-action:not(.disabled)").forEach(function (li) {
-            return li.classList.remove("active");
-          });
-        }
-
-        e.currentTarget.classList.toggle("active");
+      selector: ".list-group-item-action:not(.active):not(.disabled)",
+      callback: function callback(el, event, _) {
+        el.querySelectorAll(".active").forEach(function (item) {
+          return item.classList.remove("active");
+        });
+        event.currentTarget.classList.add("active");
+      }
+    }, {
+      type: "click",
+      selector: ".active:not(.disabled)",
+      callback: function callback(el, event, _) {
+        event.currentTarget.classList.remove("active");
       }
     }],
     _update: function _update(el, data) {
@@ -768,53 +771,53 @@
       template.classList.remove("disabled");
       el.innerHTML = "";
       data.choices.forEach(function (choice, i) {
-        var child = template.cloneNode();
-        child.innerHTML = choice;
-        child.setAttribute("data-value", data.values[i]);
+        var item = template.cloneNode();
+        item.innerHTML = choice;
+        item.value = data.values[i];
 
         if (data.selected.indexOf(data.values[i]) > -1) {
-          child.classList.add("active");
+          item.classList.add("active");
         }
 
-        el.appendChild(child);
+        el.appendChild(item);
       });
     },
     _select: function _select(el, data) {
-      el.querySelectorAll(".list-group-item").forEach(function (child) {
-        var value = child.getAttribute("data-value");
+      el.querySelectorAll(".list-group-item").forEach(function (item) {
+        var value = item.value;
 
         if (data.reset) {
-          child.classList.remove("active");
+          item.classList.remove("active");
         }
 
         var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
 
         if (match !== data.invert) {
-          child.classList.add("active");
+          item.classList.add("active");
         }
       });
     },
     _enable: function _enable(el, data) {
       var values = data.values;
-      el.querySelectorAll(".list-group-item").forEach(function (li) {
-        var enable = !values.length || values.indexOf(li.getAttribute("data-value")) > -1;
+      el.querySelectorAll(".list-group-item").forEach(function (item) {
+        var enable = !values.length || values.indexOf(item.value) > -1;
 
         if (enable !== data.invert) {
-          li.classList.remove("disabled");
+          item.classList.remove("disabled");
         }
       });
     },
     _disable: function _disable(el, data) {
       var values = data.values;
-      el.querySelectorAll(".list-group-item").forEach(function (li) {
-        var disable = !values.length || values.indexOf(li.getAttribute("data-value")) > -1;
+      el.querySelectorAll(".list-group-item").forEach(function (item) {
+        var disable = !values.length || values.indexOf(item.value) > -1;
 
         if (data.reset) {
-          li.classList.remove("disabled");
+          item.classList.remove("disabled");
         }
 
         if (disable !== data.invert) {
-          li.classList.add("disabled");
+          item.classList.add("disabled");
         }
       });
     }

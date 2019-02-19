@@ -3,19 +3,24 @@ export let listGroupInputBinding = new Shiny.InputBinding();
 $.extend(listGroupInputBinding, {
   Selector: {
     SELF: ".yonder-list-group",
-    SELECTED: ".list-group-item-action.active:not(.disabled)"
+    SELECTED: ".active:not(.disabled)"
   },
   Events: [
     {
       type: "click",
-      selector: ".list-group-item-action:not(.disabled)",
-      callback: (el, e, self) => {
-        if (el.getAttribute("data-multiple") === "false") {
-          el.querySelectorAll(".list-group-item-action:not(.disabled)")
-            .forEach(li => li.classList.remove("active"));
-        }
+      selector: ".list-group-item-action:not(.active):not(.disabled)",
+      callback: (el, event, _) => {
+        el.querySelectorAll(".active")
+          .forEach(item => item.classList.remove("active"));
 
-        e.currentTarget.classList.toggle("active");
+        event.currentTarget.classList.add("active");
+      }
+    },
+    {
+      type: "click",
+      selector: ".active:not(.disabled)",
+      callback: (el, event, _) => {
+        event.currentTarget.classList.remove("active");
       }
     }
   ],
@@ -27,54 +32,54 @@ $.extend(listGroupInputBinding, {
     el.innerHTML = "";
 
     data.choices.forEach((choice, i) => {
-      let child = template.cloneNode();
-      child.innerHTML = choice;
-      child.setAttribute("data-value", data.values[i]);
+      let item = template.cloneNode();
+      item.innerHTML = choice;
+      item.value = data.values[i];
 
       if (data.selected.indexOf(data.values[i]) > -1) {
-        child.classList.add("active");
+        item.classList.add("active");
       }
 
-      el.appendChild(child);
+      el.appendChild(item);
     });
   },
   _select: function(el, data) {
-    el.querySelectorAll(".list-group-item").forEach(child => {
-      let value = child.getAttribute("data-value");
+    el.querySelectorAll(".list-group-item").forEach(item => {
+      let value = item.value;
 
       if (data.reset) {
-        child.classList.remove("active");
+        item.classList.remove("active");
       }
 
       let match = data.fixed ? data.pattern.indexOf(value) > -1 :
           RegExp(data.pattern, "i").test(value);
 
       if (match !== data.invert) {
-        child.classList.add("active");
+        item.classList.add("active");
       }
     });
   },
   _enable: (el, data) => {
     let values = data.values;
-    el.querySelectorAll(".list-group-item").forEach(li => {
-      let enable = !values.length || values.indexOf(li.getAttribute("data-value")) > -1;
+    el.querySelectorAll(".list-group-item").forEach(item => {
+      let enable = !values.length || values.indexOf(item.value) > -1;
 
       if (enable !== data.invert) {
-        li.classList.remove("disabled");
+        item.classList.remove("disabled");
       }
     });
   },
   _disable: (el, data) => {
     let values = data.values;
-    el.querySelectorAll(".list-group-item").forEach(li => {
-      let disable = !values.length || values.indexOf(li.getAttribute("data-value")) > -1;
+    el.querySelectorAll(".list-group-item").forEach(item => {
+      let disable = !values.length || values.indexOf(item.value) > -1;
 
       if (data.reset) {
-        li.classList.remove("disabled");
+        item.classList.remove("disabled");
       }
 
       if (disable !== data.invert) {
-        li.classList.add("disabled");
+        item.classList.add("disabled");
       }
     });
   }
