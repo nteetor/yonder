@@ -1187,22 +1187,7 @@
       type: "change"
     }],
     initialize: function initialize(el) {
-      var $el = $(el);
-      var $input = $(el.querySelector(".irs-hidden-input"));
-      $input.ionRangeSlider();
-      var bgclasses = $el.attr("class").split(/\s+/).filter(function (c) {
-        return /^bg-[a-z-]+$/g.test(c);
-      }).join(" ");
-
-      if (bgclasses) {
-        var components = ".irs-slider,.irs-bar,.irs-bar-edge,.irs-to,.irs-from,.irs-single,.irs-slider";
-        $el.find(components).addClass(bgclasses);
-        $el.removeClass(bgclasses);
-      }
-
-      if ($input.data("no-fill")) {
-        $el.find(".irs-bar,.irs-bar-edge").addClass("no-fill");
-      }
+      $(el.querySelector("input")).ionRangeSlider();
     },
     getId: function getId(el) {
       return el.id;

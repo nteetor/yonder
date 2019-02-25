@@ -3594,6 +3594,15 @@ input[type="button"].btn-block {
   box-shadow: 0 0 0 0.2rem rgba(38, 38, 38, 0.5);
 }
 
+.yonder-link {
+  padding: 0 !important;
+  vertical-align: inherit !important;
+}
+
+.btn {
+  cursor: pointer;
+}
+
 .fade {
   transition: opacity 0.15s linear;
 }
@@ -4788,6 +4797,10 @@ input[type="button"].btn-block {
 .active-black .custom-switch .custom-control-input:checked ~ .custom-control-label::before {
   background-color: #000;
   border-color: #000;
+}
+
+.custom-control-label::before, .custom-control-label::after {
+  cursor: pointer;
 }
 
 .nav {
@@ -7515,17 +7528,9 @@ a.close.disabled {
   flex-wrap: wrap;
 }
 
-.chips-inline .chip + .chip {
-  margin-right: .5rem;
-}
-
 .chips-block {
   -ms-flex-direction: column;
   flex-direction: column;
-}
-
-.chips-block .chip {
-  width: 100%;
 }
 
 .chips-block .chip-close {
@@ -7542,15 +7547,34 @@ a.close.disabled {
   font-weight: 700;
   line-height: 1;
   white-space: normal;
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
+  box-shadow: none;
   border: 1px solid transparent;
   border-radius: 0.25rem;
+  transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
   cursor: pointer;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chip {
+    transition: none;
+  }
 }
 
 .chip.active {
   display: -ms-flexbox;
   display: flex;
+}
+
+.chips-inline .chip {
+  margin-right: .5rem;
+}
+
+.chips-block .chip {
+  width: 100%;
+}
+
+.chips-shadow .chip {
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075);
 }
 
 .chip-content {
@@ -7762,6 +7786,231 @@ a.close.disabled {
 .chips-black .chip:focus, .chips-black .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.5);
+}
+
+.irs {
+  background-color: initial !important;
+}
+
+.irs .irs-bar-edge,
+.irs .irs-to,
+.irs .irs-from,
+.irs .irs-single,
+.irs .irs-line-left,
+.irs .irs-line-mid,
+.irs .irs-line-right {
+  cursor: pointer;
+}
+
+.irs .irs-bar {
+  cursor: pointer;
+}
+
+.irs .irs-bar.draggable {
+  cursor: move;
+}
+
+.irs .irs-min,
+.irs .irs-max,
+.irs .irs-from,
+.irs .irs-to,
+.irs .irs-single,
+.irs .irs-slider {
+  border-radius: 0.25rem;
+}
+
+.irs .irs-bar,
+.irs .irs-bar-edge,
+.irs .irs-to,
+.irs .irs-from,
+.irs .irs-single,
+.irs .irs-slider {
+  background-image: none;
+  color: #212529;
+}
+
+.irs .irs-slider {
+  cursor: ew-resize;
+}
+
+.irs .irs-slider:hover, .irs .irs-slider:focus {
+  -webkit-filter: brightness(90%);
+  filter: brightness(90%);
+}
+
+.irs .irs-to::after,
+.irs .irs-from::after,
+.irs .irs-single::after {
+  border-top-color: transparent;
+}
+
+.irs .irs-line-left {
+  border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.irs .irs-line-right {
+  border-radius: 0 0.25rem 0.25rem 0;
+}
+
+.irs .irs-bar-edge {
+  border-radius: 0.25rem 0 0 0.25rem;
+}
+
+.irs .irs-min,
+.irs .irs-max {
+  color: #495057;
+}
+
+.irs .irs-grid-text {
+  color: #495057;
+}
+
+.range-red .irs-slider,
+.range-red .irs-bar,
+.range-red .irs-bar-edge,
+.range-red .irs-to,
+.range-red .irs-from,
+.range-red .irs-single,
+.range-red .irs-slider {
+  color: #fff;
+  background-color: #f44336;
+}
+
+.range-purple .irs-slider,
+.range-purple .irs-bar,
+.range-purple .irs-bar-edge,
+.range-purple .irs-to,
+.range-purple .irs-from,
+.range-purple .irs-single,
+.range-purple .irs-slider {
+  color: #fff;
+  background-color: #9c27b0;
+}
+
+.range-indigo .irs-slider,
+.range-indigo .irs-bar,
+.range-indigo .irs-bar-edge,
+.range-indigo .irs-to,
+.range-indigo .irs-from,
+.range-indigo .irs-single,
+.range-indigo .irs-slider {
+  color: #fff;
+  background-color: #3f51b5;
+}
+
+.range-blue .irs-slider,
+.range-blue .irs-bar,
+.range-blue .irs-bar-edge,
+.range-blue .irs-to,
+.range-blue .irs-from,
+.range-blue .irs-single,
+.range-blue .irs-slider {
+  color: #fff;
+  background-color: #357edd;
+}
+
+.range-cyan .irs-slider,
+.range-cyan .irs-bar,
+.range-cyan .irs-bar-edge,
+.range-cyan .irs-to,
+.range-cyan .irs-from,
+.range-cyan .irs-single,
+.range-cyan .irs-slider {
+  color: #fff;
+  background-color: #00bcd4;
+}
+
+.range-teal .irs-slider,
+.range-teal .irs-bar,
+.range-teal .irs-bar-edge,
+.range-teal .irs-to,
+.range-teal .irs-from,
+.range-teal .irs-single,
+.range-teal .irs-slider {
+  color: #fff;
+  background-color: #009688;
+}
+
+.range-green .irs-slider,
+.range-green .irs-bar,
+.range-green .irs-bar-edge,
+.range-green .irs-to,
+.range-green .irs-from,
+.range-green .irs-single,
+.range-green .irs-slider {
+  color: #fff;
+  background-color: #4caf50;
+}
+
+.range-yellow .irs-slider,
+.range-yellow .irs-bar,
+.range-yellow .irs-bar-edge,
+.range-yellow .irs-to,
+.range-yellow .irs-from,
+.range-yellow .irs-single,
+.range-yellow .irs-slider {
+  color: #212529;
+  background-color: #ffeb3b;
+}
+
+.range-amber .irs-slider,
+.range-amber .irs-bar,
+.range-amber .irs-bar-edge,
+.range-amber .irs-to,
+.range-amber .irs-from,
+.range-amber .irs-single,
+.range-amber .irs-slider {
+  color: #212529;
+  background-color: #ffc107;
+}
+
+.range-orange .irs-slider,
+.range-orange .irs-bar,
+.range-orange .irs-bar-edge,
+.range-orange .irs-to,
+.range-orange .irs-from,
+.range-orange .irs-single,
+.range-orange .irs-slider {
+  color: #212529;
+  background-color: #ff9800;
+}
+
+.range-grey .irs-slider,
+.range-grey .irs-bar,
+.range-grey .irs-bar-edge,
+.range-grey .irs-to,
+.range-grey .irs-from,
+.range-grey .irs-single,
+.range-grey .irs-slider {
+  color: #212529;
+  background-color: #f8f9fa;
+}
+
+.range-white .irs-slider,
+.range-white .irs-bar,
+.range-white .irs-bar-edge,
+.range-white .irs-to,
+.range-white .irs-from,
+.range-white .irs-single,
+.range-white .irs-slider {
+  color: #212529;
+  background-color: #fff;
+}
+
+.range-black .irs-slider,
+.range-black .irs-bar,
+.range-black .irs-bar-edge,
+.range-black .irs-to,
+.range-black .irs-from,
+.range-black .irs-single,
+.range-black .irs-slider {
+  color: #fff;
+  background-color: #000;
+}
+
+.range-no-fill .irs-bar,
+.range-no-fill .irs-bar-edge {
+  background-color: transparent !important;
 }
 
 .align-baseline {
@@ -11263,6 +11512,18 @@ button.bg-black:focus {
   .mx-xl-auto {
     margin-left: auto !important;
   }
+}
+
+.stretched-link::after {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 1;
+  pointer-events: auto;
+  content: "";
+  background-color: rgba(0, 0, 0, 0);
 }
 
 .text-monospace {
