@@ -41,13 +41,8 @@ d3 <- function(...) d(3, ...)
 d4 <- function(...) d(4, ...)
 
 d <- function(level, ...) {
-  element <- tags$h1(
-    class = paste0("display-", level),
-    ...
-  )
-
   attachDependencies(
-    element,
+    tags$h1(class = paste0("display-", level)),
     yonderDep()
   )
 }
@@ -74,7 +69,7 @@ d <- function(level, ...) {
 #'
 #' jumbotron(
 #'   title = "Welcome, welcome!",
-#'   subtitle = "This simple jumbotron-style component calls attention to a new feature",
+#'   subtitle = "This simple jumbotron-style component",
 #'   tags$p(
 #'     "Here we can talk more about this excellently superb new feature.",
 #'     "The best."
@@ -92,12 +87,11 @@ jumbotron <- function(title, subtitle, ..., fluid = FALSE) {
       class = "lead",
       subtitle
     ),
-    if (length(elements(list(...))) > 0) tags$hr(class = "my-4"),
+    if (length(elements(list(...))) > 0) {
+      tags$hr(class = "my-4")
+    },
     ...
   )
 
-  attachDependencies(
-    element,
-    yonderDep()
-  )
+  attachDependencies(element, yonderDep())
 }

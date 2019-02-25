@@ -82,17 +82,17 @@ navbar <- function(..., brand = NULL) {
     )
   }
 
-  navContentId <- ID("navContent")
+  content_id <- generate_id("nav-content")
 
-  this <- tags$nav(
+  element <- tags$nav(
     class = "navbar navbar-expand-lg navbar-light",
     brand,
     tags$button(
       class = "navbar-toggler",
       type = "button",
       `data-toggle` = "collapse",
-      `data-target` = paste0("#", navContentId),
-      `aria-controls` = navContentId,
+      `data-target` = paste0("#", content_id),
+      `aria-controls` = content_id,
       `aria-expanded` = "false",
       `aria-label` = "Toggle navigation",
       tags$span(
@@ -101,15 +101,15 @@ navbar <- function(..., brand = NULL) {
     ),
     tags$div(
       class = "collapse navbar-collapse",
-      id = navContentId,
+      id = content_id,
       elems
     )
   )
 
-  this <- tagConcatAttributes(this, attrs)
+  element <- tagConcatAttributes(element, attrs)
 
   attachDependencies(
-    this,
+    element,
     yonderDep()
   )
 }

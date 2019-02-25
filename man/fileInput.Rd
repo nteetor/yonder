@@ -40,7 +40,7 @@ Be careful when adjusting the right or left margin of a file input. In the
 current version of Bootstrap file inputs can be pushed off the side of a
 page.
 }
-\section{Uploading a file}{
+\section{\strong{Example} uploading a file}{
 \preformatted{shinyApp(
   ui = container(
     fileInput("upload") \%>\%

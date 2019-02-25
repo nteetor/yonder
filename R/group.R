@@ -61,13 +61,14 @@
 #' ### Text input and button combo
 #'
 #' groupInput(
-#'   id = "group2",,
+#'   id = "group2",
 #'   placeholder = "Search terms",
 #'   right = buttonInput(
-#'     id = "button",
+#'     id = "button2",
 #'     label = "Go!"
 #'   ) %>%
-#'     background("transparent")
+#'     background("grey") %>%
+#'     border()
 #' )
 #'
 #' ### Combination addon
@@ -84,15 +85,21 @@
 #'   left = "@@",
 #'   placeholder = "Username",
 #'   right = buttonInput(
-#'     id = NULL,
+#'     id = "button4",
 #'     label = "Search"
 #'   ) %>%
-#'     background("transparent") %>%
-#'     border("blue")
+#'     background("blue")
 #' )
 #'
 groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
                        right = NULL, ...) {
+  if (!is.null(id) && !is.character(id)) {
+    stop(
+      "inavlid `groupInput()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   if (!is.null(left) && !isValidAddon(left)) {
     stop(
       "invalid `groupInput()` argument, `left` must be a character string, ",
@@ -115,56 +122,57 @@ groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
     force = TRUE
   )
 
+  left <- if (!is.null(left)) {
+    tags$div(
+      class = "input-group-prepend",
+      if (is.character(left)) {
+        lapply(left, tags$span, class = "input-group-text")
+      } else if (tagHasClass(left, "dropdown")) {
+        left$children
+      } else {
+        # list of buttons
+        left
+      }
+    )
+  }
+
+  right <- if (!is.null(right)) {
+    tags$div(
+      class = "input-group-append",
+      if (is.character(right)) {
+        lapply(right, tags$span, class = "input-group-text")
+      } else if (tagHasClass(right, "dropdown")) {
+        right$children
+      } else {
+        # list of buttons
+        right
+      }
+    )
+  }
+
   input <- tags$div(
     class = "yonder-group input-group",
     id = id,
-    if (!is.null(left)) {
-      tags$div(
-        class = "input-group-prepend",
-        if (is.character(left)) {
-          lapply(left, tags$span, class = "input-group-text")
-        } else if (tagHasClass(left, "dropdown")) {
-          left$children
-        } else {
-          # list of buttons
-          left
-        }
-      )
-    },
+    left,
     tags$input(
       type = "text",
       class = "form-control",
       placeholder = placeholder,
       value = value
     ),
-    if (!is.null(right)) {
-      tags$div(
-        class = "input-group-append",
-        if (is.character(right)) {
-          lapply(right, tags$span, class = "input-group-text")
-        } else if (tagHasClass(right, "dropdown")) {
-          right$children
-        } else {
-          # list of buttons
-          right
-        }
-      )
-    },
+    right,
     ...
   )
 
-  attachDependencies(
-    input,
-    yonderDep()
-  )
+  attachDependencies(input, yonderDep())
 }
 
 isValidAddon <- function(tag) {
-  if (all(class(tag) == "list")) {
+  if (is_strictly_list(tag)) {
     return(all(vapply(tag, tagIs, logical(1), "button")))
   }
 
   is.character(tag) ||
-   tagIs(tag, "button") ||
-   tagHasClass(tag, "dropdown")
+    tagIs(tag, "button") ||
+    tagHasClass(tag, "dropdown")
 }

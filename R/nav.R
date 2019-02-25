@@ -118,6 +118,13 @@
 #'
 navInput <- function(id, choices, values = choices, selected = values[[1]], ...,
                      appearance = "links", fill = FALSE) {
+  if (!is.null(id) && !is.character(id)) {
+    stop(
+      "inavlid `navInput()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   if (!is.null(appearance) && !re(appearance, "links|pills|tabs", FALSE)) {
     stop(
       "invalid `navInput()` argument, `appearance` must be one of ",

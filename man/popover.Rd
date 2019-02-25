@@ -8,7 +8,7 @@
 \usage{
 popover(..., title = NULL)
 
-showPopover(target, popover, placement = "right", duration = NULL,
+showPopover(target, popover, placement = "top", duration = NULL,
   session = getDefaultReactiveDomain())
 
 closePopover(id, session = getDefaultReactiveDomain())

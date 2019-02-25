@@ -73,13 +73,6 @@ updateInput <- function(id, choices, values = choices, selected = NULL,
     )
   }
 
-  if (!is.null(selected) && !(selected %in% values)) {
-    stop(
-      "invalid `updateInput()` argument, `selected` must be one of `values`",
-      call. = FALSE
-    )
-  }
-
   choices <- lapply(choices, function(x) HTML(as.character(x)))
   values <- lapply(values, as.character)
   selected <- lapply(selected, function(x) HTML(as.character(x)))

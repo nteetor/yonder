@@ -26,10 +26,10 @@
 #' @export
 #' @examples
 #'
-#' ### Stacked radio input
+#' ### Out-of-the-box radios
 #'
 #' radioInput(
-#'   id = "stacked",
+#'   id = "radio1",
 #'   choices = c(
 #'     "Vehicula adipiscing mattis",
 #'     "Magna nullam",
@@ -41,7 +41,7 @@
 #' ### Inline radio input
 #'
 #' radioInput(
-#'   id = "inline",
+#'   id = "radio2",
 #'   choices = c(
 #'     "Choice 1",
 #'     "Choice 2",
@@ -53,7 +53,7 @@
 #' ### Radiobars in comparison
 #'
 #' radiobarInput(
-#'   id = NULL,
+#'   id = "radiobar1",
 #'   choices = c(
 #'     "fusce sagittis",
 #'     "libero non molestie",
@@ -66,6 +66,13 @@
 #'
 radioInput <- function(id, choices, values = choices, selected = NULL, ...,
                        inline = FALSE) {
+  if (!is.null(id) && !is.character(id)) {
+    stop(
+      "invalid `radioInput()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   if (length(choices) != length(values)) {
     stop(
       "invalid `radioInput()` arguments, `choices` and `values` must be the ",
@@ -95,8 +102,7 @@ radioInput <- function(id, choices, values = choices, selected = NULL, ...,
           id = child_id,
           name = id,
           value = value,
-          checked = if (select) NA,
-          disabled = if (disable) NA
+          checked = if (select) NA
         ),
         tags$label(
           class = "custom-control-label",

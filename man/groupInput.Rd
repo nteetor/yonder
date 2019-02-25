@@ -73,13 +73,14 @@ groupInput(
 ### Text input and button combo
 
 groupInput(
-  id = "group2",,
+  id = "group2",
   placeholder = "Search terms",
   right = buttonInput(
-    id = "button",
+    id = "button2",
     label = "Go!"
   ) \%>\%
-    background("transparent")
+    background("grey") \%>\%
+    border()
 )
 
 ### Combination addon
@@ -96,11 +97,10 @@ groupInput(
   left = "@",
   placeholder = "Username",
   right = buttonInput(
-    id = NULL,
+    id = "button4",
     label = "Search"
   ) \%>\%
-    background("transparent") \%>\%
-    border("blue")
+    background("blue")
 )
 
 }

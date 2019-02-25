@@ -19,7 +19,7 @@
 #' @keywords internal
 #' @export
 elementOutput <- function(id, ...) {
-  output <- tags$div(  # what is support like for <template> elements?
+  output <- tags$div(
     id = id,
     ...
   )

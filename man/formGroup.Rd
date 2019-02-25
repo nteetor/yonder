@@ -5,7 +5,7 @@
 \alias{formRow}
 \title{Add labels, help text, and formatting to inputs}
 \usage{
-formGroup(label, input, help = NULL, ..., width = NULL)
+formGroup(label, input, ..., help = NULL, width = NULL)
 
 formRow(...)
 }
@@ -15,14 +15,14 @@ in which case a label is not added.}
 
 \item{input}{A tag element specifying the input to label.}
 
-\item{help}{A character string specifying help text for the input, defaults
-to \code{NULL}, in which case help text is not added.}
-
 \item{...}{For \strong{formGroup}, additional named arguments passed as HTML
 attributes to the parent element.
 
 For \strong{formRow}, any number of \code{formGroup}s or additional named arguments
 passed as HTML attributes to the parent element.}
+
+\item{help}{A character string specifying help text for the input, defaults
+to \code{NULL}, in which case help text is not added.}
 
 \item{width}{A \link{responsive} argument. One of \code{1:12} or "auto" specifying a
 column width for the form group, defaults to \code{NULL}.}

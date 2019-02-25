@@ -29,7 +29,7 @@
 #' current version of Bootstrap file inputs can be pushed off the side of a
 #' page.
 #'
-#' @section Uploading a file:
+#' @section **Example** uploading a file:
 #'
 #' ```R
 #' shinyApp(
@@ -143,8 +143,5 @@ fileInput <- function(id, placeholder = "Choose file", browse = "Browse",
     right
   )
 
-  attachDependencies(
-    input,
-    yonderDep()
-  )
+  attachDependencies(input, yonderDep())
 }

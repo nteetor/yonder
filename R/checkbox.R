@@ -89,6 +89,13 @@
 #'
 checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
                           inline = FALSE) {
+  if (!is.null(id) && !is.character(id)) {
+    stop(
+      "invalid `chekcboxInput()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   if (length(choices) != length(values)) {
     stop(
       "invalid `checkboxInput()` argument, `choices` and `values` must have ",
@@ -122,7 +129,7 @@ checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
         ),
         tags$label(
           class = "custom-control-label",
-          `for` = this,
+          `for` = child_id,
           choice
         ),
         tags$div(class = "invalid-feedback")
@@ -137,10 +144,7 @@ checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
     ...
   )
 
-  attachDependencies(
-    element,
-    yonderDep()
-  )
+  attachDependencies(element, yonderDep())
 }
 
 #' @rdname checkboxInput
@@ -198,8 +202,5 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
     ...
   )
 
-  attachDependencies(
-    element,
-    yonderDep()
-  )
+  attachDependencies(element, yonderDep())
 }

@@ -26,7 +26,7 @@ Highlight messages.
 
 jumbotron(
   title = "Welcome, welcome!",
-  subtitle = "This simple jumbotron-style component calls attention to a new feature",
+  subtitle = "This simple jumbotron-style component",
   tags$p(
     "Here we can talk more about this excellently superb new feature.",
     "The best."

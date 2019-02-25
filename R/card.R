@@ -148,7 +148,6 @@
 card <- function(..., header = NULL, title = NULL, subtitle = NULL,
                  image = NULL, footer = NULL) {
   args <- list(...)
-  attrs <- attribs(args)
 
   title <- if (!is.null(title)) {
     if (is_tag(title)) {
@@ -164,45 +163,6 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
     } else {
       tags$h6(class = "card-subtitle", subtitle)
     }
-  }
-
-  isListGroup <- function(x) tagHasClass(x, "list-group")
-
-  body <- lapply(
-    dropNulls(c(list(title, subtitle), elements(args))),
-    function(el) {
-      if (isListGroup(el)) {
-        return(tagAddClass(el, "list-group-flush"))
-      }
-
-      tags$div(
-        class = "card-body",
-        if (!is_tag(el)) {
-          tags$p(class = "card-text", el)
-        } else {
-          el
-        }
-      )
-    }
-  )
-
-  if (length(body)) {
-    body <- Reduce(
-      x = body[-1],
-      init = list(body[[1]]),
-      function(acc, el) {
-        if (isListGroup(acc[[length(acc)]])) {
-          c(acc, list(el))
-        } else {
-          acc[[length(acc)]][["children"]] <- c(
-            acc[[length(acc)]][["children"]],
-            el$children
-          )
-
-          acc
-        }
-      }
-    )
   }
 
   header <- if (!is.null(header)) {
@@ -232,25 +192,60 @@ card <- function(..., header = NULL, title = NULL, subtitle = NULL,
     }
   }
 
-  this <- tags$div(
+  body <- lapply(
+    dropNulls(c(list(title, subtitle), elements(args))),
+    function(el) {
+      if (tagHasClass(el, "list-group")) {
+        return(el)
+      }
+
+      tags$div(
+        class = "card-body",
+        if (!is_tag(el)) {
+          tags$p(class = "card-text", el)
+        } else {
+          el
+        }
+      )
+    }
+  )
+
+  if (length(body)) {
+    body <- Reduce(
+      x = body[-1],
+      init = list(body[[1]]),
+      function(acc, el) {
+        if (tagHasClass(acc[[length(acc)]], "list-group")) {
+          c(acc, list(el))
+        } else {
+          acc[[length(acc)]][["children"]] <- c(
+            acc[[length(acc)]][["children"]],
+            el$children
+          )
+
+          acc
+        }
+      }
+    )
+  }
+
+  element <- tags$div(
     class = "card",
     header,
     body,
     footer
   )
 
-  this <- tagConcatAttributes(this, attribs(args))
+  element <- tagConcatAttributes(element, attribs(args))
 
-  attachDependencies(this, yonderDep())
+  attachDependencies(element, yonderDep())
 }
 
 #' @rdname card
 #' @export
 deck <- function(...) {
-  this <- tags$div(
-    class = "card-deck",
-    ...
+  attachDependencies(
+    tags$div(class = "card-deck", ...),
+    yonderDep()
   )
-
-  attachDependencies(this, yonderDep())
 }

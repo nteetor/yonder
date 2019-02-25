@@ -13,7 +13,8 @@
 #'   into paragraphs of text. To format menu text use `p()` and utility
 #'   functions.
 #'
-#'   Named arguments are passed as HTML attributes to the parent element.
+#'   Additional named arguments are passed as HTML attributes to the parent
+#'   element.
 #'
 #' @param direction One of `"up"`, `"right"`, `"down"`, or `"left"` specifying
 #'   the direction in which the menu opens, defaults to `"down"`.
@@ -114,7 +115,24 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
   }
 
   args <- list(...)
-  items <- elements(args)
+
+  items <- Reduce(
+    x = lapply(elements(args), dropdownItem),
+    function(acc, obj) {
+      if (is_tag(acc)) {
+        acc <- list(acc)
+      }
+
+      if (is_strictly_list(acc[[length(acc)]]) ||
+          is_strictly_list(obj)) {
+        return(
+          c(acc, list(tags$div(class = "dropdown-divider")), list(obj))
+        )
+      }
+
+      return(c(acc, list(obj)))
+    }
+  )
 
   this <- tags$div(
     class = collate(
@@ -138,23 +156,7 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
         "dropdown-menu",
         if (align == "right") "dropdown-menu-right"
       ),
-      Reduce(
-        x = lapply(items, dropdownItem),
-        function(acc, obj) {
-          if (is_tag(acc)) {
-            acc <- list(acc)
-          }
-
-          if (is_strictly_list(acc[[length(acc)]]) ||
-                is_strictly_list(obj)) {
-            return(
-              c(acc, list(tags$div(class = "dropdown-divider")), list(obj))
-            )
-          }
-
-          return(c(acc, list(obj)))
-        }
-      )
+      items
     )
   )
 
@@ -197,8 +199,8 @@ dropdownItem <- function(base) {
   }
 
   stop(
-    "problem converting object of class ", class(base)[1], " into ",
-    "dropdown item",
+    "invalid `dropdown()` argument, could not convert object of class ",
+    class(base)[1], " into dropdown item",
     call. = FALSE
   )
 }

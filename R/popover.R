@@ -76,7 +76,7 @@ popover <- function(..., title = NULL) {
   elems <- elements(args)
   attrs <- attribs(args)
 
-  this <- tags$div(
+  element <- tags$div(
     class = "popover",
     role = "tooltip",
     tags$div(class = "arrow"),
@@ -87,18 +87,22 @@ popover <- function(..., title = NULL) {
     )
   )
 
-  this <- tagConcatAttributes(this, attrs)
+  element <- tagConcatAttributes(element, attrs)
 
-  attachDependencies(
-    this,
-    yonderDep()
-  )
+  attachDependencies(element, yonderDep())
 }
 
 #' @rdname popover
 #' @export
-showPopover <- function(target, popover, placement = "right", duration = NULL,
+showPopover <- function(target, popover, placement = "top", duration = NULL,
                         session = getDefaultReactiveDomain()) {
+  if (!is.character(target)) {
+    stop(
+      "invalid `showPopover()` argument, `target` must be a character string",
+      call. = FALSE
+    )
+  }
+
   if (is.null(session)) {
     stop(
       "invalid `showPopover()` argument, `session` is NULL",
@@ -106,12 +110,22 @@ showPopover <- function(target, popover, placement = "right", duration = NULL,
     )
   }
 
-  if (!re(placement, "right|left|top|bottom")) {
+  if (!re(placement, "right|left|top|bottom", len0 = FALSE)) {
     stop(
       "invalid `showPopover()` arugment, `placement` must be one of ",
       '"top", "right", "bottom", or "left"',
       call. = FALSE
     )
+  }
+
+  if (!is.null(duration)) {
+    if (!is.numeric(duration) || duration < 0) {
+      stop(
+        "invalid `showPopover()` argument, `duration` must be a positive ",
+        "integer",
+        call. = FALSE
+      )
+    }
   }
 
   session$sendCustomMessage("yonder:popover", list(
@@ -128,6 +142,13 @@ showPopover <- function(target, popover, placement = "right", duration = NULL,
 #' @rdname popover
 #' @export
 closePopover <- function(id, session = getDefaultReactiveDomain()) {
+  if (!is.character(id)) {
+    stop(
+      "inavlid `closePopover()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   if (is.null(session)) {
     stop(
       "invalid `closePopover()` argument, `session` is NULL",

@@ -39,10 +39,10 @@ Create a reactive radio input of one or more radio controls.
 }
 \examples{
 
-### Stacked radio input
+### Out-of-the-box radios
 
 radioInput(
-  id = "stacked",
+  id = "radio1",
   choices = c(
     "Vehicula adipiscing mattis",
     "Magna nullam",
@@ -54,7 +54,7 @@ radioInput(
 ### Inline radio input
 
 radioInput(
-  id = "inline",
+  id = "radio2",
   choices = c(
     "Choice 1",
     "Choice 2",
@@ -66,7 +66,7 @@ radioInput(
 ### Radiobars in comparison
 
 radiobarInput(
-  id = NULL,
+  id = "radiobar1",
   choices = c(
     "fusce sagittis",
     "libero non molestie",

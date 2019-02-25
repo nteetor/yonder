@@ -89,6 +89,13 @@
 #'   width(50)
 #'
 formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
+  if (!is.null(id) && !is.character(id)) {
+    stop(
+      "invalid `formInput()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   shiny::registerInputHandler(
     type = "yonder.form",
     fun = function(x, session, name) {
@@ -107,10 +114,7 @@ formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
     submit
   )
 
-  attachDependencies(
-    input,
-    yonderDep()
-  )
+  attachDependencies(input, yonderDep())
 }
 
 #' Add labels, help text, and formatting to inputs
@@ -182,11 +186,17 @@ formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
 #'   margin(3) %>%
 #'   background("grey")
 #'
-formGroup <- function(label, input, help = NULL,..., width = NULL) {
+formGroup <- function(label, input, ..., help = NULL, width = NULL) {
   if (!is_tag(input)) {
     stop(
-      "invalid `formGroup()` argument, expecting `input` to be a tag element",
+      "invalid `formGroup()` argument, `input` must be a tag element",
       call. = FALSE
+    )
+  }
+
+  if (!is.character(help)) {
+    stop(
+      "invalid `formGroup()` argument, `help` must be a character string",
     )
   }
 
@@ -199,7 +209,7 @@ formGroup <- function(label, input, help = NULL,..., width = NULL) {
   width <- ensureBreakpoints(width, c(1:12, "auto"))
   classes <- createResponsiveClasses(width, "col")
 
-  this <- tags$div(
+  element <- tags$div(
     class = collate(
       "form-group",
       classes
@@ -215,22 +225,14 @@ formGroup <- function(label, input, help = NULL,..., width = NULL) {
     }
   )
 
-  attachDependencies(
-    this,
-    yonderDep()
-  )
+  attachDependencies(element, yonderDep())
 }
 
 #' @rdname formGroup
 #' @export
 formRow <- function(...) {
-  this <- tags$div(
-    class = "form-row",
-    ...
-  )
-
   attachDependencies(
-    this,
+    tags$div(class = "form-row", ...),
     yonderDep()
   )
 }
@@ -285,27 +287,21 @@ fieldset <- function(..., legend = NULL) {
   }
 
   args <- list(...)
-  attrs <- attribs(args)
-  inputs <- elements(args)
 
-  this <- tagConcatAttributes(
-    tags$fieldset(
-      class = "form-group",
-      if (!is.null(legend)) {
-        tags$legend(
-          class = "col-form-legend",
-          legend
-        )
-      },
-      tags$div(
-        inputs
+  element <- tags$fieldset(
+    class = "form-group",
+    if (!is.null(legend)) {
+      tags$legend(
+        class = "col-form-legend",
+        legend
       )
-    ),
-    attrs
+    },
+    tags$div(
+      elements(args)
+    )
   )
 
-  attachDependencies(
-    this,
-    yonderDep()
-  )
+  element <- tagConcatAttributes(element, attribs(args))
+
+  attachDependencies(element, yonderDep())
 }
