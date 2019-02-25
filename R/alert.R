@@ -15,7 +15,8 @@
 #'
 #' ### Default alert
 #'
-#' alert("Donec at pede.")
+#' alert("Donec at pede.") %>%
+#'   background("blue")
 #'
 #' ### A more complex alert
 #'
