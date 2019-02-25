@@ -56,6 +56,14 @@
 #'
 #' ### Range inputs
 #'
+#' % <script>
+#' % $(function() {
+#' %   $(".yonder-range").each(function() {
+#' %     $(this.querySelector("input")).ionRangeSlider();
+#' %   });
+#' % });
+#' % </script>
+#'
 #' # Select from a range of numeric values.
 #'
 #' rangeInput(id = "range1") %>%
@@ -94,11 +102,22 @@
 #' ) %>%
 #'   background("blue")
 #'
-rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
-                       ticks = TRUE, labels = 4, prefix = NULL,
-                       suffix = NULL, fill = TRUE, ...) {
+rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...,
+                       ticks = TRUE, labels = 4, prefix = NULL, suffix = NULL,
+                       fill = TRUE) {
+  if (!is.null(id) && !is.character(id)) {
+    stop(
+      "invalid `rangeInput()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   input <- tags$div(
-    class = "yonder-range bg-grey",
+    class = collate(
+      "yonder-range",
+      "range-grey",
+      if (!fill) "range-no-fill"
+    ),
     id = id,
     tags$input(
       class = "range",
@@ -113,8 +132,7 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
       `data-postfix` = suffix,
       `data-grid` = ticks,
       `data-grid-num` = labels,
-      `data-grid-snap` = if (isTRUE(labels)) labels,
-      `data-no-fill` = if (!fill) "true"
+      `data-grid-snap` = if (isTRUE(labels)) labels
     ),
     ...
   )
@@ -128,10 +146,54 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1,
 #' @rdname rangeInput
 #' @export
 intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
-                          step = 1, ticks = TRUE, labels = 4, prefix = NULL,
-                          suffix = NULL, draggable = FALSE, ...) {
+                          step = 1, ..., ticks = TRUE, labels = 4,
+                          prefix = NULL, suffix = NULL, draggable = FALSE) {
+  if (!is.null(id) && !is.character(id)) {
+    stop(
+      "invalid `intervalInput()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
+  if (!is.numeric(min)) {
+    stop(
+      "invalid `intervalInput()` argument, `min` must be a numeric value",
+      call. = FALSE
+    )
+  }
+
+  if (!is.numeric(max)) {
+    stop(
+      "invalid `intervalInput()` argument, `max` must be a numeric value",
+      call. = FALSE
+    )
+  }
+
+  if (length(default) != 2) {
+    stop(
+      "invalid `intervalInput()` argument, `default` must have a length of 2",
+      call. = FALSE
+    )
+  }
+
+  if (default[[1]] < min) {
+    stop(
+      "invalid `intervalInput()` argument, `default[[1]]` must be greater ",
+      "than or equal to `min`",
+      call. = FALSE
+    )
+  }
+
+  if (default[[2]] > max) {
+    stop(
+      "invalid `intervalInput()` argument, `default[[2]]` must be less ",
+      "than or equal to `max`",
+      call. = FALSE
+    )
+  }
+
   input <- tags$div(
-    class = "yonder-range bg-grey",
+    class = "yonder-range range-grey",
     id = id,
     tags$input(
       class = "range",
@@ -139,8 +201,8 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
       `data-type` = "double",
       `data-min` = min,
       `data-max` = max,
-      `data-from` = default[1],
-      `data-to` = default[2],
+      `data-from` = default[[1]],
+      `data-to` = default[[2]],
       `data-drag-interval` = draggable,
       `data-prettify-separator` = ",",
       `data-prefix` = prefix,
@@ -193,8 +255,15 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
 #' )
 #'
 sliderInput <- function(id, choices, values = choices, selected = values[[1]],
-                        ticks = TRUE, fill = FALSE, prefix = NULL,
-                        suffix = NULL, ...) {
+                        ..., ticks = TRUE, prefix = NULL, suffix = NULL,
+                        fill = FALSE) {
+  if (!is.null(id) && !is.character(id)) {
+    stop(
+      "invalid `sliderInput()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   values <- vapply(values, as.character, character(1))
 
   # need to replace commas as ion rangeslider splits the string of values on the
@@ -204,7 +273,11 @@ sliderInput <- function(id, choices, values = choices, selected = values[[1]],
   selected <- encode_commas(selected)
 
   input <- tags$div(
-    class = "yonder-range bg-grey",
+    class = collate(
+      "yonder-range",
+      "range-grey",
+      if (!fill) "range-no-fill"
+    ),
     id = id,
     tags$input(
       class = "range",
@@ -216,8 +289,7 @@ sliderInput <- function(id, choices, values = choices, selected = values[[1]],
       `data-prefix` = prefix,
       `data-postfix` = suffix,
       `data-grid` = ticks,
-      `data-hide-min-max` = TRUE,
-      `data-no-fill` = if (!fill) "true"
+      `data-hide-min-max` = TRUE
     ),
     ...
   )

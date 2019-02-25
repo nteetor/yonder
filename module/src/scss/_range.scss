@@ -48,13 +48,6 @@
     color: color-yiq($gray-400);
   }
 
-  .irs-bar,
-  .irs-bar-edge {
-    &.no-fill {
-      background-color: transparent !important;
-    }
-  }
-
   .irs-slider {
     cursor: ew-resize;
 
@@ -93,5 +86,18 @@
 
   .irs-grid-text {
     color: $gray-700;
+  }
+}
+
+@each $color, $value in $theme-colors {
+  .range-#{$color} {
+    @include range-variant($value);
+  }
+}
+
+.range-no-fill {
+  .irs-bar,
+  .irs-bar-edge {
+    background-color: transparent !important;
   }
 }

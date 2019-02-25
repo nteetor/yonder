@@ -4,8 +4,8 @@
 \alias{sliderInput}
 \title{Slider with custom choices}
 \usage{
-sliderInput(id, choices, values = choices, selected = values[[1]],
-  ticks = TRUE, fill = FALSE, prefix = NULL, suffix = NULL, ...)
+sliderInput(id, choices, values = choices, selected = values[[1]], ...,
+  ticks = TRUE, prefix = NULL, suffix = NULL, fill = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -18,11 +18,11 @@ defaults to \code{choices}.}
 \item{selected}{One of \code{values} specifying the initial value of the slider
 input, defaults to \code{values[[1]]}.}
 
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
+
 \item{ticks}{One of \code{TRUE} or \code{FALSE} specifying if tick marks are added to
 the input, defaults to \code{TRUE}.}
-
-\item{fill}{One of \code{TRUE} or \code{FALSE} specifying whether the filled portion of
-the slider input is shown, defaults to \code{FALSE}.}
 
 \item{prefix}{A character string specifying a prefix for the input value,
 defaults to \code{NULL}, in which case a prefix is not prepended.}
@@ -30,8 +30,8 @@ defaults to \code{NULL}, in which case a prefix is not prepended.}
 \item{suffix}{A character string specifying a suffix for the input value,
 defaults to \code{NULL}, in which case a prefix is not appended.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
+\item{fill}{One of \code{TRUE} or \code{FALSE} specifying whether the filled portion of
+the slider input is shown, defaults to \code{FALSE}.}
 }
 \description{
 A slider input with custom choices and values. Unlike \code{\link[=rangeInput]{rangeInput()}} or

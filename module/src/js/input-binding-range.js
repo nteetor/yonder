@@ -8,26 +8,7 @@ $.extend(rangeInputBinding, {
     { type: "change" }
   ],
   initialize: (el) => {
-    let $el = $(el);
-    let $input = $(el.querySelector(".irs-hidden-input"));
-
-    $input.ionRangeSlider();
-
-    let bgclasses = $el.attr("class")
-        .split(/\s+/)
-        .filter(c => /^bg-[a-z-]+$/g.test(c))
-        .join(" ");
-
-    if (bgclasses) {
-      let components = ".irs-slider,.irs-bar,.irs-bar-edge,.irs-to,.irs-from,.irs-single,.irs-slider";
-
-      $el.find(components).addClass(bgclasses);
-      $el.removeClass(bgclasses);
-    }
-
-    if ($input.data("no-fill")) {
-      $el.find(".irs-bar,.irs-bar-edge").addClass("no-fill");
-    }
+    $(el.querySelector("input")).ionRangeSlider();
   },
   getId: function(el) {
     return el.id;

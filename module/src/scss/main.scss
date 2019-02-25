@@ -5,6 +5,7 @@
 @import 'variables';
 @import 'mixins/active';
 @import 'mixins/chip';
+@import 'mixins/range';
 
 // links
 $link-color: $blue;
@@ -56,6 +57,7 @@ $form-feedback-invalid-color:  $red;
 @import '../../node_modules/bootstrap/scss/popover';
 @import '../../node_modules/bootstrap/scss/spinners';
 @import 'chip';
+@import 'range';
 
 @import '../../node_modules/bootstrap/scss/utilities/align';
 @import '../../node_modules/bootstrap/scss/utilities/background';

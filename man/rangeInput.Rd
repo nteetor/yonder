@@ -5,13 +5,13 @@
 \alias{intervalInput}
 \title{Inputs for numeric ranges}
 \usage{
-rangeInput(id, min = 0, max = 100, default = min, step = 1,
+rangeInput(id, min = 0, max = 100, default = min, step = 1, ...,
   ticks = TRUE, labels = 4, prefix = NULL, suffix = NULL,
-  fill = TRUE, ...)
+  fill = TRUE)
 
 intervalInput(id, min = 0, max = 100, default = c(min, max),
-  step = 1, ticks = TRUE, labels = 4, prefix = NULL,
-  suffix = NULL, draggable = FALSE, ...)
+  step = 1, ..., ticks = TRUE, labels = 4, prefix = NULL,
+  suffix = NULL, draggable = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -32,6 +32,9 @@ For \strong{intervalInput()}, a vector of two numbers, defaults to
 
 \item{step}{A number specifying the interval step of the input, defaults to
 \code{1}.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
 
 \item{ticks}{One of \code{TRUE} or \code{FALSE} specifying if tick marks are added to
 the input, defaults to \code{TRUE}.}
@@ -56,9 +59,6 @@ defaults to \code{NULL}, in which case a prefix is not appended.}
 \item{fill}{One of \code{TRUE} or \code{FALSE} specifying whether the filled portion of
 a range or slider input is shown, defaults to \code{TRUE}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
-
 \item{draggable}{One of \code{TRUE} or \code{FALSE} specifying if the user can drag the
 interval between an interval input's two sliders, defaults to \code{FALSE}. If
 \code{TRUE}, the slider interval may be dragged with the cursor.}
@@ -71,6 +71,14 @@ range of numeric values. For a slider input with non-numeric values refer to
 \examples{
 
 ### Range inputs
+
+% <script>
+% $(function() {
+%   $(".yonder-range").each(function() {
+%     $(this.querySelector("input")).ionRangeSlider();
+%   });
+% });
+% </script>
 
 # Select from a range of numeric values.
 
