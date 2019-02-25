@@ -194,9 +194,10 @@ formGroup <- function(label, input, ..., help = NULL, width = NULL) {
     )
   }
 
-  if (!is.character(help)) {
+  if (!is.null(help) && !is.character(help)) {
     stop(
       "invalid `formGroup()` argument, `help` must be a character string",
+      call. = FALSE
     )
   }
 
