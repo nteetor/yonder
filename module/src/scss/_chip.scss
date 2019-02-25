@@ -32,18 +32,10 @@
 .chips-inline {
   flex-direction: row;
   flex-wrap: wrap;
-
-  .chip + .chip {
-    margin-right: .5rem;
-  }
 }
 
 .chips-block {
   flex-direction: column;
-
-  .chip {
-    width: 100%;
-  }
 
   .chip-close {
     margin-right: .25rem;
@@ -55,19 +47,31 @@
   align-items: center;
   padding: .25rem;
   margin: .25rem 0;
-  // @include font-size($badge-font-size);
-  font-size: $badge-font-size;
+  @include font-size($badge-font-size);
+  // font-size: $badge-font-size;
   font-weight: $badge-font-weight;
   line-height: 1;
   white-space: normal;
-  box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
+  box-shadow: none;
   border: 1px solid transparent;
   @include border-radius($badge-border-radius);
-  // @include transition($badge-transition);
+  @include transition($badge-transition);
   cursor: pointer;
 
   &.active {
     display: flex;
+  }
+
+  .chips-inline & {
+    margin-right: .5rem;
+  }
+
+  .chips-block & {
+    width: 100%;
+  }
+
+  .chips-shadow & {
+    box-shadow: 0 .125rem .25rem rgba(0,0,0,.075);
   }
 }
 
