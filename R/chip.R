@@ -14,15 +14,70 @@
 #'
 #' @param max A number specifying the maximum number of items a user may select.
 #'
-#' @param block One of `TRUE` or `FALSE` specifying the layout of chips. If
+#' @param fill One of `TRUE` or `FALSE` specifying the layout of chips. If
 #'   `TRUE` chips fill the width of the parent element, otherwise if `FALSE` the
-#'   chips are rendered inline, defaults to `TRUE`. Rendering chips inline is
-#'   useful when choice text is consistently short.
+#'   chips are rendered inline, defaults to `TRUE`.
+#'
+#' @section **Example** simple application:
+#'
+#' ```R
+#' ui <- container(
+#'   chipInput(
+#'     id = "chips",
+#'     choices = paste("Option number", 1:10),
+#'     values = 1:10,
+#'     fill = TRUE
+#'   ) %>%
+#'     width("1/2")
+#' )
+#'
+#' server <- function(input, output) {
+#'
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
+#'
+#' @section **Example** inline chips:
+#'
+#' ```R
+#' ui <- container(
+#'   chipInput(
+#'     id = "chips",
+#'     choices = c(
+#'       "A rather long option, isn't it?",
+#'       "Shorter",
+#'       "A middle-size option",
+#'       "One more"
+#'     ),
+#'     values = 1:4,
+#'     fill = FALSE
+#'   ) %>%
+#'     width("1/2") %>%
+#'     background("blue") %>%
+#'     shadow("small")
+#' )
+#'
+#' server <- function(input, output) {
+#'
+#' }
+#'
+#' shinyApp(ui, server)
+#' ```
 #'
 #' @family inputs
 #' @export
+#' @examples
+#'
+#' ### Default input
+#'
+#' chipInput(
+#'   id = "chip1",
+#'   choices = paste("Choice", 1:5)
+#' )
+#'
 chipInput <- function(id, choices, values = choices, selected = NULL, ...,
-                      max = NULL, block = TRUE) {
+                      max = NULL, fill = TRUE) {
   if (!is.null(id) && !is.character(id)) {
     stop(
       "invalid `chipInput()` argument, `id` must be a character string",
@@ -30,7 +85,15 @@ chipInput <- function(id, choices, values = choices, selected = NULL, ...,
     )
   }
 
-  selected <- if (is.null(selected)) FALSE else (selected %in% values)
+  if (length(choices) != length(values)) {
+    stop(
+      "invalid `chipInput()` argument, `choices` and `values` must be the ",
+      "same length",
+      call. = FALSE
+    )
+  }
+
+  selected <- values %in% selected
 
   dropdownToggle <- tags$input(
     class = "form-control form-control-sm",
@@ -92,7 +155,8 @@ chipInput <- function(id, choices, values = choices, selected = NULL, ...,
     div(
       class = collate(
         "chips",
-        if (block) "chips-block" else "chips-inline"
+        if (fill) "chips-block" else "chips-inline",
+        "chips-grey"
       ),
       chips
     ),

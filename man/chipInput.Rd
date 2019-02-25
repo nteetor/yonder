@@ -5,7 +5,7 @@
 \title{A chips input}
 \usage{
 chipInput(id, choices, values = choices, selected = NULL, ...,
-  max = NULL, block = TRUE)
+  max = NULL, fill = TRUE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -23,13 +23,67 @@ element.}
 
 \item{max}{A number specifying the maximum number of items a user may select.}
 
-\item{block}{One of \code{TRUE} or \code{FALSE} specifying the layout of chips. If
+\item{fill}{One of \code{TRUE} or \code{FALSE} specifying the layout of chips. If
 \code{TRUE} chips fill the width of the parent element, otherwise if \code{FALSE} the
-chips are rendered inline, defaults to \code{TRUE}. Rendering chips inline is
-useful when choice text is consistently short.}
+chips are rendered inline, defaults to \code{TRUE}.}
 }
 \description{
 A selectize alternative.
+}
+\section{\strong{Example} simple application}{
+\preformatted{ui <- container(
+  chipInput(
+    id = "chips",
+    choices = paste("Option number", 1:10),
+    values = 1:10,
+    fill = TRUE
+  ) \%>\%
+    width("1/2")
+)
+
+server <- function(input, output) {
+
+}
+
+shinyApp(ui, server)
+}
+}
+
+\section{\strong{Example} inline chips}{
+\preformatted{ui <- container(
+  chipInput(
+    id = "chips",
+    choices = c(
+      "A rather long option, isn't it?",
+      "Shorter",
+      "A middle-size option",
+      "One more"
+    ),
+    values = 1:4,
+    fill = FALSE
+  ) \%>\%
+    width("1/2") \%>\%
+    background("blue") \%>\%
+    shadow("small")
+)
+
+server <- function(input, output) {
+
+}
+
+shinyApp(ui, server)
+}
+}
+
+\examples{
+
+### Default input
+
+chipInput(
+  id = "chip1",
+  choices = paste("Choice", 1:5)
+)
+
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
