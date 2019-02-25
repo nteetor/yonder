@@ -267,6 +267,8 @@ background <- function(.tag, color) {
     base <- "list-group-item"
   } else if (tagHasClass(.tag, "yonder-chip")) {
     base <- "chips"
+  } else if (tagHasClass(.tag, "yonder-range")) {
+    base <- "range"
   } else {
     base <- "bg"
   }

@@ -117,8 +117,11 @@ tableThruput <- function(id, ..., borders = "rows", striped = FALSE,
     class = collate(
       "yonder-table",
       "table",
-      if (borders == "all") "table-bordered"
-      else if (borders == "none") "table-borderless",
+      if (borders == "all") {
+        "table-bordered"
+      } else if (borders == "none") {
+        "table-borderless"
+      },
       if (striped) "table-striped",
       if (compact) "table-sm"
     ),

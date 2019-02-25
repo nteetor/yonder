@@ -2,7 +2,6 @@
 globalVariables("func")
 
 # plain utils ----
-
 `%||%` <- function(a, b) if (is.null(a)) b else a
 
 encode_commas <- function(x) {
