@@ -4,8 +4,8 @@
 \alias{flex}
 \title{Flex layout}
 \usage{
-flex(.tag, direction = NULL, reverse = NULL, justify = NULL,
-  align = NULL, wrap = NULL)
+flex(.tag, direction = NULL, justify = NULL, align = NULL,
+  wrap = NULL, reverse = NULL)
 }
 \arguments{
 \item{.tag}{A tag element.}
@@ -14,11 +14,6 @@ flex(.tag, direction = NULL, reverse = NULL, justify = NULL,
 specifying the placement of flex items, defaults to \code{NULL}. If \code{"row"}
 items are placed vertically, if \code{"column"} items are placed horizontally.
 Browsers place items vertically by default.}
-
-\item{reverse}{A \link{responsive} argument. One of \code{TRUE} or \code{FALSE} specifying
-if flex items are placed in reverse order, defaults to \code{NULL}. If \code{TRUE}
-items are placed from right to left when \code{direction} is \code{"row"} or bottom
-to top when \code{direction} is \code{"column"}.}
 
 \item{justify}{A \link{responsive} argument. One of \code{"start"}, \code{"end"},
 \code{"center"}, \code{"between"}, or \code{"around"} specifying how items are
@@ -34,6 +29,11 @@ different values affect vertical spacing.}
 whether to wrap flex items inside the flex containter, \code{.tag}, defaults
 to \code{NULL}. If \code{TRUE} items wrap inside the container, if \code{FALSE} items will
 not wrap. See the \strong{wrap} section below for more.}
+
+\item{reverse}{A \link{responsive} argument. One of \code{TRUE} or \code{FALSE} specifying
+if flex items are placed in reverse order, defaults to \code{NULL}. If \code{TRUE}
+items are placed from right to left when \code{direction} is \code{"row"} or bottom
+to top when \code{direction} is \code{"column"}.}
 }
 \description{
 Use \code{flex()} to control how a flex container tag element places its flex

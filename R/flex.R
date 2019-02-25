@@ -231,9 +231,8 @@ NULL
 #'
 #' @family layout
 #' @export
-flex <- function(.tag, direction = NULL, reverse = NULL, justify = NULL,
-                 align = NULL, wrap = NULL) {
-
+flex <- function(.tag, direction = NULL, justify = NULL, align = NULL,
+                 wrap = NULL, reverse = NULL) {
   direction <- ensureBreakpoints(direction, c("row", "column"))
   reverse <- ensureBreakpoints(reverse, c(TRUE, FALSE))
   justify <- ensureBreakpoints(justify, c("start", "end", "center", "between", "around"))
