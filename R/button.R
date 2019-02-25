@@ -93,7 +93,7 @@
 #' div("Curabitur ", linkInput("link1", "vulputate"), " vestibulum lorem.")
 #'
 buttonInput <- function(id, label, ..., fill = FALSE) {
-  if (!is.null(id) && !is.character(label)) {
+  if (!is.null(id) && !is.character(id)) {
     stop(
       "invalid `buttonInput()` argument, `id` must be a character string",
       call. = FALSE
