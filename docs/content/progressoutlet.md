@@ -38,8 +38,7 @@ parameters:
   description: A character string specifying the id of a progress outlet.
 - name: bar
   description: A bar element, typically a call to `bar()`.
-- name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()](getdefaultreactivedomain.html).
+inheritParams: updateInput
 sections:
 - title: Example application
   body: |-

@@ -19,8 +19,7 @@ parameters:
   description: |-
     Tag elements inside the collapsible pane or additional named
     arguments passed as HTML attributes to parent element.
-- name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()](getdefaultreactivedomain.html).
+inheritParams: updateInput
 details: |-
   Padding may not be applied to the collapsible pane div element. To pad a
   collapsible pane first wrap the pane in another element and add padding to

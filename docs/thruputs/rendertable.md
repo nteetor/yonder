@@ -5,6 +5,7 @@ description: |-
   Use `tableThruput()` to create a table output you can update with
   `renderTable()`. Access selected table columns by referencing the same
   table id as an input.
+inheritParams: buttonInput
 parameters:
 - name: borders
   description: |-
@@ -42,12 +43,6 @@ parameters:
   description: |-
     One of `TRUE` or `FALSE` specifying if `expr` is a quoted
     expression.
-- name: '...'
-  description: |-
-    Additional named arguments passed on HTML attributes to the parent
-    element.
-- name: id
-  description: A character string specifying the reactive id of the thruput.
 sections:
 - title: Example application
   body: |-

@@ -2,9 +2,8 @@
 name: enableInput
 title: Enable, disable input
 description: Prevent interacting with input choices.
+inheritParams: updateInput
 parameters:
-- name: id
-  description: A character string specifying the reactive id of an input.
 - name: values
   description: A vector specifying values to enable or disable.
 - name: invert
@@ -15,8 +14,7 @@ parameters:
   description: |-
     One of `TRUE` or `FALSE`, if `TRUE` choices are all enabled
     prior to disabling choices, defaults to `FALSE`.
-- name: session
-  description: A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.
+family: utilities
 export: ''
 rdname: enableInput
 sections: []

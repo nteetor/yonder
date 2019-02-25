@@ -19,8 +19,10 @@ examples:
 - title: Default alert
   body:
   - type: code
-    content: alert("Donec at pede.")
-    output: <div class="alert alert-grey fade show" role="alert">Donec at pede.</div>
+    content: |-
+      alert("Donec at pede.") %>%
+        background("blue")
+    output: <div class="alert fade show alert-blue" role="alert">Donec at pede.</div>
 - title: A more complex alert
   body:
   - type: code

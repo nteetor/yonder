@@ -11,8 +11,7 @@ parameters:
   description: |-
     Additional named arguments passed as HTML attributes to the parent
     element.
-- name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()](getdefaultreactivedomain.html).
+inheritParams: updateInput
 details: |-
   These functions are experimental and are subject to change. Additionally, they
   may be moved from this package entirely.

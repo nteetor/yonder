@@ -96,8 +96,10 @@ hyderogen:
     path: /assets/css/ion.rangeSlider.skinFlat.css
   - ext: js
     path: /assets/js/ion.rangeSlider.min.js
+  - ext: png
+    path: /assets/img/sprite-skin-flat.png
   - ext: js
     path: /assets/js/yonder.min.js
   - ext: js
-    path: /assets/js/iris-json-2f1c33409952.js
+    path: /assets/js/iris-json.js
 

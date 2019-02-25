@@ -9,14 +9,16 @@ description: |-
   submit input. This allows you to distinguish between different clicks if
   your form includes multiple submit inputs.
 
-  **Important** if `id` or `submit` are `NULL` the form input will not freeze
-  its child inputs. This can be useful if you want to use a `formInput()`
-  solely for page layout.
-templateVar:
-  name: '...'
-  description: Any number of unnamed arguments (inputs or tag elements) passed as
-    child elements of the form.
+  If `id` or `submit` are `NULL` the form input will not freeze its child
+  inputs.
+inheritParams: buttonInput
 parameters:
+- name: '...'
+  description: |-
+    Any number of unnamed arguments (inputs or tag elements) passed as
+      child elements of the form.
+
+      Additional named arguments passed as HTML attributes to the parent element.
 - name: submit
   description: |-
     A submit button or tags containing a submit button. The submit
@@ -28,13 +30,6 @@ parameters:
     elements are rendered in a horizontal row, defaults to `FALSE`. On small
     viewports, think mobile device, `inline` has no effect and the form will
     span multiple lines.
-- name: id
-  description: A character string specifying the reactive id of the input.
-- name: '...'
-  description: |-
-    Any number of unnamed arguments (inputs or tag elements) passed as child elements of the form.
-
-    Additional named arguments passed as HTML attributes to the parent element.
 details: |-
   When `inline` is `TRUE` you may want to adjust the right margin of each child
   element for viewports larger than mobile, `margin(<TAG>, right = c(sm = 2))`,
@@ -102,21 +97,21 @@ examples:
               <label>Ice creams</label>
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-512-280" name="flavorChoice" value="Mint" checked/>
-                  <label class="custom-control-label" for="radio-512-280">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-673-420" name="flavorChoice" value="Mint"/>
+                  <label class="custom-control-label" for="radio-673-420">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-236-873" name="flavorChoice" value="Moose tracks"/>
-                  <label class="custom-control-label" for="radio-236-873">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-768-862" name="flavorChoice" value="Moose tracks"/>
+                  <label class="custom-control-label" for="radio-768-862">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-393-145" name="flavorChoice" value="Marble"/>
-                  <label class="custom-control-label" for="radio-393-145">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-291-210" name="flavorChoice" value="Marble"/>
+                  <label class="custom-control-label" for="radio-291-210">Marble</label>
                 </div>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
-            <button class="yonder-submit btn btn-block btn-teal" role="button" value="Make choice">Make choice</button>
+            <button class="yonder-submit btn btn-teal" role="button" value="Make choice" block="TRUE">Make choice</button>
           </form>
         </div>
       </div>

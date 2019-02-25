@@ -1,9 +1,13 @@
 ---
-name: closeModal
+name: registerModal
 title: Modal dialogs
 description: |-
   Modals are a flexible alert window, which disable interaction with the page
-  behind them. Modals may include inputs or buttons or simply text.
+  behind them. Modals may include inputs or buttons or simply text. To use
+  one or more modals you must first register the modal from the server with
+  `registerModal()`. This will assocaite the modal with an id at which point
+  the rest of your application's server may hide or show the modal with
+  `showModal()` and `hideModal()`, respectively, by referring to this id.
 parameters:
 - name: title
   description: |-
@@ -24,14 +28,15 @@ parameters:
     One of `"small"`, `"large"`, or `"xl"` (extra large) specifying
     whether to shrink or grow the width of the modal, defaults to `NULL`, in
     which case the width is not adjusted.
+- name: id
+  description: A character string specifying the id to associate with the modal.
 - name: modal
   description: A modal tag element created using `modal()`.
 - name: '...'
   description: |-
     Additional named arguments passed as HTML attributes to the
     parent element.
-- name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()](getdefaultreactivedomain.html).
+inheritParams: updateInput
 sections:
 - title: Example application
   body: |-
@@ -45,8 +50,9 @@ sections:
     )
 
     server <- function(input, output) {
-      observeEvent(input$trigger, ignoreInit = TRUE, {
-        showModal(
+      isolate(
+        registerModal(
+          id = "modal1",
           modal(
             title = "A simple modal",
             body = paste(
@@ -57,6 +63,10 @@ sections:
             )
           )
         )
+      )
+
+      observeEvent(input$trigger, ignoreInit = TRUE, {
+        showModal("modal1")
       })
     }
 
@@ -134,6 +144,6 @@ examples:
           </div>
         </div>
       </div>
-rdname: closeModal
+rdname: registerModal
 layout: doc
 ---

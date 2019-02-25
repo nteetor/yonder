@@ -12,10 +12,7 @@ description: |-
   reactive inputs, see [formInput()].
 parameters:
 - name: id
-  description: A character string specifying the reactive id of the input.
-- name: '...'
-  description: Additional named arguments passed as HTML attributes to the parent
-    element.
+  description: A character string specifying the id of the reactive input.
 - name: label
   description: |-
     A character string specifying the label text on the button
@@ -25,39 +22,58 @@ parameters:
     A character string specifying the value of a submit input,
     defaults to `label`. This value is used to distinguish form submission
     types in the case where a form input has multiple submit inputs.
-- name: block
+- name: fill
   description: |-
-    If `TRUE`, the input is block-level instead of inline, defaults
-    to `FALSE`. A block-level element will occupy the entire width of its
-    parent element.
+    One of `TRUE` or `FALSE` specifying if the button fills the
+    entire width of its parent, defaults to `FALSE`.
 - name: text
   description: |-
     A character string specifying the text displayed as part of the
     link input.
+- name: '...'
+  description: |-
+    Additional named arguments passed as HTML attributes to the parent
+    element.
 family: inputs
 export: ''
 examples:
-- title: Simple vs block button
+- title: A simple button
   body:
   - type: code
     content: |-
       buttonInput(
-        id = NULL,
+        id = "button1",
         label = "Simple"
       )
-    output: <button class="yonder-button btn btn-grey" type="button" role="button">Simple</button>
+    output: <button class="yonder-button btn btn-grey" type="button" role="button"
+      id="button1">Simple</button>
   - type: text
-    content: Block buttons will fill the width of their parent element
+    content: Alternatively, a button can fill the width of its parent element.
     output: ~
   - type: code
     content: |-
       buttonInput(
-        id = NULL,
-        label = "Block",
-        block = TRUE
+        id = "button2",
+        label = "Full-width",
+        fill = TRUE  # <-
       ) %>%
         background("red")
-    output: <button class="yonder-button btn btn-block btn-red" type="button" role="button">Block</button>
+    output: <button class="yonder-button btn btn-block btn-red" type="button" role="button"
+      id="button2">Full-width</button>
+  - type: text
+    content: Use design utilities to further adjust the width of a button.
+    output: ~
+  - type: code
+    content: |-
+      buttonInput(
+        id = "button3",
+        label = "Full and back again",
+        fill = TRUE  # <-
+      ) %>%
+        background("red") %>%
+        width("3/4")  # <-
+    output: <button class="yonder-button btn btn-block btn-red w-3/4" type="button"
+      role="button" id="button3">Full and back again</button>
 - title: A submit button
   body:
   - type: code
@@ -79,40 +95,39 @@ examples:
         "yellow", "amber", "orange", "grey"
       )
 
-      div(
-        lapply(
-          colors,
-          function(color) {
-            buttonInput(
-              id = NULL,
-              label = color
-            ) %>%
-              background(color) %>%
-              margin(2)
-          }
-        )
+      lapply(
+        colors,
+        function(color) {
+          buttonInput(
+            id = color,
+            label = color
+          ) %>%
+            background(color) %>%
+            margin(2)
+        }
       ) %>%
+        div() %>%
         display("flex") %>%
         flex(wrap = TRUE)
     output: |-
       <div class="d-flex flex-wrap">
-        <button class="yonder-button btn btn-red m-2" type="button" role="button">red</button>
-        <button class="yonder-button btn btn-purple m-2" type="button" role="button">purple</button>
-        <button class="yonder-button btn btn-indigo m-2" type="button" role="button">indigo</button>
-        <button class="yonder-button btn btn-blue m-2" type="button" role="button">blue</button>
-        <button class="yonder-button btn btn-cyan m-2" type="button" role="button">cyan</button>
-        <button class="yonder-button btn btn-teal m-2" type="button" role="button">teal</button>
-        <button class="yonder-button btn btn-green m-2" type="button" role="button">green</button>
-        <button class="yonder-button btn btn-yellow m-2" type="button" role="button">yellow</button>
-        <button class="yonder-button btn btn-amber m-2" type="button" role="button">amber</button>
-        <button class="yonder-button btn btn-orange m-2" type="button" role="button">orange</button>
-        <button class="yonder-button btn btn-grey m-2" type="button" role="button">grey</button>
+        <button class="yonder-button btn btn-red m-2" type="button" role="button" id="red">red</button>
+        <button class="yonder-button btn btn-purple m-2" type="button" role="button" id="purple">purple</button>
+        <button class="yonder-button btn btn-indigo m-2" type="button" role="button" id="indigo">indigo</button>
+        <button class="yonder-button btn btn-blue m-2" type="button" role="button" id="blue">blue</button>
+        <button class="yonder-button btn btn-cyan m-2" type="button" role="button" id="cyan">cyan</button>
+        <button class="yonder-button btn btn-teal m-2" type="button" role="button" id="teal">teal</button>
+        <button class="yonder-button btn btn-green m-2" type="button" role="button" id="green">green</button>
+        <button class="yonder-button btn btn-yellow m-2" type="button" role="button" id="yellow">yellow</button>
+        <button class="yonder-button btn btn-amber m-2" type="button" role="button" id="amber">amber</button>
+        <button class="yonder-button btn btn-orange m-2" type="button" role="button" id="orange">orange</button>
+        <button class="yonder-button btn btn-grey m-2" type="button" role="button" id="grey">grey</button>
       </div>
 - title: Reactive links
   body:
   - type: code
-    content: div("Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem.")
-    output: "<div>\n  Curabitur \n  <button class=\"yonder-link btn btn-link\" id=\"inline\">vulputate</button>\n
+    content: div("Curabitur ", linkInput("link1", "vulputate"), " vestibulum lorem.")
+    output: "<div>\n  Curabitur \n  <button class=\"yonder-link btn btn-link\" id=\"link1\">vulputate</button>\n
       \  vestibulum lorem.\n</div>"
 rdname: submitInput
 sections: []

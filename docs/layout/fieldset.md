@@ -49,7 +49,7 @@ examples:
           <div class="form-group">
             <label>What toppings would you like?</label>
             <div>
-              <div class="yonder-checkbar btn-group btn-group-toggle" data-toggle="buttons" id="toppings">
+              <div class="yonder-checkbar btn-group btn-group-toggle d-flex" id="toppings" data-toggle="buttons">
                 <label class="btn btn-grey">
                   <input type="checkbox" autocomplete="off" value="Cheese"/>
                   Cheese
@@ -69,8 +69,8 @@ examples:
             <label>Is this for delivery?</label>
             <div class="yonder-checkbox" id="deliver">
               <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox" id="checkbox-154-956" name="deliver" value="Deliver"/>
-                <label class="custom-control-label" for="checkbox-154-956">Deliver</label>
+                <input class="custom-control-input" type="checkbox" id="checkbox-599-688" name="deliver" value="Deliver"/>
+                <label class="custom-control-label" for="checkbox-599-688">Deliver</label>
                 <div class="invalid-feedback"></div>
               </div>
             </div>

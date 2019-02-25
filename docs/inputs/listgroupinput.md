@@ -5,6 +5,7 @@ description: |-
   List group inputs are an actionable list of items. They behave similarly to
   checkboxes or radios, that is, users may select one or more items from the
   list. However, list group items may include highly variable content.
+inheritParams: buttonInput
 parameters:
 - name: choices
   description: |-
@@ -22,79 +23,18 @@ parameters:
   description: |-
     One of `TRUE` or `FALSE` specifyng if multiple list group
     items may be selected, defaults to `TRUE`.
+- name: layout
+  description: |-
+    A [responsive](responsive.html) argument. One of `"vertical"` or `"horizontal"`
+    specifying how list items are laid out, defaults to `"vertical"`. Note, if
+    `layout` is `"horizontal"` and the `flush` argument is ignored.
 - name: flush
   description: |-
     One of `TRUE` or `FALSE` specifying if the list group is
     rendered without an outside border, defaults to `FALSE`. Removing the list
     group border is useful when rendering a list group inside a custom parent
     container, e.g. inside a [card()](content/card.html).
-- name: id
-  description: A character string specifying the reactive id of the input.
-- name: '...'
-  description: Additional named arguments passed as HTML attributes to the parent
-    element.
 sections:
-- title: Complex list items
-  body: |-
-    The following application demonstrates the flexibility of a list
-    group input. Here each list item contains a collasible pane. We
-    can hook up the server such that selecting a list item expands the
-    corresponding collapsible pane.
-
-    ```R
-    lessons <- list(
-      stars = c(
-        "The stars and moon are far too bright",
-        "Their beam and smile splashing o'er all",
-        "To illuminate while turning sight",
-        "From shadows wherein deeper shadows fall"
-      ),
-      joy = c(
-        "A single step, her hand aloft",
-        "More than a step, a joyful bound",
-        "The moment, precious, small, soft",
-        "And within a truth was found"
-      )
-    )
-
-    ui <- container(
-      listGroupInput(
-        id = "poems",
-        multiple = FALSE,
-        choices = list(
-          list(
-            h5("Stars"),
-            collapsiblePane(
-              id = "stars",
-              lapply(lessons[["stars"]], tags$p)
-            )
-          ),
-          list(
-            h5("Joy"),
-            collapsiblePane(
-              id = "joy",
-              lapply(lessons[["joy"]], tags$p)
-            )
-          )
-        ),
-        values = c("stars", "joy")
-      )
-    )
-
-    server <- function(input, output) {
-      observeEvent(input$poems, {
-        if (input$poems == "stars") {
-          collapsePane("joy")
-          expandPane("stars")
-        } else {
-          collapsePane("stars")
-          expandPane("joy")
-        }
-      })
-    }
-
-    shinyApp(ui, server)
-    ```
 - title: Navigation with a list group
   body: |-
     A list group can also control a set of panes. Be sure to set `multiple =
@@ -107,7 +47,6 @@ sections:
           width = 3,
           listGroupInput(
             id = "nav",
-            multiple = FALSE,
             selected = "pane1",
             choices = c(
               "Item 1",
@@ -151,30 +90,8 @@ sections:
 family: inputs
 export: ''
 examples:
-- title: A simple list group
-  body:
-  - type: text
-    content: This list group is not actionable as `id` is `NULL`.
-    output: ~
-  - type: code
-    content: |-
-      listGroupInput(
-        id = NULL,
-        choices = paste("Item", 1:5)
-      )
-    output: |-
-      <ul class="yonder-list-group list-group" data-multiple="true">
-        <li class="list-group-item" data-value="Item 1">Item 1</li>
-        <li class="list-group-item" data-value="Item 2">Item 2</li>
-        <li class="list-group-item" data-value="Item 3">Item 3</li>
-        <li class="list-group-item" data-value="Item 4">Item 4</li>
-        <li class="list-group-item" data-value="Item 5">Item 5</li>
-      </ul>
 - title: An actionable list group
   body:
-  - type: text
-    content: In this example we specify an `id` thus creating an actionable list group.
-    output: ~
   - type: code
     content: |-
       listGroupInput(
@@ -182,12 +99,12 @@ examples:
         choices = paste("Item", 1:5)
       )
     output: |-
-      <div class="yonder-list-group list-group" data-multiple="true" id="list1">
-        <a class="list-group-item list-group-item-action" data-value="Item 1">Item 1</a>
-        <a class="list-group-item list-group-item-action" data-value="Item 2">Item 2</a>
-        <a class="list-group-item list-group-item-action" data-value="Item 3">Item 3</a>
-        <a class="list-group-item list-group-item-action" data-value="Item 4">Item 4</a>
-        <a class="list-group-item list-group-item-action" data-value="Item 5">Item 5</a>
+      <div class="yonder-list-group list-group" id="list1">
+        <button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
+        <button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
+        <button class="list-group-item list-group-item-action" value="Item 3">Item 3</button>
+        <button class="list-group-item list-group-item-action" value="Item 4">Item 4</button>
+        <button class="list-group-item list-group-item-action" value="Item 5">Item 5</button>
       </div>
 - title: List group within a card
   body:
@@ -204,13 +121,29 @@ examples:
     output: |-
       <div class="card">
         <h6 class="card-header">Pick an item</h6>
-        <div class="yonder-list-group list-group list-group-flush" data-multiple="true" id="list2">
-          <a class="list-group-item list-group-item-action" data-value="Item 1">Item 1</a>
-          <a class="list-group-item list-group-item-action" data-value="Item 2">Item 2</a>
-          <a class="list-group-item list-group-item-action" data-value="Item 3">Item 3</a>
-          <a class="list-group-item list-group-item-action" data-value="Item 4">Item 4</a>
-          <a class="list-group-item list-group-item-action" data-value="Item 5">Item 5</a>
+        <div class="yonder-list-group list-group list-group-flush" id="list2">
+          <button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
+          <button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
+          <button class="list-group-item list-group-item-action" value="Item 3">Item 3</button>
+          <button class="list-group-item list-group-item-action" value="Item 4">Item 4</button>
+          <button class="list-group-item list-group-item-action" value="Item 5">Item 5</button>
         </div>
+      </div>
+- title: Horizontal list group
+  body:
+  - type: code
+    content: |-
+      listGroupInput(
+        id = "list3",
+        choices = paste("Item", 1:4),
+        layout = "horizontal"
+      )
+    output: |-
+      <div class="yonder-list-group list-group list-group-horizontal" id="list3">
+        <button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
+        <button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
+        <button class="list-group-item list-group-item-action" value="Item 3">Item 3</button>
+        <button class="list-group-item list-group-item-action" value="Item 4">Item 4</button>
       </div>
 rdname: listGroupInput
 layout: doc

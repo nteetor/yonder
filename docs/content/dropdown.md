@@ -18,7 +18,8 @@ parameters:
       into paragraphs of text. To format menu text use `p()` and utility
       functions.
 
-      Named arguments are passed as HTML attributes to the parent element.
+      Additional named arguments are passed as HTML attributes to the parent
+      element.
 - name: direction
   description: |-
     One of `"up"`, `"right"`, `"down"`, or `"left"` specifying

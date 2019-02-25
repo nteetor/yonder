@@ -6,6 +6,8 @@ description: |-
   displaying dynamically changing counts or tickers, drawing attention to new
   options, or tagging content.
 parameters:
+- name: id
+  description: A character string specifying the id of the output.
 - name: '...'
   description: |-
     Additional named argument passed as HTML attributes to the parent
@@ -22,8 +24,6 @@ parameters:
   description: |-
     One of `TRUE` or `FALSE` specifying if `expr` is a quoted
     expression.
-- name: id
-  description: A character string specifying the reactive id of the output.
 family: outputs
 export: ''
 examples:

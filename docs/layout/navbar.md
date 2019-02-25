@@ -60,13 +60,13 @@ examples:
       <div>
         <nav class="navbar navbar-expand-lg navbar-light bg-teal">
           <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navContent-21-20" aria-controls="navContent-21-20" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-65-535" aria-controls="nav-content-65-535" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="navContent-21-20">
+          <div class="collapse navbar-collapse" id="nav-content-65-535">
             <ul class="yonder-nav nav mr-auto navbar-nav" id="tabs">
               <li class="nav-item">
-                <button class="nav-link btn btn-link" value="Home">Home</button>
+                <button class="nav-link btn btn-link active" value="Home">Home</button>
               </li>
               <li class="nav-item">
                 <button class="nav-link btn btn-link" value="About">About</button>

@@ -5,6 +5,7 @@ description: |-
   Different types of textual inputs are provided to best support mobile
   keyboards and assistive technologies. A password input will mask its
   contents. Email inputs offer client-side validation depending on the browser.
+inheritParams: buttonInput
 parameters:
 - name: value
   description: |-
@@ -14,11 +15,6 @@ parameters:
   description: |-
     A character string specifying placeholder text for the
     input, defaults to `NULL`, in which case there is no placeholder text.
-- name: id
-  description: A character string specifying the reactive id of the input.
-- name: '...'
-  description: Additional named arguments passed as HTML attributes to the parent
-    element.
 family: inputs
 export: ''
 examples:

@@ -154,10 +154,10 @@ examples:
     output: |-
       <div class="col-4">
         <div class="card">
-          <div class="yonder-list-group list-group list-group-flush" data-multiple="true" id="important">
-            <a class="list-group-item list-group-item-action" data-value="choice1">Pellentesque tristique imperdiet tortor.</a>
-            <a class="list-group-item list-group-item-action" data-value="choice2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</a>
-            <a class="list-group-item list-group-item-action" data-value="choice3">Phasellus purus.</a>
+          <div class="yonder-list-group list-group list-group-flush" id="important">
+            <button class="list-group-item list-group-item-action" value="choice1">Pellentesque tristique imperdiet tortor.</button>
+            <button class="list-group-item list-group-item-action" value="choice2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</button>
+            <button class="list-group-item list-group-item-action" value="choice3">Phasellus purus.</button>
           </div>
         </div>
       </div>
@@ -193,7 +193,7 @@ examples:
         <div class="card-header">
           <ul class="yonder-nav nav nav-tabs card-header-tabs" id="tabs">
             <li class="nav-item">
-              <button class="nav-link btn btn-link" value="Tab 1">Tab 1</button>
+              <button class="nav-link btn btn-link active" value="Tab 1">Tab 1</button>
             </li>
             <li class="nav-item">
               <button class="nav-link btn btn-link" value="Tab 2">Tab 2</button>

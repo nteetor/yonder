@@ -5,6 +5,7 @@ description: |-
   A togglable dropdown menu input. Menu inputs may be used as standalone
   reactive inputs or within a [navInput()]. For building custom, more complex
   dropdown elements please see [dropdown()].
+inheritParams: buttonInput
 parameters:
 - name: label
   description: |-
@@ -26,11 +27,6 @@ parameters:
   description: |-
     One or `"right"` or `"left"` specifying which side of the
     toggle button the menu aligns to, defaults to `"left"`.`
-- name: id
-  description: A character string specifying the reactive id of the input.
-- name: '...'
-  description: Additional named arguments passed as HTML attributes to the parent
-    element.
 family: inputs
 export: ''
 examples:
@@ -81,10 +77,10 @@ examples:
     output: |-
       <ul class="yonder-nav nav" id="nav1">
         <li class="nav-item">
-          <button class="nav-link btn btn-link" value="tab1">Tab 1</button>
+          <button class="nav-link btn btn-link active" value="tab1">Tab 1</button>
         </li>
         <li class="yonder-menu dropdown nav-item" id="navOptions">
-          <button class="nav-link btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="tab2">Tab 2</button>
+          <button class="btn dropdown-toggle nav-link btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="tab2">Tab 2</button>
           <div class="dropdown-menu">
             <button class="dropdown-item" type="button" value="Option 1">Option 1</button>
             <button class="dropdown-item" type="button" value="Option 2">Option 2</button>

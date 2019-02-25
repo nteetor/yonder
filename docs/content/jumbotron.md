@@ -24,7 +24,7 @@ examples:
     content: |-
       jumbotron(
         title = "Welcome, welcome!",
-        subtitle = "This simple jumbotron-style component calls attention to a new feature",
+        subtitle = "This simple jumbotron-style component",
         tags$p(
           "Here we can talk more about this excellently superb new feature.",
           "The best."
@@ -32,8 +32,8 @@ examples:
       )
     output: |-
       <div class="jumbotron">
-        <h1 class="display-3">Welcome, welcome!</h1>
-        <p class="lead">This simple jumbotron-style component calls attention to a new feature</p>
+        <h1 class="display-3"></h1>
+        <p class="lead">This simple jumbotron-style component</p>
         <hr class="my-4"/>
         <p>
           Here we can talk more about this excellently superb new feature.

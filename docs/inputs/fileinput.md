@@ -2,6 +2,7 @@
 name: fileInput
 title: Upload user files
 description: Upload files to the server.
+inheritParams: buttonInput
 parameters:
 - name: placeholder
   description: |-
@@ -27,17 +28,12 @@ parameters:
   description: |-
     A character vector of possible MIME types or file extensions,
     defaults to `NULL`, in which case any file type may be selected.
-- name: id
-  description: A character string specifying the reactive id of the input.
-- name: '...'
-  description: Additional named arguments passed as HTML attributes to the parent
-    element.
 details: |-
   Be careful when adjusting the right or left margin of a file input. In the
   current version of Bootstrap file inputs can be pushed off the side of a
   page.
 sections:
-- title: Uploading a file
+- title: '**Example** uploading a file'
   body: |-
     ```R
     shinyApp(

@@ -95,7 +95,7 @@ examples:
                   <label>Control 1</label>
                   <div class="yonder-select" id="control1">
                     <select class="custom-select">
-                      <option value="..." selected>...</option>
+                      <option value="...">...</option>
                     </select>
                     <div class="invalid-feedback"></div>
                   </div>
@@ -104,7 +104,7 @@ examples:
                   <label>Control 2</label>
                   <div class="yonder-select" id="control2">
                     <select class="custom-select">
-                      <option value="..." selected>...</option>
+                      <option value="...">...</option>
                     </select>
                     <div class="invalid-feedback"></div>
                   </div>
@@ -113,7 +113,7 @@ examples:
                   <label>Control 3</label>
                   <div class="yonder-select" id="control3">
                     <select class="custom-select">
-                      <option value="..." selected>...</option>
+                      <option value="...">...</option>
                     </select>
                     <div class="invalid-feedback"></div>
                   </div>
@@ -122,7 +122,7 @@ examples:
             </div>
           </div>
           <div class="col">
-            <h1 class="display-4">Main panel</h1>
+            <h1 class="display-4"></h1>
           </div>
         </div>
       </div>

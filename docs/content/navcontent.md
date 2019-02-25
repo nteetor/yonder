@@ -15,8 +15,7 @@ parameters:
       element.
 - name: id
   description: A character string specifying the id of the nav pane.
-- name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()](getdefaultreactivedomain.html).
+inheritParams: updateInput
 sections:
 - title: App with pills
   body: |-

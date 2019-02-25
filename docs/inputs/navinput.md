@@ -8,6 +8,7 @@ description: |-
   are triggered when a nav choice or menu item is clicked. The reactive value
   of a nav input is `NULL` or a singleton character string. The value of any
   menus in the nav input must be retrieved with its own reactive id.
+inheritParams: buttonInput
 parameters:
 - name: choices
   description: |-
@@ -20,7 +21,7 @@ parameters:
 - name: selected
   description: |-
     One of `values` specifying which choice is selected by
-    default, defaults to `NULL`.
+    default, defaults to `values[[1]]`.
 - name: fill
   description: |-
     One of `TRUE` or `FALSE` specifying if the nav input fills the
@@ -30,11 +31,6 @@ parameters:
   description: |-
     One of `"links"`, `"pills"`, or `"tabs"` specifying the
     appearance of the nav input, defaults to `"links"`.
-- name: id
-  description: A character string specifying the reactive id of the input.
-- name: '...'
-  description: Additional named arguments passed as HTML attributes to the parent
-    element.
 sections:
 - title: Including a menu
   body: |-
@@ -137,10 +133,10 @@ examples:
     output: |-
       <ul class="yonder-nav nav" id="tabs3">
         <li class="nav-item">
-          <button class="nav-link btn btn-link" value="tab1">Tab 1</button>
+          <button class="nav-link btn btn-link active" value="tab1">Tab 1</button>
         </li>
         <li class="yonder-menu dropdown nav-item">
-          <button class="nav-link btn btn-link dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="tab2">Tab 2</button>
+          <button class="btn dropdown-toggle nav-link btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="tab2">Tab 2</button>
           <div class="dropdown-menu">
             <button class="dropdown-item" type="button" value="Action">Action</button>
             <button class="dropdown-item" type="button" value="Another action">Another action</button>
@@ -164,7 +160,7 @@ examples:
     output: |-
       <ul class="yonder-nav nav nav-fill nav-pills" id="tabs4">
         <li class="nav-item">
-          <button class="nav-link btn btn-link" value="tab1">Tab 1</button>
+          <button class="nav-link btn btn-link active" value="tab1">Tab 1</button>
         </li>
         <li class="nav-item">
           <button class="nav-link btn btn-link" value="tab2">Tab 2</button>
@@ -191,7 +187,7 @@ examples:
     output: |-
       <ul class="yonder-nav nav justify-content-center" id="tabs5">
         <li class="nav-item">
-          <button class="nav-link btn btn-link" value="Tab 1">Tab 1</button>
+          <button class="nav-link btn btn-link active" value="Tab 1">Tab 1</button>
         </li>
         <li class="nav-item">
           <button class="nav-link btn btn-link" value="Tab 2">Tab 2</button>

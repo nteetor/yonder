@@ -29,8 +29,7 @@ parameters:
   description: |-
     A character string specifying a reactive id. If specified, the
     hiding or closing of the toast will set the reactive id `action` to `TRUE`.
-- name: session
-  description: A reactive context, defaults to [getDefaultReactiveDomain()](getdefaultreactivedomain.html).
+inheritParams: updateInput
 sections:
 - title: Showing notifications
   body: |-

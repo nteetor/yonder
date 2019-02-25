@@ -28,7 +28,7 @@ examples:
       ) %>%
         background("cyan")
     output: |-
-      <div class="yonder-checkbar btn-group btn-group-toggle" data-toggle="buttons">
+      <div class="yonder-checkbar btn-group btn-group-toggle d-flex" data-toggle="buttons">
         <label class="btn btn-cyan">
           <input type="checkbox" autocomplete="off" value="Nunc rutrum turpis sed pede."/>
           Nunc rutrum turpis sed pede.

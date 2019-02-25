@@ -9,6 +9,7 @@ description: |-
   static addons render with a shaded background to help indicated this behavior
   to the user. Buttons and dropdowns may be included to control when the group
   input's reactive value updates. See Details for more information.
+inheritParams: buttonInput
 parameters:
 - name: placeholder
   description: |-
@@ -24,11 +25,6 @@ parameters:
     [buttonInput()](inputs/buttoninput.html) or [dropdown()](content/dropdown.html) elements specifying dynamic addons.
     Addon's affect the reactive value of the group input, see the Details
     section below for more information.
-- name: id
-  description: A character string specifying the reactive id of the input.
-- name: '...'
-  description: Additional named arguments passed as HTML attributes to the parent
-    element.
 sections:
 - title: '`left` and `right` combinations'
   body: |-
@@ -79,19 +75,20 @@ examples:
   - type: code
     content: |-
       groupInput(
-        id = "group2",,
+        id = "group2",
         placeholder = "Search terms",
         right = buttonInput(
-          id = "button",
+          id = "button2",
           label = "Go!"
         ) %>%
-          background("transparent")
+          background("grey") %>%
+          border()
       )
     output: |-
       <div class="yonder-group input-group" id="group2">
         <input type="text" class="form-control" placeholder="Search terms"/>
         <div class="input-group-append">
-          <button class="yonder-button btn btn-grey bg-transparent" type="button" role="button" id="button">Go!</button>
+          <button class="yonder-button btn btn-grey border" type="button" role="button" id="button2">Go!</button>
         </div>
       </div>
 - title: Combination addon
@@ -119,11 +116,10 @@ examples:
         left = "@",
         placeholder = "Username",
         right = buttonInput(
-          id = NULL,
+          id = "button4",
           label = "Search"
         ) %>%
-          background("transparent") %>%
-          border("blue")
+          background("blue")
       )
     output: |-
       <div class="yonder-group input-group" id="group4">
@@ -132,7 +128,7 @@ examples:
         </div>
         <input type="text" class="form-control" placeholder="Username"/>
         <div class="input-group-append">
-          <button class="yonder-button btn btn-grey bg-transparent border border-blue" type="button" role="button">Search</button>
+          <button class="yonder-button btn btn-blue" type="button" role="button" id="button4">Search</button>
         </div>
       </div>
 rdname: groupInput
