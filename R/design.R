@@ -462,13 +462,18 @@ shadow <- function(.tag, size = "regular") {
 
   size <- switch(
     size,
-    none = "none",
-    small = "sm",
-    regular = NULL,
-    large = "lg"
+    none = "shadow-none",
+    small = "shadow-sm",
+    regular = "shadow",
+    large = "shadow-lg"
   )
 
-  .tag <- tagAddClass(.tag, paste0(c("shadow", size), collapse = "-"))
+  if (tagHasClass(.tag, "yonder-chip")) {
+    .tag$children[[3]] <- tagAddClass(.tag$children[[3]], "chips-shadow")
+    return(.tag)
+  }
+
+  .tag <- tagAddClass(.tag, size)
 
   attachDependencies(.tag, yonderDep())
 }
