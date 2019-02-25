@@ -125,7 +125,7 @@ navInput <- function(id, choices, values = choices, selected = values[[1]], ...,
     )
   }
 
-  if (!is.null(appearance) && !re(appearance, "links|pills|tabs", FALSE)) {
+  if (!re(appearance, "links|pills|tabs", len0 = FALSE)) {
     stop(
       "invalid `navInput()` argument, `appearance` must be one of ",
       '"links", "pills", or "tabs"',

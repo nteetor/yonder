@@ -25,10 +25,8 @@ conjoin <- function(x, con = "or") {
 }
 
 re <- function(string, pattern, len0 = TRUE) {
-  if (length(string) == 0 && len0) {
-    # because grepl("", <regex>) returns TRUE, extend this to
-    # handle character(0) or NULL
-    return(TRUE)
+  if (length(string) == 0) {
+    return(len0)
   }
 
   grepl(paste0("^(?:", pattern, ")$"), string)
