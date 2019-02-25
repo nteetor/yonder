@@ -30,9 +30,6 @@ specifying how list items are laid out, defaults to \code{"vertical"}. Note, if
 rendered without an outside border, defaults to \code{FALSE}. Removing the list
 group border is useful when rendering a list group inside a custom parent
 container, e.g. inside a \code{\link[=card]{card()}}.}
-
-\item{multiple}{One of \code{TRUE} or \code{FALSE} specifyng if multiple list group
-items may be selected, defaults to \code{TRUE}.}
 }
 \description{
 List group inputs are an actionable list of items. They behave similarly to

@@ -6,7 +6,7 @@
 \alias{linkInput}
 \title{Button and submit inputs}
 \usage{
-buttonInput(id, label, ..., fill = FALSE)
+buttonInput(id, label, ..., fill = FALSE, stretch = FALSE)
 
 submitInput(label = "Submit", value = label, ..., fill = FALSE)
 
@@ -23,6 +23,12 @@ element.}
 
 \item{fill}{One of \code{TRUE} or \code{FALSE} specifying if the button fills the
 entire width of its parent, defaults to \code{FALSE}.}
+
+\item{stretch}{One of \code{TRUE} or \code{FALSE} specifying stretched behaviour for
+the button or link input, defaults to \code{FALSE}. If \code{TRUE}, the button or
+link will receive clicks from its containing block element. For example, a
+stretched button or link inside a \code{\link[=card]{card()}} would update whenever the user
+clicked on the card.}
 
 \item{value}{A character string specifying the value of a submit input,
 defaults to \code{label}. This value is used to distinguish form submission
@@ -101,6 +107,21 @@ lapply(
 ### Reactive links
 
 div("Curabitur ", linkInput("link1", "vulputate"), " vestibulum lorem.")
+
+### Stretched buttons and links
+
+card(
+  header = "Card with stretched button",
+  p("Notice when you hover over the card, the button also detects ",
+    "the hover."),
+  buttonInput(
+    id = "go",
+    label = "Go go go",
+    stretch = TRUE
+  ) \%>\%
+    background("blue")
+) \%>\%
+  width(20)
 
 }
 \seealso{

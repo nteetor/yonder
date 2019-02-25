@@ -30,9 +30,6 @@ element.}
 
 \item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
 in which case the radio controls render on separate lines.}
-
-\item{disabled}{One or more of \code{values} indicating which radio choices to
-disable, defaults to \code{NULL}, in which case all choices are enabled.}
 }
 \description{
 Create a reactive radio input of one or more radio controls.

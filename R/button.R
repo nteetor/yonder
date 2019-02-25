@@ -23,6 +23,12 @@
 #' @param fill One of `TRUE` or `FALSE` specifying if the button fills the
 #'   entire width of its parent, defaults to `FALSE`.
 #'
+#' @param stretch One of `TRUE` or `FALSE` specifying stretched behaviour for
+#'   the button or link input, defaults to `FALSE`. If `TRUE`, the button or
+#'   link will receive clicks from its containing block element. For example, a
+#'   stretched button or link inside a [card()] would update whenever the user
+#'   clicked on the card.
+#'
 #' @param text A character string specifying the text displayed as part of the
 #'   link input.
 #'
@@ -92,7 +98,22 @@
 #'
 #' div("Curabitur ", linkInput("link1", "vulputate"), " vestibulum lorem.")
 #'
-buttonInput <- function(id, label, ..., fill = FALSE) {
+#' ### Stretched buttons and links
+#'
+#' card(
+#'   header = "Card with stretched button",
+#'   p("Notice when you hover over the card, the button also detects ",
+#'     "the hover."),
+#'   buttonInput(
+#'     id = "go",
+#'     label = "Go go go",
+#'     stretch = TRUE
+#'   ) %>%
+#'     background("blue")
+#' ) %>%
+#'   width(20)
+#'
+buttonInput <- function(id, label, ..., fill = FALSE, stretch = FALSE) {
   if (!is.null(id) && !is.character(id)) {
     stop(
       "invalid `buttonInput()` argument, `id` must be a character string",
@@ -105,6 +126,7 @@ buttonInput <- function(id, label, ..., fill = FALSE) {
       "yonder-button",
       "btn",
       if (fill) "btn-block",
+      if (stretch) "stretched-link",
       "btn-grey"
     ),
     type = "button",

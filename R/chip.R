@@ -140,7 +140,7 @@ chipInput <- function(id, choices, values = choices, selected = NULL, ...,
     }
   )
 
-  element <- div(
+  element <- tags$div(
     id = id,
     class = collate(
       "yonder-chip",
@@ -148,11 +148,11 @@ chipInput <- function(id, choices, values = choices, selected = NULL, ...,
     ),
     `data-max` = max %||% -1,
     dropdownToggle,
-    div(
+    tags$div(
       class = "dropdown-menu",
       dropdownItems
     ),
-    div(
+    tags$div(
       class = collate(
         "chips",
         if (fill) "chips-block" else "chips-inline",

@@ -15,9 +15,6 @@
 #' @param selected One or more of `values` specifying which choices are selected
 #'   by default, defaults to `NULL`, in which case no choice is selected.
 #'
-#' @param multiple One of `TRUE` or `FALSE` specifyng if multiple list group
-#'   items may be selected, defaults to `TRUE`.
-#'
 #' @param layout A [responsive] argument. One of `"vertical"` or `"horizontal"`
 #'   specifying how list items are laid out, defaults to `"vertical"`. Note, if
 #'   `layout` is `"horizontal"` and the `flush` argument is ignored.
@@ -153,7 +150,7 @@ listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
     }
   )
 
-  input <- div(
+  input <- tags$div(
     class = collate(
       "yonder-list-group",
       "list-group",

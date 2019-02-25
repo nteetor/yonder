@@ -19,9 +19,6 @@
 #' @param inline If `TRUE`, the radio input renders inline, defaults to `FALSE`,
 #'   in which case the radio controls render on separate lines.
 #'
-#' @param disabled One or more of `values` indicating which radio choices to
-#'   disable, defaults to `NULL`, in which case all choices are enabled.
-#'
 #' @family inputs
 #' @export
 #' @examples
