@@ -247,6 +247,14 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
 #'
 #' ### Custom chocies
 #'
+#' % <script>
+#' % $(function() {
+#' %   $(".yonder-range").each(function() {
+#' %     $(this.querySelector("input")).ionRangeSlider();
+#' %   });
+#' % });
+#' % </script>
+#'
 #' # Select a value from a set of choices using a slider.
 #'
 #' sliderInput(
