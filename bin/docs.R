@@ -6,9 +6,9 @@ library(fs)
 
 path_root <-  find_package_root_file()
 
-iris_json <- tempfile("iris-json-", fileext = ".js")
+path_iris <- file_create(path_temp("iris-json.js"))
 cat(
-  file = iris_json,
+  file = path_iris,
   paste0("var iris = ", jsonlite::toJSON(iris), ";")
 )
 
@@ -24,9 +24,10 @@ site_assets <- c(
     "inst/www/ion-rangeslider/css/ion.rangeSlider.css",
     "inst/www/ion-rangeslider/css/ion.rangeSlider.skinFlat.css",
     "inst/www/ion-rangeslider/js/ion.rangeSlider.min.js",
+    "inst/www/ion-rangeslider/img/sprite-skin-flat.png",
     "inst/www/yonder/js/yonder.min.js"
   )),
-  iris_json
+  path_iris
 )
 
 jekyll(
