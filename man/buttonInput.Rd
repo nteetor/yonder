@@ -6,11 +6,11 @@
 \alias{linkInput}
 \title{Button and submit inputs}
 \usage{
-buttonInput(id, label, ..., block = FALSE)
+buttonInput(id, label, ..., fill = FALSE)
 
-submitInput(label = "Submit", value = label, block = FALSE, ...)
+submitInput(label = "Submit", value = label, ..., fill = FALSE)
 
-linkInput(id, text, ...)
+linkInput(id, text, ..., stretch = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -21,9 +21,8 @@ input.}
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{block}{If \code{TRUE}, the input is block-level instead of inline, defaults
-to \code{FALSE}. A block-level element will occupy the entire width of its
-parent element.}
+\item{fill}{One of \code{TRUE} or \code{FALSE} specifying if the button fills the
+entire width of its parent, defaults to \code{FALSE}.}
 
 \item{value}{A character string specifying the value of a submit input,
 defaults to \code{label}. This value is used to distinguish form submission
@@ -43,20 +42,31 @@ submission. Because of their specific usage, submit inputs do not require an
 reactive inputs, see \code{\link[=formInput]{formInput()}}.
 }
 \examples{
-### Simple vs block button
+### A simple button
 
 buttonInput(
-  id = NULL,
+  id = "button1",
   label = "Simple"
 )
 
-# Block buttons will fill the width of their parent element
+# Alternatively, a button can fill the width of its parent element.
+
 buttonInput(
-  id = NULL,
-  label = "Block",
-  block = TRUE
+  id = "button2",
+  label = "Full-width",
+  fill = TRUE  # <-
 ) \%>\%
   background("red")
+
+# Use design utilities to further adjust the width of a button.
+
+buttonInput(
+  id = "button3",
+  label = "Full and back again",
+  fill = TRUE
+) \%>\%
+  background("red") \%>\%
+  width("3/4")
 
 ### A submit button
 
@@ -73,19 +83,18 @@ colors <- c(
   "yellow", "amber", "orange", "grey"
 )
 
-div(
-  lapply(
-    colors,
-    function(color) {
-      buttonInput(
-        id = NULL,
-        label = color
-      ) \%>\%
-        background(color) \%>\%
-        margin(2)
-    }
-  )
+lapply(
+  colors,
+  function(color) {
+    buttonInput(
+      id = color,
+      label = color
+    ) \%>\%
+      background(color) \%>\%
+      margin(2)
+  }
 ) \%>\%
+  div() \%>\%
   display("flex") \%>\%
   flex(wrap = TRUE)
 

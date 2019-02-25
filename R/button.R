@@ -20,9 +20,8 @@
 #'   defaults to `label`. This value is used to distinguish form submission
 #'   types in the case where a form input has multiple submit inputs.
 #'
-#' @param block If `TRUE`, the input is block-level instead of inline, defaults
-#'   to `FALSE`. A block-level element will occupy the entire width of its
-#'   parent element.
+#' @param fill One of `TRUE` or `FALSE` specifying if the button fills the
+#'   entire width of its parent, defaults to `FALSE`.
 #'
 #' @param text A character string specifying the text displayed as part of the
 #'   link input.
@@ -33,20 +32,31 @@
 #' @family inputs
 #' @export
 #' @examples
-#' ### Simple vs block button
+#' ### A simple button
 #'
 #' buttonInput(
-#'   id = NULL,
+#'   id = "button1",
 #'   label = "Simple"
 #' )
 #'
-#' # Block buttons will fill the width of their parent element
+#' # Alternatively, a button can fill the width of its parent element.
+#'
 #' buttonInput(
-#'   id = NULL,
-#'   label = "Block",
-#'   block = TRUE
+#'   id = "button2",
+#'   label = "Full-width",
+#'   fill = TRUE  # <-
 #' ) %>%
 #'   background("red")
+#'
+#' # Use design utilities to further adjust the width of a button.
+#'
+#' buttonInput(
+#'   id = "button3",
+#'   label = "Full and back again",
+#'   fill = TRUE  # <-
+#' ) %>%
+#'   background("red") %>%
+#'   width("3/4")  # <-
 #'
 #' ### A submit button
 #'
@@ -63,32 +73,38 @@
 #'   "yellow", "amber", "orange", "grey"
 #' )
 #'
-#' div(
-#'   lapply(
-#'     colors,
-#'     function(color) {
-#'       buttonInput(
-#'         id = NULL,
-#'         label = color
-#'       ) %>%
-#'         background(color) %>%
-#'         margin(2)
-#'     }
-#'   )
+#' lapply(
+#'   colors,
+#'   function(color) {
+#'     buttonInput(
+#'       id = color,
+#'       label = color
+#'     ) %>%
+#'       background(color) %>%
+#'       margin(2)
+#'   }
 #' ) %>%
+#'   div() %>%
 #'   display("flex") %>%
 #'   flex(wrap = TRUE)
 #'
 #' ### Reactive links
 #'
-#' div("Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem.")
+#' div("Curabitur ", linkInput("link1", "vulputate"), " vestibulum lorem.")
 #'
-buttonInput <- function(id, label, ..., block = FALSE) {
+buttonInput <- function(id, label, ..., fill = FALSE) {
+  if (!is.null(id) && !is.character(label)) {
+    stop(
+      "invalid `buttonInput()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   element <- tags$button(
     class = collate(
       "yonder-button",
       "btn",
-      if (block) "btn-block",
+      if (fill) "btn-block",
       "btn-grey"
     ),
     type = "button",
@@ -98,21 +114,18 @@ buttonInput <- function(id, label, ..., block = FALSE) {
     ...
   )
 
-  attachDependencies(
-    element,
-    yonderDep()
-  )
+  attachDependencies(element, yonderDep())
 }
 
 #' @rdname buttonInput
 #' @export
-submitInput <- function(label = "Submit", value = label, block = FALSE, ...) {
+submitInput <- function(label = "Submit", value = label, ..., fill = FALSE) {
   element <- tags$button(
     class = collate(
       "yonder-submit",
       "btn",
       "btn-blue",
-      if (block) "btn-block"
+      if (fill) "btn-block"
     ),
     role = "button",
     value = value,
@@ -120,26 +133,24 @@ submitInput <- function(label = "Submit", value = label, block = FALSE, ...) {
     ...
   )
 
-  attachDependencies(
-    element,
-    yonderDep()
-  )
+  attachDependencies(element, yonderDep())
 }
 
 #' @rdname buttonInput
 #' @export
-linkInput <- function(id, text, ...) {
+linkInput <- function(id, text, ..., stretch = FALSE) {
   element <- tags$button(
-    class = "yonder-link btn btn-link",
+    class = collate(
+      "yonder-link",
+      "btn btn-link",
+      if (stretch) "stretched-link"
+    ),
     id = id,
     text,
     ...
   )
 
-  attachDependencies(
-    element,
-    yonderDep()
-  )
+  attachDependencies(element, yonderDep())
 }
 
 #' Button group inputs
@@ -161,7 +172,7 @@ linkInput <- function(id, text, ...) {
 #' ### Default input
 #'
 #' buttonGroupInput(
-#'   id = NULL,
+#'   id = "group1",
 #'   labels = c("Once", "Twice", "Thrice"),
 #'   values = c(1, 2, 3)
 #' )
@@ -169,13 +180,20 @@ linkInput <- function(id, text, ...) {
 #' ### Styling the button group
 #'
 #' buttonGroupInput(
-#'   id = NULL,
+#'   id = "group2",
 #'   labels = c("Button 1", "Button 2", "Button 3")
 #' ) %>%
 #'   background("blue") %>%
-#'   margin(3)
+#'   width("1/3")
 #'
 buttonGroupInput <- function(id, labels, values = labels, ...) {
+  if (!is.null(id) && !is.character(id)) {
+    stop(
+      "invalid `buttonGroupInput()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   if (length(labels) != length(values)) {
     stop(
       "invalid `buttonGroupInput()` arguments, `labels` and `values` must be ",
@@ -192,27 +210,26 @@ buttonGroupInput <- function(id, labels, values = labels, ...) {
     force = TRUE
   )
 
+  buttons <- Map(
+    label = labels,
+    value = values,
+    function(label, value) {
+      tags$button(
+        type = "button",
+        class = "btn btn-grey",
+        value = value,
+        label
+      )
+    }
+  )
+
   element <- tags$div(
     class = "yonder-button-group btn-group",
     id = id,
     role = "group",
-    Map(
-      label = labels,
-      value = values,
-      function(label, value, outline) {
-        tags$button(
-          type = "button",
-          class = "btn btn-grey",
-          value = value,
-          label
-        )
-      }
-    ),
+    buttons,
     ...
   )
 
-  attachDependencies(
-    element,
-    yonderDep()
-  )
+  attachDependencies(element, yonderDep())
 }
