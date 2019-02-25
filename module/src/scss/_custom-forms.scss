@@ -1,3 +1,10 @@
 @import '../../node_modules/bootstrap/scss/custom-forms';
 
 @include custom-control-active-variant();
+
+.custom-control-label {
+  &::before,
+  &::after {
+    cursor: pointer;
+  }
+}
