@@ -512,6 +512,9 @@
   Shiny.inputBindings.register(chipInputBinding, "yonder.chipInput");
 
   var fileInputBinding = new Shiny.InputBinding();
+  document.addEventListener("DOMContentLoaded", function () {
+    bsCustomFileInput.init(".yonder-file[id] input[type='file']");
+  });
   $.extend(fileInputBinding, {
     Selector: {
       SELF: ".yonder-file",

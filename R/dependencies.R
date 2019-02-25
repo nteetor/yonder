@@ -44,7 +44,7 @@ yonderDep <- function() {
         href = "yonder/bootstrap"
       ),
       stylesheet = "css/bootstrap.min.css",
-      script = "js/bootstrap.min.js"
+      script = c("js/bootstrap.min.js", "js/bs-custom-file-input.min.js")
     ),
     htmlDependency(
       name = "shiny",

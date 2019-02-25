@@ -1,5 +1,9 @@
 export let fileInputBinding = new Shiny.InputBinding();
 
+document.addEventListener("DOMContentLoaded", () => {
+  bsCustomFileInput.init(".yonder-file[id] input[type='file']");
+});
+
 $.extend(fileInputBinding, {
   Selector: {
     SELF: ".yonder-file",
