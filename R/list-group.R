@@ -22,77 +22,10 @@
 #'   specifying how list items are laid out, defaults to `"vertical"`. Note, if
 #'   `layout` is `"horizontal"` and the `flush` argument is ignored.
 #'
-#' @param fill One of `TRUE` or `FALSE` specifying if a horizontal list group
-#'   extends to fill the width of its parent element, defaults to `FALSE`. If
-#'   `TRUE` space is evenly divided for equal width list group items. This
-#'   argument is ignored if `layout` is not `"horizontal"`.
-#'
 #' @param flush One of `TRUE` or `FALSE` specifying if the list group is
 #'   rendered without an outside border, defaults to `FALSE`. Removing the list
 #'   group border is useful when rendering a list group inside a custom parent
 #'   container, e.g. inside a [card()].
-#'
-#' @section Complex list items:
-#'
-#' The following application demonstrates the flexibility of a list
-#' group input. Here each list item contains a collasible pane. We
-#' can hook up the server such that selecting a list item expands the
-#' corresponding collapsible pane.
-#'
-#' ```R
-#' lessons <- list(
-#'   stars = c(
-#'     "The stars and moon are far too bright",
-#'     "Their beam and smile splashing o'er all",
-#'     "To illuminate while turning sight",
-#'     "From shadows wherein deeper shadows fall"
-#'   ),
-#'   joy = c(
-#'     "A single step, her hand aloft",
-#'     "More than a step, a joyful bound",
-#'     "The moment, precious, small, soft",
-#'     "And within a truth was found"
-#'   )
-#' )
-#'
-#' ui <- container(
-#'   listGroupInput(
-#'     id = "poems",
-#'     multiple = FALSE,
-#'     choices = list(
-#'       list(
-#'         h5("Stars"),
-#'         collapsiblePane(
-#'           id = "stars",
-#'           lapply(lessons[["stars"]], tags$p)
-#'         )
-#'       ),
-#'       list(
-#'         h5("Joy"),
-#'         collapsiblePane(
-#'           id = "joy",
-#'           lapply(lessons[["joy"]], tags$p)
-#'         )
-#'       )
-#'     ),
-#'     values = c("stars", "joy")
-#'   )
-#' )
-#'
-#' server <- function(input, output) {
-#'   observeEvent(input$poems, {
-#'     if (input$poems == "stars") {
-#'       collapsePane("joy")
-#'       expandPane("stars")
-#'     } else {
-#'       collapsePane("stars")
-#'       expandPane("joy")
-#'     }
-#'   })
-#' }
-#'
-#' shinyApp(ui, server)
-#' ```
 #'
 #' @section Navigation with a list group:
 #'
@@ -106,7 +39,6 @@
 #'       width = 3,
 #'       listGroupInput(
 #'         id = "nav",
-#'         multiple = FALSE,
 #'         selected = "pane1",
 #'         choices = c(
 #'           "Item 1",
@@ -152,25 +84,14 @@
 #' @export
 #' @examples
 #'
-#' ### A simple list group
-#'
-#' # This list group is not actionable as `id` is `NULL`.
-#'
-#' listGroupInput(
-#'   id = NULL,
-#'   choices = paste("Item", 1:5)
-#' )
-#'
-#' ## An actionable list group
-#'
-#' # In this example we specify an `id` thus creating an actionable list group.
+#' ### An actionable list group
 #'
 #' listGroupInput(
 #'   id = "list1",
 #'   choices = paste("Item", 1:5)
 #' )
 #'
-#' ## List group within a card
+#' ### List group within a card
 #'
 #' card(
 #'   header = h6("Pick an item"),
@@ -181,8 +102,23 @@
 #'   )
 #' )
 #'
+#' ### Horizontal list group
+#'
+#' listGroupInput(
+#'   id = "list3",
+#'   choices = paste("Item", 1:4),
+#'   layout = "horizontal"
+#' )
+#'
 listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
-                           layout = "vertical", fill = FALSE, flush = FALSE) {
+                           layout = "vertical", flush = FALSE) {
+  if (!is.null(id) && !is.character(id)) {
+    stop(
+      "invalid `listGroupInput()` argument, `id` must be a character string",
+      call. = FALSE
+    )
+  }
+
   if (length(values) != length(choices)) {
     stop(
       "invalid `listGroupInput()` arguments, `choices` and `values` must be ",
@@ -208,7 +144,7 @@ listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
         class = collate(
           "list-group-item",
           "list-group-item-action",
-          if (fill && length(classes) > 0) "flex-fill",
+          # if (fill && length(classes) > 0) "flex-fill",
           if (select) "active"
         ),
         value = value,

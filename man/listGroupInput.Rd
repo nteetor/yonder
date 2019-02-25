@@ -5,7 +5,7 @@
 \title{List group inputs}
 \usage{
 listGroupInput(id, choices, values = choices, selected = NULL, ...,
-  layout = "vertical", fill = FALSE, flush = FALSE)
+  layout = "vertical", flush = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -26,11 +26,6 @@ element.}
 specifying how list items are laid out, defaults to \code{"vertical"}. Note, if
 \code{layout} is \code{"horizontal"} and the \code{flush} argument is ignored.}
 
-\item{fill}{One of \code{TRUE} or \code{FALSE} specifying if a horizontal list group
-extends to fill the width of its parent element, defaults to \code{FALSE}. If
-\code{TRUE} space is evenly divided for equal width list group items. This
-argument is ignored if \code{layout} is not \code{"horizontal"}.}
-
 \item{flush}{One of \code{TRUE} or \code{FALSE} specifying if the list group is
 rendered without an outside border, defaults to \code{FALSE}. Removing the list
 group border is useful when rendering a list group inside a custom parent
@@ -44,67 +39,6 @@ List group inputs are an actionable list of items. They behave similarly to
 checkboxes or radios, that is, users may select one or more items from the
 list. However, list group items may include highly variable content.
 }
-\section{Complex list items}{
-
-
-The following application demonstrates the flexibility of a list
-group input. Here each list item contains a collasible pane. We
-can hook up the server such that selecting a list item expands the
-corresponding collapsible pane.\preformatted{lessons <- list(
-  stars = c(
-    "The stars and moon are far too bright",
-    "Their beam and smile splashing o'er all",
-    "To illuminate while turning sight",
-    "From shadows wherein deeper shadows fall"
-  ),
-  joy = c(
-    "A single step, her hand aloft",
-    "More than a step, a joyful bound",
-    "The moment, precious, small, soft",
-    "And within a truth was found"
-  )
-)
-
-ui <- container(
-  listGroupInput(
-    id = "poems",
-    multiple = FALSE,
-    choices = list(
-      list(
-        h5("Stars"),
-        collapsiblePane(
-          id = "stars",
-          lapply(lessons[["stars"]], tags$p)
-        )
-      ),
-      list(
-        h5("Joy"),
-        collapsiblePane(
-          id = "joy",
-          lapply(lessons[["joy"]], tags$p)
-        )
-      )
-    ),
-    values = c("stars", "joy")
-  )
-)
-
-server <- function(input, output) {
-  observeEvent(input$poems, {
-    if (input$poems == "stars") {
-      collapsePane("joy")
-      expandPane("stars")
-    } else {
-      collapsePane("stars")
-      expandPane("joy")
-    }
-  })
-}
-
-shinyApp(ui, server)
-}
-}
-
 \section{Navigation with a list group}{
 
 
@@ -114,7 +48,6 @@ A list group can also control a set of panes. Be sure to set \code{multiple = FA
       width = 3,
       listGroupInput(
         id = "nav",
-        multiple = FALSE,
         selected = "pane1",
         choices = c(
           "Item 1",
@@ -159,25 +92,14 @@ shinyApp(ui, server)
 
 \examples{
 
-### A simple list group
-
-# This list group is not actionable as `id` is `NULL`.
-
-listGroupInput(
-  id = NULL,
-  choices = paste("Item", 1:5)
-)
-
-## An actionable list group
-
-# In this example we specify an `id` thus creating an actionable list group.
+### An actionable list group
 
 listGroupInput(
   id = "list1",
   choices = paste("Item", 1:5)
 )
 
-## List group within a card
+### List group within a card
 
 card(
   header = h6("Pick an item"),
@@ -186,6 +108,14 @@ card(
     flush = TRUE,
     choices = paste("Item", 1:5),
   )
+)
+
+### Horizontal list group
+
+listGroupInput(
+  id = "list3",
+  choices = paste("Item", 1:4),
+  layout = "horizontal"
 )
 
 }
