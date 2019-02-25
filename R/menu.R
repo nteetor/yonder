@@ -113,6 +113,7 @@ menuInput <- function(id, label, choices, values = choices, ...,
       `aria-expanded` = "false",
       label
     ),
+    ...,
     tags$div(
       class = collate(
         "dropdown-menu",
