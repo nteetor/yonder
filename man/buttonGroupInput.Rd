@@ -26,7 +26,7 @@ A set of buttons with custom values.
 ### Default input
 
 buttonGroupInput(
-  id = NULL,
+  id = "group1",
   labels = c("Once", "Twice", "Thrice"),
   values = c(1, 2, 3)
 )
@@ -34,11 +34,11 @@ buttonGroupInput(
 ### Styling the button group
 
 buttonGroupInput(
-  id = NULL,
+  id = "group2",
   labels = c("Button 1", "Button 2", "Button 3")
 ) \%>\%
   background("blue") \%>\%
-  margin(3)
+  width("1/3")
 
 }
 \seealso{

@@ -63,10 +63,10 @@ buttonInput(
 buttonInput(
   id = "button3",
   label = "Full and back again",
-  fill = TRUE
+  fill = TRUE  # <-
 ) \%>\%
   background("red") \%>\%
-  width("3/4")
+  width("3/4")  # <-
 
 ### A submit button
 
@@ -100,7 +100,7 @@ lapply(
 
 ### Reactive links
 
-div("Curabitur ", linkInput("inline", "vulputate"), " vestibulum lorem.")
+div("Curabitur ", linkInput("link1", "vulputate"), " vestibulum lorem.")
 
 }
 \seealso{
