@@ -497,7 +497,8 @@ shadow <- function(.tag, size = "regular") {
 #'
 #' div(
 #'   div() %>%
-#'     height(3) %>%
+#'     width(5) %>%
+#'     height(5) %>%
 #'     margin(right = 2) %>%
 #'     background("amber") %>%
 #'     float("left"),
