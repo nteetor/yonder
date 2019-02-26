@@ -54,23 +54,21 @@
 #'
 navbar <- function(..., brand = NULL) {
   args <- list(...)
-  attrs <- attribs(args)
 
-  elems <- lapply(
+  items <- lapply(
     elements(args),
-    function(arg) {
-      if (tagHasClass(arg, "nav")) {
-        arg <- tagDropClass(arg, "nav-tabs|nav-pills")
-        arg <- tagAddClass(arg, "navbar-nav")
-      } else if (tagIs(arg, "form")) {
-        if (!tagHasClass(arg, "form-inline")) {
+    function(item) {
+      if (tagHasClass(item, "nav")) {
+        item <- tagAddClass(item, "navbar-nav")
+      } else if (tagIs(item, "form")) {
+        if (!tagHasClass(item, "form-inline")) {
           warning("non-inline form element passed to `navbar()`", call. = FALSE)
         }
-      } else if (!is_tag(arg)) {
-        arg <- tags$span(class = "navbar-text", arg)
+      } else if (!is_tag(item)) {
+        item <- tags$span(class = "navbar-text", item)
       }
 
-      arg
+      item
     }
   )
 
@@ -102,14 +100,11 @@ navbar <- function(..., brand = NULL) {
     tags$div(
       class = "collapse navbar-collapse",
       id = content_id,
-      elems
+      items
     )
   )
 
-  element <- tagConcatAttributes(element, attrs)
+  element <- tagConcatAttributes(element, attribs(args))
 
-  attachDependencies(
-    element,
-    yonderDep()
-  )
+  attachDependencies(element, yonderDep())
 }
