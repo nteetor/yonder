@@ -411,12 +411,13 @@
   $.extend(chipInputBinding, {
     Selector: {
       SELF: ".yonder-chip",
-      SELECTED: ".active"
+      SELECTED: ".active",
+      TOGGLE: "input[data-toggle='dropdown']"
     },
     Events: [{
       type: "input",
       callback: function callback(el, event, self) {
-        var value = event.currentTarget.value;
+        var value = el.querySelector(self.Selector.TOGGLE).value;
         self.filterItems(el, value);
 
         if (self.visibleItems(el) === 0) {
@@ -428,7 +429,7 @@
     }, {
       type: "input change",
       callback: function callback(el, event, self) {
-        el.querySelector("input[data-toggle='dropdown']").dropdown("update");
+        $(el.querySelector("input[data-toggle='dropdown']")).dropdown("update");
       }
     }, {
       type: "hide.bs.dropdown",
@@ -462,6 +463,8 @@
         if (max === -1 || self.selectedItems(el) < max) {
           self.enableToggle(el);
         }
+
+        $(el.querySelector("input[data-toggle='dropdown']")).dropdown("update");
       }
     }, {
       type: "click",

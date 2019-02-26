@@ -3,13 +3,14 @@ export let chipInputBinding = new Shiny.InputBinding();
 $.extend(chipInputBinding, {
   Selector: {
     SELF: ".yonder-chip",
-    SELECTED: ".active"
+    SELECTED: ".active",
+    TOGGLE: "input[data-toggle='dropdown']"
   },
   Events: [
     {
       type: "input",
       callback: (el, event, self) => {
-        let value = event.currentTarget.value;
+        let value = el.querySelector(self.Selector.TOGGLE).value;
         self.filterItems(el, value);
 
         if (self.visibleItems(el) === 0) {
@@ -22,7 +23,7 @@ $.extend(chipInputBinding, {
     {
       type: "input change",
       callback: (el, event, self) => {
-        el.querySelector("input[data-toggle='dropdown']").dropdown("update");
+        $(el.querySelector("input[data-toggle='dropdown']")).dropdown("update");
       }
     },
     {
@@ -61,6 +62,8 @@ $.extend(chipInputBinding, {
         if (max === -1 || self.selectedItems(el) < max) {
           self.enableToggle(el);
         }
+
+        $(el.querySelector("input[data-toggle='dropdown']")).dropdown("update");
       }
     },
     {
