@@ -131,7 +131,7 @@ toast <- function(..., header = NULL) {
       header,
       tags$button(
         type = "button",
-        class = "ml-2 mb-1 close",
+        class = "ml-auto close",
         `data-dismiss` = "toast",
         `aria-label` = "Close",
         tags$span(
