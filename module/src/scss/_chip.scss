@@ -49,7 +49,7 @@
   margin: .25rem 0;
   @include font-size($badge-font-size);
   // font-size: $badge-font-size;
-  font-weight: $badge-font-weight;
+  font-weight: 500; // $badge-font-weight;
   line-height: 1;
   white-space: normal;
   box-shadow: none;
