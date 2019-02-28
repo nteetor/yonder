@@ -534,7 +534,6 @@
         }
 
         var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
-        console.log(match);
 
         if (match != data.invert) {
           _this.addChip(el, value);

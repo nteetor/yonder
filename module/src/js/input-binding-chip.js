@@ -134,8 +134,6 @@ $.extend(chipInputBinding, {
       let match = data.fixed ? data.pattern.indexOf(value) > -1 :
         RegExp(data.pattern, "i").test(value);
 
-      console.log(match);
-
       if (match != data.invert) {
         this.addChip(el, value);
       }
