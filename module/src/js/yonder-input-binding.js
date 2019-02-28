@@ -124,6 +124,10 @@ export function yonderInputBinding() {
       this._update(el, msg.data);
       break;
 
+    case "change":
+      this._select(el, msg.data);
+      break;
+
     case "enable":
       this._enable(el, msg.data);
       break;
