@@ -41,48 +41,16 @@ $.extend(chipInputBinding, {
       callback: (el, event, self) => {
         event.stopPropagation();
 
-        let item = event.currentTarget;
-        let label = item.innerText;
-        let value = item.value;
-
-        let input = el.querySelector("input");
-        let max = +el.getAttribute("data-max");
-
-        item.classList.add("selected");
-
-        el.querySelectorAll(`.chip[value="${ value }"]`)
-          .forEach(chip => chip.classList.add("active"));
-
-        if (self.visibleItems(el) === 0) {
-          $(el.querySelector(self.Selector.TOGGLE)).dropdown("hide");
-        }
+        self.addChip(el, event.currentTarget.value);
 
         input.focus();
-
-        if (max === -1 || self.selectedItems(el) < max) {
-          $(el.querySelector(self.Selector.TOGGLE)).dropdown("update");
-        } else {
-          $(el.querySelector(self.Selector.TOGGLE)).dropdown("hide");
-          self.disableToggle(el);
-        }
       }
     },
     {
       type: "click",
       selector: ".chip",
       callback: (el, event, self) => {
-        let chip = event.currentTarget;
-        let value = chip.value;
-        let max = +el.getAttribute("data-max");
-
-        chip.classList.remove("active");
-
-        el.querySelectorAll(`.dropdown-item[value='${ value }']`)
-          .forEach(item => item.classList.remove("selected"));
-
-        if (max === -1 || self.selectedItems(el) < max) {
-          self.enableToggle(el);
-        }
+        self.removeChip(el, event.currentTarget.value);
       }
     }
   ],
@@ -116,12 +84,62 @@ $.extend(chipInputBinding, {
     return el.querySelectorAll(".selected").length;
   },
 
+  addChip: function(el, value) {
+    el.querySelector(`.dropdown-item[value="${ value }"]`).classList.add("selected");
+
+    el.querySelectorAll(`.chip[value="${ value }"]`)
+      .forEach(chip => chip.classList.add("active"));
+
+    if (this.visibleItems(el) === 0) {
+      $(el.querySelector(this.Selector.TOGGLE)).dropdown("hide");
+    }
+
+    let max = +el.getAttribute("data-max");
+
+    if (max === -1 || this.selectedItems(el) < max) {
+      $(el.querySelector(this.Selector.TOGGLE)).dropdown("update");
+    } else {
+      $(el.querySelector(this.Selector.TOGGLE)).dropdown("hide");
+      this.disableToggle(el);
+    }
+  },
+  removeChip: function(el, value) {
+    let max = +el.getAttribute("data-max");
+
+    el.querySelector(`.chip[value="${ value }"]`).classList.remove("active");
+
+    el.querySelectorAll(`.dropdown-item[value='${ value }']`)
+      .forEach(item => item.classList.remove("selected"));
+
+    if (max === -1 || this.selectedItems(el) < max) {
+      this.enableToggle(el);
+    }
+  },
+
   initialize: function(el) {
     let max = +el.getAttribute("data-max");
 
     if (max !== -1 && this.selectedItems(el) >= max) {
       this.disableToggle(el);
     }
+  },
+  _select: function(el, data) {
+    el.querySelectorAll(".chip").forEach(item => {
+      let value = item.value;
+
+      if (data.reset) {
+        this.removeChip(el, value);
+      }
+
+      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
+        RegExp(data.pattern, "i").test(value);
+
+      console.log(match);
+
+      if (match != data.invert) {
+        this.addChip(el, value);
+      }
+    });
   }
 });
 

@@ -133,6 +133,11 @@
 
           break;
 
+        case "change":
+          this._select(el, msg.data);
+
+          break;
+
         case "enable":
           this._enable(el, msg.data);
 
@@ -444,44 +449,14 @@
       selector: ".dropdown-item",
       callback: function callback(el, event, self) {
         event.stopPropagation();
-        var item = event.currentTarget;
-        var label = item.innerText;
-        var value = item.value;
-        var input = el.querySelector("input");
-        var max = +el.getAttribute("data-max");
-        item.classList.add("selected");
-        el.querySelectorAll(".chip[value=\"" + value + "\"]").forEach(function (chip) {
-          return chip.classList.add("active");
-        });
-
-        if (self.visibleItems(el) === 0) {
-          $(el.querySelector(self.Selector.TOGGLE)).dropdown("hide");
-        }
-
+        self.addChip(el, event.currentTarget.value);
         input.focus();
-
-        if (max === -1 || self.selectedItems(el) < max) {
-          $(el.querySelector(self.Selector.TOGGLE)).dropdown("update");
-        } else {
-          $(el.querySelector(self.Selector.TOGGLE)).dropdown("hide");
-          self.disableToggle(el);
-        }
       }
     }, {
       type: "click",
       selector: ".chip",
       callback: function callback(el, event, self) {
-        var chip = event.currentTarget;
-        var value = chip.value;
-        var max = +el.getAttribute("data-max");
-        chip.classList.remove("active");
-        el.querySelectorAll(".dropdown-item[value='" + value + "']").forEach(function (item) {
-          return item.classList.remove("selected");
-        });
-
-        if (max === -1 || self.selectedItems(el) < max) {
-          self.enableToggle(el);
-        }
+        self.removeChip(el, event.currentTarget.value);
       }
     }],
     enableToggle: function enableToggle(el) {
@@ -511,12 +486,60 @@
     selectedItems: function selectedItems(el) {
       return el.querySelectorAll(".selected").length;
     },
+    addChip: function addChip(el, value) {
+      el.querySelector(".dropdown-item[value=\"" + value + "\"]").classList.add("selected");
+      el.querySelectorAll(".chip[value=\"" + value + "\"]").forEach(function (chip) {
+        return chip.classList.add("active");
+      });
+
+      if (this.visibleItems(el) === 0) {
+        $(el.querySelector(this.Selector.TOGGLE)).dropdown("hide");
+      }
+
+      var max = +el.getAttribute("data-max");
+
+      if (max === -1 || this.selectedItems(el) < max) {
+        $(el.querySelector(this.Selector.TOGGLE)).dropdown("update");
+      } else {
+        $(el.querySelector(this.Selector.TOGGLE)).dropdown("hide");
+        this.disableToggle(el);
+      }
+    },
+    removeChip: function removeChip(el, value) {
+      var max = +el.getAttribute("data-max");
+      el.querySelector(".chip[value=\"" + value + "\"]").classList.remove("active");
+      el.querySelectorAll(".dropdown-item[value='" + value + "']").forEach(function (item) {
+        return item.classList.remove("selected");
+      });
+
+      if (max === -1 || this.selectedItems(el) < max) {
+        this.enableToggle(el);
+      }
+    },
     initialize: function initialize(el) {
       var max = +el.getAttribute("data-max");
 
       if (max !== -1 && this.selectedItems(el) >= max) {
         this.disableToggle(el);
       }
+    },
+    _select: function _select(el, data) {
+      var _this = this;
+
+      el.querySelectorAll(".chip").forEach(function (item) {
+        var value = item.value;
+
+        if (data.reset) {
+          _this.removeChip(el, value);
+        }
+
+        var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
+        console.log(match);
+
+        if (match != data.invert) {
+          _this.addChip(el, value);
+        }
+      });
     }
   });
   Shiny.inputBindings.register(chipInputBinding, "yonder.chipInput");
@@ -1275,7 +1298,7 @@
           child.removeAttribute("selected");
         }
 
-        var match = data.fixed ? data.pattern.indexOf(value) : RegExp(data.pattern, "i").test(value);
+        var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
 
         if (match !== data.invert) {
           el.querySelector("select").value = value;
