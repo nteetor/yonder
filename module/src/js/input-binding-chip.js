@@ -114,6 +114,14 @@ $.extend(chipInputBinding, {
   },
   selectedItems: (el) => {
     return el.querySelectorAll(".selected").length;
+  },
+
+  initialize: function(el) {
+    let max = +el.getAttribute("data-max");
+
+    if (max !== -1 && this.selectedItems(el) >= max) {
+      this.disableToggle(el);
+    }
   }
 });
 

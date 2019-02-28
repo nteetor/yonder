@@ -510,6 +510,13 @@
     },
     selectedItems: function selectedItems(el) {
       return el.querySelectorAll(".selected").length;
+    },
+    initialize: function initialize(el) {
+      var max = +el.getAttribute("data-max");
+
+      if (max !== -1 && this.selectedItems(el) >= max) {
+        this.disableToggle(el);
+      }
     }
   });
   Shiny.inputBindings.register(chipInputBinding, "yonder.chipInput");
