@@ -450,7 +450,7 @@
       callback: function callback(el, event, self) {
         event.stopPropagation();
         self.addChip(el, event.currentTarget.value);
-        input.focus();
+        el.querySelector(self.Selector.TOGGLE).focus();
       }
     }, {
       type: "click",

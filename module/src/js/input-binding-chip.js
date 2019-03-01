@@ -43,7 +43,7 @@ $.extend(chipInputBinding, {
 
         self.addChip(el, event.currentTarget.value);
 
-        input.focus();
+        el.querySelector(self.Selector.TOGGLE).focus();
       }
     },
     {
