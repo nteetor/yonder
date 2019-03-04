@@ -37,7 +37,7 @@ Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
   };
 
   if (msg.type === "hide") {
-    _close(msg.data);
+    _hide(msg.data);
   } else if (msg.type === "show") {
     _show(msg.data);
   } else if (msg.type === "register") {

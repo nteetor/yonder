@@ -234,7 +234,7 @@ hideModal <- function(id, session = getDefaultReactiveDomain()) {
   }
 
   session$sendCustomMessage("yonder:modal", list(
-    type = "close",
+    type = "hide",
     data = list(
       id = id
     )

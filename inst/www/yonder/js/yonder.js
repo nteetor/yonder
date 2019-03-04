@@ -1511,6 +1511,10 @@
       return false;
     }
 
+    var _hide = function _hide(data) {
+      $(document.getElementById(data.id)).modal("hide");
+    };
+
     var _show = function _show(data) {
       $(document.getElementById(data.id)).modal("show");
     };
@@ -1534,7 +1538,7 @@
     };
 
     if (msg.type === "hide") {
-      _close(msg.data);
+      _hide(msg.data);
     } else if (msg.type === "show") {
       _show(msg.data);
     } else if (msg.type === "register") {
