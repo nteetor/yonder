@@ -257,11 +257,13 @@
     _enable: function _enable(el, data) {
       if (!data.invert) {
         el.classList.remove("disabled");
+        el.removeAttribute("disabled");
       }
     },
     _disable: function _disable(el, data) {
       if (!data.invert) {
         el.classList.add("disabled");
+        el.setAttribute("disabled", "");
       }
     }
   });
@@ -1273,20 +1275,21 @@
       type: "change"
     }],
     _update: function _update(el, data) {
+      var select = el.children[0];
       var template = el.querySelector("option").cloneNode();
       template.removeAttribute("selected");
       template.removeAttribute("disabled");
-      el.innerHTML = "";
+      select.innerHTML = "";
       data.choices.forEach(function (choice, i) {
         var child = template.cloneNode();
         child.innerText = choice;
         child.value = data.values[i];
 
         if (data.selected.indexOf(data.values[i]) > -1) {
-          el.querySelector("select").value = child.value;
+          select.value = child.value;
         }
 
-        el.appendChild(child);
+        select.appendChild(child);
       });
     },
     _select: function _select(el, data) {

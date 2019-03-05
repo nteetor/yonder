@@ -10,11 +10,12 @@ $.extend(selectInputBinding, {
     { type: "change" }
   ],
   _update: (el, data) => {
+    let select = el.children[0];
     let template = el.querySelector("option").cloneNode();
     template.removeAttribute("selected");
     template.removeAttribute("disabled");
 
-    el.innerHTML = "";
+    select.innerHTML = "";
 
     data.choices.forEach((choice, i) => {
       let child = template.cloneNode();
@@ -22,10 +23,10 @@ $.extend(selectInputBinding, {
       child.value = data.values[i];
 
       if (data.selected.indexOf(data.values[i]) > -1) {
-        el.querySelector("select").value = child.value;
+        select.value = child.value;
       }
 
-      el.appendChild(child);
+      select.appendChild(child);
     });
   },
   _select: (el, data) => {
