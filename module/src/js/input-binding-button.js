@@ -26,11 +26,13 @@ $.extend(buttonInputBinding, {
   _enable: (el, data) => {
     if (!data.invert) {
       el.classList.remove("disabled");
+      el.removeAttribute("disabled");
     }
   },
   _disable: (el, data) => {
     if (!data.invert) {
       el.classList.add("disabled");
+      el.setAttribute("disabled", "");
     }
   }
 });

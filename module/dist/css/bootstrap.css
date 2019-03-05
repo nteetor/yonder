@@ -3603,6 +3603,10 @@ input[type="button"].btn-block {
   cursor: pointer;
 }
 
+.btn.disabled, .btn[disabled] {
+  cursor: not-allowed;
+}
+
 .fade {
   transition: opacity 0.15s linear;
 }
