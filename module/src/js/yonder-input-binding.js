@@ -56,6 +56,8 @@ export function yonderInputBinding() {
       formElement = true;
     }
 
+    this.Events.push({ type: "yonder.change.propagate" });
+
     this.Events.forEach(event => {
       this.attachHandler(
         el,
@@ -126,6 +128,11 @@ export function yonderInputBinding() {
 
     case "change":
       this._select(el, msg.data);
+
+      if (msg.data.propagate === true) {
+        $(el).trigger("yonder.change.propagate");
+      }
+
       break;
 
     case "enable":

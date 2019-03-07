@@ -70,6 +70,9 @@
         formElement = true;
       }
 
+      this.Events.push({
+        type: "yonder.change.propagate"
+      });
       this.Events.forEach(function (event) {
         _this2.attachHandler(el, event.type, event.selector, event.callback, formElement ? null : callback, event.debounce);
       });
@@ -135,6 +138,10 @@
 
         case "change":
           this._select(el, msg.data);
+
+          if (msg.data.propagate === true) {
+            $(el).trigger("yonder.change.propagate");
+          }
 
           break;
 
