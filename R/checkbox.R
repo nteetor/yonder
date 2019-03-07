@@ -125,7 +125,8 @@ checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
           id = child_id,
           name = id,
           value = value,
-          checked = if (select) NA
+          checked = if (select) NA,
+          autocomplete = "off"
         ),
         tags$label(
           class = "custom-control-label",

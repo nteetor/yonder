@@ -133,7 +133,8 @@ buttonInput <- function(id, label, ..., fill = FALSE, stretch = FALSE) {
     role = "button",
     id = id,
     label,
-    ...
+    ...,
+    autocomplete = "off"
   )
 
   attachDependencies(element, yonderDep())

@@ -84,7 +84,8 @@ numberInput <- function(id, value = NULL, placeholder = NULL, ...) {
   textualInput(id, value, placeholder, ..., type = "number")
 }
 
-textualInput <- function(id, value, placeholder, ..., type) {
+textualInput <- function(id, value, placeholder, ..., type,
+                         autocomplete = FALSE) {
   attachDependencies(
     tags$div(
       class = "yonder-textual",
@@ -93,7 +94,8 @@ textualInput <- function(id, value, placeholder, ..., type) {
         class = "form-control",
         type = type,
         value = value,
-        placeholder = placeholder
+        placeholder = placeholder,
+        autocomplete = if (autocomplete) "on" else "off"
       ),
       tags$div(class = "invalid-feedback"),
       ...

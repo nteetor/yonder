@@ -129,7 +129,8 @@ fileInput <- function(id, placeholder = "Choose file", browse = "Browse",
       tags$input(
         type = "file",
         class = "custom-file-input",
-        multiple = if (multiple) NA
+        multiple = if (multiple) NA,
+        autocomplete = "off"
       ),
       tags$label(
         class = "custom-file-label",

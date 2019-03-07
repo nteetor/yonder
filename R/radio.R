@@ -99,7 +99,8 @@ radioInput <- function(id, choices, values = choices, selected = NULL, ...,
           id = child_id,
           name = id,
           value = value,
-          checked = if (select) NA
+          checked = if (select) NA,
+          autocomplete = "off"
         ),
         tags$label(
           class = "custom-control-label",
@@ -151,8 +152,8 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL, ...) {
           name = id,
           type = "radio",
           value = value,
-          autocomplete = "false",
-          checked = if (select) NA
+          checked = if (select) NA,
+          autocomplete = "off"
         ),
         choice
       )

@@ -158,7 +158,8 @@ groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
       type = "text",
       class = "form-control",
       placeholder = placeholder,
-      value = value
+      value = value,
+      autocomplete = "off"
     ),
     right,
     ...
