@@ -16,12 +16,16 @@ Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
   let _show = function(data) {
     let modal = document.getElementById(data.id);
 
+    let content = modal._content;
+
     if (data.exprs) {
       Object.keys(data.exprs).forEach(key => {
         let regex = RegExp(`[{]\\s*${ key }\\s*[}]`, "g");
-        modal.innerHTML = modal.innerHTML.replace(regex, data.exprs[key]);
+        content = content.replace(regex, data.exprs[key]);
       });
     }
+
+    modal.innerHTML = content;
 
     $(modal).modal("show");
   };
@@ -33,6 +37,7 @@ Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
     modal.setAttribute("tabindex", -1);
     modal.setAttribute("role", "dialog");
     modal.setAttribute("id", data.id);
+    modal._content = data.content;
 
     if (data.dependencies !== undefined) {
       Shiny.renderDependencies(data.dependencies);

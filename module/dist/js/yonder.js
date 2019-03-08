@@ -1527,14 +1527,16 @@
 
     var _show = function _show(data) {
       var modal = document.getElementById(data.id);
+      var content = modal._content;
 
       if (data.exprs) {
         Object.keys(data.exprs).forEach(function (key) {
           var regex = RegExp("[{]\\s*" + key + "\\s*[}]", "g");
-          modal.innerHTML = modal.innerHTML.replace(regex, data.exprs[key]);
+          content = content.replace(regex, data.exprs[key]);
         });
       }
 
+      modal.innerHTML = content;
       $(modal).modal("show");
     };
 
@@ -1545,6 +1547,7 @@
       modal.setAttribute("tabindex", -1);
       modal.setAttribute("role", "dialog");
       modal.setAttribute("id", data.id);
+      modal._content = data.content;
 
       if (data.dependencies !== undefined) {
         Shiny.renderDependencies(data.dependencies);
