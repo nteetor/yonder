@@ -1526,7 +1526,16 @@
     };
 
     var _show = function _show(data) {
-      $(document.getElementById(data.id)).modal("show");
+      var modal = document.getElementById(data.id);
+
+      if (data.exprs) {
+        Object.keys(data.exprs).forEach(function (key) {
+          var regex = RegExp("[{]\\s*" + key + "\\s*[}]", "g");
+          modal.innerHTML = modal.innerHTML.replace(regex, data.exprs[key]);
+        });
+      }
+
+      $(modal).modal("show");
     };
 
     var _register = function _register(data) {

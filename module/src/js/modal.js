@@ -14,7 +14,16 @@ Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
   };
 
   let _show = function(data) {
-    $(document.getElementById(data.id)).modal("show");
+    let modal = document.getElementById(data.id);
+
+    if (data.exprs) {
+      Object.keys(data.exprs).forEach(key => {
+        let regex = RegExp(`[{]\\s*${ key }\\s*[}]`, "g");
+        modal.innerHTML = modal.innerHTML.replace(regex, data.exprs[key]);
+      });
+    }
+
+    $(modal).modal("show");
   };
 
   let _register = function(data) {

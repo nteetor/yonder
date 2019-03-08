@@ -193,7 +193,8 @@ registerModal <- function(id, modal, session = getDefaultReactiveDomain()) {
 
 #' @rdname modal
 #' @export
-showModal <- function(id, session = getDefaultReactiveDomain()) {
+showModal <- function(id, exprs = list(),
+                      session = getDefaultReactiveDomain()) {
   if (!is.character(id)) {
     stop(
       "invalid `showModal()` argument, `id` must be a character string",
@@ -208,10 +209,20 @@ showModal <- function(id, session = getDefaultReactiveDomain()) {
     )
   }
 
+  exprs <- lapply(exprs, as.character)
+
+  if (any(names2(exprs) == "")) {
+    stop(
+      "invalid `showModal()` argument, `exprs` must be a named list",
+      call. = FALSE
+    )
+  }
+
   session$sendCustomMessage("yonder:modal", list(
     type = "show",
     data = list(
-      id = id
+      id = id,
+      exprs = if (length(exprs) > 0) exprs
     )
   ))
 }
