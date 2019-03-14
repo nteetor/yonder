@@ -112,6 +112,10 @@ updateInput <- function(id, choices, values = choices, selected = NULL,
 #'   selected values, if `TRUE` the current selection is dropped before
 #'   selecting new values, defaults to `TRUE`.
 #'
+#' @param propagate One of `TRUE` or `FALSE` specifying if the value change
+#'   causes a re-evaluation of dependent reactives and observers, defaults to
+#'   `FALSE`.
+#'
 #' @export
 changeInput <- function(id, pattern, fixed = FALSE, invert = FALSE,
                         reset = TRUE, propagate = FALSE,

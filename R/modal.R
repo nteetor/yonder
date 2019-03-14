@@ -26,6 +26,9 @@
 #'
 #' @param modal A modal tag element created using `modal()`.
 #'
+#' @param exprs A list of named values used to interpolate placeholders in a
+#'   registered modal, defaults to `list()`.
+#'
 #' @param ... Additional named arguments passed as HTML attributes to the
 #'   parent element.
 #'

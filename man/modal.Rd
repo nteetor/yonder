@@ -12,7 +12,7 @@ modal(title = NULL, body = NULL, footer = NULL, ...,
 
 registerModal(id, modal, session = getDefaultReactiveDomain())
 
-showModal(id, session = getDefaultReactiveDomain())
+showModal(id, exprs = list(), session = getDefaultReactiveDomain())
 
 hideModal(id, session = getDefaultReactiveDomain())
 }
@@ -40,6 +40,9 @@ which case the width is not adjusted.}
 \item{modal}{A modal tag element created using \code{modal()}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
+
+\item{exprs}{A list of named values used to interpolate placeholders in a
+registered modal, defaults to \code{list()}.}
 }
 \description{
 Modals are a flexible alert window, which disable interaction with the page
