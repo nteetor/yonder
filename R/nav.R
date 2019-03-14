@@ -233,6 +233,9 @@ navItem <- function(choice, value, select) {
 #'
 #' @param id A character string specifying the id of the nav pane.
 #'
+#' @param fade One of `TRUE` or `FALSE` specifying if the pane fades in when
+#'   show and out when hidden, defaults to `TRUE`.
+#'
 #' @inheritParams updateInput
 #'
 #' @section App with pills:
@@ -428,9 +431,12 @@ navContent <- function(...) {
 
 #' @rdname navContent
 #' @export
-navPane <- function(id, ...) {
+navPane <- function(id, ..., fade = TRUE) {
   pane <- tags$div(
-    class = "tab-pane fade",
+    class = collate(
+      "tab-pane",
+      if (fade) "fade"
+    ),
     role = "tab-panel",
     id = id,
     ...
