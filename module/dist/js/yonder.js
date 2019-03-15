@@ -546,6 +546,31 @@
         this.disableToggle(el);
       }
     },
+    _update: function _update(el, data) {
+      var itemTemplate = el.querySelector(".dropdown-item").cloneNode();
+      itemTemplate.value = "";
+      itemTemplate.innerText = "";
+      itemTemplate.classList.remove("selected");
+      itemTemplate.classList.remove("filtered");
+      var chipTemplate = el.querySelector(".chip").cloneNode(true);
+      chipTemplate.value = "";
+      chipTemplate.children[0].innerHTML = "";
+      chipTemplate.classList.remove("active");
+      var menu = el.querySelector(".dropdown-menu");
+      var chips = el.querySelector(".chips");
+      menu.innerHTML = "";
+      chips.innerHTML = "";
+      data.choices.forEach(function (choice, i) {
+        var item = itemTemplate.cloneNode();
+        item.value = data.values[i];
+        item.innerHTML = choice;
+        var chip = chipTemplate.cloneNode(true);
+        chip.value = data.values[i];
+        chip.children[0].innerHTML = choice;
+        menu.appendChild(item);
+        chips.appendChild(chip);
+      });
+    },
     _select: function _select(el, data) {
       var _this = this;
 
