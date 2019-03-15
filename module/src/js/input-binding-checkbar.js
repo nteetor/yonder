@@ -34,7 +34,7 @@ $.extend(checkbarInputBinding, {
     });
   },
   _select: function(el, data) {
-    el.querySelectAll(".btn").forEach(child => {
+    el.querySelectorAll(".btn").forEach(child => {
       let value = child.children[0].value;
 
       if (data.reset) {

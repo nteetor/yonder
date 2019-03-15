@@ -309,7 +309,7 @@
       });
     },
     _select: function _select(el, data) {
-      el.querySelectAll(".btn").forEach(function (child) {
+      el.querySelectorAll(".btn").forEach(function (child) {
         var value = child.children[0].value;
 
         if (data.reset) {
