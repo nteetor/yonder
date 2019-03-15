@@ -1121,7 +1121,14 @@
     }
   });
 
-  var radioInputBinding = new Shiny.InputBinding();
+  var radioInputBinding = new Shiny.InputBinding(); // https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
+
+  function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min)) + min; // The maximum is exclusive and the minimum is inclusive
+  }
+
   $.extend(radioInputBinding, {
     Selector: {
       SELF: ".yonder-radio[id]",
@@ -1133,12 +1140,17 @@
     }],
     _update: function _update(el, data) {
       var template = el.querySelector(".custom-radio").cloneNode(true);
+      template.children[0].removeAttribute("id");
       template.children[0].removeAttribute("checked");
+      template.children[1].removeAttribute("for");
       el.innerHTML = "";
-      data.chocies.forEach(function (choice, i) {
+      data.choices.forEach(function (choice, i) {
+        var id = "radio-" + getRandomInt(100, 1000) + "-" + getRandomInt(100, 1000);
         var child = template.cloneNode(true);
         child.children[1].innerHTML = choice;
+        child.children[1].setAttribute("for", id);
         child.children[0].value = data.values[i];
+        child.children[0].setAttribute("id", id);
 
         if (data.selected.indexOf(data.values[i]) > -1) {
           child.children[0].setAttribute("checked", "");
