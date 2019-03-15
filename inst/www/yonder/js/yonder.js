@@ -567,6 +567,12 @@
         var chip = chipTemplate.cloneNode(true);
         chip.value = data.values[i];
         chip.children[0].innerHTML = choice;
+
+        if (data.selected.indexOf(data.values[i]) > -1) {
+          item.classList.add("selected");
+          chip.classList.add("active");
+        }
+
         menu.appendChild(item);
         chips.appendChild(chip);
       });
