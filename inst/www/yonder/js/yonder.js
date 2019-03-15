@@ -495,9 +495,16 @@
     selectedItems: function selectedItems(el) {
       return el.querySelectorAll(".selected").length;
     },
+    getItem: function getItem(el, value) {
+      return Array.prototype.filter.call(el.querySelectorAll(".dropdown-item"), function (chip) {
+        return chip.value === value;
+      });
+    },
     addChip: function addChip(el, value) {
-      el.querySelector(".dropdown-item[value=\"" + value + "\"]").classList.add("selected");
-      el.querySelectorAll(".chip[value=\"" + value + "\"]").forEach(function (chip) {
+      this.getItem(el, value).forEach(function (item) {
+        return item.classList.add("selected");
+      });
+      this.getChip(el, value).forEach(function (chip) {
         return chip.classList.add("active");
       });
 
@@ -516,14 +523,21 @@
     },
     removeChip: function removeChip(el, value) {
       var max = +el.getAttribute("data-max");
-      el.querySelector(".chip[value=\"" + value + "\"]").classList.remove("active");
-      el.querySelectorAll(".dropdown-item[value='" + value + "']").forEach(function (item) {
+      this.getChip(el, value).forEach(function (chip) {
+        return chip.classList.remove("active");
+      });
+      this.getItem(el, value).forEach(function (item) {
         return item.classList.remove("selected");
       });
 
       if (max === -1 || this.selectedItems(el) < max) {
         this.enableToggle(el);
       }
+    },
+    getChip: function getChip(el, value) {
+      return Array.prototype.filter.call(el.querySelectorAll(".chip"), function (chip) {
+        return chip.value === value;
+      });
     },
     initialize: function initialize(el) {
       var max = +el.getAttribute("data-max");
