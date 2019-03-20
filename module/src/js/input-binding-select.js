@@ -23,7 +23,7 @@ $.extend(selectInputBinding, {
       child.value = data.values[i];
 
       if (data.selected.indexOf(data.values[i]) > -1) {
-        select.value = child.value;
+        child.selected = true;
       }
 
       select.appendChild(child);
