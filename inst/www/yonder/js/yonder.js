@@ -68,10 +68,14 @@
           return callback();
         });
         formElement = true;
-      }
+      } // default events
+
 
       this.Events.push({
-        type: "yonder.change.propagate"
+        type: "change.yonder"
+      });
+      this.Events.push({
+        type: "update.yonder"
       });
       this.Events.forEach(function (event) {
         _this2.attachHandler(el, event.type, event.selector, event.callback, formElement ? null : callback, event.debounce);
@@ -139,10 +143,6 @@
         case "change":
           this._select(el, msg.data);
 
-          if (msg.data.propagate === true) {
-            $(el).trigger("yonder.change.propagate");
-          }
-
           break;
 
         case "enable":
@@ -166,6 +166,11 @@
           break;
       }
 
+      if (msg.type === "change" && msg.data.propagate === true) {
+        return false;
+      }
+
+      $(el).trigger(msg.type + ".yonder");
       return false;
     };
   }
@@ -1350,7 +1355,7 @@
         child.value = data.values[i];
 
         if (data.selected.indexOf(data.values[i]) > -1) {
-          select.value = child.value;
+          child.selected = true;
         }
 
         select.appendChild(child);

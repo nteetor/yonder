@@ -56,7 +56,9 @@ export function yonderInputBinding() {
       formElement = true;
     }
 
-    this.Events.push({ type: "yonder.change.propagate" });
+    // default events
+    this.Events.push({ type: "change.yonder" });
+    this.Events.push({ type: "update.yonder" });
 
     this.Events.forEach(event => {
       this.attachHandler(
@@ -128,11 +130,6 @@ export function yonderInputBinding() {
 
     case "change":
       this._select(el, msg.data);
-
-      if (msg.data.propagate === true) {
-        $(el).trigger("yonder.change.propagate");
-      }
-
       break;
 
     case "enable":
@@ -151,6 +148,12 @@ export function yonderInputBinding() {
       this._validate(el, msg.data);
       break;
     }
+
+    if (msg.type === "change" && msg.data.propagate === true) {
+      return false;
+    }
+
+    $(el).trigger(`${ msg.type }.yonder`);
 
     return false;
   };
