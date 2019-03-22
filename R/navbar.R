@@ -13,6 +13,10 @@
 #' @param brand A tag element or text placed on the left end of the navbar,
 #'   defaults to `NULL`, in which case nothing is added.
 #'
+#' @param collapse One of `"sm"`, `"md"`, `"lg"`, `"xl"`, or `NULL` specifying
+#'   the breakpoint at which the navbar collapes, defaults to `NULL`, in which
+#'   case the navbar is always expanded.
+#'
 #' @family layout
 #' @export
 #' @examples
@@ -52,8 +56,16 @@
 #'   )
 #' )
 #'
-navbar <- function(..., brand = NULL) {
+navbar <- function(..., brand = NULL, collapse = NULL) {
   args <- list(...)
+
+  if (!re(collapse, "sm|md|lg|xl")) {
+    stop(
+      "invalid `navbar()` argument, `collapse` must be one of ",
+      '"sm", "md", "lg", "xl", or NULL',
+      call. = FALSE
+    )
+  }
 
   items <- lapply(
     elements(args),
@@ -83,7 +95,11 @@ navbar <- function(..., brand = NULL) {
   content_id <- generate_id("nav-content")
 
   element <- tags$nav(
-    class = "navbar navbar-expand-lg navbar-light",
+    class = collate(
+      "navbar",
+      paste(c("navbar", "expand", collapse), collapse = "-"),
+      "navbar-light"
+    ),
     brand,
     tags$button(
       class = "navbar-toggler",

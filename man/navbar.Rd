@@ -4,7 +4,7 @@
 \alias{navbar}
 \title{Page and content navigation}
 \usage{
-navbar(..., brand = NULL)
+navbar(..., brand = NULL, collapse = NULL)
 }
 \arguments{
 \item{...}{A tab toggle, inline forms, or text to add to include as part of
@@ -12,6 +12,10 @@ the navigation bar.}
 
 \item{brand}{A tag element or text placed on the left end of the navbar,
 defaults to \code{NULL}, in which case nothing is added.}
+
+\item{collapse}{One of \code{"sm"}, \code{"md"}, \code{"lg"}, \code{"xl"}, or \code{NULL} specifying
+the breakpoint at which the navbar collapes, defaults to \code{NULL}, in which
+case the navbar is always expanded.}
 }
 \description{
 Add a navigation bar to your application with \code{navbar()}. Navigation bars may
