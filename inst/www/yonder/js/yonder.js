@@ -166,7 +166,7 @@
           break;
       }
 
-      if (msg.type === "change" && msg.data.propagate === true) {
+      if (msg.type === "change" && msg.data.propagate === false) {
         return false;
       }
 
