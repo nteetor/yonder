@@ -135,19 +135,6 @@ column <- function(..., width = NULL) {
 #' @rdname column
 #' @export
 columns <- function(...) {
-  children <- dropNulls(elements(list(...)))
-
-  are_column <- vapply(children, tagHasClass, logical(1), class = "col[-]?[-a-z0-9]*")
-  are_list <- vapply(children, is_strictly_list, logical(1))
-
-  if (!all(are_column | are_list)) {
-    stop(
-      "invalid `columns()` argument, all direct child elements ",
-      "must be `column()`s or lists",
-      call. = FALSE
-    )
-  }
-
   attachDependencies(
     tags$div(
       class = "row",
