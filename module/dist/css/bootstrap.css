@@ -7541,7 +7541,11 @@ a.close.disabled {
   margin-right: .25rem;
 }
 
-.chips-inline .active + .active {
+.chips-inline {
+  margin-left: -.5rem;
+}
+
+.chips-inline .active {
   margin-left: .5rem;
 }
 
