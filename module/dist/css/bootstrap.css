@@ -7541,6 +7541,10 @@ a.close.disabled {
   margin-right: .25rem;
 }
 
+.chips-inline .active + .active {
+  margin-left: .5rem;
+}
+
 .chip {
   display: none;
   -ms-flex-align: center;
@@ -7567,10 +7571,6 @@ a.close.disabled {
 .chip.active {
   display: -ms-flexbox;
   display: flex;
-}
-
-.chips-inline .chip {
-  margin-right: .5rem;
 }
 
 .chips-block .chip {
