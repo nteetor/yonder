@@ -41,7 +41,6 @@
 #' ```
 #'
 #' @family utilities
-#' @export
 downloadEvent <- function(event, filename, handler,
                           domain = getDefaultReactiveDomain()) {
   priority <- -5000

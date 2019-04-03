@@ -82,7 +82,7 @@ $(() => {
     let agent = window.navigator.userAgent;
     let ie = /MSIE/.test(agent);
 
-    if (ie > 0) {
+    if (ie === true) {
       let xhr = new XMLHttpRequest();
       xhr.open("GET", uri);
       xhr.responseType = "blob";

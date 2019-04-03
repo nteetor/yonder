@@ -1726,7 +1726,7 @@
       var agent = window.navigator.userAgent;
       var ie = /MSIE/.test(agent);
 
-      if (ie > 0) {
+      if (ie === true) {
         var xhr = new XMLHttpRequest();
         xhr.open("GET", uri);
         xhr.responseType = "blob";
