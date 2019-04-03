@@ -1724,7 +1724,7 @@
 
       var uri = "/session/" + msg.token + "/download/" + msg.key;
       var agent = window.navigator.userAgent;
-      var ie = ua.indexOf("MSIE ");
+      var ie = /MSIE/.test(agent);
 
       if (ie > 0) {
         var xhr = new XMLHttpRequest();

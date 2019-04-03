@@ -80,7 +80,7 @@ $(() => {
     const uri = "/session/" + msg.token + "/download/" + msg.key;
 
     let agent = window.navigator.userAgent;
-    let ie = ua.indexOf("MSIE ");
+    let ie = /MSIE/.test(agent);
 
     if (ie > 0) {
       let xhr = new XMLHttpRequest();
