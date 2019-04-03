@@ -187,9 +187,9 @@ formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
 #'   background("grey")
 #'
 formGroup <- function(label, input, ..., help = NULL, width = NULL) {
-  if (!is_tag(input)) {
+  if (!is_tag(input) && !is_strictly_list(input)) {
     stop(
-      "invalid `formGroup()` argument, `input` must be a tag element",
+      "invalid `formGroup()` argument, `input` must be a tag element or list",
       call. = FALSE
     )
   }
