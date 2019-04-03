@@ -48,7 +48,7 @@ downloadEvent <- function(event, filename, handler,
   pframe <- parent.frame()
   quoted <- FALSE
 
-  key <- deparse(substitute(event))
+  key <- paste0("download", domain$downloads$size())
 
   eventFunc <- shiny::exprToFunction(event, pframe, quoted)
   eventFunc <- wrapFunctionLabel(eventFunc, "downloadEvent", ..stacktraceon = TRUE)
