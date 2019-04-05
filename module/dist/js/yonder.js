@@ -1112,17 +1112,39 @@
       };
 
       bootstrap.Tab.prototype._activate(pane, pane.parentElement, complete);
-    }; // let _hide = function(pane) {
-    //   let current = pane.parent
-    // };
+    };
 
+    var _hide = function _hide(pane) {
+      if (pane === null || !pane.parentElement.classList.contains("tab-content") || !pane.classList.contains("active")) {
+        return;
+      }
+
+      var complete = function complete() {
+        var hiddenEvent = $.Event("hidden.bs.tab", {
+          relatedTarget: pane
+        });
+        $(pane).trigger(hiddenEvent);
+      };
+
+      var dummy = document.createElement("div");
+
+      bootstrap.Tab.prototype._activate(dummy, pane.parentElement, complete);
+    };
 
     if (msg.type === undefined || msg.data === undefined || msg.data.target === undefined) {
       return;
     }
 
+    var target = document.getElementById(msg.data.target);
+
+    if (target === null) {
+      return;
+    }
+
     if (msg.type === "show") {
-      _show(document.getElementById(msg.data.target));
+      _show(target);
+    } else if (msg.type === "hide") {
+      _hide(target);
     }
   });
 

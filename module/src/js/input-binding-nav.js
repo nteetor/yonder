@@ -122,9 +122,25 @@ Shiny.addCustomMessageHandler("yonder:pane", (msg) => {
     bootstrap.Tab.prototype._activate(pane, pane.parentElement, complete);
   };
 
-  // let _hide = function(pane) {
-  //   let current = pane.parent
-  // };
+  let _hide = function(pane) {
+    if (pane === null ||
+        !pane.parentElement.classList.contains("tab-content") ||
+        !pane.classList.contains("active")) {
+      return;
+    }
+
+    const complete = () => {
+      const hiddenEvent = $.Event("hidden.bs.tab", {
+        relatedTarget: pane
+      });
+
+      $(pane).trigger(hiddenEvent);
+    };
+
+    let dummy = document.createElement("div");
+
+    bootstrap.Tab.prototype._activate(dummy, pane.parentElement, complete);
+  };
 
   if (msg.type === undefined ||
       msg.data === undefined ||
@@ -132,7 +148,15 @@ Shiny.addCustomMessageHandler("yonder:pane", (msg) => {
     return;
   }
 
+  let target = document.getElementById(msg.data.target);
+
+  if (target === null) {
+    return;
+  }
+
   if (msg.type === "show") {
-    _show(document.getElementById(msg.data.target));
+    _show(target);
+  } else if (msg.type === "hide") {
+    _hide(target);
   }
 });

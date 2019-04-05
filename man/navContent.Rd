@@ -4,6 +4,7 @@
 \alias{navContent}
 \alias{navPane}
 \alias{showPane}
+\alias{hidePane}
 \title{Navigation panes}
 \usage{
 navContent(...)
@@ -11,6 +12,8 @@ navContent(...)
 navPane(id, ..., fade = TRUE)
 
 showPane(id, session = getDefaultReactiveDomain())
+
+hidePane(id, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{...}{For \strong{navContent}, any number of nav panes or named arguments
@@ -29,7 +32,9 @@ show and out when hidden, defaults to \code{TRUE}.}
 \description{
 These functions pair with \code{\link[=navInput]{navInput()}}. Use \code{navContent()} and \code{navPane()} to
 create the pane layout. To show a new pane use \code{showPane()} in the server
-function.
+function. \code{showPane()} will also hide the previously active pane. You can
+also hide an active pane with \code{hidePane()}. \code{hidePane()} is useful when you
+do not have a new pane to show, but want to hide the current active pane.
 }
 \section{App with pills}{
 \preformatted{ui <- container(

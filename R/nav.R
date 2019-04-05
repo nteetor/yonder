@@ -223,7 +223,9 @@ navItem <- function(choice, value, select) {
 #'
 #' These functions pair with [navInput()]. Use `navContent()` and `navPane()` to
 #' create the pane layout. To show a new pane use `showPane()` in the server
-#' function.
+#' function. `showPane()` will also hide the previously active pane. You can
+#' also hide an active pane with `hidePane()`. `hidePane()` is useful when you
+#' do not have a new pane to show, but want to hide the current active pane.
 #'
 #' @param ... For **navContent**, any number of nav panes or named arguments
 #'   passed as HTML attributes to the parent element.
@@ -473,13 +475,21 @@ showPane <- function(id, session = getDefaultReactiveDomain()) {
   ))
 }
 
+#' @rdname navContent
+#' @export
 hidePane <- function(id, session = getDefaultReactiveDomain()) {
   if (is.null(session)) {
-
+    stop(
+      "invalid `hidePane()` argument, `session` is NULL",
+      call. = FALSE
+    )
   }
 
   if (!is.character(id)) {
-
+    stop(
+      "invalid `hidePane()` argument, `id` must be a character string",
+      call. = FALSE
+    )
   }
 
   session$sendCustomMessage("yonder:pane", list(
