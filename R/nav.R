@@ -165,7 +165,8 @@ navInput <- function(id, choices, values = choices, selected = values[[1]], ...,
       if (appearance != "links") paste0("nav-", appearance)
     ),
     id = id,
-    items
+    items,
+    ...
   )
 
   attachDependencies(
