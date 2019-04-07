@@ -135,7 +135,7 @@ toast(
 
 }
 \seealso{
-Other content: \code{\link{alert}},
+Other content: \code{\link{alert}}, \code{\link{badge}},
   \code{\link{blockquote}}, \code{\link{card}},
   \code{\link{collapsiblePane}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{img}},

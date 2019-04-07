@@ -43,7 +43,7 @@ d4("You'll never guess what happens next.")
 
 }
 \seealso{
-Other content: \code{\link{alert}},
+Other content: \code{\link{alert}}, \code{\link{badge}},
   \code{\link{blockquote}}, \code{\link{card}},
   \code{\link{collapsiblePane}}, \code{\link{dropdown}},
   \code{\link{img}}, \code{\link{jumbotron}},

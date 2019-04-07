@@ -1483,24 +1483,6 @@
   });
   Shiny.inputBindings.register(textualInputBinding, "yonder.textualInput");
 
-  var badgeOutputBinding = new Shiny.OutputBinding();
-  $.extend(badgeOutputBinding, {
-    find: function find(scope) {
-      return $(scope).find(".yonder-badge[id]");
-    },
-    getId: function getId(el) {
-      return el.id;
-    },
-    renderValue: function renderValue(el, msg) {
-      if (msg.data !== undefined) {
-        el.innerHTML = msg.data;
-      }
-    },
-    renderError: function renderError(el, data) {},
-    clearError: function clearError(el) {}
-  });
-  Shiny.outputBindings.register(badgeOutputBinding, "yonder.badgeOutput");
-
   $.extend(Shiny.progressHandlers, {
     "yonder-progress": function yonderProgress(msg) {
       if (!msg.type || !msg.data.outlet) {

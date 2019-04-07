@@ -36,12 +36,13 @@ blockquote(
 
 }
 \seealso{
-Other content: \code{\link{alert}}, \code{\link{card}},
-  \code{\link{collapsiblePane}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{img}},
-  \code{\link{jumbotron}}, \code{\link{modal}},
-  \code{\link{navContent}}, \code{\link{popover}},
-  \code{\link{pre}}, \code{\link{progressOutlet}},
-  \code{\link{toast}}, \code{\link{tooltip}}
+Other content: \code{\link{alert}}, \code{\link{badge}},
+  \code{\link{card}}, \code{\link{collapsiblePane}},
+  \code{\link{d1}}, \code{\link{dropdown}},
+  \code{\link{img}}, \code{\link{jumbotron}},
+  \code{\link{modal}}, \code{\link{navContent}},
+  \code{\link{popover}}, \code{\link{pre}},
+  \code{\link{progressOutlet}}, \code{\link{toast}},
+  \code{\link{tooltip}}
 }
 \concept{content}

@@ -18,7 +18,6 @@ import "./input-binding-range.js";
 import "./input-binding-select.js";
 import "./input-binding-textual.js";
 
-import "./output-binding-badge.js";
 import "./output-binding-progress.js";
 
 import "./collapsible.js";
