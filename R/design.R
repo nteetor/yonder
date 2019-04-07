@@ -130,7 +130,8 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
     )
   }
 
-  if (!re(size, "xs|sm|base|lg|xl")) {
+  if (!re(size, "xs|sm|base|lg|xl") ||
+      !is.null(size) && length(size) != 1) {
     stop(
       "invalid `font()` argument, `size` must be one of ",
       '"xs", "sm", "base", "lg", "xl"',
