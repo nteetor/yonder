@@ -47,7 +47,7 @@ $.extend(selectInputBinding, {
   },
   _enable: (el, data) => {
     el.querySelectorAll("option").forEach(opt => {
-      let enable = !data.values.length || data.values.indexOf(opt.value);
+      let enable = !data.values.length || data.values.indexOf(opt.value) > -1;
 
       if (enable !== data.invert) {
         opt.removeAttribute("disabled");
@@ -56,7 +56,7 @@ $.extend(selectInputBinding, {
   },
   _disable: (el, data) => {
     el.querySelectorAll("option").forEach(opt => {
-      let disable = !data.values.length || data.values.indexOf(opt.value);
+      let disable = !data.values.length || data.values.indexOf(opt.value) > -1;
 
       if (data.reset) {
         opt.removeAttribute("disabled");

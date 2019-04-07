@@ -184,6 +184,30 @@ $.extend(chipInputBinding, {
         this.addChip(el, value);
       }
     });
+  },
+  _enable: function(el, data) {
+    el.querySelectorAll(".dropdown-item,.chip").forEach(item => {
+      let enable = !data.values.length || data.values.indexOf(item.value) > -1;
+
+      if (enable !== data.invert) {
+        item.removeAttribute("disabled");
+        item.classList.remove("disabled");
+      }
+    });
+  },
+  _disable: function(el, data) {
+    el.querySelectorAll(".dropdown-item,.chip").forEach(item => {
+      let disable = !data.values.length || data.values.indexOf(item.value)> -1;
+      if (data.reset) {
+        item.removeAttribute("disabled");
+        item.classList.removeAttribute("disabled");
+      }
+
+      if (disable !== data.invert) {
+        item.setAttribute("disabled", "");
+        item.classList.add("disabled");
+      }
+    });
   }
 });
 
