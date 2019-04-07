@@ -28,7 +28,7 @@ the reactive input, thus allowing subsequent observers and reactives to
 trigger.
 }
 \seealso{
-Other utilities: \code{\link{downloadEvent}},
-  \code{\link{enableInput}}, \code{\link{updateInput}}
+Other utilities: \code{\link{enableInput}},
+  \code{\link{updateInput}}
 }
 \concept{utilities}

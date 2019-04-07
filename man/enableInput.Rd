@@ -28,7 +28,7 @@ prior to disabling choices, defaults to \code{FALSE}.}
 Prevent interacting with input choices.
 }
 \seealso{
-Other utilities: \code{\link{downloadEvent}},
-  \code{\link{invalidateInput}}, \code{\link{updateInput}}
+Other utilities: \code{\link{invalidateInput}},
+  \code{\link{updateInput}}
 }
 \concept{utilities}
