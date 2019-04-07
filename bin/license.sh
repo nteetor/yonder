@@ -48,14 +48,6 @@ license "https://raw.githubusercontent.com/twbs/bootstrap/v4-dev/LICENSE" \
         "bootstrap"
 
 #
-# FileSaver.js
-#
-header "FileSaver.js"
-
-license "https://raw.githubusercontent.com/eligrey/FileSaver.js/master/LICENSE.md" \
-        "file-saver"
-
-#
 # ion.rangeSlider
 #
 header "ion.rangeSlider"

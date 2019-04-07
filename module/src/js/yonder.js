@@ -21,8 +21,6 @@ import "./input-binding-textual.js";
 import "./output-binding-badge.js";
 import "./output-binding-progress.js";
 
-import "./thruput-binding-table.js";
-
 import "./collapsible.js";
 import "./element.js";
 import "./modal.js";

@@ -13,5 +13,11 @@
       outline: 0;
       box-shadow: 0 0 0 $input-btn-focus-width rgba($bg, .5);
     }
+
+    &.disabled,
+    &:disabled {
+      color: color-yiq($bg);
+      background-color: $bg;
+    }
   }
 }

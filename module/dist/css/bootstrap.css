@@ -7577,6 +7577,11 @@ a.close.disabled {
   display: flex;
 }
 
+.chip.disabled {
+  cursor: not-allowed;
+  opacity: .65;
+}
+
 .chips-block .chip {
   width: 100%;
 }
@@ -7616,6 +7621,11 @@ a.close.disabled {
   box-shadow: 0 0 0 0.2rem rgba(244, 67, 54, 0.5);
 }
 
+.chips-red .chip.disabled, .chips-red .chip:disabled {
+  color: #fff;
+  background-color: #f44336;
+}
+
 .chips-purple .chip {
   color: #fff;
   background-color: #9c27b0;
@@ -7629,6 +7639,11 @@ a.close.disabled {
 .chips-purple .chip:focus, .chips-purple .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(156, 39, 176, 0.5);
+}
+
+.chips-purple .chip.disabled, .chips-purple .chip:disabled {
+  color: #fff;
+  background-color: #9c27b0;
 }
 
 .chips-indigo .chip {
@@ -7646,6 +7661,11 @@ a.close.disabled {
   box-shadow: 0 0 0 0.2rem rgba(63, 81, 181, 0.5);
 }
 
+.chips-indigo .chip.disabled, .chips-indigo .chip:disabled {
+  color: #fff;
+  background-color: #3f51b5;
+}
+
 .chips-blue .chip {
   color: #fff;
   background-color: #357edd;
@@ -7659,6 +7679,11 @@ a.close.disabled {
 .chips-blue .chip:focus, .chips-blue .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(53, 126, 221, 0.5);
+}
+
+.chips-blue .chip.disabled, .chips-blue .chip:disabled {
+  color: #fff;
+  background-color: #357edd;
 }
 
 .chips-cyan .chip {
@@ -7676,6 +7701,11 @@ a.close.disabled {
   box-shadow: 0 0 0 0.2rem rgba(0, 188, 212, 0.5);
 }
 
+.chips-cyan .chip.disabled, .chips-cyan .chip:disabled {
+  color: #fff;
+  background-color: #00bcd4;
+}
+
 .chips-teal .chip {
   color: #fff;
   background-color: #009688;
@@ -7689,6 +7719,11 @@ a.close.disabled {
 .chips-teal .chip:focus, .chips-teal .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 150, 136, 0.5);
+}
+
+.chips-teal .chip.disabled, .chips-teal .chip:disabled {
+  color: #fff;
+  background-color: #009688;
 }
 
 .chips-green .chip {
@@ -7706,6 +7741,11 @@ a.close.disabled {
   box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.5);
 }
 
+.chips-green .chip.disabled, .chips-green .chip:disabled {
+  color: #fff;
+  background-color: #4caf50;
+}
+
 .chips-yellow .chip {
   color: #212529;
   background-color: #ffeb3b;
@@ -7719,6 +7759,11 @@ a.close.disabled {
 .chips-yellow .chip:focus, .chips-yellow .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(255, 235, 59, 0.5);
+}
+
+.chips-yellow .chip.disabled, .chips-yellow .chip:disabled {
+  color: #212529;
+  background-color: #ffeb3b;
 }
 
 .chips-amber .chip {
@@ -7736,6 +7781,11 @@ a.close.disabled {
   box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5);
 }
 
+.chips-amber .chip.disabled, .chips-amber .chip:disabled {
+  color: #212529;
+  background-color: #ffc107;
+}
+
 .chips-orange .chip {
   color: #212529;
   background-color: #ff9800;
@@ -7749,6 +7799,11 @@ a.close.disabled {
 .chips-orange .chip:focus, .chips-orange .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(255, 152, 0, 0.5);
+}
+
+.chips-orange .chip.disabled, .chips-orange .chip:disabled {
+  color: #212529;
+  background-color: #ff9800;
 }
 
 .chips-grey .chip {
@@ -7766,6 +7821,11 @@ a.close.disabled {
   box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5);
 }
 
+.chips-grey .chip.disabled, .chips-grey .chip:disabled {
+  color: #212529;
+  background-color: #f8f9fa;
+}
+
 .chips-white .chip {
   color: #212529;
   background-color: #fff;
@@ -7781,6 +7841,11 @@ a.close.disabled {
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
 }
 
+.chips-white .chip.disabled, .chips-white .chip:disabled {
+  color: #212529;
+  background-color: #fff;
+}
+
 .chips-black .chip {
   color: #fff;
   background-color: #000;
@@ -7794,6 +7859,11 @@ a.close.disabled {
 .chips-black .chip:focus, .chips-black .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.5);
+}
+
+.chips-black .chip.disabled, .chips-black .chip:disabled {
+  color: #fff;
+  background-color: #000;
 }
 
 .irs {
