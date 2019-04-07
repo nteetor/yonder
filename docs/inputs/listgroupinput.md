@@ -19,10 +19,6 @@ parameters:
   description: |-
     One or more of `values` specifying which choices are selected
     by default, defaults to `NULL`, in which case no choice is selected.
-- name: multiple
-  description: |-
-    One of `TRUE` or `FALSE` specifyng if multiple list group
-    items may be selected, defaults to `TRUE`.
 - name: layout
   description: |-
     A [responsive](responsive.html) argument. One of `"vertical"` or `"horizontal"`

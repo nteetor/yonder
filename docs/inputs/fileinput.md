@@ -60,7 +60,7 @@ examples:
     output: |-
       <div class="yonder-file input-group" id="file1">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" multiple/>
+          <input type="file" class="custom-file-input" multiple autocomplete="off"/>
           <label class="custom-file-label" data-browse="Browse">Choose file</label>
           <div class="invalid-feedback"></div>
         </div>
@@ -77,10 +77,10 @@ examples:
     output: |-
       <div class="yonder-file input-group" id="file2">
         <div class="input-group-prepend">
-          <button class="yonder-button btn btn-green" type="button" role="button" id="upload">Upload</button>
+          <button class="yonder-button btn btn-green" type="button" role="button" id="upload" autocomplete="off">Upload</button>
         </div>
         <div class="custom-file">
-          <input type="file" class="custom-file-input" multiple/>
+          <input type="file" class="custom-file-input" multiple autocomplete="off"/>
           <label class="custom-file-label" data-browse="Browse">Choose file</label>
           <div class="invalid-feedback"></div>
         </div>
@@ -97,7 +97,7 @@ examples:
     output: |-
       <div class="yonder-file input-group" id="file3">
         <div class="custom-file">
-          <input type="file" class="custom-file-input" multiple/>
+          <input type="file" class="custom-file-input" multiple autocomplete="off"/>
           <label class="custom-file-label" data-browse="Go go go!">Pick a file</label>
           <div class="invalid-feedback"></div>
         </div>

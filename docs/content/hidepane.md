@@ -1,5 +1,5 @@
 ---
-name: navContent
+name: hidePane
 title: Navigation panes
 description: |-
   These functions pair with [navInput()]. Use `navContent()` and `navPane()` to
@@ -199,6 +199,6 @@ examples:
     content: Because these are server-side utilities please see the example applications
       above.
     output: ~
-rdname: navContent
+rdname: hidePane
 layout: doc
 ---

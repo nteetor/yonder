@@ -23,10 +23,6 @@ parameters:
   description: |-
     If `TRUE`, the radio input renders inline, defaults to `FALSE`,
     in which case the radio controls render on separate lines.
-- name: disabled
-  description: |-
-    One or more of `values` indicating which radio choices to
-    disable, defaults to `NULL`, in which case all choices are enabled.
 family: inputs
 export: ''
 examples:
@@ -46,20 +42,20 @@ examples:
     output: |-
       <div class="yonder-radio" id="radio1">
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-252-963" name="radio1" value="Vehicula adipiscing mattis"/>
-          <label class="custom-control-label" for="radio-252-963">Vehicula adipiscing mattis</label>
+          <input class="custom-control-input" type="radio" id="radio-75-888" name="radio1" value="Vehicula adipiscing mattis" autocomplete="off"/>
+          <label class="custom-control-label" for="radio-75-888">Vehicula adipiscing mattis</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-988-359" name="radio1" value="Magna nullam"/>
-          <label class="custom-control-label" for="radio-988-359">Magna nullam</label>
+          <input class="custom-control-input" type="radio" id="radio-577-380" name="radio1" value="Magna nullam" autocomplete="off"/>
+          <label class="custom-control-label" for="radio-577-380">Magna nullam</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-401-271" name="radio1" value="Aenean venenatis"/>
-          <label class="custom-control-label" for="radio-401-271">Aenean venenatis</label>
+          <input class="custom-control-input" type="radio" id="radio-788-273" name="radio1" value="Aenean venenatis" autocomplete="off"/>
+          <label class="custom-control-label" for="radio-788-273">Aenean venenatis</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-910-226" name="radio1" value="Tristique quam porta"/>
-          <label class="custom-control-label" for="radio-910-226">Tristique quam porta</label>
+          <input class="custom-control-input" type="radio" id="radio-960-676" name="radio1" value="Tristique quam porta" autocomplete="off"/>
+          <label class="custom-control-label" for="radio-960-676">Tristique quam porta</label>
         </div>
         <div class="invalid-feedback"></div>
       </div>
@@ -79,16 +75,16 @@ examples:
     output: |-
       <div class="yonder-radio" id="radio2">
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-183-897" name="radio2" value="Choice 1"/>
-          <label class="custom-control-label" for="radio-183-897">Choice 1</label>
+          <input class="custom-control-input" type="radio" id="radio-12-455" name="radio2" value="Choice 1" autocomplete="off"/>
+          <label class="custom-control-label" for="radio-12-455">Choice 1</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-915-514" name="radio2" value="Choice 2"/>
-          <label class="custom-control-label" for="radio-915-514">Choice 2</label>
+          <input class="custom-control-input" type="radio" id="radio-864-778" name="radio2" value="Choice 2" autocomplete="off"/>
+          <label class="custom-control-label" for="radio-864-778">Choice 2</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-221-541" name="radio2" value="Choice 3"/>
-          <label class="custom-control-label" for="radio-221-541">Choice 3</label>
+          <input class="custom-control-input" type="radio" id="radio-23-378" name="radio2" value="Choice 3" autocomplete="off"/>
+          <label class="custom-control-label" for="radio-23-378">Choice 3</label>
         </div>
         <div class="invalid-feedback"></div>
       </div>
@@ -110,19 +106,19 @@ examples:
     output: |-
       <div class="yonder-radiobar btn-group btn-group-toggle d-flex" id="radiobar1" data-toggle="buttons">
         <label class="btn btn-grey">
-          <input name="radiobar1" type="radio" value="fusce sagittis" autocomplete="false"/>
+          <input name="radiobar1" type="radio" value="fusce sagittis" autocomplete="off"/>
           fusce sagittis
         </label>
         <label class="btn btn-grey">
-          <input name="radiobar1" type="radio" value="libero non molestie" autocomplete="false"/>
+          <input name="radiobar1" type="radio" value="libero non molestie" autocomplete="off"/>
           libero non molestie
         </label>
         <label class="btn btn-grey">
-          <input name="radiobar1" type="radio" value="magna orci" autocomplete="false"/>
+          <input name="radiobar1" type="radio" value="magna orci" autocomplete="off"/>
           magna orci
         </label>
         <label class="btn active btn-grey">
-          <input name="radiobar1" type="radio" value="ultrices dolor" autocomplete="false" checked/>
+          <input name="radiobar1" type="radio" value="ultrices dolor" checked autocomplete="off"/>
           ultrices dolor
         </label>
       </div>

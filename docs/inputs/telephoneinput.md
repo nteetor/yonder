@@ -24,7 +24,7 @@ examples:
     content: textInput(id = "text")
     output: |-
       <div class="yonder-textual" id="text">
-        <input class="form-control" type="text"/>
+        <input class="form-control" type="text" autocomplete="off"/>
         <div class="invalid-feedback"></div>
       </div>
 - title: Search
@@ -33,7 +33,7 @@ examples:
     content: searchInput(id = "search")
     output: |-
       <div class="yonder-textual" id="search">
-        <input class="form-control" type="search"/>
+        <input class="form-control" type="search" autocomplete="off"/>
         <div class="invalid-feedback"></div>
       </div>
 - title: Email
@@ -42,7 +42,7 @@ examples:
     content: emailInput(id = "email")
     output: |-
       <div class="yonder-textual" id="email">
-        <input class="form-control" type="email"/>
+        <input class="form-control" type="email" autocomplete="off"/>
         <div class="invalid-feedback"></div>
       </div>
 - title: URLs
@@ -51,7 +51,7 @@ examples:
     content: urlInput(id = "url")
     output: |-
       <div class="yonder-textual" id="url">
-        <input class="form-control" type="url"/>
+        <input class="form-control" type="url" autocomplete="off"/>
         <div class="invalid-feedback"></div>
       </div>
 - title: Telephone numbers
@@ -60,7 +60,7 @@ examples:
     content: telephoneInput(id = "tele")
     output: |-
       <div class="yonder-textual" id="tele">
-        <input class="form-control" type="tel"/>
+        <input class="form-control" type="tel" autocomplete="off"/>
         <div class="invalid-feedback"></div>
       </div>
 - title: Passwords
@@ -69,7 +69,7 @@ examples:
     content: passwordInput(id = "password")
     output: |-
       <div class="yonder-textual" id="password">
-        <input class="form-control" type="password"/>
+        <input class="form-control" type="password" autocomplete="off"/>
         <div class="invalid-feedback"></div>
       </div>
 - title: Numbers
@@ -78,7 +78,7 @@ examples:
     content: numberInput(id = "num")
     output: |-
       <div class="yonder-textual" id="num">
-        <input class="form-control" type="number"/>
+        <input class="form-control" type="number" autocomplete="off"/>
         <div class="invalid-feedback"></div>
       </div>
 rdname: telephoneInput

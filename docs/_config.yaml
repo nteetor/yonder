@@ -85,12 +85,6 @@ hyderogen:
   - ext: js
     path: /assets/js/bootstrap.min.js
   - ext: css
-    path: /assets/css/chabudai.min.css
-  - ext: js
-    path: /assets/js/chabudai.min.js
-  - ext: js
-    path: /assets/js/FileSaver.min.js
-  - ext: css
     path: /assets/css/ion.rangeSlider.css
   - ext: css
     path: /assets/css/ion.rangeSlider.skinFlat.css

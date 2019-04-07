@@ -76,19 +76,19 @@ examples:
     output: |-
       <form class="yonder-form form-inline" id="login">
         <div class="yonder-textual" id="name">
-          <input class="form-control" type="text" placeholder="full name"/>
+          <input class="form-control" type="text" placeholder="full name" autocomplete="off"/>
           <div class="invalid-feedback"></div>
         </div>
         <div class="yonder-group input-group" id="username">
           <div class="input-group-prepend">
             <span class="input-group-text">@</span>
           </div>
-          <input type="text" class="form-control" placeholder="username"/>
+          <input type="text" class="form-control" placeholder="username" autocomplete="off"/>
         </div>
         <div class="yonder-checkbox" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-815-304" name="remember" value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-815-304">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-284-419" name="remember" value="Remember me" autocomplete="off"/>
+            <label class="custom-control-label" for="checkbox-284-419">Remember me</label>
             <div class="invalid-feedback"></div>
           </div>
         </div>
@@ -126,19 +126,19 @@ examples:
     output: |-
       <form class="yonder-form form-inline" id="login2">
         <div class="yonder-textual mr-sm-2 mb-2" id="name">
-          <input class="form-control" type="text" placeholder="full name"/>
+          <input class="form-control" type="text" placeholder="full name" autocomplete="off"/>
           <div class="invalid-feedback"></div>
         </div>
         <div class="yonder-group input-group mr-sm-2 mb-2" id="username">
           <div class="input-group-prepend">
             <span class="input-group-text">@</span>
           </div>
-          <input type="text" class="form-control" placeholder="username"/>
+          <input type="text" class="form-control" placeholder="username" autocomplete="off"/>
         </div>
         <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-602-339" name="remember" value="Remember me"/>
-            <label class="custom-control-label" for="checkbox-602-339">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-968-268" name="remember" value="Remember me" autocomplete="off"/>
+            <label class="custom-control-label" for="checkbox-968-268">Remember me</label>
             <div class="invalid-feedback"></div>
           </div>
         </div>

@@ -32,6 +32,10 @@ parameters:
   description: A character string specifying the id to associate with the modal.
 - name: modal
   description: A modal tag element created using `modal()`.
+- name: exprs
+  description: |-
+    A list of named values used to interpolate placeholders in a
+    registered modal, defaults to `list()`.
 - name: '...'
   description: |-
     Additional named arguments passed as HTML attributes to the
@@ -99,7 +103,7 @@ examples:
           </div>
           <div class="modal-body">Cras placerat accumsan nulla.</div>
           <div class="modal-footer">
-            <button class="yonder-button btn btn-blue" type="button" role="button" id="closeModal">Close</button>
+            <button class="yonder-button btn btn-blue" type="button" role="button" id="closeModal" autocomplete="off">Close</button>
           </div>
         </div>
       </div>

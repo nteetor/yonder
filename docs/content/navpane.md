@@ -4,7 +4,9 @@ title: Navigation panes
 description: |-
   These functions pair with [navInput()]. Use `navContent()` and `navPane()` to
   create the pane layout. To show a new pane use `showPane()` in the server
-  function.
+  function. `showPane()` will also hide the previously active pane. You can
+  also hide an active pane with `hidePane()`. `hidePane()` is useful when you
+  do not have a new pane to show, but want to hide the current active pane.
 parameters:
 - name: '...'
   description: |-
@@ -15,6 +17,10 @@ parameters:
       element.
 - name: id
   description: A character string specifying the id of the nav pane.
+- name: fade
+  description: |-
+    One of `TRUE` or `FALSE` specifying if the pane fades in when
+    show and out when hidden, defaults to `TRUE`.
 inheritParams: updateInput
 sections:
 - title: App with pills

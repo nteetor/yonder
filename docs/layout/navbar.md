@@ -17,6 +17,11 @@ parameters:
   description: |-
     A tag element or text placed on the left end of the navbar,
     defaults to `NULL`, in which case nothing is added.
+- name: collapse
+  description: |-
+    One of `"sm"`, `"md"`, `"lg"`, `"xl"`, or `NULL` specifying
+    the breakpoint at which the navbar collapes, defaults to `NULL`, in which
+    case the navbar is always expanded.
 family: layout
 export: ''
 examples:
@@ -58,12 +63,12 @@ examples:
       )
     output: |-
       <div>
-        <nav class="navbar navbar-expand-lg navbar-light bg-teal">
+        <nav class="navbar navbar-expand navbar-light bg-teal">
           <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-65-535" aria-controls="nav-content-65-535" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-576-680" aria-controls="nav-content-576-680" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="nav-content-65-535">
+          <div class="collapse navbar-collapse" id="nav-content-576-680">
             <ul class="yonder-nav nav mr-auto navbar-nav" id="tabs">
               <li class="nav-item">
                 <button class="nav-link btn btn-link active" value="Home">Home</button>
@@ -77,7 +82,7 @@ examples:
             </ul>
             <form class="yonder-form form-inline" id="navForm">
               <div class="yonder-textual mr-sm-2" id="search">
-                <input class="form-control" type="search" placeholder="Search"/>
+                <input class="form-control" type="search" placeholder="Search" autocomplete="off"/>
                 <div class="invalid-feedback"></div>
               </div>
               <button class="yonder-submit btn btn-amber" role="button" value="Search">Search</button>

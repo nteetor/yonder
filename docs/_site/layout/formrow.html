@@ -15,57 +15,45 @@
 
   
   
-  <script src=/assets/js/jquery.min.js type="text/javascript"></script>
+  <script src=/yonder/assets/js/jquery.min.js type="text/javascript"></script>
   
   
   
-  <script src=/assets/js/popper.min.js type="text/javascript"></script>
+  <script src=/yonder/assets/js/popper.min.js type="text/javascript"></script>
   
   
   
-  <link rel="stylesheet" href=/assets/css/bootstrap.min.css>
+  <link rel="stylesheet" href=/yonder/assets/css/bootstrap.min.css>
   
   
   
-  <script src=/assets/js/bootstrap.min.js type="text/javascript"></script>
+  <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
   
   
   
-  <link rel="stylesheet" href=/assets/css/chabudai.min.css>
+  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.css>
   
   
   
-  <script src=/assets/js/chabudai.min.js type="text/javascript"></script>
+  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.skinFlat.css>
   
   
   
-  <script src=/assets/js/FileSaver.min.js type="text/javascript"></script>
-  
-  
-  
-  <link rel="stylesheet" href=/assets/css/ion.rangeSlider.css>
-  
-  
-  
-  <link rel="stylesheet" href=/assets/css/ion.rangeSlider.skinFlat.css>
-  
-  
-  
-  <script src=/assets/js/ion.rangeSlider.min.js type="text/javascript"></script>
+  <script src=/yonder/assets/js/ion.rangeSlider.min.js type="text/javascript"></script>
   
   
   
   
   
-  <script src=/assets/js/yonder.min.js type="text/javascript"></script>
+  <script src=/yonder/assets/js/yonder.min.js type="text/javascript"></script>
   
   
   
-  <script src=/assets/js/iris-json.js type="text/javascript"></script>
+  <script src=/yonder/assets/js/iris-json.js type="text/javascript"></script>
   
   
 
-  <link rel="stylesheet" href="/assets/css/main.css">
+  <link rel="stylesheet" href="/yonder/assets/css/main.css">
 </head>
 
   <body>
@@ -89,7 +77,7 @@
 
     <dt >
       <a class="text-dark"
-         href=/design/active.html
+         href=/yonder/design/active.html
          >Design</a>
     </dt>
     
@@ -99,7 +87,7 @@
 
     <dt >
       <a class="text-dark"
-         href=/content/alert.html
+         href=/yonder/content/alert.html
          >Content</a>
     </dt>
     
@@ -109,7 +97,7 @@
 
     <dt >
       <a class="text-dark"
-         href=/outputs/badgeoutput.html
+         href=/yonder/outputs/badgeoutput.html
          >Outputs</a>
     </dt>
     
@@ -119,7 +107,7 @@
 
     <dt >
       <a class="text-dark"
-         href=/inputs/buttongroupinput.html
+         href=/yonder/inputs/buttongroupinput.html
          >Inputs</a>
     </dt>
     
@@ -131,56 +119,56 @@
         class = "mt-3"
         >
       <a class="text-dark"
-         href=/layout/column.html
+         href=/yonder/layout/column.html
          >Layout</a>
     </dt>
     
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/layout/column.html
+         href=/yonder/layout/column.html
          >column</a>
     </dd>
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/layout/columns.html
+         href=/yonder/layout/columns.html
          >columns</a>
     </dd>
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/layout/container.html
+         href=/yonder/layout/container.html
          >container</a>
     </dd>
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/layout/fieldset.html
+         href=/yonder/layout/fieldset.html
          >fieldset</a>
     </dd>
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/layout/flex.html
+         href=/yonder/layout/flex.html
          >flex</a>
     </dd>
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/layout/formgroup.html
+         href=/yonder/layout/formgroup.html
          >formGroup</a>
     </dd>
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/layout/formrow.html
+         href=/yonder/layout/formrow.html
          >formRow</a>
     </dd>
     
     <dd class="mb-3">
       <a class="text-muted"
-         href=/layout/navbar.html
+         href=/yonder/layout/navbar.html
          >navbar</a>
     </dd>
     
@@ -191,7 +179,7 @@
 
     <dt >
       <a class="text-dark"
-         href=/utilities/disableinput.html
+         href=/yonder/utilities/disableinput.html
          >Utilities</a>
     </dt>
     
@@ -201,22 +189,12 @@
 
     <dt >
       <a class="text-dark"
-         href=/rendering/elementoutput.html
+         href=/yonder/rendering/elementoutput.html
          >Rendering</a>
     </dt>
     
     
 
-    
-    
-
-    
-
-    <dt >
-      <a class="text-dark"
-         href=/thruputs/rendertable.html
-         >Thruputs</a>
-    </dt>
     
     
   </dl>
@@ -326,14 +304,14 @@ column width for the form group, defaults to <code class="highlighter-rouge">NUL
       <div class="form-group col-md-6">
         <label>Email</label>
         <div class="yonder-textual" id="email">
-          <input class="form-control" type="email" placeholder="e@mail.com"/>
+          <input class="form-control" type="email" placeholder="e@mail.com" autocomplete="off"/>
           <div class="invalid-feedback"></div>
         </div>
       </div>
       <div class="form-group col-md-6">
         <label>Password</label>
         <div class="yonder-textual" id="password">
-          <input class="form-control" type="password" placeholder="123456"/>
+          <input class="form-control" type="password" placeholder="123456" autocomplete="off"/>
           <div class="invalid-feedback"></div>
         </div>
         <small class="form-text text-muted">Please consider something better than 123456</small>
@@ -345,10 +323,10 @@ column width for the form group, defaults to <code class="highlighter-rouge">NUL
         <div class="input-group-prepend">
           <span class="input-group-text">@</span>
         </div>
-        <input type="text" class="form-control"/>
+        <input type="text" class="form-control" autocomplete="off"/>
       </div>
     </div>
-    <button class="yonder-button btn btn-blue" type="button" role="button" id="go">Go!</button>
+    <button class="yonder-button btn btn-blue" type="button" role="button" id="go" autocomplete="off">Go!</button>
   </div>
 </div></div>
   

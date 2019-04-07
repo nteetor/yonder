@@ -42,16 +42,16 @@ examples:
         </label>
         <div class="yonder-radio" id="radios">
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-596-203" name="radios" value="Ready"/>
-            <label class="custom-control-label" for="radio-596-203">Ready</label>
+            <input class="custom-control-input" type="radio" id="radio-108-532" name="radios" value="Ready" autocomplete="off"/>
+            <label class="custom-control-label" for="radio-108-532">Ready</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-631-887" name="radios" value="Set"/>
-            <label class="custom-control-label" for="radio-631-887">Set</label>
+            <input class="custom-control-input" type="radio" id="radio-620-27" name="radios" value="Set" autocomplete="off"/>
+            <label class="custom-control-label" for="radio-620-27">Set</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-753-466" name="radios" value="Go"/>
-            <label class="custom-control-label" for="radio-753-466">Go</label>
+            <input class="custom-control-input" type="radio" id="radio-799-646" name="radios" value="Go" autocomplete="off"/>
+            <label class="custom-control-label" for="radio-799-646">Go</label>
           </div>
           <div class="invalid-feedback"></div>
         </div>

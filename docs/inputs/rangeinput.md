@@ -79,7 +79,7 @@ examples:
         background("yellow")
     output: |-
       <div class="yonder-range range-yellow" id="range1">
-        <input class="range" type="text" data-type="single" data-min="0" data-max="100" data-step="1" data-from="0" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
+        <input class="range" type="text" autocomplete="off" data-type="single" data-min="0" data-max="100" data-step="1" data-from="0" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
       </div>
 - title: Increase the number of labels
   body:
@@ -93,7 +93,7 @@ examples:
         background("purple")
     output: |-
       <div class="yonder-range range-purple" id="range2">
-        <input class="range" type="text" data-type="single" data-min="0" data-max="100" data-step="1" data-from="30" data-prettify-separator="," data-grid="TRUE" data-grid-num="8"/>
+        <input class="range" type="text" autocomplete="off" data-type="single" data-min="0" data-max="100" data-step="1" data-from="30" data-prettify-separator="," data-grid="TRUE" data-grid-num="8"/>
       </div>
 - title: Increase thumb step
   body:
@@ -112,7 +112,7 @@ examples:
         background("red")
     output: |-
       <div class="yonder-range range-no-fill range-red" id="range3" snap="TRUE">
-        <input class="range" type="text" data-type="single" data-min="0" data-max="100" data-step="10" data-from="0" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
+        <input class="range" type="text" autocomplete="off" data-type="single" data-min="0" data-max="100" data-step="10" data-from="0" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
       </div>
 - title: Interval inputs
   body:
@@ -129,7 +129,7 @@ examples:
         background("blue")
     output: |-
       <div class="yonder-range range-blue" id="interval1">
-        <input class="range" type="text" data-type="double" data-min="0" data-max="100" data-from="45" data-to="65" data-drag-interval="FALSE" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
+        <input class="range" type="text" autocomplete="off" data-type="double" data-min="0" data-max="100" data-from="45" data-to="65" data-drag-interval="FALSE" data-prettify-separator="," data-grid="TRUE" data-grid-num="4"/>
       </div>
 rdname: rangeInput
 sections: []

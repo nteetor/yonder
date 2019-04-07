@@ -118,7 +118,7 @@ examples:
       <div aria-atomic="true" aria-live="polite" class="toast fade show" role="alert">
         <div class="toast-header">
           <div class="mr-auto">Header</div>
-          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <button type="button" class="ml-auto close" data-dismiss="toast" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>
@@ -143,7 +143,7 @@ examples:
         <div class="toast-header">
           <div class="font-weight-bold mr-auto">Notification</div>
           <small>1 min ago</small>
-          <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <button type="button" class="ml-auto close" data-dismiss="toast" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
         </div>

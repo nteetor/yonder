@@ -28,6 +28,11 @@ parameters:
     One of `TRUE` or `FALSE` indicating how to handle any currently
     selected values, if `TRUE` the current selection is dropped before
     selecting new values, defaults to `TRUE`.
+- name: propagate
+  description: |-
+    One of `TRUE` or `FALSE` specifying if the value change
+    causes a re-evaluation of dependent reactives and observers, defaults to
+    `FALSE`.
 export: ''
 rdname: changeInput
 sections: []

@@ -26,6 +26,13 @@ parameters:
   description: |-
     One of `TRUE` or `FALSE` specifying if the button fills the
     entire width of its parent, defaults to `FALSE`.
+- name: stretch
+  description: |-
+    One of `TRUE` or `FALSE` specifying stretched behaviour for
+    the button or link input, defaults to `FALSE`. If `TRUE`, the button or
+    link will receive clicks from its containing block element. For example, a
+    stretched button or link inside a [card()](content/card.html) would update whenever the user
+    clicked on the card.
 - name: text
   description: |-
     A character string specifying the text displayed as part of the
@@ -46,7 +53,7 @@ examples:
         label = "Simple"
       )
     output: <button class="yonder-button btn btn-grey" type="button" role="button"
-      id="button1">Simple</button>
+      id="button1" autocomplete="off">Simple</button>
   - type: text
     content: Alternatively, a button can fill the width of its parent element.
     output: ~
@@ -59,7 +66,7 @@ examples:
       ) %>%
         background("red")
     output: <button class="yonder-button btn btn-block btn-red" type="button" role="button"
-      id="button2">Full-width</button>
+      id="button2" autocomplete="off">Full-width</button>
   - type: text
     content: Use design utilities to further adjust the width of a button.
     output: ~
@@ -73,7 +80,7 @@ examples:
         background("red") %>%
         width("3/4")  # <-
     output: <button class="yonder-button btn btn-block btn-red w-3/4" type="button"
-      role="button" id="button3">Full and back again</button>
+      role="button" id="button3" autocomplete="off">Full and back again</button>
 - title: A submit button
   body:
   - type: code
@@ -111,17 +118,17 @@ examples:
         flex(wrap = TRUE)
     output: |-
       <div class="d-flex flex-wrap">
-        <button class="yonder-button btn btn-red m-2" type="button" role="button" id="red">red</button>
-        <button class="yonder-button btn btn-purple m-2" type="button" role="button" id="purple">purple</button>
-        <button class="yonder-button btn btn-indigo m-2" type="button" role="button" id="indigo">indigo</button>
-        <button class="yonder-button btn btn-blue m-2" type="button" role="button" id="blue">blue</button>
-        <button class="yonder-button btn btn-cyan m-2" type="button" role="button" id="cyan">cyan</button>
-        <button class="yonder-button btn btn-teal m-2" type="button" role="button" id="teal">teal</button>
-        <button class="yonder-button btn btn-green m-2" type="button" role="button" id="green">green</button>
-        <button class="yonder-button btn btn-yellow m-2" type="button" role="button" id="yellow">yellow</button>
-        <button class="yonder-button btn btn-amber m-2" type="button" role="button" id="amber">amber</button>
-        <button class="yonder-button btn btn-orange m-2" type="button" role="button" id="orange">orange</button>
-        <button class="yonder-button btn btn-grey m-2" type="button" role="button" id="grey">grey</button>
+        <button class="yonder-button btn btn-red m-2" type="button" role="button" id="red" autocomplete="off">red</button>
+        <button class="yonder-button btn btn-purple m-2" type="button" role="button" id="purple" autocomplete="off">purple</button>
+        <button class="yonder-button btn btn-indigo m-2" type="button" role="button" id="indigo" autocomplete="off">indigo</button>
+        <button class="yonder-button btn btn-blue m-2" type="button" role="button" id="blue" autocomplete="off">blue</button>
+        <button class="yonder-button btn btn-cyan m-2" type="button" role="button" id="cyan" autocomplete="off">cyan</button>
+        <button class="yonder-button btn btn-teal m-2" type="button" role="button" id="teal" autocomplete="off">teal</button>
+        <button class="yonder-button btn btn-green m-2" type="button" role="button" id="green" autocomplete="off">green</button>
+        <button class="yonder-button btn btn-yellow m-2" type="button" role="button" id="yellow" autocomplete="off">yellow</button>
+        <button class="yonder-button btn btn-amber m-2" type="button" role="button" id="amber" autocomplete="off">amber</button>
+        <button class="yonder-button btn btn-orange m-2" type="button" role="button" id="orange" autocomplete="off">orange</button>
+        <button class="yonder-button btn btn-grey m-2" type="button" role="button" id="grey" autocomplete="off">grey</button>
       </div>
 - title: Reactive links
   body:
@@ -129,6 +136,27 @@ examples:
     content: div("Curabitur ", linkInput("link1", "vulputate"), " vestibulum lorem.")
     output: "<div>\n  Curabitur \n  <button class=\"yonder-link btn btn-link\" id=\"link1\">vulputate</button>\n
       \  vestibulum lorem.\n</div>"
+- title: Stretched buttons and links
+  body:
+  - type: code
+    content: |-
+      card(
+        header = "Card with stretched button",
+        p("Notice when you hover over the card, the button also detects ",
+          "the hover."),
+        buttonInput(
+          id = "go",
+          label = "Go go go",
+          stretch = TRUE
+        ) %>%
+          background("blue")
+      ) %>%
+        width(20)
+    output: "<div class=\"card w-20\">\n  <div class=\"card-header\">Card with stretched
+      button</div>\n  <div class=\"card-body\">\n    <p>\n      Notice when you hover
+      over the card, the button also detects \n      the hover.\n    </p>\n    <button
+      class=\"yonder-button btn stretched-link btn-blue\" type=\"button\" role=\"button\"
+      id=\"go\" autocomplete=\"off\">Go go go</button>\n  </div>\n</div>"
 rdname: linkInput
 sections: []
 layout: doc

@@ -69,8 +69,8 @@ examples:
             <label>Is this for delivery?</label>
             <div class="yonder-checkbox" id="deliver">
               <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox" id="checkbox-599-688" name="deliver" value="Deliver"/>
-                <label class="custom-control-label" for="checkbox-599-688">Deliver</label>
+                <input class="custom-control-input" type="checkbox" id="checkbox-113-985" name="deliver" value="Deliver" autocomplete="off"/>
+                <label class="custom-control-label" for="checkbox-113-985">Deliver</label>
                 <div class="invalid-feedback"></div>
               </div>
             </div>

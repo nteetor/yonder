@@ -68,7 +68,7 @@ examples:
         <div class="input-group-prepend">
           <span class="input-group-text">@</span>
         </div>
-        <input type="text" class="form-control" placeholder="Username"/>
+        <input type="text" class="form-control" placeholder="Username" autocomplete="off"/>
       </div>
 - title: Text input and button combo
   body:
@@ -86,9 +86,9 @@ examples:
       )
     output: |-
       <div class="yonder-group input-group" id="group2">
-        <input type="text" class="form-control" placeholder="Search terms"/>
+        <input type="text" class="form-control" placeholder="Search terms" autocomplete="off"/>
         <div class="input-group-append">
-          <button class="yonder-button btn btn-grey border" type="button" role="button" id="button2">Go!</button>
+          <button class="yonder-button btn btn-grey border" type="button" role="button" id="button2" autocomplete="off">Go!</button>
         </div>
       </div>
 - title: Combination addon
@@ -105,7 +105,7 @@ examples:
           <span class="input-group-text">$</span>
           <span class="input-group-text">0.</span>
         </div>
-        <input type="text" class="form-control"/>
+        <input type="text" class="form-control" autocomplete="off"/>
       </div>
 - title: Two addons
   body:
@@ -126,9 +126,9 @@ examples:
         <div class="input-group-prepend">
           <span class="input-group-text">@</span>
         </div>
-        <input type="text" class="form-control" placeholder="Username"/>
+        <input type="text" class="form-control" placeholder="Username" autocomplete="off"/>
         <div class="input-group-append">
-          <button class="yonder-button btn btn-blue" type="button" role="button" id="button4">Search</button>
+          <button class="yonder-button btn btn-blue" type="button" role="button" id="button4" autocomplete="off">Search</button>
         </div>
       </div>
 rdname: groupInput

@@ -45,9 +45,9 @@ examples:
       <div class="dropdown">
         <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Choices</button>
         <div class="dropdown-menu">
-          <button class="yonder-button dropdown-item" type="button" role="button" id="choice1">Choice 1</button>
-          <button class="yonder-button dropdown-item" type="button" role="button" id="choice2">Choice 2</button>
-          <button class="yonder-button dropdown-item" type="button" role="button" id="choice3">Choice 3</button>
+          <button class="yonder-button dropdown-item" type="button" role="button" id="choice1" autocomplete="off">Choice 1</button>
+          <button class="yonder-button dropdown-item" type="button" role="button" id="choice2" autocomplete="off">Choice 2</button>
+          <button class="yonder-button dropdown-item" type="button" role="button" id="choice3" autocomplete="off">Choice 3</button>
         </div>
       </div>
 - title: Grouped sections
@@ -72,12 +72,12 @@ examples:
         <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Sections</button>
         <div class="dropdown-menu">
           <h6 class="dropdown-header">Section 1</h6>
-          <button class="yonder-button dropdown-item" type="button" role="button" id="addA">Add A</button>
-          <button class="yonder-button dropdown-item" type="button" role="button" id="addB">Add B</button>
+          <button class="yonder-button dropdown-item" type="button" role="button" id="addA" autocomplete="off">Add A</button>
+          <button class="yonder-button dropdown-item" type="button" role="button" id="addB" autocomplete="off">Add B</button>
           <div class="dropdown-divider"></div>
           <h6 class="dropdown-header">Section 2</h6>
-          <button class="yonder-button dropdown-item" type="button" role="button" id="calcC">Calculate C</button>
-          <button class="yonder-button dropdown-item" type="button" role="button" id="calcD">Calculate D</button>
+          <button class="yonder-button dropdown-item" type="button" role="button" id="calcC" autocomplete="off">Calculate C</button>
+          <button class="yonder-button dropdown-item" type="button" role="button" id="calcD" autocomplete="off">Calculate D</button>
         </div>
       </div>
 - title: Direction variations
@@ -105,33 +105,33 @@ examples:
         <div class="dropdown dropup m-3">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">up</button>
           <div class="dropdown-menu">
-            <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
-            <button class="yonder-button dropdown-item" type="button" role="button">Nunc eleifend</button>
-            <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
+            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nam euismod</button>
+            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nunc eleifend</button>
+            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nullam eu</button>
           </div>
         </div>
         <div class="dropdown m-3">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">down</button>
           <div class="dropdown-menu">
-            <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
-            <button class="yonder-button dropdown-item" type="button" role="button">Nunc eleifend</button>
-            <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
+            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nam euismod</button>
+            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nunc eleifend</button>
+            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nullam eu</button>
           </div>
         </div>
         <div class="dropdown dropleft m-3">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">left</button>
           <div class="dropdown-menu">
-            <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
-            <button class="yonder-button dropdown-item" type="button" role="button">Nunc eleifend</button>
-            <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
+            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nam euismod</button>
+            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nunc eleifend</button>
+            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nullam eu</button>
           </div>
         </div>
         <div class="dropdown dropright m-3">
           <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">right</button>
           <div class="dropdown-menu">
-            <button class="yonder-button dropdown-item" type="button" role="button">Nam euismod</button>
-            <button class="yonder-button dropdown-item" type="button" role="button">Nunc eleifend</button>
-            <button class="yonder-button dropdown-item" type="button" role="button">Nullam eu</button>
+            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nam euismod</button>
+            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nunc eleifend</button>
+            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nullam eu</button>
           </div>
         </div>
       </div>
@@ -171,14 +171,14 @@ examples:
             <div class="form-group">
               <label>Email address</label>
               <div class="yonder-textual" id="email">
-                <input class="form-control" type="text" placeholder="email@example.com"/>
+                <input class="form-control" type="text" placeholder="email@example.com" autocomplete="off"/>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
             <div class="form-group">
               <label>Password</label>
               <div class="yonder-textual" id="password">
-                <input class="form-control" type="password" placeholder="*****"/>
+                <input class="form-control" type="password" placeholder="*****" autocomplete="off"/>
                 <div class="invalid-feedback"></div>
               </div>
             </div>

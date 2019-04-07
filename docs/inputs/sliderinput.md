@@ -42,7 +42,7 @@ examples:
       )
     output: |-
       <div class="yonder-range range-grey range-no-fill" id="slider1">
-        <input class="range" type="text" data-type="single" data-values="Closest,Close,Far,Farthest" data-choices="Closest,Close,Far,Farthest" data-from="0" data-grid="TRUE" data-hide-min-max="TRUE"/>
+        <input class="range" type="text" autocomplete="off" data-type="single" data-values="Closest,Close,Far,Farthest" data-choices="Closest,Close,Far,Farthest" data-from="0" data-grid="TRUE" data-hide-min-max="TRUE"/>
       </div>
 rdname: sliderInput
 sections: []

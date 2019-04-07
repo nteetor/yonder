@@ -45,7 +45,7 @@ examples:
           background("cyan")
       )
     output: |-
-      <button class="yonder-button btn btn-grey" type="button" role="button">
+      <button class="yonder-button btn btn-grey" type="button" role="button" autocomplete="off">
         Process
         <span class="yonder-badge badge badge-cyan">7</span>
       </button>
