@@ -1,7 +1,7 @@
 Package: yonder
 Type: Package
 Title: A Reactive Web Framework Built on Shiny
-Version: 0.0.5
+Version: 0.1.0
 Authors@R: c(
     person("Nathan", "Teetor", role = c("aut", "cre"),
       email = "nathanteetor@gmail.com"),
@@ -9,19 +9,19 @@ Authors@R: c(
       comment = "Bootstrap library"),
     person(family = "Twitter, Inc", role = "cph",
       comment = "Bootstrap library"),
-    person("Eli", "Grey", role = c("ctb", "cph"),
-      comment = "FileSaver.js library"),
     person("Denis", "Ineshin", role = c("ctb", "cph"),
       comment = "ion.rangeSlider library"),
     person(family = "JS Foundation", role = "cph",
       comment = "jQuery library"),
     person("Federico", "Zivolo", role = c("ctb", "cph"),
-      comment = "popper.js library")
+      comment = "popper.js library"),
+    person("Johann", "Servoire", role = c("ctb", "cph"),
+      comment = "bs-custom-file-input library")
     )
-Description: A new toolset to build shiny applications with Bootstrap 4.
-    Includes refreshed reactive inputs, outputs, and new thruputs. Design
-    utilities may be used to create responsive layouts for devices of all
-    sizes.
+Description: A new toolset to build shiny applications with the latest
+    Bootstrap components and design utilities. Includes refreshed reactive 
+    inputs, outputs, and new thruputs. Build applications with responsive 
+    layouts for devices of all sizes.
 License: GPL-3 | file LICENSE
 URL: https://nteetor.github.io/yonder
 BugReports: https://github.com/nteetor/yonder/issues
@@ -31,10 +31,11 @@ Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Depends:
     R (>= 3.0.2),
-    shiny
+    shiny (>= 1.1.0)
 Imports:
     htmltools,
     jsonlite,
-    magrittr
+    magrittr,
+    utils
 Suggests:
     testthat
