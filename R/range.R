@@ -105,15 +105,10 @@
 rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...,
                        ticks = TRUE, labels = 4, prefix = NULL, suffix = NULL,
                        fill = TRUE) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `rangeInput()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
+  assert_id()
 
-  input <- tags$div(
-    class = collate(
+  component <- tags$div(
+    class = str_collate(
       "yonder-range",
       "range-grey",
       if (!fill) "range-no-fill"
@@ -138,10 +133,7 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...,
     ...
   )
 
-  attachDependencies(
-    input,
-    c(yonderDep(), ionSliderDep())
-  )
+  attach_dependencies(component)
 }
 
 #' @rdname rangeInput
@@ -149,37 +141,32 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...,
 intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
                           step = 1, ..., ticks = TRUE, labels = 4,
                           prefix = NULL, suffix = NULL, draggable = FALSE) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `intervalInput()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
+  assert_id()
 
   if (!is.numeric(min)) {
     stop(
-      "invalid `intervalInput()` argument, `min` must be a numeric value",
+      "invalid argument in `intervalInput()`, `min` must be a numeric value",
       call. = FALSE
     )
   }
 
   if (!is.numeric(max)) {
     stop(
-      "invalid `intervalInput()` argument, `max` must be a numeric value",
+      "invalid argument in `intervalInput()`, `max` must be a numeric value",
       call. = FALSE
     )
   }
 
   if (length(default) != 2) {
     stop(
-      "invalid `intervalInput()` argument, `default` must have a length of 2",
+      "invalid argument in `intervalInput()`, `default` must have a length of 2",
       call. = FALSE
     )
   }
 
   if (default[[1]] < min) {
     stop(
-      "invalid `intervalInput()` argument, `default[[1]]` must be greater ",
+      "invalid argument in `intervalInput()`, `default[[1]]` must be greater ",
       "than or equal to `min`",
       call. = FALSE
     )
@@ -187,13 +174,13 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
 
   if (default[[2]] > max) {
     stop(
-      "invalid `intervalInput()` argument, `default[[2]]` must be less ",
+      "invalid argument in `intervalInput()`, `default[[2]]` must be less ",
       "than or equal to `max`",
       call. = FALSE
     )
   }
 
-  input <- tags$div(
+  component <- tags$div(
     class = "yonder-range range-grey",
     id = id,
     tags$input(
@@ -216,10 +203,7 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
     ...
   )
 
-  attachDependencies(
-    input,
-    c(yonderDep(), ionSliderDep())
-  )
+  attach_dependencies(component)
 }
 
 #' Slider with custom choices
@@ -267,12 +251,9 @@ intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
 sliderInput <- function(id, choices, values = choices, selected = values[[1]],
                         ..., ticks = TRUE, prefix = NULL, suffix = NULL,
                         fill = FALSE) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `sliderInput()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
+  assert_id()
+  assert_choices()
+  assert_selected(length = 1)
 
   values <- vapply(values, as.character, character(1))
 
@@ -282,8 +263,8 @@ sliderInput <- function(id, choices, values = choices, selected = values[[1]],
   choices <- encode_commas(choices)
   selected <- encode_commas(selected)
 
-  input <- tags$div(
-    class = collate(
+  component <- tags$div(
+    class = str_collate(
       "yonder-range",
       "range-grey",
       if (!fill) "range-no-fill"
@@ -305,8 +286,5 @@ sliderInput <- function(id, choices, values = choices, selected = values[[1]],
     ...
   )
 
-  attachDependencies(
-    input,
-    c(yonderDep(), ionSliderDep())
-  )
+  attach_dependencies(component)
 }

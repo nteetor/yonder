@@ -4,10 +4,10 @@
 \alias{width}
 \title{Tag element width}
 \usage{
-width(.tag, size)
+width(tag, size)
 }
 \arguments{
-\item{.tag}{A tag element.}
+\item{tag}{A tag element.}
 
 \item{size}{A character string or number specifying the width of the tag
 element. Possible values:
@@ -43,7 +43,7 @@ div(
   lapply(
     1:20,
     width,
-    .tag = div() \%>\%
+    tag = div() \%>\%
       border("black") \%>\%
       height(4)
   )

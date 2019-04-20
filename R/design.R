@@ -14,11 +14,11 @@
   "white"
 )
 
-colorUtility <- function(tag, base, color) {
-  if (tagHasClass(tag, "yonder-(?:checkbar|radiobar|button-group|list-group)")) {
+color_apply <- function(tag, base, color) {
+  if (tag_class_re(tag, "yonder-(?:checkbar|radiobar|button-group|list-group)")) {
     tag$children[[1]] <- lapply(
       tag$children[[1]],
-      colorUtility,
+      color_apply,
       base = base,
       color = color
     )
@@ -26,8 +26,8 @@ colorUtility <- function(tag, base, color) {
     return(tag)
   }
 
-  if (tagHasClass(tag, "yonder-chip")) {
-    tag$children[[3]] <- colorUtility(
+  if (tag_class_re(tag, "yonder-chip")) {
+    tag$children[[3]] <- color_apply(
       tag = tag$children[[3]],
       base = base,
       color = color
@@ -36,8 +36,8 @@ colorUtility <- function(tag, base, color) {
     return(tag)
   }
 
-  if (tagHasClass(tag, "dropdown")) {
-    tag$children[[1]] <- colorUtility(
+  if (tag_class_re(tag, "dropdown")) {
+    tag$children[[1]] <- color_apply(
       tag$children[[1]],
       base = base,
       color = color
@@ -46,10 +46,13 @@ colorUtility <- function(tag, base, color) {
     return(tag)
   }
 
-  tag <- tagDropClass(tag, sprintf("%s-(%s)", base, paste(.colors, collapse = "|")))
-  tag <- tagAddClass(tag, paste0(base, "-", color))
+  tag <- tag_class_remove(
+    tag,
+    sprintf("%s-(%s)", base, paste(.colors, collapse = "|"))
+  )
+  tag <- tag_class_add(tag, paste0(base, "-", color))
 
-  attachDependencies(tag, yonderDep(), append = TRUE)
+  attach_dependencies(tag)
 }
 
 #' Tag element font
@@ -59,12 +62,12 @@ colorUtility <- function(tag, base, color) {
 #' ignored.  For example, `font(.., size = "lg")` increases font size without
 #' affecting color, weight, case, or alignment.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
 #' @param color One `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
 #'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`,
-#'   `"black"`, or `"white"` specifying the color the tag element's text,
-#'   defaults to `NULL`.
+#'   `"black"`, or `"white"` specifying the tag element text color, defaults to
+#'   `NULL`.
 #'
 #' @param size One of `"xs"`, `"sm"`, `"base"`, `"lg"`, `"xl"` specifying a font
 #'   size relative to the default base page font size, defaults to `NULL`.
@@ -120,55 +123,27 @@ colorUtility <- function(tag, base, color) {
 #' p("Proin quam nisl, tincidunt et.") %>%
 #'   font(weight = "light")
 #'
-font <- function(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
+font <- function(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
                  align = NULL) {
-  if (!re(color, paste(.colors, collapse = "|"))) {
-    stop(
-      "invalid `font()` argument, `color` unknown ",
-      '"', color, '", see ?font for possible values',
-      call. = FALSE
-    )
-  }
+  assert_possible(color, .colors)
+  assert_possible(size, c("xs", "sm", "base", "lg", "xl"))
+  assert_possible(weight, c("bold", "normal", "light", "italic", "monospace"))
+  assert_possible(case, c("lower", "upper", "title"))
 
-  if (!re(size, "xs|sm|base|lg|xl") ||
-      !is.null(size) && length(size) != 1) {
-    stop(
-      "invalid `font()` argument, `size` must be one of ",
-      '"xs", "sm", "base", "lg", "xl"',
-      call. = FALSE
-    )
-  }
-
-  if (!re(weight, "bold|normal|light|italic|monospace")) {
-    stop(
-      "invalid `font()` argument, `weight` must be one of ",
-      '"bold", "normal", "light", "italic", or "monospace"',
-      call. = FALSE
-    )
-  }
-
-  if (!re(case, "lower|upper|title")) {
-    stop(
-      "invalid `font()` argument, `case` must be one of ",
-      '"lower", "upper", or "title"',
-      call. = FALSE
-    )
-  }
-
-  align <- ensureBreakpoints(align, c("left", "center", "right", "justify"))
+  align <- resp_construct(align, c("left", "center", "right", "justify"))
 
   if (!is.null(color)) {
-    .tag <- colorUtility(.tag, "text", color)
+    tag <- color_apply(tag, "text", color)
   }
 
   if (!is.null(size)) {
     size <- paste0("font-size-", size)
-    .tag <- tagDropClass(.tag, "font-size-(xs|sm|base|lg|xl)")
-    .tag <- tagAddClass(.tag, size)
+    tag <- tag_class_remove(tag, "font-size-(xs|sm|base|lg|xl)")
+    tag <- tag_class_add(tag, size)
   }
 
   if (!is.null(weight)) {
-    if (re(weight, "bold|normal|light")) {
+    if (str_re(weight, "bold|normal|light")) {
       weight <- paste0("font-weight-", weight)
     } else if (weight == "italic") {
       weight <- paste0("font-", weight)
@@ -176,8 +151,8 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
       weight <- paste0("text-", weight)
     }
 
-    .tag <- tagDropClass(.tag, "(font-weight-(bold|normal|light))|font-italic|text-monospace)")
-    .tag <- tagAddClass(.tag, weight)
+    tag <- tag_class_remove(tag, "(font-weight-(bold|normal|light))|font-italic|text-monospace)")
+    tag <- tag_class_add(tag, weight)
   }
 
   if (!is.null(case)) {
@@ -189,23 +164,23 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
       case <- "text-capitalize"
     }
 
-    .tag <- tagDropClass(.tag, "text-(lowercase|uppercase|capitalize)")
-    .tag <- tagAddClass(.tag, case)
+    tag <- tag_class_remove(tag, "text-(lowercase|uppercase|capitalize)")
+    tag <- tag_class_add(tag, case)
   }
 
   if (length(align)) {
-    classes <- createResponsiveClasses(align, "text")
-    .tag <- tagAddClass(.tag, classes)
+    classes <- resp_classes(align, "text")
+    tag <- tag_class_add(tag, classes)
   }
 
-  attachDependencies(.tag, yonderDep())
+  attach_dependencies(tag)
 }
 
 #' Tag element background color
 #'
 #' Use `background()` to modify the background color of a tag element.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
 #' @param color One of `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
 #'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`,
@@ -239,7 +214,7 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
 #'   lapply(
 #'     colors,
 #'     background,
-#'     .tag = div() %>%
+#'     tag = div() %>%
 #'       padding(5) %>%
 #'       margin(2)
 #'   )
@@ -247,41 +222,35 @@ font <- function(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
 #'   display("flex") %>%
 #'   flex(wrap = TRUE)
 #'
-background <- function(.tag, color) {
-  if (!(color %in% c(.colors, "transparent"))) {
-    stop(
-      "invalid `background()` argument, unknown `color` ",
-      '"', color, '", see ?background for possible colors',
-      call. = FALSE
-    )
-  }
+background <- function(tag, color) {
+  assert_possible(color, c(.colors, "transparent"))
 
   if (color == "transparent") {
     base <- "bg"
-  } else if (tagHasClass(.tag, "alert")) {
+  } else if (tag_class_re(tag, "alert")) {
     base <- "alert"
-  } else if (tagHasClass(.tag, "badge")) {
+  } else if (tag_class_re(tag, "badge")) {
     base <- "badge"
-  } else if (tagHasClass(.tag, "yonder-(?:radiobar|checkbar|button-group|button|submit)")) {
+  } else if (tag_class_re(tag, "yonder-(?:radiobar|checkbar|button-group|button|submit)")) {
     base <- "btn"
-  } else if (tagHasClass(.tag, "list-group")) {
+  } else if (tag_class_re(tag, "list-group")) {
     base <- "list-group-item"
-  } else if (tagHasClass(.tag, "yonder-chip")) {
+  } else if (tag_class_re(tag, "yonder-chip")) {
     base <- "chips"
-  } else if (tagHasClass(.tag, "yonder-range")) {
+  } else if (tag_class_re(tag, "yonder-range")) {
     base <- "range"
   } else {
     base <- "bg"
   }
 
-  colorUtility(.tag, base, color)
+  color_apply(tag, base, color)
 }
 
 #' Tag element borders
 #'
 #' Use `border()` to add or modify tag element borders.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
 #' @param color One of `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
 #'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`, `"white"`
@@ -323,7 +292,7 @@ background <- function(.tag, color) {
 #'   lapply(
 #'     sides,
 #'     border,
-#'     .tag = div() %>%
+#'     tag = div() %>%
 #'       height(3) %>%
 #'       width(3),
 #'     color = "black"
@@ -332,41 +301,27 @@ background <- function(.tag, color) {
 #'   display("flex") %>%
 #'   flex(wrap = TRUE)
 #'
-border <- function(.tag, color = NULL, sides = "all", round = NULL) {
-  if (!re(color, paste(.colors, collapse = "|"))) {
-    stop(
-      "invalid `border()` argument, unknown `color` ",
-      '"', color, '", see ?border for possible colors',
-      call. = FALSE
-    )
-  }
-
-  if (!all(re(sides, "top|right|bottom|left|all|none|circle", len0 = FALSE))) {
-    stop(
-      "invalid `border()` argument, `sides` must be one of ",
-      '"top", "right", "bottom", "left", "all", or "none"',
-      call. = FALSE
-    )
-  }
-
-  if (!all(re(round, "top|right|bottom|left|circle|all|none"))) {
-    stop(
-      "invalid `border()` argument, `round` must be one of ",
-      '"top", "right", "bottom", "left", "circle", "all", or "none"',
-      call. = FALSE
-    )
-  }
+border <- function(tag, color = NULL, sides = "all", round = NULL) {
+  assert_possible(color, .colors)
+  assert_possible(
+    sides,
+    c("top", "right", "bottom", "left", "all", "none", "circle")
+  )
+  assert_possible(
+    round,
+    c("top", "right", "bottom", "left", "all", "none")
+  )
 
   if ("all" %in% sides) {
-    .tag <- tagAddClass(.tag, "border")
+    tag <- tag_class_add(tag, "border")
   } else if ("none" %in% sides) {
-    .tag <- tagAddClass(.tag, "border-0")
+    tag <- tag_class_add(tag, "border-0")
   } else {
-    .tag <- tagAddClass(.tag, sprintf("border-%s", sides))
+    tag <- tag_class_add(tag, sprintf("border-%s", sides))
   }
 
   if (!is.null(color)) {
-    .tag <- colorUtility(.tag, "border", color)
+    tag <- color_apply(tag, "border", color)
   }
 
   if (!is.null(round)) {
@@ -375,18 +330,19 @@ border <- function(.tag, color = NULL, sides = "all", round = NULL) {
     round[round == "rounded-none"] <- "rounded-0"
     round[round == "rounded-all"] <- "rounded"
 
-    .tag <- tagAddClass(.tag, round)
+    tag <- tag_class_add(tag, round)
   }
 
-  attachDependencies(.tag, yonderDep())
+  attach_dependencies(tag)
 }
 
-#' Change color for selected choices
+#' Color selected choices
 #'
-#' Please note this will only have an effect on elements with selectedable
-#' choices, e.g. `checkbarInput()`.
+#' Use `active()` to change the color of active selected choices. This utility
+#' will only have an effect on elements with selectable choices, e.g.
+#' `checkbarInput()`.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
 #' @param color One of `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
 #'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`, `"white"`
@@ -394,19 +350,12 @@ border <- function(.tag, color = NULL, sides = "all", round = NULL) {
 #'
 #' @family design
 #' @export
-active <- function(.tag, color) {
-  if (!(color %in% .colors)) {
-    stop(
-      "invalid `active()` argument, `color` must be one of ",
-      '"red", "purple", "indigo", "blue", "cyan", "teal", "green", "yellow", ',
-      '"amber", "orange", "grey", "white"',
-      .call = FALSE
-    )
-  }
+active <- function(tag, color) {
+  assert_possible(color, .colors)
 
-  .tag <- tagAddClass(.tag, paste0("active-", color))
+  tag <- tag_class_add(tag, paste0("active-", color))
 
-  attachDependencies(.tag, yonderDep())
+  attach_dependencies(tag)
 }
 
 #' Add shadows to tag elements
@@ -417,7 +366,7 @@ active <- function(.tag, color) {
 #' Although `"none"` is an allowed `size`, most elements do not have a shadow by
 #' default.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
 #' @param size One of `"none"`, `"small"`, `"regular"`, or `"large"` specifying
 #'   the amount of shadow added, defaults to `"regular"`.
@@ -447,21 +396,15 @@ active <- function(.tag, color) {
 #'   lapply(
 #'     c("small", "regular", "large"),
 #'     shadow,
-#'     .tag = div() %>%
+#'     tag = div() %>%
 #'       padding(5) %>%
 #'       margin(2)
 #'   )
 #' ) %>%
 #'   display("flex")
 #'
-shadow <- function(.tag, size = "regular") {
-  if (!re(size, "none|small|regular|large", len0 = FALSE)) {
-    stop(
-      "invalid `shadow()` argument, `size` must be one of ",
-      '"none", "small", "regular", or "large"',
-      call. = FALSE
-    )
-  }
+shadow <- function(tag, size = "regular") {
+  assert_possible(size, c("none", "small", "regular", "large"))
 
   size <- switch(
     size,
@@ -471,14 +414,14 @@ shadow <- function(.tag, size = "regular") {
     large = "shadow-lg"
   )
 
-  if (tagHasClass(.tag, "yonder-chip")) {
-    .tag$children[[3]] <- tagAddClass(.tag$children[[3]], "chips-shadow")
-    return(.tag)
+  if (tag_class_re(tag, "yonder-chip")) {
+    tag$children[[3]] <- tag_class_add(tag$children[[3]], "chips-shadow")
+    return(tag)
   }
 
-  .tag <- tagAddClass(.tag, size)
+  tag <- tag_class_add(tag, size)
 
-  attachDependencies(.tag, yonderDep())
+  attach_dependencies(tag)
 }
 
 #' Tag element float
@@ -487,7 +430,7 @@ shadow <- function(.tag, size = "regular") {
 #' element. A newspaper layout is a classic usage where an image is floated with
 #' text wrapped around.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
 #' @param side A [responsive] argument. One of `"left"` or `"right"` specifying
 #'   the side to float the element.
@@ -522,14 +465,14 @@ shadow <- function(.tag, size = "regular") {
 #'   )
 #' )
 #'
-float <- function(.tag, side) {
-  side <- ensureBreakpoints(side, c("left", "right"))
+float <- function(tag, side) {
+  side <- resp_construct(side, c("left", "right"))
 
-  classes <- createResponsiveClasses(side, "float")
+  classes <- resp_classes(side, "float")
 
-  .tag <- tagAddClass(.tag, classes)
+  tag <- tag_class_add(tag, classes)
 
-  attachDependencies(.tag, yonderDep())
+  attach_dependencies(tag)
 }
 
 #' Affix elements to top or bottom of page
@@ -539,7 +482,7 @@ float <- function(.tag, side) {
 #' of a page *after* the element is scrolled past. *Important*, the IE11 and
 #' Edge browsers do not support the sticky behavior.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
 #' @param position One of `"top"`, `"bottom"`, or `"sticky"` specifying the
 #'   fixed behavior of an element.
@@ -559,8 +502,8 @@ float <- function(.tag, side) {
 #'   flex(justify = "center") %>%
 #'   affix("top")
 #'
-affix <- function(.tag, position) {
-  if (!re(position, "top|bottom|sticky", len0 = FALSE)) {
+affix <- function(tag, position) {
+  if (!str_re(position, "top|bottom|sticky", len0 = FALSE)) {
     stop(
       "invalid `affix` argument, `position` must be one of ",
       '"top", "bottom", or "sticky"',
@@ -569,28 +512,24 @@ affix <- function(.tag, position) {
   }
 
   if (position == "sticky") {
-    .tag <- tagAddClass(.tag, "sticky-top")
+    tag <- tag_class_add(tag, "sticky-top")
   } else {
-    .tag <- tagAddClass(.tag, paste0("fixed-", position))
+    tag <- tag_class_add(tag, paste0("fixed-", position))
   }
 
-  attachDependencies(.tag, yonderDep())
+  attach_dependencies(tag)
 }
 
 #' Tag element display
 #'
 #' Use the `display()` utility to adjust how a tag element is rendered. All
 #' arguments are responsive allowing you to hide elements on small screens or
-#' convert elements from inline to block on large screens. Most of the time
-#' you will use the `render` argument. However if you want to control how an
-#' element appears (or does not appear) when the page is printed use the `print`
-#' argument.
+#' convert elements from inline to block on large screens.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
-#' @param render,print A [responsive] argument. One of `"inline"`, `"block"`,
-#'   `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`, defaults to
-#'   `NULL`.
+#' @param type A [responsive] argument. One of `"inline"`, `"block"`,
+#'   `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`.
 #'
 #' @family design
 #' @export
@@ -617,29 +556,17 @@ affix <- function(.tag, position) {
 #'     justify = c(sm = "around")
 #'   )
 #'
-#' ### Printing pages
-#'
-#' # This element is not shown when the page is printed.
-#'
-#' div() %>%
-#'   height(4) %>%
-#'   background("orange") %>%
-#'   display(print = "none")  # <-
-#'
-display <- function(.tag, render = NULL, print = NULL) {
-  possibles <- c("inline", "block", "inline-block", "flex", "inline-flex", "none")
-
-  render <- ensureBreakpoints(render, possibles)
-  print <- ensureBreakpoints(print, possibles)
-
-  classes <- c(
-    createResponsiveClasses(render, "d"),
-    createResponsiveClasses(print, "d-print")
+display <- function(tag, type) {
+  type <- resp_construct(
+    type,
+    c("inline", "block", "inline-block", "flex", "inline-flex", "none")
   )
 
-  .tag <- tagAddClass(.tag, classes)
+  classes <- resp_classes(type, "d")
 
-  attachDependencies(.tag, yonderDep())
+  tag <- tag_class_add(tag, classes)
+
+  attach_dependencies(tag)
 }
 
 #' Tag element margin and padding
@@ -651,7 +578,7 @@ display <- function(.tag, render = NULL, print = NULL) {
 #' child elements. All arguments default to `NULL`, in which case they are
 #' ignored.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
 #' @param all,top,right,bottom,left A [responsive] argument.
 #'
@@ -705,7 +632,8 @@ display <- function(.tag, render = NULL, print = NULL) {
 #'   checkboxInput(
 #'     id = "remember",
 #'     choice = "Remember me"
-#'   )
+#'   ),
+#'   submit = buttonInput("go", "Login")
 #' )
 #'
 #' # Without any adjustments the layout is not great. But, with some styling we
@@ -731,70 +659,76 @@ display <- function(.tag, render = NULL, print = NULL) {
 #'     choice = "Remember me"
 #'   ) %>%
 #'     margin(r = c(sm = 2), b = 2),  # <-
-#'   submit = submitInput("Log in") %>%
+#'   submit = buttonInput(NULL, "Log in") %>%
 #'     margin(b = 2)  # <-
 #' )
 #'
-padding <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
+padding <- function(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
                     left = NULL) {
   possibles <- c(0:5, "auto")
 
-  all <- ensureBreakpoints(all, possibles)
-  top <- ensureBreakpoints(top, possibles)
-  right <- ensureBreakpoints(right, possibles)
-  bottom <- ensureBreakpoints(bottom, possibles)
-  left <- ensureBreakpoints(left, possibles)
+  all <- resp_construct(all, possibles)
+  top <- resp_construct(top, possibles)
+  right <- resp_construct(right, possibles)
+  bottom <- resp_construct(bottom, possibles)
+  left <- resp_construct(left, possibles)
 
   classes <- c(
-    createResponsiveClasses(top, "t"),
-    createResponsiveClasses(right, "r"),
-    createResponsiveClasses(bottom, "b"),
-    createResponsiveClasses(left, "l")
+    resp_classes(top, "t"),
+    resp_classes(right, "r"),
+    resp_classes(bottom, "b"),
+    resp_classes(left, "l")
   )
 
   if (!is.null(classes)) {
     classes <- paste0("p", classes)
   }
 
-  classes <- c(createResponsiveClasses(all, "p"), classes)
+  classes <- c(resp_classes(all, "p"), classes)
 
-  .tag <- tagAddClass(.tag, classes)
+  tag <- tag_class_add(tag, classes)
 
-  attachDependencies(.tag, yonderDep())
+  attach_dependencies(tag)
 }
 
 #' @rdname padding
 #' @export
-margin <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
+margin <- function(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
                    left = NULL) {
   possibles <- c(0:5, "auto", paste0("n", 1:5))
 
-  fixNegative <- function(x) {
+  format_negative <- function(x) {
     if (x < 0) paste0("n", abs(x)) else x
   }
 
-  all <- ensureBreakpoints(all, possibles, fixNegative)
-  top <- ensureBreakpoints(top, possibles, fixNegative)
-  right <- ensureBreakpoints(right, possibles, fixNegative)
-  bottom <- ensureBreakpoints(bottom, possibles, fixNegative)
-  left <- ensureBreakpoints(left, possibles, fixNegative)
+  all <- lapply(all, format_negative)
+  top <- lapply(top, format_negative)
+  right <- lapply(right, format_negative)
+  bottom <- lapply(bottom, format_negative)
+  left <- lapply(left, format_negative)
+
+  all <- resp_construct(all, possibles)
+  top <- resp_construct(top, possibles)
+  right <- resp_construct(right, possibles)
+  bottom <- resp_construct(bottom, possibles)
+  left <- resp_construct(left, possibles)
 
   classes <- c(
-    createResponsiveClasses(top, "t"),
-    createResponsiveClasses(right, "r"),
-    createResponsiveClasses(bottom, "b"),
-    createResponsiveClasses(left, "l")
+    resp_classes(top, "t"),
+    resp_classes(right, "r"),
+    resp_classes(bottom, "b"),
+    resp_classes(left, "l")
   )
 
   if (!is.null(classes)) {
     classes <- paste0("m", classes)
   }
 
-  classes <- c(createResponsiveClasses(all, "m"), classes)
+  classes <- c(resp_classes(all, "m"), classes)
 
-  .tag <- tagAddClass(.tag, classes)
+  tag <- tag_class_add(tag, classes)
 
-  attachDependencies(.tag, yonderDep())
+  attach_dependencies(tag)
 }
 
 #' Tag element width
@@ -804,7 +738,7 @@ margin <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 #' their parent element (i.e. 1/2 the width of their parent), or relative to the
 #' element's content.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
 #' @param size A character string or number specifying the width of the tag
 #'   element. Possible values:
@@ -836,7 +770,7 @@ margin <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 #'   lapply(
 #'     1:20,
 #'     width,
-#'     .tag = div() %>%
+#'     tag = div() %>%
 #'       border("black") %>%
 #'       height(4)
 #'   )
@@ -857,10 +791,10 @@ margin <- function(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 #'   height(5) %>%
 #'   width("1/3")  # <-
 #'
-width <- function(.tag, size) {
-  .tag <- tagAddClass(.tag, paste0("w-", size))
+width <- function(tag, size) {
+  tag <- tag_class_add(tag, paste0("w-", size))
 
-  attachDependencies(.tag, yonderDep())
+  attach_dependencies(tag)
 }
 
 #' Tag element height
@@ -869,7 +803,7 @@ width <- function(.tag, size) {
 #' relative to the font size of page (browser default is 16px), relative to
 #' their parent element, or relative to the element's content.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
 #' @param size A character string or number specifying the height of the tag
 #'   element. Possible values:
@@ -911,23 +845,23 @@ width <- function(.tag, size) {
 #'   display("flex") %>%
 #'   flex(justify = "between")
 #'
-height <- function(.tag, size) {
-  .tag <- tagAddClass(.tag, paste0("h-", size))
+height <- function(tag, size) {
+  tag <- tag_class_add(tag, paste0("h-", size))
 
-  attachDependencies(.tag, yonderDep())
+  attach_dependencies(tag)
 }
 
 #' Vertical and horizontal scroll
 #'
 #' Many of the applications you build depsite a complex layout will still fit
-#' onto a single page. To help scroll long content along side shorter content
-#' use the `scroll()` utility function.
+#' onto a single page. To help scroll long content alongside shorter content use
+#' the `scroll()` utility function.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
-#' @param direction One of `"x"` or `"y"` specifying which direction to scroll
-#'   the tag's content, defaults to `"y"`, in which case vertical scroll is
-#'   applied.
+#' @param direction One of `"horizontal"` or `"vertical"` specifying which
+#'   direction to scroll overflowing content, defaults to `"vertical"`, in which
+#'   case the content may croll up and down.
 #'
 #' @family design
 #' @export
@@ -938,73 +872,34 @@ height <- function(.tag, size) {
 #' div(
 #'   lapply(
 #'     rep("Integer placerat tristique nisl.", 20),
-#'     p
+#'     . %>% p() %>% margin(bottom = 2)
 #'   )
 #' ) %>%
 #'   height(20) %>%
-#'   border() %>%
+#'   border("black") %>%
 #'   scroll()
 #'
-scroll <- function(.tag, direction = "y") {
+scroll <- function(tag, direction = "vertical") {
   if (length(direction) != 1 || !is.character(direction)) {
     stop(
-      "invalid `scroll()` argument, `direction` must be a single character string",
+      "invalid `scroll()` argument, `direction` must be a single ",
+      "character string",
       call. = FALSE
     )
   }
 
-  if (direction != "x" && direction != "y") {
+  if (direction != "horizontal" && direction != "vertical") {
     stop(
-      'invalid `scroll()` arugment, `direction` must be one of "x" or "y"',
+      "invalid `scroll()` arugment, `direction` must be one of ",
+      '"vertical" or "horizontal"',
       call. = FALSE
     )
   }
 
-  .tag <- tagAddClass(.tag, paste0("scroll-", direction))
+  tag <- tag_class_add(
+    tag,
+    paste0("scroll-", if (direction == "vertical") "y" else "x")
+  )
 
-  attachDependencies(.tag, yonderDep())
-}
-
-# Apply styles to a tag
-#
-# This function applies any number of styles generated by utility function
-# calls.
-#
-# @param ... Any number of utility function calls **and** one tag object.
-#
-# @export
-# @examples
-# tagReduce(
-#   width(25),
-#   padding(3),
-#   tags$div()
-# )
-#
-tagReduce <- function(...) {
-  args <- list(...)
-
-  tag_objs <- vapply(args, is_tag, logical(1))
-
-  if (!any(tag_objs)) {
-    stop(
-      "invalid call to `tagReduce`, one argument must be a tag object",
-      call. = FALSE
-    )
-  }
-
-  if (sum(tag_objs) > 1) {
-    stop(
-      "invalid call to `tagReduce`, only one argument may be a tag object",
-      call. = FALSE
-    )
-  }
-
-  funs <- args[!tag_objs]
-  tag <- args[tag_objs][[1]]
-
-  if (length(funs) == 0) {
-    return(tag)
-  }
-
-  Reduce(function(acc, fun) fun(acc), funs, init = tag)
+  attach_dependencies(tag)
 }

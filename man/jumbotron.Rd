@@ -4,21 +4,20 @@
 \alias{jumbotron}
 \title{Jumbotron}
 \usage{
-jumbotron(title, subtitle, ..., fluid = FALSE)
+jumbotron(..., title = NULL, subtitle = NULL)
 }
 \arguments{
-\item{title}{A character string specifying the jumbotron's title.}
+\item{...}{Tag elements passed as child elements or named arguments passed as
+HTML attributes to the parent element.}
 
-\item{subtitle}{A character string specifying the jumbotron's subtitle.}
+\item{title}{A character string specifying a title for the jumbotron,
+defaults to \code{NULL}, in which case a title is not added.}
 
-\item{...}{Additional tag elements or named arguments passed as HTML
-attributes to the parent element.}
-
-\item{fluid}{One of \code{TRUE} or \code{FALSE} specifying if the jumbotron fills the
-width of its parent container, defaults to \code{FALSE}.}
+\item{subtitle}{A character string specifying a subtitle for the jumbotron,
+defaults to \code{NULL}, in which case a subtitle is not added.}
 }
 \description{
-Highlight messages.
+A showcase banner, good for front or splash pages.
 }
 \examples{
 
@@ -26,10 +25,9 @@ Highlight messages.
 
 jumbotron(
   title = "Welcome, welcome!",
-  subtitle = "This simple jumbotron-style component",
+  subtitle = "Here we are showcasing the very showcase itself.",
   tags$p(
-    "Here we can talk more about this excellently superb new feature.",
-    "The best."
+    "Now let's talk more about that superb new feature."
   )
 )
 

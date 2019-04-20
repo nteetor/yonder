@@ -9,8 +9,8 @@
 #'
 #' @inheritParams buttonInput
 #'
-#' @param choices A character string or vector specifying a label for the
-#'   checkbox or checkbar.
+#' @param choices A character string or vector specifying a label or labels for
+#'   the checkbox or checkbar.
 #'
 #' @param values A character string or vector specifying values for the
 #'   checkbox or checkbar input, defaults to `choice` or `values`, respectively.
@@ -89,20 +89,8 @@
 #'
 checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
                           inline = FALSE) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `chekcboxInput()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  if (length(choices) != length(values)) {
-    stop(
-      "invalid `checkboxInput()` argument, `choices` and `values` must have ",
-      "the same length",
-      call. = FALSE
-    )
-  }
+  assert_id()
+  assert_choices()
 
   selected <- values %in% selected
 
@@ -114,7 +102,7 @@ checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
       child_id <- generate_id("checkbox")
 
       tags$div(
-        class = collate(
+        class = str_collate(
           "custom-control",
           "custom-checkbox",
           if (inline) "custom-control-inline"
@@ -138,38 +126,39 @@ checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
     }
   )
 
-  element <- tags$div(
+  component <- tags$div(
     class = "yonder-checkbox",
     id = id,
     checkboxes,
     ...
   )
 
-  attachDependencies(element, yonderDep())
+  attach_dependencies(component)
 }
 
 #' @rdname checkboxInput
 #' @export
 switchInput <- function(id, choices, values = choices, selected = NULL, ...) {
-  input <- checkboxInput(id, choices, values, selected, inline = FALSE, ...)
+  assert_id()
+  assert_choices()
 
-  input[["children"]][[1]] <- lapply(input[["children"]][[1]], function(child) {
-    tagAddClass(tagDropClass(child, "custom-checkbox"), "custom-switch")
-  })
+  component <- checkboxInput(id, choices, values, selected, inline = FALSE, ...)
 
-  input
+  component[["children"]][[1]] <- lapply(
+    component[["children"]][[1]],
+    function(child) {
+      tag_class_add(tag_class_remove(child, "custom-checkbox"), "custom-switch")
+    }
+  )
+
+  component
 }
 
 #' @rdname checkboxInput
 #' @export
 checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
-  if (length(choices) != length(values)) {
-    stop(
-      "invalid `checkbarInput()` arguments, `choices` and `values` must have ",
-      "the same length",
-      call. = FALSE
-    )
-  }
+  assert_id()
+  assert_choices()
 
   selected <- values %in% selected
 
@@ -179,7 +168,7 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
     select = selected,
     function(choice, value, select) {
       tags$label(
-        class = collate(
+        class = str_collate(
           "btn",
           "btn-grey",
           if (select) "active"
@@ -195,7 +184,7 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
     }
   )
 
-  element <- tags$div(
+  component <- tags$div(
     class = "yonder-checkbar btn-group btn-group-toggle d-flex",
     id = id,
     `data-toggle` = "buttons",
@@ -203,5 +192,5 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
     ...
   )
 
-  attachDependencies(element, yonderDep())
+  attach_dependencies(component)
 }

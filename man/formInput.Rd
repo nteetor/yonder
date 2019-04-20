@@ -4,24 +4,23 @@
 \alias{formInput}
 \title{Form inputs}
 \usage{
-formInput(id, ..., submit = submitInput(), inline = FALSE)
+formInput(id, submit, ..., inline = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
 
+\item{submit}{A button input, which will trigger the form and cause reactives
+to update.}
+
 \item{...}{Any number of unnamed arguments (inputs or tag elements) passed as
-child elements of the form.
+child elements to the form.
 
 Additional named arguments passed as HTML attributes to the parent element.}
 
-\item{submit}{A submit button or tags containing a submit button. The submit
-button will trigger the update of input form elements. Defaults to
-\code{\link[=submitInput]{submitInput()}}.}
-
 \item{inline}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} the form and its child
 elements are rendered in a horizontal row, defaults to \code{FALSE}. On small
-viewports, think mobile device, \code{inline} has no effect and the form will
-span multiple lines.}
+viewports, think mobile device, \code{inline} intentionally has no effect and
+the form will span multiple lines.}
 }
 \description{
 Form inputs are a new reactive input. Form inputs are an alternative to
@@ -30,6 +29,11 @@ inputs. The value of these inputs will not change until the form input's
 submit input is clicked. A form input's reactive value also depends on the
 submit input. This allows you to distinguish between different clicks if
 your form includes multiple submit inputs.
+
+A submit input is a special type of button used to control form input
+submission. Because of their specific usage, submit inputs do not require an
+\code{id}, but may have a specified \code{value}. Submit inputs will \emph{not} freeze all
+reactive inputs, see \code{\link[=formInput]{formInput()}}.
 
 If \code{id} or \code{submit} are \code{NULL} the form input will not freeze its child
 inputs.
@@ -67,7 +71,7 @@ shinyApp(ui, server)
 
 \examples{
 
-### Customizing the submit button
+### A simple form
 
 card(
   header = "Please pick a flavor",
@@ -80,9 +84,9 @@ card(
         choices = c("Mint", "Moose tracks", "Marble"),
       )
     ),
-    submit = submitInput(  # <-
-      label = "Make choice",
-      block = TRUE
+    submit = buttonInput(  # <-
+      id = NULL,
+      label = "Make choice"
     ) \%>\%
       background("teal")
   )

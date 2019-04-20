@@ -1,6 +1,10 @@
-#' A chips input
+#' Chip input, selectize alternative
 #'
-#' A selectize alternative.
+#' The chip input is a selectize alternative. Choices are selected from a
+#' dropdown menu and appear as chips below the input's text box. Chips do not
+#' appear in the order they are selected. Instead chips are shown in the order
+#' specified by the `choices` argument. Use the `max` argument to limit the
+#' number of choices a user may select.
 #'
 #' @inheritParams buttonInput
 #'
@@ -14,9 +18,10 @@
 #'
 #' @param max A number specifying the maximum number of items a user may select.
 #'
-#' @param fill One of `TRUE` or `FALSE` specifying the layout of chips. If
-#'   `TRUE` chips fill the width of the parent element, otherwise if `FALSE` the
-#'   chips are rendered inline, defaults to `TRUE`.
+#' @param inline One of `TRUE` or `FALSE` specifying if chips are rendered
+#'   inline. If `TRUE` multiple chips may fit onto a single row, otherwise, if
+#'   `FALSE`, chips expand to fill the width of their parent element, one chip
+#'   per row.
 #'
 #' @section **Example** simple application:
 #'
@@ -26,7 +31,7 @@
 #'     id = "chips",
 #'     choices = paste("Option number", 1:10),
 #'     values = 1:10,
-#'     fill = TRUE
+#'     inline = TRUE
 #'   ) %>%
 #'     width("1/2")
 #' )
@@ -77,36 +82,24 @@
 #' )
 #'
 chipInput <- function(id, choices, values = choices, selected = NULL, ...,
-                      max = NULL, fill = TRUE) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `chipInput()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  if (length(choices) != length(values)) {
-    stop(
-      "invalid `chipInput()` argument, `choices` and `values` must be the ",
-      "same length",
-      call. = FALSE
-    )
-  }
+                      max = NULL, inline = TRUE) {
+  assert_id()
+  assert_choices()
 
   selected <- values %in% selected
 
-  dropdownToggle <- tags$input(
+  toggle <- tags$input(
     class = "form-control form-control-sm",
     `data-toggle` = "dropdown"
   )
 
-  dropdownItems <- Map(
+  items <- Map(
     choice = choices,
     value = values,
     select = selected,
     function(choice, value, select) {
       tags$button(
-        class = collate(
+        class = str_collate(
           "dropdown-item",
           if (select) "selected"
         ),
@@ -122,11 +115,10 @@ chipInput <- function(id, choices, values = choices, selected = NULL, ...,
     select = selected,
     function(choice, value, select) {
       tags$button(
-        class = collate(
+        class = str_collate(
           "chip",
           if (select) "active"
         ),
-        ## href = "javascript:void(0)",
         value = value,
         tags$span(
           class = "chip-content",
@@ -140,22 +132,22 @@ chipInput <- function(id, choices, values = choices, selected = NULL, ...,
     }
   )
 
-  element <- tags$div(
+  component <- tags$div(
     id = id,
-    class = collate(
+    class = str_collate(
       "yonder-chip",
       "btn-group dropup"
     ),
     `data-max` = max %||% -1,
-    dropdownToggle,
+    toggle,
     tags$div(
       class = "dropdown-menu",
-      dropdownItems
+      items
     ),
     tags$div(
-      class = collate(
+      class = str_collate(
         "chips",
-        if (fill) "chips-block" else "chips-inline",
+        if (!inline) "chips-block" else "chips-inline",
         "chips-grey"
       ),
       chips
@@ -163,5 +155,5 @@ chipInput <- function(id, choices, values = choices, selected = NULL, ...,
     ...
   )
 
-  attachDependencies(element, yonderDep())
+  attach_dependencies(component)
 }

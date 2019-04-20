@@ -32,7 +32,6 @@ Looking for ... ?
 \item \code{radioButtons()} use \code{\link[=radioInput]{radioInput()}}
 \item \code{checkboxGroupInput()} use \code{\link[=checkbarInput]{checkbarInput()}}
 \item \code{numericInput()} use \code{\link[=numberInput]{numberInput()}}
-\item \code{submitButton()} use \code{\link[=submitInput]{submitInput()}}
 \item \code{updateRadioButtons()}, \code{updateTextInput()}, etc. use \code{\link[=updateInput]{updateInput()}}
 }
 }
@@ -70,10 +69,10 @@ Other contributors:
 \itemize{
   \item  The Bootstrap Authors (Bootstrap library) [copyright holder]
   \item  Twitter, Inc (Bootstrap library) [copyright holder]
-  \item Eli Grey (FileSaver.js library) [contributor, copyright holder]
   \item Denis Ineshin (ion.rangeSlider library) [contributor, copyright holder]
   \item  JS Foundation (jQuery library) [copyright holder]
   \item Federico Zivolo (popper.js library) [contributor, copyright holder]
+  \item Johann Servoire (bs-custom-file-input library) [contributor, copyright holder]
 }
 
 }

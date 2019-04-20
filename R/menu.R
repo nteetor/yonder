@@ -60,47 +60,14 @@
 #'
 menuInput <- function(id, label, choices, values = choices, ...,
                       direction = "down", align = "left") {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `menuInput()` argument, `id` must be a character string or NULL",
-      call. = FALSE
-    )
-  }
+  assert_id()
+  assert_choices()
 
-  if (missing(label) || missing(choices)) {
-    stop(
-      "invalid `menuInput()` arguments, you may be missing `label` or ",
-      "`choices`",
-      call. = FALSE
-    )
-  }
+  assert_possible(direction, c("up", "right", "down", "left"))
+  assert_possible(align, c("right", "left"))
 
-  if (length(choices) != length(values)) {
-    stop(
-      "invalid `menuInput()` arguments, `choices` and `values` must be the ",
-      "same length",
-      call. = FALSE
-    )
-  }
-
-  if (!re(direction, "up|right|down|left", len0 = FALSE)) {
-    stop(
-      "invalid `menuInput()` arugment, `direction` must be one of ",
-      '"up", "right", "down", or "left"',
-      call. = FALSE
-    )
-  }
-
-  if (!re(align, "right|left", len0 = FALSE)) {
-    stop(
-      "invalid `menuInput()` argument, `align` must be one of ",
-      '"right" or "left"',
-      call. = FALSE
-    )
-  }
-
-  element <- tags$div(
-    class = collate(
+  component <- tags$div(
+    class = str_collate(
       "yonder-menu",
       paste0("drop", direction)
     ),
@@ -115,7 +82,7 @@ menuInput <- function(id, label, choices, values = choices, ...,
     ),
     ...,
     tags$div(
-      class = collate(
+      class = str_collate(
         "dropdown-menu",
         if (align == "right") "dropdown-menu-right"
       ),
@@ -134,8 +101,5 @@ menuInput <- function(id, label, choices, values = choices, ...,
     )
   )
 
-  attachDependencies(
-    element,
-    yonderDep()
-  )
+  attach_dependencies(component)
 }

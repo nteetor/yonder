@@ -63,54 +63,53 @@
 #' # above.
 #'
 collapsiblePane <- function(id, ..., show = FALSE) {
-  if (!is.character(id)) {
-    stop(
-      "inavlid `collapsiblePane()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
+  assert_id()
 
   pane <- tags$div(
     id = id,
-    class = collate(
+    class = str_collate(
       "collapse",
       if (show) "show"
     ),
     ...
   )
 
-  attachDependencies(pane, yonderDep())
+  attach_dependencies(pane)
 }
 
 #' @rdname collapsiblePane
 #' @export
 collapsePane <- function(id, session = getDefaultReactiveDomain()) {
-  sendCollapseMessage("hide", id, session)
+  assert_session()
+
+  session$sendCustomMessage("yonder:collapse", list(
+    type = "hide",
+    data = list(
+      target = id
+    )
+  ))
 }
 
 #' @rdname collapsiblePane
 #' @export
 expandPane <- function(id, session = getDefaultReactiveDomain()) {
-  sendCollapseMessage("show", id, session)
+  assert_session()
+
+  session$sendCustomMessage("yonder:collapse", list(
+    type = "show",
+    data = list(
+      target = id
+    )
+  ))
 }
 
 #' @rdname collapsiblePane
 #' @export
 togglePane <- function(id, session = getDefaultReactiveDomain()) {
-  sendCollapseMessage("toggle", id, session)
-}
-
-# internal
-sendCollapseMessage <- function(type, id, session) {
-  if (is.null(session)) {
-    stop(
-      "`", sys.call(-1)[[1]], "()`, must be called within a reactive context",
-      call. = FALSE
-    )
-  }
+  assert_session()
 
   session$sendCustomMessage("yonder:collapse", list(
-    type = type,
+    type = "toggle",
     data = list(
       target = id
     )

@@ -4,14 +4,17 @@
 \alias{alert}
 \title{Alert boxes}
 \usage{
-alert(..., title = NULL)
+alert(..., dismissible = TRUE, fade = TRUE)
 }
 \arguments{
 \item{...}{Character strings specifying the text of the alert or additional
 named arguments passed as HTML attributes to the alert element.}
 
-\item{title}{A character string or tag element specifying a heading for the
-alert, defaults to \code{NULL}, in which case a title is not added.}
+\item{dismissible}{One of \code{TRUE} or \code{FALSE} specifying if the alert may be
+dismissed by the user, deafults to \code{TRUE}.}
+
+\item{fade}{One of \code{TRUE} or \code{FALSE} specifying if the alert fades out or
+immediately disappears when dismissed, defaults to \code{TRUE}.}
 }
 \description{
 Use an alert element to let the user know of successes or to call attention
@@ -27,7 +30,7 @@ alert("Donec at pede.") \%>\%
 ### A more complex alert
 
 alert(
-  p("Etiam vel tortor sodales"),
+  h4("Etiam vel tortor sodales"),
   hr(),
   p("Fusce commodo.")
 ) \%>\%

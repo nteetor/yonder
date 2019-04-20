@@ -74,7 +74,9 @@
 fileInput <- function(id, placeholder = "Choose file", browse = "Browse",
                       left = NULL, right = NULL, ...,
                       multiple = TRUE, accept = NULL) {
-  if (is_tag(left) && !tagIs(left, "button")) {
+  assert_id()
+
+  if (is_tag(left) && !tag_name_is(left, "button")) {
     stop(
       "invalid `fileInput()` argument, `left` must be a button element or ",
       "character string",
@@ -82,7 +84,7 @@ fileInput <- function(id, placeholder = "Choose file", browse = "Browse",
     )
   }
 
-  if (is_tag(right) && !tagIs(right, "button")) {
+  if (is_tag(right) && !tag_name_is(right, "button")) {
     stop(
       "invalid `fileInput()` argument, `right` must be a button element or ",
       "character string",
@@ -119,7 +121,7 @@ fileInput <- function(id, placeholder = "Choose file", browse = "Browse",
     )
   }
 
-  input <- tags$div(
+  component <- tags$div(
     class = "yonder-file input-group",
     id = id,
     ...,
@@ -144,5 +146,5 @@ fileInput <- function(id, placeholder = "Choose file", browse = "Browse",
     right
   )
 
-  attachDependencies(input, yonderDep())
+  attach_dependencies(component)
 }

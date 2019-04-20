@@ -12,7 +12,15 @@ is_strictly_list <- function(x) {
   length(class(x)) == 1 && class(x) == "list"
 }
 
-conjoin <- function(x, con = "or") {
+drop_nulls <- function(x) {
+  if (length(x) == 0) {
+    x
+  } else {
+    x[!vapply(x, is.null, logical(1))]
+  }
+}
+
+str_conjoin <- function(x, con = "or") {
   if (length(x) == 1) {
     return(as.character(x))
   }
@@ -24,7 +32,21 @@ conjoin <- function(x, con = "or") {
   paste0(paste(x[-length(x)], collapse = ", "), ", ", con, " ", x[length(x)])
 }
 
-re <- function(string, pattern, len0 = TRUE) {
+str_collate <- function(..., collapse = " ") {
+  args <- unique(c(...))
+
+  if (is.null(args)) {
+    NULL
+  } else if (all(args == "")) {
+    NULL
+  } else if (all(is.na(args))) {
+    NA_character_
+  } else {
+    paste(args, collapse = collapse)
+  }
+}
+
+str_re <- function(string, pattern, len0 = TRUE) {
   if (length(string) == 0) {
     return(len0)
   }
@@ -40,84 +62,138 @@ names2 <- function(x) {
   names(x) %||% rep.int("", length(x))
 }
 
-attribs <- function(x) {
-  if (is.null(x)) {
-    return(NULL)
-  }
+named_values <- function(x) {
   x[names2(x) != ""]
 }
 
-elements <- function(x) {
-  if (is.null(x)) {
-    return(NULL)
-  }
-  unname(x[names2(x) == ""])
+unnamed_values <- function(x) {
+  x[names2(x) == ""]
 }
 
-collate <- function(..., collapse = " ") {
-  args <- unique(c(...))
-
-  if (is.null(args)) {
-    NULL
-  } else if (all(args == "")) {
-    NULL
-  } else if (all(is.na(args))) {
-    NA_character_
-  } else {
-    paste(args, collapse = collapse)
-  }
+is_tag <- function(x) {
+  inherits(x, "shiny.tag")
 }
 
-msgInvalidValues <- function(fun, argument, invalid) {
-  if (is.character(invalid)) {
-    invalid <- paste0('"', invalid, '"')
+tag_name_is <- function(x, name) {
+  stopifnot(is_tag(x))
+  isTRUE(x$name == name)
+}
+
+tag_attributes_add <- function(x, attrs, ...) {
+  stopifnot(is_tag(x))
+  x$attribs <- c(x$attribs, attrs, list(...))
+  x
+}
+
+tag_class_add <- function(x, class) {
+  stopifnot(is_tag(x))
+
+  class <- trimws(class, "both")
+
+  if (length(class) < 1 || !all(nzchar(class))) {
+    return(x)
   }
 
-  sprintf(
-    "invalid call to `%s()`, argument `%s` contains unexpected value%s %s",
-    as.character(fun),
-    as.character(argument),
-    if (length(invalid) > 1) "s" else "",
-    conjoin(as.character(invalid), con = "and")
+  if (is.null(x$attribs$class)) {
+    x$attribs$class <- paste(class, collapse = " ")
+    return(x)
+  }
+
+  class <- unlist(strsplit(class, "\\s+"))
+
+  dups <- vapply(class, grepl, logical(1), x = x$attribs$class, fixed = TRUE)
+  new <- paste0(class[!dups], collapse = " ")
+
+  if (isTRUE(nzchar(new))) {
+    x$attribs$class <- paste(x$attribs$class, new)
+  }
+
+  x
+}
+
+tag_class_remove <- function(x, regex) {
+  stopifnot(is_tag(x))
+
+  if (is.null(x$attribs$class)) {
+    return(x)
+  }
+
+  x$attribs$class <- gsub("\\s+", " ", gsub(regex, "", x$attribs$class))
+
+  x
+}
+
+tag_class_re <- function(x, regex) {
+  stopifnot(is_tag(x))
+
+  if (is.null(x$attribs$class)) {
+    return(FALSE)
+  }
+
+  regex <- paste0(
+    c("^", "^", "\\s", "\\s"), regex, c("$", "\\s", "\\s", "$"),
+    collapse = "|"
   )
+
+  grepl(regex, x$attribs$class)
 }
 
-msgInvalidBreakpoints <- function(fun, argument, invalid) {
+resp_msg_breaks <- function(argument, invalid) {
+  fun <- sys.call(1)[[1]]
+
   sprintf(
     "invalid call to `%s()`, argument `%s` contains unexpected breakpoint%s %s",
     as.character(fun),
     as.character(argument),
     if (length(invalid) > 1) "s" else "",
-    conjoin(paste0("`", invalid, "`"))
+    str_conjoin(paste0("`", invalid, "`"))
   )
 }
 
-msgInvalidTooManyValues <- function(fun, argument, invalid) {
+resp_msg_values <- function(argument, invalid) {
+  if (is.character(invalid)) {
+    invalid <- paste0('"', invalid, '"')
+  }
+
+  fun <- sys.call(1)[[1]]
+
   sprintf(
-    "invalid call to `%s()`, argument `%s` breakpoint%s %s contain%s too many values",
+    "invalid `%s()` argument, `%s` contains unexpected value%s %s",
     as.character(fun),
     as.character(argument),
     if (length(invalid) > 1) "s" else "",
-    conjoin(paste0("`", invalid, "`"), con = "and"),
+    str_conjoin(as.character(invalid), con = "and")
+  )
+}
+
+resp_msg_too_many <- function(argument, invalid) {
+  fun <- sys.call(1)[[1]]
+
+  sprintf(
+    "invalid `%s()` argument, `%s` breakpoint%s %s contain%s too many values",
+    as.character(fun),
+    as.character(argument),
+    if (length(invalid) > 1) "s" else "",
+    str_conjoin(paste0("`", invalid, "`"), con = "and"),
     if (length(invalid) > 1) "" else "s"
   )
 }
 
-msgDuplicateBreakpoints <- function(fun, duplicates, arguments) {
-  fun <- as.character(fun)
+resp_msg_duplicates <- function(duplicates, arguments) {
+  fun <- sys.call(1)[[1]]
   duplicates <- as.character(duplicates)
   arguments <- as.character(arguments)
 
   sprintf(
     "invalid call to `%s()`, %s breakpoint%s specified in multiple arguments %s",
-    fun,
-    conjoin(sprintf("`%s`", duplicates), con = "and"),
+    as.character(fun),
+    str_conjoin(sprintf("`%s`", duplicates), con = "and"),
     if (length(duplicates) > 1) "s" else "",
-    conjoin(sprintf("`%s`", arguments), con = "and")
+    str_conjoin(sprintf("`%s`", arguments), con = "and")
   )
 }
 
-checkDuplicateBreakpoints <- function(...) {
+resp_check <- function(...) {
   passed <- as.character(as.list(substitute(list(...)))[-1])
   args <- list(...)
   flat <- unlist(list(...))
@@ -128,64 +204,21 @@ checkDuplicateBreakpoints <- function(...) {
     caller <-  sys.call(-1)[[1]]
 
     stop(
-      msgDuplicateBreakpoints(caller, dups, points),
+      resp_msg_duplicates(dups, points),
       call. = FALSE
     )
   }
 }
 
-ensureBreakpoints <- function(values, possible, transform = NULL) {
-  if (is.null(values)) {
-    return(list())
-  }
-
-  values <- if (is.null(transform)) as.list(values) else lapply(values, transform)
-  caller <- sys.call(-1)[[1]]
-  passed <- match.call()$values
-
-  if (length(values) == 1 && names2(values) == "") {
-    names(values) <- "default"
-  }
-
-  if (length(invalid <- getInvalidBreakpoints(values))) {
-    stop(
-      msgInvalidBreakpoints(caller, passed, invalid),
-      call. = FALSE
-    )
-  }
-
-  if (length(invalid <- getInvalidLengths(values))) {
-    stop(
-      msgInvalidTooManyValues(caller, passed, invalid),
-      call. = FALSE
-    )
-  }
-
-  if (length(invalid <- getInvalidValues(values, possible))) {
-    stop(
-      msgInvalidValues(caller, passed, invalid),
-      call. = FALSE
-    )
-  }
-
-  names(values) <- vapply(
-    names2(values),
-    function(nm) if (nm == "xs") "default" else nm,
-    character(1)
-  )
-
-  values
-}
-
-getInvalidBreakpoints <- function(values) {
+resp_check_breaks <- function(values) {
   if (length(values) == 0) {
     return(NULL)
   }
 
-  names2(values)[!re(names2(values), "default|xs|sm|md|lg|xl")]
+  names2(values)[!str_re(names2(values), "default|xs|sm|md|lg|xl")]
 }
 
-getInvalidLengths <- function(values) {
+resp_check_lengths <- function(values) {
   if (length(values) == 0) {
     return(NULL)
   }
@@ -193,7 +226,7 @@ getInvalidLengths <- function(values) {
   names2(values)[vapply(values, length, numeric(1)) > 1]
 }
 
-getInvalidValues <- function(values, possible) {
+resp_check_value <- function(values, possible) {
   if (length(values) == 0) {
     return(NULL)
   }
@@ -201,31 +234,71 @@ getInvalidValues <- function(values, possible) {
   unlist(values)[!(unlist(values) %in% possible)]
 }
 
-createResponsiveClasses <- function(values, prefix) {
+resp_construct <- function(values, possible) {
+  if (is.null(values)) {
+    return(list())
+  }
+
+  values <- as.list(values)
+  args <- match.call()$values
+
+  if (is.null(names(values)) && length(values) > 1) {
+    stop(
+      resp_msg_too_many(args, "default"),
+      call. = FALSE
+    )
+  }
+
+  if (length(values) == 1 && names2(values) == "") {
+    names(values) <- "default"
+  }
+
+  if (length(invalid <- resp_check_lengths(values))) {
+    stop(
+      resp_msg_too_many(args, invalid),
+      call. = FALSE
+    )
+  }
+
+  if (length(invalid <- resp_check_breaks(values))) {
+    stop(
+      resp_msg_breaks(args, invalid),
+      call. = FALSE
+    )
+  }
+
+  if (length(invalid <- resp_check_value(values, possible))) {
+    stop(
+      resp_msg_values(args, invalid),
+      call. = FALSE
+    )
+  }
+
+  names(values)[names2(values) == "xs"] <- "default"
+
+  values
+}
+
+resp_classes <- function(values, prefix) {
   if (!length(values)) {
     return(NULL)
   }
 
-  vapply(
-    names2(values),
-    function(breakpoint) {
-      value <- values[[breakpoint]]
+  default <- values[names2(values) == "default"]
+  if (length(default)) {
+    default <- paste0(prefix, "-", default)
+  } else {
+    default <- NULL
+  }
 
-      if (breakpoint == "default") {
-        paste0(prefix, "-", value)
-      } else {
-        paste0(prefix, "-", breakpoint, "-", value)
-      }
-    },
-    character(1),
-    USE.NAMES = FALSE
-  )
-}
+  points <- values[names2(values) != "default"]
+  if (length(points)) {
+    points <- paste0(prefix, "-", names2(points), "-", points)
+  } else {
+    points <- NULL
+  }
 
-# shiny utils ----
-
-dropNulls <- function(x) {
-  x[!vapply(x, is.null, logical(1))]
+  c(default, points)
 }
 
 # borrowed from shiny, see shiny/R/utils.R
@@ -279,84 +352,4 @@ processDeps <- function(tags, session) {
   #   deps = dependencies
   # )
   dependencies
-}
-
-# tag utils ----
-
-is_tag <- function(x) {
-  inherits(x, "shiny.tag")
-}
-
-tagConcatAttributes <- function(x, attrs) {
-  if (!is_tag(x)) {
-    return(NULL)
-  }
-
-  x$attribs <- c(x$attribs, attrs)
-  x
-}
-
-tagHasClass <- function(x, class) {
-  if (!is_tag(x) || is.null(x$attribs$class)) {
-    return(FALSE)
-  }
-
-  regex <- paste0(
-    c("^", "^", "\\s", "\\s"), class, c("$", "\\s", "\\s", "$"),
-    collapse = "|"
-  )
-
-  grepl(regex, x$attribs$class)
-}
-
-tagRename <- function(tag, name) {
-  if (!is_tag(tag)) {
-    return(NULL)
-  }
-
-  tag$name <- name
-  tag
-}
-
-tagIs <- function(x, name) {
-  if (!is_tag(x)) {
-    return(FALSE)
-  }
-
-  isTRUE(x$name %in% name)
-}
-
-tagAddClass <- function(x, class) {
-  stopifnot(is_tag(x))
-
-  if (length(class) < 1) {
-    return(x)
-  }
-
-  class <- trimws(class)
-
-  if (is.null(x$attribs$class)) {
-    x$attribs$class <- paste(class, collapse = " ")
-    return(x)
-  }
-
-  old <- unlist(strsplit(x$attribs$class, "\\s+"))
-  new <- unlist(strsplit(class, "\\s+"))
-
-  x$attribs$class <- paste(unique(c(old, new)), collapse = " ")
-
-  x
-}
-
-tagDropClass <- function(x, regex) {
-  stopifnot(is_tag(x))
-
-  if (is.null(x$attribs$class)) {
-    return(x)
-  }
-
-  x$attribs$class <- gsub(regex, "", x$attribs$class)
-  x$attribs$class <- gsub("\\s+", " ", x$attribs$class)
-
-  x
 }

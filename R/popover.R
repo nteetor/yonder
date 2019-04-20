@@ -68,28 +68,26 @@
 #' # Please see example application above.
 #'
 popover <- function(..., title = NULL) {
-  title <- if (!is.null(title) && !is_tag(title)) {
-    tags$h3(class = "popover-header", title)
+  if (!is.null(title)) {
+    title <- tags$h3(class = "popover-header", title)
   }
 
   args <- list(...)
-  elems <- elements(args)
-  attrs <- attribs(args)
 
-  element <- tags$div(
+  component <- tags$div(
     class = "popover",
     role = "tooltip",
     tags$div(class = "arrow"),
     title,
     tags$div(
       class = "popover-body",
-      elems
+      unnamed_values(args)
     )
   )
 
-  element <- tagConcatAttributes(element, attrs)
+  component <- tag_attributes_add(component, named_values(args))
 
-  attachDependencies(element, yonderDep())
+  attach_dependencies(component)
 }
 
 #' @rdname popover
@@ -103,20 +101,9 @@ showPopover <- function(target, popover, placement = "top", duration = NULL,
     )
   }
 
-  if (is.null(session)) {
-    stop(
-      "invalid `showPopover()` argument, `session` is NULL",
-      call. = FALSE
-    )
-  }
+  assert_session()
 
-  if (!re(placement, "right|left|top|bottom", len0 = FALSE)) {
-    stop(
-      "invalid `showPopover()` arugment, `placement` must be one of ",
-      '"top", "right", "bottom", or "left"',
-      call. = FALSE
-    )
-  }
+  assert_possible(placement, c("right", "left", "top", "bottom"))
 
   if (!is.null(duration)) {
     if (!is.numeric(duration) || duration < 0) {
@@ -142,19 +129,8 @@ showPopover <- function(target, popover, placement = "top", duration = NULL,
 #' @rdname popover
 #' @export
 closePopover <- function(id, session = getDefaultReactiveDomain()) {
-  if (!is.character(id)) {
-    stop(
-      "inavlid `closePopover()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  if (is.null(session)) {
-    stop(
-      "invalid `closePopover()` argument, `session` is NULL",
-      call. = FALSE
-    )
-  }
+  assert_id()
+  assert_session()
 
   session$sendCustomMessage("yonder:popover", list(
     type = "close",

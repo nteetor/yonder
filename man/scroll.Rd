@@ -4,19 +4,19 @@
 \alias{scroll}
 \title{Vertical and horizontal scroll}
 \usage{
-scroll(.tag, direction = "y")
+scroll(tag, direction = "vertical")
 }
 \arguments{
-\item{.tag}{A tag element.}
+\item{tag}{A tag element.}
 
-\item{direction}{One of \code{"x"} or \code{"y"} specifying which direction to scroll
-the tag's content, defaults to \code{"y"}, in which case vertical scroll is
-applied.}
+\item{direction}{One of \code{"horizontal"} or \code{"vertical"} specifying which
+direction to scroll overflowing content, defaults to \code{"vertical"}, in which
+case the content may croll up and down.}
 }
 \description{
 Many of the applications you build depsite a complex layout will still fit
-onto a single page. To help scroll long content along side shorter content
-use the \code{scroll()} utility function.
+onto a single page. To help scroll long content alongside shorter content use
+the \code{scroll()} utility function.
 }
 \examples{
 
@@ -25,11 +25,11 @@ use the \code{scroll()} utility function.
 div(
   lapply(
     rep("Integer placerat tristique nisl.", 20),
-    p
+    . \%>\% p() \%>\% margin(bottom = 2)
   )
 ) \%>\%
   height(20) \%>\%
-  border() \%>\%
+  border("black") \%>\%
   scroll()
 
 }

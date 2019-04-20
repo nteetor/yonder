@@ -38,37 +38,14 @@
 #'
 selectInput <- function(id, choices, values = choices, selected = NULL,
                         ..., multiple = FALSE) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `selectInput()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  if (length(choices) != length(values)) {
-    stop(
-      "invalid `selectInput()` arguments, `choices` and `values` must be the ",
-      "same length",
-      call. = FALSE
-    )
-  }
+  assert_id()
+  assert_choices()
 
   selected <- values %in% selected
 
-  options <- Map(
-    choice = choices,
-    value = values,
-    select = selected,
-    function(choice, value, select) {
-      tags$option(
-        selected = if (select) NA,
-        value = value,
-        choice
-      )
-    }
-  )
+  options <- map_options(choices, values, selected)
 
-  input <- tags$div(
+  component <- tags$div(
     class = "yonder-select",
     id = id,
     tags$select(
@@ -80,8 +57,20 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
     ...
   )
 
-  attachDependencies(
-    input,
-    yonderDep()
+  attach_dependencies(component)
+}
+
+map_options <- function(choices, values, selected) {
+  Map(
+    choice = choices,
+    value = values,
+    select = selected,
+    function(choice, value, select) {
+      tags$option(
+        selected = if (select) NA,
+        value = value,
+        choice
+      )
+    }
   )
 }

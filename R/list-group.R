@@ -124,8 +124,8 @@ listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
     )
   }
 
-  layout <- ensureBreakpoints(layout, c("vertical", "horizontal"))
-  classes <- createResponsiveClasses(layout, "list-group")
+  layout <- resp_construct(layout, c("vertical", "horizontal"))
+  classes <- resp_classes(layout, "list-group")
 
   # drop vertical classes as they do not actually exist
   classes <- classes[!grepl("vertical", classes, fixed = TRUE)]
@@ -138,7 +138,7 @@ listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
     select = selected,
     function(choice, value, select) {
       tags$button(
-        class = collate(
+        class = str_collate(
           "list-group-item",
           "list-group-item-action",
           # if (fill && length(classes) > 0) "flex-fill",
@@ -151,7 +151,7 @@ listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
   )
 
   input <- tags$div(
-    class = collate(
+    class = str_collate(
       "yonder-list-group",
       "list-group",
       classes,
@@ -162,8 +162,5 @@ listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
     ...
   )
 
-  attachDependencies(
-    input,
-    yonderDep()
-  )
+  attach_dependencies(input)
 }

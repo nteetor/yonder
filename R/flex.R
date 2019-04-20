@@ -64,7 +64,7 @@ NULL
 #' container see [display()]. By default tag elements within a flex container
 #' are treated as flex items.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
 #' @param direction A [responsive] argument. One of `"row"` or `"column"`
 #'   specifying the placement of flex items, defaults to `NULL`. If `"row"`
@@ -87,10 +87,12 @@ NULL
 #'   different values affect vertical spacing.
 #'
 #' @param wrap A [responsive] argument. One of `TRUE` or `FALSE` specifying
-#'   whether to wrap flex items inside the flex containter, `.tag`, defaults
+#'   whether to wrap flex items inside the flex containter, `tag`, defaults
 #'   to `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
 #'   not wrap. See the **wrap** section below for more.
 #'
+#' @family layout
+#' @export
 #' @examples
 #'
 #' ### Different `direction`s
@@ -229,15 +231,13 @@ NULL
 #'   display("flex") %>%
 #'   flex(wrap = TRUE)
 #'
-#' @family layout
-#' @export
-flex <- function(.tag, direction = NULL, justify = NULL, align = NULL,
+flex <- function(tag, direction = NULL, justify = NULL, align = NULL,
                  wrap = NULL, reverse = NULL) {
-  direction <- ensureBreakpoints(direction, c("row", "column"))
-  reverse <- ensureBreakpoints(reverse, c(TRUE, FALSE))
-  justify <- ensureBreakpoints(justify, c("start", "end", "center", "between", "around"))
-  align <- ensureBreakpoints(align, c("start", "end", "center", "baseline", "stretch"))
-  wrap <- ensureBreakpoints(wrap, c(TRUE, FALSE))
+  direction <- resp_construct(direction, c("row", "column"))
+  reverse <- resp_construct(reverse, c(TRUE, FALSE))
+  justify <- resp_construct(justify, c("start", "end", "center", "between", "around"))
+  align <- resp_construct(align, c("start", "end", "center", "baseline", "stretch"))
+  wrap <- resp_construct(wrap, c(TRUE, FALSE))
 
   if (length(direction) || length(reverse)) {
     for (breakpoint in names(reverse)) {
@@ -256,13 +256,13 @@ flex <- function(.tag, direction = NULL, justify = NULL, align = NULL,
   }
 
   classes <- c(
-    createResponsiveClasses(direction, "flex"),
-    createResponsiveClasses(justify, "justify-content"),
-    createResponsiveClasses(align, "align-items"),
-    createResponsiveClasses(wrap, "flex")
+    resp_classes(direction, "flex"),
+    resp_classes(justify, "justify-content"),
+    resp_classes(align, "align-items"),
+    resp_classes(wrap, "flex")
   )
 
-  .tag <- tagAddClass(.tag, classes)
+  tag <- tag_class_add(tag, classes)
 
-  attachDependencies(.tag, yonderDep())
+  attach_dependencies(tag)
 }

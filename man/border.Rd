@@ -4,10 +4,10 @@
 \alias{border}
 \title{Tag element borders}
 \usage{
-border(.tag, color = NULL, sides = "all", round = NULL)
+border(tag, color = NULL, sides = "all", round = NULL)
 }
 \arguments{
-\item{.tag}{A tag element.}
+\item{tag}{A tag element.}
 
 \item{color}{One of \code{"red"}, \code{"purple"}, \code{"indigo"}, \code{"blue"}, \code{"cyan"},
 \code{"teal"}, \code{"green"}, \code{"yellow"}, \code{"amber"}, \code{"orange"}, \code{"grey"}, \code{"white"}
@@ -50,7 +50,7 @@ div(
   lapply(
     sides,
     border,
-    .tag = div() \%>\%
+    tag = div() \%>\%
       height(3) \%>\%
       width(3),
     color = "black"

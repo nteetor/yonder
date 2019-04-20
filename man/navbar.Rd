@@ -42,7 +42,7 @@ div(
       id = "navForm",
       searchInput("search", placeholder = "Search") \%>\%
         margin(right = c(sm = 2)),
-      submit = submitInput("Search") \%>\%
+      submit = buttonInput("search", "Search") \%>\%
         background("amber")
     )
   ) \%>\%

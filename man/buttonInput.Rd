@@ -2,15 +2,12 @@
 % Please edit documentation in R/button.R
 \name{buttonInput}
 \alias{buttonInput}
-\alias{submitInput}
 \alias{linkInput}
 \title{Button and submit inputs}
 \usage{
-buttonInput(id, label, ..., fill = FALSE, stretch = FALSE)
+buttonInput(id, label, ..., stretch = FALSE, download = FALSE)
 
-submitInput(label = "Submit", value = label, ..., fill = FALSE)
-
-linkInput(id, text, ..., stretch = FALSE)
+linkInput(id, ..., stretch = FALSE, download = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -21,31 +18,19 @@ input.}
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{fill}{One of \code{TRUE} or \code{FALSE} specifying if the button fills the
-entire width of its parent, defaults to \code{FALSE}.}
-
 \item{stretch}{One of \code{TRUE} or \code{FALSE} specifying stretched behaviour for
 the button or link input, defaults to \code{FALSE}. If \code{TRUE}, the button or
 link will receive clicks from its containing block element. For example, a
 stretched button or link inside a \code{\link[=card]{card()}} would update whenever the user
 clicked on the card.}
 
-\item{value}{A character string specifying the value of a submit input,
-defaults to \code{label}. This value is used to distinguish form submission
-types in the case where a form input has multiple submit inputs.}
-
-\item{text}{A character string specifying the text displayed as part of the
-link input.}
+\item{download}{One of \code{TRUE} or \code{FALSE} specifying if the button or link
+input is used to trigger a download, defaults to \code{FALSE}.}
 }
 \description{
 Button inputs are useful as triggers for reactive or observer expressions.
 The reactive value of a button input begins as \code{NULL}, but subsequently is
 the number of clicks.
-
-A submit input is a special type of button used to control form input
-submission. Because of their specific usage, submit inputs do not require an
-\code{id}, but may have a specified \code{value}. Submit inputs will \emph{not} freeze all
-reactive inputs, see \code{\link[=formInput]{formInput()}}.
 }
 \examples{
 ### A simple button
@@ -73,14 +58,6 @@ buttonInput(
 ) \%>\%
   background("red") \%>\%
   width("3/4")  # <-
-
-### A submit button
-
-submitInput()
-
-# Or use custom text to clarify the action taken when clicked by the user.
-
-submitInput("Place order")
 
 ### Possible colors
 
@@ -122,6 +99,15 @@ card(
     background("blue")
 ) \%>\%
   width(20)
+
+### Download button
+
+buttonInput(
+  download = TRUE,
+  id = "download1",
+  label = "Download",
+  icon("download")
+)
 
 }
 \seealso{

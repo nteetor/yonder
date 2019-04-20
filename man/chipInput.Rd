@@ -2,10 +2,10 @@
 % Please edit documentation in R/chip.R
 \name{chipInput}
 \alias{chipInput}
-\title{A chips input}
+\title{Chip input, selectize alternative}
 \usage{
 chipInput(id, choices, values = choices, selected = NULL, ...,
-  max = NULL, fill = TRUE)
+  max = NULL, inline = TRUE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -23,12 +23,17 @@ element.}
 
 \item{max}{A number specifying the maximum number of items a user may select.}
 
-\item{fill}{One of \code{TRUE} or \code{FALSE} specifying the layout of chips. If
-\code{TRUE} chips fill the width of the parent element, otherwise if \code{FALSE} the
-chips are rendered inline, defaults to \code{TRUE}.}
+\item{inline}{One of \code{TRUE} or \code{FALSE} specifying if chips are rendered
+inline. If \code{TRUE} multiple chips may fit onto a single row, otherwise, if
+\code{FALSE}, chips expand to fill the width of their parent element, one chip
+per row.}
 }
 \description{
-A selectize alternative.
+The chip input is a selectize alternative. Choices are selected from a
+dropdown menu and appear as chips below the input's text box. Chips do not
+appear in the order they are selected. Instead chips are shown in the order
+specified by the \code{choices} argument. Use the \code{max} argument to limit the
+number of choices a user may select.
 }
 \section{\strong{Example} simple application}{
 \preformatted{ui <- container(
@@ -36,7 +41,7 @@ A selectize alternative.
     id = "chips",
     choices = paste("Option number", 1:10),
     values = 1:10,
-    fill = TRUE
+    inline = TRUE
   ) \%>\%
     width("1/2")
 )

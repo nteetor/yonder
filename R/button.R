@@ -6,22 +6,10 @@
 #' The reactive value of a button input begins as `NULL`, but subsequently is
 #' the number of clicks.
 #'
-#' A submit input is a special type of button used to control form input
-#' submission. Because of their specific usage, submit inputs do not require an
-#' `id`, but may have a specified `value`. Submit inputs will _not_ freeze all
-#' reactive inputs, see [formInput()].
-#'
 #' @param id A character string specifying the id of the reactive input.
 #'
 #' @param label A character string specifying the label text on the button
 #'   input.
-#'
-#' @param value A character string specifying the value of a submit input,
-#'   defaults to `label`. This value is used to distinguish form submission
-#'   types in the case where a form input has multiple submit inputs.
-#'
-#' @param fill One of `TRUE` or `FALSE` specifying if the button fills the
-#'   entire width of its parent, defaults to `FALSE`.
 #'
 #' @param stretch One of `TRUE` or `FALSE` specifying stretched behaviour for
 #'   the button or link input, defaults to `FALSE`. If `TRUE`, the button or
@@ -29,8 +17,8 @@
 #'   stretched button or link inside a [card()] would update whenever the user
 #'   clicked on the card.
 #'
-#' @param text A character string specifying the text displayed as part of the
-#'   link input.
+#' @param download One of `TRUE` or `FALSE` specifying if the button or link
+#'   input is used to trigger a download, defaults to `FALSE`.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
@@ -63,14 +51,6 @@
 #' ) %>%
 #'   background("red") %>%
 #'   width("3/4")  # <-
-#'
-#' ### A submit button
-#'
-#' submitInput()
-#'
-#' # Or use custom text to clarify the action taken when clicked by the user.
-#'
-#' submitInput("Place order")
 #'
 #' ### Possible colors
 #'
@@ -113,67 +93,60 @@
 #' ) %>%
 #'   width(20)
 #'
-buttonInput <- function(id, label, ..., fill = FALSE, stretch = FALSE) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `buttonInput()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
+#' ### Download button
+#'
+#' buttonInput(
+#'   download = TRUE,
+#'   id = "download1",
+#'   label = "Download",
+#'   icon("download")
+#' )
+#'
+buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE) {
+  assert_id()
 
-  element <- tags$button(
-    class = collate(
+  component <- (if (download) tags$a else tags$button)(
+    class = str_collate(
       "yonder-button",
-      "btn",
-      if (fill) "btn-block",
+      "btn btn-grey",
       if (stretch) "stretched-link",
-      "btn-grey"
+      if (download) "shiny-download-link"
     ),
     type = "button",
     role = "button",
+    href = if (download) "",
+    `_target` = if (download) NA,
+    download = if (download) NA,
     id = id,
     label,
     ...,
     autocomplete = "off"
   )
 
-  attachDependencies(element, yonderDep())
+  attach_dependencies(component)
 }
 
 #' @rdname buttonInput
 #' @export
-submitInput <- function(label = "Submit", value = label, ..., fill = FALSE) {
-  element <- tags$button(
-    class = collate(
-      "yonder-submit",
-      "btn",
-      "btn-blue",
-      if (fill) "btn-block"
-    ),
-    role = "button",
-    value = value,
-    label,
-    ...
-  )
+linkInput <- function(id, ..., stretch = FALSE, download = FALSE) {
+  assert_id()
 
-  attachDependencies(element, yonderDep())
-}
-
-#' @rdname buttonInput
-#' @export
-linkInput <- function(id, text, ..., stretch = FALSE) {
-  element <- tags$button(
-    class = collate(
+  component <- (if (download) tags$a else tags$button)(
+    class = str_collate(
       "yonder-link",
-      "btn btn-link",
-      if (stretch) "stretched-link"
+      "btn",
+      if (!download) "btn-link",
+      if (stretch) "stretched-link",
+      if (download) "shiny-download-link"
     ),
+    href = if (download) "",
+    `_target` = if (download) NA,
+    download = if (download) NA,
     id = id,
-    text,
     ...
   )
 
-  attachDependencies(element, yonderDep())
+  attach_dependencies(component)
 }
 
 #' Button group inputs
@@ -182,11 +155,11 @@ linkInput <- function(id, text, ..., stretch = FALSE) {
 #'
 #' @inheritParams buttonInput
 #'
-#' @param labels A character vector of labels, a button is added to the group
-#'   for each label specified.
+#' @param labels A character vector specifying the labels for each button in the
+#'   group.
 #'
-#' @param values A character vector of values, one for each button specified,
-#'   defaults to `labels`.
+#' @param values A vector of values specifying the values of each button in the
+#'   group, defaults to `labels`.
 #'
 #' @family inputs
 #' @export
@@ -210,12 +183,7 @@ linkInput <- function(id, text, ..., stretch = FALSE) {
 #'   width("1/3")
 #'
 buttonGroupInput <- function(id, labels, values = labels, ...) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `buttonGroupInput()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
+  assert_id()
 
   if (length(labels) != length(values)) {
     stop(
@@ -246,7 +214,7 @@ buttonGroupInput <- function(id, labels, values = labels, ...) {
     }
   )
 
-  element <- tags$div(
+  component <- tags$div(
     class = "yonder-button-group btn-group",
     id = id,
     role = "group",
@@ -254,5 +222,5 @@ buttonGroupInput <- function(id, labels, values = labels, ...) {
     ...
   )
 
-  attachDependencies(element, yonderDep())
+  attach_dependencies(component)
 }

@@ -61,22 +61,11 @@
 #' ) %>%
 #'   background("grey")
 #'
-radioInput <- function(id, choices, values = choices, selected = NULL, ...,
-                       inline = FALSE) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `radioInput()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  if (length(choices) != length(values)) {
-    stop(
-      "invalid `radioInput()` arguments, `choices` and `values` must be the ",
-      "same length",
-      call. = FALSE
-    )
-  }
+radioInput <- function(id, choices, values = choices, selected = values[[1]],
+                       ..., inline = FALSE) {
+  assert_id()
+  assert_choices()
+  assert_selected(length = 1)
 
   selected <- values %in% selected
 
@@ -88,7 +77,7 @@ radioInput <- function(id, choices, values = choices, selected = NULL, ...,
       child_id <- generate_id("radio")
 
       tags$div(
-        class = collate(
+        class = str_collate(
           "custom-control",
           "custom-radio",
           if (inline) "custom-control-inline"
@@ -111,29 +100,23 @@ radioInput <- function(id, choices, values = choices, selected = NULL, ...,
     }
   )
 
-  input <- tags$div(
+  component <- tags$div(
     class = "yonder-radio",
     id = id,
     radios,
     tags$div(class = "invalid-feedback")
   )
 
-  attachDependencies(
-    input,
-    yonderDep()
-  )
+  attach_dependencies(component)
 }
 
 #' @rdname radioInput
 #' @export
-radiobarInput <- function(id, choices, values = choices, selected = NULL, ...) {
-  if (length(choices) != length(values)) {
-    stop(
-      "invalid `radiobarInput()` arguments, `choices` and `values` must be ",
-      "the same length",
-      call. = FALSE
-    )
-  }
+radiobarInput <- function(id, choices, values = choices, selected = values[[1]],
+                          ...) {
+  assert_id()
+  assert_choices()
+  assert_selected(length = 1)
 
   selected <- values %in% selected
 
@@ -143,7 +126,7 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL, ...) {
     select = selected,
     function(choice, value, select) {
       tags$label(
-        class = collate(
+        class = str_collate(
           "btn",
           "btn-grey",
           if (select) "active"
@@ -160,7 +143,7 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL, ...) {
     }
   )
 
-  input <- tags$div(
+  component <- tags$div(
     class = "yonder-radiobar btn-group btn-group-toggle d-flex",
     id = id,
     `data-toggle` = "buttons",
@@ -168,8 +151,5 @@ radiobarInput <- function(id, choices, values = choices, selected = NULL, ...) {
     radios
   )
 
-  attachDependencies(
-    input,
-    yonderDep()
-  )
+  attach_dependencies(component)
 }

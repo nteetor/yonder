@@ -16,8 +16,8 @@ checkbarInput(id, choices, values = choices, selected = NULL, ...)
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
 
-\item{choices}{A character string or vector specifying a label for the
-checkbox or checkbar.}
+\item{choices}{A character string or vector specifying a label or labels for
+the checkbox or checkbar.}
 
 \item{values}{A character string or vector specifying values for the
 checkbox or checkbar input, defaults to \code{choice} or \code{values}, respectively.}

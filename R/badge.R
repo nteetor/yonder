@@ -2,24 +2,12 @@
 #'
 #' Small highlighted content which scales to its parent's size.
 #'
-#' @param ... Additional named argument passed as HTML attributes to the parent
-#'   element.
-#'
-#' @param pill One of `TRUE` or `FALSE` specifying if the badge has more rounded
-#'   corners, defaults to `FALSE`.
+#' @param ... Named arguments passed as HTML attributes to the parent
+#'   element or tag elements passed as children.
 #'
 #' @family content
 #' @export
 #' @examples
-#'
-#' ## Buttons with badges
-#'
-#' buttonInput(
-#'   id = "button1",
-#'   label = "Process",
-#'   badge(7) %>%
-#'     background("cyan")
-#' )
 #'
 #' ## Possible colors
 #'
@@ -38,18 +26,11 @@
 #'   display("flex") %>%
 #'   flex(wrap = TRUE)
 #'
-badge <- function(..., pill = FALSE) {
-  element <- tags$span(
-    class = collate(
-      "badge",
-      if (pill) "badge-pill"
-    ),
-    id = id,
+badge <- function(...) {
+  component <- tags$span(
+    class = "badge",
     ...
   )
 
-  attachDependencies(
-    element,
-    yonderDep()
-  )
+  attach_dependencies(component)
 }

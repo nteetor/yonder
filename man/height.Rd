@@ -4,10 +4,10 @@
 \alias{height}
 \title{Tag element height}
 \usage{
-height(.tag, size)
+height(tag, size)
 }
 \arguments{
-\item{.tag}{A tag element.}
+\item{tag}{A tag element.}
 
 \item{size}{A character string or number specifying the height of the tag
 element. Possible values:

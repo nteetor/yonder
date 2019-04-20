@@ -9,24 +9,28 @@
 #' submit input. This allows you to distinguish between different clicks if
 #' your form includes multiple submit inputs.
 #'
+#' A submit input is a special type of button used to control form input
+#' submission. Because of their specific usage, submit inputs do not require an
+#' `id`, but may have a specified `value`. Submit inputs will _not_ freeze all
+#' reactive inputs, see [formInput()].
+#'
 #' If `id` or `submit` are `NULL` the form input will not freeze its child
 #' inputs.
 #'
 #' @inheritParams buttonInput
 #'
 #' @param ... Any number of unnamed arguments (inputs or tag elements) passed as
-#'   child elements of the form.
+#'   child elements to the form.
 #'
 #'   Additional named arguments passed as HTML attributes to the parent element.
 #'
-#' @param submit A submit button or tags containing a submit button. The submit
-#'   button will trigger the update of input form elements. Defaults to
-#'   [submitInput()].
+#' @param submit A button input, which will trigger the form and cause reactives
+#'  to update.
 #'
 #' @param inline One of `TRUE` or `FALSE`, if `TRUE` the form and its child
 #'   elements are rendered in a horizontal row, defaults to `FALSE`. On small
-#'   viewports, think mobile device, `inline` has no effect and the form will
-#'   span multiple lines.
+#'   viewports, think mobile device, `inline` intentionally has no effect and
+#'   the form will span multiple lines.
 #'
 #' @details
 #'
@@ -65,7 +69,7 @@
 #' @export
 #' @examples
 #'
-#' ### Customizing the submit button
+#' ### A simple form
 #'
 #' card(
 #'   header = "Please pick a flavor",
@@ -78,9 +82,9 @@
 #'         choices = c("Mint", "Moose tracks", "Marble"),
 #'       )
 #'     ),
-#'     submit = submitInput(  # <-
-#'       label = "Make choice",
-#'       block = TRUE
+#'     submit = buttonInput(  # <-
+#'       id = NULL,
+#'       label = "Make choice"
 #'     ) %>%
 #'       background("teal")
 #'   )
@@ -88,10 +92,12 @@
 #'   border("teal") %>%
 #'   width(50)
 #'
-formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
-  if (!is.null(id) && !is.character(id)) {
+formInput <- function(id, submit, ..., inline = FALSE) {
+  assert_id()
+
+  if (!tag_class_re(submit, "yonder-button")) {
     stop(
-      "invalid `formInput()` argument, `id` must be a character string",
+      "invalid `formInput()` argument, `submit` must be a button input",
       call. = FALSE
     )
   }
@@ -104,8 +110,8 @@ formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
     force = TRUE
   )
 
-  input <- tags$form(
-    class = collate(
+  component <- tags$form(
+    class = str_collate(
       "yonder-form",
       if (inline) "form-inline"
     ),
@@ -114,7 +120,7 @@ formInput <- function(id, ..., submit = submitInput(), inline = FALSE) {
     submit
   )
 
-  attachDependencies(input, yonderDep())
+  attach_dependencies(component)
 }
 
 #' Add labels, help text, and formatting to inputs
@@ -194,24 +200,17 @@ formGroup <- function(label, input, ..., help = NULL, width = NULL) {
     )
   }
 
-  if (!is.null(help) && !is.character(help)) {
-    stop(
-      "invalid `formGroup()` argument, `help` must be a character string",
-      call. = FALSE
-    )
-  }
-
   build <- column(width = width)
 
-  extra <- if (build$attribs$class != "col") {
-    sub("^col\\s+", "", build$attribs$class)
+  if (build$attribs$class != "col") {
+    build$attribs$class <- sub("^col\\s+", "", build$attribs$class)
   }
 
-  width <- ensureBreakpoints(width, c(1:12, "auto"))
-  classes <- createResponsiveClasses(width, "col")
+  width <- resp_construct(width, c(1:12, "auto"))
+  classes <- resp_classes(width, "col")
 
-  element <- tags$div(
-    class = collate(
+  component <- tags$div(
+    class = str_collate(
       "form-group",
       classes
     ),
@@ -226,83 +225,13 @@ formGroup <- function(label, input, ..., help = NULL, width = NULL) {
     }
   )
 
-  attachDependencies(element, yonderDep())
+  attach_dependencies(component)
 }
 
 #' @rdname formGroup
 #' @export
 formRow <- function(...) {
-  attachDependencies(
-    tags$div(class = "form-row", ...),
-    yonderDep()
+  attach_dependencies(
+    tags$div(class = "form-row", ...)
   )
-}
-
-#' Group and label multiple inputs
-#'
-#' Use `fieldset` to associate and label inputs. This is good for screen readers
-#' and other assistive technologies.
-#'
-#' @param legend A character string specifying the fieldset's legend.
-#'
-#' @param ... Any number of inputs to group or named arguments passed as HTML
-#'   attributes to the parent element.
-#'
-#' @family layout
-#' @export
-#' @examples
-#'
-#' ### Grouping related inputs
-#'
-#' fieldset(
-#'   legend = "Pizza order",
-#'   formGroup(
-#'     "What toppings would you like?",
-#'     div(
-#'       checkbarInput(
-#'         id = "toppings",
-#'         choices = c(
-#'           "Cheese",
-#'           "Black olives",
-#'           "Mushrooms"
-#'         )
-#'       )
-#'     )
-#'   ),
-#'   formGroup(
-#'     "Is this for delivery?",
-#'     checkboxInput(
-#'       id = "deliver",
-#'       choice = "Deliver"
-#'     )
-#'   ),
-#'   submitInput("Place order")
-#' )
-#'
-fieldset <- function(..., legend = NULL) {
-  if (!is.null(legend) && !is.character(legend)) {
-    stop(
-      "invalid `fieldset()` argument, `legend` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  args <- list(...)
-
-  element <- tags$fieldset(
-    class = "form-group",
-    if (!is.null(legend)) {
-      tags$legend(
-        class = "col-form-legend",
-        legend
-      )
-    },
-    tags$div(
-      elements(args)
-    )
-  )
-
-  element <- tagConcatAttributes(element, attribs(args))
-
-  attachDependencies(element, yonderDep())
 }

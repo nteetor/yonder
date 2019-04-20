@@ -4,10 +4,10 @@
 \alias{float}
 \title{Tag element float}
 \usage{
-float(.tag, side)
+float(tag, side)
 }
 \arguments{
-\item{.tag}{A tag element.}
+\item{tag}{A tag element.}
 
 \item{side}{A \link{responsive} argument. One of \code{"left"} or \code{"right"} specifying
 the side to float the element.}

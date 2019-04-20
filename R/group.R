@@ -93,12 +93,7 @@
 #'
 groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
                        right = NULL, ...) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "inavlid `groupInput()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
+  assert_id()
 
   if (!is.null(left) && !isValidAddon(left)) {
     stop(
@@ -122,12 +117,12 @@ groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
     force = TRUE
   )
 
-  left <- if (!is.null(left)) {
-    tags$div(
+  if (!is.null(left)) {
+    left <- tags$div(
       class = "input-group-prepend",
       if (is.character(left)) {
         lapply(left, tags$span, class = "input-group-text")
-      } else if (tagHasClass(left, "dropdown")) {
+      } else if (tag_class_re(left, "dropdown")) {
         left$children
       } else {
         # list of buttons
@@ -136,12 +131,12 @@ groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
     )
   }
 
-  right <- if (!is.null(right)) {
-    tags$div(
+  if (!is.null(right)) {
+    right <- tags$div(
       class = "input-group-append",
       if (is.character(right)) {
         lapply(right, tags$span, class = "input-group-text")
-      } else if (tagHasClass(right, "dropdown")) {
+      } else if (tag_class_re(right, "dropdown")) {
         right$children
       } else {
         # list of buttons
@@ -150,7 +145,7 @@ groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
     )
   }
 
-  input <- tags$div(
+  component <- tags$div(
     class = "yonder-group input-group",
     id = id,
     left,
@@ -165,15 +160,15 @@ groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
     ...
   )
 
-  attachDependencies(input, yonderDep())
+  attach_dependencies(component)
 }
 
 isValidAddon <- function(tag) {
   if (is_strictly_list(tag)) {
-    return(all(vapply(tag, tagIs, logical(1), "button")))
+    return(all(vapply(tag, tag_name_is, logical(1), "button")))
   }
 
   is.character(tag) ||
-    tagIs(tag, "button") ||
-    tagHasClass(tag, "dropdown")
+    tag_name_is(tag, "button") ||
+    tag_class_re(tag, "dropdown")
 }

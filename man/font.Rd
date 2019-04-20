@@ -4,16 +4,16 @@
 \alias{font}
 \title{Tag element font}
 \usage{
-font(.tag, color = NULL, size = NULL, weight = NULL, case = NULL,
+font(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
   align = NULL)
 }
 \arguments{
-\item{.tag}{A tag element.}
+\item{tag}{A tag element.}
 
 \item{color}{One \code{"red"}, \code{"purple"}, \code{"indigo"}, \code{"blue"}, \code{"cyan"},
 \code{"teal"}, \code{"green"}, \code{"yellow"}, \code{"amber"}, \code{"orange"}, \code{"grey"},
-\code{"black"}, or \code{"white"} specifying the color the tag element's text,
-defaults to \code{NULL}.}
+\code{"black"}, or \code{"white"} specifying the tag element text color, defaults to
+\code{NULL}.}
 
 \item{size}{One of \code{"xs"}, \code{"sm"}, \code{"base"}, \code{"lg"}, \code{"xl"} specifying a font
 size relative to the default base page font size, defaults to \code{NULL}.}

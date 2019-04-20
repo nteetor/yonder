@@ -107,33 +107,24 @@
 #' )
 #'
 progressOutlet <- function(id, ...) {
-  this <- tags$div(
+  component <- tags$div(
     id = id,
     class = "yonder-progress progress",
     ...
   )
 
-  attachDependencies(
-    this,
-    yonderDep()
-  )
+  attach_dependencies(component)
 }
 
 #' @rdname progressOutlet
 #' @export
 bar <- function(id, value, label = NULL, striped = FALSE, ...) {
-  if (!is.character(id) && !is.null(id)) {
-    stop(
-      "invalid `bar()` argument, `id` must be a character string ",
-      "or NULL",
-      call. = FALSE
-    )
-  }
+  assert_id()
 
   value <- round(value)
 
   tags$div(
-    class = collate(
+    class = str_collate(
       "progress-bar",
       if (striped) "progress-bar-striped"
     ),

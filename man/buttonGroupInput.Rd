@@ -9,11 +9,11 @@ buttonGroupInput(id, labels, values = labels, ...)
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
 
-\item{labels}{A character vector of labels, a button is added to the group
-for each label specified.}
+\item{labels}{A character vector specifying the labels for each button in the
+group.}
 
-\item{values}{A character vector of values, one for each button specified,
-defaults to \code{labels}.}
+\item{values}{A vector of values specifying the values of each button in the
+group, defaults to \code{labels}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}

@@ -2,20 +2,21 @@
 % Please edit documentation in R/design.R
 \name{active}
 \alias{active}
-\title{Change color for selected choices}
+\title{Color selected choices}
 \usage{
-active(.tag, color)
+active(tag, color)
 }
 \arguments{
-\item{.tag}{A tag element.}
+\item{tag}{A tag element.}
 
 \item{color}{One of \code{"red"}, \code{"purple"}, \code{"indigo"}, \code{"blue"}, \code{"cyan"},
 \code{"teal"}, \code{"green"}, \code{"yellow"}, \code{"amber"}, \code{"orange"}, \code{"grey"}, \code{"white"}
 specifying the active color of selected choices.}
 }
 \description{
-Please note this will only have an effect on elements with selectedable
-choices, e.g. \code{checkbarInput()}.
+Use \code{active()} to change the color of active selected choices. This utility
+will only have an effect on elements with selectable choices, e.g.
+\code{checkbarInput()}.
 }
 \seealso{
 Other design: \code{\link{affix}},

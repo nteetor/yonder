@@ -4,10 +4,10 @@
 \alias{background}
 \title{Tag element background color}
 \usage{
-background(.tag, color)
+background(tag, color)
 }
 \arguments{
-\item{.tag}{A tag element.}
+\item{tag}{A tag element.}
 
 \item{color}{One of \code{"red"}, \code{"purple"}, \code{"indigo"}, \code{"blue"}, \code{"cyan"},
 \code{"teal"}, \code{"green"}, \code{"yellow"}, \code{"amber"}, \code{"orange"}, \code{"grey"},
@@ -42,7 +42,7 @@ div(
   lapply(
     colors,
     background,
-    .tag = div() \%>\%
+    tag = div() \%>\%
       padding(5) \%>\%
       margin(2)
   )

@@ -4,24 +4,15 @@
 #' is placed around any number of cards. Additionally, grouping cards with
 #' `deck` has the benefit of aligning the footer of each card.
 #'
-#' @param ... For **card**, character strings, tag elements, or list groups to
-#'   include as the body of a card or additional named arguments passed as HTML
-#'   attributes to the parent element.
+#' @param ... For **card**, `tag$div()`s, tag elements, or list groups to
+#'   include in the card or additional named arguments passed as HTML attributes
+#'   to the parent element.
 #'
-#'   For **deck**, any number of cards or additional named arguments passed as
-#'   HTML attributes to the parent element.
+#'   For **deck**, any number of `card()`s or additional named arguments passed
+#'   as HTML attributes to the parent element.
 #'
 #' @param header A character string or tag element specifying the header of the
 #'   card, defaults to `NULL`, in which case a header is not added.
-#'
-#' @param title A character string or tag element specifying the title of the
-#'   card, defaults to `NULL`, in which case a title is not added.
-#'
-#' @param subtitle A character string or tag element specifying the subtitle of
-#'   the card, defaults to `NULL`, in which case a subtitle is not added.
-#'
-#' @param image An [img()] element specifying an image to add to the card,
-#'   defaults to `NULL`, in which case an image is not added.
 #'
 #' @param footer A character string or tag element specifying the footer of the
 #'   card, defaults to `NULL`, in which case a footer is not added.
@@ -34,7 +25,9 @@
 #'
 #' column(
 #'   width = 4,
-#'   card("Praesent fermentum tempor tellus.")
+#'   card(
+#'     p("Praesent fermentum tempor tellus.")
+#'   )
 #' )
 #'
 #' ### Adding a title, subtitle
@@ -42,10 +35,10 @@
 #' column(
 #'   width = 4,
 #'   card(
-#'     title = "Mauris mollis tincidunt felis.",
-#'     subtitle = "Phasellus at dui in ligula mollis ultricies.",
-#'     "Nullam tempus. Mauris mollis tincidunt felis.",
-#'     "Nullam libero mauris, consequat quis, varius et, dictum id, arcu."
+#'     h5("Mauris mollis tincidunt felis."),
+#'     h6("Phasellus at dui in ligula mollis ultricies."),
+#'     p("Nullam tempus. Mauris mollis tincidunt felis."),
+#'     p("Nullam libero mauris, consequat quis, varius et, dictum id, arcu.")
 #'   )
 #' )
 #'
@@ -53,25 +46,25 @@
 #'
 #' deck(
 #'   card(
-#'     header = div("Donec pretium posuere tellus") %>%
-#'       background("teal"),
-#'     "Donec hendrerit tempor tellus.",
-#'     "Cras placerat accumsan nulla."
-#'   ),
+#'     header = "Donec pretium posuere tellus",
+#'     p("Donec hendrerit tempor tellus."),
+#'     p("Cras placerat accumsan nulla.")
+#'   ) %>%
+#'     font(color = "teal"),
 #'   card(
-#'     "Aliquam posuere.",
-#'     "Phasellus neque orci, porta a, aliquet quis, semper a, massa.",
-#'     "Pellentesque dapibus suscipit ligula."
+#'     p("Aliquam posuere."),
+#'     p("Phasellus neque orci, porta a, aliquet quis, semper a, massa."),
+#'     p("Pellentesque dapibus suscipit ligula.")
 #'   ) %>%
 #'     border("orange"),
 #'   card(
-#'     header = div("Phasellus lacus") %>%
-#'       background("indigo"),
-#'     "Etiam laoreet quam sed arcu.",
-#'     "Etiam vel tortor sodales tellus ultricies commodo.",
+#'     header = "Phasellus lacus",
+#'     p("Etiam laoreet quam sed arcu."),
+#'     p("Etiam vel tortor sodales tellus ultricies commodo."),
 #'     footer = "Nam euismod tellus id erat."
 #'   ) %>%
-#'       background("grey")
+#'     background("grey") %>%
+#'     font(color = "indigo")
 #' )
 #'
 #' ### Cards with list groups
@@ -80,7 +73,7 @@
 #'   width = 4,
 #'   card(
 #'     listGroupInput(
-#'       id = "important",
+#'       id = "lg1",
 #'       flush = TRUE,
 #'       choices = c(
 #'         "Pellentesque tristique imperdiet tortor.",
@@ -127,125 +120,108 @@
 #' deck(
 #'   card(
 #'     title = "Nullam tristique",
-#'     "Fusce sagittis, libero non molestie mollis, magna orci ultrices ",
-#'     "dolor, at vulputate neque nulla lacinia eros.",
-#'     "Nunc rutrum turpis sed pede.",
+#'     p("Fusce sagittis, libero non molestie mollis, magna orci ultrices ",
+#'       "dolor, at vulputate neque nulla lacinia eros."),
+#'     p("Nunc rutrum turpis sed pede."),
 #'     footer = "Cras placerat accumsan nulla."
 #'   ),
 #'   card(
 #'     title = "Integer placerat",
-#'     "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ",
-#'     "hendrerit tempor tellus.",
+#'     p("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ",
+#'       "hendrerit tempor tellus."),
 #'     footer = "Cras placerat accumsan nulla."
 #'   ),
 #'   card(
 #'     title = "Phasellus neque",
-#'     "Donec at pede. Etiam vel neque nec dui dignissim bibendum.",
+#'     p("Donec at pede. Etiam vel neque nec dui dignissim bibendum."),
 #'     footer = "Cras placerat accumsan nulla."
 #'   )
 #' )
 #'
-card <- function(..., header = NULL, title = NULL, subtitle = NULL,
-                 image = NULL, footer = NULL) {
-  args <- list(...)
+card <- function(..., header = NULL, footer = NULL) {
+  args <- eval(substitute(alist(...)))
 
-  title <- if (!is.null(title)) {
-    if (is_tag(title)) {
-      tagAddClass(title, "card-title")
-    } else {
-      tags$h5(class = "card-title", title)
-    }
-  }
-
-  subtitle <- if (!is.null(subtitle)) {
-    if (is_tag(subtitle)) {
-      tagAddClass(subtitle, "card-subtitle")
-    } else {
-      tags$h6(class = "card-subtitle", subtitle)
-    }
-  }
-
-  header <- if (!is.null(header)) {
-    if (is_tag(header)) {
-      if (tagHasClass(header, "nav-tabs")) {
-        tags$div(
-          class = "card-header",
-          tagAddClass(header, "card-header-tabs")
-        )
-      } else {
-        tagAddClass(header, "card-header")
-      }
-    } else {
-      tags$div(class = "card-header", header)
-    }
-  }
-
-  image <- if (!is.null(image)) {
-    tagAddClass(image, "card-img-top")
-  }
-
-  footer <- if (!is.null(footer)) {
-    if (is_tag(footer)) {
-      tagAddClass(footer, "card-footer")
-    } else {
-      tags$div(class = "card-footer", footer)
-    }
-  }
-
-  body <- lapply(
-    dropNulls(c(list(title, subtitle), elements(args))),
-    function(el) {
-      if (tagHasClass(el, "list-group")) {
-        return(el)
-      }
-
-      tags$div(
-        class = "card-body",
-        if (!is_tag(el)) {
-          tags$p(class = "card-text", el)
-        } else {
-          el
-        }
+  if (!is.null(header)) {
+    if (is_tag(header) && tag_class_re(header, "nav-tabs")) {
+      header <- tags$div(
+        class = "card-header",
+        tag_class_add(header, "card-header-tabs")
       )
+    } else if (is_tag(header) && tag_class_re(header, "nav-pills")) {
+      header <- tags$div(
+        class = "card-header",
+        tag_class_add(header, "card-header-pills")
+      )
+    } else {
+      header <- tags$div(class = "card-header", header)
     }
+  }
+
+  if (!is.null(footer)) {
+    footer <- tags$div(class = "card-footer", footer)
+  }
+
+  attributes <- lapply(
+    named_values(args),
+    eval,
+    envir = parent.frame()
   )
 
-  if (length(body)) {
-    body <- Reduce(
-      x = body[-1],
-      init = list(body[[1]]),
-      function(acc, el) {
-        if (tagHasClass(acc[[length(acc)]], "list-group")) {
-          c(acc, list(el))
-        } else {
-          acc[[length(acc)]][["children"]] <- c(
-            acc[[length(acc)]][["children"]],
-            el$children
-          )
+  formatted_tags <- list(
+    p = function(...) tags$p(class = "card-text", ...),
+    h1 = function(...) tags$h1(class = "card-title", ...),
+    h2 = function(...) tags$h2(class = "card-title", ...),
+    h3 = function(...) tags$h3(class = "card-title", ...),
+    h4 = function(...) tags$h4(class = "card-title", ...),
+    h5 = function(...) tags$h5(class = "card-title", ...),
+    h6 = function(...) tags$h6(class = "card-subtitle", ...),
+    linkInput = function(...) linkInput(class = "card-link", ...)
+  )
 
-          acc
-        }
-      }
+  body <- lapply(
+    unnamed_values(args),
+    eval,
+    envir = list2env(formatted_tags, envir = parent.frame())
+  )
+
+  body <- lapply(body, function(x) {
+    if (is_strictly_list(x)) {
+      tags$div(class = "card-body", x)
+    } else {
+      x
+    }
+  })
+
+  if (any(!vapply(body, is_tag, logical(1)))) {
+    stop(
+      "invalid arguments in `card()`, all top-level arguments must be tag ",
+      "elements",
+      call. = FALSE
     )
   }
 
-  element <- tags$div(
+  flags <- vapply(body, tag_class_re, logical(1), regex = "row|list-group")
+
+  if (!any(flags)) {
+    body <- tags$div(class = "card-body", body)
+  }
+
+  component <- tags$div(
     class = "card",
     header,
     body,
     footer
   )
 
-  element <- tagConcatAttributes(element, attribs(args))
+  component <- tag_attributes_add(component, attributes)
 
-  attachDependencies(element, yonderDep())
+  attach_dependencies(component)
 }
 
 #' @rdname card
 #' @export
 deck <- function(...) {
-  attachDependencies(
-    tags$div(class = "card-deck", ...),
-    yonderDep()
+  attach_dependencies(
+    tags$div(class = "card-deck", ...)
   )
 }

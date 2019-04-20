@@ -1,5 +1,7 @@
 # yonder
 
+[![can we build it?](https://travis-ci.org/nteetor/yonder.svg?branch=master)](https://travis-ci.org/nteetor/yonder)
+
 A reactive web framework built on [shiny](https://github.com/rstudio/shiny).
 
 ## Introduction

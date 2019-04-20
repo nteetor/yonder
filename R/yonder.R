@@ -36,8 +36,6 @@ NULL
 #'
 #' * `numericInput()` use [numberInput()]
 #'
-#' * `submitButton()` use [submitInput()]
-#'
 #' * `updateRadioButtons()`, `updateTextInput()`, etc. use [updateInput()]
 #'
 #' @section Layout:

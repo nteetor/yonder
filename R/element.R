@@ -19,30 +19,21 @@
 #' @keywords internal
 #' @export
 elementOutput <- function(id, ...) {
-  output <- tags$div(
-    id = id,
-    ...
-  )
+  assert_id()
 
-  attachDependencies(output, yonderDep())
+  attach_dependencies(
+    tags$div(
+      id = id,
+      ...
+    )
+  )
 }
 
 #' @rdname elementOutput
 #' @export
 replaceElement <- function(id, element, session = getDefaultReactiveDomain()) {
-  if (!is.character(id)) {
-    stop(
-      "invalid `renderElement()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  if (is.null(session)) {
-    stop(
-      "invalid `renderElement()` argument, `session` is NULL",
-      call. = FALSE
-    )
-  }
+  assert_id()
+  assert_session()
 
   session$sendCustomMessage("yonder:element", list(
     type = "render",
@@ -57,19 +48,8 @@ replaceElement <- function(id, element, session = getDefaultReactiveDomain()) {
 #' @rdname elementOutput
 #' @export
 removeElement <- function(id, session = getDefaultReactiveDomain()) {
-  if (!is.character(id)) {
-    stop(
-      "invalid `removeElement()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  if (is.null(session)) {
-    stop(
-      "invalid `removeElement()` argument, `session` is NULL",
-      call. = FALSE
-    )
-  }
+  assert_id()
+  assert_session()
 
   session$sendCustomMessage("yonder:element", list(
     type = "remove",

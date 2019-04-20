@@ -118,40 +118,37 @@
 #' )
 #'
 column <- function(..., width = NULL) {
-  width <- ensureBreakpoints(width, c(1:12, "auto"))
+  width <- resp_construct(width, c(1:12, "auto"))
 
-  classes <- createResponsiveClasses(width, "col")
+  classes <- resp_classes(width, "col")
 
   if (!length(classes)) {
     classes <- "col"
   }
 
-  attachDependencies(
-    tagAddClass(tags$div(...), classes),
-    yonderDep()
+  attach_dependencies(
+    tag_class_add(tags$div(...), classes)
   )
 }
 
 #' @rdname column
 #' @export
 columns <- function(...) {
-  attachDependencies(
+  attach_dependencies(
     tags$div(
       class = "row",
       ...
-    ),
-    yonderDep()
+    )
   )
 }
 
 #' @rdname column
 #' @export
 container <- function(..., centered = FALSE) {
-  attachDependencies(
+  attach_dependencies(
     tags$div(
       class = if (centered) "container" else "container-fluid",
       ...
-    ),
-    yonderDep()
+    )
   )
 }

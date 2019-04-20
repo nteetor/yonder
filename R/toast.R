@@ -135,7 +135,7 @@ toast <- function(..., header = NULL) {
         `data-dismiss` = "toast",
         `aria-label` = "Close",
         tags$span(
-          `aria-hidden`= "true",
+          `aria-hidden` = "true",
           HTML("&times;")
         )
       )
@@ -150,30 +150,22 @@ toast <- function(..., header = NULL) {
     header,
     tags$div(
       class = "toast-body",
-      elements(args)
+      unnamed_values(args)
     )
   )
 
-  this <- tagConcatAttributes(this, attribs(args))
+  this <- tag_attributes_add(this, named_values(args))
 
-  attachDependencies(
-    this,
-    yonderDep()
-  )
+  attach_dependencies(this)
 }
 
 #' @rdname toast
 #' @export
 showToast <- function(toast, duration = 4, action = NULL,
                       session = getDefaultReactiveDomain()) {
-  if (is.null(session)) {
-    stop(
-      "invalid `showToast()` argument, `session` is NULL",
-      call. = FALSE
-    )
-  }
+  assert_session()
 
-  if (!tagHasClass(toast, "toast")) {
+  if (!tag_class_re(toast, "toast")) {
     stop(
       "invalid `showToast()` argument, expecting `toast` to be a toast element",
       call. = FALSE

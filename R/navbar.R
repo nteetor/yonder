@@ -36,7 +36,7 @@
 #'       id = "navForm",
 #'       searchInput("search", placeholder = "Search") %>%
 #'         margin(right = c(sm = 2)),
-#'       submit = submitInput("Search") %>%
+#'       submit = buttonInput("search", "Search") %>%
 #'         background("amber")
 #'     )
 #'   ) %>%
@@ -59,21 +59,15 @@
 navbar <- function(..., brand = NULL, collapse = NULL) {
   args <- list(...)
 
-  if (!re(collapse, "sm|md|lg|xl")) {
-    stop(
-      "invalid `navbar()` argument, `collapse` must be one of ",
-      '"sm", "md", "lg", "xl", or NULL',
-      call. = FALSE
-    )
-  }
+  assert_possible(collapse, c("sm", "md", "lg", "xl"))
 
   items <- lapply(
-    elements(args),
+    named_values(args),
     function(item) {
-      if (tagHasClass(item, "nav")) {
-        item <- tagAddClass(item, "navbar-nav")
-      } else if (tagIs(item, "form")) {
-        if (!tagHasClass(item, "form-inline")) {
+      if (tag_class_re(item, "nav")) {
+        item <- tag_class_add(item, "navbar-nav")
+      } else if (tag_name_is(item, "form")) {
+        if (!tag_class_re(item, "form-inline")) {
           warning("non-inline form element passed to `navbar()`", call. = FALSE)
         }
       } else if (!is_tag(item)) {
@@ -94,8 +88,8 @@ navbar <- function(..., brand = NULL, collapse = NULL) {
 
   content_id <- generate_id("nav-content")
 
-  element <- tags$nav(
-    class = collate(
+  component <- tags$nav(
+    class = str_collate(
       "navbar",
       paste(c("navbar", "expand", collapse), collapse = "-"),
       "navbar-light"
@@ -120,7 +114,7 @@ navbar <- function(..., brand = NULL, collapse = NULL) {
     )
   )
 
-  element <- tagConcatAttributes(element, attribs(args))
-
-  attachDependencies(element, yonderDep())
+  attach_dependencies(
+    tag_attributes_add(component, named_values(args))
+  )
 }

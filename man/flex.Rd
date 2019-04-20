@@ -4,11 +4,11 @@
 \alias{flex}
 \title{Flex layout}
 \usage{
-flex(.tag, direction = NULL, justify = NULL, align = NULL,
+flex(tag, direction = NULL, justify = NULL, align = NULL,
   wrap = NULL, reverse = NULL)
 }
 \arguments{
-\item{.tag}{A tag element.}
+\item{tag}{A tag element.}
 
 \item{direction}{A \link{responsive} argument. One of \code{"row"} or \code{"column"}
 specifying the placement of flex items, defaults to \code{NULL}. If \code{"row"}
@@ -26,7 +26,7 @@ defaults to \code{NULL}. See the \strong{align} section below for more on how th
 different values affect vertical spacing.}
 
 \item{wrap}{A \link{responsive} argument. One of \code{TRUE} or \code{FALSE} specifying
-whether to wrap flex items inside the flex containter, \code{.tag}, defaults
+whether to wrap flex items inside the flex containter, \code{tag}, defaults
 to \code{NULL}. If \code{TRUE} items wrap inside the container, if \code{FALSE} items will
 not wrap. See the \strong{wrap} section below for more.}
 

@@ -5,30 +5,20 @@
 \alias{deck}
 \title{Cards, blocks of content}
 \usage{
-card(..., header = NULL, title = NULL, subtitle = NULL,
-  image = NULL, footer = NULL)
+card(..., header = NULL, footer = NULL)
 
 deck(...)
 }
 \arguments{
-\item{...}{For \strong{card}, character strings, tag elements, or list groups to
-include as the body of a card or additional named arguments passed as HTML
-attributes to the parent element.
+\item{...}{For \strong{card}, \code{tag$div()}s, tag elements, or list groups to
+include in the card or additional named arguments passed as HTML attributes
+to the parent element.
 
-For \strong{deck}, any number of cards or additional named arguments passed as
-HTML attributes to the parent element.}
+For \strong{deck}, any number of \code{card()}s or additional named arguments passed
+as HTML attributes to the parent element.}
 
 \item{header}{A character string or tag element specifying the header of the
 card, defaults to \code{NULL}, in which case a header is not added.}
-
-\item{title}{A character string or tag element specifying the title of the
-card, defaults to \code{NULL}, in which case a title is not added.}
-
-\item{subtitle}{A character string or tag element specifying the subtitle of
-the card, defaults to \code{NULL}, in which case a subtitle is not added.}
-
-\item{image}{An \code{\link[=img]{img()}} element specifying an image to add to the card,
-defaults to \code{NULL}, in which case an image is not added.}
 
 \item{footer}{A character string or tag element specifying the footer of the
 card, defaults to \code{NULL}, in which case a footer is not added.}
@@ -44,7 +34,9 @@ is placed around any number of cards. Additionally, grouping cards with
 
 column(
   width = 4,
-  card("Praesent fermentum tempor tellus.")
+  card(
+    p("Praesent fermentum tempor tellus.")
+  )
 )
 
 ### Adding a title, subtitle
@@ -52,10 +44,10 @@ column(
 column(
   width = 4,
   card(
-    title = "Mauris mollis tincidunt felis.",
-    subtitle = "Phasellus at dui in ligula mollis ultricies.",
-    "Nullam tempus. Mauris mollis tincidunt felis.",
-    "Nullam libero mauris, consequat quis, varius et, dictum id, arcu."
+    h5("Mauris mollis tincidunt felis."),
+    h6("Phasellus at dui in ligula mollis ultricies."),
+    p("Nullam tempus. Mauris mollis tincidunt felis."),
+    p("Nullam libero mauris, consequat quis, varius et, dictum id, arcu.")
   )
 )
 
@@ -63,25 +55,25 @@ column(
 
 deck(
   card(
-    header = div("Donec pretium posuere tellus") \%>\%
-      background("teal"),
-    "Donec hendrerit tempor tellus.",
-    "Cras placerat accumsan nulla."
-  ),
+    header = "Donec pretium posuere tellus",
+    p("Donec hendrerit tempor tellus."),
+    p("Cras placerat accumsan nulla.")
+  ) \%>\%
+    font(color = "teal"),
   card(
-    "Aliquam posuere.",
-    "Phasellus neque orci, porta a, aliquet quis, semper a, massa.",
-    "Pellentesque dapibus suscipit ligula."
+    p("Aliquam posuere."),
+    p("Phasellus neque orci, porta a, aliquet quis, semper a, massa."),
+    p("Pellentesque dapibus suscipit ligula.")
   ) \%>\%
     border("orange"),
   card(
-    header = div("Phasellus lacus") \%>\%
-      background("indigo"),
-    "Etiam laoreet quam sed arcu.",
-    "Etiam vel tortor sodales tellus ultricies commodo.",
+    header = "Phasellus lacus",
+    p("Etiam laoreet quam sed arcu."),
+    p("Etiam vel tortor sodales tellus ultricies commodo."),
     footer = "Nam euismod tellus id erat."
   ) \%>\%
-      background("grey")
+    background("grey") \%>\%
+    font(color = "indigo")
 )
 
 ### Cards with list groups
@@ -90,7 +82,7 @@ column(
   width = 4,
   card(
     listGroupInput(
-      id = "important",
+      id = "lg1",
       flush = TRUE,
       choices = c(
         "Pellentesque tristique imperdiet tortor.",
@@ -137,20 +129,20 @@ card(
 deck(
   card(
     title = "Nullam tristique",
-    "Fusce sagittis, libero non molestie mollis, magna orci ultrices ",
-    "dolor, at vulputate neque nulla lacinia eros.",
-    "Nunc rutrum turpis sed pede.",
+    p("Fusce sagittis, libero non molestie mollis, magna orci ultrices ",
+      "dolor, at vulputate neque nulla lacinia eros."),
+    p("Nunc rutrum turpis sed pede."),
     footer = "Cras placerat accumsan nulla."
   ),
   card(
     title = "Integer placerat",
-    "Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ",
-    "hendrerit tempor tellus.",
+    p("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ",
+      "hendrerit tempor tellus."),
     footer = "Cras placerat accumsan nulla."
   ),
   card(
     title = "Phasellus neque",
-    "Donec at pede. Etiam vel neque nec dui dignissim bibendum.",
+    p("Donec at pede. Etiam vel neque nec dui dignissim bibendum."),
     footer = "Cras placerat accumsan nulla."
   )
 )

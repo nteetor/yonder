@@ -118,35 +118,9 @@
 #'
 navInput <- function(id, choices, values = choices, selected = values[[1]], ...,
                      appearance = "links", fill = FALSE) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "inavlid `navInput()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  if (!re(appearance, "links|pills|tabs", len0 = FALSE)) {
-    stop(
-      "invalid `navInput()` argument, `appearance` must be one of ",
-      '"links", "pills", or "tabs"',
-      call. = FALSE
-    )
-  }
-
-  if (!is.atomic(values)) {
-    stop(
-      "invalid `navInput()` argument, `values` must be a character vector",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(selected) && length(selected) > 1) {
-    stop(
-      "invalid `navInput()` argument, `selected` must be a single character ",
-      "string",
-      call. = FALSE
-    )
-  }
+  assert_id()
+  assert_selected(length = 1)
+  assert_possible(appearance, c("links", "pills", "tabs"))
 
   selected <- values %in% selected
 
@@ -158,7 +132,7 @@ navInput <- function(id, choices, values = choices, selected = values[[1]], ...,
   )
 
   input <- tags$ul(
-    class = collate(
+    class = str_collate(
       "yonder-nav",
       "nav",
       if (fill) "nav-fill",
@@ -169,28 +143,25 @@ navInput <- function(id, choices, values = choices, selected = values[[1]], ...,
     ...
   )
 
-  attachDependencies(
-    input,
-    yonderDep()
-  )
+  attach_dependencies(input)
 }
 
 navItem <- function(choice, value, select) {
-  if (tagHasClass(choice, "yonder-menu")) {
-    choice$children[[1]] <- tagDropClass(
+  if (is_tag(choice) && tag_class_re(choice, "yonder-menu")) {
+    choice$children[[1]] <- tag_class_remove(
       choice$children[[1]],
       paste0("btn-(?:", paste0(.colors, collapse = "|"), ")")
     )
-    choice$children[[1]] <- tagAddClass(choice$children[[1]], "nav-link btn-link")
+    choice$children[[1]] <- tag_class_add(choice$children[[1]], "nav-link btn-link")
     choice$children[[1]]$attribs$type <- NULL
     choice$children[[1]]$attribs$value <- value
 
     if (select) {
-      choice$children[[1]] <- tagAddClass(choice$children[[1]], "active")
+      choice$children[[1]] <- tag_class_add(choice$children[[1]], "active")
     }
 
     choice$name <- "li"
-    choice <- tagAddClass(choice, "nav-item")
+    choice <- tag_class_add(choice, "nav-item")
 
     return(choice)
   }
@@ -199,7 +170,7 @@ navItem <- function(choice, value, select) {
     choice <- tags$li(
       class = "nav-item",
       tags$button(
-        class = collate(
+        class = str_collate(
           "nav-link",
           "btn",
           "btn-link",
@@ -421,14 +392,8 @@ navItem <- function(choice, value, select) {
 #' # above.
 #'
 navContent <- function(...) {
-  panes <- tags$div(
-    class = "tab-content",
-    ...
-  )
-
-  attachDependencies(
-    panes,
-    yonderDep()
+  attach_dependencies(
+    tags$div(class = "tab-content", ...)
   )
 }
 
@@ -436,7 +401,7 @@ navContent <- function(...) {
 #' @export
 navPane <- function(id, ..., fade = TRUE) {
   pane <- tags$div(
-    class = collate(
+    class = str_collate(
       "tab-pane",
       if (fade) "fade"
     ),
@@ -445,28 +410,14 @@ navPane <- function(id, ..., fade = TRUE) {
     ...
   )
 
-  attachDependencies(
-    pane,
-    yonderDep()
-  )
+  attach_dependencies(pane)
 }
 
 #' @rdname navContent
 #' @export
 showPane <- function(id, session = getDefaultReactiveDomain()) {
-  if (is.null(session)) {
-    stop(
-      "invalid `showPane()` argument, `session` is NULL",
-      call. = FALSE
-    )
-  }
-
-  if (!is.character(id)) {
-    stop(
-      "invalid `showPane()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
+  assert_id()
+  assert_session()
 
   session$sendCustomMessage("yonder:pane", list(
     type = "show",
@@ -479,19 +430,8 @@ showPane <- function(id, session = getDefaultReactiveDomain()) {
 #' @rdname navContent
 #' @export
 hidePane <- function(id, session = getDefaultReactiveDomain()) {
-  if (is.null(session)) {
-    stop(
-      "invalid `hidePane()` argument, `session` is NULL",
-      call. = FALSE
-    )
-  }
-
-  if (!is.character(id)) {
-    stop(
-      "invalid `hidePane()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
+  assert_id()
+  assert_session()
 
   session$sendCustomMessage("yonder:pane", list(
     type = "hide",

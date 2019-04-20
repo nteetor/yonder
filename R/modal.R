@@ -104,16 +104,10 @@
 #'
 modal <- function(title = NULL, body = NULL, footer = NULL, ..., center = FALSE,
                   size = NULL) {
-  if (!is.null(size) && !re(size, "small|large|xl")) {
-    stop(
-      "invalid `modal()` argument, `size` must be one of ",
-      '"small", "large", or "xl"',
-      call. = FALSE
-    )
-  }
+  assert_possible(size, c("small", "large", "xl"))
 
-  title <- if (!is.null(title)) {
-    tagAddClass(
+  if (!is.null(title)) {
+    title <- tag_class_add(
       if (!is_tag(title)) tags$h5(title) else title,
       "modal-title"
     )
@@ -147,7 +141,7 @@ modal <- function(title = NULL, body = NULL, footer = NULL, ..., center = FALSE,
   }
 
   tags$div(
-    class = collate(
+    class = str_collate(
       "modal-dialog",
       if (center) "modal-dialog-centered",
       if (!is.null(size)) {

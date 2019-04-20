@@ -4,10 +4,10 @@
 \alias{tooltip}
 \title{Tooltips}
 \usage{
-tooltip(.tag, text, placement = "top")
+tooltip(tag, text, placement = "top")
 }
 \arguments{
-\item{.tag}{A tag element.}
+\item{tag}{A tag element.}
 
 \item{text}{The tooltip text.}
 

@@ -5,10 +5,11 @@
 \alias{radiobarInput}
 \title{Radio inputs}
 \usage{
-radioInput(id, choices, values = choices, selected = NULL, ...,
+radioInput(id, choices, values = choices, selected = values[[1]], ...,
   inline = FALSE)
 
-radiobarInput(id, choices, values = choices, selected = NULL, ...)
+radiobarInput(id, choices, values = choices, selected = values[[1]],
+  ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}

@@ -5,14 +5,14 @@
 \alias{margin}
 \title{Tag element margin and padding}
 \usage{
-padding(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
+padding(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
   left = NULL)
 
-margin(.tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
+margin(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
   left = NULL)
 }
 \arguments{
-\item{.tag}{A tag element.}
+\item{tag}{A tag element.}
 
 \item{all, top, right, bottom, left}{A \link{responsive} argument.
 
@@ -72,7 +72,8 @@ formInput(
   checkboxInput(
     id = "remember",
     choice = "Remember me"
-  )
+  ),
+  submit = buttonInput("go", "Login")
 )
 
 # Without any adjustments the layout is not great. But, with some styling we
@@ -98,7 +99,7 @@ formInput(
     choice = "Remember me"
   ) \%>\%
     margin(r = c(sm = 2), b = 2),  # <-
-  submit = submitInput("Log in") \%>\%
+  submit = buttonInput(NULL, "Log in") \%>\%
     margin(b = 2)  # <-
 )
 

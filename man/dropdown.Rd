@@ -32,7 +32,7 @@ argument \code{...} for details on composing dropdown menus.
 }
 \examples{
 
-### Simple options w/ buttons
+### Dropdown with buttons
 
 dropdown(
   label = "Choices",
@@ -41,42 +41,37 @@ dropdown(
   buttonInput("choice3", "Choice 3")
 )
 
+### Dropdown with links
+
+dropdown(
+  label = "Choices",
+  linkInput("link1", "Choice 1"),
+  linkInput("link2", "Choice 2")
+)
+
 ### Grouped sections
 
 dropdown(
   label = "Sections",
-  list(
-    h6("Section 1"),
-    buttonInput("addA", "Add A"),
-    buttonInput("addB", "Add B")
-  ),
-  list(
-    h6("Section 2"),
-    buttonInput("calcC", "Calculate C"),
-    buttonInput("calcD", "Calculate D")
-  )
+  h6("Section 1"),
+  buttonInput("a", "Option A"),
+  buttonInput("b", "Option B"),
+  hr(),
+  h6("Section 2"),
+  buttonInput("c", "Option C"),
+  buttonInput("d", "Option D")
 )
 
 ### Direction variations
 
-div(
-  lapply(
-    c("up", "down", "left", "right"),
-    function(d) {
-      dropdown(
-        label = d,
-        direction = d,
-        buttonInput(NULL, "Nam euismod"),
-        buttonInput(NULL, "Nunc eleifend"),
-        buttonInput(NULL, "Nullam eu")
-      ) \%>\%
-        margin(3)
-    }
-  )
-) \%>\%
-  display("flex")
+dropdown(
+  label = "Up!",
+  direction = "up",
+  buttonInput("up1", "Choice 1"),
+  buttonInput("up2", "Choice 2")
+)
 
-### Include forms
+### Dropdowns with forms
 
 dropdown(
   label = "Sign in",
@@ -96,9 +91,7 @@ dropdown(
         placeholder = "*****"
       )
     ),
-    submit = submitInput(
-      label = "Sign in"
-    )
+    submit = buttonInput("signin", "Sign in")
   ) \%>\%
     padding(3, 4, 3, 4)
 )

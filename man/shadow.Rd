@@ -4,10 +4,10 @@
 \alias{shadow}
 \title{Add shadows to tag elements}
 \usage{
-shadow(.tag, size = "regular")
+shadow(tag, size = "regular")
 }
 \arguments{
-\item{.tag}{A tag element.}
+\item{tag}{A tag element.}
 
 \item{size}{One of \code{"none"}, \code{"small"}, \code{"regular"}, or \code{"large"} specifying
 the amount of shadow added, defaults to \code{"regular"}.}
@@ -42,7 +42,7 @@ div(
   lapply(
     c("small", "regular", "large"),
     shadow,
-    .tag = div() \%>\%
+    tag = div() \%>\%
       padding(5) \%>\%
       margin(2)
   )

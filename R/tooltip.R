@@ -3,7 +3,7 @@
 #' Add a tooltip to a tag element. Tooltips may be placed above, below, left, or
 #' right of an element.
 #'
-#' @param .tag A tag element.
+#' @param tag A tag element.
 #'
 #' @param text The tooltip text.
 #'
@@ -44,28 +44,13 @@
 #'   )
 #' )
 #'
-tooltip <- function(.tag, text, placement = "top") {
-  if (!is_tag(.tag)) {
-    stop(
-      "invalid `tooltip` argument, `.tag` must be a tag object",
-      call. = FALSE
-    )
-  }
+tooltip <- function(tag, text, placement = "top") {
+  assert_tag()
+  assert_possible(placement, c("top", "right", "bottom", "left"))
 
-  if (!re(placement, "top|left|bottom|right", FALSE)) {
-    stop(
-      "invalid `tooltip` argument, `placement` must be one of ",
-      '"top", "left", "bottom", or "right"',
-      call. = FALSE
-    )
-  }
+  tag$attribs$`data-toggle` <- "tooltip"
+  tag$attribs$`data-placement` <- placement
+  tag$attribs$title <- as.character(text)
 
-  .tag$attribs$`data-toggle` <- "tooltip"
-  .tag$attribs$`data-placement` <- placement
-  .tag$attribs$title <- as.character(text)
-
-  attachDependencies(
-    .tag,
-    yonderDep()
-  )
+  attach_dependencies(tag)
 }

@@ -26,7 +26,7 @@
 #' @export
 #' @examples
 #'
-#' ### Simple options w/ buttons
+#' ### Dropdown with buttons
 #'
 #' dropdown(
 #'   label = "Choices",
@@ -35,42 +35,37 @@
 #'   buttonInput("choice3", "Choice 3")
 #' )
 #'
+#' ### Dropdown with links
+#'
+#' dropdown(
+#'   label = "Choices",
+#'   linkInput("link1", "Choice 1"),
+#'   linkInput("link2", "Choice 2")
+#' )
+#'
 #' ### Grouped sections
 #'
 #' dropdown(
 #'   label = "Sections",
-#'   list(
-#'     h6("Section 1"),
-#'     buttonInput("addA", "Add A"),
-#'     buttonInput("addB", "Add B")
-#'   ),
-#'   list(
-#'     h6("Section 2"),
-#'     buttonInput("calcC", "Calculate C"),
-#'     buttonInput("calcD", "Calculate D")
-#'   )
+#'   h6("Section 1"),
+#'   buttonInput("a", "Option A"),
+#'   buttonInput("b", "Option B"),
+#'   hr(),
+#'   h6("Section 2"),
+#'   buttonInput("c", "Option C"),
+#'   buttonInput("d", "Option D")
 #' )
 #'
 #' ### Direction variations
 #'
-#' div(
-#'   lapply(
-#'     c("up", "down", "left", "right"),
-#'     function(d) {
-#'       dropdown(
-#'         label = d,
-#'         direction = d,
-#'         buttonInput(NULL, "Nam euismod"),
-#'         buttonInput(NULL, "Nunc eleifend"),
-#'         buttonInput(NULL, "Nullam eu")
-#'       ) %>%
-#'         margin(3)
-#'     }
-#'   )
-#' ) %>%
-#'   display("flex")
+#' dropdown(
+#'   label = "Up!",
+#'   direction = "up",
+#'   buttonInput("up1", "Choice 1"),
+#'   buttonInput("up2", "Choice 2")
+#' )
 #'
-#' ### Include forms
+#' ### Dropdowns with forms
 #'
 #' dropdown(
 #'   label = "Sign in",
@@ -90,57 +85,53 @@
 #'         placeholder = "*****"
 #'       )
 #'     ),
-#'     submit = submitInput(
-#'       label = "Sign in"
-#'     )
+#'     submit = buttonInput("signin", "Sign in")
 #'   ) %>%
 #'     padding(3, 4, 3, 4)
 #' )
 #'
 dropdown <- function(label, ..., direction = "down", align = "left") {
-  if (!re(direction, "up|right|down|left", len0 = FALSE)) {
-    stop(
-      "invalid `dropdown()` argument, `direction` must be one of ",
-      '"up", "right", "down", or "left"',
-      call. = FALSE
-    )
-  }
+  assert_possible(direction, c("up", "right", "down", "left"))
+  assert_possible(align, c("right", "left"))
 
-  if (!re(align, "left|right", len0 = FALSE)) {
-    stop(
-      "invalid `dropdown()` argument, `align` must be one of ",
-      '"left" or "right"',
-      call. = FALSE
-    )
-  }
+  args <- eval(substitute(alist(...)))
 
-  args <- list(...)
+  formatted_tags <- list(
+    h6 = function(...) tags$h6(class = "dropdown-header", ...),
+    hr = function(...) tags$div(class = "dropdown-divider", ...),
+    formInput = function(...) formInput(...)
+  )
 
-  items <- Reduce(
-    x = lapply(elements(args), dropdownItem),
-    function(acc, obj) {
-      if (is_tag(acc)) {
-        acc <- list(acc)
+  items <- lapply(
+    unnamed_values(args),
+    eval,
+    envir = list2env(formatted_tags, envir = parent.frame())
+  )
+
+  items <- lapply(
+    items,
+    function(i) {
+      if (tag_name_is(i, "a") || tag_name_is(i, "button")) {
+        tag_class_add(i, "dropdown-item")
+      } else {
+        i
       }
-
-      if (is_strictly_list(acc[[length(acc)]]) ||
-          is_strictly_list(obj)) {
-        return(
-          c(acc, list(tags$div(class = "dropdown-divider")), list(obj))
-        )
-      }
-
-      return(c(acc, list(obj)))
     }
   )
 
-  this <- tags$div(
-    class = collate(
+  attributes <- lapply(
+    named_values(args),
+    eval,
+    envir = parent.frame()
+  )
+
+  component <- tags$div(
+    class = str_collate(
       "dropdown",
       paste0("drop", direction)
     ),
     tags$button(
-      class = collate(
+      class = str_collate(
         "btn",
         "btn-grey",
         "dropdown-toggle"
@@ -152,7 +143,7 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
       label
     ),
     tags$div(
-      class = collate(
+      class = str_collate(
         "dropdown-menu",
         if (align == "right") "dropdown-menu-right"
       ),
@@ -160,47 +151,7 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
     )
   )
 
-  this <- tagConcatAttributes(this, attribs(args))
+  component <- tag_attributes_add(component, attributes)
 
-  attachDependencies(
-    this,
-    yonderDep()
-  )
-}
-
-dropdownItem <- function(base) {
-  if (is_strictly_list(base)) {
-    return(list(lapply(base, dropdownItem)))
-  }
-
-  if (is.character(base)) {
-    return(tagAppendChildren(tags$p(class = "text-muted"), list = base))
-  }
-
-  if (tagIs(base, "p")) {
-    return(base)
-  }
-
-  if (tagIs(base, c("h1", "h2", "h3", "h4", "h5", "h6"))) {
-    return(tagAddClass(base, "dropdown-header"))
-  }
-
-  if (tagIs(base, "a") || tagIs(base, "button")) {
-    cregex <- paste(.colors, collapse = "|")
-
-    base <- tagDropClass(base, paste0("btn(-(", cregex, "))?"))
-    base <- tagAddClass(base, "dropdown-item")
-
-    return(base)
-  }
-
-  if (tagIs(base, "form")) {
-    return(base)
-  }
-
-  stop(
-    "invalid `dropdown()` argument, could not convert object of class ",
-    class(base)[1], " into dropdown item",
-    call. = FALSE
-  )
+  attach_dependencies(component)
 }
