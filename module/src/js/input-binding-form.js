@@ -14,7 +14,9 @@ $.extend(formInputBinding, {
   Type: "yonder.form",
   _VALUES: {},
   find: function(scope) {
-    let forms = Array.prototype.slice.call(scope.querySelectorAll(".yonder-form[id]"));
+    let forms = Array.prototype.slice.call(
+      scope.querySelectorAll(".yonder-form[id]")
+    );
 
     return forms.filter(f => f.querySelector(".yonder-submit") !== null);
   },

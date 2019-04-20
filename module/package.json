@@ -7,11 +7,9 @@
     "@babel/polyfill": "^7.0.0",
     "bootstrap": "^4.3.1",
     "bs-custom-file-input": "^1.3.1",
-    "flatpickr": "^4.5.2",
     "ion-rangeslider": "^2.2.0",
     "jquery": "^3.3.1",
-    "popper.js": "^1.14.7",
-    "velocity-animate": "^1.5.2"
+    "popper.js": "^1.14.7"
   },
   "devDependencies": {
     "@babel/cli": "^7.2.0",
@@ -47,16 +45,16 @@
     "js-build": "rollup --config build/rollup.config.js --sourcemap",
     "js-minify": "uglifyjs --compress --mangle --output dist/js/yonder.min.js dist/js/yonder.js",
     "js": "npm-run-all js-lint js-build js-minify js-vend",
-    "bootstrap-file-input-vend": "cp node_modules/bs-custom-file-input/dist/bs-custom-file-input.min.js ../inst/www/bootstrap/js/",
-    "bootstrap-file-input": "npm-run-all bootstrap-file-input-vend",
+    "bootstrap-file-input-vend": "cp node_modules/bs-custom-file-input/dist/bs-custom-file-input.min.js ../inst/www/bs-custom-file-input/js/",
+    "bootstrap-custom-file-input": "npm-run-all bootstrap-file-input-vend",
     "bootstrap-js-vend": "cp node_modules/bootstrap/dist/js/bootstrap.min.js ../inst/www/bootstrap/js/",
     "bootstrap-js": "npm-run-all bootstrap-js-vend",
-    "bootstrap-css-compile": "node-sass --quiet --output-style expanded src/scss/main.scss dist/css/bootstrap.css",
-    "bootstrap-css-prefix": "postcss --config build/postcss.config.js --replace dist/css/bootstrap.css",
-    "bootstrap-css-minify": "cleancss --level 1 --output dist/css/bootstrap.min.css dist/css/bootstrap.css",
-    "bootstrap-css-vend": "cp dist/css/bootstrap.min.css ../inst/www/bootstrap/css/",
-    "bootstrap-css": "npm-run-all bootstrap-css-compile bootstrap-css-prefix bootstrap-css-minify bootstrap-css-vend",
-    "bootstrap": "npm-run-all bootstrap-js bootstrap-css bootstrap-file-input"
+    "bootstrap": "npm-run-all bootstrap-js bootstrap-custom-file-input",
+    "css-compile": "node-sass --quiet --output-style expanded src/scss/main.scss dist/css/yonder.css",
+    "css-prefix": "postcss --config build/postcss.config.js --replace dist/css/yonder.css",
+    "css-minify": "cleancss --level 1 --output dist/css/yonder.min.css dist/css/yonder.css",
+    "css-vend": "cp dist/css/yonder.min.css ../inst/www/yonder/css/",
+    "css": "npm-run-all css-compile css-prefix css-minify css-vend"
   },
   "repository": {
     "type": "git",
@@ -71,5 +69,5 @@
   "bugs": {
     "url": "https://github.com/nteetor/yonder/issues"
   },
-  "homepage": "https://github.com/nteetor/yonder#readme"
+  "homepage": "https://nteetor.github.com/yonder"
 }

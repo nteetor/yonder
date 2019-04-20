@@ -30,12 +30,10 @@ is a list of these components (full copies of the components' license agreements
 are included below):
 
 * Bootstrap, https://github.com/twbs/bootstrap
-* FileSaver.js, https://github.com/eligrey/FileSaver.js
-* flatpickr, https://github.com/flatpickr/flatpickr
 * ion.rangeSlider, https://github.com/IonDen/ion.rangeSlider
 * jQuery, https://github.com/jquery/jquery
 * popper.js, https://github.com/FezVrasta/popper.js
-* Velocity.js, https://github.com/julianshapiro/velocity
+* bs-custom-file-input, https://github.com/Johann-S/bs-custom-file-input
 
 EOF
 
@@ -70,6 +68,14 @@ header "popper.js"
 
 license "https://raw.githubusercontent.com/FezVrasta/popper.js/master/LICENSE.md" \
         "popper"
+
+#
+# bs-custom-file-input
+#
+header "bs-custom-file-input"
+
+license "https://raw.githubusercontent.com/Johann-S/bs-custom-file-input/master/LICENSE" \
+        "bs-custom-file-input"
 
 #
 # yonder
