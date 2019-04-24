@@ -128,6 +128,25 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE) {
 
 #' @rdname buttonInput
 #' @export
+updateButtonInput <- function(id, label = NULL, disable = NULL, enable = NULL,
+                              session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_session()
+
+  if (!is.null(label)) {
+    label <- HTML(as.character(label))
+  }
+
+  session$sendInputMessage(id, list(
+    content = label,
+    disable = disable,
+    enable = enable
+  ))
+}
+
+
+#' @rdname buttonInput
+#' @export
 linkInput <- function(id, ..., stretch = FALSE, download = FALSE) {
   assert_id()
 
@@ -147,6 +166,24 @@ linkInput <- function(id, ..., stretch = FALSE, download = FALSE) {
   )
 
   attach_dependencies(component)
+}
+
+#' @rdname buttonInput
+#' @export
+updateLinkInput <- function(id, text = NULL, enable = NULL, disable = NULL,
+                            session = getDefaultReactiveDomain())  {
+  assert_id()
+  assert_session()
+
+  if (!is.null(text)) {
+    text <- HTML(as.character(text))
+  }
+
+  session$sendInputMessage(id, list(
+    content = text,
+    enable = enable,
+    disable = disable
+  ))
 }
 
 #' Button group inputs
@@ -182,16 +219,9 @@ linkInput <- function(id, ..., stretch = FALSE, download = FALSE) {
 #'   background("blue") %>%
 #'   width("1/3")
 #'
-buttonGroupInput <- function(id, labels, values = labels, ...) {
+buttonGroupInput <- function(id, labels = NULL, values = labels, ...) {
   assert_id()
-
-  if (length(labels) != length(values)) {
-    stop(
-      "invalid `buttonGroupInput()` arguments, `labels` and `values` must be ",
-      "the same length",
-      call. = FALSE
-    )
-  }
+  assert_labels()
 
   shiny::registerInputHandler(
     type = "yonder.buttonGroup",
@@ -201,7 +231,43 @@ buttonGroupInput <- function(id, labels, values = labels, ...) {
     force = TRUE
   )
 
-  buttons <- Map(
+  buttons <- map_buttons(labels, values)
+
+  component <- tags$div(
+    class = "yonder-button-group btn-group",
+    id = id,
+    role = "group",
+    buttons,
+    ...
+  )
+
+  attach_dependencies(component)
+}
+
+#' @rdname buttonGroupInput
+#' @export
+updateButtonGroupInput <- function(id, labels = NULL, values = labels,
+                                   enable = NULL, disable = NULL,
+                                   session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_labels()
+  assert_session()
+
+  if (!is.null(labels)) {
+    buttons <- HTML(as.character(map_buttons(labels, values)))
+  } else {
+    buttons <- NULL
+  }
+
+  session$sendInputMessage(id, list(
+    content = buttons,
+    enable = enable,
+    disable = disable
+  ))
+}
+
+map_buttons <- function(labels, values) {
+  Map(
     label = labels,
     value = values,
     function(label, value) {
@@ -213,14 +279,4 @@ buttonGroupInput <- function(id, labels, values = labels, ...) {
       )
     }
   )
-
-  component <- tags$div(
-    class = "yonder-button-group btn-group",
-    id = id,
-    role = "group",
-    buttons,
-    ...
-  )
-
-  attach_dependencies(component)
 }

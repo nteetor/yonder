@@ -26,22 +26,51 @@ assert_id <- function() {
   }
 }
 
-assert_choices <- function() {
+assert_choices <- function(strict = TRUE) {
   choices <- get_variable("choices")
   values <- get_variable("values")
   fun <- get_caller()
 
-  if (length(choices) == 0) {
+  if (strict) {
+    pass <- length(choices) == length(values)
+  } else {
+    pass <- is.null(choices) || is.null(values) ||
+      length(choices) == length(values)
+  }
+
+  if (!pass) {
+    addendum <- if (is_tag(choices)) {
+      "if `choices` is a single tag element be sure to wrap the value in `list()`"
+    }
+
     stop(
-      "invalid argument in `", fun, "`, length of `choices` must be >= 1",
+      "invalid arguments in `", fun, "`, `choices` and `values` must be the ",
+      "same length", addendum,
       call. = FALSE
     )
   }
+}
 
-  if (length(choices) != length(values)) {
+assert_labels <- function(strict = TRUE) {
+  labels <- get_variable("labels")
+  values <- get_variable("values")
+  fun <- get_caller()
+
+  if (strict) {
+    pass <- length(labels) == length(values)
+  } else {
+    pass <- is.null(labels) || is.null(values) ||
+      length(labels) == length(values)
+  }
+
+  if (!pass) {
+    addendum <- if (is_tag(labels)) {
+      "if `labels` is a single tag element be sure to wrap the value in `list()`"
+    }
+
     stop(
-      "invalid argument in `", fun, "`, `choices` and `values` must be the ",
-      "same length",
+      "invalid arguments in `", fun, "`, `labels` and `values` must be the ",
+      "same length", addendum,
       call. = FALSE
     )
   }

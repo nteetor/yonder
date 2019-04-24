@@ -81,8 +81,8 @@
 #'   choices = paste("Choice", 1:5)
 #' )
 #'
-chipInput <- function(id, choices, values = choices, selected = NULL, ...,
-                      max = NULL, inline = TRUE) {
+chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
+                      ..., max = NULL, inline = TRUE) {
   assert_id()
   assert_choices()
 
@@ -93,6 +93,60 @@ chipInput <- function(id, choices, values = choices, selected = NULL, ...,
     `data-toggle` = "dropdown"
   )
 
+  chips <- map_chips(choices, values, selected)
+
+  component <- tags$div(
+    id = id,
+    class = str_collate(
+      "yonder-chip",
+      "btn-group dropup"
+    ),
+    `data-max` = max %||% -1,
+    toggle,
+    tags$div(
+      class = "dropdown-menu",
+      chips$items
+    ),
+    tags$div(
+      class = str_collate(
+        "chips",
+        if (!inline) "chips-block" else "chips-inline",
+        "chips-grey"
+      ),
+      chips$chips
+    ),
+    ...
+  )
+
+  attach_dependencies(component)
+}
+
+#' @rdname chipInput
+#' @export
+updateChipInput <- function(id, choices = NULL, values = NULL, selected = NULL,
+                            enable = NULL, disable = NULL,
+                            session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_session()
+
+  if (!is.null(choices)) {
+    chips <- lapply(
+      map_chips(choices, values, selected),
+      function(x) HTML(as.character(x))
+    )
+  } else {
+    chips <- list(chips = NULL, items = NULL)
+  }
+
+  session$sendInputMessage(id, list(
+    chips = chips$chips,
+    items = chips$items,
+    enable = enable,
+    disable = disable
+  ))
+}
+
+map_chips <- function(choices, values, selected) {
   items <- Map(
     choice = choices,
     value = values,
@@ -132,28 +186,5 @@ chipInput <- function(id, choices, values = choices, selected = NULL, ...,
     }
   )
 
-  component <- tags$div(
-    id = id,
-    class = str_collate(
-      "yonder-chip",
-      "btn-group dropup"
-    ),
-    `data-max` = max %||% -1,
-    toggle,
-    tags$div(
-      class = "dropdown-menu",
-      items
-    ),
-    tags$div(
-      class = str_collate(
-        "chips",
-        if (!inline) "chips-block" else "chips-inline",
-        "chips-grey"
-      ),
-      chips
-    ),
-    ...
-  )
-
-  attach_dependencies(component)
+  list(items = items, chips = chips)
 }
