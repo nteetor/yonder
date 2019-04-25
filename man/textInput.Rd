@@ -2,27 +2,55 @@
 % Please edit documentation in R/textual.R
 \name{textInput}
 \alias{textInput}
+\alias{updateTextInput}
 \alias{searchInput}
+\alias{updateSearchInput}
 \alias{emailInput}
+\alias{updateEmailInput}
 \alias{urlInput}
+\alias{updateUrlInput}
 \alias{telephoneInput}
+\alias{updateTelephoneInput}
 \alias{passwordInput}
+\alias{updatePassowrdInput}
 \alias{numberInput}
+\alias{updateNumberInput}
 \title{Textual inputs}
 \usage{
 textInput(id, value = NULL, placeholder = NULL, ...)
 
+updateTextInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+
 searchInput(id, value = NULL, placeholder = NULL, ...)
+
+updateSearchInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
 
 emailInput(id, value = NULL, placeholder = NULL, ...)
 
+updateEmailInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+
 urlInput(id, value = NULL, placeholder = NULL, ...)
+
+updateUrlInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
 
 telephoneInput(id, value = NULL, placeholder = NULL, ...)
 
+updateTelephoneInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+
 passwordInput(id, value = NULL, placeholder = NULL, ...)
 
+updatePassowrdInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+
 numberInput(id, value = NULL, placeholder = NULL, ...)
+
+updateNumberInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -76,7 +104,7 @@ numberInput(id = "num")
 Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{formInput}}, \code{\link{groupTextInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},

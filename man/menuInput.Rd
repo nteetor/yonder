@@ -2,10 +2,15 @@
 % Please edit documentation in R/menu.R
 \name{menuInput}
 \alias{menuInput}
+\alias{updateMenuInput}
 \title{Menu input}
 \usage{
-menuInput(id, label, choices, values = choices, ...,
-  direction = "down", align = "left")
+menuInput(id, label, choices = NULL, values = choices,
+  selected = NULL, ..., direction = "down", align = "left")
+
+updateMenuInput(id, choices = NULL, values = choices,
+  selected = NULL, enable = NULL, disable = NULL,
+  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -73,7 +78,7 @@ navInput(
 Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{formInput}}, \code{\link{groupTextInput}},
   \code{\link{listGroupInput}}, \code{\link{navInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}, \code{\link{sliderInput}},

@@ -2,10 +2,15 @@
 % Please edit documentation in R/list-group.R
 \name{listGroupInput}
 \alias{listGroupInput}
+\alias{updateListGroupInput}
 \title{List group inputs}
 \usage{
 listGroupInput(id, choices, values = choices, selected = NULL, ...,
   layout = "vertical", flush = FALSE)
+
+updateListGroupInput(id, choices = NULL, values = choices,
+  selected = NULL, enable = NULL, disable = NULL,
+  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -120,7 +125,7 @@ listGroupInput(
 Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{formInput}}, \code{\link{groupTextInput}},
   \code{\link{menuInput}}, \code{\link{navInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}, \code{\link{sliderInput}},

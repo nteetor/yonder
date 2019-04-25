@@ -2,10 +2,15 @@
 % Please edit documentation in R/chip.R
 \name{chipInput}
 \alias{chipInput}
+\alias{updateChipInput}
 \title{Chip input, selectize alternative}
 \usage{
-chipInput(id, choices, values = choices, selected = NULL, ...,
+chipInput(id, choices = NULL, values = choices, selected = NULL, ...,
   max = NULL, inline = TRUE)
+
+updateChipInput(id, choices = NULL, values = NULL, selected = NULL,
+  enable = NULL, disable = NULL,
+  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -94,10 +99,10 @@ chipInput(
 Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}, \code{\link{sliderInput}},
-  \code{\link{textInput}}
+  \code{\link{groupTextInput}},
+  \code{\link{listGroupInput}}, \code{\link{menuInput}},
+  \code{\link{navInput}}, \code{\link{radioInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
+  \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

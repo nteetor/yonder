@@ -72,13 +72,13 @@ range of numeric values. For a slider input with non-numeric values refer to
 
 ### Range inputs
 
-% <script>
-% $(function() {
-%   $(".yonder-range").each(function() {
-%     $(this.querySelector("input")).ionRangeSlider();
-%   });
-% });
-% </script>
+\% <script>
+\% $(function() {
+\%   $(".yonder-range").each(function() {
+\%     $(this.querySelector("input")).ionRangeSlider();
+\%   });
+\% });
+\% </script>
 
 # Select from a range of numeric values.
 
@@ -123,7 +123,7 @@ intervalInput(
 Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{formInput}}, \code{\link{groupTextInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{selectInput}}, \code{\link{sliderInput}},

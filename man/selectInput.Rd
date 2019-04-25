@@ -2,10 +2,15 @@
 % Please edit documentation in R/select.R
 \name{selectInput}
 \alias{selectInput}
+\alias{updateSelectInput}
 \title{Select input}
 \usage{
-selectInput(id, choices, values = choices, selected = NULL, ...,
-  multiple = FALSE)
+selectInput(id, choices = NULL, values = choices, selected = NULL,
+  ..., multiple = FALSE)
+
+updateSelectInput(id, choices = NULL, values = choices,
+  selected = NULL, enable = NULL, disable = NULL, valid = NULL,
+  invalid = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -51,7 +56,7 @@ selectInput(
 Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{formInput}}, \code{\link{groupTextInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{sliderInput}},

@@ -1,71 +1,77 @@
 export let selectInputBinding = new Shiny.InputBinding();
 
 $.extend(selectInputBinding, {
-  Selector: {
-    SELF: ".yonder-select",
-    SELECTED: "option:checked:not(:disabled)",
-    VALIDATE: "select"
+  find: (scope) => {
+    return scope.querySelectorAll(".yonder-select[id]");
   },
-  Events: [
-    { type: "change" }
-  ],
-  _update: (el, data) => {
-    let select = el.children[0];
-    let template = el.querySelector("option").cloneNode();
-    template.removeAttribute("selected");
-    template.removeAttribute("disabled");
+  getValue: (el) => {
+    let selected = el.querySelectorAll("option:checked:not(:disabled");
 
-    select.innerHTML = "";
+    if (selected.length === 0) {
+      return null;
+    }
 
-    data.choices.forEach((choice, i) => {
-      let child = template.cloneNode();
-      child.innerText = choice;
-      child.value = data.values[i];
-
-      if (data.selected.indexOf(data.values[i]) > -1) {
-        child.selected = true;
-      }
-
-      select.appendChild(child);
-    });
+    return Array.prototype.slice.call(selected).map(o => o.value);
   },
-  _select: (el, data) => {
-    el.querySelectorAll("option").forEach(child => {
-      let value = child.value;
+  subscribe: (el, callback) => {
+    let $el = $(el);
 
-      if (data.reset === true) {
-        child.removeAttribute("selected");
-      }
-
-      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
-          RegExp(data.pattern, "i").test(value);
-
-      if (match !== data.invert) {
-        el.querySelector("select").value = value;
-      }
-    });
+    $el.on("change.yonder", e => callback());
   },
-  _enable: (el, data) => {
-    el.querySelectorAll("option").forEach(opt => {
-      let enable = !data.values.length || data.values.indexOf(opt.value) > -1;
-
-      if (enable !== data.invert) {
-        opt.removeAttribute("disabled");
-      }
-    });
+  unsubscribe: (el) => {
+    $(el).off(".yonder");
   },
-  _disable: (el, data) => {
-    el.querySelectorAll("option").forEach(opt => {
-      let disable = !data.values.length || data.values.indexOf(opt.value) > -1;
+  receiveMessage: (el, msg) => {
+    if (msg.content) {
+      el.querySelector(".custom-select").innerHTML = msg.content;
+    }
 
-      if (data.reset) {
-        opt.removeAttribute("disabled");
-      }
+    if (msg.enable) {
+      let enable = msg.enable;
 
-      if (disable !== data.invert) {
-        opt.setAttribute("disabled", "");
+      if (enable === true) {
+        el.querySelector(".custom-select").classList.remove("disabled");
+      } else {
+        el.querySelectorAll("option").forEach(opt => {
+          if (enable.indexOf(opt.value) > -1) {
+            opt.removeAttribute("disabled");
+          }
+        });
       }
-    });
+    }
+
+    if (msg.disable) {
+      let disable = msg.disable;
+
+      if (disable === true) {
+        el.querySelector(".custom-select").classList.add("disabled");
+      } else {
+        el.querySelectorAll("option").forEach(opt => {
+          if (disable.indexOf(opt.value) > -1) {
+            opt.setAttribute("disabled", "");
+          }
+        });
+      }
+    }
+
+    if (msg.valid) {
+      el.querySelector(".custom-select").classList.add("is-valid");
+      el.querySelector(".valid-feedback").innerHTML = msg.valid;
+    }
+
+    if (msg.invalid) {
+      el.querySelector(".custom-select").classList.add("is-invalid");
+      el.querySelector(".invalid-feedback").innerHTML = msg.invalid;
+    }
+
+    if (!msg.valid && !msg.invalid) {
+      let select = el.querySelector(".custom-select");
+      select.classList.remove("is-valid");
+      select.classList.remove("is-invalid");
+
+      el.querySelector(".valid-feedback").innerHTML = "";
+      el.querySelector(".invalid-feedback").innerHTML = "";
+    }
   }
 });
 

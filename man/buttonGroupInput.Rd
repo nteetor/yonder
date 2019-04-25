@@ -2,9 +2,14 @@
 % Please edit documentation in R/button.R
 \name{buttonGroupInput}
 \alias{buttonGroupInput}
+\alias{updateButtonGroupInput}
 \title{Button group inputs}
 \usage{
-buttonGroupInput(id, labels, values = labels, ...)
+buttonGroupInput(id, labels = NULL, values = labels, ...)
+
+updateButtonGroupInput(id, labels = NULL, values = labels,
+  enable = NULL, disable = NULL,
+  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -45,10 +50,10 @@ buttonGroupInput(
 Other inputs: \code{\link{buttonInput}},
   \code{\link{checkboxInput}}, \code{\link{chipInput}},
   \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}, \code{\link{sliderInput}},
-  \code{\link{textInput}}
+  \code{\link{groupTextInput}},
+  \code{\link{listGroupInput}}, \code{\link{menuInput}},
+  \code{\link{navInput}}, \code{\link{radioInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
+  \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

@@ -66,30 +66,31 @@ $.extend(chipInputBinding, {
     if (msg.enable) {
       if (msg === true) {
 
-      } else if () {
+      } else {
         el.querySelectorAll(".dropdown-item,.chip").forEach(item => {
           if (msg.enable.indexOf(item.value) > -1) {
             item.removeAttribute("disabled");
             item.classList.remove("disabled");
           }
-        }
+        });
       }
     }
-  },
-  _disable: function(el, data) {
-    el.querySelectorAll(".dropdown-item,.chip").forEach(item => {
-      let disable = !data.values.length || data.values.indexOf(item.value)> -1;
-      if (data.reset) {
-        item.removeAttribute("disabled");
-        item.classList.removeAttribute("disabled");
-      }
 
-      if (disable !== data.invert) {
-        item.setAttribute("disabled", "");
-        item.classList.add("disabled");
+    if (msg.disable) {
+      let disable = msg.disable;
+
+      if (disable === true) {
+
+
+      } else {
+        el.querySelectorAll(".dropdown-item,.chip").forEach(item => {
+          if (disable.indexOf(item.value) > -1) {
+            item.setAttribute("disabled", "");
+            item.classList.add("disabled");
+          }
+        });
       }
-    });
-  }
+    }
   },
 
   enableToggle: (el) => {

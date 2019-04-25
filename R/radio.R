@@ -4,7 +4,7 @@
 #'
 #' @inheritParams buttonInput
 #'
-#' @param choices A character vector specifying labels for the radio or radiobar
+#' @param choices A character vector or list of tag elements specifying the
 #'   input's choices.
 #'
 #' @param values A character vector, list of character strings, vector of values
@@ -47,29 +47,57 @@
 #'   inline = TRUE  # <-
 #' )
 #'
-#' ### Radiobars in comparison
-#'
-#' radiobarInput(
-#'   id = "radiobar1",
-#'   choices = c(
-#'     "fusce sagittis",
-#'     "libero non molestie",
-#'     "magna orci",
-#'     "ultrices dolor"
-#'   ),
-#'   selected = "ultrices dolor"
-#' ) %>%
-#'   background("grey")
-#'
-radioInput <- function(id, choices, values = choices, selected = values[[1]],
-                       ..., inline = FALSE) {
+radioInput <- function(id, choices = NULL, values = choices,
+                       selected = values[[1]], ..., inline = FALSE) {
   assert_id()
   assert_choices()
   assert_selected(length = 1)
 
+  radios <- map_radios(choices, values, selected, id)
+
+  component <- tags$div(
+    class = "yonder-radio",
+    id = id,
+    radios,
+    tags$div(class = "valid-feedback"),
+    tags$div(class = "invalid-feedback")
+  )
+
+  attach_dependencies(component)
+}
+
+#' @rdname radioInput
+#' @export
+updateRadioInput <- function(id, choices = NULL, values = choices,
+                             selected = NULL, enable = NULL, disable = NULL,
+                             valid = NULL, invalid = NULL,
+                             session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_choices()
+  assert_selected(length = 1)
+  assert_session()
+
+  radios <- map_radios(choices, values, selected, id)
+
+  content <- coerce_content(radios)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+  valid <- coerce_valid(valid)
+  invalid <- coerce_invalid(invalid)
+
+  session$sendInputMessage(id, list(
+    content = content,
+    enable = enable,
+    disable = disable,
+    valid = valid,
+    invalid = invalid
+  ))
+}
+
+map_radios <- function(choices, values, selected, parent_id) {
   selected <- values %in% selected
 
-  radios <- Map(
+  Map(
     choice = choices,
     value = values,
     select = selected,
@@ -86,7 +114,7 @@ radioInput <- function(id, choices, values = choices, selected = values[[1]],
           class = "custom-control-input",
           type = "radio",
           id = child_id,
-          name = id,
+          name = parent_id,
           value = value,
           checked = if (select) NA,
           autocomplete = "off"
@@ -99,28 +127,86 @@ radioInput <- function(id, choices, values = choices, selected = values[[1]],
       )
     }
   )
-
-  component <- tags$div(
-    class = "yonder-radio",
-    id = id,
-    radios,
-    tags$div(class = "invalid-feedback")
-  )
-
-  attach_dependencies(component)
 }
 
-#' @rdname radioInput
+#' Radiobar input
+#'
+#' A stylized radio input.
+#'
+#' @inheritParams buttonInput
+#'
+#' @param choices A character vector or list of tag elements specifying the
+#'   labels of the input's choices.
+#'
+#' @param values A vector specifying the values of the input's choices,
+#'   defaults to `choices`.
+#'
+#' @param selected One of `values` specifying the input's default selected
+#'   choice, defualts to `values[[1]]`.
+#'
 #' @export
+#' @examples
+#'
+#' ### Radiobars
+#'
+#' radiobarInput(
+#'   id = "radiobar1",
+#'   choices = c(
+#'     "fusce sagittis",
+#'     "libero non molestie",
+#'     "magna orci",
+#'     "ultrices dolor"
+#'   ),
+#'   selected = "ultrices dolor"
+#' ) %>%
+#'   background("grey")
+#'
 radiobarInput <- function(id, choices, values = choices, selected = values[[1]],
                           ...) {
   assert_id()
   assert_choices()
   assert_selected(length = 1)
 
+  radios <- map_radiobuttons(choices, values, selected)
+
+  component <- tags$div(
+    class = "yonder-radiobar btn-group btn-group-toggle d-flex",
+    id = id,
+    `data-toggle` = "buttons",
+    ...,
+    radios
+  )
+
+  attach_dependencies(component)
+}
+
+#' @rdname radiobarInput
+#' @export
+updateRadiobarInput <- function(id, choices = NULL, values = choices,
+                                selected = NULL, enable = NULL, disable = NULL,
+                                session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_choices()
+  assert_selected(length = 1)
+  assert_session()
+
+  radios <- map_radiobuttons(choices, values, selected)
+
+  content <- coerce_content(radios)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+
+  session$sendInputMessage(id, list(
+    content = content,
+    enable = enable,
+    disable = disable
+  ))
+}
+
+map_radiobuttons <- function(choices, values, selected) {
   selected <- values %in% selected
 
-  radios <- Map(
+  Map(
     choice = choices,
     value = values,
     select = selected,
@@ -142,14 +228,4 @@ radiobarInput <- function(id, choices, values = choices, selected = values[[1]],
       )
     }
   )
-
-  component <- tags$div(
-    class = "yonder-radiobar btn-group btn-group-toggle d-flex",
-    id = id,
-    `data-toggle` = "buttons",
-    ...,
-    radios
-  )
-
-  attach_dependencies(component)
 }

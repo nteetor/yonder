@@ -1,83 +1,89 @@
 export let radioInputBinding = new Shiny.InputBinding();
 
-// https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Math/random
-function getRandomInt(min, max) {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  return Math.floor(Math.random() * (max - min)) + min; // The maximum is exclusive and the minimum is inclusive
-}
-
 $.extend(radioInputBinding, {
-  Selector: {
-    SELF: ".yonder-radio[id]",
-    SELECTED: ".custom-control-input:checked:not(:disabled)",
-    VALIDATE: ".custom-control-input"
+  find: (scope) => {
+    return scope.querySelectorAll(".yonder-radio[id]");
   },
-  Events: [
-    { type: "change" }
-  ],
-  _update: (el, data) => {
-    let template = el.querySelector(".custom-radio").cloneNode(true);
-    template.children[0].removeAttribute("id");
-    template.children[0].removeAttribute("checked");
-    template.children[1].removeAttribute("for");
+  getValue: (el) => {
+    let radios = el.querySelectorAll(".custom-radio > input:checked:not(:disabled)");
 
-    el.innerHTML = "";
+    if (radios.length === 0) {
+      return null;
+    }
 
-    data.choices.forEach((choice, i) => {
-      let id = `radio-${ getRandomInt(100, 1000) }-${ getRandomInt(100, 1000) }`;
-      let child = template.cloneNode(true);
-
-      child.children[1].innerHTML = choice;
-      child.children[1].setAttribute("for", id);
-
-      child.children[0].value = data.values[i];
-      child.children[0].setAttribute("id", id);
-
-      if (data.selected.indexOf(data.values[i]) > -1) {
-        child.children[0].setAttribute("checked", "");
-      }
-
-      el.appendChild(child);
-    });
+    return Array.prototype.slice.call(radios).map(r => r.value);
   },
-  _select: (el, data) => {
-    el.querySelectorAll(".custom-control-input").forEach(child => {
-      let value = child.value;
+  subscribe: (el, callback) => {
+    let $el = $(el);
 
-      if (data.reset) {
-        child.removeAttribute("checked");
-      }
-
-      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
-          RegExp(data.pattern, "i").test(value);
-
-      if (match !== data.invert) {
-        child.setAttribute("checked", "");
-      }
-    });
+    $el.on("change.yonder", e => callback());
   },
-  _enable: (el, data) => {
-    el.querySelectorAll(".custom-control-input").forEach(input => {
-      let enable = !data.values.length || data.values.indexOf(input.value) > -1;
-
-      if (enable !== data.invert) {
-        input.removeAttribute("disabled");
-      }
-    });
+  unsubscribe: (el) => {
+    $(el).off(".yonder");
   },
-  _disable: (el, data) => {
-    el.querySelectorAll(".custom-control-input").forEach(input => {
-      let disable = !data.values.length || data.values.indexOf(input.value) > -1;
+  receiveMessage: (el, msg) => {
+    if (msg.content) {
+      el.querySelectorAll(".custom-radio").forEach((radio) => {
+        el.removeChild(radio);
+      });
 
-      if (data.reset) {
-        input.removeAttribute("disabled");
-      }
+      el.insertAdjacentHTML("afterbegin", msg.content);
+    }
 
-      if (disable !== data.invert) {
-        input.setAttribute("disabled", "");
+    if (msg.enable) {
+      let enable = msg.enable;
+
+      if (enable === true) {
+        el.querySelectorAll(".custom-radio > input").forEach(input => {
+          input.removeAttribute("disabled");
+        });
+      } else {
+        el.querySelectorAll(".custom-radio > input").forEach(input => {
+          if (enable.indexOf(input.value) > -1) {
+            input.removeAttribute("disabled");
+          }
+        });
       }
-    });
+    }
+
+    if (msg.disable) {
+      let disable = msg.disable;
+
+      if (disable === true) {
+        el.querySelectorAll(".custom-radio > input").forEach(input => {
+          input.setAttribute("disabled", "");
+        });
+      } else {
+        el.querySelectorAll(".custom-radio > input").forEach(input => {
+          if (disable.indexOf(input.value)> -1) {
+            input.setAttribute("disabled", "");
+          }
+        });
+      }
+    }
+
+    if (msg.valid) {
+      el.querySelector(".valid-feedback").innerHTML = msg.valid;
+      el.querySelectorAll(".custom-radio").forEach(radio => {
+        radio.classList.add("is-valid");
+      });
+    }
+
+    if (msg.invalid) {
+      el.querySelector(".invalid-feedback").innerHTML = msg.invalid;
+      el.querySelectorAll(".custom-radio").forEach(radio => {
+        radio.classList.add("is-invalid");
+      });
+    }
+
+    if (!msg.valid && !msg.invalid) {
+      el.querySelector(".valid-feedback").innerHTML = "";
+      el.querySelector(".invalid-feedback").innerHTML = "";
+      el.querySelectorAll(".custom-radio").forEach(radio => {
+        radio.classList.remove("is-valid");
+        radio.classList.remove("is-invalid");
+      });
+    }
   }
 });
 

@@ -2,19 +2,24 @@
 % Please edit documentation in R/nav.R
 \name{navInput}
 \alias{navInput}
-\title{Page navigation}
+\alias{updateNavInput}
+\title{Page navigation input}
 \usage{
-navInput(id, choices, values = choices, selected = values[[1]], ...,
-  appearance = "links", fill = FALSE)
+navInput(id, choices = NULL, values = choices,
+  selected = values[[1]], ..., appearance = "links", fill = FALSE)
+
+updateNavInput(id, choices = NULL, values = choices, selected = NULL,
+  enable = NULL, disable = NULL,
+  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
 
 \item{choices}{A character vector or list of tag elements specifying the
-navigation items of the navigation input.}
+navigation items of the input.}
 
-\item{values}{A character vector specifying custom values for each navigation
-item, defaults to \code{choices}.}
+\item{values}{A character vector specifying the values of the input's
+chocies, defaults to \code{choices}.}
 
 \item{selected}{One of \code{values} specifying which choice is selected by
 default, defaults to \code{values[[1]]}.}
@@ -130,7 +135,7 @@ navInput(
 Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{formInput}}, \code{\link{groupTextInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{radioInput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}, \code{\link{sliderInput}},

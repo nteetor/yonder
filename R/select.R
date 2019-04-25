@@ -36,12 +36,10 @@
 #'   values = list(NULL, 1, 2, 3)
 #' )
 #'
-selectInput <- function(id, choices, values = choices, selected = NULL,
+selectInput <- function(id, choices = NULL, values = choices, selected = NULL,
                         ..., multiple = FALSE) {
   assert_id()
   assert_choices()
-
-  selected <- values %in% selected
 
   options <- map_options(choices, values, selected)
 
@@ -53,6 +51,7 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
       multiple = if (multiple) NA,
       options
     ),
+    tags$div(class = "valid-feedback"),
     tags$div(class = "invalid-feedback"),
     ...
   )
@@ -60,7 +59,36 @@ selectInput <- function(id, choices, values = choices, selected = NULL,
   attach_dependencies(component)
 }
 
+#' @rdname selectInput
+#' @export
+updateSelectInput <- function(id, choices = NULL, values = choices,
+                              selected = NULL, enable = NULL, disable = NULL,
+                              valid = NULL, invalid = NULL,
+                              session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_session()
+  assert_choices()
+
+  options <- map_options(choices, values, selected)
+
+  content <- coerce_content(options)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+  valid <- coerce_valid(valid)
+  invalid <- coerce_invalid(invalid)
+
+  session$sendInputMessage(id, list(
+    content = content,
+    enable = enable,
+    disable = disable,
+    valid = valid,
+    invalid = invalid
+  ))
+}
+
 map_options <- function(choices, values, selected) {
+  selected <- values %in% selected
+
   Map(
     choice = choices,
     value = values,

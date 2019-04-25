@@ -10,16 +10,22 @@
 #'
 #' @inheritParams buttonInput
 #'
-#' @param placeholder A character string specifying placeholder text for the
-#'   input group, defaults to `NULL`.
+#' @param value A character string specifying the initial value of the central
+#'   text input, defaults to `NULL`.
 #'
-#' @param value A character string specifying an initial value for the input
-#'   group, defaults to `NULL`.
+#' @param placeholder A character string specifying the placeholder text of
+#'   the text input, defaults to `NULL`.
+#'
+#' @param choices A character vector specifying the select input's choices,
+#'   defaults to `NULL`.
+#'
+#' @param values A character vector specifying the select input's values,
+#'   defaults to `NULL`.
 #'
 #' @param left,right A character vector specifying static addons or
-#'   [buttonInput()] or [dropdown()] elements specifying dynamic addons.
-#'   Addon's affect the reactive value of the group input, see the Details
-#'   section below for more information.
+#'   [buttonInput()] or [dropdown()] elements specifying dynamic addons. Addons
+#'   affect the reactive value of the group input, see the Details section below
+#'   for more information.
 #'
 #' @section `left` and `right` combinations:
 #'
@@ -91,25 +97,11 @@
 #'     background("blue")
 #' )
 #'
-groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
-                       right = NULL, ...) {
+groupTextInput <- function(id, value = NULL, placeholder = NULL, ...,
+                           left = NULL, right = NULL) {
   assert_id()
-
-  if (!is.null(left) && !isValidAddon(left)) {
-    stop(
-      "invalid `groupInput()` argument, `left` must be a character string, ",
-      "buttonInput(), or dropdown()",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(right) && !isValidAddon(right)) {
-    stop(
-      "invalid `groupInput()` argument, `right` must be a character string, ",
-      "buttonInput(), or dropdown()",
-      call. = FALSE
-    )
-  }
+  assert_left()
+  assert_right()
 
   shiny::registerInputHandler(
     type = "yonder.group",
@@ -117,8 +109,90 @@ groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
     force = TRUE
   )
 
+  left <- addon_left(left)
+  right <- addon_right(right)
+
+  component <- tags$div(
+    class = "yonder-group-text input-group",
+    id = id,
+    left,
+    tags$input(
+      type = "text",
+      class = "form-control",
+      placeholder = placeholder,
+      value = value,
+      autocomplete = "off"
+    ),
+    right,
+    tags$div(class = "valid-feedback"),
+    tags$div(class = "invalid-feedback"),
+    ...
+  )
+
+  attach_dependencies(component)
+}
+
+#' @rdname groupTextInput
+#' @export
+updateGroupTextInput <- function(id, value = NULL,
+                                 enable = NULL, disable = NULL, valid = NULL,
+                                 invalid = NULL,
+                                 session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_session()
+
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+  valid <- ceorce_valid(valid)
+  invalid <- coerce_invalid(invalid)
+
+  session$sendInputMessage(id, list(
+    value = value,
+    enable = enable,
+    disable = disable,
+    valid = valid,
+    invalid = invalid
+  ))
+}
+
+#' @rdname groupTextInput
+#' @export
+groupSelectInput <- function(id, choices, values = choices, selected = NULL,
+                             ..., left = NULL, right = NULL) {
+  assert_id()
+  assert_choices()
+  assert_selected(length = 1)
+
+  shiny::registerInputHandler(
+    type = "yonder.group",
+    fun = function(x, session, name) paste0(x, collapse = ""),
+    force = TRUE
+  )
+
+  options <- map_options(choices, values, selected)
+  left <- addon_left(left)
+  right <- addon_right(right)
+
+  component <- tags$div(
+    class = "yonder-group-select input-group",
+    id = id,
+    left,
+    tags$select(
+      class = "custom-select",
+      options
+    ),
+    right,
+    tags$div(class = "valid-feedback"),
+    tags$div(class = "invalid-feedback"),
+    ...
+  )
+
+  attach_dependencies(component)
+}
+
+addon_left <- function(left) {
   if (!is.null(left)) {
-    left <- tags$div(
+    tags$div(
       class = "input-group-prepend",
       if (is.character(left)) {
         lapply(left, tags$span, class = "input-group-text")
@@ -130,9 +204,11 @@ groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
       }
     )
   }
+}
 
+addon_right <- function(right) {
   if (!is.null(right)) {
-    right <- tags$div(
+    tags$div(
       class = "input-group-append",
       if (is.character(right)) {
         lapply(right, tags$span, class = "input-group-text")
@@ -144,31 +220,4 @@ groupInput <- function(id, value = NULL, placeholder = NULL, left = NULL,
       }
     )
   }
-
-  component <- tags$div(
-    class = "yonder-group input-group",
-    id = id,
-    left,
-    tags$input(
-      type = "text",
-      class = "form-control",
-      placeholder = placeholder,
-      value = value,
-      autocomplete = "off"
-    ),
-    right,
-    ...
-  )
-
-  attach_dependencies(component)
-}
-
-isValidAddon <- function(tag) {
-  if (is_strictly_list(tag)) {
-    return(all(vapply(tag, tag_name_is, logical(1), "button")))
-  }
-
-  is.character(tag) ||
-    tag_name_is(tag, "button") ||
-    tag_class_re(tag, "dropdown")
 }

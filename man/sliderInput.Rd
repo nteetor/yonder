@@ -42,13 +42,13 @@ Instead the slider input may be used similarly to a radio input.
 
 ### Custom chocies
 
-% <script>
-% $(function() {
-%   $(".yonder-range").each(function() {
-%     $(this.querySelector("input")).ionRangeSlider();
-%   });
-% });
-% </script>
+\% <script>
+\% $(function() {
+\%   $(".yonder-range").each(function() {
+\%     $(this.querySelector("input")).ionRangeSlider();
+\%   });
+\% });
+\% </script>
 
 # Select a value from a set of choices using a slider.
 
@@ -62,7 +62,7 @@ sliderInput(
 Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{formInput}}, \code{\link{groupTextInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
