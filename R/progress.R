@@ -31,7 +31,7 @@
 #'
 #' @param bar A bar element, typically a call to `bar()`.
 #'
-#' @inheritParams updateInput
+#' @inheritParams elementOutput
 #'
 #' @section Example application:
 #'

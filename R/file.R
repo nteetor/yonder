@@ -10,24 +10,11 @@
 #' @param browse A character string specifying the label of file input, defaults
 #'   to `"Browse"`.
 #'
-#' @param left,right A character string or button element placed prepended or
-#'   appended respectively to the file input. For more information refer to
-#'   [groupInput()].
-#'
-#'   Clicking on an element specified by `right` also opens the file input
-#'   dialog.
-#'
 #' @param multiple One of `TRUE` or `FALSE` specifying whether or not the user
 #'   can upload multiple files at once, defaults to `TRUE`.
 #'
 #' @param accept A character vector of possible MIME types or file extensions,
 #'   defaults to `NULL`, in which case any file type may be selected.
-#'
-#' @details
-#'
-#' Be careful when adjusting the right or left margin of a file input. In the
-#' current version of Bootstrap file inputs can be pushed off the side of a
-#' page.
 #'
 #' @section **Example** uploading a file:
 #'
@@ -71,79 +58,38 @@
 #'   browse = "Go go go!"
 #' )
 #'
-fileInput <- function(id, placeholder = "Choose file", browse = "Browse",
-                      left = NULL, right = NULL, ...,
+fileInput <- function(id, placeholder = "Choose file", browse = "Browse", ...,
                       multiple = TRUE, accept = NULL) {
   assert_id()
 
-  if (is_tag(left) && !tag_name_is(left, "button")) {
-    stop(
-      "invalid `fileInput()` argument, `left` must be a button element or ",
-      "character string",
-      call. = FALSE
-    )
-  }
-
-  if (is_tag(right) && !tag_name_is(right, "button")) {
-    stop(
-      "invalid `fileInput()` argument, `right` must be a button element or ",
-      "character string",
-      call. = FALSE
-    )
-  }
-
   if (!is.character(browse)) {
     stop(
-      "invalid `fileInput()` argument, `browse` must be a character string",
+      "invalid argument in `fileInput()`, `browse` must be a character string",
       call. = FALSE
-    )
-  }
-
-  if (!is.null(left)) {
-    left <- tags$div(
-      class = "input-group-prepend",
-      if (is_tag(left)) {
-        left
-      } else {
-        tags$span(class = "input-group-text", left)
-      }
-    )
-  }
-
-  if (!is.null(right)) {
-    right <- tags$div(
-      class = "input-group-append",
-      if (is_tag(right)) {
-        right
-      } else {
-        tags$span(class = "input-group-text", right)
-      }
     )
   }
 
   component <- tags$div(
-    class = "yonder-file input-group",
+    class = "yonder-file custom-file",
     id = id,
-    ...,
-    left,
-    tags$div(
-      class = "custom-file",
-      tags$input(
-        type = "file",
-        class = "custom-file-input",
-        multiple = if (multiple) NA,
-        autocomplete = "off"
-      ),
-      tags$label(
-        class = "custom-file-label",
-        `data-browse` = browse,
-        placeholder
-      ),
-      tags$div(
-        class = "invalid-feedback"
-      )
+    tags$input(
+      type = "file",
+      class = "custom-file-input",
+      multiple = if (multiple) NA,
+      autocomplete = "off"
     ),
-    right
+    tags$label(
+      class = "custom-file-label",
+      `data-browse` = browse,
+      placeholder
+    ),
+    tags$div(
+      class = "valid-feedback"
+    ),
+    tags$div(
+      class = "invalid-feedback"
+    ),
+    ...
   )
 
   attach_dependencies(component)

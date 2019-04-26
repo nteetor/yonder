@@ -3,38 +3,75 @@
 \name{selectInput}
 \alias{selectInput}
 \alias{updateSelectInput}
+\alias{groupSelectInput}
+\alias{updateGroupSelectInput}
 \title{Select input}
 \usage{
-selectInput(id, choices = NULL, values = choices, selected = NULL,
-  ..., multiple = FALSE)
+selectInput(id, choices = NULL, values = choices,
+  selected = values[[1]], ..., multiple = FALSE)
 
 updateSelectInput(id, choices = NULL, values = choices,
+  selected = NULL, enable = NULL, disable = NULL, valid = NULL,
+  invalid = NULL, session = getDefaultReactiveDomain())
+
+groupSelectInput(id, choices, values = choices, selected = values[[1]],
+  ..., left = NULL, right = NULL)
+
+updateGroupSelectInput(id, choices = NULL, values = choices,
   selected = NULL, enable = NULL, disable = NULL, valid = NULL,
   invalid = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
 
-\item{choices}{A character vector specifying the labels of the select input
-options.}
+\item{choices}{A character vector specifying the input's choices.}
 
-\item{values}{A character vector specifying the values of the select input
-options, defaults to \code{chocies}.}
+\item{values}{A character vector specifying the values of the input's
+choices, defaults to \code{choices}.}
 
-\item{selected}{One of \code{values} indicating the default value of the select
-input, defaults to \code{NULL}. If \code{NULL} the first value is selected by
-default.}
+\item{selected}{One of \code{values} indicating the default value of the input,
+defaults to \code{values[[1]]}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{multiple}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} multiple values may be
-selected, otherwise a single value is selected at a time, defaults to
-\code{FALSE}.}
+\item{multiple}{One of \code{TRUE} or \code{FALSE} specifying if multiple choices may
+be selected, defaults to \code{FALSE}. Please note, most browsers do not render
+a multiple select input as a dropdown menu, rather as a scrollable block
+of choices.}
+
+\item{left, right}{A character vector specifying static addons or
+\code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons. Addons
+affect the reactive value of the group input, see the Details section below
+for more information.
+
+\strong{\code{left} is character or \code{right} is character}
+
+If \code{left} or \code{right} are character vectors, then the group input functions
+like a text input. The value will update and trigger a reactive event when
+the text box is modified. The group input's reactive value is the
+concatention of the static addons specified by \code{left} or \code{right} and the
+value of the text input.
+
+\strong{\code{left} is button or \code{right} is button}
+
+The button does not change the value of the group input. However, the input
+no longer triggers event when the text box is updated. Instead the value is
+updated when a button is clicked. Static addons are still applied to the
+group input value.
+
+\strong{\code{left} is a dropdown or \code{right} is a dropdown}
+
+The value of the group input does chance depending on the clicked dropdown
+menu item. The value of the input group is the concatentation of the
+dropdown input value, the value of the text input, and any static addons.}
 }
 \description{
-Create a select input. Select elements often appear as a dropdown menu and
-may have one or more selected values, see \code{multiple}.
+Create a select input. Select elements typically appear as a simple menu of
+choices and may have one or more selected values, see the \code{multiple}
+argument. A group select input is a select input with one or two additional
+components. These addon components are used to change the reactivity or value
+of the input, see Details for more information.
 }
 \examples{
 
@@ -56,10 +93,9 @@ selectInput(
 Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{buttonInput}}, \code{\link{checkboxInput}},
   \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupTextInput}},
-  \code{\link{listGroupInput}}, \code{\link{menuInput}},
-  \code{\link{navInput}}, \code{\link{radioInput}},
-  \code{\link{rangeInput}}, \code{\link{sliderInput}},
-  \code{\link{textInput}}
+  \code{\link{formInput}}, \code{\link{listGroupInput}},
+  \code{\link{menuInput}}, \code{\link{navInput}},
+  \code{\link{radioInput}}, \code{\link{rangeInput}},
+  \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

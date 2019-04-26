@@ -14,7 +14,7 @@
 #' @param ... Tag elements inside the collapsible pane or additional named
 #'   arguments passed as HTML attributes to parent element.
 #'
-#' @inheritParams updateInput
+#' @inheritParams elementOutput
 #'
 #' @details
 #'

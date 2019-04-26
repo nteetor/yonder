@@ -224,7 +224,7 @@ map_navitems <- function(choices, values, selected) {
 #' @param fade One of `TRUE` or `FALSE` specifying if the pane fades in when
 #'   show and out when hidden, defaults to `TRUE`.
 #'
-#' @inheritParams updateInput
+#' @inheritParams elementOutput
 #'
 #' @section App with pills:
 #'

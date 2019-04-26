@@ -76,3 +76,83 @@ $.extend(selectInputBinding, {
 });
 
 Shiny.inputBindings.register(selectInputBinding, "yonder.selectInput");
+
+export let groupSelectInputBinding = new Shiny.InputBinding();
+
+$.extend(groupSelectInputBinding, {
+  find: (scope) => scope.querySelectorAll(".yonder-group-select[id]"),
+  getValue: (el) => {
+    let inputs = el.querySelectorAll(".input-group-prepend .input-group-text, input, .input-group-append .input-group-text");
+
+    return Array.prototype.slice.call(inputs)
+      .map(i => /^(DIV|SPAN)$/.test(i.tagName) ? i.innerText : (i.value || null))
+      .filter(value => value !== null);
+  },
+  getType: () => "yonder.group",
+  subscribe: (el, callback) => {
+    let $el = $(el);
+
+    if (el.querySelectorAll(".btn").length > 0) {
+      $el.on("click", ".dropdown-item", e => callback());
+      $el.on("click", ".btn:not(.dropdown-toggle", e => callback());
+    } else {
+      $el.on("change", e => callback());
+    }
+  },
+  receiveMessage: (el, msg) => {
+    let select = el.querySelector("select");
+
+    if (msg.content) {
+      select.innerHTML = msg.content;
+    }
+
+    if (msg.enable) {
+      let enable = msg.enable;
+
+      if (enable === true) {
+        select.removeAttribute("disabled");
+      } else {
+        select.querySelectorAll("option").forEach(option => {
+          option.removeAttribute("disabled");
+        });
+      }
+    }
+
+    if (msg.disable) {
+      let disable = msg.disable;
+
+      if (disable) {
+        select.setAttribute("disabled", "");
+      } else {
+        select.querySelectorAll("option").forEach(option => {
+          option.setAttribute("disabled", "");
+        });
+      }
+    }
+
+    if (msg.valid) {
+      el.querySelector("valid-feedback").innerHTML = msg.valid;
+
+      select.classList.remove("is-invalid");
+      select.classList.add("is-valid");
+    }
+
+    if (msg.invalid) {
+      el.querySelector("invalid-feedback").innerHTML = msg.invalid;
+
+      select.classList.remove("is-valid");
+      select.classList.add("is-invalid");
+    }
+
+    if (!msg.valid && !msg.invalid) {
+      select.classList.remove("is-valid");
+      select.classList.remove("is-invalid");
+
+      el.querySelector("invalid-feedback").innerHTML = "";
+      el.querySelector("valid-feedback").innerHTML = "";
+    }
+
+  }
+});
+
+Shiny.inputBindings.register(groupSelectInputBinding, "yonder.groupSelectInputBinding");

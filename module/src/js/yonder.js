@@ -7,7 +7,6 @@ import "./input-binding-checkbox.js";
 import "./input-binding-chip.js";
 import "./input-binding-file.js";
 import "./input-binding-form.js";
-import "./input-binding-group-input.js";
 import "./input-binding-link.js";
 import "./input-binding-list-group.js";
 import "./input-binding-menu.js";

@@ -1,23 +1,51 @@
 #' Select input
 #'
-#' Create a select input. Select elements often appear as a dropdown menu and
-#' may have one or more selected values, see `multiple`.
+#' Create a select input. Select elements typically appear as a simple menu of
+#' choices and may have one or more selected values, see the `multiple`
+#' argument. A group select input is a select input with one or two additional
+#' components. These addon components are used to change the reactivity or value
+#' of the input, see Details for more information.
 #'
 #' @inheritParams buttonInput
 #'
-#' @param choices A character vector specifying the labels of the select input
-#'   options.
+#' @param choices A character vector specifying the input's choices.
 #'
-#' @param values A character vector specifying the values of the select input
-#'   options, defaults to `chocies`.
+#' @param values A character vector specifying the values of the input's
+#'   choices, defaults to `choices`.
 #'
-#' @param selected One of `values` indicating the default value of the select
-#'   input, defaults to `NULL`. If `NULL` the first value is selected by
-#'   default.
+#' @param selected One of `values` indicating the default value of the input,
+#'   defaults to `values[[1]]`.
 #'
-#' @param multiple One of `TRUE` or `FALSE`, if `TRUE` multiple values may be
-#'   selected, otherwise a single value is selected at a time, defaults to
-#'   `FALSE`.
+#' @param multiple One of `TRUE` or `FALSE` specifying if multiple choices may
+#'   be selected, defaults to `FALSE`. Please note, most browsers do not render
+#'   a multiple select input as a dropdown menu, rather as a scrollable block
+#'   of choices.
+#'
+#' @param left,right A character vector specifying static addons or
+#'   [buttonInput()] or [dropdown()] elements specifying dynamic addons. Addons
+#'   affect the reactive value of the group input, see the Details section below
+#'   for more information.
+#'
+#'   **`left` is character or `right` is character**
+#'
+#'   If `left` or `right` are character vectors, then the group input functions
+#'   like a text input. The value will update and trigger a reactive event when
+#'   the text box is modified. The group input's reactive value is the
+#'   concatention of the static addons specified by `left` or `right` and the
+#'   value of the text input.
+#'
+#'   **`left` is button or `right` is button**
+#'
+#'   The button does not change the value of the group input. However, the input
+#'   no longer triggers event when the text box is updated. Instead the value is
+#'   updated when a button is clicked. Static addons are still applied to the
+#'   group input value.
+#'
+#'   **`left` is a dropdown or `right` is a dropdown**
+#'
+#'   The value of the group input does chance depending on the clicked dropdown
+#'   menu item. The value of the input group is the concatentation of the
+#'   dropdown input value, the value of the text input, and any static addons.
 #'
 #' @family inputs
 #' @export
@@ -36,8 +64,8 @@
 #'   values = list(NULL, 1, 2, 3)
 #' )
 #'
-selectInput <- function(id, choices = NULL, values = choices, selected = NULL,
-                        ..., multiple = FALSE) {
+selectInput <- function(id, choices = NULL, values = choices,
+                        selected = values[[1]], ..., multiple = FALSE) {
   assert_id()
   assert_choices()
 
@@ -86,6 +114,72 @@ updateSelectInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
+#' @rdname selectInput
+#' @export
+groupSelectInput <- function(id, choices, values = choices,
+                             selected = values[[1]], ..., left = NULL,
+                             right = NULL) {
+  assert_id()
+  assert_choices()
+  assert_selected(length = 1)
+  assert_left()
+  assert_right()
+
+  shiny::registerInputHandler(
+    type = "yonder.group",
+    fun = function(x, session, name) paste0(x, collapse = ""),
+    force = TRUE
+  )
+
+  options <- map_options(choices, values, selected)
+  left <- addon_left(left)
+  right <- addon_right(right)
+
+  component <- tags$div(
+    class = "yonder-group-select input-group",
+    id = id,
+    left,
+    tags$select(
+      class = "custom-select",
+      options
+    ),
+    right,
+    tags$div(class = "valid-feedback"),
+    tags$div(class = "invalid-feedback"),
+    ...
+  )
+
+  attach_dependencies(component)
+}
+
+#' @rdname selectInput
+#' @export
+updateGroupSelectInput <- function(id, choices = NULL, values = choices,
+                                   selected = NULL, enable = NULL,
+                                   disable = NULL, valid = NULL,
+                                   invalid = NULL,
+                                   session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_choices()
+  assert_session()
+
+  options <- map_options(choices, values, selected)
+
+  content <- coerce_content(options)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+  valid <- coerce_valid(valid)
+  invalid <- coerce_invalid(invalid)
+
+  session$sendInputMessage(id, list(
+    content = content,
+    enable = enable,
+    disable = diable,
+    valid = valid,
+    invalid = invalid
+  ))
+}
+
 map_options <- function(choices, values, selected) {
   selected <- values %in% selected
 
@@ -102,3 +196,36 @@ map_options <- function(choices, values, selected) {
     }
   )
 }
+
+addon_left <- function(left) {
+  if (!is.null(left)) {
+    tags$div(
+      class = "input-group-prepend",
+      if (is.character(left)) {
+        lapply(left, tags$span, class = "input-group-text")
+      } else if (tag_class_re(left, "dropdown")) {
+        left$children
+      } else {
+        # list of buttons
+        left
+      }
+    )
+  }
+}
+
+addon_right <- function(right) {
+  if (!is.null(right)) {
+    tags$div(
+      class = "input-group-append",
+      if (is.character(right)) {
+        lapply(right, tags$span, class = "input-group-text")
+      } else if (tag_class_re(right, "dropdown")) {
+        right$children
+      } else {
+        # list of buttons
+        right
+      }
+    )
+  }
+}
+

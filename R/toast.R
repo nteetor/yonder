@@ -23,7 +23,7 @@
 #' @param action A character string specifying a reactive id. If specified, the
 #'   hiding or closing of the toast will set the reactive id `action` to `TRUE`.
 #'
-#' @inheritParams updateInput
+#' @inheritParams elementOutput
 #'
 #' @section Showing notifications:
 #'

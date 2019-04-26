@@ -6,6 +6,8 @@
 #'
 #' @inheritParams buttonInput
 #'
+#' @inheritParams selectInput
+#'
 #' @param value A character string or a value coerced to a character string
 #'   specifying the default value of the textual input.
 #'
@@ -59,6 +61,66 @@ updateTextInput <- function(id, value = NULL, enable = NULL, disable = NULL,
   assert_session()
 
   updateTextualInput(id, value, enable, disable, valid, invalid, session)
+}
+
+#' @rdname textInput
+#' @export
+groupTextInput <- function(id, value = NULL, placeholder = NULL, ...,
+                           left = NULL, right = NULL) {
+  assert_id()
+  assert_left()
+  assert_right()
+
+  shiny::registerInputHandler(
+    type = "yonder.group",
+    fun = function(x, session, name) paste0(x, collapse = ""),
+    force = TRUE
+  )
+
+  left <- addon_left(left)
+  right <- addon_right(right)
+
+  component <- tags$div(
+    class = "yonder-group-text input-group",
+    id = id,
+    left,
+    tags$input(
+      type = "text",
+      class = "form-control",
+      placeholder = placeholder,
+      value = value,
+      autocomplete = "off"
+    ),
+    right,
+    tags$div(class = "valid-feedback"),
+    tags$div(class = "invalid-feedback"),
+    ...
+  )
+
+  attach_dependencies(component)
+}
+
+#' @rdname textInput
+#' @export
+updateGroupTextInput <- function(id, value = NULL,
+                                 enable = NULL, disable = NULL, valid = NULL,
+                                 invalid = NULL,
+                                 session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_session()
+
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+  valid <- ceorce_valid(valid)
+  invalid <- coerce_invalid(invalid)
+
+  session$sendInputMessage(id, list(
+    value = value,
+    enable = enable,
+    disable = disable,
+    valid = valid,
+    invalid = invalid
+  ))
 }
 
 #' @rdname textInput

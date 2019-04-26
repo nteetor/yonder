@@ -1,64 +1,61 @@
 export let fileInputBinding = new Shiny.InputBinding();
 
-document.addEventListener("DOMContentLoaded", () => {
-  bsCustomFileInput.init(".yonder-file[id] input[type='file']");
-});
-
 $.extend(fileInputBinding, {
-  Selector: {
-    SELF: ".yonder-file",
-    VALIDATE: "input[type='file']"
+  find: (scope) => scope.querySelectorAll(".yonder-file[id]"),
+  initialize: (el) => {
+    let $el = $(el);
+
+    $el.on("dragover", (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+    });
+
+    $el.on("dragcenter", (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+    });
+
+    $el.on("drop", (e) => {
+      e.stopPropagation();
+      e.preventDefault();
+
+      fileInputBinding._upload(el, e.originalEvent.dataTransfer.files);
+    });
+
+    $el.on("change", (e) => {
+      fileInputBinding._upload(el);
+    });
   },
-  Events: [
-    {
-      type: "change",
-      callback: (el, _, self) => {
-        if (el.querySelector("button") !== null) return;
+  getValue: (el) => null,
+  receiveMessage: (el, msg) => {
+    let input = el.querySelector("input");
 
-        self._doUpload(el);
-      }
-    },
-    {
-      type: "click",
-      selector: "button",
-      callback: (el, _, self) => self._doUpload(el)
-    },
-    {
-      type: "dragover",
-      callback: (_, e) => {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-    },
-    {
-      type: "dragcenter",
-      callback: (_, e) => {
-        e.stopPropagation();
-        e.preventDefault();
-      }
-    },
-    {
-      type: "drop",
-      callback: (el, e, self) => {
-        e.stopPropagation();
-        e.preventDefault();
-
-        self._doUpload(el, e.originalEvent.dataTransfer.files);
-      }
+    if (msg.enable) {
+      input.removeAttribute("disabled");
     }
-  ],
-  getValue: el => null,
-  _value: () => null,
-  _choice: () => null,
-  _select: () => null,
-  _clear: () => null,
-  _enable: function(el, data) {
-    el.querySelector("input[type='file']").removeAttribute("disabled");
+
+    if (msg.disable) {
+      input.setAttribute("disabled", "");
+    }
+
+    if (msg.valid) {
+      el.querySelector(".valid-feedback").innerHTML = msg.valid;
+      input.classList.add("is-valid");
+    }
+
+    if (msg.invalid) {
+      el.querySelector(".invalid-feedback").innerHTML = msg.invalid;
+      input.classList.remove("is-invalid");
+    }
+
+    if (!msg.valid && !msg.invalid) {
+      el.querySelector(".valid-feedback").innerHTML = "";
+      el.querySelector(".invalid-feedback").innerHTML = "";
+      input.classList.remove("is-valid");
+      input.classList.remove("is-invalid");
+    }
   },
-  _disable: function(el, data) {
-    el.querySelector("input[type='file']").setAttribute("disabled", "");
-  },
-  _sendFile: function(uri, job, file, final, el) {
+  _post: function(uri, job, file, final, el) {
     let xhr = new XMLHttpRequest();
     xhr.open("POST", uri, true);
     xhr.setRequestHeader("Content-Type", "application/octet-stream");
@@ -80,7 +77,7 @@ $.extend(fileInputBinding, {
 
     xhr.send(file);
   },
-  _doUpload: function(el, files) {
+  _upload: function(el, files) {
     let input = el.querySelector("input[type='file']");
 
     if (files === undefined) {
@@ -109,7 +106,7 @@ $.extend(fileInputBinding, {
         let uri = res.uploadUrl;
 
         for (var i = 0; i < files.length; i++) {
-          this._sendFile(uri, job, files[i], i === (files.length - 1), el);
+          this._post(uri, job, files[i], i === (files.length - 1), el);
         }
       },
       (err) => {
@@ -117,6 +114,10 @@ $.extend(fileInputBinding, {
       }
     );
   }
+});
+
+document.addEventListener("DOMContentLoaded", () => {
+  bsCustomFileInput.init(".yonder-file[id] input[type='file']");
 });
 
 Shiny.inputBindings.register(fileInputBinding, "yonder.fileInput");

@@ -439,56 +439,76 @@
       var $toggle = $(el.querySelector(chipInputBinding.selectorToggle));
       $el.on("input", function (e) {
         var value = $toggle[0].value;
-        chipInputBinding.filterItems(el, value);
 
-        if (chipInputBinding.visibleItems(el) === 0) {
+        chipInputBinding._filter(el, value);
+
+        if (chipInputBinding._visible(el).length === 0) {
           $toggle.dropdown("hide");
         } else {
           $toggle.dropdown("show");
         }
       });
       $el.on("input change", function (e) {
-        return $toggle.dropdown("update");
+        $toggle.dropdown("update");
       });
       $el.on("hide.bs.dropdown", function (e) {
         if (el.querySelector("input:focus") === null) {
           el.querySelector("input").value = "";
-          chipInputBinding.filterItems(el, "");
+
+          chipInputBinding._filter(el, "");
         }
       });
       $el.on("click", ".dropdown-item", function (e) {
         e.stopPropagation();
-        chipInputBinding.addChip(el, e.currentTarget.value);
-        el.querySelector(chipInputBinding.selectorToggle).focus();
+
+        chipInputBinding._add(el, e.currentTarget.value);
+
+        $toggle[0].focus();
       });
       $el.on("click", ".chip", function (e) {
-        chipInputBinding.removeChip(el, e.currentTarget.value);
+        chipInputBinding._remove(el, e.currentTarget.value);
       });
       var max = +el.getAttribute("data-max");
 
-      if (max !== -1 && chipInputBinding.selectedItems(el) >= max) {
-        chipInputBinding.disableToggle(el);
+      if (max !== -1 && chipInputBinding._selected(el).length >= max) {
+        chipInputBinding._disable(el);
       }
+    },
+    getValue: function getValue(el) {
+      var selected = el.querySelectorAll(".active");
+
+      if (selected.length === 0) {
+        return null;
+      }
+
+      return Array.prototype.map.call(selected, function (s) {
+        return s.value;
+      });
+    },
+    subscribe: function subscribe(el, callback) {
+      var $el = $(el);
+      $el.on("click", ".dropdown-item,.chip", function (e) {
+        return callback();
+      });
+    },
+    unsubscribe: function unsubscribe(el) {
+      return $(el).off(".yonder");
     },
     receiveMessage: function receiveMessage(el, msg) {
       if (msg.items && msg.chips) {
-        var menu = el.querySelector(".dropdown-menu");
-
-        if (menu) {
-          menu.innerHTML = msg.items;
-        }
-
-        var chips = el.querySelector(".chips");
-
-        if (chips) {
-          chips.innerHTML = msg.chips;
-        }
+        el.querySelector(".dropdown-menu").innerHTML = msg.items;
+        el.querySelector(".chips").innerHTML = msg.chips;
       }
 
       if (msg.enable) {
-        if (msg === true) ; else {
+        var enable = msg.enable;
+
+        if (enable === true) {
+          chipInputBinding._enable(el); // el.querySelector("input").removeAttribute("disabled");
+
+        } else {
           el.querySelectorAll(".dropdown-item,.chip").forEach(function (item) {
-            if (msg.enable.indexOf(item.value) > -1) {
+            if (enable.indexOf(item.value) > -1) {
               item.removeAttribute("disabled");
               item.classList.remove("disabled");
             }
@@ -499,7 +519,10 @@
       if (msg.disable) {
         var disable = msg.disable;
 
-        if (disable === true) ; else {
+        if (disable === true) {
+          chipInputBinding._disable(el); // el.querySelector("input").setAttribute("disabled", "");
+
+        } else {
           el.querySelectorAll(".dropdown-item,.chip").forEach(function (item) {
             if (disable.indexOf(item.value) > -1) {
               item.setAttribute("disabled", "");
@@ -509,17 +532,18 @@
         }
       }
     },
-    enableToggle: function enableToggle(el) {
+    _enable: function _enable(el) {
       var input = el.querySelector("input");
       input.removeAttribute("disabled");
       input.classList.remove("disabled");
     },
-    disableToggle: function disableToggle(el) {
+    _disable: function _disable(el) {
       var input = el.querySelector("input");
       input.setAttribute("disabled", "");
       input.classList.add("disabled");
     },
-    filterItems: function filterItems(el, value) {
+    _filter: function _filter(el, value) {
+      value = value.toLowerCase();
       el.querySelectorAll(".dropdown-item").forEach(function (item) {
         var match = item.innerText.toLowerCase().indexOf(value) !== -1;
 
@@ -530,172 +554,125 @@
         }
       });
     },
-    visibleItems: function visibleItems(el) {
-      return el.querySelectorAll(":not(.selected), :not(.filtered)").length;
+    _visible: function _visible(el) {
+      return el.querySelectorAll(":not(.selected),:not(.filtered)");
     },
-    selectedItems: function selectedItems(el) {
-      return el.querySelectorAll(".selected").length;
+    _selected: function _selected(el) {
+      return el.querySelectorAll(".selected");
     },
-    getItem: function getItem(el, value) {
+    _items: function _items(el, value) {
       return Array.prototype.filter.call(el.querySelectorAll(".dropdown-item"), function (chip) {
         return chip.value === value;
       });
     },
-    addChip: function addChip(el, value) {
-      this.getItem(el, value).forEach(function (item) {
-        return item.classList.add("selected");
-      });
-      this.getChip(el, value).forEach(function (chip) {
-        return chip.classList.add("active");
-      });
-
-      if (this.visibleItems(el) === 0) {
-        $(el.querySelector(this.Selector.TOGGLE)).dropdown("hide");
-      }
-
-      var max = +el.getAttribute("data-max");
-
-      if (max === -1 || this.selectedItems(el) < max) {
-        $(el.querySelector(this.Selector.TOGGLE)).dropdown("update");
-      } else {
-        $(el.querySelector(this.Selector.TOGGLE)).dropdown("hide");
-        this.disableToggle(el);
-      }
-    },
-    removeChip: function removeChip(el, value) {
-      var max = +el.getAttribute("data-max");
-      this.getChip(el, value).forEach(function (chip) {
-        return chip.classList.remove("active");
-      });
-      this.getItem(el, value).forEach(function (item) {
-        return item.classList.remove("selected");
-      });
-
-      if (max === -1 || this.selectedItems(el) < max) {
-        this.enableToggle(el);
-      }
-    },
-    getChip: function getChip(el, value) {
+    _chips: function _chips(el, value) {
       return Array.prototype.filter.call(el.querySelectorAll(".chip"), function (chip) {
         return chip.value === value;
       });
     },
-    _update: function _update(el, data) {
-      var itemTemplate = el.querySelector(".dropdown-item").cloneNode();
-      itemTemplate.value = "";
-      itemTemplate.innerText = "";
-      itemTemplate.classList.remove("selected");
-      itemTemplate.classList.remove("filtered");
-      var chipTemplate = el.querySelector(".chip").cloneNode(true);
-      chipTemplate.value = "";
-      chipTemplate.children[0].innerHTML = "";
-      chipTemplate.classList.remove("active");
-      var menu = el.querySelector(".dropdown-menu");
+    _add: function _add(el, value) {
+      var $toggle = $(el.querySelector(chipInputBinding.selectorToggle));
+
+      chipInputBinding._items(el, value).forEach(function (item) {
+        item.classList.add("selected");
+      });
+
       var chips = el.querySelector(".chips");
-      menu.innerHTML = "";
-      chips.innerHTML = "";
-      data.choices.forEach(function (choice, i) {
-        var item = itemTemplate.cloneNode();
-        item.value = data.values[i];
-        item.innerHTML = choice;
-        var chip = chipTemplate.cloneNode(true);
-        chip.value = data.values[i];
-        chip.children[0].innerHTML = choice;
 
-        if (data.selected.indexOf(data.values[i]) > -1) {
-          item.classList.add("selected");
-          chip.classList.add("active");
-        }
-
-        menu.appendChild(item);
-        chips.appendChild(chip);
+      chipInputBinding._chips(el, value).forEach(function (chip) {
+        chips.insertBefore(chips.removeChild(chip), chips.firstChild);
+        chip.classList.add("active");
       });
+
+      if (chipInputBinding._visible(el).length === 0) {
+        $toggle.dropdown("hide");
+      }
+
+      var max = +el.getAttribute("data-max");
+
+      if (max === -1 || chipInputBinding._selected(el).length < max) {
+        $toggle.dropdown("update");
+      } else {
+        $toggle.dropdown("hide");
+
+        chipInputBinding._disable(el);
+      }
     },
-    _select: function _select(el, data) {
-      var _this = this;
+    _remove: function _remove(el, value) {
+      var max = +el.getAttribute("data-max");
 
-      el.querySelectorAll(".chip").forEach(function (item) {
-        var value = item.value;
-
-        if (data.reset) {
-          _this.removeChip(el, value);
-        }
-
-        var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
-
-        if (match != data.invert) {
-          _this.addChip(el, value);
-        }
+      chipInputBinding._chips(el, value).forEach(function (chip) {
+        chip.classList.remove("active");
       });
+
+      chipInputBinding._items(el, value).forEach(function (item) {
+        item.classList.remove("selected");
+      });
+
+      if (max === -1 || chipInputBinding._selected(el).length < max) {
+        chipInputBinding._enable(el);
+      }
     }
   });
   Shiny.inputBindings.register(chipInputBinding, "yonder.chipInput");
 
   var fileInputBinding = new Shiny.InputBinding();
-  document.addEventListener("DOMContentLoaded", function () {
-    bsCustomFileInput.init(".yonder-file[id] input[type='file']");
-  });
   $.extend(fileInputBinding, {
-    Selector: {
-      SELF: ".yonder-file",
-      VALIDATE: "input[type='file']"
+    find: function find(scope) {
+      return scope.querySelectorAll(".yonder-file[id]");
     },
-    Events: [{
-      type: "change",
-      callback: function callback(el, _, self) {
-        if (el.querySelector("button") !== null) return;
-
-        self._doUpload(el);
-      }
-    }, {
-      type: "click",
-      selector: "button",
-      callback: function callback(el, _, self) {
-        return self._doUpload(el);
-      }
-    }, {
-      type: "dragover",
-      callback: function callback(_, e) {
+    initialize: function initialize(el) {
+      var $el = $(el);
+      $el.on("dragover", function (e) {
         e.stopPropagation();
         e.preventDefault();
-      }
-    }, {
-      type: "dragcenter",
-      callback: function callback(_, e) {
+      });
+      $el.on("dragcenter", function (e) {
         e.stopPropagation();
         e.preventDefault();
-      }
-    }, {
-      type: "drop",
-      callback: function callback(el, e, self) {
+      });
+      $el.on("drop", function (e) {
         e.stopPropagation();
         e.preventDefault();
 
-        self._doUpload(el, e.originalEvent.dataTransfer.files);
-      }
-    }],
+        fileInputBinding._upload(el, e.originalEvent.dataTransfer.files);
+      });
+      $el.on("change", function (e) {
+        fileInputBinding._upload(el);
+      });
+    },
     getValue: function getValue(el) {
       return null;
     },
-    _value: function _value() {
-      return null;
+    receiveMessage: function receiveMessage(el, msg) {
+      var input = el.querySelector("input");
+
+      if (msg.enable) {
+        input.removeAttribute("disabled");
+      }
+
+      if (msg.disable) {
+        input.setAttribute("disabled", "");
+      }
+
+      if (msg.valid) {
+        el.querySelector(".valid-feedback").innerHTML = msg.valid;
+        input.classList.add("is-valid");
+      }
+
+      if (msg.invalid) {
+        el.querySelector(".invalid-feedback").innerHTML = msg.invalid;
+        input.classList.remove("is-invalid");
+      }
+
+      if (!msg.valid && !msg.invalid) {
+        el.querySelector(".valid-feedback").innerHTML = "";
+        el.querySelector(".invalid-feedback").innerHTML = "";
+        input.classList.remove("is-valid");
+        input.classList.remove("is-invalid");
+      }
     },
-    _choice: function _choice() {
-      return null;
-    },
-    _select: function _select() {
-      return null;
-    },
-    _clear: function _clear() {
-      return null;
-    },
-    _enable: function _enable(el, data) {
-      el.querySelector("input[type='file']").removeAttribute("disabled");
-    },
-    _disable: function _disable(el, data) {
-      el.querySelector("input[type='file']").setAttribute("disabled", "");
-    },
-    _sendFile: function _sendFile(uri, job, file, final, el) {
+    _post: function _post(uri, job, file, final, el) {
       var xhr = new XMLHttpRequest();
       xhr.open("POST", uri, true);
       xhr.setRequestHeader("Content-Type", "application/octet-stream");
@@ -712,7 +689,7 @@
 
       xhr.send(file);
     },
-    _doUpload: function _doUpload(el, files) {
+    _upload: function _upload(el, files) {
       var _this = this;
 
       var input = el.querySelector("input[type='file']");
@@ -743,12 +720,15 @@
         var uri = res.uploadUrl;
 
         for (var i = 0; i < files.length; i++) {
-          _this._sendFile(uri, job, files[i], i === files.length - 1, el);
+          _this._post(uri, job, files[i], i === files.length - 1, el);
         }
       }, function (err) {
         console.error("uploadInit request failed for " + el.id + ": " + err);
       });
     }
+  });
+  document.addEventListener("DOMContentLoaded", function () {
+    bsCustomFileInput.init(".yonder-file[id] input[type='file']");
   });
   Shiny.inputBindings.register(fileInputBinding, "yonder.fileInput");
 
@@ -799,162 +779,6 @@
     }
   });
   Shiny.inputBindings.register(formInputBinding, "yonder.formInput");
-
-  var groupTextInputBinding = new Shiny.InputBinding();
-  $.extend(groupTextInputBinding, {
-    find: function find(scope) {
-      return scope.querySelectorAll(".yonder-group-text[id]");
-    },
-    getValue: function getValue(el) {
-      var inputs = el.querySelectorAll(".input-group-prepend .input-group-text, input, .input-group-append .input-group-text");
-      return Array.prototype.slice.call(inputs).map(function (i) {
-        return /^(DIV|SPAN)$/.test(i.tagName) ? i.innerText : i.value || null;
-      }).filter(function (value) {
-        return value !== null;
-      });
-    },
-    getType: function getType() {
-      return "yonder.group";
-    },
-    subscribe: function subscribe(el, callback) {
-      var $el = $(el);
-
-      if (el.querySelectorAll(".btn").length > 0) {
-        $el.on("click", ".dropdown-item", function (e) {
-          return callback();
-        });
-        $el.on("click", ".btn:not(.dropdown-toggle", function (e) {
-          return callback();
-        });
-      } else {
-        $el.on("input", function (e) {
-          return callback(true);
-        });
-        $el.on("change", function (e) {
-          return callback(true);
-        });
-      }
-    },
-    receiveMessage: function receiveMessage(el, msg) {
-      var input = el.querySelector("input");
-
-      if (msg.value) {
-        input.value = msg.values;
-      }
-
-      if (msg.enable) {
-        input.removeAttribute("disabled");
-      }
-
-      if (msg.disable) {
-        input.setAttribute("disabled", "");
-      }
-
-      if (msg.valid) {
-        el.querySelector("valid-feedback").innerHTML = msg.valid;
-        input.classList.remove("is-invalid");
-        input.classList.add("is-valid");
-      }
-
-      if (msg.invalid) {
-        el.querySelector("invalid-feedback").innerHTML = msg.invalid;
-        input.classList.remove("is-valid");
-        input.classList.add("is-invalid");
-      }
-
-      if (!msg.valid && !msg.invalid) {
-        input.classList.remove("is-valid");
-        input.classList.remove("is-invalid");
-        el.querySelector("invalid-feedback").innerHTML = "";
-        el.querySelector("valid-feedback").innerHTML = "";
-      }
-    }
-  });
-  Shiny.inputBindings.register(groupTextInputBinding, "yonder.groupTextInput");
-  var groupSelectInputBinding = new Shiny.InputBinding();
-  $.extend(groupSelectInputBinding, {
-    find: function find(scope) {
-      return scope.querySelectorAll(".yonder-group-select[id]");
-    },
-    getValue: function getValue(el) {
-      var inputs = el.querySelectorAll(".input-group-prepend .input-group-text, input, .input-group-append .input-group-text");
-      return Array.prototype.slice.call(inputs).map(function (i) {
-        return /^(DIV|SPAN)$/.test(i.tagName) ? i.innerText : i.value || null;
-      }).filter(function (value) {
-        return value !== null;
-      });
-    },
-    getType: function getType() {
-      return "yonder.group";
-    },
-    subscribe: function subscribe(el, callback) {
-      var $el = $(el);
-
-      if (el.querySelectorAll(".btn").length > 0) {
-        $el.on("click", ".dropdown-item", function (e) {
-          return callback();
-        });
-        $el.on("click", ".btn:not(.dropdown-toggle", function (e) {
-          return callback();
-        });
-      } else {
-        $el.on("change", function (e) {
-          return callback(true);
-        });
-      }
-    },
-    receiveMessage: function receiveMessage(el, msg) {
-      var select = el.querySelector("select");
-
-      if (msg.content) {
-        select.innerHTML = msg.content;
-      }
-
-      if (msg.enable) {
-        var enable = msg.enable;
-
-        if (enable === true) {
-          select.removeAttribute("disabled");
-        } else {
-          select.querySelectorAll("option").forEach(function (option) {
-            option.removeAttribute("disabled");
-          });
-        }
-      }
-
-      if (msg.disable) {
-        var disable = msg.disable;
-
-        if (disable) {
-          select.setAttribute("disabled", "");
-        } else {
-          select.querySelectorAll("option").forEach(function (option) {
-            option.setAttribute("disabled", "");
-          });
-        }
-      }
-
-      if (msg.valid) {
-        el.querySelector("valid-feedback").innerHTML = msg.valid;
-        select.classList.remove("is-invalid");
-        select.classList.add("is-valid");
-      }
-
-      if (msg.invalid) {
-        el.querySelector("invalid-feedback").innerHTML = msg.invalid;
-        select.classList.remove("is-valid");
-        select.classList.add("is-invalid");
-      }
-
-      if (!msg.valid && !msg.invalid) {
-        select.classList.remove("is-valid");
-        select.classList.remove("is-invalid");
-        el.querySelector("invalid-feedback").innerHTML = "";
-        el.querySelector("valid-feedback").innerHTML = "";
-      }
-    }
-  });
-  Shiny.inputBindings.register(groupSelectInputBinding, "yonder.groupSelectInputBinding");
 
   var linkInputBinding = new Shiny.InputBinding();
   $.extend(linkInputBinding, {
@@ -1596,6 +1420,90 @@
     }
   });
   Shiny.inputBindings.register(selectInputBinding, "yonder.selectInput");
+  var groupSelectInputBinding = new Shiny.InputBinding();
+  $.extend(groupSelectInputBinding, {
+    find: function find(scope) {
+      return scope.querySelectorAll(".yonder-group-select[id]");
+    },
+    getValue: function getValue(el) {
+      var inputs = el.querySelectorAll(".input-group-prepend .input-group-text, input, .input-group-append .input-group-text");
+      return Array.prototype.slice.call(inputs).map(function (i) {
+        return /^(DIV|SPAN)$/.test(i.tagName) ? i.innerText : i.value || null;
+      }).filter(function (value) {
+        return value !== null;
+      });
+    },
+    getType: function getType() {
+      return "yonder.group";
+    },
+    subscribe: function subscribe(el, callback) {
+      var $el = $(el);
+
+      if (el.querySelectorAll(".btn").length > 0) {
+        $el.on("click", ".dropdown-item", function (e) {
+          return callback();
+        });
+        $el.on("click", ".btn:not(.dropdown-toggle", function (e) {
+          return callback();
+        });
+      } else {
+        $el.on("change", function (e) {
+          return callback();
+        });
+      }
+    },
+    receiveMessage: function receiveMessage(el, msg) {
+      var select = el.querySelector("select");
+
+      if (msg.content) {
+        select.innerHTML = msg.content;
+      }
+
+      if (msg.enable) {
+        var enable = msg.enable;
+
+        if (enable === true) {
+          select.removeAttribute("disabled");
+        } else {
+          select.querySelectorAll("option").forEach(function (option) {
+            option.removeAttribute("disabled");
+          });
+        }
+      }
+
+      if (msg.disable) {
+        var disable = msg.disable;
+
+        if (disable) {
+          select.setAttribute("disabled", "");
+        } else {
+          select.querySelectorAll("option").forEach(function (option) {
+            option.setAttribute("disabled", "");
+          });
+        }
+      }
+
+      if (msg.valid) {
+        el.querySelector("valid-feedback").innerHTML = msg.valid;
+        select.classList.remove("is-invalid");
+        select.classList.add("is-valid");
+      }
+
+      if (msg.invalid) {
+        el.querySelector("invalid-feedback").innerHTML = msg.invalid;
+        select.classList.remove("is-valid");
+        select.classList.add("is-invalid");
+      }
+
+      if (!msg.valid && !msg.invalid) {
+        select.classList.remove("is-valid");
+        select.classList.remove("is-invalid");
+        el.querySelector("invalid-feedback").innerHTML = "";
+        el.querySelector("valid-feedback").innerHTML = "";
+      }
+    }
+  });
+  Shiny.inputBindings.register(groupSelectInputBinding, "yonder.groupSelectInputBinding");
 
   var textualInputBinding = new Shiny.InputBinding();
   $.extend(textualInputBinding, {
@@ -1658,6 +1566,77 @@
     }
   });
   Shiny.inputBindings.register(textualInputBinding, "yonder.textualInput");
+  var groupTextInputBinding = new Shiny.InputBinding();
+  $.extend(groupTextInputBinding, {
+    find: function find(scope) {
+      return scope.querySelectorAll(".yonder-group-text[id]");
+    },
+    getValue: function getValue(el) {
+      var inputs = el.querySelectorAll(".input-group-prepend .input-group-text, input, .input-group-append .input-group-text");
+      return Array.prototype.slice.call(inputs).map(function (i) {
+        return /^(DIV|SPAN)$/.test(i.tagName) ? i.innerText : i.value || null;
+      }).filter(function (value) {
+        return value !== null;
+      });
+    },
+    getType: function getType() {
+      return "yonder.group";
+    },
+    subscribe: function subscribe(el, callback) {
+      var $el = $(el);
+
+      if (el.querySelectorAll(".btn").length > 0) {
+        $el.on("click", ".dropdown-item", function (e) {
+          return callback();
+        });
+        $el.on("click", ".btn:not(.dropdown-toggle", function (e) {
+          return callback();
+        });
+      } else {
+        $el.on("input", function (e) {
+          return callback(true);
+        });
+        $el.on("change", function (e) {
+          return callback(true);
+        });
+      }
+    },
+    receiveMessage: function receiveMessage(el, msg) {
+      var input = el.querySelector("input");
+
+      if (msg.value) {
+        input.value = msg.values;
+      }
+
+      if (msg.enable) {
+        input.removeAttribute("disabled");
+      }
+
+      if (msg.disable) {
+        input.setAttribute("disabled", "");
+      }
+
+      if (msg.valid) {
+        el.querySelector("valid-feedback").innerHTML = msg.valid;
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+      }
+
+      if (msg.invalid) {
+        el.querySelector("invalid-feedback").innerHTML = msg.invalid;
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
+      }
+
+      if (!msg.valid && !msg.invalid) {
+        input.classList.remove("is-valid");
+        input.classList.remove("is-invalid");
+        el.querySelector("invalid-feedback").innerHTML = "";
+        el.querySelector("valid-feedback").innerHTML = "";
+      }
+    }
+  });
+  Shiny.inputBindings.register(groupTextInputBinding, "yonder.groupTextInput");
 
   $.extend(Shiny.progressHandlers, {
     "yonder-progress": function yonderProgress(msg) {
