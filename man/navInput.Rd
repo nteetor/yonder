@@ -33,6 +33,8 @@ appearance of the nav input, defaults to \code{"links"}.}
 \item{fill}{One of \code{TRUE} or \code{FALSE} specifying if the nav input fills the
 width of its parent element. If \code{TRUE}, the space is divided evenly among
 the nav items.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 A reactive input styled as a navigation control. The navigation input can be
@@ -133,10 +135,11 @@ navInput(
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{radioInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{chipInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{listGroupInput}}, \code{\link{menuInput}},
+  \code{\link{radioInput}}, \code{\link{radiobarInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{sliderInput}}, \code{\link{textInput}}
 }

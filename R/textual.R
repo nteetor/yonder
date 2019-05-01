@@ -111,7 +111,7 @@ updateGroupTextInput <- function(id, value = NULL,
 
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
-  valid <- ceorce_valid(valid)
+  valid <- coerce_valid(valid)
   invalid <- coerce_invalid(invalid)
 
   session$sendInputMessage(id, list(

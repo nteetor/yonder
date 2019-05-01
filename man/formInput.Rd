@@ -4,18 +4,19 @@
 \alias{formInput}
 \title{Form inputs}
 \usage{
-formInput(id, submit, ..., inline = FALSE)
+formInput(id, ..., submit = buttonInput(NULL, "Submit"),
+  inline = FALSE)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
-
-\item{submit}{A button input, which will trigger the form and cause reactives
-to update.}
 
 \item{...}{Any number of unnamed arguments (inputs or tag elements) passed as
 child elements to the form.
 
 Additional named arguments passed as HTML attributes to the parent element.}
+
+\item{submit}{A button input, when clicked the form input will update its
+reactive child inputs, defaults to \code{buttonInput(NULL, "Submit")}.}
 
 \item{inline}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} the form and its child
 elements are rendered in a horizontal row, defaults to \code{FALSE}. On small
@@ -97,10 +98,11 @@ card(
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{listGroupInput}}, \code{\link{menuInput}},
-  \code{\link{navInput}}, \code{\link{radioInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{chipInput}},
+  \code{\link{fileInput}}, \code{\link{listGroupInput}},
+  \code{\link{menuInput}}, \code{\link{navInput}},
+  \code{\link{radioInput}}, \code{\link{radiobarInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{sliderInput}}, \code{\link{textInput}}
 }

@@ -9,8 +9,8 @@ radioInput(id, choices = NULL, values = choices,
   selected = values[[1]], ..., inline = FALSE)
 
 updateRadioInput(id, choices = NULL, values = choices,
-  selected = NULL, enable = NULL, disable = NULL, valid = NULL,
-  invalid = NULL, session = getDefaultReactiveDomain())
+  selected = NULL, inline = FALSE, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -32,6 +32,8 @@ element.}
 
 \item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
 in which case the radio controls render on separate lines.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 Create a reactive radio input of one or more radio controls.
@@ -65,10 +67,11 @@ radioInput(
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{chipInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{listGroupInput}}, \code{\link{menuInput}},
+  \code{\link{navInput}}, \code{\link{radiobarInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{sliderInput}}, \code{\link{textInput}}
 }

@@ -40,6 +40,8 @@ be selected, defaults to \code{FALSE}. Please note, most browsers do not render
 a multiple select input as a dropdown menu, rather as a scrollable block
 of choices.}
 
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
+
 \item{left, right}{A character vector specifying static addons or
 \code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons. Addons
 affect the reactive value of the group input, see the Details section below
@@ -91,11 +93,12 @@ selectInput(
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{chipInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{listGroupInput}}, \code{\link{menuInput}},
+  \code{\link{navInput}}, \code{\link{radioInput}},
+  \code{\link{radiobarInput}}, \code{\link{rangeInput}},
   \code{\link{sliderInput}}, \code{\link{textInput}}
 }
 \concept{inputs}

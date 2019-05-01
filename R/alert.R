@@ -33,12 +33,6 @@
 alert <- function(..., dismissible = TRUE, fade = TRUE) {
   args <- eval(substitute(alist(...)))
 
-  attributes <- lapply(
-    named_values(args),
-    eval,
-    envir = parent.frame()
-  )
-
   body <- lapply(
     unnamed_values(args),
     eval,
@@ -77,7 +71,7 @@ alert <- function(..., dismissible = TRUE, fade = TRUE) {
     }
   )
 
-  compoment <- tag_attributes_add(component, attributes)
+  compoment <- tag_attributes_add(component, named_values(list(...)))
 
   attach_dependencies(component)
 }

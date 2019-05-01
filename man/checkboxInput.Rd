@@ -2,16 +2,23 @@
 % Please edit documentation in R/checkbox.R
 \name{checkboxInput}
 \alias{checkboxInput}
+\alias{updateCheckboxInput}
 \alias{switchInput}
-\alias{checkbarInput}
+\alias{updateSwitchInput}
 \title{Checkbox inputs}
 \usage{
-checkboxInput(id, choices, values = choices, selected = NULL, ...,
-  inline = FALSE)
+checkboxInput(id, choices = NULL, values = choices, selected = NULL,
+  ..., inline = FALSE)
+
+updateCheckboxInput(id, choices = NULL, values = choices,
+  selected = NULL, inline = FALSE, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
 
 switchInput(id, choices, values = choices, selected = NULL, ...)
 
-checkbarInput(id, choices, values = choices, selected = NULL, ...)
+updateSwitchInput(id, choices = NULL, values = choices,
+  selected = NULL, enable = NULL, disable = NULL, valid = NULL,
+  invalid = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -32,6 +39,8 @@ element.}
 \item{inline}{One of \code{TRUE} or \code{FALSE} specifying if the checkbox input
 choices render inline or stacked, defaults to \code{FALSE}, in which case the
 choices are stacked.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 Reactive checkbox and checkbar inputs. Users may select one or more choices.
@@ -106,10 +115,11 @@ switchInput(
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{chipInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{listGroupInput}}, \code{\link{menuInput}},
-  \code{\link{navInput}}, \code{\link{radioInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{chipInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{listGroupInput}},
+  \code{\link{menuInput}}, \code{\link{navInput}},
+  \code{\link{radioInput}}, \code{\link{radiobarInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{sliderInput}}, \code{\link{textInput}}
 }

@@ -22,6 +22,8 @@ group, defaults to \code{labels}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 A set of buttons with custom values.
@@ -48,10 +50,11 @@ buttonGroupInput(
 }
 \seealso{
 Other inputs: \code{\link{buttonInput}},
-  \code{\link{checkboxInput}}, \code{\link{chipInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{listGroupInput}}, \code{\link{menuInput}},
-  \code{\link{navInput}}, \code{\link{radioInput}},
+  \code{\link{checkbarInput}}, \code{\link{checkboxInput}},
+  \code{\link{chipInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{listGroupInput}},
+  \code{\link{menuInput}}, \code{\link{navInput}},
+  \code{\link{radioInput}}, \code{\link{radiobarInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{sliderInput}}, \code{\link{textInput}}
 }

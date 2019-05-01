@@ -72,6 +72,8 @@ input, defaults to \code{NULL}, in which case there is no placeholder text.}
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
+
 \item{left}{A character vector specifying static addons or
 \code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons. Addons
 affect the reactive value of the group input, see the Details section below
@@ -162,11 +164,12 @@ numberInput(id = "num")
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{chipInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{listGroupInput}}, \code{\link{menuInput}},
+  \code{\link{navInput}}, \code{\link{radioInput}},
+  \code{\link{radiobarInput}}, \code{\link{rangeInput}},
   \code{\link{selectInput}}, \code{\link{sliderInput}}
 }
 \concept{inputs}

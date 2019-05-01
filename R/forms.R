@@ -24,8 +24,8 @@
 #'
 #'   Additional named arguments passed as HTML attributes to the parent element.
 #'
-#' @param submit A button input, which will trigger the form and cause reactives
-#'  to update.
+#' @param submit A button input, when clicked the form input will update its
+#'   reactive child inputs, defaults to `buttonInput(NULL, "Submit")`.
 #'
 #' @param inline One of `TRUE` or `FALSE`, if `TRUE` the form and its child
 #'   elements are rendered in a horizontal row, defaults to `FALSE`. On small
@@ -92,7 +92,8 @@
 #'   border("teal") %>%
 #'   width(50)
 #'
-formInput <- function(id, submit, ..., inline = FALSE) {
+formInput <- function(id, ..., submit = buttonInput(NULL, "Submit"),
+                      inline = FALSE) {
   assert_id()
 
   if (!tag_class_re(submit, "yonder-button")) {
@@ -109,6 +110,8 @@ formInput <- function(id, submit, ..., inline = FALSE) {
     },
     force = TRUE
   )
+
+  submit <- tag_class_add(submit, "yonder-form-submit")
 
   component <- tags$form(
     class = str_collate(
@@ -178,7 +181,7 @@ formInput <- function(id, submit, ..., inline = FALSE) {
 #'   ),
 #'   formGroup(
 #'     label = "Username",
-#'     groupInput(
+#'     groupTextInput(
 #'       id = "username",
 #'       left = "@@"
 #'     )

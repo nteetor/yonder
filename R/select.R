@@ -174,7 +174,7 @@ updateGroupSelectInput <- function(id, choices = NULL, values = choices,
   session$sendInputMessage(id, list(
     content = content,
     enable = enable,
-    disable = diable,
+    disable = disable,
     valid = valid,
     invalid = invalid
   ))

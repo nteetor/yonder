@@ -13,6 +13,18 @@ coerce_content <- function(x) {
   }
 }
 
+coerce_selected <- function(choices, x) {
+  if (length(choices) > 0) {
+    if (isTRUE(x)) {
+      x
+    } else {
+      as.list(x)
+    }
+  } else {
+    NULL
+  }
+}
+
 coerce_enable <- function(x) {
   if (!is.null(x)) {
     if (!isTRUE(x)) {

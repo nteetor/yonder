@@ -70,6 +70,14 @@ $.extend(chipInputBinding, {
       el.querySelector(".chips").innerHTML = msg.chips;
     }
 
+    if (msg.selected) {
+
+    }
+
+    if (msg.max !== null) {
+      el.setAttribute("data-max", msg.max);
+    }
+
     if (msg.enable) {
       let enable = msg.enable;
 
@@ -103,30 +111,7 @@ $.extend(chipInputBinding, {
     }
   },
 
-  _enable: (el) => {
-    let input = el.querySelector("input");
-    input.removeAttribute("disabled");
-    input.classList.remove("disabled");
-  },
-  _disable: (el) => {
-    let input = el.querySelector("input");
-    input.setAttribute("disabled", "");
-    input.classList.add("disabled");
-  },
 
-  _filter: (el, value) => {
-    value = value.toLowerCase();
-
-    el.querySelectorAll(".dropdown-item").forEach(item => {
-      let match = item.innerText.toLowerCase().indexOf(value) !== -1;
-
-      if (match) {
-        item.classList.remove("filtered");
-      } else {
-        item.classList.add("filtered");
-      }
-    });
-  },
   _visible: (el) => {
     return el.querySelectorAll(":not(.selected),:not(.filtered)");
   },
@@ -146,6 +131,29 @@ $.extend(chipInputBinding, {
     );
   },
 
+  _enable: (el) => {
+    let input = el.querySelector("input");
+    input.removeAttribute("disabled");
+    input.classList.remove("disabled");
+  },
+  _disable: (el) => {
+    let input = el.querySelector("input");
+    input.setAttribute("disabled", "");
+    input.classList.add("disabled");
+  },
+  _filter: (el, value) => {
+    value = value.toLowerCase();
+
+    el.querySelectorAll(".dropdown-item").forEach(item => {
+      let match = item.innerText.toLowerCase().indexOf(value) !== -1;
+
+      if (match) {
+        item.classList.remove("filtered");
+      } else {
+        item.classList.add("filtered");
+      }
+    });
+  },
   _add: (el, value) => {
     let $toggle = $(el.querySelector(chipInputBinding.selectorToggle));
 

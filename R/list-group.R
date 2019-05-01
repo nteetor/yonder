@@ -143,7 +143,7 @@ updateListGroupInput <- function(id, choices = NULL, values = choices,
                                  selected = NULL, enable = NULL, disable = NULL,
                                  session = getDefaultReactiveDomain()) {
   assert_id()
-  assert_choice()
+  assert_choices()
   assert_session()
 
   items <- map_listitems(choices, values, selected)

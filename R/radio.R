@@ -53,14 +53,13 @@ radioInput <- function(id, choices = NULL, values = choices,
   assert_choices()
   assert_selected(length = 1)
 
-  radios <- map_radios(choices, values, selected, id)
+  radios <- map_radios(choices, values, selected, id, inline)
 
   component <- tags$div(
     class = "yonder-radio",
     id = id,
     radios,
-    tags$div(class = "valid-feedback"),
-    tags$div(class = "invalid-feedback")
+    ...
   )
 
   attach_dependencies(component)
@@ -69,7 +68,8 @@ radioInput <- function(id, choices = NULL, values = choices,
 #' @rdname radioInput
 #' @export
 updateRadioInput <- function(id, choices = NULL, values = choices,
-                             selected = NULL, enable = NULL, disable = NULL,
+                             selected = NULL, inline = FALSE,
+                             enable = NULL, disable = NULL,
                              valid = NULL, invalid = NULL,
                              session = getDefaultReactiveDomain()) {
   assert_id()
@@ -77,7 +77,7 @@ updateRadioInput <- function(id, choices = NULL, values = choices,
   assert_selected(length = 1)
   assert_session()
 
-  radios <- map_radios(choices, values, selected, id)
+  radios <- map_radios(choices, values, selected, id, inline)
 
   content <- coerce_content(radios)
   enable <- coerce_enable(enable)
@@ -94,14 +94,15 @@ updateRadioInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_radios <- function(choices, values, selected, parent_id) {
+map_radios <- function(choices, values, selected, parent_id, inline) {
   selected <- values %in% selected
 
   Map(
     choice = choices,
     value = values,
     select = selected,
-    function(choice, value, select) {
+    last = seq_along(choices) == length(choices),
+    function(choice, value, select, last) {
       child_id <- generate_id("radio")
 
       tags$div(
@@ -123,7 +124,13 @@ map_radios <- function(choices, values, selected, parent_id) {
           class = "custom-control-label",
           `for` = child_id,
           choice
-        )
+        ),
+        if (last) {
+          list(
+            tags$div(class = "valid-feedback"),
+            tags$div(class = "invalid-feedback")
+          )
+        }
       )
     }
   )
@@ -144,6 +151,7 @@ map_radios <- function(choices, values, selected, parent_id) {
 #' @param selected One of `values` specifying the input's default selected
 #'   choice, defualts to `values[[1]]`.
 #'
+#' @family inputs
 #' @export
 #' @examples
 #'
@@ -190,7 +198,7 @@ updateRadiobarInput <- function(id, choices = NULL, values = choices,
   assert_selected(length = 1)
   assert_session()
 
-  radios <- map_radiobuttons(choices, values, selected)
+  radios <- map_radiobuttons(choices, values, selected, id)
 
   content <- coerce_content(radios)
   enable <- coerce_enable(enable)
@@ -203,7 +211,7 @@ updateRadiobarInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_radiobuttons <- function(choices, values, selected) {
+map_radiobuttons <- function(choices, values, selected, parent_id) {
   selected <- values %in% selected
 
   Map(
@@ -218,7 +226,7 @@ map_radiobuttons <- function(choices, values, selected) {
           if (select) "active"
         ),
         tags$input(
-          name = id,
+          name = parent_id,
           type = "radio",
           value = value,
           checked = if (select) NA,

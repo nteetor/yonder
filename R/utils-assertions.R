@@ -171,7 +171,7 @@ assert_right <- function() {
 
 is_addon <- function(x) {
   if (is_strictly_list(x)) {
-    all(vapply(tag, tag_name_is, logical(1), name = "button"))
+    all(vapply(x, tag_name_is, logical(1), name = "button"))
   } else {
     is.character(x) ||
       tag_name_is(x, "button") ||

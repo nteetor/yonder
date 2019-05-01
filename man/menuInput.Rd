@@ -32,6 +32,8 @@ which direction the menu opens, defaults to \code{"down"}.}
 
 \item{align}{One or \code{"right"} or \code{"left"} specifying which side of the
 toggle button the menu aligns to, defaults to \code{"left"}.`}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 A togglable dropdown menu input. Menu inputs may be used as standalone
@@ -76,10 +78,11 @@ navInput(
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{listGroupInput}},
-  \code{\link{navInput}}, \code{\link{radioInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{chipInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{listGroupInput}}, \code{\link{navInput}},
+  \code{\link{radioInput}}, \code{\link{radiobarInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{sliderInput}}, \code{\link{textInput}}
 }

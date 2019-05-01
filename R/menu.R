@@ -106,7 +106,7 @@ updateMenuInput <- function(id, choices = NULL, values = choices,
 
   items <- map_menuitems(choices, values, selected)
 
-  content <- coerce_content(item)
+  content <- coerce_content(items)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 

@@ -32,6 +32,8 @@ element.}
 inline. If \code{TRUE} multiple chips may fit onto a single row, otherwise, if
 \code{FALSE}, chips expand to fill the width of their parent element, one chip
 per row.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 The chip input is a selectize alternative. Choices are selected from a
@@ -97,10 +99,11 @@ chipInput(
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{listGroupInput}}, \code{\link{menuInput}},
-  \code{\link{navInput}}, \code{\link{radioInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{listGroupInput}},
+  \code{\link{menuInput}}, \code{\link{navInput}},
+  \code{\link{radioInput}}, \code{\link{radiobarInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{sliderInput}}, \code{\link{textInput}}
 }

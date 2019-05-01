@@ -62,7 +62,7 @@ card(
   ),
   formGroup(
     label = "Username",
-    groupInput(
+    groupTextInput(
       id = "username",
       left = "@"
     )

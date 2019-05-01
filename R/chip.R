@@ -138,6 +138,10 @@ updateChipInput <- function(id, choices = NULL, values = NULL, selected = NULL,
     chips <- list(chips = NULL, items = NULL)
   }
 
+  selected <- coerce_selected(choices, selected)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+
   session$sendInputMessage(id, list(
     chips = chips$chips,
     items = chips$items,

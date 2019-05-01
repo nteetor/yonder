@@ -35,6 +35,8 @@ specifying how list items are laid out, defaults to \code{"vertical"}. Note, if
 rendered without an outside border, defaults to \code{FALSE}. Removing the list
 group border is useful when rendering a list group inside a custom parent
 container, e.g. inside a \code{\link[=card]{card()}}.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 List group inputs are an actionable list of items. They behave similarly to
@@ -123,10 +125,11 @@ listGroupInput(
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{menuInput}},
-  \code{\link{navInput}}, \code{\link{radioInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{chipInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{menuInput}}, \code{\link{navInput}},
+  \code{\link{radioInput}}, \code{\link{radiobarInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{sliderInput}}, \code{\link{textInput}}
 }

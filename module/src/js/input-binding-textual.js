@@ -62,6 +62,7 @@ $.extend(groupTextInputBinding, {
       .filter(value => value !== null);
   },
   getType: () => "yonder.group",
+  getRatePolicy: (el) => ({ policy: "debounce", delay: 250 }),
   subscribe: (el, callback) => {
     let $el = $(el);
 
@@ -77,7 +78,7 @@ $.extend(groupTextInputBinding, {
     let input = el.querySelector("input");
 
     if (msg.value) {
-      input.value = msg.values;
+      input.value = msg.value;
     }
 
     if (msg.enable) {

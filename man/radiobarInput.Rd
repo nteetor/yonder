@@ -26,6 +26,8 @@ choice, defualts to \code{values[[1]]}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 A stylized radio input.
@@ -47,3 +49,14 @@ radiobarInput(
   background("grey")
 
 }
+\seealso{
+Other inputs: \code{\link{buttonGroupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{chipInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
+  \code{\link{listGroupInput}}, \code{\link{menuInput}},
+  \code{\link{navInput}}, \code{\link{radioInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
+  \code{\link{sliderInput}}, \code{\link{textInput}}
+}
+\concept{inputs}

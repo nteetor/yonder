@@ -284,145 +284,178 @@
 
   var checkbarInputBinding = new Shiny.InputBinding();
   $.extend(checkbarInputBinding, {
-    Selector: {
-      SELF: ".yonder-checkbar",
-      SELECTED: "input:checked"
+    find: function find(scope) {
+      return scope.querySelectorAll(".yonder-checkbar[id]");
     },
-    Events: [{
-      type: "change",
-      selector: ".btn"
-    }],
-    _update: function _update(el, data) {
-      var template = el.querySelector(".btn").cloneNode(true);
-      template.classList.remove("active");
-      template.classList.remove("disabled");
-      template.children[0].removeAttribute("disabled");
-      var input = template.children[0].cloneNode();
-      template.innerHTML = "";
-      template.appendChild(input);
-      el.innerHTML = "";
-      data.choices.forEach(function (choice, i) {
-        var child = template.cloneNode(true);
-        child.insertAdjacentHTML("beforeend", choice);
-        child.children[0].value = data.values[i];
+    getValue: function getValue(el) {
+      var checked = el.querySelectorAll("input:checked:not(:disabled)");
 
-        if (data.selected.indexOf(data.values[i]) > -1) {
-          child.classList.add("active");
-          child.children[0].checked = true;
-        }
+      if (checked.length === 0) {
+        return null;
+      }
 
-        el.appendChild(child);
+      return Array.prototype.map.call(checked, function (c) {
+        return c.value;
       });
     },
-    _select: function _select(el, data) {
-      el.querySelectorAll(".btn").forEach(function (child) {
-        var value = child.children[0].value;
-
-        if (data.reset) {
-          child.classList.remove("active");
-          child.children[0].checked = false;
-        }
-
-        var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
-
-        if (match !== data.invert) {
-          child.classList.add("active");
-          child.children[0].checked = true;
-        }
+    subscribe: function subscribe(el, callback) {
+      var $el = $(el);
+      $el.on("click.yonder", function (e) {
+        return callback();
+      });
+      $el.on("change.yonder", function (e) {
+        return callback();
       });
     },
-    _enable: function _enable(el, data) {
-      var values = data.values;
-      el.querySelectorAll(".btn").forEach(function (btn) {
-        var enable = !values.length || values.indexOf(btn.children[0].value) > -1;
-
-        if (enable !== data.invert) {
-          btn.classList.remove("disabled");
-          btn.children[0].removeAttribute("disabled");
-        }
-      });
+    unsubscribe: function unsubscribe(el) {
+      return $(el).off(".yonder");
     },
-    _disable: function _disable(el, data) {
-      var values = data.values;
-      el.querySelectorAll(".btn").forEach(function (btn) {
-        var disable = !values.length || values.indexOf(btn.children[0].value) > -1;
+    receiveMessage: function receiveMessage(el, msg) {
+      if (msg.content) {
+        el.querySelectorAll(".btn").forEach(function (btn) {
+          el.removeChild(btn);
+        });
+        el.insertAdjacentHTML("afterbegin", msg.content);
+      }
 
-        if (data.reset) {
-          btn.classList.remove("disabled");
-          btn.children[0].removeAttribute("disabled");
-        }
+      if (msg.enable) {
+        var enable = msg.enable;
 
-        if (disable !== data.invert) {
-          btn.classList.add("disabled");
-          btn.children[0].setAttribute("disabled", "");
+        if (enable === true) {
+          el.querySelectorAll(".btn").forEach(function (btn) {
+            btn.classList.remove("disabled");
+            btn.children[0].removeAttribute("disabled");
+          });
+        } else {
+          el.querySelectorAll(".btn").forEach(function (btn) {
+            if (enable.indexOf(btn.value) > -1) {
+              btn.classList.remove("disabled");
+              btn.children[0].removeAttribute("disabled");
+            }
+          });
         }
-      });
+      }
+
+      if (msg.disable) {
+        var disable = msg.disable;
+
+        if (disable === true) {
+          el.querySelectorAll(".btn").forEach(function (btn) {
+            btn.classList.add("disabled");
+            btn.children[0].setAttribute("disabled", "");
+          });
+        } else {
+          el.querySelectorAll(".btn").forEach(function (btn) {
+            if (disable.indexOf(btn.value) > -1) {
+              btn.classList.add("disabled");
+              btn.children[0].setAttribute("disabled", "");
+            }
+          });
+        }
+      }
     }
   });
   Shiny.inputBindings.register(checkbarInputBinding, "yonder.checkbarInput");
 
   var checkboxInputBinding = new Shiny.InputBinding();
   $.extend(checkboxInputBinding, {
-    Selector: {
-      SELF: ".yonder-checkbox",
-      SELECTED: ".custom-control-input:checked:not(:disabled)",
-      VALIDATE: ".custom-control-input"
+    find: function find(scope) {
+      return scope.querySelectorAll(".yonder-checkbox[id]");
     },
-    Events: [{
-      type: "change"
-    }],
-    _update: function _update(el, data) {
-      var template = el.querySelector(".custom-checkbox").cloneNode(true);
-      template.children[0].checked = false;
-      el.innerHTML = "";
-      data.choices.forEach(function (choice, i) {
-        var child = template.cloneNode(true);
-        child.children[0].value = data.values[i];
-        child.children[1].innerHTML = choice;
+    getValue: function getValue(el) {
+      var checked = el.querySelectorAll("input:checked:not(:disabled)");
 
-        if (data.selected.indexOf(data.values[i]) > -1) {
-          child.children[0].checked = true;
-        }
+      if (checked.length === 0) {
+        return null;
+      }
 
-        el.appendChild(child);
+      return Array.prototype.map.call(checked, function (c) {
+        return c.value;
       });
     },
-    _select: function _select(el, data) {
-      el.querySelectorAll(".custom-checkbox").forEach(function (child) {
-        var value = child.children[0].value;
-
-        if (data.reset) {
-          child.children[0].checked = false;
-        }
-
-        var match = data.fixed ? data.pattern.indexOf(value) > -1 : RegExp(data.pattern, "i").test(value);
-
-        if (match !== data.invert) {
-          child.children[0].checked = true;
-        }
+    subscribe: function subscribe(el) {
+      var $el = $(el);
+      $el.on("change.yonder", function (e) {
+        return callback();
       });
     },
-    _enable: function _enable(el, data) {
-      el.querySelectorAll("input").forEach(function (input) {
-        var enable = !data.values.length && data.values.indexOf(input.value) > -1;
-
-        if (enable !== data.invert) {
-          input.removeAttribute("disabled");
-        }
-      });
+    unsubscribe: function unsubscribe(el) {
+      return $(el).off(".yonder");
     },
-    _disable: function _disable(el, data) {
-      el.querySelectorAll("input").forEach(function (input) {
-        var disable = !data.values.length && data.values.indexOf(input.value) > -1;
+    receiveMessage: function receiveMessage(el, msg) {
+      if (msg.content) {
+        el.querySelectorAll(".custom-checkbox").forEach(function (box) {
+          el.removeChild(box);
+        });
+        el.insertAdjacentHTML("afterbegin", msg.content);
+      }
 
-        if (data.reset) {
-          input.removeAttribute("disabled");
-        }
+      if (msg.selected) {
+        el.querySelectorAll("input").forEach(function (input) {
+          if (msg.selected === true || msg.selected.indexOf(input.value) > -1) {
+            input.checked = true;
+          }
+        });
+      }
 
-        if (disable !== data.invert) {
-          input.setAttribute("disabled", "");
+      if (msg.enable) {
+        var enable = msg.enable;
+
+        if (enable === true) {
+          el.querySelectorAll("input").forEach(function (input) {
+            input.removeAttribute("disabled");
+          });
+        } else {
+          el.querySelectorAll("input").forEach(function (input) {
+            if (enable.indexOf(input.value) > -1) {
+              input.removeAttribute("disabled");
+            }
+          });
         }
-      });
+      }
+
+      if (msg.disable) {
+        var disable = msg.disable;
+
+        if (disable === true) {
+          el.querySelectorAll("input").forEach(function (input) {
+            input.setAttribute("disabled", "");
+          });
+        } else {
+          el.querySelectorAll("input").forEach(function (input) {
+            if (disable.indexOf(input.value) > -1) {
+              input.setAttribute("disabled", "");
+            }
+          });
+        }
+      }
+
+      if (msg.valid) {
+        el.querySelector(".invalid-feedback").innerHTML = "";
+        el.querySelector(".valid-feedback").innerHTML = msg.valid;
+        el.querySelectorAll("input").forEach(function (input) {
+          input.classList.remove("is-invalid");
+          input.classList.add("is-valid");
+        });
+      }
+
+      if (msg.invalid) {
+        el.querySelector(".valid-feedback").innerHTML = "";
+        el.querySelector(".inavlid-feedback").innerHTML = msg.invalid;
+        el.querySelectorAll("input").forEach(function (input) {
+          input.classList.remove("is-valid");
+          input.classList.add("is-invalid");
+        });
+      }
+
+      if (!msg.valid && !msg.invalid) {
+        el.querySelector(".valid-feedback").innerHTML = "";
+        el.querySelector(".invalid-feedback").innerHTML = "";
+        el.querySelectorAll("input").forEach(function (input) {
+          input.classList.remove("is-valid");
+          input.classList.remove("is-invalid");
+        });
+      }
     }
   });
   Shiny.inputBindings.register(checkboxInputBinding, "yonder.checkboxInput");
@@ -500,6 +533,10 @@
         el.querySelector(".chips").innerHTML = msg.chips;
       }
 
+      if (msg.max !== null) {
+        el.setAttribute("data-max", msg.max);
+      }
+
       if (msg.enable) {
         var enable = msg.enable;
 
@@ -532,6 +569,22 @@
         }
       }
     },
+    _visible: function _visible(el) {
+      return el.querySelectorAll(":not(.selected),:not(.filtered)");
+    },
+    _selected: function _selected(el) {
+      return el.querySelectorAll(".selected");
+    },
+    _items: function _items(el, value) {
+      return Array.prototype.filter.call(el.querySelectorAll(".dropdown-item"), function (chip) {
+        return chip.value === value;
+      });
+    },
+    _chips: function _chips(el, value) {
+      return Array.prototype.filter.call(el.querySelectorAll(".chip"), function (chip) {
+        return chip.value === value;
+      });
+    },
     _enable: function _enable(el) {
       var input = el.querySelector("input");
       input.removeAttribute("disabled");
@@ -552,22 +605,6 @@
         } else {
           item.classList.add("filtered");
         }
-      });
-    },
-    _visible: function _visible(el) {
-      return el.querySelectorAll(":not(.selected),:not(.filtered)");
-    },
-    _selected: function _selected(el) {
-      return el.querySelectorAll(".selected");
-    },
-    _items: function _items(el, value) {
-      return Array.prototype.filter.call(el.querySelectorAll(".dropdown-item"), function (chip) {
-        return chip.value === value;
-      });
-    },
-    _chips: function _chips(el, value) {
-      return Array.prototype.filter.call(el.querySelectorAll(".chip"), function (chip) {
-        return chip.value === value;
       });
     },
     _add: function _add(el, value) {
@@ -1188,14 +1225,14 @@
 
       if (msg.valid) {
         el.querySelector(".valid-feedback").innerHTML = msg.valid;
-        el.querySelectorAll(".custom-radio").forEach(function (radio) {
+        el.querySelectorAll(".custom-control-input").forEach(function (radio) {
           radio.classList.add("is-valid");
         });
       }
 
       if (msg.invalid) {
         el.querySelector(".invalid-feedback").innerHTML = msg.invalid;
-        el.querySelectorAll(".custom-radio").forEach(function (radio) {
+        el.querySelectorAll(".custom-control-input").forEach(function (radio) {
           radio.classList.add("is-invalid");
         });
       }
@@ -1203,7 +1240,7 @@
       if (!msg.valid && !msg.invalid) {
         el.querySelector(".valid-feedback").innerHTML = "";
         el.querySelector(".invalid-feedback").innerHTML = "";
-        el.querySelectorAll(".custom-radio").forEach(function (radio) {
+        el.querySelectorAll(".custom-control-input").forEach(function (radio) {
           radio.classList.remove("is-valid");
           radio.classList.remove("is-invalid");
         });
@@ -1582,6 +1619,12 @@
     getType: function getType() {
       return "yonder.group";
     },
+    getRatePolicy: function getRatePolicy(el) {
+      return {
+        policy: "debounce",
+        delay: 250
+      };
+    },
     subscribe: function subscribe(el, callback) {
       var $el = $(el);
 
@@ -1605,7 +1648,7 @@
       var input = el.querySelector("input");
 
       if (msg.value) {
-        input.value = msg.values;
+        input.value = msg.value;
       }
 
       if (msg.enable) {

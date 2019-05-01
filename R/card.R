@@ -161,12 +161,6 @@ card <- function(..., header = NULL, footer = NULL) {
     footer <- tags$div(class = "card-footer", footer)
   }
 
-  attributes <- lapply(
-    named_values(args),
-    eval,
-    envir = parent.frame()
-  )
-
   formatted_tags <- list(
     p = function(...) tags$p(class = "card-text", ...),
     h1 = function(...) tags$h1(class = "card-title", ...),
@@ -213,7 +207,7 @@ card <- function(..., header = NULL, footer = NULL) {
     footer
   )
 
-  component <- tag_attributes_add(component, attributes)
+  component <- tag_attributes_add(component, named_values(list(...)))
 
   attach_dependencies(component)
 }

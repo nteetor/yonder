@@ -12,7 +12,7 @@ Yonder is a set of tools for flexible and creative shiny application design.
 
 
 Yonder provides many familiar inputs like \code{\link[=selectInput]{selectInput()}} or \code{\link[=radioInput]{radioInput()}}.
-There are also new inputs like \code{\link[=groupInput]{groupInput()}} or \code{\link[=formInput]{formInput()}}.
+There are also new inputs like \code{\link[=groupTextInput]{groupTextInput()}} or \code{\link[=formInput]{formInput()}}.
 
 \strong{Changes to be mindful of}
 \itemize{

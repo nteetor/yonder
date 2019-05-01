@@ -64,14 +64,14 @@ $.extend(radioInputBinding, {
 
     if (msg.valid) {
       el.querySelector(".valid-feedback").innerHTML = msg.valid;
-      el.querySelectorAll(".custom-radio").forEach(radio => {
+      el.querySelectorAll(".custom-control-input").forEach(radio => {
         radio.classList.add("is-valid");
       });
     }
 
     if (msg.invalid) {
       el.querySelector(".invalid-feedback").innerHTML = msg.invalid;
-      el.querySelectorAll(".custom-radio").forEach(radio => {
+      el.querySelectorAll(".custom-control-input").forEach(radio => {
         radio.classList.add("is-invalid");
       });
     }
@@ -79,7 +79,7 @@ $.extend(radioInputBinding, {
     if (!msg.valid && !msg.invalid) {
       el.querySelector(".valid-feedback").innerHTML = "";
       el.querySelector(".invalid-feedback").innerHTML = "";
-      el.querySelectorAll(".custom-radio").forEach(radio => {
+      el.querySelectorAll(".custom-control-input").forEach(radio => {
         radio.classList.remove("is-valid");
         radio.classList.remove("is-invalid");
       });

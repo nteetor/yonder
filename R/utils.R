@@ -81,7 +81,15 @@ tag_name_is <- function(x, name) {
 
 tag_attributes_add <- function(x, attrs, ...) {
   stopifnot(is_tag(x))
-  x$attribs <- c(x$attribs, attrs, list(...))
+
+  args <- c(attrs, list(...))
+
+  if (length(args) == 0) {
+    return(x)
+  }
+
+  x$attribs <- c(x$attribs, args)
+
   x
 }
 
@@ -118,7 +126,17 @@ tag_class_remove <- function(x, regex) {
     return(x)
   }
 
-  x$attribs$class <- gsub("\\s+", " ", gsub(regex, "", x$attribs$class))
+  class_indices <- names2(x$attribs) == "class"
+  class_values <- x$attribs[class_indices]
+
+  class_subbed <- vapply(
+    class_values, gsub, character(1),
+    pattern = regex, replacement = ""
+  )
+
+  class_trimmed <- trimws(gsub("\\s+", " ", class_subbed), "both")
+
+  x$attribs[class_indices] <- class_trimmed
 
   x
 }
@@ -135,7 +153,9 @@ tag_class_re <- function(x, regex) {
     collapse = "|"
   )
 
-  grepl(regex, x$attribs$class)
+  class_indices <- names2(x$attribs) == "class"
+
+  any(vapply(x$attribs[class_indices], grepl, logical(1), pattern = regex))
 }
 
 resp_msg_breaks <- function(argument, invalid) {
