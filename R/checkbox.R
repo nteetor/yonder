@@ -117,7 +117,7 @@ updateCheckboxInput <- function(id, choices = NULL, values = choices,
   checkboxes <- map_checkboxes(choices, values, selected, inline, FALSE)
 
   content <- coerce_content(checkboxes)
-  selected <- coerce_selected(choices, selected)
+  selected <- coerce_selected(selected)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
   valid <- coerce_valid(valid)

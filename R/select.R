@@ -100,6 +100,7 @@ updateSelectInput <- function(id, choices = NULL, values = choices,
   options <- map_options(choices, values, selected)
 
   content <- coerce_content(options)
+  selected <- coerce_selected(selected)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
   valid <- coerce_valid(valid)
@@ -107,6 +108,7 @@ updateSelectInput <- function(id, choices = NULL, values = choices,
 
   session$sendInputMessage(id, list(
     content = content,
+    selected = selected,
     enable = enable,
     disable = disable,
     valid = valid,

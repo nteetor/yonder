@@ -13,15 +13,13 @@ coerce_content <- function(x) {
   }
 }
 
-coerce_selected <- function(choices, x) {
-  if (length(choices) > 0) {
-    if (isTRUE(x)) {
-      x
-    } else {
-      as.list(x)
-    }
+coerce_selected <- function(x) {
+  if (is.null(x)) {
+    x
+  } else if (isTRUE(x)) {
+    x
   } else {
-    NULL
+    lapply(x, as.character)
   }
 }
 
