@@ -11,7 +11,7 @@ $.extend(checkboxInputBinding, {
 
     return Array.prototype.map.call(checked, c => c.value);
   },
-  subscribe: (el) => {
+  subscribe: (el, callback) => {
     let $el = $(el);
 
     $el.on("change.yonder", e => callback());

@@ -10,7 +10,7 @@ $.extend(navInputBinding, {
 
       if (active !== null) {
         // trigger reset on menu input
-        $(activeItem.parentNode.parentNode).trigger("nav.reset");
+        $(active.parentNode.parentNode).trigger("nav.reset");
       }
 
       el.querySelectorAll(".active").forEach(a => a.classList.remove("active"));
@@ -33,10 +33,11 @@ $.extend(navInputBinding, {
 
     return active.value;
   },
-  subscribe: (el) => {
+  subscribe: (el, callback) => {
     let $el = $(el);
 
-    $el.on("click.yonder", e => callback());
+    $el.on("click.yonder", ".dropdown-item", e => callback());
+    $el.on("click.yonder", ".nav-link:not(.dropdown-toggle)", e => callback());
   },
   unsubscribe: (el) => $(el).off(".yonder"),
   receiveMessage: (el, msg) => {

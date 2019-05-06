@@ -175,7 +175,7 @@ radiobarInput <- function(id, choices, values = choices, selected = values[[1]],
   assert_choices()
   assert_selected(length = 1)
 
-  radios <- map_radiobuttons(choices, values, selected)
+  radios <- map_radiobuttons(choices, values, selected, id)
 
   component <- tags$div(
     class = "yonder-radiobar btn-group btn-group-toggle d-flex",

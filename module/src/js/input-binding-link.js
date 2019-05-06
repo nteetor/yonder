@@ -7,8 +7,10 @@ $.extend(linkInputBinding, {
     el.value = 0;
   },
   getValue: (el) => +el.value > 0 ? +el.value : null,
-  subscribe: (el) => {
-    $(el).on("click.yonder", e => callback());
+  subscribe: (el, callback) => {
+    let $el = $(el);
+
+    $el.on("click.yonder", e => callback());
   },
   unsubscribe: (el) => $(el).off(".yonder"),
   receiveMessage: (el, data) => {

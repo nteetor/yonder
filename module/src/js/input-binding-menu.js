@@ -29,7 +29,7 @@ $.extend(menuInputBinding, {
 
     return active.value;
   },
-  subscribe: (el) => {
+  subscribe: (el, callback) => {
     let $el = $(el);
 
     $el.on("click.yonder", e => callback());

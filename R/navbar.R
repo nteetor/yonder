@@ -62,7 +62,7 @@ navbar <- function(..., brand = NULL, collapse = NULL) {
   assert_possible(collapse, c("sm", "md", "lg", "xl"))
 
   items <- lapply(
-    named_values(args),
+    unnamed_values(args),
     function(item) {
       if (tag_class_re(item, "nav")) {
         item <- tag_class_add(item, "navbar-nav")

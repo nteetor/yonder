@@ -26,6 +26,15 @@ $.extend(selectInputBinding, {
       el.querySelector(".custom-select").innerHTML = msg.content;
     }
 
+    if (msg.selected) {
+      el.querySelectorAll("option").forEach(option => {
+        if (msg.selected === true || msg.selected.indexOf(option.value) > -1) {
+          option.setAttribute("selected", "");
+        }
+      });
+      $(el).trigger("change");
+    }
+
     if (msg.enable) {
       let enable = msg.enable;
 

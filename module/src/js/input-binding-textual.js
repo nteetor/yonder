@@ -4,6 +4,11 @@ $.extend(textualInputBinding, {
   find: (scope) => scope.querySelectorAll(".yonder-textual[id]"),
   getValue: (el) => {
     let input = el.children[0];
+
+    if (input.value === "") {
+      return null;
+    }
+
     return input.type === "number" ? Number(input.value) : input.value;
   },
   subscribe: (el, callback) => {

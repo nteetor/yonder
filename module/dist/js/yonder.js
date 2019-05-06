@@ -373,7 +373,7 @@
         return c.value;
       });
     },
-    subscribe: function subscribe(el) {
+    subscribe: function subscribe(el, callback) {
       var $el = $(el);
       $el.on("change.yonder", function (e) {
         return callback();
@@ -520,7 +520,10 @@
     },
     subscribe: function subscribe(el, callback) {
       var $el = $(el);
-      $el.on("click", ".dropdown-item,.chip", function (e) {
+      $el.on("click.yonder", ".dropdown-item,.chip", function (e) {
+        return callback();
+      });
+      $el.on("chip.select.yonder", function (e) {
         return callback();
       });
     },
@@ -528,12 +531,34 @@
       return $(el).off(".yonder");
     },
     receiveMessage: function receiveMessage(el, msg) {
+      var $el = $(el);
+
       if (msg.items && msg.chips) {
         el.querySelector(".dropdown-menu").innerHTML = msg.items;
         el.querySelector(".chips").innerHTML = msg.chips;
       }
 
-      if (msg.max !== null) {
+      if (msg.selected) {
+        if (msg.selected === true) {
+          el.querySelectorAll(".dropdown-item").forEach(function (item) {
+            chipInputBinding._add(el, item.value);
+          });
+        } else {
+          msg.selected.reverse();
+
+          chipInputBinding._selected(el).forEach(function (item) {
+            chipInputBinding._remove(el, item.value);
+          });
+
+          msg.selected.forEach(function (value) {
+            chipInputBinding._add(el, value);
+          });
+        }
+
+        $el.trigger("chip.select");
+      }
+
+      if (msg.max !== undefined && msg.max !== null) {
         el.setAttribute("data-max", msg.max);
       }
 
@@ -831,8 +856,9 @@
     getValue: function getValue(el) {
       return +el.value > 0 ? +el.value : null;
     },
-    subscribe: function subscribe(el) {
-      $(el).on("click.yonder", function (e) {
+    subscribe: function subscribe(el, callback) {
+      var $el = $(el);
+      $el.on("click.yonder", function (e) {
         return callback();
       });
     },
@@ -969,7 +995,7 @@
 
       return active.value;
     },
-    subscribe: function subscribe(el) {
+    subscribe: function subscribe(el, callback) {
       var $el = $(el);
       $el.on("click.yonder", function (e) {
         return callback();
@@ -1026,7 +1052,7 @@
 
         if (active !== null) {
           // trigger reset on menu input
-          $(activeItem.parentNode.parentNode).trigger("nav.reset");
+          $(active.parentNode.parentNode).trigger("nav.reset");
         }
 
         el.querySelectorAll(".active").forEach(function (a) {
@@ -1051,9 +1077,12 @@
 
       return active.value;
     },
-    subscribe: function subscribe(el) {
+    subscribe: function subscribe(el, callback) {
       var $el = $(el);
-      $el.on("click.yonder", function (e) {
+      $el.on("click.yonder", ".dropdown-item", function (e) {
+        return callback();
+      });
+      $el.on("click.yonder", ".nav-link:not(.dropdown-toggle)", function (e) {
         return callback();
       });
     },
@@ -1409,6 +1438,15 @@
         el.querySelector(".custom-select").innerHTML = msg.content;
       }
 
+      if (msg.selected) {
+        el.querySelectorAll("option").forEach(function (option) {
+          if (msg.selected === true || msg.selected.indexOf(option.value) > -1) {
+            option.setAttribute("selected", "");
+          }
+        });
+        $(el).trigger("change");
+      }
+
       if (msg.enable) {
         var enable = msg.enable;
 
@@ -1549,6 +1587,11 @@
     },
     getValue: function getValue(el) {
       var input = el.children[0];
+
+      if (input.value === "") {
+        return null;
+      }
+
       return input.type === "number" ? Number(input.value) : input.value;
     },
     subscribe: function subscribe(el, callback) {
