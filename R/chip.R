@@ -16,7 +16,8 @@
 #' @param selected One or more of `values` specifying which values are selected
 #'   by default.
 #'
-#' @param max A number specifying the maximum number of items a user may select.
+#' @param max A number specifying the maximum number of items a user may select,
+#'   defaults to `Inf`.
 #'
 #' @param inline One of `TRUE` or `FALSE` specifying if chips are rendered
 #'   inline. If `TRUE` multiple chips may fit onto a single row, otherwise, if
@@ -82,7 +83,7 @@
 #' )
 #'
 chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
-                      ..., max = NULL, inline = TRUE) {
+                      ..., max = Inf, inline = TRUE) {
   assert_id()
   assert_choices()
 
@@ -93,7 +94,8 @@ chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
     `data-toggle` = "dropdown"
   )
 
-  chips <- map_chips(choices, values, selected)
+  chips <- map_chipchips(choices, values, selected)
+  items <- map_chipitems(choices, values, selected)
 
   component <- tags$div(
     id = id,
@@ -101,11 +103,11 @@ chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
       "yonder-chip",
       "btn-group dropup"
     ),
-    `data-max` = max %||% -1,
+    `data-max` = if (max == Inf) -1 else max,
     toggle,
     tags$div(
       class = "dropdown-menu",
-      chips$items
+      items
     ),
     tags$div(
       class = str_collate(
@@ -113,7 +115,7 @@ chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
         if (!inline) "chips-block" else "chips-inline",
         "chips-grey"
       ),
-      chips$chips
+      chips
     ),
     ...
   )
@@ -123,35 +125,36 @@ chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
 
 #' @rdname chipInput
 #' @export
-updateChipInput <- function(id, choices = NULL, values = NULL, selected = NULL,
+updateChipInput <- function(id, choices = NULL, values = choices,
+                            selected = NULL, max = NULL,
                             enable = NULL, disable = NULL,
                             session = getDefaultReactiveDomain()) {
   assert_id()
+  assert_choices()
   assert_session()
 
-  if (!is.null(choices)) {
-    chips <- lapply(
-      map_chips(choices, values, selected),
-      function(x) HTML(as.character(x))
-    )
-  } else {
-    chips <- list(chips = NULL, items = NULL)
-  }
+  chips <- map_chipchips(choices, values, selected)
+  items <- map_chipitems(choices, values, selected)
 
-  selected <- coerce_selected(choices, selected)
+  chips <- coerce_content(chips)
+  items <- coerce_content(items)
+  selected <- coerce_selected(selected)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 
   session$sendInputMessage(id, list(
-    chips = chips$chips,
-    items = chips$items,
+    chips = chips,
+    items = items,
+    selected = selected,
     enable = enable,
     disable = disable
   ))
 }
 
-map_chips <- function(choices, values, selected) {
-  items <- Map(
+map_chipitems <- function(choices, values, selected) {
+  selected <- values %in% selected
+
+  Map(
     choice = choices,
     value = values,
     select = selected,
@@ -166,8 +169,12 @@ map_chips <- function(choices, values, selected) {
       )
     }
   )
+}
 
-  chips <- Map(
+map_chipchips <- function(choices, values, selected) {
+  selected <- values %in% selected
+
+  Map(
     choice = choices,
     value = values,
     select = selected,
@@ -189,6 +196,4 @@ map_chips <- function(choices, values, selected) {
       )
     }
   )
-
-  list(items = items, chips = chips)
 }

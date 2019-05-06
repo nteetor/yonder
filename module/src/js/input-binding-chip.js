@@ -61,20 +61,39 @@ $.extend(chipInputBinding, {
   subscribe: (el, callback) => {
     let $el = $(el);
 
-    $el.on("click", ".dropdown-item,.chip", (e) => callback());
+    $el.on("click.yonder", ".dropdown-item,.chip", (e) => callback());
+    $el.on("chip.select.yonder", (e) => callback());
   },
   unsubscribe: (el) => $(el).off(".yonder"),
   receiveMessage: (el, msg) => {
+    let $el = $(el);
+
     if (msg.items && msg.chips) {
       el.querySelector(".dropdown-menu").innerHTML = msg.items;
       el.querySelector(".chips").innerHTML = msg.chips;
     }
 
     if (msg.selected) {
+      if (msg.selected === true) {
+        el.querySelectorAll(".dropdown-item").forEach(item => {
+          chipInputBinding._add(el, item.value);
+        });
+      } else {
+        msg.selected.reverse();
 
+        chipInputBinding._selected(el).forEach(item => {
+          chipInputBinding._remove(el, item.value);
+        });
+
+        msg.selected.forEach(value => {
+          chipInputBinding._add(el, value);
+        });
+      }
+
+      $el.trigger("chip.select");
     }
 
-    if (msg.max !== null) {
+    if (msg.max !== undefined && msg.max !== null) {
       el.setAttribute("data-max", msg.max);
     }
 

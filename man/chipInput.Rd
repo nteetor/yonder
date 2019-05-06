@@ -6,10 +6,10 @@
 \title{Chip input, selectize alternative}
 \usage{
 chipInput(id, choices = NULL, values = choices, selected = NULL, ...,
-  max = NULL, inline = TRUE)
+  max = Inf, inline = TRUE)
 
-updateChipInput(id, choices = NULL, values = NULL, selected = NULL,
-  enable = NULL, disable = NULL,
+updateChipInput(id, choices = NULL, values = choices,
+  selected = NULL, max = NULL, enable = NULL, disable = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
@@ -26,7 +26,8 @@ by default.}
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{max}{A number specifying the maximum number of items a user may select.}
+\item{max}{A number specifying the maximum number of items a user may select,
+defaults to \code{Inf}.}
 
 \item{inline}{One of \code{TRUE} or \code{FALSE} specifying if chips are rendered
 inline. If \code{TRUE} multiple chips may fit onto a single row, otherwise, if
