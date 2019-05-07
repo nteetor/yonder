@@ -201,12 +201,7 @@ showToast <- function(toast, duration = 4, action = NULL,
 #' @rdname toast
 #' @export
 closeToast <- function(session = getDefaultReactiveDomain()) {
-  if (is.null(session)) {
-    stop(
-      "invalid `closeToast()` argument, `session` is NULL",
-      call. = FALSE
-    )
-  }
+  assert_session()
 
   session$sendCustomMessage("yonder:toast", list(
     type = "close",
