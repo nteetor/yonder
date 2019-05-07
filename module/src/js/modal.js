@@ -1,15 +1,9 @@
-$(() => {
-  $(document).on("hidden.bs.modal", ".modal", (e) => {
-    Shiny.unbindAll(e.currentTarget);
-  });
-});
-
 Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
   if (msg.type === undefined) {
     return false;
   }
 
-  let _hide = function(data) {
+  let _close = function(data) {
     $(document.getElementById(data.id)).modal("hide");
   };
 
@@ -52,8 +46,8 @@ Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
     Shiny.bindAll(modal);
   };
 
-  if (msg.type === "hide") {
-    _hide(msg.data);
+  if (msg.type === "close") {
+    _close(msg.data);
   } else if (msg.type === "show") {
     _show(msg.data);
   } else if (msg.type === "register") {

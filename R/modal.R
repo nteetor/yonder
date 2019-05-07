@@ -192,19 +192,8 @@ registerModal <- function(id, modal, session = getDefaultReactiveDomain()) {
 #' @export
 showModal <- function(id, exprs = list(),
                       session = getDefaultReactiveDomain()) {
-  if (!is.character(id)) {
-    stop(
-      "invalid `showModal()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  if (is.null(session)) {
-    stop(
-      "invalid `showModal()` argument, `session` is NULL",
-      call. = FALSE
-    )
-  }
+  assert_id()
+  assert_session()
 
   exprs <- lapply(exprs, as.character)
 
@@ -226,23 +215,12 @@ showModal <- function(id, exprs = list(),
 
 #' @rdname modal
 #' @export
-hideModal <- function(id, session = getDefaultReactiveDomain()) {
-  if (!is.character(id)) {
-    stop(
-      "invalid `hideModal()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  if (is.null(session)) {
-    stop(
-      "invalid `hideModal()` argument, `session` is NULL",
-      call. = FALSE
-    )
-  }
+closeModal <- function(id, session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_session()
 
   session$sendCustomMessage("yonder:modal", list(
-    type = "hide",
+    type = "close",
     data = list(
       id = id
     )
