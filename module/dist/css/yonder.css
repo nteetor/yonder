@@ -3638,6 +3638,20 @@ input[type="button"].btn-block {
   }
 }
 
+.yonder-select {
+  width: 100%;
+}
+
+.yonder-select .dropdown-menu {
+  width: 100%;
+  max-height: 20rem;
+  overflow-y: scroll;
+}
+
+.yonder-select .dropdown-menu .filtered {
+  display: none;
+}
+
 .dropup,
 .dropright,
 .dropdown,

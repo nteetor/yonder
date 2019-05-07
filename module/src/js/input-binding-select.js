@@ -4,8 +4,44 @@ $.extend(selectInputBinding, {
   find: (scope) => {
     return scope.querySelectorAll(".yonder-select[id]");
   },
+  initialize: (el) => {
+    let $el = $(el);
+
+    $el.on("click", ".dropdown-item", (e) => {
+      $el[0].querySelector("input").placeholder = e.currentTarget.innerText;
+
+      let prev = $el[0].querySelector(".active");
+      if (prev) {
+        prev.classList.remove("active");
+      }
+
+      e.currentTarget.classList.add("active");
+    });
+
+    let $input = $(el.querySelector("input"));
+    $el.on("input change", "input", (e) => {
+      let pattern = $input[0].value.toLowerCase();
+
+      el.querySelectorAll(".dropdown-item").forEach(item => {
+        if (item.innerText.toLowerCase().indexOf(pattern) === -1) {
+          item.classList.add("filtered");
+        } else {
+          item.classList.remove("filtered");
+        }
+      });
+
+      $input.dropdown("update");
+    });
+
+    $el.on("hide.bs.dropdown", (e) => {
+      $input[0].value = "";
+      el.querySelectorAll(".filtered").forEach(f => {
+        f.classList.remove("filtered");
+      });
+    });
+  },
   getValue: (el) => {
-    let selected = el.querySelectorAll("option:checked:not(:disabled");
+    let selected = el.querySelectorAll(".dropdown-item.active:not(.disabled");
 
     if (selected.length === 0) {
       return null;
@@ -16,34 +52,36 @@ $.extend(selectInputBinding, {
   subscribe: (el, callback) => {
     let $el = $(el);
 
-    $el.on("change.yonder", e => callback());
+    $el.on("click.yonder", ".dropdown-item", e => callback());
   },
   unsubscribe: (el) => {
     $(el).off(".yonder");
   },
   receiveMessage: (el, msg) => {
     if (msg.content) {
-      el.querySelector(".custom-select").innerHTML = msg.content;
+      el.querySelector(".dropdown-menu").innerHTML = msg.content;
     }
 
     if (msg.selected) {
-      el.querySelectorAll("option").forEach(option => {
-        if (msg.selected === true || msg.selected.indexOf(option.value) > -1) {
-          option.setAttribute("selected", "");
+      el.querySelectorAll(".dropdown-item").forEach(item => {
+        if (msg.selected === true || msg.selected.indexOf(item.value) > -1) {
+          item.classList.add("active");
+          el.querySelector("input").placeholder = item.innerText;
+        } else {
+          item.classList.remove("active");
         }
       });
-      $(el).trigger("change");
     }
 
     if (msg.enable) {
       let enable = msg.enable;
 
       if (enable === true) {
-        el.querySelector(".custom-select").classList.remove("disabled");
+        el.querySelector("input").removeAttribute("disabled");
       } else {
-        el.querySelectorAll("option").forEach(opt => {
-          if (enable.indexOf(opt.value) > -1) {
-            opt.removeAttribute("disabled");
+        el.querySelectorAll(".dropdown-item").forEach(item => {
+          if (enable.indexOf(item.value) > -1) {
+            item.classList.remove("disabled");
           }
         });
       }
@@ -53,30 +91,30 @@ $.extend(selectInputBinding, {
       let disable = msg.disable;
 
       if (disable === true) {
-        el.querySelector(".custom-select").classList.add("disabled");
+        el.querySelector("input").setAttribute("disabled", "");
       } else {
-        el.querySelectorAll("option").forEach(opt => {
-          if (disable.indexOf(opt.value) > -1) {
-            opt.setAttribute("disabled", "");
+        el.querySelectorAll(".dropdown-item").forEach(item => {
+          if (disable.indexOf(item.value) > -1) {
+            item.classList.add("disabled");
           }
         });
       }
     }
 
     if (msg.valid) {
-      el.querySelector(".custom-select").classList.add("is-valid");
+      el.querySelector("input").classList.add("is-valid");
       el.querySelector(".valid-feedback").innerHTML = msg.valid;
     }
 
     if (msg.invalid) {
-      el.querySelector(".custom-select").classList.add("is-invalid");
+      el.querySelector("input").classList.add("is-invalid");
       el.querySelector(".invalid-feedback").innerHTML = msg.invalid;
     }
 
     if (!msg.valid && !msg.invalid) {
-      let select = el.querySelector(".custom-select");
-      select.classList.remove("is-valid");
-      select.classList.remove("is-invalid");
+      let input = el.querySelector("input");
+      input.classList.remove("is-valid");
+      input.classList.remove("is-invalid");
 
       el.querySelector(".valid-feedback").innerHTML = "";
       el.querySelector(".invalid-feedback").innerHTML = "";

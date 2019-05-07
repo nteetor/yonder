@@ -1,0 +1,17 @@
+.yonder-select {
+  width: 100%;
+
+  .dropdown-toggle:disabled {
+    cursor: not-allowed;
+  }
+
+  .dropdown-menu {
+    width: 100%;
+    max-height: 20rem;
+    overflow-y: scroll;
+
+    .filtered {
+      display: none;
+    }
+  }
+}
