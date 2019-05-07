@@ -16,11 +16,6 @@
 #' @param selected One of `values` indicating the default value of the input,
 #'   defaults to `values[[1]]`.
 #'
-#' @param multiple One of `TRUE` or `FALSE` specifying if multiple choices may
-#'   be selected, defaults to `FALSE`. Please note, most browsers do not render
-#'   a multiple select input as a dropdown menu, rather as a scrollable block
-#'   of choices.
-#'
 #' @param left,right A character vector specifying static addons or
 #'   [buttonInput()] or [dropdown()] elements specifying dynamic addons. Addons
 #'   affect the reactive value of the group input, see the Details section below
@@ -65,19 +60,25 @@
 #' )
 #'
 selectInput <- function(id, choices = NULL, values = choices,
-                        selected = values[[1]], ..., multiple = FALSE) {
+                        selected = values[[1]], ...) {
   assert_id()
   assert_choices()
+  assert_selected(length = 1)
 
-  options <- map_options(choices, values, selected)
+  items <- map_selectitems(choices, values, selected)
 
   component <- tags$div(
-    class = "yonder-select",
+    class = "yonder-select btn-group",
     id = id,
-    tags$select(
-      class = "custom-select",
-      multiple = if (multiple) NA,
-      options
+    tags$input(
+      type = "text",
+      class = "form-control custom-select",
+      `data-toggle` = "dropdown",
+      placeholder = choices[values %in% selected][1]
+    ),
+    tags$div(
+      class = "dropdown-menu",
+      items
     ),
     tags$div(class = "valid-feedback"),
     tags$div(class = "invalid-feedback"),
@@ -97,7 +98,7 @@ updateSelectInput <- function(id, choices = NULL, values = choices,
   assert_session()
   assert_choices()
 
-  options <- map_options(choices, values, selected)
+  options <- map_selectitems(choices, values, selected)
 
   content <- coerce_content(options)
   selected <- coerce_selected(selected)
@@ -114,6 +115,26 @@ updateSelectInput <- function(id, choices = NULL, values = choices,
     valid = valid,
     invalid = invalid
   ))
+}
+
+map_selectitems <- function(choices, values, selected) {
+  selected <- values %in% selected
+
+  Map(
+    choice = choices,
+    value = values,
+    select = selected,
+    function(choice, value, select) {
+      tags$button(
+        class = str_collate(
+          "dropdown-item",
+          if (select) "active"
+        ),
+        value = value,
+        choice
+      )
+    }
+  )
 }
 
 #' @rdname selectInput

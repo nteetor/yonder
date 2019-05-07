@@ -8,7 +8,7 @@
 \title{Select input}
 \usage{
 selectInput(id, choices = NULL, values = choices,
-  selected = values[[1]], ..., multiple = FALSE)
+  selected = values[[1]], ...)
 
 updateSelectInput(id, choices = NULL, values = choices,
   selected = NULL, enable = NULL, disable = NULL, valid = NULL,
@@ -34,11 +34,6 @@ defaults to \code{values[[1]]}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
-
-\item{multiple}{One of \code{TRUE} or \code{FALSE} specifying if multiple choices may
-be selected, defaults to \code{FALSE}. Please note, most browsers do not render
-a multiple select input as a dropdown menu, rather as a scrollable block
-of choices.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 
