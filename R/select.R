@@ -91,12 +91,14 @@ selectInput <- function(id, choices = NULL, values = choices,
 #' @rdname selectInput
 #' @export
 updateSelectInput <- function(id, choices = NULL, values = choices,
-                              selected = NULL, enable = NULL, disable = NULL,
+                              selected = values[[1]], enable = NULL,
+                              disable = NULL,
                               valid = NULL, invalid = NULL,
                               session = getDefaultReactiveDomain()) {
   assert_id()
-  assert_session()
   assert_choices()
+  assert_selected(length = 1)
+  assert_session()
 
   options <- map_selectitems(choices, values, selected)
 

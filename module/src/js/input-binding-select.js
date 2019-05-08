@@ -52,7 +52,8 @@ $.extend(selectInputBinding, {
   subscribe: (el, callback) => {
     let $el = $(el);
 
-    $el.on("click.yonder", ".dropdown-item", e => callback());
+    $el.on("click.yonder", ".dropdown-item", (e) => callback());
+    $el.on("select.select.yonder", (e) => callback()); // ha.
   },
   unsubscribe: (el) => {
     $(el).off(".yonder");
@@ -71,6 +72,8 @@ $.extend(selectInputBinding, {
           item.classList.remove("active");
         }
       });
+
+      $(el).trigger("select.select");
     }
 
     if (msg.enable) {

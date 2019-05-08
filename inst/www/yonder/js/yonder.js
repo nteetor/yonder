@@ -257,7 +257,11 @@
       return +el.value > 0 ? +el.value : null;
     },
     subscribe: function subscribe(el, callback) {
-      $(el).on("click.yonder", function (e) {
+      var $el = $(el);
+      $el.on("click.yonder", function (e) {
+        return callback();
+      });
+      $el.on("button.value.yonder", function (e) {
         return callback();
       });
     },
@@ -267,6 +271,11 @@
     receiveMessage: function receiveMessage(el, msg) {
       if (msg.content) {
         el.innerHTML = msg.content;
+      }
+
+      if (msg.value !== null && msg.value !== undefined) {
+        el.value = msg.value;
+        $(el).trigger("button.value");
       }
 
       if (msg.enable) {
@@ -1460,6 +1469,9 @@
       $el.on("click.yonder", ".dropdown-item", function (e) {
         return callback();
       });
+      $el.on("select.select.yonder", function (e) {
+        return callback();
+      }); // ha.
     },
     unsubscribe: function unsubscribe(el) {
       $(el).off(".yonder");
@@ -1478,6 +1490,7 @@
             item.classList.remove("active");
           }
         });
+        $(el).trigger("select.select");
       }
 
       if (msg.enable) {

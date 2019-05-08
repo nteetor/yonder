@@ -3642,10 +3642,15 @@ input[type="button"].btn-block {
   width: 100%;
 }
 
+.yonder-select .dropdown-toggle:disabled {
+  cursor: not-allowed;
+}
+
 .yonder-select .dropdown-menu {
-  width: 100%;
+  min-width: 100%;
   max-height: 20rem;
   overflow-y: scroll;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 .yonder-select .dropdown-menu .filtered {
@@ -7515,9 +7520,10 @@ a.close.disabled {
 }
 
 .yonder-chip .dropdown-menu {
-  width: 100%;
+  min-width: 100%;
   max-height: 20rem;
   overflow-y: scroll;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 .yonder-chip .dropdown-menu .filtered,
