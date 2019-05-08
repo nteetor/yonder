@@ -87,8 +87,6 @@ chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
   assert_id()
   assert_choices()
 
-  selected <- values %in% selected
-
   toggle <- tags$input(
     class = "form-control",
     `data-toggle` = "dropdown"
