@@ -9,8 +9,8 @@
 \usage{
 buttonInput(id, label, ..., stretch = FALSE, download = FALSE)
 
-updateButtonInput(id, label = NULL, disable = NULL, enable = NULL,
-  session = getDefaultReactiveDomain())
+updateButtonInput(id, label = NULL, value = NULL, disable = NULL,
+  enable = NULL, session = getDefaultReactiveDomain())
 
 linkInput(id, ..., stretch = FALSE, download = FALSE)
 
@@ -34,6 +34,9 @@ clicked on the card.}
 
 \item{download}{One of \code{TRUE} or \code{FALSE} specifying if the button or link
 input is used to trigger a download, defaults to \code{FALSE}.}
+
+\item{value}{A number specifying a new value for the button, defaults to
+\code{NULL}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }

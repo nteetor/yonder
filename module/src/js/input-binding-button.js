@@ -8,12 +8,20 @@ $.extend(buttonInputBinding, {
   },
   getValue: (el) => +el.value > 0 ? +el.value : null,
   subscribe: (el, callback) => {
-    $(el).on("click.yonder", e => callback());
+    let $el = $(el);
+
+    $el.on("click.yonder", (e) => callback());
+    $el.on("button.value.yonder", (e) => callback());
   },
   unsubscribe: (el, callback) => $(el).off(".yonder"),
   receiveMessage: (el, msg) => {
     if (msg.content) {
       el.innerHTML = msg.content;
+    }
+
+    if (msg.value !== null && msg.value !== undefined) {
+      el.value = msg.value;
+      $(el).trigger("button.value");
     }
 
     if (msg.enable) {

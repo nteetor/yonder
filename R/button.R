@@ -23,6 +23,9 @@
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
 #'
+#' @param value A number specifying a new value for the button, defaults to
+#'   `NULL`.
+#'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
 #' @family inputs
@@ -130,10 +133,19 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE) {
 
 #' @rdname buttonInput
 #' @export
-updateButtonInput <- function(id, label = NULL, disable = NULL, enable = NULL,
+updateButtonInput <- function(id, label = NULL, value = NULL,
+                              disable = NULL, enable = NULL,
                               session = getDefaultReactiveDomain()) {
   assert_id()
   assert_session()
+
+  if (!is.null(value) && !is.numeric(value)) {
+    stop(
+      "invalid argument in `updateButtonInput()`, `value` must be numeric or ",
+      "NULL",
+      call. = FALSE
+    )
+  }
 
   if (!is.null(label)) {
     label <- HTML(as.character(label))
@@ -141,6 +153,7 @@ updateButtonInput <- function(id, label = NULL, disable = NULL, enable = NULL,
 
   session$sendInputMessage(id, list(
     content = label,
+    value = value,
     disable = disable,
     enable = enable
   ))
