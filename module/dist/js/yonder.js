@@ -1490,7 +1490,7 @@
             item.classList.remove("active");
           }
         });
-        $(el).trigger("select.select");
+        $(el).trigger("select.select.yonder");
       }
 
       if (msg.enable) {
@@ -1648,6 +1648,9 @@
       $el.on("input.yonder", function (e) {
         return callback(true);
       });
+      $el.on("textual.value.yonder", function (e) {
+        return callback(true);
+      });
     },
     unsubscribe: function unsubscribe(el) {
       return $(el).off(".yonder");
@@ -1661,6 +1664,7 @@
     receiveMessage: function receiveMessage(el, msg) {
       if (msg.value !== null) {
         el.querySelector("input").value = msg.value;
+        $(el).trigger("textual.value.yonder");
       }
 
       if (msg.enable) {

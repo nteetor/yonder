@@ -14,14 +14,16 @@ $.extend(textualInputBinding, {
   subscribe: (el, callback) => {
     let $el = $(el);
 
-    $el.on("change.yonder", e => callback(true));
-    $el.on("input.yonder", e => callback(true));
+    $el.on("change.yonder", (e) => callback(true));
+    $el.on("input.yonder", (e) => callback(true));
+    $el.on("textual.value.yonder", (e) => callback(true));
   },
   unsubscribe: (el) => $(el).off(".yonder"),
   getRatePolicy: () => ({ policy: "debounce", delay: 250 }),
   receiveMessage: (el, msg) => {
     if (msg.value !== null) {
       el.querySelector("input").value = msg.value;
+      $(el).trigger("textual.value.yonder");
     }
 
     if (msg.enable) {

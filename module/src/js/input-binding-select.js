@@ -73,7 +73,7 @@ $.extend(selectInputBinding, {
         }
       });
 
-      $(el).trigger("select.select");
+      $(el).trigger("select.select.yonder");
     }
 
     if (msg.enable) {
