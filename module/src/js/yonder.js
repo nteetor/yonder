@@ -17,8 +17,6 @@ import "./input-binding-range.js";
 import "./input-binding-select.js";
 import "./input-binding-textual.js";
 
-import "./output-binding-progress.js";
-
 import "./collapsible.js";
 import "./element.js";
 import "./modal.js";
@@ -39,9 +37,9 @@ $(() => {
 
     if (msg.type == "show") {
       let data = msg.data;
-      let target = `#${ data.target }`;
+      let $target = $(`#${ data.target }`);
 
-      $(target).popover({
+      $target.popover({
         title: () => undefined,
         content: () => undefined,
         template: data.content,
@@ -51,12 +49,12 @@ $(() => {
 
       if (data.duration) {
         setTimeout(
-          () => $(target).popover("hide"),
+          () => $target.popover("hide"),
           data.duration
         );
       }
 
-      $(target).popover("show");
+      $target.popover("show");
 
       return;
     }

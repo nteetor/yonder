@@ -29,7 +29,7 @@
 #' @param id A character string specifying the HTML id of a popover's target tag
 #'   element.
 #'
-#' @inheritParams elementOutput
+#' @inheritParams collapsiblePane
 #'
 #' @section Example application:
 #'

@@ -1770,30 +1770,6 @@
   });
   Shiny.inputBindings.register(groupTextInputBinding, "yonder.groupTextInput");
 
-  $.extend(Shiny.progressHandlers, {
-    "yonder-progress": function yonderProgress(msg) {
-      if (!msg.type || !msg.data.outlet) {
-        return false;
-      }
-
-      var $outlet = $("#" + msg.data.outlet);
-
-      if (msg.type === "show") {
-        var $bar = $(msg.data.content);
-
-        if ($bar[0].id && $outlet.find("#" + $bar[0].id).length) {
-          $outlet.find("#" + $bar[0].id).replaceWith($bar);
-        } else {
-          $outlet.append($bar);
-        }
-
-        return true;
-      }
-
-      return false;
-    }
-  });
-
   Shiny.addCustomMessageHandler("yonder:collapse", function (msg) {
     if (msg.type === undefined || msg.data === undefined || msg.data.target === undefined) {
       return false;
@@ -1821,7 +1797,7 @@
 
       var container = document.getElementById(data.target);
 
-      if (container === null) {
+      if (!container || !container.classList.contains("yonder-element")) {
         return;
       }
 
@@ -1834,7 +1810,7 @@
     var _remove = function _remove(data) {
       var container = document.getElementById(data.target);
 
-      if (container === null) {
+      if (!container || !container.classList.contains("yonder-element")) {
         return;
       }
 
@@ -1966,8 +1942,8 @@
 
       if (msg.type == "show") {
         var data = msg.data;
-        var target = "#" + data.target;
-        $(target).popover({
+        var $target = $("#" + data.target);
+        $target.popover({
           title: function title() {
             return undefined;
           },
@@ -1981,11 +1957,11 @@
 
         if (data.duration) {
           setTimeout(function () {
-            return $(target).popover("hide");
+            return $target.popover("hide");
           }, data.duration);
         }
 
-        $(target).popover("show");
+        $target.popover("show");
         return;
       }
 

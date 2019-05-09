@@ -29,9 +29,9 @@ is shown when the page renders, defaults to \code{FALSE}.}
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-The \code{collapsible()} function wraps a tag element in a collasible div
-element. The state of the element, shown or hidden, is toggled using
-\code{hideCollapse()}, \code{showCollapse()}, and \code{toggleCollapse()}.
+The \code{collapsiblePane()} creates a collapsible container. The state of the
+container, expanded or collapsed, is toggled using \code{expandPane()},
+\code{collapsePane()}, and \code{togglePane()}.
 }
 \details{
 Padding may not be applied to the collapsible pane div element. To pad a
@@ -77,13 +77,12 @@ shinyApp(ui, server)
 
 }
 \seealso{
-Other content: \code{\link{alert}}, \code{\link{badge}},
+Other content: \code{\link{alert}},
   \code{\link{blockquote}}, \code{\link{card}},
   \code{\link{d1}}, \code{\link{dropdown}},
   \code{\link{img}}, \code{\link{jumbotron}},
   \code{\link{modal}}, \code{\link{navContent}},
   \code{\link{popover}}, \code{\link{pre}},
-  \code{\link{progressOutlet}}, \code{\link{toast}},
-  \code{\link{tooltip}}
+  \code{\link{toast}}, \code{\link{tooltip}}
 }
 \concept{content}

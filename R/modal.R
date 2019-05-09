@@ -32,7 +32,7 @@
 #' @param ... Additional named arguments passed as HTML attributes to the
 #'   parent element.
 #'
-#' @inheritParams elementOutput
+#' @inheritParams collapsiblePane
 #'
 #' @section Example application:
 #'

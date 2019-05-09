@@ -5,7 +5,12 @@
 #' @param ... Named arguments passed as HTML attributes to the parent
 #'   element or tag elements passed as children.
 #'
-#' @family content
+#' @details
+#'
+#' Use [replaceElement()] and [removeElement()] to modify the contents of a
+#' badge.
+#'
+#' @family rendering
 #' @export
 #' @examples
 #'
@@ -26,9 +31,9 @@
 #'   display("flex") %>%
 #'   flex(wrap = TRUE)
 #'
-badge <- function(...) {
+badgeElement <- function(...) {
   component <- tags$span(
-    class = "badge",
+    class = "yonder-element badge",
     ...
   )
 

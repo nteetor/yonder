@@ -38,13 +38,12 @@ alert(
 
 }
 \seealso{
-Other content: \code{\link{badge}},
-  \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{collapsiblePane}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{img}},
-  \code{\link{jumbotron}}, \code{\link{modal}},
-  \code{\link{navContent}}, \code{\link{popover}},
-  \code{\link{pre}}, \code{\link{progressOutlet}},
+Other content: \code{\link{blockquote}},
+  \code{\link{card}}, \code{\link{collapsiblePane}},
+  \code{\link{d1}}, \code{\link{dropdown}},
+  \code{\link{img}}, \code{\link{jumbotron}},
+  \code{\link{modal}}, \code{\link{navContent}},
+  \code{\link{popover}}, \code{\link{pre}},
   \code{\link{toast}}, \code{\link{tooltip}}
 }
 \concept{content}

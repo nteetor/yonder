@@ -6,7 +6,7 @@ Shiny.addCustomMessageHandler("yonder:element", (msg) => {
 
     let container = document.getElementById(data.target);
 
-    if (container === null) {
+    if (!container || !container.classList.contains("yonder-element")) {
       return;
     }
 
@@ -20,7 +20,7 @@ Shiny.addCustomMessageHandler("yonder:element", (msg) => {
   let _remove = (data) => {
     let container = document.getElementById(data.target);
 
-    if (container === null) {
+    if (!container || !container.classList.contains("yonder-element")) {
       return;
     }
 
