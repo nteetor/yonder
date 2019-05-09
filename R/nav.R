@@ -125,7 +125,7 @@ navInput <- function(id, choices = NULL, values = choices,
 
   items <- map_navitems(choices, values, selected)
 
-  input <- tags$ul(
+  component <- tags$ul(
     class = str_collate(
       "yonder-nav",
       "nav",
@@ -137,7 +137,7 @@ navInput <- function(id, choices = NULL, values = choices,
     ...
   )
 
-  attach_dependencies(input)
+  attach_dependencies(component)
 }
 
 #' @rdname navInput
@@ -174,7 +174,10 @@ map_navitems <- function(choices, values, selected) {
           choice$children[[1]],
           paste0("btn-(?:", paste0(.colors, collapse = "|"), ")")
         )
-        choice$children[[1]] <- tag_class_add(choice$children[[1]], "nav-link btn-link")
+        choice$children[[1]] <- tag_class_add(
+          choice$children[[1]],
+          "nav-link btn-link"
+        )
         choice$children[[1]]$attribs$type <- NULL
         choice$children[[1]]$attribs$value <- value
 
