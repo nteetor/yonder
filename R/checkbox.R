@@ -87,44 +87,12 @@
 #' ) %>%
 #'   active("indigo")
 #'
-checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
-                          inline = FALSE) {
+checkboxInput <- function(id, choices = NULL, values = choices, selected = NULL,
+                          ..., inline = FALSE) {
   assert_id()
   assert_choices()
 
-  selected <- values %in% selected
-
-  checkboxes <- Map(
-    choice = choices,
-    value = values,
-    select = selected,
-    function(choice, value, select) {
-      child_id <- generate_id("checkbox")
-
-      tags$div(
-        class = str_collate(
-          "custom-control",
-          "custom-checkbox",
-          if (inline) "custom-control-inline"
-        ),
-        tags$input(
-          class = "custom-control-input",
-          type = "checkbox",
-          id = child_id,
-          name = id,
-          value = value,
-          checked = if (select) NA,
-          autocomplete = "off"
-        ),
-        tags$label(
-          class = "custom-control-label",
-          `for` = child_id,
-          choice
-        ),
-        tags$div(class = "invalid-feedback")
-      )
-    }
-  )
+  checkboxes <- map_checkboxes(choices, values, selected, inline)
 
   component <- tags$div(
     class = "yonder-checkbox",
@@ -138,31 +106,203 @@ checkboxInput <- function(id, choices, values = choices, selected = NULL, ...,
 
 #' @rdname checkboxInput
 #' @export
-switchInput <- function(id, choices, values = choices, selected = NULL, ...) {
+updateCheckboxInput <- function(id, choices = NULL, values = choices,
+                                selected = NULL, inline = FALSE, enable = NULL,
+                                disable = NULL, valid = NULL, invalid = NULL,
+                                session = getDefaultReactiveDomain()) {
   assert_id()
   assert_choices()
+  assert_session()
 
-  component <- checkboxInput(id, choices, values, selected, inline = FALSE, ...)
+  checkboxes <- map_checkboxes(choices, values, selected, inline, FALSE)
 
-  component[["children"]][[1]] <- lapply(
-    component[["children"]][[1]],
-    function(child) {
-      tag_class_add(tag_class_remove(child, "custom-checkbox"), "custom-switch")
-    }
-  )
+  content <- coerce_content(checkboxes)
+  selected <- coerce_selected(selected)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+  valid <- coerce_valid(valid)
+  invalid <- coerce_invalid(invalid)
 
-  component
+  session$sendInputMessage(id, list(
+    content = content,
+    selected = selected,
+    enable = enable,
+    disable = disable,
+    valid = valid,
+    invalid = invalid
+  ))
 }
 
 #' @rdname checkboxInput
 #' @export
-checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
+switchInput <- function(id, choices, values = choices, selected = NULL, ...) {
   assert_id()
   assert_choices()
 
+  switches <- map_checkboxes(choices, values, selected, FALSE, TRUE)
+
+  component <- tags$div(
+    class = "yonder-checkbox",
+    id = id,
+    switches,
+    ...
+  )
+
+  attach_dependencies(component)
+}
+
+#' @rdname checkboxInput
+#' @export
+updateSwitchInput <- function(id, choices = NULL, values = choices,
+                              selected = NULL, enable = NULL,
+                              disable = NULL, valid = NULL, invalid = NULL,
+                              session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_choices()
+  assert_session()
+
+  switches <- map_checkboxes(choices, values, selected, FALSE, TRUE)
+
+  content <- coerce_content(switches)
+  selected <- coerce_selected(selected)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+  valid <- coerce_valid(valid)
+  invalid <- coerce_invalid(invalid)
+
+  session$sendInputMessage(id, list(
+    content = content,
+    selected = selected,
+    enable = enable,
+    disable = disable,
+    valid = valid,
+    invalid = invalid
+  ))
+}
+
+map_checkboxes <- function(choices, values, selected, inline,
+                           switches = FALSE) {
   selected <- values %in% selected
 
-  checkboxes <- Map(
+  Map(
+    choice = choices,
+    value = values,
+    select = selected,
+    last = seq_along(choices) == length(choices),
+    function(choice, value, select, last) {
+      id <- generate_id("checkbox")
+
+      tags$div(
+        class = str_collate(
+          "custom-control",
+          if (switches) "custom-switch" else "custom-checkbox",
+          if (inline) "custom-control-inline"
+        ),
+        tags$input(
+          class = "custom-control-input",
+          type = "checkbox",
+          id = id,
+          name = id,
+          value = value,
+          checked = if (select) NA,
+          autocomplete = "off"
+        ),
+        tags$label(
+          class = "custom-control-label",
+          `for` = id,
+          choice
+        ),
+        if (last) {
+          list(
+            tags$div(class = "valid-feedback"),
+            tags$div(class = "invalid-feedback")
+          )
+        }
+      )
+    }
+  )
+}
+
+#' Checkbar input
+#'
+#' A stylized checkbox input.
+#'
+#' @inheritParams buttonInput
+#'
+#' @param choices A character vector or list of tag element specifying the
+#'   input's choices, defaults to `NULL`.
+#'
+#' @param values A vector of values specifying the values of the input's
+#'   choices, defaults to `choices`.
+#'
+#' @param selected One or more of `values` specifying the input's default
+#'  selected values, defaults to `NULL`.
+#'
+#' @family inputs
+#' @export
+#' @examples
+#'
+#' ### Default checkbar
+#'
+#' checkbarInput(
+#'   id = "cb1",
+#'   choices = c("When", "Why", "Where")
+#' )
+#'
+#' ### Modifying background color
+#'
+#' checkbarInput(
+#'   id = "cb2",
+#'   choices = c("What", "Which")
+#' ) %>%
+#'   background("teal")
+#'
+checkbarInput <- function(id, choices = NULL, values = choices,
+                          selected = NULL, ...) {
+  assert_id()
+  assert_choices()
+
+  checkboxes <- map_checkbuttons(choices, values, selected)
+
+  component <- tags$div(
+    class = "yonder-checkbar btn-group btn-group-toggle d-flex",
+    id = id,
+    `data-toggle` = "buttons",
+    checkboxes,
+    ...
+  )
+
+  attach_dependencies(component)
+}
+
+#' @rdname checkbarInput
+#' @export
+updateCheckbarInput <- function(id, choices = NULL, values = choices,
+                                selected = NULL, enable = NULL, disable = NULL,
+                                session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_choices()
+  assert_session()
+
+  checkboxes <- map_checkbuttons(choices, values, selected)
+
+  content <- coerce_content(checkboxes)
+  selected <- coerce_selected(selected)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+
+  session$sendInputMessage(id, list(
+    content = content,
+    selected = selected,
+    enable = enable,
+    disable = disable
+  ))
+}
+
+map_checkbuttons <- function(choices, values, selected) {
+  selected <- values %in% selected
+
+  Map(
     choice = choices,
     value = values,
     select = selected,
@@ -183,14 +323,4 @@ checkbarInput <- function(id, choices, values = choices, selected = NULL, ...) {
       )
     }
   )
-
-  component <- tags$div(
-    class = "yonder-checkbar btn-group btn-group-toggle d-flex",
-    id = id,
-    `data-toggle` = "buttons",
-    checkboxes,
-    ...
-  )
-
-  attach_dependencies(component)
 }

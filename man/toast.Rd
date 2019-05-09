@@ -6,7 +6,7 @@
 \alias{closeToast}
 \title{Toasts}
 \usage{
-toast(..., header = NULL)
+toast(header, ...)
 
 showToast(toast, duration = 4, action = NULL,
   session = getDefaultReactiveDomain())
@@ -14,15 +14,15 @@ showToast(toast, duration = 4, action = NULL,
 closeToast(session = getDefaultReactiveDomain())
 }
 \arguments{
+\item{header}{A character string or tag element specifying a header for the
+toast, defaults to \code{NULL}. A close button is always included in the
+header.}
+
 \item{...}{Any number of character strings or tag elements to include in the
 body of the toast.
 
 Any number of named arguments passed as HTML attributes to the parent
 element.}
-
-\item{header}{A character string or tag element specifying a header for the
-toast, defaults to \code{NULL}. A close button is always included in the
-header.}
 
 \item{toast}{A toast element, typically built with \code{toast()}.}
 
@@ -53,7 +53,7 @@ server <- function(input, output) {
   observeEvent(input$show, {
     showToast(
       toast(
-        header = list(
+        list(
           span("Notification") \%>\%
             margin(right = "4"),
           span(strftime(Sys.time(), "\%H:\%M")) \%>\%
@@ -88,10 +88,9 @@ server <- function(input, output) {
       action = "undo",
       duration = NULL,
       toast(
-        header = tags$strong("Close") \%>\%
+        tags$strong("Close") \%>\%
           margin(right = "auto"),
-        "When closing this notification, ",
-        "see the console"
+        "When closing this notification, see the console"
       ) \%>\%
         margin(right = 2, top = 2)
     )
@@ -124,7 +123,7 @@ toast(
 
 toast(
   class = "fade show",
-  header = list(
+  list(
     div("Notification") \%>\%
       font(weight = "bold") \%>\%
       margin(right = "auto"),
@@ -135,13 +134,12 @@ toast(
 
 }
 \seealso{
-Other content: \code{\link{alert}}, \code{\link{badge}},
+Other content: \code{\link{alert}},
   \code{\link{blockquote}}, \code{\link{card}},
   \code{\link{collapsiblePane}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{img}},
   \code{\link{jumbotron}}, \code{\link{modal}},
   \code{\link{navContent}}, \code{\link{popover}},
-  \code{\link{pre}}, \code{\link{progressOutlet}},
-  \code{\link{tooltip}}
+  \code{\link{pre}}, \code{\link{tooltip}}
 }
 \concept{content}

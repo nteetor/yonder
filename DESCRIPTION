@@ -1,7 +1,7 @@
 Package: yonder
 Type: Package
 Title: A Reactive Web Framework Built on Shiny
-Version: 0.1.0
+Version: 0.1.1
 Authors@R: c(
     person("Nathan", "Teetor", role = c("aut", "cre"),
       email = "nathanteetor@gmail.com"),

@@ -1,8 +1,8 @@
 #' Collapsible sections
 #'
-#' The `collapsible()` function wraps a tag element in a collasible div
-#' element. The state of the element, shown or hidden, is toggled using
-#' `hideCollapse()`, `showCollapse()`, and `toggleCollapse()`.
+#' The `collapsiblePane()` creates a collapsible container. The state of the
+#' container, expanded or collapsed, is toggled using `expandPane()`,
+#' `collapsePane()`, and `togglePane()`.
 #'
 #' @param id A character string specifying the id of the collapsible pane. Pass
 #'   this id to the `hideCollapse()`, `showCollapse()`, or `toggleCollapse()`
@@ -14,7 +14,7 @@
 #' @param ... Tag elements inside the collapsible pane or additional named
 #'   arguments passed as HTML attributes to parent element.
 #'
-#' @inheritParams updateInput
+#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
 #' @details
 #'

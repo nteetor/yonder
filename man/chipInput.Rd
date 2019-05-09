@@ -2,10 +2,15 @@
 % Please edit documentation in R/chip.R
 \name{chipInput}
 \alias{chipInput}
+\alias{updateChipInput}
 \title{Chip input, selectize alternative}
 \usage{
-chipInput(id, choices, values = choices, selected = NULL, ...,
-  max = NULL, inline = TRUE)
+chipInput(id, choices = NULL, values = choices, selected = NULL, ...,
+  max = Inf, inline = TRUE)
+
+updateChipInput(id, choices = NULL, values = choices,
+  selected = NULL, max = NULL, enable = NULL, disable = NULL,
+  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -21,12 +26,15 @@ by default.}
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{max}{A number specifying the maximum number of items a user may select.}
+\item{max}{A number specifying the maximum number of items a user may select,
+defaults to \code{Inf}.}
 
 \item{inline}{One of \code{TRUE} or \code{FALSE} specifying if chips are rendered
 inline. If \code{TRUE} multiple chips may fit onto a single row, otherwise, if
 \code{FALSE}, chips expand to fill the width of their parent element, one chip
 per row.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 The chip input is a selectize alternative. Choices are selected from a
@@ -92,12 +100,12 @@ chipInput(
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{listGroupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{listGroupInput}},
   \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}, \code{\link{sliderInput}},
+  \code{\link{radioInput}}, \code{\link{radiobarInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }
 \concept{inputs}

@@ -2,12 +2,20 @@
 % Please edit documentation in R/button.R
 \name{buttonInput}
 \alias{buttonInput}
+\alias{updateButtonInput}
 \alias{linkInput}
+\alias{updateLinkInput}
 \title{Button and submit inputs}
 \usage{
 buttonInput(id, label, ..., stretch = FALSE, download = FALSE)
 
+updateButtonInput(id, label = NULL, value = NULL, disable = NULL,
+  enable = NULL, session = getDefaultReactiveDomain())
+
 linkInput(id, ..., stretch = FALSE, download = FALSE)
+
+updateLinkInput(id, text = NULL, value = NULL, enable = NULL,
+  disable = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -26,6 +34,11 @@ clicked on the card.}
 
 \item{download}{One of \code{TRUE} or \code{FALSE} specifying if the button or link
 input is used to trigger a download, defaults to \code{FALSE}.}
+
+\item{value}{A number specifying a new value for the button, defaults to
+\code{NULL}.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 Button inputs are useful as triggers for reactive or observer expressions.
@@ -112,12 +125,12 @@ buttonInput(
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{checkboxInput}}, \code{\link{chipInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{listGroupInput}},
+  \code{\link{checkbarInput}}, \code{\link{checkboxInput}},
+  \code{\link{chipInput}}, \code{\link{fileInput}},
+  \code{\link{formInput}}, \code{\link{listGroupInput}},
   \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}, \code{\link{sliderInput}},
+  \code{\link{radioInput}}, \code{\link{radiobarInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }
 \concept{inputs}

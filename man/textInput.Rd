@@ -2,27 +2,63 @@
 % Please edit documentation in R/textual.R
 \name{textInput}
 \alias{textInput}
+\alias{updateTextInput}
+\alias{groupTextInput}
+\alias{updateGroupTextInput}
 \alias{searchInput}
+\alias{updateSearchInput}
 \alias{emailInput}
+\alias{updateEmailInput}
 \alias{urlInput}
+\alias{updateUrlInput}
 \alias{telephoneInput}
+\alias{updateTelephoneInput}
 \alias{passwordInput}
+\alias{updatePassowrdInput}
 \alias{numberInput}
+\alias{updateNumberInput}
 \title{Textual inputs}
 \usage{
 textInput(id, value = NULL, placeholder = NULL, ...)
 
+updateTextInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+
+groupTextInput(id, value = NULL, placeholder = NULL, ...,
+  left = NULL, right = NULL)
+
+updateGroupTextInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+
 searchInput(id, value = NULL, placeholder = NULL, ...)
+
+updateSearchInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
 
 emailInput(id, value = NULL, placeholder = NULL, ...)
 
+updateEmailInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+
 urlInput(id, value = NULL, placeholder = NULL, ...)
+
+updateUrlInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
 
 telephoneInput(id, value = NULL, placeholder = NULL, ...)
 
+updateTelephoneInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+
 passwordInput(id, value = NULL, placeholder = NULL, ...)
 
+updatePassowrdInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+
 numberInput(id, value = NULL, placeholder = NULL, ...)
+
+updateNumberInput(id, value = NULL, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -35,6 +71,60 @@ input, defaults to \code{NULL}, in which case there is no placeholder text.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
+
+\item{left}{A character vector specifying static addons or
+\code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons. Addons
+affect the reactive value of the group input, see the Details section below
+for more information.
+
+\strong{\code{left} is character or \code{right} is character}
+
+If \code{left} or \code{right} are character vectors, then the group input functions
+like a text input. The value will update and trigger a reactive event when
+the text box is modified. The group input's reactive value is the
+concatention of the static addons specified by \code{left} or \code{right} and the
+value of the text input.
+
+\strong{\code{left} is button or \code{right} is button}
+
+The button does not change the value of the group input. However, the input
+no longer triggers event when the text box is updated. Instead the value is
+updated when a button is clicked. Static addons are still applied to the
+group input value.
+
+\strong{\code{left} is a dropdown or \code{right} is a dropdown}
+
+The value of the group input does chance depending on the clicked dropdown
+menu item. The value of the input group is the concatentation of the
+dropdown input value, the value of the text input, and any static addons.}
+
+\item{right}{A character vector specifying static addons or
+\code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons. Addons
+affect the reactive value of the group input, see the Details section below
+for more information.
+
+\strong{\code{left} is character or \code{right} is character}
+
+If \code{left} or \code{right} are character vectors, then the group input functions
+like a text input. The value will update and trigger a reactive event when
+the text box is modified. The group input's reactive value is the
+concatention of the static addons specified by \code{left} or \code{right} and the
+value of the text input.
+
+\strong{\code{left} is button or \code{right} is button}
+
+The button does not change the value of the group input. However, the input
+no longer triggers event when the text box is updated. Instead the value is
+updated when a button is clicked. Static addons are still applied to the
+group input value.
+
+\strong{\code{left} is a dropdown or \code{right} is a dropdown}
+
+The value of the group input does chance depending on the clicked dropdown
+menu item. The value of the input group is the concatentation of the
+dropdown input value, the value of the text input, and any static addons.}
 }
 \description{
 Different types of textual inputs are provided to best support mobile
@@ -74,12 +164,12 @@ numberInput(id = "num")
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{chipInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{sliderInput}}
+  \code{\link{radiobarInput}}, \code{\link{rangeInput}},
+  \code{\link{selectInput}}
 }
 \concept{inputs}

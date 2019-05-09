@@ -1,97 +1,95 @@
 export let navInputBinding = new Shiny.InputBinding();
 
 $.extend(navInputBinding, {
-  Selector: {
-    SELF: ".yonder-nav",
-    SELECTED: ".nav-link.active:not(.disabled)"
-  },
-  Events: [
-    {
-      type: "click",
-      selector: ".nav-link:not(.dropdown-toggle):not(.disabled)",
-      callback: (el, e) => {
-        let activeItem = el.querySelector(".dropdown-item.active");
-        if (activeItem !== null) {
-          // trigger reset on menu input
-          $(activeItem.parentNode.parentNode).trigger("nav.reset");
-        }
+  find: (scope) => scope.querySelectorAll(".yonder-nav[id]"),
+  initialize: (el) => {
+    let $el = $(el);
 
-        el.querySelectorAll(".nav-link.active").forEach(a => {
-          a.classList.remove("active");
-        });
+    $el.on("click", ".nav-link:not(.dropdown-toggle):not(.disabled)", (e) => {
+      let active = el.querySelector(".dropdown-item.active");
 
-        e.currentTarget.classList.add("active");
+      if (active !== null) {
+        // trigger reset on menu input
+        $(active.parentNode.parentNode).trigger("nav.reset");
       }
-    },
-    {
-      type: "click",
-      selector: ".dropdown-item:not(.disabled)",
-      callback: (el, e) => {
-        el.querySelectorAll(".active").forEach(a => {
-          a.classList.remove("active");
-        });
 
-        e.currentTarget.parentNode.parentNode.children[0].classList.add("active");
-        e.currentTarget.classList.add("active");
+      el.querySelectorAll(".active").forEach(a => a.classList.remove("active"));
+
+      e.currentTarget.classList.add("active");
+    });
+
+    $el.on("click", ".dropdown-item:not(.disabled)", (e) => {
+      el.querySelectorAll(".active").forEach(a => a.classList.remove("active"));
+      e.currentTarget.parentNode.parentNode.children[0].classList.add("active");
+      e.currentTarget.classList.add("active");
+    });
+  },
+  getValue: (el) => {
+    let active = el.querySelector(".nav-link.active:not(.disabled)");
+
+    if (active === null) {
+      return null;
+    }
+
+    return active.value;
+  },
+  subscribe: (el, callback) => {
+    let $el = $(el);
+
+    $el.on("click.yonder", ".dropdown-item", (e) => callback());
+    $el.on("click.yonder", ".nav-link:not(.dropdown-toggle)", (e) => callback());
+    $el.on("nav.select.yonder", (e) => callback());
+  },
+  unsubscribe: (el) => $(el).off(".yonder"),
+  receiveMessage: (el, msg) => {
+    if (msg.content) {
+      el.querySelectorAll(".nav-item").forEach(item => el.removeChild(item));
+      el.insertAdjacentHTML("afterbegin", msg.content);
+    }
+
+    if (msg.selected) {
+      el.querySelectorAll(".nav-link").forEach(link => {
+        if (msg.selected.indexOf(link.value) > -1) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+
+      $(el).trigger("nav.select.yonder");
+    }
+
+    if (msg.enable) {
+      let enable = msg.enable;
+
+      if (enable === true) {
+        el.querySelectorAll(".nav-link").forEach(link => {
+          link.classList.remove("disabled");
+        });
+      } else {
+        el.querySelectorAll(".nav-link").forEach(link => {
+          if (enable.indexOf(link.value) > -1) {
+            link.classList.remove("disabled");
+          }
+        });
       }
     }
-  ],
-  _update: (el, data) => {
-    let template = el.querySelector(".nav-item").cloneNode(true);
-    template.children[0].classList.remove("active");
-    template.children[0].classList.remove("disabled");
 
-    el.innerHTML = "";
+    if (msg.disable) {
+      let disable = msg.disable;
 
-    data.choices.forEach((choice, i) => {
-      let child = template.cloneNode(true);
-      child.children[0].innerHTML = choice;
-      child.children[0].value = data.values[i];
-
-      if (data.selected.indexOf(data.values[i]) > -1) {
-        child.children[0].classList.add("active");
+      if (disable === true) {
+        el.querySelectorAll(".nav-link").forEach(link => {
+          link.classList.add("disabled");
+        });
+      } else {
+        el.querySelectorAll(".nav-link").forEach(link => {
+          if (disable.indexOf(link.value) > -1) {
+            link.classList.add("disabled");
+          }
+        });
       }
-
-      el.appendChild(child);
-    });
-  },
-  _select: (el, data) => {
-    el.querySelectorAll(".nav-link").forEach(child => {
-      let value = child.value;
-
-      if (data.reset) {
-        child.classList.remove("active");
-      }
-
-      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
-          RegExp(data.pattern, "i").test(value);
-
-      if (match !== data.invert) {
-        child.classList.add("active");
-      }
-    });
-  },
-  _disable: function(el, data) {
-    el.querySelectorAll(".nav-link").forEach(nl => {
-      let disabled = !data.values.length || data.values.indexOf(nl.value) > -1;
-
-      if (data.reset) {
-        nl.classList.remove("disabled");
-      }
-
-      if (disabled !== data.invert) {
-        nl.classList.add("disabled");
-      }
-    });
-  },
-  _enable: function(el, data) {
-    el.querySelectorAll(".nav-link").forEach(nl => {
-      let enable = !data.values.length || data.values.indexOf(nl.value) > -1;
-
-      if (enable !== data.invert) {
-        nl.classList.remove("disabled");
-      }
-    });
+    }
   }
 });
 

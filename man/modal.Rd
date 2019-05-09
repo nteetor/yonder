@@ -4,7 +4,7 @@
 \alias{modal}
 \alias{registerModal}
 \alias{showModal}
-\alias{hideModal}
+\alias{closeModal}
 \title{Modal dialogs}
 \usage{
 modal(title = NULL, body = NULL, footer = NULL, ...,
@@ -14,7 +14,7 @@ registerModal(id, modal, session = getDefaultReactiveDomain())
 
 showModal(id, exprs = list(), session = getDefaultReactiveDomain())
 
-hideModal(id, session = getDefaultReactiveDomain())
+closeModal(id, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{title}{A character string or tag element specifying the title of the
@@ -119,13 +119,12 @@ modal(
 
 }
 \seealso{
-Other content: \code{\link{alert}}, \code{\link{badge}},
+Other content: \code{\link{alert}},
   \code{\link{blockquote}}, \code{\link{card}},
   \code{\link{collapsiblePane}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{img}},
   \code{\link{jumbotron}}, \code{\link{navContent}},
   \code{\link{popover}}, \code{\link{pre}},
-  \code{\link{progressOutlet}}, \code{\link{toast}},
-  \code{\link{tooltip}}
+  \code{\link{toast}}, \code{\link{tooltip}}
 }
 \concept{content}

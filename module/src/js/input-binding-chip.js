@@ -1,72 +1,168 @@
 export let chipInputBinding = new Shiny.InputBinding();
 
 $.extend(chipInputBinding, {
-  Selector: {
-    SELF: ".yonder-chip",
-    SELECTED: ".active",
-    TOGGLE: "input[data-toggle='dropdown']"
+  selectorActive: ".active",
+  selectorToggle: "input[data-toggle='dropdown']",
+
+  find: (scope) => scope.querySelectorAll(".yonder-chip[id]"),
+  initialize: (el) => {
+    let $el = $(el);
+    let $toggle = $(el.querySelector(chipInputBinding.selectorToggle));
+
+    $el.on("input", (e) => {
+      let value = $toggle[0].value;
+
+      chipInputBinding._filter(el, value);
+
+      if (chipInputBinding._visible(el).length === 0) {
+        $toggle.dropdown("hide");
+      } else {
+        $toggle.dropdown("show");
+      }
+    });
+
+    $el.on("input change", (e) => {
+      $toggle.dropdown("update");
+    });
+
+    $el.on("hide.bs.dropdown", (e) => {
+      if (el.querySelector("input:focus") === null) {
+        el.querySelector("input").value = "";
+        chipInputBinding._filter(el, "");
+      }
+    });
+
+    $el.on("click", ".dropdown-item", (e) => {
+      e.stopPropagation();
+
+      chipInputBinding._add(el, e.currentTarget.value);
+      $toggle[0].focus();
+    });
+
+    $el.on("click", ".chip", (e) => {
+      chipInputBinding._remove(el, e.currentTarget.value);
+    });
+
+    let max = +el.getAttribute("data-max");
+
+    if (max !== -1 && chipInputBinding._selected(el).length >= max) {
+      chipInputBinding._disable(el);
+    }
   },
-  Events: [
-    {
-      type: "input",
-      callback: (el, event, self) => {
-        let value = el.querySelector(self.Selector.TOGGLE).value;
-        self.filterItems(el, value);
+  getValue: (el) => {
+    let selected = el.querySelectorAll(".active");
 
-        if (self.visibleItems(el) === 0) {
-          $(el.querySelector(self.Selector.TOGGLE)).dropdown("hide");
-        } else {
-          $(el.querySelector(self.Selector.TOGGLE)).dropdown("show");
-        }
-      }
-    },
-    {
-      type: "input change",
-      callback: (el, event, self) => {
-        $(el.querySelector(self.Selector.TOGGLE)).dropdown("update");
-      }
-    },
-    {
-      type: "hide.bs.dropdown",
-      callback: (el, event, self) => {
-        if (el.querySelector("input:focus") === null) {
-          el.querySelector("input").value = "";
-          self.filterItems(el, "");
-        }
-      }
-    },
-    {
-      type: "click",
-      selector: ".dropdown-item",
-      callback: (el, event, self) => {
-        event.stopPropagation();
+    if (selected.length === 0) {
+      return null;
+    }
 
-        self.addChip(el, event.currentTarget.value);
+    return Array.prototype.map.call(selected, s => s.value);
+  },
+  subscribe: (el, callback) => {
+    let $el = $(el);
 
-        el.querySelector(self.Selector.TOGGLE).focus();
+    $el.on("click.yonder", ".dropdown-item,.chip", (e) => callback());
+    $el.on("chip.select.yonder", (e) => callback());
+  },
+  unsubscribe: (el) => $(el).off(".yonder"),
+  receiveMessage: (el, msg) => {
+    let $el = $(el);
+
+    if (msg.items && msg.chips) {
+      el.querySelector(".dropdown-menu").innerHTML = msg.items;
+      el.querySelector(".chips").innerHTML = msg.chips;
+    }
+
+    if (msg.selected) {
+      if (msg.selected === true) {
+        el.querySelectorAll(".dropdown-item").forEach(item => {
+          chipInputBinding._add(el, item.value);
+        });
+      } else {
+        msg.selected.reverse();
+
+        chipInputBinding._selected(el).forEach(item => {
+          chipInputBinding._remove(el, item.value);
+        });
+
+        msg.selected.forEach(value => {
+          chipInputBinding._add(el, value);
+        });
       }
-    },
-    {
-      type: "click",
-      selector: ".chip",
-      callback: (el, event, self) => {
-        self.removeChip(el, event.currentTarget.value);
+
+      $el.trigger("chip.select.yonder");
+    }
+
+    if (msg.max !== undefined && msg.max !== null) {
+      el.setAttribute("data-max", msg.max);
+    }
+
+    if (msg.enable) {
+      let enable = msg.enable;
+
+      if (enable === true) {
+        chipInputBinding._enable(el);
+        // el.querySelector("input").removeAttribute("disabled");
+      } else {
+        el.querySelectorAll(".dropdown-item,.chip").forEach(item => {
+          if (enable.indexOf(item.value) > -1) {
+            item.removeAttribute("disabled");
+            item.classList.remove("disabled");
+          }
+        });
       }
     }
-  ],
 
-  enableToggle: (el) => {
+    if (msg.disable) {
+      let disable = msg.disable;
+
+      if (disable === true) {
+        chipInputBinding._disable(el);
+        // el.querySelector("input").setAttribute("disabled", "");
+      } else {
+        el.querySelectorAll(".dropdown-item,.chip").forEach(item => {
+          if (disable.indexOf(item.value) > -1) {
+            item.setAttribute("disabled", "");
+            item.classList.add("disabled");
+          }
+        });
+      }
+    }
+  },
+
+
+  _visible: (el) => {
+    return el.querySelectorAll(":not(.selected),:not(.filtered)");
+  },
+  _selected: (el) => {
+    return el.querySelectorAll(".selected");
+  },
+  _items: (el, value) => {
+    return Array.prototype.filter.call(
+      el.querySelectorAll(".dropdown-item"),
+      chip => chip.value === value
+    );
+  },
+  _chips: (el, value) => {
+    return Array.prototype.filter.call(
+      el.querySelectorAll(".chip"),
+      chip => chip.value === value
+    );
+  },
+
+  _enable: (el) => {
     let input = el.querySelector("input");
     input.removeAttribute("disabled");
     input.classList.remove("disabled");
   },
-  disableToggle: (el) => {
+  _disable: (el) => {
     let input = el.querySelector("input");
     input.setAttribute("disabled", "");
     input.classList.add("disabled");
   },
+  _filter: (el, value) => {
+    value = value.toLowerCase();
 
-  filterItems: (el, value) => {
     el.querySelectorAll(".dropdown-item").forEach(item => {
       let match = item.innerText.toLowerCase().indexOf(value) !== -1;
 
@@ -77,137 +173,46 @@ $.extend(chipInputBinding, {
       }
     });
   },
-  visibleItems: (el) => {
-    return el.querySelectorAll(":not(.selected), :not(.filtered)").length;
-  },
-  selectedItems: (el) => {
-    return el.querySelectorAll(".selected").length;
-  },
-  getItem: function(el, value) {
-    return Array.prototype.filter.call(
-      el.querySelectorAll(".dropdown-item"),
-      chip => chip.value === value
-    );
-  },
+  _add: (el, value) => {
+    let $toggle = $(el.querySelector(chipInputBinding.selectorToggle));
 
-  addChip: function(el, value) {
-    this.getItem(el, value).forEach(item => item.classList.add("selected"));
+    chipInputBinding._items(el, value).forEach(item => {
+      item.classList.add("selected");
+    });
 
-    this.getChip(el, value).forEach(chip => chip.classList.add("active"));
-
-    if (this.visibleItems(el) === 0) {
-      $(el.querySelector(this.Selector.TOGGLE)).dropdown("hide");
-    }
-
-    let max = +el.getAttribute("data-max");
-
-    if (max === -1 || this.selectedItems(el) < max) {
-      $(el.querySelector(this.Selector.TOGGLE)).dropdown("update");
-    } else {
-      $(el.querySelector(this.Selector.TOGGLE)).dropdown("hide");
-      this.disableToggle(el);
-    }
-  },
-  removeChip: function(el, value) {
-    let max = +el.getAttribute("data-max");
-
-    this.getChip(el, value).forEach(chip => chip.classList.remove("active"));
-
-    this.getItem(el, value).forEach(item => item.classList.remove("selected"));
-
-    if (max === -1 || this.selectedItems(el) < max) {
-      this.enableToggle(el);
-    }
-  },
-  getChip: function(el, value) {
-    return Array.prototype.filter.call(
-      el.querySelectorAll(".chip"),
-      chip => chip.value === value
-    );
-  },
-
-  initialize: function(el) {
-    let max = +el.getAttribute("data-max");
-
-    if (max !== -1 && this.selectedItems(el) >= max) {
-      this.disableToggle(el);
-    }
-  },
-  _update: function(el, data) {
-    let itemTemplate = el.querySelector(".dropdown-item").cloneNode();
-    itemTemplate.value = "";
-    itemTemplate.innerText = "";
-    itemTemplate.classList.remove("selected");
-    itemTemplate.classList.remove("filtered");
-
-    let chipTemplate = el.querySelector(".chip").cloneNode(true);
-    chipTemplate.value = "";
-    chipTemplate.children[0].innerHTML = "";
-    chipTemplate.classList.remove("active");
-
-    let menu = el.querySelector(".dropdown-menu");
     let chips = el.querySelector(".chips");
-
-    menu.innerHTML = "";
-    chips.innerHTML = "";
-
-    data.choices.forEach((choice, i) => {
-      let item = itemTemplate.cloneNode();
-      item.value = data.values[i];
-      item.innerHTML = choice;
-
-      let chip = chipTemplate.cloneNode(true);
-      chip.value = data.values[i];
-      chip.children[0].innerHTML = choice;
-
-      if (data.selected.indexOf(data.values[i]) > -1) {
-        item.classList.add("selected");
-        chip.classList.add("active");
-      }
-
-      menu.appendChild(item);
-      chips.appendChild(chip);
+    chipInputBinding._chips(el, value).forEach(chip => {
+      chips.insertBefore(chips.removeChild(chip), chips.firstChild);
+      chip.classList.add("active");
     });
+
+    if (chipInputBinding._visible(el).length === 0) {
+      $toggle.dropdown("hide");
+    }
+
+    let max = +el.getAttribute("data-max");
+
+    if (max === -1 || chipInputBinding._selected(el).length < max) {
+      $toggle.dropdown("update");
+    } else {
+      $toggle.dropdown("hide");
+      chipInputBinding._disable(el);
+    }
   },
-  _select: function(el, data) {
-    el.querySelectorAll(".chip").forEach(item => {
-      let value = item.value;
+  _remove: (el, value) => {
+    let max = +el.getAttribute("data-max");
 
-      if (data.reset) {
-        this.removeChip(el, value);
-      }
-
-      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
-        RegExp(data.pattern, "i").test(value);
-
-      if (match != data.invert) {
-        this.addChip(el, value);
-      }
+    chipInputBinding._chips(el, value).forEach(chip => {
+      chip.classList.remove("active");
     });
-  },
-  _enable: function(el, data) {
-    el.querySelectorAll(".dropdown-item,.chip").forEach(item => {
-      let enable = !data.values.length || data.values.indexOf(item.value) > -1;
 
-      if (enable !== data.invert) {
-        item.removeAttribute("disabled");
-        item.classList.remove("disabled");
-      }
+    chipInputBinding._items(el, value).forEach(item => {
+      item.classList.remove("selected");
     });
-  },
-  _disable: function(el, data) {
-    el.querySelectorAll(".dropdown-item,.chip").forEach(item => {
-      let disable = !data.values.length || data.values.indexOf(item.value)> -1;
-      if (data.reset) {
-        item.removeAttribute("disabled");
-        item.classList.removeAttribute("disabled");
-      }
 
-      if (disable !== data.invert) {
-        item.setAttribute("disabled", "");
-        item.classList.add("disabled");
-      }
-    });
+    if (max === -1 || chipInputBinding._selected(el).length < max) {
+      chipInputBinding._enable(el);
+    }
   }
 });
 

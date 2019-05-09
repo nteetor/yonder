@@ -12,7 +12,7 @@ NULL
 #' @section Inputs:
 #'
 #' Yonder provides many familiar inputs like [selectInput()] or [radioInput()].
-#' There are also new inputs like [groupInput()] or [formInput()].
+#' There are also new inputs like [groupTextInput()] or [formInput()].
 #'
 #' **Changes to be mindful of**
 #'

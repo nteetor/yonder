@@ -107,22 +107,13 @@
 #'   layout = "horizontal"
 #' )
 #'
-listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
-                           layout = "vertical", flush = FALSE) {
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid `listGroupInput()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  if (length(values) != length(choices)) {
-    stop(
-      "invalid `listGroupInput()` arguments, `choices` and `values` must be ",
-      "the same length",
-      call. = FALSE
-    )
-  }
+listGroupInput <- function(id, choices = NULL, values = choices,
+                           selected = NULL, ..., layout = "vertical",
+                           flush = FALSE) {
+  assert_id()
+  assert_choices()
+  assert_possible(layout, c("vertical", "horizontal"))
+  assert_possible(flush, c(TRUE, FALSE))
 
   layout <- resp_construct(layout, c("vertical", "horizontal"))
   classes <- resp_classes(layout, "list-group")
@@ -130,9 +121,51 @@ listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
   # drop vertical classes as they do not actually exist
   classes <- classes[!grepl("vertical", classes, fixed = TRUE)]
 
+  items <- map_listitems(choices, values, selected)
+
+  component <- tags$div(
+    class = str_collate(
+      "yonder-list-group",
+      "list-group",
+      classes,
+      if (flush) "list-group-flush"
+    ),
+    id = id,
+    items,
+    ...
+  )
+
+  attach_dependencies(component)
+}
+
+#' @rdname listGroupInput
+#' @export
+updateListGroupInput <- function(id, choices = NULL, values = choices,
+                                 selected = NULL, enable = NULL, disable = NULL,
+                                 session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_choices()
+  assert_session()
+
+  items <- map_listitems(choices, values, selected)
+
+  content <- coerce_content(items)
+  selected <- coerce_selected(selected)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+
+  session$sendInputMessage(id, list(
+    content = content,
+    selected = selected,
+    enable = enable,
+    disable = disable
+  ))
+}
+
+map_listitems <- function(choices, values, selected) {
   selected <- values %in% selected
 
-  items <- Map(
+  Map(
     choice = choices,
     value = values,
     select = selected,
@@ -149,18 +182,4 @@ listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
       )
     }
   )
-
-  input <- tags$div(
-    class = str_collate(
-      "yonder-list-group",
-      "list-group",
-      classes,
-      if (flush && length(classes) == 0) "list-group-flush"
-    ),
-    id = id,
-    items,
-    ...
-  )
-
-  attach_dependencies(input)
 }

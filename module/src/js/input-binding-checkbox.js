@@ -1,69 +1,104 @@
 export let checkboxInputBinding = new Shiny.InputBinding();
 
 $.extend(checkboxInputBinding, {
-  Selector: {
-    SELF: ".yonder-checkbox",
-    SELECTED: ".custom-control-input:checked:not(:disabled)",
-    VALIDATE: ".custom-control-input"
+  find: (scope) => scope.querySelectorAll(".yonder-checkbox[id]"),
+  getValue: (el) => {
+    let checked = el.querySelectorAll("input:checked:not(:disabled)");
+
+    if (checked.length === 0) {
+      return null;
+    }
+
+    return Array.prototype.map.call(checked, c => c.value);
   },
-  Events: [
-    { type: "change" }
-  ],
-  _update: (el, data) => {
-    let template = el.querySelector(".custom-checkbox").cloneNode(true);
-    template.children[0].checked = false;
+  subscribe: (el, callback) => {
+    let $el = $(el);
 
-    el.innerHTML = "";
-
-    data.choices.forEach((choice, i) => {
-      let child = template.cloneNode(true);
-      child.children[0].value = data.values[i];
-      child.children[1].innerHTML = choice;
-
-      if (data.selected.indexOf(data.values[i]) > -1) {
-        child.children[0].checked = true;
-      }
-
-      el.appendChild(child);
-    });
+    $el.on("change.yonder", (e) => callback());
+    $el.on("checkbox.select.yonder", (e) => callback());
   },
-  _select: function(el, data) {
-    el.querySelectorAll(".custom-checkbox").forEach(child => {
-      let value = child.children[0].value;
+  unsubscribe: (el) => $(el).off(".yonder"),
+  receiveMessage: (el, msg) => {
+    if (msg.content) {
+      el.querySelectorAll(".custom-checkbox").forEach(box => {
+        el.removeChild(box);
+      });
 
-      if (data.reset) {
-        child.children[0].checked = false;
+      el.insertAdjacentHTML("afterbegin", msg.content);
+    }
+
+    if (msg.selected) {
+      el.querySelectorAll("input:checked").forEach(input => {
+        input.checked = false;
+      });
+
+      el.querySelectorAll("input").forEach(input => {
+        if (msg.selected === true || msg.selected.indexOf(input.value) > -1) {
+          input.checked = true;
+        }
+      });
+
+      $(el).trigger("checkbox.select.yonder");
+    }
+
+    if (msg.enable) {
+      let enable = msg.enable;
+
+      if (enable === true) {
+        el.querySelectorAll("input").forEach(input => {
+          input.removeAttribute("disabled");
+        });
+      } else {
+        el.querySelectorAll("input").forEach(input => {
+          if (enable.indexOf(input.value) > -1) {
+            input.removeAttribute("disabled");
+          }
+        });
       }
+    }
 
-      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
-          RegExp(data.pattern, "i").test(value);
+    if (msg.disable) {
+      let disable = msg.disable;
 
-      if (match !== data.invert) {
-        child.children[0].checked = true;
+      if (disable === true) {
+        el.querySelectorAll("input").forEach(input => {
+          input.setAttribute("disabled", "");
+        });
+      } else {
+        el.querySelectorAll("input").forEach(input => {
+          if (disable.indexOf(input.value) > -1) {
+            input.setAttribute("disabled", "");
+          }
+        });
       }
-    });
-  },
-  _enable: function(el, data) {
-    el.querySelectorAll("input").forEach(input => {
-      let enable = !data.values.length && data.values.indexOf(input.value) > -1;
+    }
 
-      if (enable !== data.invert) {
-        input.removeAttribute("disabled");
-      }
-    });
-  },
-  _disable: function(el, data) {
-    el.querySelectorAll("input").forEach(input => {
-      let disable = !data.values.length && data.values.indexOf(input.value) > -1;
+    if (msg.valid) {
+      el.querySelector(".invalid-feedback").innerHTML = "";
+      el.querySelector(".valid-feedback").innerHTML = msg.valid;
+      el.querySelectorAll("input").forEach(input => {
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
+      });
+    }
 
-      if (data.reset) {
-        input.removeAttribute("disabled");
-      }
+    if (msg.invalid) {
+      el.querySelector(".valid-feedback").innerHTML = "";
+      el.querySelector(".inavlid-feedback").innerHTML = msg.invalid;
+      el.querySelectorAll("input").forEach(input => {
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
+      });
+    }
 
-      if (disable !== data.invert) {
-        input.setAttribute("disabled", "");
-      }
-    });
+    if (!msg.valid && !msg.invalid) {
+      el.querySelector(".valid-feedback").innerHTML = "";
+      el.querySelector(".invalid-feedback").innerHTML = "";
+      el.querySelectorAll("input").forEach(input => {
+        input.classList.remove("is-valid");
+        input.classList.remove("is-invalid");
+      });
+    }
   }
 });
 

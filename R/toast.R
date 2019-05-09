@@ -23,7 +23,7 @@
 #' @param action A character string specifying a reactive id. If specified, the
 #'   hiding or closing of the toast will set the reactive id `action` to `TRUE`.
 #'
-#' @inheritParams updateInput
+#' @inheritParams collapsiblePane
 #'
 #' @section Showing notifications:
 #'
@@ -40,7 +40,7 @@
 #'   observeEvent(input$show, {
 #'     showToast(
 #'       toast(
-#'         header = list(
+#'         list(
 #'           span("Notification") %>%
 #'             margin(right = "4"),
 #'           span(strftime(Sys.time(), "%H:%M")) %>%
@@ -76,10 +76,9 @@
 #'       action = "undo",
 #'       duration = NULL,
 #'       toast(
-#'         header = tags$strong("Close") %>%
+#'         tags$strong("Close") %>%
 #'           margin(right = "auto"),
-#'         "When closing this notification, ",
-#'         "see the console"
+#'         "When closing this notification, see the console"
 #'       ) %>%
 #'         margin(right = 2, top = 2)
 #'     )
@@ -113,7 +112,7 @@
 #'
 #' toast(
 #'   class = "fade show",
-#'   header = list(
+#'   list(
 #'     div("Notification") %>%
 #'       font(weight = "bold") %>%
 #'       margin(right = "auto"),
@@ -122,7 +121,7 @@
 #'   "Hello, world!"
 #' )
 #'
-toast <- function(..., header = NULL) {
+toast <- function(header, ...) {
   args <- list(...)
 
   header <- tags$div(
@@ -142,7 +141,7 @@ toast <- function(..., header = NULL) {
     )
   )
 
-  this <- tags$div(
+  component <- tags$div(
     class = "toast",
     role = "alert",
     `aria-live` = "polite",
@@ -154,9 +153,9 @@ toast <- function(..., header = NULL) {
     )
   )
 
-  this <- tag_attributes_add(this, named_values(args))
+  component <- tag_attributes_add(component, named_values(args))
 
-  attach_dependencies(this)
+  attach_dependencies(component)
 }
 
 #' @rdname toast
@@ -201,12 +200,7 @@ showToast <- function(toast, duration = 4, action = NULL,
 #' @rdname toast
 #' @export
 closeToast <- function(session = getDefaultReactiveDomain()) {
-  if (is.null(session)) {
-    stop(
-      "invalid `closeToast()` argument, `session` is NULL",
-      call. = FALSE
-    )
-  }
+  assert_session()
 
   session$sendCustomMessage("yonder:toast", list(
     type = "close",

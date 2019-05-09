@@ -119,12 +119,6 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
     }
   )
 
-  attributes <- lapply(
-    named_values(args),
-    eval,
-    envir = parent.frame()
-  )
-
   component <- tags$div(
     class = str_collate(
       "dropdown",
@@ -151,7 +145,7 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
     )
   )
 
-  component <- tag_attributes_add(component, attributes)
+  component <- tag_attributes_add(component, named_values(list(...)))
 
   attach_dependencies(component)
 }

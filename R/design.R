@@ -624,7 +624,7 @@ display <- function(tag, type) {
 #'     id = "name",
 #'     placeholder = "full name"
 #'   ),
-#'   groupInput(
+#'   groupTextInput(
 #'     id = "username",
 #'     left = "@",
 #'     placeholder = "username"
@@ -648,9 +648,9 @@ display <- function(tag, type) {
 #'     placeholder = "full name"
 #'   ) %>%
 #'     margin(r = c(sm = 2), b = 2),  # <-
-#'   groupInput(
+#'   groupTextInput(
 #'     id = "username",
-#'     left = "@",
+#'     left = "@@",
 #'     placeholder = "username"
 #'   ) %>%
 #'     margin(r = c(sm = 2), b = 2),  # <-

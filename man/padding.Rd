@@ -64,7 +64,7 @@ formInput(
     id = "name",
     placeholder = "full name"
   ),
-  groupInput(
+  groupTextInput(
     id = "username",
     left = "@",
     placeholder = "username"
@@ -88,7 +88,7 @@ formInput(
     placeholder = "full name"
   ) \%>\%
     margin(r = c(sm = 2), b = 2),  # <-
-  groupInput(
+  groupTextInput(
     id = "username",
     left = "@",
     placeholder = "username"

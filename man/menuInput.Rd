@@ -2,10 +2,15 @@
 % Please edit documentation in R/menu.R
 \name{menuInput}
 \alias{menuInput}
+\alias{updateMenuInput}
 \title{Menu input}
 \usage{
-menuInput(id, label, choices, values = choices, ...,
-  direction = "down", align = "left")
+menuInput(id, label, choices = NULL, values = choices,
+  selected = NULL, ..., direction = "down", align = "left")
+
+updateMenuInput(id, choices = NULL, values = choices,
+  selected = NULL, enable = NULL, disable = NULL,
+  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -27,6 +32,8 @@ which direction the menu opens, defaults to \code{"down"}.}
 
 \item{align}{One or \code{"right"} or \code{"left"} specifying which side of the
 toggle button the menu aligns to, defaults to \code{"left"}.`}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 A togglable dropdown menu input. Menu inputs may be used as standalone
@@ -71,12 +78,12 @@ navInput(
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{chipInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
   \code{\link{listGroupInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}, \code{\link{sliderInput}},
+  \code{\link{radioInput}}, \code{\link{radiobarInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }
 \concept{inputs}

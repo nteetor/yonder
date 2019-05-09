@@ -3638,6 +3638,25 @@ input[type="button"].btn-block {
   }
 }
 
+.yonder-select {
+  width: 100%;
+}
+
+.yonder-select .dropdown-toggle:disabled {
+  cursor: not-allowed;
+}
+
+.yonder-select .dropdown-menu {
+  min-width: 100%;
+  max-height: 20rem;
+  overflow-y: scroll;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+}
+
+.yonder-select .dropdown-menu .filtered {
+  display: none;
+}
+
 .dropup,
 .dropright,
 .dropdown,
@@ -6923,6 +6942,8 @@ a.close.disabled {
   position: absolute;
   top: 0;
   right: 0;
+  margin-top: 2rem;
+  margin-right: 2rem;
 }
 
 .modal-open {
@@ -7501,9 +7522,10 @@ a.close.disabled {
 }
 
 .yonder-chip .dropdown-menu {
-  width: 100%;
+  min-width: 100%;
   max-height: 20rem;
   overflow-y: scroll;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
 .yonder-chip .dropdown-menu .filtered,

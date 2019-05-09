@@ -4,8 +4,8 @@
 \alias{fileInput}
 \title{Upload user files}
 \usage{
-fileInput(id, placeholder = "Choose file", browse = "Browse",
-  left = NULL, right = NULL, ..., multiple = TRUE, accept = NULL)
+fileInput(id, placeholder = "Choose file", browse = "Browse", ...,
+  multiple = TRUE, accept = NULL)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -15,13 +15,6 @@ input, defaults to \code{"Choose file"}.}
 
 \item{browse}{A character string specifying the label of file input, defaults
 to \code{"Browse"}.}
-
-\item{left, right}{A character string or button element placed prepended or
-appended respectively to the file input. For more information refer to
-\code{\link[=groupInput]{groupInput()}}.
-
-Clicking on an element specified by \code{right} also opens the file input
-dialog.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
@@ -34,11 +27,6 @@ defaults to \code{NULL}, in which case any file type may be selected.}
 }
 \description{
 Upload files to the server.
-}
-\details{
-Be careful when adjusting the right or left margin of a file input. In the
-current version of Bootstrap file inputs can be pushed off the side of a
-page.
 }
 \section{\strong{Example} uploading a file}{
 \preformatted{shinyApp(
@@ -82,12 +70,12 @@ fileInput(
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{formInput}},
-  \code{\link{groupInput}}, \code{\link{listGroupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{chipInput}},
+  \code{\link{formInput}}, \code{\link{listGroupInput}},
   \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}, \code{\link{sliderInput}},
+  \code{\link{radioInput}}, \code{\link{radiobarInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }
 \concept{inputs}

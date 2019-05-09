@@ -1,4 +1,4 @@
-#' Page navigation
+#' Page navigation input
 #'
 #' A reactive input styled as a navigation control. The navigation input can be
 #' styled as links, tabs, or pills. A nav input is paired with [navContent()]
@@ -10,10 +10,10 @@
 #' @inheritParams buttonInput
 #'
 #' @param choices A character vector or list of tag elements specifying the
-#'   navigation items of the navigation input.
+#'   navigation items of the input.
 #'
-#' @param values A character vector specifying custom values for each navigation
-#'   item, defaults to `choices`.
+#' @param values A character vector specifying the values of the input's
+#'   chocies, defaults to `choices`.
 #'
 #' @param selected One of `values` specifying which choice is selected by
 #'   default, defaults to `values[[1]]`.
@@ -116,22 +116,16 @@
 #' ) %>%
 #'   flex(justify = "center")
 #'
-navInput <- function(id, choices, values = choices, selected = values[[1]], ...,
-                     appearance = "links", fill = FALSE) {
+navInput <- function(id, choices = NULL, values = choices,
+                     selected = values[[1]], ..., appearance = "links",
+                     fill = FALSE) {
   assert_id()
   assert_selected(length = 1)
   assert_possible(appearance, c("links", "pills", "tabs"))
 
-  selected <- values %in% selected
+  items <- map_navitems(choices, values, selected)
 
-  items <- Map(
-    choice = choices,
-    value = values,
-    select = selected,
-    navItem
-  )
-
-  input <- tags$ul(
+  component <- tags$ul(
     class = str_collate(
       "yonder-nav",
       "nav",
@@ -143,51 +137,78 @@ navInput <- function(id, choices, values = choices, selected = values[[1]], ...,
     ...
   )
 
-  attach_dependencies(input)
+  attach_dependencies(component)
 }
 
-navItem <- function(choice, value, select) {
-  if (is_tag(choice) && tag_class_re(choice, "yonder-menu")) {
-    choice$children[[1]] <- tag_class_remove(
-      choice$children[[1]],
-      paste0("btn-(?:", paste0(.colors, collapse = "|"), ")")
-    )
-    choice$children[[1]] <- tag_class_add(choice$children[[1]], "nav-link btn-link")
-    choice$children[[1]]$attribs$type <- NULL
-    choice$children[[1]]$attribs$value <- value
+#' @rdname navInput
+#' @export
+updateNavInput <- function(id, choices = NULL, values = choices,
+                           selected = NULL, enable = NULL, disable = NULL,
+                           session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_choices()
+  assert_selected(length = 1)
+  assert_session()
 
-    if (select) {
-      choice$children[[1]] <- tag_class_add(choice$children[[1]], "active")
-    }
+  items <- map_navitems(choices, values, selected)
 
-    choice$name <- "li"
-    choice <- tag_class_add(choice, "nav-item")
+  content <- coerce_content(items)
+  selected <- coerce_selected(selected)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
 
-    return(choice)
-  }
+  session$sendInputMessage(id, list(
+    content = content,
+    selected = selected,
+    enable = enable,
+    disable = disable
+  ))
+}
 
-  if (is.character(choice) || is_tag(choice)) {
-    choice <- tags$li(
-      class = "nav-item",
-      tags$button(
-        class = str_collate(
-          "nav-link",
-          "btn",
-          "btn-link",
-          if (select) "active"
-        ),
-        value = value,
-        choice
+map_navitems <- function(choices, values, selected) {
+  selected <- values %in% selected
+
+  Map(
+    choice = choices,
+    value = values,
+    select = selected,
+    function(choice, value, select) {
+      if (is_tag(choice) && tag_class_re(choice, "yonder-menu")) {
+        choice$children[[1]] <- tag_class_remove(
+          choice$children[[1]],
+          paste0("btn-(?:", paste0(.colors, collapse = "|"), ")")
+        )
+        choice$children[[1]] <- tag_class_add(
+          choice$children[[1]],
+          "nav-link btn-link"
+        )
+        choice$children[[1]]$attribs$type <- NULL
+        choice$children[[1]]$attribs$value <- value
+
+        if (select) {
+          choice$children[[1]] <- tag_class_add(choice$children[[1]], "active")
+        }
+
+        choice$name <- "li"
+        choice <- tag_class_add(choice, "nav-item")
+
+        return(choice)
+      }
+
+      tags$li(
+        class = "nav-item",
+        tags$button(
+          class = str_collate(
+            "nav-link",
+            "btn",
+            "btn-link",
+            if (select) "active"
+          ),
+          value = value,
+          choice
+        )
       )
-    )
-
-    return(choice)
-  }
-
-  stop(
-    "invalid `navInput()` arguments, could not construct nav items from ",
-    "`choices` and `values`",
-    call. = FALSE
+    }
   )
 }
 
@@ -210,7 +231,7 @@ navItem <- function(choice, value, select) {
 #' @param fade One of `TRUE` or `FALSE` specifying if the pane fades in when
 #'   show and out when hidden, defaults to `TRUE`.
 #'
-#' @inheritParams updateInput
+#' @inheritParams collapsiblePane
 #'
 #' @section App with pills:
 #'

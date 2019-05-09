@@ -1,8 +1,6 @@
-#' Inputs for numeric ranges
+#' Simple range input
 #'
-#' Use `rangeInput()` and `intervalInput()` to allow users to select from a
-#' range of numeric values. For a slider input with non-numeric values refer to
-#' [sliderInput()].
+#' `rangeInput()` creates a simple numeric range input.
 #'
 #' @inheritParams buttonInput
 #'
@@ -12,43 +10,16 @@
 #' @param max A number specifying the maximum value of the input, defaults to
 #'   `100`.
 #'
-#' @param default A numeric vector between `min` and `max` specifying the
-#'   default value of the input.
-#'
-#'   For **rangeInput()**, a single number, defaults to `min`.
-#'
-#'   For **intervalInput()**, a vector of two numbers, defaults to
-#'   `c(min, max)`.
+#' @param default A number between `min` and `max` specifying the
+#'   default value of the input, defaults to `min`.
 #'
 #' @param step A number specifying the interval step of the input, defaults to
 #'   `1`.
 #'
-#' @param draggable One of `TRUE` or `FALSE` specifying if the user can drag the
-#'   interval between an interval input's two sliders, defaults to `FALSE`. If
-#'   `TRUE`, the slider interval may be dragged with the cursor.
+#' @details
 #'
-#' @param ticks One of `TRUE` or `FALSE` specifying if tick marks are added to
-#'   the input, defaults to `TRUE`.
-#'
-#' @param fill One of `TRUE` or `FALSE` specifying whether the filled portion of
-#'   a range or slider input is shown, defaults to `TRUE`.
-#'
-#' @param labels One of `TRUE`, `FALSE`, or a number specifying how labels are
-#'   applied to tick marks.
-#'
-#'   If **numeric**, `labels` specifies the exact number of
-#'   tick mark labels added to the input.
-#'
-#'   If **`TRUE`**, labels are added to the tick marks and the number of labels
-#'   is determined by `step`.
-#'
-#'   If **`FALSE`**, labels are not added to the tick marks.
-#'
-#' @param prefix A character string specifying a prefix for the input value,
-#'   defaults to `NULL`, in which case a prefix is not prepended.
-#'
-#' @param suffix A character string specifying a suffix for the input value,
-#'   defaults to `NULL`, in which case a prefix is not appended.
+#' The sophistication of this input will improve as browsers adopt the latest
+#' HTML standards.
 #'
 #' @family inputs
 #' @export
@@ -56,79 +27,59 @@
 #'
 #' ### Range inputs
 #'
-#' % <script>
-#' % $(function() {
-#' %   $(".yonder-range").each(function() {
-#' %     $(this.querySelector("input")).ionRangeSlider();
-#' %   });
-#' % });
-#' % </script>
-#'
 #' # Select from a range of numeric values.
 #'
-#' rangeInput(id = "range1") %>%
-#'   background("yellow")
+#' rangeInput(id = "range1")
 #'
-#' ### Increase the number of labels
-#'
-#' rangeInput(
-#'   id = "range2",
-#'   default = 30,
-#'   labels = 8
-#' ) %>%
-#'   background("purple")
-#'
-#' ### Increase thumb step
-#'
-#' # We'll hide the filled portion of the input with `fill` and change how
-#' # tick marks are placed with `snap`.
-#'
-#' rangeInput(
-#'   id = "range3",
-#'   step = 10,  # <-
-#'   snap = TRUE,
-#'   fill = FALSE
-#' ) %>%
-#'   background("red")
-#'
-#' ### Interval inputs
-#'
-#' # Select an interval from a range of numeric values. Intervals are draggable
-#' # by default, this can be toggled off with `draggable = FALSE`.
-#'
-#' intervalInput(
-#'   id = "interval1",
-#'   default = c(45, 65)
-#' ) %>%
-#'   background("blue")
-#'
-rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...,
-                       ticks = TRUE, labels = 4, prefix = NULL, suffix = NULL,
-                       fill = TRUE) {
+rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...) {
   assert_id()
 
+  if (!is.numeric(min)) {
+    stop(
+      "invalid argument in `rangeInput()`, `min` must be a number",
+      call. = FALSE
+    )
+  }
+
+  if (!is.numeric(max)) {
+    stop(
+      "invalid argument in `rangeInput()`, `max` must be a number",
+      call. = FALSE
+    )
+  }
+
+  if (!is.numeric(default)) {
+    stop(
+      "invalid argument in `rangeInput()`, `default` must be a number",
+      call. = FALSE
+    )
+  }
+
+  if (default < min || default > max) {
+    stop(
+      "invalid argument in `rangeInput()`,",
+      call. = FALSE
+    )
+  }
+
+  if (!is.numeric(step)) {
+    stop(
+      "invalid argument in `rangeInput()`,",
+      call. = FALSE
+    )
+  }
+
   component <- tags$div(
-    class = str_collate(
-      "yonder-range",
-      "range-grey",
-      if (!fill) "range-no-fill"
-    ),
+    class = "yonder-range",
     id = id,
     tags$input(
-      class = "range",
-      type = "text",
+      class = "custom-range",
+      type = "range",
+      step = step,
+      min = min,
+      max = max,
+      value = default,
       autocomplete = "off",
-      `data-type` = "single",
-      `data-min` = min,
-      `data-max` = max,
-      `data-step` = step,
-      `data-from` = default,
-      `data-prettify-separator` = ",",
-      `data-prefix` = prefix,
-      `data-postfix` = suffix,
-      `data-grid` = ticks,
-      `data-grid-num` = labels,
-      `data-grid-snap` = if (isTRUE(labels)) labels
     ),
     ...
   )
@@ -138,153 +89,18 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...,
 
 #' @rdname rangeInput
 #' @export
-intervalInput <- function(id, min = 0, max = 100, default = c(min, max),
-                          step = 1, ..., ticks = TRUE, labels = 4,
-                          prefix = NULL, suffix = NULL, draggable = FALSE) {
+updateRangeInput <- function(id, value = NULL, enable = NULL, disable = NULL,
+                             session = getDefaultReactiveDomain()) {
   assert_id()
+  assert_session()
 
-  if (!is.numeric(min)) {
-    stop(
-      "invalid argument in `intervalInput()`, `min` must be a numeric value",
-      call. = FALSE
-    )
-  }
+  value <- coerce_value(value)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
 
-  if (!is.numeric(max)) {
-    stop(
-      "invalid argument in `intervalInput()`, `max` must be a numeric value",
-      call. = FALSE
-    )
-  }
-
-  if (length(default) != 2) {
-    stop(
-      "invalid argument in `intervalInput()`, `default` must have a length of 2",
-      call. = FALSE
-    )
-  }
-
-  if (default[[1]] < min) {
-    stop(
-      "invalid argument in `intervalInput()`, `default[[1]]` must be greater ",
-      "than or equal to `min`",
-      call. = FALSE
-    )
-  }
-
-  if (default[[2]] > max) {
-    stop(
-      "invalid argument in `intervalInput()`, `default[[2]]` must be less ",
-      "than or equal to `max`",
-      call. = FALSE
-    )
-  }
-
-  component <- tags$div(
-    class = "yonder-range range-grey",
-    id = id,
-    tags$input(
-      class = "range",
-      type = "text",
-      autocomplete = "off",
-      `data-type` = "double",
-      `data-min` = min,
-      `data-max` = max,
-      `data-from` = default[[1]],
-      `data-to` = default[[2]],
-      `data-drag-interval` = draggable,
-      `data-prettify-separator` = ",",
-      `data-prefix` = prefix,
-      `data-postfix` = suffix,
-      `data-grid` = ticks,
-      `data-grid-num` = labels,
-      `data-grid-snap` = if (isTRUE(labels)) labels
-    ),
-    ...
-  )
-
-  attach_dependencies(component)
-}
-
-#' Slider with custom choices
-#'
-#' A slider input with custom choices and values. Unlike [rangeInput()] or
-#' [intervalInput()] the slider input does range over a set of numeric values.
-#' Instead the slider input may be used similarly to a radio input.
-#'
-#' @inheritParams buttonInput
-#'
-#' @param choices A character vector specifying the slider labels.
-#'
-#' @param values A character vector specifying the values of the input,
-#'   defaults to `choices`.
-#'
-#' @param selected One of `values` specifying the initial value of the slider
-#'   input, defaults to `values[[1]]`.
-#'
-#' @param fill One of `TRUE` or `FALSE` specifying whether the filled portion of
-#'   the slider input is shown, defaults to `FALSE`.
-#'
-#' @inheritParams rangeInput
-#'
-#' @family inputs
-#' @export
-#' @examples
-#'
-#' ### Custom chocies
-#'
-#' % <script>
-#' % $(function() {
-#' %   $(".yonder-range").each(function() {
-#' %     $(this.querySelector("input")).ionRangeSlider();
-#' %   });
-#' % });
-#' % </script>
-#'
-#' # Select a value from a set of choices using a slider.
-#'
-#' sliderInput(
-#'   id = "slider1",
-#'   choices = c("Closest", "Close", "Far", "Farthest")
-#' )
-#'
-sliderInput <- function(id, choices, values = choices, selected = values[[1]],
-                        ..., ticks = TRUE, prefix = NULL, suffix = NULL,
-                        fill = FALSE) {
-  assert_id()
-  assert_choices()
-  assert_selected(length = 1)
-
-  values <- vapply(values, as.character, character(1))
-
-  # need to replace commas as ion rangeslider splits the string of values on the
-  # string literal ","
-  values <- encode_commas(values)
-  choices <- encode_commas(choices)
-  selected <- encode_commas(selected)
-
-  component <- tags$div(
-    class = str_collate(
-      "yonder-range",
-      "range-grey",
-      if (!fill) "range-no-fill"
-    ),
-    id = id,
-    tags$input(
-      class = "range",
-      type = "text",
-      autocomplete = "off",
-      `data-type` = "single",
-      `data-values` = paste0(values, collapse = ","),
-      `data-choices` = paste0(choices, collapse = ","),
-      `data-from` = if (!is.null(selected)) which(choices == selected)[1] - 1, # JS is 0-indexed
-      `data-prefix` = prefix,
-      `data-postfix` = suffix,
-      `data-grid` = ticks,
-      `data-hide-min-max` = TRUE
-    ),
-    ...
-  )
-
-  attach_dependencies(component)
+  session$sendInputMessage(id, list(
+    value = value,
+    enable = enable,
+    disable = disable
+  ))
 }

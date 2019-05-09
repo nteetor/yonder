@@ -2,19 +2,20 @@
 % Please edit documentation in R/radio.R
 \name{radioInput}
 \alias{radioInput}
-\alias{radiobarInput}
+\alias{updateRadioInput}
 \title{Radio inputs}
 \usage{
-radioInput(id, choices, values = choices, selected = values[[1]], ...,
-  inline = FALSE)
+radioInput(id, choices = NULL, values = choices,
+  selected = values[[1]], ..., inline = FALSE)
 
-radiobarInput(id, choices, values = choices, selected = values[[1]],
-  ...)
+updateRadioInput(id, choices = NULL, values = choices,
+  selected = NULL, inline = FALSE, enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
 
-\item{choices}{A character vector specifying labels for the radio or radiobar
+\item{choices}{A character vector or list of tag elements specifying the
 input's choices.}
 
 \item{values}{A character vector, list of character strings, vector of values
@@ -31,6 +32,8 @@ element.}
 
 \item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
 in which case the radio controls render on separate lines.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 Create a reactive radio input of one or more radio controls.
@@ -61,29 +64,15 @@ radioInput(
   inline = TRUE  # <-
 )
 
-### Radiobars in comparison
-
-radiobarInput(
-  id = "radiobar1",
-  choices = c(
-    "fusce sagittis",
-    "libero non molestie",
-    "magna orci",
-    "ultrices dolor"
-  ),
-  selected = "ultrices dolor"
-) \%>\%
-  background("grey")
-
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{groupInput}},
+  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
+  \code{\link{checkboxInput}}, \code{\link{chipInput}},
+  \code{\link{fileInput}}, \code{\link{formInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
-  \code{\link{navInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}, \code{\link{sliderInput}},
+  \code{\link{navInput}}, \code{\link{radiobarInput}},
+  \code{\link{rangeInput}}, \code{\link{selectInput}},
   \code{\link{textInput}}
 }
 \concept{inputs}

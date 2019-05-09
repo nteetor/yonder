@@ -1,82 +1,85 @@
 export let checkbarInputBinding = new Shiny.InputBinding();
 
 $.extend(checkbarInputBinding, {
-  Selector: {
-    SELF: ".yonder-checkbar",
-    SELECTED: "input:checked"
+  find: (scope) => scope.querySelectorAll(".yonder-checkbar[id]"),
+  getValue: (el) => {
+    let checked = el.querySelectorAll("input:checked:not(:disabled)");
+
+    if (checked.length === 0) {
+      return null;
+    }
+
+    return Array.prototype.map.call(checked, c => c.value);
   },
-  Events: [
-    { type: "change", selector: ".btn" }
-  ],
-  _update: (el, data) => {
-    let template = el.querySelector(".btn").cloneNode(true);
-    template.classList.remove("active");
-    template.classList.remove("disabled");
-    template.children[0].removeAttribute("disabled");
+  subscribe: (el, callback) => {
+    let $el = $(el);
 
-    let input = template.children[0].cloneNode();
-    template.innerHTML = "";
-    template.appendChild(input);
-
-    el.innerHTML = "";
-
-    data.choices.forEach((choice, i) => {
-      let child = template.cloneNode(true);
-      child.insertAdjacentHTML("beforeend", choice);
-      child.children[0].value = data.values[i];
-
-      if (data.selected.indexOf(data.values[i]) > -1) {
-        child.classList.add("active");
-        child.children[0].checked = true;
-      }
-
-      el.appendChild(child);
-    });
+    $el.on("click.yonder", e => callback());
+    $el.on("change.yonder", e => callback());
+    $el.on("checkbar.select.yonder", (e) => callback());
   },
-  _select: function(el, data) {
-    el.querySelectorAll(".btn").forEach(child => {
-      let value = child.children[0].value;
+  unsubscribe: (el) => $(el).off(".yonder"),
+  receiveMessage: (el, msg) => {
+    if (msg.content) {
+      el.querySelectorAll(".btn").forEach(btn => {
+        el.removeChild(btn);
+      });
+      el.insertAdjacentHTML("afterbegin", msg.content);
+    }
 
-      if (data.reset) {
-        child.classList.remove("active");
-        child.children[0].checked = false;
+    if (msg.selected) {
+      if (msg.selected !== true) {
+        el.querySelectorAll("input:checked").forEach(input => {
+          input.checked = false;
+          input.parentNode.classList.remove("active");
+        });
       }
 
-      let match = data.fixed ? data.pattern.indexOf(value) > -1 :
-          RegExp(data.pattern, "i").test(value);
+      el.querySelectorAll("input").forEach(input => {
+        if (msg.selected === true || msg.selected.indexOf(input.value) > -1) {
+          input.checked = true;
+          input.parentNode.classList.add("active");
+        }
+      });
 
-      if (match !== data.invert) {
-        child.classList.add("active");
-        child.children[0].checked = true;
-      }
-    });
-  },
-  _enable: function(el, data) {
-    let values = data.values;
-    el.querySelectorAll(".btn").forEach(btn => {
-      let enable = !values.length || values.indexOf(btn.children[0].value) > -1;
+      $(el).trigger("checkbar.select.yonder");
+    }
 
-      if (enable !== data.invert) {
-        btn.classList.remove("disabled");
-        btn.children[0].removeAttribute("disabled");
-      }
-    });
-  },
-  _disable: function(el, data) {
-    let values = data.values;
-    el.querySelectorAll(".btn").forEach(btn => {
-      let disable = !values.length || values.indexOf(btn.children[0].value) > -1;
+    if (msg.enable) {
+      let enable = msg.enable;
 
-      if (data.reset) {
-        btn.classList.remove("disabled");
-        btn.children[0].removeAttribute("disabled");
+      if (enable === true) {
+        el.querySelectorAll(".btn").forEach(btn => {
+          btn.classList.remove("disabled");
+          btn.children[0].removeAttribute("disabled");
+        });
+      } else {
+        el.querySelectorAll(".btn").forEach(btn => {
+          if (enable.indexOf(btn.value) > -1) {
+            btn.classList.remove("disabled");
+            btn.children[0].removeAttribute("disabled");
+          }
+        });
       }
+    }
 
-      if (disable !== data.invert) {
-        btn.classList.add("disabled");
-        btn.children[0].setAttribute("disabled", "");
+    if (msg.disable) {
+      let disable = msg.disable;
+
+      if (disable === true) {
+        el.querySelectorAll(".btn").forEach(btn => {
+          btn.classList.add("disabled");
+          btn.children[0].setAttribute("disabled", "");
+        });
+      } else {
+        el.querySelectorAll(".btn").forEach(btn => {
+          if (disable.indexOf(btn.value) > -1) {
+            btn.classList.add("disabled");
+            btn.children[0].setAttribute("disabled", "");
+          }
+        });
       }
-    });
+    }
   }
 });
 

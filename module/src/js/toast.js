@@ -1,8 +1,5 @@
 $(() => {
-  document.body.insertAdjacentHTML(
-    "beforeend",
-    "<div class='toasts'></div>"
-  );
+  document.body.insertAdjacentHTML("beforeend", "<div class='toasts'></div>");
 
   $(".toasts").on("hidden.bs.toast", ".toast", (e) => {
     if (e.currentTarget.hasAttribute("data-action")) {
@@ -17,8 +14,7 @@ $(() => {
 
 Shiny.addCustomMessageHandler("yonder:toast", (msg) => {
   let _show = function(data) {
-    document
-      .querySelector(".toasts")
+    document.querySelector(".toasts")
       .insertAdjacentHTML("beforeend", data.content);
 
     $(".toasts > .toast:last-child").toast("show");

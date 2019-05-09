@@ -1,48 +1,30 @@
 export let rangeInputBinding = new Shiny.InputBinding();
 
 $.extend(rangeInputBinding, {
-  Selector: {
-    SELF: ".yonder-range[id]"
-  },
-  Events: [
-    { type: "change" }
-  ],
-  initialize: (el) => {
-    $(el.querySelector("input")).ionRangeSlider();
-  },
-  getId: function(el) {
-    return el.id;
-  },
-  getValue: function(el) {
-    var $input = $("input[type='text']", el);
-    var data = $input.data("ionRangeSlider");
+  find: (scope) => scope.querySelectorAll(".yonder-range[id]"),
+  getId: (el) => el.id,
+  getValue: (el) => +el.children[0].value,
+  subscribe: (el, callback) => {
+    let $el = $(el);
 
-    if ($input.data("type") === "double") {
-      return [data.result.from, data.result.to];
-    } else if ($input.data("type") === "single") {
-      if (data.result.from_value !== null) {
-        return data.result.from_value.replace("&#44;", ",");
-      } else {
-        return data.result.from;
-      }
-    } else {
-      return null;
+    $el.on("input.yonder", callback(true));
+    $el.on("range.value.yonder");
+  },
+  unsubscribe: (el) => $(el).off("yonder"),
+  receiveMessage: (el, msg) => {
+    let input = el.children[0];
+
+    if (msg.value) {
+      input.value = msg.value;
     }
-  },
-  getState: function(el, data) {
-    return { value: this.getValue(el) };
-  },
-  _update: (el, data) => {
-    $(el.querySelector(".irs-hidden-input")).data("ionRangeSlider").update({
-      values: data.values
-    });
-  },
-  _select: (el, data) => {
-    $(el.querySelector(".irs-hidden-input")).data("ionRangeSlider");
-    // need to check if input is a numeric range input or choices slider
-  },
-  dispose: function(el) {
-    $(el.querySelector(".irs-hidden-input")).data("ionRangeSlider").destroy();
+
+    if (msg.enable) {
+      input.removeAttribute("disabled");
+    }
+
+    if (msg.disable) {
+      input.setAttribute("disabled", "");
+    }
   }
 });
 

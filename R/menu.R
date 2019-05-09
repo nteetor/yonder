@@ -58,13 +58,15 @@
 #'   values = paste0("tab", 1:4)
 #' )
 #'
-menuInput <- function(id, label, choices, values = choices, ...,
-                      direction = "down", align = "left") {
+menuInput <- function(id, label, choices = NULL, values = choices,
+                      selected = NULL, ..., direction = "down",
+                      align = "left") {
   assert_id()
   assert_choices()
-
   assert_possible(direction, c("up", "right", "down", "left"))
   assert_possible(align, c("right", "left"))
+
+  items <- map_menuitems(choices, values, selected)
 
   component <- tags$div(
     class = str_collate(
@@ -86,20 +88,53 @@ menuInput <- function(id, label, choices, values = choices, ...,
         "dropdown-menu",
         if (align == "right") "dropdown-menu-right"
       ),
-      Map(
-        choice = choices,
-        value = values,
-        function(choice, value) {
-          tags$button(
-            class = "dropdown-item",
-            type = "button",
-            value = value,
-            choice
-          )
-        }
-      )
+      items
     )
   )
 
   attach_dependencies(component)
+}
+
+#' @rdname menuInput
+#' @export
+updateMenuInput <- function(id, choices = NULL, values = choices,
+                            selected = NULL, enable = NULL, disable = NULL,
+                            session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_choices()
+  assert_selected(length = 1)
+  assert_session()
+
+  items <- map_menuitems(choices, values, selected)
+
+  content <- coerce_content(items)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+
+  session$sentInputMessage(id, list(
+    content = content,
+    enable = enable,
+    disable = disable
+  ))
+}
+
+map_menuitems <- function(choices, values, selected) {
+  selected <- values %in% selected
+
+  Map(
+    choice = choices,
+    value = values,
+    select = selected,
+    function(choice, value, select) {
+      tags$button(
+        class = str_collate(
+          "dropdown-item",
+          if (select) "active"
+        ),
+        type = "button",
+        value = value,
+        choice
+      )
+    }
+  )
 }

@@ -27,6 +27,14 @@ test_that("tag_class_re", {
   expect_true(tag_class_re(div(class = "world hello"),  c("wo..d", "he.+")))
 })
 
+test_that("tag_class_re on tag with multiple attributes", {
+  this <- tags$div(class = "hello", class = "world")
+  expect_true(tag_class_re(this, "world"))
+
+  that <- tags$div(class = "hello", class = "goodnight world")
+  expect_true(tag_class_re(that, "goodnight"))
+})
+
 test_that("tag_name_is", {
   expect_true(tag_name_is(div(), "div"))
   expect_false(tag_name_is(tags$span(), "div"))
@@ -58,4 +66,10 @@ test_that("tag_class_remove", {
     tag_class_remove(div(class = "hello world goodnight"), "world")$attribs$class,
     "hello goodnight"
   )
+})
+
+test_that("tag_class_remove on tag with multiple class attributes", {
+  this <- tag_class_remove(div(class = "one", class = "two three"), "two")
+
+  expect_true(grepl('class="one three"', as.character(this), fixed = TRUE))
 })
