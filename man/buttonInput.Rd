@@ -14,8 +14,8 @@ updateButtonInput(id, label = NULL, value = NULL, disable = NULL,
 
 linkInput(id, ..., stretch = FALSE, download = FALSE)
 
-updateLinkInput(id, text = NULL, enable = NULL, disable = NULL,
-  session = getDefaultReactiveDomain())
+updateLinkInput(id, text = NULL, value = NULL, enable = NULL,
+  disable = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -131,6 +131,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{menuInput}}, \code{\link{navInput}},
   \code{\link{radioInput}}, \code{\link{radiobarInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{sliderInput}}, \code{\link{textInput}}
+  \code{\link{textInput}}
 }
 \concept{inputs}

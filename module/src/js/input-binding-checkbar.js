@@ -16,6 +16,7 @@ $.extend(checkbarInputBinding, {
 
     $el.on("click.yonder", e => callback());
     $el.on("change.yonder", e => callback());
+    $el.on("checkbar.select.yonder", (e) => callback());
   },
   unsubscribe: (el) => $(el).off(".yonder"),
   receiveMessage: (el, msg) => {
@@ -24,6 +25,24 @@ $.extend(checkbarInputBinding, {
         el.removeChild(btn);
       });
       el.insertAdjacentHTML("afterbegin", msg.content);
+    }
+
+    if (msg.selected) {
+      if (msg.selected !== true) {
+        el.querySelectorAll("input:checked").forEach(input => {
+          input.checked = false;
+          input.parentNode.classList.remove("active");
+        });
+      }
+
+      el.querySelectorAll("input").forEach(input => {
+        if (msg.selected === true || msg.selected.indexOf(input.value) > -1) {
+          input.checked = true;
+          input.parentNode.classList.add("active");
+        }
+      });
+
+      $(el).trigger("checkbar.select.yonder");
     }
 
     if (msg.enable) {

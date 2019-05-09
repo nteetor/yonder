@@ -164,6 +164,7 @@ updateSwitchInput <- function(id, choices = NULL, values = choices,
   switches <- map_checkboxes(choices, values, selected, FALSE, TRUE)
 
   content <- coerce_content(switches)
+  selected <- coerce_selected(selected)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
   valid <- coerce_valid(valid)
@@ -171,6 +172,7 @@ updateSwitchInput <- function(id, choices = NULL, values = choices,
 
   session$sendInputMessage(id, list(
     content = content,
+    selected = selected,
     enable = enable,
     disable = disable,
     valid = valid,
@@ -285,11 +287,13 @@ updateCheckbarInput <- function(id, choices = NULL, values = choices,
   checkboxes <- map_checkbuttons(choices, values, selected)
 
   content <- coerce_content(checkboxes)
+  selected <- coerce_selected(selected)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 
   session$sendInputMessage(id, list(
     content = content,
+    selected = selected,
     enable = enable,
     disable = disable
   ))

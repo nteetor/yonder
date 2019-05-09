@@ -11,8 +11,8 @@ selectInput(id, choices = NULL, values = choices,
   selected = values[[1]], ...)
 
 updateSelectInput(id, choices = NULL, values = choices,
-  selected = values[[1]], enable = NULL, disable = NULL,
-  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+  selected = NULL, enable = NULL, disable = NULL, valid = NULL,
+  invalid = NULL, session = getDefaultReactiveDomain())
 
 groupSelectInput(id, choices, values = choices, selected = values[[1]],
   ..., left = NULL, right = NULL)
@@ -94,6 +94,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{radiobarInput}}, \code{\link{rangeInput}},
-  \code{\link{sliderInput}}, \code{\link{textInput}}
+  \code{\link{textInput}}
 }
 \concept{inputs}

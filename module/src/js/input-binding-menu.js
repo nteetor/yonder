@@ -32,12 +32,25 @@ $.extend(menuInputBinding, {
   subscribe: (el, callback) => {
     let $el = $(el);
 
-    $el.on("click.yonder", e => callback());
+    $el.on("click.yonder", (e) => callback());
+    $el.on("menu.select.yonder", (e) => callback());
   },
   unsubscribe: (el) => $(el).off(".yonder"),
   receiveMessage: (el, msg) => {
     if (msg.content) {
       el.querySelector(".dropdown-menu").innerHTML = msg.content;
+    }
+
+    if (msg.selected) {
+      el.querySelectorAll(".dropdown-item").forEach(item => {
+        if (msg.selected.indexOf(item.value) > -1) {
+          item.classList.add("active");
+        } else {
+          item.classList.remove("active");
+        }
+      });
+
+      $(el).trigger("menu.select.yonder");
     }
 
     if (msg.enable) {

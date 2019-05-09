@@ -14,7 +14,8 @@ $.extend(checkboxInputBinding, {
   subscribe: (el, callback) => {
     let $el = $(el);
 
-    $el.on("change.yonder", e => callback());
+    $el.on("change.yonder", (e) => callback());
+    $el.on("checkbox.select.yonder", (e) => callback());
   },
   unsubscribe: (el) => $(el).off(".yonder"),
   receiveMessage: (el, msg) => {
@@ -27,11 +28,17 @@ $.extend(checkboxInputBinding, {
     }
 
     if (msg.selected) {
+      el.querySelectorAll("input:checked").forEach(input => {
+        input.checked = false;
+      });
+
       el.querySelectorAll("input").forEach(input => {
         if (msg.selected === true || msg.selected.indexOf(input.value) > -1) {
           input.checked = true;
         }
       });
+
+      $(el).trigger("checkbox.select.yonder");
     }
 
     if (msg.enable) {

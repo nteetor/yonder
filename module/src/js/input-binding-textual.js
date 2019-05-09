@@ -79,6 +79,7 @@ $.extend(groupTextInputBinding, {
     } else {
       $el.on("input", e => callback(true));
       $el.on("change", e => callback(true));
+      $el.on("textual.value.yonder", (e) => callback());
     }
   },
   receiveMessage: (el, msg) => {
@@ -86,6 +87,7 @@ $.extend(groupTextInputBinding, {
 
     if (msg.value) {
       input.value = msg.value;
+      $(el).trigger("textual.value.yonder");
     }
 
     if (msg.enable) {

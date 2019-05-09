@@ -10,20 +10,26 @@ $.extend(linkInputBinding, {
   subscribe: (el, callback) => {
     let $el = $(el);
 
-    $el.on("click.yonder", e => callback());
+    $el.on("click.yonder", (e) => callback());
+    $el.on("link.value.yonder", (e) => callback());
   },
   unsubscribe: (el) => $(el).off(".yonder"),
-  receiveMessage: (el, data) => {
-    if (data.content) {
-      el.innerHTML = data.content;
+  receiveMessage: (el, msg) => {
+    if (msg.content) {
+      el.innerHTML = msg.content;
     }
 
-    if (data.enable) {
+    if (msg.value !== null && msg.value !== undefined) {
+      el.value = msg.value;
+      $(el).trigger("link.value.yonder");
+    }
+
+    if (msg.enable) {
       el.classList.remove("disabled");
       el.removeAttribute("disabled");
     }
 
-    if (data.disable) {
+    if (msg.disable) {
       el.classList.add("disabled");
       el.setAttribute("disabled", "");
     }

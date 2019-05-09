@@ -21,7 +21,7 @@ $.extend(buttonInputBinding, {
 
     if (msg.value !== null && msg.value !== undefined) {
       el.value = msg.value;
-      $(el).trigger("button.value");
+      $(el).trigger("button.value.yonder");
     }
 
     if (msg.enable) {

@@ -29,7 +29,8 @@ $.extend(listGroupInputBinding, {
   subscribe: (el, callback) => {
     let $el = $(el);
 
-    $el.on("click.yonder", e => callback());
+    $el.on("click.yonder", (e) => callback());
+    $el.on("listgroup.select.yonder", (e) => callback());
   },
   unsubcribe: (el) => $(el).off(".yonder"),
   receiveMessage: (el, msg) => {
@@ -37,6 +38,23 @@ $.extend(listGroupInputBinding, {
       el.querySelectorAll(".list-group-item").forEach(item => {
         el.removeChild(item);
       });
+      el.insertAdjacentHTML("afterbegin", msg.content);
+    }
+
+    if (msg.selected) {
+      if (msg.selected !== true) {
+        el.querySelectorAll(".list-group-item.active").forEach(item => {
+          item.classList.remove("active");
+        });
+      }
+
+      el.querySelectorAll(".list-group-item").forEach(item => {
+        if (msg.selected === true || msg.selected.indexOf(item.value) > -1) {
+          item.classList.add("active");
+        }
+      });
+
+      $(el).trigger("listgroup.select.yonder");
     }
 
     if (msg.enable) {

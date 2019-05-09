@@ -147,15 +147,19 @@ updateNavInput <- function(id, choices = NULL, values = choices,
                            session = getDefaultReactiveDomain()) {
   assert_id()
   assert_choices()
+  assert_selected(length = 1)
+  assert_session()
 
   items <- map_navitems(choices, values, selected)
 
   content <- coerce_content(items)
+  selected <- coerce_selected(selected)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 
   session$sendInputMessage(id, list(
     content = content,
+    selected = selected,
     enable = enable,
     disable = disable
   ))

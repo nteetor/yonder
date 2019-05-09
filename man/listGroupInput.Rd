@@ -5,8 +5,8 @@
 \alias{updateListGroupInput}
 \title{List group inputs}
 \usage{
-listGroupInput(id, choices, values = choices, selected = NULL, ...,
-  layout = "vertical", flush = FALSE)
+listGroupInput(id, choices = NULL, values = choices, selected = NULL,
+  ..., layout = "vertical", flush = FALSE)
 
 updateListGroupInput(id, choices = NULL, values = choices,
   selected = NULL, enable = NULL, disable = NULL,
@@ -131,6 +131,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{menuInput}}, \code{\link{navInput}},
   \code{\link{radioInput}}, \code{\link{radiobarInput}},
   \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{sliderInput}}, \code{\link{textInput}}
+  \code{\link{textInput}}
 }
 \concept{inputs}

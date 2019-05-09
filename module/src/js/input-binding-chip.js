@@ -90,7 +90,7 @@ $.extend(chipInputBinding, {
         });
       }
 
-      $el.trigger("chip.select");
+      $el.trigger("chip.select.yonder");
     }
 
     if (msg.max !== undefined && msg.max !== null) {

@@ -107,8 +107,9 @@
 #'   layout = "horizontal"
 #' )
 #'
-listGroupInput <- function(id, choices, values = choices, selected = NULL, ...,
-                           layout = "vertical", flush = FALSE) {
+listGroupInput <- function(id, choices = NULL, values = choices,
+                           selected = NULL, ..., layout = "vertical",
+                           flush = FALSE) {
   assert_id()
   assert_choices()
   assert_possible(layout, c("vertical", "horizontal"))
@@ -149,11 +150,13 @@ updateListGroupInput <- function(id, choices = NULL, values = choices,
   items <- map_listitems(choices, values, selected)
 
   content <- coerce_content(items)
+  selected <- coerce_selected(selected)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 
   session$sendInputMessage(id, list(
     content = content,
+    selected = selected,
     enable = enable,
     disable = disable
   ))

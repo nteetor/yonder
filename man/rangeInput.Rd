@@ -2,16 +2,13 @@
 % Please edit documentation in R/range.R
 \name{rangeInput}
 \alias{rangeInput}
-\alias{intervalInput}
-\title{Inputs for numeric ranges}
+\alias{updateRangeInput}
+\title{Simple range input}
 \usage{
-rangeInput(id, min = 0, max = 100, default = min, step = 1, ...,
-  ticks = TRUE, labels = 4, prefix = NULL, suffix = NULL,
-  fill = TRUE)
+rangeInput(id, min = 0, max = 100, default = min, step = 1, ...)
 
-intervalInput(id, min = 0, max = 100, default = c(min, max),
-  step = 1, ..., ticks = TRUE, labels = 4, prefix = NULL,
-  suffix = NULL, draggable = FALSE)
+updateRangeInput(id, value = NULL, enable = NULL, disable = NULL,
+  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -22,13 +19,8 @@ intervalInput(id, min = 0, max = 100, default = c(min, max),
 \item{max}{A number specifying the maximum value of the input, defaults to
 \code{100}.}
 
-\item{default}{A numeric vector between \code{min} and \code{max} specifying the
-default value of the input.
-
-For \strong{rangeInput()}, a single number, defaults to \code{min}.
-
-For \strong{intervalInput()}, a vector of two numbers, defaults to
-\code{c(min, max)}.}
+\item{default}{A number between \code{min} and \code{max} specifying the
+default value of the input, defaults to \code{min}.}
 
 \item{step}{A number specifying the interval step of the input, defaults to
 \code{1}.}
@@ -36,87 +28,25 @@ For \strong{intervalInput()}, a vector of two numbers, defaults to
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
-\item{ticks}{One of \code{TRUE} or \code{FALSE} specifying if tick marks are added to
-the input, defaults to \code{TRUE}.}
+\item{value}{A number specifying a new value for the button, defaults to
+\code{NULL}.}
 
-\item{labels}{One of \code{TRUE}, \code{FALSE}, or a number specifying how labels are
-applied to tick marks.
-
-If \strong{numeric}, \code{labels} specifies the exact number of
-tick mark labels added to the input.
-
-If \strong{\code{TRUE}}, labels are added to the tick marks and the number of labels
-is determined by \code{step}.
-
-If \strong{\code{FALSE}}, labels are not added to the tick marks.}
-
-\item{prefix}{A character string specifying a prefix for the input value,
-defaults to \code{NULL}, in which case a prefix is not prepended.}
-
-\item{suffix}{A character string specifying a suffix for the input value,
-defaults to \code{NULL}, in which case a prefix is not appended.}
-
-\item{fill}{One of \code{TRUE} or \code{FALSE} specifying whether the filled portion of
-a range or slider input is shown, defaults to \code{TRUE}.}
-
-\item{draggable}{One of \code{TRUE} or \code{FALSE} specifying if the user can drag the
-interval between an interval input's two sliders, defaults to \code{FALSE}. If
-\code{TRUE}, the slider interval may be dragged with the cursor.}
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-Use \code{rangeInput()} and \code{intervalInput()} to allow users to select from a
-range of numeric values. For a slider input with non-numeric values refer to
-\code{\link[=sliderInput]{sliderInput()}}.
+\code{rangeInput()} creates a simple numeric range input.
+}
+\details{
+The sophistication of this input will improve as browsers adopt the latest
+HTML standards.
 }
 \examples{
 
 ### Range inputs
 
-\% <script>
-\% $(function() {
-\%   $(".yonder-range").each(function() {
-\%     $(this.querySelector("input")).ionRangeSlider();
-\%   });
-\% });
-\% </script>
-
 # Select from a range of numeric values.
 
-rangeInput(id = "range1") \%>\%
-  background("yellow")
-
-### Increase the number of labels
-
-rangeInput(
-  id = "range2",
-  default = 30,
-  labels = 8
-) \%>\%
-  background("purple")
-
-### Increase thumb step
-
-# We'll hide the filled portion of the input with `fill` and change how
-# tick marks are placed with `snap`.
-
-rangeInput(
-  id = "range3",
-  step = 10,  # <-
-  snap = TRUE,
-  fill = FALSE
-) \%>\%
-  background("red")
-
-### Interval inputs
-
-# Select an interval from a range of numeric values. Intervals are draggable
-# by default, this can be toggled off with `draggable = FALSE`.
-
-intervalInput(
-  id = "interval1",
-  default = c(45, 65)
-) \%>\%
-  background("blue")
+rangeInput(id = "range1")
 
 }
 \seealso{
@@ -127,6 +57,6 @@ Other inputs: \code{\link{buttonGroupInput}},
   \code{\link{listGroupInput}}, \code{\link{menuInput}},
   \code{\link{navInput}}, \code{\link{radioInput}},
   \code{\link{radiobarInput}}, \code{\link{selectInput}},
-  \code{\link{sliderInput}}, \code{\link{textInput}}
+  \code{\link{textInput}}
 }
 \concept{inputs}

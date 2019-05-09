@@ -4,181 +4,6 @@
   (factory());
 }(this, (function () { 'use strict';
 
-  function yonderInputBinding() {
-    this.Selector = {};
-    this.Events = [];
-
-    this.find = function (scope) {
-      return scope.querySelectorAll(this.Selector.SELF + "[id]");
-    };
-
-    this.getId = function (el) {
-      return el.id;
-    };
-
-    this.getType = function (el) {
-      return this.Type || false;
-    };
-
-    this.getValue = function (el) {
-      if (!this.Selector.hasOwnProperty("SELECTED")) {
-        return null;
-      }
-
-      var selected = Array.prototype.slice.call(el.querySelectorAll(this.Selector.SELECTED));
-
-      if (!selected.length) {
-        return null;
-      }
-
-      return selected.map(function (s) {
-        var value = s.getAttribute("data-value") || s.value;
-        return value === undefined ? null : value;
-      });
-    };
-
-    this.getState = function (el, data) {
-      return {
-        value: this.getValue(el)
-      };
-    };
-
-    this.attachHandler = function (el, type, selector, handler, callback, debounce) {
-      var _this = this;
-
-      $(el).on(type + ".yonder", selector || null, function (e) {
-        if (handler) {
-          handler(el, e, _this);
-        }
-
-        if (callback) {
-          callback(debounce || false);
-        }
-      });
-    };
-
-    this.subscribe = function (el, callback) {
-      var _this2 = this;
-
-      var $el = $(el);
-      var formElement = false;
-
-      if ($el.parent().closest(".yonder-form[id]").length) {
-        $el.on("submission.yonder", function (e) {
-          return callback();
-        });
-        formElement = true;
-      } // default events
-
-
-      this.Events.push({
-        type: "change.yonder"
-      });
-      this.Events.push({
-        type: "update.yonder"
-      });
-      this.Events.forEach(function (event) {
-        _this2.attachHandler(el, event.type, event.selector, event.callback, formElement ? null : callback, event.debounce);
-      });
-    };
-
-    this.unsubscribe = function (el) {
-      $(el).off("yonder");
-    };
-
-    this._update = function (el, data) {
-      console.warn("no _update method");
-    };
-
-    this._enable = function (el, data) {
-      console.warn("no _enable method");
-    };
-
-    this._disable = function (el, data) {
-      console.warn("no _disable method");
-    };
-
-    this._invalidate = function (el, data) {
-      if (!this.Selector.hasOwnProperty("VALIDATE")) {
-        console.warn("input does not support invalidation");
-        return;
-      }
-
-      var input = el.querySelector(this.Selector.VALIDATE);
-      input.classList.remove("is-valid");
-      input.classList.add("is-invalid");
-      var feedback = el.querySelector(".invalid-feedback");
-
-      if (feedback !== null) {
-        feedback.innerHTML = data.message;
-      }
-    };
-
-    this._validate = function (el, data) {
-      if (!this.Selector.hasOwnProperty("VALIDATE")) {
-        console.warn("input does not support validation");
-        return;
-      }
-
-      var input = el.querySelector(this.Selector.VALIDATE);
-      input.classList.remove("is-invalid");
-      var feedback = el.querySelector(".invalid-feedback");
-
-      if (feedback !== null) {
-        feedback.innerHTML = "";
-      }
-    };
-
-    this.receiveMessage = function (el, msg) {
-      if (!msg.type || msg.data === undefined) {
-        return false;
-      }
-
-      switch (msg.type) {
-        case "update":
-          this._update(el, msg.data);
-
-          break;
-
-        case "change":
-          this._select(el, msg.data);
-
-          break;
-
-        case "enable":
-          this._enable(el, msg.data);
-
-          break;
-
-        case "disable":
-          this._disable(el, msg.data);
-
-          break;
-
-        case "invalidate":
-          this._invalidate(el, msg.data);
-
-          break;
-
-        case "validate":
-          this._validate(el, msg.data);
-
-          break;
-      }
-
-      if (msg.type === "change" && msg.data.propagate === false) {
-        return false;
-      }
-
-      $(el).trigger(msg.type + ".yonder");
-      return false;
-    };
-  }
-
-  if (typeof Shiny !== "undefined") {
-    yonderInputBinding.call(Shiny.InputBinding.prototype);
-  }
-
   var buttonGroupInputBinding = new Shiny.InputBinding();
   $.extend(buttonGroupInputBinding, {
     Selector: {
@@ -275,7 +100,7 @@
 
       if (msg.value !== null && msg.value !== undefined) {
         el.value = msg.value;
-        $(el).trigger("button.value");
+        $(el).trigger("button.value.yonder");
       }
 
       if (msg.enable) {
@@ -315,6 +140,9 @@
       $el.on("change.yonder", function (e) {
         return callback();
       });
+      $el.on("checkbar.select.yonder", function (e) {
+        return callback();
+      });
     },
     unsubscribe: function unsubscribe(el) {
       return $(el).off(".yonder");
@@ -325,6 +153,23 @@
           el.removeChild(btn);
         });
         el.insertAdjacentHTML("afterbegin", msg.content);
+      }
+
+      if (msg.selected) {
+        if (msg.selected !== true) {
+          el.querySelectorAll("input:checked").forEach(function (input) {
+            input.checked = false;
+            input.parentNode.classList.remove("active");
+          });
+        }
+
+        el.querySelectorAll("input").forEach(function (input) {
+          if (msg.selected === true || msg.selected.indexOf(input.value) > -1) {
+            input.checked = true;
+            input.parentNode.classList.add("active");
+          }
+        });
+        $(el).trigger("checkbar.select.yonder");
       }
 
       if (msg.enable) {
@@ -387,6 +232,9 @@
       $el.on("change.yonder", function (e) {
         return callback();
       });
+      $el.on("checkbox.select.yonder", function (e) {
+        return callback();
+      });
     },
     unsubscribe: function unsubscribe(el) {
       return $(el).off(".yonder");
@@ -400,11 +248,15 @@
       }
 
       if (msg.selected) {
+        el.querySelectorAll("input:checked").forEach(function (input) {
+          input.checked = false;
+        });
         el.querySelectorAll("input").forEach(function (input) {
           if (msg.selected === true || msg.selected.indexOf(input.value) > -1) {
             input.checked = true;
           }
         });
+        $(el).trigger("checkbox.select.yonder");
       }
 
       if (msg.enable) {
@@ -564,7 +416,7 @@
           });
         }
 
-        $el.trigger("chip.select");
+        $el.trigger("chip.select.yonder");
       }
 
       if (msg.max !== undefined && msg.max !== null) {
@@ -870,21 +722,29 @@
       $el.on("click.yonder", function (e) {
         return callback();
       });
+      $el.on("link.value.yonder", function (e) {
+        return callback();
+      });
     },
     unsubscribe: function unsubscribe(el) {
       return $(el).off(".yonder");
     },
-    receiveMessage: function receiveMessage(el, data) {
-      if (data.content) {
-        el.innerHTML = data.content;
+    receiveMessage: function receiveMessage(el, msg) {
+      if (msg.content) {
+        el.innerHTML = msg.content;
       }
 
-      if (data.enable) {
+      if (msg.value !== null && msg.value !== undefined) {
+        el.value = msg.value;
+        $(el).trigger("link.value.yonder");
+      }
+
+      if (msg.enable) {
         el.classList.remove("disabled");
         el.removeAttribute("disabled");
       }
 
-      if (data.disable) {
+      if (msg.disable) {
         el.classList.add("disabled");
         el.setAttribute("disabled", "");
       }
@@ -925,6 +785,9 @@
       $el.on("click.yonder", function (e) {
         return callback();
       });
+      $el.on("listgroup.select.yonder", function (e) {
+        return callback();
+      });
     },
     unsubcribe: function unsubcribe(el) {
       return $(el).off(".yonder");
@@ -934,6 +797,22 @@
         el.querySelectorAll(".list-group-item").forEach(function (item) {
           el.removeChild(item);
         });
+        el.insertAdjacentHTML("afterbegin", msg.content);
+      }
+
+      if (msg.selected) {
+        if (msg.selected !== true) {
+          el.querySelectorAll(".list-group-item.active").forEach(function (item) {
+            item.classList.remove("active");
+          });
+        }
+
+        el.querySelectorAll(".list-group-item").forEach(function (item) {
+          if (msg.selected === true || msg.selected.indexOf(item.value) > -1) {
+            item.classList.add("active");
+          }
+        });
+        $(el).trigger("listgroup.select.yonder");
       }
 
       if (msg.enable) {
@@ -1009,6 +888,9 @@
       $el.on("click.yonder", function (e) {
         return callback();
       });
+      $el.on("menu.select.yonder", function (e) {
+        return callback();
+      });
     },
     unsubscribe: function unsubscribe(el) {
       return $(el).off(".yonder");
@@ -1016,6 +898,17 @@
     receiveMessage: function receiveMessage(el, msg) {
       if (msg.content) {
         el.querySelector(".dropdown-menu").innerHTML = msg.content;
+      }
+
+      if (msg.selected) {
+        el.querySelectorAll(".dropdown-item").forEach(function (item) {
+          if (msg.selected.indexOf(item.value) > -1) {
+            item.classList.add("active");
+          } else {
+            item.classList.remove("active");
+          }
+        });
+        $(el).trigger("menu.select.yonder");
       }
 
       if (msg.enable) {
@@ -1094,6 +987,9 @@
       $el.on("click.yonder", ".nav-link:not(.dropdown-toggle)", function (e) {
         return callback();
       });
+      $el.on("nav.select.yonder", function (e) {
+        return callback();
+      });
     },
     unsubscribe: function unsubscribe(el) {
       return $(el).off(".yonder");
@@ -1104,6 +1000,17 @@
           return el.removeChild(item);
         });
         el.insertAdjacentHTML("afterbegin", msg.content);
+      }
+
+      if (msg.selected) {
+        el.querySelectorAll(".nav-link").forEach(function (link) {
+          if (msg.selected.indexOf(link.value) > -1) {
+            link.classList.add("active");
+          } else {
+            link.classList.remove("active");
+          }
+        });
+        $(el).trigger("nav.select.yonder");
       }
 
       if (msg.enable) {
@@ -1217,6 +1124,9 @@
       $el.on("change.yonder", function (e) {
         return callback();
       });
+      $el.on("radio.select.yonder", function (e) {
+        return callback();
+      });
     },
     unsubscribe: function unsubscribe(el) {
       $(el).off(".yonder");
@@ -1227,6 +1137,17 @@
           el.removeChild(radio);
         });
         el.insertAdjacentHTML("afterbegin", msg.content);
+      }
+
+      if (msg.selected) {
+        el.querySelectorAll("input").forEach(function (input) {
+          if (msg.selected.indexOf(input.value) > -1) {
+            input.checked = true;
+          } else {
+            input.checked = false;
+          }
+        });
+        $(el).trigger("radio.select.yonder");
       }
 
       if (msg.enable) {
@@ -1370,49 +1291,37 @@
 
   var rangeInputBinding = new Shiny.InputBinding();
   $.extend(rangeInputBinding, {
-    Selector: {
-      SELF: ".yonder-range[id]"
-    },
-    Events: [{
-      type: "change"
-    }],
-    initialize: function initialize(el) {
-      $(el.querySelector("input")).ionRangeSlider();
+    find: function find(scope) {
+      return scope.querySelectorAll(".yonder-range[id]");
     },
     getId: function getId(el) {
       return el.id;
     },
     getValue: function getValue(el) {
-      var $input = $("input[type='text']", el);
-      var data = $input.data("ionRangeSlider");
+      return +el.children[0].value;
+    },
+    subscribe: function subscribe(el, callback) {
+      var $el = $(el);
+      $el.on("input.yonder", callback(true));
+      $el.on("range.value.yonder");
+    },
+    unsubscribe: function unsubscribe(el) {
+      return $(el).off("yonder");
+    },
+    receiveMessage: function receiveMessage(el, msg) {
+      var input = el.children[0];
 
-      if ($input.data("type") === "double") {
-        return [data.result.from, data.result.to];
-      } else if ($input.data("type") === "single") {
-        if (data.result.from_value !== null) {
-          return data.result.from_value.replace("&#44;", ",");
-        } else {
-          return data.result.from;
-        }
-      } else {
-        return null;
+      if (msg.value) {
+        input.value = msg.value;
       }
-    },
-    getState: function getState(el, data) {
-      return {
-        value: this.getValue(el)
-      };
-    },
-    _update: function _update(el, data) {
-      $(el.querySelector(".irs-hidden-input")).data("ionRangeSlider").update({
-        values: data.values
-      });
-    },
-    _select: function _select(el, data) {
-      $(el.querySelector(".irs-hidden-input")).data("ionRangeSlider"); // need to check if input is a numeric range input or choices slider
-    },
-    dispose: function dispose(el) {
-      $(el.querySelector(".irs-hidden-input")).data("ionRangeSlider").destroy();
+
+      if (msg.enable) {
+        input.removeAttribute("disabled");
+      }
+
+      if (msg.disable) {
+        input.setAttribute("disabled", "");
+      }
     }
   });
   Shiny.inputBindings.register(rangeInputBinding, "yonder.rangeInput");
@@ -1571,6 +1480,9 @@
         $el.on("change", function (e) {
           return callback();
         });
+        $el.on("groupselect.select.yonder", function (e) {
+          return callback();
+        });
       }
     },
     receiveMessage: function receiveMessage(el, msg) {
@@ -1578,6 +1490,17 @@
 
       if (msg.content) {
         select.innerHTML = msg.content;
+      }
+
+      if (msg.selected) {
+        select.querySelectorAll("option").forEach(function (option) {
+          if (msg.selected.indexOf(option.value) > -1) {
+            option.setAttribute("selected", "");
+          } else {
+            option.removeAttribute("selected");
+          }
+        });
+        $(el).trigger("groupselect.select.yonder");
       }
 
       if (msg.enable) {
@@ -1735,6 +1658,9 @@
         $el.on("change", function (e) {
           return callback(true);
         });
+        $el.on("textual.value.yonder", function (e) {
+          return callback();
+        });
       }
     },
     receiveMessage: function receiveMessage(el, msg) {
@@ -1742,6 +1668,7 @@
 
       if (msg.value) {
         input.value = msg.value;
+        $(el).trigger("textual.value.yonder");
       }
 
       if (msg.enable) {

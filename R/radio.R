@@ -80,6 +80,7 @@ updateRadioInput <- function(id, choices = NULL, values = choices,
   radios <- map_radios(choices, values, selected, id, inline)
 
   content <- coerce_content(radios)
+  selected <- coerce_selected(selected)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
   valid <- coerce_valid(valid)
@@ -87,6 +88,7 @@ updateRadioInput <- function(id, choices = NULL, values = choices,
 
   session$sendInputMessage(id, list(
     content = content,
+    selected = selected,
     enable = enable,
     disable = disable,
     valid = valid,

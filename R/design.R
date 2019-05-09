@@ -650,7 +650,7 @@ display <- function(tag, type) {
 #'     margin(r = c(sm = 2), b = 2),  # <-
 #'   groupTextInput(
 #'     id = "username",
-#'     left = "@",
+#'     left = "@@",
 #'     placeholder = "username"
 #'   ) %>%
 #'     margin(r = c(sm = 2), b = 2),  # <-

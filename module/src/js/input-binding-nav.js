@@ -36,14 +36,27 @@ $.extend(navInputBinding, {
   subscribe: (el, callback) => {
     let $el = $(el);
 
-    $el.on("click.yonder", ".dropdown-item", e => callback());
-    $el.on("click.yonder", ".nav-link:not(.dropdown-toggle)", e => callback());
+    $el.on("click.yonder", ".dropdown-item", (e) => callback());
+    $el.on("click.yonder", ".nav-link:not(.dropdown-toggle)", (e) => callback());
+    $el.on("nav.select.yonder", (e) => callback());
   },
   unsubscribe: (el) => $(el).off(".yonder"),
   receiveMessage: (el, msg) => {
     if (msg.content) {
       el.querySelectorAll(".nav-item").forEach(item => el.removeChild(item));
       el.insertAdjacentHTML("afterbegin", msg.content);
+    }
+
+    if (msg.selected) {
+      el.querySelectorAll(".nav-link").forEach(link => {
+        if (msg.selected.indexOf(link.value) > -1) {
+          link.classList.add("active");
+        } else {
+          link.classList.remove("active");
+        }
+      });
+
+      $(el).trigger("nav.select.yonder");
     }
 
     if (msg.enable) {

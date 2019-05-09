@@ -185,10 +185,19 @@ linkInput <- function(id, ..., stretch = FALSE, download = FALSE) {
 
 #' @rdname buttonInput
 #' @export
-updateLinkInput <- function(id, text = NULL, enable = NULL, disable = NULL,
+updateLinkInput <- function(id, text = NULL, value = NULL,
+                            enable = NULL, disable = NULL,
                             session = getDefaultReactiveDomain())  {
   assert_id()
   assert_session()
+
+  if (!is.null(value) && !is.numeric(value)) {
+    stop(
+      "invalid argument in `updateLinkInput()`, `value` must be numeric or ",
+      "NULL",
+      call. = FALSE
+    )
+  }
 
   if (!is.null(text)) {
     text <- HTML(as.character(text))
@@ -196,6 +205,7 @@ updateLinkInput <- function(id, text = NULL, enable = NULL, disable = NULL,
 
   session$sendInputMessage(id, list(
     content = text,
+    value = value,
     enable = enable,
     disable = disable
   ))

@@ -91,7 +91,7 @@ selectInput <- function(id, choices = NULL, values = choices,
 #' @rdname selectInput
 #' @export
 updateSelectInput <- function(id, choices = NULL, values = choices,
-                              selected = values[[1]], enable = NULL,
+                              selected = NULL, enable = NULL,
                               disable = NULL,
                               valid = NULL, invalid = NULL,
                               session = getDefaultReactiveDomain()) {
@@ -186,11 +186,13 @@ updateGroupSelectInput <- function(id, choices = NULL, values = choices,
                                    session = getDefaultReactiveDomain()) {
   assert_id()
   assert_choices()
+  assert_selected(length = 1)
   assert_session()
 
   options <- map_options(choices, values, selected)
 
   content <- coerce_content(options)
+  selected <- coerce_selected(selected)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
   valid <- coerce_valid(valid)
@@ -198,6 +200,7 @@ updateGroupSelectInput <- function(id, choices = NULL, values = choices,
 
   session$sendInputMessage(id, list(
     content = content,
+    selected = selected,
     enable = enable,
     disable = disable,
     valid = valid,

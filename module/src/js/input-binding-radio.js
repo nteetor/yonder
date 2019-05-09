@@ -17,6 +17,7 @@ $.extend(radioInputBinding, {
     let $el = $(el);
 
     $el.on("change.yonder", e => callback());
+    $el.on("radio.select.yonder", (e) => callback());
   },
   unsubscribe: (el) => {
     $(el).off(".yonder");
@@ -28,6 +29,18 @@ $.extend(radioInputBinding, {
       });
 
       el.insertAdjacentHTML("afterbegin", msg.content);
+    }
+
+    if (msg.selected) {
+      el.querySelectorAll("input").forEach(input => {
+        if (msg.selected.indexOf(input.value) > -1) {
+          input.checked = true;
+        } else {
+          input.checked = false;
+        }
+      });
+
+      $(el).trigger("radio.select.yonder");
     }
 
     if (msg.enable) {

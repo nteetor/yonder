@@ -147,6 +147,7 @@ $.extend(groupSelectInputBinding, {
       $el.on("click", ".btn:not(.dropdown-toggle", e => callback());
     } else {
       $el.on("change", e => callback());
+      $el.on("groupselect.select.yonder", (e) => callback());
     }
   },
   receiveMessage: (el, msg) => {
@@ -154,6 +155,18 @@ $.extend(groupSelectInputBinding, {
 
     if (msg.content) {
       select.innerHTML = msg.content;
+    }
+
+    if (msg.selected) {
+      select.querySelectorAll("option").forEach(option => {
+        if (msg.selected.indexOf(option.value) > -1) {
+          option.setAttribute("selected", "");
+        } else {
+          option.removeAttribute("selected");
+        }
+      });
+
+      $(el).trigger("groupselect.select.yonder");
     }
 
     if (msg.enable) {
