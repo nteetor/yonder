@@ -51,19 +51,6 @@ dependency_yonder <- function() {
       script = "js/bs-custom-file-input.min.js"
     ),
     htmlDependency(
-      name = "ion-slider",
-      version = "2.2.0",
-      src = c(
-        file = system.file("www/ion-rangeslider", package = "yonder"),
-        href = "yonder/ion-rangeslider"
-      ),
-      stylesheet = c(
-        "css/ion.rangeSlider.css",
-        "css/ion.rangeSlider.skinFlat.css"
-      ),
-      script = "js/ion.rangeSlider.min.js"
-    ),
-    htmlDependency(
       name = "shiny",
       version = "3.3.3",
       src = c(href = "shared"),
