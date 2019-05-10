@@ -5,27 +5,13 @@ description: |-
   Button inputs are useful as triggers for reactive or observer expressions.
   The reactive value of a button input begins as `NULL`, but subsequently is
   the number of clicks.
-
-  A submit input is a special type of button used to control form input
-  submission. Because of their specific usage, submit inputs do not require an
-  `id`, but may have a specified `value`. Submit inputs will _not_ freeze all
-  reactive inputs, see [formInput()].
 parameters:
 - name: id
   description: A character string specifying the id of the reactive input.
 - name: label
   description: |-
-    A character string specifying the label text on the button
-    input.
-- name: value
-  description: |-
-    A character string specifying the value of a submit input,
-    defaults to `label`. This value is used to distinguish form submission
-    types in the case where a form input has multiple submit inputs.
-- name: fill
-  description: |-
-    One of `TRUE` or `FALSE` specifying if the button fills the
-    entire width of its parent, defaults to `FALSE`.
+    A character string specifying the label text on the button or
+    link input.
 - name: stretch
   description: |-
     One of `TRUE` or `FALSE` specifying stretched behaviour for
@@ -33,14 +19,28 @@ parameters:
     link will receive clicks from its containing block element. For example, a
     stretched button or link inside a [card()](content/card.html) would update whenever the user
     clicked on the card.
-- name: text
+- name: download
   description: |-
-    A character string specifying the text displayed as part of the
-    link input.
+    One of `TRUE` or `FALSE` specifying if the button or link
+    input is used to trigger a download, defaults to `FALSE`.
 - name: '...'
   description: |-
     Additional named arguments passed as HTML attributes to the parent
     element.
+- name: value
+  description: |-
+    A number specifying a new value for the button, defaults to
+    `NULL`.
+- name: enable
+  description: |-
+    If `TRUE` the button is enabled and will react to clicks from
+    the user,  defaults to `NULL`.
+- name: disable
+  description: |-
+    if `TRUE` the button is disabled and will not react to clicks
+    from the user, default to `NULL`.
+- name: session
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](getdefaultreactivedomain.html).
 family: inputs
 export: ''
 examples:
@@ -65,8 +65,8 @@ examples:
         fill = TRUE  # <-
       ) %>%
         background("red")
-    output: <button class="yonder-button btn btn-block btn-red" type="button" role="button"
-      id="button2" autocomplete="off">Full-width</button>
+    output: <button class="yonder-button btn btn-red" type="button" role="button"
+      id="button2" fill="TRUE" autocomplete="off">Full-width</button>
   - type: text
     content: Use design utilities to further adjust the width of a button.
     output: ~
@@ -79,20 +79,8 @@ examples:
       ) %>%
         background("red") %>%
         width("3/4")  # <-
-    output: <button class="yonder-button btn btn-block btn-red w-3/4" type="button"
-      role="button" id="button3" autocomplete="off">Full and back again</button>
-- title: A submit button
-  body:
-  - type: code
-    content: submitInput()
-    output: <button class="yonder-submit btn btn-blue" role="button" value="Submit">Submit</button>
-  - type: text
-    content: Or use custom text to clarify the action taken when clicked by the user.
-    output: ~
-  - type: code
-    content: submitInput("Place order")
-    output: <button class="yonder-submit btn btn-blue" role="button" value="Place
-      order">Place order</button>
+    output: <button class="yonder-button btn btn-red w-3/4" type="button" role="button"
+      id="button3" fill="TRUE" autocomplete="off">Full and back again</button>
 - title: Possible colors
   body:
   - type: code
@@ -153,10 +141,25 @@ examples:
       ) %>%
         width(20)
     output: "<div class=\"card w-20\">\n  <div class=\"card-header\">Card with stretched
-      button</div>\n  <div class=\"card-body\">\n    <p>\n      Notice when you hover
-      over the card, the button also detects \n      the hover.\n    </p>\n    <button
-      class=\"yonder-button btn stretched-link btn-blue\" type=\"button\" role=\"button\"
-      id=\"go\" autocomplete=\"off\">Go go go</button>\n  </div>\n</div>"
+      button</div>\n  <div class=\"card-body\">\n    <p class=\"card-text\">\n      Notice
+      when you hover over the card, the button also detects \n      the hover.\n    </p>\n
+      \   <button class=\"yonder-button btn stretched-link btn-blue\" type=\"button\"
+      role=\"button\" id=\"go\" autocomplete=\"off\">Go go go</button>\n  </div>\n</div>"
+- title: Download button
+  body:
+  - type: code
+    content: |-
+      buttonInput(
+        download = TRUE,
+        id = "download1",
+        label = "Download",
+        icon("download")
+      )
+    output: |-
+      <a class="yonder-button btn btn-grey shiny-download-link" type="button" role="button" href="" _target download id="download1" autocomplete="off">
+        Download
+        <i class="fa fa-download"></i>
+      </a>
 rdname: linkInput
 sections: []
 layout: doc

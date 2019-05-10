@@ -23,25 +23,11 @@
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/bootstrap.min.css>
-  
-  
-  
   <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.css>
-  
-  
-  
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.skinFlat.css>
-  
-  
-  
-  <script src=/yonder/assets/js/ion.rangeSlider.min.js type="text/javascript"></script>
-  
-  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
   
   
   
@@ -177,8 +163,8 @@
 
     <dt >
       <a class="text-dark"
-         href=/yonder/outputs/badgeoutput.html
-         >Outputs</a>
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
     </dt>
     
     
@@ -204,26 +190,6 @@
     
 
     
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/utilities/disableinput.html
-         >Utilities</a>
-    </dt>
-    
-    
-
-    
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/rendering/elementoutput.html
-         >Rendering</a>
-    </dt>
-    
-    
-
-    
     
   </dl>
 </div>
@@ -242,7 +208,7 @@ ignored.</p>
 
 <dl>
   
-  <dt><p>.tag</p>
+  <dt><p>tag</p>
 </dt>
   <dd><p>A tag element.</p>
 </dd>
@@ -317,7 +283,7 @@ that direction.</p>
     </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"name"</span><span class="p">,</span><span class="w">
     </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"full name"</span><span class="w">
   </span><span class="p">),</span><span class="w">
-  </span><span class="n">groupInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">groupTextInput</span><span class="p">(</span><span class="w">
     </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"username"</span><span class="p">,</span><span class="w">
     </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"@"</span><span class="p">,</span><span class="w">
     </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"username"</span><span class="w">
@@ -325,28 +291,33 @@ that direction.</p>
   </span><span class="n">checkboxInput</span><span class="p">(</span><span class="w">
     </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"remember"</span><span class="p">,</span><span class="w">
     </span><span class="n">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Remember me"</span><span class="w">
-  </span><span class="p">)</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"go"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Login"</span><span class="p">)</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
 
   <div><form class="yonder-form form-inline" id="login">
   <div class="yonder-textual" id="name">
     <input class="form-control" type="text" placeholder="full name" autocomplete="off"/>
+    <div class="valid-feedback"></div>
     <div class="invalid-feedback"></div>
   </div>
-  <div class="yonder-group input-group" id="username">
+  <div class="yonder-group-text input-group" id="username">
     <div class="input-group-prepend">
       <span class="input-group-text">@</span>
     </div>
     <input type="text" class="form-control" placeholder="username" autocomplete="off"/>
+    <div class="valid-feedback"></div>
+    <div class="invalid-feedback"></div>
   </div>
   <div class="yonder-checkbox" id="remember">
     <div class="custom-control custom-checkbox">
-      <input class="custom-control-input" type="checkbox" id="checkbox-421-675" name="remember" value="Remember me" autocomplete="off"/>
-      <label class="custom-control-label" for="checkbox-421-675">Remember me</label>
+      <input class="custom-control-input" type="checkbox" id="checkbox-426-242" name="checkbox-426-242" value="Remember me" autocomplete="off"/>
+      <label class="custom-control-label" for="checkbox-426-242">Remember me</label>
+      <div class="valid-feedback"></div>
       <div class="invalid-feedback"></div>
     </div>
   </div>
-  <button class="yonder-submit btn btn-blue" role="button" value="Submit">Submit</button>
+  <button class="yonder-button btn btn-grey yonder-form-submit" type="button" role="button" id="go" autocomplete="off">Login</button>
 </form></div>
   
   
@@ -365,7 +336,7 @@ that direction.</p>
     </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"full name"</span><span class="w">
   </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
     </span><span class="n">margin</span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
-  </span><span class="n">groupInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">groupTextInput</span><span class="p">(</span><span class="w">
     </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"username"</span><span class="p">,</span><span class="w">
     </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"@"</span><span class="p">,</span><span class="w">
     </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"username"</span><span class="w">
@@ -376,29 +347,33 @@ that direction.</p>
     </span><span class="n">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Remember me"</span><span class="w">
   </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
     </span><span class="n">margin</span><span class="p">(</span><span class="n">r</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w"> </span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">),</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
-  </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">submitInput</span><span class="p">(</span><span class="s2">"Log in"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buttonInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="s2">"Log in"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
     </span><span class="n">margin</span><span class="p">(</span><span class="n">b</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
 
   <div><form class="yonder-form form-inline" id="login2">
   <div class="yonder-textual mr-sm-2 mb-2" id="name">
     <input class="form-control" type="text" placeholder="full name" autocomplete="off"/>
+    <div class="valid-feedback"></div>
     <div class="invalid-feedback"></div>
   </div>
-  <div class="yonder-group input-group mr-sm-2 mb-2" id="username">
+  <div class="yonder-group-text input-group mr-sm-2 mb-2" id="username">
     <div class="input-group-prepend">
       <span class="input-group-text">@</span>
     </div>
     <input type="text" class="form-control" placeholder="username" autocomplete="off"/>
+    <div class="valid-feedback"></div>
+    <div class="invalid-feedback"></div>
   </div>
   <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
     <div class="custom-control custom-checkbox">
-      <input class="custom-control-input" type="checkbox" id="checkbox-198-557" name="remember" value="Remember me" autocomplete="off"/>
-      <label class="custom-control-label" for="checkbox-198-557">Remember me</label>
+      <input class="custom-control-input" type="checkbox" id="checkbox-804-561" name="checkbox-804-561" value="Remember me" autocomplete="off"/>
+      <label class="custom-control-label" for="checkbox-804-561">Remember me</label>
+      <div class="valid-feedback"></div>
       <div class="invalid-feedback"></div>
     </div>
   </div>
-  <button class="yonder-submit btn btn-blue mb-2" role="button" value="Log in">Log in</button>
+  <button class="yonder-button btn btn-grey mb-2 yonder-form-submit" type="button" role="button" autocomplete="off">Log in</button>
 </form></div>
   
   

@@ -40,7 +40,8 @@ examples:
             choice = "Deliver"
           )
         ),
-        submitInput("Place order")
+        buttonInput("order", "Place order") %>%
+          background("blue")
       )
     output: |-
       <fieldset class="form-group">
@@ -69,13 +70,14 @@ examples:
             <label>Is this for delivery?</label>
             <div class="yonder-checkbox" id="deliver">
               <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox" id="checkbox-113-985" name="deliver" value="Deliver" autocomplete="off"/>
-                <label class="custom-control-label" for="checkbox-113-985">Deliver</label>
+                <input class="custom-control-input" type="checkbox" id="checkbox-988-40" name="checkbox-988-40" value="Deliver" autocomplete="off"/>
+                <label class="custom-control-label" for="checkbox-988-40">Deliver</label>
+                <div class="valid-feedback"></div>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
           </div>
-          <button class="yonder-submit btn btn-blue" role="button" value="Place order">Place order</button>
+          <button class="yonder-button btn btn-blue" type="button" role="button" id="order" autocomplete="off">Place order</button>
         </div>
       </fieldset>
 rdname: fieldset

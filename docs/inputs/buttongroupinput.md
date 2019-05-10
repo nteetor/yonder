@@ -6,12 +6,20 @@ inheritParams: buttonInput
 parameters:
 - name: labels
   description: |-
-    A character vector of labels, a button is added to the group
-    for each label specified.
+    A character vector specifying the labels for each button in the
+    group.
 - name: values
   description: |-
-    A character vector of values, one for each button specified,
-    defaults to `labels`.
+    A vector of values specifying the values of each button in the
+    group, defaults to `labels`.
+- name: enable
+  description: |-
+    One of `values` indicating individual buttons to enable or
+    `TRUE` to enable the entire input, defaults to `NULL`.
+- name: disable
+  description: |-
+    One of `values` indicating individual buttons to disable or
+    `TRUE` to disable the entire input, defaults to `NULL`.
 family: inputs
 export: ''
 examples:

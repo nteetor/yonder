@@ -1,0 +1,583 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>yonder - updateTelephoneInput</title>
+
+  <!--
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  -->
+
+  
+  
+  <script src=/yonder/assets/js/jquery.min.js type="text/javascript"></script>
+  
+  
+  
+  <script src=/yonder/assets/js/popper.min.js type="text/javascript"></script>
+  
+  
+  
+  <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
+  
+  
+  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
+  
+  
+  
+  <script src=/yonder/assets/js/yonder.min.js type="text/javascript"></script>
+  
+  
+  
+  <script src=/yonder/assets/js/iris-json.js type="text/javascript"></script>
+  
+  
+
+  <link rel="stylesheet" href="/yonder/assets/css/main.css">
+</head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <style>
+          .sidebar, .content {
+          height: 100vh;
+          overflow-y: scroll;
+          }
+        </style>
+        <div class="sidebar col col-auto">
+          <div class="sidebar pr-4">
+  <dl>
+    
+    
+
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/design/active.html
+         >Design</a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/content/alert.html
+         >Content</a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
+    </dt>
+    
+    
+
+    
+
+    <dt 
+        class = "mt-3"
+        >
+      <a class="text-dark"
+         href=/yonder/inputs/buttongroupinput.html
+         >Inputs</a>
+    </dt>
+    
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/buttongroupinput.html
+         >buttonGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/buttoninput.html
+         >buttonInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/checkbarinput.html
+         >checkbarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/checkboxinput.html
+         >checkboxInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/chipinput.html
+         >chipInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/emailinput.html
+         >emailInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/fileinput.html
+         >fileInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/forminput.html
+         >formInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/groupselectinput.html
+         >groupSelectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/grouptextinput.html
+         >groupTextInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/linkinput.html
+         >linkInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/listgroupinput.html
+         >listGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/menuinput.html
+         >menuInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/navinput.html
+         >navInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/numberinput.html
+         >numberInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/passwordinput.html
+         >passwordInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/radiobarinput.html
+         >radiobarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/radioinput.html
+         >radioInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/rangeinput.html
+         >rangeInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/searchinput.html
+         >searchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/selectinput.html
+         >selectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/switchinput.html
+         >switchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/telephoneinput.html
+         >telephoneInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/textinput.html
+         >textInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatebuttongroupinput.html
+         >updateButtonGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatebuttoninput.html
+         >updateButtonInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatecheckbarinput.html
+         >updateCheckbarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatecheckboxinput.html
+         >updateCheckboxInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatechipinput.html
+         >updateChipInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateemailinput.html
+         >updateEmailInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updategroupselectinput.html
+         >updateGroupSelectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updategrouptextinput.html
+         >updateGroupTextInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatelinkinput.html
+         >updateLinkInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatelistgroupinput.html
+         >updateListGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatemenuinput.html
+         >updateMenuInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatenavinput.html
+         >updateNavInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatenumberinput.html
+         >updateNumberInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatepassowrdinput.html
+         >updatePassowrdInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateradiobarinput.html
+         >updateRadiobarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateradioinput.html
+         >updateRadioInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updaterangeinput.html
+         >updateRangeInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatesearchinput.html
+         >updateSearchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateselectinput.html
+         >updateSelectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateswitchinput.html
+         >updateSwitchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatetelephoneinput.html
+         >updateTelephoneInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatetextinput.html
+         >updateTextInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateurlinput.html
+         >updateUrlInput</a>
+    </dd>
+    
+    <dd class="mb-3">
+      <a class="text-muted"
+         href=/yonder/inputs/urlinput.html
+         >urlInput</a>
+    </dd>
+    
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/layout/column.html
+         >Layout</a>
+    </dt>
+    
+    
+
+    
+    
+  </dl>
+</div>
+
+        </div>
+        <div class="content col">
+          <h2><p>Textual inputs</p>
+</h2>
+<p><p>Different types of textual inputs are provided to best support mobile
+keyboards and assistive technologies. A password input will mask its
+contents. Email inputs offer client-side validation depending on the browser.</p>
+</p>
+
+<dl>
+  
+  <dt><p>value</p>
+</dt>
+  <dd><p>A character string or a value coerced to a character string
+specifying the default value of the textual input.</p>
+</dd>
+  
+  <dt><p>placeholder</p>
+</dt>
+  <dd><p>A character string specifying placeholder text for the
+input, defaults to <code class="highlighter-rouge">NULL</code>, in which case there is no placeholder text.</p>
+</dd>
+  
+</dl>
+
+
+
+
+
+<h4><p>Basic text</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">textInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"text"</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-textual" id="text">
+  <input class="form-control" type="text" autocomplete="off"/>
+  <div class="valid-feedback"></div>
+  <div class="invalid-feedback"></div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Search</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">searchInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"search"</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-textual" id="search">
+  <input class="form-control" type="search" autocomplete="off"/>
+  <div class="valid-feedback"></div>
+  <div class="invalid-feedback"></div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Email</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">emailInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"email"</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-textual" id="email">
+  <input class="form-control" type="email" autocomplete="off"/>
+  <div class="valid-feedback"></div>
+  <div class="invalid-feedback"></div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>URLs</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">urlInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"url"</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-textual" id="url">
+  <input class="form-control" type="url" autocomplete="off"/>
+  <div class="valid-feedback"></div>
+  <div class="invalid-feedback"></div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Telephone numbers</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">telephoneInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"tele"</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-textual" id="tele">
+  <input class="form-control" type="tel" autocomplete="off"/>
+  <div class="valid-feedback"></div>
+  <div class="invalid-feedback"></div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Passwords</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">passwordInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"password"</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-textual" id="password">
+  <input class="form-control" type="password" autocomplete="off"/>
+  <div class="valid-feedback"></div>
+  <div class="invalid-feedback"></div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Numbers</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">numberInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"num"</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-textual" id="num">
+  <input class="form-control" type="number" autocomplete="off"/>
+  <div class="valid-feedback"></div>
+  <div class="invalid-feedback"></div>
+</div></div>
+  
+  
+</div>
+
+
+          <div class="d-flex justify-content-center">
+            <a class="text-muted p-3"
+               href="https://github.com/nteetor"
+               >github</a>
+            <a class="text-muted p-3"
+               href="https://twitter.com/ntweetor"
+               >twitter</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -7,7 +7,7 @@ description: |-
   their parent element (i.e. 1/2 the width of their parent), or relative to the
   element's content.
 parameters:
-- name: .tag
+- name: tag
   description: A tag element.
 - name: size
   description: |-
@@ -42,7 +42,7 @@ examples:
         lapply(
           1:20,
           width,
-          .tag = div() %>%
+          tag = div() %>%
             border("black") %>%
             height(4)
         )

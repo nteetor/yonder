@@ -5,7 +5,8 @@ description: |-
   Different types of textual inputs are provided to best support mobile
   keyboards and assistive technologies. A password input will mask its
   contents. Email inputs offer client-side validation depending on the browser.
-inheritParams: buttonInput
+inheritParams: checkboxInput
+inheritParams: checkboxInput
 parameters:
 - name: value
   description: |-
@@ -25,6 +26,7 @@ examples:
     output: |-
       <div class="yonder-textual" id="text">
         <input class="form-control" type="text" autocomplete="off"/>
+        <div class="valid-feedback"></div>
         <div class="invalid-feedback"></div>
       </div>
 - title: Search
@@ -34,6 +36,7 @@ examples:
     output: |-
       <div class="yonder-textual" id="search">
         <input class="form-control" type="search" autocomplete="off"/>
+        <div class="valid-feedback"></div>
         <div class="invalid-feedback"></div>
       </div>
 - title: Email
@@ -43,6 +46,7 @@ examples:
     output: |-
       <div class="yonder-textual" id="email">
         <input class="form-control" type="email" autocomplete="off"/>
+        <div class="valid-feedback"></div>
         <div class="invalid-feedback"></div>
       </div>
 - title: URLs
@@ -52,6 +56,7 @@ examples:
     output: |-
       <div class="yonder-textual" id="url">
         <input class="form-control" type="url" autocomplete="off"/>
+        <div class="valid-feedback"></div>
         <div class="invalid-feedback"></div>
       </div>
 - title: Telephone numbers
@@ -61,6 +66,7 @@ examples:
     output: |-
       <div class="yonder-textual" id="tele">
         <input class="form-control" type="tel" autocomplete="off"/>
+        <div class="valid-feedback"></div>
         <div class="invalid-feedback"></div>
       </div>
 - title: Passwords
@@ -70,6 +76,7 @@ examples:
     output: |-
       <div class="yonder-textual" id="password">
         <input class="form-control" type="password" autocomplete="off"/>
+        <div class="valid-feedback"></div>
         <div class="invalid-feedback"></div>
       </div>
 - title: Numbers
@@ -79,6 +86,7 @@ examples:
     output: |-
       <div class="yonder-textual" id="num">
         <input class="form-control" type="number" autocomplete="off"/>
+        <div class="valid-feedback"></div>
         <div class="invalid-feedback"></div>
       </div>
 rdname: numberInput

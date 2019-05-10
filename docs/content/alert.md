@@ -9,10 +9,14 @@ parameters:
   description: |-
     Character strings specifying the text of the alert or additional
     named arguments passed as HTML attributes to the alert element.
-- name: title
+- name: dismissible
   description: |-
-    A character string or tag element specifying a heading for the
-    alert, defaults to `NULL`, in which case a title is not added.
+    One of `TRUE` or `FALSE` specifying if the alert may be
+    dismissed by the user, deafults to `TRUE`.
+- name: fade
+  description: |-
+    One of `TRUE` or `FALSE` specifying if the alert fades out or
+    immediately disappears when dismissed, defaults to `TRUE`.
 family: content
 export: ''
 examples:
@@ -22,22 +26,31 @@ examples:
     content: |-
       alert("Donec at pede.") %>%
         background("blue")
-    output: <div class="alert fade show alert-blue" role="alert">Donec at pede.</div>
+    output: |-
+      <div class="alert alert-dismissible fade show alert-blue" role="alert">
+        Donec at pede.
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
 - title: A more complex alert
   body:
   - type: code
     content: |-
       alert(
-        p("Etiam vel tortor sodales"),
+        h4("Etiam vel tortor sodales"),
         hr(),
         p("Fusce commodo.")
       ) %>%
         background("amber")
     output: |-
-      <div class="alert fade show alert-amber" role="alert">
-        <p>Etiam vel tortor sodales</p>
+      <div class="alert alert-dismissible fade show alert-amber" role="alert">
+        <h4 class="alert-heading">Etiam vel tortor sodales</h4>
         <hr/>
         <p>Fusce commodo.</p>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
       </div>
 rdname: alert
 sections: []

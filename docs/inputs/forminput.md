@@ -9,27 +9,31 @@ description: |-
   submit input. This allows you to distinguish between different clicks if
   your form includes multiple submit inputs.
 
+  A submit input is a special type of button used to control form input
+  submission. Because of their specific usage, submit inputs do not require an
+  `id`, but may have a specified `value`. Submit inputs will _not_ freeze all
+  reactive inputs, see [formInput()].
+
   If `id` or `submit` are `NULL` the form input will not freeze its child
   inputs.
-inheritParams: buttonInput
+inheritParams: checkboxInput
 parameters:
 - name: '...'
   description: |-
     Any number of unnamed arguments (inputs or tag elements) passed as
-      child elements of the form.
+      child elements to the form.
 
       Additional named arguments passed as HTML attributes to the parent element.
 - name: submit
   description: |-
-    A submit button or tags containing a submit button. The submit
-    button will trigger the update of input form elements. Defaults to
-    [submitInput()](inputs/submitinput.html).
+    A button input, when clicked the form input will update its
+    reactive child inputs, defaults to `buttonInput(NULL, "Submit")`.
 - name: inline
   description: |-
     One of `TRUE` or `FALSE`, if `TRUE` the form and its child
     elements are rendered in a horizontal row, defaults to `FALSE`. On small
-    viewports, think mobile device, `inline` has no effect and the form will
-    span multiple lines.
+    viewports, think mobile device, `inline` intentionally has no effect and
+    the form will span multiple lines.
 details: |-
   When `inline` is `TRUE` you may want to adjust the right margin of each child
   element for viewports larger than mobile, `margin(<TAG>, right = c(sm = 2))`,
@@ -64,7 +68,7 @@ sections:
 family: inputs
 export: ''
 examples:
-- title: Customizing the submit button
+- title: A simple form
   body:
   - type: code
     content: |-
@@ -79,9 +83,9 @@ examples:
               choices = c("Mint", "Moose tracks", "Marble"),
             )
           ),
-          submit = submitInput(  # <-
-            label = "Make choice",
-            block = TRUE
+          submit = buttonInput(  # <-
+            id = NULL,
+            label = "Make choice"
           ) %>%
             background("teal")
         )
@@ -97,21 +101,22 @@ examples:
               <label>Ice creams</label>
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-702-891" name="flavorChoice" value="Mint" autocomplete="off"/>
-                  <label class="custom-control-label" for="radio-702-891">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-517-117" name="flavorChoice" value="Mint" checked autocomplete="off"/>
+                  <label class="custom-control-label" for="radio-517-117">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-543-5" name="flavorChoice" value="Moose tracks" autocomplete="off"/>
-                  <label class="custom-control-label" for="radio-543-5">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-504-62" name="flavorChoice" value="Moose tracks" autocomplete="off"/>
+                  <label class="custom-control-label" for="radio-504-62">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-708-893" name="flavorChoice" value="Marble" autocomplete="off"/>
-                  <label class="custom-control-label" for="radio-708-893">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-323-262" name="flavorChoice" value="Marble" autocomplete="off"/>
+                  <label class="custom-control-label" for="radio-323-262">Marble</label>
+                  <div class="valid-feedback"></div>
+                  <div class="invalid-feedback"></div>
                 </div>
-                <div class="invalid-feedback"></div>
               </div>
             </div>
-            <button class="yonder-submit btn btn-teal" role="button" value="Make choice" block="TRUE">Make choice</button>
+            <button class="yonder-button btn btn-teal yonder-form-submit" type="button" role="button" autocomplete="off">Make choice</button>
           </form>
         </div>
       </div>

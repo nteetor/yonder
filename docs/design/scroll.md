@@ -3,16 +3,16 @@ name: scroll
 title: Vertical and horizontal scroll
 description: |-
   Many of the applications you build depsite a complex layout will still fit
-  onto a single page. To help scroll long content along side shorter content
-  use the `scroll()` utility function.
+  onto a single page. To help scroll long content alongside shorter content use
+  the `scroll()` utility function.
 parameters:
-- name: .tag
+- name: tag
   description: A tag element.
 - name: direction
   description: |-
-    One of `"x"` or `"y"` specifying which direction to scroll
-    the tag's content, defaults to `"y"`, in which case vertical scroll is
-    applied.
+    One of `"horizontal"` or `"vertical"` specifying which
+    direction to scroll overflowing content, defaults to `"vertical"`, in which
+    case the content may croll up and down.
 family: design
 export: ''
 examples:
@@ -23,34 +23,34 @@ examples:
       div(
         lapply(
           rep("Integer placerat tristique nisl.", 20),
-          p
+          . %>% p() %>% margin(bottom = 2)
         )
       ) %>%
         height(20) %>%
-        border() %>%
+        border("black") %>%
         scroll()
     output: |-
-      <div class="h-20 border scroll-y">
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
-        <p>Integer placerat tristique nisl.</p>
+      <div class="h-20 border border-black scroll-y">
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
+        <p class="mb-2">Integer placerat tristique nisl.</p>
       </div>
 rdname: scroll
 sections: []

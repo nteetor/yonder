@@ -23,25 +23,11 @@
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/bootstrap.min.css>
-  
-  
-  
   <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.css>
-  
-  
-  
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.skinFlat.css>
-  
-  
-  
-  <script src=/yonder/assets/js/ion.rangeSlider.min.js type="text/javascript"></script>
-  
-  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
   
   
   
@@ -102,12 +88,6 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/bar.html
-         >bar</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/blockquote.html
          >blockquote</a>
     </dd>
@@ -116,6 +96,12 @@
       <a class="text-muted"
          href=/yonder/content/card.html
          >card</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/content/closemodal.html
+         >closeModal</a>
     </dd>
     
     <dd class="mb-1">
@@ -192,12 +178,6 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/hidemodal.html
-         >hideModal</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/hidepane.html
          >hidePane</a>
     </dd>
@@ -246,20 +226,8 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/progressoutlet.html
-         >progressOutlet</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/registermodal.html
          >registerModal</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
-         href=/yonder/content/showbar.html
-         >showBar</a>
     </dd>
     
     <dd class="mb-1">
@@ -311,8 +279,8 @@
 
     <dt >
       <a class="text-dark"
-         href=/yonder/outputs/badgeoutput.html
-         >Outputs</a>
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
     </dt>
     
     
@@ -338,26 +306,6 @@
     
 
     
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/utilities/disableinput.html
-         >Utilities</a>
-    </dt>
-    
-    
-
-    
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/rendering/elementoutput.html
-         >Rendering</a>
-    </dt>
-    
-    
-
-    
     
   </dl>
 </div>
@@ -378,10 +326,16 @@ to problems.</p>
 named arguments passed as HTML attributes to the alert element.</p>
 </dd>
   
-  <dt><p>title</p>
+  <dt><p>dismissible</p>
 </dt>
-  <dd><p>A character string or tag element specifying a heading for the
-alert, defaults to <code class="highlighter-rouge">NULL</code>, in which case a title is not added.</p>
+  <dd><p>One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying if the alert may be
+dismissed by the user, deafults to <code class="highlighter-rouge">TRUE</code>.</p>
+</dd>
+  
+  <dt><p>fade</p>
+</dt>
+  <dd><p>One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying if the alert fades out or
+immediately disappears when dismissed, defaults to <code class="highlighter-rouge">TRUE</code>.</p>
 </dd>
   
 </dl>
@@ -400,7 +354,12 @@ alert, defaults to <code class="highlighter-rouge">NULL</code>, in which case a 
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">alert</span><span class="p">(</span><span class="s2">"Donec at pede."</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">background</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">)</span></code></pre></figure>
 
-  <div><div class="alert fade show alert-blue" role="alert">Donec at pede.</div></div>
+  <div><div class="alert alert-dismissible fade show alert-blue" role="alert">
+  Donec at pede.
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div></div>
   
   
 </div>
@@ -414,16 +373,19 @@ alert, defaults to <code class="highlighter-rouge">NULL</code>, in which case a 
   
   
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">alert</span><span class="p">(</span><span class="w">
-  </span><span class="n">p</span><span class="p">(</span><span class="s2">"Etiam vel tortor sodales"</span><span class="p">),</span><span class="w">
+  </span><span class="n">h</span><span class="m">4</span><span class="p">(</span><span class="s2">"Etiam vel tortor sodales"</span><span class="p">),</span><span class="w">
   </span><span class="n">hr</span><span class="p">(),</span><span class="w">
   </span><span class="n">p</span><span class="p">(</span><span class="s2">"Fusce commodo."</span><span class="p">)</span><span class="w">
 </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">background</span><span class="p">(</span><span class="s2">"amber"</span><span class="p">)</span></code></pre></figure>
 
-  <div><div class="alert fade show alert-amber" role="alert">
-  <p>Etiam vel tortor sodales</p>
+  <div><div class="alert alert-dismissible fade show alert-amber" role="alert">
+  <h4 class="alert-heading">Etiam vel tortor sodales</h4>
   <hr/>
   <p>Fusce commodo.</p>
+  <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
 </div></div>
   
   

@@ -23,25 +23,11 @@
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/bootstrap.min.css>
-  
-  
-  
   <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.css>
-  
-  
-  
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.skinFlat.css>
-  
-  
-  
-  <script src=/yonder/assets/js/ion.rangeSlider.min.js type="text/javascript"></script>
-  
-  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
   
   
   
@@ -177,8 +163,8 @@
 
     <dt >
       <a class="text-dark"
-         href=/yonder/outputs/badgeoutput.html
-         >Outputs</a>
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
     </dt>
     
     
@@ -204,26 +190,6 @@
     
 
     
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/utilities/disableinput.html
-         >Utilities</a>
-    </dt>
-    
-    
-
-    
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/rendering/elementoutput.html
-         >Rendering</a>
-    </dt>
-    
-    
-
-    
     
   </dl>
 </div>
@@ -240,7 +206,7 @@ affecting color, weight, case, or alignment.</p>
 
 <dl>
   
-  <dt><p>.tag</p>
+  <dt><p>tag</p>
 </dt>
   <dd><p>A tag element.</p>
 </dd>
@@ -249,8 +215,8 @@ affecting color, weight, case, or alignment.</p>
 </dt>
   <dd><p>One <code class="highlighter-rouge">"red"</code>, <code class="highlighter-rouge">"purple"</code>, <code class="highlighter-rouge">"indigo"</code>, <code class="highlighter-rouge">"blue"</code>, <code class="highlighter-rouge">"cyan"</code>,
 <code class="highlighter-rouge">"teal"</code>, <code class="highlighter-rouge">"green"</code>, <code class="highlighter-rouge">"yellow"</code>, <code class="highlighter-rouge">"amber"</code>, <code class="highlighter-rouge">"orange"</code>, <code class="highlighter-rouge">"grey"</code>,
-<code class="highlighter-rouge">"black"</code>, or <code class="highlighter-rouge">"white"</code> specifying the color the tag element’s text,
-defaults to <code class="highlighter-rouge">NULL</code>.</p>
+<code class="highlighter-rouge">"black"</code>, or <code class="highlighter-rouge">"white"</code> specifying the tag element text color, defaults to
+<code class="highlighter-rouge">NULL</code>.</p>
 </dd>
   
   <dt><p>size</p>
@@ -302,7 +268,9 @@ to <code class="highlighter-rouge">NULL</code>.</p>
   </span><span class="n">border</span><span class="p">(</span><span class="n">color</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"amber"</span><span class="p">)</span></code></pre></figure>
 
   <div><div class="card border border-amber">
-  <h3 class="text-amber card-header">Important!</h3>
+  <div class="card-header">
+    <h3 class="text-amber">Important!</h3>
+  </div>
   <div class="card-body">
     <div>This is a reminder.</div>
   </div>
@@ -333,11 +301,11 @@ to <code class="highlighter-rouge">NULL</code>.</p>
 </span><span class="p">)</span></code></pre></figure>
 
   <div><div>
-  <p class="font-size-xs">Extra small</p>
-  <p class="font-size-sm">Small</p>
-  <p class="font-size-base">Medium</p>
-  <p class="font-size-lg">Large</p>
-  <p class="font-size-xl">Extra large</p>
+  <p class="card-text font-size-xs">Extra small</p>
+  <p class="card-text font-size-sm">Small</p>
+  <p class="card-text font-size-base">Medium</p>
+  <p class="card-text font-size-lg">Large</p>
+  <p class="card-text font-size-xl">Extra large</p>
 </div></div>
   
   
@@ -362,7 +330,7 @@ to <code class="highlighter-rouge">NULL</code>.</p>
 </span><span class="n">p</span><span class="p">(</span><span class="s2">"Proin quam nisl, tincidunt et."</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">font</span><span class="p">(</span><span class="n">weight</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"light"</span><span class="p">)</span></code></pre></figure>
 
-  <div><p class="font-weight-light">Proin quam nisl, tincidunt et.</p></div>
+  <div><p class="card-text font-weight-light">Proin quam nisl, tincidunt et.</p></div>
   
   
 </div>

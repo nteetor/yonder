@@ -6,7 +6,7 @@ description: |-
   element. A newspaper layout is a classic usage where an image is floated with
   text wrapped around.
 parameters:
-- name: .tag
+- name: tag
   description: A tag element.
 - name: side
   description: |-

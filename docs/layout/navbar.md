@@ -42,7 +42,7 @@ examples:
             id = "navForm",
             searchInput("search", placeholder = "Search") %>%
               margin(right = c(sm = 2)),
-            submit = submitInput("Search") %>%
+            submit = buttonInput("search", "Search") %>%
               background("amber")
           )
         ) %>%
@@ -65,10 +65,10 @@ examples:
       <div>
         <nav class="navbar navbar-expand navbar-light bg-teal">
           <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-576-680" aria-controls="nav-content-576-680" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-638-41" aria-controls="nav-content-638-41" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="nav-content-576-680">
+          <div class="collapse navbar-collapse" id="nav-content-638-41">
             <ul class="yonder-nav nav mr-auto navbar-nav" id="tabs">
               <li class="nav-item">
                 <button class="nav-link btn btn-link active" value="Home">Home</button>
@@ -83,9 +83,10 @@ examples:
             <form class="yonder-form form-inline" id="navForm">
               <div class="yonder-textual mr-sm-2" id="search">
                 <input class="form-control" type="search" placeholder="Search" autocomplete="off"/>
+                <div class="valid-feedback"></div>
                 <div class="invalid-feedback"></div>
               </div>
-              <button class="yonder-submit btn btn-amber" role="button" value="Search">Search</button>
+              <button class="yonder-button btn btn-amber yonder-form-submit" type="button" role="button" id="search" autocomplete="off">Search</button>
             </form>
           </div>
         </nav>

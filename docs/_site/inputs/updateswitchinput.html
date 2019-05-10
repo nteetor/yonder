@@ -1,0 +1,711 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>yonder - updateSwitchInput</title>
+
+  <!--
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  -->
+
+  
+  
+  <script src=/yonder/assets/js/jquery.min.js type="text/javascript"></script>
+  
+  
+  
+  <script src=/yonder/assets/js/popper.min.js type="text/javascript"></script>
+  
+  
+  
+  <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
+  
+  
+  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
+  
+  
+  
+  <script src=/yonder/assets/js/yonder.min.js type="text/javascript"></script>
+  
+  
+  
+  <script src=/yonder/assets/js/iris-json.js type="text/javascript"></script>
+  
+  
+
+  <link rel="stylesheet" href="/yonder/assets/css/main.css">
+</head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <style>
+          .sidebar, .content {
+          height: 100vh;
+          overflow-y: scroll;
+          }
+        </style>
+        <div class="sidebar col col-auto">
+          <div class="sidebar pr-4">
+  <dl>
+    
+    
+
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/design/active.html
+         >Design</a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/content/alert.html
+         >Content</a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
+    </dt>
+    
+    
+
+    
+
+    <dt 
+        class = "mt-3"
+        >
+      <a class="text-dark"
+         href=/yonder/inputs/buttongroupinput.html
+         >Inputs</a>
+    </dt>
+    
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/buttongroupinput.html
+         >buttonGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/buttoninput.html
+         >buttonInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/checkbarinput.html
+         >checkbarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/checkboxinput.html
+         >checkboxInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/chipinput.html
+         >chipInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/emailinput.html
+         >emailInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/fileinput.html
+         >fileInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/forminput.html
+         >formInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/groupselectinput.html
+         >groupSelectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/grouptextinput.html
+         >groupTextInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/linkinput.html
+         >linkInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/listgroupinput.html
+         >listGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/menuinput.html
+         >menuInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/navinput.html
+         >navInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/numberinput.html
+         >numberInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/passwordinput.html
+         >passwordInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/radiobarinput.html
+         >radiobarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/radioinput.html
+         >radioInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/rangeinput.html
+         >rangeInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/searchinput.html
+         >searchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/selectinput.html
+         >selectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/switchinput.html
+         >switchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/telephoneinput.html
+         >telephoneInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/textinput.html
+         >textInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatebuttongroupinput.html
+         >updateButtonGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatebuttoninput.html
+         >updateButtonInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatecheckbarinput.html
+         >updateCheckbarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatecheckboxinput.html
+         >updateCheckboxInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatechipinput.html
+         >updateChipInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateemailinput.html
+         >updateEmailInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updategroupselectinput.html
+         >updateGroupSelectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updategrouptextinput.html
+         >updateGroupTextInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatelinkinput.html
+         >updateLinkInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatelistgroupinput.html
+         >updateListGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatemenuinput.html
+         >updateMenuInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatenavinput.html
+         >updateNavInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatenumberinput.html
+         >updateNumberInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatepassowrdinput.html
+         >updatePassowrdInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateradiobarinput.html
+         >updateRadiobarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateradioinput.html
+         >updateRadioInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updaterangeinput.html
+         >updateRangeInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatesearchinput.html
+         >updateSearchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateselectinput.html
+         >updateSelectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateswitchinput.html
+         >updateSwitchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatetelephoneinput.html
+         >updateTelephoneInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatetextinput.html
+         >updateTextInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateurlinput.html
+         >updateUrlInput</a>
+    </dd>
+    
+    <dd class="mb-3">
+      <a class="text-muted"
+         href=/yonder/inputs/urlinput.html
+         >urlInput</a>
+    </dd>
+    
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/layout/column.html
+         >Layout</a>
+    </dt>
+    
+    
+
+    
+    
+  </dl>
+</div>
+
+        </div>
+        <div class="content col">
+          <h2><p>Checkbox inputs</p>
+</h2>
+<p><p>Reactive checkbox and checkbar inputs. Users may select one or more choices.
+The checkbox input appears as a standard checkbox or set of checkboxes. The
+checkbar input appears similar to a group of buttons, but with a checked or
+highlighted state. When a checkbox or checkbar input has no selected choices
+the reactive value is <code class="highlighter-rouge">NULL</code>. Switch inputs differ from checkboxes only in
+appearance.</p>
+</p>
+
+<dl>
+  
+  <dt><p>id</p>
+</dt>
+  <dd><p>A character string specifying the id of the reactive input.</p>
+</dd>
+  
+  <dt><p>choices</p>
+</dt>
+  <dd><p>A character string or vector specifying a label or labels for
+the checkbox or checkbar.</p>
+</dd>
+  
+  <dt><p>values</p>
+</dt>
+  <dd><p>A character string or vector specifying values for the
+checkbox or checkbar input, defaults to <code class="highlighter-rouge">choice</code> or <code class="highlighter-rouge">values</code>, respectively.</p>
+</dd>
+  
+  <dt><p>selected</p>
+</dt>
+  <dd><p>One or more of <code class="highlighter-rouge">values</code> specifying which choices are
+selected by default, defaults to <code class="highlighter-rouge">NULL</code>, in which case no choices are
+initially selected.</p>
+</dd>
+  
+  <dt><p>inline</p>
+</dt>
+  <dd><p>One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying if the checkbox input
+choices render inline or stacked, defaults to <code class="highlighter-rouge">FALSE</code>, in which case the
+choices are stacked.</p>
+</dd>
+  
+  <dt><p>…</p>
+</dt>
+  <dd><p>Additional named arguments passed as HTML attributes to the
+parent element or tag elements passed as child elements to the parent
+element.</p>
+</dd>
+  
+  <dt><p>enable</p>
+</dt>
+  <dd><p>One of <code class="highlighter-rouge">values</code> specifying particular choices to enable or
+<code class="highlighter-rouge">TRUE</code> specifying the entire input is enabled, defaults to <code class="highlighter-rouge">NULL</code>.</p>
+</dd>
+  
+  <dt><p>disable</p>
+</dt>
+  <dd><p>One of <code class="highlighter-rouge">values</code> specifying particular choices to disable or
+<code class="highlighter-rouge">TRUE</code> specifying the entire input is disabled, defaults to <code class="highlighter-rouge">NULL</code>.</p>
+</dd>
+  
+  <dt><p>valid</p>
+</dt>
+  <dd><p>A character string specifying a message to the user indicating
+how the input’s value is valid, defaults to <code class="highlighter-rouge">NULL.</code></p>
+</dd>
+  
+  <dt><p>invalid</p>
+</dt>
+  <dd><p>A character string specifying a message to the user
+indicating how the input’s value is invalid, defaults to <code class="highlighter-rouge">NULL</code>.</p>
+</dd>
+  
+  <dt><p>session</p>
+</dt>
+  <dd><p>A reactive context, defaults to <a href="getdefaultreactivedomain.html">getDefaultReactiveDomain()</a>.</p>
+</dd>
+  
+</dl>
+
+
+
+
+
+<h4><p>One option</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">checkboxInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"checkbox1"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Choice 1"</span><span class="p">,</span><span class="w">
+  </span><span class="n">selected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Choice 1"</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-checkbox" id="checkbox1">
+  <div class="custom-control custom-checkbox">
+    <input class="custom-control-input" type="checkbox" id="checkbox-490-533" name="checkbox-490-533" value="Choice 1" checked autocomplete="off"/>
+    <label class="custom-control-label" for="checkbox-490-533">Choice 1</label>
+    <div class="valid-feedback"></div>
+    <div class="invalid-feedback"></div>
+  </div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Multiple options</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">checkboxInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"checkbox2"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Choice 1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Choice 2"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-checkbox" id="checkbox2">
+  <div class="custom-control custom-checkbox">
+    <input class="custom-control-input" type="checkbox" id="checkbox-677-925" name="checkbox-677-925" value="Choice 1" autocomplete="off"/>
+    <label class="custom-control-label" for="checkbox-677-925">Choice 1</label>
+  </div>
+  <div class="custom-control custom-checkbox">
+    <input class="custom-control-input" type="checkbox" id="checkbox-901-299" name="checkbox-901-299" value="Choice 2" autocomplete="off"/>
+    <label class="custom-control-label" for="checkbox-901-299">Choice 2</label>
+    <div class="valid-feedback"></div>
+    <div class="invalid-feedback"></div>
+  </div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Inline checkbox</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">checkboxInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"checkbox3"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Choice 1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Choice 2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Choice 3"</span><span class="p">),</span><span class="w">
+  </span><span class="n">inline</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-checkbox" id="checkbox3">
+  <div class="custom-control custom-checkbox custom-control-inline">
+    <input class="custom-control-input" type="checkbox" id="checkbox-861-159" name="checkbox-861-159" value="Choice 1" autocomplete="off"/>
+    <label class="custom-control-label" for="checkbox-861-159">Choice 1</label>
+  </div>
+  <div class="custom-control custom-checkbox custom-control-inline">
+    <input class="custom-control-input" type="checkbox" id="checkbox-80-150" name="checkbox-80-150" value="Choice 2" autocomplete="off"/>
+    <label class="custom-control-label" for="checkbox-80-150">Choice 2</label>
+  </div>
+  <div class="custom-control custom-checkbox custom-control-inline">
+    <input class="custom-control-input" type="checkbox" id="checkbox-530-64" name="checkbox-530-64" value="Choice 3" autocomplete="off"/>
+    <label class="custom-control-label" for="checkbox-530-64">Choice 3</label>
+    <div class="valid-feedback"></div>
+    <div class="invalid-feedback"></div>
+  </div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Checkbar</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">checkbarInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"checks"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+    </span><span class="s2">"Check 1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Check 2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Check 3"</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">selected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Check 1"</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">background</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">margin</span><span class="p">(</span><span class="m">2</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-checkbar btn-group btn-group-toggle d-flex m-2" id="checks" data-toggle="buttons">
+  <label class="btn active btn-blue">
+    <input type="checkbox" autocomplete="off" value="Check 1" checked/>
+    Check 1
+  </label>
+  <label class="btn btn-blue">
+    <input type="checkbox" autocomplete="off" value="Check 2"/>
+    Check 2
+  </label>
+  <label class="btn btn-blue">
+    <input type="checkbox" autocomplete="off" value="Check 3"/>
+    Check 3
+  </label>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Labeling a checkbar</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">formGroup</span><span class="p">(</span><span class="w">
+  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Toppings"</span><span class="p">,</span><span class="w">
+  </span><span class="n">checkbarInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"fixins"</span><span class="p">,</span><span class="w">
+    </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+      </span><span class="s2">"Sprinkles"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"Nuts"</span><span class="p">,</span><span class="w">
+      </span><span class="s2">"Fudge"</span><span class="w">
+    </span><span class="p">)</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="form-group">
+  <label>Toppings</label>
+  <div class="yonder-checkbar btn-group btn-group-toggle d-flex" id="fixins" data-toggle="buttons">
+    <label class="btn btn-grey">
+      <input type="checkbox" autocomplete="off" value="Sprinkles"/>
+      Sprinkles
+    </label>
+    <label class="btn btn-grey">
+      <input type="checkbox" autocomplete="off" value="Nuts"/>
+      Nuts
+    </label>
+    <label class="btn btn-grey">
+      <input type="checkbox" autocomplete="off" value="Fudge"/>
+      Fudge
+    </label>
+  </div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Switches</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">switchInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"switch1"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"Switch choice"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">3</span><span class="p">),</span><span class="w">
+  </span><span class="n">selected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Switch choice 3"</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">active</span><span class="p">(</span><span class="s2">"indigo"</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-checkbox active-indigo" id="switch1">
+  <div class="custom-control custom-switch">
+    <input class="custom-control-input" type="checkbox" id="checkbox-926-885" name="checkbox-926-885" value="Switch choice 1" autocomplete="off"/>
+    <label class="custom-control-label" for="checkbox-926-885">Switch choice 1</label>
+  </div>
+  <div class="custom-control custom-switch">
+    <input class="custom-control-input" type="checkbox" id="checkbox-891-309" name="checkbox-891-309" value="Switch choice 2" autocomplete="off"/>
+    <label class="custom-control-label" for="checkbox-891-309">Switch choice 2</label>
+  </div>
+  <div class="custom-control custom-switch">
+    <input class="custom-control-input" type="checkbox" id="checkbox-202-432" name="checkbox-202-432" value="Switch choice 3" checked autocomplete="off"/>
+    <label class="custom-control-label" for="checkbox-202-432">Switch choice 3</label>
+    <div class="valid-feedback"></div>
+    <div class="invalid-feedback"></div>
+  </div>
+</div></div>
+  
+  
+</div>
+
+
+          <div class="d-flex justify-content-center">
+            <a class="text-muted p-3"
+               href="https://github.com/nteetor"
+               >github</a>
+            <a class="text-muted p-3"
+               href="https://twitter.com/ntweetor"
+               >twitter</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

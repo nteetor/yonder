@@ -6,7 +6,7 @@ description: |-
   relative to the font size of page (browser default is 16px), relative to
   their parent element, or relative to the element's content.
 parameters:
-- name: .tag
+- name: tag
   description: A tag element.
 - name: size
   description: |-

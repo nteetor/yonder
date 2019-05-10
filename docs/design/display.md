@@ -4,18 +4,14 @@ title: Tag element display
 description: |-
   Use the `display()` utility to adjust how a tag element is rendered. All
   arguments are responsive allowing you to hide elements on small screens or
-  convert elements from inline to block on large screens. Most of the time
-  you will use the `render` argument. However if you want to control how an
-  element appears (or does not appear) when the page is printed use the `print`
-  argument.
+  convert elements from inline to block on large screens.
 parameters:
-- name: .tag
+- name: tag
   description: A tag element.
-- name: render,print
+- name: type
   description: |-
     A [responsive](responsive.html) argument. One of `"inline"`, `"block"`,
-    `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`, defaults to
-    `NULL`.
+    `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`.
 family: design
 export: ''
 examples:
@@ -50,18 +46,6 @@ examples:
         <div class="p-5 mt-2 mb-2 bg-blue"></div>
         <div class="p-5 mt-2 mb-2 bg-blue"></div>
       </div>
-- title: Printing pages
-  body:
-  - type: text
-    content: This element is not shown when the page is printed.
-    output: ~
-  - type: code
-    content: |-
-      div() %>%
-        height(4) %>%
-        background("orange") %>%
-        display(print = "none")  # <-
-    output: <div class="h-4 bg-orange d-print-none"></div>
 rdname: display
 sections: []
 layout: doc

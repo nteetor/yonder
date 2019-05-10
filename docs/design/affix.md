@@ -7,7 +7,7 @@ description: |-
   of a page *after* the element is scrolled past. *Important*, the IE11 and
   Edge browsers do not support the sticky behavior.
 parameters:
-- name: .tag
+- name: tag
   description: A tag element.
 - name: position
   description: |-

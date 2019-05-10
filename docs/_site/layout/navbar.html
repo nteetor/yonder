@@ -23,25 +23,11 @@
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/bootstrap.min.css>
-  
-  
-  
   <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.css>
-  
-  
-  
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.skinFlat.css>
-  
-  
-  
-  <script src=/yonder/assets/js/ion.rangeSlider.min.js type="text/javascript"></script>
-  
-  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
   
   
   
@@ -97,8 +83,8 @@
 
     <dt >
       <a class="text-dark"
-         href=/yonder/outputs/badgeoutput.html
-         >Outputs</a>
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
     </dt>
     
     
@@ -176,26 +162,6 @@
     
 
     
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/utilities/disableinput.html
-         >Utilities</a>
-    </dt>
-    
-    
-
-    
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/rendering/elementoutput.html
-         >Rendering</a>
-    </dt>
-    
-    
-
-    
     
   </dl>
 </div>
@@ -259,7 +225,7 @@ case the navbar is always expanded.</p>
       </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"navForm"</span><span class="p">,</span><span class="w">
       </span><span class="n">searchInput</span><span class="p">(</span><span class="s2">"search"</span><span class="p">,</span><span class="w"> </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Search"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
         </span><span class="n">margin</span><span class="p">(</span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="n">sm</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)),</span><span class="w">
-      </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">submitInput</span><span class="p">(</span><span class="s2">"Search"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"search"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Search"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
         </span><span class="n">background</span><span class="p">(</span><span class="s2">"amber"</span><span class="p">)</span><span class="w">
     </span><span class="p">)</span><span class="w">
   </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
@@ -282,10 +248,10 @@ case the navbar is always expanded.</p>
   <div><div>
   <nav class="navbar navbar-expand navbar-light bg-teal">
     <a class="navbar-brand" href="#">Navbar</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-576-680" aria-controls="nav-content-576-680" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-638-41" aria-controls="nav-content-638-41" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
-    <div class="collapse navbar-collapse" id="nav-content-576-680">
+    <div class="collapse navbar-collapse" id="nav-content-638-41">
       <ul class="yonder-nav nav mr-auto navbar-nav" id="tabs">
         <li class="nav-item">
           <button class="nav-link btn btn-link active" value="Home">Home</button>
@@ -300,9 +266,10 @@ case the navbar is always expanded.</p>
       <form class="yonder-form form-inline" id="navForm">
         <div class="yonder-textual mr-sm-2" id="search">
           <input class="form-control" type="search" placeholder="Search" autocomplete="off"/>
+          <div class="valid-feedback"></div>
           <div class="invalid-feedback"></div>
         </div>
-        <button class="yonder-submit btn btn-amber" role="button" value="Search">Search</button>
+        <button class="yonder-button btn btn-amber yonder-form-submit" type="button" role="button" id="search" autocomplete="off">Search</button>
       </form>
     </div>
   </nav>

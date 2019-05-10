@@ -1,11 +1,12 @@
 ---
 name: active
-title: Change color for selected choices
+title: Color selected choices
 description: |-
-  Please note this will only have an effect on elements with selectedable
-  choices, e.g. `checkbarInput()`.
+  Use `active()` to change the color of active selected choices. This utility
+  will only have an effect on elements with selectable choices, e.g.
+  `checkbarInput()`.
 parameters:
-- name: .tag
+- name: tag
   description: A tag element.
 - name: color
   description: |-

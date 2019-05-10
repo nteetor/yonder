@@ -31,7 +31,7 @@ parameters:
 family: content
 export: ''
 examples:
-- title: Simple options w/ buttons
+- title: Dropdown with buttons
   body:
   - type: code
     content: |-
@@ -45,9 +45,26 @@ examples:
       <div class="dropdown">
         <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Choices</button>
         <div class="dropdown-menu">
-          <button class="yonder-button dropdown-item" type="button" role="button" id="choice1" autocomplete="off">Choice 1</button>
-          <button class="yonder-button dropdown-item" type="button" role="button" id="choice2" autocomplete="off">Choice 2</button>
-          <button class="yonder-button dropdown-item" type="button" role="button" id="choice3" autocomplete="off">Choice 3</button>
+          <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="choice1" autocomplete="off">Choice 1</button>
+          <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="choice2" autocomplete="off">Choice 2</button>
+          <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="choice3" autocomplete="off">Choice 3</button>
+        </div>
+      </div>
+- title: Dropdown with links
+  body:
+  - type: code
+    content: |-
+      dropdown(
+        label = "Choices",
+        linkInput("link1", "Choice 1"),
+        linkInput("link2", "Choice 2")
+      )
+    output: |-
+      <div class="dropdown">
+        <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Choices</button>
+        <div class="dropdown-menu">
+          <button class="yonder-link btn btn-link dropdown-item" id="link1">Choice 1</button>
+          <button class="yonder-link btn btn-link dropdown-item" id="link2">Choice 2</button>
         </div>
       </div>
 - title: Grouped sections
@@ -56,86 +73,46 @@ examples:
     content: |-
       dropdown(
         label = "Sections",
-        list(
-          h6("Section 1"),
-          buttonInput("addA", "Add A"),
-          buttonInput("addB", "Add B")
-        ),
-        list(
-          h6("Section 2"),
-          buttonInput("calcC", "Calculate C"),
-          buttonInput("calcD", "Calculate D")
-        )
+        h6("Section 1"),
+        buttonInput("a", "Option A"),
+        buttonInput("b", "Option B"),
+        hr(),
+        h6("Section 2"),
+        buttonInput("c", "Option C"),
+        buttonInput("d", "Option D")
       )
     output: |-
       <div class="dropdown">
         <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Sections</button>
         <div class="dropdown-menu">
           <h6 class="dropdown-header">Section 1</h6>
-          <button class="yonder-button dropdown-item" type="button" role="button" id="addA" autocomplete="off">Add A</button>
-          <button class="yonder-button dropdown-item" type="button" role="button" id="addB" autocomplete="off">Add B</button>
+          <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="a" autocomplete="off">Option A</button>
+          <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="b" autocomplete="off">Option B</button>
           <div class="dropdown-divider"></div>
           <h6 class="dropdown-header">Section 2</h6>
-          <button class="yonder-button dropdown-item" type="button" role="button" id="calcC" autocomplete="off">Calculate C</button>
-          <button class="yonder-button dropdown-item" type="button" role="button" id="calcD" autocomplete="off">Calculate D</button>
+          <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="c" autocomplete="off">Option C</button>
+          <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="d" autocomplete="off">Option D</button>
         </div>
       </div>
 - title: Direction variations
   body:
   - type: code
     content: |-
-      div(
-        lapply(
-          c("up", "down", "left", "right"),
-          function(d) {
-            dropdown(
-              label = d,
-              direction = d,
-              buttonInput(NULL, "Nam euismod"),
-              buttonInput(NULL, "Nunc eleifend"),
-              buttonInput(NULL, "Nullam eu")
-            ) %>%
-              margin(3)
-          }
-        )
-      ) %>%
-        display("flex")
+      dropdown(
+        label = "Up!",
+        direction = "up",
+        buttonInput("up1", "Choice 1"),
+        buttonInput("up2", "Choice 2")
+      )
     output: |-
-      <div class="d-flex">
-        <div class="dropdown dropup m-3">
-          <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">up</button>
-          <div class="dropdown-menu">
-            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nam euismod</button>
-            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nunc eleifend</button>
-            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nullam eu</button>
-          </div>
-        </div>
-        <div class="dropdown m-3">
-          <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">down</button>
-          <div class="dropdown-menu">
-            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nam euismod</button>
-            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nunc eleifend</button>
-            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nullam eu</button>
-          </div>
-        </div>
-        <div class="dropdown dropleft m-3">
-          <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">left</button>
-          <div class="dropdown-menu">
-            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nam euismod</button>
-            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nunc eleifend</button>
-            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nullam eu</button>
-          </div>
-        </div>
-        <div class="dropdown dropright m-3">
-          <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">right</button>
-          <div class="dropdown-menu">
-            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nam euismod</button>
-            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nunc eleifend</button>
-            <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nullam eu</button>
-          </div>
+      <div class="dropdown dropup">
+        <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Up!</button>
+        <div class="dropdown-menu">
+          <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="up1" autocomplete="off">Choice 1</button>
+          <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="up2" autocomplete="off">Choice 2</button>
         </div>
       </div>
-- title: Include forms
+- title: Dropdowns with forms
   body:
   - type: code
     content: |-
@@ -157,9 +134,7 @@ examples:
               placeholder = "*****"
             )
           ),
-          submit = submitInput(
-            label = "Sign in"
-          )
+          submit = buttonInput("signin", "Sign in")
         ) %>%
           padding(3, 4, 3, 4)
       )
@@ -172,6 +147,7 @@ examples:
               <label>Email address</label>
               <div class="yonder-textual" id="email">
                 <input class="form-control" type="text" placeholder="email@example.com" autocomplete="off"/>
+                <div class="valid-feedback"></div>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -179,10 +155,11 @@ examples:
               <label>Password</label>
               <div class="yonder-textual" id="password">
                 <input class="form-control" type="password" placeholder="*****" autocomplete="off"/>
+                <div class="valid-feedback"></div>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
-            <button class="yonder-submit btn btn-blue" role="button" value="Sign in">Sign in</button>
+            <button class="yonder-button btn btn-grey yonder-form-submit" type="button" role="button" id="signin" autocomplete="off">Sign in</button>
           </form>
         </div>
       </div>

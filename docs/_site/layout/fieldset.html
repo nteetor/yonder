@@ -23,25 +23,11 @@
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/bootstrap.min.css>
-  
-  
-  
   <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.css>
-  
-  
-  
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.skinFlat.css>
-  
-  
-  
-  <script src=/yonder/assets/js/ion.rangeSlider.min.js type="text/javascript"></script>
-  
-  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
   
   
   
@@ -97,8 +83,8 @@
 
     <dt >
       <a class="text-dark"
-         href=/yonder/outputs/badgeoutput.html
-         >Outputs</a>
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
     </dt>
     
     
@@ -176,26 +162,6 @@
     
 
     
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/utilities/disableinput.html
-         >Utilities</a>
-    </dt>
-    
-    
-
-    
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/rendering/elementoutput.html
-         >Rendering</a>
-    </dt>
-    
-    
-
-    
     
   </dl>
 </div>
@@ -256,7 +222,8 @@ attributes to the parent element.</p>
       </span><span class="n">choice</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Deliver"</span><span class="w">
     </span><span class="p">)</span><span class="w">
   </span><span class="p">),</span><span class="w">
-  </span><span class="n">submitInput</span><span class="p">(</span><span class="s2">"Place order"</span><span class="p">)</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"order"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Place order"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">background</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">)</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
 
   <div><fieldset class="form-group">
@@ -285,13 +252,14 @@ attributes to the parent element.</p>
       <label>Is this for delivery?</label>
       <div class="yonder-checkbox" id="deliver">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-113-985" name="deliver" value="Deliver" autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-113-985">Deliver</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-988-40" name="checkbox-988-40" value="Deliver" autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-988-40">Deliver</label>
+          <div class="valid-feedback"></div>
           <div class="invalid-feedback"></div>
         </div>
       </div>
     </div>
-    <button class="yonder-submit btn btn-blue" role="button" value="Place order">Place order</button>
+    <button class="yonder-button btn btn-blue" type="button" role="button" id="order" autocomplete="off">Place order</button>
   </div>
 </fieldset></div>
   

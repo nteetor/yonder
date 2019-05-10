@@ -7,7 +7,7 @@ sections:
 - title: Inputs
   body: |-
     Yonder provides many familiar inputs like [selectInput()](inputs/selectinput.html) or [radioInput()](inputs/radioinput.html).
-    There are also new inputs like [groupInput()](inputs/groupinput.html) or [formInput()](inputs/forminput.html).
+    There are also new inputs like [groupTextInput()](inputs/grouptextinput.html) or [formInput()](inputs/forminput.html).
 
     **Changes to be mindful of**
 
@@ -18,22 +18,15 @@ sections:
       argument, but these arguments refer to button labels. If you would like to
       add a label above an input please use [formGroup()](layout/formgroup.html).
 
-    * `shiny::sliderInput()` has been split into three inputs: [rangeInput()](inputs/rangeinput.html),
-      [intervalInput()](inputs/intervalinput.html), and [sliderInput()](inputs/sliderinput.html).
-
     **Familiar variants**
 
     Looking for ... ?
 
     * `radioButtons()` use [radioInput()](inputs/radioinput.html)
 
-    * `checkboxGroupInput()` use [checkbarInput()](inputs/checkbarinput.html)
+    * `checkboxGroupInput()` use [checkbarInput()](inputs/checkbarinput.html) or [checkboxInput()](inputs/checkboxinput.html)
 
     * `numericInput()` use [numberInput()](inputs/numberinput.html)
-
-    * `submitButton()` use [submitInput()](inputs/submitinput.html)
-
-    * `updateRadioButtons()`, `updateTextInput()`, etc. use [updateInput()](utilities/updateinput.html)
 - title: Layout
   body: |-
     Included are a handful of tools for building applications for devices and

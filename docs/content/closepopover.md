@@ -37,7 +37,7 @@ parameters:
   description: |-
     A character string specifying the HTML id of a popover's target tag
     element.
-inheritParams: updateInput
+inheritParams: collapsiblePane
 sections:
 - title: Example application
   body: |-

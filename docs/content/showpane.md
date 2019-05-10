@@ -21,7 +21,7 @@ parameters:
   description: |-
     One of `TRUE` or `FALSE` specifying if the pane fades in when
     show and out when hidden, defaults to `TRUE`.
-inheritParams: updateInput
+inheritParams: collapsiblePane
 sections:
 - title: App with pills
   body: |-

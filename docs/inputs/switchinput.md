@@ -8,12 +8,13 @@ description: |-
   highlighted state. When a checkbox or checkbar input has no selected choices
   the reactive value is `NULL`. Switch inputs differ from checkboxes only in
   appearance.
-inheritParams: buttonInput
 parameters:
+- name: id
+  description: A character string specifying the id of the reactive input.
 - name: choices
   description: |-
-    A character string or vector specifying a label for the
-    checkbox or checkbar.
+    A character string or vector specifying a label or labels for
+    the checkbox or checkbar.
 - name: values
   description: |-
     A character string or vector specifying values for the
@@ -28,6 +29,29 @@ parameters:
     One of `TRUE` or `FALSE` specifying if the checkbox input
     choices render inline or stacked, defaults to `FALSE`, in which case the
     choices are stacked.
+- name: '...'
+  description: |-
+    Additional named arguments passed as HTML attributes to the
+    parent element or tag elements passed as child elements to the parent
+    element.
+- name: enable
+  description: |-
+    One of `values` specifying particular choices to enable or
+    `TRUE` specifying the entire input is enabled, defaults to `NULL`.
+- name: disable
+  description: |-
+    One of `values` specifying particular choices to disable or
+    `TRUE` specifying the entire input is disabled, defaults to `NULL`.
+- name: valid
+  description: |-
+    A character string specifying a message to the user indicating
+    how the input's value is valid, defaults to `NULL.`
+- name: invalid
+  description: |-
+    A character string specifying a message to the user
+    indicating how the input's value is invalid, defaults to `NULL`.
+- name: session
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](getdefaultreactivedomain.html).
 family: inputs
 export: ''
 examples:
@@ -43,8 +67,9 @@ examples:
     output: |-
       <div class="yonder-checkbox" id="checkbox1">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-82-633" name="checkbox1" value="Choice 1" checked autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-82-633">Choice 1</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-829-361" name="checkbox-829-361" value="Choice 1" checked autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-829-361">Choice 1</label>
+          <div class="valid-feedback"></div>
           <div class="invalid-feedback"></div>
         </div>
       </div>
@@ -59,13 +84,13 @@ examples:
     output: |-
       <div class="yonder-checkbox" id="checkbox2">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-867-486" name="checkbox2" value="Choice 1" autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-867-486">Choice 1</label>
-          <div class="invalid-feedback"></div>
+          <input class="custom-control-input" type="checkbox" id="checkbox-904-428" name="checkbox-904-428" value="Choice 1" autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-904-428">Choice 1</label>
         </div>
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-605-226" name="checkbox2" value="Choice 2" autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-605-226">Choice 2</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-844-649" name="checkbox-844-649" value="Choice 2" autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-844-649">Choice 2</label>
+          <div class="valid-feedback"></div>
           <div class="invalid-feedback"></div>
         </div>
       </div>
@@ -81,18 +106,17 @@ examples:
     output: |-
       <div class="yonder-checkbox" id="checkbox3">
         <div class="custom-control custom-checkbox custom-control-inline">
-          <input class="custom-control-input" type="checkbox" id="checkbox-804-167" name="checkbox3" value="Choice 1" autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-804-167">Choice 1</label>
-          <div class="invalid-feedback"></div>
+          <input class="custom-control-input" type="checkbox" id="checkbox-666-8" name="checkbox-666-8" value="Choice 1" autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-666-8">Choice 1</label>
         </div>
         <div class="custom-control custom-checkbox custom-control-inline">
-          <input class="custom-control-input" type="checkbox" id="checkbox-102-854" name="checkbox3" value="Choice 2" autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-102-854">Choice 2</label>
-          <div class="invalid-feedback"></div>
+          <input class="custom-control-input" type="checkbox" id="checkbox-177-67" name="checkbox-177-67" value="Choice 2" autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-177-67">Choice 2</label>
         </div>
         <div class="custom-control custom-checkbox custom-control-inline">
-          <input class="custom-control-input" type="checkbox" id="checkbox-717-780" name="checkbox3" value="Choice 3" autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-717-780">Choice 3</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-129-182" name="checkbox-129-182" value="Choice 3" autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-129-182">Choice 3</label>
+          <div class="valid-feedback"></div>
           <div class="invalid-feedback"></div>
         </div>
       </div>
@@ -172,18 +196,17 @@ examples:
     output: |-
       <div class="yonder-checkbox active-indigo" id="switch1">
         <div class="custom-control custom-switch">
-          <input class="custom-control-input" type="checkbox" id="checkbox-85-385" name="switch1" value="Switch choice 1" autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-85-385">Switch choice 1</label>
-          <div class="invalid-feedback"></div>
+          <input class="custom-control-input" type="checkbox" id="checkbox-738-502" name="checkbox-738-502" value="Switch choice 1" autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-738-502">Switch choice 1</label>
         </div>
         <div class="custom-control custom-switch">
-          <input class="custom-control-input" type="checkbox" id="checkbox-421-366" name="switch1" value="Switch choice 2" autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-421-366">Switch choice 2</label>
-          <div class="invalid-feedback"></div>
+          <input class="custom-control-input" type="checkbox" id="checkbox-140-396" name="checkbox-140-396" value="Switch choice 2" autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-140-396">Switch choice 2</label>
         </div>
         <div class="custom-control custom-switch">
-          <input class="custom-control-input" type="checkbox" id="checkbox-340-919" name="switch1" value="Switch choice 3" checked autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-340-919">Switch choice 3</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-580-511" name="checkbox-580-511" value="Switch choice 3" checked autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-580-511">Switch choice 3</label>
+          <div class="valid-feedback"></div>
           <div class="invalid-feedback"></div>
         </div>
       </div>

@@ -1,0 +1,520 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>yonder - updateGroupSelectInput</title>
+
+  <!--
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  -->
+
+  
+  
+  <script src=/yonder/assets/js/jquery.min.js type="text/javascript"></script>
+  
+  
+  
+  <script src=/yonder/assets/js/popper.min.js type="text/javascript"></script>
+  
+  
+  
+  <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
+  
+  
+  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
+  
+  
+  
+  <script src=/yonder/assets/js/yonder.min.js type="text/javascript"></script>
+  
+  
+  
+  <script src=/yonder/assets/js/iris-json.js type="text/javascript"></script>
+  
+  
+
+  <link rel="stylesheet" href="/yonder/assets/css/main.css">
+</head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <style>
+          .sidebar, .content {
+          height: 100vh;
+          overflow-y: scroll;
+          }
+        </style>
+        <div class="sidebar col col-auto">
+          <div class="sidebar pr-4">
+  <dl>
+    
+    
+
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/design/active.html
+         >Design</a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/content/alert.html
+         >Content</a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
+    </dt>
+    
+    
+
+    
+
+    <dt 
+        class = "mt-3"
+        >
+      <a class="text-dark"
+         href=/yonder/inputs/buttongroupinput.html
+         >Inputs</a>
+    </dt>
+    
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/buttongroupinput.html
+         >buttonGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/buttoninput.html
+         >buttonInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/checkbarinput.html
+         >checkbarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/checkboxinput.html
+         >checkboxInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/chipinput.html
+         >chipInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/emailinput.html
+         >emailInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/fileinput.html
+         >fileInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/forminput.html
+         >formInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/groupselectinput.html
+         >groupSelectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/grouptextinput.html
+         >groupTextInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/linkinput.html
+         >linkInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/listgroupinput.html
+         >listGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/menuinput.html
+         >menuInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/navinput.html
+         >navInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/numberinput.html
+         >numberInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/passwordinput.html
+         >passwordInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/radiobarinput.html
+         >radiobarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/radioinput.html
+         >radioInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/rangeinput.html
+         >rangeInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/searchinput.html
+         >searchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/selectinput.html
+         >selectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/switchinput.html
+         >switchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/telephoneinput.html
+         >telephoneInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/textinput.html
+         >textInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatebuttongroupinput.html
+         >updateButtonGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatebuttoninput.html
+         >updateButtonInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatecheckbarinput.html
+         >updateCheckbarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatecheckboxinput.html
+         >updateCheckboxInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatechipinput.html
+         >updateChipInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateemailinput.html
+         >updateEmailInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updategroupselectinput.html
+         >updateGroupSelectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updategrouptextinput.html
+         >updateGroupTextInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatelinkinput.html
+         >updateLinkInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatelistgroupinput.html
+         >updateListGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatemenuinput.html
+         >updateMenuInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatenavinput.html
+         >updateNavInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatenumberinput.html
+         >updateNumberInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatepassowrdinput.html
+         >updatePassowrdInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateradiobarinput.html
+         >updateRadiobarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateradioinput.html
+         >updateRadioInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updaterangeinput.html
+         >updateRangeInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatesearchinput.html
+         >updateSearchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateselectinput.html
+         >updateSelectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateswitchinput.html
+         >updateSwitchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatetelephoneinput.html
+         >updateTelephoneInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatetextinput.html
+         >updateTextInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateurlinput.html
+         >updateUrlInput</a>
+    </dd>
+    
+    <dd class="mb-3">
+      <a class="text-muted"
+         href=/yonder/inputs/urlinput.html
+         >urlInput</a>
+    </dd>
+    
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/layout/column.html
+         >Layout</a>
+    </dt>
+    
+    
+
+    
+    
+  </dl>
+</div>
+
+        </div>
+        <div class="content col">
+          <h2><p>Select input</p>
+</h2>
+<p><p>Create a select input. Select elements typically appear as a simple menu of
+choices and may have one or more selected values, see the <code class="highlighter-rouge">multiple</code>
+argument. A group select input is a select input with one or two additional
+components. These addon components are used to change the reactivity or value
+of the input, see Details for more information.</p>
+</p>
+
+<dl>
+  
+  <dt><p>choices</p>
+</dt>
+  <dd><p>A character vector specifying the input’s choices.</p>
+</dd>
+  
+  <dt><p>values</p>
+</dt>
+  <dd><p>A character vector specifying the values of the input’s
+choices, defaults to <code class="highlighter-rouge">choices</code>.</p>
+</dd>
+  
+  <dt><p>selected</p>
+</dt>
+  <dd><p>One of <code class="highlighter-rouge">values</code> indicating the default value of the input,
+defaults to <code class="highlighter-rouge">values[[1]]</code>.</p>
+</dd>
+  
+  <dt><p>left,right</p>
+</dt>
+  <dd><p>A character vector specifying static addons or
+<a href="inputs/buttoninput.html">buttonInput()</a> or <a href="content/dropdown.html">dropdown()</a> elements specifying dynamic addons. Addons
+affect the reactive value of the group input, see the Details section below
+for more information.</p>
+
+<p><strong><code class="highlighter-rouge">left</code> is character or <code class="highlighter-rouge">right</code> is character</strong></p>
+
+<p>If <code class="highlighter-rouge">left</code> or <code class="highlighter-rouge">right</code> are character vectors, then the group input functions
+like a text input. The value will update and trigger a reactive event when
+the text box is modified. The group input’s reactive value is the
+concatention of the static addons specified by <code class="highlighter-rouge">left</code> or <code class="highlighter-rouge">right</code> and the
+value of the text input.</p>
+
+<p><strong><code class="highlighter-rouge">left</code> is button or <code class="highlighter-rouge">right</code> is button</strong></p>
+
+<p>The button does not change the value of the group input. However, the input
+no longer triggers event when the text box is updated. Instead the value is
+updated when a button is clicked. Static addons are still applied to the
+group input value.</p>
+
+<p><strong><code class="highlighter-rouge">left</code> is a dropdown or <code class="highlighter-rouge">right</code> is a dropdown</strong></p>
+
+<p>The value of the group input does chance depending on the clicked dropdown
+menu item. The value of the input group is the concatentation of the
+dropdown input value, the value of the text input, and any static addons.</p>
+</dd>
+  
+</dl>
+
+
+
+
+
+<h4><p>Getting started</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">selectInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+    </span><span class="s2">"Choose one"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Choice 1"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Choice 2"</span><span class="p">,</span><span class="w">
+    </span><span class="s2">"Choice 3"</span><span class="w">
+  </span><span class="p">),</span><span class="w">
+  </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-select btn-group">
+  <input type="text" class="form-control custom-select" data-toggle="dropdown" placeholder/>
+  <div class="dropdown-menu">
+    <button class="dropdown-item">Choose one</button>
+    <button class="dropdown-item" value="1">Choice 1</button>
+    <button class="dropdown-item" value="2">Choice 2</button>
+    <button class="dropdown-item" value="3">Choice 3</button>
+  </div>
+  <div class="valid-feedback"></div>
+  <div class="invalid-feedback"></div>
+</div></div>
+  
+  
+</div>
+
+
+          <div class="d-flex justify-content-center">
+            <a class="text-muted p-3"
+               href="https://github.com/nteetor"
+               >github</a>
+            <a class="text-muted p-3"
+               href="https://twitter.com/ntweetor"
+               >twitter</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

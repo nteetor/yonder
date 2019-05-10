@@ -1,6 +1,6 @@
 ---
 name: navInput
-title: Page navigation
+title: Page navigation input
 description: |-
   A reactive input styled as a navigation control. The navigation input can be
   styled as links, tabs, or pills. A nav input is paired with [navContent()]
@@ -8,16 +8,16 @@ description: |-
   are triggered when a nav choice or menu item is clicked. The reactive value
   of a nav input is `NULL` or a singleton character string. The value of any
   menus in the nav input must be retrieved with its own reactive id.
-inheritParams: buttonInput
+inheritParams: checkboxInput
 parameters:
 - name: choices
   description: |-
     A character vector or list of tag elements specifying the
-    navigation items of the navigation input.
+    navigation items of the input.
 - name: values
   description: |-
-    A character vector specifying custom values for each navigation
-    item, defaults to `choices`.
+    A character vector specifying the values of the input's
+    chocies, defaults to `choices`.
 - name: selected
   description: |-
     One of `values` specifying which choice is selected by

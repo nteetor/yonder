@@ -29,7 +29,7 @@ parameters:
   description: |-
     A character string specifying a reactive id. If specified, the
     hiding or closing of the toast will set the reactive id `action` to `TRUE`.
-inheritParams: updateInput
+inheritParams: collapsiblePane
 sections:
 - title: Showing notifications
   body: |-
@@ -46,7 +46,7 @@ sections:
       observeEvent(input$show, {
         showToast(
           toast(
-            header = list(
+            list(
               span("Notification") %>%
                 margin(right = "4"),
               span(strftime(Sys.time(), "%H:%M")) %>%
@@ -81,10 +81,9 @@ sections:
           action = "undo",
           duration = NULL,
           toast(
-            header = tags$strong("Close") %>%
+            tags$strong("Close") %>%
               margin(right = "auto"),
-            "When closing this notification, ",
-            "see the console"
+            "When closing this notification, see the console"
           ) %>%
             margin(right = 2, top = 2)
         )
@@ -130,7 +129,7 @@ examples:
     content: |-
       toast(
         class = "fade show",
-        header = list(
+        list(
           div("Notification") %>%
             font(weight = "bold") %>%
             margin(right = "auto"),

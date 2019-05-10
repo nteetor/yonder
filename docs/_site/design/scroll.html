@@ -23,25 +23,11 @@
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/bootstrap.min.css>
-  
-  
-  
   <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.css>
-  
-  
-  
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.skinFlat.css>
-  
-  
-  
-  <script src=/yonder/assets/js/ion.rangeSlider.min.js type="text/javascript"></script>
-  
-  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
   
   
   
@@ -177,8 +163,8 @@
 
     <dt >
       <a class="text-dark"
-         href=/yonder/outputs/badgeoutput.html
-         >Outputs</a>
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
     </dt>
     
     
@@ -204,26 +190,6 @@
     
 
     
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/utilities/disableinput.html
-         >Utilities</a>
-    </dt>
-    
-    
-
-    
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/rendering/elementoutput.html
-         >Rendering</a>
-    </dt>
-    
-    
-
-    
     
   </dl>
 </div>
@@ -233,22 +199,22 @@
           <h2><p>Vertical and horizontal scroll</p>
 </h2>
 <p><p>Many of the applications you build depsite a complex layout will still fit
-onto a single page. To help scroll long content along side shorter content
-use the <code class="highlighter-rouge">scroll()</code> utility function.</p>
+onto a single page. To help scroll long content alongside shorter content use
+the <code class="highlighter-rouge">scroll()</code> utility function.</p>
 </p>
 
 <dl>
   
-  <dt><p>.tag</p>
+  <dt><p>tag</p>
 </dt>
   <dd><p>A tag element.</p>
 </dd>
   
   <dt><p>direction</p>
 </dt>
-  <dd><p>One of <code class="highlighter-rouge">"x"</code> or <code class="highlighter-rouge">"y"</code> specifying which direction to scroll
-the tag’s content, defaults to <code class="highlighter-rouge">"y"</code>, in which case vertical scroll is
-applied.</p>
+  <dd><p>One of <code class="highlighter-rouge">"horizontal"</code> or <code class="highlighter-rouge">"vertical"</code> specifying which
+direction to scroll overflowing content, defaults to <code class="highlighter-rouge">"vertical"</code>, in which
+case the content may croll up and down.</p>
 </dd>
   
 </dl>
@@ -267,34 +233,34 @@ applied.</p>
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
   </span><span class="n">lapply</span><span class="p">(</span><span class="w">
     </span><span class="nf">rep</span><span class="p">(</span><span class="s2">"Integer placerat tristique nisl."</span><span class="p">,</span><span class="w"> </span><span class="m">20</span><span class="p">),</span><span class="w">
-    </span><span class="n">p</span><span class="w">
+    </span><span class="n">.</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">p</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w"> </span><span class="n">margin</span><span class="p">(</span><span class="n">bottom</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">2</span><span class="p">)</span><span class="w">
   </span><span class="p">)</span><span class="w">
 </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">height</span><span class="p">(</span><span class="m">20</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-  </span><span class="n">border</span><span class="p">()</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">border</span><span class="p">(</span><span class="s2">"black"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
   </span><span class="n">scroll</span><span class="p">()</span></code></pre></figure>
 
-  <div><div class="h-20 border scroll-y">
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
-  <p>Integer placerat tristique nisl.</p>
+  <div><div class="h-20 border border-black scroll-y">
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
+  <p class="mb-2">Integer placerat tristique nisl.</p>
 </div></div>
   
   

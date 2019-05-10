@@ -7,14 +7,14 @@ description: |-
   ignored.  For example, `font(.., size = "lg")` increases font size without
   affecting color, weight, case, or alignment.
 parameters:
-- name: .tag
+- name: tag
   description: A tag element.
 - name: color
   description: |-
     One `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
     `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`,
-    `"black"`, or `"white"` specifying the color the tag element's text,
-    defaults to `NULL`.
+    `"black"`, or `"white"` specifying the tag element text color, defaults to
+    `NULL`.
 - name: size
   description: |-
     One of `"xs"`, `"sm"`, `"base"`, `"lg"`, `"xl"` specifying a font
@@ -50,7 +50,9 @@ examples:
         border(color = "amber")
     output: |-
       <div class="card border border-amber">
-        <h3 class="text-amber card-header">Important!</h3>
+        <div class="card-header">
+          <h3 class="text-amber">Important!</h3>
+        </div>
         <div class="card-body">
           <div>This is a reminder.</div>
         </div>
@@ -73,11 +75,11 @@ examples:
       )
     output: |-
       <div>
-        <p class="font-size-xs">Extra small</p>
-        <p class="font-size-sm">Small</p>
-        <p class="font-size-base">Medium</p>
-        <p class="font-size-lg">Large</p>
-        <p class="font-size-xl">Extra large</p>
+        <p class="card-text font-size-xs">Extra small</p>
+        <p class="card-text font-size-sm">Small</p>
+        <p class="card-text font-size-base">Medium</p>
+        <p class="card-text font-size-lg">Large</p>
+        <p class="card-text font-size-xl">Extra large</p>
       </div>
 - title: Changing font weight
   body:
@@ -91,7 +93,7 @@ examples:
 
       p("Proin quam nisl, tincidunt et.") %>%
         font(weight = "light")
-    output: <p class="font-weight-light">Proin quam nisl, tincidunt et.</p>
+    output: <p class="card-text font-weight-light">Proin quam nisl, tincidunt et.</p>
 rdname: font
 sections: []
 layout: doc

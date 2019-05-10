@@ -1,20 +1,20 @@
 ---
 name: jumbotron
 title: Jumbotron
-description: Highlight messages.
+description: A showcase banner, good for front or splash pages.
 parameters:
-- name: title
-  description: A character string specifying the jumbotron's title.
-- name: subtitle
-  description: A character string specifying the jumbotron's subtitle.
 - name: '...'
   description: |-
-    Additional tag elements or named arguments passed as HTML
-    attributes to the parent element.
-- name: fluid
+    Tag elements passed as child elements or named arguments passed as
+    HTML attributes to the parent element.
+- name: title
   description: |-
-    One of `TRUE` or `FALSE` specifying if the jumbotron fills the
-    width of its parent container, defaults to `FALSE`.
+    A character string specifying a title for the jumbotron,
+    defaults to `NULL`, in which case a title is not added.
+- name: subtitle
+  description: |-
+    A character string specifying a subtitle for the jumbotron,
+    defaults to `NULL`, in which case a subtitle is not added.
 family: content
 export: ''
 examples:
@@ -24,21 +24,16 @@ examples:
     content: |-
       jumbotron(
         title = "Welcome, welcome!",
-        subtitle = "This simple jumbotron-style component",
+        subtitle = "Here we are showcasing the very showcase itself.",
         tags$p(
-          "Here we can talk more about this excellently superb new feature.",
-          "The best."
+          "Now let's talk more about that superb new feature."
         )
       )
     output: |-
       <div class="jumbotron">
         <h1 class="display-3"></h1>
-        <p class="lead">This simple jumbotron-style component</p>
-        <hr class="my-4"/>
-        <p>
-          Here we can talk more about this excellently superb new feature.
-          The best.
-        </p>
+        <p class="lead">Here we are showcasing the very showcase itself.</p>
+        <p>Now let's talk more about that superb new feature.</p>
       </div>
 rdname: jumbotron
 sections: []

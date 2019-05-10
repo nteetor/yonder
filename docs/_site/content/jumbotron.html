@@ -23,25 +23,11 @@
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/bootstrap.min.css>
-  
-  
-  
   <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.css>
-  
-  
-  
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.skinFlat.css>
-  
-  
-  
-  <script src=/yonder/assets/js/ion.rangeSlider.min.js type="text/javascript"></script>
-  
-  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
   
   
   
@@ -102,12 +88,6 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/bar.html
-         >bar</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/blockquote.html
          >blockquote</a>
     </dd>
@@ -116,6 +96,12 @@
       <a class="text-muted"
          href=/yonder/content/card.html
          >card</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/content/closemodal.html
+         >closeModal</a>
     </dd>
     
     <dd class="mb-1">
@@ -192,12 +178,6 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/hidemodal.html
-         >hideModal</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/hidepane.html
          >hidePane</a>
     </dd>
@@ -246,20 +226,8 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/progressoutlet.html
-         >progressOutlet</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/registermodal.html
          >registerModal</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
-         href=/yonder/content/showbar.html
-         >showBar</a>
     </dd>
     
     <dd class="mb-1">
@@ -311,8 +279,8 @@
 
     <dt >
       <a class="text-dark"
-         href=/yonder/outputs/badgeoutput.html
-         >Outputs</a>
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
     </dt>
     
     
@@ -338,26 +306,6 @@
     
 
     
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/utilities/disableinput.html
-         >Utilities</a>
-    </dt>
-    
-    
-
-    
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/rendering/elementoutput.html
-         >Rendering</a>
-    </dt>
-    
-    
-
-    
     
   </dl>
 </div>
@@ -366,31 +314,27 @@
         <div class="content col">
           <h2><p>Jumbotron</p>
 </h2>
-<p><p>Highlight messages.</p>
+<p><p>A showcase banner, good for front or splash pages.</p>
 </p>
 
 <dl>
   
+  <dt><p>…</p>
+</dt>
+  <dd><p>Tag elements passed as child elements or named arguments passed as
+HTML attributes to the parent element.</p>
+</dd>
+  
   <dt><p>title</p>
 </dt>
-  <dd><p>A character string specifying the jumbotron’s title.</p>
+  <dd><p>A character string specifying a title for the jumbotron,
+defaults to <code class="highlighter-rouge">NULL</code>, in which case a title is not added.</p>
 </dd>
   
   <dt><p>subtitle</p>
 </dt>
-  <dd><p>A character string specifying the jumbotron’s subtitle.</p>
-</dd>
-  
-  <dt><p>…</p>
-</dt>
-  <dd><p>Additional tag elements or named arguments passed as HTML
-attributes to the parent element.</p>
-</dd>
-  
-  <dt><p>fluid</p>
-</dt>
-  <dd><p>One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying if the jumbotron fills the
-width of its parent container, defaults to <code class="highlighter-rouge">FALSE</code>.</p>
+  <dd><p>A character string specifying a subtitle for the jumbotron,
+defaults to <code class="highlighter-rouge">NULL</code>, in which case a subtitle is not added.</p>
 </dd>
   
 </dl>
@@ -408,21 +352,16 @@ width of its parent container, defaults to <code class="highlighter-rouge">FALSE
   
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">jumbotron</span><span class="p">(</span><span class="w">
   </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Welcome, welcome!"</span><span class="p">,</span><span class="w">
-  </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"This simple jumbotron-style component"</span><span class="p">,</span><span class="w">
+  </span><span class="n">subtitle</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Here we are showcasing the very showcase itself."</span><span class="p">,</span><span class="w">
   </span><span class="n">tags</span><span class="o">$</span><span class="n">p</span><span class="p">(</span><span class="w">
-    </span><span class="s2">"Here we can talk more about this excellently superb new feature."</span><span class="p">,</span><span class="w">
-    </span><span class="s2">"The best."</span><span class="w">
+    </span><span class="s2">"Now let's talk more about that superb new feature."</span><span class="w">
   </span><span class="p">)</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
 
   <div><div class="jumbotron">
   <h1 class="display-3"></h1>
-  <p class="lead">This simple jumbotron-style component</p>
-  <hr class="my-4"/>
-  <p>
-    Here we can talk more about this excellently superb new feature.
-    The best.
-  </p>
+  <p class="lead">Here we are showcasing the very showcase itself.</p>
+  <p>Now let's talk more about that superb new feature.</p>
 </div></div>
   
   

@@ -23,25 +23,11 @@
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/bootstrap.min.css>
-  
-  
-  
   <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.css>
-  
-  
-  
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.skinFlat.css>
-  
-  
-  
-  <script src=/yonder/assets/js/ion.rangeSlider.min.js type="text/javascript"></script>
-  
-  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
   
   
   
@@ -102,12 +88,6 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/bar.html
-         >bar</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/blockquote.html
          >blockquote</a>
     </dd>
@@ -116,6 +96,12 @@
       <a class="text-muted"
          href=/yonder/content/card.html
          >card</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/content/closemodal.html
+         >closeModal</a>
     </dd>
     
     <dd class="mb-1">
@@ -192,12 +178,6 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/hidemodal.html
-         >hideModal</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/hidepane.html
          >hidePane</a>
     </dd>
@@ -246,20 +226,8 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/progressoutlet.html
-         >progressOutlet</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/registermodal.html
          >registerModal</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
-         href=/yonder/content/showbar.html
-         >showBar</a>
     </dd>
     
     <dd class="mb-1">
@@ -311,8 +279,8 @@
 
     <dt >
       <a class="text-dark"
-         href=/yonder/outputs/badgeoutput.html
-         >Outputs</a>
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
     </dt>
     
     
@@ -333,26 +301,6 @@
       <a class="text-dark"
          href=/yonder/layout/column.html
          >Layout</a>
-    </dt>
-    
-    
-
-    
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/utilities/disableinput.html
-         >Utilities</a>
-    </dt>
-    
-    
-
-    
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/rendering/elementoutput.html
-         >Rendering</a>
     </dt>
     
     
@@ -409,7 +357,7 @@ to align the dropdown menu to, defaults to <code class="highlighter-rouge">"left
 
 
 
-<h4><p>Simple options w/ buttons</p>
+<h4><p>Dropdown with buttons</p>
 </h4>
 
 <div class="mb-2">
@@ -426,9 +374,34 @@ to align the dropdown menu to, defaults to <code class="highlighter-rouge">"left
   <div><div class="dropdown">
   <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Choices</button>
   <div class="dropdown-menu">
-    <button class="yonder-button dropdown-item" type="button" role="button" id="choice1" autocomplete="off">Choice 1</button>
-    <button class="yonder-button dropdown-item" type="button" role="button" id="choice2" autocomplete="off">Choice 2</button>
-    <button class="yonder-button dropdown-item" type="button" role="button" id="choice3" autocomplete="off">Choice 3</button>
+    <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="choice1" autocomplete="off">Choice 1</button>
+    <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="choice2" autocomplete="off">Choice 2</button>
+    <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="choice3" autocomplete="off">Choice 3</button>
+  </div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Dropdown with links</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dropdown</span><span class="p">(</span><span class="w">
+  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Choices"</span><span class="p">,</span><span class="w">
+  </span><span class="n">linkInput</span><span class="p">(</span><span class="s2">"link1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Choice 1"</span><span class="p">),</span><span class="w">
+  </span><span class="n">linkInput</span><span class="p">(</span><span class="s2">"link2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Choice 2"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="dropdown">
+  <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Choices</button>
+  <div class="dropdown-menu">
+    <button class="yonder-link btn btn-link dropdown-item" id="link1">Choice 1</button>
+    <button class="yonder-link btn btn-link dropdown-item" id="link2">Choice 2</button>
   </div>
 </div></div>
   
@@ -445,28 +418,25 @@ to align the dropdown menu to, defaults to <code class="highlighter-rouge">"left
   
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dropdown</span><span class="p">(</span><span class="w">
   </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Sections"</span><span class="p">,</span><span class="w">
-  </span><span class="nf">list</span><span class="p">(</span><span class="w">
-    </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Section 1"</span><span class="p">),</span><span class="w">
-    </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"addA"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Add A"</span><span class="p">),</span><span class="w">
-    </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"addB"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Add B"</span><span class="p">)</span><span class="w">
-  </span><span class="p">),</span><span class="w">
-  </span><span class="nf">list</span><span class="p">(</span><span class="w">
-    </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Section 2"</span><span class="p">),</span><span class="w">
-    </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"calcC"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Calculate C"</span><span class="p">),</span><span class="w">
-    </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"calcD"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Calculate D"</span><span class="p">)</span><span class="w">
-  </span><span class="p">)</span><span class="w">
+  </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Section 1"</span><span class="p">),</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"a"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Option A"</span><span class="p">),</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"b"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Option B"</span><span class="p">),</span><span class="w">
+  </span><span class="n">hr</span><span class="p">(),</span><span class="w">
+  </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Section 2"</span><span class="p">),</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"c"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Option C"</span><span class="p">),</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"d"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Option D"</span><span class="p">)</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
 
   <div><div class="dropdown">
   <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Sections</button>
   <div class="dropdown-menu">
     <h6 class="dropdown-header">Section 1</h6>
-    <button class="yonder-button dropdown-item" type="button" role="button" id="addA" autocomplete="off">Add A</button>
-    <button class="yonder-button dropdown-item" type="button" role="button" id="addB" autocomplete="off">Add B</button>
+    <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="a" autocomplete="off">Option A</button>
+    <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="b" autocomplete="off">Option B</button>
     <div class="dropdown-divider"></div>
     <h6 class="dropdown-header">Section 2</h6>
-    <button class="yonder-button dropdown-item" type="button" role="button" id="calcC" autocomplete="off">Calculate C</button>
-    <button class="yonder-button dropdown-item" type="button" role="button" id="calcD" autocomplete="off">Calculate D</button>
+    <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="c" autocomplete="off">Option C</button>
+    <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="d" autocomplete="off">Option D</button>
   </div>
 </div></div>
   
@@ -481,55 +451,18 @@ to align the dropdown menu to, defaults to <code class="highlighter-rouge">"left
   
   
   
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
-  </span><span class="n">lapply</span><span class="p">(</span><span class="w">
-    </span><span class="nf">c</span><span class="p">(</span><span class="s2">"up"</span><span class="p">,</span><span class="w"> </span><span class="s2">"down"</span><span class="p">,</span><span class="w"> </span><span class="s2">"left"</span><span class="p">,</span><span class="w"> </span><span class="s2">"right"</span><span class="p">),</span><span class="w">
-    </span><span class="k">function</span><span class="p">(</span><span class="n">d</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">dropdown</span><span class="p">(</span><span class="w">
-        </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w">
-        </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">d</span><span class="p">,</span><span class="w">
-        </span><span class="n">buttonInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="s2">"Nam euismod"</span><span class="p">),</span><span class="w">
-        </span><span class="n">buttonInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="s2">"Nunc eleifend"</span><span class="p">),</span><span class="w">
-        </span><span class="n">buttonInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="s2">"Nullam eu"</span><span class="p">)</span><span class="w">
-      </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-        </span><span class="n">margin</span><span class="p">(</span><span class="m">3</span><span class="p">)</span><span class="w">
-    </span><span class="p">}</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-  </span><span class="n">display</span><span class="p">(</span><span class="s2">"flex"</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">dropdown</span><span class="p">(</span><span class="w">
+  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Up!"</span><span class="p">,</span><span class="w">
+  </span><span class="n">direction</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"up"</span><span class="p">,</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"up1"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Choice 1"</span><span class="p">),</span><span class="w">
+  </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"up2"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Choice 2"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
 
-  <div><div class="d-flex">
-  <div class="dropdown dropup m-3">
-    <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">up</button>
-    <div class="dropdown-menu">
-      <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nam euismod</button>
-      <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nunc eleifend</button>
-      <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nullam eu</button>
-    </div>
-  </div>
-  <div class="dropdown m-3">
-    <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">down</button>
-    <div class="dropdown-menu">
-      <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nam euismod</button>
-      <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nunc eleifend</button>
-      <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nullam eu</button>
-    </div>
-  </div>
-  <div class="dropdown dropleft m-3">
-    <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">left</button>
-    <div class="dropdown-menu">
-      <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nam euismod</button>
-      <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nunc eleifend</button>
-      <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nullam eu</button>
-    </div>
-  </div>
-  <div class="dropdown dropright m-3">
-    <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">right</button>
-    <div class="dropdown-menu">
-      <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nam euismod</button>
-      <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nunc eleifend</button>
-      <button class="yonder-button dropdown-item" type="button" role="button" autocomplete="off">Nullam eu</button>
-    </div>
+  <div><div class="dropdown dropup">
+  <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Up!</button>
+  <div class="dropdown-menu">
+    <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="up1" autocomplete="off">Choice 1</button>
+    <button class="yonder-button btn btn-grey dropdown-item" type="button" role="button" id="up2" autocomplete="off">Choice 2</button>
   </div>
 </div></div>
   
@@ -537,7 +470,7 @@ to align the dropdown menu to, defaults to <code class="highlighter-rouge">"left
 </div>
 
 
-<h4><p>Include forms</p>
+<h4><p>Dropdowns with forms</p>
 </h4>
 
 <div class="mb-2">
@@ -562,9 +495,7 @@ to align the dropdown menu to, defaults to <code class="highlighter-rouge">"left
         </span><span class="n">placeholder</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"*****"</span><span class="w">
       </span><span class="p">)</span><span class="w">
     </span><span class="p">),</span><span class="w">
-    </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">submitInput</span><span class="p">(</span><span class="w">
-      </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Sign in"</span><span class="w">
-    </span><span class="p">)</span><span class="w">
+    </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buttonInput</span><span class="p">(</span><span class="s2">"signin"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Sign in"</span><span class="p">)</span><span class="w">
   </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
     </span><span class="n">padding</span><span class="p">(</span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w"> </span><span class="m">4</span><span class="p">)</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
@@ -577,6 +508,7 @@ to align the dropdown menu to, defaults to <code class="highlighter-rouge">"left
         <label>Email address</label>
         <div class="yonder-textual" id="email">
           <input class="form-control" type="text" placeholder="email@example.com" autocomplete="off"/>
+          <div class="valid-feedback"></div>
           <div class="invalid-feedback"></div>
         </div>
       </div>
@@ -584,10 +516,11 @@ to align the dropdown menu to, defaults to <code class="highlighter-rouge">"left
         <label>Password</label>
         <div class="yonder-textual" id="password">
           <input class="form-control" type="password" placeholder="*****" autocomplete="off"/>
+          <div class="valid-feedback"></div>
           <div class="invalid-feedback"></div>
         </div>
       </div>
-      <button class="yonder-submit btn btn-blue" role="button" value="Sign in">Sign in</button>
+      <button class="yonder-button btn btn-grey yonder-form-submit" type="button" role="button" id="signin" autocomplete="off">Sign in</button>
     </form>
   </div>
 </div></div>

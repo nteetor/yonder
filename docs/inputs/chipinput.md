@@ -1,8 +1,13 @@
 ---
 name: chipInput
-title: A chips input
-description: A selectize alternative.
-inheritParams: buttonInput
+title: Chip input, selectize alternative
+description: |-
+  The chip input is a selectize alternative. Choices are selected from a
+  dropdown menu and appear as chips below the input's text box. Chips do not
+  appear in the order they are selected. Instead chips are shown in the order
+  specified by the `choices` argument. Use the `max` argument to limit the
+  number of choices a user may select.
+inheritParams: checkboxInput
 parameters:
 - name: choices
   description: A character vector or list specifying the possible choices.
@@ -15,12 +20,15 @@ parameters:
     One or more of `values` specifying which values are selected
     by default.
 - name: max
-  description: A number specifying the maximum number of items a user may select.
-- name: fill
   description: |-
-    One of `TRUE` or `FALSE` specifying the layout of chips. If
-    `TRUE` chips fill the width of the parent element, otherwise if `FALSE` the
-    chips are rendered inline, defaults to `TRUE`.
+    A number specifying the maximum number of items a user may select,
+    defaults to `Inf`.
+- name: inline
+  description: |-
+    One of `TRUE` or `FALSE` specifying if chips are rendered
+    inline. If `TRUE` multiple chips may fit onto a single row, otherwise, if
+    `FALSE`, chips expand to fill the width of their parent element, one chip
+    per row.
 sections:
 - title: '**Example** simple application'
   body: |-
@@ -30,7 +38,7 @@ sections:
         id = "chips",
         choices = paste("Option number", 1:10),
         values = 1:10,
-        fill = TRUE
+        inline = TRUE
       ) %>%
         width("1/2")
     )
@@ -80,7 +88,7 @@ examples:
       )
     output: |-
       <div id="chip1" class="yonder-chip btn-group dropup" data-max="-1">
-        <input class="form-control form-control-sm" data-toggle="dropdown"/>
+        <input class="form-control" data-toggle="dropdown"/>
         <div class="dropdown-menu">
           <button class="dropdown-item" value="Choice 1">Choice 1</button>
           <button class="dropdown-item" value="Choice 2">Choice 2</button>
@@ -88,7 +96,7 @@ examples:
           <button class="dropdown-item" value="Choice 4">Choice 4</button>
           <button class="dropdown-item" value="Choice 5">Choice 5</button>
         </div>
-        <div class="chips chips-block chips-grey">
+        <div class="chips chips-inline chips-grey">
           <button class="chip" value="Choice 1">
             <span class="chip-content">Choice 1</span>
             <span class="chip-close">&times;</span>

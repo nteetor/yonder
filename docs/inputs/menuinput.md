@@ -5,7 +5,7 @@ description: |-
   A togglable dropdown menu input. Menu inputs may be used as standalone
   reactive inputs or within a [navInput()]. For building custom, more complex
   dropdown elements please see [dropdown()].
-inheritParams: buttonInput
+inheritParams: checkboxInput
 parameters:
 - name: label
   description: |-

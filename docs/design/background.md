@@ -3,7 +3,7 @@ name: background
 title: Tag element background color
 description: Use `background()` to modify the background color of a tag element.
 parameters:
-- name: .tag
+- name: tag
   description: A tag element.
 - name: color
   description: |-
@@ -55,7 +55,7 @@ examples:
         lapply(
           colors,
           background,
-          .tag = div() %>%
+          tag = div() %>%
             padding(5) %>%
             margin(2)
         )

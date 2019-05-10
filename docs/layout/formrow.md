@@ -61,7 +61,7 @@ examples:
         ),
         formGroup(
           label = "Username",
-          groupInput(
+          groupTextInput(
             id = "username",
             left = "@"
           )
@@ -82,6 +82,7 @@ examples:
               <label>Email</label>
               <div class="yonder-textual" id="email">
                 <input class="form-control" type="email" placeholder="e@mail.com" autocomplete="off"/>
+                <div class="valid-feedback"></div>
                 <div class="invalid-feedback"></div>
               </div>
             </div>
@@ -89,6 +90,7 @@ examples:
               <label>Password</label>
               <div class="yonder-textual" id="password">
                 <input class="form-control" type="password" placeholder="123456" autocomplete="off"/>
+                <div class="valid-feedback"></div>
                 <div class="invalid-feedback"></div>
               </div>
               <small class="form-text text-muted">Please consider something better than 123456</small>
@@ -96,11 +98,13 @@ examples:
           </div>
           <div class="form-group">
             <label>Username</label>
-            <div class="yonder-group input-group" id="username">
+            <div class="yonder-group-text input-group" id="username">
               <div class="input-group-prepend">
                 <span class="input-group-text">@</span>
               </div>
               <input type="text" class="form-control" autocomplete="off"/>
+              <div class="valid-feedback"></div>
+              <div class="invalid-feedback"></div>
             </div>
           </div>
           <button class="yonder-button btn btn-blue" type="button" role="button" id="go" autocomplete="off">Go!</button>

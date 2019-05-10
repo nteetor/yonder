@@ -23,25 +23,11 @@
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/bootstrap.min.css>
-  
-  
-  
   <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
   
   
   
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.css>
-  
-  
-  
-  <link rel="stylesheet" href=/yonder/assets/css/ion.rangeSlider.skinFlat.css>
-  
-  
-  
-  <script src=/yonder/assets/js/ion.rangeSlider.min.js type="text/javascript"></script>
-  
-  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
   
   
   
@@ -97,8 +83,8 @@
 
     <dt >
       <a class="text-dark"
-         href=/yonder/outputs/badgeoutput.html
-         >Outputs</a>
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
     </dt>
     
     
@@ -124,26 +110,6 @@
     
 
     
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/utilities/disableinput.html
-         >Utilities</a>
-    </dt>
-    
-    
-
-    
-
-    <dt >
-      <a class="text-dark"
-         href=/yonder/rendering/elementoutput.html
-         >Rendering</a>
-    </dt>
-    
-    
-
-    
     
   </dl>
 </div>
@@ -163,7 +129,7 @@
 <h4><p>Inputs</p>
 </h4>
 <p><p>Yonder provides many familiar inputs like <a href="inputs/selectinput.html">selectInput()</a> or <a href="inputs/radioinput.html">radioInput()</a>.
-There are also new inputs like <a href="inputs/groupinput.html">groupInput()</a> or <a href="inputs/forminput.html">formInput()</a>.</p>
+There are also new inputs like <a href="inputs/grouptextinput.html">groupTextInput()</a> or <a href="inputs/forminput.html">formInput()</a>.</p>
 
 <p><strong>Changes to be mindful of</strong></p>
 
@@ -177,10 +143,6 @@ a label above the input. Button and menu inputs do include a <code class="highli
 argument, but these arguments refer to button labels. If you would like to
 add a label above an input please use <a href="layout/formgroup.html">formGroup()</a>.</p>
   </li>
-  <li>
-    <p><code class="highlighter-rouge">shiny::sliderInput()</code> has been split into three inputs: <a href="inputs/rangeinput.html">rangeInput()</a>,
-<a href="inputs/intervalinput.html">intervalInput()</a>, and <a href="inputs/sliderinput.html">sliderInput()</a>.</p>
-  </li>
 </ul>
 
 <p><strong>Familiar variants</strong></p>
@@ -192,16 +154,10 @@ add a label above an input please use <a href="layout/formgroup.html">formGroup(
     <p><code class="highlighter-rouge">radioButtons()</code> use <a href="inputs/radioinput.html">radioInput()</a></p>
   </li>
   <li>
-    <p><code class="highlighter-rouge">checkboxGroupInput()</code> use <a href="inputs/checkbarinput.html">checkbarInput()</a></p>
+    <p><code class="highlighter-rouge">checkboxGroupInput()</code> use <a href="inputs/checkbarinput.html">checkbarInput()</a> or <a href="inputs/checkboxinput.html">checkboxInput()</a></p>
   </li>
   <li>
     <p><code class="highlighter-rouge">numericInput()</code> use <a href="inputs/numberinput.html">numberInput()</a></p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">submitButton()</code> use <a href="inputs/submitinput.html">submitInput()</a></p>
-  </li>
-  <li>
-    <p><code class="highlighter-rouge">updateRadioButtons()</code>, <code class="highlighter-rouge">updateTextInput()</code>, etc. use <a href="utilities/updateinput.html">updateInput()</a></p>
   </li>
 </ul>
 </p>

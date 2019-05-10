@@ -3,7 +3,7 @@ name: border
 title: Tag element borders
 description: Use `border()` to add or modify tag element borders.
 parameters:
-- name: .tag
+- name: tag
   description: A tag element.
 - name: color
   description: |-
@@ -55,7 +55,7 @@ examples:
         lapply(
           sides,
           border,
-          .tag = div() %>%
+          tag = div() %>%
             height(3) %>%
             width(3),
           color = "black"

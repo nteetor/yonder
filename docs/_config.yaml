@@ -80,18 +80,10 @@ hyderogen:
     path: /assets/js/jquery.min.js
   - ext: js
     path: /assets/js/popper.min.js
-  - ext: css
-    path: /assets/css/bootstrap.min.css
   - ext: js
     path: /assets/js/bootstrap.min.js
   - ext: css
-    path: /assets/css/ion.rangeSlider.css
-  - ext: css
-    path: /assets/css/ion.rangeSlider.skinFlat.css
-  - ext: js
-    path: /assets/js/ion.rangeSlider.min.js
-  - ext: png
-    path: /assets/img/sprite-skin-flat.png
+    path: /assets/css/yonder.min.css
   - ext: js
     path: /assets/js/yonder.min.js
   - ext: js

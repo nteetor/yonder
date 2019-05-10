@@ -1,0 +1,605 @@
+<!doctype html>
+<html lang="en">
+  <head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>yonder - updateListGroupInput</title>
+
+  <!--
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
+
+  <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.6/umd/popper.min.js" integrity="sha384-wHAiFfRlMFy6i5SRaxvfOCifBUQy1xHdJ/yoi7FRNXMRBu5WHdZYu1hA6ZOblgut" crossorigin="anonymous"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js" integrity="sha384-B0UglyR+jN6CkvvICOB2joaf5I4l3gm9GU6Hc1og6Ls7i6U/mkkaduKaBhlAXv9k" crossorigin="anonymous"></script>
+  -->
+
+  
+  
+  <script src=/yonder/assets/js/jquery.min.js type="text/javascript"></script>
+  
+  
+  
+  <script src=/yonder/assets/js/popper.min.js type="text/javascript"></script>
+  
+  
+  
+  <script src=/yonder/assets/js/bootstrap.min.js type="text/javascript"></script>
+  
+  
+  
+  <link rel="stylesheet" href=/yonder/assets/css/yonder.min.css>
+  
+  
+  
+  <script src=/yonder/assets/js/yonder.min.js type="text/javascript"></script>
+  
+  
+  
+  <script src=/yonder/assets/js/iris-json.js type="text/javascript"></script>
+  
+  
+
+  <link rel="stylesheet" href="/yonder/assets/css/main.css">
+</head>
+
+  <body>
+    <div class="container-fluid">
+      <div class="row">
+        <style>
+          .sidebar, .content {
+          height: 100vh;
+          overflow-y: scroll;
+          }
+        </style>
+        <div class="sidebar col col-auto">
+          <div class="sidebar pr-4">
+  <dl>
+    
+    
+
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/design/active.html
+         >Design</a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/content/alert.html
+         >Content</a>
+    </dt>
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/rendering/badgeelement.html
+         >Rendering</a>
+    </dt>
+    
+    
+
+    
+
+    <dt 
+        class = "mt-3"
+        >
+      <a class="text-dark"
+         href=/yonder/inputs/buttongroupinput.html
+         >Inputs</a>
+    </dt>
+    
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/buttongroupinput.html
+         >buttonGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/buttoninput.html
+         >buttonInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/checkbarinput.html
+         >checkbarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/checkboxinput.html
+         >checkboxInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/chipinput.html
+         >chipInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/emailinput.html
+         >emailInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/fileinput.html
+         >fileInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/forminput.html
+         >formInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/groupselectinput.html
+         >groupSelectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/grouptextinput.html
+         >groupTextInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/linkinput.html
+         >linkInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/listgroupinput.html
+         >listGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/menuinput.html
+         >menuInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/navinput.html
+         >navInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/numberinput.html
+         >numberInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/passwordinput.html
+         >passwordInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/radiobarinput.html
+         >radiobarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/radioinput.html
+         >radioInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/rangeinput.html
+         >rangeInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/searchinput.html
+         >searchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/selectinput.html
+         >selectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/switchinput.html
+         >switchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/telephoneinput.html
+         >telephoneInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/textinput.html
+         >textInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatebuttongroupinput.html
+         >updateButtonGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatebuttoninput.html
+         >updateButtonInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatecheckbarinput.html
+         >updateCheckbarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatecheckboxinput.html
+         >updateCheckboxInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatechipinput.html
+         >updateChipInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateemailinput.html
+         >updateEmailInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updategroupselectinput.html
+         >updateGroupSelectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updategrouptextinput.html
+         >updateGroupTextInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatelinkinput.html
+         >updateLinkInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatelistgroupinput.html
+         >updateListGroupInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatemenuinput.html
+         >updateMenuInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatenavinput.html
+         >updateNavInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatenumberinput.html
+         >updateNumberInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatepassowrdinput.html
+         >updatePassowrdInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateradiobarinput.html
+         >updateRadiobarInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateradioinput.html
+         >updateRadioInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updaterangeinput.html
+         >updateRangeInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatesearchinput.html
+         >updateSearchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateselectinput.html
+         >updateSelectInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateswitchinput.html
+         >updateSwitchInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatetelephoneinput.html
+         >updateTelephoneInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updatetextinput.html
+         >updateTextInput</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/inputs/updateurlinput.html
+         >updateUrlInput</a>
+    </dd>
+    
+    <dd class="mb-3">
+      <a class="text-muted"
+         href=/yonder/inputs/urlinput.html
+         >urlInput</a>
+    </dd>
+    
+    
+    
+
+    
+
+    <dt >
+      <a class="text-dark"
+         href=/yonder/layout/column.html
+         >Layout</a>
+    </dt>
+    
+    
+
+    
+    
+  </dl>
+</div>
+
+        </div>
+        <div class="content col">
+          <h2><p>List group inputs</p>
+</h2>
+<p><p>List group inputs are an actionable list of items. They behave similarly to
+checkboxes or radios, that is, users may select one or more items from the
+list. However, list group items may include highly variable content.</p>
+</p>
+
+<dl>
+  
+  <dt><p>choices</p>
+</dt>
+  <dd><p>A vector of character strings or list of tag elements specifying
+the content of the list group’s items.</p>
+</dd>
+  
+  <dt><p>values</p>
+</dt>
+  <dd><p>A character vector specifying the values of the list items,
+defaults to <code class="highlighter-rouge">choices</code>.</p>
+</dd>
+  
+  <dt><p>selected</p>
+</dt>
+  <dd><p>One or more of <code class="highlighter-rouge">values</code> specifying which choices are selected
+by default, defaults to <code class="highlighter-rouge">NULL</code>, in which case no choice is selected.</p>
+</dd>
+  
+  <dt><p>layout</p>
+</dt>
+  <dd><p>A <a href="responsive.html">responsive</a> argument. One of <code class="highlighter-rouge">"vertical"</code> or <code class="highlighter-rouge">"horizontal"</code>
+specifying how list items are laid out, defaults to <code class="highlighter-rouge">"vertical"</code>. Note, if
+<code class="highlighter-rouge">layout</code> is <code class="highlighter-rouge">"horizontal"</code> and the <code class="highlighter-rouge">flush</code> argument is ignored.</p>
+</dd>
+  
+  <dt><p>flush</p>
+</dt>
+  <dd><p>One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying if the list group is
+rendered without an outside border, defaults to <code class="highlighter-rouge">FALSE</code>. Removing the list
+group border is useful when rendering a list group inside a custom parent
+container, e.g. inside a <a href="content/card.html">card()</a>.</p>
+</dd>
+  
+</dl>
+
+
+<h4><p>Navigation with a list group</p>
+</h4>
+<p><p>A list group can also control a set of panes. Be sure to set <code class="highlighter-rouge">multiple =
+FALSE</code>. This layout is reminiscent of a table of contents.</p>
+
+<div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
+  </span><span class="n">columns</span><span class="p">(</span><span class="w">
+    </span><span class="n">column</span><span class="p">(</span><span class="w">
+      </span><span class="n">width</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">3</span><span class="p">,</span><span class="w">
+      </span><span class="n">listGroupInput</span><span class="p">(</span><span class="w">
+        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"nav"</span><span class="p">,</span><span class="w">
+        </span><span class="n">selected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane1"</span><span class="p">,</span><span class="w">
+        </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+          </span><span class="s2">"Item 1"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"Item 2"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"Item 3"</span><span class="w">
+        </span><span class="p">),</span><span class="w">
+        </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
+          </span><span class="s2">"pane1"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"pane2"</span><span class="p">,</span><span class="w">
+          </span><span class="s2">"pane3"</span><span class="w">
+        </span><span class="p">)</span><span class="w">
+      </span><span class="p">)</span><span class="w">
+    </span><span class="p">),</span><span class="w">
+    </span><span class="n">column</span><span class="p">(</span><span class="w">
+      </span><span class="n">navContent</span><span class="p">(</span><span class="w">
+        </span><span class="n">navPane</span><span class="p">(</span><span class="w">
+          </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane1"</span><span class="p">,</span><span class="w">
+          </span><span class="n">p</span><span class="p">(</span><span class="s2">"Pellentesque tristique imperdiet tortor."</span><span class="p">)</span><span class="w">
+        </span><span class="p">),</span><span class="w">
+        </span><span class="n">navPane</span><span class="p">(</span><span class="w">
+          </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane2"</span><span class="p">,</span><span class="w">
+          </span><span class="n">p</span><span class="p">(</span><span class="s2">"Sed bibendum. Donec pretium posuere tellus."</span><span class="p">)</span><span class="w">
+        </span><span class="p">),</span><span class="w">
+        </span><span class="n">navPane</span><span class="p">(</span><span class="w">
+          </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"pane3"</span><span class="p">,</span><span class="w">
+          </span><span class="n">p</span><span class="p">(</span><span class="s2">"Pellentesque tristique imperdiet tortor."</span><span class="p">)</span><span class="w">
+        </span><span class="p">)</span><span class="w">
+      </span><span class="p">)</span><span class="w">
+    </span><span class="p">)</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w">
+
+</span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">nav</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
+    </span><span class="n">showPane</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">nav</span><span class="p">)</span><span class="w">
+  </span><span class="p">})</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
+</p>
+
+
+
+
+<h4><p>An actionable list group</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">listGroupInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"list1"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"Item"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-list-group list-group" id="list1">
+  <button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
+  <button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
+  <button class="list-group-item list-group-item-action" value="Item 3">Item 3</button>
+  <button class="list-group-item list-group-item-action" value="Item 4">Item 4</button>
+  <button class="list-group-item list-group-item-action" value="Item 5">Item 5</button>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>List group within a card</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">card</span><span class="p">(</span><span class="w">
+  </span><span class="n">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">h</span><span class="m">6</span><span class="p">(</span><span class="s2">"Pick an item"</span><span class="p">),</span><span class="w">
+  </span><span class="n">listGroupInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"list2"</span><span class="p">,</span><span class="w">
+    </span><span class="n">flush</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">TRUE</span><span class="p">,</span><span class="w">
+    </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"Item"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">),</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="card">
+  <div class="card-header">
+    <h6>Pick an item</h6>
+  </div>
+  <div class="yonder-list-group list-group list-group-flush" id="list2">
+    <button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
+    <button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
+    <button class="list-group-item list-group-item-action" value="Item 3">Item 3</button>
+    <button class="list-group-item list-group-item-action" value="Item 4">Item 4</button>
+    <button class="list-group-item list-group-item-action" value="Item 5">Item 5</button>
+  </div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Horizontal list group</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">listGroupInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"list3"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"Item"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">4</span><span class="p">),</span><span class="w">
+  </span><span class="n">layout</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"horizontal"</span><span class="w">
+</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-list-group list-group list-group-horizontal" id="list3">
+  <button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
+  <button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
+  <button class="list-group-item list-group-item-action" value="Item 3">Item 3</button>
+  <button class="list-group-item list-group-item-action" value="Item 4">Item 4</button>
+</div></div>
+  
+  
+</div>
+
+
+          <div class="d-flex justify-content-center">
+            <a class="text-muted p-3"
+               href="https://github.com/nteetor"
+               >github</a>
+            <a class="text-muted p-3"
+               href="https://twitter.com/ntweetor"
+               >twitter</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

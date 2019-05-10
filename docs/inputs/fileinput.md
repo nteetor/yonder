@@ -2,7 +2,7 @@
 name: fileInput
 title: Upload user files
 description: Upload files to the server.
-inheritParams: buttonInput
+inheritParams: checkboxInput
 parameters:
 - name: placeholder
   description: |-
@@ -12,14 +12,6 @@ parameters:
   description: |-
     A character string specifying the label of file input, defaults
     to `"Browse"`.
-- name: left,right
-  description: |-
-    A character string or button element placed prepended or
-    appended respectively to the file input. For more information refer to
-    [groupInput()](inputs/groupinput.html).
-
-    Clicking on an element specified by `right` also opens the file input
-    dialog.
 - name: multiple
   description: |-
     One of `TRUE` or `FALSE` specifying whether or not the user
@@ -28,10 +20,6 @@ parameters:
   description: |-
     A character vector of possible MIME types or file extensions,
     defaults to `NULL`, in which case any file type may be selected.
-details: |-
-  Be careful when adjusting the right or left margin of a file input. In the
-  current version of Bootstrap file inputs can be pushed off the side of a
-  page.
 sections:
 - title: '**Example** uploading a file'
   body: |-
@@ -58,12 +46,11 @@ examples:
   - type: code
     content: fileInput(id = "file1")
     output: |-
-      <div class="yonder-file input-group" id="file1">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" multiple autocomplete="off"/>
-          <label class="custom-file-label" data-browse="Browse">Choose file</label>
-          <div class="invalid-feedback"></div>
-        </div>
+      <div class="yonder-file custom-file" id="file1">
+        <input type="file" class="custom-file-input" multiple autocomplete="off"/>
+        <label class="custom-file-label" data-browse="Browse">Choose file</label>
+        <div class="valid-feedback"></div>
+        <div class="invalid-feedback"></div>
       </div>
 - title: Adding a button
   body:
@@ -75,15 +62,11 @@ examples:
           background("green")
       )
     output: |-
-      <div class="yonder-file input-group" id="file2">
-        <div class="input-group-prepend">
-          <button class="yonder-button btn btn-green" type="button" role="button" id="upload" autocomplete="off">Upload</button>
-        </div>
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" multiple autocomplete="off"/>
-          <label class="custom-file-label" data-browse="Browse">Choose file</label>
-          <div class="invalid-feedback"></div>
-        </div>
+      <div class="yonder-file custom-file" id="file2" left="&lt;button class=&quot;yonder-button btn btn-green&quot; type=&quot;button&quot; role=&quot;button&quot; id=&quot;upload&quot; autocomplete=&quot;off&quot;&gt;Upload&lt;/button&gt;">
+        <input type="file" class="custom-file-input" multiple autocomplete="off"/>
+        <label class="custom-file-label" data-browse="Browse">Choose file</label>
+        <div class="valid-feedback"></div>
+        <div class="invalid-feedback"></div>
       </div>
 - title: Customizing text
   body:
@@ -95,12 +78,11 @@ examples:
         browse = "Go go go!"
       )
     output: |-
-      <div class="yonder-file input-group" id="file3">
-        <div class="custom-file">
-          <input type="file" class="custom-file-input" multiple autocomplete="off"/>
-          <label class="custom-file-label" data-browse="Go go go!">Pick a file</label>
-          <div class="invalid-feedback"></div>
-        </div>
+      <div class="yonder-file custom-file" id="file3">
+        <input type="file" class="custom-file-input" multiple autocomplete="off"/>
+        <label class="custom-file-label" data-browse="Go go go!">Pick a file</label>
+        <div class="valid-feedback"></div>
+        <div class="invalid-feedback"></div>
       </div>
 rdname: fileInput
 layout: doc

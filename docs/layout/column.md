@@ -88,33 +88,38 @@ examples:
       <div class="container-fluid">
         <div class="row">
           <div class="col-4">
-            <div class="card">
+            <div class="card" title="Sidebar">
               <div class="card-body">
-                <h5 class="card-title">Sidebar</h5>
                 <div class="form-group">
                   <label>Control 1</label>
-                  <div class="yonder-select" id="control1">
-                    <select class="custom-select">
-                      <option value="...">...</option>
-                    </select>
+                  <div class="yonder-select btn-group" id="control1">
+                    <input type="text" class="form-control custom-select" data-toggle="dropdown" placeholder="..."/>
+                    <div class="dropdown-menu">
+                      <button class="dropdown-item active" value="...">...</button>
+                    </div>
+                    <div class="valid-feedback"></div>
                     <div class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label>Control 2</label>
-                  <div class="yonder-select" id="control2">
-                    <select class="custom-select">
-                      <option value="...">...</option>
-                    </select>
+                  <div class="yonder-select btn-group" id="control2">
+                    <input type="text" class="form-control custom-select" data-toggle="dropdown" placeholder="..."/>
+                    <div class="dropdown-menu">
+                      <button class="dropdown-item active" value="...">...</button>
+                    </div>
+                    <div class="valid-feedback"></div>
                     <div class="invalid-feedback"></div>
                   </div>
                 </div>
                 <div class="form-group">
                   <label>Control 3</label>
-                  <div class="yonder-select" id="control3">
-                    <select class="custom-select">
-                      <option value="...">...</option>
-                    </select>
+                  <div class="yonder-select btn-group" id="control3">
+                    <input type="text" class="form-control custom-select" data-toggle="dropdown" placeholder="..."/>
+                    <div class="dropdown-menu">
+                      <button class="dropdown-item active" value="...">...</button>
+                    </div>
+                    <div class="valid-feedback"></div>
                     <div class="invalid-feedback"></div>
                   </div>
                 </div>

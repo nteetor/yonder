@@ -2,9 +2,9 @@
 name: collapsePane
 title: Collapsible sections
 description: |-
-  The `collapsible()` function wraps a tag element in a collasible div
-  element. The state of the element, shown or hidden, is toggled using
-  `hideCollapse()`, `showCollapse()`, and `toggleCollapse()`.
+  The `collapsiblePane()` creates a collapsible container. The state of the
+  container, expanded or collapsed, is toggled using `expandPane()`,
+  `collapsePane()`, and `togglePane()`.
 parameters:
 - name: id
   description: |-
@@ -19,7 +19,8 @@ parameters:
   description: |-
     Tag elements inside the collapsible pane or additional named
     arguments passed as HTML attributes to parent element.
-inheritParams: updateInput
+- name: session
+  description: A reactive context, defaults to [getDefaultReactiveDomain()](getdefaultreactivedomain.html).
 details: |-
   Padding may not be applied to the collapsible pane div element. To pad a
   collapsible pane first wrap the pane in another element and add padding to

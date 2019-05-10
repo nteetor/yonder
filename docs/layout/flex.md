@@ -7,7 +7,7 @@ description: |-
   container see [display()]. By default tag elements within a flex container
   are treated as flex items.
 parameters:
-- name: .tag
+- name: tag
   description: A tag element.
 - name: direction
   description: |-
@@ -36,9 +36,11 @@ parameters:
 - name: wrap
   description: |-
     A [responsive](responsive.html) argument. One of `TRUE` or `FALSE` specifying
-    whether to wrap flex items inside the flex containter, `.tag`, defaults
+    whether to wrap flex items inside the flex containter, `tag`, defaults
     to `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
     not wrap. See the **wrap** section below for more.
+family: layout
+export: ''
 examples:
 - title: Different `direction`s
   body:
@@ -254,8 +256,6 @@ examples:
         <div class="p-3 border">A flex item</div>
         <div class="p-3 border">A flex item</div>
       </div>
-family: layout
-export: ''
 rdname: flex
 sections: []
 layout: doc

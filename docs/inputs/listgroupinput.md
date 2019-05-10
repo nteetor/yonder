@@ -5,7 +5,7 @@ description: |-
   List group inputs are an actionable list of items. They behave similarly to
   checkboxes or radios, that is, users may select one or more items from the
   list. However, list group items may include highly variable content.
-inheritParams: buttonInput
+inheritParams: checkboxInput
 parameters:
 - name: choices
   description: |-
@@ -116,7 +116,9 @@ examples:
       )
     output: |-
       <div class="card">
-        <h6 class="card-header">Pick an item</h6>
+        <div class="card-header">
+          <h6>Pick an item</h6>
+        </div>
         <div class="yonder-list-group list-group list-group-flush" id="list2">
           <button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
           <button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
