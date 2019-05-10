@@ -21,7 +21,7 @@ parameters:
     by default, defaults to `NULL`, in which case no choice is selected.
 - name: layout
   description: |-
-    A [responsive](responsive.html) argument. One of `"vertical"` or `"horizontal"`
+    A [responsive](layout/responsive.html) argument. One of `"vertical"` or `"horizontal"`
     specifying how list items are laid out, defaults to `"vertical"`. Note, if
     `layout` is `"horizontal"` and the `flush` argument is ignored.
 - name: flush

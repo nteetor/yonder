@@ -56,3 +56,9 @@ How: use name \code{xl}.
 When: the style is applied when the viewport is at least 1200px wide, think
 large desktops.
 }
+\seealso{
+Other layout: \code{\link{column}}, \code{\link{fieldset}},
+  \code{\link{flex}}, \code{\link{formGroup}},
+  \code{\link{navbar}}
+}
+\concept{layout}

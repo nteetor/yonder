@@ -65,6 +65,7 @@ div(
 }
 \seealso{
 Other layout: \code{\link{column}}, \code{\link{fieldset}},
-  \code{\link{flex}}, \code{\link{formGroup}}
+  \code{\link{flex}}, \code{\link{formGroup}},
+  \code{\link{responsive}}
 }
 \concept{layout}

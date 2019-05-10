@@ -10,7 +10,7 @@ parameters:
   description: A tag element.
 - name: side
   description: |-
-    A [responsive](responsive.html) argument. One of `"left"` or `"right"` specifying
+    A [responsive](layout/responsive.html) argument. One of `"left"` or `"right"` specifying
     the side to float the element.
 family: design
 export: ''

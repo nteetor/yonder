@@ -70,8 +70,8 @@ examples:
             <label>Is this for delivery?</label>
             <div class="yonder-checkbox" id="deliver">
               <div class="custom-control custom-checkbox">
-                <input class="custom-control-input" type="checkbox" id="checkbox-988-40" name="checkbox-988-40" value="Deliver" autocomplete="off"/>
-                <label class="custom-control-label" for="checkbox-988-40">Deliver</label>
+                <input class="custom-control-input" type="checkbox" id="checkbox-313-790" name="checkbox-313-790" value="Deliver" autocomplete="off"/>
+                <label class="custom-control-label" for="checkbox-313-790">Deliver</label>
                 <div class="valid-feedback"></div>
                 <div class="invalid-feedback"></div>
               </div>

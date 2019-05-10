@@ -49,6 +49,7 @@ fieldset(
 }
 \seealso{
 Other layout: \code{\link{column}}, \code{\link{flex}},
-  \code{\link{formGroup}}, \code{\link{navbar}}
+  \code{\link{formGroup}}, \code{\link{navbar}},
+  \code{\link{responsive}}
 }
 \concept{layout}

@@ -13,7 +13,7 @@ parameters:
   description: A tag element.
 - name: all,top,right,bottom,left
   description: |-
-    A [responsive](responsive.html) argument.
+    A [responsive](layout/responsive.html) argument.
 
     For **padding()**, one of `0:5` or `"auto"` specifying padding for one or
     more sides of the tag element. 0 removes all inner space and 5 adds the
@@ -91,8 +91,8 @@ examples:
         </div>
         <div class="yonder-checkbox" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-970-358" name="checkbox-970-358" value="Remember me" autocomplete="off"/>
-            <label class="custom-control-label" for="checkbox-970-358">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-44-44" name="checkbox-44-44" value="Remember me" autocomplete="off"/>
+            <label class="custom-control-label" for="checkbox-44-44">Remember me</label>
             <div class="valid-feedback"></div>
             <div class="invalid-feedback"></div>
           </div>
@@ -145,8 +145,8 @@ examples:
         </div>
         <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-165-274" name="checkbox-165-274" value="Remember me" autocomplete="off"/>
-            <label class="custom-control-label" for="checkbox-165-274">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-535-269" name="checkbox-535-269" value="Remember me" autocomplete="off"/>
+            <label class="custom-control-label" for="checkbox-535-269">Remember me</label>
             <div class="valid-feedback"></div>
             <div class="invalid-feedback"></div>
           </div>

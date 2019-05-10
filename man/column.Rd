@@ -132,6 +132,7 @@ container(
 }
 \seealso{
 Other layout: \code{\link{fieldset}}, \code{\link{flex}},
-  \code{\link{formGroup}}, \code{\link{navbar}}
+  \code{\link{formGroup}}, \code{\link{navbar}},
+  \code{\link{responsive}}
 }
 \concept{layout}

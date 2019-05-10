@@ -55,6 +55,10 @@ HTML standards.
 
 rangeInput(id = "range1")
 
+### Custom step
+
+rangeInput(id = "range2", step = 10)
+
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},

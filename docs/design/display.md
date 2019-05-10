@@ -10,7 +10,7 @@ parameters:
   description: A tag element.
 - name: type
   description: |-
-    A [responsive](responsive.html) argument. One of `"inline"`, `"block"`,
+    A [responsive](layout/responsive.html) argument. One of `"inline"`, `"block"`,
     `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`.
 family: design
 export: ''

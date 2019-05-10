@@ -34,6 +34,10 @@
 #'
 #' rangeInput(id = "range1")
 #'
+#' ### Custom step
+#'
+#' rangeInput(id = "range2", step = 10)
+#'
 rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...) {
   assert_id()
 

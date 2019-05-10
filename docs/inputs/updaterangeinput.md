@@ -41,6 +41,14 @@ examples:
       <div class="yonder-range" id="range1">
         <input class="custom-range" type="range" step="1" min="0" max="100" value="0" autocomplete="off"/>
       </div>
+- title: Custom step
+  body:
+  - type: code
+    content: rangeInput(id = "range2", step = 10)
+    output: |-
+      <div class="yonder-range" id="range2">
+        <input class="custom-range" type="range" step="10" min="0" max="100" value="0" autocomplete="off"/>
+      </div>
 rdname: updateRangeInput
 sections: []
 layout: doc
