@@ -64,14 +64,15 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...) {
 
   if (default < min || default > max) {
     stop(
-      "invalid argument in `rangeInput()`,",
+      "invalid argument in `rangeInput()`, `default` must be between `min` ",
+      "and `max`",
       call. = FALSE
     )
   }
 
   if (!is.numeric(step)) {
     stop(
-      "invalid argument in `rangeInput()`,",
+      "invalid argument in `rangeInput()`, `step` must be a number",
       call. = FALSE
     )
   }

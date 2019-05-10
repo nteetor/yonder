@@ -46,18 +46,27 @@
 #' @export
 #' @examples
 #'
-#' ### Getting started
+#' ### Simple select input
 #'
 #' selectInput(
-#'   id = NULL,
+#'   id = "select1",
 #'   choices = c(
-#'     "Choose one",
 #'     "Choice 1",
 #'     "Choice 2",
 #'     "Choice 3"
 #'   ),
-#'   values = list(NULL, 1, 2, 3)
+#'   values = list(1, 2, 3)
 #' )
+#'
+#' ### Group select input
+#'
+#' groupSelectInput(
+#'   id = "select2",
+#'   choices = 1:5,
+#'   left = "$",
+#'   right = ".00"
+#' ) %>%
+#'   width(10)
 #'
 selectInput <- function(id, choices = NULL, values = choices,
                         selected = values[[1]], ...) {
