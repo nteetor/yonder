@@ -46,14 +46,6 @@ license "https://raw.githubusercontent.com/twbs/bootstrap/v4-dev/LICENSE" \
         "bootstrap"
 
 #
-# ion.rangeSlider
-#
-header "ion.rangeSlider"
-
-license "https://raw.githubusercontent.com/IonDen/ion.rangeSlider/master/License.md" \
-        "ion-rangeslider"
-
-#
 # jQuery
 #
 header "jQuery"
