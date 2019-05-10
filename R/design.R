@@ -194,7 +194,7 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
 #' ### Modifying input elements
 #'
 #' checkbarInput(
-#'   id = NULL,
+#'   id = "bar1",
 #'   choices = c(
 #'     "Nunc rutrum turpis sed pede.",
 #'     "Etiam vel neque.",

@@ -25,7 +25,7 @@ assert_id <- function() {
     )
   }
 
-  if (isTRUE(is.na(id)) || isTRUE(id == "")) {
+  if (!is.null(id) && (isTRUE(is.na(id)) || isTRUE(id == ""))) {
     stop(
       "invalid argument in `", fun, "`, `id` must be a non-zero length ",
       "character string",

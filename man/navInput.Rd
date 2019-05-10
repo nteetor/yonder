@@ -109,7 +109,7 @@ navInput(
   choices = list(
     "Tab 1",
     menuInput(
-      id = NULL,  # <- ignored
+      id = "menu1",
       label = "Tab 2",
       choices = c(
         "Action",

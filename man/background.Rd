@@ -22,7 +22,7 @@ Use \code{background()} to modify the background color of a tag element.
 ### Modifying input elements
 
 checkbarInput(
-  id = NULL,
+  id = "bar1",
   choices = c(
     "Nunc rutrum turpis sed pede.",
     "Etiam vel neque.",

@@ -74,7 +74,7 @@
 #' card(
 #'   header = "Please pick a flavor",
 #'   formInput(
-#'     id = NULL,
+#'     id = "form1",
 #'     formGroup(
 #'       label = "Ice creams",
 #'       radioInput(
@@ -83,7 +83,7 @@
 #'       )
 #'     ),
 #'     submit = buttonInput(  # <-
-#'       id = NULL,
+#'       id = "submi1",
 #'       label = "Make choice"
 #'     ) %>%
 #'       background("teal")
