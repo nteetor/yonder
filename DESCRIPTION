@@ -30,7 +30,7 @@ LazyData: true
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 6.1.1
 Depends:
-    R (>= 3.0.2),
+    R (>= 3.2),
     shiny (>= 1.1.0)
 Imports:
     htmltools,

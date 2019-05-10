@@ -6,6 +6,7 @@ cache: packages
 
 matrix:
   include:
+    - r: 3.2
     - r: oldrel
     - r: release
     - r: devel
