@@ -18,10 +18,10 @@ Authors@R: c(
     person("Johann", "Servoire", role = c("ctb", "cph"),
       comment = "bs-custom-file-input library")
     )
-Description: A new toolset to build shiny applications with the latest
-    Bootstrap components and design utilities. Includes refreshed reactive 
-    inputs, outputs, and new thruputs. Build applications with responsive 
-    layouts for devices of all sizes.
+Description: Build shiny applications with the latest Bootstrap components
+    and design utilities. Includes refreshed reactive inputs and outputs. 
+    Use responsive layouts to design and construct applications for devices
+    of all sizes.
 License: GPL-3 | file LICENSE
 URL: https://nteetor.github.io/yonder
 BugReports: https://github.com/nteetor/yonder/issues

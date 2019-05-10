@@ -8,6 +8,7 @@
   - current release (R 3.6.0)
   - development release
 * win-builder 
+  - old release
   - current release
   - development release
 
