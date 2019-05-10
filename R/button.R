@@ -8,8 +8,8 @@
 #'
 #' @param id A character string specifying the id of the reactive input.
 #'
-#' @param label A character string specifying the label text on the button
-#'   input.
+#' @param label A character string specifying the label text on the button or
+#'   link input.
 #'
 #' @param stretch One of `TRUE` or `FALSE` specifying stretched behaviour for
 #'   the button or link input, defaults to `FALSE`. If `TRUE`, the button or
@@ -25,6 +25,12 @@
 #'
 #' @param value A number specifying a new value for the button, defaults to
 #'   `NULL`.
+#'
+#' @param enable If `TRUE` the button is enabled and will react to clicks from
+#'   the user,  defaults to `NULL`.
+#'
+#' @param disable if `TRUE` the button is disabled and will not react to clicks
+#'   from the user, default to `NULL`.
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
@@ -147,12 +153,12 @@ updateButtonInput <- function(id, label = NULL, value = NULL,
     )
   }
 
-  if (!is.null(label)) {
-    label <- HTML(as.character(label))
-  }
+  content <- coerce_content(label)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
 
   session$sendInputMessage(id, list(
-    content = label,
+    content = content,
     value = value,
     disable = disable,
     enable = enable
@@ -162,7 +168,7 @@ updateButtonInput <- function(id, label = NULL, value = NULL,
 
 #' @rdname buttonInput
 #' @export
-linkInput <- function(id, ..., stretch = FALSE, download = FALSE) {
+linkInput <- function(id, label, ..., stretch = FALSE, download = FALSE) {
   assert_id()
 
   component <- (if (download) tags$a else tags$button)(
@@ -177,6 +183,7 @@ linkInput <- function(id, ..., stretch = FALSE, download = FALSE) {
     `_target` = if (download) NA,
     download = if (download) NA,
     id = id,
+    label,
     ...
   )
 
@@ -185,7 +192,7 @@ linkInput <- function(id, ..., stretch = FALSE, download = FALSE) {
 
 #' @rdname buttonInput
 #' @export
-updateLinkInput <- function(id, text = NULL, value = NULL,
+updateLinkInput <- function(id, label = NULL, value = NULL,
                             enable = NULL, disable = NULL,
                             session = getDefaultReactiveDomain())  {
   assert_id()
@@ -199,12 +206,16 @@ updateLinkInput <- function(id, text = NULL, value = NULL,
     )
   }
 
-  if (!is.null(text)) {
-    text <- HTML(as.character(text))
+  if (!is.null(value)) {
+    value <- as.numeric(value)
   }
 
+  content <- coerce_content(label)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
+
   session$sendInputMessage(id, list(
-    content = text,
+    content = content,
     value = value,
     enable = enable,
     disable = disable
@@ -222,6 +233,12 @@ updateLinkInput <- function(id, text = NULL, value = NULL,
 #'
 #' @param values A vector of values specifying the values of each button in the
 #'   group, defaults to `labels`.
+#'
+#' @param enable One of `values` indicating individual buttons to enable or
+#'   `TRUE` to enable the entire input, defaults to `NULL`.
+#'
+#' @param disable One of `values` indicating individual buttons to disable or
+#'   `TRUE` to disable the entire input, defaults to `NULL`.
 #'
 #' @family inputs
 #' @export
@@ -249,7 +266,7 @@ buttonGroupInput <- function(id, labels = NULL, values = labels, ...) {
   assert_labels()
 
   shiny::registerInputHandler(
-    type = "yonder.buttonGroup",
+    type = "yonder.button.group",
     fun = function(x, session, name) {
       if (length(x) > 1) x[[2]]
     },
@@ -278,14 +295,14 @@ updateButtonGroupInput <- function(id, labels = NULL, values = labels,
   assert_labels()
   assert_session()
 
-  if (!is.null(labels)) {
-    buttons <- HTML(as.character(map_buttons(labels, values)))
-  } else {
-    buttons <- NULL
-  }
+  buttons <- map_buttons(labels, values)
+
+  content <- coerce_content(buttons)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
 
   session$sendInputMessage(id, list(
-    content = buttons,
+    content = content,
     enable = enable,
     disable = disable
   ))

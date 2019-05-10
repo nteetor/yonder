@@ -1,65 +1,51 @@
 export let buttonGroupInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonGroupInputBinding, {
-  Selector: {
-    SELF: ".yonder-button-group"
+  find: (scope) => scope.querySelectorAll(".yonder-button-group[id]"),
+  getType: (el) => "yonder.button.group",
+  initialize: (el) => {
+    $(el).on("click", "button", (e) => {
+      buttonGroupInputBinding._VALUES[el.id] = e.delegateTarget.value;
+    });
+
+    buttonGroupInputBinding._VALUES[el.id] = null;
   },
-  Events: [
-    {
-      type: "click",
-      selector: "button",
-      callback: (el, e, self) => {
-        self._VALUES[el.id] = e.currentTarget.value;
-      }
+  getValue: (el) => {
+    return { force: Date.now(), value: buttonGroupInputBinding._VALUES[el.id] };
+  },
+  subscribe: (el, callback) => {
+    let $el = $(el);
+
+    $el.on("click.yonder", "button", (e) => callback());
+    $el.on("buttongroup.value.yonder", (e) => callback());
+  },
+  unsubscribe: (el) => $(el).off(".yonder"),
+  receiveMessage: (el, msg) => {
+    if (msg.content) {
+      el.innerHTML = msg.content;
     }
-  ],
-  _VALUES: {},
-  getType: (el) => "yonder.buttonGroup",
-  initialize: function(el) {
-    this._VALUES[el.id] = null;
-  },
-  getValue: function(el) {
-    return { force: Date.now(), value: this._VALUES[el.id] };
-  },
-  _update: (el, data) => {
-    let template = el.querySelector("button").cloneNode();
-    template.removeAttribute("disabled");
 
-    el.innerHTML = "";
+    if (msg.value) {
+      buttonGroupInputBinding._VALUES[el.id] = msg.value;
+    }
 
-    data.choices.forEach((choice, i) => {
-      let child = template.cloneNode();
-      child.innerHTML = choice;
-      child.value = data.values[i];
+    if (msg.enable) {
+      el.querySelectorAll("button").forEach(btn => {
+        if (msg.enable === true || msg.enable.indexOf(btn.value) > -1) {
+          btn.classList.remove("disabled");
+          btn.removeAttribute("disabled");
+        }
+      });
+    }
 
-      el.appendChild(child);
-    });
-  },
-  _enable: function(el, data) {
-    let values = data.values;
-
-    el.querySelectorAll("button").forEach(button => {
-      let enable = !values.length || values.indexOf(button.value) > -1;
-
-      if (enable !== data.invert) {
-        button.removeAttribute("disabled");
-      }
-    });
-  },
-  _disable: function(el, data) {
-    let values = data.values;
-
-    el.querySelectorAll("button").forEach(button => {
-      let disable = !values.length || values.indexOf(button.value) > -1;
-
-      if (data.reset) {
-        button.removeAttribute("disabled");
-      }
-
-      if (disable !== data.invert) {
-        button.setAttribute("disabled", "");
-      }
-    });
+    if (msg.disable) {
+      el.querySelectorAll("button").forEach(btn => {
+        if (msg.disable === true || msg.disable.indexOf(btn.value) > -1) {
+          btn.classList.add("disabled");
+          btn.setAttribute("disabled", "");
+        }
+      });
+    }
   }
 });
 

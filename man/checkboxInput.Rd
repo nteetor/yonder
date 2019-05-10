@@ -33,12 +33,25 @@ checkbox or checkbar input, defaults to \code{choice} or \code{values}, respecti
 selected by default, defaults to \code{NULL}, in which case no choices are
 initially selected.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element or tag elements passed as child elements to the parent
 element.}
 
 \item{inline}{One of \code{TRUE} or \code{FALSE} specifying if the checkbox input
 choices render inline or stacked, defaults to \code{FALSE}, in which case the
 choices are stacked.}
+
+\item{enable}{One of \code{values} specifying particular choices to enable or
+\code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
+
+\item{disable}{One of \code{values} specifying particular choices to disable or
+\code{TRUE} specifying the entire input is disabled, defaults to \code{NULL}.}
+
+\item{valid}{A character string specifying a message to the user indicating
+how the input's value is valid, defaults to \code{NULL.}}
+
+\item{invalid}{A character string specifying a message to the user
+indicating how the input's value is invalid, defaults to \code{NULL}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }

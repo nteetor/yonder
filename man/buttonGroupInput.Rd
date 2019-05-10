@@ -23,6 +23,12 @@ group, defaults to \code{labels}.}
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
 
+\item{enable}{One of \code{values} indicating individual buttons to enable or
+\code{TRUE} to enable the entire input, defaults to \code{NULL}.}
+
+\item{disable}{One of \code{values} indicating individual buttons to disable or
+\code{TRUE} to disable the entire input, defaults to \code{NULL}.}
+
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{

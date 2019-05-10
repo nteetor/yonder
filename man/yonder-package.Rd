@@ -21,8 +21,6 @@ There are also new inputs like \code{\link[=groupTextInput]{groupTextInput()}} o
 a label above the input. Button and menu inputs do include a \code{label}
 argument, but these arguments refer to button labels. If you would like to
 add a label above an input please use \code{\link[=formGroup]{formGroup()}}.
-\item \code{shiny::sliderInput()} has been split into three inputs: \code{\link[=rangeInput]{rangeInput()}},
-\code{\link[=intervalInput]{intervalInput()}}, and \code{\link[=sliderInput]{sliderInput()}}.
 }
 
 \strong{Familiar variants}
@@ -30,9 +28,8 @@ add a label above an input please use \code{\link[=formGroup]{formGroup()}}.
 Looking for ... ?
 \itemize{
 \item \code{radioButtons()} use \code{\link[=radioInput]{radioInput()}}
-\item \code{checkboxGroupInput()} use \code{\link[=checkbarInput]{checkbarInput()}}
+\item \code{checkboxGroupInput()} use \code{\link[=checkbarInput]{checkbarInput()}} or \code{\link[=checkboxInput]{checkboxInput()}}
 \item \code{numericInput()} use \code{\link[=numberInput]{numberInput()}}
-\item \code{updateRadioButtons()}, \code{updateTextInput()}, etc. use \code{\link[=updateInput]{updateInput()}}
 }
 }
 

@@ -27,11 +27,24 @@ strings specifying the values of the radio input's choices, defaults to
 radio input, defaults to \code{NULL}, in which case the first choice is
 selected by default.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element or tag elements passed as child elements to the parent
 element.}
 
 \item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
 in which case the radio controls render on separate lines.}
+
+\item{enable}{One of \code{values} specifying particular choices to enable or
+\code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
+
+\item{disable}{One of \code{values} specifying particular choices to disable or
+\code{TRUE} specifying the entire input is disabled, defaults to \code{NULL}.}
+
+\item{valid}{A character string specifying a message to the user indicating
+how the input's value is valid, defaults to \code{NULL.}}
+
+\item{invalid}{A character string specifying a message to the user
+indicating how the input's value is invalid, defaults to \code{NULL}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }

@@ -40,7 +40,7 @@ test_that("card respects ... named values as HTML attributes", {
 })
 
 test_that("card linkInputs have .card-link, keep id", {
-  this <- card(linkInput(id = "ID"))
+  this <- card(linkInput(id = "ID", label = "LABEL"))
 
   expect_true(grepl('id="ID"', as.character(this), fixed = TRUE))
   expect_true(grepl("card-link", as.character(this)))

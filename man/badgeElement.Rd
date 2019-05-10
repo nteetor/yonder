@@ -28,7 +28,7 @@ colors <- c(
 
 div(
   lapply(colors, function(color) {
-    badge(color) \%>\%
+    badgeElement(color) \%>\%
       background(color) \%>\%
       margin(2)
   })

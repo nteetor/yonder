@@ -17,7 +17,7 @@
 #' If `id` or `submit` are `NULL` the form input will not freeze its child
 #' inputs.
 #'
-#' @inheritParams buttonInput
+#' @inheritParams checkboxInput
 #'
 #' @param ... Any number of unnamed arguments (inputs or tag elements) passed as
 #'   child elements to the form.

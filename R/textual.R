@@ -4,7 +4,7 @@
 #' keyboards and assistive technologies. A password input will mask its
 #' contents. Email inputs offer client-side validation depending on the browser.
 #'
-#' @inheritParams buttonInput
+#' @inheritParams checkboxInput
 #'
 #' @inheritParams selectInput
 #'

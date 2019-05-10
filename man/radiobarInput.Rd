@@ -24,8 +24,15 @@ defaults to \code{choices}.}
 \item{selected}{One of \code{values} specifying the input's default selected
 choice, defualts to \code{values[[1]]}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element or tag elements passed as child elements to the parent
 element.}
+
+\item{enable}{One of \code{values} specifying particular choices to enable or
+\code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
+
+\item{disable}{One of \code{values} specifying particular choices to disable or
+\code{TRUE} specifying the entire input is disabled, defaults to \code{NULL}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }

@@ -7,7 +7,7 @@
 #' the reactive value is `NULL`. Switch inputs differ from checkboxes only in
 #' appearance.
 #'
-#' @inheritParams buttonInput
+#' @param id A character string specifying the id of the reactive input.
 #'
 #' @param choices A character string or vector specifying a label or labels for
 #'   the checkbox or checkbar.
@@ -22,6 +22,24 @@
 #' @param inline One of `TRUE` or `FALSE` specifying if the checkbox input
 #'   choices render inline or stacked, defaults to `FALSE`, in which case the
 #'   choices are stacked.
+#'
+#' @param ... Additional named arguments passed as HTML attributes to the
+#'   parent element or tag elements passed as child elements to the parent
+#'   element.
+#'
+#' @param enable One of `values` specifying particular choices to enable or
+#'   `TRUE` specifying the entire input is enabled, defaults to `NULL`.
+#'
+#' @param disable One of `values` specifying particular choices to disable or
+#'   `TRUE` specifying the entire input is disabled, defaults to `NULL`.
+#'
+#' @param valid A character string specifying a message to the user indicating
+#'   how the input's value is valid, defaults to `NULL.`
+#'
+#' @param invalid A character string specifying a message to the user
+#'   indicating how the input's value is invalid, defaults to `NULL`.
+#'
+#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
 #' @family inputs
 #' @export
@@ -227,7 +245,7 @@ map_checkboxes <- function(choices, values, selected, inline,
 #'
 #' A stylized checkbox input.
 #'
-#' @inheritParams buttonInput
+#' @inheritParams checkboxInput
 #'
 #' @param choices A character vector or list of tag element specifying the
 #'   input's choices, defaults to `NULL`.
@@ -236,7 +254,7 @@ map_checkboxes <- function(choices, values, selected, inline,
 #'   choices, defaults to `choices`.
 #'
 #' @param selected One or more of `values` specifying the input's default
-#'  selected values, defaults to `NULL`.
+#'   selected values, defaults to `NULL`.
 #'
 #' @family inputs
 #' @export

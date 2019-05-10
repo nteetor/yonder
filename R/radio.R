@@ -2,7 +2,7 @@
 #'
 #' Create a reactive radio input of one or more radio controls.
 #'
-#' @inheritParams buttonInput
+#' @inheritParams checkboxInput
 #'
 #' @param choices A character vector or list of tag elements specifying the
 #'   input's choices.
@@ -142,7 +142,7 @@ map_radios <- function(choices, values, selected, parent_id, inline) {
 #'
 #' A stylized radio input.
 #'
-#' @inheritParams buttonInput
+#' @inheritParams checkboxInput
 #'
 #' @param choices A character vector or list of tag elements specifying the
 #'   labels of the input's choices.

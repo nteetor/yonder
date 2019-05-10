@@ -2,7 +2,7 @@
 #'
 #' `rangeInput()` creates a simple numeric range input.
 #'
-#' @inheritParams buttonInput
+#' @inheritParams checkboxInput
 #'
 #' @param min A number specifying the minimum value of the input, defaults to
 #'   `0`.
@@ -10,11 +10,14 @@
 #' @param max A number specifying the maximum value of the input, defaults to
 #'   `100`.
 #'
-#' @param default A number between `min` and `max` specifying the
-#'   default value of the input, defaults to `min`.
+#' @param default A number between `min` and `max` specifying the default value
+#'   of the input, defaults to `min`.
 #'
 #' @param step A number specifying the interval step of the input, defaults to
 #'   `1`.
+#'
+#' @param value A number specifying a new value for the input, defaults to
+#'   `NULL`.
 #'
 #' @details
 #'
@@ -79,7 +82,7 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...) {
       min = min,
       max = max,
       value = default,
-      autocomplete = "off",
+      autocomplete = "off"
     ),
     ...
   )
@@ -94,7 +97,10 @@ updateRangeInput <- function(id, value = NULL, enable = NULL, disable = NULL,
   assert_id()
   assert_session()
 
-  value <- coerce_value(value)
+  if (!is.null(value)) {
+    value <- as.numeric(value)
+  }
+
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 

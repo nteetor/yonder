@@ -23,20 +23,15 @@ NULL
 #'   argument, but these arguments refer to button labels. If you would like to
 #'   add a label above an input please use [formGroup()].
 #'
-#' * `shiny::sliderInput()` has been split into three inputs: [rangeInput()],
-#'   [intervalInput()], and [sliderInput()].
-#'
 #' **Familiar variants**
 #'
 #' Looking for ... ?
 #'
 #' * `radioButtons()` use [radioInput()]
 #'
-#' * `checkboxGroupInput()` use [checkbarInput()]
+#' * `checkboxGroupInput()` use [checkbarInput()] or [checkboxInput()]
 #'
 #' * `numericInput()` use [numberInput()]
-#'
-#' * `updateRadioButtons()`, `updateTextInput()`, etc. use [updateInput()]
 #'
 #' @section Layout:
 #'

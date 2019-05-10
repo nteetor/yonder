@@ -24,7 +24,12 @@ items.}
 \item{values}{A character vector specifying the values of the menu's items,
 defaults to \code{choices}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
+\item{selected}{One or more of \code{values} specifying which choices are
+selected by default, defaults to \code{NULL}, in which case no choices are
+initially selected.}
+
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element or tag elements passed as child elements to the parent
 element.}
 
 \item{direction}{One of \code{"up"}, \code{"right"}, \code{"down"}, or \code{"left"} specifying
@@ -32,6 +37,12 @@ which direction the menu opens, defaults to \code{"down"}.}
 
 \item{align}{One or \code{"right"} or \code{"left"} specifying which side of the
 toggle button the menu aligns to, defaults to \code{"left"}.`}
+
+\item{enable}{One of \code{values} specifying particular choices to enable or
+\code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
+
+\item{disable}{One of \code{values} specifying particular choices to disable or
+\code{TRUE} specifying the entire input is disabled, defaults to \code{NULL}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }

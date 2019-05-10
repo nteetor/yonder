@@ -12,16 +12,16 @@ buttonInput(id, label, ..., stretch = FALSE, download = FALSE)
 updateButtonInput(id, label = NULL, value = NULL, disable = NULL,
   enable = NULL, session = getDefaultReactiveDomain())
 
-linkInput(id, ..., stretch = FALSE, download = FALSE)
+linkInput(id, label, ..., stretch = FALSE, download = FALSE)
 
-updateLinkInput(id, text = NULL, value = NULL, enable = NULL,
+updateLinkInput(id, label = NULL, value = NULL, enable = NULL,
   disable = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
 
-\item{label}{A character string specifying the label text on the button
-input.}
+\item{label}{A character string specifying the label text on the button or
+link input.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
@@ -37,6 +37,12 @@ input is used to trigger a download, defaults to \code{FALSE}.}
 
 \item{value}{A number specifying a new value for the button, defaults to
 \code{NULL}.}
+
+\item{disable}{if \code{TRUE} the button is disabled and will not react to clicks
+from the user, default to \code{NULL}.}
+
+\item{enable}{If \code{TRUE} the button is enabled and will react to clicks from
+the user,  defaults to \code{NULL}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }

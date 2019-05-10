@@ -4,7 +4,7 @@
 #' reactive inputs or within a [navInput()]. For building custom, more complex
 #' dropdown elements please see [dropdown()].
 #'
-#' @inheritParams buttonInput
+#' @inheritParams checkboxInput
 #'
 #' @param label A character string or tag element specifying the label of the
 #'   menu's toggle button.

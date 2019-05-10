@@ -6,7 +6,7 @@
 #' specified by the `choices` argument. Use the `max` argument to limit the
 #' number of choices a user may select.
 #'
-#' @inheritParams buttonInput
+#' @inheritParams checkboxInput
 #'
 #' @param choices A character vector or list specifying the possible choices.
 #'

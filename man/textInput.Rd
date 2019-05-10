@@ -69,8 +69,21 @@ specifying the default value of the textual input.}
 \item{placeholder}{A character string specifying placeholder text for the
 input, defaults to \code{NULL}, in which case there is no placeholder text.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element or tag elements passed as child elements to the parent
 element.}
+
+\item{enable}{One of \code{values} specifying particular choices to enable or
+\code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
+
+\item{disable}{One of \code{values} specifying particular choices to disable or
+\code{TRUE} specifying the entire input is disabled, defaults to \code{NULL}.}
+
+\item{valid}{A character string specifying a message to the user indicating
+how the input's value is valid, defaults to \code{NULL.}}
+
+\item{invalid}{A character string specifying a message to the user
+indicating how the input's value is invalid, defaults to \code{NULL}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 

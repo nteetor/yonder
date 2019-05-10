@@ -6,7 +6,7 @@
 #' components. These addon components are used to change the reactivity or value
 #' of the input, see Details for more information.
 #'
-#' @inheritParams buttonInput
+#' @inheritParams checkboxInput
 #'
 #' @param choices A character vector specifying the input's choices.
 #'

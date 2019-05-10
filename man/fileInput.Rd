@@ -16,7 +16,8 @@ input, defaults to \code{"Choose file"}.}
 \item{browse}{A character string specifying the label of file input, defaults
 to \code{"Browse"}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element or tag elements passed as child elements to the parent
 element.}
 
 \item{multiple}{One of \code{TRUE} or \code{FALSE} specifying whether or not the user

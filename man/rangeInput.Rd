@@ -19,17 +19,24 @@ updateRangeInput(id, value = NULL, enable = NULL, disable = NULL,
 \item{max}{A number specifying the maximum value of the input, defaults to
 \code{100}.}
 
-\item{default}{A number between \code{min} and \code{max} specifying the
-default value of the input, defaults to \code{min}.}
+\item{default}{A number between \code{min} and \code{max} specifying the default value
+of the input, defaults to \code{min}.}
 
 \item{step}{A number specifying the interval step of the input, defaults to
 \code{1}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element or tag elements passed as child elements to the parent
 element.}
 
-\item{value}{A number specifying a new value for the button, defaults to
+\item{value}{A number specifying a new value for the input, defaults to
 \code{NULL}.}
+
+\item{enable}{One of \code{values} specifying particular choices to enable or
+\code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
+
+\item{disable}{One of \code{values} specifying particular choices to disable or
+\code{TRUE} specifying the entire input is disabled, defaults to \code{NULL}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }

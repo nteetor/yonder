@@ -24,7 +24,8 @@ defaults to \code{choices}.}
 \item{selected}{One or more of \code{values} specifying which choices are selected
 by default, defaults to \code{NULL}, in which case no choice is selected.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element or tag elements passed as child elements to the parent
 element.}
 
 \item{layout}{A \link{responsive} argument. One of \code{"vertical"} or \code{"horizontal"}
@@ -35,6 +36,12 @@ specifying how list items are laid out, defaults to \code{"vertical"}. Note, if
 rendered without an outside border, defaults to \code{FALSE}. Removing the list
 group border is useful when rendering a list group inside a custom parent
 container, e.g. inside a \code{\link[=card]{card()}}.}
+
+\item{enable}{One of \code{values} specifying particular choices to enable or
+\code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
+
+\item{disable}{One of \code{values} specifying particular choices to disable or
+\code{TRUE} specifying the entire input is disabled, defaults to \code{NULL}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
