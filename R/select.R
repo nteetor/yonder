@@ -160,7 +160,7 @@ groupSelectInput <- function(id, choices, values = choices,
   assert_right()
 
   shiny::registerInputHandler(
-    type = "yonder.group",
+    type = "yonder.group.select",
     fun = function(x, session, name) paste0(x, collapse = ""),
     force = TRUE
   )

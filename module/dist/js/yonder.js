@@ -6,63 +6,62 @@
 
   var buttonGroupInputBinding = new Shiny.InputBinding();
   $.extend(buttonGroupInputBinding, {
-    Selector: {
-      SELF: ".yonder-button-group"
+    find: function find(scope) {
+      return scope.querySelectorAll(".yonder-button-group[id]");
     },
-    Events: [{
-      type: "click",
-      selector: "button",
-      callback: function callback(el, e, self) {
-        self._VALUES[el.id] = e.currentTarget.value;
-      }
-    }],
-    _VALUES: {},
     getType: function getType(el) {
-      return "yonder.buttonGroup";
+      return "yonder.button.group";
     },
     initialize: function initialize(el) {
-      this._VALUES[el.id] = null;
+      $(el).on("click", "button", function (e) {
+        buttonGroupInputBinding._VALUES[el.id] = e.delegateTarget.value;
+      });
+      buttonGroupInputBinding._VALUES[el.id] = null;
     },
     getValue: function getValue(el) {
       return {
         force: Date.now(),
-        value: this._VALUES[el.id]
+        value: buttonGroupInputBinding._VALUES[el.id]
       };
     },
-    _update: function _update(el, data) {
-      var template = el.querySelector("button").cloneNode();
-      template.removeAttribute("disabled");
-      el.innerHTML = "";
-      data.choices.forEach(function (choice, i) {
-        var child = template.cloneNode();
-        child.innerHTML = choice;
-        child.value = data.values[i];
-        el.appendChild(child);
+    subscribe: function subscribe(el, callback) {
+      var $el = $(el);
+      $el.on("click.yonder", "button", function (e) {
+        return callback();
+      });
+      $el.on("buttongroup.value.yonder", function (e) {
+        return callback();
       });
     },
-    _enable: function _enable(el, data) {
-      var values = data.values;
-      el.querySelectorAll("button").forEach(function (button) {
-        var enable = !values.length || values.indexOf(button.value) > -1;
-
-        if (enable !== data.invert) {
-          button.removeAttribute("disabled");
-        }
-      });
+    unsubscribe: function unsubscribe(el) {
+      return $(el).off(".yonder");
     },
-    _disable: function _disable(el, data) {
-      var values = data.values;
-      el.querySelectorAll("button").forEach(function (button) {
-        var disable = !values.length || values.indexOf(button.value) > -1;
+    receiveMessage: function receiveMessage(el, msg) {
+      if (msg.content) {
+        el.innerHTML = msg.content;
+      }
 
-        if (data.reset) {
-          button.removeAttribute("disabled");
-        }
+      if (msg.value) {
+        buttonGroupInputBinding._VALUES[el.id] = msg.value;
+      }
 
-        if (disable !== data.invert) {
-          button.setAttribute("disabled", "");
-        }
-      });
+      if (msg.enable) {
+        el.querySelectorAll("button").forEach(function (btn) {
+          if (msg.enable === true || msg.enable.indexOf(btn.value) > -1) {
+            btn.classList.remove("disabled");
+            btn.removeAttribute("disabled");
+          }
+        });
+      }
+
+      if (msg.disable) {
+        el.querySelectorAll("button").forEach(function (btn) {
+          if (msg.disable === true || msg.disable.indexOf(btn.value) > -1) {
+            btn.classList.add("disabled");
+            btn.setAttribute("disabled", "");
+          }
+        });
+      }
     }
   });
   Shiny.inputBindings.register(buttonGroupInputBinding, "yonder.buttonGroupInput");
@@ -1456,7 +1455,7 @@
       return scope.querySelectorAll(".yonder-group-select[id]");
     },
     getValue: function getValue(el) {
-      var inputs = el.querySelectorAll(".input-group-prepend .input-group-text, input, .input-group-append .input-group-text");
+      var inputs = el.querySelectorAll(".input-group-prepend .input-group-text, select, .input-group-append .input-group-text");
       return Array.prototype.slice.call(inputs).map(function (i) {
         return /^(DIV|SPAN)$/.test(i.tagName) ? i.innerText : i.value || null;
       }).filter(function (value) {
@@ -1464,7 +1463,7 @@
       });
     },
     getType: function getType() {
-      return "yonder.group";
+      return "yonder.group.select";
     },
     subscribe: function subscribe(el, callback) {
       var $el = $(el);
@@ -1633,7 +1632,7 @@
       });
     },
     getType: function getType() {
-      return "yonder.group";
+      return "yonder.group.text";
     },
     getRatePolicy: function getRatePolicy(el) {
       return {
@@ -1645,23 +1644,26 @@
       var $el = $(el);
 
       if (el.querySelectorAll(".btn").length > 0) {
-        $el.on("click", ".dropdown-item", function (e) {
+        $el.on("click.yonder", ".dropdown-item", function (e) {
           return callback();
         });
-        $el.on("click", ".btn:not(.dropdown-toggle", function (e) {
+        $el.on("click.yonder", ".btn:not(.dropdown-toggle", function (e) {
           return callback();
         });
       } else {
-        $el.on("input", function (e) {
+        $el.on("input.yonder", function (e) {
           return callback(true);
         });
-        $el.on("change", function (e) {
+        $el.on("change.yonder", function (e) {
           return callback(true);
         });
         $el.on("textual.value.yonder", function (e) {
           return callback();
         });
       }
+    },
+    unsubscribe: function unsubscribe(el) {
+      return $(el).off("yonder");
     },
     receiveMessage: function receiveMessage(el, msg) {
       var input = el.querySelector("input");

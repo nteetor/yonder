@@ -72,7 +72,7 @@ groupTextInput <- function(id, value = NULL, placeholder = NULL, ...,
   assert_right()
 
   shiny::registerInputHandler(
-    type = "yonder.group",
+    type = "yonder.group.text",
     fun = function(x, session, name) paste0(x, collapse = ""),
     force = TRUE
   )

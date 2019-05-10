@@ -68,20 +68,21 @@ $.extend(groupTextInputBinding, {
       .map(i => /^(DIV|SPAN)$/.test(i.tagName) ? i.innerText : (i.value || null))
       .filter(value => value !== null);
   },
-  getType: () => "yonder.group",
+  getType: () => "yonder.group.text",
   getRatePolicy: (el) => ({ policy: "debounce", delay: 250 }),
   subscribe: (el, callback) => {
     let $el = $(el);
 
     if (el.querySelectorAll(".btn").length > 0) {
-      $el.on("click", ".dropdown-item", e => callback());
-      $el.on("click", ".btn:not(.dropdown-toggle", e => callback());
+      $el.on("click.yonder", ".dropdown-item", (e) => callback());
+      $el.on("click.yonder", ".btn:not(.dropdown-toggle", (e) => callback());
     } else {
-      $el.on("input", e => callback(true));
-      $el.on("change", e => callback(true));
+      $el.on("input.yonder", (e) => callback(true));
+      $el.on("change.yonder", (e) => callback(true));
       $el.on("textual.value.yonder", (e) => callback());
     }
   },
+  unsubscribe: (el) => $(el).off("yonder"),
   receiveMessage: (el, msg) => {
     let input = el.querySelector("input");
 
