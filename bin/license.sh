@@ -30,7 +30,6 @@ is a list of these components (full copies of the components' license agreements
 are included below):
 
 * Bootstrap, https://github.com/twbs/bootstrap
-* ion.rangeSlider, https://github.com/IonDen/ion.rangeSlider
 * jQuery, https://github.com/jquery/jquery
 * popper.js, https://github.com/FezVrasta/popper.js
 * bs-custom-file-input, https://github.com/Johann-S/bs-custom-file-input
