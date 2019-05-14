@@ -229,7 +229,7 @@ map_navitems <- function(choices, values, selected) {
 #' @param id A character string specifying the id of the nav pane.
 #'
 #' @param fade One of `TRUE` or `FALSE` specifying if the pane fades in when
-#'   show and out when hidden, defaults to `TRUE`.
+#'   shown and fades out when hidden, defaults to `TRUE`.
 #'
 #' @inheritParams collapsiblePane
 #'

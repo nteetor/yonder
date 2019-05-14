@@ -14,9 +14,28 @@ active(tag, color)
 specifying the active color of selected choices.}
 }
 \description{
-Use \code{active()} to change the color of active selected choices. This utility
-will only have an effect on elements with selectable choices, e.g.
-\code{checkbarInput()}.
+Use \code{active()} to change the highlight color of an input's selected choices.
+}
+\examples{
+
+### Radiobar example
+
+radiobarInput(
+  id = "radio1",
+  choices = c("Hello", "Goodnight", "Howdy")
+) \%>\%
+  width(16) \%>\%
+  active("orange")  # <-
+
+### Checkbox example
+
+checkboxInput(
+  id = "check1",
+  choices = c("Rock", "Paper", "Scissors"),
+  selected = "Rock"
+) \%>\%
+  active("teal")
+
 }
 \seealso{
 Other design: \code{\link{affix}},

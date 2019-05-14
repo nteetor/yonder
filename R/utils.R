@@ -178,7 +178,7 @@ resp_msg_values <- function(argument, invalid) {
   fun <- sys.call(1)[[1]]
 
   sprintf(
-    "invalid `%s()` argument, `%s` contains unexpected value%s %s",
+    "invalid argument in `%s()`, `%s` contains unexpected value%s %s",
     as.character(fun),
     as.character(argument),
     if (length(invalid) > 1) "s" else "",
@@ -190,7 +190,7 @@ resp_msg_too_many <- function(argument, invalid) {
   fun <- sys.call(1)[[1]]
 
   sprintf(
-    "invalid `%s()` argument, `%s` breakpoint%s %s contain%s too many values",
+    "invalid argument in `%s()`, `%s` breakpoint%s %s contain%s too many values",
     as.character(fun),
     as.character(argument),
     if (length(invalid) > 1) "s" else "",

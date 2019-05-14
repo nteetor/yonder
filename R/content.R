@@ -118,7 +118,7 @@ img <- function(src, ...) {
 figure <- function(image, caption = NULL, ...) {
   if (!is_tag(image)) {
     stop(
-      "invalid `figure` argument, `image` must be a tag element",
+      "invalid argument in `figure()`, `image` must be a tag element",
       call. = FALSE
     )
   }
@@ -266,7 +266,7 @@ pre <- function(...) {
 fieldset <- function(..., legend = NULL) {
   if (!is.null(legend) && !is.character(legend)) {
     stop(
-      "invalid `fieldset()` argument, `legend` must be a character string",
+      "invalid argument in `fieldset()`, `legend` must be a character string",
       call. = FALSE
     )
   }

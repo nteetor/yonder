@@ -338,9 +338,7 @@ border <- function(tag, color = NULL, sides = "all", round = NULL) {
 
 #' Color selected choices
 #'
-#' Use `active()` to change the color of active selected choices. This utility
-#' will only have an effect on elements with selectable choices, e.g.
-#' `checkbarInput()`.
+#' Use `active()` to change the highlight color of an input's selected choices.
 #'
 #' @param tag A tag element.
 #'
@@ -350,6 +348,26 @@ border <- function(tag, color = NULL, sides = "all", round = NULL) {
 #'
 #' @family design
 #' @export
+#' @examples
+#'
+#' ### Radiobar example
+#'
+#' radiobarInput(
+#'   id = "radio1",
+#'   choices = c("Hello", "Goodnight", "Howdy")
+#' ) %>%
+#'   width(16) %>%
+#'   active("orange")  # <-
+#'
+#' ### Checkbox example
+#'
+#' checkboxInput(
+#'   id = "check1",
+#'   choices = c("Rock", "Paper", "Scissors"),
+#'   selected = "Rock"
+#' ) %>%
+#'   active("teal")
+#'
 active <- function(tag, color) {
   assert_possible(color, .colors)
 
@@ -503,13 +521,7 @@ float <- function(tag, side) {
 #'   affix("top")
 #'
 affix <- function(tag, position) {
-  if (!str_re(position, "top|bottom|sticky", len0 = FALSE)) {
-    stop(
-      "invalid `affix` argument, `position` must be one of ",
-      '"top", "bottom", or "sticky"',
-      call. = FALSE
-    )
-  }
+  assert_possible(position, c("top", "bottom", "sticky"))
 
   if (position == "sticky") {
     tag <- tag_class_add(tag, "sticky-top")
@@ -761,7 +773,7 @@ margin <- function(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 #' @export
 #' @examples
 #'
-#' ### Numeric values
+#' ### Numeric `size` values
 #'
 #' # When specifying a numeric value the width of the element is relative to the
 #' # default font size of the page.
@@ -780,7 +792,7 @@ margin <- function(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 #'     justify = "between"
 #'   )
 #'
-#' ### Fractional values
+#' ### Fractional `size` values
 #'
 #' # When specifying width as a fraction the element's width is a percentage of
 #' # its parent's width.
@@ -882,7 +894,7 @@ height <- function(tag, size) {
 scroll <- function(tag, direction = "vertical") {
   if (length(direction) != 1 || !is.character(direction)) {
     stop(
-      "invalid `scroll()` argument, `direction` must be a single ",
+      "invalid argument in `scroll()`, `direction` must be a single ",
       "character string",
       call. = FALSE
     )
@@ -890,7 +902,7 @@ scroll <- function(tag, direction = "vertical") {
 
   if (direction != "horizontal" && direction != "vertical") {
     stop(
-      "invalid `scroll()` arugment, `direction` must be one of ",
+      "invalid argument in `scroll()`, `direction` must be one of ",
       '"vertical" or "horizontal"',
       call. = FALSE
     )

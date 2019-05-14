@@ -34,7 +34,7 @@ element's content.
 }
 \examples{
 
-### Numeric values
+### Numeric `size` values
 
 # When specifying a numeric value the width of the element is relative to the
 # default font size of the page.
@@ -53,7 +53,7 @@ div(
     justify = "between"
   )
 
-### Fractional values
+### Fractional `size` values
 
 # When specifying width as a fraction the element's width is a percentage of
 # its parent's width.

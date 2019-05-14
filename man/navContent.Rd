@@ -25,7 +25,7 @@ element.}
 \item{id}{A character string specifying the id of the nav pane.}
 
 \item{fade}{One of \code{TRUE} or \code{FALSE} specifying if the pane fades in when
-show and out when hidden, defaults to \code{TRUE}.}
+shown and fades out when hidden, defaults to \code{TRUE}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
