@@ -1,6 +1,10 @@
 .yonder-select {
   width: 100%;
 
+  input::placeholder {
+    color: #343a40;
+  }
+
   .dropdown-toggle:disabled {
     cursor: not-allowed;
   }

@@ -3642,6 +3642,26 @@ input[type="button"].btn-block {
   width: 100%;
 }
 
+.yonder-select input::-webkit-input-placeholder {
+  color: #343a40;
+}
+
+.yonder-select input::-moz-placeholder {
+  color: #343a40;
+}
+
+.yonder-select input:-ms-input-placeholder {
+  color: #343a40;
+}
+
+.yonder-select input::-ms-input-placeholder {
+  color: #343a40;
+}
+
+.yonder-select input::placeholder {
+  color: #343a40;
+}
+
 .yonder-select .dropdown-toggle:disabled {
   cursor: not-allowed;
 }
