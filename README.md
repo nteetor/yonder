@@ -1,16 +1,16 @@
 # yonder
 
-[![can we build it?](https://travis-ci.org/nteetor/yonder.svg?branch=master)](https://travis-ci.org/nteetor/yonder)
-
 A reactive web framework built on [shiny](https://github.com/rstudio/shiny).
+
+[![can we build it?](https://travis-ci.org/nteetor/yonder.svg?branch=master)](https://travis-ci.org/nteetor/yonder)
 
 ## Introduction
 
 yonder is designed to make building pragmatic applications fun and rewarding. On
-the UI side yonder features refreshed IonRange sliders, new reactive inputs such as
-`navInput()` and `dropdownInput()`, and Bootstrap 4.2. On the server side yonder
-includes tools for showing alerts and toasts, displaying modal and popovers,
-validating and freezing input values, hiding and showing panes of content, and more!
+the UI side yonder features new reactive inputs such as `navInput()`,
+`chipInput()` and `menuInput()`, as well as the latest Bootstrap components. On
+the server side yonder includes tools for showing alerts and toasts, displaying
+modal and popovers, hiding and showing panes of content, and more!
 
 ## Examples
 
@@ -19,7 +19,7 @@ the documentation, https://nteetor.github.io/yonder/.
 
 ## Installation
 
-yonder is still a work in progress and may be downloaded from GitHub.
+The latest development version of yonder may be installed from GitHub.
 
 ```R
 # install.packages("remotes")
