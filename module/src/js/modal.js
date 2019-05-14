@@ -1,57 +1,68 @@
+$(() => {
+  document.body.insertAdjacentHTML("beforeend", "<div class='yonder-modals'></div>");
+});
+
 Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
   if (msg.type === undefined) {
     return false;
   }
 
   let _close = function(data) {
-    $(document.getElementById(data.id)).modal("hide");
+    let modals = document.querySelector(".yonder-modals").children;
+
+    if (data.id) {
+      modals = Array.prototype.filter.call(modals, m => m.id === data.id);
+    }
+
+    modals.forEach((modal) => {
+      if (!modal.classList.contains("yonder-modal")) {
+        return;
+      }
+
+      $(modal).modal("hide");
+    });
   };
 
   let _show = function(data) {
-    let modal = document.getElementById(data.id);
+    if (data.id) {
+      let possible = document.getElementById(data.id);
 
-    if (data.exprs) {
-      Object.keys(data.exprs).forEach(key => {
-        let outlet = modal.querySelector(`span[data-target='${ data.id }__${ key }']`);
-
-        if (outlet) {
-          outlet.innerHTML = data.exprs[key];
-        }
-      });
+      if (possible && possible.classList.contains("yonder-modal")) {
+        console.warn("ignoring modal with duplicate id");
+        return;
+      }
     }
 
-    $(modal).modal("show");
-  };
-
-  let _register = function(data) {
-    let modal = document.createElement("div");
-    modal.classList.add("modal");
-    modal.classList.add("fade");
-    modal.setAttribute("tabindex", -1);
-    modal.setAttribute("role", "dialog");
-    modal.setAttribute("id", data.id);
-
-    if (data.dependencies !== undefined) {
+    if (data.dependencies) {
       Shiny.renderDependencies(data.dependencies);
     }
 
-    document.body.appendChild(modal);
+    let container = document.querySelector(".yonder-modals");
 
-    let content = data.content.replace(/[{]\s*([a-z0-9_.]+)\s*[}]/g, (m, id) => {
-      return `<span data-target='${ data.id }__${ id }'></span>`;
-    });
-    modal.insertAdjacentHTML("afterbegin", content);
+    container.insertAdjacentHTML("beforeend", data.content);
+    let modal = container.querySelector(".yonder-modal:last-child");
 
     Shiny.initializeInputs(modal);
     Shiny.bindAll(modal);
+
+    let $modal = $(modal);
+
+    $modal.one("hidden.bs.modal", (e) => {
+      if (modal.id) {
+        Shiny.onInputChange(modal.id, true);
+        setTimeout(() => Shiny.onInputChange(modal.id, null), 100);
+      }
+
+      container.removeChild(modal);
+    });
+
+    $(modal).modal("show");
   };
 
   if (msg.type === "close") {
     _close(msg.data);
   } else if (msg.type === "show") {
     _show(msg.data);
-  } else if (msg.type === "register") {
-    _register(msg.data);
   } else {
     console.warn(`no modal ${ msg.type } method`);
   }

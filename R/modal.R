@@ -7,10 +7,15 @@
 #' the rest of your application's server may hide or show the modal with
 #' `showModal()` and `hideModal()`, respectively, by referring to this id.
 #'
+#' @param id A character string specifying the id of the modal, when closed
+#'   `input[[id]]` is set to `TRUE`.
+#'
 #' @param title A character string or tag element specifying the title of the
 #'   modal.
 #'
-#' @param body A character string or tag element specifying the body of the modal.
+#' @param ... Unnamed arguments passed as tag elements to the body of the modal
+#'   or named arguments passed as HTML attributes to the body element of the
+#'   modal.
 #'
 #' @param footer A character string or tag element specifying the footer of the
 #'   modal.
@@ -18,19 +23,14 @@
 #' @param center One of `TRUE` or `FALSE` specifying whether the modal is
 #'   vertically centered on the page, defaults to `FALSE`.
 #'
-#' @param size One of `"small"`, `"large"`, or `"xl"` (extra large) specifying
-#'   whether to shrink or grow the width of the modal, defaults to `NULL`, in
-#'   which case the width is not adjusted.
+#' @param size One of `"sm"` (small), `"md"` (medium), `"lg"` (large), or `"xl"`
+#'   (extra large) specifying the relative width of the modal, defaults to
+#'   `"md"`.
 #'
-#' @param id A character string specifying the id to associate with the modal.
+#' @param fade One of `TRUE` or `FALSE` specifying if the modal fades in when
+#'   shown and fades out when closed, defaults to `TRUE`.
 #'
 #' @param modal A modal tag element created using `modal()`.
-#'
-#' @param exprs A list of named values used to interpolate placeholders in a
-#'   registered modal, defaults to `list()`.
-#'
-#' @param ... Additional named arguments passed as HTML attributes to the
-#'   parent element.
 #'
 #' @inheritParams collapsiblePane
 #'
@@ -76,19 +76,16 @@
 #' ### Simple modal
 #'
 #' modal(
+#'   id = NULL,
 #'   title = "Title",
-#'   body = "Cras placerat accumsan nulla.",
-#'   footer = buttonInput(
-#'     id = "closeModal",
-#'     label = "Close"
-#'   ) %>%
-#'     background("blue")
+#'   body = "Cras placerat accumsan nulla."
 #' )
 #'
 #' ### Modal with container body
 #'
 #' modal(
-#'   size = "large",
+#'   id = NULL,
+#'   size = "lg",
 #'   title = "More complex",
 #'   body = container(
 #'     columns(
@@ -102,16 +99,17 @@
 #'   )
 #' )
 #'
-modal <- function(title = NULL, body = NULL, footer = NULL, ..., center = FALSE,
-                  size = NULL) {
-  assert_possible(size, c("small", "large", "xl"))
+modal <- function(id, title, ..., footer = NULL, center = FALSE, size = "md",
+                  fade = TRUE) {
+  assert_id()
+  assert_possible(size, c("sm", "md", "lg", "xl"))
 
-  if (!is.null(title)) {
-    title <- tag_class_add(
-      if (!is_tag(title)) tags$h5(title) else title,
-      "modal-title"
-    )
-  }
+  args <- list(...)
+
+  title <- tag_class_add(
+    if (!is_tag(title)) tags$h5(title) else title,
+    "modal-title"
+  )
 
   header <- tags$div(
     class = "modal-header",
@@ -128,10 +126,7 @@ modal <- function(title = NULL, body = NULL, footer = NULL, ..., center = FALSE,
     )
   )
 
-  body <- tags$div(
-    class = "modal-body",
-    body
-  )
+  body <- tags$div(class = "modal-body", unnamed_values(args))
 
   footer <- if (!is.null(footer)) {
     tags$div(
@@ -140,46 +135,43 @@ modal <- function(title = NULL, body = NULL, footer = NULL, ..., center = FALSE,
     )
   }
 
-  tags$div(
+  component <- tags$div(
     class = str_collate(
-      "modal-dialog",
-      if (center) "modal-dialog-centered",
-      if (!is.null(size)) {
-        paste0(
-          "modal-",
-          if (size == "small") "sm" else if (size == "large") "lg" else size
-        )
-      }
+      "yonder-modal modal",
+      if (fade) "fade"
     ),
-    role = "document",
+    id = id,
+    tabindex = "-1",
+    role = "dialog",
     tags$div(
-      class = "modal-content",
-      header,
-      body,
-      if (!is.null(footer)) footer
+      class = str_collate(
+        "modal-dialog",
+        if (center) "modal-dialog-centered",
+        if (!is.null(size) && size != "md") paste0("modal-", size)
+      ),
+      role = "document",
+      tags$div(
+        class = "modal-content",
+        named_values(args),
+        header,
+        body,
+        if (!is.null(footer)) footer
+      )
     )
   )
+
+  component
 }
 
 #' @rdname modal
 #' @export
-registerModal <- function(id, modal, session = getDefaultReactiveDomain()) {
-  if (!is.character(id)) {
-    stop(
-      "invalid `registerModal()` argument, `id` must be a character string",
-      call. = FALSE
-    )
-  }
+showModal <- function(modal, session = getDefaultReactiveDomain()) {
+  assert_session()
 
-  if (is.null(session)) {
-    stop(
-      "invalid `registerModal()` argument, `session` is NULL",
-      call. = FALSE
-    )
-  }
+  id <- modal$attribs$id
 
   session$sendCustomMessage("yonder:modal", list(
-    type = "register",
+    type = "show",
     data = list(
       id = id,
       content = HTML(as.character(modal)),
@@ -190,32 +182,7 @@ registerModal <- function(id, modal, session = getDefaultReactiveDomain()) {
 
 #' @rdname modal
 #' @export
-showModal <- function(id, exprs = list(),
-                      session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_session()
-
-  exprs <- lapply(exprs, as.character)
-
-  if (any(names2(exprs) == "")) {
-    stop(
-      "invalid `showModal()` argument, `exprs` must be a named list",
-      call. = FALSE
-    )
-  }
-
-  session$sendCustomMessage("yonder:modal", list(
-    type = "show",
-    data = list(
-      id = id,
-      exprs = if (length(exprs) > 0) exprs
-    )
-  ))
-}
-
-#' @rdname modal
-#' @export
-closeModal <- function(id, session = getDefaultReactiveDomain()) {
+closeModal <- function(id = NULL, session = getDefaultReactiveDomain()) {
   assert_id()
   assert_session()
 

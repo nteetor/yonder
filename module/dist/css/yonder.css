@@ -7171,6 +7171,10 @@ a.close.disabled {
   }
 }
 
+.modal-backdrop + .modal-backdrop {
+  background-color: transparent;
+}
+
 .tooltip {
   position: absolute;
   z-index: 1070;

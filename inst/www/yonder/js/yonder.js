@@ -1764,66 +1764,78 @@
     }
   });
 
+  $(function () {
+    document.body.insertAdjacentHTML("beforeend", "<div class='yonder-modals'></div>");
+  });
   Shiny.addCustomMessageHandler("yonder:modal", function (msg) {
     if (msg.type === undefined) {
       return false;
     }
 
     var _close = function _close(data) {
-      $(document.getElementById(data.id)).modal("hide");
-    };
+      var modals = document.querySelector(".yonder-modals").children;
 
-    var _show = function _show(data) {
-      var modal = document.getElementById(data.id);
-
-      if (data.exprs) {
-        Object.keys(data.exprs).forEach(function (key) {
-          var outlet = modal.querySelector("span[data-target='" + data.id + "__" + key + "']");
-
-          if (outlet) {
-            outlet.innerHTML = data.exprs[key];
-          }
+      if (data.id) {
+        modals = Array.prototype.filter.call(modals, function (m) {
+          return m.id === data.id;
         });
       }
 
-      $(modal).modal("show");
+      modals.forEach(function (modal) {
+        if (!modal.classList.contains("yonder-modal")) {
+          return;
+        }
+
+        console.log(modal);
+        $(modal).modal("hide");
+      });
     };
 
-    var _register = function _register(data) {
-      var modal = document.createElement("div");
-      modal.classList.add("modal");
-      modal.classList.add("fade");
-      modal.setAttribute("tabindex", -1);
-      modal.setAttribute("role", "dialog");
-      modal.setAttribute("id", data.id);
+    var _show = function _show(data) {
+      if (data.id) {
+        var possible = document.getElementById(data.id);
 
-      if (data.dependencies !== undefined) {
+        if (possible && possible.classList.contains("yonder-modal")) {
+          console.warn("ignoring modal with duplicate id");
+          return;
+        }
+      }
+
+      if (data.dependencies) {
         Shiny.renderDependencies(data.dependencies);
       }
 
-      document.body.appendChild(modal);
-      var content = data.content.replace(/[{]\s*([a-z0-9_.]+)\s*[}]/g, function (m, id) {
-        return "<span data-target='" + data.id + "__" + id + "'></span>";
-      });
-      modal.insertAdjacentHTML("afterbegin", content);
+      var container = document.querySelector(".yonder-modals");
+      container.insertAdjacentHTML("beforeend", data.content);
+      var modal = container.querySelector(".yonder-modal:last-child");
       Shiny.initializeInputs(modal);
       Shiny.bindAll(modal);
+      var $modal = $(modal);
+      $modal.one("hidden.bs.modal", function (e) {
+        if (modal.id) {
+          Shiny.onInputChange(modal.id, true);
+          setTimeout(function () {
+            return Shiny.onInputChange(modal.id, null);
+          }, 100);
+        }
+
+        container.removeChild(modal);
+      });
+      $(modal).modal("show");
     };
 
     if (msg.type === "close") {
       _close(msg.data);
     } else if (msg.type === "show") {
       _show(msg.data);
-    } else if (msg.type === "register") {
-      _register(msg.data);
     } else {
       console.warn("no modal " + msg.type + " method");
     }
   });
 
   $(function () {
-    document.body.insertAdjacentHTML("beforeend", "<div class='toasts'></div>");
-    $(".toasts").on("hidden.bs.toast", ".toast", function (e) {
+    document.body.insertAdjacentHTML("beforeend", "<div class='yonder-toasts'></div>");
+    $(".yonder-toasts").on("hidden.bs.toast", ".toast", function (e) {
       if (e.currentTarget.hasAttribute("data-action")) {
         var action = e.currentTarget.getAttribute("data-action");
         Shiny.onInputChange(action, true);
@@ -1837,12 +1849,12 @@
   });
   Shiny.addCustomMessageHandler("yonder:toast", function (msg) {
     var _show = function _show(data) {
-      document.querySelector(".toasts").insertAdjacentHTML("beforeend", data.content);
-      $(".toasts > .toast:last-child").toast("show");
+      document.querySelector(".yonder-toasts").insertAdjacentHTML("beforeend", data.content);
+      $(".yonder-toasts > .toast:last-child").toast("show");
     };
 
     var _close = function _close(data) {
-      var toasts = document.querySelectorAll(".toasts .toast");
+      var toasts = document.querySelectorAll(".yonder-toasts .toast");
 
       if (toasts.length) {
         $(toasts).toast("hide");

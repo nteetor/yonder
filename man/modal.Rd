@@ -2,47 +2,44 @@
 % Please edit documentation in R/modal.R
 \name{modal}
 \alias{modal}
-\alias{registerModal}
 \alias{showModal}
 \alias{closeModal}
 \title{Modal dialogs}
 \usage{
-modal(title = NULL, body = NULL, footer = NULL, ...,
-  center = FALSE, size = NULL)
+modal(id, title, ..., footer = NULL, center = FALSE, size = "md",
+  fade = TRUE)
 
-registerModal(id, modal, session = getDefaultReactiveDomain())
+showModal(modal, session = getDefaultReactiveDomain())
 
-showModal(id, exprs = list(), session = getDefaultReactiveDomain())
-
-closeModal(id, session = getDefaultReactiveDomain())
+closeModal(id = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
+\item{id}{A character string specifying the id of the modal, when closed
+\code{input[[id]]} is set to \code{TRUE}.}
+
 \item{title}{A character string or tag element specifying the title of the
 modal.}
 
-\item{body}{A character string or tag element specifying the body of the modal.}
+\item{...}{Unnamed arguments passed as tag elements to the body of the modal
+or named arguments passed as HTML attributes to the body element of the
+modal.}
 
 \item{footer}{A character string or tag element specifying the footer of the
 modal.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element.}
-
 \item{center}{One of \code{TRUE} or \code{FALSE} specifying whether the modal is
 vertically centered on the page, defaults to \code{FALSE}.}
 
-\item{size}{One of \code{"small"}, \code{"large"}, or \code{"xl"} (extra large) specifying
-whether to shrink or grow the width of the modal, defaults to \code{NULL}, in
-which case the width is not adjusted.}
+\item{size}{One of \code{"sm"} (small), \code{"md"} (medium), \code{"lg"} (large), or \code{"xl"}
+(extra large) specifying the relative width of the modal, defaults to
+\code{"md"}.}
 
-\item{id}{A character string specifying the id to associate with the modal.}
+\item{fade}{One of \code{TRUE} or \code{FALSE} specifying if the modal fades in when
+shown and fades out when closed, defaults to \code{TRUE}.}
 
 \item{modal}{A modal tag element created using \code{modal()}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
-
-\item{exprs}{A list of named values used to interpolate placeholders in a
-registered modal, defaults to \code{list()}.}
 }
 \description{
 Modals are a flexible alert window, which disable interaction with the page
@@ -91,19 +88,16 @@ shinyApp(ui, server)
 ### Simple modal
 
 modal(
+  id = NULL,
   title = "Title",
-  body = "Cras placerat accumsan nulla.",
-  footer = buttonInput(
-    id = "closeModal",
-    label = "Close"
-  ) \%>\%
-    background("blue")
+  body = "Cras placerat accumsan nulla."
 )
 
 ### Modal with container body
 
 modal(
-  size = "large",
+  id = NULL,
+  size = "lg",
   title = "More complex",
   body = container(
     columns(
