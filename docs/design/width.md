@@ -30,7 +30,7 @@ parameters:
 family: design
 export: ''
 examples:
-- title: Numeric values
+- title: Numeric `size` values
   body:
   - type: text
     content: When specifying a numeric value the width of the element is relative
@@ -74,7 +74,7 @@ examples:
         <div class="border border-black h-4 w-19"></div>
         <div class="border border-black h-4 w-20"></div>
       </div>
-- title: Fractional values
+- title: Fractional `size` values
   body:
   - type: text
     content: When specifying width as a fraction the element's width is a percentage

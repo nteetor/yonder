@@ -9,12 +9,19 @@ description: |-
   the rest of your application's server may hide or show the modal with
   `showModal()` and `hideModal()`, respectively, by referring to this id.
 parameters:
+- name: id
+  description: |-
+    A character string specifying the id of the modal, when closed
+    `input[[id]]` is set to `TRUE`.
 - name: title
   description: |-
     A character string or tag element specifying the title of the
     modal.
-- name: body
-  description: A character string or tag element specifying the body of the modal.
+- name: '...'
+  description: |-
+    Unnamed arguments passed as tag elements to the body of the modal
+    or named arguments passed as HTML attributes to the body element of the
+    modal.
 - name: footer
   description: |-
     A character string or tag element specifying the footer of the
@@ -25,21 +32,15 @@ parameters:
     vertically centered on the page, defaults to `FALSE`.
 - name: size
   description: |-
-    One of `"small"`, `"large"`, or `"xl"` (extra large) specifying
-    whether to shrink or grow the width of the modal, defaults to `NULL`, in
-    which case the width is not adjusted.
-- name: id
-  description: A character string specifying the id to associate with the modal.
+    One of `"sm"` (small), `"md"` (medium), `"lg"` (large), or `"xl"`
+    (extra large) specifying the relative width of the modal, defaults to
+    `"md"`.
+- name: fade
+  description: |-
+    One of `TRUE` or `FALSE` specifying if the modal fades in when
+    shown and fades out when closed, defaults to `TRUE`.
 - name: modal
   description: A modal tag element created using `modal()`.
-- name: exprs
-  description: |-
-    A list of named values used to interpolate placeholders in a
-    registered modal, defaults to `list()`.
-- name: '...'
-  description: |-
-    Additional named arguments passed as HTML attributes to the
-    parent element.
 inheritParams: collapsiblePane
 sections:
 - title: Example application
@@ -84,26 +85,22 @@ examples:
   - type: code
     content: |-
       modal(
+        id = NULL,
         title = "Title",
-        body = "Cras placerat accumsan nulla.",
-        footer = buttonInput(
-          id = "closeModal",
-          label = "Close"
-        ) %>%
-          background("blue")
+        body = "Cras placerat accumsan nulla."
       )
     output: |-
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">Title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">Cras placerat accumsan nulla.</div>
-          <div class="modal-footer">
-            <button class="yonder-button btn btn-blue" type="button" role="button" id="closeModal" autocomplete="off">Close</button>
+      <div class="yonder-modal modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            Cras placerat accumsan nulla.
+            <div class="modal-header">
+              <h5 class="modal-title">Title</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body"></div>
           </div>
         </div>
       </div>
@@ -112,7 +109,8 @@ examples:
   - type: code
     content: |-
       modal(
-        size = "large",
+        id = NULL,
+        size = "lg",
         title = "More complex",
         body = container(
           columns(
@@ -126,15 +124,9 @@ examples:
         )
       )
     output: |-
-      <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title">More complex</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
+      <div class="yonder-modal modal fade" tabindex="-1" role="dialog">
+        <div class="modal-dialog modal-lg" role="document">
+          <div class="modal-content">
             <div class="container-fluid">
               <div class="row">
                 <div class="col">Cras placerat accumsan nulla.</div>
@@ -145,6 +137,13 @@ examples:
                 </div>
               </div>
             </div>
+            <div class="modal-header">
+              <h5 class="modal-title">More complex</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body"></div>
           </div>
         </div>
       </div>

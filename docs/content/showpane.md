@@ -20,7 +20,7 @@ parameters:
 - name: fade
   description: |-
     One of `TRUE` or `FALSE` specifying if the pane fades in when
-    show and out when hidden, defaults to `TRUE`.
+    shown and fades out when hidden, defaults to `TRUE`.
 inheritParams: collapsiblePane
 sections:
 - title: App with pills

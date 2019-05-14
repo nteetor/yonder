@@ -226,12 +226,6 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/registermodal.html
-         >registerModal</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/showmodal.html
          >showModal</a>
     </dd>
@@ -324,15 +318,23 @@ the rest of your application’s server may hide or show the modal with
 
 <dl>
   
+  <dt><p>id</p>
+</dt>
+  <dd><p>A character string specifying the id of the modal, when closed
+<code class="highlighter-rouge">input[[id]]</code> is set to <code class="highlighter-rouge">TRUE</code>.</p>
+</dd>
+  
   <dt><p>title</p>
 </dt>
   <dd><p>A character string or tag element specifying the title of the
 modal.</p>
 </dd>
   
-  <dt><p>body</p>
+  <dt><p>…</p>
 </dt>
-  <dd><p>A character string or tag element specifying the body of the modal.</p>
+  <dd><p>Unnamed arguments passed as tag elements to the body of the modal
+or named arguments passed as HTML attributes to the body element of the
+modal.</p>
 </dd>
   
   <dt><p>footer</p>
@@ -349,31 +351,20 @@ vertically centered on the page, defaults to <code class="highlighter-rouge">FAL
   
   <dt><p>size</p>
 </dt>
-  <dd><p>One of <code class="highlighter-rouge">"small"</code>, <code class="highlighter-rouge">"large"</code>, or <code class="highlighter-rouge">"xl"</code> (extra large) specifying
-whether to shrink or grow the width of the modal, defaults to <code class="highlighter-rouge">NULL</code>, in
-which case the width is not adjusted.</p>
+  <dd><p>One of <code class="highlighter-rouge">"sm"</code> (small), <code class="highlighter-rouge">"md"</code> (medium), <code class="highlighter-rouge">"lg"</code> (large), or <code class="highlighter-rouge">"xl"</code>
+(extra large) specifying the relative width of the modal, defaults to
+<code class="highlighter-rouge">"md"</code>.</p>
 </dd>
   
-  <dt><p>id</p>
+  <dt><p>fade</p>
 </dt>
-  <dd><p>A character string specifying the id to associate with the modal.</p>
+  <dd><p>One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying if the modal fades in when
+shown and fades out when closed, defaults to <code class="highlighter-rouge">TRUE</code>.</p>
 </dd>
   
   <dt><p>modal</p>
 </dt>
   <dd><p>A modal tag element created using <code class="highlighter-rouge">modal()</code>.</p>
-</dd>
-  
-  <dt><p>exprs</p>
-</dt>
-  <dd><p>A list of named values used to interpolate placeholders in a
-registered modal, defaults to <code class="highlighter-rouge">list()</code>.</p>
-</dd>
-  
-  <dt><p>…</p>
-</dt>
-  <dd><p>Additional named arguments passed as HTML attributes to the
-parent element.</p>
 </dd>
   
 </dl>
@@ -425,26 +416,22 @@ parent element.</p>
   
   
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">modal</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
   </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Title"</span><span class="p">,</span><span class="w">
-  </span><span class="n">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Cras placerat accumsan nulla."</span><span class="p">,</span><span class="w">
-  </span><span class="n">footer</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buttonInput</span><span class="p">(</span><span class="w">
-    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"closeModal"</span><span class="p">,</span><span class="w">
-    </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Close"</span><span class="w">
-  </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-    </span><span class="n">background</span><span class="p">(</span><span class="s2">"blue"</span><span class="p">)</span><span class="w">
+  </span><span class="n">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Cras placerat accumsan nulla."</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
 
-  <div><div class="modal-dialog" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title">Title</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">Cras placerat accumsan nulla.</div>
-    <div class="modal-footer">
-      <button class="yonder-button btn btn-blue" type="button" role="button" id="closeModal" autocomplete="off">Close</button>
+  <div><div class="yonder-modal modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      Cras placerat accumsan nulla.
+      <div class="modal-header">
+        <h5 class="modal-title">Title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"></div>
     </div>
   </div>
 </div></div>
@@ -461,7 +448,8 @@ parent element.</p>
   
   
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">modal</span><span class="p">(</span><span class="w">
-  </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"large"</span><span class="p">,</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">size</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"lg"</span><span class="p">,</span><span class="w">
   </span><span class="n">title</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"More complex"</span><span class="p">,</span><span class="w">
   </span><span class="n">body</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
     </span><span class="n">columns</span><span class="p">(</span><span class="w">
@@ -475,15 +463,9 @@ parent element.</p>
   </span><span class="p">)</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
 
-  <div><div class="modal-dialog modal-lg" role="document">
-  <div class="modal-content">
-    <div class="modal-header">
-      <h5 class="modal-title">More complex</h5>
-      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-        <span aria-hidden="true">&times;</span>
-      </button>
-    </div>
-    <div class="modal-body">
+  <div><div class="yonder-modal modal fade" tabindex="-1" role="dialog">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
       <div class="container-fluid">
         <div class="row">
           <div class="col">Cras placerat accumsan nulla.</div>
@@ -494,6 +476,13 @@ parent element.</p>
           </div>
         </div>
       </div>
+      <div class="modal-header">
+        <h5 class="modal-title">More complex</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body"></div>
     </div>
   </div>
 </div></div>

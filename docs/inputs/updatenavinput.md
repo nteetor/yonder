@@ -119,7 +119,7 @@ examples:
         choices = list(
           "Tab 1",
           menuInput(
-            id = NULL,  # <- ignored
+            id = "menu1",
             label = "Tab 2",
             choices = c(
               "Action",
@@ -135,7 +135,7 @@ examples:
         <li class="nav-item">
           <button class="nav-link btn btn-link active" value="tab1">Tab 1</button>
         </li>
-        <li class="yonder-menu dropdown nav-item">
+        <li class="yonder-menu dropdown nav-item" id="menu1">
           <button class="btn dropdown-toggle nav-link btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="tab2">Tab 2</button>
           <div class="dropdown-menu">
             <button class="dropdown-item" type="button" value="Action">Action</button>

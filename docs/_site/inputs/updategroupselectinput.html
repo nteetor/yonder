@@ -471,7 +471,7 @@ dropdown input value, the value of the text input, and any static addons.</p>
 
 
 
-<h4><p>Getting started</p>
+<h4><p>Simple select input</p>
 </h4>
 
 <div class="mb-2">
@@ -479,23 +479,58 @@ dropdown input value, the value of the text input, and any static addons.</p>
   
   
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">selectInput</span><span class="p">(</span><span class="w">
-  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"select1"</span><span class="p">,</span><span class="w">
   </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
-    </span><span class="s2">"Choose one"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"Choice 1"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"Choice 2"</span><span class="p">,</span><span class="w">
     </span><span class="s2">"Choice 3"</span><span class="w">
   </span><span class="p">),</span><span class="w">
-  </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">
+  </span><span class="n">values</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="m">1</span><span class="p">,</span><span class="w"> </span><span class="m">2</span><span class="p">,</span><span class="w"> </span><span class="m">3</span><span class="p">)</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
 
-  <div><div class="yonder-select btn-group">
-  <input type="text" class="form-control custom-select" data-toggle="dropdown" placeholder/>
+  <div><div class="yonder-select btn-group" id="select1">
+  <input type="text" class="form-control custom-select" data-toggle="dropdown" placeholder="Choice 1"/>
   <div class="dropdown-menu">
-    <button class="dropdown-item">Choose one</button>
-    <button class="dropdown-item" value="1">Choice 1</button>
+    <button class="dropdown-item active" value="1">Choice 1</button>
     <button class="dropdown-item" value="2">Choice 2</button>
     <button class="dropdown-item" value="3">Choice 3</button>
+  </div>
+  <div class="valid-feedback"></div>
+  <div class="invalid-feedback"></div>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Group select input</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">groupSelectInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"select2"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">,</span><span class="w">
+  </span><span class="n">left</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"$"</span><span class="p">,</span><span class="w">
+  </span><span class="n">right</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">".00"</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">width</span><span class="p">(</span><span class="m">10</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-group-select input-group w-10" id="select2">
+  <div class="input-group-prepend">
+    <span class="input-group-text">$</span>
+  </div>
+  <select class="custom-select">
+    <option selected value="1">1</option>
+    <option value="2">2</option>
+    <option value="3">3</option>
+    <option value="4">4</option>
+    <option value="5">5</option>
+  </select>
+  <div class="input-group-append">
+    <span class="input-group-text">.00</span>
   </div>
   <div class="valid-feedback"></div>
   <div class="invalid-feedback"></div>

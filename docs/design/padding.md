@@ -91,8 +91,8 @@ examples:
         </div>
         <div class="yonder-checkbox" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-938-214" name="checkbox-938-214" value="Remember me" autocomplete="off"/>
-            <label class="custom-control-label" for="checkbox-938-214">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-82-266" name="checkbox-82-266" value="Remember me" autocomplete="off"/>
+            <label class="custom-control-label" for="checkbox-82-266">Remember me</label>
             <div class="valid-feedback"></div>
             <div class="invalid-feedback"></div>
           </div>
@@ -145,8 +145,8 @@ examples:
         </div>
         <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-432-515" name="checkbox-432-515" value="Remember me" autocomplete="off"/>
-            <label class="custom-control-label" for="checkbox-432-515">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-685-968" name="checkbox-685-968" value="Remember me" autocomplete="off"/>
+            <label class="custom-control-label" for="checkbox-685-968">Remember me</label>
             <div class="valid-feedback"></div>
             <div class="invalid-feedback"></div>
           </div>

@@ -561,7 +561,7 @@ appearance of the nav input, defaults to <code class="highlighter-rouge">"links"
   </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">list</span><span class="p">(</span><span class="w">
     </span><span class="s2">"Tab 1"</span><span class="p">,</span><span class="w">
     </span><span class="n">menuInput</span><span class="p">(</span><span class="w">
-      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">NULL</span><span class="p">,</span><span class="w">  </span><span class="c1"># &lt;- ignored</span><span class="w">
+      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"menu1"</span><span class="p">,</span><span class="w">
       </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Tab 2"</span><span class="p">,</span><span class="w">
       </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="w">
         </span><span class="s2">"Action"</span><span class="p">,</span><span class="w">
@@ -577,7 +577,7 @@ appearance of the nav input, defaults to <code class="highlighter-rouge">"links"
   <li class="nav-item">
     <button class="nav-link btn btn-link active" value="tab1">Tab 1</button>
   </li>
-  <li class="yonder-menu dropdown nav-item">
+  <li class="yonder-menu dropdown nav-item" id="menu1">
     <button class="btn dropdown-toggle nav-link btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="tab2">Tab 2</button>
     <div class="dropdown-menu">
       <button class="dropdown-item" type="button" value="Action">Action</button>

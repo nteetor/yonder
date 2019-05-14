@@ -198,9 +198,7 @@
         <div class="content col">
           <h2><p>Color selected choices</p>
 </h2>
-<p><p>Use <code class="highlighter-rouge">active()</code> to change the color of active selected choices. This utility
-will only have an effect on elements with selectable choices, e.g.
-<code class="highlighter-rouge">checkbarInput()</code>.</p>
+<p><p>Use <code class="highlighter-rouge">active()</code> to change the highlight color of an input’s selected choices.</p>
 </p>
 
 <dl>
@@ -221,6 +219,74 @@ specifying the active color of selected choices.</p>
 
 
 
+
+
+<h4><p>Radiobar example</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">radiobarInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"radio1"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Hello"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Goodnight"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Howdy"</span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">width</span><span class="p">(</span><span class="m">16</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">active</span><span class="p">(</span><span class="s2">"orange"</span><span class="p">)</span><span class="w">  </span><span class="c1"># &lt;-</span></code></pre></figure>
+
+  <div><div class="yonder-radiobar btn-group btn-group-toggle d-flex w-16 active-orange" id="radio1" data-toggle="buttons">
+  <label class="btn btn-grey active">
+    <input name="radio1" type="radio" value="Hello" checked autocomplete="off"/>
+    Hello
+  </label>
+  <label class="btn btn-grey">
+    <input name="radio1" type="radio" value="Goodnight" autocomplete="off"/>
+    Goodnight
+  </label>
+  <label class="btn btn-grey">
+    <input name="radio1" type="radio" value="Howdy" autocomplete="off"/>
+    Howdy
+  </label>
+</div></div>
+  
+  
+</div>
+
+
+<h4><p>Checkbox example</p>
+</h4>
+
+<div class="mb-2">
+  
+  
+  
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">checkboxInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"check1"</span><span class="p">,</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Rock"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Paper"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Scissors"</span><span class="p">),</span><span class="w">
+  </span><span class="n">selected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Rock"</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">active</span><span class="p">(</span><span class="s2">"teal"</span><span class="p">)</span></code></pre></figure>
+
+  <div><div class="yonder-checkbox active-teal" id="check1">
+  <div class="custom-control custom-checkbox">
+    <input class="custom-control-input" type="checkbox" id="checkbox-807-890" name="checkbox-807-890" value="Rock" checked autocomplete="off"/>
+    <label class="custom-control-label" for="checkbox-807-890">Rock</label>
+  </div>
+  <div class="custom-control custom-checkbox">
+    <input class="custom-control-input" type="checkbox" id="checkbox-96-994" name="checkbox-96-994" value="Paper" autocomplete="off"/>
+    <label class="custom-control-label" for="checkbox-96-994">Paper</label>
+  </div>
+  <div class="custom-control custom-checkbox">
+    <input class="custom-control-input" type="checkbox" id="checkbox-385-816" name="checkbox-385-816" value="Scissors" autocomplete="off"/>
+    <label class="custom-control-label" for="checkbox-385-816">Scissors</label>
+    <div class="valid-feedback"></div>
+    <div class="invalid-feedback"></div>
+  </div>
+</div></div>
+  
+  
+</div>
 
 
           <div class="d-flex justify-content-center">

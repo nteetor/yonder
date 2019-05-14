@@ -49,28 +49,55 @@ parameters:
 family: inputs
 export: ''
 examples:
-- title: Getting started
+- title: Simple select input
   body:
   - type: code
     content: |-
       selectInput(
-        id = NULL,
+        id = "select1",
         choices = c(
-          "Choose one",
           "Choice 1",
           "Choice 2",
           "Choice 3"
         ),
-        values = list(NULL, 1, 2, 3)
+        values = list(1, 2, 3)
       )
     output: |-
-      <div class="yonder-select btn-group">
-        <input type="text" class="form-control custom-select" data-toggle="dropdown" placeholder/>
+      <div class="yonder-select btn-group" id="select1">
+        <input type="text" class="form-control custom-select" data-toggle="dropdown" placeholder="Choice 1"/>
         <div class="dropdown-menu">
-          <button class="dropdown-item">Choose one</button>
-          <button class="dropdown-item" value="1">Choice 1</button>
+          <button class="dropdown-item active" value="1">Choice 1</button>
           <button class="dropdown-item" value="2">Choice 2</button>
           <button class="dropdown-item" value="3">Choice 3</button>
+        </div>
+        <div class="valid-feedback"></div>
+        <div class="invalid-feedback"></div>
+      </div>
+- title: Group select input
+  body:
+  - type: code
+    content: |-
+      groupSelectInput(
+        id = "select2",
+        choices = 1:5,
+        left = "$",
+        right = ".00"
+      ) %>%
+        width(10)
+    output: |-
+      <div class="yonder-group-select input-group w-10" id="select2">
+        <div class="input-group-prepend">
+          <span class="input-group-text">$</span>
+        </div>
+        <select class="custom-select">
+          <option selected value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+        </select>
+        <div class="input-group-append">
+          <span class="input-group-text">.00</span>
         </div>
         <div class="valid-feedback"></div>
         <div class="invalid-feedback"></div>

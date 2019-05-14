@@ -75,7 +75,7 @@ examples:
       card(
         header = "Please pick a flavor",
         formInput(
-          id = NULL,
+          id = "form1",
           formGroup(
             label = "Ice creams",
             radioInput(
@@ -84,7 +84,7 @@ examples:
             )
           ),
           submit = buttonInput(  # <-
-            id = NULL,
+            id = "submi1",
             label = "Make choice"
           ) %>%
             background("teal")
@@ -96,27 +96,27 @@ examples:
       <div class="card border border-teal w-50">
         <div class="card-header">Please pick a flavor</div>
         <div class="card-body">
-          <form class="yonder-form">
+          <form class="yonder-form" id="form1">
             <div class="form-group">
               <label>Ice creams</label>
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-956-965" name="flavorChoice" value="Mint" checked autocomplete="off"/>
-                  <label class="custom-control-label" for="radio-956-965">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-553-249" name="flavorChoice" value="Mint" checked autocomplete="off"/>
+                  <label class="custom-control-label" for="radio-553-249">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-408-827" name="flavorChoice" value="Moose tracks" autocomplete="off"/>
-                  <label class="custom-control-label" for="radio-408-827">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-533-742" name="flavorChoice" value="Moose tracks" autocomplete="off"/>
+                  <label class="custom-control-label" for="radio-533-742">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-762-446" name="flavorChoice" value="Marble" autocomplete="off"/>
-                  <label class="custom-control-label" for="radio-762-446">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-328-395" name="flavorChoice" value="Marble" autocomplete="off"/>
+                  <label class="custom-control-label" for="radio-328-395">Marble</label>
                   <div class="valid-feedback"></div>
                   <div class="invalid-feedback"></div>
                 </div>
               </div>
             </div>
-            <button class="yonder-button btn btn-teal yonder-form-submit" type="button" role="button" autocomplete="off">Make choice</button>
+            <button class="yonder-button btn btn-teal yonder-form-submit" type="button" role="button" id="submi1" autocomplete="off">Make choice</button>
           </form>
         </div>
       </div>
