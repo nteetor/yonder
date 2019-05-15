@@ -79,7 +79,7 @@ tag_name_is <- function(x, name) {
   isTRUE(x$name == name)
 }
 
-tag_attributes_add <- function(x, attrs, ...) {
+tag_attributes_add <- function(x, attrs = NULL, ...) {
   stopifnot(is_tag(x))
 
   args <- c(attrs, list(...))

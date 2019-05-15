@@ -8,7 +8,7 @@
 \usage{
 popover(..., title = NULL)
 
-showPopover(target, popover, placement = "top", duration = NULL,
+showPopover(id, popover, placement = "top", duration = NULL,
   session = getDefaultReactiveDomain())
 
 closePopover(id, session = getDefaultReactiveDomain())
@@ -21,24 +21,20 @@ parent element.}
 \item{title}{A character string specifying a title for the popover, defaults
 to \code{NULL}, in which case a title is not added.}
 
-\item{target}{A character string specifying the id of the element where the
-popover is shown.}
+\item{id}{A character string specifying the id of a popover's target tag
+element.}
 
 \item{popover}{The popover element to show, typically a call to \code{popover()}.}
 
 \item{placement}{One of \code{"top"}, \code{"left"}, \code{"bottom"}, or \code{"right"}
 specifying where the popover is positioned relative to the target tag
-element indicated by \code{id}.}
+element indicated by \code{id}, defaults to \code{"top"}.}
 
-\item{duration}{A positive integer specifying the duration of the popover
-in seconds or \code{NULL}, in which case the popover is not automatically
-removed. When \code{NULL} is specified the popover can be removed with
-\code{closePopover()}.}
+\item{duration}{A positive integer specifying the duration of the popover in
+seconds or \code{NULL}, in which case the popover is not automatically removed.
+When \code{NULL} the popover must be removed with \code{closePopover()}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
-
-\item{id}{A character string specifying the HTML id of a popover's target tag
-element.}
 }
 \description{
 Popovers are small windows of content associated with a tag element. Use
@@ -83,7 +79,7 @@ shinyApp(ui, server)
 \seealso{
 Other content: \code{\link{alert}},
   \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{collapsiblePane}}, \code{\link{d1}},
+  \code{\link{collapsePane}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{img}},
   \code{\link{jumbotron}}, \code{\link{modal}},
   \code{\link{navContent}}, \code{\link{pre}},

@@ -1722,6 +1722,34 @@
     return false;
   });
 
+  Shiny.addCustomMessageHandler("yonder:download", function (msg) {
+    if (!(msg.filename && msg.token && msg.key)) {
+      throw "invalid download event";
+    }
+
+    var uri = "/session/" + msg.token + "/download/" + msg.key;
+    var agent = window.navigator.userAgent;
+    var ie = /MSIE/.test(agent);
+
+    if (ie === true) {
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", uri);
+      xhr.responseType = "blob";
+
+      xhr.onload = function () {
+        return saveAs(xhr.response, msg.filename);
+      };
+
+      xhr.send();
+    } else {
+      fetch(uri).then(function (res) {
+        return res.blob();
+      }).then(function (blob) {
+        saveAs(blob, msg.filename);
+      });
+    }
+  });
+
   Shiny.addCustomMessageHandler("yonder:element", function (msg) {
     var _render = function _render(data) {
       if (data.dependencies) {
@@ -1786,7 +1814,6 @@
           return;
         }
 
-        console.log(modal);
         $(modal).modal("hide");
       });
     };
@@ -1833,6 +1860,53 @@
     }
   });
 
+  Shiny.addCustomMessageHandler("yonder:popover", function (msg) {
+    if (!msg.data.id || !document.getElementById(msg.data.id)) {
+      return;
+    }
+
+    var _show = function _show(data) {
+      var $target = $(document.getElementById(data.id));
+      $target.popover({
+        content: function content() {
+          return undefined;
+        },
+        placement: data.placement,
+        template: data.content,
+        title: function title() {
+          return undefined;
+        },
+        trigger: "manual"
+      });
+
+      if (data.duration) {
+        setTimeout(function () {
+          return $target.popover("hide");
+        }, data.duration);
+      }
+
+      $target.popover("show");
+    };
+
+    var _close = function _close(data) {
+      var target = document.getElementById(data.id);
+
+      if (!target) {
+        return;
+      }
+
+      $(target).popover("hide");
+    };
+
+    if (msg.type === "show") {
+      _show(msg.data);
+    } else if (msg.type === "close") {
+      _close(msg.data);
+    } else {
+      console.warn("no \"" + msg.type + "\" popover method");
+    }
+  });
+
   $(function () {
     document.body.insertAdjacentHTML("beforeend", "<div class='yonder-toasts'></div>");
     $(".yonder-toasts").on("hidden.bs.toast", ".toast", function (e) {
@@ -1875,72 +1949,10 @@
   });
 
   $(function () {
-    $("[data-toggle=\"tooltip\"]").tooltip();
-    $("[data-toggle=\"popover\"]").popover();
+    $("[data-toggle=\"tooltip\"]").tooltip(); //$("[data-toggle=\"popover\"]").popover();
+
     $(document).on("shiny:connected", function () {
       $(".yonder-submit[data-type=\"submit\"]").attr("type", "submit");
-    });
-    Shiny.addCustomMessageHandler("yonder:popover", function (msg) {
-      if (msg.data.target === undefined) {
-        return;
-      }
-
-      if (msg.type == "show") {
-        var data = msg.data;
-        var $target = $("#" + data.target);
-        $target.popover({
-          title: function title() {
-            return undefined;
-          },
-          content: function content() {
-            return undefined;
-          },
-          template: data.content,
-          placement: data.placement,
-          trigger: "manual"
-        });
-
-        if (data.duration) {
-          setTimeout(function () {
-            return $target.popover("hide");
-          }, data.duration);
-        }
-
-        $target.popover("show");
-        return;
-      }
-
-      if (msg.type == "close") {
-        $("#" + msg.data.id).popover("hide");
-        return;
-      }
-    });
-    Shiny.addCustomMessageHandler("yonder:download", function (msg) {
-      if (!(msg.filename && msg.token && msg.key)) {
-        throw "invalid download event";
-      }
-
-      var uri = "/session/" + msg.token + "/download/" + msg.key;
-      var agent = window.navigator.userAgent;
-      var ie = /MSIE/.test(agent);
-
-      if (ie === true) {
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", uri);
-        xhr.responseType = "blob";
-
-        xhr.onload = function () {
-          return saveAs(xhr.response, msg.filename);
-        };
-
-        xhr.send();
-      } else {
-        fetch(uri).then(function (res) {
-          return res.blob();
-        }).then(function (blob) {
-          saveAs(blob, msg.filename);
-        });
-      }
     });
   });
 

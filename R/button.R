@@ -20,6 +20,9 @@
 #' @param download One of `TRUE` or `FALSE` specifying if the button or link
 #'   input is used to trigger a download, defaults to `FALSE`.
 #'
+#' @param tooltip A call to [tooltip()] specifying a tooltip for the button or
+#'   link input, defaults to `NULL`.
+#'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
 #'
@@ -37,6 +40,7 @@
 #' @family inputs
 #' @export
 #' @examples
+#'
 #' ### A simple button
 #'
 #' buttonInput(
@@ -113,7 +117,8 @@
 #'   icon("download")
 #' )
 #'
-buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE) {
+buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
+                        tooltip = NULL) {
   assert_id()
 
   component <- (if (download) tags$a else tags$button)(
@@ -133,6 +138,8 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE) {
     ...,
     autocomplete = "off"
   )
+
+  component <- tag_tooltip_add(component, tooltip)
 
   attach_dependencies(component)
 }
@@ -168,7 +175,8 @@ updateButtonInput <- function(id, label = NULL, value = NULL,
 
 #' @rdname buttonInput
 #' @export
-linkInput <- function(id, label, ..., stretch = FALSE, download = FALSE) {
+linkInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
+                      tooltip = NULL) {
   assert_id()
 
   component <- (if (download) tags$a else tags$button)(
@@ -186,6 +194,8 @@ linkInput <- function(id, label, ..., stretch = FALSE, download = FALSE) {
     label,
     ...
   )
+
+  component <- tag_tooltip_add(component, tooltip)
 
   attach_dependencies(component)
 }

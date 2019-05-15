@@ -12,24 +12,20 @@
 #' @param title A character string specifying a title for the popover, defaults
 #'   to `NULL`, in which case a title is not added.
 #'
-#' @param target A character string specifying the id of the element where the
-#'   popover is shown.
+#' @param id A character string specifying the id of a popover's target tag
+#'   element.
 #'
 #' @param popover The popover element to show, typically a call to `popover()`.
 #'
 #' @param placement One of `"top"`, `"left"`, `"bottom"`, or `"right"`
 #'   specifying where the popover is positioned relative to the target tag
-#'   element indicated by `id`.
+#'   element indicated by `id`, defaults to `"top"`.
 #'
-#' @param duration A positive integer specifying the duration of the popover
-#'   in seconds or `NULL`, in which case the popover is not automatically
-#'   removed. When `NULL` is specified the popover can be removed with
-#'   `closePopover()`.
+#' @param duration A positive integer specifying the duration of the popover in
+#'   seconds or `NULL`, in which case the popover is not automatically removed.
+#'   When `NULL` the popover must be removed with `closePopover()`.
 #'
-#' @param id A character string specifying the HTML id of a popover's target tag
-#'   element.
-#'
-#' @inheritParams collapsiblePane
+#' @inheritParams collapsePane
 #'
 #' @section Example application:
 #'
@@ -92,34 +88,27 @@ popover <- function(..., title = NULL) {
 
 #' @rdname popover
 #' @export
-showPopover <- function(target, popover, placement = "top", duration = NULL,
+showPopover <- function(id, popover, placement = "top", duration = NULL,
                         session = getDefaultReactiveDomain()) {
-  if (!is.character(target)) {
+  assert_id()
+  assert_session()
+  assert_possible(placement, c("right", "left", "top", "bottom"))
+
+  if (!is.null(duration) && (!is.numeric(duration) || duration < 0)) {
     stop(
-      "invalid `showPopover()` argument, `target` must be a character string",
+      "invalid argument in `showPopover()`, `duration` must be a positive ",
+      "integer",
       call. = FALSE
     )
   }
 
-  assert_session()
-
-  assert_possible(placement, c("right", "left", "top", "bottom"))
-
-  if (!is.null(duration)) {
-    if (!is.numeric(duration) || duration < 0) {
-      stop(
-        "invalid `showPopover()` argument, `duration` must be a positive ",
-        "integer",
-        call. = FALSE
-      )
-    }
-  }
+  content <- coerce_content(popover)
 
   session$sendCustomMessage("yonder:popover", list(
     type = "show",
     data = list(
-      target = target,
-      content = HTML(as.character(popover)),
+      id = id,
+      content = content,
       placement = placement,
       duration = if (!is.null(duration)) duration * 1000
     )

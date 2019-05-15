@@ -7652,262 +7652,262 @@ a.close.disabled {
   transform: translateY(-10%);
 }
 
-.chips-red .chip {
+.active-red .chip {
   color: #fff;
   background-color: #f44336;
 }
 
-.chips-red .chip:hover, .chips-red .chip:focus {
+.active-red .chip:hover, .active-red .chip:focus {
   color: #fff;
   background-color: #ea1c0d;
 }
 
-.chips-red .chip:focus, .chips-red .chip.focus {
+.active-red .chip:focus, .active-red .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(244, 67, 54, 0.5);
 }
 
-.chips-red .chip.disabled, .chips-red .chip:disabled {
+.active-red .chip.disabled, .active-red .chip:disabled {
   color: #fff;
   background-color: #f44336;
 }
 
-.chips-purple .chip {
+.active-purple .chip {
   color: #fff;
   background-color: #9c27b0;
 }
 
-.chips-purple .chip:hover, .chips-purple .chip:focus {
+.active-purple .chip:hover, .active-purple .chip:focus {
   color: #fff;
   background-color: #771e86;
 }
 
-.chips-purple .chip:focus, .chips-purple .chip.focus {
+.active-purple .chip:focus, .active-purple .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(156, 39, 176, 0.5);
 }
 
-.chips-purple .chip.disabled, .chips-purple .chip:disabled {
+.active-purple .chip.disabled, .active-purple .chip:disabled {
   color: #fff;
   background-color: #9c27b0;
 }
 
-.chips-indigo .chip {
+.active-indigo .chip {
   color: #fff;
   background-color: #3f51b5;
 }
 
-.chips-indigo .chip:hover, .chips-indigo .chip:focus {
+.active-indigo .chip:hover, .active-indigo .chip:focus {
   color: #fff;
   background-color: #32408f;
 }
 
-.chips-indigo .chip:focus, .chips-indigo .chip.focus {
+.active-indigo .chip:focus, .active-indigo .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(63, 81, 181, 0.5);
 }
 
-.chips-indigo .chip.disabled, .chips-indigo .chip:disabled {
+.active-indigo .chip.disabled, .active-indigo .chip:disabled {
   color: #fff;
   background-color: #3f51b5;
 }
 
-.chips-blue .chip {
+.active-blue .chip {
   color: #fff;
   background-color: #357edd;
 }
 
-.chips-blue .chip:hover, .chips-blue .chip:focus {
+.active-blue .chip:hover, .active-blue .chip:focus {
   color: #fff;
   background-color: #2065bf;
 }
 
-.chips-blue .chip:focus, .chips-blue .chip.focus {
+.active-blue .chip:focus, .active-blue .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(53, 126, 221, 0.5);
 }
 
-.chips-blue .chip.disabled, .chips-blue .chip:disabled {
+.active-blue .chip.disabled, .active-blue .chip:disabled {
   color: #fff;
   background-color: #357edd;
 }
 
-.chips-cyan .chip {
+.active-cyan .chip {
   color: #fff;
   background-color: #00bcd4;
 }
 
-.chips-cyan .chip:hover, .chips-cyan .chip:focus {
+.active-cyan .chip:hover, .active-cyan .chip:focus {
   color: #fff;
   background-color: #008fa1;
 }
 
-.chips-cyan .chip:focus, .chips-cyan .chip.focus {
+.active-cyan .chip:focus, .active-cyan .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 188, 212, 0.5);
 }
 
-.chips-cyan .chip.disabled, .chips-cyan .chip:disabled {
+.active-cyan .chip.disabled, .active-cyan .chip:disabled {
   color: #fff;
   background-color: #00bcd4;
 }
 
-.chips-teal .chip {
+.active-teal .chip {
   color: #fff;
   background-color: #009688;
 }
 
-.chips-teal .chip:hover, .chips-teal .chip:focus {
+.active-teal .chip:hover, .active-teal .chip:focus {
   color: #fff;
   background-color: #00635a;
 }
 
-.chips-teal .chip:focus, .chips-teal .chip.focus {
+.active-teal .chip:focus, .active-teal .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 150, 136, 0.5);
 }
 
-.chips-teal .chip.disabled, .chips-teal .chip:disabled {
+.active-teal .chip.disabled, .active-teal .chip:disabled {
   color: #fff;
   background-color: #009688;
 }
 
-.chips-green .chip {
+.active-green .chip {
   color: #fff;
   background-color: #4caf50;
 }
 
-.chips-green .chip:hover, .chips-green .chip:focus {
+.active-green .chip:hover, .active-green .chip:focus {
   color: #fff;
   background-color: #3d8b40;
 }
 
-.chips-green .chip:focus, .chips-green .chip.focus {
+.active-green .chip:focus, .active-green .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(76, 175, 80, 0.5);
 }
 
-.chips-green .chip.disabled, .chips-green .chip:disabled {
+.active-green .chip.disabled, .active-green .chip:disabled {
   color: #fff;
   background-color: #4caf50;
 }
 
-.chips-yellow .chip {
+.active-yellow .chip {
   color: #212529;
   background-color: #ffeb3b;
 }
 
-.chips-yellow .chip:hover, .chips-yellow .chip:focus {
+.active-yellow .chip:hover, .active-yellow .chip:focus {
   color: #212529;
   background-color: #ffe608;
 }
 
-.chips-yellow .chip:focus, .chips-yellow .chip.focus {
+.active-yellow .chip:focus, .active-yellow .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(255, 235, 59, 0.5);
 }
 
-.chips-yellow .chip.disabled, .chips-yellow .chip:disabled {
+.active-yellow .chip.disabled, .active-yellow .chip:disabled {
   color: #212529;
   background-color: #ffeb3b;
 }
 
-.chips-amber .chip {
+.active-amber .chip {
   color: #212529;
   background-color: #ffc107;
 }
 
-.chips-amber .chip:hover, .chips-amber .chip:focus {
+.active-amber .chip:hover, .active-amber .chip:focus {
   color: #212529;
   background-color: #d39e00;
 }
 
-.chips-amber .chip:focus, .chips-amber .chip.focus {
+.active-amber .chip:focus, .active-amber .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(255, 193, 7, 0.5);
 }
 
-.chips-amber .chip.disabled, .chips-amber .chip:disabled {
+.active-amber .chip.disabled, .active-amber .chip:disabled {
   color: #212529;
   background-color: #ffc107;
 }
 
-.chips-orange .chip {
+.active-orange .chip {
   color: #212529;
   background-color: #ff9800;
 }
 
-.chips-orange .chip:hover, .chips-orange .chip:focus {
+.active-orange .chip:hover, .active-orange .chip:focus {
   color: #212529;
   background-color: #cc7a00;
 }
 
-.chips-orange .chip:focus, .chips-orange .chip.focus {
+.active-orange .chip:focus, .active-orange .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(255, 152, 0, 0.5);
 }
 
-.chips-orange .chip.disabled, .chips-orange .chip:disabled {
+.active-orange .chip.disabled, .active-orange .chip:disabled {
   color: #212529;
   background-color: #ff9800;
 }
 
-.chips-grey .chip {
+.active-grey .chip {
   color: #212529;
   background-color: #f8f9fa;
 }
 
-.chips-grey .chip:hover, .chips-grey .chip:focus {
+.active-grey .chip:hover, .active-grey .chip:focus {
   color: #212529;
   background-color: #dae0e5;
 }
 
-.chips-grey .chip:focus, .chips-grey .chip.focus {
+.active-grey .chip:focus, .active-grey .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(248, 249, 250, 0.5);
 }
 
-.chips-grey .chip.disabled, .chips-grey .chip:disabled {
+.active-grey .chip.disabled, .active-grey .chip:disabled {
   color: #212529;
   background-color: #f8f9fa;
 }
 
-.chips-white .chip {
+.active-white .chip {
   color: #212529;
   background-color: #fff;
 }
 
-.chips-white .chip:hover, .chips-white .chip:focus {
+.active-white .chip:hover, .active-white .chip:focus {
   color: #212529;
   background-color: #e6e6e6;
 }
 
-.chips-white .chip:focus, .chips-white .chip.focus {
+.active-white .chip:focus, .active-white .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(255, 255, 255, 0.5);
 }
 
-.chips-white .chip.disabled, .chips-white .chip:disabled {
+.active-white .chip.disabled, .active-white .chip:disabled {
   color: #212529;
   background-color: #fff;
 }
 
-.chips-black .chip {
+.active-black .chip {
   color: #fff;
   background-color: #000;
 }
 
-.chips-black .chip:hover, .chips-black .chip:focus {
+.active-black .chip:hover, .active-black .chip:focus {
   color: #fff;
   background-color: black;
 }
 
-.chips-black .chip:focus, .chips-black .chip.focus {
+.active-black .chip:focus, .active-black .chip.focus {
   outline: 0;
   box-shadow: 0 0 0 0.2rem rgba(0, 0, 0, 0.5);
 }
 
-.chips-black .chip.disabled, .chips-black .chip:disabled {
+.active-black .chip.disabled, .active-black .chip:disabled {
   color: #fff;
   background-color: #000;
 }

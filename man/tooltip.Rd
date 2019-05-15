@@ -2,59 +2,38 @@
 % Please edit documentation in R/tooltip.R
 \name{tooltip}
 \alias{tooltip}
-\title{Tooltips}
+\title{Button or link tooltips}
 \usage{
-tooltip(tag, text, placement = "top")
+tooltip(..., placement = "top", fade = TRUE)
 }
 \arguments{
-\item{tag}{A tag element.}
-
-\item{text}{The tooltip text.}
+\item{...}{Character strings or tag elements (such as \code{em} or \code{b}) specifying
+the contents of the tooltip.}
 
 \item{placement}{One of \code{"top"}, \code{"right"}, \code{"bottom"}, or \code{"left"}
 specifying what side of the tag element the tooltip appears on.}
+
+\item{fade}{One of \code{TRUE} or \code{FALSE} specifying if the tooltip fades in when
+shown and fades out when hidden, defaults to \code{TRUE}.}
 }
 \description{
-Add a tooltip to a tag element. Tooltips may be placed above, below, left, or
-right of an element.
+Use \code{tooltip()} to contruct a tooltip for a button or link input.
 }
 \examples{
 
-### Tooltips galore
+### Link with tooltip
 
-formGroup(
-  label = tags$label(
-    "An exciting input",
-    tooltip(span(icon("info-circle")), "What is exciting here?")
-  ),
-  radioInput(
-    id = "radios",
-    choices = c("Ready", "Set", "Go")
-  )
-)
-
-### Describing links (link inputs)
-
-div(
-  p("Nunc rutrum turpis sed pede."),
-  p(
-    "Donec posuere augue in ",
-    linkInput(NULL, "quam.") \%>\%
-      tooltip("This is bound to do something")
-  ),
-  p(
-    "Etiam vel tortor sodales ",
-    linkInput(NULL, "tellus") \%>\%
-      tooltip("Tell us more?"),
-    " ultricies commodo."
-  )
+linkInput(
+  id = "link1",
+  "A link",
+  tooltip = tooltip("But, with a tooltip!")
 )
 
 }
 \seealso{
 Other content: \code{\link{alert}},
   \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{collapsiblePane}}, \code{\link{d1}},
+  \code{\link{collapsePane}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{img}},
   \code{\link{jumbotron}}, \code{\link{modal}},
   \code{\link{navContent}}, \code{\link{popover}},

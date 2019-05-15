@@ -36,6 +36,16 @@ checkboxInput(
 ) \%>\%
   active("teal")
 
+### Chip input
+
+chipInput(
+  id = "chip1",
+  choices = c("Ether", "Bombos", "Quake"),
+  selected = "Ether"
+) \%>\%
+  width("1/2") \%>\%
+  active("green")
+
 }
 \seealso{
 Other design: \code{\link{affix}},

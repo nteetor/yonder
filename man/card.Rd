@@ -150,7 +150,7 @@ deck(
 }
 \seealso{
 Other content: \code{\link{alert}},
-  \code{\link{blockquote}}, \code{\link{collapsiblePane}},
+  \code{\link{blockquote}}, \code{\link{collapsePane}},
   \code{\link{d1}}, \code{\link{dropdown}},
   \code{\link{img}}, \code{\link{jumbotron}},
   \code{\link{modal}}, \code{\link{navContent}},

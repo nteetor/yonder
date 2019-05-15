@@ -79,7 +79,8 @@
 #'
 #' chipInput(
 #'   id = "chip1",
-#'   choices = paste("Choice", 1:5)
+#'   choices = paste("Choice", 1:5),
+#'   selected = c("Choice 3", "Choice 4")
 #' )
 #'
 chipInput <- function(id, choices = NULL, values = choices, selected = NULL,

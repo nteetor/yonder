@@ -32,7 +32,7 @@
 #'
 #' @param modal A modal tag element created using `modal()`.
 #'
-#' @inheritParams collapsiblePane
+#' @inheritParams collapsePane
 #'
 #' @section Example application:
 #'

@@ -1,12 +1,10 @@
-#' Collapsible sections
+#' Collapse sections
 #'
-#' The `collapsiblePane()` creates a collapsible container. The state of the
-#' container, expanded or collapsed, is toggled using `expandPane()`,
-#' `collapsePane()`, and `togglePane()`.
+#' The `collapsePane()` creates a collapsible container. The state of the
+#' container, expanded or collapsed, is toggled using `showCollapsePane()`,
+#' `hideCollapsePane()`, and `toggleCollapsePane()`.
 #'
-#' @param id A character string specifying the id of the collapsible pane. Pass
-#'   this id to the `hideCollapse()`, `showCollapse()`, or `toggleCollapse()`
-#'   to change the state of a collapsible pane.
+#' @param id A character string specifying the id of the collapse pane.
 #'
 #' @param show One of `TRUE` or `FALSE` specifying if the collapsible pane
 #'   is shown when the page renders, defaults to `FALSE`.
@@ -30,7 +28,7 @@
 #'     id = "demo",
 #'     label = "Toggle collapse"
 #'   ),
-#'   collapsiblePane(
+#'   collapsePane(
 #'     id = "collapse",
 #'     p(
 #'       "Pellentesque condimentum, magna ut suscipit hendrerit, ",
@@ -46,7 +44,7 @@
 #'
 #' server <- function(input, output) {
 #'   observeEvent(input$demo, {
-#'     togglePane("collapse")
+#'     toggleCollapsePane("collapse")
 #'   })
 #' }
 #'
@@ -62,7 +60,7 @@
 #' # As these are server-side utilities, please run the example applications
 #' # above.
 #'
-collapsiblePane <- function(id, ..., show = FALSE) {
+collapsePane <- function(id, ..., show = FALSE) {
   assert_id()
 
   pane <- tags$div(
@@ -77,9 +75,10 @@ collapsiblePane <- function(id, ..., show = FALSE) {
   attach_dependencies(pane)
 }
 
-#' @rdname collapsiblePane
+#' @rdname collapsePane
 #' @export
-collapsePane <- function(id, session = getDefaultReactiveDomain()) {
+hideCollapsePane <- function(id, session = getDefaultReactiveDomain()) {
+  assert_id()
   assert_session()
 
   session$sendCustomMessage("yonder:collapse", list(
@@ -90,9 +89,10 @@ collapsePane <- function(id, session = getDefaultReactiveDomain()) {
   ))
 }
 
-#' @rdname collapsiblePane
+#' @rdname collapsePane
 #' @export
-expandPane <- function(id, session = getDefaultReactiveDomain()) {
+showCollapsePane <- function(id, session = getDefaultReactiveDomain()) {
+  assert_id()
   assert_session()
 
   session$sendCustomMessage("yonder:collapse", list(
@@ -103,9 +103,10 @@ expandPane <- function(id, session = getDefaultReactiveDomain()) {
   ))
 }
 
-#' @rdname collapsiblePane
+#' @rdname collapsePane
 #' @export
-togglePane <- function(id, session = getDefaultReactiveDomain()) {
+toggleCollapsePane <- function(id, session = getDefaultReactiveDomain()) {
+  assert_id()
   assert_session()
 
   session$sendCustomMessage("yonder:collapse", list(

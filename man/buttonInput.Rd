@@ -7,12 +7,14 @@
 \alias{updateLinkInput}
 \title{Button and submit inputs}
 \usage{
-buttonInput(id, label, ..., stretch = FALSE, download = FALSE)
+buttonInput(id, label, ..., stretch = FALSE, download = FALSE,
+  tooltip = NULL)
 
 updateButtonInput(id, label = NULL, value = NULL, disable = NULL,
   enable = NULL, session = getDefaultReactiveDomain())
 
-linkInput(id, label, ..., stretch = FALSE, download = FALSE)
+linkInput(id, label, ..., stretch = FALSE, download = FALSE,
+  tooltip = NULL)
 
 updateLinkInput(id, label = NULL, value = NULL, enable = NULL,
   disable = NULL, session = getDefaultReactiveDomain())
@@ -35,6 +37,9 @@ clicked on the card.}
 \item{download}{One of \code{TRUE} or \code{FALSE} specifying if the button or link
 input is used to trigger a download, defaults to \code{FALSE}.}
 
+\item{tooltip}{A call to \code{\link[=tooltip]{tooltip()}} specifying a tooltip for the button or
+link input, defaults to \code{NULL}.}
+
 \item{value}{A number specifying a new value for the button, defaults to
 \code{NULL}.}
 
@@ -52,6 +57,7 @@ The reactive value of a button input begins as \code{NULL}, but subsequently is
 the number of clicks.
 }
 \examples{
+
 ### A simple button
 
 buttonInput(

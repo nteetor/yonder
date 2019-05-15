@@ -26,16 +26,6 @@ color_apply <- function(tag, base, color) {
     return(tag)
   }
 
-  if (tag_class_re(tag, "yonder-chip")) {
-    tag$children[[3]] <- color_apply(
-      tag = tag$children[[3]],
-      base = base,
-      color = color
-    )
-
-    return(tag)
-  }
-
   if (tag_class_re(tag, "dropdown")) {
     tag$children[[1]] <- color_apply(
       tag$children[[1]],
@@ -235,8 +225,6 @@ background <- function(tag, color) {
     base <- "btn"
   } else if (tag_class_re(tag, "list-group")) {
     base <- "list-group-item"
-  } else if (tag_class_re(tag, "yonder-chip")) {
-    base <- "chips"
   } else if (tag_class_re(tag, "yonder-range")) {
     base <- "range"
   } else {
@@ -367,6 +355,16 @@ border <- function(tag, color = NULL, sides = "all", round = NULL) {
 #'   selected = "Rock"
 #' ) %>%
 #'   active("teal")
+#'
+#' ### Chip input
+#'
+#' chipInput(
+#'   id = "chip1",
+#'   choices = c("Ether", "Bombos", "Quake"),
+#'   selected = "Ether"
+#' ) %>%
+#'   width("1/2") %>%
+#'   active("green")
 #'
 active <- function(tag, color) {
   assert_possible(color, .colors)

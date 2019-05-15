@@ -28,7 +28,7 @@ caption.
 \seealso{
 Other content: \code{\link{alert}},
   \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{collapsiblePane}}, \code{\link{d1}},
+  \code{\link{collapsePane}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{jumbotron}},
   \code{\link{modal}}, \code{\link{navContent}},
   \code{\link{popover}}, \code{\link{pre}},

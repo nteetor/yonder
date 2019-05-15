@@ -2,7 +2,7 @@
 #'
 #' A reactive input styled as a navigation control. The navigation input can be
 #' styled as links, tabs, or pills. A nav input is paired with [navContent()]
-#' and [showPane()] to create tabbed user interfaces. Observers and reactives
+#' and [showNavPane()] to create tabbed user interfaces. Observers and reactives
 #' are triggered when a nav choice or menu item is clicked. The reactive value
 #' of a nav input is `NULL` or a singleton character string. The value of any
 #' menus in the nav input must be retrieved with its own reactive id.
@@ -215,23 +215,26 @@ map_navitems <- function(choices, values, selected) {
 #' Navigation panes
 #'
 #' These functions pair with [navInput()]. Use `navContent()` and `navPane()` to
-#' create the pane layout. To show a new pane use `showPane()` in the server
-#' function. `showPane()` will also hide the previously active pane. You can
-#' also hide an active pane with `hidePane()`. `hidePane()` is useful when you
-#' do not have a new pane to show, but want to hide the current active pane.
+#' create the pane layout. To show a new pane use `showNavPane()` from within an
+#' observer. `showNavPane()` will also hide a previously active pane. If needed
+#' you can hide an active pane with `hideNavPane()`. `hideNavPane()` is useful
+#' when you do not have a new pane to show, but want to hide the current active
+#' pane.
 #'
-#' @param ... For **navContent**, any number of nav panes or named arguments
-#'   passed as HTML attributes to the parent element.
+#' @param ... For **navContent**, any number of nav panes passed as child
+#'   elements to the nav parent element or named arguments passed as HTML
+#'   attributes to the parent element.
 #'
-#'   For **navPane**, named attributes passed as HTML elements to the parent
-#'   element.
+#'   For **navPane**, any number of unnamed arguments passed as tag elements to
+#'   the parent element or named arguments passed as HTML elements to the
+#'   parent element.
 #'
 #' @param id A character string specifying the id of the nav pane.
 #'
 #' @param fade One of `TRUE` or `FALSE` specifying if the pane fades in when
 #'   shown and fades out when hidden, defaults to `TRUE`.
 #'
-#' @inheritParams collapsiblePane
+#' @inheritParams collapsePane
 #'
 #' @section App with pills:
 #'
@@ -272,7 +275,7 @@ map_navitems <- function(choices, values, selected) {
 #'
 #' server <- function(input, output) {
 #'   observeEvent(input$tabs, {
-#'     showPane(input$tabs)
+#'     showNavPane(input$tabs)
 #'   })
 #' }
 #'
@@ -321,12 +324,12 @@ map_navitems <- function(choices, values, selected) {
 #'
 #' server <- function(input, output) {
 #'   observeEvent(input$tabs, {
-#'     showPane(input$tabs)
+#'     showNavPane(input$tabs)
 #'   })
 #'
 #'   observeEvent(c(input$action, input$another), {
 #'     if (input$action > 0 || input$another > 0) {
-#'       showPane("pane2")
+#'       showNavPane("pane2")
 #'     }
 #'   })
 #' }
@@ -395,8 +398,8 @@ map_navitems <- function(choices, values, selected) {
 #'
 #' server <- function(input, output) {
 #'   observeEvent(input$tabs, {
-#'     showPane(paste0(input$tabs, "_1"))
-#'     showPane(paste0(input$tabs, "_2"))
+#'     showNavPane(paste0(input$tabs, "_1"))
+#'     showNavPane(paste0(input$tabs, "_2"))
 #'   })
 #' }
 #'
@@ -436,7 +439,7 @@ navPane <- function(id, ..., fade = TRUE) {
 
 #' @rdname navContent
 #' @export
-showPane <- function(id, session = getDefaultReactiveDomain()) {
+showNavPane <- function(id, session = getDefaultReactiveDomain()) {
   assert_id()
   assert_session()
 
@@ -450,7 +453,7 @@ showPane <- function(id, session = getDefaultReactiveDomain()) {
 
 #' @rdname navContent
 #' @export
-hidePane <- function(id, session = getDefaultReactiveDomain()) {
+hideNavPane <- function(id, session = getDefaultReactiveDomain()) {
   assert_id()
   assert_session()
 

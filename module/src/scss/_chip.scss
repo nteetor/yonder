@@ -99,8 +99,4 @@
   transform: translateY(-10%); // I don't like this.
 }
 
-@each $color, $value in $theme-colors {
-  .chips-#{$color} .chip {
-    @include chip-variant($value);
-  }
-}
+@include chip-active-variant();

@@ -1,56 +1,50 @@
-#' Tooltips
+#' Button or link tooltips
 #'
-#' Add a tooltip to a tag element. Tooltips may be placed above, below, left, or
-#' right of an element.
+#' Use `tooltip()` to contruct a tooltip for a button or link input.
 #'
-#' @param tag A tag element.
-#'
-#' @param text The tooltip text.
+#' @param ... Character strings or tag elements (such as `em` or `b`) specifying
+#'   the contents of the tooltip.
 #'
 #' @param placement One of `"top"`, `"right"`, `"bottom"`, or `"left"`
 #'   specifying what side of the tag element the tooltip appears on.
+#'
+#' @param fade One of `TRUE` or `FALSE` specifying if the tooltip fades in when
+#'   shown and fades out when hidden, defaults to `TRUE`.
 #'
 #' @family content
 #' @export
 #' @examples
 #'
-#' ### Tooltips galore
+#' ### Link with tooltip
 #'
-#' formGroup(
-#'   label = tags$label(
-#'     "An exciting input",
-#'     tooltip(span(icon("info-circle")), "What is exciting here?")
-#'   ),
-#'   radioInput(
-#'     id = "radios",
-#'     choices = c("Ready", "Set", "Go")
-#'   )
+#' linkInput(
+#'   id = "link1",
+#'   "A link",
+#'   tooltip = tooltip("But, with a tooltip!")
 #' )
 #'
-#' ### Describing links (link inputs)
-#'
-#' div(
-#'   p("Nunc rutrum turpis sed pede."),
-#'   p(
-#'     "Donec posuere augue in ",
-#'     linkInput(NULL, "quam.") %>%
-#'       tooltip("This is bound to do something")
-#'   ),
-#'   p(
-#'     "Etiam vel tortor sodales ",
-#'     linkInput(NULL, "tellus") %>%
-#'       tooltip("Tell us more?"),
-#'     " ultricies commodo."
-#'   )
-#' )
-#'
-tooltip <- function(tag, text, placement = "top") {
-  assert_tag()
+tooltip <- function(..., placement = "top", fade = TRUE) {
   assert_possible(placement, c("top", "right", "bottom", "left"))
+  assert_possible(fade, c(TRUE, FALSE))
 
-  tag$attribs$`data-toggle` <- "tooltip"
-  tag$attribs$`data-placement` <- placement
-  tag$attribs$title <- as.character(text)
+  list(
+    fade = if (fade) "true" else "false",
+    placement = placement,
+    title = coerce_content(unnamed_values(list(...)))
+  )
+}
 
-  attach_dependencies(tag)
+tag_tooltip_add <- function(tag, tooltip) {
+  if (!is.null(tooltip)) {
+    tag <- tag_attributes_add(
+      tag,
+      `data-animation` = tooltip$fade,
+      `data-html` = "true",
+      `data-placement` = tooltip$placement,
+      title = tooltip$title,
+      `data-toggle` = "tooltip"
+    )
+  }
+
+  tag
 }

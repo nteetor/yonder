@@ -23,7 +23,7 @@
 #' @param action A character string specifying a reactive id. If specified, the
 #'   hiding or closing of the toast will set the reactive id `action` to `TRUE`.
 #'
-#' @inheritParams collapsiblePane
+#' @inheritParams collapsePane
 #'
 #' @section Showing notifications:
 #'

@@ -3,24 +3,26 @@
 \name{navContent}
 \alias{navContent}
 \alias{navPane}
-\alias{showPane}
-\alias{hidePane}
+\alias{showNavPane}
+\alias{hideNavPane}
 \title{Navigation panes}
 \usage{
 navContent(...)
 
 navPane(id, ..., fade = TRUE)
 
-showPane(id, session = getDefaultReactiveDomain())
+showNavPane(id, session = getDefaultReactiveDomain())
 
-hidePane(id, session = getDefaultReactiveDomain())
+hideNavPane(id, session = getDefaultReactiveDomain())
 }
 \arguments{
-\item{...}{For \strong{navContent}, any number of nav panes or named arguments
-passed as HTML attributes to the parent element.
+\item{...}{For \strong{navContent}, any number of nav panes passed as child
+elements to the nav parent element or named arguments passed as HTML
+attributes to the parent element.
 
-For \strong{navPane}, named attributes passed as HTML elements to the parent
-element.}
+For \strong{navPane}, any number of unnamed arguments passed as tag elements to
+the parent element or named arguments passed as HTML elements to the
+parent element.}
 
 \item{id}{A character string specifying the id of the nav pane.}
 
@@ -31,10 +33,11 @@ shown and fades out when hidden, defaults to \code{TRUE}.}
 }
 \description{
 These functions pair with \code{\link[=navInput]{navInput()}}. Use \code{navContent()} and \code{navPane()} to
-create the pane layout. To show a new pane use \code{showPane()} in the server
-function. \code{showPane()} will also hide the previously active pane. You can
-also hide an active pane with \code{hidePane()}. \code{hidePane()} is useful when you
-do not have a new pane to show, but want to hide the current active pane.
+create the pane layout. To show a new pane use \code{showNavPane()} from within an
+observer. \code{showNavPane()} will also hide a previously active pane. If needed
+you can hide an active pane with \code{hideNavPane()}. \code{hideNavPane()} is useful
+when you do not have a new pane to show, but want to hide the current active
+pane.
 }
 \section{App with pills}{
 \preformatted{ui <- container(
@@ -73,7 +76,7 @@ do not have a new pane to show, but want to hide the current active pane.
 
 server <- function(input, output) {
   observeEvent(input$tabs, {
-    showPane(input$tabs)
+    showNavPane(input$tabs)
   })
 }
 
@@ -121,12 +124,12 @@ shinyApp(ui, server)
 
 server <- function(input, output) {
   observeEvent(input$tabs, {
-    showPane(input$tabs)
+    showNavPane(input$tabs)
   })
 
   observeEvent(c(input$action, input$another), {
     if (input$action > 0 || input$another > 0) {
-      showPane("pane2")
+      showNavPane("pane2")
     }
   })
 }
@@ -194,8 +197,8 @@ shinyApp(ui, server)
 
 server <- function(input, output) {
   observeEvent(input$tabs, {
-    showPane(paste0(input$tabs, "_1"))
-    showPane(paste0(input$tabs, "_2"))
+    showNavPane(paste0(input$tabs, "_1"))
+    showNavPane(paste0(input$tabs, "_2"))
   })
 }
 
@@ -214,7 +217,7 @@ shinyApp(ui, server)
 \seealso{
 Other content: \code{\link{alert}},
   \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{collapsiblePane}}, \code{\link{d1}},
+  \code{\link{collapsePane}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{img}},
   \code{\link{jumbotron}}, \code{\link{modal}},
   \code{\link{popover}}, \code{\link{pre}},
