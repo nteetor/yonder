@@ -8,7 +8,7 @@
 \usage{
 outputElement(id, ...)
 
-replaceElement(id, element, session = getDefaultReactiveDomain())
+replaceElement(id, ..., session = getDefaultReactiveDomain())
 
 removeElement(id, session = getDefaultReactiveDomain())
 }
@@ -16,6 +16,7 @@ removeElement(id, session = getDefaultReactiveDomain())
 \item{id}{A character string specifying a reactive id.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
+element or unnamed arguments passed as the new contents of the output
 element.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
@@ -33,4 +34,3 @@ they may be moved from this package entirely.
 Other rendering: \code{\link{badgeElement}}
 }
 \concept{rendering}
-\keyword{internal}

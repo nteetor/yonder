@@ -11,6 +11,7 @@ parameters:
 - name: '...'
   description: |-
     Additional named arguments passed as HTML attributes to the parent
+    element or unnamed arguments passed as the new contents of the output
     element.
 - name: session
   description: A reactive context, defaults to [getDefaultReactiveDomain()](getdefaultreactivedomain.html).
@@ -18,7 +19,6 @@ details: |-
   These functions are experimental and are subject to change. Additionally,
   they may be moved from this package entirely.
 family: rendering
-keywords: internal
 export: ''
 rdname: outputElement
 sections: []

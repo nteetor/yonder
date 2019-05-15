@@ -7,7 +7,8 @@ NULL
 
 #' A new approach to shiny applications
 #'
-#' Yonder is a set of tools for flexible and creative shiny application design.
+#' Yonder is a set of tools for flexible and creative shiny application
+#' construction and design.
 #'
 #' @section Inputs:
 #'
@@ -27,17 +28,21 @@ NULL
 #'
 #' Looking for ... ?
 #'
+#' * `actionButton()` or `actionLink()` use [buttonInput()] or [linkInput()]
+#'
 #' * `radioButtons()` use [radioInput()]
 #'
 #' * `checkboxGroupInput()` use [checkbarInput()] or [checkboxInput()]
 #'
 #' * `numericInput()` use [numberInput()]
 #'
-#' @section Layout:
+#' * `selectizeInput()` use [selectInput()] or [chipInput()]
 #'
-#' Included are a handful of tools for building applications for devices and
-#' screens of varying sizes. For real control over spacing elements be sure to
-#' check out [flex()], which gives you the power of flexbox layout.
+#' @section Layout and content:
+#'
+#' Included are a handful of utilities for building applications suited for
+#' devices and screens of varying sizes. For real control over spacing elements
+#' be sure to check out [flex()], which gives you the power of flexbox layout.
 #'
 #' **Familiar variants**
 #'
@@ -49,5 +54,9 @@ NULL
 #'   [columns()], and [column()]
 #'
 #' * `navbarPage()` use [navbar()]
+#'
+#' * `tabPanel()` use [navContent()] and [navPane()]
+#'
+#' * `modalDialog()` use [modal()]
 #'
 "_PACKAGE"

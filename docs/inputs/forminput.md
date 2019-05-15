@@ -101,16 +101,16 @@ examples:
               <label>Ice creams</label>
               <div class="yonder-radio" id="flavorChoice">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-921-160" name="flavorChoice" value="Mint" checked autocomplete="off"/>
-                  <label class="custom-control-label" for="radio-921-160">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-71-160" name="flavorChoice" value="Mint" checked autocomplete="off"/>
+                  <label class="custom-control-label" for="radio-71-160">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-283-437" name="flavorChoice" value="Moose tracks" autocomplete="off"/>
-                  <label class="custom-control-label" for="radio-283-437">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-859-936" name="flavorChoice" value="Moose tracks" autocomplete="off"/>
+                  <label class="custom-control-label" for="radio-859-936">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-51-11" name="flavorChoice" value="Marble" autocomplete="off"/>
-                  <label class="custom-control-label" for="radio-51-11">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-540-180" name="flavorChoice" value="Marble" autocomplete="off"/>
+                  <label class="custom-control-label" for="radio-540-180">Marble</label>
                   <div class="valid-feedback"></div>
                   <div class="invalid-feedback"></div>
                 </div>

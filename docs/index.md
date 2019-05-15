@@ -1,8 +1,9 @@
 ---
 name: _PACKAGE
 title: A new approach to shiny applications
-description: Yonder is a set of tools for flexible and creative shiny application
-  design.
+description: |-
+  Yonder is a set of tools for flexible and creative shiny application
+  construction and design.
 sections:
 - title: Inputs
   body: |-
@@ -22,16 +23,20 @@ sections:
 
     Looking for ... ?
 
+    * `actionButton()` or `actionLink()` use [buttonInput()](inputs/buttoninput.html) or [linkInput()](inputs/linkinput.html)
+
     * `radioButtons()` use [radioInput()](inputs/radioinput.html)
 
     * `checkboxGroupInput()` use [checkbarInput()](inputs/checkbarinput.html) or [checkboxInput()](inputs/checkboxinput.html)
 
     * `numericInput()` use [numberInput()](inputs/numberinput.html)
-- title: Layout
+
+    * `selectizeInput()` use [selectInput()](inputs/selectinput.html) or [chipInput()](inputs/chipinput.html)
+- title: Layout and content
   body: |-
-    Included are a handful of tools for building applications for devices and
-    screens of varying sizes. For real control over spacing elements be sure to
-    check out [flex()](layout/flex.html), which gives you the power of flexbox layout.
+    Included are a handful of utilities for building applications suited for
+    devices and screens of varying sizes. For real control over spacing elements
+    be sure to check out [flex()](layout/flex.html), which gives you the power of flexbox layout.
 
     **Familiar variants**
 
@@ -43,6 +48,10 @@ sections:
       [columns()](layout/columns.html), and [column()](layout/column.html)
 
     * `navbarPage()` use [navbar()](layout/navbar.html)
+
+    * `tabPanel()` use [navContent()](content/navcontent.html) and [navPane()](content/navpane.html)
+
+    * `modalDialog()` use [modal()](content/modal.html)
 rdname: _PACKAGE
 parameters: []
 layout: doc

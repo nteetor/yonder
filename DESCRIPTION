@@ -9,8 +9,6 @@ Authors@R: c(
       comment = "Bootstrap library"),
     person(family = "Twitter, Inc", role = "cph",
       comment = "Bootstrap library"),
-    person("Denis", "Ineshin", role = c("ctb", "cph"),
-      comment = "ion.rangeSlider library"),
     person(family = "JS Foundation", role = "cph",
       comment = "jQuery library"),
     person("Federico", "Zivolo", role = c("ctb", "cph"),
@@ -34,7 +32,6 @@ Depends:
     shiny (>= 1.1.0)
 Imports:
     htmltools,
-    jsonlite,
     magrittr,
     utils
 Suggests:

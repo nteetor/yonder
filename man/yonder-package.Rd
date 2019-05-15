@@ -6,7 +6,8 @@
 \alias{yonder-package}
 \title{A new approach to shiny applications}
 \description{
-Yonder is a set of tools for flexible and creative shiny application design.
+Yonder is a set of tools for flexible and creative shiny application
+construction and design.
 }
 \section{Inputs}{
 
@@ -27,18 +28,20 @@ add a label above an input please use \code{\link[=formGroup]{formGroup()}}.
 
 Looking for ... ?
 \itemize{
+\item \code{actionButton()} or \code{actionLink()} use \code{\link[=buttonInput]{buttonInput()}} or \code{\link[=linkInput]{linkInput()}}
 \item \code{radioButtons()} use \code{\link[=radioInput]{radioInput()}}
 \item \code{checkboxGroupInput()} use \code{\link[=checkbarInput]{checkbarInput()}} or \code{\link[=checkboxInput]{checkboxInput()}}
 \item \code{numericInput()} use \code{\link[=numberInput]{numberInput()}}
+\item \code{selectizeInput()} use \code{\link[=selectInput]{selectInput()}} or \code{\link[=chipInput]{chipInput()}}
 }
 }
 
-\section{Layout}{
+\section{Layout and content}{
 
 
-Included are a handful of tools for building applications for devices and
-screens of varying sizes. For real control over spacing elements be sure to
-check out \code{\link[=flex]{flex()}}, which gives you the power of flexbox layout.
+Included are a handful of utilities for building applications suited for
+devices and screens of varying sizes. For real control over spacing elements
+be sure to check out \code{\link[=flex]{flex()}}, which gives you the power of flexbox layout.
 
 \strong{Familiar variants}
 
@@ -48,6 +51,8 @@ Looking for ... ?
 \item \code{fixedPage()}, \code{fluidPage()}, or \code{sidebarLayout()} use \code{\link[=container]{container()}},
 \code{\link[=columns]{columns()}}, and \code{\link[=column]{column()}}
 \item \code{navbarPage()} use \code{\link[=navbar]{navbar()}}
+\item \code{tabPanel()} use \code{\link[=navContent]{navContent()}} and \code{\link[=navPane]{navPane()}}
+\item \code{modalDialog()} use \code{\link[=modal]{modal()}}
 }
 }
 
@@ -66,7 +71,6 @@ Other contributors:
 \itemize{
   \item  The Bootstrap Authors (Bootstrap library) [copyright holder]
   \item  Twitter, Inc (Bootstrap library) [copyright holder]
-  \item Denis Ineshin (ion.rangeSlider library) [contributor, copyright holder]
   \item  JS Foundation (jQuery library) [copyright holder]
   \item Federico Zivolo (popper.js library) [contributor, copyright holder]
   \item Johann Servoire (bs-custom-file-input library) [contributor, copyright holder]

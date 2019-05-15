@@ -4,22 +4,49 @@
 \alias{badgeElement}
 \title{Badges}
 \usage{
-badgeElement(...)
+badgeElement(id, ...)
 }
 \arguments{
+\item{id}{A character string specifying a reactive id.}
+
 \item{...}{Named arguments passed as HTML attributes to the parent
-element or tag elements passed as children.}
+element or tag elements passed as children to the parent element.}
 }
 \description{
-Small highlighted content which scales to its parent's size.
+Small highlighted content which scales to its parent's size. A badge may
+be dynamically updated with \code{\link[=replaceElement]{replaceElement()}}.
 }
 \details{
 Use \code{\link[=replaceElement]{replaceElement()}} and \code{\link[=removeElement]{removeElement()}} to modify the contents of a
 badge.
 }
+\section{Example application}{
+\preformatted{ui <- container(
+  buttonInput(
+    id = "clicker",
+    label = list(
+      "Clicks",
+      badgeElement("counter") \%>\%
+        margin(left = 2) \%>\%
+        background("teal")
+    )
+  )
+)
+
+server <- function(input, output) {
+  observe({
+    clicks <- if (is.null(input$clicker)) 0 else input$clicker
+    replaceElement("counter", clicks)
+  })
+}
+
+shinyApp(ui, server)
+}
+}
+
 \examples{
 
-## Possible colors
+### Possible colors
 
 colors <- c(
   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
@@ -28,9 +55,10 @@ colors <- c(
 
 div(
   lapply(colors, function(color) {
-    badgeElement(color) \%>\%
+    badgeElement(color, color) \%>\%
       background(color) \%>\%
-      margin(2)
+      margin(2) \%>\%
+      padding(1)
   })
 ) \%>\%
   display("flex") \%>\%

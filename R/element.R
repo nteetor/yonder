@@ -7,6 +7,7 @@
 #' @param id A character string specifying a reactive id.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
+#'   element or unnamed arguments passed as the new contents of the output
 #'   element.
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
@@ -17,7 +18,6 @@
 #' they may be moved from this package entirely.
 #'
 #' @family rendering
-#' @keywords internal
 #' @export
 outputElement <- function(id, ...) {
   assert_id()
@@ -33,16 +33,19 @@ outputElement <- function(id, ...) {
 
 #' @rdname outputElement
 #' @export
-replaceElement <- function(id, element, session = getDefaultReactiveDomain()) {
+replaceElement <- function(id, ..., session = getDefaultReactiveDomain()) {
   assert_id()
   assert_session()
+
+  args <- list(...)
+  content <- coerce_content(unnamed_values(args))
 
   session$sendCustomMessage("yonder:element", list(
     type = "render",
     data = list(
       target = id,
-      content = HTML(as.character(element)),
-      dependencies = processDeps(element, session)
+      content = content,
+      dependencies = processDeps(unnamed_values(args), session)
     )
   ))
 }

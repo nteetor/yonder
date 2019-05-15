@@ -118,7 +118,8 @@
         <div class="content col">
           <h2><p>A new approach to shiny applications</p>
 </h2>
-<p><p>Yonder is a set of tools for flexible and creative shiny application design.</p>
+<p><p>Yonder is a set of tools for flexible and creative shiny application
+construction and design.</p>
 </p>
 
 <dl>
@@ -151,6 +152,9 @@ add a label above an input please use <a href="layout/formgroup.html">formGroup(
 
 <ul>
   <li>
+    <p><code class="highlighter-rouge">actionButton()</code> or <code class="highlighter-rouge">actionLink()</code> use <a href="inputs/buttoninput.html">buttonInput()</a> or <a href="inputs/linkinput.html">linkInput()</a></p>
+  </li>
+  <li>
     <p><code class="highlighter-rouge">radioButtons()</code> use <a href="inputs/radioinput.html">radioInput()</a></p>
   </li>
   <li>
@@ -159,14 +163,17 @@ add a label above an input please use <a href="layout/formgroup.html">formGroup(
   <li>
     <p><code class="highlighter-rouge">numericInput()</code> use <a href="inputs/numberinput.html">numberInput()</a></p>
   </li>
+  <li>
+    <p><code class="highlighter-rouge">selectizeInput()</code> use <a href="inputs/selectinput.html">selectInput()</a> or <a href="inputs/chipinput.html">chipInput()</a></p>
+  </li>
 </ul>
 </p>
 
-<h4><p>Layout</p>
+<h4><p>Layout and content</p>
 </h4>
-<p><p>Included are a handful of tools for building applications for devices and
-screens of varying sizes. For real control over spacing elements be sure to
-check out <a href="layout/flex.html">flex()</a>, which gives you the power of flexbox layout.</p>
+<p><p>Included are a handful of utilities for building applications suited for
+devices and screens of varying sizes. For real control over spacing elements
+be sure to check out <a href="layout/flex.html">flex()</a>, which gives you the power of flexbox layout.</p>
 
 <p><strong>Familiar variants</strong></p>
 
@@ -182,6 +189,12 @@ check out <a href="layout/flex.html">flex()</a>, which gives you the power of fl
   </li>
   <li>
     <p><code class="highlighter-rouge">navbarPage()</code> use <a href="layout/navbar.html">navbar()</a></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">tabPanel()</code> use <a href="content/navcontent.html">navContent()</a> and <a href="content/navpane.html">navPane()</a></p>
+  </li>
+  <li>
+    <p><code class="highlighter-rouge">modalDialog()</code> use <a href="content/modal.html">modal()</a></p>
   </li>
 </ul>
 </p>

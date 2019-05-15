@@ -154,7 +154,7 @@ formInput <- function(id, ..., submit = buttonInput(NULL, "Submit"),
 #' @export
 #' @examples
 #'
-#' ## Grid layout forms
+#' ### Grid layout forms
 #'
 #' # Use responsive arguments to adjust form layouts based on viewport size.
 #' # Be sure to adjust the size of your browser window between large and small.

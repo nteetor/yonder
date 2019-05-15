@@ -35,7 +35,7 @@ develop shiny applications for devices and screens of varying sizes.
 }
 \examples{
 
-## Grid layout forms
+### Grid layout forms
 
 # Use responsive arguments to adjust form layouts based on viewport size.
 # Be sure to adjust the size of your browser window between large and small.
