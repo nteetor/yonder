@@ -84,7 +84,8 @@ examples:
     content: |-
       chipInput(
         id = "chip1",
-        choices = paste("Choice", 1:5)
+        choices = paste("Choice", 1:5),
+        selected = c("Choice 3", "Choice 4")
       )
     output: |-
       <div id="chip1" class="yonder-chip btn-group dropup" data-max="-1">
@@ -92,8 +93,8 @@ examples:
         <div class="dropdown-menu">
           <button class="dropdown-item" value="Choice 1">Choice 1</button>
           <button class="dropdown-item" value="Choice 2">Choice 2</button>
-          <button class="dropdown-item" value="Choice 3">Choice 3</button>
-          <button class="dropdown-item" value="Choice 4">Choice 4</button>
+          <button class="dropdown-item selected" value="Choice 3">Choice 3</button>
+          <button class="dropdown-item selected" value="Choice 4">Choice 4</button>
           <button class="dropdown-item" value="Choice 5">Choice 5</button>
         </div>
         <div class="chips chips-inline chips-grey">
@@ -105,11 +106,11 @@ examples:
             <span class="chip-content">Choice 2</span>
             <span class="chip-close">&times;</span>
           </button>
-          <button class="chip" value="Choice 3">
+          <button class="chip active" value="Choice 3">
             <span class="chip-content">Choice 3</span>
             <span class="chip-close">&times;</span>
           </button>
-          <button class="chip" value="Choice 4">
+          <button class="chip active" value="Choice 4">
             <span class="chip-content">Choice 4</span>
             <span class="chip-close">&times;</span>
           </button>

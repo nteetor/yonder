@@ -4,7 +4,7 @@ title: Page navigation input
 description: |-
   A reactive input styled as a navigation control. The navigation input can be
   styled as links, tabs, or pills. A nav input is paired with [navContent()]
-  and [showPane()] to create tabbed user interfaces. Observers and reactives
+  and [showNavPane()] to create tabbed user interfaces. Observers and reactives
   are triggered when a nav choice or menu item is clicked. The reactive value
   of a nav input is `NULL` or a singleton character string. The value of any
   menus in the nav input must be retrieved with its own reactive id.

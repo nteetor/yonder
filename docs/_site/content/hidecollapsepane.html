@@ -3,7 +3,7 @@
   <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>yonder - collapsiblePane</title>
+  <title>yonder - hideCollapsePane</title>
 
   <!--
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -124,12 +124,6 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/collapsiblepane.html
-         >collapsiblePane</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/d1.html
          >d1</a>
     </dd>
@@ -166,20 +160,20 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/expandpane.html
-         >expandPane</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/figure.html
          >figure</a>
     </dd>
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/hidepane.html
-         >hidePane</a>
+         href=/yonder/content/hidecollapsepane.html
+         >hideCollapsePane</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/content/hidenavpane.html
+         >hideNavPane</a>
     </dd>
     
     <dd class="mb-1">
@@ -226,14 +220,20 @@
     
     <dd class="mb-1">
       <a class="text-muted"
+         href=/yonder/content/showcollapsepane.html
+         >showCollapsePane</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
          href=/yonder/content/showmodal.html
          >showModal</a>
     </dd>
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/showpane.html
-         >showPane</a>
+         href=/yonder/content/shownavpane.html
+         >showNavPane</a>
     </dd>
     
     <dd class="mb-1">
@@ -256,8 +256,8 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/togglepane.html
-         >togglePane</a>
+         href=/yonder/content/togglecollapsepane.html
+         >toggleCollapsePane</a>
     </dd>
     
     <dd class="mb-3">
@@ -306,20 +306,18 @@
 
         </div>
         <div class="content col">
-          <h2><p>Collapsible sections</p>
+          <h2><p>Collapse sections</p>
 </h2>
-<p><p>The <code class="highlighter-rouge">collapsiblePane()</code> creates a collapsible container. The state of the
-container, expanded or collapsed, is toggled using <code class="highlighter-rouge">expandPane()</code>,
-<code class="highlighter-rouge">collapsePane()</code>, and <code class="highlighter-rouge">togglePane()</code>.</p>
+<p><p>The <code class="highlighter-rouge">collapsePane()</code> creates a collapsible container. The state of the
+container, expanded or collapsed, is toggled using <code class="highlighter-rouge">showCollapsePane()</code>,
+<code class="highlighter-rouge">hideCollapsePane()</code>, and <code class="highlighter-rouge">toggleCollapsePane()</code>.</p>
 </p>
 
 <dl>
   
   <dt><p>id</p>
 </dt>
-  <dd><p>A character string specifying the id of the collapsible pane. Pass
-this id to the <code class="highlighter-rouge">hideCollapse()</code>, <code class="highlighter-rouge">showCollapse()</code>, or <code class="highlighter-rouge">toggleCollapse()</code>
-to change the state of a collapsible pane.</p>
+  <dd><p>A character string specifying the id of the collapse pane.</p>
 </dd>
   
   <dt><p>show</p>
@@ -349,7 +347,7 @@ arguments passed as HTML attributes to parent element.</p>
     </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"demo"</span><span class="p">,</span><span class="w">
     </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Toggle collapse"</span><span class="w">
   </span><span class="p">),</span><span class="w">
-  </span><span class="n">collapsiblePane</span><span class="p">(</span><span class="w">
+  </span><span class="n">collapsePane</span><span class="p">(</span><span class="w">
     </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"collapse"</span><span class="p">,</span><span class="w">
     </span><span class="n">p</span><span class="p">(</span><span class="w">
       </span><span class="s2">"Pellentesque condimentum, magna ut suscipit hendrerit, "</span><span class="p">,</span><span class="w">
@@ -365,7 +363,7 @@ arguments passed as HTML attributes to parent element.</p>
 
 </span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
   </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">demo</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">togglePane</span><span class="p">(</span><span class="s2">"collapse"</span><span class="p">)</span><span class="w">
+    </span><span class="n">toggleCollapsePane</span><span class="p">(</span><span class="s2">"collapse"</span><span class="p">)</span><span class="w">
   </span><span class="p">})</span><span class="w">
 </span><span class="p">}</span><span class="w">
 

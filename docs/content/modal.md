@@ -41,7 +41,7 @@ parameters:
     shown and fades out when closed, defaults to `TRUE`.
 - name: modal
   description: A modal tag element created using `modal()`.
-inheritParams: collapsiblePane
+inheritParams: collapsePane
 sections:
 - title: Example application
   body: |-

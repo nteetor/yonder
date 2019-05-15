@@ -23,6 +23,10 @@ parameters:
   description: |-
     One of `TRUE` or `FALSE` specifying if the button or link
     input is used to trigger a download, defaults to `FALSE`.
+- name: tooltip
+  description: |-
+    A call to [tooltip()](content/tooltip.html) specifying a tooltip for the button or
+    link input, defaults to `NULL`.
 - name: '...'
   description: |-
     Additional named arguments passed as HTML attributes to the parent

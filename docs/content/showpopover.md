@@ -16,28 +16,23 @@ parameters:
   description: |-
     A character string specifying a title for the popover, defaults
     to `NULL`, in which case a title is not added.
-- name: target
+- name: id
   description: |-
-    A character string specifying the id of the element where the
-    popover is shown.
+    A character string specifying the id of a popover's target tag
+    element.
 - name: popover
   description: The popover element to show, typically a call to `popover()`.
 - name: placement
   description: |-
     One of `"top"`, `"left"`, `"bottom"`, or `"right"`
     specifying where the popover is positioned relative to the target tag
-    element indicated by `id`.
+    element indicated by `id`, defaults to `"top"`.
 - name: duration
   description: |-
-    A positive integer specifying the duration of the popover
-    in seconds or `NULL`, in which case the popover is not automatically
-    removed. When `NULL` is specified the popover can be removed with
-    `closePopover()`.
-- name: id
-  description: |-
-    A character string specifying the HTML id of a popover's target tag
-    element.
-inheritParams: collapsiblePane
+    A positive integer specifying the duration of the popover in
+    seconds or `NULL`, in which case the popover is not automatically removed.
+    When `NULL` the popover must be removed with `closePopover()`.
+inheritParams: collapsePane
 sections:
 - title: Example application
   body: |-

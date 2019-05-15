@@ -42,20 +42,20 @@ examples:
     output: |-
       <div class="yonder-radio" id="radio1">
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-248-599" name="radio1" value="Vehicula adipiscing mattis" checked autocomplete="off"/>
-          <label class="custom-control-label" for="radio-248-599">Vehicula adipiscing mattis</label>
+          <input class="custom-control-input" type="radio" id="radio-404-112" name="radio1" value="Vehicula adipiscing mattis" checked autocomplete="off"/>
+          <label class="custom-control-label" for="radio-404-112">Vehicula adipiscing mattis</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-224-403" name="radio1" value="Magna nullam" autocomplete="off"/>
-          <label class="custom-control-label" for="radio-224-403">Magna nullam</label>
+          <input class="custom-control-input" type="radio" id="radio-130-872" name="radio1" value="Magna nullam" autocomplete="off"/>
+          <label class="custom-control-label" for="radio-130-872">Magna nullam</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-651-554" name="radio1" value="Aenean venenatis" autocomplete="off"/>
-          <label class="custom-control-label" for="radio-651-554">Aenean venenatis</label>
+          <input class="custom-control-input" type="radio" id="radio-579-194" name="radio1" value="Aenean venenatis" autocomplete="off"/>
+          <label class="custom-control-label" for="radio-579-194">Aenean venenatis</label>
         </div>
         <div class="custom-control custom-radio">
-          <input class="custom-control-input" type="radio" id="radio-876-522" name="radio1" value="Tristique quam porta" autocomplete="off"/>
-          <label class="custom-control-label" for="radio-876-522">Tristique quam porta</label>
+          <input class="custom-control-input" type="radio" id="radio-9-364" name="radio1" value="Tristique quam porta" autocomplete="off"/>
+          <label class="custom-control-label" for="radio-9-364">Tristique quam porta</label>
           <div class="valid-feedback"></div>
           <div class="invalid-feedback"></div>
         </div>
@@ -76,16 +76,16 @@ examples:
     output: |-
       <div class="yonder-radio" id="radio2">
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-985-69" name="radio2" value="Choice 1" checked autocomplete="off"/>
-          <label class="custom-control-label" for="radio-985-69">Choice 1</label>
+          <input class="custom-control-input" type="radio" id="radio-22-622" name="radio2" value="Choice 1" checked autocomplete="off"/>
+          <label class="custom-control-label" for="radio-22-622">Choice 1</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-447-821" name="radio2" value="Choice 2" autocomplete="off"/>
-          <label class="custom-control-label" for="radio-447-821">Choice 2</label>
+          <input class="custom-control-input" type="radio" id="radio-136-92" name="radio2" value="Choice 2" autocomplete="off"/>
+          <label class="custom-control-label" for="radio-136-92">Choice 2</label>
         </div>
         <div class="custom-control custom-radio custom-control-inline">
-          <input class="custom-control-input" type="radio" id="radio-362-313" name="radio2" value="Choice 3" autocomplete="off"/>
-          <label class="custom-control-label" for="radio-362-313">Choice 3</label>
+          <input class="custom-control-input" type="radio" id="radio-393-285" name="radio2" value="Choice 3" autocomplete="off"/>
+          <label class="custom-control-label" for="radio-393-285">Choice 3</label>
           <div class="valid-feedback"></div>
           <div class="invalid-feedback"></div>
         </div>

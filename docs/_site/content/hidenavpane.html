@@ -3,7 +3,7 @@
   <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>yonder - hidePane</title>
+  <title>yonder - hideNavPane</title>
 
   <!--
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -124,12 +124,6 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/collapsiblepane.html
-         >collapsiblePane</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/d1.html
          >d1</a>
     </dd>
@@ -166,20 +160,20 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/expandpane.html
-         >expandPane</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/figure.html
          >figure</a>
     </dd>
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/hidepane.html
-         >hidePane</a>
+         href=/yonder/content/hidecollapsepane.html
+         >hideCollapsePane</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/content/hidenavpane.html
+         >hideNavPane</a>
     </dd>
     
     <dd class="mb-1">
@@ -226,14 +220,20 @@
     
     <dd class="mb-1">
       <a class="text-muted"
+         href=/yonder/content/showcollapsepane.html
+         >showCollapsePane</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
          href=/yonder/content/showmodal.html
          >showModal</a>
     </dd>
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/showpane.html
-         >showPane</a>
+         href=/yonder/content/shownavpane.html
+         >showNavPane</a>
     </dd>
     
     <dd class="mb-1">
@@ -256,8 +256,8 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/togglepane.html
-         >togglePane</a>
+         href=/yonder/content/togglecollapsepane.html
+         >toggleCollapsePane</a>
     </dd>
     
     <dd class="mb-3">
@@ -309,21 +309,24 @@
           <h2><p>Navigation panes</p>
 </h2>
 <p><p>These functions pair with [navInput()]. Use <code class="highlighter-rouge">navContent()</code> and <code class="highlighter-rouge">navPane()</code> to
-create the pane layout. To show a new pane use <code class="highlighter-rouge">showPane()</code> in the server
-function. <code class="highlighter-rouge">showPane()</code> will also hide the previously active pane. You can
-also hide an active pane with <code class="highlighter-rouge">hidePane()</code>. <code class="highlighter-rouge">hidePane()</code> is useful when you
-do not have a new pane to show, but want to hide the current active pane.</p>
+create the pane layout. To show a new pane use <code class="highlighter-rouge">showNavPane()</code> from within an
+observer. <code class="highlighter-rouge">showNavPane()</code> will also hide a previously active pane. If needed
+you can hide an active pane with <code class="highlighter-rouge">hideNavPane()</code>. <code class="highlighter-rouge">hideNavPane()</code> is useful
+when you do not have a new pane to show, but want to hide the current active
+pane.</p>
 </p>
 
 <dl>
   
   <dt><p>…</p>
 </dt>
-  <dd><p>For <strong>navContent</strong>, any number of nav panes or named arguments
-  passed as HTML attributes to the parent element.</p>
+  <dd><p>For <strong>navContent</strong>, any number of nav panes passed as child
+  elements to the nav parent element or named arguments passed as HTML
+  attributes to the parent element.</p>
 
-<p>For <strong>navPane</strong>, named attributes passed as HTML elements to the parent
-  element.</p>
+<p>For <strong>navPane</strong>, any number of unnamed arguments passed as tag elements to
+  the parent element or named arguments passed as HTML elements to the
+  parent element.</p>
 </dd>
   
   <dt><p>id</p>
@@ -378,7 +381,7 @@ shown and fades out when hidden, defaults to <code class="highlighter-rouge">TRU
 
 </span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
   </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">showPane</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">)</span><span class="w">
+    </span><span class="n">showNavPane</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">)</span><span class="w">
   </span><span class="p">})</span><span class="w">
 </span><span class="p">}</span><span class="w">
 
@@ -427,12 +430,12 @@ shown and fades out when hidden, defaults to <code class="highlighter-rouge">TRU
 
 </span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
   </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">showPane</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">)</span><span class="w">
+    </span><span class="n">showNavPane</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">)</span><span class="w">
   </span><span class="p">})</span><span class="w">
 
   </span><span class="n">observeEvent</span><span class="p">(</span><span class="nf">c</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">action</span><span class="p">,</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">another</span><span class="p">),</span><span class="w"> </span><span class="p">{</span><span class="w">
     </span><span class="k">if</span><span class="w"> </span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">action</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="w"> </span><span class="o">||</span><span class="w"> </span><span class="n">input</span><span class="o">$</span><span class="n">another</span><span class="w"> </span><span class="o">&gt;</span><span class="w"> </span><span class="m">0</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
-      </span><span class="n">showPane</span><span class="p">(</span><span class="s2">"pane2"</span><span class="p">)</span><span class="w">
+      </span><span class="n">showNavPane</span><span class="p">(</span><span class="s2">"pane2"</span><span class="p">)</span><span class="w">
     </span><span class="p">}</span><span class="w">
   </span><span class="p">})</span><span class="w">
 </span><span class="p">}</span><span class="w">
@@ -501,8 +504,8 @@ shown and fades out when hidden, defaults to <code class="highlighter-rouge">TRU
 
 </span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
   </span><span class="n">observeEvent</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">,</span><span class="w"> </span><span class="p">{</span><span class="w">
-    </span><span class="n">showPane</span><span class="p">(</span><span class="n">paste0</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">,</span><span class="w"> </span><span class="s2">"_1"</span><span class="p">))</span><span class="w">
-    </span><span class="n">showPane</span><span class="p">(</span><span class="n">paste0</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">,</span><span class="w"> </span><span class="s2">"_2"</span><span class="p">))</span><span class="w">
+    </span><span class="n">showNavPane</span><span class="p">(</span><span class="n">paste0</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">,</span><span class="w"> </span><span class="s2">"_1"</span><span class="p">))</span><span class="w">
+    </span><span class="n">showNavPane</span><span class="p">(</span><span class="n">paste0</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">tabs</span><span class="p">,</span><span class="w"> </span><span class="s2">"_2"</span><span class="p">))</span><span class="w">
   </span><span class="p">})</span><span class="w">
 </span><span class="p">}</span><span class="w">
 

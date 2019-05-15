@@ -3,25 +3,28 @@ name: navPane
 title: Navigation panes
 description: |-
   These functions pair with [navInput()]. Use `navContent()` and `navPane()` to
-  create the pane layout. To show a new pane use `showPane()` in the server
-  function. `showPane()` will also hide the previously active pane. You can
-  also hide an active pane with `hidePane()`. `hidePane()` is useful when you
-  do not have a new pane to show, but want to hide the current active pane.
+  create the pane layout. To show a new pane use `showNavPane()` from within an
+  observer. `showNavPane()` will also hide a previously active pane. If needed
+  you can hide an active pane with `hideNavPane()`. `hideNavPane()` is useful
+  when you do not have a new pane to show, but want to hide the current active
+  pane.
 parameters:
 - name: '...'
   description: |-
-    For **navContent**, any number of nav panes or named arguments
-      passed as HTML attributes to the parent element.
+    For **navContent**, any number of nav panes passed as child
+      elements to the nav parent element or named arguments passed as HTML
+      attributes to the parent element.
 
-      For **navPane**, named attributes passed as HTML elements to the parent
-      element.
+      For **navPane**, any number of unnamed arguments passed as tag elements to
+      the parent element or named arguments passed as HTML elements to the
+      parent element.
 - name: id
   description: A character string specifying the id of the nav pane.
 - name: fade
   description: |-
     One of `TRUE` or `FALSE` specifying if the pane fades in when
     shown and fades out when hidden, defaults to `TRUE`.
-inheritParams: collapsiblePane
+inheritParams: collapsePane
 sections:
 - title: App with pills
   body: |-
@@ -62,7 +65,7 @@ sections:
 
     server <- function(input, output) {
       observeEvent(input$tabs, {
-        showPane(input$tabs)
+        showNavPane(input$tabs)
       })
     }
 
@@ -110,12 +113,12 @@ sections:
 
     server <- function(input, output) {
       observeEvent(input$tabs, {
-        showPane(input$tabs)
+        showNavPane(input$tabs)
       })
 
       observeEvent(c(input$action, input$another), {
         if (input$action > 0 || input$another > 0) {
-          showPane("pane2")
+          showNavPane("pane2")
         }
       })
     }
@@ -183,8 +186,8 @@ sections:
 
     server <- function(input, output) {
       observeEvent(input$tabs, {
-        showPane(paste0(input$tabs, "_1"))
-        showPane(paste0(input$tabs, "_2"))
+        showNavPane(paste0(input$tabs, "_1"))
+        showNavPane(paste0(input$tabs, "_2"))
       })
     }
 

@@ -51,18 +51,52 @@ examples:
     output: |-
       <div class="yonder-checkbox active-teal" id="check1">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-807-890" name="checkbox-807-890" value="Rock" checked autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-807-890">Rock</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-553-294" name="checkbox-553-294" value="Rock" checked autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-553-294">Rock</label>
         </div>
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-96-994" name="checkbox-96-994" value="Paper" autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-96-994">Paper</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-664-987" name="checkbox-664-987" value="Paper" autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-664-987">Paper</label>
         </div>
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-385-816" name="checkbox-385-816" value="Scissors" autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-385-816">Scissors</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-430-712" name="checkbox-430-712" value="Scissors" autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-430-712">Scissors</label>
           <div class="valid-feedback"></div>
           <div class="invalid-feedback"></div>
+        </div>
+      </div>
+- title: Chip input
+  body:
+  - type: code
+    content: |-
+      chipInput(
+        id = "chip1",
+        choices = c("Ether", "Bombos", "Quake"),
+        selected = "Ether"
+      ) %>%
+        width("1/2") %>%
+        active("green")
+    output: |-
+      <div id="chip1" class="yonder-chip btn-group dropup w-1/2 active-green" data-max="-1">
+        <input class="form-control" data-toggle="dropdown"/>
+        <div class="dropdown-menu">
+          <button class="dropdown-item selected" value="Ether">Ether</button>
+          <button class="dropdown-item" value="Bombos">Bombos</button>
+          <button class="dropdown-item" value="Quake">Quake</button>
+        </div>
+        <div class="chips chips-inline chips-grey">
+          <button class="chip active" value="Ether">
+            <span class="chip-content">Ether</span>
+            <span class="chip-close">&times;</span>
+          </button>
+          <button class="chip" value="Bombos">
+            <span class="chip-content">Bombos</span>
+            <span class="chip-close">&times;</span>
+          </button>
+          <button class="chip" value="Quake">
+            <span class="chip-content">Quake</span>
+            <span class="chip-close">&times;</span>
+          </button>
         </div>
       </div>
 rdname: active

@@ -512,7 +512,8 @@ per row.</p>
   
 <figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">chipInput</span><span class="p">(</span><span class="w">
   </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"chip1"</span><span class="p">,</span><span class="w">
-  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"Choice"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">)</span><span class="w">
+  </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">paste</span><span class="p">(</span><span class="s2">"Choice"</span><span class="p">,</span><span class="w"> </span><span class="m">1</span><span class="o">:</span><span class="m">5</span><span class="p">),</span><span class="w">
+  </span><span class="n">selected</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Choice 3"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Choice 4"</span><span class="p">)</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
 
   <div><div id="chip1" class="yonder-chip btn-group dropup" data-max="-1">
@@ -520,8 +521,8 @@ per row.</p>
   <div class="dropdown-menu">
     <button class="dropdown-item" value="Choice 1">Choice 1</button>
     <button class="dropdown-item" value="Choice 2">Choice 2</button>
-    <button class="dropdown-item" value="Choice 3">Choice 3</button>
-    <button class="dropdown-item" value="Choice 4">Choice 4</button>
+    <button class="dropdown-item selected" value="Choice 3">Choice 3</button>
+    <button class="dropdown-item selected" value="Choice 4">Choice 4</button>
     <button class="dropdown-item" value="Choice 5">Choice 5</button>
   </div>
   <div class="chips chips-inline chips-grey">
@@ -533,11 +534,11 @@ per row.</p>
       <span class="chip-content">Choice 2</span>
       <span class="chip-close">&times;</span>
     </button>
-    <button class="chip" value="Choice 3">
+    <button class="chip active" value="Choice 3">
       <span class="chip-content">Choice 3</span>
       <span class="chip-close">&times;</span>
     </button>
-    <button class="chip" value="Choice 4">
+    <button class="chip active" value="Choice 4">
       <span class="chip-content">Choice 4</span>
       <span class="chip-close">&times;</span>
     </button>

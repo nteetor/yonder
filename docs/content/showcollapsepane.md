@@ -1,16 +1,13 @@
 ---
-name: togglePane
-title: Collapsible sections
+name: showCollapsePane
+title: Collapse sections
 description: |-
-  The `collapsiblePane()` creates a collapsible container. The state of the
-  container, expanded or collapsed, is toggled using `expandPane()`,
-  `collapsePane()`, and `togglePane()`.
+  The `collapsePane()` creates a collapsible container. The state of the
+  container, expanded or collapsed, is toggled using `showCollapsePane()`,
+  `hideCollapsePane()`, and `toggleCollapsePane()`.
 parameters:
 - name: id
-  description: |-
-    A character string specifying the id of the collapsible pane. Pass
-    this id to the `hideCollapse()`, `showCollapse()`, or `toggleCollapse()`
-    to change the state of a collapsible pane.
+  description: A character string specifying the id of the collapse pane.
 - name: show
   description: |-
     One of `TRUE` or `FALSE` specifying if the collapsible pane
@@ -34,7 +31,7 @@ sections:
         id = "demo",
         label = "Toggle collapse"
       ),
-      collapsiblePane(
+      collapsePane(
         id = "collapse",
         p(
           "Pellentesque condimentum, magna ut suscipit hendrerit, ",
@@ -50,7 +47,7 @@ sections:
 
     server <- function(input, output) {
       observeEvent(input$demo, {
-        togglePane("collapse")
+        toggleCollapsePane("collapse")
       })
     }
 
@@ -65,6 +62,6 @@ examples:
     content: As these are server-side utilities, please run the example applications
       above.
     output: ~
-rdname: togglePane
+rdname: showCollapsePane
 layout: doc
 ---

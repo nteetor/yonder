@@ -1,86 +1,35 @@
 ---
 name: tooltip
-title: Tooltips
-description: |-
-  Add a tooltip to a tag element. Tooltips may be placed above, below, left, or
-  right of an element.
+title: Button or link tooltips
+description: Use `tooltip()` to contruct a tooltip for a button or link input.
 parameters:
-- name: tag
-  description: A tag element.
-- name: text
-  description: The tooltip text.
+- name: '...'
+  description: |-
+    Character strings or tag elements (such as `em` or `b`) specifying
+    the contents of the tooltip.
 - name: placement
   description: |-
     One of `"top"`, `"right"`, `"bottom"`, or `"left"`
     specifying what side of the tag element the tooltip appears on.
+- name: fade
+  description: |-
+    One of `TRUE` or `FALSE` specifying if the tooltip fades in when
+    shown and fades out when hidden, defaults to `TRUE`.
 family: content
 export: ''
 examples:
-- title: Tooltips galore
+- title: Link with tooltip
   body:
   - type: code
     content: |-
-      formGroup(
-        label = tags$label(
-          "An exciting input",
-          tooltip(span(icon("info-circle")), "What is exciting here?")
-        ),
-        radioInput(
-          id = "radios",
-          choices = c("Ready", "Set", "Go")
-        )
+      linkInput(
+        id = "link1",
+        "A link",
+        tooltip = tooltip("But, with a tooltip!")
       )
-    output: |-
-      <div class="form-group">
-        <label>
-          <label>
-            An exciting input
-            <span data-toggle="tooltip" data-placement="top" title="What is exciting here?">
-              <i class="fa fa-info-circle"></i>
-            </span>
-          </label>
-        </label>
-        <div class="yonder-radio" id="radios">
-          <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-415-480" name="radios" value="Ready" checked autocomplete="off"/>
-            <label class="custom-control-label" for="radio-415-480">Ready</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-600-905" name="radios" value="Set" autocomplete="off"/>
-            <label class="custom-control-label" for="radio-600-905">Set</label>
-          </div>
-          <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-757-149" name="radios" value="Go" autocomplete="off"/>
-            <label class="custom-control-label" for="radio-757-149">Go</label>
-            <div class="valid-feedback"></div>
-            <div class="invalid-feedback"></div>
-          </div>
-        </div>
-      </div>
-- title: Describing links (link inputs)
-  body:
-  - type: code
-    content: |-
-      div(
-        p("Nunc rutrum turpis sed pede."),
-        p(
-          "Donec posuere augue in ",
-          linkInput(NULL, "quam.") %>%
-            tooltip("This is bound to do something")
-        ),
-        p(
-          "Etiam vel tortor sodales ",
-          linkInput(NULL, "tellus") %>%
-            tooltip("Tell us more?"),
-          " ultricies commodo."
-        )
-      )
-    output: "<div>\n  <p>Nunc rutrum turpis sed pede.</p>\n  <p>\n    Donec posuere
-      augue in \n    <button class=\"yonder-link btn btn-link\" data-toggle=\"tooltip\"
-      data-placement=\"top\" title=\"This is bound to do something\">quam.</button>\n
-      \ </p>\n  <p>\n    Etiam vel tortor sodales \n    <button class=\"yonder-link
-      btn btn-link\" data-toggle=\"tooltip\" data-placement=\"top\" title=\"Tell us
-      more?\">tellus</button>\n     ultricies commodo.\n  </p>\n</div>"
+    output: <button class="yonder-link btn btn-link" id="link1" data-animation="true"
+      data-html="true" data-placement="top" title="But, with a tooltip!" data-toggle="tooltip">A
+      link</button>
 rdname: tooltip
 sections: []
 layout: doc

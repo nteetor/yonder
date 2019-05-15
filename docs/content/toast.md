@@ -29,7 +29,7 @@ parameters:
   description: |-
     A character string specifying a reactive id. If specified, the
     hiding or closing of the toast will set the reactive id `action` to `TRUE`.
-inheritParams: collapsiblePane
+inheritParams: collapsePane
 sections:
 - title: Showing notifications
   body: |-

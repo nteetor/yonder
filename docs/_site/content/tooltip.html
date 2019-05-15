@@ -124,12 +124,6 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/collapsiblepane.html
-         >collapsiblePane</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/d1.html
          >d1</a>
     </dd>
@@ -166,20 +160,20 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/expandpane.html
-         >expandPane</a>
-    </dd>
-    
-    <dd class="mb-1">
-      <a class="text-muted"
          href=/yonder/content/figure.html
          >figure</a>
     </dd>
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/hidepane.html
-         >hidePane</a>
+         href=/yonder/content/hidecollapsepane.html
+         >hideCollapsePane</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
+         href=/yonder/content/hidenavpane.html
+         >hideNavPane</a>
     </dd>
     
     <dd class="mb-1">
@@ -226,14 +220,20 @@
     
     <dd class="mb-1">
       <a class="text-muted"
+         href=/yonder/content/showcollapsepane.html
+         >showCollapsePane</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
          href=/yonder/content/showmodal.html
          >showModal</a>
     </dd>
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/showpane.html
-         >showPane</a>
+         href=/yonder/content/shownavpane.html
+         >showNavPane</a>
     </dd>
     
     <dd class="mb-1">
@@ -256,8 +256,8 @@
     
     <dd class="mb-1">
       <a class="text-muted"
-         href=/yonder/content/togglepane.html
-         >togglePane</a>
+         href=/yonder/content/togglecollapsepane.html
+         >toggleCollapsePane</a>
     </dd>
     
     <dd class="mb-3">
@@ -306,22 +306,17 @@
 
         </div>
         <div class="content col">
-          <h2><p>Tooltips</p>
+          <h2><p>Button or link tooltips</p>
 </h2>
-<p><p>Add a tooltip to a tag element. Tooltips may be placed above, below, left, or
-right of an element.</p>
+<p><p>Use <code class="highlighter-rouge">tooltip()</code> to contruct a tooltip for a button or link input.</p>
 </p>
 
 <dl>
   
-  <dt><p>tag</p>
+  <dt><p>…</p>
 </dt>
-  <dd><p>A tag element.</p>
-</dd>
-  
-  <dt><p>text</p>
-</dt>
-  <dd><p>The tooltip text.</p>
+  <dd><p>Character strings or tag elements (such as <code class="highlighter-rouge">em</code> or <code class="highlighter-rouge">b</code>) specifying
+the contents of the tooltip.</p>
 </dd>
   
   <dt><p>placement</p>
@@ -330,95 +325,32 @@ right of an element.</p>
 specifying what side of the tag element the tooltip appears on.</p>
 </dd>
   
+  <dt><p>fade</p>
+</dt>
+  <dd><p>One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code> specifying if the tooltip fades in when
+shown and fades out when hidden, defaults to <code class="highlighter-rouge">TRUE</code>.</p>
+</dd>
+  
 </dl>
 
 
 
 
 
-<h4><p>Tooltips galore</p>
+<h4><p>Link with tooltip</p>
 </h4>
 
 <div class="mb-2">
   
   
   
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">formGroup</span><span class="p">(</span><span class="w">
-  </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tags</span><span class="o">$</span><span class="n">label</span><span class="p">(</span><span class="w">
-    </span><span class="s2">"An exciting input"</span><span class="p">,</span><span class="w">
-    </span><span class="n">tooltip</span><span class="p">(</span><span class="n">span</span><span class="p">(</span><span class="n">icon</span><span class="p">(</span><span class="s2">"info-circle"</span><span class="p">)),</span><span class="w"> </span><span class="s2">"What is exciting here?"</span><span class="p">)</span><span class="w">
-  </span><span class="p">),</span><span class="w">
-  </span><span class="n">radioInput</span><span class="p">(</span><span class="w">
-    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"radios"</span><span class="p">,</span><span class="w">
-    </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Ready"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Set"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Go"</span><span class="p">)</span><span class="w">
-  </span><span class="p">)</span><span class="w">
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">linkInput</span><span class="p">(</span><span class="w">
+  </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"link1"</span><span class="p">,</span><span class="w">
+  </span><span class="s2">"A link"</span><span class="p">,</span><span class="w">
+  </span><span class="n">tooltip</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">tooltip</span><span class="p">(</span><span class="s2">"But, with a tooltip!"</span><span class="p">)</span><span class="w">
 </span><span class="p">)</span></code></pre></figure>
 
-  <div><div class="form-group">
-  <label>
-    <label>
-      An exciting input
-      <span data-toggle="tooltip" data-placement="top" title="What is exciting here?">
-        <i class="fa fa-info-circle"></i>
-      </span>
-    </label>
-  </label>
-  <div class="yonder-radio" id="radios">
-    <div class="custom-control custom-radio">
-      <input class="custom-control-input" type="radio" id="radio-415-480" name="radios" value="Ready" checked autocomplete="off"/>
-      <label class="custom-control-label" for="radio-415-480">Ready</label>
-    </div>
-    <div class="custom-control custom-radio">
-      <input class="custom-control-input" type="radio" id="radio-600-905" name="radios" value="Set" autocomplete="off"/>
-      <label class="custom-control-label" for="radio-600-905">Set</label>
-    </div>
-    <div class="custom-control custom-radio">
-      <input class="custom-control-input" type="radio" id="radio-757-149" name="radios" value="Go" autocomplete="off"/>
-      <label class="custom-control-label" for="radio-757-149">Go</label>
-      <div class="valid-feedback"></div>
-      <div class="invalid-feedback"></div>
-    </div>
-  </div>
-</div></div>
-  
-  
-</div>
-
-
-<h4><p>Describing links (link inputs)</p>
-</h4>
-
-<div class="mb-2">
-  
-  
-  
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">div</span><span class="p">(</span><span class="w">
-  </span><span class="n">p</span><span class="p">(</span><span class="s2">"Nunc rutrum turpis sed pede."</span><span class="p">),</span><span class="w">
-  </span><span class="n">p</span><span class="p">(</span><span class="w">
-    </span><span class="s2">"Donec posuere augue in "</span><span class="p">,</span><span class="w">
-    </span><span class="n">linkInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="s2">"quam."</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-      </span><span class="n">tooltip</span><span class="p">(</span><span class="s2">"This is bound to do something"</span><span class="p">)</span><span class="w">
-  </span><span class="p">),</span><span class="w">
-  </span><span class="n">p</span><span class="p">(</span><span class="w">
-    </span><span class="s2">"Etiam vel tortor sodales "</span><span class="p">,</span><span class="w">
-    </span><span class="n">linkInput</span><span class="p">(</span><span class="kc">NULL</span><span class="p">,</span><span class="w"> </span><span class="s2">"tellus"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
-      </span><span class="n">tooltip</span><span class="p">(</span><span class="s2">"Tell us more?"</span><span class="p">),</span><span class="w">
-    </span><span class="s2">" ultricies commodo."</span><span class="w">
-  </span><span class="p">)</span><span class="w">
-</span><span class="p">)</span></code></pre></figure>
-
-  <div><div>
-  <p>Nunc rutrum turpis sed pede.</p>
-  <p>
-    Donec posuere augue in 
-    <button class="yonder-link btn btn-link" data-toggle="tooltip" data-placement="top" title="This is bound to do something">quam.</button>
-  </p>
-  <p>
-    Etiam vel tortor sodales 
-    <button class="yonder-link btn btn-link" data-toggle="tooltip" data-placement="top" title="Tell us more?">tellus</button>
-     ultricies commodo.
-  </p>
-</div></div>
+  <div><button class="yonder-link btn btn-link" id="link1" data-animation="true" data-html="true" data-placement="top" title="But, with a tooltip!" data-toggle="tooltip">A link</button></div>
   
   
 </div>
