@@ -163,22 +163,13 @@ toast <- function(header, ...) {
 showToast <- function(toast, duration = 4, action = NULL,
                       session = getDefaultReactiveDomain()) {
   assert_session()
+  assert_duration()
 
-  if (!tag_class_re(toast, "toast")) {
+  if (!is_tag(toast)) {
     stop(
-      "invalid `showToast()` argument, expecting `toast` to be a toast element",
+      "invalid argument in `showToast()`, `toast` must be a tag element",
       call. = FALSE
     )
-  }
-
-  if (!is.null(duration)) {
-    if (!is.numeric(duration) || duration <= 0) {
-      stop(
-        "invalid `showToast()` argument, expecting `duration` to be a positive ",
-        "integer or NULL",
-        call. = FALSE
-      )
-    }
   }
 
   if (is.null(duration)) {
@@ -189,10 +180,12 @@ showToast <- function(toast, duration = 4, action = NULL,
 
   toast[["attribs"]][["data-action"]] <- action
 
+  content <- coerce_content(toast)
+
   session$sendCustomMessage("yonder:toast", list(
     type = "show",
     data = list(
-      content = HTML(as.character(toast))
+      content = content
     )
   ))
 }

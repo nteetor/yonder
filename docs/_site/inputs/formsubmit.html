@@ -3,7 +3,7 @@
   <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>yonder - rangeInput</title>
+  <title>yonder - formSubmit</title>
 
   <!--
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
@@ -414,82 +414,131 @@
 
         </div>
         <div class="content col">
-          <h2><p>Simple range input</p>
+          <h2><p>Form inputs</p>
 </h2>
-<p><p><code class="highlighter-rouge">rangeInput()</code> creates a simple numeric range input.</p>
+<p><p>Form inputs are a new reactive input. Form inputs are an alternative to
+shiny’s submit buttons. A form input is comprised of any number of inputs.
+The value of these inputs will <em>not</em> change until a form submit button within
+the form input is clicked. A form input’s reactive value depends on the
+clicked form submit button. This allows you to distinguish between different
+form submission types, think “login” versus “register”.</p>
+
+<p>A form submit button, <code class="highlighter-rouge">formSubmit()</code>, is a special type of button used to
+control form input submission. A form input and its child reactive inputs
+will <em>never</em> update if a form submit button is not included in <code class="highlighter-rouge">...</code> passed
+to <code class="highlighter-rouge">formInput()</code>.</p>
 </p>
 
 <dl>
   
-  <dt><p>min</p>
+  <dt><p>…</p>
 </dt>
-  <dd><p>A number specifying the minimum value of the input, defaults to
-<code class="highlighter-rouge">0</code>.</p>
+  <dd><p>Any number of unnamed arguments passed as child elements to the
+parent form element or named arguments passed as HTML attributes to the
+parent element. At least one <code class="highlighter-rouge">formSubmit()</code> must be included.</p>
 </dd>
   
-  <dt><p>max</p>
+  <dt><p>inline</p>
 </dt>
-  <dd><p>A number specifying the maximum value of the input, defaults to
-<code class="highlighter-rouge">100</code>.</p>
-</dd>
-  
-  <dt><p>default</p>
-</dt>
-  <dd><p>A number between <code class="highlighter-rouge">min</code> and <code class="highlighter-rouge">max</code> specifying the default value
-of the input, defaults to <code class="highlighter-rouge">min</code>.</p>
-</dd>
-  
-  <dt><p>step</p>
-</dt>
-  <dd><p>A number specifying the interval step of the input, defaults to
-<code class="highlighter-rouge">1</code>.</p>
-</dd>
-  
-  <dt><p>value</p>
-</dt>
-  <dd><p>A number specifying a new value for the input, defaults to
-<code class="highlighter-rouge">NULL</code>.</p>
+  <dd><p>One of <code class="highlighter-rouge">TRUE</code> or <code class="highlighter-rouge">FALSE</code>, if <code class="highlighter-rouge">TRUE</code> the form and its child
+elements are rendered in a horizontal row, defaults to <code class="highlighter-rouge">FALSE</code>. On small
+viewports, think mobile device, <code class="highlighter-rouge">inline</code> intentionally has no effect and
+the form will span multiple lines.</p>
 </dd>
   
 </dl>
 
 
-
-
-
-<h4><p>Range inputs</p>
+<h4><p>Frozen inputs with scope</p>
 </h4>
+<p><div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
+  </span><span class="n">formInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"login"</span><span class="p">,</span><span class="w">
+    </span><span class="n">formGroup</span><span class="p">(</span><span class="w">
+      </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Email"</span><span class="p">,</span><span class="w">
+      </span><span class="n">emailInput</span><span class="p">(</span><span class="w">
+        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"email"</span><span class="w">
+      </span><span class="p">)</span><span class="w">
+    </span><span class="p">),</span><span class="w">
+    </span><span class="n">formGroup</span><span class="p">(</span><span class="w">
+      </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Password"</span><span class="p">,</span><span class="w">
+      </span><span class="n">passwordInput</span><span class="p">(</span><span class="w">
+        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"password"</span><span class="w">
+      </span><span class="p">)</span><span class="w">
+    </span><span class="p">),</span><span class="w">
+    </span><span class="n">formSubmit</span><span class="p">(</span><span class="w">
+      </span><span class="s2">"Login"</span><span class="p">,</span><span class="w"> </span><span class="s2">"go!"</span><span class="w">
+    </span><span class="p">)</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w">
 
-<div class="mb-2">
-  
-  
-  <p><p>Select from a range of numeric values.</p>
+</span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="c1"># Will not react until the form submit button is</span><span class="w">
+  </span><span class="c1"># clicked.</span><span class="w">
+  </span><span class="n">observe</span><span class="p">({</span><span class="w">
+    </span><span class="n">print</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">email</span><span class="p">)</span><span class="w">
+    </span><span class="n">print</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">password</span><span class="p">)</span><span class="w">
+  </span><span class="p">})</span><span class="w">
+</span><span class="p">}</span><span class="w">
+
+</span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="p">)</span><span class="w">
+</span></code></pre></div></div>
 </p>
-  
-  
-  
-  
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">rangeInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"range1"</span><span class="p">)</span></code></pre></figure>
-
-  <div><div class="yonder-range" id="range1">
-  <input class="custom-range" type="range" step="1" min="0" max="100" value="0" autocomplete="off"/>
-</div></div>
-  
-  
-</div>
 
 
-<h4><p>Custom step</p>
+
+
+<h4><p>A simple form</p>
 </h4>
 
 <div class="mb-2">
   
   
   
-<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">rangeInput</span><span class="p">(</span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"range2"</span><span class="p">,</span><span class="w"> </span><span class="n">step</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="m">10</span><span class="p">)</span></code></pre></figure>
+<figure class="highlight"><pre><code class="language-r" data-lang="r"><span class="n">card</span><span class="p">(</span><span class="w">
+  </span><span class="n">header</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Please pick a flavor"</span><span class="p">,</span><span class="w">
+  </span><span class="n">formInput</span><span class="p">(</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"form1"</span><span class="p">,</span><span class="w">
+    </span><span class="n">formGroup</span><span class="p">(</span><span class="w">
+      </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Ice creams"</span><span class="p">,</span><span class="w">
+      </span><span class="n">radioInput</span><span class="p">(</span><span class="w">
+        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"flavor"</span><span class="p">,</span><span class="w">
+        </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Mint"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Moose tracks"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Marble"</span><span class="p">),</span><span class="w">
+      </span><span class="p">)</span><span class="w">
+    </span><span class="p">),</span><span class="w">
+    </span><span class="n">formSubmit</span><span class="p">(</span><span class="s2">"Make choice"</span><span class="p">,</span><span class="w"> </span><span class="s2">"choice"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+      </span><span class="n">background</span><span class="p">(</span><span class="s2">"teal"</span><span class="p">)</span><span class="w">
+  </span><span class="p">)</span><span class="w">
+</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">border</span><span class="p">(</span><span class="s2">"teal"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+  </span><span class="n">width</span><span class="p">(</span><span class="m">50</span><span class="p">)</span></code></pre></figure>
 
-  <div><div class="yonder-range" id="range2">
-  <input class="custom-range" type="range" step="10" min="0" max="100" value="0" autocomplete="off"/>
+  <div><div class="card border border-teal w-50">
+  <div class="card-header">Please pick a flavor</div>
+  <div class="card-body">
+    <form class="yonder-form" id="form1">
+      <div class="form-group">
+        <label>Ice creams</label>
+        <div class="yonder-radio" id="flavor">
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="radio-737-229" name="flavor" value="Mint" checked autocomplete="off"/>
+            <label class="custom-control-label" for="radio-737-229">Mint</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="radio-888-546" name="flavor" value="Moose tracks" autocomplete="off"/>
+            <label class="custom-control-label" for="radio-888-546">Moose tracks</label>
+          </div>
+          <div class="custom-control custom-radio">
+            <input class="custom-control-input" type="radio" id="radio-306-368" name="flavor" value="Marble" autocomplete="off"/>
+            <label class="custom-control-label" for="radio-306-368">Marble</label>
+            <div class="valid-feedback"></div>
+            <div class="invalid-feedback"></div>
+          </div>
+        </div>
+      </div>
+      <button class="yonder-form-submit btn btn-teal" value="choice">Make choice</button>
+    </form>
+  </div>
 </div></div>
   
   

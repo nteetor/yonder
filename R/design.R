@@ -221,7 +221,7 @@ background <- function(tag, color) {
     base <- "alert"
   } else if (tag_class_re(tag, "badge")) {
     base <- "badge"
-  } else if (tag_class_re(tag, "yonder-(?:radiobar|checkbar|button-group|button|submit)")) {
+  } else if (tag_class_re(tag, "yonder-(?:radiobar|checkbar|button-group|button|form-submit)")) {
     base <- "btn"
   } else if (tag_class_re(tag, "list-group")) {
     base <- "list-group-item"

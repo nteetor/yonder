@@ -38,6 +38,8 @@ NULL
 #'
 #' * `selectizeInput()` use [selectInput()] or [chipInput()]
 #'
+#' * `submitButton()` use [formInput()] and [formSubmit()]
+#'
 #' @section Layout and content:
 #'
 #' Included are a handful of utilities for building applications suited for

@@ -3,48 +3,48 @@
 #' @description
 #'
 #' Form inputs are a new reactive input. Form inputs are an alternative to
-#' shiny's submit buttons. A form input is comprised of any number of
-#' inputs. The value of these inputs will not change until the form input's
-#' submit input is clicked. A form input's reactive value also depends on the
-#' submit input. This allows you to distinguish between different clicks if
-#' your form includes multiple submit inputs.
+#' shiny's submit buttons. A form input is comprised of any number of inputs.
+#' The value of these inputs will _not_ change until a form submit button within
+#' the form input is clicked. A form input's reactive value depends on the
+#' clicked form submit button. This allows you to distinguish between different
+#' form submission types, think "login" versus "register".
 #'
-#' A submit input is a special type of button used to control form input
-#' submission. Because of their specific usage, submit inputs do not require an
-#' `id`, but may have a specified `value`. Submit inputs will _not_ freeze all
-#' reactive inputs, see [formInput()].
-#'
-#' If `id` or `submit` are `NULL` the form input will not freeze its child
-#' inputs.
+#' A form submit button, `formSubmit()`, is a special type of button used to
+#' control form input submission. A form input and its child reactive inputs
+#' will _never_ update if a form submit button is not included in `...` passed
+#' to `formInput()`.
 #'
 #' @inheritParams checkboxInput
 #'
-#' @param ... Any number of unnamed arguments (inputs or tag elements) passed as
-#'   child elements to the form.
-#'
-#'   Additional named arguments passed as HTML attributes to the parent element.
-#'
-#' @param submit A button input, when clicked the form input will update its
-#'   reactive child inputs, defaults to `buttonInput(NULL, "Submit")`.
+#' @param ... Any number of unnamed arguments passed as child elements to the
+#'   parent form element or named arguments passed as HTML attributes to the
+#'   parent element. At least one `formSubmit()` must be included.
 #'
 #' @param inline One of `TRUE` or `FALSE`, if `TRUE` the form and its child
 #'   elements are rendered in a horizontal row, defaults to `FALSE`. On small
 #'   viewports, think mobile device, `inline` intentionally has no effect and
 #'   the form will span multiple lines.
 #'
+#' @param label A character string specifying the label of the form submit
+#'   button.
+#'
+#' @param value A character string specifying the value of the form submit
+#'   button and the value of the form input when the button is clicked,
+#'   defaults to `label`.
+#'
 #' @details
 #'
 #' When `inline` is `TRUE` you may want to adjust the right margin of each child
 #' element for viewports larger than mobile, `margin(<TAG>, right = c(sm = 2))`,
-#' more information at [margin()]. You only need to apply extra space for larger
-#' viewports because inline forms do not take effect on small viewports.
+#' see [margin()]. You only need to apply extra space for larger viewports
+#' because inline forms do not take effect on small viewports.
 #'
 #' @section Frozen inputs with scope:
 #'
 #' ```R
 #' ui <- container(
 #'   formInput(
-#'     id = "form",
+#'     id = "login",
 #'     formGroup(
 #'       label = "Email",
 #'       emailInput(
@@ -56,11 +56,21 @@
 #'       passwordInput(
 #'         id = "password"
 #'       )
+#'     ),
+#'     formSubmit(
+#'       "Login", "go!"
 #'     )
 #'   )
 #' )
 #'
-#' server <- function(input, output) { }
+#' server <- function(input, output) {
+#'   # Will not react until the form submit button is
+#'   # clicked.
+#'   observe({
+#'     print(input$email)
+#'     print(input$password)
+#'   })
+#' }
 #'
 #' shinyApp(ui, server)
 #' ```
@@ -78,40 +88,19 @@
 #'     formGroup(
 #'       label = "Ice creams",
 #'       radioInput(
-#'         id = "flavorChoice",
+#'         id = "flavor",
 #'         choices = c("Mint", "Moose tracks", "Marble"),
 #'       )
 #'     ),
-#'     submit = buttonInput(  # <-
-#'       id = "submi1",
-#'       label = "Make choice"
-#'     ) %>%
+#'     formSubmit("Make choice", "choice") %>%
 #'       background("teal")
 #'   )
 #' ) %>%
 #'   border("teal") %>%
 #'   width(50)
 #'
-formInput <- function(id, ..., submit = buttonInput(NULL, "Submit"),
-                      inline = FALSE) {
+formInput <- function(id, ..., inline = FALSE) {
   assert_id()
-
-  if (!tag_class_re(submit, "yonder-button")) {
-    stop(
-      "invalid `formInput()` argument, `submit` must be a button input",
-      call. = FALSE
-    )
-  }
-
-  shiny::registerInputHandler(
-    type = "yonder.form",
-    fun = function(x, session, name) {
-      if (length(x) > 0) x[[2]]
-    },
-    force = TRUE
-  )
-
-  submit <- tag_class_add(submit, "yonder-form-submit")
 
   component <- tags$form(
     class = str_collate(
@@ -119,11 +108,21 @@ formInput <- function(id, ..., submit = buttonInput(NULL, "Submit"),
       if (inline) "form-inline"
     ),
     id = id,
-    ...,
-    submit
+    ...
   )
 
   attach_dependencies(component)
+}
+
+#' @rdname formInput
+#' @export
+formSubmit <- function(label, value = label, ...) {
+  tags$button(
+    class = "yonder-form-submit btn btn-blue",
+    value = value,
+    label,
+    ...
+  )
 }
 
 #' Add labels, help text, and formatting to inputs
@@ -198,7 +197,7 @@ formInput <- function(id, ..., submit = buttonInput(NULL, "Submit"),
 formGroup <- function(label, input, ..., help = NULL, width = NULL) {
   if (!is_tag(input) && !is_strictly_list(input)) {
     stop(
-      "invalid `formGroup()` argument, `input` must be a tag element or list",
+      "invalid argument in `formGroup()`, `input` must be a tag element or list",
       call. = FALSE
     )
   }

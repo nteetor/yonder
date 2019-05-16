@@ -656,48 +656,58 @@
 
   var formInputBinding = new Shiny.InputBinding();
   $.extend(formInputBinding, {
-    Events: [{
-      type: "click",
-      selector: ".yonder-submit",
-      callback: function callback(el, e, self) {
-        self._VALUES[el.id] = e.currentTarget.value;
-        $(el.querySelectorAll(".shiny-bound-input")).trigger("submission.yonder");
-      }
-    }],
-    Type: "yonder.form",
-    _VALUES: {},
     find: function find(scope) {
-      var forms = Array.prototype.slice.call(scope.querySelectorAll(".yonder-form[id]"));
-      return forms.filter(function (f) {
-        return f.querySelector(".yonder-submit") !== null;
-      });
+      return scope.querySelectorAll(".yonder-form[id]");
     },
     initialize: function initialize(el) {
-      this._VALUES[el.id] = null;
+      var $document = $(document);
+      var $el = $(el);
+      var store = {};
+      var value = null;
+      el.querySelectorAll(".yonder-form-submit").forEach(function (s) {
+        s.setAttribute("type", "submit");
+      });
+      $document.on("shiny:inputchanged.yonder", function (e) {
+        if (!e.el || e.priority === "event") {
+          return;
+        }
+
+        if (e.el.id === el.id) {
+          Shiny.onInputChange(el.id, value, {
+            priority: "event"
+          });
+          e.preventDefault();
+          return;
+        }
+
+        if (el.contains(e.el)) {
+          store[e.name] = e.value;
+          e.preventDefault();
+        }
+      });
+      $el.on("click.yonder", ".yonder-form-submit", function (e) {
+        value = e.currentTarget.value;
+      });
+      $el.on("submit.yonder", function (e) {
+        Object.keys(store).forEach(function (key) {
+          Shiny.onInputChange(key, store[key], {
+            priority: "event"
+          });
+        });
+      });
     },
     getValue: function getValue(el) {
-      return {
-        force: Date.now(),
-        value: this._VALUES[el.id]
-      };
-    },
-    _value: function _value() {
       return null;
     },
-    _choice: function _choice() {
-      return null;
+    subscribe: function subscribe(el, callback) {
+      var $el = $(el);
+      $el.on("submit.yonder", function (e) {
+        return callback();
+      });
     },
-    _select: function _select() {
-      return null;
-    },
-    _clear: function _clear() {
-      return null;
-    },
-    _enable: function _enable() {
-      return null;
-    },
-    _disable: function _disable() {
-      return null;
+    unsubscribe: function unsubscribe(el) {
+      $(el).off(".yonder");
+      $(document).off("shiny:inputchanged.yonder");
     }
   });
   Shiny.inputBindings.register(formInputBinding, "yonder.formInput");
@@ -1305,7 +1315,7 @@
       $el.on("range.value.yonder");
     },
     unsubscribe: function unsubscribe(el) {
-      return $(el).off("yonder");
+      return $(el).off(".yonder");
     },
     receiveMessage: function receiveMessage(el, msg) {
       var input = el.children[0];
@@ -1663,7 +1673,7 @@
       }
     },
     unsubscribe: function unsubscribe(el) {
-      return $(el).off("yonder");
+      return $(el).off(".yonder");
     },
     receiveMessage: function receiveMessage(el, msg) {
       var input = el.querySelector("input");
@@ -1949,11 +1959,7 @@
   });
 
   $(function () {
-    $("[data-toggle=\"tooltip\"]").tooltip(); //$("[data-toggle=\"popover\"]").popover();
-
-    $(document).on("shiny:connected", function () {
-      $(".yonder-submit[data-type=\"submit\"]").attr("type", "submit");
-    });
+    return $("[data-toggle=\"tooltip\"]").tooltip();
   });
 
 })));

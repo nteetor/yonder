@@ -150,6 +150,12 @@
     
     <dd class="mb-1">
       <a class="text-muted"
+         href=/yonder/inputs/formsubmit.html
+         >formSubmit</a>
+    </dd>
+    
+    <dd class="mb-1">
+      <a class="text-muted"
          href=/yonder/inputs/groupselectinput.html
          >groupSelectInput</a>
     </dd>
@@ -411,35 +417,25 @@
           <h2><p>Form inputs</p>
 </h2>
 <p><p>Form inputs are a new reactive input. Form inputs are an alternative to
-shiny’s submit buttons. A form input is comprised of any number of
-inputs. The value of these inputs will not change until the form input’s
-submit input is clicked. A form input’s reactive value also depends on the
-submit input. This allows you to distinguish between different clicks if
-your form includes multiple submit inputs.</p>
+shiny’s submit buttons. A form input is comprised of any number of inputs.
+The value of these inputs will <em>not</em> change until a form submit button within
+the form input is clicked. A form input’s reactive value depends on the
+clicked form submit button. This allows you to distinguish between different
+form submission types, think “login” versus “register”.</p>
 
-<p>A submit input is a special type of button used to control form input
-submission. Because of their specific usage, submit inputs do not require an
-<code class="highlighter-rouge">id</code>, but may have a specified <code class="highlighter-rouge">value</code>. Submit inputs will <em>not</em> freeze all
-reactive inputs, see [formInput()].</p>
-
-<p>If <code class="highlighter-rouge">id</code> or <code class="highlighter-rouge">submit</code> are <code class="highlighter-rouge">NULL</code> the form input will not freeze its child
-inputs.</p>
+<p>A form submit button, <code class="highlighter-rouge">formSubmit()</code>, is a special type of button used to
+control form input submission. A form input and its child reactive inputs
+will <em>never</em> update if a form submit button is not included in <code class="highlighter-rouge">...</code> passed
+to <code class="highlighter-rouge">formInput()</code>.</p>
 </p>
 
 <dl>
   
   <dt><p>…</p>
 </dt>
-  <dd><p>Any number of unnamed arguments (inputs or tag elements) passed as
-  child elements to the form.</p>
-
-<p>Additional named arguments passed as HTML attributes to the parent element.</p>
-</dd>
-  
-  <dt><p>submit</p>
-</dt>
-  <dd><p>A button input, when clicked the form input will update its
-reactive child inputs, defaults to <code class="highlighter-rouge">buttonInput(NULL, "Submit")</code>.</p>
+  <dd><p>Any number of unnamed arguments passed as child elements to the
+parent form element or named arguments passed as HTML attributes to the
+parent element. At least one <code class="highlighter-rouge">formSubmit()</code> must be included.</p>
 </dd>
   
   <dt><p>inline</p>
@@ -457,7 +453,7 @@ the form will span multiple lines.</p>
 </h4>
 <p><div class="language-R highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">ui</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="n">container</span><span class="p">(</span><span class="w">
   </span><span class="n">formInput</span><span class="p">(</span><span class="w">
-    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"form"</span><span class="p">,</span><span class="w">
+    </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"login"</span><span class="p">,</span><span class="w">
     </span><span class="n">formGroup</span><span class="p">(</span><span class="w">
       </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Email"</span><span class="p">,</span><span class="w">
       </span><span class="n">emailInput</span><span class="p">(</span><span class="w">
@@ -469,11 +465,21 @@ the form will span multiple lines.</p>
       </span><span class="n">passwordInput</span><span class="p">(</span><span class="w">
         </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"password"</span><span class="w">
       </span><span class="p">)</span><span class="w">
+    </span><span class="p">),</span><span class="w">
+    </span><span class="n">formSubmit</span><span class="p">(</span><span class="w">
+      </span><span class="s2">"Login"</span><span class="p">,</span><span class="w"> </span><span class="s2">"go!"</span><span class="w">
     </span><span class="p">)</span><span class="w">
   </span><span class="p">)</span><span class="w">
 </span><span class="p">)</span><span class="w">
 
-</span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w"> </span><span class="p">}</span><span class="w">
+</span><span class="n">server</span><span class="w"> </span><span class="o">&lt;-</span><span class="w"> </span><span class="k">function</span><span class="p">(</span><span class="n">input</span><span class="p">,</span><span class="w"> </span><span class="n">output</span><span class="p">)</span><span class="w"> </span><span class="p">{</span><span class="w">
+  </span><span class="c1"># Will not react until the form submit button is</span><span class="w">
+  </span><span class="c1"># clicked.</span><span class="w">
+  </span><span class="n">observe</span><span class="p">({</span><span class="w">
+    </span><span class="n">print</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">email</span><span class="p">)</span><span class="w">
+    </span><span class="n">print</span><span class="p">(</span><span class="n">input</span><span class="o">$</span><span class="n">password</span><span class="p">)</span><span class="w">
+  </span><span class="p">})</span><span class="w">
+</span><span class="p">}</span><span class="w">
 
 </span><span class="n">shinyApp</span><span class="p">(</span><span class="n">ui</span><span class="p">,</span><span class="w"> </span><span class="n">server</span><span class="p">)</span><span class="w">
 </span></code></pre></div></div>
@@ -496,14 +502,11 @@ the form will span multiple lines.</p>
     </span><span class="n">formGroup</span><span class="p">(</span><span class="w">
       </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Ice creams"</span><span class="p">,</span><span class="w">
       </span><span class="n">radioInput</span><span class="p">(</span><span class="w">
-        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"flavorChoice"</span><span class="p">,</span><span class="w">
+        </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"flavor"</span><span class="p">,</span><span class="w">
         </span><span class="n">choices</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="nf">c</span><span class="p">(</span><span class="s2">"Mint"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Moose tracks"</span><span class="p">,</span><span class="w"> </span><span class="s2">"Marble"</span><span class="p">),</span><span class="w">
       </span><span class="p">)</span><span class="w">
     </span><span class="p">),</span><span class="w">
-    </span><span class="n">submit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="n">buttonInput</span><span class="p">(</span><span class="w">  </span><span class="c1"># &lt;-</span><span class="w">
-      </span><span class="n">id</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"submi1"</span><span class="p">,</span><span class="w">
-      </span><span class="n">label</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="s2">"Make choice"</span><span class="w">
-    </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
+    </span><span class="n">formSubmit</span><span class="p">(</span><span class="s2">"Make choice"</span><span class="p">,</span><span class="w"> </span><span class="s2">"choice"</span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
       </span><span class="n">background</span><span class="p">(</span><span class="s2">"teal"</span><span class="p">)</span><span class="w">
   </span><span class="p">)</span><span class="w">
 </span><span class="p">)</span><span class="w"> </span><span class="o">%&gt;%</span><span class="w">
@@ -516,24 +519,24 @@ the form will span multiple lines.</p>
     <form class="yonder-form" id="form1">
       <div class="form-group">
         <label>Ice creams</label>
-        <div class="yonder-radio" id="flavorChoice">
+        <div class="yonder-radio" id="flavor">
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-71-160" name="flavorChoice" value="Mint" checked autocomplete="off"/>
-            <label class="custom-control-label" for="radio-71-160">Mint</label>
+            <input class="custom-control-input" type="radio" id="radio-455-707" name="flavor" value="Mint" checked autocomplete="off"/>
+            <label class="custom-control-label" for="radio-455-707">Mint</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-859-936" name="flavorChoice" value="Moose tracks" autocomplete="off"/>
-            <label class="custom-control-label" for="radio-859-936">Moose tracks</label>
+            <input class="custom-control-input" type="radio" id="radio-363-709" name="flavor" value="Moose tracks" autocomplete="off"/>
+            <label class="custom-control-label" for="radio-363-709">Moose tracks</label>
           </div>
           <div class="custom-control custom-radio">
-            <input class="custom-control-input" type="radio" id="radio-540-180" name="flavorChoice" value="Marble" autocomplete="off"/>
-            <label class="custom-control-label" for="radio-540-180">Marble</label>
+            <input class="custom-control-input" type="radio" id="radio-748-847" name="flavor" value="Marble" autocomplete="off"/>
+            <label class="custom-control-label" for="radio-748-847">Marble</label>
             <div class="valid-feedback"></div>
             <div class="invalid-feedback"></div>
           </div>
         </div>
       </div>
-      <button class="yonder-button btn btn-teal yonder-form-submit" type="button" role="button" id="submi1" autocomplete="off">Make choice</button>
+      <button class="yonder-form-submit btn btn-teal" value="choice">Make choice</button>
     </form>
   </div>
 </div></div>

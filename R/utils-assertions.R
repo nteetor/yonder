@@ -186,3 +186,18 @@ is_addon <- function(x) {
       tag_class_re(x, "dropdown")
   }
 }
+
+assert_duration <- function(x) {
+  duration <- get_variable("duration")
+  fun <- get_caller()
+
+  if (!is.null(duration)) {
+    if (!is.numeric(duration) || duration <= 0) {
+      stop(
+        "invalid argument in `", fun, "`, `duration` must be a positive ",
+        "integer or NULL",
+        call. = FALSE
+      )
+    }
+  }
+}

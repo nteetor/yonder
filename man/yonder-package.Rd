@@ -33,6 +33,7 @@ Looking for ... ?
 \item \code{checkboxGroupInput()} use \code{\link[=checkbarInput]{checkbarInput()}} or \code{\link[=checkboxInput]{checkboxInput()}}
 \item \code{numericInput()} use \code{\link[=numberInput]{numberInput()}}
 \item \code{selectizeInput()} use \code{\link[=selectInput]{selectInput()}} or \code{\link[=chipInput]{chipInput()}}
+\item \code{submitButton()} use \code{\link[=formInput]{formInput()}} and \code{\link[=formSubmit]{formSubmit()}}
 }
 }
 

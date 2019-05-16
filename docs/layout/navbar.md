@@ -65,10 +65,10 @@ examples:
       <div>
         <nav class="navbar navbar-expand navbar-light bg-teal">
           <a class="navbar-brand" href="#">Navbar</a>
-          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-658-569" aria-controls="nav-content-658-569" aria-expanded="false" aria-label="Toggle navigation">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-404-8" aria-controls="nav-content-404-8" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
           </button>
-          <div class="collapse navbar-collapse" id="nav-content-658-569">
+          <div class="collapse navbar-collapse" id="nav-content-404-8">
             <ul class="yonder-nav nav mr-auto navbar-nav" id="tabs">
               <li class="nav-item">
                 <button class="nav-link btn btn-link active" value="Home">Home</button>
@@ -80,13 +80,12 @@ examples:
                 <button class="nav-link btn btn-link" value="Our process">Our process</button>
               </li>
             </ul>
-            <form class="yonder-form form-inline" id="navForm">
+            <form class="yonder-form form-inline" id="navForm" submit="&lt;button class=&quot;yonder-button btn btn-amber&quot; type=&quot;button&quot; role=&quot;button&quot; id=&quot;search&quot; autocomplete=&quot;off&quot;&gt;Search&lt;/button&gt;">
               <div class="yonder-textual mr-sm-2" id="search">
                 <input class="form-control" type="search" placeholder="Search" autocomplete="off"/>
                 <div class="valid-feedback"></div>
                 <div class="invalid-feedback"></div>
               </div>
-              <button class="yonder-button btn btn-amber yonder-form-submit" type="button" role="button" id="search" autocomplete="off">Search</button>
             </form>
           </div>
         </nav>

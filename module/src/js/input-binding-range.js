@@ -10,7 +10,7 @@ $.extend(rangeInputBinding, {
     $el.on("input.yonder", callback(true));
     $el.on("range.value.yonder");
   },
-  unsubscribe: (el) => $(el).off("yonder"),
+  unsubscribe: (el) => $(el).off(".yonder"),
   receiveMessage: (el, msg) => {
     let input = el.children[0];
 

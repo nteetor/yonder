@@ -32,6 +32,8 @@ sections:
     * `numericInput()` use [numberInput()](inputs/numberinput.html)
 
     * `selectizeInput()` use [selectInput()](inputs/selectinput.html) or [chipInput()](inputs/chipinput.html)
+
+    * `submitButton()` use [formInput()](inputs/forminput.html) and [formSubmit()](inputs/formsubmit.html)
 - title: Layout and content
   body: |-
     Included are a handful of utilities for building applications suited for

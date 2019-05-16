@@ -142,7 +142,7 @@ examples:
       <div class="dropdown">
         <button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">Sign in</button>
         <div class="dropdown-menu">
-          <form class="yonder-form p-3 pt-4 pr-3 pb-4" id="login">
+          <form class="yonder-form p-3 pt-4 pr-3 pb-4" id="login" submit="&lt;button class=&quot;yonder-button btn btn-grey&quot; type=&quot;button&quot; role=&quot;button&quot; id=&quot;signin&quot; autocomplete=&quot;off&quot;&gt;Sign in&lt;/button&gt;">
             <div class="form-group">
               <label>Email address</label>
               <div class="yonder-textual" id="email">
@@ -159,7 +159,6 @@ examples:
                 <div class="invalid-feedback"></div>
               </div>
             </div>
-            <button class="yonder-button btn btn-grey yonder-form-submit" type="button" role="button" id="signin" autocomplete="off">Sign in</button>
           </form>
         </div>
       </div>

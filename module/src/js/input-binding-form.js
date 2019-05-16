@@ -5,31 +5,51 @@ $.extend(formInputBinding, {
   initialize: (el) => {
     let $document = $(document);
     let $el = $(el);
-    let store = {};
 
-    $document.on("shiny:inputchanged", (e) => {
-      if (e.priority !== "event" &&
-          e.el && el.querySelector(`#${ e.el.id }`) !== null) {
+    let store = {};
+    let value = null;
+
+    el.querySelectorAll(".yonder-form-submit").forEach(s => {
+      s.setAttribute("type", "submit");
+    });
+
+    $document.on("shiny:inputchanged.yonder", (e) => {
+      if (!e.el || e.priority === "event") {
+        return;
+      }
+
+      if (e.el.id === el.id) {
+        Shiny.onInputChange(el.id, value, { priority: "event" });
+        e.preventDefault();
+        return;
+      }
+
+      if (el.contains(e.el)) {
         store[e.name] = e.value;
         e.preventDefault();
       }
     });
 
-    $el.on("submit", (e) => {
+    $el.on("click.yonder", ".yonder-form-submit", (e) => {
+      value = e.currentTarget.value;
+    });
+
+    $el.on("submit.yonder", (e) => {
       Object.keys(store).forEach(key => {
         Shiny.onInputChange(key, store[key], { priority: "event" });
       });
     });
   },
-  getType: () => "yonder.form",
   getValue: (el) => null,
-  // return { force: Date.now(), value: this._VALUES[el.id] };
   subscribe: (el, callback) => {
     let $el = $(el);
 
-    $el.on("submit", (e) => callback());
+    $el.on("submit.yonder", (e) => callback());
   },
-  unsubscribe: (el) => $(el).off("yonder")
+  unsubscribe: (el) => {
+    $(el).off(".yonder");
+    $(document).off("shiny:inputchanged.yonder");
+  }
 });
 
 Shiny.inputBindings.register(formInputBinding, "yonder.formInput");

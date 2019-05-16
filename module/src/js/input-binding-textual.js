@@ -82,7 +82,7 @@ $.extend(groupTextInputBinding, {
       $el.on("textual.value.yonder", (e) => callback());
     }
   },
-  unsubscribe: (el) => $(el).off("yonder"),
+  unsubscribe: (el) => $(el).off(".yonder"),
   receiveMessage: (el, msg) => {
     let input = el.querySelector("input");
 

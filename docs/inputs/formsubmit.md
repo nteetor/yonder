@@ -1,5 +1,5 @@
 ---
-name: formInput
+name: formSubmit
 title: Form inputs
 description: |-
   Form inputs are a new reactive input. Form inputs are an alternative to
@@ -100,16 +100,16 @@ examples:
               <label>Ice creams</label>
               <div class="yonder-radio" id="flavor">
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-455-707" name="flavor" value="Mint" checked autocomplete="off"/>
-                  <label class="custom-control-label" for="radio-455-707">Mint</label>
+                  <input class="custom-control-input" type="radio" id="radio-737-229" name="flavor" value="Mint" checked autocomplete="off"/>
+                  <label class="custom-control-label" for="radio-737-229">Mint</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-363-709" name="flavor" value="Moose tracks" autocomplete="off"/>
-                  <label class="custom-control-label" for="radio-363-709">Moose tracks</label>
+                  <input class="custom-control-input" type="radio" id="radio-888-546" name="flavor" value="Moose tracks" autocomplete="off"/>
+                  <label class="custom-control-label" for="radio-888-546">Moose tracks</label>
                 </div>
                 <div class="custom-control custom-radio">
-                  <input class="custom-control-input" type="radio" id="radio-748-847" name="flavor" value="Marble" autocomplete="off"/>
-                  <label class="custom-control-label" for="radio-748-847">Marble</label>
+                  <input class="custom-control-input" type="radio" id="radio-306-368" name="flavor" value="Marble" autocomplete="off"/>
+                  <label class="custom-control-label" for="radio-306-368">Marble</label>
                   <div class="valid-feedback"></div>
                   <div class="invalid-feedback"></div>
                 </div>
@@ -119,6 +119,6 @@ examples:
           </form>
         </div>
       </div>
-rdname: formInput
+rdname: formSubmit
 layout: doc
 ---

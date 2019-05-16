@@ -2,53 +2,55 @@
 % Please edit documentation in R/forms.R
 \name{formInput}
 \alias{formInput}
+\alias{formSubmit}
 \title{Form inputs}
 \usage{
-formInput(id, ..., submit = buttonInput(NULL, "Submit"),
-  inline = FALSE)
+formInput(id, ..., inline = FALSE)
+
+formSubmit(label, value = label, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
 
-\item{...}{Any number of unnamed arguments (inputs or tag elements) passed as
-child elements to the form.
-
-Additional named arguments passed as HTML attributes to the parent element.}
-
-\item{submit}{A button input, when clicked the form input will update its
-reactive child inputs, defaults to \code{buttonInput(NULL, "Submit")}.}
+\item{...}{Any number of unnamed arguments passed as child elements to the
+parent form element or named arguments passed as HTML attributes to the
+parent element. At least one \code{formSubmit()} must be included.}
 
 \item{inline}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} the form and its child
 elements are rendered in a horizontal row, defaults to \code{FALSE}. On small
 viewports, think mobile device, \code{inline} intentionally has no effect and
 the form will span multiple lines.}
+
+\item{label}{A character string specifying the label of the form submit
+button.}
+
+\item{value}{A character string specifying the value of the form submit
+button and the value of the form input when the button is clicked,
+defaults to \code{label}.}
 }
 \description{
 Form inputs are a new reactive input. Form inputs are an alternative to
-shiny's submit buttons. A form input is comprised of any number of
-inputs. The value of these inputs will not change until the form input's
-submit input is clicked. A form input's reactive value also depends on the
-submit input. This allows you to distinguish between different clicks if
-your form includes multiple submit inputs.
+shiny's submit buttons. A form input is comprised of any number of inputs.
+The value of these inputs will \emph{not} change until a form submit button within
+the form input is clicked. A form input's reactive value depends on the
+clicked form submit button. This allows you to distinguish between different
+form submission types, think "login" versus "register".
 
-A submit input is a special type of button used to control form input
-submission. Because of their specific usage, submit inputs do not require an
-\code{id}, but may have a specified \code{value}. Submit inputs will \emph{not} freeze all
-reactive inputs, see \code{\link[=formInput]{formInput()}}.
-
-If \code{id} or \code{submit} are \code{NULL} the form input will not freeze its child
-inputs.
+A form submit button, \code{formSubmit()}, is a special type of button used to
+control form input submission. A form input and its child reactive inputs
+will \emph{never} update if a form submit button is not included in \code{...} passed
+to \code{formInput()}.
 }
 \details{
 When \code{inline} is \code{TRUE} you may want to adjust the right margin of each child
 element for viewports larger than mobile, \code{margin(<TAG>, right = c(sm = 2))},
-more information at \code{\link[=margin]{margin()}}. You only need to apply extra space for larger
-viewports because inline forms do not take effect on small viewports.
+see \code{\link[=margin]{margin()}}. You only need to apply extra space for larger viewports
+because inline forms do not take effect on small viewports.
 }
 \section{Frozen inputs with scope}{
 \preformatted{ui <- container(
   formInput(
-    id = "form",
+    id = "login",
     formGroup(
       label = "Email",
       emailInput(
@@ -60,11 +62,21 @@ viewports because inline forms do not take effect on small viewports.
       passwordInput(
         id = "password"
       )
+    ),
+    formSubmit(
+      "Login", "go!"
     )
   )
 )
 
-server <- function(input, output) { }
+server <- function(input, output) {
+  # Will not react until the form submit button is
+  # clicked.
+  observe({
+    print(input$email)
+    print(input$password)
+  })
+}
 
 shinyApp(ui, server)
 }
@@ -81,14 +93,11 @@ card(
     formGroup(
       label = "Ice creams",
       radioInput(
-        id = "flavorChoice",
+        id = "flavor",
         choices = c("Mint", "Moose tracks", "Marble"),
       )
     ),
-    submit = buttonInput(  # <-
-      id = "submi1",
-      label = "Make choice"
-    ) \%>\%
+    formSubmit("Make choice", "choice") \%>\%
       background("teal")
   )
 ) \%>\%

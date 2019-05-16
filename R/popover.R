@@ -93,14 +93,7 @@ showPopover <- function(id, popover, placement = "top", duration = NULL,
   assert_id()
   assert_session()
   assert_possible(placement, c("right", "left", "top", "bottom"))
-
-  if (!is.null(duration) && (!is.numeric(duration) || duration < 0)) {
-    stop(
-      "invalid argument in `showPopover()`, `duration` must be a positive ",
-      "integer",
-      call. = FALSE
-    )
-  }
+  assert_duration()
 
   content <- coerce_content(popover)
 

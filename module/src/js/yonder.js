@@ -22,11 +22,4 @@ import "./modal.js";
 import "./popover.js";
 import "./toast.js";
 
-$(() => {
-  $("[data-toggle=\"tooltip\"]").tooltip();
-  //$("[data-toggle=\"popover\"]").popover();
-
-  $(document).on("shiny:connected", function() {
-    $(".yonder-submit[data-type=\"submit\"]").attr("type", "submit");
-  });
-});
+$(() => $("[data-toggle=\"tooltip\"]").tooltip());

@@ -51,16 +51,16 @@ examples:
     output: |-
       <div class="yonder-checkbox active-teal" id="check1">
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-524-775" name="checkbox-524-775" value="Rock" checked autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-524-775">Rock</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-509-585" name="checkbox-509-585" value="Rock" checked autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-509-585">Rock</label>
         </div>
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-210-113" name="checkbox-210-113" value="Paper" autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-210-113">Paper</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-866-773" name="checkbox-866-773" value="Paper" autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-866-773">Paper</label>
         </div>
         <div class="custom-control custom-checkbox">
-          <input class="custom-control-input" type="checkbox" id="checkbox-262-618" name="checkbox-262-618" value="Scissors" autocomplete="off"/>
-          <label class="custom-control-label" for="checkbox-262-618">Scissors</label>
+          <input class="custom-control-input" type="checkbox" id="checkbox-480-263" name="checkbox-480-263" value="Scissors" autocomplete="off"/>
+          <label class="custom-control-label" for="checkbox-480-263">Scissors</label>
           <div class="valid-feedback"></div>
           <div class="invalid-feedback"></div>
         </div>

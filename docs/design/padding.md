@@ -75,7 +75,7 @@ examples:
         submit = buttonInput("go", "Login")
       )
     output: |-
-      <form class="yonder-form form-inline" id="login">
+      <form class="yonder-form form-inline" id="login" submit="&lt;button class=&quot;yonder-button btn btn-grey&quot; type=&quot;button&quot; role=&quot;button&quot; id=&quot;go&quot; autocomplete=&quot;off&quot;&gt;Login&lt;/button&gt;">
         <div class="yonder-textual" id="name">
           <input class="form-control" type="text" placeholder="full name" autocomplete="off"/>
           <div class="valid-feedback"></div>
@@ -91,13 +91,12 @@ examples:
         </div>
         <div class="yonder-checkbox" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-911-906" name="checkbox-911-906" value="Remember me" autocomplete="off"/>
-            <label class="custom-control-label" for="checkbox-911-906">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-223-12" name="checkbox-223-12" value="Remember me" autocomplete="off"/>
+            <label class="custom-control-label" for="checkbox-223-12">Remember me</label>
             <div class="valid-feedback"></div>
             <div class="invalid-feedback"></div>
           </div>
         </div>
-        <button class="yonder-button btn btn-grey yonder-form-submit" type="button" role="button" id="go" autocomplete="off">Login</button>
       </form>
   - type: text
     content: Without any adjustments the layout is not great. But, with some styling
@@ -129,7 +128,7 @@ examples:
           margin(b = 2)  # <-
       )
     output: |-
-      <form class="yonder-form form-inline" id="login2">
+      <form class="yonder-form form-inline" id="login2" submit="&lt;button class=&quot;yonder-button btn btn-grey mb-2&quot; type=&quot;button&quot; role=&quot;button&quot; autocomplete=&quot;off&quot;&gt;Log in&lt;/button&gt;">
         <div class="yonder-textual mr-sm-2 mb-2" id="name">
           <input class="form-control" type="text" placeholder="full name" autocomplete="off"/>
           <div class="valid-feedback"></div>
@@ -145,13 +144,12 @@ examples:
         </div>
         <div class="yonder-checkbox mr-sm-2 mb-2" id="remember">
           <div class="custom-control custom-checkbox">
-            <input class="custom-control-input" type="checkbox" id="checkbox-786-474" name="checkbox-786-474" value="Remember me" autocomplete="off"/>
-            <label class="custom-control-label" for="checkbox-786-474">Remember me</label>
+            <input class="custom-control-input" type="checkbox" id="checkbox-368-380" name="checkbox-368-380" value="Remember me" autocomplete="off"/>
+            <label class="custom-control-label" for="checkbox-368-380">Remember me</label>
             <div class="valid-feedback"></div>
             <div class="invalid-feedback"></div>
           </div>
         </div>
-        <button class="yonder-button btn btn-grey mb-2 yonder-form-submit" type="button" role="button" autocomplete="off">Log in</button>
       </form>
 rdname: padding
 sections: []
