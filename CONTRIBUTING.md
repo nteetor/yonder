@@ -2,8 +2,6 @@
 
 First of all, thank you for considering contributing! Below are guidelines for helping you contribute to this repository. 
 
-## 
-
 ## Raising an issue
 
 ### Bugs
