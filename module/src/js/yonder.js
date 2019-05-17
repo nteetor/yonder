@@ -17,7 +17,7 @@ import "./input-binding-textual.js";
 
 import "./collapse.js";
 import "./download.js";
-import "./element.js";
+import "./content.js";
 import "./modal.js";
 import "./popover.js";
 import "./toast.js";

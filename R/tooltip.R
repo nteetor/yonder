@@ -1,7 +1,3 @@
-#' Button or link tooltips
-#'
-#' Use `tooltip()` to contruct a tooltip for a button or link input.
-#'
 #' @param ... Character strings or tag elements (such as `em` or `b`) specifying
 #'   the contents of the tooltip.
 #'
@@ -11,18 +7,8 @@
 #' @param fade One of `TRUE` or `FALSE` specifying if the tooltip fades in when
 #'   shown and fades out when hidden, defaults to `TRUE`.
 #'
-#' @family content
+#' @rdname buttonInput
 #' @export
-#' @examples
-#'
-#' ### Link with tooltip
-#'
-#' linkInput(
-#'   id = "link1",
-#'   "A link",
-#'   tooltip = tooltip("But, with a tooltip!")
-#' )
-#'
 tooltip <- function(..., placement = "top", fade = TRUE) {
   assert_possible(placement, c("top", "right", "bottom", "left"))
   assert_possible(fade, c(TRUE, FALSE))
