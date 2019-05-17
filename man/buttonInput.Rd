@@ -59,9 +59,6 @@ specifying what side of the tag element the tooltip appears on.}
 
 \item{fade}{One of \code{TRUE} or \code{FALSE} specifying if the tooltip fades in when
 shown and fades out when hidden, defaults to \code{TRUE}.}
-
-\item{...}{Character strings or tag elements (such as \code{em} or \code{b}) specifying
-the contents of the tooltip.}
 }
 \description{
 Button inputs are useful as triggers for reactive or observer expressions.

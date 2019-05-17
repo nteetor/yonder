@@ -1,6 +1,3 @@
-#' @param ... Character strings or tag elements (such as `em` or `b`) specifying
-#'   the contents of the tooltip.
-#'
 #' @param placement One of `"top"`, `"right"`, `"bottom"`, or `"left"`
 #'   specifying what side of the tag element the tooltip appears on.
 #'

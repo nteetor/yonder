@@ -12,7 +12,7 @@ element or tag elements passed as children to the parent element.}
 }
 \description{
 Small highlighted content which scales to its parent's size. A badge may
-be dynamically updated with \code{\link[=replaceElement]{replaceElement()}}, in which case be sure to
+be dynamically updated with \code{\link[=replaceContent]{replaceContent()}}, in which case be sure to
 pass an \code{id} argument as part of \code{...}.
 }
 \section{Example application}{

@@ -1,7 +1,7 @@
 #' Badges
 #'
 #' Small highlighted content which scales to its parent's size. A badge may
-#' be dynamically updated with [replaceElement()], in which case be sure to
+#' be dynamically updated with [replaceContent()], in which case be sure to
 #' pass an `id` argument as part of `...`.
 #'
 #' @param ... Named arguments passed as HTML attributes to the parent
