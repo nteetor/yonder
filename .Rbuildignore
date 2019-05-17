@@ -8,3 +8,6 @@
 ^man-roxygen$
 ^LICENSE\.md$
 ^CONTRIBUTING\.md$
+^pkgdown/_pkgdown\.yaml$
+^pkgdown$
+^index.Rmd$

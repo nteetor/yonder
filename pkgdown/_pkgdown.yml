@@ -1,0 +1,54 @@
+destination: docs
+url: https://nteetor.github.io/yonder
+
+reference:
+  - title: Components
+    desc: Build out your user interfaces.
+    contents:
+      - alert
+      - badge
+      - blockquote
+      - card
+      - collapsePane
+      - dropdown
+      - d1
+      - fieldset
+      - img
+      - jumbotron
+      - modal
+      - navbar
+      - navContent
+      - popover
+      - pre
+      - toast
+  - title: Design
+    desc: Customize components and inputs.
+    contents:
+      - active
+      - affix
+      - background
+      - border
+      - display
+      - float
+      - font
+      - height
+      - padding
+      - scroll
+      - shadow
+      - width
+  - title: Inputs
+    desc: Get information from the user with reactive inputs.
+    contents:
+      - ends_with("Input")
+  - title: Layout
+    desc: Build user interfaces for devices of all sizes.
+    contents:
+      - container
+      - flex
+      - matches("^form[GR]")
+      - responsive
+  - title: Utilities
+    desc: Assorted tools for more possibilities.
+    contents:
+      - replaceContent
+      - removeContent
