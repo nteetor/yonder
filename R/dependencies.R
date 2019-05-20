@@ -53,7 +53,10 @@ dependency_yonder <- function() {
     htmlDependency(
       name = "shiny",
       version = "3.3.3",
-      src = c(href = "shared"),
+      src = c(
+        file = system.file("www/shared/", package = "shiny"),
+        href = "shared"
+      ),
       script = "shiny.min.js"
     )
   )
