@@ -35,4 +35,7 @@ Imports:
     magrittr,
     utils
 Suggests:
-    testthat
+    testthat,
+    knitr,
+    rmarkdown
+VignetteBuilder: knitr
