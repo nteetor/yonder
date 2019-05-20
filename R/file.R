@@ -69,12 +69,17 @@ fileInput <- function(id, placeholder = "Choose file", browse = "Browse", ...,
     )
   }
 
+  if (length(accept) > 1) {
+    accept <- paste(accept, collapse = ",")
+  }
+
   component <- tags$div(
     class = "yonder-file custom-file",
     id = id,
     tags$input(
       type = "file",
       class = "custom-file-input",
+      accept = accept,
       multiple = if (multiple) NA,
       autocomplete = "off"
     ),
