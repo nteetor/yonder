@@ -3662,7 +3662,15 @@ input[type="button"].btn-block {
   color: #343a40;
 }
 
-.yonder-select .dropdown-toggle:disabled {
+.yonder-select .custom-select {
+  cursor: pointer;
+}
+
+.yonder-select .custom-select[aria-expanded="true"] {
+  cursor: text;
+}
+
+.yonder-select .custom-select:disabled {
   cursor: not-allowed;
 }
 

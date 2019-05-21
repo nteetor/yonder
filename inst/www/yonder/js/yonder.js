@@ -1482,9 +1482,6 @@
         $el.on("click", ".dropdown-item", function (e) {
           return callback();
         });
-        $el.on("click", ".btn:not(.dropdown-toggle", function (e) {
-          return callback();
-        });
       } else {
         $el.on("change", function (e) {
           return callback();
@@ -1495,7 +1492,7 @@
       }
     },
     receiveMessage: function receiveMessage(el, msg) {
-      var select = el.querySelector("select");
+      var select = el.querySelector("input[data-toggle='dropdown']");
 
       if (msg.content) {
         select.innerHTML = msg.content;

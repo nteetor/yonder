@@ -144,14 +144,13 @@ $.extend(groupSelectInputBinding, {
 
     if (el.querySelectorAll(".btn").length > 0) {
       $el.on("click", ".dropdown-item", (e) => callback());
-      $el.on("click", ".btn:not(.dropdown-toggle", (e) => callback());
     } else {
       $el.on("change", (e) => callback());
       $el.on("groupselect.select.yonder", (e) => callback());
     }
   },
   receiveMessage: (el, msg) => {
-    let select = el.querySelector("select");
+    let select = el.querySelector("input[data-toggle='dropdown']");
 
     if (msg.content) {
       select.innerHTML = msg.content;

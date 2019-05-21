@@ -5,8 +5,16 @@
     color: #343a40;
   }
 
-  .dropdown-toggle:disabled {
-    cursor: not-allowed;
+  .custom-select {
+    cursor: pointer;
+
+    &[aria-expanded="true"] {
+      cursor: text;
+    }
+
+    &:disabled {
+      cursor: not-allowed;
+    }
   }
 
   .dropdown-menu {
