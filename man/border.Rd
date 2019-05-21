@@ -9,9 +9,7 @@ border(tag, color = NULL, sides = "all", round = NULL)
 \arguments{
 \item{tag}{A tag element.}
 
-\item{color}{One of \code{"red"}, \code{"purple"}, \code{"indigo"}, \code{"blue"}, \code{"cyan"},
-\code{"teal"}, \code{"green"}, \code{"yellow"}, \code{"amber"}, \code{"orange"}, \code{"grey"}, \code{"white"}
-specifying the border color, defaults to \code{NULL}.}
+\item{color}{One of "\code{red}", "\code{purple}", "\code{indigo}", "\code{blue}", "\code{cyan}", "\code{teal}", "\code{green}", "\code{yellow}", "\code{amber}", "\code{orange}", "\code{grey}", "\code{black}" or "\code{white}" specifying the border color of the tag element, defaults to \code{NULL}}
 
 \item{sides}{One or more of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"} or
 \code{"all"} or \code{"none"} specifying which sides to add a border to, defaults to

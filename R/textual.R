@@ -1,8 +1,44 @@
-#' Textual inputs
+possible_types <- c(
+  "color",
+  "date",
+  "datetime-local",
+  "email",
+  "month",
+  "password",
+  "search",
+  "tel",
+  "text",
+  "time",
+  "url",
+  "week"
+)
+
+param_type <- function() {
+  q_start <- '"`'
+  q_end <- '`"'
+
+  paste(
+    "@param type One of",
+    paste(q_start, utils::head(possible_types, -1), q_end, collapse = ", "),
+    "or",
+    paste(q_start, utils::tail(possible_types, 1), q_end),
+    'specifying the type of text input, defaults to `"text"`.',
+    "\n\n",
+    "For details on a particular type please see",
+    "\\url{https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input}."
+  )
+}
+
+#' Text inputs
 #'
-#' Different types of textual inputs are provided to best support mobile
-#' keyboards and assistive technologies. A password input will mask its
-#' contents. Email inputs offer client-side validation depending on the browser.
+#' @description
+#'
+#' A text input. A group text input is an alternative text input. The group text
+#' input allows you to include static prefixes or buttons with a standard text
+#' input.
+#'
+#' `numberInput()` is a simple wrapper around `textInput()` with `type` set to
+#' `"number"`. Because of this use `updateTextInput()` to update a number input.
 #'
 #' @inheritParams checkboxInput
 #'
@@ -14,42 +50,48 @@
 #' @param placeholder A character string specifying placeholder text for the
 #'   input, defaults to `NULL`, in which case there is no placeholder text.
 #'
+#' @eval param_type()
+#'
 #' @family inputs
 #' @export
 #' @examples
 #'
-#' ### Basic text
+#' ### Default text input
 #'
 #' textInput(id = "text")
 #'
-#' ### Search
-#'
-#' searchInput(id = "search")
-#'
-#' ### Email
-#'
-#' emailInput(id = "email")
-#'
-#' ### URLs
-#'
-#' urlInput(id = "url")
-#'
-#' ### Telephone numbers
-#'
-#' telephoneInput(id = "tele")
-#'
-#' ### Passwords
-#'
-#' passwordInput(id = "password")
-#'
-#' ### Numbers
-#'
-#' numberInput(id = "num")
-#'
-textInput <- function(id, value = NULL, placeholder = NULL, ...) {
+textInput <- function(id, value = NULL, placeholder = NULL, ...,
+                      type = "text") {
+  assert_id()
+  assert_possible(type, possible_types)
+
+  component <- tags$div(
+    class = "yonder-textual",
+    id = id,
+    tags$input(
+      class = "form-control",
+      type = type,
+      value = value,
+      placeholder = placeholder,
+      autocomplete = "off"
+    ),
+    tags$div(class = "valid-feedback"),
+    tags$div(class = "invalid-feedback"),
+    ...
+  )
+
+  attach_dependencies(component)
+}
+
+#' @rdname textInput
+#' @export
+numberInput <- function(id, value = NULL, placeholder = NULL, ...) {
   assert_id()
 
-  textualInput(id, value, placeholder, ..., type = "text")
+  textInput(
+    id = id, value = value, placeholder = placeholder, ...,
+    type = "number"
+  )
 }
 
 #' @rdname textInput
@@ -60,14 +102,26 @@ updateTextInput <- function(id, value = NULL, enable = NULL, disable = NULL,
   assert_id()
   assert_session()
 
-  updateTextualInput(id, value, enable, disable, valid, invalid, session)
+  enable <- coerce_enable(valid)
+  disable <- coerce_disable(valid)
+  valid <- coerce_valid(valid)
+  invalid <- coerce_invalid(invalid)
+
+  session$sendInputMessage(id, list(
+    value = value,
+    enable = enable,
+    disable = disable,
+    valid = valid,
+    invalid = invalid
+  ))
 }
 
 #' @rdname textInput
 #' @export
 groupTextInput <- function(id, value = NULL, placeholder = NULL, ...,
-                           left = NULL, right = NULL) {
+                           type = "text", left = NULL, right = NULL) {
   assert_id()
+  assert_type(type, possible_types)
   assert_left()
   assert_right()
 
@@ -85,7 +139,7 @@ groupTextInput <- function(id, value = NULL, placeholder = NULL, ...,
     id = id,
     left,
     tags$input(
-      type = "text",
+      type = type,
       class = "form-control",
       placeholder = placeholder,
       value = value,
@@ -111,165 +165,6 @@ updateGroupTextInput <- function(id, value = NULL,
 
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
-  valid <- coerce_valid(valid)
-  invalid <- coerce_invalid(invalid)
-
-  session$sendInputMessage(id, list(
-    value = value,
-    enable = enable,
-    disable = disable,
-    valid = valid,
-    invalid = invalid
-  ))
-}
-
-#' @rdname textInput
-#' @export
-searchInput <- function(id, value = NULL, placeholder = NULL, ...) {
-  assert_id()
-
-  textualInput(id, value, placeholder, ..., type = "search")
-}
-
-#' @rdname textInput
-#' @export
-updateSearchInput <- function(id, value = NULL, enable = NULL, disable = NULL,
-                              valid = NULL, invalid = NULL,
-                              session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_session()
-
-  updateTextualInput(id, value, enable, disable, valid, invalid, session)
-}
-
-#' @rdname textInput
-#' @export
-emailInput <- function(id, value = NULL, placeholder = NULL, ...) {
-  assert_id()
-
-  textualInput(id, value, placeholder, ..., type = "email")
-}
-
-#' @rdname textInput
-#' @export
-updateEmailInput <- function(id, value = NULL, enable = NULL, disable = NULL,
-                             valid = NULL, invalid = NULL,
-                             session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_session()
-
-  updateTextualInput(id, value, enable, disable, valid, invalid, session)
-}
-
-#' @rdname textInput
-#' @export
-urlInput <- function(id, value = NULL, placeholder = NULL, ...) {
-  assert_id()
-
-  textualInput(id, value, placeholder, ..., type = "url")
-}
-
-#' @rdname textInput
-#' @export
-updateUrlInput <- function(id, value = NULL, enable = NULL, disable = NULL,
-                           valid = NULL, invalid = NULL,
-                           session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_session()
-
-  updateTextualInput(id, value, enable, disable, valid, invalid, session)
-}
-
-#' @rdname textInput
-#' @export
-telephoneInput <- function(id, value = NULL, placeholder = NULL, ...) {
-  assert_id()
-
-  textualInput(id, value, placeholder, ..., type = "tel")
-}
-
-#' @rdname textInput
-#' @export
-updateTelephoneInput <- function(id, value = NULL, enable = NULL, disable = NULL,
-                                 valid = NULL, invalid = NULL,
-                                 session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_session()
-
-  updateTextualInput(id, value, enable, disable, valid, invalid, session)
-}
-
-#' @rdname textInput
-#' @export
-passwordInput <- function(id, value = NULL, placeholder = NULL, ...) {
-  assert_id()
-
-  textualInput(id, value, placeholder, ..., type = "password")
-}
-
-#' @rdname textInput
-#' @export
-updatePassowrdInput <- function(id, value = NULL, enable = NULL, disable = NULL,
-                                valid = NULL, invalid = NULL,
-                                session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_session()
-
-  updateTextualInput(id, value, enable, disable, valid, invalid, session)
-}
-
-#' @rdname textInput
-#' @export
-numberInput <- function(id, value = NULL, placeholder = NULL, ...) {
-  assert_id()
-
-  textualInput(id, value, placeholder, ..., type = "number")
-}
-
-#' @rdname textInput
-#' @export
-updateNumberInput <- function(id, value = NULL, enable = NULL, disable = NULL,
-                              valid = NULL, invalid = NULL,
-                              session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_session()
-
-  if (!is.null(value) && !is.numeric(value)) {
-    stop(
-      "invalid argument in `updateNumberInput()`, argument `valid` must be ",
-      "numeric or NULL",
-      call. = FALSE
-    )
-  }
-
-  updateTextualInput(id, value, enable, disable, valid, invalid, session)
-}
-
-textualInput <- function(id, value, placeholder, ..., type,
-                         autocomplete = FALSE) {
-  component <- tags$div(
-    class = "yonder-textual",
-    id = id,
-    tags$input(
-      class = "form-control",
-      type = type,
-      value = value,
-      placeholder = placeholder,
-      autocomplete = if (autocomplete) "on" else "off"
-    ),
-    tags$div(class = "valid-feedback"),
-    tags$div(class = "invalid-feedback"),
-    ...
-  )
-
-  attach_dependencies(component)
-}
-
-
-updateTextualInput <- function(id, value, enable, disable, valid, invalid,
-                               session) {
-  enable <- coerce_enable(valid)
-  disable <- coerce_disable(valid)
   valid <- coerce_valid(valid)
   invalid <- coerce_invalid(invalid)
 

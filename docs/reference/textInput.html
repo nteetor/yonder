@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Textual inputs — textInput • yonder</title>
+<title>Text inputs — textInput • yonder</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,11 +30,13 @@
 
 
 
-<meta property="og:title" content="Textual inputs — textInput" />
+<meta property="og:title" content="Text inputs — textInput" />
 
-<meta property="og:description" content="Different types of textual inputs are provided to best support mobile
-keyboards and assistive technologies. A password input will mask its
-contents. Email inputs offer client-side validation depending on the browser." />
+<meta property="og:description" content="A text input. A group text input is an alternative text input. The group text
+input allows you to include static prefixes or buttons with a standard text
+input.
+numberInput() is a simple wrapper around textInput() with type set to
+&quot;number&quot;. Because of this use updateTextInput() to update a number input." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -71,19 +73,34 @@ contents. Email inputs offer client-side validation depending on the browser." /
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
+        
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="../index.html">Home</a>
+</li>
+<li>
+  <a href="../reference/index.html">Docs</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/layout.html">Application layouts</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://github.com/nteetor/yonder">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -96,58 +113,32 @@ contents. Email inputs offer client-side validation depending on the browser." /
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Textual inputs</h1>
+    <h1>Text inputs</h1>
     
     <div class="hidden name"><code>textInput.Rd</code></div>
     </div>
 
     <div class="ref-description">
     
-    <p>Different types of textual inputs are provided to best support mobile
-keyboards and assistive technologies. A password input will mask its
-contents. Email inputs offer client-side validation depending on the browser.</p>
+    <p>A text input. A group text input is an alternative text input. The group text
+input allows you to include static prefixes or buttons with a standard text
+input.</p>
+<p><code>numberInput()</code> is a simple wrapper around <code>textInput()</code> with <code>type</code> set to
+<code>"number"</code>. Because of this use <code>updateTextInput()</code> to update a number input.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>textInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
+    <pre class="usage"><span class='fu'>textInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"text"</span>)
+
+<span class='fu'>numberInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
 
 <span class='fu'>updateTextInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>valid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>invalid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>())
 
 <span class='fu'>groupTextInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>,
-  <span class='kw'>left</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>right</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
+  <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"text"</span>, <span class='kw'>left</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>right</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
 <span class='fu'>updateGroupTextInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>valid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>invalid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>())
-
-<span class='fu'>searchInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
-<span class='fu'>updateSearchInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>valid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>invalid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>())
-
-<span class='fu'>emailInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
-<span class='fu'>updateEmailInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>valid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>invalid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>())
-
-<span class='fu'>urlInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
-<span class='fu'>updateUrlInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>valid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>invalid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>())
-
-<span class='fu'>telephoneInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
-<span class='fu'>updateTelephoneInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>valid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>invalid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>())
-
-<span class='fu'>passwordInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
-<span class='fu'>updatePassowrdInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>valid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>invalid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>())
-
-<span class='fu'>numberInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>)
-
-<span class='fu'>updateNumberInput</span>(<span class='no'>id</span>, <span class='kw'>value</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
   <span class='kw'>valid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>invalid</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>())</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
@@ -172,6 +163,11 @@ input, defaults to <code>NULL</code>, in which case there is no placeholder text
       <td><p>Additional named arguments passed as HTML attributes to the
 parent element or tag elements passed as child elements to the parent
 element.</p></td>
+    </tr>
+    <tr>
+      <th>type</th>
+      <td><p>One of "<code>color</code>", "<code>date</code>", "<code>datetime-local</code>", "<code>email</code>", "<code>month</code>", "<code>password</code>", "<code>search</code>", "<code>tel</code>", "<code>text</code>", "<code>time</code>", "<code>url</code>" or "<code>week</code>" specifying the type of text input, defaults to <code>"text"</code>.</p>
+<p>For details on a particular type please see <a href='https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input'>https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input</a>.</p></td>
     </tr>
     <tr>
       <th>enable</th>
@@ -257,52 +253,10 @@ dropdown input value, the value of the text input, and any static addons.</p></t
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
-<span class='co'>### Basic text</span>
+<span class='co'>### Default text input</span>
 
 <span class='fu'>textInput</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"text"</span>)</div><div class='output co'>#&gt; &lt;div class="yonder-textual" id="text"&gt;
 #&gt;   &lt;input class="form-control" type="text" autocomplete="off"/&gt;
-#&gt;   &lt;div class="valid-feedback"&gt;&lt;/div&gt;
-#&gt;   &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='co'>### Search</span>
-
-<span class='fu'>searchInput</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"search"</span>)</div><div class='output co'>#&gt; &lt;div class="yonder-textual" id="search"&gt;
-#&gt;   &lt;input class="form-control" type="search" autocomplete="off"/&gt;
-#&gt;   &lt;div class="valid-feedback"&gt;&lt;/div&gt;
-#&gt;   &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='co'>### Email</span>
-
-<span class='fu'>emailInput</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"email"</span>)</div><div class='output co'>#&gt; &lt;div class="yonder-textual" id="email"&gt;
-#&gt;   &lt;input class="form-control" type="email" autocomplete="off"/&gt;
-#&gt;   &lt;div class="valid-feedback"&gt;&lt;/div&gt;
-#&gt;   &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='co'>### URLs</span>
-
-<span class='fu'>urlInput</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"url"</span>)</div><div class='output co'>#&gt; &lt;div class="yonder-textual" id="url"&gt;
-#&gt;   &lt;input class="form-control" type="url" autocomplete="off"/&gt;
-#&gt;   &lt;div class="valid-feedback"&gt;&lt;/div&gt;
-#&gt;   &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='co'>### Telephone numbers</span>
-
-<span class='fu'>telephoneInput</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"tele"</span>)</div><div class='output co'>#&gt; &lt;div class="yonder-textual" id="tele"&gt;
-#&gt;   &lt;input class="form-control" type="tel" autocomplete="off"/&gt;
-#&gt;   &lt;div class="valid-feedback"&gt;&lt;/div&gt;
-#&gt;   &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='co'>### Passwords</span>
-
-<span class='fu'>passwordInput</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"password"</span>)</div><div class='output co'>#&gt; &lt;div class="yonder-textual" id="password"&gt;
-#&gt;   &lt;input class="form-control" type="password" autocomplete="off"/&gt;
-#&gt;   &lt;div class="valid-feedback"&gt;&lt;/div&gt;
-#&gt;   &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='co'>### Numbers</span>
-
-<span class='fu'>numberInput</span>(<span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"num"</span>)</div><div class='output co'>#&gt; &lt;div class="yonder-textual" id="num"&gt;
-#&gt;   &lt;input class="form-control" type="number" autocomplete="off"/&gt;
 #&gt;   &lt;div class="valid-feedback"&gt;&lt;/div&gt;
 #&gt;   &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
 #&gt; &lt;/div&gt;</div><div class='input'>

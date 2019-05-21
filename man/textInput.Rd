@@ -2,62 +2,23 @@
 % Please edit documentation in R/textual.R
 \name{textInput}
 \alias{textInput}
+\alias{numberInput}
 \alias{updateTextInput}
 \alias{groupTextInput}
 \alias{updateGroupTextInput}
-\alias{searchInput}
-\alias{updateSearchInput}
-\alias{emailInput}
-\alias{updateEmailInput}
-\alias{urlInput}
-\alias{updateUrlInput}
-\alias{telephoneInput}
-\alias{updateTelephoneInput}
-\alias{passwordInput}
-\alias{updatePassowrdInput}
-\alias{numberInput}
-\alias{updateNumberInput}
-\title{Textual inputs}
+\title{Text inputs}
 \usage{
-textInput(id, value = NULL, placeholder = NULL, ...)
+textInput(id, value = NULL, placeholder = NULL, ..., type = "text")
+
+numberInput(id, value = NULL, placeholder = NULL, ...)
 
 updateTextInput(id, value = NULL, enable = NULL, disable = NULL,
   valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
 
 groupTextInput(id, value = NULL, placeholder = NULL, ...,
-  left = NULL, right = NULL)
+  type = "text", left = NULL, right = NULL)
 
 updateGroupTextInput(id, value = NULL, enable = NULL, disable = NULL,
-  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
-
-searchInput(id, value = NULL, placeholder = NULL, ...)
-
-updateSearchInput(id, value = NULL, enable = NULL, disable = NULL,
-  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
-
-emailInput(id, value = NULL, placeholder = NULL, ...)
-
-updateEmailInput(id, value = NULL, enable = NULL, disable = NULL,
-  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
-
-urlInput(id, value = NULL, placeholder = NULL, ...)
-
-updateUrlInput(id, value = NULL, enable = NULL, disable = NULL,
-  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
-
-telephoneInput(id, value = NULL, placeholder = NULL, ...)
-
-updateTelephoneInput(id, value = NULL, enable = NULL, disable = NULL,
-  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
-
-passwordInput(id, value = NULL, placeholder = NULL, ...)
-
-updatePassowrdInput(id, value = NULL, enable = NULL, disable = NULL,
-  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
-
-numberInput(id, value = NULL, placeholder = NULL, ...)
-
-updateNumberInput(id, value = NULL, enable = NULL, disable = NULL,
   valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
 }
 \arguments{
@@ -72,6 +33,10 @@ input, defaults to \code{NULL}, in which case there is no placeholder text.}
 \item{...}{Additional named arguments passed as HTML attributes to the
 parent element or tag elements passed as child elements to the parent
 element.}
+
+\item{type}{One of "\code{color}", "\code{date}", "\code{datetime-local}", "\code{email}", "\code{month}", "\code{password}", "\code{search}", "\code{tel}", "\code{text}", "\code{time}", "\code{url}" or "\code{week}" specifying the type of text input, defaults to \code{"text"}.
+
+For details on a particular type please see \url{https://developer.mozilla.org/en-US/docs/Web/HTML/Element/input}.}
 
 \item{enable}{One of \code{values} specifying particular choices to enable or
 \code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
@@ -140,39 +105,18 @@ menu item. The value of the input group is the concatentation of the
 dropdown input value, the value of the text input, and any static addons.}
 }
 \description{
-Different types of textual inputs are provided to best support mobile
-keyboards and assistive technologies. A password input will mask its
-contents. Email inputs offer client-side validation depending on the browser.
+A text input. A group text input is an alternative text input. The group text
+input allows you to include static prefixes or buttons with a standard text
+input.
+
+\code{numberInput()} is a simple wrapper around \code{textInput()} with \code{type} set to
+\code{"number"}. Because of this use \code{updateTextInput()} to update a number input.
 }
 \examples{
 
-### Basic text
+### Default text input
 
 textInput(id = "text")
-
-### Search
-
-searchInput(id = "search")
-
-### Email
-
-emailInput(id = "email")
-
-### URLs
-
-urlInput(id = "url")
-
-### Telephone numbers
-
-telephoneInput(id = "tele")
-
-### Passwords
-
-passwordInput(id = "password")
-
-### Numbers
-
-numberInput(id = "num")
 
 }
 \seealso{

@@ -1,4 +1,4 @@
-.colors <- c(
+possible_colors <- c(
   "red",
   "purple",
   "indigo",
@@ -13,6 +13,20 @@
   "black",
   "white"
 )
+
+param_color <- function(what) {
+  q_start <- '"`'
+  q_end <- '`"'
+
+  paste(
+    "@param color One of",
+    paste0(q_start, utils::head(possible_colors, -1), q_end, collapse = ", "),
+    "or",
+    paste0(q_start, utils::tail(possible_colors, 1), q_end),
+    "specifying the", what, "color of the tag element,",
+    "defaults to `NULL`"
+  )
+}
 
 color_apply <- function(tag, base, color) {
   if (tag_class_re(tag, "yonder-(?:checkbar|radiobar|button-group|list-group)")) {
@@ -38,7 +52,7 @@ color_apply <- function(tag, base, color) {
 
   tag <- tag_class_remove(
     tag,
-    sprintf("%s-(%s)", base, paste(.colors, collapse = "|"))
+    sprintf("%s-(%s)", base, paste(possible_colors, collapse = "|"))
   )
   tag <- tag_class_add(tag, paste0(base, "-", color))
 
@@ -54,10 +68,7 @@ color_apply <- function(tag, base, color) {
 #'
 #' @param tag A tag element.
 #'
-#' @param color One `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
-#'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`,
-#'   `"black"`, or `"white"` specifying the tag element text color, defaults to
-#'   `NULL`.
+#' @eval param_color("text")
 #'
 #' @param size One of `"xs"`, `"sm"`, `"base"`, `"lg"`, `"xl"` specifying a font
 #'   size relative to the default base page font size, defaults to `NULL`.
@@ -66,7 +77,7 @@ color_apply <- function(tag, base, color) {
 #'   `"monospace"` specifying the font weight of the element's text, defaults to
 #'   `NULL`.
 #'
-#'@param case One of `"upper"`, `"lower"`, or `"title"` specifying a
+#' @param case One of `"upper"`, `"lower"`, or `"title"` specifying a
 #'   transformation of the tag element's text, default to `NULL`.
 #'
 #' @param align A [responsive] argument. One of `"left"`, `"center"`, `"right"`,
@@ -115,7 +126,7 @@ color_apply <- function(tag, base, color) {
 #'
 font <- function(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
                  align = NULL) {
-  assert_possible(color, .colors)
+  assert_possible(color, possible_colors)
   assert_possible(size, c("xs", "sm", "base", "lg", "xl"))
   assert_possible(weight, c("bold", "normal", "light", "italic", "monospace"))
   assert_possible(case, c("lower", "upper", "title"))
@@ -172,10 +183,7 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
 #'
 #' @param tag A tag element.
 #'
-#' @param color One of `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
-#'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`,
-#'   `"white"`, or `"transparent"` character string specifying the background
-#'   color.
+#' @eval param_color("background")
 #'
 #' @family design
 #' @export
@@ -213,7 +221,7 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
 #'   flex(wrap = TRUE)
 #'
 background <- function(tag, color) {
-  assert_possible(color, c(.colors, "transparent"))
+  assert_possible(color, c(possible_colors, "transparent"))
 
   if (color == "transparent") {
     base <- "bg"
@@ -240,9 +248,7 @@ background <- function(tag, color) {
 #'
 #' @param tag A tag element.
 #'
-#' @param color One of `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
-#'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`, `"white"`
-#'   specifying the border color, defaults to `NULL`.
+#' @eval param_color("border")
 #'
 #' @param sides One or more of `"top"`, `"right"`, `"bottom"`, `"left"` or
 #'   `"all"` or `"none"` specifying which sides to add a border to, defaults to
@@ -290,7 +296,7 @@ background <- function(tag, color) {
 #'   flex(wrap = TRUE)
 #'
 border <- function(tag, color = NULL, sides = "all", round = NULL) {
-  assert_possible(color, .colors)
+  assert_possible(color, possible_colors)
   assert_possible(
     sides,
     c("top", "right", "bottom", "left", "all", "none", "circle")
@@ -367,7 +373,7 @@ border <- function(tag, color = NULL, sides = "all", round = NULL) {
 #'   active("green")
 #'
 active <- function(tag, color) {
-  assert_possible(color, .colors)
+  assert_possible(color, possible_colors)
 
   tag <- tag_class_add(tag, paste0("active-", color))
 

@@ -1,6 +1,20 @@
 destination: docs
 url: https://nteetor.github.io/yonder
 
+navbar:
+  left: []
+  right:
+  - text: Home
+    href: index.html
+  - text: Docs
+    href: reference/index.html
+  - text: Articles
+    menu:
+    - text: Application layouts
+      href: articles/layout.html
+  - icon: fa-github fa-lg
+    href: https://github.com/nteetor/yonder
+
 reference:
   - title: Components
     desc: Build out your user interfaces.

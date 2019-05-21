@@ -74,19 +74,34 @@ ignored." />
 
     <div id="navbar" class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <li>
-  <a href="../index.html">
-    <span class="fa fa-home fa-lg"></span>
-     
-  </a>
-</li>
-<li>
-  <a href="../reference/index.html">Reference</a>
-</li>
+        
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="../index.html">Home</a>
+</li>
+<li>
+  <a href="../reference/index.html">Docs</a>
+</li>
+<li class="dropdown">
+  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
+    Articles
+     
+    <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu" role="menu">
+    <li>
+      <a href="../articles/layout.html">Application layouts</a>
+    </li>
+  </ul>
+</li>
+<li>
+  <a href="https://github.com/nteetor/yonder">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
       
     </div><!--/.nav-collapse -->
@@ -191,29 +206,7 @@ that direction.</p></td>
     <span class='kw'>choice</span> <span class='kw'>=</span> <span class='st'>"Remember me"</span>
   ),
   <span class='kw'>submit</span> <span class='kw'>=</span> <span class='fu'><a href='buttonInput.html'>buttonInput</a></span>(<span class='st'>"go"</span>, <span class='st'>"Login"</span>)
-)</div><div class='output co'>#&gt; &lt;form class="yonder-form form-inline" id="login" submit="&amp;lt;button class=&amp;quot;yonder-button btn btn-grey&amp;quot; type=&amp;quot;button&amp;quot; role=&amp;quot;button&amp;quot; id=&amp;quot;go&amp;quot; autocomplete=&amp;quot;off&amp;quot;&amp;gt;Login&amp;lt;/button&amp;gt;"&gt;
-#&gt;   &lt;div class="yonder-textual" id="name"&gt;
-#&gt;     &lt;input class="form-control" type="text" placeholder="full name" autocomplete="off"/&gt;
-#&gt;     &lt;div class="valid-feedback"&gt;&lt;/div&gt;
-#&gt;     &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt;   &lt;/div&gt;
-#&gt;   &lt;div class="yonder-group-text input-group" id="username"&gt;
-#&gt;     &lt;div class="input-group-prepend"&gt;
-#&gt;       &lt;span class="input-group-text"&gt;@&lt;/span&gt;
-#&gt;     &lt;/div&gt;
-#&gt;     &lt;input type="text" class="form-control" placeholder="username" autocomplete="off"/&gt;
-#&gt;     &lt;div class="valid-feedback"&gt;&lt;/div&gt;
-#&gt;     &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt;   &lt;/div&gt;
-#&gt;   &lt;div class="yonder-checkbox" id="remember"&gt;
-#&gt;     &lt;div class="custom-control custom-checkbox"&gt;
-#&gt;       &lt;input class="custom-control-input" type="checkbox" id="checkbox-949-70" name="checkbox-949-70" value="Remember me" autocomplete="off"/&gt;
-#&gt;       &lt;label class="custom-control-label" for="checkbox-949-70"&gt;Remember me&lt;/label&gt;
-#&gt;       &lt;div class="valid-feedback"&gt;&lt;/div&gt;
-#&gt;       &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt;     &lt;/div&gt;
-#&gt;   &lt;/div&gt;
-#&gt; &lt;/form&gt;</div><div class='input'>
+)</div><div class='output co'>#&gt; <span class='error'>Error in assert_type(type, possible_types): could not find function "assert_type"</span></div><div class='input'>
 <span class='co'># Without any adjustments the layout is not great. But, with some styling we</span>
 <span class='co'># can make this form sparkle. Notice we are also adjusting the default submit</span>
 <span class='co'># button added to the form input.</span>
@@ -239,29 +232,7 @@ that direction.</p></td>
     <span class='fu'>margin</span>(<span class='kw'>r</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>sm</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2</span>),  <span class='co'># &lt;-</span>
   <span class='kw'>submit</span> <span class='kw'>=</span> <span class='fu'><a href='buttonInput.html'>buttonInput</a></span>(<span class='kw'>NULL</span>, <span class='st'>"Log in"</span>) <span class='kw'>%&gt;%</span>
     <span class='fu'>margin</span>(<span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2</span>)  <span class='co'># &lt;-</span>
-)</div><div class='output co'>#&gt; &lt;form class="yonder-form form-inline" id="login2" submit="&amp;lt;button class=&amp;quot;yonder-button btn btn-grey mb-2&amp;quot; type=&amp;quot;button&amp;quot; role=&amp;quot;button&amp;quot; autocomplete=&amp;quot;off&amp;quot;&amp;gt;Log in&amp;lt;/button&amp;gt;"&gt;
-#&gt;   &lt;div class="yonder-textual mr-sm-2 mb-2" id="name"&gt;
-#&gt;     &lt;input class="form-control" type="text" placeholder="full name" autocomplete="off"/&gt;
-#&gt;     &lt;div class="valid-feedback"&gt;&lt;/div&gt;
-#&gt;     &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt;   &lt;/div&gt;
-#&gt;   &lt;div class="yonder-group-text input-group mr-sm-2 mb-2" id="username"&gt;
-#&gt;     &lt;div class="input-group-prepend"&gt;
-#&gt;       &lt;span class="input-group-text"&gt;@&lt;/span&gt;
-#&gt;     &lt;/div&gt;
-#&gt;     &lt;input type="text" class="form-control" placeholder="username" autocomplete="off"/&gt;
-#&gt;     &lt;div class="valid-feedback"&gt;&lt;/div&gt;
-#&gt;     &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt;   &lt;/div&gt;
-#&gt;   &lt;div class="yonder-checkbox mr-sm-2 mb-2" id="remember"&gt;
-#&gt;     &lt;div class="custom-control custom-checkbox"&gt;
-#&gt;       &lt;input class="custom-control-input" type="checkbox" id="checkbox-265-150" name="checkbox-265-150" value="Remember me" autocomplete="off"/&gt;
-#&gt;       &lt;label class="custom-control-label" for="checkbox-265-150"&gt;Remember me&lt;/label&gt;
-#&gt;       &lt;div class="valid-feedback"&gt;&lt;/div&gt;
-#&gt;       &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt;     &lt;/div&gt;
-#&gt;   &lt;/div&gt;
-#&gt; &lt;/form&gt;</div><div class='input'>
+)</div><div class='output co'>#&gt; <span class='error'>Error in assert_type(type, possible_types): could not find function "assert_type"</span></div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

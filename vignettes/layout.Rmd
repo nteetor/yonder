@@ -8,7 +8,7 @@ vignette: >
 ---
 
 <style>
-  .row > div {
+  .sourceCode + .container-fluid .row > div {
     border: 1px solid blue;
   }
 </style>
