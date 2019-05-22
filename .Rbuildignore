@@ -11,3 +11,4 @@
 ^pkgdown/_pkgdown\.yaml$
 ^pkgdown$
 ^index.Rmd$
+^CRAN-RELEASE$
