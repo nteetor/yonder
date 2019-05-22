@@ -19,7 +19,13 @@ the documentation, https://nteetor.github.io/yonder/.
 
 ## Installation
 
-The latest development version of yonder may be installed from GitHub.
+You may install a stable version of yonder from CRAN.
+
+```R
+install.packages("yonder")
+```
+
+Alternatively, the development version of yonder may be installed from GitHub.
 
 ```R
 # install.packages("remotes")
