@@ -1,4 +1,4 @@
-#' Page and content navigation
+#' Navigation bar
 #'
 #' Add a navigation bar to your application with `navbar()`. Navigation bars may
 #' include a tab toggle (useful for multi-page applications), inline forms
@@ -17,7 +17,7 @@
 #'   the breakpoint at which the navbar collapes, defaults to `NULL`, in which
 #'   case the navbar is always expanded.
 #'
-#' @family layout
+#' @family layout functions
 #' @export
 #' @examples
 #'
@@ -34,9 +34,16 @@
 #'     formInput(
 #'       inline = TRUE,
 #'       id = "navForm",
-#'       searchInput("search", placeholder = "Search") %>%
+#'       textInput(
+#'         type = "search",
+#'         id = "site_search",
+#'         placeholder = "Search"
+#'       ) %>%
 #'         margin(right = c(sm = 2)),
-#'       submit = buttonInput("search", "Search") %>%
+#'       formSubmit(
+#'         label = "Search",
+#'         value = "search"
+#'       ) %>%
 #'         background("amber")
 #'     )
 #'   ) %>%

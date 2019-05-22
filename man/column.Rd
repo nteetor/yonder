@@ -131,8 +131,8 @@ container(
 
 }
 \seealso{
-Other layout: \code{\link{fieldset}}, \code{\link{flex}},
-  \code{\link{formGroup}}, \code{\link{navbar}},
+Other layout functions: \code{\link{fieldset}},
+  \code{\link{flex}}, \code{\link{navbar}},
   \code{\link{responsive}}
 }
-\concept{layout}
+\concept{layout functions}

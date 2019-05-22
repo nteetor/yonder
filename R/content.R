@@ -1,4 +1,4 @@
-#' Utilities for dynamic contents
+#' Dynamic content
 #'
 #' An application may require dynamic content. This content may be quite simple.
 #' The content could also be quite variable. These tools are an alternative to

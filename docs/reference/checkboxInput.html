@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Checkbox inputs — checkboxInput • yonder</title>
+<title>Checkbox and switch inputs — checkboxInput • yonder</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,14 +30,12 @@
 
 
 
-<meta property="og:title" content="Checkbox inputs — checkboxInput" />
+<meta property="og:title" content="Checkbox and switch inputs — checkboxInput" />
 
 <meta property="og:description" content="Reactive checkbox and checkbar inputs. Users may select one or more choices.
-The checkbox input appears as a standard checkbox or set of checkboxes. The
-checkbar input appears similar to a group of buttons, but with a checked or
-highlighted state. When a checkbox or checkbar input has no selected choices
-the reactive value is NULL. Switch inputs differ from checkboxes only in
-appearance." />
+The checkbox input appears as a standard checkbox or set of checkboxes. When
+a checkbox input has no selected choices the reactive value is NULL. Switch
+inputs differ from checkboxes only in appearance." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -82,7 +80,7 @@ appearance." />
   <a href="../index.html">Home</a>
 </li>
 <li>
-  <a href="../reference/index.html">Docs</a>
+  <a href="../reference/index.html">Documentation</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -114,7 +112,7 @@ appearance." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Checkbox inputs</h1>
+    <h1>Checkbox and switch inputs</h1>
     
     <div class="hidden name"><code>checkboxInput.Rd</code></div>
     </div>
@@ -122,11 +120,9 @@ appearance." />
     <div class="ref-description">
     
     <p>Reactive checkbox and checkbar inputs. Users may select one or more choices.
-The checkbox input appears as a standard checkbox or set of checkboxes. The
-checkbar input appears similar to a group of buttons, but with a checked or
-highlighted state. When a checkbox or checkbar input has no selected choices
-the reactive value is <code>NULL</code>. Switch inputs differ from checkboxes only in
-appearance.</p>
+The checkbox input appears as a standard checkbox or set of checkboxes. When
+a checkbox input has no selected choices the reactive value is <code>NULL</code>. Switch
+inputs differ from checkboxes only in appearance.</p>
     
     </div>
 
@@ -269,61 +265,6 @@ indicating how the input's value is invalid, defaults to <code>NULL</code>.</p><
 #&gt;     &lt;label class="custom-control-label" for="checkbox-847-77"&gt;Choice 3&lt;/label&gt;
 #&gt;     &lt;div class="valid-feedback"&gt;&lt;/div&gt;
 #&gt;     &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
-#&gt;   &lt;/div&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='co'>### Checkbar</span>
-
-<span class='fu'><a href='checkbarInput.html'>checkbarInput</a></span>(
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"checks"</span>,
-  <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(
-    <span class='st'>"Check 1"</span>,
-    <span class='st'>"Check 2"</span>,
-    <span class='st'>"Check 3"</span>
-  ),
-  <span class='kw'>selected</span> <span class='kw'>=</span> <span class='st'>"Check 1"</span>
-) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='background.html'>background</a></span>(<span class='st'>"blue"</span>) <span class='kw'>%&gt;%</span>
-  <span class='fu'><a href='padding.html'>margin</a></span>(<span class='fl'>2</span>)</div><div class='output co'>#&gt; &lt;div class="yonder-checkbar btn-group btn-group-toggle d-flex m-2" id="checks" data-toggle="buttons"&gt;
-#&gt;   &lt;label class="btn active btn-blue"&gt;
-#&gt;     &lt;input type="checkbox" autocomplete="off" value="Check 1" checked/&gt;
-#&gt;     Check 1
-#&gt;   &lt;/label&gt;
-#&gt;   &lt;label class="btn btn-blue"&gt;
-#&gt;     &lt;input type="checkbox" autocomplete="off" value="Check 2"/&gt;
-#&gt;     Check 2
-#&gt;   &lt;/label&gt;
-#&gt;   &lt;label class="btn btn-blue"&gt;
-#&gt;     &lt;input type="checkbox" autocomplete="off" value="Check 3"/&gt;
-#&gt;     Check 3
-#&gt;   &lt;/label&gt;
-#&gt; &lt;/div&gt;</div><div class='input'>
-<span class='co'>### Labeling a checkbar</span>
-
-<span class='fu'><a href='formGroup.html'>formGroup</a></span>(
-  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Toppings"</span>,
-  <span class='fu'><a href='checkbarInput.html'>checkbarInput</a></span>(
-    <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"fixins"</span>,
-    <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(
-      <span class='st'>"Sprinkles"</span>,
-      <span class='st'>"Nuts"</span>,
-      <span class='st'>"Fudge"</span>
-    )
-  )
-)</div><div class='output co'>#&gt; &lt;div class="form-group"&gt;
-#&gt;   &lt;label&gt;Toppings&lt;/label&gt;
-#&gt;   &lt;div class="yonder-checkbar btn-group btn-group-toggle d-flex" id="fixins" data-toggle="buttons"&gt;
-#&gt;     &lt;label class="btn btn-grey"&gt;
-#&gt;       &lt;input type="checkbox" autocomplete="off" value="Sprinkles"/&gt;
-#&gt;       Sprinkles
-#&gt;     &lt;/label&gt;
-#&gt;     &lt;label class="btn btn-grey"&gt;
-#&gt;       &lt;input type="checkbox" autocomplete="off" value="Nuts"/&gt;
-#&gt;       Nuts
-#&gt;     &lt;/label&gt;
-#&gt;     &lt;label class="btn btn-grey"&gt;
-#&gt;       &lt;input type="checkbox" autocomplete="off" value="Fudge"/&gt;
-#&gt;       Fudge
-#&gt;     &lt;/label&gt;
 #&gt;   &lt;/div&gt;
 #&gt; &lt;/div&gt;</div><div class='input'>
 <span class='co'>### Switches</span>

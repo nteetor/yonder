@@ -1,11 +1,9 @@
-#' Checkbox inputs
+#' Checkbox and switch inputs
 #'
 #' Reactive checkbox and checkbar inputs. Users may select one or more choices.
-#' The checkbox input appears as a standard checkbox or set of checkboxes. The
-#' checkbar input appears similar to a group of buttons, but with a checked or
-#' highlighted state. When a checkbox or checkbar input has no selected choices
-#' the reactive value is `NULL`. Switch inputs differ from checkboxes only in
-#' appearance.
+#' The checkbox input appears as a standard checkbox or set of checkboxes. When
+#' a checkbox input has no selected choices the reactive value is `NULL`. Switch
+#' inputs differ from checkboxes only in appearance.
 #'
 #' @param id A character string specifying the id of the reactive input.
 #'
@@ -66,34 +64,6 @@
 #'   id = "checkbox3",
 #'   choices = c("Choice 1", "Choice 2", "Choice 3"),
 #'   inline = TRUE
-#' )
-#'
-#' ### Checkbar
-#'
-#' checkbarInput(
-#'   id = "checks",
-#'   choices = c(
-#'     "Check 1",
-#'     "Check 2",
-#'     "Check 3"
-#'   ),
-#'   selected = "Check 1"
-#' ) %>%
-#'   background("blue") %>%
-#'   margin(2)
-#'
-#' ### Labeling a checkbar
-#'
-#' formGroup(
-#'   label = "Toppings",
-#'   checkbarInput(
-#'     id = "fixins",
-#'     choices = c(
-#'       "Sprinkles",
-#'       "Nuts",
-#'       "Fudge"
-#'     )
-#'   )
 #' )
 #'
 #' ### Switches
@@ -243,7 +213,8 @@ map_checkboxes <- function(choices, values, selected, inline,
 
 #' Checkbar input
 #'
-#' A stylized checkbox input.
+#' A stylized checkbox input. The checkbar input appears similar to a group of
+#' buttons, but with a checked or highlighted state.
 #'
 #' @inheritParams checkboxInput
 #'
@@ -274,6 +245,20 @@ map_checkboxes <- function(choices, values, selected, inline,
 #'   choices = c("What", "Which")
 #' ) %>%
 #'   background("teal")
+#'
+#' ### Labeling a checkbar
+#'
+#' formGroup(
+#'   label = "Toppings",
+#'   checkbarInput(
+#'     id = "fixins",
+#'     choices = c(
+#'       "Sprinkles",
+#'       "Nuts",
+#'       "Fudge"
+#'     )
+#'   )
+#' )
 #'
 checkbarInput <- function(id, choices = NULL, values = choices,
                           selected = NULL, ...) {

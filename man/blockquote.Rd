@@ -2,7 +2,7 @@
 % Please edit documentation in R/components.R
 \name{blockquote}
 \alias{blockquote}
-\title{Cleaner blockquotes}
+\title{Blockquotes}
 \usage{
 blockquote(..., source = NULL, align = "left")
 }
@@ -36,7 +36,7 @@ blockquote(
 
 }
 \seealso{
-Other content: \code{\link{alert}}, \code{\link{badge}},
+Other components: \code{\link{alert}}, \code{\link{badge}},
   \code{\link{card}}, \code{\link{collapsePane}},
   \code{\link{d1}}, \code{\link{dropdown}},
   \code{\link{img}}, \code{\link{jumbotron}},
@@ -44,4 +44,4 @@ Other content: \code{\link{alert}}, \code{\link{badge}},
   \code{\link{popover}}, \code{\link{pre}},
   \code{\link{toast}}
 }
-\concept{content}
+\concept{components}

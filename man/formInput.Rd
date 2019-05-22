@@ -52,19 +52,21 @@ because inline forms do not take effect on small viewports.
   formInput(
     id = "login",
     formGroup(
-      label = "Email",
-      emailInput(
-        id = "email"
+      label = "Username",
+      textInput(
+        id = "user"
       )
     ),
     formGroup(
       label = "Password",
-      passwordInput(
-        id = "password"
+      textInput(
+        type = "password",
+        id = "pass"
       )
     ),
     formSubmit(
-      "Login", "go!"
+      label = "Login",
+      value = "login"
     )
   )
 )

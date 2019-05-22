@@ -3,7 +3,7 @@
 \name{padding}
 \alias{padding}
 \alias{margin}
-\title{Tag element margin and padding}
+\title{Margin and padding}
 \usage{
 padding(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
   left = NULL)
@@ -58,22 +58,22 @@ div(
 # Here is an inline form without any additional spacing applied.
 
 formInput(
-  id = "login",
+  id = "form1",
   inline = TRUE,
   textInput(
     id = "name",
-    placeholder = "full name"
+    placeholder = "Full name"
   ),
   groupTextInput(
     id = "username",
     left = "@",
-    placeholder = "username"
+    placeholder = "Username"
   ),
   checkboxInput(
     id = "remember",
     choice = "Remember me"
   ),
-  submit = buttonInput("go", "Login")
+  formSubmit("Login", "login")
 )
 
 # Without any adjustments the layout is not great. But, with some styling we
@@ -81,17 +81,17 @@ formInput(
 # button added to the form input.
 
 formInput(
-  id = "login2",
+  id = "form2",
   inline = TRUE,
   textInput(
     id = "name",
-    placeholder = "full name"
+    placeholder = "Full name"
   ) \%>\%
     margin(r = c(sm = 2), b = 2),  # <-
   groupTextInput(
     id = "username",
     left = "@",
-    placeholder = "username"
+    placeholder = "Username"
   ) \%>\%
     margin(r = c(sm = 2), b = 2),  # <-
   checkboxInput(
@@ -99,17 +99,20 @@ formInput(
     choice = "Remember me"
   ) \%>\%
     margin(r = c(sm = 2), b = 2),  # <-
-  submit = buttonInput(NULL, "Log in") \%>\%
+  formSubmit(
+    label = "Login",
+    value = "login"
+  ) \%>\%
     margin(b = 2)  # <-
 )
 
 }
 \seealso{
-Other design: \code{\link{active}}, \code{\link{affix}},
-  \code{\link{background}}, \code{\link{border}},
-  \code{\link{display}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{height}},
-  \code{\link{scroll}}, \code{\link{shadow}},
-  \code{\link{width}}
+Other design utilities: \code{\link{active}},
+  \code{\link{affix}}, \code{\link{background}},
+  \code{\link{border}}, \code{\link{display}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{height}}, \code{\link{scroll}},
+  \code{\link{shadow}}, \code{\link{width}}
 }
-\concept{design}
+\concept{design utilities}

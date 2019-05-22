@@ -181,8 +181,8 @@ div(
 
 }
 \seealso{
-Other layout: \code{\link{column}}, \code{\link{fieldset}},
-  \code{\link{formGroup}}, \code{\link{navbar}},
+Other layout functions: \code{\link{column}},
+  \code{\link{fieldset}}, \code{\link{navbar}},
   \code{\link{responsive}}
 }
-\concept{layout}
+\concept{layout functions}

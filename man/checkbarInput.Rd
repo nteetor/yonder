@@ -37,7 +37,8 @@ element.}
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-A stylized checkbox input.
+A stylized checkbox input. The checkbar input appears similar to a group of
+buttons, but with a checked or highlighted state.
 }
 \examples{
 
@@ -55,6 +56,20 @@ checkbarInput(
   choices = c("What", "Which")
 ) \%>\%
   background("teal")
+
+### Labeling a checkbar
+
+formGroup(
+  label = "Toppings",
+  checkbarInput(
+    id = "fixins",
+    choices = c(
+      "Sprinkles",
+      "Nuts",
+      "Fudge"
+    )
+  )
+)
 
 }
 \seealso{

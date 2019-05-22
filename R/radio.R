@@ -1,6 +1,7 @@
 #' Radio inputs
 #'
-#' Create a reactive radio input of one or more radio controls.
+#' A stylized radio input. A reactive input with multiple choices where only one
+#' choice and value at most may be selected.
 #'
 #' @inheritParams checkboxInput
 #'
@@ -138,9 +139,11 @@ map_radios <- function(choices, values, selected, parent_id, inline) {
   )
 }
 
-#' Radiobar input
+#' Radiobar inputs
 #'
-#' A stylized radio input.
+#' A stylized group of radio inputs. A radiobar input is similar to a button
+#' group, but with a checked or highlighted stated. Additionally, only one value
+#' at most may be selected at any given time.
 #'
 #' @inheritParams checkboxInput
 #'

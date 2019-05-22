@@ -78,7 +78,7 @@ argument ... for details on composing dropdown menus." />
   <a href="../index.html">Home</a>
 </li>
 <li>
-  <a href="../reference/index.html">Docs</a>
+  <a href="../reference/index.html">Documentation</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -157,7 +157,7 @@ to align the dropdown menu to, defaults to <code>"left"</code>.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other content: <code><a href='alert.html'>alert</a></code>, <code><a href='badge.html'>badge</a></code>,
+    <div class='dont-index'><p>Other components: <code><a href='alert.html'>alert</a></code>, <code><a href='badge.html'>badge</a></code>,
   <code><a href='blockquote.html'>blockquote</a></code>, <code><a href='card.html'>card</a></code>,
   <code><a href='collapsePane.html'>collapsePane</a></code>, <code><a href='d1.html'>d1</a></code>,
   <code><a href='img.html'>img</a></code>, <code><a href='jumbotron.html'>jumbotron</a></code>,
@@ -240,23 +240,49 @@ to align the dropdown menu to, defaults to <code>"left"</code>.</p></td>
   <span class='fu'><a href='formInput.html'>formInput</a></span>(
     <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"login"</span>,
     <span class='fu'><a href='formGroup.html'>formGroup</a></span>(
-      <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Email address"</span>,
+      <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Username / Email"</span>,
       <span class='fu'><a href='textInput.html'>textInput</a></span>(
-        <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"email"</span>,
-        <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='st'>"email@example.com"</span>
+        <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"email"</span>,
+        <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"user"</span>
       )
     ),
     <span class='fu'><a href='formGroup.html'>formGroup</a></span>(
       <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Password"</span>,
-      <span class='fu'>passwordInput</span>(
-        <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"password"</span>,
-        <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='st'>"*****"</span>
+      <span class='fu'><a href='textInput.html'>textInput</a></span>(
+        <span class='kw'>type</span> <span class='kw'>=</span> <span class='st'>"password"</span>,
+        <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"pass"</span>
       )
     ),
-    <span class='kw'>submit</span> <span class='kw'>=</span> <span class='fu'><a href='buttonInput.html'>buttonInput</a></span>(<span class='st'>"signin"</span>, <span class='st'>"Sign in"</span>)
+    <span class='fu'><a href='formInput.html'>formSubmit</a></span>(
+      <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Sign in"</span>,
+      <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"signin"</span>
+    )
   ) <span class='kw'>%&gt;%</span>
     <span class='fu'><a href='padding.html'>padding</a></span>(<span class='fl'>3</span>, <span class='fl'>4</span>, <span class='fl'>3</span>, <span class='fl'>4</span>)
-)</div><div class='output co'>#&gt; <span class='error'>Error in passwordInput(id = "password", placeholder = "*****"): unused argument (id = "password")</span></div><div class='input'>
+)</div><div class='output co'>#&gt; &lt;div class="dropdown"&gt;
+#&gt;   &lt;button class="btn btn-grey dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false"&gt;Sign in&lt;/button&gt;
+#&gt;   &lt;div class="dropdown-menu"&gt;
+#&gt;     &lt;form class="yonder-form p-3 pt-4 pr-3 pb-4" id="login"&gt;
+#&gt;       &lt;div class="form-group"&gt;
+#&gt;         &lt;label&gt;Username / Email&lt;/label&gt;
+#&gt;         &lt;div class="yonder-textual" id="user"&gt;
+#&gt;           &lt;input class="form-control" type="email" autocomplete="off"/&gt;
+#&gt;           &lt;div class="valid-feedback"&gt;&lt;/div&gt;
+#&gt;           &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
+#&gt;         &lt;/div&gt;
+#&gt;       &lt;/div&gt;
+#&gt;       &lt;div class="form-group"&gt;
+#&gt;         &lt;label&gt;Password&lt;/label&gt;
+#&gt;         &lt;div class="yonder-textual" id="pass"&gt;
+#&gt;           &lt;input class="form-control" type="password" autocomplete="off"/&gt;
+#&gt;           &lt;div class="valid-feedback"&gt;&lt;/div&gt;
+#&gt;           &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
+#&gt;         &lt;/div&gt;
+#&gt;       &lt;/div&gt;
+#&gt;       &lt;button class="yonder-form-submit btn btn-blue" value="signin"&gt;Sign in&lt;/button&gt;
+#&gt;     &lt;/form&gt;
+#&gt;   &lt;/div&gt;
+#&gt; &lt;/div&gt;</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Tag element margin and padding — padding • yonder</title>
+<title>Margin and padding — padding • yonder</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Tag element margin and padding — padding" />
+<meta property="og:title" content="Margin and padding — padding" />
 
 <meta property="og:description" content="Use the margin() and padding() utilities to change the margin or padding
 of a tag element.  The margin of a tag element is the space outside and
@@ -82,7 +82,7 @@ ignored." />
   <a href="../index.html">Home</a>
 </li>
 <li>
-  <a href="../reference/index.html">Docs</a>
+  <a href="../reference/index.html">Documentation</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -114,7 +114,7 @@ ignored." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Tag element margin and padding</h1>
+    <h1>Margin and padding</h1>
     
     <div class="hidden name"><code>padding.Rd</code></div>
     </div>
@@ -158,12 +158,12 @@ that direction.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other design: <code><a href='active.html'>active</a></code>, <code><a href='affix.html'>affix</a></code>,
-  <code><a href='background.html'>background</a></code>, <code><a href='border.html'>border</a></code>,
-  <code><a href='display.html'>display</a></code>, <code><a href='float.html'>float</a></code>,
-  <code><a href='font.html'>font</a></code>, <code><a href='height.html'>height</a></code>,
-  <code><a href='scroll.html'>scroll</a></code>, <code><a href='shadow.html'>shadow</a></code>,
-  <code><a href='width.html'>width</a></code></p></div>
+    <div class='dont-index'><p>Other design utilities: <code><a href='active.html'>active</a></code>,
+  <code><a href='affix.html'>affix</a></code>, <code><a href='background.html'>background</a></code>,
+  <code><a href='border.html'>border</a></code>, <code><a href='display.html'>display</a></code>,
+  <code><a href='float.html'>float</a></code>, <code><a href='font.html'>font</a></code>,
+  <code><a href='height.html'>height</a></code>, <code><a href='scroll.html'>scroll</a></code>,
+  <code><a href='shadow.html'>shadow</a></code>, <code><a href='width.html'>width</a></code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -190,39 +190,62 @@ that direction.</p></td>
 <span class='co'># Here is an inline form without any additional spacing applied.</span>
 
 <span class='fu'><a href='formInput.html'>formInput</a></span>(
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"login"</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"form1"</span>,
   <span class='kw'>inline</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='fu'><a href='textInput.html'>textInput</a></span>(
     <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
-    <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='st'>"full name"</span>
+    <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='st'>"Full name"</span>
   ),
   <span class='fu'><a href='textInput.html'>groupTextInput</a></span>(
     <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"username"</span>,
     <span class='kw'>left</span> <span class='kw'>=</span> <span class='st'>"@"</span>,
-    <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='st'>"username"</span>
+    <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='st'>"Username"</span>
   ),
   <span class='fu'><a href='checkboxInput.html'>checkboxInput</a></span>(
     <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"remember"</span>,
     <span class='kw'>choice</span> <span class='kw'>=</span> <span class='st'>"Remember me"</span>
   ),
-  <span class='kw'>submit</span> <span class='kw'>=</span> <span class='fu'><a href='buttonInput.html'>buttonInput</a></span>(<span class='st'>"go"</span>, <span class='st'>"Login"</span>)
-)</div><div class='output co'>#&gt; <span class='error'>Error in assert_type(type, possible_types): could not find function "assert_type"</span></div><div class='input'>
+  <span class='fu'><a href='formInput.html'>formSubmit</a></span>(<span class='st'>"Login"</span>, <span class='st'>"login"</span>)
+)</div><div class='output co'>#&gt; &lt;form class="yonder-form form-inline" id="form1"&gt;
+#&gt;   &lt;div class="yonder-textual" id="name"&gt;
+#&gt;     &lt;input class="form-control" type="text" placeholder="Full name" autocomplete="off"/&gt;
+#&gt;     &lt;div class="valid-feedback"&gt;&lt;/div&gt;
+#&gt;     &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
+#&gt;   &lt;/div&gt;
+#&gt;   &lt;div class="yonder-group-text input-group" id="username"&gt;
+#&gt;     &lt;div class="input-group-prepend"&gt;
+#&gt;       &lt;span class="input-group-text"&gt;@&lt;/span&gt;
+#&gt;     &lt;/div&gt;
+#&gt;     &lt;input type="text" class="form-control" placeholder="Username" autocomplete="off"/&gt;
+#&gt;     &lt;div class="valid-feedback"&gt;&lt;/div&gt;
+#&gt;     &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
+#&gt;   &lt;/div&gt;
+#&gt;   &lt;div class="yonder-checkbox" id="remember"&gt;
+#&gt;     &lt;div class="custom-control custom-checkbox"&gt;
+#&gt;       &lt;input class="custom-control-input" type="checkbox" id="checkbox-949-70" name="checkbox-949-70" value="Remember me" autocomplete="off"/&gt;
+#&gt;       &lt;label class="custom-control-label" for="checkbox-949-70"&gt;Remember me&lt;/label&gt;
+#&gt;       &lt;div class="valid-feedback"&gt;&lt;/div&gt;
+#&gt;       &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
+#&gt;     &lt;/div&gt;
+#&gt;   &lt;/div&gt;
+#&gt;   &lt;button class="yonder-form-submit btn btn-blue" value="login"&gt;Login&lt;/button&gt;
+#&gt; &lt;/form&gt;</div><div class='input'>
 <span class='co'># Without any adjustments the layout is not great. But, with some styling we</span>
 <span class='co'># can make this form sparkle. Notice we are also adjusting the default submit</span>
 <span class='co'># button added to the form input.</span>
 
 <span class='fu'><a href='formInput.html'>formInput</a></span>(
-  <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"login2"</span>,
+  <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"form2"</span>,
   <span class='kw'>inline</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>,
   <span class='fu'><a href='textInput.html'>textInput</a></span>(
     <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"name"</span>,
-    <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='st'>"full name"</span>
+    <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='st'>"Full name"</span>
   ) <span class='kw'>%&gt;%</span>
     <span class='fu'>margin</span>(<span class='kw'>r</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>sm</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2</span>),  <span class='co'># &lt;-</span>
   <span class='fu'><a href='textInput.html'>groupTextInput</a></span>(
     <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"username"</span>,
     <span class='kw'>left</span> <span class='kw'>=</span> <span class='st'>"@"</span>,
-    <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='st'>"username"</span>
+    <span class='kw'>placeholder</span> <span class='kw'>=</span> <span class='st'>"Username"</span>
   ) <span class='kw'>%&gt;%</span>
     <span class='fu'>margin</span>(<span class='kw'>r</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>sm</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2</span>),  <span class='co'># &lt;-</span>
   <span class='fu'><a href='checkboxInput.html'>checkboxInput</a></span>(
@@ -230,9 +253,35 @@ that direction.</p></td>
     <span class='kw'>choice</span> <span class='kw'>=</span> <span class='st'>"Remember me"</span>
   ) <span class='kw'>%&gt;%</span>
     <span class='fu'>margin</span>(<span class='kw'>r</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>sm</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2</span>),  <span class='co'># &lt;-</span>
-  <span class='kw'>submit</span> <span class='kw'>=</span> <span class='fu'><a href='buttonInput.html'>buttonInput</a></span>(<span class='kw'>NULL</span>, <span class='st'>"Log in"</span>) <span class='kw'>%&gt;%</span>
+  <span class='fu'><a href='formInput.html'>formSubmit</a></span>(
+    <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Login"</span>,
+    <span class='kw'>value</span> <span class='kw'>=</span> <span class='st'>"login"</span>
+  ) <span class='kw'>%&gt;%</span>
     <span class='fu'>margin</span>(<span class='kw'>b</span> <span class='kw'>=</span> <span class='fl'>2</span>)  <span class='co'># &lt;-</span>
-)</div><div class='output co'>#&gt; <span class='error'>Error in assert_type(type, possible_types): could not find function "assert_type"</span></div><div class='input'>
+)</div><div class='output co'>#&gt; &lt;form class="yonder-form form-inline" id="form2"&gt;
+#&gt;   &lt;div class="yonder-textual mr-sm-2 mb-2" id="name"&gt;
+#&gt;     &lt;input class="form-control" type="text" placeholder="Full name" autocomplete="off"/&gt;
+#&gt;     &lt;div class="valid-feedback"&gt;&lt;/div&gt;
+#&gt;     &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
+#&gt;   &lt;/div&gt;
+#&gt;   &lt;div class="yonder-group-text input-group mr-sm-2 mb-2" id="username"&gt;
+#&gt;     &lt;div class="input-group-prepend"&gt;
+#&gt;       &lt;span class="input-group-text"&gt;@&lt;/span&gt;
+#&gt;     &lt;/div&gt;
+#&gt;     &lt;input type="text" class="form-control" placeholder="Username" autocomplete="off"/&gt;
+#&gt;     &lt;div class="valid-feedback"&gt;&lt;/div&gt;
+#&gt;     &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
+#&gt;   &lt;/div&gt;
+#&gt;   &lt;div class="yonder-checkbox mr-sm-2 mb-2" id="remember"&gt;
+#&gt;     &lt;div class="custom-control custom-checkbox"&gt;
+#&gt;       &lt;input class="custom-control-input" type="checkbox" id="checkbox-265-150" name="checkbox-265-150" value="Remember me" autocomplete="off"/&gt;
+#&gt;       &lt;label class="custom-control-label" for="checkbox-265-150"&gt;Remember me&lt;/label&gt;
+#&gt;       &lt;div class="valid-feedback"&gt;&lt;/div&gt;
+#&gt;       &lt;div class="invalid-feedback"&gt;&lt;/div&gt;
+#&gt;     &lt;/div&gt;
+#&gt;   &lt;/div&gt;
+#&gt;   &lt;button class="yonder-form-submit btn btn-blue mb-2" value="login"&gt;Login&lt;/button&gt;
+#&gt; &lt;/form&gt;</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

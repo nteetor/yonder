@@ -1,4 +1,4 @@
-#' Select input
+#' Select inputs
 #'
 #' Create a select input. Select elements typically appear as a simple menu of
 #' choices and may have one or more selected values, see the `multiple`

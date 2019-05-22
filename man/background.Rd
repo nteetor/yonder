@@ -2,7 +2,7 @@
 % Please edit documentation in R/design.R
 \name{background}
 \alias{background}
-\title{Tag element background color}
+\title{Background color}
 \usage{
 background(tag, color)
 }
@@ -49,11 +49,11 @@ div(
 
 }
 \seealso{
-Other design: \code{\link{active}}, \code{\link{affix}},
-  \code{\link{border}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{font}},
-  \code{\link{height}}, \code{\link{padding}},
-  \code{\link{scroll}}, \code{\link{shadow}},
-  \code{\link{width}}
+Other design utilities: \code{\link{active}},
+  \code{\link{affix}}, \code{\link{border}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{height}},
+  \code{\link{padding}}, \code{\link{scroll}},
+  \code{\link{shadow}}, \code{\link{width}}
 }
-\concept{design}
+\concept{design utilities}

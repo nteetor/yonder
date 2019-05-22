@@ -18,7 +18,7 @@
 #'   centered, otherwise, if `FALSE`, the container occupies the entire width of
 #'   the viewport, defaults to `FALSE`.
 #'
-#' @family layout
+#' @family layout functions
 #' @export
 #' @examples
 #'

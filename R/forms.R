@@ -46,19 +46,21 @@
 #'   formInput(
 #'     id = "login",
 #'     formGroup(
-#'       label = "Email",
-#'       emailInput(
-#'         id = "email"
+#'       label = "Username",
+#'       textInput(
+#'         id = "user"
 #'       )
 #'     ),
 #'     formGroup(
 #'       label = "Password",
-#'       passwordInput(
-#'         id = "password"
+#'       textInput(
+#'         type = "password",
+#'         id = "pass"
 #'       )
 #'     ),
 #'     formSubmit(
-#'       "Login", "go!"
+#'       label = "Login",
+#'       value = "login"
 #'     )
 #'   )
 #' )
@@ -125,7 +127,7 @@ formSubmit <- function(label, value = label, ...) {
   )
 }
 
-#' Add labels, help text, and formatting to inputs
+#' Input labels, help text, and formatting to inputs
 #'
 #' Form groups are a way of labelling an input. Form rows are similar to
 #' [columns()]s, but include additional styles intended for forms. The
@@ -162,20 +164,18 @@ formSubmit <- function(label, value = label, ...) {
 #'   formRow(
 #'     formGroup(
 #'       width = c(md = 6),  # <-
-#'       label = "Email",
-#'       emailInput(
-#'         id = "email",
-#'         placeholder = "e@@mail.com"
+#'       label = "Username",
+#'       textInput(
+#'         id = "user"
 #'       )
 #'     ),
 #'     formGroup(
 #'       width = c(md = 6),  # <-
 #'       label = "Password",
-#'       passwordInput(
-#'         id = "password",
-#'         placeholder = "123456"
-#'       ),
-#'       help = "Please consider something better than 123456"
+#'       textInput(
+#'         type = "password",
+#'         id = "pass"
+#'       )
 #'     )
 #'   ),
 #'   formGroup(

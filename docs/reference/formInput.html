@@ -86,7 +86,7 @@ to formInput()." />
   <a href="../index.html">Home</a>
 </li>
 <li>
-  <a href="../reference/index.html">Docs</a>
+  <a href="../reference/index.html">Documentation</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -188,19 +188,21 @@ because inline forms do not take effect on small viewports.</p>
   formInput(
     id = "login",
     formGroup(
-      label = "Email",
-      emailInput(
-        id = "email"
+      label = "Username",
+      textInput(
+        id = "user"
       )
     ),
     formGroup(
       label = "Password",
-      passwordInput(
-        id = "password"
+      textInput(
+        type = "password",
+        id = "pass"
       )
     ),
     formSubmit(
-      "Login", "go!"
+      label = "Login",
+      value = "login"
     )
   )
 )

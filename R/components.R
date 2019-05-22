@@ -6,7 +6,7 @@
 #' @param ... Any number of character strings or tag elements or named arguments
 #'   passed as HTML attributes to the parent element.
 #'
-#' @family content
+#' @family components
 #' @export
 #' @examples
 #'
@@ -57,7 +57,7 @@ d <- function(level, ...) {
 #' @param subtitle A character string specifying a subtitle for the jumbotron,
 #'   defaults to `NULL`, in which case a subtitle is not added.
 #'
-#' @family content
+#' @family components
 #' @export
 #' @examples
 #'
@@ -101,7 +101,7 @@ jumbotron <- function(..., title = NULL, subtitle = NULL) {
 #' @param ... Additional tag elements or named arguments passed as HTML attributes
 #'   to the parent element.
 #'
-#' @family content
+#' @family components
 #' @export
 img <- function(src, ...) {
   attach_dependencies(
@@ -138,7 +138,7 @@ figure <- function(image, caption = NULL, ...) {
   )
 }
 
-#' Cleaner blockquotes
+#' Blockquotes
 #'
 #' Stylized blockquotes, an updated builder function for `<blockquote>`.
 #'
@@ -151,7 +151,7 @@ figure <- function(image, caption = NULL, ...) {
 #'
 #' @param align One of `"left"` or `"right"`, defaults to `"left"`.
 #'
-#' @family content
+#' @family components
 #' @export
 #' @examples
 #'
@@ -191,7 +191,7 @@ blockquote <- function(..., source = NULL, align = "left") {
 #' @param ... Text, tag elements, or named arguments passed as HTML attributes
 #'   to the tag.
 #'
-#' @family content
+#' @family components
 #' @export
 #' @examples
 #'
@@ -231,7 +231,7 @@ pre <- function(...) {
 #' @param ... Any number of inputs to group or named arguments passed as HTML
 #'   attributes to the parent element.
 #'
-#' @family layout
+#' @family layout functions
 #' @export
 #' @examples
 #'

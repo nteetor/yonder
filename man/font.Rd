@@ -2,7 +2,7 @@
 % Please edit documentation in R/design.R
 \name{font}
 \alias{font}
-\title{Tag element font}
+\title{Font color, size, weight}
 \usage{
 font(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
   align = NULL)
@@ -72,11 +72,11 @@ p("Proin quam nisl, tincidunt et.") \%>\%
 
 }
 \seealso{
-Other design: \code{\link{active}}, \code{\link{affix}},
-  \code{\link{background}}, \code{\link{border}},
-  \code{\link{display}}, \code{\link{float}},
-  \code{\link{height}}, \code{\link{padding}},
-  \code{\link{scroll}}, \code{\link{shadow}},
-  \code{\link{width}}
+Other design utilities: \code{\link{active}},
+  \code{\link{affix}}, \code{\link{background}},
+  \code{\link{border}}, \code{\link{display}},
+  \code{\link{float}}, \code{\link{height}},
+  \code{\link{padding}}, \code{\link{scroll}},
+  \code{\link{shadow}}, \code{\link{width}}
 }
-\concept{design}
+\concept{design utilities}

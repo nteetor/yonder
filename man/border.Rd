@@ -2,7 +2,7 @@
 % Please edit documentation in R/design.R
 \name{border}
 \alias{border}
-\title{Tag element borders}
+\title{Border color}
 \usage{
 border(tag, color = NULL, sides = "all", round = NULL)
 }
@@ -59,11 +59,11 @@ div(
 
 }
 \seealso{
-Other design: \code{\link{active}}, \code{\link{affix}},
-  \code{\link{background}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{font}},
-  \code{\link{height}}, \code{\link{padding}},
-  \code{\link{scroll}}, \code{\link{shadow}},
-  \code{\link{width}}
+Other design utilities: \code{\link{active}},
+  \code{\link{affix}}, \code{\link{background}},
+  \code{\link{display}}, \code{\link{float}},
+  \code{\link{font}}, \code{\link{height}},
+  \code{\link{padding}}, \code{\link{scroll}},
+  \code{\link{shadow}}, \code{\link{width}}
 }
-\concept{design}
+\concept{design utilities}

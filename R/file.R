@@ -1,4 +1,4 @@
-#' Upload user files
+#' File inputs
 #'
 #' Upload files to the server.
 #'

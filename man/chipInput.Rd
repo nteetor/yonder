@@ -3,7 +3,7 @@
 \name{chipInput}
 \alias{chipInput}
 \alias{updateChipInput}
-\title{Chip input, selectize alternative}
+\title{Chip inputs}
 \usage{
 chipInput(id, choices = NULL, values = choices, selected = NULL, ...,
   max = Inf, inline = TRUE)

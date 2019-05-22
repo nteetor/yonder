@@ -2,7 +2,7 @@
 % Please edit documentation in R/design.R
 \name{affix}
 \alias{affix}
-\title{Affix elements to top or bottom of page}
+\title{Position}
 \usage{
 affix(tag, position)
 }
@@ -15,12 +15,12 @@ fixed behavior of an element.}
 \description{
 The \code{affix} utility function applies Bootstrap classes to fix elements to the
 top or bottom of a page. Use \code{"sticky"} to cause an element to fix to the top
-of a page \emph{after} the element is scrolled past. \emph{Important}, the IE11 and
+of a page after the element is scrolled past. \emph{Important}, the IE11 and
 Edge browsers do not support the sticky behavior.
 }
 \examples{
 
-### See top of page
+### Affix an element
 
 div(
   span("I'm up here!") \%>\%
@@ -33,11 +33,11 @@ div(
 
 }
 \seealso{
-Other design: \code{\link{active}},
+Other design utilities: \code{\link{active}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{height}},
   \code{\link{padding}}, \code{\link{scroll}},
   \code{\link{shadow}}, \code{\link{width}}
 }
-\concept{design}
+\concept{design utilities}

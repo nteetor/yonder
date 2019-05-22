@@ -5,7 +5,7 @@
 \alias{updateCheckboxInput}
 \alias{switchInput}
 \alias{updateSwitchInput}
-\title{Checkbox inputs}
+\title{Checkbox and switch inputs}
 \usage{
 checkboxInput(id, choices = NULL, values = choices, selected = NULL,
   ..., inline = FALSE)
@@ -57,11 +57,9 @@ indicating how the input's value is invalid, defaults to \code{NULL}.}
 }
 \description{
 Reactive checkbox and checkbar inputs. Users may select one or more choices.
-The checkbox input appears as a standard checkbox or set of checkboxes. The
-checkbar input appears similar to a group of buttons, but with a checked or
-highlighted state. When a checkbox or checkbar input has no selected choices
-the reactive value is \code{NULL}. Switch inputs differ from checkboxes only in
-appearance.
+The checkbox input appears as a standard checkbox or set of checkboxes. When
+a checkbox input has no selected choices the reactive value is \code{NULL}. Switch
+inputs differ from checkboxes only in appearance.
 }
 \examples{
 
@@ -86,34 +84,6 @@ checkboxInput(
   id = "checkbox3",
   choices = c("Choice 1", "Choice 2", "Choice 3"),
   inline = TRUE
-)
-
-### Checkbar
-
-checkbarInput(
-  id = "checks",
-  choices = c(
-    "Check 1",
-    "Check 2",
-    "Check 3"
-  ),
-  selected = "Check 1"
-) \%>\%
-  background("blue") \%>\%
-  margin(2)
-
-### Labeling a checkbar
-
-formGroup(
-  label = "Toppings",
-  checkbarInput(
-    id = "fixins",
-    choices = c(
-      "Sprinkles",
-      "Nuts",
-      "Fudge"
-    )
-  )
 )
 
 ### Switches

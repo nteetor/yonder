@@ -69,7 +69,7 @@
 #' shinyApp(ui, server)
 #' ```
 #'
-#' @family content
+#' @family components
 #' @export
 #' @examples
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/design.R
 \name{active}
 \alias{active}
-\title{Color selected choices}
+\title{Selected choice color}
 \usage{
 active(tag, color)
 }
@@ -48,11 +48,11 @@ chipInput(
 
 }
 \seealso{
-Other design: \code{\link{affix}},
+Other design utilities: \code{\link{affix}},
   \code{\link{background}}, \code{\link{border}},
   \code{\link{display}}, \code{\link{float}},
   \code{\link{font}}, \code{\link{height}},
   \code{\link{padding}}, \code{\link{scroll}},
   \code{\link{shadow}}, \code{\link{width}}
 }
-\concept{design}
+\concept{design utilities}

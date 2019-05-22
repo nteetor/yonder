@@ -3,7 +3,7 @@
 \name{replaceContent}
 \alias{replaceContent}
 \alias{removeContent}
-\title{Utilities for dynamic contents}
+\title{Dynamic content}
 \usage{
 replaceContent(id, ..., session = getDefaultReactiveDomain())
 

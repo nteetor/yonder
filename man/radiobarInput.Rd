@@ -3,7 +3,7 @@
 \name{radiobarInput}
 \alias{radiobarInput}
 \alias{updateRadiobarInput}
-\title{Radiobar input}
+\title{Radiobar inputs}
 \usage{
 radiobarInput(id, choices, values = choices, selected = values[[1]],
   ...)
@@ -37,7 +37,9 @@ element.}
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-A stylized radio input.
+A stylized group of radio inputs. A radiobar input is similar to a button
+group, but with a checked or highlighted stated. Additionally, only one value
+at most may be selected at any given time.
 }
 \examples{
 

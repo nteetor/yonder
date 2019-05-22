@@ -2,7 +2,7 @@
 % Please edit documentation in R/design.R
 \name{float}
 \alias{float}
-\title{Tag element float}
+\title{Float}
 \usage{
 float(tag, side)
 }
@@ -47,11 +47,11 @@ div(
 
 }
 \seealso{
-Other design: \code{\link{active}}, \code{\link{affix}},
-  \code{\link{background}}, \code{\link{border}},
-  \code{\link{display}}, \code{\link{font}},
-  \code{\link{height}}, \code{\link{padding}},
-  \code{\link{scroll}}, \code{\link{shadow}},
-  \code{\link{width}}
+Other design utilities: \code{\link{active}},
+  \code{\link{affix}}, \code{\link{background}},
+  \code{\link{border}}, \code{\link{display}},
+  \code{\link{font}}, \code{\link{height}},
+  \code{\link{padding}}, \code{\link{scroll}},
+  \code{\link{shadow}}, \code{\link{width}}
 }
-\concept{design}
+\concept{design utilities}

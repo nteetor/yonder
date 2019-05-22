@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Page navigation input — navInput • yonder</title>
+<title>Page navigation inputs — navInput • yonder</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Page navigation input — navInput" />
+<meta property="og:title" content="Page navigation inputs — navInput" />
 
 <meta property="og:description" content="A reactive input styled as a navigation control. The navigation input can be
 styled as links, tabs, or pills. A nav input is paired with navContent()
@@ -82,7 +82,7 @@ menus in the nav input must be retrieved with its own reactive id." />
   <a href="../index.html">Home</a>
 </li>
 <li>
-  <a href="../reference/index.html">Docs</a>
+  <a href="../reference/index.html">Documentation</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -114,7 +114,7 @@ menus in the nav input must be retrieved with its own reactive id." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Page navigation input</h1>
+    <h1>Page navigation inputs</h1>
     
     <div class="hidden name"><code>navInput.Rd</code></div>
     </div>
@@ -287,7 +287,21 @@ the nav items.</p></td>
     <span class='st'>"Tab 2"</span>
   ),
   <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='st'>"tab1"</span>, <span class='st'>"tab2"</span>, <span class='st'>"tab3"</span>)
-)</div><div class='output co'>#&gt; <span class='error'>Error in paste0(.colors, collapse = "|"): object '.colors' not found</span></div><div class='input'>
+)</div><div class='output co'>#&gt; &lt;ul class="yonder-nav nav" id="tabs3"&gt;
+#&gt;   &lt;li class="nav-item"&gt;
+#&gt;     &lt;button class="nav-link btn btn-link active" value="tab1"&gt;Tab 1&lt;/button&gt;
+#&gt;   &lt;/li&gt;
+#&gt;   &lt;li class="yonder-menu dropdown nav-item" id="menu1"&gt;
+#&gt;     &lt;button class="btn dropdown-toggle nav-link btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="tab2"&gt;Tab 2&lt;/button&gt;
+#&gt;     &lt;div class="dropdown-menu"&gt;
+#&gt;       &lt;button class="dropdown-item" type="button" value="Action"&gt;Action&lt;/button&gt;
+#&gt;       &lt;button class="dropdown-item" type="button" value="Another action"&gt;Another action&lt;/button&gt;
+#&gt;     &lt;/div&gt;
+#&gt;   &lt;/li&gt;
+#&gt;   &lt;li class="nav-item"&gt;
+#&gt;     &lt;button class="nav-link btn btn-link" value="tab3"&gt;Tab 2&lt;/button&gt;
+#&gt;   &lt;/li&gt;
+#&gt; &lt;/ul&gt;</div><div class='input'>
 <span class='co'>### Full width nav input</span>
 
 <span class='fu'>navInput</span>(

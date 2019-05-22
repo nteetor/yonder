@@ -1,4 +1,4 @@
-#' Display a popover
+#' Popovers
 #'
 #' Popovers are small windows of content associated with a tag element. Use
 #' `popover()` to construct the element and `showPopover()` to add it to any tag
@@ -55,7 +55,7 @@
 #' shinyApp(ui, server)
 #' ```
 #'
-#' @family content
+#' @family components
 #' @export
 #' @examples
 #'

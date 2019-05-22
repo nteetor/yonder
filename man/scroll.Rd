@@ -34,11 +34,11 @@ div(
 
 }
 \seealso{
-Other design: \code{\link{active}}, \code{\link{affix}},
-  \code{\link{background}}, \code{\link{border}},
-  \code{\link{display}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{height}},
-  \code{\link{padding}}, \code{\link{shadow}},
-  \code{\link{width}}
+Other design utilities: \code{\link{active}},
+  \code{\link{affix}}, \code{\link{background}},
+  \code{\link{border}}, \code{\link{display}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{height}}, \code{\link{padding}},
+  \code{\link{shadow}}, \code{\link{width}}
 }
-\concept{design}
+\concept{design utilities}

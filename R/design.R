@@ -59,7 +59,7 @@ color_apply <- function(tag, base, color) {
   attach_dependencies(tag)
 }
 
-#' Tag element font
+#' Font color, size, weight
 #'
 #' The `font()` utility modifies the color, size, weight, case, or alignment of
 #' a tag element's text. All arguments default to `NULL`, in which case they are
@@ -84,7 +84,7 @@ color_apply <- function(tag, base, color) {
 #'   or `"justify"`, specifying the alignment of the tag element's text, defaults
 #'   to `NULL`.
 #'
-#' @family design
+#' @family design utilities
 #' @export
 #' @examples
 #'
@@ -177,7 +177,7 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
   attach_dependencies(tag)
 }
 
-#' Tag element background color
+#' Background color
 #'
 #' Use `background()` to modify the background color of a tag element.
 #'
@@ -185,7 +185,7 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
 #'
 #' @eval param_color("background")
 #'
-#' @family design
+#' @family design utilities
 #' @export
 #' @examples
 #'
@@ -242,7 +242,7 @@ background <- function(tag, color) {
   color_apply(tag, base, color)
 }
 
-#' Tag element borders
+#' Border color
 #'
 #' Use `border()` to add or modify tag element borders.
 #'
@@ -258,7 +258,7 @@ background <- function(tag, color) {
 #'   `"circle"`, `"all"`, or `"none"` specifying how to round the border(s) of a
 #'   tag element, defaults to `NULL`, in which case the argument is ignored.
 #'
-#' @family design
+#' @family design utilities
 #' @export
 #' @examples
 #'
@@ -330,7 +330,7 @@ border <- function(tag, color = NULL, sides = "all", round = NULL) {
   attach_dependencies(tag)
 }
 
-#' Color selected choices
+#' Selected choice color
 #'
 #' Use `active()` to change the highlight color of an input's selected choices.
 #'
@@ -340,7 +340,7 @@ border <- function(tag, color = NULL, sides = "all", round = NULL) {
 #'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`, `"white"`
 #'   specifying the active color of selected choices.
 #'
-#' @family design
+#' @family design utilities
 #' @export
 #' @examples
 #'
@@ -380,7 +380,7 @@ active <- function(tag, color) {
   attach_dependencies(tag)
 }
 
-#' Add shadows to tag elements
+#' Shadows
 #'
 #' The `shadow` utility applies a shadow to a tag element. Elements with a
 #' shadow may appear to pop off the page. The material design set of components,
@@ -393,7 +393,7 @@ active <- function(tag, color) {
 #' @param size One of `"none"`, `"small"`, `"regular"`, or `"large"` specifying
 #'   the amount of shadow added, defaults to `"regular"`.
 #'
-#' @family design
+#' @family design utilities
 #' @export
 #' @examples
 #'
@@ -446,7 +446,7 @@ shadow <- function(tag, size = "regular") {
   attach_dependencies(tag)
 }
 
-#' Tag element float
+#' Float
 #'
 #' Use `float()` to float an element to the left or right side of its parent
 #' element. A newspaper layout is a classic usage where an image is floated with
@@ -457,7 +457,7 @@ shadow <- function(tag, size = "regular") {
 #' @param side A [responsive] argument. One of `"left"` or `"right"` specifying
 #'   the side to float the element.
 #'
-#' @family design
+#' @family design utilities
 #' @export
 #' @examples
 #'
@@ -497,11 +497,11 @@ float <- function(tag, side) {
   attach_dependencies(tag)
 }
 
-#' Affix elements to top or bottom of page
+#' Position
 #'
 #' The `affix` utility function applies Bootstrap classes to fix elements to the
 #' top or bottom of a page. Use `"sticky"` to cause an element to fix to the top
-#' of a page *after* the element is scrolled past. *Important*, the IE11 and
+#' of a page after the element is scrolled past. *Important*, the IE11 and
 #' Edge browsers do not support the sticky behavior.
 #'
 #' @param tag A tag element.
@@ -509,11 +509,11 @@ float <- function(tag, side) {
 #' @param position One of `"top"`, `"bottom"`, or `"sticky"` specifying the
 #'   fixed behavior of an element.
 #'
-#' @family design
+#' @family design utilities
 #' @export
 #' @examples
 #'
-#' ### See top of page
+#' ### Affix an element
 #'
 #' div(
 #'   span("I'm up here!") %>%
@@ -536,7 +536,7 @@ affix <- function(tag, position) {
   attach_dependencies(tag)
 }
 
-#' Tag element display
+#' Display property
 #'
 #' Use the `display()` utility to adjust how a tag element is rendered. All
 #' arguments are responsive allowing you to hide elements on small screens or
@@ -547,7 +547,7 @@ affix <- function(tag, position) {
 #' @param type A [responsive] argument. One of `"inline"`, `"block"`,
 #'   `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`.
 #'
-#' @family design
+#' @family design utilities
 #' @export
 #' @examples
 #'
@@ -585,7 +585,7 @@ display <- function(tag, type) {
   attach_dependencies(tag)
 }
 
-#' Tag element margin and padding
+#' Margin and padding
 #'
 #' Use the `margin()` and `padding()` utilities to change the margin or padding
 #' of a tag element.  The margin of a tag element is the space outside and
@@ -607,7 +607,7 @@ display <- function(tag, type) {
 #'   most space, and negative values will consume space pulling the element in
 #'   that direction.
 #'
-#' @family design
+#' @family design utilities
 #' @export
 #' @examples
 #'
@@ -634,22 +634,22 @@ display <- function(tag, type) {
 #' # Here is an inline form without any additional spacing applied.
 #'
 #' formInput(
-#'   id = "login",
+#'   id = "form1",
 #'   inline = TRUE,
 #'   textInput(
 #'     id = "name",
-#'     placeholder = "full name"
+#'     placeholder = "Full name"
 #'   ),
 #'   groupTextInput(
 #'     id = "username",
-#'     left = "@",
-#'     placeholder = "username"
+#'     left = "@@",
+#'     placeholder = "Username"
 #'   ),
 #'   checkboxInput(
 #'     id = "remember",
 #'     choice = "Remember me"
 #'   ),
-#'   submit = buttonInput("go", "Login")
+#'   formSubmit("Login", "login")
 #' )
 #'
 #' # Without any adjustments the layout is not great. But, with some styling we
@@ -657,17 +657,17 @@ display <- function(tag, type) {
 #' # button added to the form input.
 #'
 #' formInput(
-#'   id = "login2",
+#'   id = "form2",
 #'   inline = TRUE,
 #'   textInput(
 #'     id = "name",
-#'     placeholder = "full name"
+#'     placeholder = "Full name"
 #'   ) %>%
 #'     margin(r = c(sm = 2), b = 2),  # <-
 #'   groupTextInput(
 #'     id = "username",
 #'     left = "@@",
-#'     placeholder = "username"
+#'     placeholder = "Username"
 #'   ) %>%
 #'     margin(r = c(sm = 2), b = 2),  # <-
 #'   checkboxInput(
@@ -675,7 +675,10 @@ display <- function(tag, type) {
 #'     choice = "Remember me"
 #'   ) %>%
 #'     margin(r = c(sm = 2), b = 2),  # <-
-#'   submit = buttonInput(NULL, "Log in") %>%
+#'   formSubmit(
+#'     label = "Login",
+#'     value = "login"
+#'   ) %>%
 #'     margin(b = 2)  # <-
 #' )
 #'
@@ -747,7 +750,7 @@ margin <- function(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
   attach_dependencies(tag)
 }
 
-#' Tag element width
+#' Width
 #'
 #' Utility function to change a tag element's width. Widths are specified
 #' relative to the font size of page (browser default is 16px), relative to
@@ -773,7 +776,7 @@ margin <- function(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 #'   of the tag element's parent to keep the element from extending beyond its
 #'   parent.
 #'
-#' @family design
+#' @family design utilities
 #' @export
 #' @examples
 #'
@@ -813,7 +816,7 @@ width <- function(tag, size) {
   attach_dependencies(tag)
 }
 
-#' Tag element height
+#' Height
 #'
 #' Utility function to change a tag element's height. Height is specified
 #' relative to the font size of page (browser default is 16px), relative to
@@ -840,7 +843,7 @@ width <- function(tag, size) {
 #'   `"screen"`, in which case the element's height is determined by the height of
 #'   the viewport.
 #'
-#' @family design
+#' @family design utilities
 #' @export
 #' @examples
 #'
@@ -879,7 +882,7 @@ height <- function(tag, size) {
 #'   direction to scroll overflowing content, defaults to `"vertical"`, in which
 #'   case the content may croll up and down.
 #'
-#' @family design
+#' @family design utilities
 #' @export
 #' @examples
 #'

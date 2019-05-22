@@ -5,7 +5,7 @@
 \alias{updateSelectInput}
 \alias{groupSelectInput}
 \alias{updateGroupSelectInput}
-\title{Select input}
+\title{Select inputs}
 \usage{
 selectInput(id, choices = NULL, values = choices,
   selected = values[[1]], ...)

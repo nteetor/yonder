@@ -1,4 +1,4 @@
-#' Collapse sections
+#' Collapsible panes
 #'
 #' The `collapsePane()` creates a collapsible container. The state of the
 #' container, expanded or collapsed, is toggled using `showCollapsePane()`,
@@ -51,7 +51,7 @@
 #' shinyApp(ui, server)
 #' ```
 #'
-#' @family content
+#' @family components
 #' @export
 #' @examples
 #'

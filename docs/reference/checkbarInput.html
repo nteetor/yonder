@@ -32,7 +32,8 @@
 
 <meta property="og:title" content="Checkbar input — checkbarInput" />
 
-<meta property="og:description" content="A stylized checkbox input." />
+<meta property="og:description" content="A stylized checkbox input. The checkbar input appears similar to a group of
+buttons, but with a checked or highlighted state." />
 <meta name="twitter:card" content="summary" />
 
 
@@ -77,7 +78,7 @@
   <a href="../index.html">Home</a>
 </li>
 <li>
-  <a href="../reference/index.html">Docs</a>
+  <a href="../reference/index.html">Documentation</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -116,7 +117,8 @@
 
     <div class="ref-description">
     
-    <p>A stylized checkbox input.</p>
+    <p>A stylized checkbox input. The checkbar input appears similar to a group of
+buttons, but with a checked or highlighted state.</p>
     
     </div>
 
@@ -219,6 +221,35 @@ element.</p></td>
 #&gt;     &lt;input type="checkbox" autocomplete="off" value="Which"/&gt;
 #&gt;     Which
 #&gt;   &lt;/label&gt;
+#&gt; &lt;/div&gt;</div><div class='input'>
+<span class='co'>### Labeling a checkbar</span>
+
+<span class='fu'><a href='formGroup.html'>formGroup</a></span>(
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='st'>"Toppings"</span>,
+  <span class='fu'>checkbarInput</span>(
+    <span class='kw'>id</span> <span class='kw'>=</span> <span class='st'>"fixins"</span>,
+    <span class='kw'>choices</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(
+      <span class='st'>"Sprinkles"</span>,
+      <span class='st'>"Nuts"</span>,
+      <span class='st'>"Fudge"</span>
+    )
+  )
+)</div><div class='output co'>#&gt; &lt;div class="form-group"&gt;
+#&gt;   &lt;label&gt;Toppings&lt;/label&gt;
+#&gt;   &lt;div class="yonder-checkbar btn-group btn-group-toggle d-flex" id="fixins" data-toggle="buttons"&gt;
+#&gt;     &lt;label class="btn btn-grey"&gt;
+#&gt;       &lt;input type="checkbox" autocomplete="off" value="Sprinkles"/&gt;
+#&gt;       Sprinkles
+#&gt;     &lt;/label&gt;
+#&gt;     &lt;label class="btn btn-grey"&gt;
+#&gt;       &lt;input type="checkbox" autocomplete="off" value="Nuts"/&gt;
+#&gt;       Nuts
+#&gt;     &lt;/label&gt;
+#&gt;     &lt;label class="btn btn-grey"&gt;
+#&gt;       &lt;input type="checkbox" autocomplete="off" value="Fudge"/&gt;
+#&gt;       Fudge
+#&gt;     &lt;/label&gt;
+#&gt;   &lt;/div&gt;
 #&gt; &lt;/div&gt;</div><div class='input'>
 </div></pre>
   </div>

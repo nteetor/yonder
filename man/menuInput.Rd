@@ -3,7 +3,7 @@
 \name{menuInput}
 \alias{menuInput}
 \alias{updateMenuInput}
-\title{Menu input}
+\title{Menu inputs}
 \usage{
 menuInput(id, label, choices = NULL, values = choices,
   selected = NULL, ..., direction = "down", align = "left")

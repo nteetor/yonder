@@ -1,4 +1,4 @@
-#' Simple range input
+#' Range input
 #'
 #' `rangeInput()` creates a simple numeric range input.
 #'

@@ -1,4 +1,4 @@
-#' Responsive arguments
+#' Understanding responsive arguments
 #'
 #' @description
 #'
@@ -54,7 +54,7 @@
 #' When: the style is applied when the viewport is at least 1200px wide, think
 #' large desktops.
 #'
-#' @family layout
+#' @family layout functions
 #' @name responsive
 NULL
 
@@ -92,7 +92,7 @@ NULL
 #'   to `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
 #'   not wrap. See the **wrap** section below for more.
 #'
-#' @family layout
+#' @family layout functions
 #' @export
 #' @examples
 #'

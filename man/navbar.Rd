@@ -2,7 +2,7 @@
 % Please edit documentation in R/navbar.R
 \name{navbar}
 \alias{navbar}
-\title{Page and content navigation}
+\title{Navigation bar}
 \usage{
 navbar(..., brand = NULL, collapse = NULL)
 }
@@ -40,9 +40,16 @@ div(
     formInput(
       inline = TRUE,
       id = "navForm",
-      searchInput("search", placeholder = "Search") \%>\%
+      textInput(
+        type = "search",
+        id = "site_search",
+        placeholder = "Search"
+      ) \%>\%
         margin(right = c(sm = 2)),
-      submit = buttonInput("search", "Search") \%>\%
+      formSubmit(
+        label = "Search",
+        value = "search"
+      ) \%>\%
         background("amber")
     )
   ) \%>\%
@@ -64,8 +71,8 @@ div(
 
 }
 \seealso{
-Other layout: \code{\link{column}}, \code{\link{fieldset}},
-  \code{\link{flex}}, \code{\link{formGroup}},
+Other layout functions: \code{\link{column}},
+  \code{\link{fieldset}}, \code{\link{flex}},
   \code{\link{responsive}}
 }
-\concept{layout}
+\concept{layout functions}

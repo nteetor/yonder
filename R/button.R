@@ -1,4 +1,4 @@
-#' Button and submit inputs
+#' Button and link inputs
 #'
 #' @description
 #'

@@ -3,7 +3,7 @@
 \name{rangeInput}
 \alias{rangeInput}
 \alias{updateRangeInput}
-\title{Simple range input}
+\title{Range input}
 \usage{
 rangeInput(id, min = 0, max = 100, default = min, step = 1, ...)
 

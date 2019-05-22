@@ -22,7 +22,7 @@
 #' @param align One of `"left"` or `"right"` specifying which side of the button
 #'   to align the dropdown menu to, defaults to `"left"`.
 #'
-#' @family content
+#' @family components
 #' @export
 #' @examples
 #'
@@ -72,20 +72,23 @@
 #'   formInput(
 #'     id = "login",
 #'     formGroup(
-#'       label = "Email address",
+#'       label = "Username / Email",
 #'       textInput(
-#'         id = "email",
-#'         placeholder = "email@example.com"
+#'         type = "email",
+#'         id = "user"
 #'       )
 #'     ),
 #'     formGroup(
 #'       label = "Password",
-#'       passwordInput(
-#'         id = "password",
-#'         placeholder = "*****"
+#'       textInput(
+#'         type = "password",
+#'         id = "pass"
 #'       )
 #'     ),
-#'     submit = buttonInput("signin", "Sign in")
+#'     formSubmit(
+#'       label = "Sign in",
+#'       value = "signin"
+#'     )
 #'   ) %>%
 #'     padding(3, 4, 3, 4)
 #' )

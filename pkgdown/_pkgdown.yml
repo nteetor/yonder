@@ -6,7 +6,7 @@ navbar:
   right:
   - text: Home
     href: index.html
-  - text: Docs
+  - text: Documentation
     href: reference/index.html
   - text: Articles
     menu:

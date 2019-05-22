@@ -1,4 +1,4 @@
-#' Chip input, selectize alternative
+#' Chip inputs
 #'
 #' The chip input is a selectize alternative. Choices are selected from a
 #' dropdown menu and appear as chips below the input's text box. Chips do not

@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Menu input — menuInput • yonder</title>
+<title>Menu inputs — menuInput • yonder</title>
 
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
@@ -30,7 +30,7 @@
 
 
 
-<meta property="og:title" content="Menu input — menuInput" />
+<meta property="og:title" content="Menu inputs — menuInput" />
 
 <meta property="og:description" content="A togglable dropdown menu input. Menu inputs may be used as standalone
 reactive inputs or within a navInput(). For building custom, more complex
@@ -79,7 +79,7 @@ dropdown elements please see dropdown()." />
   <a href="../index.html">Home</a>
 </li>
 <li>
-  <a href="../reference/index.html">Docs</a>
+  <a href="../reference/index.html">Documentation</a>
 </li>
 <li class="dropdown">
   <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
@@ -111,7 +111,7 @@ dropdown elements please see dropdown()." />
 <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Menu input</h1>
+    <h1>Menu inputs</h1>
     
     <div class="hidden name"><code>menuInput.Rd</code></div>
     </div>
@@ -242,7 +242,25 @@ toggle button the menu aligns to, defaults to <code>"left"</code>.`</p></td>
     <span class='st'>"Tab 4"</span>
   ),
   <span class='kw'>values</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/paste'>paste0</a></span>(<span class='st'>"tab"</span>, <span class='fl'>1</span>:<span class='fl'>4</span>)
-)</div><div class='output co'>#&gt; <span class='error'>Error in paste0(.colors, collapse = "|"): object '.colors' not found</span></div><div class='input'>
+)</div><div class='output co'>#&gt; &lt;ul class="yonder-nav nav" id="nav1"&gt;
+#&gt;   &lt;li class="nav-item"&gt;
+#&gt;     &lt;button class="nav-link btn btn-link active" value="tab1"&gt;Tab 1&lt;/button&gt;
+#&gt;   &lt;/li&gt;
+#&gt;   &lt;li class="yonder-menu dropdown nav-item" id="navOptions"&gt;
+#&gt;     &lt;button class="btn dropdown-toggle nav-link btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="tab2"&gt;Tab 2&lt;/button&gt;
+#&gt;     &lt;div class="dropdown-menu"&gt;
+#&gt;       &lt;button class="dropdown-item" type="button" value="Option 1"&gt;Option 1&lt;/button&gt;
+#&gt;       &lt;button class="dropdown-item" type="button" value="Option 2"&gt;Option 2&lt;/button&gt;
+#&gt;       &lt;button class="dropdown-item" type="button" value="Option 3"&gt;Option 3&lt;/button&gt;
+#&gt;     &lt;/div&gt;
+#&gt;   &lt;/li&gt;
+#&gt;   &lt;li class="nav-item"&gt;
+#&gt;     &lt;button class="nav-link btn btn-link" value="tab3"&gt;Tab 3&lt;/button&gt;
+#&gt;   &lt;/li&gt;
+#&gt;   &lt;li class="nav-item"&gt;
+#&gt;     &lt;button class="nav-link btn btn-link" value="tab4"&gt;Tab 4&lt;/button&gt;
+#&gt;   &lt;/li&gt;
+#&gt; &lt;/ul&gt;</div><div class='input'>
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">

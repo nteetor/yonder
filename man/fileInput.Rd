@@ -2,7 +2,7 @@
 % Please edit documentation in R/file.R
 \name{fileInput}
 \alias{fileInput}
-\title{Upload user files}
+\title{File inputs}
 \usage{
 fileInput(id, placeholder = "Choose file", browse = "Browse", ...,
   multiple = TRUE, accept = NULL)

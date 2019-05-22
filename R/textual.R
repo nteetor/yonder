@@ -121,7 +121,7 @@ updateTextInput <- function(id, value = NULL, enable = NULL, disable = NULL,
 groupTextInput <- function(id, value = NULL, placeholder = NULL, ...,
                            type = "text", left = NULL, right = NULL) {
   assert_id()
-  assert_type(type, possible_types)
+  assert_possible(type, possible_types)
   assert_left()
   assert_right()
 

@@ -1,4 +1,4 @@
-#' Page navigation input
+#' Page navigation inputs
 #'
 #' A reactive input styled as a navigation control. The navigation input can be
 #' styled as links, tabs, or pills. A nav input is paired with [navContent()]
@@ -176,7 +176,7 @@ map_navitems <- function(choices, values, selected) {
       if (is_tag(choice) && tag_class_re(choice, "yonder-menu")) {
         choice$children[[1]] <- tag_class_remove(
           choice$children[[1]],
-          paste0("btn-(?:", paste0(.colors, collapse = "|"), ")")
+          paste0("btn-(?:", paste0(possible_colors, collapse = "|"), ")")
         )
         choice$children[[1]] <- tag_class_add(
           choice$children[[1]],
@@ -406,7 +406,7 @@ map_navitems <- function(choices, values, selected) {
 #' shinyApp(ui, server)
 #' ```
 #'
-#' @family content
+#' @family components
 #' @export
 #' @examples
 #'

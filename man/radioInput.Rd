@@ -49,7 +49,8 @@ indicating how the input's value is invalid, defaults to \code{NULL}.}
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-Create a reactive radio input of one or more radio controls.
+A stylized radio input. A reactive input with multiple choices where only one
+choice and value at most may be selected.
 }
 \examples{
 

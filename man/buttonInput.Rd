@@ -6,7 +6,7 @@
 \alias{linkInput}
 \alias{updateLinkInput}
 \alias{tooltip}
-\title{Button and submit inputs}
+\title{Button and link inputs}
 \usage{
 buttonInput(id, label, ..., stretch = FALSE, download = FALSE,
   tooltip = NULL)

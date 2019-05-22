@@ -2,7 +2,7 @@
 % Please edit documentation in R/design.R
 \name{shadow}
 \alias{shadow}
-\title{Add shadows to tag elements}
+\title{Shadows}
 \usage{
 shadow(tag, size = "regular")
 }
@@ -51,11 +51,11 @@ div(
 
 }
 \seealso{
-Other design: \code{\link{active}}, \code{\link{affix}},
-  \code{\link{background}}, \code{\link{border}},
-  \code{\link{display}}, \code{\link{float}},
-  \code{\link{font}}, \code{\link{height}},
-  \code{\link{padding}}, \code{\link{scroll}},
-  \code{\link{width}}
+Other design utilities: \code{\link{active}},
+  \code{\link{affix}}, \code{\link{background}},
+  \code{\link{border}}, \code{\link{display}},
+  \code{\link{float}}, \code{\link{font}},
+  \code{\link{height}}, \code{\link{padding}},
+  \code{\link{scroll}}, \code{\link{width}}
 }
-\concept{design}
+\concept{design utilities}

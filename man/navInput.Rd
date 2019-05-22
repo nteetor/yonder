@@ -3,7 +3,7 @@
 \name{navInput}
 \alias{navInput}
 \alias{updateNavInput}
-\title{Page navigation input}
+\title{Page navigation inputs}
 \usage{
 navInput(id, choices = NULL, values = choices,
   selected = values[[1]], ..., appearance = "links", fill = FALSE)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/flex.R
 \name{responsive}
 \alias{responsive}
-\title{Responsive arguments}
+\title{Understanding responsive arguments}
 \description{
 A responsive argument may be a single value or a named list. Possible names
 includes \code{default} or \code{xs}, \code{sm}, \code{md}, \code{lg}, and \code{xl}. Specifying a single
@@ -57,8 +57,8 @@ When: the style is applied when the viewport is at least 1200px wide, think
 large desktops.
 }
 \seealso{
-Other layout: \code{\link{column}}, \code{\link{fieldset}},
-  \code{\link{flex}}, \code{\link{formGroup}},
+Other layout functions: \code{\link{column}},
+  \code{\link{fieldset}}, \code{\link{flex}},
   \code{\link{navbar}}
 }
-\concept{layout}
+\concept{layout functions}

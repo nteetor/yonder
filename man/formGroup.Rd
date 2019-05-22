@@ -3,7 +3,7 @@
 \name{formGroup}
 \alias{formGroup}
 \alias{formRow}
-\title{Add labels, help text, and formatting to inputs}
+\title{Input labels, help text, and formatting to inputs}
 \usage{
 formGroup(label, input, ..., help = NULL, width = NULL)
 
@@ -44,20 +44,18 @@ card(
   formRow(
     formGroup(
       width = c(md = 6),  # <-
-      label = "Email",
-      emailInput(
-        id = "email",
-        placeholder = "e@mail.com"
+      label = "Username",
+      textInput(
+        id = "user"
       )
     ),
     formGroup(
       width = c(md = 6),  # <-
       label = "Password",
-      passwordInput(
-        id = "password",
-        placeholder = "123456"
-      ),
-      help = "Please consider something better than 123456"
+      textInput(
+        type = "password",
+        id = "pass"
+      )
     )
   ),
   formGroup(
@@ -76,10 +74,5 @@ card(
   margin(3) \%>\%
   background("grey")
 
-}
-\seealso{
-Other layout: \code{\link{column}}, \code{\link{fieldset}},
-  \code{\link{flex}}, \code{\link{navbar}},
-  \code{\link{responsive}}
 }
 \concept{layout}

@@ -38,7 +38,7 @@ alert(
 
 }
 \seealso{
-Other content: \code{\link{badge}},
+Other components: \code{\link{badge}},
   \code{\link{blockquote}}, \code{\link{card}},
   \code{\link{collapsePane}}, \code{\link{d1}},
   \code{\link{dropdown}}, \code{\link{img}},
@@ -46,4 +46,4 @@ Other content: \code{\link{badge}},
   \code{\link{navContent}}, \code{\link{popover}},
   \code{\link{pre}}, \code{\link{toast}}
 }
-\concept{content}
+\concept{components}
