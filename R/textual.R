@@ -4,6 +4,7 @@ possible_types <- c(
   "datetime-local",
   "email",
   "month",
+  "number",
   "password",
   "search",
   "tel",
