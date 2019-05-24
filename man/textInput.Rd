@@ -129,6 +129,19 @@ the step amount. Use \code{updateTextInput()} to update a number input.
 
 textInput(id = "text")
 
+### Default number input
+
+numberInput(id = "num1")
+
+### Specify `min`, `max`, and `step`
+
+numberInput(
+  id = "num2",
+  min = 1,
+  max = 10,
+  step = 2
+)
+
 }
 \seealso{
 Other inputs: \code{\link{buttonGroupInput}},
