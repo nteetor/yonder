@@ -17,3 +17,9 @@
 0 errors | 0 warnings | 1 note
 
 * This is a new release.
+
+## Resubmission
+
+This is a resubmission. 
+
+* Package names in the Title and Description fields are now singled-quoted.

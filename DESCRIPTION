@@ -1,6 +1,6 @@
 Package: yonder
 Type: Package
-Title: A Reactive Web Framework Built on Shiny
+Title: A Reactive Web Framework Built on 'shiny'
 Version: 0.1.1
 Authors@R: c(
     person("Nathan", "Teetor", role = c("aut", "cre"),
@@ -16,7 +16,7 @@ Authors@R: c(
     person("Johann", "Servoire", role = c("ctb", "cph"),
       comment = "bs-custom-file-input library")
     )
-Description: Build shiny applications with the latest Bootstrap components
+Description: Build 'shiny' applications with the latest Bootstrap components
     and design utilities. Includes refreshed reactive inputs and outputs. 
     Use responsive layouts to design and construct applications for devices
     of all sizes.
