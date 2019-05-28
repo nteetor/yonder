@@ -1,6 +1,6 @@
 #!/bin/bash
 
-LICENSE="LICENSE"
+LICENSE="LICENSE.note"
 DIR="inst/www"
 
 function header() {
@@ -69,9 +69,10 @@ license "https://raw.githubusercontent.com/Johann-S/bs-custom-file-input/master/
         "bs-custom-file-input"
 
 #
-# yonder
+# yonder (CRAN said not to include this)
 #
-header "yonder"
-
-license "https://cran.r-project.org/web/licenses/GPL-3" \
-        "yonder"
+# header "yonder"
+#
+# license "https://cran.r-project.org/web/licenses/GPL-3" \
+#         "yonder"
+#

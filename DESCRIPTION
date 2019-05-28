@@ -20,7 +20,7 @@ Description: Build 'shiny' applications with the latest Bootstrap components
     and design utilities. Includes refreshed reactive inputs and outputs. 
     Use responsive layouts to design and construct applications for devices
     of all sizes.
-License: GPL-3 | file LICENSE
+License: GPL-3
 URL: https://nteetor.github.io/yonder
 BugReports: https://github.com/nteetor/yonder/issues
 Encoding: UTF-8
