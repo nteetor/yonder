@@ -22,4 +22,6 @@
 
 This is a resubmission. 
 
-* Package names in the Title and Description fields are now singled-quoted.
+* The DESCRIPTION 'License' field value has been changed to 'GPL-3'
+* The LICENSE file has been renamed to LICENSE.note
+* The GPL-3 license text has been removed from the end of LICENSE.note
