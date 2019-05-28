@@ -20,8 +20,8 @@ closeModal(id = NULL, session = getDefaultReactiveDomain())
 \item{title}{A character string or tag element specifying the title of the
 modal.}
 
-\item{...}{Unnamed arguments passed as tag elements to the body of the modal
-or named arguments passed as HTML attributes to the body element of the
+\item{...}{Unnamed values passed as tag elements to the body of the modal.
+or named values passed as HTML attributes to the body element of the
 modal.}
 
 \item{footer}{A character string or tag element specifying the footer of the
@@ -43,39 +43,34 @@ shown and fades out when closed, defaults to \code{TRUE}.}
 }
 \description{
 Modals are a flexible alert window, which disable interaction with the page
-behind them. Modals may include inputs or buttons or simply text. To use
-one or more modals you must first register the modal from the server with
-\code{registerModal()}. This will assocaite the modal with an id at which point
-the rest of your application's server may hide or show the modal with
-\code{showModal()} and \code{hideModal()}, respectively, by referring to this id.
+behind them. Modals may include inputs, buttons, or simply text. Each modal
+may be assigned an \code{id}. By default \code{hideModal()} will hide all modals, but
+you may instead specify a modal's \code{id} in which case only that modal is
+closed. Additionally, when \code{id} is not \code{NULL} observers and reactives may
+watch for the modal's close event.
 }
 \section{Example application}{
 \preformatted{ui <- container(
   buttonInput(
-    id = "trigger",
+    id = "open",
     "Open modal",
     icon("plus")
   )
 )
 
 server <- function(input, output) {
-  isolate(
-    registerModal(
-      id = "modal1",
-      modal(
-        title = "A simple modal",
-        body = paste(
-          "Cras mattis consectetur purus sit amet fermentum.",
-          "Cras justo odio, dapibus ac facilisis in, egestas",
-          "eget quam. Morbi leo risus, porta ac consectetur",
-          "ac, vestibulum at eros."
-        )
-      )
+  modal1 <- modal(
+    title = "A simple modal",
+    p(
+      "Cras mattis consectetur purus sit amet fermentum.",
+      "Cras justo odio, dapibus ac facilisis in, egestas",
+      "eget quam. Morbi leo risus, porta ac consectetur",
+      "ac, vestibulum at eros."
     )
   )
 
-  observeEvent(input$trigger, ignoreInit = TRUE, {
-    showModal("modal1")
+  observeEvent(input$open, ignoreInit = TRUE, {
+    showModal(modal1)
   })
 }
 
@@ -90,7 +85,7 @@ shinyApp(ui, server)
 modal(
   id = NULL,
   title = "Title",
-  body = "Cras placerat accumsan nulla."
+  p("Cras placerat accumsan nulla.")
 )
 
 ### Modal with container body
@@ -99,7 +94,7 @@ modal(
   id = NULL,
   size = "lg",
   title = "More complex",
-  body = container(
+  container(
     columns(
       column("Cras placerat accumsan nulla."),
       column("Curabitur lacinia pulvinar nibh."),

@@ -1,11 +1,11 @@
 #' Modal dialogs
 #'
 #' Modals are a flexible alert window, which disable interaction with the page
-#' behind them. Modals may include inputs or buttons or simply text. To use
-#' one or more modals you must first register the modal from the server with
-#' `registerModal()`. This will assocaite the modal with an id at which point
-#' the rest of your application's server may hide or show the modal with
-#' `showModal()` and `hideModal()`, respectively, by referring to this id.
+#' behind them. Modals may include inputs, buttons, or simply text. Each modal
+#' may be assigned an `id`. By default `hideModal()` will hide all modals, but
+#' you may instead specify a modal's `id` in which case only that modal is
+#' closed. Additionally, when `id` is not `NULL` observers and reactives may
+#' watch for the modal's close event.
 #'
 #' @param id A character string specifying the id of the modal, when closed
 #'   `input[[id]]` is set to `TRUE`.
@@ -13,8 +13,8 @@
 #' @param title A character string or tag element specifying the title of the
 #'   modal.
 #'
-#' @param ... Unnamed arguments passed as tag elements to the body of the modal
-#'   or named arguments passed as HTML attributes to the body element of the
+#' @param ... Unnamed values passed as tag elements to the body of the modal.
+#'   or named values passed as HTML attributes to the body element of the
 #'   modal.
 #'
 #' @param footer A character string or tag element specifying the footer of the
@@ -39,30 +39,25 @@
 #' ```R
 #' ui <- container(
 #'   buttonInput(
-#'     id = "trigger",
+#'     id = "open",
 #'     "Open modal",
 #'     icon("plus")
 #'   )
 #' )
 #'
 #' server <- function(input, output) {
-#'   isolate(
-#'     registerModal(
-#'       id = "modal1",
-#'       modal(
-#'         title = "A simple modal",
-#'         body = paste(
-#'           "Cras mattis consectetur purus sit amet fermentum.",
-#'           "Cras justo odio, dapibus ac facilisis in, egestas",
-#'           "eget quam. Morbi leo risus, porta ac consectetur",
-#'           "ac, vestibulum at eros."
-#'         )
-#'       )
+#'   modal1 <- modal(
+#'     title = "A simple modal",
+#'     p(
+#'       "Cras mattis consectetur purus sit amet fermentum.",
+#'       "Cras justo odio, dapibus ac facilisis in, egestas",
+#'       "eget quam. Morbi leo risus, porta ac consectetur",
+#'       "ac, vestibulum at eros."
 #'     )
 #'   )
 #'
-#'   observeEvent(input$trigger, ignoreInit = TRUE, {
-#'     showModal("modal1")
+#'   observeEvent(input$open, ignoreInit = TRUE, {
+#'     showModal(modal1)
 #'   })
 #' }
 #'
@@ -78,7 +73,7 @@
 #' modal(
 #'   id = NULL,
 #'   title = "Title",
-#'   body = "Cras placerat accumsan nulla."
+#'   p("Cras placerat accumsan nulla.")
 #' )
 #'
 #' ### Modal with container body
@@ -87,7 +82,7 @@
 #'   id = NULL,
 #'   size = "lg",
 #'   title = "More complex",
-#'   body = container(
+#'   container(
 #'     columns(
 #'       column("Cras placerat accumsan nulla."),
 #'       column("Curabitur lacinia pulvinar nibh."),
@@ -103,6 +98,13 @@ modal <- function(id, title, ..., footer = NULL, center = FALSE, size = "md",
                   fade = TRUE) {
   assert_id()
   assert_possible(size, c("sm", "md", "lg", "xl"))
+
+  if (missing(title)) {
+    stop(
+      "invalid argument in `modal()`, please specify `title`",
+      call. = FALSE
+    )
+  }
 
   args <- list(...)
 
@@ -126,14 +128,25 @@ modal <- function(id, title, ..., footer = NULL, center = FALSE, size = "md",
     )
   )
 
-  body <- tags$div(class = "modal-body", unnamed_values(args))
-
-  footer <- if (!is.null(footer)) {
-    tags$div(
+  if (!is.null(footer)) {
+    footer <- tags$div(
       class = "modal-footer",
       footer
     )
   }
+
+  content <-tags$div(
+    class = "modal-content",
+    header,
+    tag_attributes_add(
+      tags$div(
+        class = "modal-body",
+        unnamed_values(args)
+      ),
+      named_values(args)
+    ),
+    footer
+  )
 
   component <- tags$div(
     class = str_collate(
@@ -150,13 +163,7 @@ modal <- function(id, title, ..., footer = NULL, center = FALSE, size = "md",
         if (!is.null(size) && size != "md") paste0("modal-", size)
       ),
       role = "document",
-      tags$div(
-        class = "modal-content",
-        named_values(args),
-        header,
-        body,
-        if (!is.null(footer)) footer
-      )
+      content
     )
   )
 
