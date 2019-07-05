@@ -1,5 +1,9 @@
 attach_dependencies <- function(x) {
-  attachDependencies(x, dependency_yonder())
+  if (isTRUE(getOption("yonder.dependencies") == "manual")) {
+    attachDependencies(x, dependency_yonder())
+  } else {
+    x
+  }
 }
 
 dependency_yonder <- function() {
@@ -67,4 +71,8 @@ dependency_yonder <- function() {
     prefix = "yonder",
     directoryPath = system.file("www", package = "yonder", mustWork = TRUE)
   )
+
+  if (is.null(getOption("yonder.dependencies"))) {
+    options(yonder.dependencies = "automatic")
+  }
 }
