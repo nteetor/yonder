@@ -83,6 +83,7 @@ selectInput <- function(id, choices = NULL, values = choices,
       type = "text",
       class = "form-control custom-select",
       `data-toggle` = "dropdown",
+      `data-boundary` = "window",
       placeholder = choices[values %in% selected][1]
     ),
     tags$div(
