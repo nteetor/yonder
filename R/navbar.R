@@ -64,7 +64,7 @@
 #' )
 #'
 navbar <- function(..., brand = NULL, collapse = NULL) {
-  args <- list(...)
+  args <- drop_nulls(list(...))
 
   assert_possible(collapse, c("sm", "md", "lg", "xl"))
 
