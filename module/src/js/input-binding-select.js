@@ -41,7 +41,7 @@ $.extend(selectInputBinding, {
     });
   },
   getValue: (el) => {
-    let selected = el.querySelectorAll(".dropdown-item.active:not(.disabled");
+    let selected = el.querySelectorAll(".dropdown-item.active:not(.disabled)");
 
     if (selected.length === 0) {
       return null;

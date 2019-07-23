@@ -1,3 +1,5 @@
+import "./polyfill.js";
+
 import "./input-binding-button-group.js";
 import "./input-binding-button.js";
 import "./input-binding-checkbar.js";

@@ -4,6 +4,11 @@
   (factory());
 }(this, (function () { 'use strict';
 
+  // IE 11, ensure querySelectorAll + forEach works
+  if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = Array.prototype.forEach;
+  }
+
   var buttonGroupInputBinding = new Shiny.InputBinding();
   $.extend(buttonGroupInputBinding, {
     find: function find(scope) {
@@ -1372,7 +1377,7 @@
       });
     },
     getValue: function getValue(el) {
-      var selected = el.querySelectorAll(".dropdown-item.active:not(.disabled");
+      var selected = el.querySelectorAll(".dropdown-item.active:not(.disabled)");
 
       if (selected.length === 0) {
         return null;
