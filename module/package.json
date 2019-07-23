@@ -1,6 +1,6 @@
 {
   "name": "yonder",
-  "version": "0.0.5",
+  "version": "0.1.2",
   "description": "A reactive framework built on shiny.",
   "main": "dist/js/yonder.min.js",
   "dependencies": {

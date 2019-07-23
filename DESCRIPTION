@@ -1,7 +1,7 @@
 Package: yonder
 Type: Package
 Title: A Reactive Web Framework Built on 'shiny'
-Version: 0.1.1
+Version: 0.1.2
 Authors@R: c(
     person("Nathan", "Teetor", role = c("aut", "cre"),
       email = "nathanteetor@gmail.com"),
@@ -17,7 +17,7 @@ Authors@R: c(
       comment = "bs-custom-file-input library")
     )
 Description: Build 'shiny' applications with the latest Bootstrap components
-    and design utilities. Includes refreshed reactive inputs and outputs. 
+    and design utilities. Includes refreshed reactive inputs and outputs.
     Use responsive layouts to design and construct applications for devices
     of all sizes.
 License: GPL-3
