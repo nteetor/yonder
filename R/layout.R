@@ -120,11 +120,7 @@
 column <- function(..., width = NULL) {
   width <- resp_construct(width, c(1:12, "auto"))
 
-  classes <- resp_classes(width, "col")
-
-  if (!length(classes)) {
-    classes <- "col"
-  }
+  classes <- c("col", resp_classes(width, "col"))
 
   attach_dependencies(
     tag_class_add(tags$div(...), classes)
