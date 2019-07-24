@@ -1,4 +1,4 @@
-# yonder
+# yonder <img src="man/figures/logo.png" align="right" width=120 height=139 alt=""/>
 
 A reactive web framework built on [shiny](https://github.com/rstudio/shiny).
 
