@@ -1063,7 +1063,12 @@
   Shiny.inputBindings.register(navInputBinding, "yonder.navInput");
   Shiny.addCustomMessageHandler("yonder:pane", function (msg) {
     var _show = function _show(pane) {
-      if (pane === null || !pane.parentElement.classList.contains("tab-content")) {
+      if (pane === null || pane.classList.contains("show")) {
+        return;
+      }
+
+      if (!pane.parentElement.classList.contains("tab-content")) {
+        console.warn("nav pane " + pane.id + " is missing a nav content parent element");
         return;
       }
 
@@ -1084,7 +1089,12 @@
     };
 
     var _hide = function _hide(pane) {
-      if (pane === null || !pane.parentElement.classList.contains("tab-content") || !pane.classList.contains("active")) {
+      if (pane === null || !pane.classList.contains("show")) {
+        return;
+      }
+
+      if (!pane.parentElement.classList.contains("tab-content")) {
+        console.warn("nav pane " + pane.id + " is missing a nav content parent element");
         return;
       }
 
