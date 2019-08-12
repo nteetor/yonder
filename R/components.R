@@ -41,7 +41,7 @@ d3 <- function(...) d(3, ...)
 d4 <- function(...) d(4, ...)
 
 d <- function(level, ...) {
-  attach_dependencies(tags$h1(class = paste0("display-", level)))
+  attach_dependencies(tags$h1(class = paste0("display-", level), ...))
 }
 
 #' Jumbotron
