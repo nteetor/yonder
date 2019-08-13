@@ -3597,6 +3597,7 @@ input[type="button"].btn-block {
 .yonder-link:not(.dropdown-item) {
   padding: 0 !important;
   vertical-align: inherit !important;
+  text-align: inherit !important;
 }
 
 .btn {
