@@ -99,7 +99,7 @@ selectInput <- function(id, choices = NULL, values = choices,
 #' @rdname selectInput
 #' @export
 updateSelectInput <- function(id, choices = NULL, values = choices,
-                              selected = NULL, enable = NULL,
+                              selected = values[[1]], enable = NULL,
                               disable = NULL,
                               valid = NULL, invalid = NULL,
                               session = getDefaultReactiveDomain()) {
