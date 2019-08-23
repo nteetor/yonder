@@ -1,9 +1,18 @@
-get_variable <- function(x) {
-  get(x, envir = parent.frame(2), inherits = FALSE)
+get_caller <- function(gen = 1) {
+  paste0(sys.call(sys.parent() - gen)[[1]], "()")
 }
 
-get_caller <- function() {
-  paste0(sys.call(sys.parent() - 1)[[1]], "()")
+get_variable <- function(x) {
+  g_env <- parent.frame(2)
+
+  if (is.symbol(g_env[[x]]) && !nzchar(g_env[[x]])) {
+    stop(
+      "invalid argument in `", get_caller(2), "`, please specify `", x, "`",
+      call. = FALSE
+    )
+  }
+
+  g_env[[x]]
 }
 
 assert_id <- function() {
