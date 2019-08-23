@@ -1,6 +1,7 @@
 context("button group input")
 
 test_that("id argument", {
+  expect_missing_id_error(buttonGroupInput())
   expect_error(buttonGroupInput(id = 2, labels = "LABEL"))
   expect_silent(buttonGroupInput(id = "ID", labels = "LABELS"))
 })

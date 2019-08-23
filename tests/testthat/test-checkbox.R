@@ -4,7 +4,9 @@ test_that("choices and value may be NULL", {
   expect_silent(checkboxInput("ID"))
 })
 
-test_that("id must be NULL or character", {
+test_that("id argument", {
+  expect_missing_id_error(checkboxInput())
+
   expect_silent(checkboxInput("ID"))
   expect_silent(checkboxInput(NULL))
 

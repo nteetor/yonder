@@ -1,4 +1,4 @@
-context("Text and number input")
+context("text and number input")
 
 test_that("id argument", {
   expect_silent(textInput("id"))
