@@ -11,8 +11,8 @@ selectInput(id, choices = NULL, values = choices,
   selected = values[[1]], ...)
 
 updateSelectInput(id, choices = NULL, values = choices,
-  selected = NULL, enable = NULL, disable = NULL, valid = NULL,
-  invalid = NULL, session = getDefaultReactiveDomain())
+  selected = values[[1]], enable = NULL, disable = NULL,
+  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
 
 groupSelectInput(id, choices, values = choices, selected = values[[1]],
   ..., left = NULL, right = NULL)

@@ -6,8 +6,8 @@
 \alias{closeModal}
 \title{Modal dialogs}
 \usage{
-modal(id, title, ..., footer = NULL, center = FALSE, size = "md",
-  fade = TRUE)
+modal(id, ..., header = NULL, footer = NULL, center = FALSE,
+  size = "md", fade = TRUE)
 
 showModal(modal, session = getDefaultReactiveDomain())
 
@@ -17,11 +17,11 @@ closeModal(id = NULL, session = getDefaultReactiveDomain())
 \item{id}{A character string specifying the id of the modal, when closed
 \code{input[[id]]} is set to \code{TRUE}.}
 
-\item{title}{A character string or tag element specifying the title of the
-modal.}
-
 \item{...}{Unnamed values passed as tag elements to the body of the modal.
 or named values passed as HTML attributes to the body element of the
+modal.}
+
+\item{header}{A character string or tag element specifying the header of the
 modal.}
 
 \item{footer}{A character string or tag element specifying the footer of the
@@ -83,17 +83,17 @@ shinyApp(ui, server)
 ### Simple modal
 
 modal(
-  id = NULL,
-  title = "Title",
+  id = "simple",
+  header = h5("Title"),
   p("Cras placerat accumsan nulla.")
 )
 
 ### Modal with container body
 
 modal(
-  id = NULL,
+  id = "more_complex",
   size = "lg",
-  title = "More complex",
+  header = h5("More complex"),
   container(
     columns(
       column("Cras placerat accumsan nulla."),
