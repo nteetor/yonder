@@ -34,6 +34,20 @@ assert_id <- function() {
   }
 }
 
+assert_label <- function() {
+  label <- get_variable("label")
+  fun <- get_caller()
+
+  if (!(is.null(label) || is_tag(label) ||
+        is_strictly_list(label) || is.atomic(label))) {
+    stop(
+      "invalid argument in `", fun, "`, `label` must be a tag element, ",
+      "character string, list, or NULL",
+      call. = FALSE
+    )
+  }
+}
+
 assert_choices <- function(strict = TRUE) {
   choices <- get_variable("choices")
   values <- get_variable("values")

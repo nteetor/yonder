@@ -120,6 +120,7 @@
 buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
                         tooltip = NULL) {
   assert_id()
+  assert_label()
 
   component <- (if (download) tags$a else tags$button)(
     class = str_collate(
@@ -176,6 +177,7 @@ updateButtonInput <- function(id, label = NULL, value = NULL,
 linkInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
                       tooltip = NULL) {
   assert_id()
+  assert_label()
 
   component <- (if (download) tags$a else tags$button)(
     class = str_collate(
