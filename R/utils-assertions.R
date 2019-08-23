@@ -149,6 +149,18 @@ assert_possible <- function(x, possible) {
   }
 }
 
+assert_found <- function(x) {
+  if (missing(x)) {
+    arg <- as.character(match.call()[[2]])
+    fun <- get_caller()
+
+    stop(
+      "invalid argument in `", fun, "`, please specify `", arg, "`",
+      call. = FALSE
+    )
+  }
+}
+
 assert_session <- function() {
   session <- get_variable("session")
   fun <- get_caller()
