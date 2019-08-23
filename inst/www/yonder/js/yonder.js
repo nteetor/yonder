@@ -1839,7 +1839,11 @@
     }
 
     var _close = function _close(data) {
-      var modals = document.querySelector(".yonder-modals").children;
+      var modals = document.querySelector(".yonder-modals").childNodes;
+
+      if (modals.length === 0) {
+        return;
+      }
 
       if (data.id) {
         modals = Array.prototype.filter.call(modals, function (m) {

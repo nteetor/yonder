@@ -8,7 +8,11 @@ Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
   }
 
   let _close = function(data) {
-    let modals = document.querySelector(".yonder-modals").children;
+    let modals = document.querySelector(".yonder-modals").childNodes;
+
+    if (modals.length === 0) {
+      return;
+    }
 
     if (data.id) {
       modals = Array.prototype.filter.call(modals, m => m.id === data.id);
