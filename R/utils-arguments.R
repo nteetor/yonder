@@ -3,10 +3,12 @@ coerce_content <- function(x) {
     if (is_tag(x)) {
       HTML(as.character(x))
     } else {
-      HTML(paste(
-        vapply(x, function(i) HTML(as.character(i)), character(1)),
-        collapse = "\n"
-      ))
+      HTML(
+        paste(
+          vapply(x, as.character, character(1)),
+          collapse = "\n"
+        )
+      )
     }
   } else {
     ""
@@ -26,7 +28,7 @@ coerce_selected <- function(x) {
 coerce_enable <- function(x) {
   if (!is.null(x)) {
     if (!isTRUE(x)) {
-      lapply(x, function(i) HTML(as.character(i)))
+      lapply(x, as.character)
     } else {
       x
     }
@@ -36,7 +38,7 @@ coerce_enable <- function(x) {
 coerce_disable <- function(x) {
   if (!is.null(x)) {
     if (!isTRUE(x)) {
-      lapply(x, function(i) HTML(as.character(i)))
+      lapply(x, as.character)
     } else {
       x
     }
