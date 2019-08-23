@@ -59,6 +59,6 @@ large desktops.
 \seealso{
 Other layout functions: \code{\link{column}},
   \code{\link{fieldset}}, \code{\link{flex}},
-  \code{\link{navbar}}
+  \code{\link{navbar}}, \code{\link{webpage}}
 }
 \concept{layout functions}

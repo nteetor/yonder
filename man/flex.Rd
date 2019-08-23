@@ -183,6 +183,6 @@ div(
 \seealso{
 Other layout functions: \code{\link{column}},
   \code{\link{fieldset}}, \code{\link{navbar}},
-  \code{\link{responsive}}
+  \code{\link{responsive}}, \code{\link{webpage}}
 }
 \concept{layout functions}

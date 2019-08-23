@@ -73,6 +73,6 @@ div(
 \seealso{
 Other layout functions: \code{\link{column}},
   \code{\link{fieldset}}, \code{\link{flex}},
-  \code{\link{responsive}}
+  \code{\link{responsive}}, \code{\link{webpage}}
 }
 \concept{layout functions}
