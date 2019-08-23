@@ -55,10 +55,8 @@
 #'   flex(wrap = TRUE)
 #'
 badge <- function(...) {
-  attach_dependencies(
-    tags$span(
-      class = "badge",
-      ...
-    )
+  tags$span(
+    class = "badge",
+    ...
   )
 }

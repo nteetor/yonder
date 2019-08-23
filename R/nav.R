@@ -125,7 +125,7 @@ navInput <- function(id, choices = NULL, values = choices,
 
   items <- map_navitems(choices, values, selected)
 
-  component <- tags$ul(
+  tags$ul(
     class = str_collate(
       "yonder-nav",
       "nav",
@@ -136,8 +136,6 @@ navInput <- function(id, choices = NULL, values = choices,
     items,
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname navInput
@@ -416,15 +414,13 @@ map_navitems <- function(choices, values, selected) {
 #' # above.
 #'
 navContent <- function(...) {
-  attach_dependencies(
-    tags$div(class = "tab-content", ...)
-  )
+  tags$div(class = "tab-content", ...)
 }
 
 #' @rdname navContent
 #' @export
 navPane <- function(id, ..., fade = TRUE) {
-  pane <- tags$div(
+  tags$div(
     class = str_collate(
       "tab-pane",
       if (fade) "fade"
@@ -433,8 +429,6 @@ navPane <- function(id, ..., fade = TRUE) {
     id = id,
     ...
   )
-
-  attach_dependencies(pane)
 }
 
 #' @rdname navContent

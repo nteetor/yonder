@@ -121,7 +121,5 @@ navbar <- function(..., brand = NULL, collapse = NULL) {
     )
   )
 
-  attach_dependencies(
-    tag_attributes_add(component, named_values(args))
-  )
+  tag_attributes_add(component, named_values(args))
 }

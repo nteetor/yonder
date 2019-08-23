@@ -123,7 +123,7 @@ listGroupInput <- function(id, choices = NULL, values = choices,
 
   items <- map_listitems(choices, values, selected)
 
-  component <- tags$div(
+  tags$div(
     class = str_collate(
       "yonder-list-group",
       "list-group",
@@ -134,8 +134,6 @@ listGroupInput <- function(id, choices = NULL, values = choices,
     items,
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname listGroupInput

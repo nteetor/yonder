@@ -56,14 +56,12 @@ radioInput <- function(id, choices = NULL, values = choices,
 
   radios <- map_radios(choices, values, selected, id, inline)
 
-  component <- tags$div(
+  tags$div(
     class = "yonder-radio",
     id = id,
     radios,
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname radioInput
@@ -182,15 +180,13 @@ radiobarInput <- function(id, choices, values = choices, selected = values[[1]],
 
   radios <- map_radiobuttons(choices, values, selected, id)
 
-  component <- tags$div(
+  tags$div(
     class = "yonder-radiobar btn-group btn-group-toggle d-flex",
     id = id,
     `data-toggle` = "buttons",
     ...,
     radios
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname radiobarInput

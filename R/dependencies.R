@@ -1,9 +1,5 @@
 attach_dependencies <- function(x) {
-  if (isTRUE(getOption("yonder.dependencies") == "automatic")) {
-    attachDependencies(x, dependency_yonder())
-  } else {
-    x
-  }
+  attachDependencies(x, dependency_yonder())
 }
 
 dependency_yonder <- function() {

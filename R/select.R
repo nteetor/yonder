@@ -76,7 +76,7 @@ selectInput <- function(id, choices = NULL, values = choices,
 
   items <- map_selectitems(choices, values, selected)
 
-  component <- tags$div(
+  tags$div(
     class = "yonder-select btn-group",
     id = id,
     tags$input(
@@ -94,8 +94,6 @@ selectInput <- function(id, choices = NULL, values = choices,
     tags$div(class = "invalid-feedback"),
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname selectInput
@@ -170,7 +168,7 @@ groupSelectInput <- function(id, choices, values = choices,
   left <- addon_left(left)
   right <- addon_right(right)
 
-  component <- tags$div(
+  tags$div(
     class = "yonder-group-select input-group",
     id = id,
     left,
@@ -183,8 +181,6 @@ groupSelectInput <- function(id, choices, values = choices,
     tags$div(class = "invalid-feedback"),
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname selectInput

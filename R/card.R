@@ -207,15 +207,11 @@ card <- function(..., header = NULL, footer = NULL) {
     footer
   )
 
-  component <- tag_attributes_add(component, named_values(list(...)))
-
-  attach_dependencies(component)
+  tag_attributes_add(component, named_values(list(...)))
 }
 
 #' @rdname card
 #' @export
 deck <- function(...) {
-  attach_dependencies(
-    tags$div(class = "card-deck", ...)
-  )
+  tags$div(class = "card-deck", ...)
 }

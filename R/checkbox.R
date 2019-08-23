@@ -82,14 +82,12 @@ checkboxInput <- function(id, choices = NULL, values = choices, selected = NULL,
 
   checkboxes <- map_checkboxes(choices, values, selected, inline)
 
-  component <- tags$div(
+  tags$div(
     class = "yonder-checkbox",
     id = id,
     checkboxes,
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname checkboxInput
@@ -129,14 +127,12 @@ switchInput <- function(id, choices, values = choices, selected = NULL, ...) {
 
   switches <- map_checkboxes(choices, values, selected, FALSE, TRUE)
 
-  component <- tags$div(
+  tags$div(
     class = "yonder-checkbox",
     id = id,
     switches,
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname checkboxInput
@@ -267,15 +263,13 @@ checkbarInput <- function(id, choices = NULL, values = choices,
 
   checkboxes <- map_checkbuttons(choices, values, selected)
 
-  component <- tags$div(
+  tags$div(
     class = "yonder-checkbar btn-group btn-group-toggle d-flex",
     id = id,
     `data-toggle` = "buttons",
     checkboxes,
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname checkbarInput

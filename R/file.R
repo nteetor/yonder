@@ -73,7 +73,7 @@ fileInput <- function(id, placeholder = "Choose file", browse = "Browse", ...,
     accept <- paste(accept, collapse = ",")
   }
 
-  component <- tags$div(
+  tags$div(
     class = "yonder-file custom-file",
     id = id,
     tags$input(
@@ -96,6 +96,4 @@ fileInput <- function(id, placeholder = "Choose file", browse = "Browse", ...,
     ),
     ...
   )
-
-  attach_dependencies(component)
 }

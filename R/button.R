@@ -139,9 +139,7 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
     autocomplete = "off"
   )
 
-  component <- tag_tooltip_add(component, tooltip)
-
-  attach_dependencies(component)
+  tag_tooltip_add(component, tooltip)
 }
 
 #' @rdname buttonInput
@@ -195,9 +193,7 @@ linkInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
     ...
   )
 
-  component <- tag_tooltip_add(component, tooltip)
-
-  attach_dependencies(component)
+  tag_tooltip_add(component, tooltip)
 }
 
 #' @rdname buttonInput
@@ -285,15 +281,13 @@ buttonGroupInput <- function(id, labels = NULL, values = labels, ...) {
 
   buttons <- map_buttons(labels, values)
 
-  component <- tags$div(
+  tags$div(
     class = "yonder-button-group btn-group",
     id = id,
     role = "group",
     buttons,
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname buttonGroupInput

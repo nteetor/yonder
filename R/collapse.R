@@ -63,7 +63,7 @@
 collapsePane <- function(id, ..., show = FALSE) {
   assert_id()
 
-  pane <- tags$div(
+  tags$div(
     id = id,
     class = str_collate(
       "collapse",
@@ -71,8 +71,6 @@ collapsePane <- function(id, ..., show = FALSE) {
     ),
     ...
   )
-
-  attach_dependencies(pane)
 }
 
 #' @rdname collapsePane

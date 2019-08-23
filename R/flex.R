@@ -263,7 +263,5 @@ flex <- function(tag, direction = NULL, justify = NULL, align = NULL,
     resp_classes(wrap, "flex")
   )
 
-  tag <- tag_class_add(tag, classes)
-
-  attach_dependencies(tag)
+  tag_class_add(tag, classes)
 }

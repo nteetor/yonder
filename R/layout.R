@@ -122,29 +122,20 @@ column <- function(..., width = NULL) {
 
   classes <- c("col", resp_classes(width, "col"))
 
-  attach_dependencies(
-    tag_class_add(tags$div(...), classes)
-  )
+  tag_class_add(tags$div(...), classes)
 }
 
 #' @rdname column
 #' @export
 columns <- function(...) {
-  attach_dependencies(
-    tags$div(
-      class = "row",
-      ...
-    )
-  )
+  tags$div(class = "row", ...)
 }
 
 #' @rdname column
 #' @export
 container <- function(..., centered = FALSE) {
-  attach_dependencies(
-    tags$div(
-      class = if (centered) "container" else "container-fluid",
-      ...
-    )
+  tags$div(
+    class = if (centered) "container" else "container-fluid",
+    ...
   )
 }

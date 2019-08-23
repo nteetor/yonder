@@ -104,7 +104,7 @@
 formInput <- function(id, ..., inline = FALSE) {
   assert_id()
 
-  component <- tags$form(
+  tags$form(
     class = str_collate(
       "yonder-form",
       if (inline) "form-inline"
@@ -112,8 +112,6 @@ formInput <- function(id, ..., inline = FALSE) {
     id = id,
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname formInput
@@ -211,7 +209,7 @@ formGroup <- function(label, input, ..., help = NULL, width = NULL) {
   width <- resp_construct(width, c(1:12, "auto"))
   classes <- resp_classes(width, "col")
 
-  component <- tags$div(
+  tags$div(
     class = str_collate(
       "form-group",
       classes
@@ -226,14 +224,10 @@ formGroup <- function(label, input, ..., help = NULL, width = NULL) {
       )
     }
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname formGroup
 #' @export
 formRow <- function(...) {
-  attach_dependencies(
-    tags$div(class = "form-row", ...)
-  )
+  tags$div(class = "form-row", ...)
 }

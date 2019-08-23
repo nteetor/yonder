@@ -148,7 +148,5 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
     )
   )
 
-  component <- tag_attributes_add(component, named_values(list(...)))
-
-  attach_dependencies(component)
+  tag_attributes_add(component, named_values(list(...)))
 }

@@ -77,7 +77,7 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...) {
     )
   }
 
-  component <- tags$div(
+  tags$div(
     class = "yonder-range",
     id = id,
     tags$input(
@@ -91,8 +91,6 @@ rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...) {
     ),
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname rangeInput

@@ -68,7 +68,7 @@ menuInput <- function(id, label, choices = NULL, values = choices,
 
   items <- map_menuitems(choices, values, selected)
 
-  component <- tags$div(
+  tags$div(
     class = str_collate(
       "yonder-menu",
       paste0("drop", direction)
@@ -91,8 +91,6 @@ menuInput <- function(id, label, choices = NULL, values = choices,
       items
     )
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname menuInput

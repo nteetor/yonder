@@ -89,7 +89,7 @@ textInput <- function(id, value = NULL, placeholder = NULL, ...,
   assert_id()
   assert_possible(type, possible_types)
 
-  component <- tags$div(
+  tags$div(
     class = "yonder-textual",
     id = id,
     tags$input(
@@ -103,8 +103,6 @@ textInput <- function(id, value = NULL, placeholder = NULL, ...,
     tags$div(class = "invalid-feedback"),
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname textInput
@@ -167,7 +165,7 @@ groupTextInput <- function(id, value = NULL, placeholder = NULL, ...,
   left <- addon_left(left)
   right <- addon_right(right)
 
-  component <- tags$div(
+  tags$div(
     class = "yonder-group-text input-group",
     id = id,
     left,
@@ -183,8 +181,6 @@ groupTextInput <- function(id, value = NULL, placeholder = NULL, ...,
     tags$div(class = "invalid-feedback"),
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname textInput

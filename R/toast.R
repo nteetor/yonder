@@ -153,9 +153,7 @@ toast <- function(header, ...) {
     )
   )
 
-  component <- tag_attributes_add(component, named_values(args))
-
-  attach_dependencies(component)
+  tag_attributes_add(component, named_values(args))
 }
 
 #' @rdname toast

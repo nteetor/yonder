@@ -54,9 +54,10 @@ color_apply <- function(tag, base, color) {
     tag,
     sprintf("%s-(%s)", base, paste(possible_colors, collapse = "|"))
   )
+
   tag <- tag_class_add(tag, paste0(base, "-", color))
 
-  attach_dependencies(tag)
+  tag
 }
 
 #' Font color, size, weight
@@ -174,7 +175,7 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
     tag <- tag_class_add(tag, classes)
   }
 
-  attach_dependencies(tag)
+  tag
 }
 
 #' Background color
@@ -327,7 +328,7 @@ border <- function(tag, color = NULL, sides = "all", round = NULL) {
     tag <- tag_class_add(tag, round)
   }
 
-  attach_dependencies(tag)
+  tag
 }
 
 #' Selected choice color
@@ -377,7 +378,7 @@ active <- function(tag, color) {
 
   tag <- tag_class_add(tag, paste0("active-", color))
 
-  attach_dependencies(tag)
+  tag
 }
 
 #' Shadows
@@ -443,7 +444,7 @@ shadow <- function(tag, size = "regular") {
 
   tag <- tag_class_add(tag, size)
 
-  attach_dependencies(tag)
+  tag
 }
 
 #' Float
@@ -494,7 +495,7 @@ float <- function(tag, side) {
 
   tag <- tag_class_add(tag, classes)
 
-  attach_dependencies(tag)
+  tag
 }
 
 #' Position
@@ -533,7 +534,7 @@ affix <- function(tag, position) {
     tag <- tag_class_add(tag, paste0("fixed-", position))
   }
 
-  attach_dependencies(tag)
+  tag
 }
 
 #' Display property
@@ -582,7 +583,7 @@ display <- function(tag, type) {
 
   tag <- tag_class_add(tag, classes)
 
-  attach_dependencies(tag)
+  tag
 }
 
 #' Margin and padding
@@ -707,7 +708,7 @@ padding <- function(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 
   tag <- tag_class_add(tag, classes)
 
-  attach_dependencies(tag)
+  tag
 }
 
 #' @rdname padding
@@ -747,7 +748,7 @@ margin <- function(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 
   tag <- tag_class_add(tag, classes)
 
-  attach_dependencies(tag)
+  tag
 }
 
 #' Width
@@ -813,7 +814,7 @@ margin <- function(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 width <- function(tag, size) {
   tag <- tag_class_add(tag, paste0("w-", size))
 
-  attach_dependencies(tag)
+  tag
 }
 
 #' Height
@@ -867,7 +868,7 @@ width <- function(tag, size) {
 height <- function(tag, size) {
   tag <- tag_class_add(tag, paste0("h-", size))
 
-  attach_dependencies(tag)
+  tag
 }
 
 #' Vertical and horizontal scroll
@@ -920,5 +921,5 @@ scroll <- function(tag, direction = "vertical") {
     paste0("scroll-", if (direction == "vertical") "y" else "x")
   )
 
-  attach_dependencies(tag)
+  tag
 }

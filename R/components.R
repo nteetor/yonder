@@ -41,7 +41,7 @@ d3 <- function(...) d(3, ...)
 d4 <- function(...) d(4, ...)
 
 d <- function(level, ...) {
-  attach_dependencies(tags$h1(class = paste0("display-", level), ...))
+  tags$h1(class = paste0("display-", level), ...)
 }
 
 #' Jumbotron
@@ -72,7 +72,7 @@ d <- function(level, ...) {
 #' )
 #'
 jumbotron <- function(..., title = NULL, subtitle = NULL) {
-  component <- tags$div(
+  tags$div(
     class = "jumbotron",
     if (!is.null(title)) d3(title),
     if (!is.null(subtitle)) tags$p(class = "lead", subtitle),
@@ -81,8 +81,6 @@ jumbotron <- function(..., title = NULL, subtitle = NULL) {
     },
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' Responsive images and figures
@@ -104,12 +102,10 @@ jumbotron <- function(..., title = NULL, subtitle = NULL) {
 #' @family components
 #' @export
 img <- function(src, ...) {
-  attach_dependencies(
-    tags$img(
-      class = "img-fluid",
-      src = src,
-      ...
-    )
+  tags$img(
+    class = "img-fluid",
+    src = src,
+    ...
   )
 }
 
@@ -123,18 +119,16 @@ figure <- function(image, caption = NULL, ...) {
     )
   }
 
-  attach_dependencies(
-    tags$figure(
-      class = "figure",
-      tag_class_add(image, "figure-img"),
-      if (!is.null(caption)) {
-        tags$figcaption(
-          class = "figure-caption",
-          caption
-        )
-      },
-      ...
-    )
+  tags$figure(
+    class = "figure",
+    tag_class_add(image, "figure-img"),
+    if (!is.null(caption)) {
+      tags$figcaption(
+        class = "figure-caption",
+        caption
+      )
+    },
+    ...
   )
 }
 
@@ -169,17 +163,15 @@ figure <- function(image, caption = NULL, ...) {
 #' )
 #'
 blockquote <- function(..., source = NULL, align = "left") {
-  attach_dependencies(
-    tags$blockquote(
-      class = str_collate(
-        "blockquote",
-        if (align == "right") "blockquote-reverse"
-      ),
-      ...,
-      if (!is.null(source)) {
-        tags$footer(class = "blockquote-footer", source)
-      }
-    )
+  tags$blockquote(
+    class = str_collate(
+      "blockquote",
+      if (align == "right") "blockquote-reverse"
+    ),
+    ...,
+    if (!is.null(source)) {
+      tags$footer(class = "blockquote-footer", source)
+    }
   )
 }
 
@@ -213,12 +205,7 @@ blockquote <- function(..., source = NULL, align = "left") {
 #' )
 #'
 pre <- function(...) {
-  attach_dependencies(
-    tags$pre(
-      class = "pre-scrollable",
-      ...
-    )
-  )
+  tags$pre(class = "pre-scrollable", ...)
 }
 
 #' Group and label multiple inputs
@@ -288,5 +275,5 @@ fieldset <- function(..., legend = NULL) {
 
   component <- tag_attributes_add(component, named_values(args))
 
-  attach_dependencies(component)
+  component
 }

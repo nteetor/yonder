@@ -96,7 +96,7 @@ chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
   chips <- map_chipchips(choices, values, selected)
   items <- map_chipitems(choices, values, selected)
 
-  component <- tags$div(
+  tags$div(
     id = id,
     class = str_collate(
       "yonder-chip",
@@ -118,8 +118,6 @@ chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
     ),
     ...
   )
-
-  attach_dependencies(component)
 }
 
 #' @rdname chipInput
