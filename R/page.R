@@ -40,7 +40,7 @@ webpage <- function(..., nav = NULL) {
       tags$header(
         nav
       ),
-      tag("main", args)
+      htmltools::tag("main", args)
     )
   )
 }
