@@ -2,7 +2,7 @@
 ^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^module$
+^js$
 ^docs$
 ^bin$
 ^man-roxygen$
