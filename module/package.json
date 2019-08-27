@@ -39,11 +39,6 @@
   },
   "scripts": {
     "test": "echo \"Sorry, nothing here\"",
-    "js-lint": "eslint src/js/**/*.js",
-    "js-vend": "cp dist/js/{yonder.js,yonder.min.js,yonder.min.js.map} ../inst/www/yonder/js/",
-    "js-build": "rollup --config build/rollup.config.js --sourcemap",
-    "js-minify": "uglifyjs --compress --mangle --output dist/js/yonder.min.js dist/js/yonder.js",
-    "js": "npm-run-all js-lint js-build js-minify js-vend",
     "bootstrap-file-input-vend": "cp node_modules/bs-custom-file-input/dist/bs-custom-file-input.min.js ../inst/www/bs-custom-file-input/js/",
     "bootstrap-custom-file-input": "npm-run-all bootstrap-file-input-vend",
     "bootstrap-js-vend": "cp node_modules/bootstrap/dist/js/bootstrap.min.js ../inst/www/bootstrap/js/",
@@ -53,7 +48,18 @@
     "css-prefix": "postcss --config build/postcss.config.js --replace dist/css/yonder.css",
     "css-minify": "cleancss --level 1 --output dist/css/yonder.min.css dist/css/yonder.css",
     "css-vend": "cp dist/css/yonder.min.css ../inst/www/yonder/css/",
-    "css": "npm-run-all css-compile css-prefix css-minify css-vend"
+    "css": "npm-run-all css-compile css-prefix css-minify css-vend",
+    "js-lint": "eslint src/js/**/*.js",
+    "js-vend": "cp dist/js/{yonder.js,yonder.min.js,yonder.min.js.map} ../inst/www/yonder/js/",
+    "js-build": "rollup --config build/rollup.config.js --sourcemap",
+    "js-minify": "uglifyjs --compress --mangle --output dist/js/yonder.min.js dist/js/yonder.js",
+    "js": "npm-run-all js-lint js-build js-minify js-vend",
+    "jquery": "run-s jquery-update jquery-authors jquery-vend",
+    "jquery-update": "npm update jquery",
+    "jquery-version": "npm view jquery version > ../inst/jquery/VERSION",
+    "jquery-authors": "cp node_modules/jquery/AUTHORS.txt ../inst/www/jquery/AUTHORS",
+    "jquery-license": "cp node_modules/jquery/LICENSE.txt ../inst/www/jquery/LICENSE",
+    "jquery-vend": "cp node_modules/jquery/dist/{jquery.min.js,jquery.min.map} ../inst/www/jquery/"
   },
   "repository": {
     "type": "git",

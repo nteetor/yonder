@@ -35,7 +35,7 @@ dep_yonder <- function() {
   list(
     htmlDependency(
       name = "jquery",
-      version = "3.3.1",
+      version = "3.4.1",
       src = c(
         file = system.file("www/jquery", package = "yonder"),
         href = "yonder/jquery"
