@@ -74,6 +74,10 @@ is_tag <- function(x) {
   inherits(x, "shiny.tag")
 }
 
+tag_browse <- function(x) {
+  htmltools::browsable(x)
+}
+
 tag_name_is <- function(x, name) {
   stopifnot(is_tag(x))
   isTRUE(x$name == name)

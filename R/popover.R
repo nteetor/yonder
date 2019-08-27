@@ -64,24 +64,26 @@
 #' # Please see example application above.
 #'
 popover <- function(..., title = NULL) {
-  if (!is.null(title)) {
-    title <- tags$h3(class = "popover-header", title)
-  }
+  dep_attach({
+    if (!is.null(title)) {
+      title <- tags$h3(class = "popover-header", title)
+    }
 
-  args <- list(...)
+    args <- list(...)
 
-  component <- tags$div(
-    class = "popover",
-    role = "tooltip",
-    tags$div(class = "arrow"),
-    title,
-    tags$div(
-      class = "popover-body",
-      unnamed_values(args)
+    component <- tags$div(
+      class = "popover",
+      role = "tooltip",
+      tags$div(class = "arrow"),
+      title,
+      tags$div(
+        class = "popover-body",
+        unnamed_values(args)
+      )
     )
-  )
 
-  tag_attributes_add(component, named_values(args))
+    tag_attributes_add(component, named_values(args))
+  })
 }
 
 #' @rdname popover

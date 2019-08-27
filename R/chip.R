@@ -88,36 +88,38 @@ chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
   assert_id()
   assert_choices()
 
-  toggle <- tags$input(
-    class = "form-control",
-    `data-toggle` = "dropdown"
-  )
+  dep_attach({
+    toggle <- tags$input(
+      class = "form-control",
+      `data-toggle` = "dropdown"
+    )
 
-  chips <- map_chipchips(choices, values, selected)
-  items <- map_chipitems(choices, values, selected)
+    chips <- map_chipchips(choices, values, selected)
+    items <- map_chipitems(choices, values, selected)
 
-  tags$div(
-    id = id,
-    class = str_collate(
-      "yonder-chip",
-      "btn-group dropup"
-    ),
-    `data-max` = if (max == Inf) -1 else max,
-    toggle,
     tags$div(
-      class = "dropdown-menu",
-      items
-    ),
-    tags$div(
+      id = id,
       class = str_collate(
-        "chips",
-        if (!inline) "chips-block" else "chips-inline",
-        "chips-grey"
+        "yonder-chip",
+        "btn-group dropup"
       ),
-      chips
-    ),
-    ...
-  )
+      `data-max` = if (max == Inf) -1 else max,
+      toggle,
+      tags$div(
+        class = "dropdown-menu",
+        items
+      ),
+      tags$div(
+        class = str_collate(
+          "chips",
+          if (!inline) "chips-block" else "chips-inline",
+          "chips-grey"
+        ),
+        chips
+      ),
+      ...
+    )
+  })
 }
 
 #' @rdname chipInput

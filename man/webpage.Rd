@@ -14,9 +14,8 @@ attributes to the main section of the page.}
 top of the page, defaults to \code{NULL}.}
 }
 \description{
-Every yonder application starts with \code{webpage()}. This function ensures the
-necessary resources and dependencies are attached to your user interface and
-properly lays out an optional navigation bar and main elements.
+Begin creating a user interface. The \code{webpage()} function properly lays out a
+navigation bar and main section of elements.
 }
 \examples{
 

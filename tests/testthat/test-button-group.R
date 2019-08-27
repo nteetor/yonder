@@ -11,3 +11,7 @@ test_that("labels argument", {
   expect_silent(buttonGroupInput(id = "ID", labels = c("A", "B")))
   expect_silent(buttonGroupInput(id = "ID", labels = c("A", "B"), values = c("C", "D")))
 })
+
+test_that("has dependencies", {
+  expect_dependencies(buttonGroupInput("ID"))
+})

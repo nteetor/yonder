@@ -12,3 +12,7 @@ test_that("choices and values must be the same length", {
   expect_error(chipInput("ID", c("choice1", "choice2"), "value1"))
   expect_error(chipInput("ID", "choice1", c("value1", "value2")))
 })
+
+test_that("has dependencies", {
+  expect_dependencies(chipInput("ID"))
+})

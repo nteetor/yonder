@@ -74,26 +74,28 @@ selectInput <- function(id, choices = NULL, values = choices,
   assert_choices()
   assert_selected(length = 1)
 
-  items <- map_selectitems(choices, values, selected)
+  dep_attach({
+    items <- map_selectitems(choices, values, selected)
 
-  tags$div(
-    class = "yonder-select btn-group",
-    id = id,
-    tags$input(
-      type = "text",
-      class = "form-control custom-select",
-      `data-toggle` = "dropdown",
-      `data-boundary` = "window",
-      placeholder = choices[values %in% selected][1]
-    ),
     tags$div(
-      class = "dropdown-menu",
-      items
-    ),
-    tags$div(class = "valid-feedback"),
-    tags$div(class = "invalid-feedback"),
-    ...
-  )
+      class = "yonder-select btn-group",
+      id = id,
+      tags$input(
+        type = "text",
+        class = "form-control custom-select",
+        `data-toggle` = "dropdown",
+        `data-boundary` = "window",
+        placeholder = choices[values %in% selected][1]
+      ),
+      tags$div(
+        class = "dropdown-menu",
+        items
+      ),
+      tags$div(class = "valid-feedback"),
+      tags$div(class = "invalid-feedback"),
+      ...
+    )
+  })
 }
 
 #' @rdname selectInput
@@ -164,23 +166,25 @@ groupSelectInput <- function(id, choices, values = choices,
     force = TRUE
   )
 
-  options <- map_options(choices, values, selected)
-  left <- addon_left(left)
-  right <- addon_right(right)
+  dep_attach({
+    options <- map_options(choices, values, selected)
+    left <- addon_left(left)
+    right <- addon_right(right)
 
-  tags$div(
-    class = "yonder-group-select input-group",
-    id = id,
-    left,
-    tags$select(
-      class = "custom-select",
-      options
-    ),
-    right,
-    tags$div(class = "valid-feedback"),
-    tags$div(class = "invalid-feedback"),
-    ...
-  )
+    tags$div(
+      class = "yonder-group-select input-group",
+      id = id,
+      left,
+      tags$select(
+        class = "custom-select",
+        options
+      ),
+      right,
+      tags$div(class = "valid-feedback"),
+      tags$div(class = "invalid-feedback"),
+      ...
+    )
+  })
 }
 
 #' @rdname selectInput
@@ -262,4 +266,3 @@ addon_right <- function(right) {
     )
   }
 }
-

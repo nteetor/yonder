@@ -33,3 +33,7 @@ test_that("update", {
 
   expect_silent(updateRadioInput("ID", session = test_domain()))
 })
+
+test_that("has dependencies", {
+  expect_dependencies(radioInput("ID"))
+})

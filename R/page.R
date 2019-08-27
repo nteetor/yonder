@@ -1,8 +1,7 @@
 #' User interface
 #'
-#' Every yonder application starts with `webpage()`. This function ensures the
-#' necessary resources and dependencies are attached to your user interface and
-#' properly lays out an optional navigation bar and main elements.
+#' Begin creating a user interface. The `webpage()` function properly lays out a
+#' navigation bar and main section of elements.
 #'
 #' @param ... Any number of tag elements or named values added as children and
 #'   attributes to the main section of the page.
@@ -29,18 +28,18 @@
 #' )
 #'
 webpage <- function(..., nav = NULL) {
-  args <- list(...)
+  dep_attach({
+    args <- list(...)
 
-  if (is.null(args$role)) {
-    args$role <- "main"
-  }
+    if (is.null(args$role)) {
+      args$role <- "main"
+    }
 
-  attach_dependencies(
     tags$body(
       tags$header(
         nav
       ),
       htmltools::tag("main", args)
     )
-  )
+  })
 }

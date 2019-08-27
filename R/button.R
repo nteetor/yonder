@@ -122,25 +122,27 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
   assert_id()
   assert_label()
 
-  component <- (if (download) tags$a else tags$button)(
-    class = str_collate(
-      "yonder-button",
-      "btn btn-grey",
-      if (stretch) "stretched-link",
-      if (download) "shiny-download-link"
-    ),
-    type = "button",
-    role = "button",
-    href = if (download) "",
-    `_target` = if (download) NA,
-    download = if (download) NA,
-    id = id,
-    label,
-    ...,
-    autocomplete = "off"
-  )
+  dep_attach({
+    component <- (if (download) tags$a else tags$button)(
+      class = str_collate(
+        "yonder-button",
+        "btn btn-grey",
+        if (stretch) "stretched-link",
+        if (download) "shiny-download-link"
+      ),
+      type = "button",
+      role = "button",
+      href = if (download) "",
+      `_target` = if (download) NA,
+      download = if (download) NA,
+      id = id,
+      label,
+      ...,
+      autocomplete = "off"
+    )
 
-  tag_tooltip_add(component, tooltip)
+    tag_tooltip_add(component, tooltip)
+  })
 }
 
 #' @rdname buttonInput
@@ -179,23 +181,25 @@ linkInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
   assert_id()
   assert_label()
 
-  component <- (if (download) tags$a else tags$button)(
-    class = str_collate(
-      "yonder-link",
-      "btn",
-      if (!download) "btn-link",
-      if (stretch) "stretched-link",
-      if (download) "shiny-download-link"
-    ),
-    href = if (download) "",
-    `_target` = if (download) NA,
-    download = if (download) NA,
-    id = id,
-    label,
-    ...
-  )
+  dep_attach({
+    component <- (if (download) tags$a else tags$button)(
+      class = str_collate(
+        "yonder-link",
+        "btn",
+        if (!download) "btn-link",
+        if (stretch) "stretched-link",
+        if (download) "shiny-download-link"
+      ),
+      href = if (download) "",
+      `_target` = if (download) NA,
+      download = if (download) NA,
+      id = id,
+      label,
+      ...
+    )
 
-  tag_tooltip_add(component, tooltip)
+    tag_tooltip_add(component, tooltip)
+  })
 }
 
 #' @rdname buttonInput
@@ -281,15 +285,17 @@ buttonGroupInput <- function(id, labels = NULL, values = labels, ...) {
     force = TRUE
   )
 
-  buttons <- map_buttons(labels, values)
+  dep_attach({
+    buttons <- map_buttons(labels, values)
 
-  tags$div(
-    class = "yonder-button-group btn-group",
-    id = id,
-    role = "group",
-    buttons,
-    ...
-  )
+    tags$div(
+      class = "yonder-button-group btn-group",
+      id = id,
+      role = "group",
+      buttons,
+      ...
+    )
+  })
 }
 
 #' @rdname buttonGroupInput

@@ -16,3 +16,7 @@ test_that("title argument", {
   expect_false(grepl("modal-title", modal("ID", header = "TITLE")))
   expect_true(grepl("modal-title", modal("ID", header = h5("TITLE"))))
 })
+
+test_that("has dependencies", {
+  expect_dependencies(modal("ID"))
+})

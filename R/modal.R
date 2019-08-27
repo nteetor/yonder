@@ -99,77 +99,79 @@ modal <- function(id, ..., header = NULL, footer = NULL, center = FALSE,
   assert_id()
   assert_possible(size, c("sm", "md", "lg", "xl"))
 
-  args <- list(...)
+  dep_attach({
+    args <- list(...)
 
-  if (!is.null(header)) {
-    formatted_tags <- list(
-      h1 = function(...) tags$h1(class = "modal-title", ...),
-      h2 = function(...) tags$h2(class = "modal-title", ...),
-      h3 = function(...) tags$h3(class = "modal-title", ...),
-      h4 = function(...) tags$h4(class = "modal-title", ...),
-      h5 = function(...) tags$h5(class = "modal-title", ...),
-      h6 = function(...) tags$h6(class = "modal-title", ...)
-    )
+    if (!is.null(header)) {
+      formatted_tags <- list(
+        h1 = function(...) tags$h1(class = "modal-title", ...),
+        h2 = function(...) tags$h2(class = "modal-title", ...),
+        h3 = function(...) tags$h3(class = "modal-title", ...),
+        h4 = function(...) tags$h4(class = "modal-title", ...),
+        h5 = function(...) tags$h5(class = "modal-title", ...),
+        h6 = function(...) tags$h6(class = "modal-title", ...)
+      )
 
-    header <- eval(
-      substitute(header),
-      envir = list2env(formatted_tags, envir = parent.frame())
-    )
-  }
+      header <- eval(
+        substitute(header),
+        envir = list2env(formatted_tags, envir = parent.frame())
+      )
+    }
 
-  header <- tags$div(
-    class = "modal-header",
-    header,
-    tags$button(
-      type = "button",
-      class = "close",
-      `data-dismiss` = "modal",
-      `aria-label` = "Close",
-      tags$span(
-        `aria-hidden` = "true",
-        HTML("&times;")
+    header <- tags$div(
+      class = "modal-header",
+      header,
+      tags$button(
+        type = "button",
+        class = "close",
+        `data-dismiss` = "modal",
+        `aria-label` = "Close",
+        tags$span(
+          `aria-hidden` = "true",
+          HTML("&times;")
+        )
       )
     )
-  )
 
-  if (!is.null(footer)) {
-    footer <- tags$div(
-      class = "modal-footer",
+    if (!is.null(footer)) {
+      footer <- tags$div(
+        class = "modal-footer",
+        footer
+      )
+    }
+
+    content <- tags$div(
+      class = "modal-content",
+      header,
+      tag_attributes_add(
+        tags$div(
+          class = "modal-body",
+          unnamed_values(args)
+        ),
+        named_values(args)
+      ),
       footer
     )
-  }
 
-  content <- tags$div(
-    class = "modal-content",
-    header,
-    tag_attributes_add(
-      tags$div(
-        class = "modal-body",
-        unnamed_values(args)
-      ),
-      named_values(args)
-    ),
-    footer
-  )
-
-  tags$div(
-    class = str_collate(
-      "yonder-modal modal",
-      if (fade) "fade"
-    ),
-    id = id,
-    tabindex = "-1",
-    role = "dialog",
     tags$div(
       class = str_collate(
-        "modal-dialog",
-        if (center) "modal-dialog-centered",
-        if (!is.null(size) && size != "md") paste0("modal-", size)
+        "yonder-modal modal",
+        if (fade) "fade"
       ),
-      role = "document",
-      content
+      id = id,
+      tabindex = "-1",
+      role = "dialog",
+      tags$div(
+        class = str_collate(
+          "modal-dialog",
+          if (center) "modal-dialog-centered",
+          if (!is.null(size) && size != "md") paste0("modal-", size)
+        ),
+        role = "document",
+        content
+      )
     )
-  )
+  })
 }
 
 #' @rdname modal

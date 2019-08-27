@@ -139,79 +139,83 @@
 #' )
 #'
 card <- function(..., header = NULL, footer = NULL) {
-  args <- eval(substitute(alist(...)))
+  dep_attach({
+    args <- eval(substitute(alist(...)))
 
-  if (!is.null(header)) {
-    if (is_tag(header) && tag_class_re(header, "nav-tabs")) {
-      header <- tags$div(
-        class = "card-header",
-        tag_class_add(header, "card-header-tabs")
-      )
-    } else if (is_tag(header) && tag_class_re(header, "nav-pills")) {
-      header <- tags$div(
-        class = "card-header",
-        tag_class_add(header, "card-header-pills")
-      )
-    } else {
-      header <- tags$div(class = "card-header", header)
+    if (!is.null(header)) {
+      if (is_tag(header) && tag_class_re(header, "nav-tabs")) {
+        header <- tags$div(
+          class = "card-header",
+          tag_class_add(header, "card-header-tabs")
+        )
+      } else if (is_tag(header) && tag_class_re(header, "nav-pills")) {
+        header <- tags$div(
+          class = "card-header",
+          tag_class_add(header, "card-header-pills")
+        )
+      } else {
+        header <- tags$div(class = "card-header", header)
+      }
     }
-  }
 
-  if (!is.null(footer)) {
-    footer <- tags$div(class = "card-footer", footer)
-  }
-
-  formatted_tags <- list(
-    p = function(...) tags$p(class = "card-text", ...),
-    h1 = function(...) tags$h1(class = "card-title", ...),
-    h2 = function(...) tags$h2(class = "card-title", ...),
-    h3 = function(...) tags$h3(class = "card-title", ...),
-    h4 = function(...) tags$h4(class = "card-title", ...),
-    h5 = function(...) tags$h5(class = "card-title", ...),
-    h6 = function(...) tags$h6(class = "card-subtitle", ...),
-    linkInput = function(...) linkInput(class = "card-link", ...)
-  )
-
-  body <- lapply(
-    unnamed_values(args),
-    eval,
-    envir = list2env(formatted_tags, envir = parent.frame())
-  )
-
-  body <- lapply(body, function(x) {
-    if (is_strictly_list(x)) {
-      tags$div(class = "card-body", x)
-    } else {
-      x
+    if (!is.null(footer)) {
+      footer <- tags$div(class = "card-footer", footer)
     }
-  })
 
-  if (any(!vapply(body, is_tag, logical(1)))) {
-    stop(
-      "invalid arguments in `card()`, all top-level arguments must be tag ",
-      "elements",
-      call. = FALSE
+    formatted_tags <- list(
+      p = function(...) tags$p(class = "card-text", ...),
+      h1 = function(...) tags$h1(class = "card-title", ...),
+      h2 = function(...) tags$h2(class = "card-title", ...),
+      h3 = function(...) tags$h3(class = "card-title", ...),
+      h4 = function(...) tags$h4(class = "card-title", ...),
+      h5 = function(...) tags$h5(class = "card-title", ...),
+      h6 = function(...) tags$h6(class = "card-subtitle", ...),
+      linkInput = function(...) linkInput(class = "card-link", ...)
     )
-  }
 
-  flags <- vapply(body, tag_class_re, logical(1), regex = "row|list-group")
+    body <- lapply(
+      unnamed_values(args),
+      eval,
+      envir = list2env(formatted_tags, envir = parent.frame())
+    )
 
-  if (!any(flags)) {
-    body <- tags$div(class = "card-body", body)
-  }
+    body <- lapply(body, function(x) {
+      if (is_strictly_list(x)) {
+        tags$div(class = "card-body", x)
+      } else {
+        x
+      }
+    })
 
-  component <- tags$div(
-    class = "card",
-    header,
-    body,
-    footer
-  )
+    if (any(!vapply(body, is_tag, logical(1)))) {
+      stop(
+        "invalid arguments in `card()`, all top-level arguments must be tag ",
+        "elements",
+        call. = FALSE
+      )
+    }
 
-  tag_attributes_add(component, named_values(list(...)))
+    flags <- vapply(body, tag_class_re, logical(1), regex = "row|list-group")
+
+    if (!any(flags)) {
+      body <- tags$div(class = "card-body", body)
+    }
+
+    component <- tags$div(
+      class = "card",
+      header,
+      body,
+      footer
+    )
+
+    tag_attributes_add(component, named_values(list(...)))
+  })
 }
 
 #' @rdname card
 #' @export
 deck <- function(...) {
-  tags$div(class = "card-deck", ...)
+  dep_attach({
+    tags$div(class = "card-deck", ...)
+  })
 }

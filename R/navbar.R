@@ -64,62 +64,64 @@
 #' )
 #'
 navbar <- function(..., brand = NULL, collapse = NULL) {
-  args <- drop_nulls(list(...))
-
   assert_possible(collapse, c("sm", "md", "lg", "xl"))
 
-  items <- lapply(
-    unnamed_values(args),
-    function(item) {
-      if (tag_class_re(item, "nav")) {
-        item <- tag_class_add(item, "navbar-nav")
-      } else if (tag_name_is(item, "form")) {
-        if (!tag_class_re(item, "form-inline")) {
-          warning("non-inline form element passed to `navbar()`", call. = FALSE)
+  dep_attach({
+    args <- drop_nulls(list(...))
+
+    items <- lapply(
+      unnamed_values(args),
+      function(item) {
+        if (tag_class_re(item, "nav")) {
+          item <- tag_class_add(item, "navbar-nav")
+        } else if (tag_name_is(item, "form")) {
+          if (!tag_class_re(item, "form-inline")) {
+            warning("non-inline form element passed to `navbar()`", call. = FALSE)
+          }
+        } else if (!is_tag(item)) {
+          item <- tags$span(class = "navbar-text", item)
         }
-      } else if (!is_tag(item)) {
-        item <- tags$span(class = "navbar-text", item)
+
+        item
       }
-
-      item
-    }
-  )
-
-  brand <- if (!is.null(brand)) {
-    tags$a(
-      class = "navbar-brand",
-      href = "#",
-      brand
     )
-  }
 
-  content_id <- generate_id("nav-content")
-
-  component <- tags$nav(
-    class = str_collate(
-      "navbar",
-      paste(c("navbar", "expand", collapse), collapse = "-"),
-      "navbar-light"
-    ),
-    brand,
-    tags$button(
-      class = "navbar-toggler",
-      type = "button",
-      `data-toggle` = "collapse",
-      `data-target` = paste0("#", content_id),
-      `aria-controls` = content_id,
-      `aria-expanded` = "false",
-      `aria-label` = "Toggle navigation",
-      tags$span(
-        class = "navbar-toggler-icon"
+    brand <- if (!is.null(brand)) {
+      tags$a(
+        class = "navbar-brand",
+        href = "#",
+        brand
       )
-    ),
-    tags$div(
-      class = "collapse navbar-collapse",
-      id = content_id,
-      items
-    )
-  )
+    }
 
-  tag_attributes_add(component, named_values(args))
+    content_id <- generate_id("nav-content")
+
+    component <- tags$nav(
+      class = str_collate(
+        "navbar",
+        paste(c("navbar", "expand", collapse), collapse = "-"),
+        "navbar-light"
+      ),
+      brand,
+      tags$button(
+        class = "navbar-toggler",
+        type = "button",
+        `data-toggle` = "collapse",
+        `data-target` = paste0("#", content_id),
+        `aria-controls` = content_id,
+        `aria-expanded` = "false",
+        `aria-label` = "Toggle navigation",
+        tags$span(
+          class = "navbar-toggler-icon"
+        )
+      ),
+      tags$div(
+        class = "collapse navbar-collapse",
+        id = content_id,
+        items
+      )
+    )
+
+    tag_attributes_add(component, named_values(args))
+  })
 }

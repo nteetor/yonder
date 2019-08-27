@@ -118,24 +118,30 @@
 #' )
 #'
 column <- function(..., width = NULL) {
-  width <- resp_construct(width, c(1:12, "auto"))
+  dep_attach({
+    width <- resp_construct(width, c(1:12, "auto"))
 
-  classes <- c("col", resp_classes(width, "col"))
+    classes <- c("col", resp_classes(width, "col"))
 
-  tag_class_add(tags$div(...), classes)
+    tag_class_add(tags$div(...), classes)
+  })
 }
 
 #' @rdname column
 #' @export
 columns <- function(...) {
-  tags$div(class = "row", ...)
+  dep_attach({
+    tags$div(class = "row", ...)
+  })
 }
 
 #' @rdname column
 #' @export
 container <- function(..., centered = FALSE) {
-  tags$div(
-    class = if (centered) "container" else "container-fluid",
-    ...
-  )
+  dep_attach({
+    tags$div(
+      class = if (centered) "container" else "container-fluid",
+      ...
+    )
+  })
 }

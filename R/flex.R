@@ -234,34 +234,36 @@ NULL
 #'
 flex <- function(tag, direction = NULL, justify = NULL, align = NULL,
                  wrap = NULL, reverse = NULL) {
-  direction <- resp_construct(direction, c("row", "column"))
-  reverse <- resp_construct(reverse, c(TRUE, FALSE))
-  justify <- resp_construct(justify, c("start", "end", "center", "between", "around"))
-  align <- resp_construct(align, c("start", "end", "center", "baseline", "stretch"))
-  wrap <- resp_construct(wrap, c(TRUE, FALSE))
+  dep_attach({
+    direction <- resp_construct(direction, c("row", "column"))
+    reverse <- resp_construct(reverse, c(TRUE, FALSE))
+    justify <- resp_construct(justify, c("start", "end", "center", "between", "around"))
+    align <- resp_construct(align, c("start", "end", "center", "baseline", "stretch"))
+    wrap <- resp_construct(wrap, c(TRUE, FALSE))
 
-  if (length(direction) || length(reverse)) {
-    for (breakpoint in names(reverse)) {
-      old <- direction[[breakpoint]] %||% "row"
+    if (length(direction) || length(reverse)) {
+      for (breakpoint in names(reverse)) {
+        old <- direction[[breakpoint]] %||% "row"
 
-      if (reverse[[breakpoint]]) {
-        direction[[breakpoint]] <- paste0(old, "-reverse")
-      } else {
-        direction[[breakpoint]] <- old
+        if (reverse[[breakpoint]]) {
+          direction[[breakpoint]] <- paste0(old, "-reverse")
+        } else {
+          direction[[breakpoint]] <- old
+        }
       }
     }
-  }
 
-  if (length(wrap)) {
-    wrap <- lapply(wrap, function(w) if (w) "wrap" else "nowrap")
-  }
+    if (length(wrap)) {
+      wrap <- lapply(wrap, function(w) if (w) "wrap" else "nowrap")
+    }
 
-  classes <- c(
-    resp_classes(direction, "flex"),
-    resp_classes(justify, "justify-content"),
-    resp_classes(align, "align-items"),
-    resp_classes(wrap, "flex")
-  )
+    classes <- c(
+      resp_classes(direction, "flex"),
+      resp_classes(justify, "justify-content"),
+      resp_classes(align, "align-items"),
+      resp_classes(wrap, "flex")
+    )
 
-  tag_class_add(tag, classes)
+    tag_class_add(tag, classes)
+  })
 }

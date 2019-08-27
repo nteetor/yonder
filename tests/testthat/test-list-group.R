@@ -15,3 +15,7 @@ test_that("choices and values same length", {
   expect_error(listGroupInput("ID", c("three"), c("three", "four")))
   expect_error(listGroupInput("ID", c("four", "five"), "four"))
 })
+
+test_that("has dependencies", {
+  expect_dependencies(listGroupInput("ID"))
+})

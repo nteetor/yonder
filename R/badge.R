@@ -55,8 +55,10 @@
 #'   flex(wrap = TRUE)
 #'
 badge <- function(...) {
-  tags$span(
-    class = "badge",
-    ...
-  )
+  dep_attach({
+    tags$span(
+      class = "badge",
+      ...
+    )
+  })
 }

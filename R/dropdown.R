@@ -94,59 +94,62 @@
 #' )
 #'
 dropdown <- function(label, ..., direction = "down", align = "left") {
+  assert_found(label)
   assert_possible(direction, c("up", "right", "down", "left"))
   assert_possible(align, c("right", "left"))
 
-  args <- eval(substitute(alist(...)))
+  dep_attach({
+    args <- eval(substitute(alist(...)))
 
-  formatted_tags <- list(
-    h6 = function(...) tags$h6(class = "dropdown-header", ...),
-    hr = function(...) tags$div(class = "dropdown-divider", ...),
-    formInput = function(...) formInput(...)
-  )
-
-  items <- lapply(
-    unnamed_values(args),
-    eval,
-    envir = list2env(formatted_tags, envir = parent.frame())
-  )
-
-  items <- lapply(
-    items,
-    function(i) {
-      if (tag_name_is(i, "a") || tag_name_is(i, "button")) {
-        tag_class_add(i, "dropdown-item")
-      } else {
-        i
-      }
-    }
-  )
-
-  component <- tags$div(
-    class = str_collate(
-      "dropdown",
-      paste0("drop", direction)
-    ),
-    tags$button(
-      class = str_collate(
-        "btn",
-        "btn-grey",
-        "dropdown-toggle"
-      ),
-      type = "button",
-      `data-toggle` = "dropdown",
-      `aria-haspop` = "true",
-      `aria-expanded` = "false",
-      label
-    ),
-    tags$div(
-      class = str_collate(
-        "dropdown-menu",
-        if (align == "right") "dropdown-menu-right"
-      ),
-      items
+    formatted_tags <- list(
+      h6 = function(...) tags$h6(class = "dropdown-header", ...),
+      hr = function(...) tags$div(class = "dropdown-divider", ...),
+      formInput = function(...) formInput(...)
     )
-  )
 
-  tag_attributes_add(component, named_values(list(...)))
+    items <- lapply(
+      unnamed_values(args),
+      eval,
+      envir = list2env(formatted_tags, envir = parent.frame())
+    )
+
+    items <- lapply(
+      items,
+      function(i) {
+        if (tag_name_is(i, "a") || tag_name_is(i, "button")) {
+          tag_class_add(i, "dropdown-item")
+        } else {
+          i
+        }
+      }
+    )
+
+    component <- tags$div(
+      class = str_collate(
+        "dropdown",
+        paste0("drop", direction)
+      ),
+      tags$button(
+        class = str_collate(
+          "btn",
+          "btn-grey",
+          "dropdown-toggle"
+        ),
+        type = "button",
+        `data-toggle` = "dropdown",
+        `aria-haspop` = "true",
+        `aria-expanded` = "false",
+        label
+      ),
+      tags$div(
+        class = str_collate(
+          "dropdown-menu",
+          if (align == "right") "dropdown-menu-right"
+        ),
+        items
+      )
+    )
+
+    tag_attributes_add(component, named_values(list(...)))
+  })
 }

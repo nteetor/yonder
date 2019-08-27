@@ -104,25 +104,29 @@
 formInput <- function(id, ..., inline = FALSE) {
   assert_id()
 
-  tags$form(
-    class = str_collate(
-      "yonder-form",
-      if (inline) "form-inline"
-    ),
-    id = id,
-    ...
-  )
+  dep_attach({
+    tags$form(
+      class = str_collate(
+        "yonder-form",
+        if (inline) "form-inline"
+      ),
+      id = id,
+      ...
+    )
+  })
 }
 
 #' @rdname formInput
 #' @export
 formSubmit <- function(label, value = label, ...) {
-  tags$button(
-    class = "yonder-form-submit btn btn-blue",
-    value = value,
-    label,
-    ...
-  )
+  dep_attach({
+    tags$button(
+      class = "yonder-form-submit btn btn-blue",
+      value = value,
+      label,
+      ...
+    )
+  })
 }
 
 #' Input labels, help text, and formatting to inputs
@@ -202,32 +206,36 @@ formGroup <- function(label, input, ..., help = NULL, width = NULL) {
 
   build <- column(width = width)
 
-  if (build$attribs$class != "col") {
-    build$attribs$class <- sub("^col\\s+", "", build$attribs$class)
-  }
-
-  width <- resp_construct(width, c(1:12, "auto"))
-  classes <- resp_classes(width, "col")
-
-  tags$div(
-    class = str_collate(
-      "form-group",
-      classes
-    ),
-    ...,
-    tags$label(label),
-    input,
-    if (!is.null(help)) {
-      tags$small(
-        class = "form-text text-muted",
-        help
-      )
+  dep_attach({
+    if (build$attribs$class != "col") {
+      build$attribs$class <- sub("^col\\s+", "", build$attribs$class)
     }
-  )
+
+    width <- resp_construct(width, c(1:12, "auto"))
+    classes <- resp_classes(width, "col")
+
+    tags$div(
+      class = str_collate(
+        "form-group",
+        classes
+      ),
+      ...,
+      tags$label(label),
+      input,
+      if (!is.null(help)) {
+        tags$small(
+          class = "form-text text-muted",
+          help
+        )
+      }
+    )
+  })
 }
 
 #' @rdname formGroup
 #' @export
 formRow <- function(...) {
-  tags$div(class = "form-row", ...)
+  dep_attach({
+    tags$div(class = "form-row", ...)
+  })
 }

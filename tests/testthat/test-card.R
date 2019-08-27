@@ -45,3 +45,7 @@ test_that("card linkInputs have .card-link, keep id", {
   expect_true(grepl('id="ID"', as.character(this), fixed = TRUE))
   expect_true(grepl("card-link", as.character(this)))
 })
+
+test_that("has dependencies", {
+  expect_dependencies(card())
+})

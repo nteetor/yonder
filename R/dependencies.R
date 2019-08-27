@@ -1,8 +1,37 @@
-attach_dependencies <- function(x) {
-  attachDependencies(x, dependency_yonder())
+flags <- new.env(parent = emptyenv())
+
+flag_get <- function(x) get0(x = x, envir = flags, inherits = FALSE)
+
+flag_set <- function(x, value) assign(x = x, value = value, envir = flags)
+
+dep_fetch <- function() {
+  if (is.null(flag_get("deps")) || !flag_get("deps")) {
+    flag_set("deps", 1)
+    dep_yonder()
+  }
 }
 
-dependency_yonder <- function() {
+dep_complete <- function() {
+  flag_set("deps", NULL)
+}
+
+dep_attach <- function(tag) {
+  deps <- dep_fetch()
+
+  if (!is.null(deps)) {
+    on.exit(dep_complete())
+  }
+
+  force(tag)
+
+  if (length(deps)) {
+    htmltools::attachDependencies(tag, deps)
+  } else {
+    tag
+  }
+}
+
+dep_yonder <- function() {
   list(
     htmlDependency(
       name = "jquery",
@@ -67,8 +96,4 @@ dependency_yonder <- function() {
     prefix = "yonder",
     directoryPath = system.file("www", package = "yonder", mustWork = TRUE)
   )
-
-  if (is.null(getOption("yonder.dependencies"))) {
-    options(yonder.dependencies = "automatic")
-  }
 }

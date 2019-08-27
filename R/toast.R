@@ -122,38 +122,40 @@
 #' )
 #'
 toast <- function(header, ...) {
-  args <- list(...)
+  dep_attach({
+    args <- list(...)
 
-  header <- tags$div(
-    class = "toast-header",
-    list(
-      header,
-      tags$button(
-        type = "button",
-        class = "ml-auto close",
-        `data-dismiss` = "toast",
-        `aria-label` = "Close",
-        tags$span(
-          `aria-hidden` = "true",
-          HTML("&times;")
+    header <- tags$div(
+      class = "toast-header",
+      list(
+        header,
+        tags$button(
+          type = "button",
+          class = "ml-auto close",
+          `data-dismiss` = "toast",
+          `aria-label` = "Close",
+          tags$span(
+            `aria-hidden` = "true",
+            HTML("&times;")
+          )
         )
       )
     )
-  )
 
-  component <- tags$div(
-    class = "toast",
-    role = "alert",
-    `aria-live` = "polite",
-    `aria-atomic` = "true",
-    header,
-    tags$div(
-      class = "toast-body",
-      unnamed_values(args)
+    component <- tags$div(
+      class = "toast",
+      role = "alert",
+      `aria-live` = "polite",
+      `aria-atomic` = "true",
+      header,
+      tags$div(
+        class = "toast-body",
+        unnamed_values(args)
+      )
     )
-  )
 
-  tag_attributes_add(component, named_values(args))
+    tag_attributes_add(component, named_values(args))
+  })
 }
 
 #' @rdname toast

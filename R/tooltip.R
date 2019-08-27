@@ -10,11 +10,13 @@ tooltip <- function(..., placement = "top", fade = TRUE) {
   assert_possible(placement, c("top", "right", "bottom", "left"))
   assert_possible(fade, c(TRUE, FALSE))
 
-  list(
-    fade = if (fade) "true" else "false",
-    placement = placement,
-    title = coerce_content(unnamed_values(list(...)))
-  )
+  dep_attach({
+    list(
+      fade = if (fade) "true" else "false",
+      placement = placement,
+      title = coerce_content(unnamed_values(list(...)))
+    )
+  })
 }
 
 tag_tooltip_add <- function(tag, tooltip) {

@@ -29,7 +29,7 @@ blockquote(
   "But to love something despite.",
   "To know the flaws and love them too.",
   "That is rare and pure and perfect.",
-  source = tags$span(
+  source = list(
     "Patrick Rothfuss,", tags$cite("The Wise Man's Fear")
   )
 )

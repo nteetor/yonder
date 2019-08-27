@@ -63,14 +63,16 @@
 collapsePane <- function(id, ..., show = FALSE) {
   assert_id()
 
-  tags$div(
-    id = id,
-    class = str_collate(
-      "collapse",
-      if (show) "show"
-    ),
-    ...
-  )
+  dep_attach({
+    tags$div(
+      id = id,
+      class = str_collate(
+        "collapse",
+        if (show) "show"
+      ),
+      ...
+    )
+  })
 }
 
 #' @rdname collapsePane

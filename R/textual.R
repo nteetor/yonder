@@ -89,20 +89,22 @@ textInput <- function(id, value = NULL, placeholder = NULL, ...,
   assert_id()
   assert_possible(type, possible_types)
 
-  tags$div(
-    class = "yonder-textual",
-    id = id,
-    tags$input(
-      class = "form-control",
-      type = type,
-      value = value,
-      placeholder = placeholder,
-      autocomplete = "off"
-    ),
-    tags$div(class = "valid-feedback"),
-    tags$div(class = "invalid-feedback"),
-    ...
-  )
+  dep_attach({
+    tags$div(
+      class = "yonder-textual",
+      id = id,
+      tags$input(
+        class = "form-control",
+        type = type,
+        value = value,
+        placeholder = placeholder,
+        autocomplete = "off"
+      ),
+      tags$div(class = "valid-feedback"),
+      tags$div(class = "invalid-feedback"),
+      ...
+    )
+  })
 }
 
 #' @rdname textInput
@@ -111,17 +113,19 @@ numberInput <- function(id, value = NULL, placeholder = NULL, ..., min = NULL,
                         max = NULL, step = 1) {
   assert_id()
 
-  component <- textInput(
-    id = id, value = value, placeholder = placeholder, ...,
-    type = "number"
-  )
+  dep_attach({
+    component <- textInput(
+      id = id, value = value, placeholder = placeholder, ...,
+      type = "number"
+    )
 
-  component$children[[1]] <- tag_attributes_add(
-    component$children[[1]],
-    drop_nulls(list(min = min, max = max, step = step))
-  )
+    component$children[[1]] <- tag_attributes_add(
+      component$children[[1]],
+      drop_nulls(list(min = min, max = max, step = step))
+    )
 
-  component
+    component
+  })
 }
 
 
@@ -162,25 +166,27 @@ groupTextInput <- function(id, value = NULL, placeholder = NULL, ...,
     force = TRUE
   )
 
-  left <- addon_left(left)
-  right <- addon_right(right)
+  dep_attach({
+    left <- addon_left(left)
+    right <- addon_right(right)
 
-  tags$div(
-    class = "yonder-group-text input-group",
-    id = id,
-    left,
-    tags$input(
-      type = type,
-      class = "form-control",
-      placeholder = placeholder,
-      value = value,
-      autocomplete = "off"
-    ),
-    right,
-    tags$div(class = "valid-feedback"),
-    tags$div(class = "invalid-feedback"),
-    ...
-  )
+    tags$div(
+      class = "yonder-group-text input-group",
+      id = id,
+      left,
+      tags$input(
+        type = type,
+        class = "form-control",
+        placeholder = placeholder,
+        value = value,
+        autocomplete = "off"
+      ),
+      right,
+      tags$div(class = "valid-feedback"),
+      tags$div(class = "invalid-feedback"),
+      ...
+    )
+  })
 }
 
 #' @rdname textInput

@@ -22,3 +22,7 @@ test_that("map_* helper", {
 
   expect_length(items, 3)
 })
+
+test_that("has dependencies", {
+  expect_dependencies(selectInput("ID"))
+})

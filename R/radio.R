@@ -54,14 +54,16 @@ radioInput <- function(id, choices = NULL, values = choices,
   assert_choices()
   assert_selected(length = 1)
 
-  radios <- map_radios(choices, values, selected, id, inline)
+  dep_attach({
+    radios <- map_radios(choices, values, selected, id, inline)
 
-  tags$div(
-    class = "yonder-radio",
-    id = id,
-    radios,
-    ...
-  )
+    tags$div(
+      class = "yonder-radio",
+      id = id,
+      radios,
+      ...
+    )
+  })
 }
 
 #' @rdname radioInput
@@ -178,15 +180,17 @@ radiobarInput <- function(id, choices, values = choices, selected = values[[1]],
   assert_choices()
   assert_selected(length = 1)
 
-  radios <- map_radiobuttons(choices, values, selected, id)
+  dep_attach({
+    radios <- map_radiobuttons(choices, values, selected, id)
 
-  tags$div(
-    class = "yonder-radiobar btn-group btn-group-toggle d-flex",
-    id = id,
-    `data-toggle` = "buttons",
-    ...,
-    radios
-  )
+    tags$div(
+      class = "yonder-radiobar btn-group btn-group-toggle d-flex",
+      id = id,
+      `data-toggle` = "buttons",
+      ...,
+      radios
+    )
+  })
 }
 
 #' @rdname radiobarInput

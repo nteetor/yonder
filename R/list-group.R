@@ -115,25 +115,27 @@ listGroupInput <- function(id, choices = NULL, values = choices,
   assert_possible(layout, c("vertical", "horizontal"))
   assert_possible(flush, c(TRUE, FALSE))
 
-  layout <- resp_construct(layout, c("vertical", "horizontal"))
-  classes <- resp_classes(layout, "list-group")
+  dep_attach({
+    layout <- resp_construct(layout, c("vertical", "horizontal"))
+    classes <- resp_classes(layout, "list-group")
 
-  # drop vertical classes as they do not actually exist
-  classes <- classes[!grepl("vertical", classes, fixed = TRUE)]
+    # drop vertical classes as they do not actually exist
+    classes <- classes[!grepl("vertical", classes, fixed = TRUE)]
 
-  items <- map_listitems(choices, values, selected)
+    items <- map_listitems(choices, values, selected)
 
-  tags$div(
-    class = str_collate(
-      "yonder-list-group",
-      "list-group",
-      classes,
-      if (flush) "list-group-flush"
-    ),
-    id = id,
-    items,
-    ...
-  )
+    tags$div(
+      class = str_collate(
+        "yonder-list-group",
+        "list-group",
+        classes,
+        if (flush) "list-group-flush"
+      ),
+      id = id,
+      items,
+      ...
+    )
+  })
 }
 
 #' @rdname listGroupInput

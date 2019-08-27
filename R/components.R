@@ -41,7 +41,9 @@ d3 <- function(...) d(3, ...)
 d4 <- function(...) d(4, ...)
 
 d <- function(level, ...) {
-  tags$h1(class = paste0("display-", level), ...)
+  dep_attach({
+    tags$h1(class = paste0("display-", level), ...)
+  })
 }
 
 #' Jumbotron
@@ -72,15 +74,22 @@ d <- function(level, ...) {
 #' )
 #'
 jumbotron <- function(..., title = NULL, subtitle = NULL) {
-  tags$div(
-    class = "jumbotron",
-    if (!is.null(title)) d3(title),
-    if (!is.null(subtitle)) tags$p(class = "lead", subtitle),
-    if (length(named_values(list(...))) > 0) {
-      tags$hr(class = "my-4")
-    },
-    ...
-  )
+  dep_attach({
+    divider <- NULL
+
+    if (!(is.null(title) && is.null(subtitle)) &&
+        length(unnamed_values(list(...))) > 0) {
+      divider <- tags$hr(class = "my-4")
+    }
+
+    tags$div(
+      class = "jumbotron",
+      if (!is.null(title)) d3(title),
+      if (!is.null(subtitle)) tags$p(class = "lead", subtitle),
+      divider,
+      ...
+    )
+  })
 }
 
 #' Responsive images and figures
@@ -102,16 +111,22 @@ jumbotron <- function(..., title = NULL, subtitle = NULL) {
 #' @family components
 #' @export
 img <- function(src, ...) {
-  tags$img(
-    class = "img-fluid",
-    src = src,
-    ...
-  )
+  assert_found(src)
+
+  dep_attach({
+    tags$img(
+      class = "img-fluid",
+      src = src,
+      ...
+    )
+  })
 }
 
 #' @rdname img
 #' @export
 figure <- function(image, caption = NULL, ...) {
+  assert_found(image)
+
   if (!is_tag(image)) {
     stop(
       "invalid argument in `figure()`, `image` must be a tag element",
@@ -119,17 +134,19 @@ figure <- function(image, caption = NULL, ...) {
     )
   }
 
-  tags$figure(
-    class = "figure",
-    tag_class_add(image, "figure-img"),
-    if (!is.null(caption)) {
-      tags$figcaption(
-        class = "figure-caption",
-        caption
-      )
-    },
-    ...
-  )
+  dep_attach({
+    tags$figure(
+      class = "figure",
+      tag_class_add(image, "figure-img"),
+      if (!is.null(caption)) {
+        tags$figcaption(
+          class = "figure-caption",
+          caption
+        )
+      },
+      ...
+    )
+  })
 }
 
 #' Blockquotes
@@ -157,22 +174,24 @@ figure <- function(image, caption = NULL, ...) {
 #'   "But to love something despite.",
 #'   "To know the flaws and love them too.",
 #'   "That is rare and pure and perfect.",
-#'   source = tags$span(
+#'   source = list(
 #'     "Patrick Rothfuss,", tags$cite("The Wise Man's Fear")
 #'   )
 #' )
 #'
 blockquote <- function(..., source = NULL, align = "left") {
-  tags$blockquote(
-    class = str_collate(
-      "blockquote",
-      if (align == "right") "blockquote-reverse"
-    ),
-    ...,
-    if (!is.null(source)) {
-      tags$footer(class = "blockquote-footer", source)
-    }
-  )
+  dep_attach({
+    tags$blockquote(
+      class = str_collate(
+        "blockquote",
+        if (align == "right") "blockquote-reverse"
+      ),
+      ...,
+      if (!is.null(source)) {
+        tags$footer(class = "blockquote-footer", source)
+      }
+    )
+  })
 }
 
 #' Scrollable code snippets
@@ -205,7 +224,9 @@ blockquote <- function(..., source = NULL, align = "left") {
 #' )
 #'
 pre <- function(...) {
-  tags$pre(class = "pre-scrollable", ...)
+  dep_attach({
+    tags$pre(class = "pre-scrollable", ...)
+  })
 }
 
 #' Group and label multiple inputs
@@ -258,22 +279,22 @@ fieldset <- function(..., legend = NULL) {
     )
   }
 
-  args <- list(...)
+  dep_attach({
+    args <- list(...)
 
-  component <- tags$fieldset(
-    class = "form-group",
-    if (!is.null(legend)) {
-      tags$legend(
-        class = "col-form-legend",
-        legend
+    component <- tags$fieldset(
+      class = "form-group",
+      if (!is.null(legend)) {
+        tags$legend(
+          class = "col-form-legend",
+          legend
+        )
+      },
+      tags$div(
+        unnamed_values(args)
       )
-    },
-    tags$div(
-      unnamed_values(args)
     )
-  )
 
-  component <- tag_attributes_add(component, named_values(args))
-
-  component
+    tag_attributes_add(component, named_values(args))
+  })
 }

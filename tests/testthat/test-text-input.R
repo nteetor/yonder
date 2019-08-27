@@ -18,3 +18,7 @@ test_that("min, max, step added to <input> child element", {
   expect_equal(element$children[[1]]$attribs$step, 2)
   expect_match(as.character(element), 'min="1" max="10" step="2"')
 })
+
+test_that("has dependencies", {
+  expect_dependencies(textInput("ID"))
+})

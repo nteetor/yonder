@@ -66,31 +66,33 @@ menuInput <- function(id, label, choices = NULL, values = choices,
   assert_possible(direction, c("up", "right", "down", "left"))
   assert_possible(align, c("right", "left"))
 
-  items <- map_menuitems(choices, values, selected)
+  dep_attach({
+    items <- map_menuitems(choices, values, selected)
 
-  tags$div(
-    class = str_collate(
-      "yonder-menu",
-      paste0("drop", direction)
-    ),
-    id = id,
-    tags$button(
-      class = "btn btn-grey dropdown-toggle",
-      type = "button",
-      `data-toggle` = "dropdown",
-      `aria-haspopup` = "true",
-      `aria-expanded` = "false",
-      label
-    ),
-    ...,
     tags$div(
       class = str_collate(
-        "dropdown-menu",
-        if (align == "right") "dropdown-menu-right"
+        "yonder-menu",
+        paste0("drop", direction)
       ),
-      items
+      id = id,
+      tags$button(
+        class = "btn btn-grey dropdown-toggle",
+        type = "button",
+        `data-toggle` = "dropdown",
+        `aria-haspopup` = "true",
+        `aria-expanded` = "false",
+        label
+      ),
+      ...,
+      tags$div(
+        class = str_collate(
+          "dropdown-menu",
+          if (align == "right") "dropdown-menu-right"
+        ),
+        items
+      )
     )
-  )
+  })
 }
 
 #' @rdname menuInput

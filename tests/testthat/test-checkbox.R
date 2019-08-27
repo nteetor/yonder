@@ -19,3 +19,7 @@ test_that("choices and values must be the same length", {
   expect_error(checkboxInput("ID", c("hello"), c("world", "moon")))
   expect_error(checkboxInput("ID", c("hello", "goodnight"), "world"))
 })
+
+test_that("has dependencies", {
+  expect_dependencies(checkboxInput("ID"))
+})

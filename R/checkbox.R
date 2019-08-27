@@ -80,14 +80,16 @@ checkboxInput <- function(id, choices = NULL, values = choices, selected = NULL,
   assert_id()
   assert_choices()
 
-  checkboxes <- map_checkboxes(choices, values, selected, inline)
+  dep_attach({
+    checkboxes <- map_checkboxes(choices, values, selected, inline)
 
-  tags$div(
-    class = "yonder-checkbox",
-    id = id,
-    checkboxes,
-    ...
-  )
+    tags$div(
+      class = "yonder-checkbox",
+      id = id,
+      checkboxes,
+      ...
+    )
+  })
 }
 
 #' @rdname checkboxInput
@@ -125,14 +127,16 @@ switchInput <- function(id, choices, values = choices, selected = NULL, ...) {
   assert_id()
   assert_choices()
 
-  switches <- map_checkboxes(choices, values, selected, FALSE, TRUE)
+  dep_attach({
+    switches <- map_checkboxes(choices, values, selected, FALSE, TRUE)
 
-  tags$div(
-    class = "yonder-checkbox",
-    id = id,
-    switches,
-    ...
-  )
+    tags$div(
+      class = "yonder-checkbox",
+      id = id,
+      switches,
+      ...
+    )
+  })
 }
 
 #' @rdname checkboxInput
@@ -261,15 +265,17 @@ checkbarInput <- function(id, choices = NULL, values = choices,
   assert_id()
   assert_choices()
 
-  checkboxes <- map_checkbuttons(choices, values, selected)
+  dep_attach({
+    checkboxes <- map_checkbuttons(choices, values, selected)
 
-  tags$div(
-    class = "yonder-checkbar btn-group btn-group-toggle d-flex",
-    id = id,
-    `data-toggle` = "buttons",
-    checkboxes,
-    ...
-  )
+    tags$div(
+      class = "yonder-checkbar btn-group btn-group-toggle d-flex",
+      id = id,
+      `data-toggle` = "buttons",
+      checkboxes,
+      ...
+    )
+  })
 }
 
 #' @rdname checkbarInput
