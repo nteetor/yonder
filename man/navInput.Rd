@@ -6,7 +6,8 @@
 \title{Page navigation inputs}
 \usage{
 navInput(id, choices = NULL, values = choices,
-  selected = values[[1]], ..., appearance = "links", fill = FALSE)
+  selected = values[[1]], ..., appearance = "links", fill = FALSE,
+  targets = NULL)
 
 updateNavInput(id, choices = NULL, values = choices, selected = NULL,
   enable = NULL, disable = NULL,
@@ -138,6 +139,27 @@ navInput(
   choices = paste("Tab", 1:3)
 ) \%>\%
   flex(justify = "center")
+
+### Controlling nav content
+
+navInput(
+  id = "test",
+  choices = c("Home", "About"),
+  targets = "pages"
+)
+
+navInput(
+  id = "test",
+  choices = c("Home", "About"),
+  values = c("chicken", "dinner")
+  targets = c(chicken = "Home", dinner = "About")
+)
+
+navInput(
+  id = "test",
+  choices = c("Home", "About"),
+  targets = c(Home = c("Home", "sidebar"), About = About)
+)
 
 }
 \seealso{

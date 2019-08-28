@@ -116,9 +116,30 @@
 #' ) %>%
 #'   flex(justify = "center")
 #'
+#' ### Controlling nav content
+#'
+#' navInput(
+#'   id = "test",
+#'   choices = c("Home", "About"),
+#'   targets = "pages"
+#' )
+#'
+#' navInput(
+#'   id = "test",
+#'   choices = c("Home", "About"),
+#'   values = c("chicken", "dinner")
+#'   targets = c(chicken = "Home", dinner = "About")
+#' )
+#'
+#' navInput(
+#'   id = "test",
+#'   choices = c("Home", "About"),
+#'   targets = c(Home = c("Home", "sidebar"), About = About)
+#' )
+#'
 navInput <- function(id, choices = NULL, values = choices,
                      selected = values[[1]], ..., appearance = "links",
-                     fill = FALSE) {
+                     fill = FALSE, targets = NULL) {
   assert_id()
   assert_selected(length = 1)
   assert_possible(appearance, c("links", "pills", "tabs"))
