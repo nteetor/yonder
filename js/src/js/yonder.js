@@ -22,6 +22,5 @@ import "./download.js";
 import "./content.js";
 import "./modal.js";
 import "./popover.js";
+import "./tooltip.js";
 import "./toast.js";
-
-$(() => $("[data-toggle=\"tooltip\"]").tooltip());
