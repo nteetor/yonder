@@ -1021,6 +1021,11 @@
         });
         e.currentTarget.parentNode.parentNode.children[0].classList.add("active");
         e.currentTarget.classList.add("active");
+      }); // Show active on initialize w/out requiring click
+
+      $(el.querySelector(".active[data-target]")).removeClass("active").tab("show");
+      $("#" + el.id + " button[data-target]").on("click", function (e) {
+        $(e.currentTarget).tab("show");
       });
     },
     getValue: function getValue(el) {
@@ -2014,6 +2019,10 @@
   });
 
   $(function () {
+    $("[data-toggle=\"tooltip\"]").tooltip();
+  });
+
+  $(function () {
     document.body.insertAdjacentHTML("beforeend", "<div class='yonder-toasts'></div>");
     $(".yonder-toasts").on("hidden.bs.toast", ".toast", function (e) {
       if (e.currentTarget.hasAttribute("data-action")) {
@@ -2052,10 +2061,6 @@
     } else {
       console.warn("no toast " + msg.type + " method");
     }
-  });
-
-  $(function () {
-    return $("[data-toggle=\"tooltip\"]").tooltip();
   });
 
 })));

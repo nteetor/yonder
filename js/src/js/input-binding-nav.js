@@ -23,6 +23,13 @@ $.extend(navInputBinding, {
       e.currentTarget.parentNode.parentNode.children[0].classList.add("active");
       e.currentTarget.classList.add("active");
     });
+
+    // Show active on initialize w/out requiring click
+    $(el.querySelector(".active[data-target]")).removeClass("active").tab("show");
+
+    $(`#${ el.id } button[data-target]`).on("click", (e) => {
+      $(e.currentTarget).tab("show");
+    });
   },
   getValue: (el) => {
     let active = el.querySelector(".nav-link.active:not(.disabled)");
