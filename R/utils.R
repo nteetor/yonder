@@ -86,7 +86,7 @@ tag_name_is <- function(x, name) {
 tag_attributes_add <- function(x, attrs = NULL, ...) {
   stopifnot(is_tag(x))
 
-  args <- c(attrs, list(...))
+  args <- drop_nulls(c(attrs, list(...)))
 
   if (length(args) == 0) {
     return(x)
