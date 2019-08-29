@@ -11,6 +11,12 @@ test_that("tag_attributes_add", {
   element <- tag_attributes_add(div(multiple = NA), c(`data-hello` = "world"))
 
   expect_equal(element$attribs, list(multiple = NA, `data-hello` = "world"))
+
+  expect_silent(tag_attributes_add(div(), `data-target` = NULL))
+
+  el2 <- tag_attributes_add(div(), `data-target` = NULL)
+  expect_null(el2$attributes$`data-target`)
+  expect_output(print(el2), "<div></div>")
 })
 
 test_that("tag_class_re", {
