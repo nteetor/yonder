@@ -120,6 +120,63 @@ assert_selected <- function(length) {
   }
 }
 
+assert_targets <- function() {
+  targets <- get_variable("targets")
+  values <- get_variable("values")
+  fun <- get_caller()
+
+  if (!is.null(targets) && !is.character(targets) &&
+      !is_strictly_list(targets)) {
+    stop(
+      "invalid argument in `", fun, "`, `targets` must be NULL, a character ",
+      "string or vector, or list",
+      call. = FALSE
+    )
+  }
+
+  if (is.character(targets) && length(targets) == 1 && length(values) > 1) {
+    pass <- vapply(values, is.character, logical(1))
+
+    if (!all(pass)) {
+      stop(
+        "invalid arguments in `", fun, "`, `values` must be a character ",
+        "string or vector if `targets` is a character string",
+        call. = FALSE
+      )
+    }
+  }
+
+  if (!is.null(targets) && !(is.character(targets) && length(targets) == 1) &&
+      length(targets) != length(values)) {
+    stop(
+      "invalid arguments in `", fun, "`, `targets` and `values` must be the ",
+      "same length",
+      call. = FALSE
+    )
+  }
+
+  if (any(names2(targets) == "") && !all(names2(targets) == "")) {
+    stop(
+      "invalid argument in `", fun, "`, `targets` values must all be ",
+      "named, if using names",
+      call. = FALSE
+    )
+  }
+
+  if (is_strictly_list(targets)) {
+    classes <- vapply(targets, function(x) class(x)[1], character(1))
+
+    if (!all(classes == "character" | classes == "NULL")) {
+      stop(
+        "invalid argument in `", fun, "`, `targets` list items must be NULL ",
+        "or character strings or vectors",
+        call. = FALSE
+      )
+    }
+  }
+
+}
+
 assert_possible <- function(x, possible) {
   if (!is.null(x) && !all(x %in% possible)) {
     arg <- as.character(match.call()[[2]])

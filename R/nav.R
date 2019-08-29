@@ -141,11 +141,13 @@ navInput <- function(id, choices = NULL, values = choices,
                      selected = values[[1]], ..., appearance = "links",
                      fill = FALSE, targets = NULL) {
   assert_id()
+  assert_choices()
   assert_selected(length = 1)
   assert_possible(appearance, c("links", "pills", "tabs"))
+  assert_targets()
 
   dep_attach({
-    items <- map_navitems(choices, values, selected)
+    items <- map_navitems(choices, values, selected, targets)
 
     tags$ul(
       class = str_collate(
@@ -165,13 +167,15 @@ navInput <- function(id, choices = NULL, values = choices,
 #' @export
 updateNavInput <- function(id, choices = NULL, values = choices,
                            selected = NULL, enable = NULL, disable = NULL,
+                           targets = NULL,
                            session = getDefaultReactiveDomain()) {
   assert_id()
   assert_choices()
   assert_selected(length = 1)
+  assert_targets()
   assert_session()
 
-  items <- map_navitems(choices, values, selected)
+  items <- map_navitems(choices, values, selected, targets)
 
   content <- coerce_content(items)
   selected <- coerce_selected(selected)
@@ -186,8 +190,9 @@ updateNavInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_navitems <- function(choices, values, selected) {
+map_navitems <- function(choices, values, selected, targets) {
   selected <- values %in% selected
+  targets <- format_targets(targets, values)
 
   Map(
     choice = choices,
@@ -210,6 +215,8 @@ map_navitems <- function(choices, values, selected) {
           choice$children[[1]] <- tag_class_add(choice$children[[1]], "active")
         }
 
+        choice <- tag_attributes_add(choice, `data-target` = get_target(targets, value))
+
         choice$name <- "li"
         choice <- tag_class_add(choice, "nav-item")
 
@@ -225,6 +232,7 @@ map_navitems <- function(choices, values, selected) {
             "btn-link",
             if (select) "active"
           ),
+          `data-target` = get_target(targets, value),
           value = value,
           choice
         )
