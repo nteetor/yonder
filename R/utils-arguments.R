@@ -2,6 +2,13 @@ coerce_content <- function(x) {
   if (length(x) > 0) {
     if (is_tag(x)) {
       HTML(as.character(x))
+    } else if (inherits(x, "AsIs")) {
+      HTML(
+        paste(
+          vapply(x, as.character, character(1)),
+          collapse = "<br>\n"
+        )
+      )
     } else {
       HTML(
         paste(

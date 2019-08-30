@@ -197,6 +197,9 @@ formSubmit <- function(label, value = label, ...) {
 #'   background("grey")
 #'
 formGroup <- function(label, input, ..., help = NULL, width = NULL) {
+  assert_found(label)
+  assert_found(input)
+
   if (!is_tag(input) && !is_strictly_list(input)) {
     stop(
       "invalid argument in `formGroup()`, `input` must be a tag element or list",
@@ -214,13 +217,23 @@ formGroup <- function(label, input, ..., help = NULL, width = NULL) {
     width <- resp_construct(width, c(1:12, "auto"))
     classes <- resp_classes(width, "col")
 
+    if (is_tag(label) && tag_name_is(label, "label")) {
+      # do nothing
+    } else {
+      label <- tags$label(coerce_content(label))
+    }
+
+    if (is.character(help)) {
+      help <- coerce_content(help)
+    }
+
     tags$div(
       class = str_collate(
         "form-group",
         classes
       ),
       ...,
-      tags$label(label),
+      label,
       input,
       if (!is.null(help)) {
         tags$small(
