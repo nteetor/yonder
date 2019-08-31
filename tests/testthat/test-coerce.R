@@ -8,6 +8,8 @@ test_that("coerce_content", {
     "<div>hello</div>\n<div>world</div>",
     fixed = TRUE
   )
+  expect_match(coerce_content(c("hello", "world")), "hello\nworld")
+  expect_match(coerce_content(I(c("hello", "world"))), "hello<br>\nworld")
 })
 
 test_that("coerce_selected", {
