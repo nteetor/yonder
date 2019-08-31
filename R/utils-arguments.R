@@ -63,3 +63,11 @@ coerce_invalid <- function(x) {
     HTML(as.character(x))
   }
 }
+
+coerce_submit <- function(x) {
+  if (identical(as.logical(x), FALSE)) {
+    NULL
+  } else {
+    x
+  }
+}

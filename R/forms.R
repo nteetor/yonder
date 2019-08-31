@@ -32,12 +32,20 @@
 #'   button and the value of the form input when the button is clicked,
 #'   defaults to `label`.
 #'
+#' @param submit One of `TRUE` or `FALSE` or a character string specifying
+#'   whether to trigger a form submission, defaults to `FALSE`. If a character
+#'   string, the form is submitted and the reactive value passed is the character
+#'   string specified.
+#'
 #' @details
 #'
 #' When `inline` is `TRUE` you may want to adjust the right margin of each child
 #' element for viewports larger than mobile, `margin(<TAG>, right = c(sm = 2))`,
 #' see [margin()]. You only need to apply extra space for larger viewports
 #' because inline forms do not take effect on small viewports.
+#'
+#' Use `updateFormInput()` to submit a form input. This will cause all the form's
+#' child inputs to update.
 #'
 #' @section Frozen inputs with scope:
 #'
@@ -127,6 +135,29 @@ formSubmit <- function(label, value = label, ...) {
       ...
     )
   })
+}
+
+#' @rdname formInput
+#' @export
+updateFormInput <- function(id, submit = FALSE,
+                            session = getDefaultReactiveDomain()) {
+  assert_id()
+  assert_session()
+
+  if (!(is.logical(submit) || is.character(submit)) ||
+        (is.character(submit) && length(submit) > 1)) {
+    stop(
+      "invalid argument in `updateFormInput()`, `submit` must be one of ",
+      "TRUE or FALSE or a character string",
+      call. = FALSE
+    )
+  }
+
+  submit <- coerce_submit(submit)
+
+  session$sendInputMessage(id, list(
+    submit = submit
+  ))
 }
 
 #' Input labels, help text, and formatting to inputs
