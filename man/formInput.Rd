@@ -3,11 +3,15 @@
 \name{formInput}
 \alias{formInput}
 \alias{formSubmit}
+\alias{updateFormInput}
 \title{Form inputs}
 \usage{
 formInput(id, ..., inline = FALSE)
 
 formSubmit(label, value = label, ...)
+
+updateFormInput(id, submit = FALSE,
+  session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -27,6 +31,13 @@ button.}
 \item{value}{A character string specifying the value of the form submit
 button and the value of the form input when the button is clicked,
 defaults to \code{label}.}
+
+\item{submit}{One of \code{TRUE} or \code{FALSE} or a character string specifying
+whether to trigger a form submission, defaults to \code{FALSE}. If a character
+string, the form is submitted and the reactive value passed is the character
+string specified.}
+
+\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 Form inputs are a new reactive input. Form inputs are an alternative to
@@ -46,6 +57,9 @@ When \code{inline} is \code{TRUE} you may want to adjust the right margin of eac
 element for viewports larger than mobile, \code{margin(<TAG>, right = c(sm = 2))},
 see \code{\link[=margin]{margin()}}. You only need to apply extra space for larger viewports
 because inline forms do not take effect on small viewports.
+
+Use \code{updateFormInput()} to submit a form input. This will cause all the form's
+child inputs to update.
 }
 \section{Frozen inputs with scope}{
 \preformatted{ui <- container(

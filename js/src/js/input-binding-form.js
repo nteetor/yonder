@@ -34,7 +34,13 @@ $.extend(formInputBinding, {
       value = e.currentTarget.value;
     });
 
-    $el.on("submit.yonder", (e) => {
+    $el.on("submit.yonder", (e, v) => {
+      e.preventDefault();
+
+      if (v !== undefined) {
+        value = v;
+      }
+
       Object.keys(store).forEach(key => {
         Shiny.onInputChange(key, store[key], { priority: "event" });
       });
@@ -49,6 +55,11 @@ $.extend(formInputBinding, {
   unsubscribe: (el) => {
     $(el).off(".yonder");
     $(document).off("shiny:inputchanged.yonder");
+  },
+  receiveMessage: (el, msg) => {
+    if (msg.submit !== undefined && msg.submit !== null) {
+      $(el).trigger("submit.yonder", msg.submit);
+    }
   }
 });
 

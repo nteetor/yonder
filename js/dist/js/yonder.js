@@ -693,7 +693,13 @@
       $el.on("click.yonder", ".yonder-form-submit", function (e) {
         value = e.currentTarget.value;
       });
-      $el.on("submit.yonder", function (e) {
+      $el.on("submit.yonder", function (e, v) {
+        e.preventDefault();
+
+        if (v !== undefined) {
+          value = v;
+        }
+
         Object.keys(store).forEach(function (key) {
           Shiny.onInputChange(key, store[key], {
             priority: "event"
@@ -713,6 +719,11 @@
     unsubscribe: function unsubscribe(el) {
       $(el).off(".yonder");
       $(document).off("shiny:inputchanged.yonder");
+    },
+    receiveMessage: function receiveMessage(el, msg) {
+      if (msg.submit !== undefined && msg.submit !== null) {
+        $(el).trigger("submit.yonder", msg.submit);
+      }
     }
   });
   Shiny.inputBindings.register(formInputBinding, "yonder.formInput");
