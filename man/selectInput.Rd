@@ -78,10 +78,10 @@ dropdown input value, the value of the text input, and any static addons.}
 }
 \description{
 Create a select input. Select elements typically appear as a simple menu of
-choices and may have one or more selected values, see the \code{multiple}
-argument. A group select input is a select input with one or two additional
-components. These addon components are used to change the reactivity or value
-of the input, see Details for more information.
+choices and may have one selected choice. A group select input is a select
+input with one or two additional components. These addon components are used
+to change the reactivity or value of the input, see Details for more
+information.
 }
 \examples{
 
