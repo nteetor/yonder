@@ -7,10 +7,10 @@
 \usage{
 navInput(id, choices = NULL, values = choices,
   selected = values[[1]], ..., appearance = "links", fill = FALSE,
-  targets = NULL)
+  actions = NULL)
 
 updateNavInput(id, choices = NULL, values = choices, selected = NULL,
-  enable = NULL, disable = NULL,
+  enable = NULL, disable = NULL, actions = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
