@@ -4,10 +4,13 @@
 \alias{carousel}
 \title{Carousel}
 \usage{
-carousel(..., controls = TRUE, fade = FALSE)
+carousel(..., id = NULL, controls = TRUE, fade = FALSE)
 }
 \arguments{
 \item{...}{Any number of tag elements.}
+
+\item{id}{A character string specifying an optional id for the carousel,
+defaults to \code{NULL}.}
 
 \item{controls}{One of \code{TRUE} or \code{FALSE} specifying if next and previous
 slide controls are added to the carousel, defaults to \code{TRUE}.}

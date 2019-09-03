@@ -4,6 +4,9 @@
 #'
 #' @param ... Any number of tag elements.
 #'
+#' @param id A character string specifying an optional id for the carousel,
+#'   defaults to `NULL`.
+#'
 #' @param controls One of `TRUE` or `FALSE` specifying if next and previous
 #'   slide controls are added to the carousel, defaults to `TRUE`.
 #'
@@ -11,8 +14,10 @@
 #'   sliding in, defaults to `FALSE`.
 #'
 #' @export
-carousel <- function(..., controls = TRUE, fade = FALSE) {
+carousel <- function(..., id = NULL, controls = TRUE, fade = FALSE) {
   args <- list(...)
+
+  id <- id %||% generate_id("carousel")
 
   items <- lapply(unnamed_values(args), function(x) {
     tags$div(
@@ -26,6 +31,7 @@ carousel <- function(..., controls = TRUE, fade = FALSE) {
   }
 
   component <- tags$div(
+    id = id,
     class = str_collate(
       "carousel",
       "slide",
@@ -41,12 +47,30 @@ carousel <- function(..., controls = TRUE, fade = FALSE) {
         tags$a(
           class = "carousel-control-prev",
           role = "button",
-          `data-slide` = "prev"
+          href = paste0("#", id),
+          `data-slide` = "prev",
+          tags$span(
+            class = "carousel-control-prev-icon",
+            `aria-hidden` = "true"
+          ),
+          tags$span(
+            class = "sr-only",
+            "Previous"
+          )
         ),
         tags$a(
-          class = "carousel-control-prev",
+          class = "carousel-control-next",
           role = "button",
-          `data-slide` = "next"
+          href = paste0("#", id),
+          `data-slide` = "next",
+          tags$span(
+            class = "carousel-control-next-icon",
+            `aria-hidden` = "true"
+          ),
+          tags$span(
+            class = "sr-only",
+            "Next"
+          )
         )
 
       )
