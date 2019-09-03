@@ -67,35 +67,3 @@ coerce_invalid <- function(x) {
     HTML(as.character(x))
   }
 }
-
-format_targets <- function(targets, values) {
-  if (is.null(targets)) {
-    return(targets)
-  }
-
-  if (length(targets) > 1) {
-    targets <- lapply(targets, function(target) {
-      if (is.character(target)) {
-        paste0("#", target, collapse = " ")
-      }
-    })
-
-    if (all(names2(targets) == "")) {
-      names(targets) <- values
-    }
-
-    targets
-  } else if (is.character(targets)) {
-    targets
-  }
-}
-
-get_target <- function(targets, value) {
-  if (is.null(targets)) {
-    NULL
-  } else if (is.character(targets)) {
-    paste0("#", value)
-  } else {
-    targets[[value]]
-  }
-}

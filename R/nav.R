@@ -139,15 +139,15 @@
 #'
 navInput <- function(id, choices = NULL, values = choices,
                      selected = values[[1]], ..., appearance = "links",
-                     fill = FALSE, targets = NULL) {
+                     fill = FALSE, actions = NULL) {
   assert_id()
   assert_choices()
   assert_selected(length = 1)
   assert_possible(appearance, c("links", "pills", "tabs"))
-  assert_targets()
+  # assert_targets()
 
   dep_attach({
-    items <- map_navitems(choices, values, selected, targets)
+    items <- map_navitems(choices, values, selected, actions)
 
     tags$ul(
       class = str_collate(
@@ -167,12 +167,12 @@ navInput <- function(id, choices = NULL, values = choices,
 #' @export
 updateNavInput <- function(id, choices = NULL, values = choices,
                            selected = NULL, enable = NULL, disable = NULL,
-                           targets = NULL,
+                           actions = NULL,
                            session = getDefaultReactiveDomain()) {
   assert_id()
   assert_choices()
   assert_selected(length = 1)
-  assert_targets()
+  # assert_targets()
   assert_session()
 
   items <- map_navitems(choices, values, selected, targets)
@@ -196,7 +196,7 @@ map_navitems <- function(choices, values, selected, targets) {
   }
 
   selected <- values %in% selected
-  targets <- format_targets(targets, values)
+  targets <- construct_targets(targets, values)
 
   Map(
     choice = choices,
