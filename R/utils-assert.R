@@ -120,61 +120,25 @@ assert_selected <- function(length) {
   }
 }
 
-assert_targets <- function() {
-  targets <- get_variable("targets")
+assert_actions <- function() {
+  actions <- get_variable("actions")
   values <- get_variable("values")
   fun <- get_caller()
 
-  if (!is.null(targets) && !is.character(targets) &&
-      !is_strictly_list(targets)) {
+  if (!is.null(actions) && !is_strictly_list(actions)) {
     stop(
-      "invalid argument in `", fun, "`, `targets` must be NULL, a character ",
-      "string or vector, or list",
+      "invalid argument in `", fun, "`, `actions` must be a list or NULL",
       call. = FALSE
     )
   }
 
-  if (is.character(targets) && length(targets) == 1 && length(values) > 1) {
-    pass <- vapply(values, is.character, logical(1))
-
-    if (!all(pass)) {
-      stop(
-        "invalid arguments in `", fun, "`, `values` must be a character ",
-        "string or vector if `targets` is a character string",
-        call. = FALSE
-      )
-    }
-  }
-
-  if (!is.null(targets) && !(is.character(targets) && length(targets) == 1) &&
-      length(targets) != length(values)) {
+  if (!all(vapply(actions, is_input_action, logical(1)))) {
     stop(
-      "invalid arguments in `", fun, "`, `targets` and `values` must be the ",
-      "same length",
+      "invalid argument in `", fun, "`, `actions` must be a list of input actions ",
+      "see ?actions",
       call. = FALSE
     )
   }
-
-  if (any(names2(targets) == "") && !all(names2(targets) == "")) {
-    stop(
-      "invalid argument in `", fun, "`, `targets` values must all be ",
-      "named, if using names",
-      call. = FALSE
-    )
-  }
-
-  if (is_strictly_list(targets)) {
-    classes <- vapply(targets, function(x) class(x)[1], character(1))
-
-    if (!all(classes == "character" | classes == "NULL")) {
-      stop(
-        "invalid argument in `", fun, "`, `targets` list items must be NULL ",
-        "or character strings or vectors",
-        call. = FALSE
-      )
-    }
-  }
-
 }
 
 assert_possible <- function(x, possible) {

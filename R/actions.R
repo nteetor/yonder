@@ -1,7 +1,7 @@
 #' Input actions
 #'
-#' These functions are used in conjunction with the `targets` argument found
-#' in all of yonder's reactive input functions.
+#' These functions are used in conjunction with yonder's reactive input functions'
+#' `actions` argument.
 #'
 #' @param id A character string specifying the id of a [navPane()] or
 #'   [collapsePane()].
@@ -13,76 +13,81 @@ NULL
 
 #' @rdname actions
 #' @export
-showTarget <- function(id, ...) {
-  create_targeter("show", id)
+showNavTarget <- function(id, ...) {
+  input_action("tab", "show", id)
 }
 
 #' @rdname actions
 #' @export
-hideTarget <- function(id, ...) {
-  create_targeter("hide", id)
+hideNavTarget <- function(id, ...) {
+  input_action("tab", "hide", id)
 }
 
-create_targeter <- function(action, id) {
+input_action <- function(plugin, action, id) {
   structure(
-    class = c("targeter", "list"),
+    class = c("input_action", "list"),
     list(
+      plugin = plugin,
       action = action,
-      target = id
+      target = paste0("#", id),
+      value = id
     )
   )
 }
 
-is_targeter <- function(x) {
-  inherits(x, "targeter")
+set_action_target <- function(action, id) {
+  action$target <- paste0("#", id)
+  action
 }
 
-#' Explain a targetting action
-#'
-#' Printing a targetting action displays a message about the action performed.
-#'
-#' @param x An object with class `"targeter"`.
-#'
-#' @param ... Additional arguments passed on to other methods.
-#'
-#' @keywords internal
-#' @export
-print.targeter <- function(x, ...) {
-  msg <- "Selecting the input choice with the corresponding value _%s_ the element with id `%s`"
-  cat(sprintf(msg, x$action, x$id), "\n")
-  invisible(x)
+set_action_value <- function(action, value) {
+  action$value <- value
+  action
 }
 
-construct_targets <- function(targets, values) {
-  if (is.null(targets)) {
-    return(targets)
+get_action_value <- function(action) {
+  action$value
+}
+
+c.input_action <- function(...) {
+  list(...)
+}
+
+as.list.input_action <- function(x) {
+  list(
+    `data-toggle` = x$plugin,
+    `data-target` = x$target,
+    `data-action` = x$action
+  )
+}
+
+is_input_action <- function(x) {
+  inherits(x, "input_action")
+}
+
+normalize_actions <- function(actions, values) {
+  if (is.null(actions) || length(actions) == 0) {
+    return(vector("list", length(values)))
   }
 
-  if (length(targets) > 1) {
-    targets <- lapply(targets, function(target) {
-      if (is.character(target)) {
-        paste0("#", target, collapse = " ")
-      } else if (is_targeter(target)) {
-        stop("Not implemented")
+  actions <- Map(
+    action = actions,
+    name = names2(actions),
+    function(action, name) {
+      if (name != "") {
+        set_action_value(action, name)
+      } else {
+        action
       }
-    })
+    },
+    USE.NAMES = FALSE
+  )
 
-    if (all(names2(targets) == "")) {
-      names(targets) <- values
+  names(actions) <- vapply(actions, get_action_value, character(1))
+
+  lapply(values, function(value) {
+    if (value %in% names2(actions)) {
+      actions[names2(actions) == value][[1]]
     }
-
-    targets
-  } else if (is.character(targets)) {
-    targets
-  }
-}
-
-get_target <- function(targets, value) {
-  if (is.null(targets)) {
-    NULL
-  } else if (is.character(targets)) {
-    paste0("#", value)
-  } else {
-    targets[[value]]
-  }
+  })
 }

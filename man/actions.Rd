@@ -2,13 +2,13 @@
 % Please edit documentation in R/actions.R
 \name{actions}
 \alias{actions}
-\alias{showTarget}
-\alias{hideTarget}
+\alias{showNavTarget}
+\alias{hideNavTarget}
 \title{Input actions}
 \usage{
-showTarget(id, ...)
+showNavTarget(id, ...)
 
-hideTarget(id, ...)
+hideNavTarget(id, ...)
 }
 \arguments{
 \item{id}{A character string specifying the id of a \code{\link[=navPane]{navPane()}} or
@@ -17,6 +17,6 @@ hideTarget(id, ...)
 \item{...}{Additional arguments, currently ignored.}
 }
 \description{
-These functions are used in conjunction with the \code{targets} argument found
-in all of yonder's reactive input functions.
+These functions are used in conjunction with yonder's reactive input functions'
+\code{actions} argument.
 }

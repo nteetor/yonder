@@ -25,6 +25,8 @@
 #' @param appearance One of `"links"`, `"pills"`, or `"tabs"` specifying the
 #'   appearance of the nav input, defaults to `"links"`.
 #'
+#' @param actions Any number of [actions], defaults to `NULL`.
+#'
 #' @section Including a menu:
 #'
 #' Use the reactive id of any nav menus to know when a menu item is clicked.
@@ -190,19 +192,20 @@ updateNavInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_navitems <- function(choices, values, selected, targets) {
+map_navitems <- function(choices, values, selected, actions) {
   if (is.null(choices) && is.null(values)) {
     return(NULL)
   }
 
   selected <- values %in% selected
-  targets <- construct_targets(targets, values)
+  actions <- normalize_actions(actions, values)
 
   Map(
     choice = choices,
     value = values,
     select = selected,
-    function(choice, value, select) {
+    action = actions,
+    function(choice, value, select, action) {
       if (is_tag(choice) && tag_class_re(choice, "yonder-menu")) {
         choice$children[[1]] <- tag_class_remove(
           choice$children[[1]],
@@ -219,7 +222,9 @@ map_navitems <- function(choices, values, selected, targets) {
           choice$children[[1]] <- tag_class_add(choice$children[[1]], "active")
         }
 
-        choice <- tag_attributes_add(choice, `data-target` = get_target(targets, value))
+        if (!is.null(action)) {
+          choice <- tag_attributes_add(choice, as.list(action))
+        }
 
         choice$name <- "li"
         choice <- tag_class_add(choice, "nav-item")
@@ -236,7 +241,7 @@ map_navitems <- function(choices, values, selected, targets) {
             "btn-link",
             if (select) "active"
           ),
-          `data-target` = get_target(targets, value),
+          !!!as.list(action),
           value = value,
           choice
         )
@@ -457,6 +462,8 @@ navContent <- function(...) {
 #' @rdname navContent
 #' @export
 navPane <- function(id, ..., fade = TRUE) {
+  assert_id()
+
   dep_attach({
     tags$div(
       class = str_collate(
