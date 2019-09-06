@@ -36,6 +36,8 @@ appearance of the nav input, defaults to \code{"links"}.}
 width of its parent element. If \code{TRUE}, the space is divided evenly among
 the nav items.}
 
+\item{actions}{Any number of \link{actions}, defaults to \code{NULL}.}
+
 \item{enable}{One of \code{values} specifying particular choices to enable or
 \code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
 
