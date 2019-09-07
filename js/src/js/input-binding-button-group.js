@@ -1,14 +1,20 @@
+import { actionListener } from "./actions.js";
+
 export let buttonGroupInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonGroupInputBinding, {
+  _VALUES: {},
   find: (scope) => scope.querySelectorAll(".yonder-button-group[id]"),
   getType: (el) => "yonder.button.group",
   initialize: (el) => {
+    buttonGroupInputBinding._VALUES[el.id] = null;
+
     $(el).on("click", "button", (e) => {
       buttonGroupInputBinding._VALUES[el.id] = e.delegateTarget.value;
     });
 
-    buttonGroupInputBinding._VALUES[el.id] = null;
+
+    actionListener(el, `#${ el.id } button[data-toggle]`);
   },
   getValue: (el) => {
     return { force: Date.now(), value: buttonGroupInputBinding._VALUES[el.id] };

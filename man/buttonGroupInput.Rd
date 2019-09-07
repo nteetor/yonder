@@ -5,7 +5,8 @@
 \alias{updateButtonGroupInput}
 \title{Button group inputs}
 \usage{
-buttonGroupInput(id, labels = NULL, values = labels, ...)
+buttonGroupInput(id, labels = NULL, values = labels, ...,
+  actions = NULL)
 
 updateButtonGroupInput(id, labels = NULL, values = labels,
   enable = NULL, disable = NULL,
@@ -22,6 +23,8 @@ group, defaults to \code{labels}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
+
+\item{actions}{A list of input \link{actions} or \code{NULL}.}
 
 \item{enable}{One of \code{values} indicating individual buttons to enable or
 \code{TRUE} to enable the entire input, defaults to \code{NULL}.}

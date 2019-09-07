@@ -9,8 +9,45 @@
     NodeList.prototype.forEach = Array.prototype.forEach;
   }
 
+  var deactivateRelatives = function deactivateRelatives(el) {
+    el.parentNode.querySelectorAll(".tab-pane[id]").forEach(function (pane) {
+      document.querySelectorAll("[data-target=\"#" + pane.id + "\"]").forEach(function (t) {
+        return t.classList.remove("active");
+      });
+    });
+  };
+
+  var actionListener = function actionListener(el, selector) {
+    $(selector).on("click", function (e) {
+      // necessary to prevent `data-target` default activation
+      e.stopPropagation();
+      var clicked = e.currentTarget;
+      var plugin = clicked.getAttribute("data-toggle");
+      var action = clicked.getAttribute("data-action");
+      var target = clicked.getAttribute("data-target");
+
+      if (document.querySelector(target).classList.contains("show")) {
+        return;
+      }
+
+      if (plugin === "tab") {
+        deactivateRelatives(document.querySelector(target));
+      } // el.querySelectorAll(`[data-toggle="${ action }"]`)
+      //   .forEach(child => child.classList.remove("active"));
+      //     document.querySelectorAll(`
+      //   });
+
+
+      $(clicked)[plugin](action); // if (el === clicked) {
+      //   // ensure the target is clickable again
+      //   window.setTimeout(() => el.classList.remove("active"), 100);
+      // }
+    });
+  };
+
   var buttonGroupInputBinding = new Shiny.InputBinding();
   $.extend(buttonGroupInputBinding, {
+    _VALUES: {},
     find: function find(scope) {
       return scope.querySelectorAll(".yonder-button-group[id]");
     },
@@ -18,10 +55,11 @@
       return "yonder.button.group";
     },
     initialize: function initialize(el) {
+      buttonGroupInputBinding._VALUES[el.id] = null;
       $(el).on("click", "button", function (e) {
         buttonGroupInputBinding._VALUES[el.id] = e.delegateTarget.value;
       });
-      buttonGroupInputBinding._VALUES[el.id] = null;
+      actionListener(el, "#" + el.id + " button[data-toggle]");
     },
     getValue: function getValue(el) {
       return {
@@ -77,10 +115,11 @@
       return scope.querySelectorAll(".yonder-button[id]");
     },
     initialize: function initialize(el) {
+      el.value = 0;
       $(el).on("click", function (e) {
         return el.value = +el.value + 1;
       });
-      el.value = 0;
+      actionListener(el, "#" + el.id + "[data-toggle]");
     },
     getValue: function getValue(el) {
       return +el.value > 0 ? +el.value : null;
@@ -982,14 +1021,8 @@
         });
         e.currentTarget.parentNode.parentNode.children[0].classList.add("active");
         e.currentTarget.classList.add("active");
-      }); // Show active on initialize w/out requiring click
-      // $(el.querySelector(".active[data-target]")).removeClass("active").tab("show");
-      // $(`#${ el.id } button[data-target]`).on("click", (e) => {
-      //   let button = e.currentTarget;
-      //   let action = button.getAttribute("data-action");
-      //   let plugin = button.getAttribute("data-toggle");
-      //   $(button)[plugin](action);
-      // });
+      });
+      actionListener(el, "#" + el.id + " button[data-toggle]");
     },
     getValue: function getValue(el) {
       var active = el.querySelector(".nav-link.active:not(.disabled)");
