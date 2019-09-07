@@ -1,3 +1,5 @@
+import { actionListener } from "./actions.js";
+
 export let navInputBinding = new Shiny.InputBinding();
 
 $.extend(navInputBinding, {
@@ -24,14 +26,7 @@ $.extend(navInputBinding, {
       e.currentTarget.classList.add("active");
     });
 
-    $(`#${ el.id } button[data-target]`).on("click", (e) => {
-      let button = e.currentTarget;
-
-      let action = button.getAttribute("data-action");
-      let plugin = button.getAttribute("data-toggle");
-
-      $(button)[plugin](action);
-    });
+    actionListener(el, `#${ el.id } button[data-toggle]`);
   },
   getValue: (el) => {
     let active = el.querySelector(".nav-link.active:not(.disabled)");

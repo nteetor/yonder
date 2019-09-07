@@ -8,7 +8,7 @@
 \title{Checkbox and switch inputs}
 \usage{
 checkboxInput(id, choices = NULL, values = choices, selected = NULL,
-  ..., inline = FALSE)
+  ..., inline = FALSE, actions = NULL)
 
 updateCheckboxInput(id, choices = NULL, values = choices,
   selected = NULL, inline = FALSE, enable = NULL, disable = NULL,

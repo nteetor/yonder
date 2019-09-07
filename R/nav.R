@@ -479,6 +479,20 @@ navPane <- function(id, ..., fade = TRUE) {
 
 #' @rdname navContent
 #' @export
+showNavTarget <- function(id, ...) {
+  assert_id()
+
+  input_action("tab", "show", id)
+}
+
+#' @rdname navContent
+#' @export
+hideNavTarget <- function(id, ...) {
+  input_action("tab", "hide", id)
+}
+
+#' @rdname navContent
+#' @export
 showNavPane <- function(id, session = getDefaultReactiveDomain()) {
   assert_id()
   assert_session()

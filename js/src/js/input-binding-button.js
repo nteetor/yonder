@@ -1,10 +1,15 @@
+import { actionListener } from "./actions.js";
+
 export let buttonInputBinding = new Shiny.InputBinding();
 
 $.extend(buttonInputBinding, {
   find: (scope) => scope.querySelectorAll(".yonder-button[id]"),
   initialize: (el) => {
-    $(el).on("click", e => el.value = +el.value + 1);
     el.value = 0;
+
+    $(el).on("click", e => el.value = +el.value + 1);
+
+    actionListener(el, `#${ el.id }[data-toggle]`);
   },
   getValue: (el) => +el.value > 0 ? +el.value : null,
   subscribe: (el, callback) => {

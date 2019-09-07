@@ -76,9 +76,10 @@
 #'   active("indigo")
 #'
 checkboxInput <- function(id, choices = NULL, values = choices, selected = NULL,
-                          ..., inline = FALSE) {
+                          ..., inline = FALSE, actions = NULL) {
   assert_id()
   assert_choices()
+  assert_actions()
 
   dep_attach({
     checkboxes <- map_checkboxes(choices, values, selected, inline)
@@ -168,20 +169,22 @@ updateSwitchInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_checkboxes <- function(choices, values, selected, inline,
+map_checkboxes <- function(choices, values, selected, inline, actions,
                            switches = FALSE) {
   if (is.null(choices) && is.null(values)) {
     return(NULL)
   }
 
   selected <- values %in% selected
+  actions <- normalize_actions(actions, values)
 
   Map(
     choice = choices,
     value = values,
     select = selected,
+    action = actions,
     last = seq_along(choices) == length(choices),
-    function(choice, value, select, last) {
+    function(choice, value, select, action, last) {
       id <- generate_id("checkbox")
 
       tags$div(
@@ -196,6 +199,7 @@ map_checkboxes <- function(choices, values, selected, inline,
           id = id,
           name = id,
           value = value,
+          !!!action,
           checked = if (select) NA,
           autocomplete = "off"
         ),

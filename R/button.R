@@ -23,6 +23,8 @@
 #' @param tooltip A call to [tooltip()] specifying a tooltip for the button or
 #'   link input, defaults to `NULL`.
 #'
+#' @param actions An input [action] or `NULL`.
+#'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
 #'
@@ -125,9 +127,10 @@
 #' )
 #'
 buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
-                        tooltip = NULL) {
+                        tooltip = NULL, actions = NULL) {
   assert_id()
   assert_label()
+  assert_actions(list = FALSE)
 
   dep_attach({
     component <- (if (download) tags$a else tags$button)(
@@ -142,6 +145,7 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
       href = if (download) "",
       `_target` = if (download) NA,
       download = if (download) NA,
+      !!!actions,
       id = id,
       label,
       ...,
@@ -182,13 +186,13 @@ updateButtonInput <- function(id, label = NULL, value = NULL,
   ))
 }
 
-
 #' @rdname buttonInput
 #' @export
 linkInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
-                      tooltip = NULL) {
+                      tooltip = NULL, actions = NULL) {
   assert_id()
   assert_label()
+  assert_actions(list = FALSE)
 
   dep_attach({
     component <- (if (download) tags$a else tags$button)(
@@ -202,6 +206,7 @@ linkInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
       href = if (download) "",
       `_target` = if (download) NA,
       download = if (download) NA,
+      !!!actions,
       id = id,
       label,
       ...
@@ -257,6 +262,8 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #' @param values A vector of values specifying the values of each button in the
 #'   group, defaults to `labels`.
 #'
+#' @param actions A list of input [actions] or `NULL`.
+#'
 #' @param enable One of `values` indicating individual buttons to enable or
 #'   `TRUE` to enable the entire input, defaults to `NULL`.
 #'
@@ -284,7 +291,8 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #'   background("blue") %>%
 #'   width("1/3")
 #'
-buttonGroupInput <- function(id, choices = NULL, values = choices, ...) {
+buttonGroupInput <- function(id, choices = NULL, values = choices, ...,
+                             actions = NULL) {
   args <- list(...)
 
   if ("labels" %in% names(args)) {
@@ -302,6 +310,7 @@ buttonGroupInput <- function(id, choices = NULL, values = choices, ...) {
 
   assert_id()
   assert_choices()
+  assert_actions()
 
   shiny::registerInputHandler(
     type = "yonder.button.group",
@@ -312,7 +321,11 @@ buttonGroupInput <- function(id, choices = NULL, values = choices, ...) {
   )
 
   dep_attach({
+<<<<<<< HEAD
     buttons <- map_buttons(choices, values)
+=======
+    buttons <- map_buttons(labels, values, actions)
+>>>>>>> feat(actions): added button and button and group
 
     bg <- tags$div(
       class = "yonder-button-group btn-group",
@@ -348,19 +361,23 @@ updateButtonGroupInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_buttons <- function(choices, values) {
+map_buttons <- function(choices, values, actions) {
   if (is.null(choices) && is.null(values)) {
     return(NULL)
   }
 
+  actions <- normalize_actions(actions, values)
+
   Map(
     label = choices,
     value = values,
-    function(label, value) {
+    action = actions,
+    function(label, value, action) {
       tags$button(
         type = "button",
         class = "btn btn-grey",
         value = value,
+        !!!action,
         label
       )
     }

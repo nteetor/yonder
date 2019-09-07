@@ -8,20 +8,9 @@
 #'
 #' @param ... Additional arguments, currently ignored.
 #'
+#' @aliases action
 #' @name actions
 NULL
-
-#' @rdname actions
-#' @export
-showNavTarget <- function(id, ...) {
-  input_action("tab", "show", id)
-}
-
-#' @rdname actions
-#' @export
-hideNavTarget <- function(id, ...) {
-  input_action("tab", "hide", id)
-}
 
 input_action <- function(plugin, action, id) {
   structure(
@@ -33,6 +22,10 @@ input_action <- function(plugin, action, id) {
       value = id
     )
   )
+}
+
+is_input_action <- function(x) {
+  inherits(x, "input_action")
 }
 
 set_action_target <- function(action, id) {
@@ -59,10 +52,6 @@ as.list.input_action <- function(x) {
     `data-target` = x$target,
     `data-action` = x$action
   )
-}
-
-is_input_action <- function(x) {
-  inherits(x, "input_action")
 }
 
 normalize_actions <- function(actions, values) {

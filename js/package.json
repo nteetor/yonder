@@ -53,7 +53,7 @@
     "js-vend": "cp dist/js/{yonder.js,yonder.min.js,yonder.min.js.map} ../inst/www/yonder/js/",
     "js-build": "rollup --config build/rollup.config.js --sourcemap",
     "js-minify": "uglifyjs --compress --mangle --output dist/js/yonder.min.js dist/js/yonder.js",
-    "js": "npm-run-all js-lint js-build js-minify js-vend",
+    "js": "run-s js-lint js-build js-minify js-vend",
     "jquery": "run-s jquery-update jquery-authors jquery-vend",
     "jquery-update": "npm update jquery",
     "jquery-version": "npm view jquery version > ../inst/jquery/VERSION",

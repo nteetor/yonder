@@ -1,4 +1,5 @@
 import "./polyfill.js";
+import "./actions.js";
 
 import "./input-binding-button-group.js";
 import "./input-binding-button.js";
