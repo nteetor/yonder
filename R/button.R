@@ -23,7 +23,7 @@
 #' @param tooltip A call to [tooltip()] specifying a tooltip for the button or
 #'   link input, defaults to `NULL`.
 #'
-#' @param actions An input [action] or `NULL`.
+#' @param action An input [action] or `NULL`.
 #'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
@@ -127,10 +127,10 @@
 #' )
 #'
 buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
-                        tooltip = NULL, actions = NULL) {
+                        tooltip = NULL, action = NULL) {
   assert_id()
   assert_label()
-  assert_actions(list = FALSE)
+  assert_action()
 
   dep_attach({
     component <- (if (download) tags$a else tags$button)(
@@ -145,7 +145,7 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
       href = if (download) "",
       `_target` = if (download) NA,
       download = if (download) NA,
-      !!!actions,
+      !!!action,
       id = id,
       label,
       ...,
@@ -189,10 +189,10 @@ updateButtonInput <- function(id, label = NULL, value = NULL,
 #' @rdname buttonInput
 #' @export
 linkInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
-                      tooltip = NULL, actions = NULL) {
+                      tooltip = NULL, action = NULL) {
   assert_id()
   assert_label()
-  assert_actions(list = FALSE)
+  assert_action()
 
   dep_attach({
     component <- (if (download) tags$a else tags$button)(
@@ -206,7 +206,7 @@ linkInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
       href = if (download) "",
       `_target` = if (download) NA,
       download = if (download) NA,
-      !!!actions,
+      !!!action,
       id = id,
       label,
       ...

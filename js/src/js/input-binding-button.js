@@ -9,7 +9,7 @@ $.extend(buttonInputBinding, {
 
     $(el).on("click", e => el.value = +el.value + 1);
 
-    actionListener(el, `#${ el.id }[data-toggle]`);
+    actionListener(el, null, "click");
   },
   getValue: (el) => +el.value > 0 ? +el.value : null,
   subscribe: (el, callback) => {

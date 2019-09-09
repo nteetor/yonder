@@ -1,12 +1,43 @@
 #' Input actions
 #'
-#' These functions are used in conjunction with yonder's reactive input functions'
-#' `actions` argument.
+#' @description
 #'
-#' @param id A character string specifying the id of a [navPane()] or
-#'   [collapsePane()].
+#' Input actions are a new feature in yonder. These actions allow a reactive
+#' input to interact with elements of your application's user interface without
+#' requiring server-side logic. See below for components inputs may interact
+#' with using input actions. Not all of yonder's reactive inputs may be used
+#' with input actions.
 #'
-#' @param ... Additional arguments, currently ignored.
+#' @section Supported inputs:
+#'
+#' * [buttonInput()]
+#'
+#' * [buttonGroupInput()]
+#'
+#' * [linkInput()]
+#'
+#' * [navInput()]
+#'
+#' @section Actionable components:
+#'
+#' **Nav panes**
+#'
+#' A nav pane may be shown with [showNavTarget()] or hidden with
+#' [hideNavTarget()].
+#'
+#' **Collapse panes**
+#'
+#' A collapse pane may be opened with [showCollapseTarget()] or hidden with
+#' [hideCollapseTarget()] or toggled with [toggleCollapseTarget()].
+#'
+#' Toggling a collapse pane will open the pane if closed or close the pane
+#' if currently open.
+#'
+#' **Modals**
+#'
+#'
+#' **Toasts**
+#'
 #'
 #' @aliases action
 #' @name actions
@@ -48,7 +79,7 @@ c.input_action <- function(...) {
 
 as.list.input_action <- function(x) {
   list(
-    `data-toggle` = x$plugin,
+    `data-plugin` = x$plugin,
     `data-target` = x$target,
     `data-action` = x$action
   )

@@ -1,3 +1,5 @@
+import { actionListener } from "./actions.js";
+
 export let menuInputBinding = new Shiny.InputBinding();
 
 $.extend(menuInputBinding, {
@@ -19,6 +21,8 @@ $.extend(menuInputBinding, {
         active.classList.remove("active");
       }
     });
+
+    actionListener(el, ".dropdown-item", "click");
   },
   getValue: (el) => {
     let active = el.querySelector(".dropdown-item.active:not(.disabled)");

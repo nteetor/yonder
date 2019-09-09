@@ -14,13 +14,41 @@ showCollapseTarget(id, ...)
 
 hideCollapseTarget(id, ...)
 }
-\arguments{
-\item{id}{A character string specifying the id of a \code{\link[=navPane]{navPane()}} or
-\code{\link[=collapsePane]{collapsePane()}}.}
-
-\item{...}{Additional arguments, currently ignored.}
-}
 \description{
-These functions are used in conjunction with yonder's reactive input functions'
-\code{actions} argument.
+Input actions are a new feature in yonder. These actions allow a reactive
+input to interact with elements of your application's user interface without
+requiring server-side logic. See below for components inputs may interact
+with using input actions. Not all of yonder's reactive inputs may be used
+with input actions.
 }
+\section{Supported inputs}{
+
+\itemize{
+\item \code{\link[=buttonInput]{buttonInput()}}
+\item \code{\link[=buttonGroupInput]{buttonGroupInput()}}
+\item \code{\link[=linkInput]{linkInput()}}
+\item \code{\link[=navInput]{navInput()}}
+}
+}
+
+\section{Actionable components}{
+
+
+\strong{Nav panes}
+
+A nav pane may be shown with \code{\link[=showNavTarget]{showNavTarget()}} or hidden with
+\code{\link[=hideNavTarget]{hideNavTarget()}}.
+
+\strong{Collapse panes}
+
+A collapse pane may be opened with \code{\link[=showCollapseTarget]{showCollapseTarget()}} or hidden with
+\code{\link[=hideCollapseTarget]{hideCollapseTarget()}} or toggled with \code{\link[=toggleCollapseTarget]{toggleCollapseTarget()}}.
+
+Toggling a collapse pane will open the pane if closed or close the pane
+if currently open.
+
+\strong{Modals}
+
+\strong{Toasts}
+}
+

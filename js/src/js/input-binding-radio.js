@@ -1,8 +1,13 @@
+import { actionListener } from "./actions.js";
+
 export let radioInputBinding = new Shiny.InputBinding();
 
 $.extend(radioInputBinding, {
   find: (scope) => {
     return scope.querySelectorAll(".yonder-radio[id]");
+  },
+  initialize: (el) => {
+    actionListener(el, "input[type='radio']", "input");
   },
   getValue: (el) => {
     let radios = el.querySelectorAll(".custom-radio > input:checked:not(:disabled)");

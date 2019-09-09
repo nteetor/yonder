@@ -1,10 +1,11 @@
 #' List group inputs
 #'
 #' List group inputs are an actionable list of items. They behave similarly to
-#' checkboxes or radios, that is, users may select one or more items from the
-#' list. However, list group items may include highly variable content.
+#' radio buttons. However, list group items may include highly variable content.
 #'
 #' @inheritParams checkboxInput
+#'
+#' @inheritParams buttonGroupInput
 #'
 #' @param choices A vector of character strings or list of tag elements specifying
 #'   the content of the list group's items.
@@ -12,8 +13,8 @@
 #' @param values A character vector specifying the values of the list items,
 #'   defaults to `choices`.
 #'
-#' @param selected One or more of `values` specifying which choices are selected
-#'   by default, defaults to `NULL`, in which case no choice is selected.
+#' @param selected One of `values` specifying which choices are selected by
+#'   default, defaults to `NULL`, in which case no choice is selected.
 #'
 #' @param layout A [responsive] argument. One of `"vertical"` or `"horizontal"`
 #'   specifying how list items are laid out, defaults to `"vertical"`. Note, if
@@ -108,10 +109,12 @@
 #' )
 #'
 listGroupInput <- function(id, choices = NULL, values = choices,
-                           selected = NULL, ..., layout = "vertical",
-                           flush = FALSE) {
+                           selected = NULL, ..., actions = NULL,
+                           layout = "vertical", flush = FALSE) {
   assert_id()
   assert_choices()
+  assert_selected(length = 1)
+  assert_actions()
   assert_possible(layout, c("vertical", "horizontal"))
   assert_possible(flush, c(TRUE, FALSE))
 
@@ -122,7 +125,7 @@ listGroupInput <- function(id, choices = NULL, values = choices,
     # drop vertical classes as they do not actually exist
     classes <- classes[!grepl("vertical", classes, fixed = TRUE)]
 
-    items <- map_listitems(choices, values, selected)
+    items <- map_listitems(choices, values, selected, actions)
 
     tags$div(
       class = str_collate(
@@ -145,6 +148,7 @@ updateListGroupInput <- function(id, choices = NULL, values = choices,
                                  session = getDefaultReactiveDomain()) {
   assert_id()
   assert_choices()
+  assert_selected(length = 1)
   assert_session()
 
   items <- map_listitems(choices, values, selected)
@@ -162,18 +166,20 @@ updateListGroupInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_listitems <- function(choices, values, selected) {
+map_listitems <- function(choices, values, selected, actions) {
   if (is.null(choices) && is.null(values)) {
     return(NULL)
   }
 
   selected <- values %in% selected
+  actions <- normalize_actions(actions, values)
 
   Map(
     choice = choices,
     value = values,
     select = selected,
-    function(choice, value, select) {
+    action = actions,
+    function(choice, value, select, action) {
       tags$button(
         class = str_collate(
           "list-group-item",
@@ -182,6 +188,7 @@ map_listitems <- function(choices, values, selected) {
           if (select) "active"
         ),
         value = value,
+        !!!action,
         choice
       )
     }

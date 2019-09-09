@@ -1,3 +1,5 @@
+import { actionListener } from "./actions.js";
+
 export let listGroupInputBinding = new Shiny.InputBinding();
 
 $.extend(listGroupInputBinding, {
@@ -16,6 +18,8 @@ $.extend(listGroupInputBinding, {
     $el.on("click", ".list-group-item-action.active:not(.disabled)", (e) => {
       e.currentTarget.classList.remove("active");
     });
+
+    actionListener(el, ".list-group-item:not(.disabled)", "click");
   },
   getValue: (el) => {
     let items = el.querySelectorAll(".list-group-item-action.active:not(.disabled)");

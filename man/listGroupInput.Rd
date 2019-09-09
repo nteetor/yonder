@@ -6,7 +6,7 @@
 \title{List group inputs}
 \usage{
 listGroupInput(id, choices = NULL, values = choices, selected = NULL,
-  ..., layout = "vertical", flush = FALSE)
+  ..., actions = NULL, layout = "vertical", flush = FALSE)
 
 updateListGroupInput(id, choices = NULL, values = choices,
   selected = NULL, enable = NULL, disable = NULL,
@@ -21,12 +21,14 @@ the content of the list group's items.}
 \item{values}{A character vector specifying the values of the list items,
 defaults to \code{choices}.}
 
-\item{selected}{One or more of \code{values} specifying which choices are selected
-by default, defaults to \code{NULL}, in which case no choice is selected.}
+\item{selected}{One of \code{values} specifying which choices are selected by
+default, defaults to \code{NULL}, in which case no choice is selected.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the
 parent element or tag elements passed as child elements to the parent
 element.}
+
+\item{actions}{A list of input \link{actions} or \code{NULL}.}
 
 \item{layout}{A \link{responsive} argument. One of \code{"vertical"} or \code{"horizontal"}
 specifying how list items are laid out, defaults to \code{"vertical"}. Note, if
@@ -47,8 +49,7 @@ container, e.g. inside a \code{\link[=card]{card()}}.}
 }
 \description{
 List group inputs are an actionable list of items. They behave similarly to
-checkboxes or radios, that is, users may select one or more items from the
-list. However, list group items may include highly variable content.
+radio buttons. However, list group items may include highly variable content.
 }
 \section{Navigation with a list group}{
 

@@ -1,3 +1,5 @@
+import { actionListener } from "./actions.js";
+
 export let checkboxInputBinding = new Shiny.InputBinding();
 
 $.extend(checkboxInputBinding, {

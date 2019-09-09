@@ -6,7 +6,7 @@
 \title{Radiobar inputs}
 \usage{
 radiobarInput(id, choices, values = choices, selected = values[[1]],
-  ...)
+  ..., actions = NULL)
 
 updateRadiobarInput(id, choices = NULL, values = choices,
   selected = NULL, enable = NULL, disable = NULL,
@@ -27,6 +27,8 @@ choice, defualts to \code{values[[1]]}.}
 \item{...}{Additional named arguments passed as HTML attributes to the
 parent element or tag elements passed as child elements to the parent
 element.}
+
+\item{actions}{A list of input \link{actions} or \code{NULL}.}
 
 \item{enable}{One of \code{values} specifying particular choices to enable or
 \code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}

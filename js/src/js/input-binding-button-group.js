@@ -13,7 +13,7 @@ $.extend(buttonGroupInputBinding, {
       el.setAttribute("data-value", e.currentTarget.value);
     });
 
-    actionListener(el, `#${ el.id } button[data-toggle]`);
+    actionListener(el, "button", "click");
   },
   getValue: (el) => {
     let value = el.getAttribute("data-value");
