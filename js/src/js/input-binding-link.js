@@ -1,10 +1,15 @@
+import { actionListener } from "./actions.js";
+
 export let linkInputBinding = new Shiny.InputBinding();
 
 $.extend(linkInputBinding, {
   find: (scope) => scope.querySelectorAll(".yonder-link[id]"),
   initialize: (el) => {
-    $(el).on("click", e => el.value = +el.value + 1);
     el.value = 0;
+
+    $(el).on("click", e => el.value = +el.value + 1);
+
+    actionListener(el, null, "click");
   },
   getValue: (el) => +el.value > 0 ? +el.value : null,
   subscribe: (el, callback) => {

@@ -14,7 +14,7 @@ $.extend(buttonGroupInputBinding, {
     });
 
 
-    actionListener(el, `#${ el.id } button[data-toggle]`);
+    actionListener(el, "button", "click");
   },
   getValue: (el) => {
     return { force: Date.now(), value: buttonGroupInputBinding._VALUES[el.id] };

@@ -6,6 +6,8 @@
 #'
 #' @inheritParams checkboxInput
 #'
+#' @inheritParams buttonGroupInput
+#'
 #' @param label A character string or tag element specifying the label of the
 #'   menu's toggle button.
 #'
@@ -59,15 +61,17 @@
 #' )
 #'
 menuInput <- function(id, label, choices = NULL, values = choices,
-                      selected = NULL, ..., direction = "down",
-                      align = "left") {
+                      selected = NULL, ..., actions = NULL,
+                      direction = "down", align = "left") {
   assert_id()
+  assert_label()
   assert_choices()
+  assert_actions()
   assert_possible(direction, c("up", "right", "down", "left"))
   assert_possible(align, c("right", "left"))
 
   dep_attach({
-    items <- map_menuitems(choices, values, selected)
+    items <- map_menuitems(choices, values, selected, actions)
 
     tags$div(
       class = str_collate(
@@ -118,14 +122,16 @@ updateMenuInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_menuitems <- function(choices, values, selected) {
+map_menuitems <- function(choices, values, selected, actions) {
   selected <- values %in% selected
+  actions <- normalize_actions(actions, values)
 
   Map(
     choice = choices,
     value = values,
     select = selected,
-    function(choice, value, select) {
+    action = actions,
+    function(choice, value, select, action) {
       tags$button(
         class = str_collate(
           "dropdown-item",
@@ -133,6 +139,7 @@ map_menuitems <- function(choices, values, selected) {
         ),
         type = "button",
         value = value,
+        !!!action,
         choice
       )
     }

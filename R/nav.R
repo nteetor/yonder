@@ -9,6 +9,8 @@
 #'
 #' @inheritParams checkboxInput
 #'
+#' @inheritParams buttonInput
+#'
 #' @param choices A character vector or list of tag elements specifying the
 #'   navigation items of the input.
 #'
@@ -24,8 +26,6 @@
 #'
 #' @param appearance One of `"links"`, `"pills"`, or `"tabs"` specifying the
 #'   appearance of the nav input, defaults to `"links"`.
-#'
-#' @param actions Any number of [actions], defaults to `NULL`.
 #'
 #' @section Including a menu:
 #'

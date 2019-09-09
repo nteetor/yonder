@@ -9,13 +9,13 @@
 \title{Button and link inputs}
 \usage{
 buttonInput(id, label, ..., stretch = FALSE, download = FALSE,
-  tooltip = NULL, actions = NULL)
+  tooltip = NULL, action = NULL)
 
 updateButtonInput(id, label = NULL, value = NULL, disable = NULL,
   enable = NULL, session = getDefaultReactiveDomain())
 
 linkInput(id, label, ..., stretch = FALSE, download = FALSE,
-  tooltip = NULL, actions = NULL)
+  tooltip = NULL, action = NULL)
 
 updateLinkInput(id, label = NULL, value = NULL, enable = NULL,
   disable = NULL, session = getDefaultReactiveDomain())
@@ -43,7 +43,7 @@ input is used to trigger a download, defaults to \code{FALSE}.}
 \item{tooltip}{A call to \code{\link[=tooltip]{tooltip()}} specifying a tooltip for the button or
 link input, defaults to \code{NULL}.}
 
-\item{actions}{An input \link{action} or \code{NULL}.}
+\item{action}{An input \link{action} or \code{NULL}.}
 
 \item{value}{A number specifying a new value for the button, defaults to
 \code{NULL}.}

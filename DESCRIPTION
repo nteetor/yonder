@@ -31,6 +31,7 @@ Depends:
     R (>= 3.2),
     shiny (>= 1.1.0)
 Imports:
+    htmltools (>= 0.3.6.9004),
     magrittr,
     utils
 Remotes:

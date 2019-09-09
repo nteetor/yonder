@@ -17,31 +17,54 @@
     });
   };
 
-  var actionListener = function actionListener(el, selector) {
-    $(selector).on("click", function (e) {
-      // necessary to prevent `data-target` default activation
-      e.stopPropagation();
-      var clicked = e.currentTarget;
-      var plugin = clicked.getAttribute("data-toggle");
-      var action = clicked.getAttribute("data-action");
-      var target = clicked.getAttribute("data-target");
+  var actionPerform = function actionPerform(el) {
+    var plugin = el.getAttribute("data-plugin");
+    var action = el.getAttribute("data-action");
+    var target = el.getAttribute("data-target");
 
-      if (document.querySelector(target).classList.contains("show")) {
-        return;
+    if (!(plugin && action && target)) {
+      return;
+    }
+
+    if (document.querySelector(target).classList.contains("show")) {
+      return;
+    }
+
+    if (plugin === "tab") {
+      deactivateRelatives(document.querySelector(target));
+    }
+
+    $(el)[plugin](action);
+
+    if (el.tagName === "BUTTON") {
+      if (el.classList.contains("btn")) {
+        window.setTimeout(function () {
+          return el.classList.remove("active");
+        }, 1);
       }
 
-      if (plugin === "tab") {
-        deactivateRelatives(document.querySelector(target));
-      } // el.querySelectorAll(`[data-toggle="${ action }"]`)
-      //   .forEach(child => child.classList.remove("active"));
-      //     document.querySelectorAll(`
-      //   });
+      if (el.classList.contains("dropdown-item")) {
+        window.setTimeout(function () {
+          el.querySelector(".dropdown-toggle").classList.remove("active");
+        }, 1);
+      }
+    } else if (el.tagName === "INPUT") {
+      window.setTimeout(function () {
+        return el.classList.remove("active");
+      }, 1);
+    }
+  };
 
-
-      $(clicked)[plugin](action); // if (el === clicked) {
-      //   // ensure the target is clickable again
-      //   window.setTimeout(() => el.classList.remove("active"), 100);
-      // }
+  $(function () {
+    var active = document.querySelectorAll(".active[data-plugin], input:checked[data-plugin]");
+    active.forEach(function (a) {
+      return actionPerform(a);
+    });
+  });
+  var actionListener = function actionListener(el, selector, event) {
+    $(el).on(event, selector, function (e) {
+      var clicked = e.currentTarget;
+      actionPerform(clicked);
     });
   };
 
@@ -59,7 +82,7 @@
       $(el).on("click", "button", function (e) {
         buttonGroupInputBinding._VALUES[el.id] = e.delegateTarget.value;
       });
-      actionListener(el, "#" + el.id + " button[data-toggle]");
+      actionListener(el, "button", "click");
     },
     getValue: function getValue(el) {
       return {
@@ -119,7 +142,7 @@
       $(el).on("click", function (e) {
         return el.value = +el.value + 1;
       });
-      actionListener(el, "#" + el.id + "[data-toggle]");
+      actionListener(el, null, "click");
     },
     getValue: function getValue(el) {
       return +el.value > 0 ? +el.value : null;
@@ -762,10 +785,11 @@
       return scope.querySelectorAll(".yonder-link[id]");
     },
     initialize: function initialize(el) {
+      el.value = 0;
       $(el).on("click", function (e) {
         return el.value = +el.value + 1;
       });
-      el.value = 0;
+      actionListener(el, null, "click");
     },
     getValue: function getValue(el) {
       return +el.value > 0 ? +el.value : null;
@@ -821,6 +845,7 @@
       $el.on("click", ".list-group-item-action.active:not(.disabled)", function (e) {
         e.currentTarget.classList.remove("active");
       });
+      actionListener(el, ".list-group-item:not(.disabled)", "click");
     },
     getValue: function getValue(el) {
       var items = el.querySelectorAll(".list-group-item-action.active:not(.disabled)");
@@ -926,6 +951,7 @@
           active.classList.remove("active");
         }
       });
+      actionListener(el, ".dropdown-item", "click");
     },
     getValue: function getValue(el) {
       var active = el.querySelector(".dropdown-item.active:not(.disabled)");
@@ -1022,7 +1048,7 @@
         e.currentTarget.parentNode.parentNode.children[0].classList.add("active");
         e.currentTarget.classList.add("active");
       });
-      actionListener(el, "#" + el.id + " button[data-toggle]");
+      actionListener(el, ".nav-link[data-plugin]", "click");
     },
     getValue: function getValue(el) {
       var active = el.querySelector(".nav-link.active:not(.disabled)");
@@ -1172,6 +1198,9 @@
     find: function find(scope) {
       return scope.querySelectorAll(".yonder-radio[id]");
     },
+    initialize: function initialize(el) {
+      actionListener(el, "input[type='radio']", "input");
+    },
     getValue: function getValue(el) {
       var radios = el.querySelectorAll(".custom-radio > input:checked:not(:disabled)");
 
@@ -1274,17 +1303,11 @@
 
   var radiobarInputBinding = new Shiny.InputBinding();
   $.extend(radiobarInputBinding, {
-    Selector: {
-      SELF: ".yonder-radiobar[id]",
-      SELECTED: "input:checked:not(:disabled)"
-    },
-    Events: [{
-      type: "click"
-    }, {
-      type: "change"
-    }],
     find: function find(scope) {
       return scope.querySelectorAll(".yonder-radiobar[id]");
+    },
+    initialize: function initialize(el) {
+      actionListener(el, "input[type='radio']", "change");
     },
     getValue: function getValue(el) {
       var radios = el.querySelectorAll("input:checked:not(:disabled)");

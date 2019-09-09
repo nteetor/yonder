@@ -26,7 +26,7 @@ $.extend(navInputBinding, {
       e.currentTarget.classList.add("active");
     });
 
-    actionListener(el, `#${ el.id } button[data-toggle]`);
+    actionListener(el, ".nav-link[data-plugin]", "click");
   },
   getValue: (el) => {
     let active = el.querySelector(".nav-link.active:not(.disabled)");
