@@ -6967,12 +6967,13 @@ a.close.disabled {
   padding: 0.75rem;
 }
 
-.toasts {
+.yonder-toasts {
   position: absolute;
   top: 0;
   right: 0;
   margin-top: 2rem;
   margin-right: 2rem;
+  z-index: 1070;
 }
 
 .modal-open {
