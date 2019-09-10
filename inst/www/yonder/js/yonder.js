@@ -1899,6 +1899,7 @@
           }, 100);
         }
 
+        Shiny.unbindAll(modal);
         container.removeChild(modal);
       });
       $(modal).modal("show");

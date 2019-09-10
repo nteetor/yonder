@@ -57,6 +57,8 @@ Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
         setTimeout(() => Shiny.onInputChange(modal.id, null), 100);
       }
 
+      Shiny.unbindAll(modal);
+
       container.removeChild(modal);
     });
 
