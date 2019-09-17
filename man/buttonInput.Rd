@@ -67,6 +67,12 @@ Button inputs are useful as triggers for reactive or observer expressions.
 The reactive value of a button input begins as \code{NULL}, but subsequently is
 the number of clicks.
 }
+\details{
+\strong{Tooltips}
+
+To remove a button or link input's tooltip pass an empty tooltip,
+\code{tooltip()}, to \code{updateButtonInput()} or \code{updateLinkInput()}.
+}
 \examples{
 
 ### A simple button

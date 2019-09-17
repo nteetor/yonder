@@ -117,19 +117,16 @@
         el.setAttribute("disabled", "");
       }
 
-      if (msg.tooltip) {
+      if (msg.tooltip !== null) {
         el.setAttribute("data-animation", msg.tooltip.fade);
         el.setAttribute("data-html", "true");
         el.setAttribute("data-placement", msg.tooltip.placement);
         el.setAttribute("data-toggle", "tooltip");
+        el.setAttribute("title", msg.tooltip.title);
+        el.setAttribute("data-original-title", msg.tooltip.title);
 
-        if (el.hasAttribute("data-original-title")) {
-          el.setAttribute("data-original-title", msg.tooltip.title);
-          var tooltipId = el.getAttribute("aria-describedby");
-          document.getElementById(tooltipId).querySelector(".tooltip-inner").innerHTML = msg.tooltip.title;
-        } else {
-          el.setAttribute("title", msg.tooltip.title);
-          $(el).tooltip();
+        if (el.matches(":hover")) {
+          $(el).tooltip("show");
         }
       }
     }

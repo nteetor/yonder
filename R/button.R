@@ -37,6 +37,13 @@
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
+#' @details
+#'
+#' **Tooltips**
+#'
+#' To remove a button or link input's tooltip pass an empty tooltip,
+#' `tooltip()`, to `updateButtonInput()` or `updateLinkInput()`.
+#'
 #' @family inputs
 #' @export
 #' @examples
