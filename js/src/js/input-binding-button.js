@@ -33,6 +33,25 @@ $.extend(buttonInputBinding, {
       el.classList.add("disabled");
       el.setAttribute("disabled", "");
     }
+
+    if (msg.tooltip) {
+      el.setAttribute("data-animation", msg.tooltip.fade);
+      el.setAttribute("data-html", "true");
+      el.setAttribute("data-placement", msg.tooltip.placement);
+      el.setAttribute("data-toggle", "tooltip");
+
+      if (el.hasAttribute("data-original-title")) {
+        el.setAttribute("data-original-title", msg.tooltip.title);
+
+        let tooltipId = el.getAttribute("aria-describedby");
+        document.getElementById(tooltipId)
+          .querySelector(".tooltip-inner")
+          .innerHTML = msg.tooltip.title;
+      } else {
+        el.setAttribute("title", msg.tooltip.title);
+        $(el).tooltip();
+      }
+    }
   }
 });
 

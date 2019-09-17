@@ -149,6 +149,7 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
 #' @export
 updateButtonInput <- function(id, label = NULL, value = NULL,
                               disable = NULL, enable = NULL,
+                              tooltip = NULL,
                               session = getDefaultReactiveDomain()) {
   assert_id()
   assert_session()
@@ -169,7 +170,8 @@ updateButtonInput <- function(id, label = NULL, value = NULL,
     content = content,
     value = value,
     disable = disable,
-    enable = enable
+    enable = enable,
+    tooltip = tooltip
   ))
 }
 
@@ -206,6 +208,7 @@ linkInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
 #' @export
 updateLinkInput <- function(id, label = NULL, value = NULL,
                             enable = NULL, disable = NULL,
+                            tooltip = NULL,
                             session = getDefaultReactiveDomain())  {
   assert_id()
   assert_session()
@@ -230,7 +233,8 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
     content = content,
     value = value,
     enable = enable,
-    disable = disable
+    disable = disable,
+    tooltip = tooltip
   ))
 }
 

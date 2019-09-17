@@ -12,13 +12,15 @@ buttonInput(id, label, ..., stretch = FALSE, download = FALSE,
   tooltip = NULL)
 
 updateButtonInput(id, label = NULL, value = NULL, disable = NULL,
-  enable = NULL, session = getDefaultReactiveDomain())
+  enable = NULL, tooltip = NULL,
+  session = getDefaultReactiveDomain())
 
 linkInput(id, label, ..., stretch = FALSE, download = FALSE,
   tooltip = NULL)
 
 updateLinkInput(id, label = NULL, value = NULL, enable = NULL,
-  disable = NULL, session = getDefaultReactiveDomain())
+  disable = NULL, tooltip = NULL,
+  session = getDefaultReactiveDomain())
 
 tooltip(..., placement = "top", fade = TRUE)
 }
