@@ -7,7 +7,7 @@
 \alias{toggleCollapsePane}
 \title{Collapsible panes}
 \usage{
-collapsePane(id, ..., show = FALSE)
+collapsePane(id, ..., show = FALSE, animate = TRUE)
 
 hideCollapsePane(id, session = getDefaultReactiveDomain())
 
@@ -23,6 +23,9 @@ arguments passed as HTML attributes to parent element.}
 
 \item{show}{One of \code{TRUE} or \code{FALSE} specifying if the collapsible pane
 is shown when the page renders, defaults to \code{FALSE}.}
+
+\item{animate}{One of \code{TRUE} or \code{FALSE} specifying if showing and closing the
+collapsible pane is animated, defaults to \code{TRUE}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }

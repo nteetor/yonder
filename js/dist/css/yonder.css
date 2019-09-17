@@ -3639,6 +3639,10 @@ input[type="button"].btn-block {
   }
 }
 
+.no-transition {
+  transition: none !important;
+}
+
 .yonder-select {
   width: 100%;
 }

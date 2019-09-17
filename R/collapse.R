@@ -9,6 +9,9 @@
 #' @param show One of `TRUE` or `FALSE` specifying if the collapsible pane
 #'   is shown when the page renders, defaults to `FALSE`.
 #'
+#' @param animate One of `TRUE` or `FALSE` specifying if showing and closing the
+#'   collapsible pane is animated, defaults to `TRUE`.
+#'
 #' @param ... Tag elements inside the collapsible pane or additional named
 #'   arguments passed as HTML attributes to parent element.
 #'
@@ -60,7 +63,7 @@
 #' # As these are server-side utilities, please run the example applications
 #' # above.
 #'
-collapsePane <- function(id, ..., show = FALSE) {
+collapsePane <- function(id, ..., show = FALSE, animate = TRUE) {
   assert_id()
 
   dep_attach({
@@ -68,7 +71,8 @@ collapsePane <- function(id, ..., show = FALSE) {
       id = id,
       class = str_collate(
         "collapse",
-        if (show) "show"
+        if (show) "show",
+        if (!animate) "no-transition"
       ),
       ...
     )
