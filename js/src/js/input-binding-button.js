@@ -42,6 +42,8 @@ $.extend(buttonInputBinding, {
       el.setAttribute("title", msg.tooltip.title);
       el.setAttribute("data-original-title", msg.tooltip.title);
 
+      $(el).tooltip();
+
       if (el.matches(":hover")) {
         $(el).tooltip("show");
       }
