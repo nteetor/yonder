@@ -9,8 +9,16 @@ export default {
     file: "dist/js/yonder.js",
     format: "umd",
     sourcemap: "inline",
-    name: "yonder"
+    name: "yonder",
+    globals: {
+      "Shiny": "Shiny",
+      "jQuery": "$"
+    }
   },
+  external: [
+    "Shiny",
+    "jQuery",
+  ],
   plugins: [
     babel({
       ...babelrc

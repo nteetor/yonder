@@ -70,6 +70,14 @@ menuInput <- function(id, label, choices = NULL, values = choices,
   assert_possible(direction, c("up", "right", "down", "left"))
   assert_possible(align, c("right", "left"))
 
+  shiny::registerInputHandler(
+    type = "yonder.menu",
+    fun = function(x, session, name) {
+      x$value
+    },
+    force = TRUE
+  )
+
   dep_attach({
     items <- map_menuitems(choices, values, selected, actions)
 

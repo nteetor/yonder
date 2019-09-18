@@ -313,19 +313,15 @@ buttonGroupInput <- function(id, choices = NULL, values = choices, ...,
   assert_actions()
 
   shiny::registerInputHandler(
-    type = "yonder.button.group",
+    type = "yonder.buttongroup",
     fun = function(x, session, name) {
-      if (length(x) > 1) x[[2]]
+      x$value
     },
     force = TRUE
   )
 
   dep_attach({
-<<<<<<< HEAD
-    buttons <- map_buttons(choices, values)
-=======
     buttons <- map_buttons(labels, values, actions)
->>>>>>> feat(actions): added button and button and group
 
     bg <- tags$div(
       class = "yonder-button-group btn-group",
@@ -348,16 +344,16 @@ updateButtonGroupInput <- function(id, choices = NULL, values = choices,
   assert_choices()
   assert_session()
 
-  buttons <- map_buttons(choices, values)
+  buttons <- map_buttons(labels, values, NULL)
 
   content <- coerce_content(buttons)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 
   session$sendInputMessage(id, list(
-    content = content,
-    enable = enable,
-    disable = disable
+    ## content = content,
+    list("enable", enable),
+    list("disable", disable)
   ))
 }
 

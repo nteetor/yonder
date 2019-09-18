@@ -139,7 +139,7 @@
 #'   targets = c(Home = c("Home", "sidebar"), About = About)
 #' )
 #'
-navInput <- function(id, choices = NULL, values = choices,
+navInput <- function(id, choices, values = choices,
                      selected = values[[1]], ..., appearance = "links",
                      fill = FALSE, actions = NULL) {
   assert_id()
@@ -174,7 +174,6 @@ updateNavInput <- function(id, choices = NULL, values = choices,
   assert_id()
   assert_choices()
   assert_selected(length = 1)
-  # assert_targets()
   assert_session()
 
   items <- map_navitems(choices, values, selected, targets)
@@ -241,7 +240,7 @@ map_navitems <- function(choices, values, selected, actions) {
             "btn-link",
             if (select) "active"
           ),
-          !!!as.list(action),
+          !!!action,
           value = value,
           choice
         )
