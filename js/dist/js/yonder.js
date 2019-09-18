@@ -1,13 +1,11 @@
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory() :
-  typeof define === 'function' && define.amd ? define(factory) :
-  (factory());
-}(this, (function () { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('jQuery'), require('Shiny')) :
+  typeof define === 'function' && define.amd ? define(['jQuery', 'Shiny'], factory) :
+  (global.yonder = factory(global.$,global.Shiny));
+}(this, (function ($$1,Shiny$1) { 'use strict';
 
-  // IE 11, ensure querySelectorAll + forEach works
-  if (window.NodeList && !NodeList.prototype.forEach) {
-    NodeList.prototype.forEach = Array.prototype.forEach;
-  }
+  $$1 = $$1 && $$1.hasOwnProperty('default') ? $$1['default'] : $$1;
+  Shiny$1 = Shiny$1 && Shiny$1.hasOwnProperty('default') ? Shiny$1['default'] : Shiny$1;
 
   var deactivateRelatives = function deactivateRelatives(el) {
     el.parentNode.querySelectorAll(".tab-pane[id]").forEach(function (pane) {
@@ -53,14 +51,12 @@
         return el.classList.remove("active");
       }, 1);
     }
-  };
+  }; // $(() => {
+  //   let active = document.querySelectorAll(".active[data-plugin], input:checked[data-plugin]");
+  //   active.forEach(a => actionPerform(a));
+  // });
 
-  $(function () {
-    var active = document.querySelectorAll(".active[data-plugin], input:checked[data-plugin]");
-    active.forEach(function (a) {
-      return actionPerform(a);
-    });
-  });
+
   var actionListener = function actionListener(el, selector, event) {
     $(el).on(event, selector, function (e) {
       var clicked = e.currentTarget;
@@ -68,119 +64,717 @@
     });
   };
 
-  var buttonGroupInputBinding = new Shiny.InputBinding();
-  $.extend(buttonGroupInputBinding, {
-    _VALUES: {},
-    find: function find(scope) {
-      return scope.querySelectorAll(".yonder-button-group[id]");
-    },
-    getType: function getType(el) {
-      return "yonder.button.group";
-    },
-    initialize: function initialize(el) {
-      buttonGroupInputBinding._VALUES[el.id] = null;
-      $(el).on("click", "button", function (e) {
-        buttonGroupInputBinding._VALUES[el.id] = e.delegateTarget.value;
+  function _defineProperties(target, props) {
+    for (var i = 0; i < props.length; i++) {
+      var descriptor = props[i];
+      descriptor.enumerable = descriptor.enumerable || false;
+      descriptor.configurable = true;
+      if ("value" in descriptor) descriptor.writable = true;
+      Object.defineProperty(target, descriptor.key, descriptor);
+    }
+  }
+
+  function _createClass(Constructor, protoProps, staticProps) {
+    if (protoProps) _defineProperties(Constructor.prototype, protoProps);
+    if (staticProps) _defineProperties(Constructor, staticProps);
+    return Constructor;
+  }
+
+  function _defineProperty(obj, key, value) {
+    if (key in obj) {
+      Object.defineProperty(obj, key, {
+        value: value,
+        enumerable: true,
+        configurable: true,
+        writable: true
       });
-      actionListener(el, "button", "click");
-    },
-    getValue: function getValue(el) {
-      return {
-        force: Date.now(),
-        value: buttonGroupInputBinding._VALUES[el.id]
+    } else {
+      obj[key] = value;
+    }
+
+    return obj;
+  }
+
+  function ownKeys(object, enumerableOnly) {
+    var keys = Object.keys(object);
+
+    if (Object.getOwnPropertySymbols) {
+      var symbols = Object.getOwnPropertySymbols(object);
+      if (enumerableOnly) symbols = symbols.filter(function (sym) {
+        return Object.getOwnPropertyDescriptor(object, sym).enumerable;
+      });
+      keys.push.apply(keys, symbols);
+    }
+
+    return keys;
+  }
+
+  function _objectSpread2(target) {
+    for (var i = 1; i < arguments.length; i++) {
+      var source = arguments[i] != null ? arguments[i] : {};
+
+      if (i % 2) {
+        ownKeys(source, true).forEach(function (key) {
+          _defineProperty(target, key, source[key]);
+        });
+      } else if (Object.getOwnPropertyDescriptors) {
+        Object.defineProperties(target, Object.getOwnPropertyDescriptors(source));
+      } else {
+        ownKeys(source).forEach(function (key) {
+          Object.defineProperty(target, key, Object.getOwnPropertyDescriptor(source, key));
+        });
+      }
+    }
+
+    return target;
+  }
+
+  function _inheritsLoose(subClass, superClass) {
+    subClass.prototype = Object.create(superClass.prototype);
+    subClass.prototype.constructor = subClass;
+    subClass.__proto__ = superClass;
+  }
+
+  function _getPrototypeOf(o) {
+    _getPrototypeOf = Object.setPrototypeOf ? Object.getPrototypeOf : function _getPrototypeOf(o) {
+      return o.__proto__ || Object.getPrototypeOf(o);
+    };
+    return _getPrototypeOf(o);
+  }
+
+  function _setPrototypeOf(o, p) {
+    _setPrototypeOf = Object.setPrototypeOf || function _setPrototypeOf(o, p) {
+      o.__proto__ = p;
+      return o;
+    };
+
+    return _setPrototypeOf(o, p);
+  }
+
+  function isNativeReflectConstruct() {
+    if (typeof Reflect === "undefined" || !Reflect.construct) return false;
+    if (Reflect.construct.sham) return false;
+    if (typeof Proxy === "function") return true;
+
+    try {
+      Date.prototype.toString.call(Reflect.construct(Date, [], function () {}));
+      return true;
+    } catch (e) {
+      return false;
+    }
+  }
+
+  function _construct(Parent, args, Class) {
+    if (isNativeReflectConstruct()) {
+      _construct = Reflect.construct;
+    } else {
+      _construct = function _construct(Parent, args, Class) {
+        var a = [null];
+        a.push.apply(a, args);
+        var Constructor = Function.bind.apply(Parent, a);
+        var instance = new Constructor();
+        if (Class) _setPrototypeOf(instance, Class.prototype);
+        return instance;
       };
-    },
-    subscribe: function subscribe(el, callback) {
-      var $el = $(el);
-      $el.on("click.yonder", "button", function (e) {
-        return callback();
+    }
+
+    return _construct.apply(null, arguments);
+  }
+
+  function _isNativeFunction(fn) {
+    return Function.toString.call(fn).indexOf("[native code]") !== -1;
+  }
+
+  function _wrapNativeSuper(Class) {
+    var _cache = typeof Map === "function" ? new Map() : undefined;
+
+    _wrapNativeSuper = function _wrapNativeSuper(Class) {
+      if (Class === null || !_isNativeFunction(Class)) return Class;
+
+      if (typeof Class !== "function") {
+        throw new TypeError("Super expression must either be null or a function");
+      }
+
+      if (typeof _cache !== "undefined") {
+        if (_cache.has(Class)) return _cache.get(Class);
+
+        _cache.set(Class, Wrapper);
+      }
+
+      function Wrapper() {
+        return _construct(Class, arguments, _getPrototypeOf(this).constructor);
+      }
+
+      Wrapper.prototype = Object.create(Class.prototype, {
+        constructor: {
+          value: Wrapper,
+          enumerable: false,
+          writable: true,
+          configurable: true
+        }
       });
-      $el.on("buttongroup.value.yonder", function (e) {
-        return callback();
+      return _setPrototypeOf(Wrapper, Class);
+    };
+
+    return _wrapNativeSuper(Class);
+  }
+
+  function _assertThisInitialized(self) {
+    if (self === void 0) {
+      throw new ReferenceError("this hasn't been initialised - super() hasn't been called");
+    }
+
+    return self;
+  }
+
+  var InputError =
+  /*#__PURE__*/
+  function (_Error) {
+    _inheritsLoose(InputError, _Error);
+
+    function InputError(code, message) {
+      var _this;
+
+      var full = message ? code + ": " + message : code;
+      _this = _Error.call(this, full) || this;
+      _this.name = code;
+      _this.message = full;
+      return _this;
+    }
+
+    return InputError;
+  }(_wrapNativeSuper(Error));
+
+  var dataStore = function () {
+    var storeData = {};
+    var id = 1;
+    return {
+      set: function set(element, key, data) {
+        if (typeof element.key === "undefined") {
+          element.key = {
+            key: key,
+            id: id
+          };
+          id++;
+        }
+        storeData[element.key.id] = data;
+      },
+      get: function get(element, key) {
+        if (!element || typeof element.key === "undefined") {
+          return null;
+        }
+
+        var keyProperties = element.key;
+
+        if (keyProperties.key === key) {
+          return storeData[keyProperties.id];
+        }
+
+        return null;
+      },
+      delete: function _delete(element, key) {
+        if (typeof element.key === "undefined") {
+          return;
+        }
+
+        var keyProperties = element.key;
+
+        if (keyProperties.key === key) {
+          delete storeData[keyProperties.id];
+          delete element.key;
+        }
+      }
+    };
+  }();
+
+  var Store = {
+    setData: function setData(instance, key, data) {
+      dataStore.set(instance, key, data);
+    },
+    getData: function getData(instance, key) {
+      return dataStore.get(instance, key);
+    },
+    removeData: function removeData(instance, key) {
+      dataStore.delete(instance, key);
+    }
+  };
+
+  var VERSION = "0.1.2";
+
+  var Input =
+  /*#__PURE__*/
+  function () {
+    function Input(element, type, self) {
+      if (typeof element !== "object" && element.nodeType !== 1) {
+        throw new InputError("Invalid Argument", "`element` must be an element");
+      }
+
+      this._element = element;
+      this._type = type;
+      this._value = null;
+
+      this._callback = function () {};
+    } // getters ----
+
+
+    var _proto = Input.prototype;
+
+    // methods ----
+    _proto.content = function content(html) {
+      this._element.innerHTML = html;
+    };
+
+    _proto.dispose = function dispose() {
+      Store.removeData(this._element, this._type);
+      this._element = null;
+    } // public ----
+    ;
+
+    Input.initialize = function initialize(element, type, input) {
+      var data = Store.getData(element, type);
+
+      if (!data) {
+        data = new input(element);
+      }
+    };
+
+    Input.find = function find(scope, selector) {
+      return scope.querySelectorAll(selector);
+    };
+
+    Input.getId = function getId(element) {
+      return element.id;
+    };
+
+    Input.getType = function getType(element) {
+      return null;
+    };
+
+    Input.getValue = function getValue(element) {
+      throw new InputError("Unimplemented Method");
+    };
+
+    Input.subscribe = function subscribe(element, callback, type) {
+      var input = Store.getData(element, type);
+
+      if (!input) {
+        return;
+      }
+
+      input._callback = callback;
+    };
+
+    Input.unsubscribe = function unsubscribe(element, type) {
+      var input = Store.getData(element, type);
+
+      if (!input) {
+        return;
+      }
+
+      input._callback = function () {};
+    };
+
+    Input.receiveMessage = function receiveMessage(element, message, type) {
+      var input = Store.getData(element, type);
+
+      if (!input) {
+        return;
+      }
+
+      message.forEach(function (msg) {
+        console.log(msg);
+        var method = msg[0],
+            args = msg[1];
+
+        if (args === null) {
+          return;
+        }
+
+        input[method](args);
       });
-    },
-    unsubscribe: function unsubscribe(el) {
-      return $(el).off(".yonder");
-    },
-    receiveMessage: function receiveMessage(el, msg) {
-      if (msg.content) {
-        el.innerHTML = msg.content;
-      }
+    };
 
-      if (msg.value) {
-        buttonGroupInputBinding._VALUES[el.id] = msg.value;
-      }
+    Input.getState = function getState(element, data) {
+      throw "not implemented";
+    };
 
-      if (msg.enable) {
-        el.querySelectorAll("button").forEach(function (btn) {
-          if (msg.enable === true || msg.enable.indexOf(btn.value) > -1) {
-            btn.classList.remove("disabled");
-            btn.removeAttribute("disabled");
-          }
-        });
-      }
+    Input.getRatePolicy = function getRatePolicy() {
+      return null;
+    };
 
-      if (msg.disable) {
-        el.querySelectorAll("button").forEach(function (btn) {
-          if (msg.disable === true || msg.disable.indexOf(btn.value) > -1) {
-            btn.classList.add("disabled");
-            btn.setAttribute("disabled", "");
-          }
-        });
+    _createClass(Input, null, [{
+      key: "VERSION",
+      get: function get() {
+        return VERSION;
+      }
+    }]);
+
+    return Input;
+  }();
+
+  // IE 11, ensure querySelectorAll + forEach works
+  var _Element$prototype = Element.prototype,
+      matches = _Element$prototype.matches,
+      closest = _Element$prototype.closest;
+
+  if (!matches) {
+    matches = Element.prototype.matchesSelector || Element.prototype.mozMatchesSelector || Element.prototype.msMatchesSelector || Element.prototype.oMatchesSelector || Element.prototype.webkitMatchesSelector || function (s) {
+      var matches = (this.document || this.ownerDocument).querySelectorAll(s),
+          i = matches.length;
+
+      while (--i >= 0 && matches.item(i) !== this) {}
+
+      return i > -1;
+    };
+  }
+
+  if (!closest) {
+    closest = function closest(s) {
+      var el = this;
+
+      do {
+        if (matches.call(el, s)) return el;
+        el = el.parentElement || el.parentNode;
+      } while (el !== null && el.nodeType === 1);
+
+      return null;
+    };
+  }
+
+  var findClosest = function findClosest(element, selector) {
+    return closest.call(element, selector);
+  };
+
+  var asArray = function asArray(x) {
+    return Array.prototype.slice.call(x);
+  };
+
+  var getPluginAttributes = function getPluginAttributes(element) {
+    return [element.getAttribute("data-plugin"), element.getAttribute("data-action"), element.getAttribute("data-target")];
+  };
+
+  var activateElement = function activateElement(element) {
+    element.classList.add("active");
+  };
+
+  var deactivateElement = function deactivateElement(element) {
+    element.classList.remove("active");
+  };
+
+  var all = function all() {
+    for (var i = 0; i++; i < arguments.length) {
+      if (!(i < 0 || arguments.length <= i ? undefined : arguments[i])) {
+        return false;
       }
     }
-  });
-  Shiny.inputBindings.register(buttonGroupInputBinding, "yonder.buttonGroupInput");
 
-  var buttonInputBinding = new Shiny.InputBinding();
-  $.extend(buttonInputBinding, {
-    find: function find(scope) {
-      return scope.querySelectorAll(".yonder-button[id]");
-    },
-    initialize: function initialize(el) {
-      el.value = 0;
-      $(el).on("click", function (e) {
-        return el.value = +el.value + 1;
-      });
-      actionListener(el, null, "click");
-    },
-    getValue: function getValue(el) {
-      return +el.value > 0 ? +el.value : null;
-    },
-    subscribe: function subscribe(el, callback) {
-      var $el = $(el);
-      $el.on("click.yonder", function (e) {
-        return callback();
-      });
-      $el.on("button.value.yonder", function (e) {
-        return callback();
-      });
-    },
-    unsubscribe: function unsubscribe(el, callback) {
-      return $(el).off(".yonder");
-    },
-    receiveMessage: function receiveMessage(el, msg) {
-      if (msg.content) {
-        el.innerHTML = msg.content;
+    return true;
+  };
+
+  var NAME = "buttongroup";
+  var TYPE = "yonder." + NAME;
+  var ClassName = {
+    INPUT: "yonder-button-group",
+    CHILD: "btn",
+    DISABLED: "disabled"
+  };
+  var Selector = {
+    INPUT: "." + ClassName.INPUT,
+    CHILD: "." + ClassName.CHILD,
+    PARENT_CHILD: "." + ClassName.INPUT + " ." + ClassName.CHILD,
+    PLUGIN: "[data-plugin]"
+  };
+  var Event = {
+    CLICK: "click." + TYPE
+  };
+
+  var ButtonGroupInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(ButtonGroupInput, _Input);
+
+    _createClass(ButtonGroupInput, null, [{
+      key: "TYPE",
+      get: function get() {
+        return TYPE;
+      }
+    }]);
+
+    function ButtonGroupInput(element) {
+      var _this;
+
+      _this = _Input.call(this, element, TYPE) || this;
+
+      if (!element.classList.contains(ClassName.INPUT)) {
+        throw new InputError("Invalid Element", "the target element is invalid");
       }
 
-      if (msg.value !== null && msg.value !== undefined) {
-        el.value = msg.value;
-        $(el).trigger("button.value.yonder");
-      }
-
-      if (msg.enable) {
-        el.classList.remove("disabled");
-        el.removeAttribute("disabled");
-      }
-
-      if (msg.disable) {
-        el.classList.add("disabled");
-        el.setAttribute("disabled", "");
-      }
+      _this._counter = 0;
+      Store.setData(element, TYPE, _assertThisInitialized(_this));
+      return _this;
     }
+
+    var _proto = ButtonGroupInput.prototype;
+
+    _proto.value = function value(x) {
+      if (typeof x === "undefined") {
+        return this._value;
+      }
+
+      this._value = x;
+
+      this._callback();
+
+      return this;
+    };
+
+    _proto.content = function content(html) {
+      this._element.innerHTML = html;
+    };
+
+    _proto.disable = function disable(values) {
+      var children = this._element.querySelectorAll(Selector.CHILD);
+
+      asArray(children).forEach(function (btn) {
+        if (typeof values === "undefined" || values.indexOf(btn.value) > -1) {
+          btn.setAttribute(ClassName.DISABLED, "");
+          btn.setAttribute("aria-disabled", "true");
+        }
+      });
+    };
+
+    _proto.enable = function enable(values) {
+      var children = this._element.querySelectorAll(Selector.CHILD);
+
+      asArray(children).forEach(function (btn) {
+        if (typeof values === "undefined" || values.indexOf(btn.value) > -1) {
+          btn.removeAttribute(ClassName.DISABLED);
+          btn.setAttribute("aria-disabled", "false");
+        }
+      });
+    };
+
+    ButtonGroupInput.find = function find(scope) {
+      return _Input.find.call(this, scope, "." + ClassName.INPUT);
+    };
+
+    ButtonGroupInput.initialize = function initialize(element) {
+      _Input.initialize.call(this, element, TYPE, ButtonGroupInput);
+    };
+
+    ButtonGroupInput.getType = function getType(element) {
+      return TYPE;
+    };
+
+    ButtonGroupInput.getValue = function getValue(element) {
+      var input = Store.getData(element, TYPE);
+
+      if (!input) {
+        return null;
+      }
+
+      return {
+        value: input.value(),
+        counter: input._counter++
+      };
+    };
+
+    ButtonGroupInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE);
+    };
+
+    ButtonGroupInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE);
+    };
+
+    ButtonGroupInput.receiveMessage = function receiveMessage(element, message) {
+      _Input.receiveMessage.call(this, element, message, TYPE);
+    };
+
+    ButtonGroupInput.ShinyInterface = function ShinyInterface() {
+      return _objectSpread2({}, Input, {}, ButtonGroupInput);
+    };
+
+    return ButtonGroupInput;
+  }(Input);
+
+  $$1(document).on(Event.CLICK, Selector.PARENT_CHILD, function (event) {
+    var button = event.currentTarget;
+    var group = findClosest(button, Selector.INPUT);
+    var input = Store.getData(group, TYPE);
+
+    if (!input) {
+      return;
+    }
+
+    input.value(button.value);
   });
-  Shiny.inputBindings.register(buttonInputBinding, "yonder.buttonInput");
+  $$1(document).on(Event.CLICK, "" + Selector.PARENT_CHILD + Selector.PLUGIN, function (event) {
+    var button = event.currentTarget;
+
+    var _getPluginAttributes = getPluginAttributes(button),
+        plugin = _getPluginAttributes[0],
+        action = _getPluginAttributes[1],
+        target = _getPluginAttributes[2];
+
+    if (!plugin || !action || !target) {
+      return;
+    }
+
+    if (plugin === "tab") {
+      $$1(button).one("shown.bs.tab", function (e) {
+        return button.classList.remove("active");
+      });
+    }
+
+    $$1(button)[plugin](action);
+  });
+
+  if (Shiny$1) {
+    Shiny$1.inputBindings.register(ButtonGroupInput.ShinyInterface(), TYPE);
+  }
+
+  var NAME$1 = "button";
+  var TYPE$1 = "yonder." + NAME$1;
+  var ClassName$1 = {
+    INPUT: "yonder-button"
+  };
+  var Selector$1 = {
+    INPUT: "." + ClassName$1.INPUT,
+    PLUGIN: "[data-plugin]"
+  };
+  var Event$1 = {
+    CLICK: "click." + TYPE$1
+  };
+
+  var ButtonInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(ButtonInput, _Input);
+
+    _createClass(ButtonInput, null, [{
+      key: "TYPE",
+      get: function get() {
+        return TYPE$1;
+      }
+    }]);
+
+    function ButtonInput(element) {
+      var _this;
+
+      _this = _Input.call(this, element, TYPE$1) || this;
+      _this._value = 0;
+      _this._isLink = element.tagName === "A";
+      Store.setData(element, TYPE$1, _assertThisInitialized(_this));
+      return _this;
+    }
+
+    var _proto = ButtonInput.prototype;
+
+    _proto.value = function value(x) {
+      if (typeof x === "undefined") {
+        return this._value;
+      }
+
+      this._value = x;
+
+      this._callback();
+
+      return this;
+    };
+
+    _proto.content = function content(html) {
+      this._element.innerHTML = html;
+    };
+
+    _proto.disable = function disable(values) {
+      if (this._isLink) {
+        this._element.classList.add("disabled");
+      } else {
+        this._element.setAttribute("disabled", "");
+      }
+    };
+
+    _proto.enable = function enable() {
+      if (this._isLink) {
+        this._element.classList.remove("disabled");
+      } else {
+        this._element.removeAttribute("disabled");
+      }
+    } // static ----
+    ;
+
+    ButtonInput.initialize = function initialize(element) {
+      _Input.initialize.call(this, element, TYPE$1, ButtonInput);
+    };
+
+    ButtonInput.find = function find(scope) {
+      return _Input.find.call(this, scope, Selector$1.INPUT);
+    };
+
+    ButtonInput.getValue = function getValue(element) {
+      var input = Store.getData(element, TYPE$1);
+
+      if (!input) {
+        return null;
+      }
+
+      return input.value() === 0 ? null : input.value();
+    };
+
+    ButtonInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE$1);
+    };
+
+    ButtonInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE$1);
+    };
+
+    ButtonInput.receiveMessage = function receiveMessage(element, message) {
+      _Input.receiveMessage.call(this, element, message, TYPE$1);
+    };
+
+    ButtonInput.ShinyInterface = function ShinyInterface() {
+      return _objectSpread2({}, Input, {}, ButtonInput);
+    };
+
+    return ButtonInput;
+  }(Input);
+
+  $$1(document).on(Event$1.CLICK, Selector$1.INPUT, function (event) {
+    var button = findClosest(event.target, Selector$1.INPUT);
+    var input = Store.getData(button, TYPE$1);
+
+    if (!input) {
+      return;
+    }
+
+    input.value(input.value() + 1);
+  });
+  $$1(document).on(Event$1.CLICK, "" + Selector$1.INPUT + Selector$1.PLUGIN, function (event) {
+    var button = findClosest(event.target, Selector$1.INPUT);
+
+    var _getPluginAttributes = getPluginAttributes(button),
+        plugin = _getPluginAttributes[0],
+        action = _getPluginAttributes[1],
+        target = _getPluginAttributes[2];
+
+    if (!(plugin && action && target)) {
+      return;
+    }
+
+    if (plugin === "tab") {
+      $$1(button).one("shown.bs.tab", function (e) {
+        return button.classList.remove("active");
+      });
+    }
+
+    $$1(button)[plugin](action);
+  });
+
+  if (Shiny$1) {
+    Shiny$1.inputBindings.register(ButtonInput.ShinyInterface(), TYPE$1);
+  }
 
   var checkbarInputBinding = new Shiny.InputBinding();
   $.extend(checkbarInputBinding, {
@@ -928,206 +1522,306 @@
   });
   Shiny.inputBindings.register(listGroupInputBinding, "yonder.listGroupInput");
 
-  var menuInputBinding = new Shiny.InputBinding();
-  $.extend(menuInputBinding, {
-    find: function find(scope) {
-      return scope.querySelectorAll(".yonder-menu[id]");
-    },
-    initialize: function initialize(el) {
-      var $el = $(el);
-      $el.on("click", ".dropdown-item:not(.disabled)", function (e) {
-        var active = el.querySelector(".dropdown-item.active");
+  var NAME$2 = "menu";
+  var TYPE$2 = "yonder." + NAME$2;
+  var ClassName$2 = {
+    INPUT: "yonder-menu",
+    CHILD: "dropdown-item"
+  };
+  var Selector$2 = {
+    INPUT: "." + ClassName$2.INPUT,
+    CHILD: "." + ClassName$2.CHILD,
+    PARENT_CHILD: "." + ClassName$2.INPUT + "  ." + ClassName$2.CHILD
+  };
+  var Event$2 = {
+    CLICK: "click." + TYPE$2,
+    CLOSE: "hide.bs.dropdown",
+    CLOSED: "hidden.bs.dropdown"
+  };
 
-        if (active !== null) {
-          active.classList.remove("active");
-        }
+  var MenuInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(MenuInput, _Input);
 
-        e.currentTarget.classList.add("active");
-      });
-      $el.on("nav.reset", function (e) {
-        var active = el.querySelector(".dropdown-item.active");
+    function MenuInput(element) {
+      var _this;
 
-        if (active !== null) {
-          active.classList.remove("active");
-        }
-      });
-      actionListener(el, ".dropdown-item", "click");
-    },
-    getValue: function getValue(el) {
-      var active = el.querySelector(".dropdown-item.active:not(.disabled)");
+      _this = _Input.call(this, element, TYPE$2) || this;
+      _this._counter = 0;
+      Store.setData(element, TYPE$2, _assertThisInitialized(_this));
+      return _this;
+    }
 
-      if (active === null) {
+    var _proto = MenuInput.prototype;
+
+    _proto.value = function value(x) {
+      if (typeof x === "undefined") {
+        return this._value;
+      }
+
+      this._value = x;
+
+      this._callback();
+
+      return this;
+    } // static ----
+    ;
+
+    MenuInput.initialize = function initialize(element) {
+      var input = Store.getData(element, TYPE$2);
+
+      if (!input) {
+        input = new MenuInput(element);
+      }
+    };
+
+    MenuInput.find = function find(element) {
+      return _Input.find.call(this, element, Selector$2.INPUT);
+    };
+
+    MenuInput.getType = function getType(element) {
+      return TYPE$2;
+    };
+
+    MenuInput.getValue = function getValue(element) {
+      var input = Store.getData(element, TYPE$2);
+
+      if (!input) {
         return null;
       }
 
-      return active.value;
-    },
-    subscribe: function subscribe(el, callback) {
-      var $el = $(el);
-      $el.on("click.yonder", function (e) {
-        return callback();
-      });
-      $el.on("menu.select.yonder", function (e) {
-        return callback();
-      });
-    },
-    unsubscribe: function unsubscribe(el) {
-      return $(el).off(".yonder");
-    },
-    receiveMessage: function receiveMessage(el, msg) {
-      if (msg.content) {
-        el.querySelector(".dropdown-menu").innerHTML = msg.content;
+      return {
+        value: input.value(),
+        counter: input._counter++
+      };
+    };
+
+    MenuInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE$2);
+    };
+
+    MenuInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE$2);
+    };
+
+    MenuInput.receiveMessage = function receiveMessage(element, message) {
+      _Input.receiveMessage.call(this, element, message, TYPE$2);
+    };
+
+    MenuInput.ShinyInterface = function ShinyInterface() {
+      return _objectSpread2({}, Input, {}, MenuInput);
+    };
+
+    _createClass(MenuInput, null, [{
+      key: "TYPE",
+      get: function get() {
+        return TYPE$2;
+      }
+    }, {
+      key: "Selector",
+      get: function get() {
+        return Selector$2;
+      }
+    }, {
+      key: "Event",
+      get: function get() {
+        return Event$2;
+      }
+    }]);
+
+    return MenuInput;
+  }(Input);
+
+  $$1(document).on(Event$2.CLICK, Selector$2.PARENT_CHILD, function (event) {
+    var item = findClosest(event.target, Selector$2.CHILD);
+
+    if (!item) {
+      return;
+    }
+
+    var menu = findClosest(item, Selector$2.INPUT);
+    var menuInput = Store.getData(menu, TYPE$2);
+
+    if (!menuInput) {
+      return;
+    }
+
+    menuInput.value(item.value);
+  });
+
+  if (Shiny$1) {
+    Shiny$1.inputBindings.register(MenuInput.ShinyInterface(), TYPE$2);
+  }
+
+  var NAME$3 = "nav";
+  var TYPE$3 = "yonder." + NAME$3;
+  var ClassName$3 = {
+    INPUT: "yonder-nav",
+    CHILD: "nav-link"
+  };
+  var Selector$3 = {
+    INPUT: "." + ClassName$3.INPUT,
+    CHILD: "." + ClassName$3.CHILD,
+    PARENT_CHILD: "." + ClassName$3.INPUT + " ." + ClassName$3.CHILD,
+    MENU: MenuInput.Selector.INPUT,
+    PARENT_MENU: "." + ClassName$3.INPUT + " " + MenuInput.Selector.INPUT,
+    ACTIVE: ".active",
+    DISABLED: ".disabled",
+    PLUGIN: "[data-plugin]"
+  };
+  var Event$3 = {
+    CLICK: "click." + TYPE$3,
+    MENU_CLOSE: MenuInput.Event.CLOSE
+  };
+
+  var NavInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(NavInput, _Input);
+
+    function NavInput(element) {
+      var _this;
+
+      _this = _Input.call(this, element, TYPE$3) || this;
+      Store.setData(element, TYPE$3, _assertThisInitialized(_this));
+      return _this;
+    }
+
+    var _proto = NavInput.prototype;
+
+    _proto.value = function value(x) {
+      if (typeof x === "undefined") {
+        return this._value;
       }
 
-      if (msg.selected) {
-        el.querySelectorAll(".dropdown-item").forEach(function (item) {
-          if (msg.selected.indexOf(item.value) > -1) {
-            item.classList.add("active");
+      this._value = x;
+
+      this._callback();
+
+      return this;
+    };
+
+    _proto.select = function select(value) {
+      if (typeof value === "string") {
+        var found = false;
+        asArray(this._element.querySelectorAll(Selector$3.CHILD)).forEach(function (child) {
+          if (child.value === value) {
+            activateElement(child);
+            found = true;
           } else {
-            item.classList.remove("active");
+            deactivateElement(child);
           }
         });
-        $(el).trigger("menu.select.yonder");
-      }
 
-      if (msg.enable) {
-        var enable = msg.enable;
-
-        if (enable === true) {
-          el.querySelector(".dropdown-toggle").classList.remove("disabled");
-        } else {
-          el.querySelectorAll(".dropdown-item").forEach(function (item) {
-            if (enable.indexOf(item.value) > -1) {
-              item.classList.remove("disabled");
-            }
-          });
+        if (found === true) {
+          this.value(value);
         }
       }
 
-      if (msg.disable) {
-        var disable = msg.disable;
-
-        if (disable === true) {
-          el.querySelector(".dropdown-toggle").classList.add("disabled");
-        } else {
-          el.querySelectorAll(".dropdown-item").forEach(function (item) {
-            if (disable.indexOf(item.value) > -1) {
-              item.classList.add("disabled");
-            }
-          });
-        }
+      if (value.nodeType === 1) {
+        var child = value;
+        asArray(this._element.querySelectorAll(Selector$3.CHILD)).forEach(deactivateElement);
+        activateElement(child);
+        this.value(child.value);
       }
-    }
-  });
-  Shiny.inputBindings.register(menuInputBinding, "yonder.menuInput");
+    };
 
-  var navInputBinding = new Shiny.InputBinding();
-  $.extend(navInputBinding, {
-    find: function find(scope) {
-      return scope.querySelectorAll(".yonder-nav[id]");
-    },
-    initialize: function initialize(el) {
-      var $el = $(el);
-      $el.on("click", ".nav-link:not(.dropdown-toggle):not(.disabled)", function (e) {
-        var active = el.querySelector(".dropdown-item.active");
+    _proto.disable = function disable(values) {};
 
-        if (active !== null) {
-          // trigger reset on menu input
-          $(active.parentNode.parentNode).trigger("nav.reset");
-        }
+    _proto.enable = function enable(values) {} // static ----
+    ;
 
-        el.querySelectorAll(".active").forEach(function (a) {
-          return a.classList.remove("active");
-        });
-        e.currentTarget.classList.add("active");
-      });
-      $el.on("click", ".dropdown-item:not(.disabled)", function (e) {
-        el.querySelectorAll(".active").forEach(function (a) {
-          return a.classList.remove("active");
-        });
-        e.currentTarget.parentNode.parentNode.children[0].classList.add("active");
-        e.currentTarget.classList.add("active");
-      });
-      actionListener(el, ".nav-link[data-plugin]", "click");
-    },
-    getValue: function getValue(el) {
-      var active = el.querySelector(".nav-link.active:not(.disabled)");
+    NavInput.initialize = function initialize(element) {
+      var input = Store.getData(element, TYPE$3);
 
-      if (active === null) {
+      if (!input) {
+        input = new NavInput(element);
+      }
+    };
+
+    NavInput.find = function find(scope) {
+      return _Input.find.call(this, scope, Selector$3.INPUT);
+    };
+
+    NavInput.getValue = function getValue(element) {
+      var input = Store.getData(element, TYPE$3);
+
+      if (!input) {
         return null;
       }
 
-      return active.value;
-    },
-    subscribe: function subscribe(el, callback) {
-      var $el = $(el);
-      $el.on("click.yonder", ".dropdown-item", function (e) {
-        return callback();
-      });
-      $el.on("click.yonder", ".nav-link:not(.dropdown-toggle)", function (e) {
-        return callback();
-      });
-      $el.on("nav.select.yonder", function (e) {
-        return callback();
-      });
-    },
-    unsubscribe: function unsubscribe(el) {
-      return $(el).off(".yonder");
-    },
-    receiveMessage: function receiveMessage(el, msg) {
-      if (msg.content) {
-        el.querySelectorAll(".nav-item").forEach(function (item) {
-          return el.removeChild(item);
-        });
-        el.insertAdjacentHTML("afterbegin", msg.content);
-      }
+      return input.value();
+    };
 
-      if (msg.selected) {
-        el.querySelectorAll(".nav-link").forEach(function (link) {
-          if (msg.selected.indexOf(link.value) > -1) {
-            link.classList.add("active");
-          } else {
-            link.classList.remove("active");
-          }
-        });
-        $(el).trigger("nav.select.yonder");
-      }
+    NavInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE$3);
+    };
 
-      if (msg.enable) {
-        var enable = msg.enable;
+    NavInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE$3);
+    };
 
-        if (enable === true) {
-          el.querySelectorAll(".nav-link").forEach(function (link) {
-            link.classList.remove("disabled");
-          });
-        } else {
-          el.querySelectorAll(".nav-link").forEach(function (link) {
-            if (enable.indexOf(link.value) > -1) {
-              link.classList.remove("disabled");
-            }
-          });
-        }
-      }
+    NavInput.receiveMessage = function receiveMessage(element, message) {
+      _Input.receiveMessage.call(this, element, message, TYPE$3);
+    };
 
-      if (msg.disable) {
-        var disable = msg.disable;
+    NavInput.ShinyInterface = function ShinyInterface() {
+      return _objectSpread2({}, Input, {}, NavInput);
+    };
 
-        if (disable === true) {
-          el.querySelectorAll(".nav-link").forEach(function (link) {
-            link.classList.add("disabled");
-          });
-        } else {
-          el.querySelectorAll(".nav-link").forEach(function (link) {
-            if (disable.indexOf(link.value) > -1) {
-              link.classList.add("disabled");
-            }
-          });
-        }
-      }
+    return NavInput;
+  }(Input); // events ----
+
+
+  $$1(document).on(Event$3.CLICK, Selector$3.PARENT_CHILD, function (event) {
+    var nav = findClosest(event.target, Selector$3.INPUT);
+    var input = Store.getData(nav, TYPE$3);
+
+    if (!input) {
+      return;
     }
+
+    var button = findClosest(event.target, Selector$3.CHILD);
+    input.select(button);
   });
-  Shiny.inputBindings.register(navInputBinding, "yonder.navInput");
-  Shiny.addCustomMessageHandler("yonder:pane", function (msg) {
+  $$1(document).on(Event$3.CLICK, "" + Selector$3.PARENT_CHILD + Selector$3.PLUGIN, function (event) {
+    var link = findClosest(event.target, Selector$3.CHILD);
+
+    var _getPluginAttributes = getPluginAttributes(link),
+        plugin = _getPluginAttributes[0],
+        action = _getPluginAttributes[1],
+        target = _getPluginAttributes[2];
+
+    if (!all(plugin, action, target)) {
+      return;
+    }
+
+    deactivateElement(link);
+    $$1(link)[plugin](action);
+  });
+  $$1(document).on(Event$3.MENU_CLOSE, Selector$3.PARENT_MENU, function (event) {
+    var nav = findClosest(event.target, Event$3.PARENT);
+    var navInput = Store.getData(nav, TYPE$3);
+
+    if (!navInput) {
+      return;
+    }
+
+    var dropdown = findClosest(event.target, Selector$3.DROPDOWN);
+    var dropdownInput = Store.getData(dropdown, MenuInput.TYPE);
+
+    if (!dropdownInput) {
+      return;
+    }
+
+    navInput.value(dropdownInput.value());
+  });
+
+  if (Shiny$1) {
+    Shiny$1.inputBindings.register(NavInput.ShinyInterface(), TYPE$3);
+  }
+  Shiny$1.addCustomMessageHandler("yonder:pane", function (msg) {
     var _show = function _show(pane) {
       if (pane === null || pane.classList.contains("show")) {
         return;
@@ -1141,14 +1835,14 @@
       var previous = pane.parentElement.querySelector(".active");
 
       var complete = function complete() {
-        var hiddenEvent = $.Event("hidden.bs.tab", {
+        var hiddenEvent = $$1.Event("hidden.bs.tab", {
           relatedTarget: pane
         });
-        var shownEvent = $.Event("shown.bs.tab", {
+        var shownEvent = $$1.Event("shown.bs.tab", {
           relatedTarget: previous
         });
-        $(previous).trigger(hiddenEvent);
-        $(pane).trigger(shownEvent);
+        $$1(previous).trigger(hiddenEvent);
+        $$1(pane).trigger(shownEvent);
       };
 
       bootstrap.Tab.prototype._activate(pane, pane.parentElement, complete);
@@ -1165,10 +1859,10 @@
       }
 
       var complete = function complete() {
-        var hiddenEvent = $.Event("hidden.bs.tab", {
+        var hiddenEvent = $$1.Event("hidden.bs.tab", {
           relatedTarget: pane
         });
-        $(pane).trigger(hiddenEvent);
+        $$1(pane).trigger(hiddenEvent);
       };
 
       var dummy = document.createElement("div");
@@ -2056,6 +2750,15 @@
       console.warn("no toast " + msg.type + " method");
     }
   });
+
+  var yonder = {
+    ButtonGroupInput: ButtonGroupInput,
+    ButtonInput: ButtonInput,
+    MenuInput: MenuInput,
+    NavInput: NavInput
+  };
+
+  return yonder;
 
 })));
 //# sourceMappingURL=yonder.js.map

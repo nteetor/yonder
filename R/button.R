@@ -280,16 +280,16 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #'   background("blue") %>%
 #'   width("1/3")
 #'
-buttonGroupInput <- function(id, labels = NULL, values = labels, ...,
+buttonGroupInput <- function(id, labels, values = labels, ...,
                              actions = NULL) {
   assert_id()
   assert_labels()
   assert_actions()
 
   shiny::registerInputHandler(
-    type = "yonder.button.group",
+    type = "yonder.buttongroup",
     fun = function(x, session, name) {
-      if (length(x) > 1) x[[2]]
+      x$value
     },
     force = TRUE
   )
@@ -316,16 +316,16 @@ updateButtonGroupInput <- function(id, labels = NULL, values = labels,
   assert_labels()
   assert_session()
 
-  buttons <- map_buttons(labels, values)
+  buttons <- map_buttons(labels, values, NULL)
 
   content <- coerce_content(buttons)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 
   session$sendInputMessage(id, list(
-    content = content,
-    enable = enable,
-    disable = disable
+    ## content = content,
+    list("enable", enable),
+    list("disable", disable)
   ))
 }
 

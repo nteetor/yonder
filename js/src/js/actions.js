@@ -41,11 +41,11 @@ let actionPerform = function(el) {
   }
 };
 
-$(() => {
-  let active = document.querySelectorAll(".active[data-plugin], input:checked[data-plugin]");
+// $(() => {
+//   let active = document.querySelectorAll(".active[data-plugin], input:checked[data-plugin]");
 
-  active.forEach(a => actionPerform(a));
-});
+//   active.forEach(a => actionPerform(a));
+// });
 
 export let actionListener = function(el, selector, event) {
   $(el).on(event, selector, (e) => {
