@@ -90,7 +90,7 @@ chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
 
   dep_attach({
     toggle <- tags$input(
-      class = "form-control",
+      class = "form-control custom-select",
       `data-toggle` = "dropdown"
     )
 

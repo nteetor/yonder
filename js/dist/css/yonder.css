@@ -7760,6 +7760,10 @@ a.close.disabled {
   margin-bottom: .25rem;
 }
 
+.yonder-chip .custom-select {
+  cursor: pointer;
+}
+
 .yonder-chip .dropdown-menu {
   min-width: 100%;
   max-height: 20rem;
