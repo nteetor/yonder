@@ -80,7 +80,7 @@ selectInput <- function(id, choices = NULL, values = choices,
     items <- map_selectitems(choices, values, selected)
 
     tags$div(
-      class = "yonder-select btn-group",
+      class = "yonder-select",
       id = id,
       tags$input(
         type = "text",
