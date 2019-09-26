@@ -25,10 +25,21 @@ dep_attach <- function(tag) {
   force(tag)
 
   if (length(deps)) {
-    htmltools::attachDependencies(tag, deps)
+    tag <- htmltools::attachDependencies(tag, deps)
+    tag <- tagAppendChild(tag, dep_meta())
+    tag
   } else {
     tag
   }
+}
+
+dep_meta <- function() {
+  list(
+    tags$meta(
+      name = "viewport",
+      content = "width=device-width, initial-scale=1, shrink-to-fit=no"
+    )
+  )
 }
 
 dep_yonder <- function() {
