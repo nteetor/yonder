@@ -34,7 +34,7 @@ dep_attach <- function(tag) {
 }
 
 dep_meta <- function() {
-  list(
+  tags$head(
     tags$meta(
       name = "viewport",
       content = "width=device-width, initial-scale=1, shrink-to-fit=no"
