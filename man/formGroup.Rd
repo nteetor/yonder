@@ -24,8 +24,8 @@ passed as HTML attributes to the parent element.}
 \item{help}{A character string specifying help text for the input, defaults
 to \code{NULL}, in which case help text is not added.}
 
-\item{width}{A \link{responsive} argument. One of \code{1:12} or "auto" specifying a
-column width for the form group, defaults to \code{NULL}.}
+\item{width}{A \link{responsive} argument. One of \code{1:12}, \code{"content"}, or
+\code{"equal"} specifying a column width for the form group, defaults to \code{NULL}.}
 }
 \description{
 Form groups are a way of labelling an input. Form rows are similar to

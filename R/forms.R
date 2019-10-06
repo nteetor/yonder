@@ -181,8 +181,8 @@ updateFormInput <- function(id, submit = FALSE,
 #'   For **formRow**, any number of `formGroup`s or additional named arguments
 #'   passed as HTML attributes to the parent element.
 #'
-#' @param width A [responsive] argument. One of `1:12` or "auto" specifying a
-#'   column width for the form group, defaults to `NULL`.
+#' @param width A [responsive] argument. One of `1:12`, `"content"`, or
+#'   `"equal"` specifying a column width for the form group, defaults to `NULL`.
 #'
 #' @family layout
 #' @export
@@ -238,16 +238,9 @@ formGroup <- function(label, input, ..., help = NULL, width = NULL) {
     )
   }
 
-  build <- column(width = width)
+  col_classes <- if (!is.null(width)) column(width = width)$attribs$class
 
   dep_attach({
-    if (build$attribs$class != "col") {
-      build$attribs$class <- sub("^col\\s+", "", build$attribs$class)
-    }
-
-    width <- resp_construct(width, c(1:12, "auto"))
-    classes <- resp_classes(width, "col")
-
     if (is_tag(label) && tag_name_is(label, "label")) {
       # do nothing
     } else {
@@ -261,7 +254,7 @@ formGroup <- function(label, input, ..., help = NULL, width = NULL) {
     tags$div(
       class = str_collate(
         "form-group",
-        classes
+        col_classes
       ),
       ...,
       label,

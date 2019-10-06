@@ -6,7 +6,7 @@
 \alias{container}
 \title{Grid layout}
 \usage{
-column(..., width = NULL)
+column(..., width = "equal")
 
 columns(...)
 
@@ -16,8 +16,8 @@ container(..., centered = FALSE)
 \item{...}{Any number of tags elements passed as child elements or named
 arguments passed as HTML attributes to the parent element.}
 
-\item{width}{A \link{responsive} argument. One of \code{1:12} or \code{"auto"}, defaults to
-\code{NULL}.}
+\item{width}{A \link{responsive} argument. One of \code{1:12}, \code{"content"}, or
+\code{"equal"}, defaults to \code{"equal"}.}
 
 \item{centered}{One of \code{TRUE} or \code{FALSE} specifying how a container fills the
 browser or viewport window. If \code{TRUE} the container is responsively
@@ -28,9 +28,9 @@ the viewport, defaults to \code{FALSE}.}
 These functions are the foundation of any application. Grid elements are
 nested as follows: \code{container() > columns() > column() ~ column()}. A
 \code{column()} may be created with an explicit width, 1 through 12. To fit a
-column automatically to its content use \code{width = "auto"}. To divide the space
-in a row evenly amongst all columns leave \code{width} as \code{NULL}. For examples and
-usage tips see the sections below.
+column automatically to its content use \code{width = "content"}. To divide the
+space in a row evenly amongst all columns use \code{width = "equal"}. For examples
+and usage tips see the sections below.
 }
 \examples{
 
@@ -122,7 +122,7 @@ container(
   columns(
     column(),
     column(
-      width = "auto",
+      width = "content",
       "Cras placerat accumsan nulla. Aenean in sem ac leo mollis blandit."
     ),
     column()

@@ -3,15 +3,15 @@
 #' These functions are the foundation of any application. Grid elements are
 #' nested as follows: `container() > columns() > column() ~ column()`. A
 #' `column()` may be created with an explicit width, 1 through 12. To fit a
-#' column automatically to its content use `width = "auto"`. To divide the space
-#' in a row evenly amongst all columns leave `width` as `NULL`. For examples and
-#' usage tips see the sections below.
+#' column automatically to its content use `width = "content"`. To divide the
+#' space in a row evenly amongst all columns use `width = "equal"`. For examples
+#' and usage tips see the sections below.
 #'
 #' @param ... Any number of tags elements passed as child elements or named
 #'   arguments passed as HTML attributes to the parent element.
 #'
-#' @param width A [responsive] argument. One of `1:12` or `"auto"`, defaults to
-#'   `NULL`.
+#' @param width A [responsive] argument. One of `1:12`, `"content"`, or
+#'   `"equal"`, defaults to `"equal"`.
 #'
 #' @param centered One of `TRUE` or `FALSE` specifying how a container fills the
 #'   browser or viewport window. If `TRUE` the container is responsively
@@ -110,18 +110,23 @@
 #'   columns(
 #'     column(),
 #'     column(
-#'       width = "auto",
+#'       width = "content",
 #'       "Cras placerat accumsan nulla. Aenean in sem ac leo mollis blandit."
 #'     ),
 #'     column()
 #'   )
 #' )
 #'
-column <- function(..., width = NULL) {
+column <- function(..., width = "equal") {
   dep_attach({
-    width <- resp_construct(width, c(1:12, "auto"))
+    width <- resp_construct(width, c(1:12, "equal", "content"))
+    width <- lapply(width, function(x) if (x == "content") "auto" else x)
 
-    classes <- c("col", resp_classes(width, "col"))
+    classes <- resp_classes(width, "col")
+
+    # `col-*-equal` classes are actually `col-*`
+    # "equal" is a placeholder
+    classes <- gsub("-equal$", "", classes)
 
     tag_class_add(tags$div(...), classes)
   })
