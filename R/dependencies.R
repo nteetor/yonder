@@ -26,7 +26,7 @@ dep_attach <- function(tag) {
 
   if (length(deps)) {
     tag <- htmltools::attachDependencies(tag, deps)
-    tag <- tagAppendChild(tag, dep_meta())
+    tag <- htmltools::tagAppendChild(tag, dep_meta())
     tag
   } else {
     tag
