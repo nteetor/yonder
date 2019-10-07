@@ -1637,30 +1637,32 @@
       }
 
       if (msg.enable) {
-        el.children[0].removeAattribute("disabled");
+        el.children[0].removeAttribute("disabled");
       }
 
       if (msg.disable) {
         el.children[0].setAttribute("disabled", "");
       }
 
+      var input = el.querySelector("input");
+
       if (msg.valid) {
         el.querySelector(".valid-feedback").innerHTML = msg.valid;
-        el.classList.remove("is-invalid");
-        el.classList.add("is-valid");
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
       }
 
       if (msg.invalid) {
         el.querySelector(".invalid-feedback").innerHTML = msg.invalid;
-        el.classList.remove("is-valid");
-        el.classList.add("is-invalid");
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
       }
 
       if (!msg.valid && !msg.invalid) {
         el.querySelector(".valid-feedback").innerHTML = "";
         el.querySelector(".invalid-feedback").innerHTML = "";
-        el.children[0].classList.remove("is-valid");
-        el.children[0].classList.remove("is-invalid");
+        input.classList.remove("is-valid");
+        input.classList.remove("is-invalid");
       }
     }
   });

@@ -137,8 +137,8 @@ updateTextInput <- function(id, value = NULL, enable = NULL, disable = NULL,
   assert_id()
   assert_session()
 
-  enable <- coerce_enable(valid)
-  disable <- coerce_disable(valid)
+  enable <- coerce_enable(enable)
+  disable <- coerce_disable(disable)
   valid <- coerce_valid(valid)
   invalid <- coerce_invalid(invalid)
 
