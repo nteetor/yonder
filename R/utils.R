@@ -78,6 +78,10 @@ tag_browse <- function(x) {
   htmltools::browsable(x)
 }
 
+tag_is_identical <- function(x, y) {
+  isTRUE(all.equal(x, y))
+}
+
 tag_name_is <- function(x, name) {
   stopifnot(is_tag(x))
   isTRUE(x$name == name)

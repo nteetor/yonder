@@ -206,6 +206,16 @@ map_navitems <- function(choices, values, selected, actions) {
     action = actions,
     function(choice, value, select, action) {
       if (is_tag(choice) && tag_class_re(choice, "yonder-menu")) {
+        if (is_tag(value) && tag_is_identical(choice, value)) {
+          # Use the menu toggle label as the value if no custom
+          # value is specified
+          choice$children[[1]]$attribs$value <- choice$children[[1]]$children[[1]]
+        } else {
+          choice$children[[1]]$attribs$value <- value
+        }
+
+        choice$children[[1]]$attribs$type <- NULL
+
         choice$children[[1]] <- tag_class_remove(
           choice$children[[1]],
           paste0("btn-(?:", paste0(possible_colors, collapse = "|"), ")")
@@ -214,8 +224,6 @@ map_navitems <- function(choices, values, selected, actions) {
           choice$children[[1]],
           "nav-link btn-link"
         )
-        choice$children[[1]]$attribs$type <- NULL
-        choice$children[[1]]$attribs$value <- value
 
         if (select) {
           choice$children[[1]] <- tag_class_add(choice$children[[1]], "active")
