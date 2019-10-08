@@ -8,8 +8,10 @@ import {
   findClosest,
   asArray,
   getPluginAttributes,
-  activateElement,
-  deactivateElement,
+  isNode,
+  activateElements,
+  deactivateElements,
+  filterElements,
   all
 } from "../utils/index.js";
 
@@ -18,23 +20,24 @@ const TYPE = `yonder.${ NAME }`;
 
 const ClassName = {
   INPUT: "yonder-nav",
-  CHILD: "nav-link"
+  CHILD: "nav-link",
+  ITEM: "nav-item"
 };
 
 const Selector = {
   INPUT: `.${ ClassName.INPUT }`,
   CHILD: `.${ ClassName.CHILD }`,
   PARENT_CHILD: `.${ ClassName.INPUT } .${ ClassName.CHILD }`,
-  MENU: MenuInput.Selector.INPUT,
-  PARENT_MENU: `.${ ClassName.INPUT } ${ MenuInput.Selector.INPUT }`,
   ACTIVE: ".active",
   DISABLED: ".disabled",
-  PLUGIN: "[data-plugin]"
+  PLUGIN: "[data-plugin]",
+  NAV_ITEM: `.${ ClassName.ITEM }`,
+  MENU_TOGGLE: MenuInput.Selector.TOGGLE,
+  MENU_ITEM: MenuInput.Selector.CHILD,
 };
 
 const Event = {
-  CLICK: `click.${ TYPE }`,
-  MENU_CLOSE: MenuInput.Event.CLOSE
+  CLICK: `click.${ TYPE }`
 };
 
 class NavInput extends Input {
@@ -56,30 +59,31 @@ class NavInput extends Input {
     return this;
   }
 
-  select(value) {
-    if (typeof value === "string") {
-      let found = false;
-      asArray(this._element.querySelectorAll(Selector.CHILD)).forEach((child) => {
-        if (child.value === value) {
-          activateElement(child);
-          found = true;
-        } else {
-          deactivateElement(child);
-        }
-      });
+  select(values) {
+    let children = this._element.querySelectorAll(Selector.CHILD);
 
-      if (found === true) {
-        this.value(value);
+    let targets = filterElements(children, values);
+
+    deactivateElements(children);
+
+    asArray(children).forEach(child => {
+      if (targets.indexOf(child) > -1) {
+        return;
       }
-    }
 
-    if (value.nodeType === 1) {
-      let child = value;
-      asArray(this._element.querySelectorAll(Selector.CHILD)).forEach(deactivateElement);
-      activateElement(child);
-      this.value(child.value);
-    }
+      let menuInput = Store.getData(child.parentNode, MenuInput.TYPE);
 
+      if (!menuInput) {
+        return;
+      }
+
+      menuInput.select(null);
+    });
+
+    if (targets.length) {
+      activateElements(targets[0]);
+      this.value(targets[0].value);
+    }
   }
 
   disable(values) {
@@ -133,17 +137,17 @@ class NavInput extends Input {
 
 // events ----
 
-$(document).on(Event.CLICK, Selector.PARENT_CHILD, (event) => {
+$(document).on(Event.CLICK, `${ Selector.PARENT_CHILD }:not(${ Selector.MENU_TOGGLE })`, (event) => {
   let nav = findClosest(event.target, Selector.INPUT);
-  let input = Store.getData(nav, TYPE);
+  let navInput = Store.getData(nav, TYPE);
 
-  if (!input) {
+  if (!navInput) {
     return;
   }
 
   let button = findClosest(event.target, Selector.CHILD);
 
-  input.select(button);
+  navInput.select(button);
 });
 
 $(document).on(Event.CLICK, `${ Selector.PARENT_CHILD }${ Selector.PLUGIN }`, (event) => {
@@ -154,27 +158,23 @@ $(document).on(Event.CLICK, `${ Selector.PARENT_CHILD }${ Selector.PLUGIN }`, (e
     return;
   }
 
-  deactivateElement(link);
+  deactivateElements(link);
 
   $(link)[plugin](action);
 });
 
-$(document).on(Event.MENU_CLOSE, Selector.PARENT_MENU, (event) => {
-  let nav = findClosest(event.target, Event.PARENT);
+$(document).on(Event.CLICK, `${ Selector.INPUT } ${ Selector.MENU_ITEM }`, (event) => {
+  let nav = findClosest(event.target, Selector.INPUT);
   let navInput = Store.getData(nav, TYPE);
 
   if (!navInput) {
     return;
   }
 
-  let dropdown = findClosest(event.target, Selector.DROPDOWN);
-  let dropdownInput = Store.getData(dropdown, MenuInput.TYPE);
+  let item = findClosest(event.target, Selector.NAV_ITEM);
+  let link = item.querySelector(Selector.CHILD);
 
-  if (!dropdownInput) {
-    return;
-  }
-
-  navInput.value(dropdownInput.value());
+  navInput.select(link);
 });
 
 if (Shiny) {

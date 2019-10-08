@@ -35,8 +35,18 @@ let findClosest = function(element, selector) {
   return closest.call(element, selector);
 };
 
+let matchesSelector = function(element, selector) {
+  return matches.call(element, selector);
+};
+
 let asArray = function(x) {
-  return Array.prototype.slice.call(x);
+  if (!x) {
+    return [];
+  } else if (typeof x === "object" && x.length) {
+    return Array.prototype.slice.call(x);
+  } else {
+    return [x];
+  }
 };
 
 let getPluginAttributes = function(element) {
@@ -47,12 +57,54 @@ let getPluginAttributes = function(element) {
   ];
 };
 
-let activateElement = function(element) {
-  element.classList.add("active");
+let isNode = function(x) {
+  return x && x.nodeType === 1;
 };
 
-let deactivateElement = function(element) {
-  element.classList.remove("active");
+let activateElements = function(elements) {
+  if (!elements) {
+    return;
+  }
+
+  if (elements.length) {
+    asArray(elements).forEach(e => activateElements(e));
+  } else if (elements.classList) {
+    elements.classList.add("active");
+  }
+};
+
+let deactivateElements = function(elements) {
+  if (!elements) {
+    return;
+  }
+
+  if (elements.length) {
+    asArray(elements).forEach(e => deactivateElements(e));
+  } else if (elements.classList) {
+    elements.classList.remove("active");
+  }
+};
+
+let filterElements = function(elements, values, getValue = x => x.value) {
+  let targetValues = asArray(values).map(x => isNode(x) ? x : x.toString());
+
+  elements = asArray(elements);
+  let elementValues = elements.map(getValue);
+
+  let foundElements = [];
+
+  for (var i = 0; i < targetValues.length; i++) {
+    let v = targetValues[i];
+    let found = elements[isNode(v) ? elements.indexOf(v) : elementValues.indexOf(v)];
+
+    if (found === undefined) {
+      continue;
+    }
+
+    foundElements.push(found);
+  }
+
+  return foundElements;
 };
 
 let all = function(...objs) {
@@ -67,9 +119,12 @@ let all = function(...objs) {
 
 export {
   findClosest,
+  matchesSelector,
   asArray,
   getPluginAttributes,
-  activateElement,
-  deactivateElement,
+  isNode,
+  activateElements,
+  deactivateElements,
+  filterElements,
   all
 };
