@@ -4,7 +4,12 @@ import Shiny from "Shiny";
 import Input from "./input.js";
 import Store from "../data/store.js";
 import {
-  findClosest
+  findClosest,
+  asArray,
+  isNode,
+  activateElements,
+  deactivateElements,
+  filterElements
 } from "../utils/index.js";
 
 const NAME = "menu";
@@ -18,7 +23,8 @@ const ClassName = {
 const Selector = {
   INPUT: `.${ ClassName.INPUT }`,
   CHILD: `.${ ClassName.CHILD }`,
-  PARENT_CHILD: `.${ ClassName.INPUT }  .${ ClassName.CHILD }`
+  PARENT_CHILD: `.${ ClassName.INPUT } .${ ClassName.CHILD }`,
+  TOGGLE: "[data-toggle='dropdown']"
 };
 
 const Event = {
@@ -46,6 +52,19 @@ class MenuInput extends Input {
     this._callback();
 
     return this;
+  }
+
+  select(values) {
+    let children = this._element.querySelectorAll(Selector.CHILD);
+
+    let targets = filterElements(children, values);
+
+    deactivateElements(children);
+
+    if (targets.length) {
+      activateElements(targets[0]);
+      this.value(targets[0].value);
+    }
   }
 
   // static ----
@@ -105,6 +124,8 @@ class MenuInput extends Input {
   }
 }
 
+// events ----
+
 $(document).on(Event.CLICK, Selector.PARENT_CHILD, (event) => {
   let item = findClosest(event.target, Selector.CHILD);
 
@@ -119,7 +140,7 @@ $(document).on(Event.CLICK, Selector.PARENT_CHILD, (event) => {
     return;
   }
 
-  menuInput.value(item.value);
+  menuInput.select(item);
 });
 
 if (Shiny) {

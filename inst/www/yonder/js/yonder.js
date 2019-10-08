@@ -446,19 +446,77 @@
   };
 
   var asArray = function asArray(x) {
-    return Array.prototype.slice.call(x);
+    if (!x) {
+      return [];
+    } else if (typeof x === "object" && x.length) {
+      return Array.prototype.slice.call(x);
+    } else {
+      return [x];
+    }
   };
 
   var getPluginAttributes = function getPluginAttributes(element) {
     return [element.getAttribute("data-plugin"), element.getAttribute("data-action"), element.getAttribute("data-target")];
   };
 
-  var activateElement = function activateElement(element) {
-    element.classList.add("active");
+  var isNode = function isNode(x) {
+    return x && x.nodeType === 1;
   };
 
-  var deactivateElement = function deactivateElement(element) {
-    element.classList.remove("active");
+  var activateElements = function activateElements(elements) {
+    if (!elements) {
+      return;
+    }
+
+    if (elements.length) {
+      asArray(elements).forEach(function (e) {
+        return activateElements(e);
+      });
+    } else if (elements.classList) {
+      elements.classList.add("active");
+    }
+  };
+
+  var deactivateElements = function deactivateElements(elements) {
+    if (!elements) {
+      return;
+    }
+
+    if (elements.length) {
+      asArray(elements).forEach(function (e) {
+        return deactivateElements(e);
+      });
+    } else if (elements.classList) {
+      elements.classList.remove("active");
+    }
+  };
+
+  var filterElements = function filterElements(elements, values, getValue) {
+    if (getValue === void 0) {
+      getValue = function getValue(x) {
+        return x.value;
+      };
+    }
+
+    var targetValues = asArray(values).map(function (x) {
+      return isNode(x) ? x : x.toString();
+    });
+    elements = asArray(elements);
+    var elementValues = elements.map(getValue);
+    var foundElements = [];
+
+    for (var i = 0; i < targetValues.length; i++) {
+      var v = targetValues[i];
+      var found = elements[isNode(v) ? elements.indexOf(v) : elementValues.indexOf(v)];
+
+      if (found === undefined) {
+        continue;
+      }
+
+      foundElements.push(found);
+    }
+
+    return foundElements;
   };
 
   var all = function all() {
@@ -1531,7 +1589,8 @@
   var Selector$2 = {
     INPUT: "." + ClassName$2.INPUT,
     CHILD: "." + ClassName$2.CHILD,
-    PARENT_CHILD: "." + ClassName$2.INPUT + "  ." + ClassName$2.CHILD
+    PARENT_CHILD: "." + ClassName$2.INPUT + " ." + ClassName$2.CHILD,
+    TOGGLE: "[data-toggle='dropdown']"
   };
   var Event$2 = {
     CLICK: "click." + TYPE$2,
@@ -1565,6 +1624,18 @@
       this._callback();
 
       return this;
+    };
+
+    _proto.select = function select(values) {
+      var children = this._element.querySelectorAll(Selector$2.CHILD);
+
+      var targets = filterElements(children, values);
+      deactivateElements(children);
+
+      if (targets.length) {
+        activateElements(targets[0]);
+        this.value(targets[0].value);
+      }
     } // static ----
     ;
 
@@ -1631,7 +1702,8 @@
     }]);
 
     return MenuInput;
-  }(Input);
+  }(Input); // events ----
+
 
   $$1(document).on(Event$2.CLICK, Selector$2.PARENT_CHILD, function (event) {
     var item = findClosest(event.target, Selector$2.CHILD);
@@ -1647,7 +1719,7 @@
       return;
     }
 
-    menuInput.value(item.value);
+    menuInput.select(item);
   });
 
   if (Shiny$1) {
@@ -1658,21 +1730,22 @@
   var TYPE$3 = "yonder." + NAME$3;
   var ClassName$3 = {
     INPUT: "yonder-nav",
-    CHILD: "nav-link"
+    CHILD: "nav-link",
+    ITEM: "nav-item"
   };
   var Selector$3 = {
     INPUT: "." + ClassName$3.INPUT,
     CHILD: "." + ClassName$3.CHILD,
     PARENT_CHILD: "." + ClassName$3.INPUT + " ." + ClassName$3.CHILD,
-    MENU: MenuInput.Selector.INPUT,
-    PARENT_MENU: "." + ClassName$3.INPUT + " " + MenuInput.Selector.INPUT,
     ACTIVE: ".active",
     DISABLED: ".disabled",
-    PLUGIN: "[data-plugin]"
+    PLUGIN: "[data-plugin]",
+    NAV_ITEM: "." + ClassName$3.ITEM,
+    MENU_TOGGLE: MenuInput.Selector.TOGGLE,
+    MENU_ITEM: MenuInput.Selector.CHILD
   };
   var Event$3 = {
-    CLICK: "click." + TYPE$3,
-    MENU_CLOSE: MenuInput.Event.CLOSE
+    CLICK: "click." + TYPE$3
   };
 
   var NavInput =
@@ -1702,28 +1775,28 @@
       return this;
     };
 
-    _proto.select = function select(value) {
-      if (typeof value === "string") {
-        var found = false;
-        asArray(this._element.querySelectorAll(Selector$3.CHILD)).forEach(function (child) {
-          if (child.value === value) {
-            activateElement(child);
-            found = true;
-          } else {
-            deactivateElement(child);
-          }
-        });
+    _proto.select = function select(values) {
+      var children = this._element.querySelectorAll(Selector$3.CHILD);
 
-        if (found === true) {
-          this.value(value);
+      var targets = filterElements(children, values);
+      deactivateElements(children);
+      asArray(children).forEach(function (child) {
+        if (targets.indexOf(child) > -1) {
+          return;
         }
-      }
 
-      if (value.nodeType === 1) {
-        var child = value;
-        asArray(this._element.querySelectorAll(Selector$3.CHILD)).forEach(deactivateElement);
-        activateElement(child);
-        this.value(child.value);
+        var menuInput = Store.getData(child.parentNode, MenuInput.TYPE);
+
+        if (!menuInput) {
+          return;
+        }
+
+        menuInput.select(null);
+      });
+
+      if (targets.length) {
+        activateElements(targets[0]);
+        this.value(targets[0].value);
       }
     };
 
@@ -1774,16 +1847,17 @@
   }(Input); // events ----
 
 
-  $$1(document).on(Event$3.CLICK, Selector$3.PARENT_CHILD, function (event) {
+  $$1(document).on(Event$3.CLICK, Selector$3.PARENT_CHILD + ":not(" + Selector$3.MENU_TOGGLE + ")", function (event) {
     var nav = findClosest(event.target, Selector$3.INPUT);
-    var input = Store.getData(nav, TYPE$3);
+    var navInput = Store.getData(nav, TYPE$3);
 
-    if (!input) {
+    if (!navInput) {
       return;
     }
 
+    console.log("hmm");
     var button = findClosest(event.target, Selector$3.CHILD);
-    input.select(button);
+    navInput.select(button);
   });
   $$1(document).on(Event$3.CLICK, "" + Selector$3.PARENT_CHILD + Selector$3.PLUGIN, function (event) {
     var link = findClosest(event.target, Selector$3.CHILD);
@@ -1797,25 +1871,20 @@
       return;
     }
 
-    deactivateElement(link);
+    deactivateElements(link);
     $$1(link)[plugin](action);
   });
-  $$1(document).on(Event$3.MENU_CLOSE, Selector$3.PARENT_MENU, function (event) {
-    var nav = findClosest(event.target, Event$3.PARENT);
+  $$1(document).on(Event$3.CLICK, Selector$3.INPUT + " " + Selector$3.MENU_ITEM, function (event) {
+    var nav = findClosest(event.target, Selector$3.INPUT);
     var navInput = Store.getData(nav, TYPE$3);
 
     if (!navInput) {
       return;
     }
 
-    var dropdown = findClosest(event.target, Selector$3.DROPDOWN);
-    var dropdownInput = Store.getData(dropdown, MenuInput.TYPE);
-
-    if (!dropdownInput) {
-      return;
-    }
-
-    navInput.value(dropdownInput.value());
+    var item = findClosest(event.target, Selector$3.NAV_ITEM);
+    var link = item.querySelector(Selector$3.CHILD);
+    navInput.select(link);
   });
 
   if (Shiny$1) {
