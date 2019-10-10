@@ -6,7 +6,7 @@
 \title{List group inputs}
 \usage{
 listGroupInput(id, choices = NULL, values = choices, selected = NULL,
-  ..., actions = NULL, layout = "vertical", flush = FALSE)
+  ..., layout = "vertical", flush = FALSE)
 
 updateListGroupInput(id, choices = NULL, values = choices,
   selected = NULL, enable = NULL, disable = NULL,
@@ -27,8 +27,6 @@ default, defaults to \code{NULL}, in which case no choice is selected.}
 \item{...}{Additional named arguments passed as HTML attributes to the
 parent element or tag elements passed as child elements to the parent
 element.}
-
-\item{actions}{A list of input \link{actions} or \code{NULL}.}
 
 \item{layout}{A \link{responsive} argument. One of \code{"vertical"} or \code{"horizontal"}
 specifying how list items are laid out, defaults to \code{"vertical"}. Note, if

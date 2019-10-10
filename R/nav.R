@@ -4,8 +4,7 @@
 #' styled as links, tabs, or pills. A nav input is paired with [navContent()]
 #' and [showNavPane()] to create tabbed user interfaces. Observers and reactives
 #' are triggered when a nav choice or menu item is clicked. The reactive value
-#' of a nav input is `NULL` or a singleton character string. The value of any
-#' menus in the nav input must be retrieved with its own reactive id.
+#' of a nav input is `NULL` or a singleton character string.
 #'
 #' @inheritParams checkboxInput
 #'
@@ -27,33 +26,67 @@
 #' @param appearance One of `"links"`, `"pills"`, or `"tabs"` specifying the
 #'   appearance of the nav input, defaults to `"links"`.
 #'
-#' @section Including a menu:
+#' @details
 #'
-#' Use the reactive id of any nav menus to know when a menu item is clicked.
+#' \subsection{Including menu inputs}{
+#'
+#' Menu inputs may be included within a nav input. There are two distinct
+#' behaviours for menu inputs within a nav input depending on the menu input's
+#' `id`.
+#'
+#' \subsection{Menu input with `NULL` `id`}{
+#'
+#' If a menu input has a `NULL` `id` selecting a menu item will change the value
+#' of the parent nav input. This behviour is useful if you prefer to access the
+#' nav input's and its children's values all through the nav input's id.
 #'
 #' ```R
-#' ui <- navInput(
-#'   id = "navigation",
+#' navInput(
+#'   id = "nav1",
+#'   appearance = "pills",
 #'   choices = list(
-#'     "Item 1",
-#'     "Item 2",
+#'     "Choice 1",
 #'     menuInput(
-#'       id = "navMenu",  # <-
-#'       label = "Item 3",
-#'       choices = c("Choice 1", "Choice 2")
+#'       id = NULL,  # <-
+#'       label = "Other choices",
+#'       choices = c("Choice 2", "Choice 3")
 #'     )
-#'   ),
-#'   values = c("item1", "item2", "item3")
+#'   )
 #' )
+#' ```
 #'
-#' server <- function(input, output) {
-#'   observeEvent(input$navMenu, {
-#'     cat(paste("Click menu item:", input$navMenu, "\n"))
-#'   })
 #' }
 #'
-#' shinyApp(ui, server)
+#' \subsection{Menu input with character string `id`}{
+#'
+#' If a menu input has a character string `id` then selecting a menu item has
+#' set's the nav input's value to the `label` of the menu input. Selecting the
+#' menu item will also set the value of its parent menu input. This behaviour is
+#' useful if you want a nav input to only track which top level item is
+#' selected.
+#'
+#' Looking at the example nav input below, selecting the menu items `Choice 1`
+#' or `Choice 2` will set the value of the `nav2` nav input to
+#' `"Other choices"`.
+#'
+#' ```R
+#' navInput(
+#'   id = "nav2",
+#'   appearance = "pills",
+#'   choices = list(
+#'     "Choice 1",
+#'     menuInput(
+#'       id = "menu1",  # <-
+#'       label = "Other choices",
+#'       choices = c("Choice 2", "Choice 3")
+#'     )
+#'   )
+#' )
 #' ```
+#'
+#' }
+#'
+#' }
 #'
 #' @family inputs
 #' @export
@@ -118,38 +151,16 @@
 #' ) %>%
 #'   flex(justify = "center")
 #'
-#' ### Controlling nav content
-#'
-#' navInput(
-#'   id = "test",
-#'   choices = c("Home", "About"),
-#'   targets = "pages"
-#' )
-#'
-#' navInput(
-#'   id = "test",
-#'   choices = c("Home", "About"),
-#'   values = c("chicken", "dinner")
-#'   targets = c(chicken = "Home", dinner = "About")
-#' )
-#'
-#' navInput(
-#'   id = "test",
-#'   choices = c("Home", "About"),
-#'   targets = c(Home = c("Home", "sidebar"), About = About)
-#' )
-#'
 navInput <- function(id, choices, values = choices,
                      selected = values[[1]], ..., appearance = "links",
-                     fill = FALSE, actions = NULL) {
+                     fill = FALSE) {
   assert_id()
   assert_choices()
   assert_selected(length = 1)
   assert_possible(appearance, c("links", "pills", "tabs"))
-  # assert_targets()
 
   dep_attach({
-    items <- map_navitems(choices, values, selected, actions)
+    items <- map_navitems(choices, values, selected)
 
     tags$ul(
       class = str_collate(
@@ -169,14 +180,13 @@ navInput <- function(id, choices, values = choices,
 #' @export
 updateNavInput <- function(id, choices = NULL, values = choices,
                            selected = NULL, enable = NULL, disable = NULL,
-                           actions = NULL,
                            session = getDefaultReactiveDomain()) {
   assert_id()
   assert_choices()
   assert_selected(length = 1)
   assert_session()
 
-  items <- map_navitems(choices, values, selected, targets)
+  items <- map_navitems(choices, values, selected)
 
   content <- coerce_content(items)
   selected <- coerce_selected(selected)
@@ -191,20 +201,18 @@ updateNavInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_navitems <- function(choices, values, selected, actions) {
+map_navitems <- function(choices, values, selected) {
   if (is.null(choices) && is.null(values)) {
     return(NULL)
   }
 
   selected <- values %in% selected
-  actions <- normalize_actions(actions, values)
 
   Map(
     choice = choices,
     value = values,
     select = selected,
-    action = actions,
-    function(choice, value, select, action) {
+    function(choice, value, select) {
       if (is_tag(choice) && tag_class_re(choice, "yonder-menu")) {
         if (is_tag(value) && tag_is_identical(choice, value)) {
           # Use the menu toggle label as the value if no custom
@@ -229,10 +237,6 @@ map_navitems <- function(choices, values, selected, actions) {
           choice$children[[1]] <- tag_class_add(choice$children[[1]], "active")
         }
 
-        if (!is.null(action)) {
-          choice <- tag_attributes_add(choice, as.list(action))
-        }
-
         choice$name <- "li"
         choice <- tag_class_add(choice, "nav-item")
 
@@ -248,7 +252,6 @@ map_navitems <- function(choices, values, selected, actions) {
             "btn-link",
             if (select) "active"
           ),
-          !!!action,
           value = value,
           choice
         )
@@ -482,20 +485,6 @@ navPane <- function(id, ..., fade = TRUE) {
       ...
     )
   })
-}
-
-#' @rdname navContent
-#' @export
-showNavTarget <- function(id, ...) {
-  assert_id()
-
-  input_action("tab", "show", id)
-}
-
-#' @rdname navContent
-#' @export
-hideNavTarget <- function(id, ...) {
-  input_action("tab", "hide", id)
 }
 
 #' @rdname navContent

@@ -2,7 +2,7 @@ context("card component")
 
 test_that("card with nav pills has .nav-header-pills", {
   this <- card(
-    header = navInput(id = "ID", appearance = "pills")
+    header = navInput(id = "ID", choices = LETTERS[1:2], appearance = "pills")
   )
 
   expect_true(grepl("card-header-pills", as.character(this)))
@@ -10,7 +10,7 @@ test_that("card with nav pills has .nav-header-pills", {
 
 test_that("card with nav tabs has .nav-header-tabs", {
   this <- card(
-    header = navInput(id = "ID", appearance = "tabs")
+    header = navInput(id = "ID", choices = LETTERS[1:2], appearance = "tabs")
   )
 
   expect_true(grepl("card-header-tabs", as.character(this)))

@@ -6,8 +6,7 @@
 \title{Menu inputs}
 \usage{
 menuInput(id, label, choices = NULL, values = choices,
-  selected = NULL, ..., actions = NULL, direction = "down",
-  align = "left")
+  selected = NULL, ..., direction = "down", align = "left")
 
 updateMenuInput(id, label = NULL, choices = NULL, values = choices,
   selected = NULL, enable = NULL, disable = NULL,
@@ -32,8 +31,6 @@ initially selected.}
 \item{...}{Additional named arguments passed as HTML attributes to the
 parent element or tag elements passed as child elements to the parent
 element.}
-
-\item{actions}{A list of input \link{actions} or \code{NULL}.}
 
 \item{direction}{One of \code{"up"}, \code{"right"}, \code{"down"}, or \code{"left"} specifying
 which direction the menu opens, defaults to \code{"down"}.}

@@ -79,7 +79,6 @@ checkboxInput <- function(id, choices = NULL, values = choices, selected = NULL,
                           ..., inline = FALSE) {
   assert_id()
   assert_choices()
-  assert_actions()
 
   dep_attach({
     checkboxes <- map_checkboxes(choices, values, selected, inline)
@@ -182,7 +181,7 @@ map_checkboxes <- function(choices, values, selected, inline,
     value = values,
     select = selected,
     last = seq_along(choices) == length(choices),
-    function(choice, value, select, action, last) {
+    function(choice, value, select, last) {
       id <- generate_id("checkbox")
 
       tags$div(

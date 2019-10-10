@@ -6,7 +6,7 @@
 \title{Radio inputs}
 \usage{
 radioInput(id, choices = NULL, values = choices,
-  selected = values[[1]], ..., actions = NULL, inline = FALSE)
+  selected = values[[1]], ..., inline = FALSE)
 
 updateRadioInput(id, choices = NULL, values = choices,
   selected = NULL, inline = FALSE, enable = NULL, disable = NULL,
@@ -30,8 +30,6 @@ selected by default.}
 \item{...}{Additional named arguments passed as HTML attributes to the
 parent element or tag elements passed as child elements to the parent
 element.}
-
-\item{actions}{A list of input \link{actions} or \code{NULL}.}
 
 \item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
 in which case the radio controls render on separate lines.}

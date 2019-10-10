@@ -51,15 +51,13 @@
 #' )
 #'
 radioInput <- function(id, choices = NULL, values = choices,
-                       selected = values[[1]], ..., actions = NULL,
-                       inline = FALSE) {
+                       selected = values[[1]], ..., inline = FALSE) {
   assert_id()
   assert_choices()
   assert_selected(length = 1)
-  assert_actions()
 
   dep_attach({
-    radios <- map_radios(choices, values, selected, actions, id, inline)
+    radios <- map_radios(choices, values, selected, id, inline)
 
     tags$div(
       class = "yonder-radio",
@@ -101,21 +99,19 @@ updateRadioInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_radios <- function(choices, values, selected, actions, parent_id, inline) {
+map_radios <- function(choices, values, selected, parent_id, inline) {
   if (is.null(choices) && is.null(values)) {
     return(NULL)
   }
 
   selected <- values %in% selected
-  actions <- normalize_actions(actions, values)
 
   Map(
     choice = choices,
     value = values,
     select = selected,
-    action = actions,
     last = seq_along(choices) == length(choices),
-    function(choice, value, select, action, last) {
+    function(choice, value, select, last) {
       child_id <- generate_id("radio")
 
       tags$div(
@@ -131,8 +127,7 @@ map_radios <- function(choices, values, selected, actions, parent_id, inline) {
           name = parent_id,
           value = value,
           checked = if (select) NA,
-          autocomplete = "off",
-          !!!action
+          autocomplete = "off"
         ),
         tags$label(
           class = "custom-control-label",
@@ -188,14 +183,13 @@ map_radios <- function(choices, values, selected, actions, parent_id, inline) {
 #'   background("grey")
 #'
 radiobarInput <- function(id, choices, values = choices, selected = values[[1]],
-                          ..., actions = NULL) {
+                          ...) {
   assert_id()
   assert_choices()
   assert_selected(length = 1)
-  assert_actions()
 
   dep_attach({
-    radios <- map_radiobuttons(choices, values, selected, actions, id)
+    radios <- map_radiobuttons(choices, values, selected, id)
 
     tags$div(
       class = "yonder-radiobar btn-group btn-group-toggle d-flex",
@@ -232,21 +226,18 @@ updateRadiobarInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-
-map_radiobuttons <- function(choices, values, selected, actions, parent_id) {
+map_radiobuttons <- function(choices, values, selected, parent_id) {
   if (is.null(choices) && is.null(values)) {
     return(NULL)
   }
 
   selected <- values %in% selected
-  actions <- normalize_actions(actions, values)
 
   Map(
     choice = choices,
     value = values,
     select = selected,
-    action = actions,
-    function(choice, value, select, action) {
+    function(choice, value, select) {
       tags$label(
         class = str_collate(
           "btn",
@@ -258,8 +249,7 @@ map_radiobuttons <- function(choices, values, selected, actions, parent_id) {
           type = "radio",
           value = value,
           checked = if (select) NA,
-          autocomplete = "off",
-          !!!action
+          autocomplete = "off"
         ),
         choice
       )
