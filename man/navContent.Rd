@@ -3,8 +3,6 @@
 \name{navContent}
 \alias{navContent}
 \alias{navPane}
-\alias{showNavTarget}
-\alias{hideNavTarget}
 \alias{showNavPane}
 \alias{hideNavPane}
 \title{Navigation panes}
@@ -12,10 +10,6 @@
 navContent(...)
 
 navPane(id, ..., fade = TRUE)
-
-showNavTarget(id, ...)
-
-hideNavTarget(id, ...)
 
 showNavPane(id, session = getDefaultReactiveDomain())
 

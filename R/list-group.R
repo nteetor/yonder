@@ -109,12 +109,11 @@
 #' )
 #'
 listGroupInput <- function(id, choices = NULL, values = choices,
-                           selected = NULL, ..., actions = NULL,
-                           layout = "vertical", flush = FALSE) {
+                           selected = NULL, ..., layout = "vertical",
+                           flush = FALSE) {
   assert_id()
   assert_choices()
   assert_selected(length = 1)
-  assert_actions()
   assert_possible(layout, c("vertical", "horizontal"))
   assert_possible(flush, c(TRUE, FALSE))
 
@@ -125,7 +124,7 @@ listGroupInput <- function(id, choices = NULL, values = choices,
     # drop vertical classes as they do not actually exist
     classes <- classes[!grepl("vertical", classes, fixed = TRUE)]
 
-    items <- map_listitems(choices, values, selected, actions)
+    items <- map_listitems(choices, values, selected)
 
     tags$div(
       class = str_collate(
@@ -166,16 +165,14 @@ updateListGroupInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_listitems <- function(choices, values, selected, actions) {
+map_listitems <- function(choices, values, selected) {
   selected <- values %in% selected
-  actions <- normalize_actions(actions, values)
 
   Map(
     choice = choices,
     value = values,
     select = selected,
-    action = actions,
-    function(choice, value, select, action) {
+    function(choice, value, select) {
       tags$button(
         class = str_collate(
           "list-group-item",
@@ -184,7 +181,6 @@ map_listitems <- function(choices, values, selected, actions) {
           if (select) "active"
         ),
         value = value,
-        !!!action,
         choice
       )
     }

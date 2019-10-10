@@ -75,30 +75,6 @@ collapsePane <- function(id, ..., show = FALSE) {
   })
 }
 
-#' @rdname actions
-#' @export
-toggleCollapseTarget <- function(id, ...) {
-  assert_id()
-
-  input_action("collapse", "toggle", id)
-}
-
-#' @rdname actions
-#' @export
-showCollapseTarget <- function(id, ...) {
-  assert_id()
-
-  input_action("collapse", "show", id)
-}
-
-#' @rdname actions
-#' @export
-hideCollapseTarget <- function(id, ...) {
-  assert_id()
-
-  input_action("collapse", "hide", id)
-}
-
 #' @rdname collapsePane
 #' @export
 hideCollapsePane <- function(id, session = getDefaultReactiveDomain()) {

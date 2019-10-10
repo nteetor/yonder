@@ -13,5 +13,5 @@ test_that("labels argument", {
 })
 
 test_that("has dependencies", {
-  expect_dependencies(buttonGroupInput("ID"))
+  expect_dependencies(buttonGroupInput("ID", c("A", "B")))
 })

@@ -5,12 +5,11 @@
 \alias{updateNavInput}
 \title{Page navigation inputs}
 \usage{
-navInput(id, choices = NULL, values = choices,
-  selected = values[[1]], ..., appearance = "links", fill = FALSE,
-  actions = NULL)
+navInput(id, choices, values = choices, selected = values[[1]], ...,
+  appearance = "links", fill = FALSE)
 
 updateNavInput(id, choices = NULL, values = choices, selected = NULL,
-  enable = NULL, disable = NULL, actions = NULL,
+  enable = NULL, disable = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
@@ -49,36 +48,63 @@ A reactive input styled as a navigation control. The navigation input can be
 styled as links, tabs, or pills. A nav input is paired with \code{\link[=navContent]{navContent()}}
 and \code{\link[=showNavPane]{showNavPane()}} to create tabbed user interfaces. Observers and reactives
 are triggered when a nav choice or menu item is clicked. The reactive value
-of a nav input is \code{NULL} or a singleton character string. The value of any
-menus in the nav input must be retrieved with its own reactive id.
+of a nav input is \code{NULL} or a singleton character string.
 }
-\section{Including a menu}{
+\details{
+\subsection{Including menu inputs}{
 
+Menu inputs may be included within a nav input. There are two distinct
+behaviours for menu inputs within a nav input depending on the menu input's
+\code{id}.
 
-Use the reactive id of any nav menus to know when a menu item is clicked.\preformatted{ui <- navInput(
-  id = "navigation",
+\subsection{Menu input with \code{NULL} \code{id}}{
+
+If a menu input has a \code{NULL} \code{id} selecting a menu item will change the value
+of the parent nav input. This behviour is useful if you prefer to access the
+nav input's and its children's values all through the nav input's id.\preformatted{navInput(
+  id = "nav1",
+  appearance = "pills",
   choices = list(
-    "Item 1",
-    "Item 2",
+    "Choice 1",
     menuInput(
-      id = "navMenu",  # <-
-      label = "Item 3",
-      choices = c("Choice 1", "Choice 2")
+      id = NULL,  # <-
+      label = "Other choices",
+      choices = c("Choice 2", "Choice 3")
     )
-  ),
-  values = c("item1", "item2", "item3")
+  )
 )
-
-server <- function(input, output) {
-  observeEvent(input$navMenu, {
-    cat(paste("Click menu item:", input$navMenu, "\n"))
-  })
 }
 
-shinyApp(ui, server)
-}
 }
 
+\subsection{Menu input with character string \code{id}}{
+
+If a menu input has a character string \code{id} then selecting a menu item has
+set's the nav input's value to the \code{label} of the menu input. Selecting the
+menu item will also set the value of its parent menu input. This behaviour is
+useful if you want a nav input to only track which top level item is
+selected.
+
+Looking at the example nav input below, selecting the menu items \code{Choice 1}
+or \code{Choice 2} will set the value of the \code{nav2} nav input to
+\code{"Other choices"}.\preformatted{navInput(
+  id = "nav2",
+  appearance = "pills",
+  choices = list(
+    "Choice 1",
+    menuInput(
+      id = "menu1",  # <-
+      label = "Other choices",
+      choices = c("Choice 2", "Choice 3")
+    )
+  )
+)
+}
+
+}
+
+}
+}
 \examples{
 
 ### Nav styled as tabs
@@ -139,27 +165,6 @@ navInput(
   choices = paste("Tab", 1:3)
 ) \%>\%
   flex(justify = "center")
-
-### Controlling nav content
-
-navInput(
-  id = "test",
-  choices = c("Home", "About"),
-  targets = "pages"
-)
-
-navInput(
-  id = "test",
-  choices = c("Home", "About"),
-  values = c("chicken", "dinner")
-  targets = c(chicken = "Home", dinner = "About")
-)
-
-navInput(
-  id = "test",
-  choices = c("Home", "About"),
-  targets = c(Home = c("Home", "sidebar"), About = About)
-)
 
 }
 \seealso{

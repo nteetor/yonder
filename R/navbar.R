@@ -51,12 +51,15 @@
 #'   container(
 #'     navContent(
 #'       navPane(
+#'         id = "home",
 #'         h3("Home")
 #'       ),
 #'       navPane(
+#'         id = "about",
 #'         h3("About")
 #'       ),
 #'       navPane(
+#'         id = "process",
 #'         h3("The process")
 #'       )
 #'     )

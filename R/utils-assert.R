@@ -120,41 +120,6 @@ assert_selected <- function(length) {
   }
 }
 
-assert_actions <- function(list = TRUE) {
-  actions <- get_variable("actions")
-  values <- get_variable("values")
-  fun <- get_caller()
-
-  if (!is.null(actions) && !is_strictly_list(actions)) {
-    stop(
-      "invalid argument in `", fun, "`, `actions` must be a list or NULL",
-      call. = FALSE
-    )
-  }
-
-  if (!all(vapply(actions, is_input_action, logical(1)))) {
-    stop(
-      "invalid argument in `", fun, "`, `actions` must be a list of input actions ",
-      "see ?actions",
-      call. = FALSE
-    )
-  }
-}
-
-assert_action <- function() {
-  action <- get_variable("action")
-  values <- get_variable("values")
-  fun <- get_caller()
-
-  if (!is.null(action) && !is_input_action(action)) {
-    stop(
-      "invalid argument in `", fun, "`, `action` must be an input action ",
-      "or NULL",
-      call. = FALSE
-    )
-  }
-}
-
 assert_possible <- function(x, possible) {
   if (!is.null(x) && !all(x %in% possible)) {
     arg <- as.character(match.call()[[2]])

@@ -61,12 +61,11 @@
 #' )
 #'
 menuInput <- function(id, label, choices = NULL, values = choices,
-                      selected = NULL, ..., actions = NULL,
+                      selected = NULL, ...,
                       direction = "down", align = "left") {
   assert_id()
   assert_label()
   assert_choices()
-  assert_actions()
   assert_possible(direction, c("up", "right", "down", "left"))
   assert_possible(align, c("right", "left"))
 
@@ -79,7 +78,7 @@ menuInput <- function(id, label, choices = NULL, values = choices,
   )
 
   dep_attach({
-    items <- map_menuitems(choices, values, selected, actions)
+    items <- map_menuitems(choices, values, selected)
 
     tags$div(
       class = str_collate(
@@ -130,16 +129,14 @@ updateMenuInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_menuitems <- function(choices, values, selected, actions) {
+map_menuitems <- function(choices, values, selected) {
   selected <- values %in% selected
-  actions <- normalize_actions(actions, values)
 
   Map(
     choice = choices,
     value = values,
     select = selected,
-    action = actions,
-    function(choice, value, select, action) {
+    function(choice, value, select) {
       tags$button(
         class = str_collate(
           "dropdown-item",
@@ -147,7 +144,6 @@ map_menuitems <- function(choices, values, selected, actions) {
         ),
         type = "button",
         value = value,
-        !!!action,
         choice
       )
     }
