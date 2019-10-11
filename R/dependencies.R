@@ -44,7 +44,7 @@ dep_yonder <- function() {
     ),
     htmlDependency(
       name = "yonder",
-      version = "0.1.1",
+      version = "0.1.2",
       src = c(
         file = system.file("www/yonder", package = "yonder"),
         href = "yonder/yonder"
