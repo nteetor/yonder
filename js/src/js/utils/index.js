@@ -69,7 +69,11 @@ let activateElements = function(elements) {
   if (elements.length) {
     asArray(elements).forEach(e => activateElements(e));
   } else if (elements.classList) {
-    elements.classList.add("active");
+    if (matchesSelector(elements, "input[type='radio'], input[type='checkbox']")) {
+      elements.checked = true;
+    } else {
+      elements.classList.add("active");
+    }
   }
 };
 
@@ -81,7 +85,11 @@ let deactivateElements = function(elements) {
   if (elements.length) {
     asArray(elements).forEach(e => deactivateElements(e));
   } else if (elements.classList) {
-    elements.classList.remove("active");
+    if (matchesSelector(elements, "input[type='radio'], input[type='checkbox']")) {
+      elements.checked = false;
+    } else {
+      elements.classList.remove("active");
+    }
   }
 };
 

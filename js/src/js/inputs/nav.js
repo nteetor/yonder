@@ -32,6 +32,7 @@ const Selector = {
   DISABLED: ".disabled",
   PLUGIN: "[data-plugin]",
   NAV_ITEM: `.${ ClassName.ITEM }`,
+  MENU: MenuInput.Selector.INPUT,
   MENU_TOGGLE: MenuInput.Selector.TOGGLE,
   MENU_ITEM: MenuInput.Selector.CHILD,
 };
@@ -44,8 +45,6 @@ class NavInput extends Input {
 
   constructor(element) {
     super(element, TYPE);
-
-    Store.setData(element, TYPE, this);
   }
 
   value(x) {
@@ -66,6 +65,8 @@ class NavInput extends Input {
 
     deactivateElements(children);
 
+    // special case for nav inputs, child menu inputs need to be de-selected
+    // when a nav link is clicked
     asArray(children).forEach(child => {
       if (targets.indexOf(child) > -1) {
         return;
@@ -109,13 +110,7 @@ class NavInput extends Input {
   }
 
   static getValue(element) {
-    let input = Store.getData(element, TYPE);
-
-    if (!input) {
-      return null;
-    }
-
-    return input.value();
+    return super.getValue(element, TYPE);
   }
 
   static subscribe(element, callback) {
@@ -158,6 +153,7 @@ $(document).on(Event.CLICK, `${ Selector.PARENT_CHILD }${ Selector.PLUGIN }`, (e
     return;
   }
 
+  // ensure we can select or activate a nav link that may already be active
   deactivateElements(link);
 
   $(link)[plugin](action);
@@ -175,81 +171,94 @@ $(document).on(Event.CLICK, `${ Selector.INPUT } ${ Selector.MENU_ITEM }`, (even
   let link = item.querySelector(Selector.CHILD);
 
   navInput.select(link);
+
+  let menu = findClosest(event.target, Selector.MENU);
+
+  if (!menu.id) {
+    let menuItem = findClosest(event.target, Selector.MENU_ITEM);
+    navInput.value(menuItem.value);
+  }
 });
 
+// shiny ----
+
+// If shiny is present register the input's shiny interface with shiny's
+// input bindings.
 if (Shiny) {
   Shiny.inputBindings.register(NavInput.ShinyInterface(), TYPE);
 }
 
 export default NavInput;
 
-Shiny.addCustomMessageHandler("yonder:pane", (msg) => {
-  let _show = function(pane) {
-    if (pane === null || pane.classList.contains("show")) {
-      return;
-    }
+if (Shiny) {
+  Shiny.addCustomMessageHandler("yonder:pane", (msg) => {
+    let _show = function(pane) {
+      if (pane === null || pane.classList.contains("show")) {
+        return;
+      }
 
-    if (!pane.parentElement.classList.contains("tab-content")) {
-      console.warn(`nav pane ${ pane.id } is missing a nav content parent element`);
-      return;
-    }
+      if (!pane.parentElement.classList.contains("tab-content")) {
+        console.warn(`nav pane ${ pane.id } is missing a nav content parent element`);
+        return;
+      }
 
-    let previous = pane.parentElement.querySelector(".active");
+      let previous = pane.parentElement.querySelector(".active");
 
-    const complete = () => {
-      const hiddenEvent = $.Event("hidden.bs.tab", {
-        relatedTarget: pane
-      });
+      const complete = () => {
+        const hiddenEvent = $.Event("hidden.bs.tab", {
+          relatedTarget: pane
+        });
 
-      const shownEvent = $.Event("shown.bs.tab", {
-        relatedTarget: previous
-      });
+        const shownEvent = $.Event("shown.bs.tab", {
+          relatedTarget: previous
+        });
 
-      $(previous).trigger(hiddenEvent);
-      $(pane).trigger(shownEvent);
+        $(previous).trigger(hiddenEvent);
+        $(pane).trigger(shownEvent);
+      };
+
+      bootstrap.Tab.prototype._activate(pane, pane.parentElement, complete);
     };
 
-    bootstrap.Tab.prototype._activate(pane, pane.parentElement, complete);
-  };
+    let _hide = function(pane) {
+      if (pane === null || !pane.classList.contains("show")) {
+        return;
+      }
 
-  let _hide = function(pane) {
-    if (pane === null || !pane.classList.contains("show")) {
-      return;
-    }
+      if (!pane.parentElement.classList.contains("tab-content")) {
+        console.warn(`nav pane ${ pane.id } is missing a nav content parent element`);
+        return;
+      }
 
-    if (!pane.parentElement.classList.contains("tab-content")) {
-      console.warn(`nav pane ${ pane.id } is missing a nav content parent element`);
-      return;
-    }
+      const complete = () => {
+        const hiddenEvent = $.Event("hidden.bs.tab", {
+          relatedTarget: pane
+        });
 
-    const complete = () => {
-      const hiddenEvent = $.Event("hidden.bs.tab", {
-        relatedTarget: pane
-      });
+        $(pane).trigger(hiddenEvent);
+      };
 
-      $(pane).trigger(hiddenEvent);
+      let dummy = document.createElement("div");
+
+      bootstrap.Tab.prototype._activate(dummy, pane.parentElement, complete);
     };
 
-    let dummy = document.createElement("div");
+    if (msg.type === undefined ||
+        msg.data === undefined ||
+        msg.data.target === undefined) {
+      return;
+    }
 
-    bootstrap.Tab.prototype._activate(dummy, pane.parentElement, complete);
-  };
+    let target = document.getElementById(msg.data.target);
 
-  if (msg.type === undefined ||
-      msg.data === undefined ||
-      msg.data.target === undefined) {
-    return;
-  }
+    if (target === null) {
+      return;
+    }
 
-  let target = document.getElementById(msg.data.target);
-
-  if (target === null) {
-    return;
-  }
-
-  if (msg.type === "show") {
-    _show(target);
-  } else if (msg.type === "hide") {
-    _hide(target);
-  }
-});
+    if (msg.type === "show") {
+      _show(target);
+    } else if (msg.type === "hide") {
+      _hide(target);
+    }
+  });
+}

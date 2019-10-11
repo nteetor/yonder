@@ -5,56 +5,38 @@ import Input from "./input.js";
 import Store from "../data/store.js";
 import {
   findClosest,
-  asArray,
-  isNode,
-  activateElements,
+  filterElements,
   deactivateElements,
-  filterElements
+  activateElements,
+  getPluginAttributes,
+  all
 } from "../utils/index.js";
 
-const NAME = "menu";
+const NAME = "radio";
 const TYPE = `yonder.${ NAME }`;
 
 const ClassName = {
-  INPUT: "yonder-menu",
-  CHILD: "dropdown-item"
+  INPUT: "yonder-radio",
+  CHILD: "custom-control-input"
 };
 
 const Selector = {
   INPUT: `.${ ClassName.INPUT }`,
   CHILD: `.${ ClassName.CHILD }`,
-  PARENT_CHILD: `.${ ClassName.INPUT } .${ ClassName.CHILD }`,
-  TOGGLE: "[data-toggle='dropdown']"
+  INPUT_CHILD: `.${ ClassName.INPUT } .${ ClassName.CHILD }`,
+  PLUGIN: "[data-plugin]"
 };
 
 const Event = {
-  CLICK: `click.${ TYPE }`,
-  CLOSE: "hide.bs.dropdown",
-  CLOSED: "hidden.bs.dropdown"
+  CHANGE: `change.${ TYPE }`
 };
 
-class MenuInput extends Input {
-
-  // fields ----
-
-  static get TYPE() {
-    return TYPE;
-  }
-
-  static get Selector() {
-    return Selector;
-  }
-
-  static get Event() {
-    return Event;
-  }
+class RadioInput extends Input {
 
   // methods ----
 
   constructor(element) {
     super(element, TYPE);
-
-    this._counter = 0;
   }
 
   value(x) {
@@ -73,7 +55,7 @@ class MenuInput extends Input {
 
     let targets = filterElements(children, values);
 
-    deactivateElements(children);
+    deactivateElements(targets);
 
     if (targets.length) {
       activateElements(targets[0]);
@@ -87,26 +69,16 @@ class MenuInput extends Input {
     let input = Store.getData(element, TYPE);
 
     if (!input) {
-      input = new MenuInput(element);
+      input = new RadioInput(element);
     }
   }
 
-  static find(element) {
-    return super.find(element, Selector.INPUT);
-  }
-
-  static getType(element) {
-    return TYPE;
+  static find(scope) {
+    return super.find(scope, Selector.INPUT);
   }
 
   static getValue(element) {
-    let input = Store.getData(element, TYPE);
-
-    if (!input) {
-      return null;
-    }
-
-    return { value: input.value(), counter: input._counter++ };
+    return super.getValue(element, TYPE);
   }
 
   static subscribe(element, callback) {
@@ -122,31 +94,42 @@ class MenuInput extends Input {
   }
 
   static ShinyInterface() {
-    return { ...Input, ...MenuInput };
+    return { ...Input, ...RadioInput };
   }
 }
 
 // events ----
 
-$(document).on(Event.CLICK, Selector.PARENT_CHILD, (event) => {
-  let item = findClosest(event.target, Selector.CHILD);
+$(document).on(Event.CHANGE, Selector.INPUT_CHILD, (event) => {
+  let radio = findClosest(event.target, Selector.INPUT);
+  let radioInput = Store.getData(radio, TYPE);
 
-  if (!item) {
+  if (!radioInput) {
     return;
   }
 
-  let menu = findClosest(item, Selector.INPUT);
-  let menuInput = Store.getData(menu, TYPE);
+  let input = findClosest(event.target, Selector.CHILD);
 
-  if (!menuInput) {
-    return;
-  }
-
-  menuInput.select(item);
+  radioInput.value(input.value);
 });
 
+$(document).on(Event.CHANGE, `${ Selector.INPUT_CHILD }${ Selector.PLUGIN }`, (event) => {
+  let input = findClosest(event.target, Selector.CHILD);
+  let [plugin, action, target] = getPluginAttributes(input);
+
+  if (!all(plugin, action, target)) {
+    return;
+  }
+
+  $(input)[plugin](action);
+});
+
+// shiny ----
+
+// If shiny is present register the radio input shiny interface with the input
+// bindings.
 if (Shiny) {
-  Shiny.inputBindings.register(MenuInput.ShinyInterface(), TYPE);
+  Shiny.inputBindings.register(RadioInput.ShinyInterface(), TYPE);
 }
 
-export default MenuInput;
+export default RadioInput;
