@@ -3,6 +3,7 @@
   "version": "0.1.2",
   "description": "A reactive framework built on shiny.",
   "main": "dist/js/yonder.min.js",
+
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
     "bootstrap": "^4.3.1",
@@ -10,6 +11,7 @@
     "jquery": "^3.4.1",
     "popper.js": "^1.15.0"
   },
+
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
@@ -28,6 +30,7 @@
     "glob": "^7.1.4",
     "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
+    "npm-watch": "^0.6.0",
     "postcss-cli": "^5.0.1",
     "rollup": "^0.63.5",
     "rollup-plugin-babel": "^4.3.3",
@@ -60,8 +63,14 @@
     "jquery-version": "npm view jquery version > ../inst/jquery/VERSION",
     "jquery-authors": "cp node_modules/jquery/AUTHORS.txt ../inst/www/jquery/AUTHORS",
     "jquery-license": "cp node_modules/jquery/LICENSE.txt ../inst/www/jquery/LICENSE",
-    "jquery-vend": "cp node_modules/jquery/dist/{jquery.min.js,jquery.min.map} ../inst/www/jquery/"
+    "jquery-vend": "cp node_modules/jquery/dist/{jquery.min.js,jquery.min.map} ../inst/www/jquery/",
+    "watch": "npm-watch"
   },
+
+  "watch": {
+    "js": "src/js/**/*.js"
+  },
+
   "repository": {
     "type": "git",
     "url": "https://github.com/nteetor/yonder.git"
