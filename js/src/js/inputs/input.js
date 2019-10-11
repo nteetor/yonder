@@ -5,15 +5,25 @@ const VERSION = "0.1.2";
 
 class Input {
   constructor(element, type, self) {
-    if (typeof element !== "object" &&
-        element.nodeType !== 1) {
-      throw new InputError("Invalid Argument", "`element` must be an element");
+    if ((typeof element === "object" && element.nodeType !== 1) &&
+        (typeof element !== "string")) {
+      throw new InputError("Invalid Argument", "`element` must be a node or string");
+    }
+
+    if (typeof element === "string") {
+      element = document.querySelector(element);
+
+      if (!element) {
+        throw new InputError("Element Not Found", "could not find element for give `element` selector");
+      }
     }
 
     this._element = element;
     this._type = type;
     this._value = null;
     this._callback = () => {};
+
+    Store.setData(element, type, this);
   }
 
   // getters ----
@@ -55,8 +65,14 @@ class Input {
     return null;
   }
 
-  static getValue(element) {
-    throw new InputError("Unimplemented Method");
+  static getValue(element, type) {
+    let input = Store.getData(element, type);
+
+    if (!input) {
+      return null;
+    }
+
+    return input.value();
   }
 
   static subscribe(element, callback, type) {
@@ -87,20 +103,18 @@ class Input {
     }
 
     message.forEach((msg) => {
-      console.log(msg);
-
       let [method, args] = msg;
 
-      if (args === null) {
-        return;
+      if (!args) {
+        input[method]();
+      } else {
+        input[method](...args);
       }
-
-      input[method](args);
     });
   }
 
   static getState(element, data) {
-    throw "not implemented";
+    throw new InputError("Unimplemented Method");
   }
 
   static getRatePolicy() {

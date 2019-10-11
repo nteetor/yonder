@@ -26,17 +26,19 @@ const Event = {
 
 class ButtonInput extends Input {
 
+  // fields ----
+
   static get TYPE() {
     return TYPE;
   }
+
+  // methods ----
 
   constructor(element) {
     super(element, TYPE);
 
     this._value = 0;
     this._isLink = element.tagName === "A";
-
-    Store.setData(element, TYPE, this);
   }
 
 
@@ -107,6 +109,8 @@ class ButtonInput extends Input {
     return { ...Input, ...ButtonInput };
   }
 }
+
+// events ----
 
 $(document).on(Event.CLICK, Selector.INPUT, (event) => {
   let button = findClosest(event.target, Selector.INPUT);

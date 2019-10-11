@@ -39,13 +39,7 @@ class ButtonGroupInput extends Input {
   constructor(element) {
     super(element, TYPE);
 
-    if (!element.classList.contains(ClassName.INPUT)) {
-      throw new InputError("Invalid Element", "the target element is invalid");
-    }
-
     this._counter = 0;
-
-    Store.setData(element, TYPE, this);
   }
 
   value(x) {
