@@ -68,27 +68,23 @@ class MenuInput extends Input {
     return this;
   }
 
-  select(values) {
+  select(x) {
     let children = this._element.querySelectorAll(Selector.CHILD);
 
-    let targets = filterElements(children, values);
+    let [targets, values] = filterElements(children, x);
 
     deactivateElements(children);
 
     if (targets.length) {
       activateElements(targets[0]);
-      this.value(targets[0].value);
+      this.value(values[0]);
     }
   }
 
   // static ----
 
   static initialize(element) {
-    let input = Store.getData(element, TYPE);
-
-    if (!input) {
-      input = new MenuInput(element);
-    }
+    super.initialize(element, TYPE, MenuInput);
   }
 
   static find(element) {

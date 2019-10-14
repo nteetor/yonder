@@ -45,11 +45,11 @@ class Input {
 
   // public ----
 
-  static initialize(element, type, input) {
-    let data = Store.getData(element, type);
+  static initialize(element, type, subclass) {
+    let input = Store.getData(element, type);
 
-    if (!data) {
-      data = new input(element);
+    if (!input) {
+      input = new subclass(element);
     }
   }
 
@@ -114,7 +114,7 @@ class Input {
   }
 
   static getState(element, data) {
-    throw new InputError("Unimplemented Method");
+    throw new InputError("Method Not Implemented");
   }
 
   static getRatePolicy() {

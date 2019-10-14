@@ -58,16 +58,12 @@ class NavInput extends Input {
     return this;
   }
 
-  select(values) {
+  select(x) {
     let children = this._element.querySelectorAll(Selector.CHILD);
 
-    let targets = filterElements(children, values);
+    let [targets, values] = filterElements(children, x);
 
-    deactivateElements(children);
-
-    // special case for nav inputs, child menu inputs need to be de-selected
-    // when a nav link is clicked
-    asArray(children).forEach(child => {
+    deactivateElements(children, child => {
       if (targets.indexOf(child) > -1) {
         return;
       }
@@ -83,7 +79,7 @@ class NavInput extends Input {
 
     if (targets.length) {
       activateElements(targets[0]);
-      this.value(targets[0].value);
+      this.value(values[0]);
     }
   }
 
@@ -98,11 +94,7 @@ class NavInput extends Input {
   // static ----
 
   static initialize(element) {
-    let input = Store.getData(element, TYPE);
-
-    if (!input) {
-      input = new NavInput(element);
-    }
+    super.initialize(element, TYPE, NavInput);
   }
 
   static find(scope) {

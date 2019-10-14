@@ -3,7 +3,7 @@ import Shiny from "Shiny";
 
 import ButtonGroupInput from "./inputs/button-group.js";
 import ButtonInput from "./inputs/button.js";
-// import "./input-binding-checkbar.js";
+import CheckbarInput from "./inputs/checkbar.js";
 // import "./input-binding-checkbox.js";
 // import "./input-binding-chip.js";
 // import "./input-binding-file.js";
@@ -29,6 +29,7 @@ import RadioInput from "./inputs/radio.js";
 export default {
   ButtonGroupInput,
   ButtonInput,
+  CheckbarInput,
   MenuInput,
   NavInput,
   RadioInput

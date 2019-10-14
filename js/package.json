@@ -1,17 +1,8 @@
 {
-  "name": "yonder",
+  "name": "yonder-js",
   "version": "0.1.2",
   "description": "A reactive framework built on shiny.",
   "main": "dist/js/yonder.min.js",
-
-  "dependencies": {
-    "@babel/polyfill": "^7.4.4",
-    "bootstrap": "^4.3.1",
-    "bs-custom-file-input": "^1.3.2",
-    "jquery": "^3.4.1",
-    "popper.js": "^1.15.0"
-  },
-
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
@@ -22,55 +13,29 @@
     "babel-eslint": "^10.0.2",
     "babel-preset-minify": "^0.5.0",
     "babel-register": "^6.26.0",
-    "clean-css": "^4.2.1",
-    "clean-css-cli": "^4.3.0",
-    "commander": "^2.20.0",
     "concat": "^1.0.3",
     "eslint": "^5.0.0",
     "glob": "^7.1.4",
-    "node-sass": "^4.12.0",
     "npm-run-all": "^4.1.5",
     "npm-watch": "^0.6.0",
     "postcss-cli": "^5.0.1",
     "rollup": "^0.63.5",
     "rollup-plugin-babel": "^4.3.3",
     "rollup-plugin-terser": "^1.0.1",
-    "stylelint": "^10.1.0",
-    "stylelint-config-recommended-scss": "^3.3.0",
-    "stylelint-config-standard": "^18.3.0",
-    "stylelint-scss": "^2.5.0",
-    "uglify-js": "^3.6.0"
+    "terser": "^4.3.8"
   },
   "scripts": {
-    "test": "echo \"Sorry, nothing here\"",
-    "bootstrap-file-input-vend": "cp node_modules/bs-custom-file-input/dist/bs-custom-file-input.min.js ../inst/www/bs-custom-file-input/js/",
-    "bootstrap-custom-file-input": "npm-run-all bootstrap-file-input-vend",
-    "bootstrap-js-vend": "cp node_modules/bootstrap/dist/js/bootstrap.min.js ../inst/www/bootstrap/js/",
-    "bootstrap-js": "npm-run-all bootstrap-js-vend",
-    "bootstrap": "npm-run-all bootstrap-js bootstrap-custom-file-input",
-    "css-compile": "node-sass --quiet --output-style expanded src/scss/main.scss dist/css/yonder.css",
-    "css-prefix": "postcss --config build/postcss.config.js --replace dist/css/yonder.css",
-    "css-minify": "cleancss --level 1 --output dist/css/yonder.min.css dist/css/yonder.css",
-    "css-vend": "cp dist/css/yonder.min.css ../inst/www/yonder/css/",
-    "css": "npm-run-all css-compile css-prefix css-minify css-vend",
-    "js-lint": "eslint src/js/**/*.js",
-    "js-vend": "cp dist/js/{yonder.js,yonder.min.js,yonder.min.js.map} ../inst/www/yonder/js/",
-    "js-build": "rollup --config build/rollup.config.js --sourcemap",
-    "js-minify": "uglifyjs --compress --mangle --output dist/js/yonder.min.js dist/js/yonder.js",
-    "js": "run-s js-lint js-build js-minify js-vend",
-    "jquery": "run-s jquery-update jquery-authors jquery-vend",
-    "jquery-update": "npm update jquery",
-    "jquery-version": "npm view jquery version > ../inst/jquery/VERSION",
-    "jquery-authors": "cp node_modules/jquery/AUTHORS.txt ../inst/www/jquery/AUTHORS",
-    "jquery-license": "cp node_modules/jquery/LICENSE.txt ../inst/www/jquery/LICENSE",
-    "jquery-vend": "cp node_modules/jquery/dist/{jquery.min.js,jquery.min.map} ../inst/www/jquery/",
+    "lint": "eslint src/**/*.js",
+    "vend": "cp dist/{yonder.js,yonder.min.js,yonder.min.js.map} ../inst/www/yonder/js/",
+    "concat": "rollup --config build/rollup.config.js --sourcemap",
+    "uglify": "uglifyjs --compress --mangle --output dist/yonder.min.js dist/yonder.js",
+    "minify": "terser --config-file build/terser.config.json --output dist/yonder.min.js dist/yonder.js",
+    "build": "run-s lint concat minify vend",
     "watch": "npm-watch"
   },
-
   "watch": {
-    "js": "src/js/**/*.js"
+    "build": "src/**/*.js"
   },
-
   "repository": {
     "type": "git",
     "url": "https://github.com/nteetor/yonder.git"
@@ -84,5 +49,6 @@
   "bugs": {
     "url": "https://github.com/nteetor/yonder/issues"
   },
-  "homepage": "https://nteetor.github.com/yonder"
+  "homepage": "https://nteetor.github.com/yonder",
+  "dependencies": {}
 }
