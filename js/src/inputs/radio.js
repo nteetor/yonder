@@ -17,7 +17,7 @@ const TYPE = `yonder.${ NAME }`;
 
 const ClassName = {
   INPUT: "yonder-radio",
-  CHILD: "custom-control-input"
+  CHILD: "custom-radio"
 };
 
 const Selector = {
@@ -50,27 +50,27 @@ class RadioInput extends Input {
     return this;
   }
 
-  select(values) {
+  select(x) {
     let children = this._element.querySelectorAll(Selector.CHILD);
 
-    let targets = filterElements(children, values);
+    let [targets, values] = filterElements(children, x);
 
-    deactivateElements(targets);
+    deactivateElements(children, child => {
+      child.children[0].checked = false;
+    });
 
     if (targets.length) {
-      activateElements(targets[0]);
-      this.value(targets[0].value);
+      activateElements(targets[0], target => {
+        target.children[0].checked = true;
+      });
+      this.value(values[0]);
     }
   }
 
   // static ----
 
   static initialize(element) {
-    let input = Store.getData(element, TYPE);
-
-    if (!input) {
-      input = new RadioInput(element);
-    }
+    super.initialize(element, TYPE, RadioInput);
   }
 
   static find(scope) {

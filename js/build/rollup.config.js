@@ -4,9 +4,9 @@ import babelrc from "./babel.config.js";
 import { terser } from "rollup-plugin-terser";
 
 export default {
-  input: "src/js/yonder.js",
+  input: "src/index.js",
   output: {
-    file: "dist/js/yonder.js",
+    file: "dist/yonder.js",
     format: "umd",
     sourcemap: "inline",
     name: "yonder",

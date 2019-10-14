@@ -534,6 +534,7 @@
         chip.classList.add("active");
       });
 
+<<<<<<< HEAD:js/dist/js/yonder.js
       if (chipInputBinding._visible(el).length === 0) {
         $toggle.dropdown("hide");
       }
@@ -546,6 +547,13 @@
         $toggle.dropdown("hide");
 
         chipInputBinding._disable(el);
+=======
+    Input.initialize = function initialize(element, type, subclass) {
+      var input = Store.getData(element, type);
+
+      if (!input) {
+        input = new subclass(element);
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
       }
     },
     _remove: function _remove(el, value) {
@@ -719,9 +727,15 @@
       $el.on("submit.yonder", function (e, v) {
         e.preventDefault();
 
+<<<<<<< HEAD:js/dist/js/yonder.js
         if (v !== undefined) {
           value = v;
         }
+=======
+    Input.getState = function getState(element, data) {
+      throw new InputError("Method Not Implemented");
+    };
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
         Object.keys(store).forEach(function (key) {
           Shiny.onInputChange(key, store[key], {
@@ -879,6 +893,7 @@
         }
       }
 
+<<<<<<< HEAD:js/dist/js/yonder.js
       if (msg.disable) {
         var disable = msg.disable;
 
@@ -894,6 +909,15 @@
           });
         }
       }
+=======
+  var asArray = function asArray(x) {
+    if (!x) {
+      return [];
+    } else if (typeof x === "object" && x.length) {
+      return Array.prototype.slice.call(x);
+    } else {
+      return [x];
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
     }
   });
   Shiny.inputBindings.register(listGroupInputBinding, "yonder.listGroupInput");
@@ -912,15 +936,23 @@
           active.classList.remove("active");
         }
 
+<<<<<<< HEAD:js/dist/js/yonder.js
         e.currentTarget.classList.add("active");
       });
       $el.on("nav.reset", function (e) {
         var active = el.querySelector(".dropdown-item.active");
+=======
+  var activateElements = function activateElements(elements, callback) {
+    if (!elements) {
+      return;
+    }
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
         if (active !== null) {
           active.classList.remove("active");
         }
       });
+<<<<<<< HEAD:js/dist/js/yonder.js
     },
     getValue: function getValue(el) {
       var active = el.querySelector(".dropdown-item.active:not(.disabled)");
@@ -928,6 +960,21 @@
       if (active === null) {
         return null;
       }
+=======
+    } else if (elements.classList) {
+      elements.classList.add("active");
+
+      if (typeof callback === "function") {
+        callback(elements);
+      }
+    }
+  };
+
+  var deactivateElements = function deactivateElements(elements, callback) {
+    if (!elements) {
+      return;
+    }
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
       return active.value;
     },
@@ -936,6 +983,7 @@
       $el.on("click.yonder", function (e) {
         return callback();
       });
+<<<<<<< HEAD:js/dist/js/yonder.js
       $el.on("menu.select.yonder", function (e) {
         return callback();
       });
@@ -946,6 +994,13 @@
     receiveMessage: function receiveMessage(el, msg) {
       if (msg.content) {
         el.querySelector(".dropdown-menu").innerHTML = msg.content;
+=======
+    } else if (elements.classList) {
+      elements.classList.remove("active");
+
+      if (typeof callback === "function") {
+        callback(elements);
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
       }
 
       if (msg.label) {
@@ -953,6 +1008,7 @@
         toggle.innerHTML = msg.label;
       }
 
+<<<<<<< HEAD:js/dist/js/yonder.js
       if (msg.selected) {
         el.querySelectorAll(".dropdown-item").forEach(function (item) {
           if (msg.selected.indexOf(item.value) > -1) {
@@ -963,6 +1019,15 @@
         });
         $(el).trigger("menu.select.yonder");
       }
+=======
+    var targetValues = asArray(values).map(function (x) {
+      return isNode(x) ? x : x.toString();
+    });
+    elements = asArray(elements);
+    var elementValues = elements.map(getValue);
+    var foundElements = [];
+    var foundValues = [];
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
       if (msg.enable) {
         var enable = msg.enable;
@@ -978,8 +1043,17 @@
         }
       }
 
+<<<<<<< HEAD:js/dist/js/yonder.js
       if (msg.disable) {
         var disable = msg.disable;
+=======
+      foundElements.push(found);
+      foundValues.push(elementValues[i]);
+    }
+
+    return [foundElements, foundValues];
+  };
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
         if (disable === true) {
           el.querySelector(".dropdown-toggle").classList.add("disabled");
@@ -1561,6 +1635,7 @@
     subscribe: function subscribe(el, callback) {
       var $el = $(el);
 
+<<<<<<< HEAD:js/dist/js/yonder.js
       if (el.querySelectorAll(".btn").length > 0) {
         $el.on("click", ".dropdown-item", function (e) {
           return callback();
@@ -1580,6 +1655,166 @@
       if (msg.content) {
         select.innerHTML = msg.content;
       }
+=======
+  if (Shiny) {
+    Shiny.inputBindings.register(ButtonInput.ShinyInterface(), TYPE$1);
+  }
+
+  var TYPE$2 = "yonder." + TYPE$2;
+  var ClassName$2 = {
+    INPUT: "yonder-checkbar",
+    CHILD: "btn"
+  };
+  var Selector$2 = {
+    INPUT: "." + ClassName$2.INPUT,
+    CHILD: "." + ClassName$2.CHILD,
+    PARENT_CHILD: "." + ClassName$2.INPUT + " ." + ClassName$2.CHILD
+  };
+  var Event$2 = {
+    CHANGE: "change." + TYPE$2
+  };
+
+  var CheckbarInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(CheckbarInput, _Input);
+
+    // methods ----
+    function CheckbarInput(element) {
+      return _Input.call(this, element, TYPE$2) || this;
+    }
+
+    var _proto = CheckbarInput.prototype;
+
+    _proto.value = function value(x) {
+      if (typeof x === "undefined") {
+        return this._value;
+      }
+
+      this._value = x;
+
+      this._callback();
+
+      return this;
+    };
+
+    _proto.select = function select(x) {
+      var children = this._element.querySelectorAll(Selector$2.CHILD);
+
+      var _filterElements = filterElements(children, x, function (child) {
+        return child.querySelector("input").value;
+      }),
+          targets = _filterElements[0],
+          values = _filterElements[1];
+
+      console.log(values);
+      deactivateElements(children, function (child) {
+        child.children[0].checked = false;
+      });
+
+      if (targets.length) {
+        activateElements(targets, function (target) {
+          target.children[0].checked = true;
+        });
+        this.value(values);
+      }
+    } // static
+    ;
+
+    CheckbarInput.find = function find(scope) {
+      return _Input.find.call(this, scope, Selector$2.INPUT);
+    };
+
+    CheckbarInput.initialize = function initialize(element) {
+      _Input.initialize.call(this, element, TYPE$2, CheckbarInput);
+    };
+
+    CheckbarInput.getValue = function getValue(element) {
+      var input = Store.getData(element, TYPE$2);
+
+      if (!input) {
+        return null;
+      }
+
+      return input.value();
+    };
+
+    CheckbarInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE$2);
+    };
+
+    CheckbarInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE$2);
+    };
+
+    CheckbarInput.receiveMessage = function receiveMessage(element, message) {
+      _Input.receiveMessage.call(this, element, message, TYPE$2);
+    };
+
+    CheckbarInput.ShinyInterface = function ShinyInterface() {
+      return _objectSpread2({}, Input, {}, CheckbarInput);
+    };
+
+    return CheckbarInput;
+  }(Input); // events ----
+
+
+  $(document).on(Event$2.CHANGE, Selector$2.PARENT_CHILD, function (event) {
+    var checkbar = findClosest(event.target, Selector$2.INPUT);
+    var checkbarInput = Store.getData(checkbar, TYPE$2);
+
+    if (!checkbarInput) {
+      return;
+    }
+
+    var button = findClosest(event.target, Selector$2.CHILD);
+    checkbarInput.select(button);
+  });
+
+  if (Shiny) {
+    Shiny.inputBindings.register(CheckbarInput.ShinyInterface(), TYPE$2);
+  }
+
+  var NAME$3 = "menu";
+  var TYPE$3 = "yonder." + NAME$3;
+  var ClassName$3 = {
+    INPUT: "yonder-menu",
+    CHILD: "dropdown-item"
+  };
+  var Selector$3 = {
+    INPUT: "." + ClassName$3.INPUT,
+    CHILD: "." + ClassName$3.CHILD,
+    PARENT_CHILD: "." + ClassName$3.INPUT + " ." + ClassName$3.CHILD,
+    TOGGLE: "[data-toggle='dropdown']"
+  };
+  var Event$3 = {
+    CLICK: "click." + TYPE$3,
+    CLOSE: "hide.bs.dropdown",
+    CLOSED: "hidden.bs.dropdown"
+  };
+
+  var MenuInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(MenuInput, _Input);
+
+    _createClass(MenuInput, null, [{
+      key: "TYPE",
+      // fields ----
+      get: function get() {
+        return TYPE$3;
+      }
+    }, {
+      key: "Selector",
+      get: function get() {
+        return Selector$3;
+      }
+    }, {
+      key: "Event",
+      get: function get() {
+        return Event$3;
+      } // methods ----
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
       if (msg.selected) {
         select.querySelectorAll("option").forEach(function (option) {
@@ -1595,6 +1830,7 @@
       if (msg.enable) {
         var enable = msg.enable;
 
+<<<<<<< HEAD:js/dist/js/yonder.js
         if (enable === true) {
           select.removeAttribute("disabled");
         } else {
@@ -1603,6 +1839,12 @@
           });
         }
       }
+=======
+      _this = _Input.call(this, element, TYPE$3) || this;
+      _this._counter = 0;
+      return _this;
+    }
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
       if (msg.disable) {
         var disable = msg.disable;
@@ -1628,6 +1870,7 @@
         select.classList.add("is-invalid");
       }
 
+<<<<<<< HEAD:js/dist/js/yonder.js
       if (!msg.valid && !msg.invalid) {
         select.classList.remove("is-valid");
         select.classList.remove("is-invalid");
@@ -1648,8 +1891,23 @@
 
       if (input.value === "") {
         return null;
+=======
+    _proto.select = function select(x) {
+      var children = this._element.querySelectorAll(Selector$3.CHILD);
+
+      var _filterElements = filterElements(children, x),
+          targets = _filterElements[0],
+          values = _filterElements[1];
+
+      deactivateElements(children);
+
+      if (targets.length) {
+        activateElements(targets[0]);
+        this.value(values[0]);
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
       }
 
+<<<<<<< HEAD:js/dist/js/yonder.js
       return input.type === "number" ? Number(input.value) : input.value;
     },
     subscribe: function subscribe(el, callback) {
@@ -1694,6 +1952,22 @@
         input.classList.remove("is-invalid");
         input.classList.add("is-valid");
       }
+=======
+    MenuInput.initialize = function initialize(element) {
+      _Input.initialize.call(this, element, TYPE$3, MenuInput);
+    };
+
+    MenuInput.find = function find(element) {
+      return _Input.find.call(this, element, Selector$3.INPUT);
+    };
+
+    MenuInput.getType = function getType(element) {
+      return TYPE$3;
+    };
+
+    MenuInput.getValue = function getValue(element) {
+      var input = Store.getData(element, TYPE$3);
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
       if (msg.invalid) {
         el.querySelector(".invalid-feedback").innerHTML = msg.invalid;
@@ -1731,9 +2005,25 @@
         policy: "debounce",
         delay: 250
       };
+<<<<<<< HEAD:js/dist/js/yonder.js
     },
     subscribe: function subscribe(el, callback) {
       var $el = $(el);
+=======
+    };
+
+    MenuInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE$3);
+    };
+
+    MenuInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE$3);
+    };
+
+    MenuInput.receiveMessage = function receiveMessage(element, message) {
+      _Input.receiveMessage.call(this, element, message, TYPE$3);
+    };
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
       if (el.querySelectorAll(".btn").length > 0) {
         $el.on("click.yonder", ".dropdown-item", function (e) {
@@ -1769,9 +2059,14 @@
         input.removeAttribute("disabled");
       }
 
+<<<<<<< HEAD:js/dist/js/yonder.js
       if (msg.disable) {
         input.setAttribute("disabled", "");
       }
+=======
+  $(document).on(Event$3.CLICK, Selector$3.PARENT_CHILD, function (event) {
+    var item = findClosest(event.target, Selector$3.CHILD);
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
       if (msg.valid) {
         el.querySelector("valid-feedback").innerHTML = msg.valid;
@@ -1779,11 +2074,16 @@
         input.classList.add("is-valid");
       }
 
+<<<<<<< HEAD:js/dist/js/yonder.js
       if (msg.invalid) {
         el.querySelector("invalid-feedback").innerHTML = msg.invalid;
         input.classList.remove("is-valid");
         input.classList.add("is-invalid");
       }
+=======
+    var menu = findClosest(item, Selector$3.INPUT);
+    var menuInput = Store.getData(menu, TYPE$3);
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
       if (!msg.valid && !msg.invalid) {
         input.classList.remove("is-valid");
@@ -1795,9 +2095,46 @@
   });
   Shiny.inputBindings.register(groupTextInputBinding, "yonder.groupTextInput");
 
+<<<<<<< HEAD:js/dist/js/yonder.js
   Shiny.addCustomMessageHandler("yonder:collapse", function (msg) {
     if (msg.type === undefined || msg.data === undefined || msg.data.target === undefined) {
       return false;
+=======
+  if (Shiny) {
+    Shiny.inputBindings.register(MenuInput.ShinyInterface(), TYPE$3);
+  }
+
+  var NAME$4 = "nav";
+  var TYPE$4 = "yonder." + NAME$4;
+  var ClassName$4 = {
+    INPUT: "yonder-nav",
+    CHILD: "nav-link",
+    ITEM: "nav-item"
+  };
+  var Selector$4 = {
+    INPUT: "." + ClassName$4.INPUT,
+    CHILD: "." + ClassName$4.CHILD,
+    PARENT_CHILD: "." + ClassName$4.INPUT + " ." + ClassName$4.CHILD,
+    ACTIVE: ".active",
+    DISABLED: ".disabled",
+    PLUGIN: "[data-plugin]",
+    NAV_ITEM: "." + ClassName$4.ITEM,
+    MENU: MenuInput.Selector.INPUT,
+    MENU_TOGGLE: MenuInput.Selector.TOGGLE,
+    MENU_ITEM: MenuInput.Selector.CHILD
+  };
+  var Event$4 = {
+    CLICK: "click." + TYPE$4
+  };
+
+  var NavInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(NavInput, _Input);
+
+    function NavInput(element) {
+      return _Input.call(this, element, TYPE$4) || this;
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
     }
 
     if (msg.type === "show" || msg.type === "hide" || msg.type === "toggle") {
@@ -1811,6 +2148,7 @@
       return true;
     }
 
+<<<<<<< HEAD:js/dist/js/yonder.js
     return false;
   });
 
@@ -1822,6 +2160,19 @@
     var uri = "/session/" + msg.token + "/download/" + msg.key;
     var agent = window.navigator.userAgent;
     var ie = /MSIE/.test(agent);
+=======
+    _proto.select = function select(x) {
+      var children = this._element.querySelectorAll(Selector$4.CHILD);
+
+      var _filterElements = filterElements(children, x),
+          targets = _filterElements[0],
+          values = _filterElements[1];
+
+      deactivateElements(children, function (child) {
+        if (targets.indexOf(child) > -1) {
+          return;
+        }
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
     if (ie === true) {
       var xhr = new XMLHttpRequest();
@@ -1842,14 +2193,21 @@
     }
   });
 
+<<<<<<< HEAD:js/dist/js/yonder.js
   Shiny.addCustomMessageHandler("yonder:content", function (msg) {
     var _replace = function _replace(data) {
       if (!data.id) {
         return;
+=======
+      if (targets.length) {
+        activateElements(targets[0]);
+        this.value(values[0]);
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
       }
 
       var target = document.getElementById(data.id);
 
+<<<<<<< HEAD:js/dist/js/yonder.js
       if (!target) {
         return;
       }
@@ -1882,11 +2240,40 @@
       if (!target) {
         return;
       }
+=======
+    _proto.enable = function enable(values) {} // static ----
+    ;
+
+    NavInput.initialize = function initialize(element) {
+      _Input.initialize.call(this, element, TYPE$4, NavInput);
+    };
+
+    NavInput.find = function find(scope) {
+      return _Input.find.call(this, scope, Selector$4.INPUT);
+    };
+
+    NavInput.getValue = function getValue(element) {
+      return _Input.getValue.call(this, element, TYPE$4);
+    };
+
+    NavInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE$4);
+    };
+
+    NavInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE$4);
+    };
+
+    NavInput.receiveMessage = function receiveMessage(element, message) {
+      _Input.receiveMessage.call(this, element, message, TYPE$4);
+    };
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
       Shiny.unbindAll(target);
       target.innerHTML = "";
     };
 
+<<<<<<< HEAD:js/dist/js/yonder.js
     if (!msg.type) {
       return;
     }
@@ -1899,10 +2286,30 @@
       console.warn("no content \"" + msg.type + "\" method");
     }
   });
+=======
+    return NavInput;
+  }(Input); // events ----
+
+
+  $(document).on(Event$4.CLICK, Selector$4.PARENT_CHILD + ":not(" + Selector$4.MENU_TOGGLE + ")", function (event) {
+    var nav = findClosest(event.target, Selector$4.INPUT);
+    var navInput = Store.getData(nav, TYPE$4);
+
+    if (!navInput) {
+      return;
+    }
+
+    var button = findClosest(event.target, Selector$4.CHILD);
+    navInput.select(button);
+  });
+  $(document).on(Event$4.CLICK, "" + Selector$4.PARENT_CHILD + Selector$4.PLUGIN, function (event) {
+    var link = findClosest(event.target, Selector$4.CHILD);
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
   $(function () {
     document.body.insertAdjacentHTML("beforeend", "<div class='yonder-modals'></div>");
   });
+<<<<<<< HEAD:js/dist/js/yonder.js
   Shiny.addCustomMessageHandler("yonder:modal", function (msg) {
     if (msg.type === undefined) {
       return false;
@@ -1914,6 +2321,32 @@
       if (modals.length === 0) {
         return;
       }
+=======
+  $(document).on(Event$4.CLICK, Selector$4.INPUT + " " + Selector$4.MENU_ITEM, function (event) {
+    var nav = findClosest(event.target, Selector$4.INPUT);
+    var navInput = Store.getData(nav, TYPE$4);
+
+    if (!navInput) {
+      return;
+    }
+
+    var item = findClosest(event.target, Selector$4.NAV_ITEM);
+    var link = item.querySelector(Selector$4.CHILD);
+    navInput.select(link);
+    var menu = findClosest(event.target, Selector$4.MENU);
+
+    if (!menu.id) {
+      var menuItem = findClosest(event.target, Selector$4.MENU_ITEM);
+      navInput.value(menuItem.value);
+    }
+  }); // shiny ----
+  // If shiny is present register the input's shiny interface with shiny's
+  // input bindings.
+
+  if (Shiny) {
+    Shiny.inputBindings.register(NavInput.ShinyInterface(), TYPE$4);
+  }
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
       if (data.id) {
         modals = Array.prototype.filter.call(modals, function (m) {
@@ -1973,9 +2406,36 @@
     }
   });
 
+<<<<<<< HEAD:js/dist/js/yonder.js
   Shiny.addCustomMessageHandler("yonder:popover", function (msg) {
     if (!msg.data.id || !document.getElementById(msg.data.id)) {
       return;
+=======
+  var NAME$5 = "radio";
+  var TYPE$5 = "yonder." + NAME$5;
+  var ClassName$5 = {
+    INPUT: "yonder-radio",
+    CHILD: "custom-radio"
+  };
+  var Selector$5 = {
+    INPUT: "." + ClassName$5.INPUT,
+    CHILD: "." + ClassName$5.CHILD,
+    INPUT_CHILD: "." + ClassName$5.INPUT + " ." + ClassName$5.CHILD,
+    PLUGIN: "[data-plugin]"
+  };
+  var Event$5 = {
+    CHANGE: "change." + TYPE$5
+  };
+
+  var RadioInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(RadioInput, _Input);
+
+    // methods ----
+    function RadioInput(element) {
+      return _Input.call(this, element, TYPE$5) || this;
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
     }
 
     var _show = function _show(data) {
@@ -2001,6 +2461,7 @@
       $target.popover("show");
     };
 
+<<<<<<< HEAD:js/dist/js/yonder.js
     var _close = function _close(data) {
       var target = document.getElementById(data.id);
 
@@ -2046,12 +2507,58 @@
 
     var _close = function _close(data) {
       var toasts = document.querySelectorAll(".yonder-toasts .toast");
+=======
+    _proto.select = function select(x) {
+      var children = this._element.querySelectorAll(Selector$5.CHILD);
+
+      var _filterElements = filterElements(children, x),
+          targets = _filterElements[0],
+          values = _filterElements[1];
+
+      deactivateElements(children, function (child) {
+        child.children[0].checked = false;
+      });
+
+      if (targets.length) {
+        activateElements(targets[0], function (target) {
+          target.children[0].checked = true;
+        });
+        this.value(values[0]);
+      }
+    } // static ----
+    ;
+
+    RadioInput.initialize = function initialize(element) {
+      _Input.initialize.call(this, element, TYPE$5, RadioInput);
+    };
+
+    RadioInput.find = function find(scope) {
+      return _Input.find.call(this, scope, Selector$5.INPUT);
+    };
+
+    RadioInput.getValue = function getValue(element) {
+      return _Input.getValue.call(this, element, TYPE$5);
+    };
+
+    RadioInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE$5);
+    };
+
+    RadioInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE$5);
+    };
+
+    RadioInput.receiveMessage = function receiveMessage(element, message) {
+      _Input.receiveMessage.call(this, element, message, TYPE$5);
+    };
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
       if (toasts.length) {
         $(toasts).toast("hide");
       }
     };
 
+<<<<<<< HEAD:js/dist/js/yonder.js
     if (!msg.type) {
       return;
     }
@@ -2064,6 +2571,65 @@
       console.warn("no toast " + msg.type + " method");
     }
   });
+=======
+    return RadioInput;
+  }(Input); // events ----
+
+
+  $(document).on(Event$5.CHANGE, Selector$5.INPUT_CHILD, function (event) {
+    var radio = findClosest(event.target, Selector$5.INPUT);
+    var radioInput = Store.getData(radio, TYPE$5);
+
+    if (!radioInput) {
+      return;
+    }
+
+    var input = findClosest(event.target, Selector$5.CHILD);
+    radioInput.value(input.value);
+  });
+  $(document).on(Event$5.CHANGE, "" + Selector$5.INPUT_CHILD + Selector$5.PLUGIN, function (event) {
+    var input = findClosest(event.target, Selector$5.CHILD);
+
+    var _getPluginAttributes = getPluginAttributes(input),
+        plugin = _getPluginAttributes[0],
+        action = _getPluginAttributes[1],
+        target = _getPluginAttributes[2];
+
+    if (!all(plugin, action, target)) {
+      return;
+    }
+
+    $(input)[plugin](action);
+  }); // shiny ----
+  // If shiny is present register the radio input shiny interface with the input
+  // bindings.
+
+  if (Shiny) {
+    Shiny.inputBindings.register(RadioInput.ShinyInterface(), TYPE$5);
+  }
+
+  // import "./input-binding-range.js";
+  // import "./input-binding-select.js";
+  // import "./input-binding-textual.js";
+  // import "./collapse.js";
+  // import "./download.js";
+  // import "./content.js";
+  // import "./modal.js";
+  // import "./popover.js";
+  // import "./tooltip.js";
+  // import "./toast.js";
+
+  var index = {
+    ButtonGroupInput: ButtonGroupInput,
+    ButtonInput: ButtonInput,
+    CheckbarInput: CheckbarInput,
+    MenuInput: MenuInput,
+    NavInput: NavInput,
+    RadioInput: RadioInput
+  };
+
+  return index;
+>>>>>>> feat(js): separate module, use terser, add formal checkbar class:js/dist/yonder.js
 
 })));
 //# sourceMappingURL=yonder.js.map

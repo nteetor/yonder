@@ -61,7 +61,7 @@ let isNode = function(x) {
   return x && x.nodeType === 1;
 };
 
-let activateElements = function(elements) {
+let activateElements = function(elements, callback) {
   if (!elements) {
     return;
   }
@@ -69,15 +69,15 @@ let activateElements = function(elements) {
   if (elements.length) {
     asArray(elements).forEach(e => activateElements(e));
   } else if (elements.classList) {
-    if (matchesSelector(elements, "input[type='radio'], input[type='checkbox']")) {
-      elements.checked = true;
-    } else {
-      elements.classList.add("active");
+    elements.classList.add("active");
+
+    if (typeof callback === "function") {
+      callback(elements);
     }
   }
 };
 
-let deactivateElements = function(elements) {
+let deactivateElements = function(elements, callback) {
   if (!elements) {
     return;
   }
@@ -85,10 +85,10 @@ let deactivateElements = function(elements) {
   if (elements.length) {
     asArray(elements).forEach(e => deactivateElements(e));
   } else if (elements.classList) {
-    if (matchesSelector(elements, "input[type='radio'], input[type='checkbox']")) {
-      elements.checked = false;
-    } else {
-      elements.classList.remove("active");
+    elements.classList.remove("active");
+
+    if (typeof callback === "function") {
+      callback(elements);
     }
   }
 };
@@ -100,6 +100,7 @@ let filterElements = function(elements, values, getValue = x => x.value) {
   let elementValues = elements.map(getValue);
 
   let foundElements = [];
+  let foundValues = [];
 
   for (var i = 0; i < targetValues.length; i++) {
     let v = targetValues[i];
@@ -110,9 +111,10 @@ let filterElements = function(elements, values, getValue = x => x.value) {
     }
 
     foundElements.push(found);
+    foundValues.push(elementValues[i]);
   }
 
-  return foundElements;
+  return [foundElements, foundValues];
 };
 
 let all = function(...objs) {

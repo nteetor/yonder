@@ -1,0 +1,24 @@
+{
+  "parse": {
+  },
+  "compress": {
+    "typeofs": false
+  },
+  "mangle": {
+    "properties": false
+  },
+  "output": {
+  },
+  "sourceMap": {
+    "filename": "yonder.min.js",
+    "url": "yonder.min.js.map",
+    "includeSources": true
+  },
+  "ecma": 8,
+  "nameCache": null,
+  "ie8": false,
+  "module": false,
+  "safari10": false,
+  "toplevel": false,
+  "warnings": false
+}
