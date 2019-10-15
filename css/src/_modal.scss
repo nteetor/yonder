@@ -1,0 +1,5 @@
+@import '../node_modules/bootstrap/scss/modal';
+
+.modal-backdrop + .modal-backdrop {
+  background-color: transparent;
+}
