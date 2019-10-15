@@ -1,8 +1,9 @@
 {
   "name": "yonder-js",
   "version": "0.1.2",
-  "description": "A reactive framework built on shiny.",
+  "description": "JavaScript for the yonder R package.",
   "main": "dist/js/yonder.min.js",
+  "dependencies": {},
   "devDependencies": {
     "@babel/cli": "^7.5.5",
     "@babel/core": "^7.5.5",
@@ -42,13 +43,13 @@
   },
   "keywords": [
     "shiny",
-    "reactive"
+    "reactive",
+    "yonder"
   ],
   "author": "Nathan Teetor <nathanteetor@gmail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nteetor/yonder/issues"
   },
-  "homepage": "https://nteetor.github.com/yonder",
-  "dependencies": {}
-}
+  "homepage": "https://nteetor.github.com/yonder"
+ }
