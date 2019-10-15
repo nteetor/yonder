@@ -1,0 +1,7 @@
+@import '../node_modules/bootstrap/scss/utilities/text';
+
+@each $name, $value in $font-sizes {
+  .font-size-#{$name} {
+    font-size: $value !important;
+  }
+}
