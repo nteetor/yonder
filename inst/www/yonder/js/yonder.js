@@ -939,6 +939,11 @@
         el.querySelector(".dropdown-menu").innerHTML = msg.content;
       }
 
+      if (msg.label) {
+        var toggle = el.querySelector(".dropdown-toggle");
+        toggle.innerHTML = msg.label;
+      }
+
       if (msg.selected) {
         el.querySelectorAll(".dropdown-item").forEach(function (item) {
           if (msg.selected.indexOf(item.value) > -1) {

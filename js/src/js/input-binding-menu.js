@@ -41,6 +41,11 @@ $.extend(menuInputBinding, {
       el.querySelector(".dropdown-menu").innerHTML = msg.content;
     }
 
+    if (msg.label) {
+      let toggle = el.querySelector(".dropdown-toggle");
+      toggle.innerHTML = msg.label;
+    }
+
     if (msg.selected) {
       el.querySelectorAll(".dropdown-item").forEach(item => {
         if (msg.selected.indexOf(item.value) > -1) {
