@@ -8,7 +8,7 @@
 menuInput(id, label, choices = NULL, values = choices,
   selected = NULL, ..., direction = "down", align = "left")
 
-updateMenuInput(id, choices = NULL, values = choices,
+updateMenuInput(id, label = NULL, choices = NULL, values = choices,
   selected = NULL, enable = NULL, disable = NULL,
   session = getDefaultReactiveDomain())
 }
