@@ -5,13 +5,17 @@ $.extend(buttonGroupInputBinding, {
   getType: (el) => "yonder.button.group",
   initialize: (el) => {
     $(el).on("click", "button", (e) => {
-      buttonGroupInputBinding._VALUES[el.id] = e.delegateTarget.value;
+      el.setAttribute("data-value", e.currentTarget.value);
     });
-
-    buttonGroupInputBinding._VALUES[el.id] = null;
   },
   getValue: (el) => {
-    return { force: Date.now(), value: buttonGroupInputBinding._VALUES[el.id] };
+    let value = el.getAttribute("data-value");
+
+    if (value === undefined) {
+      value = null;
+    }
+
+    return { force: Date.now(), value: value };
   },
   subscribe: (el, callback) => {
     let $el = $(el);
@@ -26,7 +30,7 @@ $.extend(buttonGroupInputBinding, {
     }
 
     if (msg.value) {
-      buttonGroupInputBinding._VALUES[el.id] = msg.value;
+      el.setAttribute("data-value", msg.value);
     }
 
     if (msg.enable) {

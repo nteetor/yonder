@@ -19,14 +19,19 @@
     },
     initialize: function initialize(el) {
       $(el).on("click", "button", function (e) {
-        buttonGroupInputBinding._VALUES[el.id] = e.delegateTarget.value;
+        el.setAttribute("data-value", e.currentTarget.value);
       });
-      buttonGroupInputBinding._VALUES[el.id] = null;
     },
     getValue: function getValue(el) {
+      var value = el.getAttribute("data-value");
+
+      if (value === undefined) {
+        value = null;
+      }
+
       return {
         force: Date.now(),
-        value: buttonGroupInputBinding._VALUES[el.id]
+        value: value
       };
     },
     subscribe: function subscribe(el, callback) {
@@ -47,7 +52,7 @@
       }
 
       if (msg.value) {
-        buttonGroupInputBinding._VALUES[el.id] = msg.value;
+        el.setAttribute("data-value", msg.value);
       }
 
       if (msg.enable) {
