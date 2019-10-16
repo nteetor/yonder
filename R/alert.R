@@ -31,6 +31,8 @@
 #'   background("amber")
 #'
 alert <- function(..., dismissible = TRUE, fade = TRUE) {
+  c_env <- parent.frame()
+
   dep_attach({
     args <- eval(substitute(alist(...)))
 
@@ -46,7 +48,8 @@ alert <- function(..., dismissible = TRUE, fade = TRUE) {
           h4 = function(...) tags$h4(class = "alert-heading", ...),
           h5 = function(...) tags$h5(class = "alert-heading", ...),
           h6 = function(...) tags$h6(class = "alert-heading", ...)
-        )
+        ),
+        parent = c_env
       )
     )
 
