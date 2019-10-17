@@ -1,0 +1,36 @@
+
+# Basic checkbox
+
+```R
+shinyApp(
+  ui = webpage(
+    checkboxInput(
+      id = "test",
+      choices = "hello"
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$test)
+    })
+  }
+)
+```
+
+# Checkboxes are also groups
+
+```R
+shinyApp(
+  ui = webpage(
+    checkboxInput(
+      id = "test",
+      choices = c("hello", "world")
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$test)
+    })
+  }
+)
+```

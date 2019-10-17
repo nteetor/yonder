@@ -14,25 +14,25 @@ import {
   filterElements
 } from "../utils/index.js";
 
-const NAME = "checkbar";
-const TYPE = `yonder.${ TYPE }`;
+const NAME = "checkbox";
+const TYPE = `yonder.${ NAME }`;
 
 const ClassName = {
-  INPUT: "yonder-checkbar",
-  CHILD: "btn"
+  INPUT: "yonder-checkbox",
+  CHILD: "custom-checkbox"
 };
 
 const Selector = {
   INPUT: `.${ ClassName.INPUT }`,
   CHILD: `.${ ClassName.CHILD }`,
-  PARENT_CHILD: `.${ ClassName.INPUT } .${ ClassName.CHILD }`
+  INPUT_CHILD: `.${ ClassName.INPUT } .${ ClassName.CHILD }`
 };
 
 const Event = {
   CHANGE: `change.${ TYPE }`
 };
 
-class CheckbarInput extends Input {
+class CheckboxInput extends Input {
 
   // methods ----
 
@@ -54,10 +54,10 @@ class CheckbarInput extends Input {
   select(x) {
     let children = this._element.querySelectorAll(Selector.CHILD);
 
-    let [targets, values]  = filterElements(children, x, child => child.children[0].value);
+    let [targets, values] = filterElements(children, x, child => child.children[0].value);
 
-    deactivateElements(targets, target => {
-      target.children[0].checked = false;
+    deactivateElements(children, child => {
+      child.children[0].checked = false;
     });
 
     if (targets.length) {
@@ -94,7 +94,7 @@ class CheckbarInput extends Input {
   }
 
   static initialize(element) {
-    super.initialize(element, TYPE, CheckbarInput);
+    super.initialize(element, TYPE, CheckboxInput);
   }
 
   static getValue(element) {
@@ -114,27 +114,27 @@ class CheckbarInput extends Input {
   }
 
   static ShinyInterface() {
-    return { ...Input, ...CheckbarInput };
+    return { ...Input, ...CheckboxInput };
   }
 }
 
 // events ----
 
-$(document).on(Event.CHANGE, Selector.PARENT_CHILD, (event) => {
-  let checkbar = findClosest(event.target, Selector.INPUT);
-  let checkbarInput = Store.getData(checkbar, TYPE);
+$(document).on(Event.CHANGE, Selector.INPUT_CHILD, (event) => {
+  let checkbox = findClosest(event.target, Selector.INPUT);
+  let checkboxInput = Store.getData(checkbox, TYPE);
 
-  if (!checkbarInput) {
+  if (!checkboxInput) {
     return;
   }
 
-  let button = findClosest(event.target, Selector.CHILD);
+  let box = findClosest(event.target, Selector.CHILD);
 
-  checkbarInput.toggle(button);
+  checkboxInput.toggle(box);
 });
 
-export default CheckbarInput;
+export default CheckboxInput;
 
 if (Shiny) {
-  Shiny.inputBindings.register(CheckbarInput.ShinyInterface(), TYPE);
+  Shiny.inputBindings.register(CheckboxInput.ShinyInterface(), TYPE);
 }

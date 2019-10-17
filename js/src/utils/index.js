@@ -61,13 +61,17 @@ let isNode = function(x) {
   return x && x.nodeType === 1;
 };
 
+let activeElement = function(element) {
+  return element.classList && element.classList.contains("active");
+};
+
 let activateElements = function(elements, callback) {
   if (!elements) {
     return;
   }
 
   if (elements.length) {
-    asArray(elements).forEach(e => activateElements(e));
+    asArray(elements).forEach(el => activateElements(el, callback));
   } else if (elements.classList) {
     elements.classList.add("active");
 
@@ -83,12 +87,28 @@ let deactivateElements = function(elements, callback) {
   }
 
   if (elements.length) {
-    asArray(elements).forEach(e => deactivateElements(e));
+    asArray(elements).forEach(el => deactivateElements(el, callback));
   } else if (elements.classList) {
     elements.classList.remove("active");
 
     if (typeof callback === "function") {
       callback(elements);
+    }
+  }
+};
+
+let toggleElements = function(elements, callback) {
+  if (!elements) {
+    return;
+  }
+
+  if (elements.length) {
+    asArray(elements).forEach(e => toggleElements(e, callback));
+  } else if (elements.classList) {
+    let active = elements.classList.toggle("active");
+
+    if (typeof callback === "function") {
+      callback(elements, active);
     }
   }
 };
@@ -133,8 +153,10 @@ export {
   asArray,
   getPluginAttributes,
   isNode,
+  activeElement,
   activateElements,
   deactivateElements,
+  toggleElements,
   filterElements,
   all
 };
