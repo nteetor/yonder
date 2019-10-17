@@ -275,7 +275,6 @@ checkbarInput <- function(id, choices = NULL, values = choices,
     tags$div(
       class = "yonder-checkbar btn-group btn-group-toggle d-flex",
       id = id,
-      `data-toggle` = "buttons",
       checkboxes,
       ...
     )

@@ -45,11 +45,11 @@ class Input {
 
   // public ----
 
-  static initialize(element, type, subclass) {
+  static initialize(element, type, impl) {
     let input = Store.getData(element, type);
 
     if (!input) {
-      input = new subclass(element);
+      input = new impl(element);
     }
   }
 

@@ -1,7 +1,7 @@
 import ButtonGroupInput from "./inputs/button-group.js";
 import ButtonInput from "./inputs/button.js";
 import CheckbarInput from "./inputs/checkbar.js";
-// import "./input-binding-checkbox.js";
+import CheckboxInput from "./inputs/checkbox.js";
 // import "./input-binding-chip.js";
 // import "./input-binding-file.js";
 // import "./input-binding-form.js";
@@ -27,6 +27,7 @@ export default {
   ButtonGroupInput,
   ButtonInput,
   CheckbarInput,
+  CheckboxInput,
   MenuInput,
   NavInput,
   RadioInput

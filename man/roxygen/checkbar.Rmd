@@ -1,0 +1,18 @@
+
+# Basic checkbar
+
+```R
+shinyApp(
+  ui = webpage(
+    checkbarInput(
+      id = "test",
+      choices = c("hello", "world")
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$test)
+    })
+  }
+)
+```
