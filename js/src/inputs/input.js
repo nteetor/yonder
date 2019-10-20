@@ -1,125 +1,125 @@
-import InputError from "../errors/input.js";
-import Store from "../data/store.js";
+import InputError from "../errors/input.js"
+import Store from "../data/store.js"
 
-const VERSION = "0.1.2";
+const VERSION = "0.1.2"
 
 class Input {
   constructor(element, type, self) {
     if ((typeof element === "object" && element.nodeType !== 1) &&
         (typeof element !== "string")) {
-      throw new InputError("Invalid Argument", "`element` must be a node or string");
+      throw new InputError("Invalid Argument", "`element` must be a node or string")
     }
 
     if (typeof element === "string") {
-      element = document.querySelector(element);
+      element = document.querySelector(element)
 
       if (!element) {
-        throw new InputError("Element Not Found", "could not find element for give `element` selector");
+        throw new InputError("Element Not Found", "could not find element for give `element` selector")
       }
     }
 
-    this._element = element;
-    this._type = type;
-    this._value = null;
-    this._callback = () => {};
+    this._element = element
+    this._type = type
+    this._value = null
+    this._callback = () => {}
 
-    Store.setData(element, type, this);
+    Store.setData(element, type, this)
   }
 
   // getters ----
 
   static get VERSION() {
-    return VERSION;
+    return VERSION
   }
 
   // methods ----
 
   content(html) {
-    this._element.innerHTML = html;
+    this._element.innerHTML = html
   }
 
   dispose() {
-    Store.removeData(this._element, this._type);
-    this._element = null;
+    Store.removeData(this._element, this._type)
+    this._element = null
   }
 
   // public ----
 
   static initialize(element, type, impl) {
-    let input = Store.getData(element, type);
+    let input = Store.getData(element, type)
 
     if (!input) {
-      input = new impl(element);
+      input = new impl(element)
     }
   }
 
   static find(scope, selector) {
-    return scope.querySelectorAll(selector);
+    return scope.querySelectorAll(selector)
   }
 
   static getId(element) {
-    return element.id;
+    return element.id
   }
 
   static getType(element) {
-    return null;
+    return null
   }
 
   static getValue(element, type) {
-    let input = Store.getData(element, type);
+    let input = Store.getData(element, type)
 
     if (!input) {
-      return null;
+      return null
     }
 
-    return input.value();
+    return input.value()
   }
 
   static subscribe(element, callback, type) {
-    let input = Store.getData(element, type);
+    let input = Store.getData(element, type)
 
     if (!input) {
-      return;
+      return
     }
 
-    input._callback = callback;
+    input._callback = callback
   }
 
   static unsubscribe(element, type) {
-    let input = Store.getData(element, type);
+    let input = Store.getData(element, type)
 
     if (!input) {
-      return;
+      return
     }
 
-    input._callback = () => {};
+    input._callback = () => {}
   }
 
   static receiveMessage(element, message, type) {
-    let input = Store.getData(element, type);
+    let input = Store.getData(element, type)
 
     if (!input) {
-      return;
+      return
     }
 
     message.forEach((msg) => {
-      let [method, args] = msg;
+      let [method, args] = msg
 
       if (!args) {
-        input[method]();
+        input[method]()
       } else {
-        input[method](...args);
+        input[method](...args)
       }
-    });
+    })
   }
 
   static getState(element, data) {
-    throw new InputError("Method Not Implemented");
+    throw new InputError("Method Not Implemented")
   }
 
   static getRatePolicy() {
-    return null;
+    return null
   }
 }
 
-export default Input;
+export default Input

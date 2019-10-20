@@ -1,8 +1,8 @@
-import $ from "jQuery";
-import Shiny from "Shiny";
+import $ from "jQuery"
+import Shiny from "Shiny"
 
-import Input from "./input.js";
-import Store from "../data/store.js";
+import Input from "./input.js"
+import Store from "../data/store.js"
 import {
   findClosest,
   asArray,
@@ -10,139 +10,139 @@ import {
   activateElements,
   deactivateElements,
   filterElements
-} from "../utils/index.js";
+} from "../utils/index.js"
 
-const NAME = "menu";
-const TYPE = `yonder.${ NAME }`;
+const NAME = "menu"
+const TYPE = `yonder.${ NAME }`
 
 const ClassName = {
   INPUT: "yonder-menu",
   CHILD: "dropdown-item"
-};
+}
 
 const Selector = {
   INPUT: `.${ ClassName.INPUT }`,
   CHILD: `.${ ClassName.CHILD }`,
   PARENT_CHILD: `.${ ClassName.INPUT } .${ ClassName.CHILD }`,
   TOGGLE: "[data-toggle='dropdown']"
-};
+}
 
 const Event = {
   CLICK: `click.${ TYPE }`,
   CLOSE: "hide.bs.dropdown",
   CLOSED: "hidden.bs.dropdown"
-};
+}
 
 class MenuInput extends Input {
 
   // fields ----
 
   static get TYPE() {
-    return TYPE;
+    return TYPE
   }
 
   static get Selector() {
-    return Selector;
+    return Selector
   }
 
   static get Event() {
-    return Event;
+    return Event
   }
 
   // methods ----
 
   constructor(element) {
-    super(element, TYPE);
+    super(element, TYPE)
 
-    this._counter = 0;
+    this._counter = 0
   }
 
   value(x) {
     if (typeof x === "undefined") {
-      return this._value;
+      return this._value
     }
 
-    this._value = x;
-    this._callback();
+    this._value = x
+    this._callback()
 
-    return this;
+    return this
   }
 
   select(x) {
-    let children = this._element.querySelectorAll(Selector.CHILD);
+    let children = this._element.querySelectorAll(Selector.CHILD)
 
-    let [targets, values] = filterElements(children, x);
+    let [targets, values] = filterElements(children, x)
 
-    deactivateElements(children);
+    deactivateElements(children)
 
     if (targets.length) {
-      activateElements(targets[0]);
-      this.value(values[0]);
+      activateElements(targets[0])
+      this.value(values[0])
     }
   }
 
   // static ----
 
   static initialize(element) {
-    super.initialize(element, TYPE, MenuInput);
+    super.initialize(element, TYPE, MenuInput)
   }
 
   static find(element) {
-    return super.find(element, Selector.INPUT);
+    return super.find(element, Selector.INPUT)
   }
 
   static getType(element) {
-    return TYPE;
+    return TYPE
   }
 
   static getValue(element) {
-    let input = Store.getData(element, TYPE);
+    let input = Store.getData(element, TYPE)
 
     if (!input) {
-      return null;
+      return null
     }
 
-    return { value: input.value(), counter: input._counter++ };
+    return { value: input.value(), counter: input._counter++ }
   }
 
   static subscribe(element, callback) {
-    super.subscribe(element, callback, TYPE);
+    super.subscribe(element, callback, TYPE)
   }
 
   static unsubscribe(element) {
-    super.unsubscribe(element, TYPE);
+    super.unsubscribe(element, TYPE)
   }
 
   static receiveMessage(element, message) {
-    super.receiveMessage(element, message, TYPE);
+    super.receiveMessage(element, message, TYPE)
   }
 
   static ShinyInterface() {
-    return { ...Input, ...MenuInput };
+    return { ...Input, ...MenuInput }
   }
 }
 
 // events ----
 
 $(document).on(Event.CLICK, Selector.PARENT_CHILD, (event) => {
-  let item = findClosest(event.target, Selector.CHILD);
+  let item = findClosest(event.target, Selector.CHILD)
 
   if (!item) {
-    return;
+    return
   }
 
-  let menu = findClosest(item, Selector.INPUT);
-  let menuInput = Store.getData(menu, TYPE);
+  let menu = findClosest(item, Selector.INPUT)
+  let menuInput = Store.getData(menu, TYPE)
 
   if (!menuInput) {
-    return;
+    return
   }
 
-  menuInput.select(item);
-});
+  menuInput.select(item)
+})
 
 if (Shiny) {
-  Shiny.inputBindings.register(MenuInput.ShinyInterface(), TYPE);
+  Shiny.inputBindings.register(MenuInput.ShinyInterface(), TYPE)
 }
 
-export default MenuInput;
+export default MenuInput
