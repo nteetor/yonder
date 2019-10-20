@@ -8,8 +8,14 @@
       "sourceType": "module"
   },
   "rules": {
-    "semi": "error",
-    "quotes": ["error", "double"],
+    "semi": [
+      "error",
+      "never"
+    ],
+    "quotes": [
+      "error",
+      "double"
+    ],
     "prefer-object-spread": "error"
   }
 }

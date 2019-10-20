@@ -26,7 +26,7 @@
     "terser": "^4.3.8"
   },
   "scripts": {
-    "lint": "eslint src/**/*.js",
+    "lint": "eslint --config build/eslint.config.json src/**/*.js",
     "vend": "cp dist/{yonder.js,yonder.min.js,yonder.min.js.map} ../inst/www/yonder/js/",
     "concat": "rollup --config build/rollup.config.js --sourcemap",
     "uglify": "uglifyjs --compress --mangle --output dist/yonder.min.js dist/yonder.js",
@@ -37,6 +37,19 @@
   "watch": {
     "build": "src/**/*.js"
   },
+  "browserslist": [
+    ">= 1%",
+    "last 1 major version",
+    "not dead",
+    "Chrome >= 45",
+    "Firefox >= 38",
+    "Edge >= 12",
+    "Explorer >= 10",
+    "iOS >= 9",
+    "Safari >= 9",
+    "Android >= 4.4",
+    "Opera >= 30"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/nteetor/yonder.git"
