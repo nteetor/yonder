@@ -1,8 +1,8 @@
-import $ from "jQuery";
-import Shiny from "Shiny";
+import $ from "jQuery"
+import Shiny from "Shiny"
 
-import Input from "./input.js";
-import Store from "../data/store.js";
+import Input from "./input.js"
+import Store from "../data/store.js"
 import {
   findClosest,
   asArray,
@@ -10,20 +10,20 @@ import {
   activateElements,
   deactivateElements,
   filterElements
-} from "../utils/index.js";
+} from "../utils/index.js"
 
-const NAME = "file";
-const TYPE = `yonder.${ NAME }`;
+const NAME = "file"
+const TYPE = `yonder.${ NAME }`
 
 const ClassName = {
   INPUT: "yonder-file",
   PROGRESS: "progress"
-};
+}
 
 const Selector = {
   INPUT: `.${ ClassName.INPUT }`,
   PROGRESS: `.${ ClassName.PROGRESS }`
-};
+}
 
 class FileInput extends Input {
 

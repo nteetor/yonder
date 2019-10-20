@@ -1,6 +1,6 @@
 const dataStore = (() => {
-  const storeData = {};
-  let id = 1;
+  const storeData = {}
+  let id = 1
 
   return {
     set(element, key, data) {
@@ -8,48 +8,48 @@ const dataStore = (() => {
         element.key = {
           key,
           id
-        };
-        id++;
+        }
+        id++
       };
 
-      storeData[element.key.id] = data;
+      storeData[element.key.id] = data
     },
     get(element, key) {
       if (!element || typeof element.key === "undefined") {
-        return null;
+        return null
       }
 
-      const keyProperties = element.key;
+      const keyProperties = element.key
       if (keyProperties.key === key) {
-        return storeData[keyProperties.id];
+        return storeData[keyProperties.id]
       }
 
-      return null;
+      return null
     },
     delete(element, key) {
       if (typeof element.key === "undefined") {
-        return;
+        return
       }
 
-      const keyProperties = element.key;
+      const keyProperties = element.key
       if (keyProperties.key === key) {
-        delete storeData[keyProperties.id];
-        delete element.key;
+        delete storeData[keyProperties.id]
+        delete element.key
       }
     }
-  };
-})();
+  }
+})()
 
 const Store = {
   setData(instance, key, data) {
-    dataStore.set(instance, key, data);
+    dataStore.set(instance, key, data)
   },
   getData(instance, key) {
-    return dataStore.get(instance, key);
+    return dataStore.get(instance, key)
   },
   removeData(instance, key) {
-    dataStore.delete(instance, key);
+    dataStore.delete(instance, key)
   }
-};
+}
 
-export default Store;
+export default Store
