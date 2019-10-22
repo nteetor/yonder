@@ -110,12 +110,14 @@ updateMenuInput <- function(id, label = NULL, choices = NULL, values = choices,
 
   label <- coerce_content(label)
   content <- coerce_content(items)
+  selected <- coerce_selected(selected)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 
   session$sendInputMessage(id, list(
     label = label,
     content = content,
+    selected = selected,
     enable = enable,
     disable = disable
   ))
