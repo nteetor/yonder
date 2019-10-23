@@ -1078,8 +1078,8 @@
     PROGRESS: "." + ClassName$4.PROGRESS
   };
   var Event$4 = {
+    DRAGENTER: "dragenter." + TYPE$4,
     DRAGOVER: "dragover." + TYPE$4,
-    DRAGCENTER: "dragcenter." + TYPE$4,
     DROP: "drop." + TYPE$4,
     CHANGE: "change." + TYPE$4
   };
@@ -1101,7 +1101,7 @@
     };
 
     _proto.upload = function upload() {
-      var files = this._element.files;
+      var files = this._element.children[0].files;
       return files;
     } // static ----
     ;
@@ -1134,7 +1134,7 @@
   }(Input); // events ----
 
 
-  $(document).on(Event$4.DRAGOVER, Selector$4.INPUT, function (event) {
+  $(document).on(Event$4.DRAGENTER, Selector$4.INPUT, function (event) {
     event.stopPropagation();
     event.preventDefault();
   });
@@ -1150,11 +1150,20 @@
 
     if (!fileInput) {
       return;
-    } // upload
+    }
 
+    el.children[0].files = event.originalEvent.dataTransfer.files;
+    fileInput.upload();
   });
   $(document).on(Event$4.CHANGE, Selector$4.INPUT, function (event) {
-    console.log("change");
+    var el = findClosest(event.target, Selector$4.INPUT);
+    var fileInput = Store.getData(el, TYPE$4);
+
+    if (!fileInput) {
+      return;
+    }
+
+    fileInput.upload();
   });
 
   if (Shiny) {

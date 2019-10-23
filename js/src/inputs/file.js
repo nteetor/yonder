@@ -26,8 +26,8 @@ const Selector = {
 }
 
 const Event = {
+  DRAGENTER: `dragenter.${ TYPE }`,
   DRAGOVER: `dragover.${ TYPE }`,
-  DRAGCENTER: `dragcenter.${ TYPE }`,
   DROP: `drop.${ TYPE }`,
   CHANGE: `change.${ TYPE }`
 }
@@ -45,7 +45,7 @@ class FileInput extends Input {
   }
 
   upload() {
-    let files = this._element.files
+    let files = this._element.children[0].files
 
     return files
   }
@@ -80,7 +80,7 @@ class FileInput extends Input {
 
 // events ----
 
-$(document).on(Event.DRAGOVER, Selector.INPUT, (event) => {
+$(document).on(Event.DRAGENTER, Selector.INPUT, (event) => {
   event.stopPropagation()
   event.preventDefault()
 })
@@ -101,11 +101,20 @@ $(document).on(Event.DROP, Selector.INPUT, (event) => {
     return
   }
 
-  // upload
+  el.children[0].files = event.originalEvent.dataTransfer.files
+
+  fileInput.upload()
 })
 
 $(document).on(Event.CHANGE, Selector.INPUT, (event) => {
-  console.log("change")
+  let el = findClosest(event.target, Selector.INPUT)
+  let fileInput = Store.getData(el, TYPE)
+
+  if (!fileInput) {
+    return
+  }
+
+  fileInput.upload()
 })
 
 export default FileInput
