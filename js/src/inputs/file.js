@@ -17,12 +17,15 @@ const TYPE = `yonder.${ NAME }`
 
 const ClassName = {
   INPUT: "yonder-file",
-  PROGRESS: "progress"
+  PROGRESS: "progress",
+  PROGRESS_BAR: "progress-bar",
+  PROGRESS_ANIMATED: "progress-bar-animated"
 }
 
 const Selector = {
   INPUT: `.${ ClassName.INPUT }`,
-  PROGRESS: `.${ ClassName.PROGRESS }`
+  PROGRESS: `.${ ClassName.PROGRESS }`,
+  PROGRESS_BAR: `.${ ClassName.PROGRESS } .${ ClassName.PROGRESS_BAR }`
 }
 
 const Event = {
@@ -47,7 +50,45 @@ class FileInput extends Input {
   upload() {
     let files = this._element.children[0].files
 
-    return files
+    if (!files.length) {
+      return
+    }
+
+    let fileInfo = files.map(file => {
+      let {name, size, type} = file;
+
+      return { name, size, type }
+    });
+
+    let progress = this._element.querySelector(Selector.PROGRESS);
+
+    let post = function(file, uri, id) {
+
+      let req = new XMLHttpRequest()
+
+      if (progress) {
+        req.addEventListener("loadstart", (event) => {
+          progress.classList.add(ClassName.PROGRESS_ANIMATED)
+        })
+
+        req.addEventListener("progress", (event) => {
+          progress.style.width = `${ event.loaded / event.total }%`
+        })
+
+        req.addEventListener("loadend", (event) => {
+          progress.classList.remove(ClassName.PROGRESS_ANIMATED)
+        })
+      }
+
+      req.open()
+    }
+
+
+    Shiny.shinyapp.makeRequest("uploadInit", [fileInfo], (res) => {
+      for (let i = 0; i < files.length; i++) {
+        post(files[i], res.updloadUrl, res.jobId);
+      }
+    })
   }
 
   // static ----
