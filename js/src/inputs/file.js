@@ -19,6 +19,7 @@ const ClassName = {
   INPUT: "yonder-file",
   PROGRESS: "progress",
   PROGRESS_BAR: "progress-bar",
+  PROGRESS_STRIPED: "progress-bar-striped",
   PROGRESS_ANIMATED: "progress-bar-animated"
 }
 
@@ -48,46 +49,62 @@ class FileInput extends Input {
   }
 
   upload() {
-    let files = this._element.children[0].files
+    let files = asArray(this._element.children[0].files)
 
     if (!files.length) {
       return
     }
 
     let fileInfo = files.map(file => {
-      let {name, size, type} = file;
+      let {name, size, type} = file
 
       return { name, size, type }
-    });
+    })
 
-    let progress = this._element.querySelector(Selector.PROGRESS);
+    let progress = this._element.querySelector(Selector.PROGRESS)
 
-    let post = function(file, uri, id) {
+    files.forEach((file) => {
+      let bar = document.createElement("div")
+      bar.classList.add(ClassName.PROGRESS_BAR)
+      bar.classList.add(ClassName.PROGRESS_STRIPED)
+      bar.innerText = file.name
+      progress.appendChild(bar)
+    })
 
-      let req = new XMLHttpRequest()
+    Shiny.shinyapp.makeRequest("uploadInit", [fileInfo], (res) => {
+      let completed = 0
 
-      if (progress) {
+      for (let i = 0; i < files.length; i++) {
+        let file = files[i]
+        let bar = progress.children[i]
+        let req = new XMLHttpRequest()
+
         req.addEventListener("loadstart", (event) => {
-          progress.classList.add(ClassName.PROGRESS_ANIMATED)
+          bar.classList.add(ClassName.PROGRESS_ANIMATED)
         })
 
-        req.addEventListener("progress", (event) => {
-          progress.style.width = `${ event.loaded / event.total }%`
+        req.upload.addEventListener("progress", (event) => {
+          bar.style.width = `${ Math.floor(event.loaded / event.total * 100 / files.length) }%`
         })
 
         req.addEventListener("loadend", (event) => {
-          progress.classList.remove(ClassName.PROGRESS_ANIMATED)
+          bar.style.width = `${ Math.floor(100 / files.length) }%`
+          bar.classList.remove(ClassName.PROGRESS_ANIMATED)
+
+          completed++
+
+          if (completed === files.length) {
+            req.addEventListener("loadend", (event) => {
+              Shiny.shinyapp.makeRequest("uploadEnd", [res.jobId, this._element.id])
+            })
+          }
         })
+
+        req.open("POST", res.uploadUrl, true)
+        req.setRequestHeader("Content-Type", "application/octet-stream")
+        req.send(file)
       }
 
-      req.open()
-    }
-
-
-    Shiny.shinyapp.makeRequest("uploadInit", [fileInfo], (res) => {
-      for (let i = 0; i < files.length; i++) {
-        post(files[i], res.updloadUrl, res.jobId);
-      }
     })
   }
 
