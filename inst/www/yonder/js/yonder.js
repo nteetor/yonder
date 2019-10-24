@@ -1071,11 +1071,15 @@
   var TYPE$4 = "yonder." + NAME$4;
   var ClassName$4 = {
     INPUT: "yonder-file",
-    PROGRESS: "progress"
+    PROGRESS: "progress",
+    PROGRESS_BAR: "progress-bar",
+    PROGRESS_STRIPED: "progress-bar-striped",
+    PROGRESS_ANIMATED: "progress-bar-animated"
   };
   var Selector$4 = {
     INPUT: "." + ClassName$4.INPUT,
-    PROGRESS: "." + ClassName$4.PROGRESS
+    PROGRESS: "." + ClassName$4.PROGRESS,
+    PROGRESS_BAR: "." + ClassName$4.PROGRESS + " ." + ClassName$4.PROGRESS_BAR
   };
   var Event$4 = {
     DRAGENTER: "dragenter." + TYPE$4,
@@ -1101,8 +1105,67 @@
     };
 
     _proto.upload = function upload() {
-      var files = this._element.children[0].files;
-      return files;
+      var _this = this;
+
+      var files = asArray(this._element.children[0].files);
+
+      if (!files.length) {
+        return;
+      }
+
+      var fileInfo = files.map(function (file) {
+        var name = file.name,
+            size = file.size,
+            type = file.type;
+        return {
+          name: name,
+          size: size,
+          type: type
+        };
+      });
+
+      var progress = this._element.querySelector(Selector$4.PROGRESS);
+
+      files.forEach(function (file) {
+        var bar = document.createElement("div");
+        bar.classList.add(ClassName$4.PROGRESS_BAR);
+        bar.classList.add(ClassName$4.PROGRESS_STRIPED);
+        bar.innerText = file.name;
+        progress.appendChild(bar);
+      });
+      Shiny.shinyapp.makeRequest("uploadInit", [fileInfo], function (res) {
+        var completed = 0;
+
+        var _loop = function _loop(i) {
+          var file = files[i];
+          var bar = progress.children[i];
+          var req = new XMLHttpRequest();
+          req.addEventListener("loadstart", function (event) {
+            bar.classList.add(ClassName$4.PROGRESS_ANIMATED);
+          });
+          req.upload.addEventListener("progress", function (event) {
+            bar.style.width = Math.floor(event.loaded / event.total * 100 / files.length) + "%";
+          });
+          req.addEventListener("loadend", function (event) {
+            bar.style.width = Math.floor(100 / files.length) + "%";
+            bar.classList.remove(ClassName$4.PROGRESS_ANIMATED);
+            completed++;
+
+            if (completed === files.length) {
+              req.addEventListener("loadend", function (event) {
+                Shiny.shinyapp.makeRequest("uploadEnd", [res.jobId, _this._element.id]);
+              });
+            }
+          });
+          req.open("POST", res.uploadUrl, true);
+          req.setRequestHeader("Content-Type", "application/octet-stream");
+          req.send(file);
+        };
+
+        for (var i = 0; i < files.length; i++) {
+          _loop(i);
+        }
+      });
     } // static ----
     ;
 

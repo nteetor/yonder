@@ -90,6 +90,9 @@ fileInput <- function(id, placeholder = "Choose file", browse = "Browse", ...,
         placeholder
       ),
       tags$div(
+        class = "progress"
+      ),
+      tags$div(
         class = "valid-feedback"
       ),
       tags$div(
