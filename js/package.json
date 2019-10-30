@@ -26,7 +26,7 @@
     "terser": "^4.3.8"
   },
   "scripts": {
-    "lint": "eslint --config build/eslint.config.json src/**/*.js",
+    "lint": "eslint --config build/eslint.config.json src/{index.js,*/*.js}",
     "vend": "cp dist/{yonder.js,yonder.min.js,yonder.min.js.map} ../inst/www/yonder/js/",
     "concat": "rollup --config build/rollup.config.js --sourcemap",
     "uglify": "uglifyjs --compress --mangle --output dist/yonder.min.js dist/yonder.js",
