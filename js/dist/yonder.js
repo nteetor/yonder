@@ -239,6 +239,15 @@
   var Input =
   /*#__PURE__*/
   function () {
+    _createClass(Input, null, [{
+      key: "VERSION",
+      // getters ----
+      get: function get() {
+        return VERSION;
+      } // methods ----
+
+    }]);
+
     function Input(element, type, self) {
       if (typeof element === "object" && element.nodeType !== 1 && typeof element !== "string") {
         throw new InputError("Invalid Argument", "`element` must be a node or string");
@@ -248,7 +257,7 @@
         element = document.querySelector(element);
 
         if (!element) {
-          throw new InputError("Element Not Found", "could not find element for give `element` selector");
+          throw new InputError("Element Not Found", "could not find element for given `element` selector");
         }
       }
 
@@ -259,12 +268,10 @@
       this._callback = function () {};
 
       Store.setData(element, type, this);
-    } // getters ----
-
+    }
 
     var _proto = Input.prototype;
 
-    // methods ----
     _proto.content = function content(html) {
       this._element.innerHTML = html;
     };
@@ -323,6 +330,8 @@
       }
 
       input._callback = function () {};
+
+      Store.removeData(element, type);
     };
 
     Input.receiveMessage = function receiveMessage(element, message, type) {
@@ -351,13 +360,6 @@
     Input.getRatePolicy = function getRatePolicy() {
       return null;
     };
-
-    _createClass(Input, null, [{
-      key: "VERSION",
-      get: function get() {
-        return VERSION;
-      }
-    }]);
 
     return Input;
   }();
@@ -586,10 +588,11 @@
           btn.setAttribute("aria-disabled", "false");
         }
       });
-    };
+    } // static ----
+    ;
 
     ButtonGroupInput.find = function find(scope) {
-      return _Input.find.call(this, scope, "." + ClassName.INPUT);
+      return _Input.find.call(this, scope, Selector.INPUT);
     };
 
     ButtonGroupInput.initialize = function initialize(element) {
@@ -1233,20 +1236,196 @@
     Shiny.inputBindings.register(FileInput.ShinyInterface(), TYPE$4);
   }
 
-  var NAME$5 = "menu";
+  var NAME$5 = "form";
   var TYPE$5 = "yonder." + NAME$5;
   var ClassName$5 = {
-    INPUT: "yonder-menu",
-    CHILD: "dropdown-item"
+    INPUT: "yonder-form",
+    CHILD: "shiny-bound-input",
+    SUBMIT: "yonder-form-submit"
   };
   var Selector$5 = {
     INPUT: "." + ClassName$5.INPUT,
     CHILD: "." + ClassName$5.CHILD,
-    PARENT_CHILD: "." + ClassName$5.INPUT + " ." + ClassName$5.CHILD,
-    TOGGLE: "[data-toggle='dropdown']"
+    INPUT_CHILD: "." + ClassName$5.INPUT + " ." + ClassName$5.CHILD,
+    SUBMIT: "." + ClassName$5.SUBMIT
   };
   var Event$5 = {
     CLICK: "click." + TYPE$5,
+    CHANGE: "shiny:inputchanged." + TYPE$5,
+    BOUND: "shiny:bound." + TYPE$5,
+    UNBOUND: "shiny:unbound." + TYPE$5
+  };
+
+  var FormInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(FormInput, _Input);
+
+    // methods ----
+    function FormInput(element) {
+      var _this;
+
+      _this = _Input.call(this, element, TYPE$5, FormInput) || this;
+      _this._map = {};
+      return _this;
+    }
+
+    var _proto = FormInput.prototype;
+
+    _proto.value = function value(x) {
+      if (typeof x === "undefined") {
+        return this._value;
+      }
+
+      this._value = x;
+
+      this._callback();
+
+      return this;
+    };
+
+    _proto.put = function put(key, value) {
+      this._map[key] = value;
+      return this;
+    };
+
+    _proto.delete = function _delete(key) {
+      var value = this._map[key];
+      delete this._map[key];
+      return value;
+    };
+
+    _proto.fields = function fields() {
+      return Object.keys(this._map);
+    };
+
+    _proto.entries = function entries() {
+      var _this2 = this;
+
+      return this.fields().map(function (key) {
+        return [key, _this2._map[key]];
+      });
+    } // static ----
+    ;
+
+    FormInput.find = function find(scope) {
+      return _Input.find.call(this, scope, Selector$5.INPUT);
+    };
+
+    FormInput.initialize = function initialize(element) {
+      _Input.initialize.call(this, element, TYPE$5, FormInput);
+    };
+
+    FormInput.getType = function getType(element) {
+      return TYPE$5;
+    };
+
+    FormInput.getValue = function getValue(element) {
+      _Input.getValue.call(this, element, TYPE$5);
+    };
+
+    FormInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE$5);
+    };
+
+    FormInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE$5);
+    };
+
+    FormInput.receiveMessage = function receiveMessage(element, message) {
+      _Input.receiveMessage.call(this, element, message, TYPE$5);
+    };
+
+    FormInput.ShinyInterface = function ShinyInterface() {
+      return _objectSpread2({}, Input, {}, FormInput);
+    };
+
+    return FormInput;
+  }(Input); // events ----
+
+
+  $(document).on(Event$5.CLICK, Selector$5.SUBMIT, function (event) {
+    var submitButton = findClosest(event.target, Selector$5.SUBMIT);
+    var form = findClosest(submitButton, Selector$5.INPUT);
+
+    if (!form) {
+      return;
+    }
+
+    var formInput = Store.getData(form, TYPE$5);
+
+    if (!formInput) {
+      return;
+    }
+
+    formInput.value(submitButton.value);
+
+    if (Shiny) {
+      formInput.entries().forEach(function (_ref) {
+        var key = _ref[0],
+            value = _ref[1];
+        Shiny.setInputValue(key, value, {
+          priority: "event"
+        });
+      });
+    }
+  });
+  $(document).on(Event$5.BOUND, Selector$5.INPUT_CHILD, function (event) {
+    var child = event.target;
+    var form = findClosest(child, Selector$5.INPUT);
+    var formInput = Store.getData(form, TYPE$5);
+
+    if (!formInput) {
+      return;
+    }
+
+    formInput.put(child.id, null);
+  });
+  $(document).on(Event$5.UNBOUND, Selector$5.INPUT_CHILD, function (event) {
+    var child = event.target;
+    var form = findClosest(child, Selector$5.INPUT);
+    var formInput = Store.getData(form, TYPE$5);
+
+    if (!formInput) {
+      return;
+    }
+
+    formInput.delete(child.id);
+  });
+  $(document).on(Event$5.CHANGE, Selector$5.INPUT_CHILD, function (event) {
+    if (event.priority && event.priority === "event") {
+      return;
+    }
+
+    var child = findClosest(event.target, Selector$5.CHILD);
+    var form = findClosest(child, Selector$5.INPUT);
+    var formInput = Store.getData(form, TYPE$5);
+
+    if (!formInput) {
+      return;
+    }
+
+    formInput.put(child.id, event.value);
+  });
+
+  if (Shiny) {
+    Shiny.inputBindings.register(FormInput.ShinyInterface(), TYPE$5);
+  }
+
+  var NAME$6 = "menu";
+  var TYPE$6 = "yonder." + NAME$6;
+  var ClassName$6 = {
+    INPUT: "yonder-menu",
+    CHILD: "dropdown-item"
+  };
+  var Selector$6 = {
+    INPUT: "." + ClassName$6.INPUT,
+    CHILD: "." + ClassName$6.CHILD,
+    PARENT_CHILD: "." + ClassName$6.INPUT + " ." + ClassName$6.CHILD,
+    TOGGLE: "[data-toggle='dropdown']"
+  };
+  var Event$6 = {
+    CLICK: "click." + TYPE$6,
     CLOSE: "hide.bs.dropdown",
     CLOSED: "hidden.bs.dropdown"
   };
@@ -1260,17 +1439,17 @@
       key: "TYPE",
       // fields ----
       get: function get() {
-        return TYPE$5;
+        return TYPE$6;
       }
     }, {
       key: "Selector",
       get: function get() {
-        return Selector$5;
+        return Selector$6;
       }
     }, {
       key: "Event",
       get: function get() {
-        return Event$5;
+        return Event$6;
       } // methods ----
 
     }]);
@@ -1278,7 +1457,7 @@
     function MenuInput(element) {
       var _this;
 
-      _this = _Input.call(this, element, TYPE$5) || this;
+      _this = _Input.call(this, element, TYPE$6) || this;
       _this._counter = 0;
       return _this;
     }
@@ -1298,7 +1477,7 @@
     };
 
     _proto.select = function select(x) {
-      var children = this._element.querySelectorAll(Selector$5.CHILD);
+      var children = this._element.querySelectorAll(Selector$6.CHILD);
 
       var _filterElements = filterElements(children, x),
           targets = _filterElements[0],
@@ -1314,19 +1493,19 @@
     ;
 
     MenuInput.initialize = function initialize(element) {
-      _Input.initialize.call(this, element, TYPE$5, MenuInput);
+      _Input.initialize.call(this, element, TYPE$6, MenuInput);
     };
 
     MenuInput.find = function find(element) {
-      return _Input.find.call(this, element, Selector$5.INPUT);
+      return _Input.find.call(this, element, Selector$6.INPUT);
     };
 
     MenuInput.getType = function getType(element) {
-      return TYPE$5;
+      return TYPE$6;
     };
 
     MenuInput.getValue = function getValue(element) {
-      var input = Store.getData(element, TYPE$5);
+      var input = Store.getData(element, TYPE$6);
 
       if (!input) {
         return null;
@@ -1339,15 +1518,15 @@
     };
 
     MenuInput.subscribe = function subscribe(element, callback) {
-      _Input.subscribe.call(this, element, callback, TYPE$5);
+      _Input.subscribe.call(this, element, callback, TYPE$6);
     };
 
     MenuInput.unsubscribe = function unsubscribe(element) {
-      _Input.unsubscribe.call(this, element, TYPE$5);
+      _Input.unsubscribe.call(this, element, TYPE$6);
     };
 
     MenuInput.receiveMessage = function receiveMessage(element, message) {
-      _Input.receiveMessage.call(this, element, message, TYPE$5);
+      _Input.receiveMessage.call(this, element, message, TYPE$6);
     };
 
     MenuInput.ShinyInterface = function ShinyInterface() {
@@ -1358,15 +1537,15 @@
   }(Input); // events ----
 
 
-  $(document).on(Event$5.CLICK, Selector$5.PARENT_CHILD, function (event) {
-    var item = findClosest(event.target, Selector$5.CHILD);
+  $(document).on(Event$6.CLICK, Selector$6.PARENT_CHILD, function (event) {
+    var item = findClosest(event.target, Selector$6.CHILD);
 
     if (!item) {
       return;
     }
 
-    var menu = findClosest(item, Selector$5.INPUT);
-    var menuInput = Store.getData(menu, TYPE$5);
+    var menu = findClosest(item, Selector$6.INPUT);
+    var menuInput = Store.getData(menu, TYPE$6);
 
     if (!menuInput) {
       return;
@@ -1376,30 +1555,30 @@
   });
 
   if (Shiny) {
-    Shiny.inputBindings.register(MenuInput.ShinyInterface(), TYPE$5);
+    Shiny.inputBindings.register(MenuInput.ShinyInterface(), TYPE$6);
   }
 
-  var NAME$6 = "nav";
-  var TYPE$6 = "yonder." + NAME$6;
-  var ClassName$6 = {
+  var NAME$7 = "nav";
+  var TYPE$7 = "yonder." + NAME$7;
+  var ClassName$7 = {
     INPUT: "yonder-nav",
     CHILD: "nav-link",
     ITEM: "nav-item"
   };
-  var Selector$6 = {
-    INPUT: "." + ClassName$6.INPUT,
-    CHILD: "." + ClassName$6.CHILD,
-    PARENT_CHILD: "." + ClassName$6.INPUT + " ." + ClassName$6.CHILD,
+  var Selector$7 = {
+    INPUT: "." + ClassName$7.INPUT,
+    CHILD: "." + ClassName$7.CHILD,
+    PARENT_CHILD: "." + ClassName$7.INPUT + " ." + ClassName$7.CHILD,
     ACTIVE: ".active",
     DISABLED: ".disabled",
     PLUGIN: "[data-plugin]",
-    NAV_ITEM: "." + ClassName$6.ITEM,
+    NAV_ITEM: "." + ClassName$7.ITEM,
     MENU: MenuInput.Selector.INPUT,
     MENU_TOGGLE: MenuInput.Selector.TOGGLE,
     MENU_ITEM: MenuInput.Selector.CHILD
   };
-  var Event$6 = {
-    CLICK: "click." + TYPE$6
+  var Event$7 = {
+    CLICK: "click." + TYPE$7
   };
 
   var NavInput =
@@ -1408,7 +1587,7 @@
     _inheritsLoose(NavInput, _Input);
 
     function NavInput(element) {
-      return _Input.call(this, element, TYPE$6) || this;
+      return _Input.call(this, element, TYPE$7) || this;
     }
 
     var _proto = NavInput.prototype;
@@ -1426,7 +1605,7 @@
     };
 
     _proto.select = function select(x) {
-      var children = this._element.querySelectorAll(Selector$6.CHILD);
+      var children = this._element.querySelectorAll(Selector$7.CHILD);
 
       var _filterElements = filterElements(children, x),
           targets = _filterElements[0],
@@ -1458,27 +1637,27 @@
     ;
 
     NavInput.initialize = function initialize(element) {
-      _Input.initialize.call(this, element, TYPE$6, NavInput);
+      _Input.initialize.call(this, element, TYPE$7, NavInput);
     };
 
     NavInput.find = function find(scope) {
-      return _Input.find.call(this, scope, Selector$6.INPUT);
+      return _Input.find.call(this, scope, Selector$7.INPUT);
     };
 
     NavInput.getValue = function getValue(element) {
-      return _Input.getValue.call(this, element, TYPE$6);
+      return _Input.getValue.call(this, element, TYPE$7);
     };
 
     NavInput.subscribe = function subscribe(element, callback) {
-      _Input.subscribe.call(this, element, callback, TYPE$6);
+      _Input.subscribe.call(this, element, callback, TYPE$7);
     };
 
     NavInput.unsubscribe = function unsubscribe(element) {
-      _Input.unsubscribe.call(this, element, TYPE$6);
+      _Input.unsubscribe.call(this, element, TYPE$7);
     };
 
     NavInput.receiveMessage = function receiveMessage(element, message) {
-      _Input.receiveMessage.call(this, element, message, TYPE$6);
+      _Input.receiveMessage.call(this, element, message, TYPE$7);
     };
 
     NavInput.ShinyInterface = function ShinyInterface() {
@@ -1489,19 +1668,19 @@
   }(Input); // events ----
 
 
-  $(document).on(Event$6.CLICK, Selector$6.PARENT_CHILD + ":not(" + Selector$6.MENU_TOGGLE + ")", function (event) {
-    var nav = findClosest(event.target, Selector$6.INPUT);
-    var navInput = Store.getData(nav, TYPE$6);
+  $(document).on(Event$7.CLICK, Selector$7.PARENT_CHILD + ":not(" + Selector$7.MENU_TOGGLE + ")", function (event) {
+    var nav = findClosest(event.target, Selector$7.INPUT);
+    var navInput = Store.getData(nav, TYPE$7);
 
     if (!navInput) {
       return;
     }
 
-    var button = findClosest(event.target, Selector$6.CHILD);
+    var button = findClosest(event.target, Selector$7.CHILD);
     navInput.select(button);
   });
-  $(document).on(Event$6.CLICK, "" + Selector$6.PARENT_CHILD + Selector$6.PLUGIN, function (event) {
-    var link = findClosest(event.target, Selector$6.CHILD);
+  $(document).on(Event$7.CLICK, "" + Selector$7.PARENT_CHILD + Selector$7.PLUGIN, function (event) {
+    var link = findClosest(event.target, Selector$7.CHILD);
 
     var _getPluginAttributes = getPluginAttributes(link),
         plugin = _getPluginAttributes[0],
@@ -1516,21 +1695,21 @@
     deactivateElements(link);
     $(link)[plugin](action);
   });
-  $(document).on(Event$6.CLICK, Selector$6.INPUT + " " + Selector$6.MENU_ITEM, function (event) {
-    var nav = findClosest(event.target, Selector$6.INPUT);
-    var navInput = Store.getData(nav, TYPE$6);
+  $(document).on(Event$7.CLICK, Selector$7.INPUT + " " + Selector$7.MENU_ITEM, function (event) {
+    var nav = findClosest(event.target, Selector$7.INPUT);
+    var navInput = Store.getData(nav, TYPE$7);
 
     if (!navInput) {
       return;
     }
 
-    var item = findClosest(event.target, Selector$6.NAV_ITEM);
-    var link = item.querySelector(Selector$6.CHILD);
+    var item = findClosest(event.target, Selector$7.NAV_ITEM);
+    var link = item.querySelector(Selector$7.CHILD);
     navInput.select(link);
-    var menu = findClosest(event.target, Selector$6.MENU);
+    var menu = findClosest(event.target, Selector$7.MENU);
 
     if (!menu.id) {
-      var menuItem = findClosest(event.target, Selector$6.MENU_ITEM);
+      var menuItem = findClosest(event.target, Selector$7.MENU_ITEM);
       navInput.value(menuItem.value);
     }
   }); // shiny ----
@@ -1538,7 +1717,7 @@
   // input bindings.
 
   if (Shiny) {
-    Shiny.inputBindings.register(NavInput.ShinyInterface(), TYPE$6);
+    Shiny.inputBindings.register(NavInput.ShinyInterface(), TYPE$7);
   }
 
   if (Shiny) {
@@ -1609,20 +1788,20 @@
     });
   }
 
-  var NAME$7 = "radio";
-  var TYPE$7 = "yonder." + NAME$7;
-  var ClassName$7 = {
+  var NAME$8 = "radio";
+  var TYPE$8 = "yonder." + NAME$8;
+  var ClassName$8 = {
     INPUT: "yonder-radio",
     CHILD: "custom-radio"
   };
-  var Selector$7 = {
-    INPUT: "." + ClassName$7.INPUT,
-    CHILD: "." + ClassName$7.CHILD,
-    INPUT_CHILD: "." + ClassName$7.INPUT + " ." + ClassName$7.CHILD,
+  var Selector$8 = {
+    INPUT: "." + ClassName$8.INPUT,
+    CHILD: "." + ClassName$8.CHILD,
+    INPUT_CHILD: "." + ClassName$8.INPUT + " ." + ClassName$8.CHILD,
     PLUGIN: "[data-plugin]"
   };
-  var Event$7 = {
-    CHANGE: "change." + TYPE$7
+  var Event$8 = {
+    CHANGE: "change." + TYPE$8
   };
 
   var RadioInput =
@@ -1632,7 +1811,7 @@
 
     // methods ----
     function RadioInput(element) {
-      return _Input.call(this, element, TYPE$7) || this;
+      return _Input.call(this, element, TYPE$8) || this;
     }
 
     var _proto = RadioInput.prototype;
@@ -1650,7 +1829,7 @@
     };
 
     _proto.select = function select(x) {
-      var children = this._element.querySelectorAll(Selector$7.CHILD);
+      var children = this._element.querySelectorAll(Selector$8.CHILD);
 
       var _filterElements = filterElements(children, x),
           targets = _filterElements[0],
@@ -1670,27 +1849,27 @@
     ;
 
     RadioInput.initialize = function initialize(element) {
-      _Input.initialize.call(this, element, TYPE$7, RadioInput);
+      _Input.initialize.call(this, element, TYPE$8, RadioInput);
     };
 
     RadioInput.find = function find(scope) {
-      return _Input.find.call(this, scope, Selector$7.INPUT);
+      return _Input.find.call(this, scope, Selector$8.INPUT);
     };
 
     RadioInput.getValue = function getValue(element) {
-      return _Input.getValue.call(this, element, TYPE$7);
+      return _Input.getValue.call(this, element, TYPE$8);
     };
 
     RadioInput.subscribe = function subscribe(element, callback) {
-      _Input.subscribe.call(this, element, callback, TYPE$7);
+      _Input.subscribe.call(this, element, callback, TYPE$8);
     };
 
     RadioInput.unsubscribe = function unsubscribe(element) {
-      _Input.unsubscribe.call(this, element, TYPE$7);
+      _Input.unsubscribe.call(this, element, TYPE$8);
     };
 
     RadioInput.receiveMessage = function receiveMessage(element, message) {
-      _Input.receiveMessage.call(this, element, message, TYPE$7);
+      _Input.receiveMessage.call(this, element, message, TYPE$8);
     };
 
     RadioInput.ShinyInterface = function ShinyInterface() {
@@ -1701,19 +1880,19 @@
   }(Input); // events ----
 
 
-  $(document).on(Event$7.CHANGE, Selector$7.INPUT_CHILD, function (event) {
-    var radio = findClosest(event.target, Selector$7.INPUT);
-    var radioInput = Store.getData(radio, TYPE$7);
+  $(document).on(Event$8.CHANGE, Selector$8.INPUT_CHILD, function (event) {
+    var radio = findClosest(event.target, Selector$8.INPUT);
+    var radioInput = Store.getData(radio, TYPE$8);
 
     if (!radioInput) {
       return;
     }
 
-    var input = findClosest(event.target, Selector$7.CHILD);
+    var input = findClosest(event.target, Selector$8.CHILD);
     radioInput.value(input.value);
   });
-  $(document).on(Event$7.CHANGE, "" + Selector$7.INPUT_CHILD + Selector$7.PLUGIN, function (event) {
-    var input = findClosest(event.target, Selector$7.CHILD);
+  $(document).on(Event$8.CHANGE, "" + Selector$8.INPUT_CHILD + Selector$8.PLUGIN, function (event) {
+    var input = findClosest(event.target, Selector$8.CHILD);
 
     var _getPluginAttributes = getPluginAttributes(input),
         plugin = _getPluginAttributes[0],
@@ -1730,7 +1909,7 @@
   // bindings.
 
   if (Shiny) {
-    Shiny.inputBindings.register(RadioInput.ShinyInterface(), TYPE$7);
+    Shiny.inputBindings.register(RadioInput.ShinyInterface(), TYPE$8);
   }
 
   // import "./input-binding-range.js";

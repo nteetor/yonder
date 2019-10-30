@@ -79,8 +79,10 @@ class ButtonGroupInput extends Input {
     })
   }
 
+  // static ----
+
   static find(scope) {
-    return super.find(scope, `.${ ClassName.INPUT }`)
+    return super.find(scope, Selector.INPUT)
   }
 
   static initialize(element) {

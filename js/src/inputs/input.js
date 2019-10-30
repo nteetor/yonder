@@ -4,6 +4,15 @@ import Store from "../data/store.js"
 const VERSION = "0.1.2"
 
 class Input {
+
+  // getters ----
+
+  static get VERSION() {
+    return VERSION
+  }
+
+  // methods ----
+
   constructor(element, type, self) {
     if ((typeof element === "object" && element.nodeType !== 1) &&
         (typeof element !== "string")) {
@@ -14,7 +23,7 @@ class Input {
       element = document.querySelector(element)
 
       if (!element) {
-        throw new InputError("Element Not Found", "could not find element for give `element` selector")
+        throw new InputError("Element Not Found", "could not find element for given `element` selector")
       }
     }
 
@@ -25,14 +34,6 @@ class Input {
 
     Store.setData(element, type, this)
   }
-
-  // getters ----
-
-  static get VERSION() {
-    return VERSION
-  }
-
-  // methods ----
 
   content(html) {
     this._element.innerHTML = html
@@ -93,6 +94,7 @@ class Input {
     }
 
     input._callback = () => {}
+    Store.removeData(element, type)
   }
 
   static receiveMessage(element, message, type) {
