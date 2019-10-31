@@ -12,3 +12,5 @@
 ^pkgdown$
 ^index.Rmd$
 ^CRAN-RELEASE$
+^renv$
+^renv\.lock$
