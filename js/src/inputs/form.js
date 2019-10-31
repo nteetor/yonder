@@ -41,14 +41,17 @@ class FormInput extends Input {
     super(element, TYPE, FormInput)
 
     this._map = {}
+    this._counter = 0
   }
 
   value(x) {
     if (typeof x === "undefined") {
-      return this._value
+      return { value: this._value, counter: this._counter }
     }
 
     this._value = x
+    this._counter++
+
     this._callback()
 
     return this
@@ -91,7 +94,7 @@ class FormInput extends Input {
   }
 
   static getValue(element) {
-    super.getValue(element, TYPE)
+    return super.getValue(element, TYPE)
   }
 
   static subscribe(element, callback) {
@@ -146,7 +149,10 @@ $(document).on(Event.BOUND, Selector.INPUT_CHILD, (event) => {
     return
   }
 
-  formInput.put(child.id, null)
+  let type = event.binding.getType()
+  let id = type ? `${ child.id }:${ type }` : child.id
+
+  formInput.put(id, null)
 })
 
 $(document).on(Event.UNBOUND, Selector.INPUT_CHILD, (event) => {
@@ -159,7 +165,10 @@ $(document).on(Event.UNBOUND, Selector.INPUT_CHILD, (event) => {
     return
   }
 
-  formInput.delete(child.id)
+  let type = event.binding.getType()
+  let id = type ? `${ child.id }:${ type }` : child.id
+
+  formInput.delete(id)
 })
 
 $(document).on(Event.CHANGE, Selector.INPUT_CHILD, (event) => {
@@ -176,7 +185,11 @@ $(document).on(Event.CHANGE, Selector.INPUT_CHILD, (event) => {
     return
   }
 
-  formInput.put(child.id, event.value)
+  let type = event.binding.getType()
+  let id = type ? `${ child.id }:${ type }` : child.id
+
+  formInput.put(id, event.value)
+  event.preventDefault()
 })
 
 if (Shiny) {
