@@ -1267,6 +1267,7 @@
 
       _this = _Input.call(this, element, TYPE$5, FormInput) || this;
       _this._map = {};
+      _this._counter = 0;
       return _this;
     }
 
@@ -1274,10 +1275,14 @@
 
     _proto.value = function value(x) {
       if (typeof x === "undefined") {
-        return this._value;
+        return {
+          value: this._value,
+          counter: this._counter
+        };
       }
 
       this._value = x;
+      this._counter++;
 
       this._callback();
 
@@ -1321,7 +1326,7 @@
     };
 
     FormInput.getValue = function getValue(element) {
-      _Input.getValue.call(this, element, TYPE$5);
+      return _Input.getValue.call(this, element, TYPE$5);
     };
 
     FormInput.subscribe = function subscribe(element, callback) {
@@ -1379,7 +1384,9 @@
       return;
     }
 
-    formInput.put(child.id, null);
+    var type = event.binding.getType();
+    var id = type ? child.id + ":" + type : child.id;
+    formInput.put(id, null);
   });
   $(document).on(Event$5.UNBOUND, Selector$5.INPUT_CHILD, function (event) {
     var child = event.target;
@@ -1390,7 +1397,9 @@
       return;
     }
 
-    formInput.delete(child.id);
+    var type = event.binding.getType();
+    var id = type ? child.id + ":" + type : child.id;
+    formInput.delete(id);
   });
   $(document).on(Event$5.CHANGE, Selector$5.INPUT_CHILD, function (event) {
     if (event.priority && event.priority === "event") {
@@ -1405,7 +1414,10 @@
       return;
     }
 
-    formInput.put(child.id, event.value);
+    var type = event.binding.getType();
+    var id = type ? child.id + ":" + type : child.id;
+    formInput.put(id, event.value);
+    event.preventDefault();
   });
 
   if (Shiny) {
