@@ -16,6 +16,9 @@
 #' @param selected One or more of `values` specifying which values are selected
 #'   by default.
 #'
+#' @param placeholder A character string specifying placeholder text of the
+#'   chip input, defaults to `NULL`.
+#'
 #' @param max A number specifying the maximum number of items a user may select,
 #'   defaults to `Inf`.
 #'
@@ -84,14 +87,15 @@
 #' )
 #'
 chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
-                      ..., max = Inf, inline = TRUE) {
+                      ..., placeholder = NULL, max = Inf, inline = TRUE) {
   assert_id()
   assert_choices()
 
   dep_attach({
     toggle <- tags$input(
       class = "form-control custom-select",
-      `data-toggle` = "dropdown"
+      `data-toggle` = "dropdown",
+      placeholder = placeholder
     )
 
     chips <- map_chipchips(choices, values, selected)

@@ -6,7 +6,7 @@
 \title{Chip inputs}
 \usage{
 chipInput(id, choices = NULL, values = choices, selected = NULL, ...,
-  max = Inf, inline = TRUE)
+  placeholder = NULL, max = Inf, inline = TRUE)
 
 updateChipInput(id, choices = NULL, values = choices,
   selected = NULL, max = NULL, enable = NULL, disable = NULL,
@@ -26,6 +26,9 @@ by default.}
 \item{...}{Additional named arguments passed as HTML attributes to the
 parent element or tag elements passed as child elements to the parent
 element.}
+
+\item{placeholder}{A character string specifying placeholder text of the
+chip input, defaults to \code{NULL}.}
 
 \item{max}{A number specifying the maximum number of items a user may select,
 defaults to \code{Inf}.}
