@@ -118,7 +118,7 @@ formInput <- function(id, ..., inline = FALSE) {
 
 shiny::registerInputHandler("yonder.form", function(x, session, name) {
   x$value
-})
+}, force = TRUE)
 
 #' @rdname formInput
 #' @export
