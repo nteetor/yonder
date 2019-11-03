@@ -8,11 +8,11 @@ import {
   getPluginAttributes
 } from "../utils/index.js"
 
-const NAME = "button"
+const NAME = "link"
 const TYPE = `yonder.${ NAME }`
 
 const ClassName = {
-  INPUT: "yonder-button"
+  INPUT: "yonder-link"
 }
 
 const Selector = {
@@ -24,7 +24,7 @@ const Event = {
   CLICK: `click.${ TYPE }`
 }
 
-class ButtonInput extends Input {
+class LinkInput extends Input {
 
   // fields ----
 
@@ -38,7 +38,6 @@ class ButtonInput extends Input {
     super(element, TYPE)
 
     this._value = 0
-    this._isLink = element.tagName === "A"
   }
 
   value(x) {
@@ -57,25 +56,17 @@ class ButtonInput extends Input {
   }
 
   disable(values) {
-    if (this._isLink) {
-      this._element.classList.add("disabled")
-    } else {
-      this._element.setAttribute("disabled", "")
-    }
+    this._element.setAttribute("disabled", "")
   }
 
   enable() {
-    if (this._isLink) {
-      this._element.classList.remove("disabled")
-    } else {
-      this._element.removeAttribute("disabled")
-    }
+    this._element.removeAttribute("disabled")
   }
 
   // static ----
 
   static initialize(element) {
-    super.initialize(element, TYPE, ButtonInput)
+    super.initialize(element, TYPE, LinkInput)
   }
 
   static find(scope) {
@@ -105,40 +96,40 @@ class ButtonInput extends Input {
   }
 
   static ShinyInterface() {
-    return { ...Input, ...ButtonInput }
+    return { ...Input, ...LinkInput }
   }
 }
 
 // events ----
 
 $(document).on(Event.CLICK, Selector.INPUT, (event) => {
-  let button = findClosest(event.target, Selector.INPUT)
-  let input = Store.getData(button, TYPE)
+  let link = findClosest(event.target, Selector.INPUT)
+  let linkInput = Store.getData(link, TYPE)
 
-  if (!input) {
+  if (!linkInput) {
     return
   }
 
-  input.value(input.value() + 1)
+  linkInput.value(linkInput.value() + 1)
 })
 
 $(document).on(Event.CLICK, `${ Selector.INPUT }${ Selector.PLUGIN }`, (event) => {
-  let button = findClosest(event.target, Selector.INPUT)
-  let [plugin, action, target] = getPluginAttributes(button)
+  let link = findClosest(event.target, Selector.INPUT)
+  let [plugin, action, target] = getPluginAttributes(link)
 
   if (!(plugin && action && target)) {
     return
   }
 
   if (plugin === "tab") {
-    $(button).one("shown.bs.tab", (e) => button.classList.remove("active"))
+    $(link).one("shown.bs.tab", (e) => link.classList.remove("active"))
   }
 
-  $(button)[plugin](action)
+  $(link)[plugin](action)
 })
 
 if (Shiny) {
-  Shiny.inputBindings.register(ButtonInput.ShinyInterface(), TYPE)
+  Shiny.inputBindings.register(LinkInput.ShinyInterface(), TYPE)
 }
 
-export default ButtonInput
+export default LinkInput
