@@ -6,7 +6,7 @@ import CheckboxInput from "./inputs/checkbox.js"
 import FileInput from "./inputs/file.js"
 import FormInput from "./inputs/form.js"
 import LinkInput from "./inputs/link.js"
-// import "./input-binding-list-group.js"
+import ListGroupInput from "./inputs/list-group.js"
 import MenuInput from "./inputs/menu.js"
 import NavInput from "./inputs/nav.js"
 import RadioInput from "./inputs/radio.js"
@@ -29,6 +29,9 @@ export default {
   CheckbarInput,
   CheckboxInput,
   FileInput,
+  FormInput,
+  LinkInput,
+  ListGroupInput,
   MenuInput,
   NavInput,
   RadioInput
