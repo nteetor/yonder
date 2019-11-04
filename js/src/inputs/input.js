@@ -13,7 +13,7 @@ class Input {
 
   // methods ----
 
-  constructor(element, type, self) {
+  constructor(element, type) {
     if ((typeof element === "object" && element.nodeType !== 1) &&
         (typeof element !== "string")) {
       throw new InputError("Invalid Argument", "`element` must be a node or string")

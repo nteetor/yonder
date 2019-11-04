@@ -65,6 +65,13 @@ let activeElement = function(element) {
   return element.classList && element.classList.contains("active")
 }
 
+let disabledElement = function(element) {
+  return element.classList &&
+    element.classList.contains("disabled") &&
+    element.hasAttribute("disabled")
+}
+
+
 let activateElements = function(elements, callback) {
   if (!elements) {
     return
@@ -72,7 +79,7 @@ let activateElements = function(elements, callback) {
 
   if (elements.length) {
     asArray(elements).forEach(el => activateElements(el, callback))
-  } else if (elements.classList) {
+  } else if (elements.classList && !disabledElement(elements)) {
     elements.classList.add("active")
 
     if (typeof callback === "function") {
@@ -88,7 +95,7 @@ let deactivateElements = function(elements, callback) {
 
   if (elements.length) {
     asArray(elements).forEach(el => deactivateElements(el, callback))
-  } else if (elements.classList) {
+  } else if (elements.classList && !disabledElement(elements)) {
     elements.classList.remove("active")
 
     if (typeof callback === "function") {
@@ -104,7 +111,7 @@ let toggleElements = function(elements, callback) {
 
   if (elements.length) {
     asArray(elements).forEach(e => toggleElements(e, callback))
-  } else if (elements.classList) {
+  } else if (elements.classList && !disabledElement(elements)) {
     let active = elements.classList.toggle("active")
 
     if (typeof callback === "function") {
@@ -113,8 +120,9 @@ let toggleElements = function(elements, callback) {
   }
 }
 
-let filterElements = function(elements, values, getValue = x => x.value) {
-  let targetValues = asArray(values).map(x => isNode(x) ? x : x.toString())
+let filterElements = function(elements, targets, getValue = x => x.value) {
+  targets = asArray(targets)
+  let targetValues = targets.map(x => isNode(x) ? getValue(x) : x.toString())
 
   elements = asArray(elements)
   let elementValues = elements.map(getValue)
@@ -124,14 +132,12 @@ let filterElements = function(elements, values, getValue = x => x.value) {
 
   for (var i = 0; i < targetValues.length; i++) {
     let v = targetValues[i]
-    let found = elements[isNode(v) ? elements.indexOf(v) : elementValues.indexOf(v)]
+    let el = elements[elementValues.indexOf(v)]
 
-    if (found === undefined) {
-      continue
+    if (el) {
+      foundElements.push(el)
+      foundValues.push(v)
     }
-
-    foundElements.push(found)
-    foundValues.push(elementValues[i])
   }
 
   return [foundElements, foundValues]
@@ -154,6 +160,7 @@ export {
   getPluginAttributes,
   isNode,
   activeElement,
+  disabledElement,
   activateElements,
   deactivateElements,
   toggleElements,
