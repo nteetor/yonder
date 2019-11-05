@@ -7,7 +7,9 @@ import {
   findClosest,
   filterElements,
   deactivateElements,
-  activateElements
+  activateElements,
+  getPluginAttributes,
+  all
 } from "../utils/index.js"
 
 const NAME = "listgroup"
@@ -21,7 +23,8 @@ const ClassName = {
 const Selector = {
   INPUT: `.${ ClassName.INPUT }`,
   CHILD: `.${ ClassName.CHILD }`,
-  INPUT_CHILD: `.${ ClassName.INPUT } .${ ClassName.CHILD }`
+  INPUT_CHILD: `.${ ClassName.INPUT } .${ ClassName.CHILD }`,
+  PLUGIN: "[data-plugin]"
 }
 
 const Event = {
@@ -95,7 +98,20 @@ class ListGroupInput extends Input {
 
 // events ----
 
+$(document).on(Event.CLICK, `${ Selector.INPUT_CHILD }${ Selector.PLUGIN }`, (event) => {
+  let listItem = findClosest(event.target, Selector.CHILD)
+
+  let [plugin, action, target] = getPluginAttributes(listItem)
+
+  if (!all(plugin, action, target)) {
+    return
+  }
+
+  $(listItem)[plugin](action)
+})
+
 $(document).on(Event.CLICK, Selector.INPUT_CHILD, (event) => {
+
   let listGroup = findClosest(event.target, Selector.INPUT)
   let listGroupInput = Store.getData(listGroup, TYPE)
 
