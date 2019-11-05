@@ -124,8 +124,8 @@ $(document).on(Event.CLICK, Selector.INPUT_CHILD, (event) => {
   listGroupInput.select(listItem)
 })
 
+export default ListGroupInput
+
 if (Shiny) {
   Shiny.inputBindings.register(ListGroupInput.ShinyInterface(), TYPE)
 }
-
-export default ListGroupInput

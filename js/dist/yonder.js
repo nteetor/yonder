@@ -2150,6 +2150,20 @@
   }(Input); // events ----
 
 
+  $(document).on(Event$a.CHANGE, "" + Selector$a.INPUT_CHILD + Selector$a.PLUGIN, function (event) {
+    var radio = findClosest(event.target, Selector$a.CHILD);
+
+    var _getPluginAttributes = getPluginAttributes(radio),
+        plugin = _getPluginAttributes[0],
+        action = _getPluginAttributes[1],
+        target = _getPluginAttributes[2];
+
+    if (!all(plugin, action, target)) {
+      return;
+    }
+
+    $(radio)[plugin](action);
+  });
   $(document).on(Event$a.CHANGE, Selector$a.INPUT_CHILD, function (event) {
     var radio = findClosest(event.target, Selector$a.INPUT);
     var radioInput = Store.getData(radio, TYPE$a);
@@ -2160,30 +2174,123 @@
 
     var input = findClosest(event.target, Selector$a.CHILD);
     radioInput.value(input.value);
-  });
-  $(document).on(Event$a.CHANGE, "" + Selector$a.INPUT_CHILD + Selector$a.PLUGIN, function (event) {
-    var input = findClosest(event.target, Selector$a.CHILD);
-
-    var _getPluginAttributes = getPluginAttributes(input),
-        plugin = _getPluginAttributes[0],
-        action = _getPluginAttributes[1],
-        target = _getPluginAttributes[2];
-
-    if (!all(plugin, action, target)) {
-      return;
-    }
-
-    $(input)[plugin](action);
   }); // shiny ----
-  // If shiny is present register the radio input shiny interface with the input
-  // bindings.
 
   if (Shiny) {
     Shiny.inputBindings.register(RadioInput.ShinyInterface(), TYPE$a);
   }
 
-  // import "./input-binding-range.js";
-  // import "./input-binding-select.js";
+  var TYPE$b = "yonder." + TYPE$b;
+  var ClassName$b = {
+    INPUT: "yonder-radiobar",
+    CHILD: "btn"
+  };
+  var Selector$b = {
+    INPUT: "." + ClassName$b.INPUT,
+    CHILD: "." + ClassName$b.CHILD,
+    INPUT_CHILD: "." + ClassName$b.INPUT + " ." + ClassName$b.CHILD
+  };
+  var Event$b = {
+    CHANGE: "change." + TYPE$b
+  };
+
+  var RadiobarInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(RadiobarInput, _Input);
+
+    // methods ----
+    function RadiobarInput(element) {
+      return _Input.call(this, element, TYPE$b) || this;
+    }
+
+    var _proto = RadiobarInput.prototype;
+
+    _proto.value = function value(x) {
+      if (typeof x === "undefined") {
+        return this._value;
+      }
+
+      this._value = x;
+
+      this._callback();
+
+      return this;
+    };
+
+    _proto.select = function select(x) {
+      var children = this._element.querySelectorAll(Selector$b.CHILD);
+
+      var _filterElements = filterElements(children, x, function (child) {
+        return child.children[0].value;
+      }),
+          targets = _filterElements[0],
+          values = _filterElements[1];
+
+      deactivateElements(children, function (target) {
+        target.children[0].checked = false;
+      });
+
+      if (targets.length) {
+        activateElements(targets[0], function (target) {
+          target.children[0].checked = true;
+        });
+        this.value(values[0]);
+      }
+    } // static
+    ;
+
+    RadiobarInput.find = function find(scope) {
+      return _Input.find.call(this, scope, Selector$b.INPUT);
+    };
+
+    RadiobarInput.initialize = function initialize(element) {
+      _Input.initialize.call(this, element, TYPE$b, RadiobarInput);
+    };
+
+    RadiobarInput.getValue = function getValue(element) {
+      return _Input.getValue.call(this, element, TYPE$b);
+    };
+
+    RadiobarInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE$b);
+    };
+
+    RadiobarInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE$b);
+    };
+
+    RadiobarInput.receiveMessage = function receiveMessage(element, message) {
+      _Input.receiveMessage.call(this, element, message, TYPE$b);
+    };
+
+    RadiobarInput.ShinyInterface = function ShinyInterface() {
+      return _objectSpread2({}, Input, {}, RadiobarInput);
+    };
+
+    return RadiobarInput;
+  }(Input); // events ----
+
+
+  $(document).on(Event$b.CHANGE, Selector$b.INPUT_CHILD, function (event) {
+    var radiobar = findClosest(event.target, Selector$b.INPUT);
+    var radiobarInput = Store.getData(radiobar, TYPE$b);
+
+    if (!radiobarInput) {
+      return;
+    }
+
+    var button = findClosest(event.target, Selector$b.CHILD);
+    radiobarInput.select(button);
+  });
+
+  if (Shiny) {
+    Shiny.inputBindings.register(RadiobarInput.ShinyInterface(), TYPE$b);
+  }
+
+  /*
+   * {yonder}
+   */
   // import "./input-binding-textual.js";
   // import "./collapse.js";
   // import "./download.js";
@@ -2204,7 +2311,8 @@
     ListGroupInput: ListGroupInput,
     MenuInput: MenuInput,
     NavInput: NavInput,
-    RadioInput: RadioInput
+    RadioInput: RadioInput,
+    RadiobarInput: RadiobarInput
   };
 
   return index;

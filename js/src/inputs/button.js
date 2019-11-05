@@ -137,8 +137,8 @@ $(document).on(Event.CLICK, `${ Selector.INPUT }${ Selector.PLUGIN }`, (event) =
   $(button)[plugin](action)
 })
 
+export default ButtonInput
+
 if (Shiny) {
   Shiny.inputBindings.register(ButtonInput.ShinyInterface(), TYPE)
 }
-
-export default ButtonInput
