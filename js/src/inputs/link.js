@@ -128,8 +128,8 @@ $(document).on(Event.CLICK, `${ Selector.INPUT }${ Selector.PLUGIN }`, (event) =
   $(link)[plugin](action)
 })
 
+export default LinkInput
+
 if (Shiny) {
   Shiny.inputBindings.register(LinkInput.ShinyInterface(), TYPE)
 }
-
-export default LinkInput

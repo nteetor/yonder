@@ -1,3 +1,7 @@
+/*
+ * {yonder}
+ */
+
 import ButtonGroupInput from "./inputs/button-group.js"
 import ButtonInput from "./inputs/button.js"
 import CheckbarInput from "./inputs/checkbar.js"
@@ -10,8 +14,7 @@ import ListGroupInput from "./inputs/list-group.js"
 import MenuInput from "./inputs/menu.js"
 import NavInput from "./inputs/nav.js"
 import RadioInput from "./inputs/radio.js"
-// import "./input-binding-radiobar.js";
-// import "./input-binding-range.js";
+import RadiobarInput from "./inputs/radiobar.js"
 // import "./input-binding-select.js";
 // import "./input-binding-textual.js";
 
@@ -34,5 +37,6 @@ export default {
   ListGroupInput,
   MenuInput,
   NavInput,
-  RadioInput
+  RadioInput,
+  RadiobarInput
 }

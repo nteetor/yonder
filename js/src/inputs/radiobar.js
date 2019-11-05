@@ -5,33 +5,36 @@ import Input from "./input.js"
 import Store from "../data/store.js"
 import {
   findClosest,
-  filterElements,
-  deactivateElements,
+  asArray,
+  isNode,
+  activeElement,
   activateElements,
+  deactivateElements,
+  toggleElements,
+  filterElements,
   getPluginAttributes,
   all
 } from "../utils/index.js"
 
-const NAME = "radio"
-const TYPE = `yonder.${ NAME }`
+const NAME = "radiobar"
+const TYPE = `yonder.${ TYPE }`
 
 const ClassName = {
-  INPUT: "yonder-radio",
-  CHILD: "custom-radio"
+  INPUT: "yonder-radiobar",
+  CHILD: "btn"
 }
 
 const Selector = {
   INPUT: `.${ ClassName.INPUT }`,
   CHILD: `.${ ClassName.CHILD }`,
-  INPUT_CHILD: `.${ ClassName.INPUT } .${ ClassName.CHILD }`,
-  PLUGIN: "[data-plugin]"
+  INPUT_CHILD: `.${ ClassName.INPUT } .${ ClassName.CHILD }`
 }
 
 const Event = {
   CHANGE: `change.${ TYPE }`
 }
 
-class RadioInput extends Input {
+class RadiobarInput extends Input {
 
   // methods ----
 
@@ -53,28 +56,29 @@ class RadioInput extends Input {
   select(x) {
     let children = this._element.querySelectorAll(Selector.CHILD)
 
-    let [targets, values] = filterElements(children, x)
+    let [targets, values]  = filterElements(children, x, child => child.children[0].value)
 
-    deactivateElements(children, child => {
-      child.children[0].checked = false
+    deactivateElements(children, target => {
+      target.children[0].checked = false
     })
 
     if (targets.length) {
       activateElements(targets[0], target => {
         target.children[0].checked = true
       })
+
       this.value(values[0])
     }
   }
 
-  // static ----
-
-  static initialize(element) {
-    super.initialize(element, TYPE, RadioInput)
-  }
+  // static
 
   static find(scope) {
     return super.find(scope, Selector.INPUT)
+  }
+
+  static initialize(element) {
+    super.initialize(element, TYPE, RadiobarInput)
   }
 
   static getValue(element) {
@@ -94,41 +98,27 @@ class RadioInput extends Input {
   }
 
   static ShinyInterface() {
-    return { ...Input, ...RadioInput }
+    return { ...Input, ...RadiobarInput }
   }
 }
 
 // events ----
 
-$(document).on(Event.CHANGE, `${ Selector.INPUT_CHILD }${ Selector.PLUGIN }`, (event) => {
-  let radio = findClosest(event.target, Selector.CHILD)
-
-  let [plugin, action, target] = getPluginAttributes(radio)
-
-  if (!all(plugin, action, target)) {
-    return
-  }
-
-  $(radio)[plugin](action)
-})
-
 $(document).on(Event.CHANGE, Selector.INPUT_CHILD, (event) => {
-  let radio = findClosest(event.target, Selector.INPUT)
-  let radioInput = Store.getData(radio, TYPE)
+  let radiobar = findClosest(event.target, Selector.INPUT)
+  let radiobarInput = Store.getData(radiobar, TYPE)
 
-  if (!radioInput) {
+  if (!radiobarInput) {
     return
   }
 
-  let input = findClosest(event.target, Selector.CHILD)
+  let button = findClosest(event.target, Selector.CHILD)
 
-  radioInput.value(input.value)
+  radiobarInput.select(button)
 })
 
-// shiny ----
+export default RadiobarInput
 
 if (Shiny) {
-  Shiny.inputBindings.register(RadioInput.ShinyInterface(), TYPE)
+  Shiny.inputBindings.register(RadiobarInput.ShinyInterface(), TYPE)
 }
-
-export default RadioInput
