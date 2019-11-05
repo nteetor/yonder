@@ -2288,10 +2288,114 @@
     Shiny.inputBindings.register(RadiobarInput.ShinyInterface(), TYPE$b);
   }
 
+  var NAME$c = "select";
+  var TYPE$c = "yonder." + NAME$c;
+  var ClassName$c = {
+    INPUT: "yonder-select",
+    CHILD: "dropdown-item"
+  };
+  var Selector$c = {
+    INPUT: "." + ClassName$c.INPUT,
+    CHILD: "." + ClassName$c.CHILD,
+    INPUT_CHILD: "." + ClassName$c.INPUT + " ." + ClassName$c.CHILD
+  };
+  var Event$c = {
+    CLICK: "click." + TYPE$c
+  };
+
+  var SelectInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(SelectInput, _Input);
+
+    // methods ----
+    function SelectInput(element) {
+      return _Input.call(this, element, TYPE$c) || this;
+    }
+
+    var _proto = SelectInput.prototype;
+
+    _proto.value = function value(x) {
+      if (typeof x === "undefined") {
+        return this._value;
+      }
+
+      this._value = x;
+
+      this._callback();
+
+      return this;
+    };
+
+    _proto.select = function select(x) {
+      var children = this._element.querySelectorAll(Selector$c.CHILD);
+
+      var _filterElements = filterElements(children, x),
+          targets = _filterElements[0],
+          values = _filterElements[1];
+
+      deactivateElements(children);
+
+      if (targets.length) {
+        activateElements(targets[0]);
+        this.value(values[0]);
+      }
+
+      return targets[0];
+    } // static ----
+    ;
+
+    SelectInput.find = function find(scope) {
+      return _Input.find.call(this, scope, Selector$c.INPUT);
+    };
+
+    SelectInput.initialize = function initialize(element) {
+      _Input.initialize.call(this, element, TYPE$c, SelectInput);
+    };
+
+    SelectInput.getValue = function getValue(element) {
+      return _Input.getValue.call(this, element, TYPE$c);
+    };
+
+    SelectInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE$c);
+    };
+
+    SelectInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE$c);
+    };
+
+    SelectInput.receiveMessage = function receiveMessage(element, message) {
+      _Input.receiveMessage.call(this, element, message, TYPE$c);
+    };
+
+    SelectInput.ShinyInterface = function ShinyInterface() {
+      return _objectSpread2({}, Input, {}, SelectInput);
+    };
+
+    return SelectInput;
+  }(Input); // events ----
+
+
+  $(document).on(Event$c.CLICK, Selector$c.INPUT_CHILD, function (event) {
+    var select = findClosest(event.target, Selector$c.INPUT);
+    var selectInput = Store.getData(select, TYPE$c);
+
+    if (!selectInput) {
+      return;
+    }
+
+    var item = findClosest(event.target, Selector$c.CHILD);
+    selectInput.select(item);
+  });
+
+  if (Shiny) {
+    Shiny.inputBindings.register(SelectInput.ShinyInterface(), TYPE$c);
+  }
+
   /*
    * {yonder}
    */
-  // import "./input-binding-textual.js";
   // import "./collapse.js";
   // import "./download.js";
   // import "./content.js";
