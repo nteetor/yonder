@@ -1571,7 +1571,8 @@
   var Selector$7 = {
     INPUT: "." + ClassName$7.INPUT,
     CHILD: "." + ClassName$7.CHILD,
-    INPUT_CHILD: "." + ClassName$7.INPUT + " ." + ClassName$7.CHILD
+    INPUT_CHILD: "." + ClassName$7.INPUT + " ." + ClassName$7.CHILD,
+    PLUGIN: "[data-plugin]"
   };
   var Event$7 = {
     CLICK: "click." + TYPE$7
@@ -1651,6 +1652,20 @@
   }(Input); // events ----
 
 
+  $(document).on(Event$7.CLICK, "" + Selector$7.INPUT_CHILD + Selector$7.PLUGIN, function (event) {
+    var listItem = findClosest(event.target, Selector$7.CHILD);
+
+    var _getPluginAttributes = getPluginAttributes(listItem),
+        plugin = _getPluginAttributes[0],
+        action = _getPluginAttributes[1],
+        target = _getPluginAttributes[2];
+
+    if (!all(plugin, action, target)) {
+      return;
+    }
+
+    $(listItem)[plugin](action);
+  });
   $(document).on(Event$7.CLICK, Selector$7.INPUT_CHILD, function (event) {
     var listGroup = findClosest(event.target, Selector$7.INPUT);
     var listGroupInput = Store.getData(listGroup, TYPE$7);
