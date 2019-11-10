@@ -9,7 +9,7 @@ import CheckboxInput from "./inputs/checkbox.js"
 // import "./input-binding-chip.js"
 import FileInput from "./inputs/file.js"
 import FormInput from "./inputs/form.js"
-// import GroupSelectInput from "./inputs/group-select.js"
+import GroupSelectInput from "./inputs/group-select.js"
 // import GroupTextInput from "./inputs/group-text.js"
 import LinkInput from "./inputs/link.js"
 import ListGroupInput from "./inputs/list-group.js"
@@ -35,10 +35,12 @@ export default {
   CheckboxInput,
   FileInput,
   FormInput,
+  GroupSelectInput,
   LinkInput,
   ListGroupInput,
   MenuInput,
   NavInput,
   RadioInput,
-  RadiobarInput
+  RadiobarInput,
+  SelectInput
 }

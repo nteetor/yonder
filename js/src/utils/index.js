@@ -39,10 +39,14 @@ let matchesSelector = function(element, selector) {
   return matches.call(element, selector)
 }
 
+let walk = function(x, f) {
+  Array.prototype.forEach.call(x, f)
+}
+
 let asArray = function(x) {
   if (!x) {
     return []
-  } else if (typeof x === "object" && x.length) {
+  } else if (typeof x === "object" && x.length !== undefined) {
     return Array.prototype.slice.call(x)
   } else {
     return [x]
@@ -70,7 +74,6 @@ let disabledElement = function(element) {
     element.classList.contains("disabled") &&
     element.hasAttribute("disabled")
 }
-
 
 let activateElements = function(elements, callback) {
   if (!elements) {
@@ -144,18 +147,13 @@ let filterElements = function(elements, targets, getValue = x => x.value) {
 }
 
 let all = function(...objs) {
-  for (var i = 0; i++; i < objs.length) {
-    if (!objs[i]) {
-      return false
-    }
-  }
-
-  return true
+  return objs.every(x => x)
 }
 
 export {
   findClosest,
   matchesSelector,
+  walk,
   asArray,
   getPluginAttributes,
   isNode,
