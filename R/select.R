@@ -151,7 +151,7 @@ map_selectitems <- function(choices, values, selected) {
 
 #' @rdname selectInput
 #' @export
-groupSelectInput <- function(id, choices, values = choices,
+groupSelectInput <- function(id, choices = NULL, values = choices,
                              selected = values[[1]], ..., left = NULL,
                              right = NULL) {
   assert_id()
@@ -159,12 +159,6 @@ groupSelectInput <- function(id, choices, values = choices,
   assert_selected(length = 1)
   assert_left()
   assert_right()
-
-  shiny::registerInputHandler(
-    type = "yonder.group.select",
-    fun = function(x, session, name) paste0(x, collapse = ""),
-    force = TRUE
-  )
 
   dep_attach({
     options <- map_options(choices, values, selected)
@@ -180,8 +174,8 @@ groupSelectInput <- function(id, choices, values = choices,
         options
       ),
       right,
-      tags$div(class = "valid-feedback"),
-      tags$div(class = "invalid-feedback"),
+      ## tags$div(class = "valid-feedback"),
+      ## tags$div(class = "invalid-feedback"),
       ...
     )
   })
@@ -236,33 +230,33 @@ map_options <- function(choices, values, selected) {
 }
 
 addon_left <- function(left) {
-  if (!is.null(left)) {
-    tags$div(
-      class = "input-group-prepend",
-      if (is.character(left)) {
-        lapply(left, tags$span, class = "input-group-text")
-      } else if (tag_class_re(left, "dropdown")) {
-        left$children
-      } else {
-        # list of buttons
-        left
-      }
-    )
+  if (is.null(left)) {
+    return(NULL)
   }
+
+  tags$div(
+    class = "input-group-prepend",
+    addon_content(left)
+  )
 }
 
 addon_right <- function(right) {
-  if (!is.null(right)) {
-    tags$div(
-      class = "input-group-append",
-      if (is.character(right)) {
-        lapply(right, tags$span, class = "input-group-text")
-      } else if (tag_class_re(right, "dropdown")) {
-        right$children
-      } else {
-        # list of buttons
-        right
-      }
-    )
+  if (is.null(right)) {
+    return(NULL)
+  }
+
+  tags$div(
+    class = "input-group-append",
+    addon_content(right)
+  )
+}
+
+addon_content <- function(x) {
+  if (is.character(x)) {
+    lapply(x, tags$span, class = "input-group-text")
+  } else if (tag_class_re(x, "dropdown")) {
+    x$children
+  } else {
+    x
   }
 }
