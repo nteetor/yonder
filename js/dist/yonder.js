@@ -2506,15 +2506,29 @@
   var TYPE$d = "yonder." + NAME$d;
   var ClassName$d = {
     INPUT: "yonder-select",
-    CHILD: "dropdown-item"
+    CHILD: "dropdown-item",
+    TOGGLE: "custom-select",
+    MENU: "dropdown-menu",
+    ACTIVE: "active",
+    MISMATCHED: "mismatched"
   };
   var Selector$d = {
     INPUT: "." + ClassName$d.INPUT,
     CHILD: "." + ClassName$d.CHILD,
-    INPUT_CHILD: "." + ClassName$d.INPUT + " ." + ClassName$d.CHILD
+    MISMATCHED: "" + ClassName$d.MISMATCHED,
+    TOGGLE: "." + ClassName$d.TOGGLE,
+    INPUT_INACTIVE_CHILD: "." + ClassName$d.INPUT + " ." + ClassName$d.CHILD + ":not(." + ClassName$d.ACTIVE + ")",
+    INPUT_TOGGLE: "." + ClassName$d.INPUT + " ." + ClassName$d.TOGGLE,
+    CHILD_MISMATCHED: "." + ClassName$d.CHILD + "." + ClassName$d.MISMATCHED,
+    MENU: "." + ClassName$d.MENU,
+    ACTIVE: "." + ClassName$d.ACTIVE
   };
   var Event$d = {
-    CLICK: "click." + TYPE$d
+    CLICK: "click." + TYPE$d,
+    CHANGE: "change." + TYPE$d,
+    INPUT: "input." + TYPE$d,
+    MENU_CLOSE: "hide.bs.dropdown." + TYPE$d,
+    MENU_OPEN: "show.bs.dropdown." + TYPE$d
   };
 
   var SelectInput =
@@ -2524,7 +2538,11 @@
 
     // methods ----
     function SelectInput(element) {
-      return _Input.call(this, element, TYPE$d) || this;
+      var _this;
+
+      _this = _Input.call(this, element, TYPE$d) || this;
+      _this._$toggle = $(_this._element.querySelector(Selector$d.TOGGLE));
+      return _this;
     }
 
     var _proto = SelectInput.prototype;
@@ -2555,7 +2573,35 @@
         this.value(values[0]);
       }
 
+      this._$toggle[0].value = values[0];
+      this.filter(values[0]);
       return targets[0];
+    };
+
+    _proto.filter = function filter(x) {
+      if (!x) {
+        var _children = this._element.querySelectorAll(Selector$d.CHILD_MISMATCHED);
+
+        walk(_children, function (child) {
+          return child.classList.remove(ClassName$d.MISMATCHED);
+        });
+        return this;
+      }
+
+      var children = this._element.querySelectorAll(Selector$d.CHILD);
+
+      x = x.toLowerCase();
+      walk(children, function (child) {
+        if (child.innerText.toLowerCase().indexOf(x) === -1) {
+          child.classList.add(ClassName$d.MISMATCHED);
+        } else {
+          child.classList.remove(ClassName$d.MISMATCHED);
+        }
+      });
+
+      this._$toggle.dropdown("update");
+
+      return this;
     } // static ----
     ;
 
@@ -2591,7 +2637,7 @@
   }(Input); // events ----
 
 
-  $(document).on(Event$d.CLICK, Selector$d.INPUT_CHILD, function (event) {
+  $(document).on(Event$d.CLICK, Selector$d.INPUT_INACTIVE_CHILD, function (event) {
     var select = findClosest(event.target, Selector$d.INPUT);
     var selectInput = Store.getData(select, TYPE$d);
 
@@ -2601,6 +2647,37 @@
 
     var item = findClosest(event.target, Selector$d.CHILD);
     selectInput.select(item);
+  });
+  $(document).on(Event$d.INPUT, Selector$d.INPUT_TOGGLE, function (event) {
+    var select = findClosest(event.target, Selector$d.INPUT);
+    var selectInput = Store.getData(select, TYPE$d);
+
+    if (!selectInput) {
+      return;
+    }
+
+    var toggle = findClosest(event.target, Selector$d.TOGGLE);
+    selectInput.filter(toggle.value);
+  });
+  $(document).on(Event$d.MENU_OPEN, Selector$d.INPUT, function (event) {
+    var select = findClosest(event.target, Selector$d.INPUT);
+    var toggle = select.querySelector(Selector$d.TOGGLE);
+    toggle.focus();
+    toggle.select();
+    toggle.classList.add("disabled");
+  });
+  $(document).on(Event$d.MENU_CLOSE, Selector$d.INPUT, function (event) {
+    var select = findClosest(event.target, Selector$d.INPUT);
+    var toggle = select.querySelector(Selector$d.TOGGLE);
+    toggle.classList.remove("disabled");
+    var selectInput = Store.getData(select, TYPE$d);
+
+    if (!selectInput) {
+      return;
+    }
+
+    toggle.value = selectInput.value();
+    selectInput.filter(toggle.value);
   });
 
   if (Shiny) {

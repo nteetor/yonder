@@ -69,7 +69,7 @@
 #'   width(10)
 #'
 selectInput <- function(id, choices = NULL, values = choices,
-                        selected = values[[1]], ...) {
+                        selected = values[[1]], ..., placeholder = NULL) {
   assert_id()
   assert_choices()
   assert_selected(length = 1)
@@ -85,7 +85,8 @@ selectInput <- function(id, choices = NULL, values = choices,
         class = "form-control custom-select",
         `data-toggle` = "dropdown",
         `data-boundary` = "window",
-        placeholder = choices[values %in% selected][1]
+        value = choices[values %in% selected][1],
+        placeholder = placeholder
       ),
       tags$div(
         class = "dropdown-menu",
