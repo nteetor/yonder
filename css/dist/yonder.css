@@ -3677,7 +3677,7 @@ input[type="button"].btn-block {
   box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
 }
 
-.yonder-select .dropdown-menu .filtered {
+.yonder-select .dropdown-menu .mismatched {
   display: none;
 }
 
