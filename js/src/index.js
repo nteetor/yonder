@@ -17,6 +17,7 @@ import MenuInput from "./inputs/menu.js"
 import NavInput from "./inputs/nav.js"
 import RadioInput from "./inputs/radio.js"
 import RadiobarInput from "./inputs/radiobar.js"
+import RangeInput from "./inputs/range.js"
 import SelectInput from "./inputs/select.js"
 // import "./input-binding-textual.js";
 
@@ -42,5 +43,6 @@ export default {
   NavInput,
   RadioInput,
   RadiobarInput,
+  RangeInput,
   SelectInput
 }
