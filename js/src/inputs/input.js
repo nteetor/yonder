@@ -30,7 +30,8 @@ class Input {
     this._element = element
     this._type = type
     this._value = null
-    this._callback = () => {}
+    this._callback = () => function() {}
+    this._debounce = false
 
     Store.setData(element, type, this)
   }
@@ -83,7 +84,7 @@ class Input {
       return
     }
 
-    input._callback = callback
+    input._callback = () => callback(input._debounce)
   }
 
   static unsubscribe(element, type) {
