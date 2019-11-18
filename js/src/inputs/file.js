@@ -94,7 +94,6 @@ class FileInput extends Input {
           completed++
 
           if (completed === files.length) {
-            console.log(res.jobId)
             Shiny.shinyapp.makeRequest("uploadEnd", [res.jobId, this._element.id], () => null, () => null)
           }
         })
