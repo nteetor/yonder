@@ -1167,8 +1167,10 @@
             completed++;
 
             if (completed === files.length) {
-              req.addEventListener("loadend", function (event) {
-                Shiny.shinyapp.makeRequest("uploadEnd", [res.jobId, _this._element.id]);
+              Shiny.shinyapp.makeRequest("uploadEnd", [res.jobId, _this._element.id], function () {
+                return null;
+              }, function () {
+                return null;
               });
             }
           });
