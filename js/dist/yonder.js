@@ -1167,7 +1167,6 @@
             completed++;
 
             if (completed === files.length) {
-              console.log(res.jobId);
               Shiny.shinyapp.makeRequest("uploadEnd", [res.jobId, _this._element.id], function () {
                 return null;
               }, function () {
