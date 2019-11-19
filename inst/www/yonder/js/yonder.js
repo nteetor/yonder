@@ -1309,6 +1309,19 @@
         el.innerHTML = msg.content;
       }
 
+      if (msg.selected) {
+        el.querySelectorAll("input").forEach(function (input) {
+          if (msg.selected.indexOf(input.value) > -1) {
+            input.checked = true;
+            input.parentNode.classList.add("active");
+          } else {
+            input.checked = false;
+            input.parentNode.classList.remove("active");
+          }
+        });
+        $(el).trigger("radiobar.select.yonder");
+      }
+
       if (msg.enable) {
         var enable = msg.enable;
 

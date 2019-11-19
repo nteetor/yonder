@@ -206,11 +206,13 @@ updateRadiobarInput <- function(id, choices = NULL, values = choices,
   radios <- map_radiobuttons(choices, values, selected, id)
 
   content <- coerce_content(radios)
+  selected <- coerce_selected(selected)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 
   session$sendInputMessage(id, list(
     content = content,
+    selected = selected,
     enable = enable,
     disable = disable
   ))
