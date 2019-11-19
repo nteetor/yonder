@@ -3,6 +3,7 @@
 ^.*\.Rproj$
 ^\.Rproj\.user$
 ^js$
+^css$
 ^docs$
 ^bin$
 ^man-roxygen$
@@ -12,3 +13,4 @@
 ^pkgdown$
 ^index.Rmd$
 ^CRAN-RELEASE$
+^renv$
