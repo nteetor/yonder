@@ -16,7 +16,7 @@
 #'   choices, defaults to `choices`.
 #'
 #' @param selected One of `values` indicating the default value of the input,
-#'   defaults to `values[[1]]`.
+#'   defaults to `NULL`.
 #'
 #' @param left,right A character vector specifying static addons or
 #'   [buttonInput()] or [dropdown()] elements specifying dynamic addons. Addons
@@ -71,7 +71,7 @@
 #'   width(10)
 #'
 selectInput <- function(id, choices = NULL, values = choices,
-                        selected = values[[1]], ...) {
+                        selected = NULL, ..., placeholder = NULL) {
   assert_id()
   assert_choices()
   assert_selected(length = 1)
@@ -87,7 +87,8 @@ selectInput <- function(id, choices = NULL, values = choices,
         class = "form-control custom-select",
         `data-toggle` = "dropdown",
         `data-boundary` = "window",
-        placeholder = choices[values %in% selected][1]
+        placeholder = placeholder,
+        `data-original-placeholder` = placeholder
       ),
       tags$div(
         class = "dropdown-menu",
@@ -103,7 +104,7 @@ selectInput <- function(id, choices = NULL, values = choices,
 #' @rdname selectInput
 #' @export
 updateSelectInput <- function(id, choices = NULL, values = choices,
-                              selected = values[[1]], enable = NULL,
+                              selected = NULL, enable = NULL,
                               disable = NULL,
                               valid = NULL, invalid = NULL,
                               session = getDefaultReactiveDomain()) {
@@ -132,6 +133,10 @@ updateSelectInput <- function(id, choices = NULL, values = choices,
 }
 
 map_selectitems <- function(choices, values, selected) {
+  if (is.null(choices) && is.null(values)) {
+    return(NULL)
+  }
+
   selected <- values %in% selected
 
   Map(
@@ -221,6 +226,10 @@ updateGroupSelectInput <- function(id, choices = NULL, values = choices,
 }
 
 map_options <- function(choices, values, selected) {
+  if (is.null(choices) && is.null(values)) {
+    return(NULL)
+  }
+
   selected <- values %in% selected
 
   Map(

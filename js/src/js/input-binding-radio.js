@@ -90,8 +90,9 @@ $.extend(radioInputBinding, {
     }
 
     if (!msg.valid && !msg.invalid) {
-      el.querySelector(".valid-feedback").innerHTML = "";
-      el.querySelector(".invalid-feedback").innerHTML = "";
+      el.querySelectorAll(".valid-feedback").forEach(vf => vf.innerHTML = "");
+      el.querySelectorAll(".invalid-feedback").forEach(ivf => ivf.innerHTML = "");
+
       el.querySelectorAll(".custom-control-input").forEach(radio => {
         radio.classList.remove("is-valid");
         radio.classList.remove("is-invalid");

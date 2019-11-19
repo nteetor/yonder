@@ -1,24 +1,28 @@
 coerce_content <- function(x) {
-  if (length(x) > 0) {
-    if (is_tag(x)) {
-      HTML(as.character(x))
-    } else if (inherits(x, "AsIs")) {
-      HTML(
-        paste(
-          vapply(x, as.character, character(1)),
-          collapse = "<br>\n"
-        )
-      )
-    } else {
-      HTML(
-        paste(
-          vapply(x, as.character, character(1)),
-          collapse = "\n"
-        )
-      )
+  if (length(x) == 0) {
+    if (is_strictly_list(x)) {
+      return(list())
     }
+
+    return("")
+  }
+
+  if (is_tag(x)) {
+    HTML(as.character(x))
+  } else if (inherits(x, "AsIs")) {
+    HTML(
+      paste(
+        vapply(x, as.character, character(1)),
+        collapse = "<br>\n"
+      )
+    )
   } else {
-    ""
+    HTML(
+      paste(
+        vapply(x, as.character, character(1)),
+        collapse = "\n"
+      )
+    )
   }
 }
 

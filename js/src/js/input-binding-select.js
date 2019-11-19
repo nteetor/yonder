@@ -61,6 +61,9 @@ $.extend(selectInputBinding, {
   receiveMessage: (el, msg) => {
     if (msg.content) {
       el.querySelector(".dropdown-menu").innerHTML = msg.content;
+
+      let input = el.querySelector("input");
+      input.placeholder = input.getAttribute("data-original-placeholder") || "";
     }
 
     if (msg.selected) {

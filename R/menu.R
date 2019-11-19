@@ -124,6 +124,10 @@ updateMenuInput <- function(id, label = NULL, choices = NULL, values = choices,
 }
 
 map_menuitems <- function(choices, values, selected) {
+  if (is.null(choices) && is.null(values)) {
+    return(NULL)
+  }
+
   selected <- values %in% selected
 
   Map(

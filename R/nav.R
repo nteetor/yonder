@@ -166,6 +166,10 @@ updateNavInput <- function(id, choices = NULL, values = choices,
 }
 
 map_navitems <- function(choices, values, selected) {
+  if (is.null(choices) && is.null(values)) {
+    return(NULL)
+  }
+
   selected <- values %in% selected
 
   Map(

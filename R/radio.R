@@ -98,6 +98,10 @@ updateRadioInput <- function(id, choices = NULL, values = choices,
 }
 
 map_radios <- function(choices, values, selected, parent_id, inline) {
+  if (is.null(choices) && is.null(values)) {
+    return(NULL)
+  }
+
   selected <- values %in% selected
 
   Map(
@@ -219,6 +223,10 @@ updateRadiobarInput <- function(id, choices = NULL, values = choices,
 }
 
 map_radiobuttons <- function(choices, values, selected, parent_id) {
+  if (is.null(choices) && is.null(values)) {
+    return(NULL)
+  }
+
   selected <- values %in% selected
 
   Map(

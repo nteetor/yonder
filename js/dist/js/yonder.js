@@ -333,8 +333,12 @@
       }
 
       if (!msg.valid && !msg.invalid) {
-        el.querySelector(".valid-feedback").innerHTML = "";
-        el.querySelector(".invalid-feedback").innerHTML = "";
+        el.querySelectorAll(".valid-feedback").forEach(function (vf) {
+          return vf.innerHTML = "";
+        });
+        el.querySelectorAll(".invalid-feedback").forEach(function (ivf) {
+          return ivf.innerHTML = "";
+        });
         el.querySelectorAll("input").forEach(function (input) {
           input.classList.remove("is-valid");
           input.classList.remove("is-invalid");
@@ -1256,8 +1260,12 @@
       }
 
       if (!msg.valid && !msg.invalid) {
-        el.querySelector(".valid-feedback").innerHTML = "";
-        el.querySelector(".invalid-feedback").innerHTML = "";
+        el.querySelectorAll(".valid-feedback").forEach(function (vf) {
+          return vf.innerHTML = "";
+        });
+        el.querySelectorAll(".invalid-feedback").forEach(function (ivf) {
+          return ivf.innerHTML = "";
+        });
         el.querySelectorAll(".custom-control-input").forEach(function (radio) {
           radio.classList.remove("is-valid");
           radio.classList.remove("is-invalid");
@@ -1460,6 +1468,8 @@
     receiveMessage: function receiveMessage(el, msg) {
       if (msg.content) {
         el.querySelector(".dropdown-menu").innerHTML = msg.content;
+        var input = el.querySelector("input");
+        input.placeholder = input.getAttribute("data-original-placeholder") || "";
       }
 
       if (msg.selected) {
@@ -1513,9 +1523,12 @@
       }
 
       if (!msg.valid && !msg.invalid) {
-        var input = el.querySelector("input");
-        input.classList.remove("is-valid");
-        input.classList.remove("is-invalid");
+        var _input = el.querySelector("input");
+
+        _input.classList.remove("is-valid");
+
+        _input.classList.remove("is-invalid");
+
         el.querySelector(".valid-feedback").innerHTML = "";
         el.querySelector(".invalid-feedback").innerHTML = "";
       }

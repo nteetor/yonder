@@ -155,6 +155,10 @@ updateChipInput <- function(id, choices = NULL, values = choices,
 }
 
 map_chipitems <- function(choices, values, selected) {
+  if (is.null(choices) && is.null(values)) {
+    return(NULL)
+  }
+
   selected <- values %in% selected
 
   Map(
@@ -175,6 +179,10 @@ map_chipitems <- function(choices, values, selected) {
 }
 
 map_chipchips <- function(choices, values, selected) {
+  if (is.null(choices) && is.null(values)) {
+    return(NULL)
+  }
+
   selected <- values %in% selected
 
   Map(

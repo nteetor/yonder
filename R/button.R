@@ -332,6 +332,10 @@ updateButtonGroupInput <- function(id, labels = NULL, values = labels,
 }
 
 map_buttons <- function(labels, values) {
+  if (is.null(labels) && is.null(values)) {
+    return(NULL)
+  }
+
   Map(
     label = labels,
     value = values,

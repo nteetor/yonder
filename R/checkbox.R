@@ -170,6 +170,10 @@ updateSwitchInput <- function(id, choices = NULL, values = choices,
 
 map_checkboxes <- function(choices, values, selected, inline,
                            switches = FALSE) {
+  if (is.null(choices) && is.null(values)) {
+    return(NULL)
+  }
+
   selected <- values %in% selected
 
   Map(
@@ -303,6 +307,10 @@ updateCheckbarInput <- function(id, choices = NULL, values = choices,
 }
 
 map_checkbuttons <- function(choices, values, selected) {
+  if (is.null(choices) && is.null(values)) {
+    return(NULL)
+  }
+
   selected <- values %in% selected
 
   Map(

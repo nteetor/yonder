@@ -7,12 +7,12 @@
 \alias{updateGroupSelectInput}
 \title{Select inputs}
 \usage{
-selectInput(id, choices = NULL, values = choices,
-  selected = values[[1]], ...)
+selectInput(id, choices = NULL, values = choices, selected = NULL,
+  ..., placeholder = NULL)
 
 updateSelectInput(id, choices = NULL, values = choices,
-  selected = values[[1]], enable = NULL, disable = NULL,
-  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+  selected = NULL, enable = NULL, disable = NULL, valid = NULL,
+  invalid = NULL, session = getDefaultReactiveDomain())
 
 groupSelectInput(id, choices, values = choices, selected = values[[1]],
   ..., left = NULL, right = NULL)
@@ -30,7 +30,7 @@ updateGroupSelectInput(id, choices = NULL, values = choices,
 choices, defaults to \code{choices}.}
 
 \item{selected}{One of \code{values} indicating the default value of the input,
-defaults to \code{values[[1]]}.}
+defaults to \code{NULL}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the
 parent element or tag elements passed as child elements to the parent

@@ -92,8 +92,9 @@ $.extend(checkboxInputBinding, {
     }
 
     if (!msg.valid && !msg.invalid) {
-      el.querySelector(".valid-feedback").innerHTML = "";
-      el.querySelector(".invalid-feedback").innerHTML = "";
+      el.querySelectorAll(".valid-feedback").forEach(vf => vf.innerHTML = "");
+      el.querySelectorAll(".invalid-feedback").forEach(ivf => ivf.innerHTML = "");
+
       el.querySelectorAll("input").forEach(input => {
         input.classList.remove("is-valid");
         input.classList.remove("is-invalid");

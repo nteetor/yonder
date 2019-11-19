@@ -163,6 +163,10 @@ updateListGroupInput <- function(id, choices = NULL, values = choices,
 }
 
 map_listitems <- function(choices, values, selected) {
+  if (is.null(choices) && is.null(values)) {
+    return(NULL)
+  }
+
   selected <- values %in% selected
 
   Map(
