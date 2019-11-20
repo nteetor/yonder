@@ -30,7 +30,7 @@ coerce_selected <- function(x) {
   if (is.null(x)) {
     x
   } else if (isTRUE(x)) {
-    x
+    TRUE
   } else {
     unname(lapply(x, as.character))
   }
