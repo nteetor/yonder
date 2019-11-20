@@ -4,12 +4,16 @@ language: R
 sudo: false
 cache: packages
 
-matrix:
+jobs:
   include:
     - r: 3.2
     - r: oldrel
     - r: release
     - r: devel
+    - os: osx
+
+matrix:
+  fast_finish: true
 
 notifications:
   email:
