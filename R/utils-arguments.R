@@ -32,7 +32,7 @@ coerce_selected <- function(x) {
   } else if (isTRUE(x)) {
     x
   } else {
-    lapply(x, as.character)
+    unname(lapply(x, as.character))
   }
 }
 
