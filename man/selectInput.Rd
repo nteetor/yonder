@@ -36,6 +36,9 @@ defaults to \code{NULL}.}
 parent element or tag elements passed as child elements to the parent
 element.}
 
+\item{placeholder}{A character string specifying the placeholder text of
+the select input, defaults to \code{NULL}.}
+
 \item{enable}{One of \code{values} specifying particular choices to enable or
 \code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
 

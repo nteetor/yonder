@@ -8,6 +8,13 @@
 
 <title>Display property — display • yonder</title>
 
+<!-- favicons -->
+<link rel="icon" type="image/png" sizes="16x16" href="../favicon-16x16.png">
+<link rel="icon" type="image/png" sizes="32x32" href="../favicon-32x32.png">
+<link rel="apple-touch-icon" type="image/png" sizes="180x180" href="../apple-touch-icon.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="120x120" href="../apple-touch-icon-120x120.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="76x76" href="../apple-touch-icon-76x76.png" />
+<link rel="apple-touch-icon" type="image/png" sizes="60x60" href="../apple-touch-icon-60x60.png" />
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
@@ -16,13 +23,15 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -35,6 +44,8 @@
 <meta property="og:description" content="Use the display() utility to adjust how a tag element is rendered. All
 arguments are responsive allowing you to hide elements on small screens or
 convert elements from inline to block on large screens." />
+
+<meta property="og:image" content="https://nteetor.github.io/yonder/logo.png" />
 <meta name="twitter:card" content="summary" />
 
 
@@ -47,6 +58,7 @@ convert elements from inline to block on large screens." />
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -65,7 +77,7 @@ convert elements from inline to block on large screens." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">yonder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
       </span>
     </div>
 
@@ -106,6 +118,7 @@ convert elements from inline to block on large screens." />
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -157,20 +170,20 @@ convert elements from inline to block on large screens.</p>
 <span class='co'># When using `flex()` be sure to set the display, too.</span>
 
 <span class='fu'>div</span>(
-  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>lapply</a></span>(
+  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>lapply</a></span>(
     <span class='fl'>1</span>:<span class='fl'>5</span>,
     <span class='kw'>function</span>(<span class='no'>i</span>) {
       <span class='fu'>div</span>() <span class='kw'>%&gt;%</span>
         <span class='fu'><a href='padding.html'>padding</a></span>(<span class='fl'>5</span>) <span class='kw'>%&gt;%</span>
-        <span class='fu'><a href='padding.html'>margin</a></span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>xs</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>bottom</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>xs</span> <span class='kw'>=</span> <span class='fl'>2</span>)) <span class='kw'>%&gt;%</span>
+        <span class='fu'><a href='padding.html'>margin</a></span>(<span class='kw'>top</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>xs</span> <span class='kw'>=</span> <span class='fl'>2</span>), <span class='kw'>bottom</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>xs</span> <span class='kw'>=</span> <span class='fl'>2</span>)) <span class='kw'>%&gt;%</span>
         <span class='fu'><a href='background.html'>background</a></span>(<span class='st'>"blue"</span>)
     }
   )
 ) <span class='kw'>%&gt;%</span>
   <span class='fu'>display</span>(<span class='st'>"flex"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='flex.html'>flex</a></span>(
-    <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>xs</span> <span class='kw'>=</span> <span class='st'>"column"</span>, <span class='kw'>sm</span> <span class='kw'>=</span> <span class='st'>"row"</span>),
-    <span class='kw'>justify</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/c'>c</a></span>(<span class='kw'>sm</span> <span class='kw'>=</span> <span class='st'>"around"</span>)
+    <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>xs</span> <span class='kw'>=</span> <span class='st'>"column"</span>, <span class='kw'>sm</span> <span class='kw'>=</span> <span class='st'>"row"</span>),
+    <span class='kw'>justify</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='kw'>sm</span> <span class='kw'>=</span> <span class='st'>"around"</span>)
   )</div><div class='output co'>#&gt; &lt;div class="d-flex flex-column flex-sm-row justify-content-sm-around"&gt;
 #&gt;   &lt;div class="p-5 mt-2 mb-2 bg-blue"&gt;&lt;/div&gt;
 #&gt;   &lt;div class="p-5 mt-2 mb-2 bg-blue"&gt;&lt;/div&gt;
@@ -193,19 +206,23 @@ convert elements from inline to block on large screens.</p>
   </div>
 </div>
 
+
       <footer>
       <div class="copyright">
   <p>Developed by Nathan Teetor.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 

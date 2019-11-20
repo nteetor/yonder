@@ -332,7 +332,7 @@ updateButtonGroupInput <- function(id, choices = NULL, values = choices,
                                    enable = NULL, disable = NULL,
                                    session = getDefaultReactiveDomain()) {
   assert_id()
-  asssert_choices()
+  assert_choices()
   assert_session()
 
   buttons <- map_buttons(choices, values)

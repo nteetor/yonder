@@ -4,6 +4,11 @@
   (factory());
 }(this, (function () { 'use strict';
 
+  // IE 11, ensure querySelectorAll + forEach works
+  if (window.NodeList && !NodeList.prototype.forEach) {
+    NodeList.prototype.forEach = Array.prototype.forEach;
+  }
+
   var buttonGroupInputBinding = new Shiny.InputBinding();
   $.extend(buttonGroupInputBinding, {
     find: function find(scope) {
@@ -14,14 +19,19 @@
     },
     initialize: function initialize(el) {
       $(el).on("click", "button", function (e) {
-        buttonGroupInputBinding._VALUES[el.id] = e.delegateTarget.value;
+        el.setAttribute("data-value", e.currentTarget.value);
       });
-      buttonGroupInputBinding._VALUES[el.id] = null;
     },
     getValue: function getValue(el) {
+      var value = el.getAttribute("data-value");
+
+      if (value === undefined) {
+        value = null;
+      }
+
       return {
         force: Date.now(),
-        value: buttonGroupInputBinding._VALUES[el.id]
+        value: value
       };
     },
     subscribe: function subscribe(el, callback) {
@@ -42,7 +52,7 @@
       }
 
       if (msg.value) {
-        buttonGroupInputBinding._VALUES[el.id] = msg.value;
+        el.setAttribute("data-value", msg.value);
       }
 
       if (msg.enable) {
@@ -110,6 +120,20 @@
       if (msg.disable) {
         el.classList.add("disabled");
         el.setAttribute("disabled", "");
+      }
+
+      if (msg.tooltip !== null) {
+        el.setAttribute("data-animation", msg.tooltip.fade);
+        el.setAttribute("data-html", "true");
+        el.setAttribute("data-placement", msg.tooltip.placement);
+        el.setAttribute("data-toggle", "tooltip");
+        el.setAttribute("title", msg.tooltip.title);
+        el.setAttribute("data-original-title", msg.tooltip.title);
+        $(el).tooltip();
+
+        if (el.matches(":hover")) {
+          $(el).tooltip("show");
+        }
       }
     }
   });
@@ -309,8 +333,12 @@
       }
 
       if (!msg.valid && !msg.invalid) {
-        el.querySelector(".valid-feedback").innerHTML = "";
-        el.querySelector(".invalid-feedback").innerHTML = "";
+        el.querySelectorAll(".valid-feedback").forEach(function (vf) {
+          return vf.innerHTML = "";
+        });
+        el.querySelectorAll(".invalid-feedback").forEach(function (ivf) {
+          return ivf.innerHTML = "";
+        });
         el.querySelectorAll("input").forEach(function (input) {
           input.classList.remove("is-valid");
           input.classList.remove("is-invalid");
@@ -688,7 +716,13 @@
       $el.on("click.yonder", ".yonder-form-submit", function (e) {
         value = e.currentTarget.value;
       });
-      $el.on("submit.yonder", function (e) {
+      $el.on("submit.yonder", function (e, v) {
+        e.preventDefault();
+
+        if (v !== undefined) {
+          value = v;
+        }
+
         Object.keys(store).forEach(function (key) {
           Shiny.onInputChange(key, store[key], {
             priority: "event"
@@ -708,6 +742,11 @@
     unsubscribe: function unsubscribe(el) {
       $(el).off(".yonder");
       $(document).off("shiny:inputchanged.yonder");
+    },
+    receiveMessage: function receiveMessage(el, msg) {
+      if (msg.submit !== undefined && msg.submit !== null) {
+        $(el).trigger("submit.yonder", msg.submit);
+      }
     }
   });
   Shiny.inputBindings.register(formInputBinding, "yonder.formInput");
@@ -909,6 +948,11 @@
         el.querySelector(".dropdown-menu").innerHTML = msg.content;
       }
 
+      if (msg.label) {
+        var toggle = el.querySelector(".dropdown-toggle");
+        toggle.innerHTML = msg.label;
+      }
+
       if (msg.selected) {
         el.querySelectorAll(".dropdown-item").forEach(function (item) {
           if (msg.selected.indexOf(item.value) > -1) {
@@ -1058,7 +1102,12 @@
   Shiny.inputBindings.register(navInputBinding, "yonder.navInput");
   Shiny.addCustomMessageHandler("yonder:pane", function (msg) {
     var _show = function _show(pane) {
-      if (pane === null || !pane.parentElement.classList.contains("tab-content")) {
+      if (pane === null || pane.classList.contains("show")) {
+        return;
+      }
+
+      if (!pane.parentElement.classList.contains("tab-content")) {
+        console.warn("nav pane " + pane.id + " is missing a nav content parent element");
         return;
       }
 
@@ -1079,7 +1128,12 @@
     };
 
     var _hide = function _hide(pane) {
-      if (pane === null || !pane.parentElement.classList.contains("tab-content") || !pane.classList.contains("active")) {
+      if (pane === null || !pane.classList.contains("show")) {
+        return;
+      }
+
+      if (!pane.parentElement.classList.contains("tab-content")) {
+        console.warn("nav pane " + pane.id + " is missing a nav content parent element");
         return;
       }
 
@@ -1206,8 +1260,12 @@
       }
 
       if (!msg.valid && !msg.invalid) {
-        el.querySelector(".valid-feedback").innerHTML = "";
-        el.querySelector(".invalid-feedback").innerHTML = "";
+        el.querySelectorAll(".valid-feedback").forEach(function (vf) {
+          return vf.innerHTML = "";
+        });
+        el.querySelectorAll(".invalid-feedback").forEach(function (ivf) {
+          return ivf.innerHTML = "";
+        });
         el.querySelectorAll(".custom-control-input").forEach(function (radio) {
           radio.classList.remove("is-valid");
           radio.classList.remove("is-invalid");
@@ -1257,6 +1315,19 @@
     receiveMessage: function receiveMessage(el, msg) {
       if (msg.content) {
         el.innerHTML = msg.content;
+      }
+
+      if (msg.selected) {
+        el.querySelectorAll("input").forEach(function (input) {
+          if (msg.selected.indexOf(input.value) > -1) {
+            input.checked = true;
+            input.parentNode.classList.add("active");
+          } else {
+            input.checked = false;
+            input.parentNode.classList.remove("active");
+          }
+        });
+        $(el).trigger("radiobar.select.yonder");
       }
 
       if (msg.enable) {
@@ -1372,7 +1443,7 @@
       });
     },
     getValue: function getValue(el) {
-      var selected = el.querySelectorAll(".dropdown-item.active:not(.disabled");
+      var selected = el.querySelectorAll(".dropdown-item.active:not(.disabled)");
 
       if (selected.length === 0) {
         return null;
@@ -1397,6 +1468,8 @@
     receiveMessage: function receiveMessage(el, msg) {
       if (msg.content) {
         el.querySelector(".dropdown-menu").innerHTML = msg.content;
+        var input = el.querySelector("input");
+        input.placeholder = input.getAttribute("data-original-placeholder") || "";
       }
 
       if (msg.selected) {
@@ -1450,9 +1523,12 @@
       }
 
       if (!msg.valid && !msg.invalid) {
-        var input = el.querySelector("input");
-        input.classList.remove("is-valid");
-        input.classList.remove("is-invalid");
+        var _input = el.querySelector("input");
+
+        _input.classList.remove("is-valid");
+
+        _input.classList.remove("is-invalid");
+
         el.querySelector(".valid-feedback").innerHTML = "";
         el.querySelector(".invalid-feedback").innerHTML = "";
       }
@@ -1482,9 +1558,6 @@
         $el.on("click", ".dropdown-item", function (e) {
           return callback();
         });
-        $el.on("click", ".btn:not(.dropdown-toggle", function (e) {
-          return callback();
-        });
       } else {
         $el.on("change", function (e) {
           return callback();
@@ -1495,7 +1568,7 @@
       }
     },
     receiveMessage: function receiveMessage(el, msg) {
-      var select = el.querySelector("select");
+      var select = el.querySelector("input[data-toggle='dropdown']");
 
       if (msg.content) {
         select.innerHTML = msg.content;
@@ -1600,30 +1673,32 @@
       }
 
       if (msg.enable) {
-        el.children[0].removeAattribute("disabled");
+        el.children[0].removeAttribute("disabled");
       }
 
       if (msg.disable) {
         el.children[0].setAttribute("disabled", "");
       }
 
+      var input = el.querySelector("input");
+
       if (msg.valid) {
         el.querySelector(".valid-feedback").innerHTML = msg.valid;
-        el.classList.remove("is-invalid");
-        el.classList.add("is-valid");
+        input.classList.remove("is-invalid");
+        input.classList.add("is-valid");
       }
 
       if (msg.invalid) {
         el.querySelector(".invalid-feedback").innerHTML = msg.invalid;
-        el.classList.remove("is-valid");
-        el.classList.add("is-invalid");
+        input.classList.remove("is-valid");
+        input.classList.add("is-invalid");
       }
 
       if (!msg.valid && !msg.invalid) {
         el.querySelector(".valid-feedback").innerHTML = "";
         el.querySelector(".invalid-feedback").innerHTML = "";
-        el.children[0].classList.remove("is-valid");
-        el.children[0].classList.remove("is-invalid");
+        input.classList.remove("is-valid");
+        input.classList.remove("is-invalid");
       }
     }
   });
@@ -1827,7 +1902,11 @@
     }
 
     var _close = function _close(data) {
-      var modals = document.querySelector(".yonder-modals").children;
+      var modals = document.querySelector(".yonder-modals").childNodes;
+
+      if (modals.length === 0) {
+        return;
+      }
 
       if (data.id) {
         modals = Array.prototype.filter.call(modals, function (m) {
@@ -1872,6 +1951,7 @@
           }, 100);
         }
 
+        Shiny.unbindAll(modal);
         container.removeChild(modal);
       });
       $(modal).modal("show");
