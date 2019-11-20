@@ -251,8 +251,8 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #'
 #' @inheritParams buttonInput
 #'
-#' @param labels A character vector specifying the labels for each button in the
-#'   group.
+#' @param choices A character vector specifying the labels for each button in
+#'   the group.
 #'
 #' @param values A vector of values specifying the values of each button in the
 #'   group, defaults to `labels`.
@@ -271,7 +271,7 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #'
 #' buttonGroupInput(
 #'   id = "group1",
-#'   labels = c("Once", "Twice", "Thrice"),
+#'   choices = c("Once", "Twice", "Thrice"),
 #'   values = c(1, 2, 3)
 #' )
 #'
@@ -279,14 +279,29 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #'
 #' buttonGroupInput(
 #'   id = "group2",
-#'   labels = c("Button 1", "Button 2", "Button 3")
+#'   choices = c("Button 1", "Button 2", "Button 3")
 #' ) %>%
 #'   background("blue") %>%
 #'   width("1/3")
 #'
-buttonGroupInput <- function(id, labels = NULL, values = labels, ...) {
+buttonGroupInput <- function(id, choices = NULL, values = choices, ...) {
+  args <- list(...)
+
+  if ("labels" %in% names(args)) {
+    warning(
+      "invalid argument in `buttonGroupInput()`, ",
+      "`labels` has been deprecated, please use `choices`"
+    )
+
+    choices <- args$labels
+    if (is.null(values)) {
+      values <- args$labels
+    }
+    args$labels <- NULL
+  }
+
   assert_id()
-  assert_labels()
+  assert_choices()
 
   shiny::registerInputHandler(
     type = "yonder.button.group",
@@ -297,28 +312,30 @@ buttonGroupInput <- function(id, labels = NULL, values = labels, ...) {
   )
 
   dep_attach({
-    buttons <- map_buttons(labels, values)
+    buttons <- map_buttons(choices, values)
 
-    tags$div(
+    bg <- tags$div(
       class = "yonder-button-group btn-group",
       id = id,
       role = "group",
       buttons,
-      ...
+      unnamed_values(args)
     )
+
+    tag_attributes_add(bg, named_values(args))
   })
 }
 
 #' @rdname buttonGroupInput
 #' @export
-updateButtonGroupInput <- function(id, labels = NULL, values = labels,
+updateButtonGroupInput <- function(id, choices = NULL, values = choices,
                                    enable = NULL, disable = NULL,
                                    session = getDefaultReactiveDomain()) {
   assert_id()
-  assert_labels()
+  asssert_choices()
   assert_session()
 
-  buttons <- map_buttons(labels, values)
+  buttons <- map_buttons(choices, values)
 
   content <- coerce_content(buttons)
   enable <- coerce_enable(enable)
@@ -331,13 +348,13 @@ updateButtonGroupInput <- function(id, labels = NULL, values = labels,
   ))
 }
 
-map_buttons <- function(labels, values) {
-  if (is.null(labels) && is.null(values)) {
+map_buttons <- function(choices, values) {
+  if (is.null(choices) && is.null(values)) {
     return(NULL)
   }
 
   Map(
-    label = labels,
+    label = choices,
     value = values,
     function(label, value) {
       tags$button(

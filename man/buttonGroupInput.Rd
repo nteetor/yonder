@@ -5,17 +5,17 @@
 \alias{updateButtonGroupInput}
 \title{Button group inputs}
 \usage{
-buttonGroupInput(id, labels = NULL, values = labels, ...)
+buttonGroupInput(id, choices = NULL, values = choices, ...)
 
-updateButtonGroupInput(id, labels = NULL, values = labels,
+updateButtonGroupInput(id, choices = NULL, values = choices,
   enable = NULL, disable = NULL,
   session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
 
-\item{labels}{A character vector specifying the labels for each button in the
-group.}
+\item{choices}{A character vector specifying the labels for each button in
+the group.}
 
 \item{values}{A vector of values specifying the values of each button in the
 group, defaults to \code{labels}.}
@@ -40,7 +40,7 @@ A set of buttons with custom values.
 
 buttonGroupInput(
   id = "group1",
-  labels = c("Once", "Twice", "Thrice"),
+  choices = c("Once", "Twice", "Thrice"),
   values = c(1, 2, 3)
 )
 
@@ -48,7 +48,7 @@ buttonGroupInput(
 
 buttonGroupInput(
   id = "group2",
-  labels = c("Button 1", "Button 2", "Button 3")
+  choices = c("Button 1", "Button 2", "Button 3")
 ) \%>\%
   background("blue") \%>\%
   width("1/3")
