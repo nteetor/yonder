@@ -1,7 +1,9 @@
 context("coerce utilties")
 
 test_that("coerce_content", {
-  expect_equal(coerce_content(NULL), "")
+  expect_equal(coerce_content(NULL), NULL)
+  expect_equal(coerce_content(character(0)), list())
+  expect_equal(coerce_content(list()), list())
   expect_match(coerce_content(div()), "<div></div>", fixed = TRUE)
   expect_match(
     coerce_content(list(div("hello"), div("world"))),

@@ -1,10 +1,10 @@
 coerce_content <- function(x) {
-  if (length(x) == 0) {
-    if (is_strictly_list(x)) {
-      return(list())
-    }
+  if (is.null(x)) {
+    return(NULL)
+  }
 
-    return("")
+  if (length(x) == 0) {
+    return(list())
   }
 
   if (is_tag(x)) {
