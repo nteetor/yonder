@@ -47,7 +47,7 @@ toggle button the menu aligns to, defaults to \code{"left"}.`}
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
-A togglable dropdown menu input. Menu inputs may be used as standalone
+A toggleable dropdown menu input. Menu inputs may be used as standalone
 reactive inputs or within a \code{\link[=navInput]{navInput()}}. For building custom, more complex
 dropdown elements please see \code{\link[=dropdown]{dropdown()}}.
 }

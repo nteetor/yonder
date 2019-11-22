@@ -1,6 +1,6 @@
 #' Menu inputs
 #'
-#' A togglable dropdown menu input. Menu inputs may be used as standalone
+#' A toggleable dropdown menu input. Menu inputs may be used as standalone
 #' reactive inputs or within a [navInput()]. For building custom, more complex
 #' dropdown elements please see [dropdown()].
 #'

@@ -14,7 +14,7 @@
 #'   defaults to `NULL`, in which case nothing is added.
 #'
 #' @param collapse One of `"sm"`, `"md"`, `"lg"`, `"xl"`, or `NULL` specifying
-#'   the breakpoint at which the navbar collapes, defaults to `NULL`, in which
+#'   the breakpoint at which the navbar collaspes, defaults to `NULL`, in which
 #'   case the navbar is always expanded.
 #'
 #' @family layout functions

@@ -1,11 +1,11 @@
-# yonder 0.1.2 
+# yonder 0.1.2
 
 ## Breaking changes
 
 * Select inputs no longer default to the first possible value
 * The `column()` function's `width` argument now accepts the values: `1:12`,
   `"content"`, and `"equal"`. The new `"content"` value is equivalent to the
-  previous value `"auto"`. `"equal"` is the new default and the placeholder 
+  previous value `"auto"`. `"equal"` is the new default and the placeholder
   value, so as to allow `column(width = c(xs = 2, lg = "equal"))`.
 * The `modal()` function no longer includes a `title` argument, instead use
   `header`
@@ -32,14 +32,14 @@
   a zero-length value as `choices`
 * The new `updateFormInput()` may be used to trigger a form submission from
   the server (#160)
-* The new `webpage()` function may be used as the top-level element of an 
+* The new `webpage()` function may be used as the top-level element of an
   application
-* `AsIs` character vectors are now concatenated with `<br>` when passing 
+* `AsIs` character vectors are now concatenated with `<br>` when passing
   character values as choices or labels (#159)
 
 ## Major improvements
 
-* Web resources are no longer attached to each element, instead they are 
+* Web resources are no longer attached to each element, instead they are
   only attached to the top-most parent element
 
 ## Minor improvements
@@ -48,8 +48,8 @@
   (#167)
 * Added `placeholder` argument to chip inputs
 * The `collapsePane()` function now includes the argument `animate` to
-  optionally prevent animation when toggling a collasible pane
-* A menu input's label may now be updated with `updateMenuInput()`  
+  optionally prevent animation when toggling a collapsible pane
+* A menu input's label may now be updated with `updateMenuInput()`
 * Darkened the default grey color (#162)
 * Link inputs now inherit their text align property (#163)
 

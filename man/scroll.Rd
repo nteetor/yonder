@@ -14,7 +14,7 @@ direction to scroll overflowing content, defaults to \code{"vertical"}, in which
 case the content may croll up and down.}
 }
 \description{
-Many of the applications you build depsite a complex layout will still fit
+Many of the applications you build despite a complex layout will still fit
 onto a single page. To help scroll long content alongside shorter content use
 the \code{scroll()} utility function.
 }

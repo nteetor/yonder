@@ -162,7 +162,7 @@ updateFormInput <- function(id, submit = FALSE,
 
 #' Input labels, help text, and formatting to inputs
 #'
-#' Form groups are a way of labelling an input. Form rows are similar to
+#' Form groups are a way of labeling an input. Form rows are similar to
 #' [columns()]s, but include additional styles intended for forms. The
 #' flexibility provided by form rows and groups means you can confidently
 #' develop shiny applications for devices and screens of varying sizes.

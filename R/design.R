@@ -873,7 +873,7 @@ height <- function(tag, size) {
 
 #' Vertical and horizontal scroll
 #'
-#' Many of the applications you build depsite a complex layout will still fit
+#' Many of the applications you build despite a complex layout will still fit
 #' onto a single page. To help scroll long content alongside shorter content use
 #' the `scroll()` utility function.
 #'
