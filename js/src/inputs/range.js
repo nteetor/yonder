@@ -4,16 +4,7 @@ import Shiny from "Shiny"
 import Input from "./input.js"
 import Store from "../data/store.js"
 import {
-  findClosest,
-  asArray,
-  isNode,
-  activeElement,
-  activateElements,
-  deactivateElements,
-  toggleElements,
-  filterElements,
-  getPluginAttributes,
-  all
+  findClosest
 } from "../utils/index.js"
 
 const NAME = "range"
