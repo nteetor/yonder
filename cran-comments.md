@@ -1,13 +1,13 @@
 ## Test environments
 
 * OS X 10.13.3 (on travis-ci)
-  - R 3.6.1
+  - current release (R 3.6.1)
 * ubuntu 16.04 (on travis-ci)
   - R 3.2
   - old release
   - current release (R 3.6.1)
   - development release
-* win-builder 
+* win-builder
   - old release
   - current release
   - development release
