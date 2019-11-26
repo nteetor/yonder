@@ -15,6 +15,7 @@ import LinkInput from "./inputs/link.js"
 import ListGroupInput from "./inputs/list-group.js"
 import MenuInput from "./inputs/menu.js"
 import NavInput from "./inputs/nav.js"
+import NumberInput from "./inputs/number.js"
 import RadioInput from "./inputs/radio.js"
 import RadiobarInput from "./inputs/radiobar.js"
 import RangeInput from "./inputs/range.js"
@@ -41,6 +42,7 @@ export default {
   ListGroupInput,
   MenuInput,
   NavInput,
+  NumberInput,
   RadioInput,
   RadiobarInput,
   RangeInput,
