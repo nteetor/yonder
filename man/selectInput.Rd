@@ -7,15 +7,15 @@
 \alias{updateGroupSelectInput}
 \title{Select inputs}
 \usage{
-selectInput(id, choices = NULL, values = choices, selected = NULL,
-  ..., placeholder = NULL)
+selectInput(id, choices = NULL, values = choices,
+  selected = values[[1]], ..., placeholder = NULL)
 
 updateSelectInput(id, choices = NULL, values = choices,
   selected = NULL, enable = NULL, disable = NULL, valid = NULL,
   invalid = NULL, session = getDefaultReactiveDomain())
 
-groupSelectInput(id, choices, values = choices, selected = values[[1]],
-  ..., left = NULL, right = NULL)
+groupSelectInput(id, choices = NULL, values = choices,
+  selected = values[[1]], ..., left = NULL, right = NULL)
 
 updateGroupSelectInput(id, choices = NULL, values = choices,
   selected = NULL, enable = NULL, disable = NULL, valid = NULL,
@@ -36,8 +36,8 @@ defaults to \code{NULL}.}
 parent element or tag elements passed as child elements to the parent
 element.}
 
-\item{placeholder}{A character string specifying the placeholder text of
-the select input, defaults to \code{NULL}.}
+\item{placeholder}{A character string specifying the placeholder text of the
+select input, defaults to \code{NULL}.}
 
 \item{enable}{One of \code{values} specifying particular choices to enable or
 \code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
