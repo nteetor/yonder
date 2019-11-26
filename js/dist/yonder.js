@@ -2279,20 +2279,135 @@
     });
   }
 
-  var NAME$b = "radio";
+  var NAME$b = "number";
   var TYPE$b = "yonder." + NAME$b;
+  var POLICY = "debounce";
+  var DELAY = 450;
   var ClassName$b = {
-    INPUT: "yonder-radio",
-    CHILD: "custom-radio"
+    INPUT: "yonder-number",
+    CHILD: "form-control"
   };
   var Selector$b = {
     INPUT: "." + ClassName$b.INPUT,
     CHILD: "." + ClassName$b.CHILD,
-    INPUT_CHILD: "." + ClassName$b.INPUT + " ." + ClassName$b.CHILD,
-    PLUGIN: "[data-plugin]"
+    INPUT_CHILD: "." + ClassName$b.INPUT + " ." + ClassName$b.CHILD
   };
   var Event$b = {
-    CHANGE: "change." + TYPE$b
+    // CHANGE: `change.${ TYPE }`
+    INPUT: "input." + TYPE$b
+  };
+
+  var NumberInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(NumberInput, _Input);
+
+    // methods ----
+    function NumberInput(element) {
+      var _this;
+
+      _this = _Input.call(this, element, TYPE$b) || this;
+      _this._debounce = true;
+      return _this;
+    }
+
+    var _proto = NumberInput.prototype;
+
+    _proto.value = function value(x) {
+      if (arguments.length === 0) {
+        return this._value;
+      }
+
+      if (x === "" || isNaN(x)) {
+        x = null;
+      } else {
+        x = +x;
+      }
+
+      this._value = x;
+
+      this._callback();
+
+      return this;
+    } // static ----
+    ;
+
+    NumberInput.initialize = function initialize(element) {
+      _Input.initialize.call(this, element, TYPE$b, NumberInput);
+    };
+
+    NumberInput.find = function find(scope) {
+      return _Input.find.call(this, scope, Selector$b.INPUT);
+    };
+
+    NumberInput.getValue = function getValue(element) {
+      return _Input.getValue.call(this, element, TYPE$b);
+    };
+
+    NumberInput.getRatePolicy = function getRatePolicy() {
+      return {
+        policy: NumberInput.POLICY,
+        delay: NumberInput.DELAY
+      };
+    };
+
+    NumberInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE$b);
+    };
+
+    NumberInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE$b);
+    };
+
+    NumberInput.ShinyInterface = function ShinyInterface() {
+      return _objectSpread2({}, Input, {}, NumberInput);
+    };
+
+    _createClass(NumberInput, null, [{
+      key: "POLICY",
+      get: function get() {
+        return POLICY;
+      }
+    }, {
+      key: "DELAY",
+      get: function get() {
+        return DELAY;
+      }
+    }]);
+
+    return NumberInput;
+  }(Input); // events ----
+
+
+  $(document).on(Event$b.INPUT, Selector$b.INPUT_CHILD, function (event) {
+    var text = findClosest(event.target, Selector$b.INPUT);
+    var numberInput = Store.getData(text, TYPE$b);
+
+    if (!numberInput) {
+      return;
+    }
+
+    numberInput.value(event.target.value);
+  });
+
+  if (Shiny) {
+    Shiny.inputBindings.register(NumberInput.ShinyInterface(), TYPE$b);
+  }
+
+  var NAME$c = "radio";
+  var TYPE$c = "yonder." + NAME$c;
+  var ClassName$c = {
+    INPUT: "yonder-radio",
+    CHILD: "custom-radio"
+  };
+  var Selector$c = {
+    INPUT: "." + ClassName$c.INPUT,
+    CHILD: "." + ClassName$c.CHILD,
+    INPUT_CHILD: "." + ClassName$c.INPUT + " ." + ClassName$c.CHILD,
+    PLUGIN: "[data-plugin]"
+  };
+  var Event$c = {
+    CHANGE: "change." + TYPE$c
   };
 
   var RadioInput =
@@ -2302,7 +2417,7 @@
 
     // methods ----
     function RadioInput(element) {
-      return _Input.call(this, element, TYPE$b) || this;
+      return _Input.call(this, element, TYPE$c) || this;
     }
 
     var _proto = RadioInput.prototype;
@@ -2320,7 +2435,7 @@
     };
 
     _proto.select = function select(x) {
-      var children = this._element.querySelectorAll(Selector$b.CHILD);
+      var children = this._element.querySelectorAll(Selector$c.CHILD);
 
       var _filterElements = filterElements(children, x),
           targets = _filterElements[0],
@@ -2340,27 +2455,27 @@
     ;
 
     RadioInput.initialize = function initialize(element) {
-      _Input.initialize.call(this, element, TYPE$b, RadioInput);
+      _Input.initialize.call(this, element, TYPE$c, RadioInput);
     };
 
     RadioInput.find = function find(scope) {
-      return _Input.find.call(this, scope, Selector$b.INPUT);
+      return _Input.find.call(this, scope, Selector$c.INPUT);
     };
 
     RadioInput.getValue = function getValue(element) {
-      return _Input.getValue.call(this, element, TYPE$b);
+      return _Input.getValue.call(this, element, TYPE$c);
     };
 
     RadioInput.subscribe = function subscribe(element, callback) {
-      _Input.subscribe.call(this, element, callback, TYPE$b);
+      _Input.subscribe.call(this, element, callback, TYPE$c);
     };
 
     RadioInput.unsubscribe = function unsubscribe(element) {
-      _Input.unsubscribe.call(this, element, TYPE$b);
+      _Input.unsubscribe.call(this, element, TYPE$c);
     };
 
     RadioInput.receiveMessage = function receiveMessage(element, message) {
-      _Input.receiveMessage.call(this, element, message, TYPE$b);
+      _Input.receiveMessage.call(this, element, message, TYPE$c);
     };
 
     RadioInput.ShinyInterface = function ShinyInterface() {
@@ -2371,8 +2486,8 @@
   }(Input); // events ----
 
 
-  $(document).on(Event$b.CHANGE, "" + Selector$b.INPUT_CHILD + Selector$b.PLUGIN, function (event) {
-    var radio = findClosest(event.target, Selector$b.CHILD);
+  $(document).on(Event$c.CHANGE, "" + Selector$c.INPUT_CHILD + Selector$c.PLUGIN, function (event) {
+    var radio = findClosest(event.target, Selector$c.CHILD);
 
     var _getPluginAttributes = getPluginAttributes(radio),
         plugin = _getPluginAttributes[0],
@@ -2385,34 +2500,34 @@
 
     $(radio)[plugin](action);
   });
-  $(document).on(Event$b.CHANGE, Selector$b.INPUT_CHILD, function (event) {
-    var radio = findClosest(event.target, Selector$b.INPUT);
-    var radioInput = Store.getData(radio, TYPE$b);
+  $(document).on(Event$c.CHANGE, Selector$c.INPUT_CHILD, function (event) {
+    var radio = findClosest(event.target, Selector$c.INPUT);
+    var radioInput = Store.getData(radio, TYPE$c);
 
     if (!radioInput) {
       return;
     }
 
-    var input = findClosest(event.target, Selector$b.CHILD);
+    var input = findClosest(event.target, Selector$c.CHILD);
     radioInput.value(input.value);
   }); // shiny ----
 
   if (Shiny) {
-    Shiny.inputBindings.register(RadioInput.ShinyInterface(), TYPE$b);
+    Shiny.inputBindings.register(RadioInput.ShinyInterface(), TYPE$c);
   }
 
-  var TYPE$c = "yonder." + TYPE$c;
-  var ClassName$c = {
+  var TYPE$d = "yonder." + TYPE$d;
+  var ClassName$d = {
     INPUT: "yonder-radiobar",
     CHILD: "btn"
   };
-  var Selector$c = {
-    INPUT: "." + ClassName$c.INPUT,
-    CHILD: "." + ClassName$c.CHILD,
-    INPUT_CHILD: "." + ClassName$c.INPUT + " ." + ClassName$c.CHILD
+  var Selector$d = {
+    INPUT: "." + ClassName$d.INPUT,
+    CHILD: "." + ClassName$d.CHILD,
+    INPUT_CHILD: "." + ClassName$d.INPUT + " ." + ClassName$d.CHILD
   };
-  var Event$c = {
-    CHANGE: "change." + TYPE$c
+  var Event$d = {
+    CHANGE: "change." + TYPE$d
   };
 
   var RadiobarInput =
@@ -2422,7 +2537,7 @@
 
     // methods ----
     function RadiobarInput(element) {
-      return _Input.call(this, element, TYPE$c) || this;
+      return _Input.call(this, element, TYPE$d) || this;
     }
 
     var _proto = RadiobarInput.prototype;
@@ -2440,7 +2555,7 @@
     };
 
     _proto.select = function select(x) {
-      var children = this._element.querySelectorAll(Selector$c.CHILD);
+      var children = this._element.querySelectorAll(Selector$d.CHILD);
 
       var _filterElements = filterElements(children, x, function (child) {
         return child.children[0].value;
@@ -2462,27 +2577,27 @@
     ;
 
     RadiobarInput.find = function find(scope) {
-      return _Input.find.call(this, scope, Selector$c.INPUT);
+      return _Input.find.call(this, scope, Selector$d.INPUT);
     };
 
     RadiobarInput.initialize = function initialize(element) {
-      _Input.initialize.call(this, element, TYPE$c, RadiobarInput);
+      _Input.initialize.call(this, element, TYPE$d, RadiobarInput);
     };
 
     RadiobarInput.getValue = function getValue(element) {
-      return _Input.getValue.call(this, element, TYPE$c);
+      return _Input.getValue.call(this, element, TYPE$d);
     };
 
     RadiobarInput.subscribe = function subscribe(element, callback) {
-      _Input.subscribe.call(this, element, callback, TYPE$c);
+      _Input.subscribe.call(this, element, callback, TYPE$d);
     };
 
     RadiobarInput.unsubscribe = function unsubscribe(element) {
-      _Input.unsubscribe.call(this, element, TYPE$c);
+      _Input.unsubscribe.call(this, element, TYPE$d);
     };
 
     RadiobarInput.receiveMessage = function receiveMessage(element, message) {
-      _Input.receiveMessage.call(this, element, message, TYPE$c);
+      _Input.receiveMessage.call(this, element, message, TYPE$d);
     };
 
     RadiobarInput.ShinyInterface = function ShinyInterface() {
@@ -2493,37 +2608,37 @@
   }(Input); // events ----
 
 
-  $(document).on(Event$c.CHANGE, Selector$c.INPUT_CHILD, function (event) {
-    var radiobar = findClosest(event.target, Selector$c.INPUT);
-    var radiobarInput = Store.getData(radiobar, TYPE$c);
+  $(document).on(Event$d.CHANGE, Selector$d.INPUT_CHILD, function (event) {
+    var radiobar = findClosest(event.target, Selector$d.INPUT);
+    var radiobarInput = Store.getData(radiobar, TYPE$d);
 
     if (!radiobarInput) {
       return;
     }
 
-    var button = findClosest(event.target, Selector$c.CHILD);
+    var button = findClosest(event.target, Selector$d.CHILD);
     radiobarInput.select(button);
   });
 
   if (Shiny) {
-    Shiny.inputBindings.register(RadiobarInput.ShinyInterface(), TYPE$c);
+    Shiny.inputBindings.register(RadiobarInput.ShinyInterface(), TYPE$d);
   }
 
-  var NAME$d = "range";
-  var TYPE$d = "yonder." + NAME$d;
-  var POLICY = "debounce";
-  var DELAY = 450;
-  var ClassName$d = {
+  var NAME$e = "range";
+  var TYPE$e = "yonder." + NAME$e;
+  var POLICY$1 = "debounce";
+  var DELAY$1 = 450;
+  var ClassName$e = {
     INPUT: "yonder-range",
     CHILD: "custom-range"
   };
-  var Selector$d = {
-    INPUT: "." + ClassName$d.INPUT,
-    CHILD: "." + ClassName$d.CHILD,
-    INPUT_CHILD: "." + ClassName$d.INPUT + " ." + ClassName$d.CHILD
+  var Selector$e = {
+    INPUT: "." + ClassName$e.INPUT,
+    CHILD: "." + ClassName$e.CHILD,
+    INPUT_CHILD: "." + ClassName$e.INPUT + " ." + ClassName$e.CHILD
   };
-  var Event$d = {
-    INPUT: "input." + TYPE$d
+  var Event$e = {
+    INPUT: "input." + TYPE$e
   };
 
   var RangeInput =
@@ -2535,7 +2650,7 @@
     function RangeInput(element) {
       var _this;
 
-      _this = _Input.call(this, element, TYPE$d) || this;
+      _this = _Input.call(this, element, TYPE$e) || this;
       _this._debounce = true;
       return _this;
     }
@@ -2556,15 +2671,15 @@
     ;
 
     RangeInput.initialize = function initialize(element) {
-      _Input.initialize.call(this, element, TYPE$d, RangeInput);
+      _Input.initialize.call(this, element, TYPE$e, RangeInput);
     };
 
     RangeInput.find = function find(scope) {
-      return _Input.find.call(this, scope, Selector$d.INPUT);
+      return _Input.find.call(this, scope, Selector$e.INPUT);
     };
 
     RangeInput.getValue = function getValue(element) {
-      return _Input.getValue.call(this, element, TYPE$d);
+      return _Input.getValue.call(this, element, TYPE$e);
     };
 
     RangeInput.getRatePolicy = function getRatePolicy() {
@@ -2575,11 +2690,11 @@
     };
 
     RangeInput.subscribe = function subscribe(element, callback) {
-      _Input.subscribe.call(this, element, callback, TYPE$d);
+      _Input.subscribe.call(this, element, callback, TYPE$e);
     };
 
     RangeInput.unsubscribe = function unsubscribe(element) {
-      _Input.unsubscribe.call(this, element, TYPE$d);
+      _Input.unsubscribe.call(this, element, TYPE$e);
     };
 
     RangeInput.ShinyInterface = function ShinyInterface() {
@@ -2589,12 +2704,12 @@
     _createClass(RangeInput, null, [{
       key: "POLICY",
       get: function get() {
-        return POLICY;
+        return POLICY$1;
       }
     }, {
       key: "DELAY",
       get: function get() {
-        return DELAY;
+        return DELAY$1;
       }
     }]);
 
@@ -2602,15 +2717,15 @@
   }(Input); // events ----
 
 
-  $(document).on(Event$d.INPUT, Selector$d.INPUT_CHILD, function (event) {
-    var range = findClosest(event.target, Selector$d.INPUT);
-    var rangeInput = Store.getData(range, TYPE$d);
+  $(document).on(Event$e.INPUT, Selector$e.INPUT_CHILD, function (event) {
+    var range = findClosest(event.target, Selector$e.INPUT);
+    var rangeInput = Store.getData(range, TYPE$e);
 
     if (!rangeInput) {
       return;
     }
 
-    var child = findClosest(event.target, Selector$d.CHILD);
+    var child = findClosest(event.target, Selector$e.CHILD);
     var value = child.valueAsNumber;
 
     if (Number.isNaN(value) || value === undefined) {
@@ -2621,12 +2736,12 @@
   });
 
   if (Shiny) {
-    Shiny.inputBindings.register(RangeInput.ShinyInterface(), TYPE$d);
+    Shiny.inputBindings.register(RangeInput.ShinyInterface(), TYPE$e);
   }
 
-  var NAME$e = "select";
-  var TYPE$e = "yonder." + NAME$e;
-  var ClassName$e = {
+  var NAME$f = "select";
+  var TYPE$f = "yonder." + NAME$f;
+  var ClassName$f = {
     INPUT: "yonder-select",
     CHILD: "dropdown-item",
     TOGGLE: "custom-select",
@@ -2634,23 +2749,23 @@
     ACTIVE: "active",
     MISMATCHED: "mismatched"
   };
-  var Selector$e = {
-    INPUT: "." + ClassName$e.INPUT,
-    CHILD: "." + ClassName$e.CHILD,
-    MISMATCHED: "" + ClassName$e.MISMATCHED,
-    TOGGLE: "." + ClassName$e.TOGGLE,
-    INPUT_INACTIVE_CHILD: "." + ClassName$e.INPUT + " ." + ClassName$e.CHILD + ":not(." + ClassName$e.ACTIVE + ")",
-    INPUT_TOGGLE: "." + ClassName$e.INPUT + " ." + ClassName$e.TOGGLE,
-    CHILD_MISMATCHED: "." + ClassName$e.CHILD + "." + ClassName$e.MISMATCHED,
-    MENU: "." + ClassName$e.MENU,
-    ACTIVE: "." + ClassName$e.ACTIVE
+  var Selector$f = {
+    INPUT: "." + ClassName$f.INPUT,
+    CHILD: "." + ClassName$f.CHILD,
+    MISMATCHED: "" + ClassName$f.MISMATCHED,
+    TOGGLE: "." + ClassName$f.TOGGLE,
+    INPUT_INACTIVE_CHILD: "." + ClassName$f.INPUT + " ." + ClassName$f.CHILD + ":not(." + ClassName$f.ACTIVE + ")",
+    INPUT_TOGGLE: "." + ClassName$f.INPUT + " ." + ClassName$f.TOGGLE,
+    CHILD_MISMATCHED: "." + ClassName$f.CHILD + "." + ClassName$f.MISMATCHED,
+    MENU: "." + ClassName$f.MENU,
+    ACTIVE: "." + ClassName$f.ACTIVE
   };
-  var Event$e = {
-    CLICK: "click." + TYPE$e,
-    CHANGE: "change." + TYPE$e,
-    INPUT: "input." + TYPE$e,
-    MENU_CLOSE: "hide.bs.dropdown." + TYPE$e,
-    MENU_OPEN: "show.bs.dropdown." + TYPE$e
+  var Event$f = {
+    CLICK: "click." + TYPE$f,
+    CHANGE: "change." + TYPE$f,
+    INPUT: "input." + TYPE$f,
+    MENU_CLOSE: "hide.bs.dropdown." + TYPE$f,
+    MENU_OPEN: "show.bs.dropdown." + TYPE$f
   };
 
   var SelectInput =
@@ -2662,8 +2777,8 @@
     function SelectInput(element) {
       var _this;
 
-      _this = _Input.call(this, element, TYPE$e) || this;
-      _this._$toggle = $(_this._element.querySelector(Selector$e.TOGGLE));
+      _this = _Input.call(this, element, TYPE$f) || this;
+      _this._$toggle = $(_this._element.querySelector(Selector$f.TOGGLE));
       return _this;
     }
 
@@ -2682,7 +2797,7 @@
     };
 
     _proto.select = function select(x) {
-      var children = this._element.querySelectorAll(Selector$e.CHILD);
+      var children = this._element.querySelectorAll(Selector$f.CHILD);
 
       var _filterElements = filterElements(children, x),
           targets = _filterElements[0],
@@ -2702,22 +2817,22 @@
 
     _proto.filter = function filter(x) {
       if (!x) {
-        var _children = this._element.querySelectorAll(Selector$e.CHILD_MISMATCHED);
+        var _children = this._element.querySelectorAll(Selector$f.CHILD_MISMATCHED);
 
         walk(_children, function (child) {
-          return child.classList.remove(ClassName$e.MISMATCHED);
+          return child.classList.remove(ClassName$f.MISMATCHED);
         });
         return this;
       }
 
-      var children = this._element.querySelectorAll(Selector$e.CHILD);
+      var children = this._element.querySelectorAll(Selector$f.CHILD);
 
       x = x.toLowerCase();
       walk(children, function (child) {
         if (child.innerText.toLowerCase().indexOf(x) === -1) {
-          child.classList.add(ClassName$e.MISMATCHED);
+          child.classList.add(ClassName$f.MISMATCHED);
         } else {
-          child.classList.remove(ClassName$e.MISMATCHED);
+          child.classList.remove(ClassName$f.MISMATCHED);
         }
       });
 
@@ -2728,27 +2843,27 @@
     ;
 
     SelectInput.find = function find(scope) {
-      return _Input.find.call(this, scope, Selector$e.INPUT);
+      return _Input.find.call(this, scope, Selector$f.INPUT);
     };
 
     SelectInput.initialize = function initialize(element) {
-      _Input.initialize.call(this, element, TYPE$e, SelectInput);
+      _Input.initialize.call(this, element, TYPE$f, SelectInput);
     };
 
     SelectInput.getValue = function getValue(element) {
-      return _Input.getValue.call(this, element, TYPE$e);
+      return _Input.getValue.call(this, element, TYPE$f);
     };
 
     SelectInput.subscribe = function subscribe(element, callback) {
-      _Input.subscribe.call(this, element, callback, TYPE$e);
+      _Input.subscribe.call(this, element, callback, TYPE$f);
     };
 
     SelectInput.unsubscribe = function unsubscribe(element) {
-      _Input.unsubscribe.call(this, element, TYPE$e);
+      _Input.unsubscribe.call(this, element, TYPE$f);
     };
 
     SelectInput.receiveMessage = function receiveMessage(element, message) {
-      _Input.receiveMessage.call(this, element, message, TYPE$e);
+      _Input.receiveMessage.call(this, element, message, TYPE$f);
     };
 
     SelectInput.ShinyInterface = function ShinyInterface() {
@@ -2759,40 +2874,40 @@
   }(Input); // events ----
 
 
-  $(document).on(Event$e.CLICK, Selector$e.INPUT_INACTIVE_CHILD, function (event) {
-    var select = findClosest(event.target, Selector$e.INPUT);
-    var selectInput = Store.getData(select, TYPE$e);
+  $(document).on(Event$f.CLICK, Selector$f.INPUT_INACTIVE_CHILD, function (event) {
+    var select = findClosest(event.target, Selector$f.INPUT);
+    var selectInput = Store.getData(select, TYPE$f);
 
     if (!selectInput) {
       return;
     }
 
-    var item = findClosest(event.target, Selector$e.CHILD);
+    var item = findClosest(event.target, Selector$f.CHILD);
     selectInput.select(item);
   });
-  $(document).on(Event$e.INPUT, Selector$e.INPUT_TOGGLE, function (event) {
-    var select = findClosest(event.target, Selector$e.INPUT);
-    var selectInput = Store.getData(select, TYPE$e);
+  $(document).on(Event$f.INPUT, Selector$f.INPUT_TOGGLE, function (event) {
+    var select = findClosest(event.target, Selector$f.INPUT);
+    var selectInput = Store.getData(select, TYPE$f);
 
     if (!selectInput) {
       return;
     }
 
-    var toggle = findClosest(event.target, Selector$e.TOGGLE);
+    var toggle = findClosest(event.target, Selector$f.TOGGLE);
     selectInput.filter(toggle.value);
   });
-  $(document).on(Event$e.MENU_OPEN, Selector$e.INPUT, function (event) {
-    var select = findClosest(event.target, Selector$e.INPUT);
-    var toggle = select.querySelector(Selector$e.TOGGLE);
+  $(document).on(Event$f.MENU_OPEN, Selector$f.INPUT, function (event) {
+    var select = findClosest(event.target, Selector$f.INPUT);
+    var toggle = select.querySelector(Selector$f.TOGGLE);
     toggle.focus();
     toggle.select();
     toggle.classList.add("disabled");
   });
-  $(document).on(Event$e.MENU_CLOSE, Selector$e.INPUT, function (event) {
-    var select = findClosest(event.target, Selector$e.INPUT);
-    var toggle = select.querySelector(Selector$e.TOGGLE);
+  $(document).on(Event$f.MENU_CLOSE, Selector$f.INPUT, function (event) {
+    var select = findClosest(event.target, Selector$f.INPUT);
+    var toggle = select.querySelector(Selector$f.TOGGLE);
     toggle.classList.remove("disabled");
-    var selectInput = Store.getData(select, TYPE$e);
+    var selectInput = Store.getData(select, TYPE$f);
 
     if (!selectInput) {
       return;
@@ -2803,25 +2918,25 @@
   });
 
   if (Shiny) {
-    Shiny.inputBindings.register(SelectInput.ShinyInterface(), TYPE$e);
+    Shiny.inputBindings.register(SelectInput.ShinyInterface(), TYPE$f);
   }
 
-  var NAME$f = "text";
-  var TYPE$f = "yonder." + NAME$f;
-  var POLICY$1 = "debounce";
-  var DELAY$1 = 450;
-  var ClassName$f = {
+  var NAME$g = "text";
+  var TYPE$g = "yonder." + NAME$g;
+  var POLICY$2 = "debounce";
+  var DELAY$2 = 450;
+  var ClassName$g = {
     INPUT: "yonder-text",
     CHILD: "form-control"
   };
-  var Selector$f = {
-    INPUT: "." + ClassName$f.INPUT,
-    CHILD: "." + ClassName$f.CHILD,
-    INPUT_CHILD: "." + ClassName$f.INPUT + " ." + ClassName$f.CHILD
+  var Selector$g = {
+    INPUT: "." + ClassName$g.INPUT,
+    CHILD: "." + ClassName$g.CHILD,
+    INPUT_CHILD: "." + ClassName$g.INPUT + " ." + ClassName$g.CHILD
   };
-  var Event$f = {
+  var Event$g = {
     // CHANGE: `change.${ TYPE }`
-    INPUT: "input." + TYPE$f
+    INPUT: "input." + TYPE$g
   };
 
   var TextInput =
@@ -2833,7 +2948,7 @@
     function TextInput(element) {
       var _this;
 
-      _this = _Input.call(this, element, TYPE$f) || this;
+      _this = _Input.call(this, element, TYPE$g) || this;
       _this._debounce = true;
       return _this;
     }
@@ -2854,15 +2969,15 @@
     ;
 
     TextInput.initialize = function initialize(element) {
-      _Input.initialize.call(this, element, TYPE$f, TextInput);
+      _Input.initialize.call(this, element, TYPE$g, TextInput);
     };
 
     TextInput.find = function find(scope) {
-      return _Input.find.call(this, scope, Selector$f.INPUT);
+      return _Input.find.call(this, scope, Selector$g.INPUT);
     };
 
     TextInput.getValue = function getValue(element) {
-      return _Input.getValue.call(this, element, TYPE$f);
+      return _Input.getValue.call(this, element, TYPE$g);
     };
 
     TextInput.getRatePolicy = function getRatePolicy() {
@@ -2873,11 +2988,11 @@
     };
 
     TextInput.subscribe = function subscribe(element, callback) {
-      _Input.subscribe.call(this, element, callback, TYPE$f);
+      _Input.subscribe.call(this, element, callback, TYPE$g);
     };
 
     TextInput.unsubscribe = function unsubscribe(element) {
-      _Input.unsubscribe.call(this, element, TYPE$f);
+      _Input.unsubscribe.call(this, element, TYPE$g);
     };
 
     TextInput.ShinyInterface = function ShinyInterface() {
@@ -2887,12 +3002,12 @@
     _createClass(TextInput, null, [{
       key: "POLICY",
       get: function get() {
-        return POLICY$1;
+        return POLICY$2;
       }
     }, {
       key: "DELAY",
       get: function get() {
-        return DELAY$1;
+        return DELAY$2;
       }
     }]);
 
@@ -2900,9 +3015,9 @@
   }(Input); // events ----
 
 
-  $(document).on(Event$f.INPUT, Selector$f.INPUT_CHILD, function (event) {
-    var text = findClosest(event.target, Selector$f.INPUT);
-    var textInput = Store.getData(text, TYPE$f);
+  $(document).on(Event$g.INPUT, Selector$g.INPUT_CHILD, function (event) {
+    var text = findClosest(event.target, Selector$g.INPUT);
+    var textInput = Store.getData(text, TYPE$g);
 
     if (!textInput) {
       return;
@@ -2913,7 +3028,7 @@
   });
 
   if (Shiny) {
-    Shiny.inputBindings.register(TextInput.ShinyInterface(), TYPE$f);
+    Shiny.inputBindings.register(TextInput.ShinyInterface(), TYPE$g);
   }
 
   /*
@@ -2938,6 +3053,7 @@
     ListGroupInput: ListGroupInput,
     MenuInput: MenuInput,
     NavInput: NavInput,
+    NumberInput: NumberInput,
     RadioInput: RadioInput,
     RadiobarInput: RadiobarInput,
     RangeInput: RangeInput,
