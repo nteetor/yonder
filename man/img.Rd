@@ -15,7 +15,7 @@ figure(image, caption = NULL, ...)
 \item{...}{Additional tag elements or named arguments passed as HTML attributes
 to the parent element.}
 
-\item{image}{An \code{<img>} tag, typically a call to \code{img}.}
+\item{image}{An \verb{<img>} tag, typically a call to \code{img}.}
 
 \item{caption}{A character string specifying the image caption, defaults to
 \code{NULL}.}
@@ -26,12 +26,19 @@ A small update to \code{tags$img} and \code{tags$figure}. Create responsive imag
 caption.
 }
 \seealso{
-Other components: \code{\link{alert}}, \code{\link{badge}},
-  \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{collapsePane}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{jumbotron}},
-  \code{\link{modal}}, \code{\link{navContent}},
-  \code{\link{popover}}, \code{\link{pre}},
-  \code{\link{toast}}
+Other components: 
+\code{\link{alert}()},
+\code{\link{badge}()},
+\code{\link{blockquote}()},
+\code{\link{card}()},
+\code{\link{collapsePane}()},
+\code{\link{d1}()},
+\code{\link{dropdown}()},
+\code{\link{jumbotron}()},
+\code{\link{modal}()},
+\code{\link{navContent}()},
+\code{\link{popover}()},
+\code{\link{pre}()},
+\code{\link{toast}()}
 }
 \concept{components}

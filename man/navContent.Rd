@@ -40,7 +40,7 @@ when you do not have a new pane to show, but want to hide the current active
 pane.
 }
 \section{App with pills}{
-\preformatted{ui <- container(
+\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   navInput(
     id = "tabs",
     choices = paste("Tab", 1:3),
@@ -74,18 +74,18 @@ pane.
   )
 )
 
-server <- function(input, output) {
-  observeEvent(input$tabs, {
+server <- function(input, output) \{
+  observeEvent(input$tabs, \{
     showNavPane(input$tabs)
-  })
-}
+  \})
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{App with dropdown}{
-\preformatted{ui <- container(
+\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   navInput(
     id = "tabs",
     choices = list(
@@ -122,24 +122,24 @@ shinyApp(ui, server)
   )
 )
 
-server <- function(input, output) {
-  observeEvent(input$tabs, {
+server <- function(input, output) \{
+  observeEvent(input$tabs, \{
     showNavPane(input$tabs)
-  })
+  \})
 
-  observeEvent(c(input$action, input$another), {
-    if (input$action > 0 || input$another > 0) {
+  observeEvent(c(input$action, input$another), \{
+    if (input$action > 0 || input$another > 0) \{
       showNavPane("pane2")
-    }
-  })
-}
+    \}
+  \})
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{App with multiple sets of panes}{
-\preformatted{ui <- container(
+\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   navInput(
     id = "tabs",
     choices = paste("Tab", 1:3),
@@ -195,15 +195,15 @@ shinyApp(ui, server)
   )
 )
 
-server <- function(input, output) {
-  observeEvent(input$tabs, {
+server <- function(input, output) \{
+  observeEvent(input$tabs, \{
     showNavPane(paste0(input$tabs, "_1"))
     showNavPane(paste0(input$tabs, "_2"))
-  })
-}
+  \})
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{
@@ -215,12 +215,19 @@ shinyApp(ui, server)
 
 }
 \seealso{
-Other components: \code{\link{alert}}, \code{\link{badge}},
-  \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{collapsePane}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{img}},
-  \code{\link{jumbotron}}, \code{\link{modal}},
-  \code{\link{popover}}, \code{\link{pre}},
-  \code{\link{toast}}
+Other components: 
+\code{\link{alert}()},
+\code{\link{badge}()},
+\code{\link{blockquote}()},
+\code{\link{card}()},
+\code{\link{collapsePane}()},
+\code{\link{d1}()},
+\code{\link{dropdown}()},
+\code{\link{img}()},
+\code{\link{jumbotron}()},
+\code{\link{modal}()},
+\code{\link{popover}()},
+\code{\link{pre}()},
+\code{\link{toast}()}
 }
 \concept{components}

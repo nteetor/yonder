@@ -8,8 +8,12 @@
 \usage{
 toast(header, ...)
 
-showToast(toast, duration = 4, action = NULL,
-  session = getDefaultReactiveDomain())
+showToast(
+  toast,
+  duration = 4,
+  action = NULL,
+  session = getDefaultReactiveDomain()
+)
 
 closeToast(session = getDefaultReactiveDomain())
 }
@@ -41,7 +45,7 @@ the \code{toast()} function. Display toasts with \code{showToast()} and remove a
 active toasts with \code{closeToast()}.
 }
 \section{Showing notifications}{
-\preformatted{ui <- container(
+\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   buttonInput(
     id = "show",
     label = "Show notification"
@@ -49,8 +53,8 @@ active toasts with \code{closeToast()}.
     margin(3)
 )
 
-server <- function(input, output) {
-  observeEvent(input$show, {
+server <- function(input, output) \{
+  observeEvent(input$show, \{
     showToast(
       toast(
         list(
@@ -63,18 +67,18 @@ server <- function(input, output) {
       ) \%>\%
         margin(right = 2, top = 2)
     )
-  })
-}
+  \})
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{Reacting to notifications}{
 
 
 When a notification is not automatically closed you may want to know
-when the notification is manually closed.\preformatted{ui <- container(
+when the notification is manually closed.\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   buttonInput(
     id = "show",
     label = "Show notification"
@@ -82,8 +86,8 @@ when the notification is manually closed.\preformatted{ui <- container(
     margin(3)
 )
 
-server <- function(input, output) {
-  observeEvent(input$show, {
+server <- function(input, output) \{
+  observeEvent(input$show, \{
     showToast(
       action = "undo",
       duration = NULL,
@@ -94,15 +98,15 @@ server <- function(input, output) {
       ) \%>\%
         margin(right = 2, top = 2)
     )
-  })
+  \})
 
-  observeEvent(input$undo, {
+  observeEvent(input$undo, \{
     print("The notification was closed")
-  })
-}
+  \})
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{
@@ -134,12 +138,19 @@ toast(
 
 }
 \seealso{
-Other components: \code{\link{alert}}, \code{\link{badge}},
-  \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{collapsePane}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{img}},
-  \code{\link{jumbotron}}, \code{\link{modal}},
-  \code{\link{navContent}}, \code{\link{popover}},
-  \code{\link{pre}}
+Other components: 
+\code{\link{alert}()},
+\code{\link{badge}()},
+\code{\link{blockquote}()},
+\code{\link{card}()},
+\code{\link{collapsePane}()},
+\code{\link{d1}()},
+\code{\link{dropdown}()},
+\code{\link{img}()},
+\code{\link{jumbotron}()},
+\code{\link{modal}()},
+\code{\link{navContent}()},
+\code{\link{popover}()},
+\code{\link{pre}()}
 }
 \concept{components}

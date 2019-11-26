@@ -5,12 +5,27 @@
 \alias{updateMenuInput}
 \title{Menu inputs}
 \usage{
-menuInput(id, label, choices = NULL, values = choices,
-  selected = NULL, ..., direction = "down", align = "left")
+menuInput(
+  id,
+  label,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  ...,
+  direction = "down",
+  align = "left"
+)
 
-updateMenuInput(id, label = NULL, choices = NULL, values = choices,
-  selected = NULL, enable = NULL, disable = NULL,
-  session = getDefaultReactiveDomain())
+updateMenuInput(
+  id,
+  label = NULL,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  enable = NULL,
+  disable = NULL,
+  session = getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -88,13 +103,20 @@ navInput(
 
 }
 \seealso{
-Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{chipInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{listGroupInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{radiobarInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: 
+\code{\link{buttonGroupInput}()},
+\code{\link{buttonInput}()},
+\code{\link{checkbarInput}()},
+\code{\link{checkboxInput}()},
+\code{\link{chipInput}()},
+\code{\link{fileInput}()},
+\code{\link{formInput}()},
+\code{\link{listGroupInput}()},
+\code{\link{navInput}()},
+\code{\link{radioInput}()},
+\code{\link{radiobarInput}()},
+\code{\link{rangeInput}()},
+\code{\link{selectInput}()},
+\code{\link{textInput}()}
 }
 \concept{inputs}

@@ -40,7 +40,7 @@ collapsible pane first wrap the pane in another element and add padding to
 this new element.
 }
 \section{App with collapse}{
-\preformatted{ui <- container(
+\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   buttonInput(
     id = "demo",
     label = "Toggle collapse"
@@ -59,14 +59,14 @@ this new element.
   )
 )
 
-server <- function(input, output) {
-  observeEvent(input$demo, {
+server <- function(input, output) \{
+  observeEvent(input$demo, \{
     toggleCollapsePane("collapse")
-  })
-}
+  \})
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{
@@ -78,12 +78,19 @@ shinyApp(ui, server)
 
 }
 \seealso{
-Other components: \code{\link{alert}}, \code{\link{badge}},
-  \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{d1}}, \code{\link{dropdown}},
-  \code{\link{img}}, \code{\link{jumbotron}},
-  \code{\link{modal}}, \code{\link{navContent}},
-  \code{\link{popover}}, \code{\link{pre}},
-  \code{\link{toast}}
+Other components: 
+\code{\link{alert}()},
+\code{\link{badge}()},
+\code{\link{blockquote}()},
+\code{\link{card}()},
+\code{\link{d1}()},
+\code{\link{dropdown}()},
+\code{\link{img}()},
+\code{\link{jumbotron}()},
+\code{\link{modal}()},
+\code{\link{navContent}()},
+\code{\link{popover}()},
+\code{\link{pre}()},
+\code{\link{toast}()}
 }
 \concept{components}

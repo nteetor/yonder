@@ -7,9 +7,14 @@
 \usage{
 buttonGroupInput(id, choices = NULL, values = choices, ...)
 
-updateButtonGroupInput(id, choices = NULL, values = choices,
-  enable = NULL, disable = NULL,
-  session = getDefaultReactiveDomain())
+updateButtonGroupInput(
+  id,
+  choices = NULL,
+  values = choices,
+  enable = NULL,
+  disable = NULL,
+  session = getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -55,13 +60,20 @@ buttonGroupInput(
 
 }
 \seealso{
-Other inputs: \code{\link{buttonInput}},
-  \code{\link{checkbarInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{radiobarInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: 
+\code{\link{buttonInput}()},
+\code{\link{checkbarInput}()},
+\code{\link{checkboxInput}()},
+\code{\link{chipInput}()},
+\code{\link{fileInput}()},
+\code{\link{formInput}()},
+\code{\link{listGroupInput}()},
+\code{\link{menuInput}()},
+\code{\link{navInput}()},
+\code{\link{radioInput}()},
+\code{\link{radiobarInput}()},
+\code{\link{rangeInput}()},
+\code{\link{selectInput}()},
+\code{\link{textInput}()}
 }
 \concept{inputs}
