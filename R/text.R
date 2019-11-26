@@ -4,7 +4,6 @@ possible_types <- c(
   "datetime-local",
   "email",
   "month",
-  "number",
   "password",
   "search",
   "tel",
@@ -38,10 +37,6 @@ roxy_param_type <- function() {
 #' input allows you to include static prefixes or buttons with a standard text
 #' input.
 #'
-#' `numberInput()` is a simple wrapper around `textInput()` with `type` set to
-#' `"number"` and explicit arguments for specifying a min value, max value, and
-#' the step amount. Use `updateTextInput()` to update a number input.
-#'
 #' @inheritParams checkboxInput
 #'
 #' @inheritParams selectInput
@@ -54,15 +49,6 @@ roxy_param_type <- function() {
 #'
 #' @eval roxy_param_type()
 #'
-#' @param min A number specifying the minimum allowed value of the number input,
-#'   defaults to `NULL`.
-#'
-#' @param max A number specifying the maximum allowed value of the number input,
-#'   defaults to `NULL`.
-#'
-#' @param step A number specifying the increment step of the number input,
-#'   defaults to 1.
-#'
 #' @family inputs
 #' @export
 #' @examples
@@ -70,19 +56,6 @@ roxy_param_type <- function() {
 #' ### Default text input
 #'
 #' textInput(id = "text")
-#'
-#' ### Default number input
-#'
-#' numberInput(id = "num1")
-#'
-#' ### Specify `min`, `max`, and `step`
-#'
-#' numberInput(
-#'   id = "num2",
-#'   min = 1,
-#'   max = 10,
-#'   step = 2
-#' )
 #'
 textInput <- function(id, value = NULL, placeholder = NULL, ...,
                       type = "text") {
@@ -106,28 +79,6 @@ textInput <- function(id, value = NULL, placeholder = NULL, ...,
     )
   })
 }
-
-#' @rdname textInput
-#' @export
-numberInput <- function(id, value = NULL, placeholder = NULL, ..., min = NULL,
-                        max = NULL, step = 1) {
-  assert_id()
-
-  dep_attach({
-    component <- textInput(
-      id = id, value = value, placeholder = placeholder, ...,
-      type = "number"
-    )
-
-    component$children[[1]] <- tag_attributes_add(
-      component$children[[1]],
-      drop_nulls(list(min = min, max = max, step = step))
-    )
-
-    component
-  })
-}
-
 
 #' @rdname textInput
 #' @export
