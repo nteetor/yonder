@@ -6,8 +6,15 @@
 \alias{closeModal}
 \title{Modal dialogs}
 \usage{
-modal(id, ..., header = NULL, footer = NULL, center = FALSE,
-  size = "md", fade = TRUE)
+modal(
+  id,
+  ...,
+  header = NULL,
+  footer = NULL,
+  center = FALSE,
+  size = "md",
+  fade = TRUE
+)
 
 showModal(modal, session = getDefaultReactiveDomain())
 
@@ -50,7 +57,7 @@ closed. Additionally, when \code{id} is not \code{NULL} observers and reactives 
 watch for the modal's close event.
 }
 \section{Example application}{
-\preformatted{ui <- container(
+\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   buttonInput(
     id = "open",
     "Open modal",
@@ -58,7 +65,7 @@ watch for the modal's close event.
   )
 )
 
-server <- function(input, output) {
+server <- function(input, output) \{
   modal1 <- modal(
     title = "A simple modal",
     p(
@@ -69,13 +76,13 @@ server <- function(input, output) {
     )
   )
 
-  observeEvent(input$open, ignoreInit = TRUE, {
+  observeEvent(input$open, ignoreInit = TRUE, \{
     showModal(modal1)
-  })
-}
+  \})
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{
@@ -108,12 +115,19 @@ modal(
 
 }
 \seealso{
-Other components: \code{\link{alert}}, \code{\link{badge}},
-  \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{collapsePane}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{img}},
-  \code{\link{jumbotron}}, \code{\link{navContent}},
-  \code{\link{popover}}, \code{\link{pre}},
-  \code{\link{toast}}
+Other components: 
+\code{\link{alert}()},
+\code{\link{badge}()},
+\code{\link{blockquote}()},
+\code{\link{card}()},
+\code{\link{collapsePane}()},
+\code{\link{d1}()},
+\code{\link{dropdown}()},
+\code{\link{img}()},
+\code{\link{jumbotron}()},
+\code{\link{navContent}()},
+\code{\link{popover}()},
+\code{\link{pre}()},
+\code{\link{toast}()}
 }
 \concept{components}

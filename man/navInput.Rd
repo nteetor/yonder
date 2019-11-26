@@ -5,12 +5,25 @@
 \alias{updateNavInput}
 \title{Page navigation inputs}
 \usage{
-navInput(id, choices = NULL, values = choices,
-  selected = values[[1]], ..., appearance = "links", fill = FALSE)
+navInput(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = values[[1]],
+  ...,
+  appearance = "links",
+  fill = FALSE
+)
 
-updateNavInput(id, choices = NULL, values = choices, selected = NULL,
-  enable = NULL, disable = NULL,
-  session = getDefaultReactiveDomain())
+updateNavInput(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  enable = NULL,
+  disable = NULL,
+  session = getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -54,7 +67,7 @@ menus in the nav input must be retrieved with its own reactive id.
 \section{Including a menu}{
 
 
-Use the reactive id of any nav menus to know when a menu item is clicked.\preformatted{ui <- navInput(
+Use the reactive id of any nav menus to know when a menu item is clicked.\if{html}{\out{<div class="R">}}\preformatted{ui <- navInput(
   id = "navigation",
   choices = list(
     "Item 1",
@@ -68,14 +81,14 @@ Use the reactive id of any nav menus to know when a menu item is clicked.\prefor
   values = c("item1", "item2", "item3")
 )
 
-server <- function(input, output) {
-  observeEvent(input$navMenu, {
-    cat(paste("Click menu item:", input$navMenu, "\n"))
-  })
-}
+server <- function(input, output) \{
+  observeEvent(input$navMenu, \{
+    cat(paste("Click menu item:", input$navMenu, "\\n"))
+  \})
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{
@@ -141,13 +154,20 @@ navInput(
 
 }
 \seealso{
-Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{chipInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{listGroupInput}}, \code{\link{menuInput}},
-  \code{\link{radioInput}}, \code{\link{radiobarInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: 
+\code{\link{buttonGroupInput}()},
+\code{\link{buttonInput}()},
+\code{\link{checkbarInput}()},
+\code{\link{checkboxInput}()},
+\code{\link{chipInput}()},
+\code{\link{fileInput}()},
+\code{\link{formInput}()},
+\code{\link{listGroupInput}()},
+\code{\link{menuInput}()},
+\code{\link{radioInput}()},
+\code{\link{radiobarInput}()},
+\code{\link{rangeInput}()},
+\code{\link{selectInput}()},
+\code{\link{textInput}()}
 }
 \concept{inputs}

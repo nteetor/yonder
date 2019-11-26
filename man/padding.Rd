@@ -5,11 +5,9 @@
 \alias{margin}
 \title{Margin and padding}
 \usage{
-padding(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
-  left = NULL)
+padding(tag, all = NULL, top = NULL, right = NULL, bottom = NULL, left = NULL)
 
-margin(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
-  left = NULL)
+margin(tag, all = NULL, top = NULL, right = NULL, bottom = NULL, left = NULL)
 }
 \arguments{
 \item{tag}{A tag element.}
@@ -108,11 +106,17 @@ formInput(
 
 }
 \seealso{
-Other design utilities: \code{\link{active}},
-  \code{\link{affix}}, \code{\link{background}},
-  \code{\link{border}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{font}},
-  \code{\link{height}}, \code{\link{scroll}},
-  \code{\link{shadow}}, \code{\link{width}}
+Other design utilities: 
+\code{\link{active}()},
+\code{\link{affix}()},
+\code{\link{background}()},
+\code{\link{border}()},
+\code{\link{display}()},
+\code{\link{float}()},
+\code{\link{font}()},
+\code{\link{height}()},
+\code{\link{scroll}()},
+\code{\link{shadow}()},
+\code{\link{width}()}
 }
 \concept{design utilities}

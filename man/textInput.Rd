@@ -10,17 +10,45 @@
 \usage{
 textInput(id, value = NULL, placeholder = NULL, ..., type = "text")
 
-numberInput(id, value = NULL, placeholder = NULL, ..., min = NULL,
-  max = NULL, step = 1)
+numberInput(
+  id,
+  value = NULL,
+  placeholder = NULL,
+  ...,
+  min = NULL,
+  max = NULL,
+  step = 1
+)
 
-updateTextInput(id, value = NULL, enable = NULL, disable = NULL,
-  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+updateTextInput(
+  id,
+  value = NULL,
+  enable = NULL,
+  disable = NULL,
+  valid = NULL,
+  invalid = NULL,
+  session = getDefaultReactiveDomain()
+)
 
-groupTextInput(id, value = NULL, placeholder = NULL, ...,
-  type = "text", left = NULL, right = NULL)
+groupTextInput(
+  id,
+  value = NULL,
+  placeholder = NULL,
+  ...,
+  type = "text",
+  left = NULL,
+  right = NULL
+)
 
-updateGroupTextInput(id, value = NULL, enable = NULL, disable = NULL,
-  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+updateGroupTextInput(
+  id,
+  value = NULL,
+  enable = NULL,
+  disable = NULL,
+  valid = NULL,
+  invalid = NULL,
+  session = getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -144,13 +172,20 @@ numberInput(
 
 }
 \seealso{
-Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{chipInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{listGroupInput}}, \code{\link{menuInput}},
-  \code{\link{navInput}}, \code{\link{radioInput}},
-  \code{\link{radiobarInput}}, \code{\link{rangeInput}},
-  \code{\link{selectInput}}
+Other inputs: 
+\code{\link{buttonGroupInput}()},
+\code{\link{buttonInput}()},
+\code{\link{checkbarInput}()},
+\code{\link{checkboxInput}()},
+\code{\link{chipInput}()},
+\code{\link{fileInput}()},
+\code{\link{formInput}()},
+\code{\link{listGroupInput}()},
+\code{\link{menuInput}()},
+\code{\link{navInput}()},
+\code{\link{radioInput}()},
+\code{\link{radiobarInput}()},
+\code{\link{rangeInput}()},
+\code{\link{selectInput}()}
 }
 \concept{inputs}

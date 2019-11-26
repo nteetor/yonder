@@ -21,7 +21,7 @@ element.}
 \description{
 An application may require dynamic content. This content may be quite simple.
 The content could also be quite variable. These tools are an alternative to
-the standard \code{output} related \code{render*()} functions.
+the standard \code{output} related \verb{render*()} functions.
 }
 \details{
 These functions are experimental and are subject to change. Additionally,

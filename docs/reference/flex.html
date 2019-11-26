@@ -23,15 +23,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -61,7 +59,6 @@ are treated as flex items." />
 <![endif]-->
 
 
-
   </head>
 
   <body>
@@ -78,7 +75,7 @@ are treated as flex items." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">yonder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -119,7 +116,6 @@ are treated as flex items." />
 </div><!--/.navbar -->
 
       
-
       </header>
 
 <div class="row">
@@ -139,8 +135,14 @@ are treated as flex items.</p>
     
     </div>
 
-    <pre class="usage"><span class='fu'>flex</span>(<span class='no'>tag</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>justify</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>align</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)</pre>
+    <pre class="usage"><span class='fu'>flex</span>(
+  <span class='no'>tag</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>justify</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>align</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>wrap</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>reverse</span> <span class='kw'>=</span> <span class='kw'>NULL</span>
+)</pre>
     
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -188,9 +190,12 @@ to top when <code>direction</code> is <code>"column"</code>.</p></td>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other layout functions: <code><a href='column.html'>column</a></code>,
-  <code><a href='fieldset.html'>fieldset</a></code>, <code><a href='navbar.html'>navbar</a></code>,
-  <code><a href='responsive.html'>responsive</a></code>, <code><a href='webpage.html'>webpage</a></code></p></div>
+    <div class='dont-index'><p>Other layout functions: 
+<code><a href='column.html'>column</a>()</code>,
+<code><a href='fieldset.html'>fieldset</a>()</code>,
+<code><a href='navbar.html'>navbar</a>()</code>,
+<code><a href='responsive.html'>responsive</a></code>,
+<code><a href='webpage.html'>webpage</a>()</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -215,7 +220,7 @@ to top when <code>direction</code> is <code>"column"</code>.</p></td>
 ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='display.html'>display</a></span>(<span class='st'>"flex"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'>flex</span>(
-    <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'><a href='https://rdrr.io/r/base/list.html'>list</a></span>(<span class='kw'>xs</span> <span class='kw'>=</span> <span class='st'>"column"</span>, <span class='kw'>md</span> <span class='kw'>=</span> <span class='st'>"row"</span>)  <span class='co'># &lt;-</span>
+    <span class='kw'>direction</span> <span class='kw'>=</span> <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/list'>list</a></span>(<span class='kw'>xs</span> <span class='kw'>=</span> <span class='st'>"column"</span>, <span class='kw'>md</span> <span class='kw'>=</span> <span class='st'>"row"</span>)  <span class='co'># &lt;-</span>
   ) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='background.html'>background</a></span>(<span class='st'>"grey"</span>) <span class='kw'>%&gt;%</span>
   <span class='fu'><a href='border.html'>border</a></span>()</div><div class='output co'>#&gt; &lt;div class="d-flex flex-column flex-md-row bg-grey border"&gt;
@@ -251,7 +256,7 @@ to top when <code>direction</code> is <code>"column"</code>.</p></td>
 <span class='co'># beginning of their parent container.</span>
 
 <span class='fu'>div</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(
     <span class='fu'>div</span>(<span class='st'>"A flex item"</span>) <span class='kw'>%&gt;%</span>
       <span class='fu'><a href='padding.html'>padding</a></span>(<span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
       <span class='fu'><a href='border.html'>border</a></span>(),
@@ -270,7 +275,7 @@ to top when <code>direction</code> is <code>"column"</code>.</p></td>
 <span class='co'># We can also push items to the **end**.</span>
 
 <span class='fu'>div</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(
     <span class='fu'>div</span>(<span class='st'>"A flex item"</span>) <span class='kw'>%&gt;%</span>
       <span class='fu'><a href='padding.html'>padding</a></span>(<span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
       <span class='fu'><a href='border.html'>border</a></span>(),
@@ -289,7 +294,7 @@ to top when <code>direction</code> is <code>"column"</code>.</p></td>
 <span class='co'># Without using a table layout we can **center** items.</span>
 
 <span class='fu'>div</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(
     <span class='fu'>div</span>(<span class='st'>"A flex item"</span>) <span class='kw'>%&gt;%</span>
       <span class='fu'><a href='padding.html'>padding</a></span>(<span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
       <span class='fu'><a href='border.html'>border</a></span>(),
@@ -308,7 +313,7 @@ to top when <code>direction</code> is <code>"column"</code>.</p></td>
 <span class='co'># You can also put space **between** items</span>
 
 <span class='fu'>div</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(
     <span class='fu'>div</span>(<span class='st'>"A flex item"</span>) <span class='kw'>%&gt;%</span>
       <span class='fu'><a href='padding.html'>padding</a></span>(<span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
       <span class='fu'><a href='border.html'>border</a></span>(),
@@ -327,7 +332,7 @@ to top when <code>direction</code> is <code>"column"</code>.</p></td>
 <span class='co'># ... or put space **around** items.</span>
 
 <span class='fu'>div</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(
     <span class='fu'>div</span>(<span class='st'>"A flex item"</span>) <span class='kw'>%&gt;%</span>
       <span class='fu'><a href='padding.html'>padding</a></span>(<span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
       <span class='fu'><a href='border.html'>border</a></span>(),
@@ -351,7 +356,7 @@ to top when <code>direction</code> is <code>"column"</code>.</p></td>
 <span class='co'># Using flexbox we can also control how items wrap onto new lines.</span>
 
 <span class='fu'>div</span>(
-  <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>replicate</a></span>(
+  <span class='fu'><a href='https://www.rdocumentation.org/packages/base/topics/lapply'>replicate</a></span>(
     <span class='fu'>div</span>(<span class='st'>"A flex item"</span>) <span class='kw'>%&gt;%</span>
       <span class='fu'><a href='padding.html'>padding</a></span>(<span class='fl'>3</span>) <span class='kw'>%&gt;%</span>
       <span class='fu'><a href='border.html'>border</a></span>(),
@@ -382,23 +387,19 @@ to top when <code>direction</code> is <code>"column"</code>.</p></td>
   </div>
 </div>
 
-
       <footer>
       <div class="copyright">
   <p>Developed by Nathan Teetor.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
-
       </footer>
    </div>
 
   
 
-
   </body>
 </html>
-
 

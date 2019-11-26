@@ -10,8 +10,7 @@ formInput(id, ..., inline = FALSE)
 
 formSubmit(label, value = label, ...)
 
-updateFormInput(id, submit = FALSE,
-  session = getDefaultReactiveDomain())
+updateFormInput(id, submit = FALSE, session = getDefaultReactiveDomain())
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -54,7 +53,7 @@ to \code{formInput()}.
 }
 \details{
 When \code{inline} is \code{TRUE} you may want to adjust the right margin of each child
-element for viewports larger than mobile, \code{margin(<TAG>, right = c(sm = 2))},
+element for viewports larger than mobile, \verb{margin(<TAG>, right = c(sm = 2))},
 see \code{\link[=margin]{margin()}}. You only need to apply extra space for larger viewports
 because inline forms do not take effect on small viewports.
 
@@ -62,7 +61,7 @@ Use \code{updateFormInput()} to submit a form input. This will cause all the for
 child inputs to update.
 }
 \section{Frozen inputs with scope}{
-\preformatted{ui <- container(
+\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   formInput(
     id = "login",
     formGroup(
@@ -85,17 +84,17 @@ child inputs to update.
   )
 )
 
-server <- function(input, output) {
+server <- function(input, output) \{
   # Will not react until the form submit button is
   # clicked.
-  observe({
+  observe(\{
     print(input$email)
     print(input$password)
-  })
-}
+  \})
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{
@@ -122,13 +121,20 @@ card(
 
 }
 \seealso{
-Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{chipInput}},
-  \code{\link{fileInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{radiobarInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: 
+\code{\link{buttonGroupInput}()},
+\code{\link{buttonInput}()},
+\code{\link{checkbarInput}()},
+\code{\link{checkboxInput}()},
+\code{\link{chipInput}()},
+\code{\link{fileInput}()},
+\code{\link{listGroupInput}()},
+\code{\link{menuInput}()},
+\code{\link{navInput}()},
+\code{\link{radioInput}()},
+\code{\link{radiobarInput}()},
+\code{\link{rangeInput}()},
+\code{\link{selectInput}()},
+\code{\link{textInput}()}
 }
 \concept{inputs}

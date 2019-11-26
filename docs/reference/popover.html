@@ -23,15 +23,13 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha256-eZrrJcwDc/3uDhsdt61sL2oOBY362qM3lon1gyExkL0=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<!-- sticky kit -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -61,7 +59,6 @@ hints to the users. Popovers are hidden with closePopover()." />
 <![endif]-->
 
 
-
   </head>
 
   <body>
@@ -78,7 +75,7 @@ hints to the users. Popovers are hidden with closePopover()." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">yonder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.0</span>
       </span>
     </div>
 
@@ -119,7 +116,6 @@ hints to the users. Popovers are hidden with closePopover()." />
 </div><!--/.navbar -->
 
       
-
       </header>
 
 <div class="row">
@@ -141,8 +137,13 @@ hints to the users. Popovers are hidden with <code>closePopover()</code>.</p>
 
     <pre class="usage"><span class='fu'>popover</span>(<span class='no'>...</span>, <span class='kw'>title</span> <span class='kw'>=</span> <span class='kw'>NULL</span>)
 
-<span class='fu'>showPopover</span>(<span class='no'>id</span>, <span class='no'>popover</span>, <span class='kw'>placement</span> <span class='kw'>=</span> <span class='st'>"top"</span>, <span class='kw'>duration</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>())
+<span class='fu'>showPopover</span>(
+  <span class='no'>id</span>,
+  <span class='no'>popover</span>,
+  <span class='kw'>placement</span> <span class='kw'>=</span> <span class='st'>"top"</span>,
+  <span class='kw'>duration</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>()
+)
 
 <span class='fu'>closePopover</span>(<span class='no'>id</span>, <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>())</pre>
     
@@ -189,8 +190,7 @@ When <code>NULL</code> the popover must be removed with <code>closePopover()</co
     
     <h2 class="hasAnchor" id="example-application"><a class="anchor" href="#example-application"></a>Example application</h2>
 
-    
-<pre>ui &lt;- container(
+    <p><div class="R"></p><pre>ui &lt;- container(
   buttonInput("showHelp", "Help!"),
   div(
     id = "textBlock1",
@@ -200,8 +200,7 @@ When <code>NULL</code> the popover must be removed with <code>closePopover()</co
 ) %&gt;%
   display("flex") %&gt;%
   flex(justify = "around")
-
-server &lt;- function(input, output) {
+    server &lt;- function(input, output) {
   observeEvent(input$showHelp, ignoreInit = TRUE, {
     showPopover(
       target = "textBlock1",
@@ -211,20 +210,25 @@ server &lt;- function(input, output) {
     )
   })
 }
-
-shinyApp(ui, server)
-</pre>
-
+    shinyApp(ui, server)
+</pre><p></div></p>
     
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other components: <code><a href='alert.html'>alert</a></code>, <code><a href='badge.html'>badge</a></code>,
-  <code><a href='blockquote.html'>blockquote</a></code>, <code><a href='card.html'>card</a></code>,
-  <code><a href='collapsePane.html'>collapsePane</a></code>, <code><a href='d1.html'>d1</a></code>,
-  <code><a href='dropdown.html'>dropdown</a></code>, <code><a href='img.html'>img</a></code>,
-  <code><a href='jumbotron.html'>jumbotron</a></code>, <code><a href='modal.html'>modal</a></code>,
-  <code><a href='navContent.html'>navContent</a></code>, <code><a href='pre.html'>pre</a></code>,
-  <code><a href='toast.html'>toast</a></code></p></div>
+    <div class='dont-index'><p>Other components: 
+<code><a href='alert.html'>alert</a>()</code>,
+<code><a href='badge.html'>badge</a>()</code>,
+<code><a href='blockquote.html'>blockquote</a>()</code>,
+<code><a href='card.html'>card</a>()</code>,
+<code><a href='collapsePane.html'>collapsePane</a>()</code>,
+<code><a href='d1.html'>d1</a>()</code>,
+<code><a href='dropdown.html'>dropdown</a>()</code>,
+<code><a href='img.html'>img</a>()</code>,
+<code><a href='jumbotron.html'>jumbotron</a>()</code>,
+<code><a href='modal.html'>modal</a>()</code>,
+<code><a href='navContent.html'>navContent</a>()</code>,
+<code><a href='pre.html'>pre</a>()</code>,
+<code><a href='toast.html'>toast</a>()</code></p></div>
     
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
@@ -250,23 +254,19 @@ shinyApp(ui, server)
   </div>
 </div>
 
-
       <footer>
       <div class="copyright">
   <p>Developed by Nathan Teetor.</p>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.</p>
 </div>
-
       </footer>
    </div>
 
   
 
-
   </body>
 </html>
-
 

@@ -8,8 +8,13 @@
 \usage{
 popover(..., title = NULL)
 
-showPopover(id, popover, placement = "top", duration = NULL,
-  session = getDefaultReactiveDomain())
+showPopover(
+  id,
+  popover,
+  placement = "top",
+  duration = NULL,
+  session = getDefaultReactiveDomain()
+)
 
 closePopover(id, session = getDefaultReactiveDomain())
 }
@@ -43,7 +48,7 @@ element with an HTML id. Popovers are great for explaining inputs and giving
 hints to the users. Popovers are hidden with \code{closePopover()}.
 }
 \section{Example application}{
-\preformatted{ui <- container(
+\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   buttonInput("showHelp", "Help!"),
   div(
     id = "textBlock1",
@@ -54,19 +59,19 @@ hints to the users. Popovers are hidden with \code{closePopover()}.
   display("flex") \%>\%
   flex(justify = "around")
 
-server <- function(input, output) {
-  observeEvent(input$showHelp, ignoreInit = TRUE, {
+server <- function(input, output) \{
+  observeEvent(input$showHelp, ignoreInit = TRUE, \{
     showPopover(
       target = "textBlock1",
       popover(title = "Hint", "I am a <div> element!"),
       placement = "bottom",
       duration = 4
     )
-  })
-}
+  \})
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{
@@ -77,12 +82,19 @@ shinyApp(ui, server)
 
 }
 \seealso{
-Other components: \code{\link{alert}}, \code{\link{badge}},
-  \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{collapsePane}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{img}},
-  \code{\link{jumbotron}}, \code{\link{modal}},
-  \code{\link{navContent}}, \code{\link{pre}},
-  \code{\link{toast}}
+Other components: 
+\code{\link{alert}()},
+\code{\link{badge}()},
+\code{\link{blockquote}()},
+\code{\link{card}()},
+\code{\link{collapsePane}()},
+\code{\link{d1}()},
+\code{\link{dropdown}()},
+\code{\link{img}()},
+\code{\link{jumbotron}()},
+\code{\link{modal}()},
+\code{\link{navContent}()},
+\code{\link{pre}()},
+\code{\link{toast}()}
 }
 \concept{components}

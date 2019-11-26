@@ -26,7 +26,7 @@ the viewport, defaults to \code{FALSE}.}
 }
 \description{
 These functions are the foundation of any application. Grid elements are
-nested as follows: \code{container() > columns() > column() ~ column()}. A
+nested as follows: \verb{container() > columns() > column() ~ column()}. A
 \code{column()} may be created with an explicit width, 1 through 12. To fit a
 column automatically to its content use \code{width = "content"}. To divide the
 space in a row evenly amongst all columns use \code{width = "equal"}. For examples
@@ -131,8 +131,11 @@ container(
 
 }
 \seealso{
-Other layout functions: \code{\link{fieldset}},
-  \code{\link{flex}}, \code{\link{navbar}},
-  \code{\link{responsive}}, \code{\link{webpage}}
+Other layout functions: 
+\code{\link{fieldset}()},
+\code{\link{flex}()},
+\code{\link{navbar}()},
+\code{\link{responsive}},
+\code{\link{webpage}()}
 }
 \concept{layout functions}

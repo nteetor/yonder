@@ -5,12 +5,25 @@
 \alias{updateListGroupInput}
 \title{List group inputs}
 \usage{
-listGroupInput(id, choices = NULL, values = choices, selected = NULL,
-  ..., layout = "vertical", flush = FALSE)
+listGroupInput(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  ...,
+  layout = "vertical",
+  flush = FALSE
+)
 
-updateListGroupInput(id, choices = NULL, values = choices,
-  selected = NULL, enable = NULL, disable = NULL,
-  session = getDefaultReactiveDomain())
+updateListGroupInput(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  enable = NULL,
+  disable = NULL,
+  session = getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -53,7 +66,7 @@ list. However, list group items may include highly variable content.
 \section{Navigation with a list group}{
 
 
-A list group can also control a set of panes. Be sure to set \code{multiple = FALSE}. This layout is reminiscent of a table of contents.\preformatted{ui <- container(
+A list group can also control a set of panes. Be sure to set \code{multiple = FALSE}. This layout is reminiscent of a table of contents.\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   columns(
     column(
       width = 3,
@@ -91,14 +104,14 @@ A list group can also control a set of panes. Be sure to set \code{multiple = FA
   )
 )
 
-server <- function(input, output) {
-  observeEvent(input$nav, {
+server <- function(input, output) \{
+  observeEvent(input$nav, \{
     showPane(input$nav)
-  })
-}
+  \})
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{
@@ -131,13 +144,20 @@ listGroupInput(
 
 }
 \seealso{
-Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{chipInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{radiobarInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: 
+\code{\link{buttonGroupInput}()},
+\code{\link{buttonInput}()},
+\code{\link{checkbarInput}()},
+\code{\link{checkboxInput}()},
+\code{\link{chipInput}()},
+\code{\link{fileInput}()},
+\code{\link{formInput}()},
+\code{\link{menuInput}()},
+\code{\link{navInput}()},
+\code{\link{radioInput}()},
+\code{\link{radiobarInput}()},
+\code{\link{rangeInput}()},
+\code{\link{selectInput}()},
+\code{\link{textInput}()}
 }
 \concept{inputs}

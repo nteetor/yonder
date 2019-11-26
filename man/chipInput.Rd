@@ -5,12 +5,27 @@
 \alias{updateChipInput}
 \title{Chip inputs}
 \usage{
-chipInput(id, choices = NULL, values = choices, selected = NULL, ...,
-  placeholder = NULL, max = Inf, inline = TRUE)
+chipInput(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  ...,
+  placeholder = NULL,
+  max = Inf,
+  inline = TRUE
+)
 
-updateChipInput(id, choices = NULL, values = choices,
-  selected = NULL, max = NULL, enable = NULL, disable = NULL,
-  session = getDefaultReactiveDomain())
+updateChipInput(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  max = NULL,
+  enable = NULL,
+  disable = NULL,
+  session = getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -54,7 +69,7 @@ specified by the \code{choices} argument. Use the \code{max} argument to limit t
 number of choices a user may select.
 }
 \section{\strong{Example} simple application}{
-\preformatted{ui <- container(
+\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   chipInput(
     id = "chips",
     choices = paste("Option number", 1:10),
@@ -64,16 +79,16 @@ number of choices a user may select.
     width("1/2")
 )
 
-server <- function(input, output) {
+server <- function(input, output) \{
 
-}
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{\strong{Example} inline chips}{
-\preformatted{ui <- container(
+\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   chipInput(
     id = "chips",
     choices = c(
@@ -90,12 +105,12 @@ shinyApp(ui, server)
     shadow("small")
 )
 
-server <- function(input, output) {
+server <- function(input, output) \{
 
-}
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{
@@ -110,13 +125,20 @@ chipInput(
 
 }
 \seealso{
-Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{radiobarInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: 
+\code{\link{buttonGroupInput}()},
+\code{\link{buttonInput}()},
+\code{\link{checkbarInput}()},
+\code{\link{checkboxInput}()},
+\code{\link{fileInput}()},
+\code{\link{formInput}()},
+\code{\link{listGroupInput}()},
+\code{\link{menuInput}()},
+\code{\link{navInput}()},
+\code{\link{radioInput}()},
+\code{\link{radiobarInput}()},
+\code{\link{rangeInput}()},
+\code{\link{selectInput}()},
+\code{\link{textInput}()}
 }
 \concept{inputs}
