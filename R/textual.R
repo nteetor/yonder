@@ -14,7 +14,7 @@ possible_types <- c(
   "week"
 )
 
-param_type <- function() {
+roxy_param_type <- function() {
   q_start <- '"`'
   q_end <- '`"'
 
@@ -52,7 +52,7 @@ param_type <- function() {
 #' @param placeholder A character string specifying placeholder text for the
 #'   input, defaults to `NULL`, in which case there is no placeholder text.
 #'
-#' @eval param_type()
+#' @eval roxy_param_type()
 #'
 #' @param min A number specifying the minimum allowed value of the number input,
 #'   defaults to `NULL`.
@@ -91,7 +91,7 @@ textInput <- function(id, value = NULL, placeholder = NULL, ...,
 
   dep_attach({
     tags$div(
-      class = "yonder-textual",
+      class = "yonder-text",
       id = id,
       tags$input(
         class = "form-control",

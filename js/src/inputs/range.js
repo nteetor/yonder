@@ -11,7 +11,7 @@ const NAME = "range"
 const TYPE = `yonder.${ NAME }`
 
 const POLICY = "debounce"
-const DELAY = 500
+const DELAY = 450
 
 const ClassName = {
   INPUT: "yonder-range",
