@@ -2512,7 +2512,7 @@
   var NAME$d = "range";
   var TYPE$d = "yonder." + NAME$d;
   var POLICY = "debounce";
-  var DELAY = 500;
+  var DELAY = 450;
   var ClassName$d = {
     INPUT: "yonder-range",
     CHILD: "custom-range"
@@ -2806,10 +2806,119 @@
     Shiny.inputBindings.register(SelectInput.ShinyInterface(), TYPE$e);
   }
 
+  var NAME$f = "text";
+  var TYPE$f = "yonder." + NAME$f;
+  var POLICY$1 = "debounce";
+  var DELAY$1 = 450;
+  var ClassName$f = {
+    INPUT: "yonder-text",
+    CHILD: "form-control"
+  };
+  var Selector$f = {
+    INPUT: "." + ClassName$f.INPUT,
+    CHILD: "." + ClassName$f.CHILD,
+    INPUT_CHILD: "." + ClassName$f.INPUT + " ." + ClassName$f.CHILD
+  };
+  var Event$f = {
+    // CHANGE: `change.${ TYPE }`
+    INPUT: "input." + TYPE$f
+  };
+
+  var TextInput =
+  /*#__PURE__*/
+  function (_Input) {
+    _inheritsLoose(TextInput, _Input);
+
+    // methods ----
+    function TextInput(element) {
+      var _this;
+
+      _this = _Input.call(this, element, TYPE$f) || this;
+      _this._debounce = true;
+      return _this;
+    }
+
+    var _proto = TextInput.prototype;
+
+    _proto.value = function value(x) {
+      if (arguments.length === 0) {
+        return this._value;
+      }
+
+      this._value = x;
+
+      this._callback();
+
+      return this;
+    } // static ----
+    ;
+
+    TextInput.initialize = function initialize(element) {
+      _Input.initialize.call(this, element, TYPE$f, TextInput);
+    };
+
+    TextInput.find = function find(scope) {
+      return _Input.find.call(this, scope, Selector$f.INPUT);
+    };
+
+    TextInput.getValue = function getValue(element) {
+      return _Input.getValue.call(this, element, TYPE$f);
+    };
+
+    TextInput.getRatePolicy = function getRatePolicy() {
+      return {
+        policy: TextInput.POLICY,
+        delay: TextInput.DELAY
+      };
+    };
+
+    TextInput.subscribe = function subscribe(element, callback) {
+      _Input.subscribe.call(this, element, callback, TYPE$f);
+    };
+
+    TextInput.unsubscribe = function unsubscribe(element) {
+      _Input.unsubscribe.call(this, element, TYPE$f);
+    };
+
+    TextInput.ShinyInterface = function ShinyInterface() {
+      return _objectSpread2({}, Input, {}, TextInput);
+    };
+
+    _createClass(TextInput, null, [{
+      key: "POLICY",
+      get: function get() {
+        return POLICY$1;
+      }
+    }, {
+      key: "DELAY",
+      get: function get() {
+        return DELAY$1;
+      }
+    }]);
+
+    return TextInput;
+  }(Input); // events ----
+
+
+  $(document).on(Event$f.INPUT, Selector$f.INPUT_CHILD, function (event) {
+    var text = findClosest(event.target, Selector$f.INPUT);
+    var textInput = Store.getData(text, TYPE$f);
+
+    if (!textInput) {
+      return;
+    }
+
+    var child = event.target;
+    textInput.value(child.value);
+  });
+
+  if (Shiny) {
+    Shiny.inputBindings.register(TextInput.ShinyInterface(), TYPE$f);
+  }
+
   /*
    * {yonder}
    */
-  // import "./collapse.js";
   // import "./download.js";
   // import "./content.js";
   // import "./modal.js";
@@ -2832,7 +2941,8 @@
     RadioInput: RadioInput,
     RadiobarInput: RadiobarInput,
     RangeInput: RangeInput,
-    SelectInput: SelectInput
+    SelectInput: SelectInput,
+    TextInput: TextInput
   };
 
   return index;

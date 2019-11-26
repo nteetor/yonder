@@ -19,7 +19,7 @@ import RadioInput from "./inputs/radio.js"
 import RadiobarInput from "./inputs/radiobar.js"
 import RangeInput from "./inputs/range.js"
 import SelectInput from "./inputs/select.js"
-// import "./input-binding-textual.js";
+import TextInput from "./inputs/text.js"
 
 // import "./collapse.js";
 // import "./download.js";
@@ -44,5 +44,6 @@ export default {
   RadioInput,
   RadiobarInput,
   RangeInput,
-  SelectInput
+  SelectInput,
+  TextInput
 }
