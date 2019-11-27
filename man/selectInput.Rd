@@ -11,7 +11,7 @@ selectInput(
   id,
   choices = NULL,
   values = choices,
-  selected = NULL,
+  selected = values[[1]],
   ...,
   placeholder = NULL
 )
@@ -20,7 +20,7 @@ updateSelectInput(
   id,
   choices = NULL,
   values = choices,
-  selected = NULL,
+  selected = choices[[1]],
   enable = NULL,
   disable = NULL,
   valid = NULL,
@@ -59,7 +59,7 @@ updateGroupSelectInput(
 choices, defaults to \code{choices}.}
 
 \item{selected}{One of \code{values} indicating the default value of the input,
-defaults to \code{NULL}.}
+defaults to \code{values[[1]]}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the
 parent element or tag elements passed as child elements to the parent
