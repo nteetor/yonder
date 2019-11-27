@@ -1997,11 +1997,6 @@ pre code {
   opacity: 1;
 }
 
-.form-control:-ms-input-placeholder {
-  color: #6c757d;
-  opacity: 1;
-}
-
 .form-control::-ms-input-placeholder {
   color: #6c757d;
   opacity: 1;
@@ -3652,10 +3647,6 @@ input[type="button"].btn-block {
 }
 
 .yonder-select input::-moz-placeholder {
-  color: #343a40;
-}
-
-.yonder-select input:-ms-input-placeholder {
   color: #343a40;
 }
 

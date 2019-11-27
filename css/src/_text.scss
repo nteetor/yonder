@@ -1,4 +1,4 @@
-@import '../../node_modules/bootstrap/scss/utilities/text';
+@import '../node_modules/bootstrap/scss/utilities/text';
 
 @each $name, $value in $font-sizes {
   .font-size-#{$name} {
