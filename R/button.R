@@ -283,8 +283,7 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #'   background("blue") %>%
 #'   width("1/3")
 #'
-buttonGroupInput <- function(id, choices = NULL, values = choices, ...,
-                             actions = NULL) {
+buttonGroupInput <- function(id, labels, values = labels, ...) {
   args <- list(...)
 
   if ("labels" %in% names(args)) {
@@ -302,7 +301,6 @@ buttonGroupInput <- function(id, choices = NULL, values = choices, ...,
 
   assert_id()
   assert_choices()
-  assert_actions()
 
   shiny::registerInputHandler(
     type = "yonder.buttongroup",
@@ -336,7 +334,7 @@ updateButtonGroupInput <- function(id, choices = NULL, values = choices,
   assert_choices()
   assert_session()
 
-  buttons <- map_buttons(labels, values)
+  buttons <- map_buttons(choices, values)
 
   content <- coerce_content(buttons)
   enable <- coerce_enable(enable)
@@ -349,12 +347,10 @@ updateButtonGroupInput <- function(id, choices = NULL, values = choices,
   ))
 }
 
-map_buttons <- function(choices, values, actions) {
+map_buttons <- function(choices, values) {
   if (is.null(choices) && is.null(values)) {
     return(NULL)
   }
-
-  actions <- normalize_actions(actions, values)
 
   Map(
     label = choices,

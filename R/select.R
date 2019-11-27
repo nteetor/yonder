@@ -24,6 +24,9 @@
 #' @param placeholder A character string specifying the placeholder text of the
 #'   select input, defaults to `NULL`.
 #'
+#' @param placeholder A character string specifying the placeholder text of the
+#'   select input, defaults to `NULL`.
+#'
 #' @param left,right A character vector specifying static addons or
 #'   [buttonInput()] or [dropdown()] elements specifying dynamic addons. Addons
 #'   affect the reactive value of the group input, see the Details section below
@@ -93,8 +96,8 @@ selectInput <- function(id, choices = NULL, values = choices,
         class = "form-control custom-select",
         `data-toggle` = "dropdown",
         `data-boundary` = "window",
-        placeholder = placeholder,
-        values = selected
+        value = choices[values %in% selected][1],
+        placeholder = placeholder
       ),
       tags$div(
         class = "dropdown-menu",
