@@ -4,7 +4,6 @@
   "description": "A reactive framework built on shiny.",
   "main": "dist/js/yonder.min.js",
   "dependencies": {
-    "@babel/polyfill": "^7.7.0",
     "bootstrap": "^4.4.1",
     "bs-custom-file-input": "^1.3.2",
     "jquery": "^3.4.1",
