@@ -80,7 +80,7 @@ checkboxInput <- function(id, choices = NULL, values = choices, selected = NULL,
   assert_id()
   assert_choices()
 
-  dep_attach({
+  tag <- dep_attach({
     checkboxes <- map_checkboxes(choices, values, selected, inline)
 
     tags$div(
@@ -90,6 +90,8 @@ checkboxInput <- function(id, choices = NULL, values = choices, selected = NULL,
       ...
     )
   })
+
+  obj_class_add(tag, c("yonder.checkbox", "yonder.input"))
 }
 
 #' @rdname checkboxInput
@@ -127,7 +129,7 @@ switchInput <- function(id, choices, values = choices, selected = NULL, ...) {
   assert_id()
   assert_choices()
 
-  dep_attach({
+  tag <- dep_attach({
     switches <- map_checkboxes(choices, values, selected, FALSE, TRUE)
 
     tags$div(
@@ -137,6 +139,8 @@ switchInput <- function(id, choices, values = choices, selected = NULL, ...) {
       ...
     )
   })
+
+  obj_class_add(tag, c("yonder.switch", "yonder.input"))
 }
 
 #' @rdname checkboxInput
@@ -269,7 +273,7 @@ checkbarInput <- function(id, choices = NULL, values = choices,
   assert_id()
   assert_choices()
 
-  dep_attach({
+  tag <- dep_attach({
     checkboxes <- map_checkbuttons(choices, values, selected)
 
     tags$div(
@@ -280,6 +284,8 @@ checkbarInput <- function(id, choices = NULL, values = choices,
       ...
     )
   })
+
+  obj_class_add(tag, c("yonder.checkbar", "yonder.input"))
 }
 
 #' @rdname checkbarInput
@@ -321,7 +327,6 @@ map_checkbuttons <- function(choices, values, selected) {
       tags$label(
         class = str_collate(
           "btn",
-          "btn-grey",
           if (select) "active"
         ),
         tags$input(

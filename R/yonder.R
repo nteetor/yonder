@@ -3,6 +3,7 @@
 #'   tagAppendAttributes tagAppendChildren surroundSingletons takeSingletons
 #' @importFrom shiny observe getDefaultReactiveDomain installExprFunction
 #'   createRenderFunction createWebDependency
+#' @importFrom lifecycle deprecate_soft deprecated
 NULL
 
 #' An opinionated shiny framework

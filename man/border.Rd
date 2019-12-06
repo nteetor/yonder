@@ -9,7 +9,7 @@ border(tag, color = NULL, sides = "all", round = NULL)
 \arguments{
 \item{tag}{A tag element.}
 
-\item{color}{One of "\code{red}", "\code{purple}", "\code{indigo}", "\code{blue}", "\code{cyan}", "\code{teal}", "\code{green}", "\code{yellow}", "\code{amber}", "\code{orange}", "\code{grey}", "\code{black}" or "\code{white}" specifying the border color of the tag element, defaults to \code{NULL}}
+\item{color}{One of "\code{primary}", "\code{secondary}", "\code{success}", "\code{info}", "\code{warning}", "\code{danger}", "\code{light}" or "\code{dark}" specifying the border color of the tag element, defaults to \code{NULL}}
 
 \item{sides}{One or more of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"} or
 \code{"all"} or \code{"none"} specifying which sides to add a border to, defaults to
@@ -21,42 +21,6 @@ tag element, defaults to \code{NULL}, in which case the argument is ignored.}
 }
 \description{
 Use \code{border()} to add or modify tag element borders.
-}
-\examples{
-
-### Change border color
-
-div(
-  div() \%>\%
-    height(3) \%>\%
-    width(3) \%>\%
-    border("green"),
-  div() \%>\%
-    height(3) \%>\%
-    width(3) \%>\%
-    border(
-      color = "blue",
-      sides = c("left", "right")
-    )
-)
-
-### Round sides
-
-sides <- c("top", "right", "bottom", "left", "circle", "all")
-
-div(
-  lapply(
-    sides,
-    border,
-    tag = div() \%>\%
-      height(3) \%>\%
-      width(3),
-    color = "black"
-  )
-) \%>\%
-  display("flex") \%>\%
-  flex(wrap = TRUE)
-
 }
 \seealso{
 Other design utilities: 

@@ -9,43 +9,15 @@ active(tag, color)
 \arguments{
 \item{tag}{A tag element.}
 
-\item{color}{One of \code{"red"}, \code{"purple"}, \code{"indigo"}, \code{"blue"}, \code{"cyan"},
-\code{"teal"}, \code{"green"}, \code{"yellow"}, \code{"amber"}, \code{"orange"}, \code{"grey"}, \code{"white"}
-specifying the active color of selected choices.}
+\item{color}{One of "\code{primary}", "\code{secondary}", "\code{success}", "\code{info}", "\code{warning}", "\code{danger}", "\code{light}" or "\code{dark}" specifying the active color of the tag element, defaults to \code{NULL}}
 }
 \description{
-Use \code{active()} to change the highlight color of an input's selected choices.
-}
-\examples{
+As part of an effort to revert yonder's default bootstrap styles, the
+\code{active()} utility has been deprecated. In future versions of the application
+the function will be removed entirely.
 
-### Radiobar example
-
-radiobarInput(
-  id = "radio1",
-  choices = c("Hello", "Goodnight", "Howdy")
-) \%>\%
-  width(16) \%>\%
-  active("orange")  # <-
-
-### Checkbox example
-
-checkboxInput(
-  id = "check1",
-  choices = c("Rock", "Paper", "Scissors"),
-  selected = "Rock"
-) \%>\%
-  active("teal")
-
-### Chip input
-
-chipInput(
-  id = "chip1",
-  choices = c("Ether", "Bombos", "Quake"),
-  selected = "Ether"
-) \%>\%
-  width("1/2") \%>\%
-  active("green")
-
+Previously, \code{active()} would change the
+highlight color of an input's selected choices.
 }
 \seealso{
 Other design utilities: 

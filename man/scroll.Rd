@@ -18,21 +18,6 @@ Many of the applications you build despite a complex layout will still fit
 onto a single page. To help scroll long content alongside shorter content use
 the \code{scroll()} utility function.
 }
-\examples{
-
-### A simple scroll
-
-div(
-  lapply(
-    rep("Integer placerat tristique nisl.", 20),
-    . \%>\% p() \%>\% margin(bottom = 2)
-  )
-) \%>\%
-  height(20) \%>\%
-  border("black") \%>\%
-  scroll()
-
-}
 \seealso{
 Other design utilities: 
 \code{\link{active}()},

@@ -12,58 +12,24 @@ width(tag, size)
 \item{size}{A character string or number specifying the width of the tag
 element. Possible values:
 
-An integer between 1 and 20, in which case the width of the element is
-relative to the font size of the page.
-
-\code{"1/2"}, \code{"1/3"}, \code{"2/3"}, \code{"1/4"}, \code{"3/4"}, \code{"1/5"}, \code{"2/5"}, \code{"3/5"},
-\code{"4/5"}, or \code{"full"}, in which case the element's width is a percentage of
-its parent's width. The height of the parent element must be specified for
-percentage widths to work. Percentages do not account for margins or
-padding and may cause an element to extend beyond its parent.
+One of 25, 50, 75, or 100 specifying the element's width is a percentage of
+its parent's width. The width of the parent element must be
+specified. Percentages do not account for margins or padding and may cause
+an element to extend beyond its parent element.
 
 \code{"auto"}, in which case the element's width is determined by the browser.
 The browser will take into account the width, padding, margins, and border
 of the tag element's parent to keep the element from extending beyond its
-parent.}
+parent.
+
+\code{"viewport"}, in which case the element's width is determined by the size
+of the browser window.}
 }
 \description{
 Utility function to change a tag element's width. Widths are specified
 relative to the font size of page (browser default is 16px), relative to
 their parent element (i.e. 1/2 the width of their parent), or relative to the
 element's content.
-}
-\examples{
-
-### Numeric `size` values
-
-# When specifying a numeric value the width of the element is relative to the
-# default font size of the page.
-
-div(
-  lapply(
-    1:20,
-    width,
-    tag = div() \%>\%
-      border("black") \%>\%
-      height(4)
-  )
-) \%>\%
-  flex(
-    direction = "column",
-    justify = "between"
-  )
-
-### Fractional `size` values
-
-# When specifying width as a fraction the element's width is a percentage of
-# its parent's width.
-
-div() \%>\%
-  margin(b = 3) \%>\%
-  background("red") \%>\%
-  height(5) \%>\%
-  width("1/3")  # <-
-
 }
 \seealso{
 Other design utilities: 

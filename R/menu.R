@@ -66,7 +66,7 @@ menuInput <- function(id, label, choices = NULL, values = choices,
   assert_possible(direction, c("up", "right", "down", "left"))
   assert_possible(align, c("right", "left"))
 
-  dep_attach({
+  tag <- dep_attach({
     items <- map_menuitems(choices, values, selected)
 
     tags$div(
@@ -76,7 +76,7 @@ menuInput <- function(id, label, choices = NULL, values = choices,
       ),
       id = id,
       tags$button(
-        class = "btn btn-grey dropdown-toggle",
+        class = "btn dropdown-toggle",
         type = "button",
         `data-toggle` = "dropdown",
         `aria-haspopup` = "true",
@@ -93,6 +93,8 @@ menuInput <- function(id, label, choices = NULL, values = choices,
       )
     )
   })
+
+  obj_class_add(tag, c("yonder.menu", "yonder.input"))
 }
 
 #' @rdname menuInput

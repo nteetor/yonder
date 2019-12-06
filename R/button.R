@@ -62,7 +62,7 @@
 #'   label = "Full-width",
 #'   fill = TRUE  # <-
 #' ) %>%
-#'   background("red")
+#'   background("danger")
 #'
 #' # Use design utilities to further adjust the width of a button.
 #'
@@ -71,30 +71,8 @@
 #'   label = "Full and back again",
 #'   fill = TRUE  # <-
 #' ) %>%
-#'   background("red") %>%
-#'   width("3/4")  # <-
-#'
-#' ### Possible colors
-#'
-#' colors <- c(
-#'   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
-#'   "yellow", "amber", "orange", "grey"
-#' )
-#'
-#' lapply(
-#'   colors,
-#'   function(color) {
-#'     buttonInput(
-#'       id = color,
-#'       label = color
-#'     ) %>%
-#'       background(color) %>%
-#'       margin(2)
-#'   }
-#' ) %>%
-#'   div() %>%
-#'   display("flex") %>%
-#'   flex(wrap = TRUE)
+#'   background("danger") %>%
+#'   width(75)  # <-
 #'
 #' ### Reactive links
 #'
@@ -129,11 +107,11 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
   assert_id()
   assert_label()
 
-  dep_attach({
-    component <- (if (download) tags$a else tags$button)(
+  tag <- dep_attach({
+    (if (download) tags$a else tags$button)(
       class = str_collate(
         "yonder-button",
-        "btn btn-grey",
+        "btn",
         if (stretch) "stretched-link",
         if (download) "shiny-download-link"
       ),
@@ -147,9 +125,11 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
       ...,
       autocomplete = "off"
     )
-
-    tag_tooltip_add(component, tooltip)
   })
+
+  tag <- tag_tooltip_add(tag, tooltip)
+
+  obj_class_add(tag, c("yonder.button", "yonder.input"))
 }
 
 #' @rdname buttonInput
@@ -284,20 +264,11 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #'   background("blue") %>%
 #'   width("1/3")
 #'
-buttonGroupInput <- function(id, choices = NULL, values = choices, ...) {
-  args <- list(...)
+buttonGroupInput <- function(id, choices = NULL, values = choices, ..., labels = deprecated()) {
+  if (is_present(labels)) {
+    deprecate_soft("0.2.0", "buttonGroupInput(labels = )", "buttonGroupInput(choices = )")
 
-  if ("labels" %in% names(args)) {
-    warning(
-      "invalid argument in `buttonGroupInput()`, ",
-      "`labels` has been deprecated, please use `choices`"
-    )
-
-    choices <- args$labels
-    if (is.null(values)) {
-      values <- args$labels
-    }
-    args$labels <- NULL
+    choices <- labels
   }
 
   assert_id()
@@ -311,19 +282,19 @@ buttonGroupInput <- function(id, choices = NULL, values = choices, ...) {
     force = TRUE
   )
 
-  dep_attach({
+  tag <- dep_attach({
     buttons <- map_buttons(choices, values)
 
-    bg <- tags$div(
+    tags$div(
       class = "yonder-button-group btn-group",
       id = id,
       role = "group",
       buttons,
-      unnamed_values(args)
+      ...
     )
-
-    tag_attributes_add(bg, named_values(args))
   })
+
+  obj_class_add(tag, c("yonder.buttongroup", "yonder.input"))
 }
 
 #' @rdname buttonGroupInput
@@ -359,7 +330,7 @@ map_buttons <- function(choices, values) {
     function(label, value) {
       tags$button(
         type = "button",
-        class = "btn btn-grey",
+        class = "btn",
         value = value,
         label
       )
