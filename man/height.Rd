@@ -12,46 +12,23 @@ height(tag, size)
 \item{size}{A character string or number specifying the height of the tag
 element. Possible values:
 
-An integer between 1 and 20, in which case the height of the element is
-relative to the font size of the page.
-
-\code{"full"}, in which case the element's height is a percentage of its
-parent's height. The height of the parent element must also be specified.
-Percentages do not account for margins or padding and may cause an element
-to extend beyond its parent.
+One of 25, 50, 75, 100 specifying the element's height as a
+percentage of its parent's height. The height of the parent element must
+also be specified. Percentages do not account for margins or padding and
+may cause an element to extend beyond its parent element.
 
 \code{"auto"}, in which case the element's height is determined by the browser.
 The browser will take into account the height, padding, margins, and border
 of the tag element's parent to keep the element from extending beyond its
 parent.
 
-\code{"screen"}, in which case the element's height is determined by the height of
-the viewport.}
+\code{"viewport"}, in which case the element's height is determined by the size
+of the browser window.}
 }
 \description{
 Utility function to change a tag element's height. Height is specified
 relative to the font size of page (browser default is 16px), relative to
 their parent element, or relative to the element's content.
-}
-\examples{
-
-### Numeric values
-
-div(
-  lapply(
-    seq(2, 20, by = 2),
-    function(h) {
-      div(h) \%>\%
-        width(2) \%>\%
-        height(h) \%>\%  # <-
-        padding(l = 1) \%>\%
-        border("black")
-    }
-  )
-) \%>\%
-  display("flex") \%>\%
-  flex(justify = "between")
-
 }
 \seealso{
 Other design utilities: 

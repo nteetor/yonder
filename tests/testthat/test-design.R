@@ -5,13 +5,11 @@ test_that("size argument valid values", {
 })
 
 test_that("background color uses correct base class", {
-  button <- background(buttonInput("ID", "LABEL"), "red")
-  expect_false(tag_class_re(button, "bg-red"))
-  expect_true(tag_class_re(button, "btn-red"))
+  button <- background(buttonInput("ID", "LABEL"), "danger")
+  expect_false(tag_class_re(button, "bg-danger"))
+  expect_true(tag_class_re(button, "btn-danger"))
 
-  group <- background(buttonGroupInput("ID", c("1", "2")), "blue")
-  expect_false(tag_class_re(group, "bg-blue"))
-  expect_false(tag_class_re(group, "btn-blue"))
-  expect_true(tag_class_re(group$children[[1]][[1]], "btn-blue"))
-  expect_true(tag_class_re(group$children[[1]][[2]], "btn-blue"))
+  group <- background(buttonGroupInput("ID", c("1", "2")), "primary")
+  expect_false(tag_class_re(group, "bg-primary"))
+  expect_true(tag_class_re(group, "btn-group-primary"))
 })

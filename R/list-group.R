@@ -115,7 +115,7 @@ listGroupInput <- function(id, choices = NULL, values = choices,
   assert_possible(layout, c("vertical", "horizontal"))
   assert_possible(flush, c(TRUE, FALSE))
 
-  dep_attach({
+  tag <- dep_attach({
     layout <- resp_construct(layout, c("vertical", "horizontal"))
     classes <- resp_classes(layout, "list-group")
 
@@ -136,6 +136,8 @@ listGroupInput <- function(id, choices = NULL, values = choices,
       ...
     )
   })
+
+  obj_class_add(tag, c("yonder.listgroup", "yonder.input"))
 }
 
 #' @rdname listGroupInput

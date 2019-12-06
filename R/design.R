@@ -1,17 +1,12 @@
-possible_colors <- c(
-  "red",
-  "purple",
-  "indigo",
-  "blue",
-  "cyan",
-  "teal",
-  "green",
-  "yellow",
-  "amber",
-  "orange",
-  "grey",
-  "black",
-  "white"
+theme_colors <- c(
+  "primary",
+  "secondary",
+  "success",
+  "info",
+  "warning",
+  "danger",
+  "light",
+  "dark"
 )
 
 param_color <- function(what) {
@@ -20,44 +15,12 @@ param_color <- function(what) {
 
   paste(
     "@param color One of",
-    paste0(q_start, utils::head(possible_colors, -1), q_end, collapse = ", "),
+    paste0(q_start, utils::head(theme_colors, -1), q_end, collapse = ", "),
     "or",
-    paste0(q_start, utils::tail(possible_colors, 1), q_end),
+    paste0(q_start, utils::tail(theme_colors, 1), q_end),
     "specifying the", what, "color of the tag element,",
     "defaults to `NULL`"
   )
-}
-
-color_apply <- function(tag, base, color) {
-  if (tag_class_re(tag, "yonder-(?:checkbar|radiobar|button-group|list-group)")) {
-    tag$children[[1]] <- lapply(
-      tag$children[[1]],
-      color_apply,
-      base = base,
-      color = color
-    )
-
-    return(tag)
-  }
-
-  if (tag_class_re(tag, "dropdown")) {
-    tag$children[[1]] <- color_apply(
-      tag$children[[1]],
-      base = base,
-      color = color
-    )
-
-    return(tag)
-  }
-
-  tag <- tag_class_remove(
-    tag,
-    sprintf("%s-(%s)", base, paste(possible_colors, collapse = "|"))
-  )
-
-  tag <- tag_class_add(tag, paste0(base, "-", color))
-
-  tag
 }
 
 #' Font color, size, weight
@@ -93,12 +56,12 @@ color_apply <- function(tag, base, color) {
 #'
 #' card(
 #'   header = h3("Important!") %>%
-#'     font(color = "amber"),
+#'     font(color = "warning"),
 #'   div(
 #'     "This is a reminder."
 #'   )
 #' ) %>%
-#'   border(color = "amber")
+#'   border(color = "warning")
 #'
 #' ### Changing font size
 #'
@@ -127,15 +90,21 @@ color_apply <- function(tag, base, color) {
 #'
 font <- function(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
                  align = NULL) {
-  assert_possible(color, possible_colors)
+  assert_possible(color, theme_colors)
   assert_possible(size, c("xs", "sm", "base", "lg", "xl"))
   assert_possible(weight, c("bold", "normal", "light", "italic", "monospace"))
   assert_possible(case, c("lower", "upper", "title"))
 
+  UseMethod("font")
+}
+
+font.shiny.tag <- function(tag, color = NULL, size = NULL, weight = NULL,
+                           case = NULL, align = NULL) {
   align <- resp_construct(align, c("left", "center", "right", "justify"))
 
   if (!is.null(color)) {
-    tag <- color_apply(tag, "text", color)
+    color <- paste0("text-", color)
+    tag <- tag_class_add(tag, color)
   }
 
   if (!is.null(size)) {
@@ -200,47 +169,72 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
 #'     "Lorem ipsum dolor sit amet."
 #'   )
 #' ) %>%
-#'   background("cyan")
-#'
-#' ### Possible colors
-#'
-#' colors <- c(
-#'   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
-#'   "yellow", "amber", "orange", "grey", "white"
-#' )
-#'
-#' div(
-#'   lapply(
-#'     colors,
-#'     background,
-#'     tag = div() %>%
-#'       padding(5) %>%
-#'       margin(2)
-#'   )
-#' ) %>%
-#'   display("flex") %>%
-#'   flex(wrap = TRUE)
+#'   background("info")
 #'
 background <- function(tag, color) {
-  assert_possible(color, c(possible_colors, "transparent"))
+  assert_possible(color, theme_colors)
 
-  if (color == "transparent") {
-    base <- "bg"
-  } else if (tag_class_re(tag, "alert")) {
-    base <- "alert"
-  } else if (tag_class_re(tag, "badge")) {
-    base <- "badge"
-  } else if (tag_class_re(tag, "yonder-(?:radiobar|checkbar|button-group|button|form-submit)")) {
-    base <- "btn"
-  } else if (tag_class_re(tag, "list-group")) {
-    base <- "list-group-item"
-  } else if (tag_class_re(tag, "yonder-range")) {
-    base <- "range"
-  } else {
-    base <- "bg"
-  }
+  UseMethod("background")
+}
 
-  color_apply(tag, base, color)
+background.shiny.tag <- function(tag, color) {
+  tag_class_add(tag, sprintf("bg-%s", color))
+}
+
+background.yonder.alert <- function(tag, color) {
+  tag_class_add(tag, sprintf("alert-%s", color))
+}
+
+background.yonder.badge <- function(tag, color) {
+  tag_class_add(tag, sprintf("badge-%s", color))
+}
+
+background.yonder.listgroup <- function(tag, color) {
+  tag_class_add(tag, sprintf("list-group-%s", color))
+}
+
+background.yonder.checkbox <- function(tag, color) {
+  tag_class_add(tag, sprintf("custom-control-group-%s", color))
+}
+
+background.yonder.radio <- function(tag, color) {
+  tag_class_add(tag, sprintf("custom-control-group-%s", color))
+}
+
+background.yonder.switch <- function(tag, color) {
+  tag_class_add(tag, sprintf("custom-control-group-%s", color))
+}
+
+background.yonder.radiobar <- function(tag, color) {
+  tag_class_add(tag, sprintf("btn-group-%s", color))
+}
+
+background.yonder.checkbar <- function(tag, color) {
+  tag_class_add(tag, sprintf("btn-group-%s", color))
+}
+
+background.yonder.buttongroup <- function(tag, color) {
+  tag_class_add(tag, sprintf("btn-group-%s", color))
+}
+
+background.yonder.button <- function(tag, color) {
+  tag_class_add(tag, sprintf("btn-%s", color))
+}
+
+background.yonder.dropdown <- function(tag, color) {
+  toggle <- tag$children[[1]]
+
+  tag$children[[1]] <- tag_class_add(toggle, sprintf("btn-%s", color))
+
+  tag
+}
+
+background.yonder.menu <- function(tag, color) {
+  toggle <- tag$children[[1]]
+
+  tag$children[[1]] <- tag_class_add(toggle, sprintf("btn-%s", color))
+
+  tag
 }
 
 #' Border color
@@ -261,43 +255,8 @@ background <- function(tag, color) {
 #'
 #' @family design utilities
 #' @export
-#' @examples
-#'
-#' ### Change border color
-#'
-#' div(
-#'   div() %>%
-#'     height(3) %>%
-#'     width(3) %>%
-#'     border("green"),
-#'   div() %>%
-#'     height(3) %>%
-#'     width(3) %>%
-#'     border(
-#'       color = "blue",
-#'       sides = c("left", "right")
-#'     )
-#' )
-#'
-#' ### Round sides
-#'
-#' sides <- c("top", "right", "bottom", "left", "circle", "all")
-#'
-#' div(
-#'   lapply(
-#'     sides,
-#'     border,
-#'     tag = div() %>%
-#'       height(3) %>%
-#'       width(3),
-#'     color = "black"
-#'   )
-#' ) %>%
-#'   display("flex") %>%
-#'   flex(wrap = TRUE)
-#'
 border <- function(tag, color = NULL, sides = "all", round = NULL) {
-  assert_possible(color, possible_colors)
+  assert_possible(color, theme_colors)
   assert_possible(
     sides,
     c("top", "right", "bottom", "left", "all", "none", "circle")
@@ -307,6 +266,10 @@ border <- function(tag, color = NULL, sides = "all", round = NULL) {
     c("top", "right", "bottom", "left", "all", "none")
   )
 
+  UseMethod("border")
+}
+
+border.shiny.tag <- function(tag, color = NULL, sides = "all", round = NULL) {
   if ("all" %in% sides) {
     tag <- tag_class_add(tag, "border")
   } else if ("none" %in% sides) {
@@ -316,11 +279,11 @@ border <- function(tag, color = NULL, sides = "all", round = NULL) {
   }
 
   if (!is.null(color)) {
-    tag <- color_apply(tag, "border", color)
+    tag <- tag_class_add(tag, sprintf("border-%s", color))
   }
 
   if (!is.null(round)) {
-    round <- paste0("rounded-", round)
+    round <- sprintf("rounded-%s", round)
 
     round[round == "rounded-none"] <- "rounded-0"
     round[round == "rounded-all"] <- "rounded"
@@ -333,48 +296,25 @@ border <- function(tag, color = NULL, sides = "all", round = NULL) {
 
 #' Selected choice color
 #'
-#' Use `active()` to change the highlight color of an input's selected choices.
+#' @description
+#'
+#' As part of an effort to revert yonder's default bootstrap styles, the
+#' `active()` utility has been deprecated. In future versions of the application
+#' the function will be removed entirely.
+#'
+#' Previously, `active()` would change the
+#' highlight color of an input's selected choices.
 #'
 #' @param tag A tag element.
 #'
-#' @param color One of `"red"`, `"purple"`, `"indigo"`, `"blue"`, `"cyan"`,
-#'   `"teal"`, `"green"`, `"yellow"`, `"amber"`, `"orange"`, `"grey"`, `"white"`
-#'   specifying the active color of selected choices.
+#' @eval param_color("active")
 #'
 #' @family design utilities
 #' @export
-#' @examples
-#'
-#' ### Radiobar example
-#'
-#' radiobarInput(
-#'   id = "radio1",
-#'   choices = c("Hello", "Goodnight", "Howdy")
-#' ) %>%
-#'   width(16) %>%
-#'   active("orange")  # <-
-#'
-#' ### Checkbox example
-#'
-#' checkboxInput(
-#'   id = "check1",
-#'   choices = c("Rock", "Paper", "Scissors"),
-#'   selected = "Rock"
-#' ) %>%
-#'   active("teal")
-#'
-#' ### Chip input
-#'
-#' chipInput(
-#'   id = "chip1",
-#'   choices = c("Ether", "Bombos", "Quake"),
-#'   selected = "Ether"
-#' ) %>%
-#'   width("1/2") %>%
-#'   active("green")
-#'
 active <- function(tag, color) {
-  assert_possible(color, possible_colors)
+  deprecate_soft("0.2.0", "yonder::active()")
+
+  assert_possible(color, theme_colors)
 
   tag <- tag_class_add(tag, paste0("active-", color))
 
@@ -391,8 +331,8 @@ active <- function(tag, color) {
 #'
 #' @param tag A tag element.
 #'
-#' @param size One of `"none"`, `"small"`, `"regular"`, or `"large"` specifying
-#'   the amount of shadow added, defaults to `"regular"`.
+#' @param size One of `"none"`, `"small"`, `"medium"`, or `"large"` specifying
+#'   the amount of shadow added, defaults to `"medium"`.
 #'
 #' @family design utilities
 #' @export
@@ -416,42 +356,42 @@ active <- function(tag, color) {
 #' ### Different shadows
 #'
 #' div(
-#'   lapply(
-#'     c("small", "regular", "large"),
-#'     shadow,
-#'     tag = div() %>%
-#'       padding(5) %>%
-#'       margin(2)
-#'   )
-#' ) %>%
-#'   display("flex")
+#'   buttonInput(id = "b1", "Small") %>%
+#'     margin(2) %>%
+#'     shadow("small"),
+#'   buttonInput(id = "b2", "Medium") %>%
+#'     margin(2) %>%
+#'     shadow("medium"),
+#'   buttonInput(id = "b3", "Large") %>%
+#'     margin(2) %>%
+#'     shadow("large")
+#' )
 #'
-shadow <- function(tag, size = "regular") {
-  assert_possible(size, c("none", "small", "regular", "large"))
+shadow <- function(tag, size = "medium") {
+  if (size == "regular") {
+    deprecate_soft("0.2.0", 'shadow(size = "regular")', 'shadow(size = "medium")')
+
+    size <- "medium"
+  }
+
+  assert_possible(size, c("none", "small", "medium", "large"))
 
   size <- switch(
     size,
     none = "shadow-none",
     small = "shadow-sm",
-    regular = "shadow",
+    medium = "shadow",
     large = "shadow-lg"
   )
 
-  if (tag_class_re(tag, "yonder-chip")) {
-    tag$children[[3]] <- tag_class_add(tag$children[[3]], "chips-shadow")
-    return(tag)
-  }
-
-  tag <- tag_class_add(tag, size)
-
-  tag
+  tag_class_add(tag, size)
 }
 
 #' Float
 #'
 #' Use `float()` to float an element to the left or right side of its parent
-#' element. A newspaper layout is a classic usage where an image is floated with
-#' text wrapped around.
+#' element. A newspaper layout is a classic example where an image is floated
+#' with text wrapped around.
 #'
 #' @param tag A tag element.
 #'
@@ -462,31 +402,31 @@ shadow <- function(tag, size = "regular") {
 #' @export
 #' @examples
 #'
-#' ### Newspaper layout
+#' ### Float an alert
 #'
 #' div(
-#'   div() %>%
-#'     width(5) %>%
-#'     height(5) %>%
-#'     margin(right = 2) %>%
-#'     background("amber") %>%
+#'   alert("This just in!") %>%
+#'     margin(3) %>%
+#'     background("warning") %>%
 #'     float("left"),
-#'   p(
-#'     "Fusce commodo. Nullam tempus. Nunc rutrum turpis sed pede.",
+#'   p("Fusce commodo. Nullam tempus. Nunc rutrum turpis sed pede.",
 #'     "Phasellus lacus.  Cras placerat accumsan nulla.",
 #'     "Fusce sagittis, libero non molestie mollis, ",
 #'     "magna orci ultrices dolor, at vulputate neque nulla lacinia eros."
 #'   ),
-#'   p(
-#'     "Nulla facilisis, risus a rhoncus fermentum, tellus tellus",
+#'   p("Nulla facilisis, risus a rhoncus fermentum, tellus tellus",
 #'     "lacinia purus, et dictum nunc justo sit amet elit."
 #'   ),
-#'   p(
-#'     "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.",
+#'   p("Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.",
 #'     "Aliquam posuere.",
 #'     "Sed id ligula quis est convallis tempor."
+#'   ),
+#'   p("Fusce dapibus, tellus ac cursus commodo, ",
+#'     "tortor mauris condimentum nibh, ut fermentum massa justo sit",
+#'     "amet risus."
 #'   )
-#' )
+#' ) %>%
+#'   padding(2)
 #'
 float <- function(tag, side) {
   side <- resp_construct(side, c("left", "right"))
@@ -512,29 +452,12 @@ float <- function(tag, side) {
 #'
 #' @family design utilities
 #' @export
-#' @examples
-#'
-#' ### Affix an element
-#'
-#' div(
-#'   span("I'm up here!") %>%
-#'     padding(left = 3, right = 3) %>%
-#'     background("teal")
-#' ) %>%
-#'   display("flex") %>%
-#'   flex(justify = "center") %>%
-#'   affix("top")
-#'
 affix <- function(tag, position) {
   assert_possible(position, c("top", "bottom", "sticky"))
 
-  if (position == "sticky") {
-    tag <- tag_class_add(tag, "sticky-top")
-  } else {
-    tag <- tag_class_add(tag, paste0("fixed-", position))
-  }
+  p <- if (position == "sticky") "sticky-top" else sprintf("fixed-%s", position)
 
-  tag
+  tag_class_add(tag, p)
 }
 
 #' Display property
@@ -581,9 +504,7 @@ display <- function(tag, type) {
 
   classes <- resp_classes(type, "d")
 
-  tag <- tag_class_add(tag, classes)
-
-  tag
+  tag_class_add(tag, classes)
 }
 
 #' Margin and padding
@@ -624,7 +545,7 @@ display <- function(tag, type) {
 #' ) %>%
 #'   margin(top = 2, r = "auto", b = 2, l = "auto") %>%  # <-
 #'   padding(3) %>%
-#'   background("indigo")
+#'   background("info")
 #'
 #' ### Building an inline form
 #'
@@ -763,58 +684,27 @@ margin <- function(tag, all = NULL, top = NULL, right = NULL, bottom = NULL,
 #' @param size A character string or number specifying the width of the tag
 #'   element. Possible values:
 #'
-#'   An integer between 1 and 20, in which case the width of the element is
-#'   relative to the font size of the page.
-#'
-#'   `"1/2"`, `"1/3"`, `"2/3"`, `"1/4"`, `"3/4"`, `"1/5"`, `"2/5"`, `"3/5"`,
-#'   `"4/5"`, or `"full"`, in which case the element's width is a percentage of
-#'   its parent's width. The height of the parent element must be specified for
-#'   percentage widths to work. Percentages do not account for margins or
-#'   padding and may cause an element to extend beyond its parent.
+#'   One of 25, 50, 75, or 100 specifying the element's width is a percentage of
+#'   its parent's width. The width of the parent element must be
+#'   specified. Percentages do not account for margins or padding and may cause
+#'   an element to extend beyond its parent element.
 #'
 #'   `"auto"`, in which case the element's width is determined by the browser.
 #'   The browser will take into account the width, padding, margins, and border
 #'   of the tag element's parent to keep the element from extending beyond its
 #'   parent.
 #'
+#'   `"viewport"`, in which case the element's width is determined by the size
+#'   of the browser window.
+#'
 #' @family design utilities
 #' @export
-#' @examples
-#'
-#' ### Numeric `size` values
-#'
-#' # When specifying a numeric value the width of the element is relative to the
-#' # default font size of the page.
-#'
-#' div(
-#'   lapply(
-#'     1:20,
-#'     width,
-#'     tag = div() %>%
-#'       border("black") %>%
-#'       height(4)
-#'   )
-#' ) %>%
-#'   flex(
-#'     direction = "column",
-#'     justify = "between"
-#'   )
-#'
-#' ### Fractional `size` values
-#'
-#' # When specifying width as a fraction the element's width is a percentage of
-#' # its parent's width.
-#'
-#' div() %>%
-#'   margin(b = 3) %>%
-#'   background("red") %>%
-#'   height(5) %>%
-#'   width("1/3")  # <-
-#'
 width <- function(tag, size) {
-  tag <- tag_class_add(tag, paste0("w-", size))
+  assert_possible(size, c(25, 50, 75, 100, "auto", "viewport"))
 
-  tag
+  size <- if (size == "vieport") "vw-100" else sprintf("w-%s", size)
+
+  tag_class_add(tag, size)
 }
 
 #' Height
@@ -828,47 +718,27 @@ width <- function(tag, size) {
 #' @param size A character string or number specifying the height of the tag
 #'   element. Possible values:
 #'
-#'   An integer between 1 and 20, in which case the height of the element is
-#'   relative to the font size of the page.
-#'
-#'   `"full"`, in which case the element's height is a percentage of its
-#'   parent's height. The height of the parent element must also be specified.
-#'   Percentages do not account for margins or padding and may cause an element
-#'   to extend beyond its parent.
+#'   One of 25, 50, 75, 100 specifying the element's height as a
+#'   percentage of its parent's height. The height of the parent element must
+#'   also be specified. Percentages do not account for margins or padding and
+#'   may cause an element to extend beyond its parent element.
 #'
 #'   `"auto"`, in which case the element's height is determined by the browser.
 #'   The browser will take into account the height, padding, margins, and border
 #'   of the tag element's parent to keep the element from extending beyond its
 #'   parent.
 #'
-#'   `"screen"`, in which case the element's height is determined by the height of
-#'   the viewport.
+#'   `"viewport"`, in which case the element's height is determined by the size
+#'   of the browser window.
 #'
 #' @family design utilities
 #' @export
-#' @examples
-#'
-#' ### Numeric values
-#'
-#' div(
-#'   lapply(
-#'     seq(2, 20, by = 2),
-#'     function(h) {
-#'       div(h) %>%
-#'         width(2) %>%
-#'         height(h) %>%  # <-
-#'         padding(l = 1) %>%
-#'         border("black")
-#'     }
-#'   )
-#' ) %>%
-#'   display("flex") %>%
-#'   flex(justify = "between")
-#'
 height <- function(tag, size) {
-  tag <- tag_class_add(tag, paste0("h-", size))
+  assert_possible(size, c(25, 50, 75, 100, "auto", "viewport"))
 
-  tag
+  size <- if (size == "viewport") "vh-100" else sprintf("h-%s", size)
+
+  tag_class_add(tag, size)
 }
 
 #' Vertical and horizontal scroll
@@ -885,41 +755,10 @@ height <- function(tag, size) {
 #'
 #' @family design utilities
 #' @export
-#' @examples
-#'
-#' ### A simple scroll
-#'
-#' div(
-#'   lapply(
-#'     rep("Integer placerat tristique nisl.", 20),
-#'     . %>% p() %>% margin(bottom = 2)
-#'   )
-#' ) %>%
-#'   height(20) %>%
-#'   border("black") %>%
-#'   scroll()
-#'
 scroll <- function(tag, direction = "vertical") {
-  if (length(direction) != 1 || !is.character(direction)) {
-    stop(
-      "invalid argument in `scroll()`, `direction` must be a single ",
-      "character string",
-      call. = FALSE
-    )
-  }
+  assert_possible(direction, c("vertical", "horizontal"))
 
-  if (direction != "horizontal" && direction != "vertical") {
-    stop(
-      "invalid argument in `scroll()`, `direction` must be one of ",
-      '"vertical" or "horizontal"',
-      call. = FALSE
-    )
-  }
+  direction <- if (direction == "vertical") "scroll-y" else "scroll-x"
 
-  tag <- tag_class_add(
-    tag,
-    paste0("scroll-", if (direction == "vertical") "y" else "x")
-  )
-
-  tag
+  tag_class_add(tag, direction)
 }

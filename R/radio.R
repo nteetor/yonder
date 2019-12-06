@@ -237,7 +237,6 @@ map_radiobuttons <- function(choices, values, selected, parent_id) {
       tags$label(
         class = str_collate(
           "btn",
-          "btn-grey",
           if (select) "active"
         ),
         tags$input(

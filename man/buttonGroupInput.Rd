@@ -5,7 +5,13 @@
 \alias{updateButtonGroupInput}
 \title{Button group inputs}
 \usage{
-buttonGroupInput(id, choices = NULL, values = choices, ...)
+buttonGroupInput(
+  id,
+  choices = NULL,
+  values = choices,
+  ...,
+  labels = deprecated()
+)
 
 updateButtonGroupInput(
   id,

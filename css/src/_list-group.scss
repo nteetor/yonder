@@ -1,3 +1,7 @@
-@import '../node_modules/bootstrap/scss/list-group';
+// list group top-level theming
 
-@include list-group-active-variant();
+@each $color, $value in $theme-colors {
+  .list-group-#{$color} .list-group-item {
+    @extend .list-group-item-#{$color};
+  }
+}
