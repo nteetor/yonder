@@ -4,13 +4,13 @@
 \alias{shadow}
 \title{Shadows}
 \usage{
-shadow(tag, size = "regular")
+shadow(tag, size = "medium")
 }
 \arguments{
 \item{tag}{A tag element.}
 
-\item{size}{One of \code{"none"}, \code{"small"}, \code{"regular"}, or \code{"large"} specifying
-the amount of shadow added, defaults to \code{"regular"}.}
+\item{size}{One of \code{"none"}, \code{"small"}, \code{"medium"}, or \code{"large"} specifying
+the amount of shadow added, defaults to \code{"medium"}.}
 }
 \description{
 The \code{shadow} utility applies a shadow to a tag element. Elements with a
@@ -39,15 +39,16 @@ div(
 ### Different shadows
 
 div(
-  lapply(
-    c("small", "regular", "large"),
-    shadow,
-    tag = div() \%>\%
-      padding(5) \%>\%
-      margin(2)
-  )
-) \%>\%
-  display("flex")
+  buttonInput(id = "b1", "Small") \%>\%
+    margin(2) \%>\%
+    shadow("small"),
+  buttonInput(id = "b2", "Medium") \%>\%
+    margin(2) \%>\%
+    shadow("medium"),
+  buttonInput(id = "b3", "Large") \%>\%
+    margin(2) \%>\%
+    shadow("large")
+)
 
 }
 \seealso{

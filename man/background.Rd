@@ -9,7 +9,7 @@ background(tag, color)
 \arguments{
 \item{tag}{A tag element.}
 
-\item{color}{One of "\code{red}", "\code{purple}", "\code{indigo}", "\code{blue}", "\code{cyan}", "\code{teal}", "\code{green}", "\code{yellow}", "\code{amber}", "\code{orange}", "\code{grey}", "\code{black}" or "\code{white}" specifying the background color of the tag element, defaults to \code{NULL}}
+\item{color}{One of "\code{primary}", "\code{secondary}", "\code{success}", "\code{info}", "\code{warning}", "\code{danger}", "\code{light}" or "\code{dark}" specifying the background color of the tag element, defaults to \code{NULL}}
 }
 \description{
 Use \code{background()} to modify the background color of a tag element.
@@ -26,26 +26,7 @@ checkbarInput(
     "Lorem ipsum dolor sit amet."
   )
 ) \%>\%
-  background("cyan")
-
-### Possible colors
-
-colors <- c(
-  "red", "purple", "indigo", "blue", "cyan", "teal", "green",
-  "yellow", "amber", "orange", "grey", "white"
-)
-
-div(
-  lapply(
-    colors,
-    background,
-    tag = div() \%>\%
-      padding(5) \%>\%
-      margin(2)
-  )
-) \%>\%
-  display("flex") \%>\%
-  flex(wrap = TRUE)
+  background("info")
 
 }
 \seealso{

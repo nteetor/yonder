@@ -9,7 +9,7 @@ font(tag, color = NULL, size = NULL, weight = NULL, case = NULL, align = NULL)
 \arguments{
 \item{tag}{A tag element.}
 
-\item{color}{One of "\code{red}", "\code{purple}", "\code{indigo}", "\code{blue}", "\code{cyan}", "\code{teal}", "\code{green}", "\code{yellow}", "\code{amber}", "\code{orange}", "\code{grey}", "\code{black}" or "\code{white}" specifying the text color of the tag element, defaults to \code{NULL}}
+\item{color}{One of "\code{primary}", "\code{secondary}", "\code{success}", "\code{info}", "\code{warning}", "\code{danger}", "\code{light}" or "\code{dark}" specifying the text color of the tag element, defaults to \code{NULL}}
 
 \item{size}{One of \code{"xs"}, \code{"sm"}, \code{"base"}, \code{"lg"}, \code{"xl"} specifying a font
 size relative to the default base page font size, defaults to \code{NULL}.}
@@ -37,12 +37,12 @@ affecting color, weight, case, or alignment.
 
 card(
   header = h3("Important!") \%>\%
-    font(color = "amber"),
+    font(color = "warning"),
   div(
     "This is a reminder."
   )
 ) \%>\%
-  border(color = "amber")
+  border(color = "warning")
 
 ### Changing font size
 

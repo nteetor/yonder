@@ -99,7 +99,7 @@ buttonInput(
   label = "Full-width",
   fill = TRUE  # <-
 ) \%>\%
-  background("red")
+  background("danger")
 
 # Use design utilities to further adjust the width of a button.
 
@@ -108,30 +108,8 @@ buttonInput(
   label = "Full and back again",
   fill = TRUE  # <-
 ) \%>\%
-  background("red") \%>\%
-  width("3/4")  # <-
-
-### Possible colors
-
-colors <- c(
-  "red", "purple", "indigo", "blue", "cyan", "teal", "green",
-  "yellow", "amber", "orange", "grey"
-)
-
-lapply(
-  colors,
-  function(color) {
-    buttonInput(
-      id = color,
-      label = color
-    ) \%>\%
-      background(color) \%>\%
-      margin(2)
-  }
-) \%>\%
-  div() \%>\%
-  display("flex") \%>\%
-  flex(wrap = TRUE)
+  background("danger") \%>\%
+  width(75)  # <-
 
 ### Reactive links
 

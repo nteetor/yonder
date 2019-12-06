@@ -33,6 +33,7 @@ Depends:
 Imports:
     htmltools (>= 0.4.0),
     magrittr,
+    lifecycle,
     utils
 Suggests:
     testthat (>= 2.1.0)

@@ -98,7 +98,7 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
   assert_possible(direction, c("up", "right", "down", "left"))
   assert_possible(align, c("right", "left"))
 
-  dep_attach({
+  tag <- dep_attach({
     args <- eval(substitute(alist(...)))
 
     formatted_tags <- list(
@@ -124,7 +124,7 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
       }
     )
 
-    component <- tags$div(
+    tags$div(
       class = str_collate(
         "dropdown",
         paste0("drop", direction)
@@ -132,7 +132,6 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
       tags$button(
         class = str_collate(
           "btn",
-          "btn-grey",
           "dropdown-toggle"
         ),
         type = "button",
@@ -149,7 +148,9 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
         items
       )
     )
-
-    tag_attributes_add(component, named_values(list(...)))
   })
+
+  tag <- tag_attributes_add(tag, named_values(list(...)))
+
+  obj_class_add(tag, c("yonder.dropdown"))
 }

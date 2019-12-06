@@ -45,7 +45,7 @@ div(
 ) \%>\%
   margin(top = 2, r = "auto", b = 2, l = "auto") \%>\%  # <-
   padding(3) \%>\%
-  background("indigo")
+  background("info")
 
 ### Building an inline form
 

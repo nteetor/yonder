@@ -18,20 +18,6 @@ top or bottom of a page. Use \code{"sticky"} to cause an element to fix to the t
 of a page after the element is scrolled past. \emph{Important}, the IE11 and
 Edge browsers do not support the sticky behavior.
 }
-\examples{
-
-### Affix an element
-
-div(
-  span("I'm up here!") \%>\%
-    padding(left = 3, right = 3) \%>\%
-    background("teal")
-) \%>\%
-  display("flex") \%>\%
-  flex(justify = "center") \%>\%
-  affix("top")
-
-}
 \seealso{
 Other design utilities: 
 \code{\link{active}()},
