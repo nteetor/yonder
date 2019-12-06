@@ -522,6 +522,7 @@
     },
     _add: function _add(el, value) {
       var $toggle = $(el.querySelector(chipInputBinding.selectorToggle));
+      var sort = el.getAttribute("data-sort");
 
       chipInputBinding._items(el, value).forEach(function (item) {
         item.classList.add("selected");
@@ -530,7 +531,12 @@
       var chips = el.querySelector(".chips");
 
       chipInputBinding._chips(el, value).forEach(function (chip) {
-        chips.insertBefore(chips.removeChild(chip), chips.firstChild);
+        if (sort === "stack") {
+          chips.insertBefore(chips.removeChild(chip), chips.firstChild);
+        } else if (sort === "queue") {
+          chips.appendChild(chips.removeChild(chip));
+        }
+
         chip.classList.add("active");
       });
 
