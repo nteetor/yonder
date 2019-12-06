@@ -27,6 +27,17 @@
 #'   `FALSE`, chips expand to fill the width of their parent element, one chip
 #'   per row.
 #'
+#' @param sort One of `"stack"`, `"queue"`, or `"fixed"` specifying how
+#'   selected chips are ordered, defaults to `"stack"`.
+#'
+#'   `"stack"`, selected chips are placed ahead of other selected chips.
+#'
+#'   `"queue"`, selected chips are placed behind other selected chips.
+#'
+#'   `"fixed"`, selected chips appear in the order specified by
+#'   `choices` and `values`. Use `"fixed"` and sort `choices` to keep selected
+#'   chips in the same sorted order.
+#'
 #' @section **Example** simple application:
 #'
 #' ```R
@@ -87,9 +98,11 @@
 #' )
 #'
 chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
-                      ..., placeholder = NULL, max = Inf, inline = TRUE) {
+                      ..., placeholder = NULL, max = Inf, inline = TRUE,
+                      sort = "stack") {
   assert_id()
   assert_choices()
+  assert_possible(sort, c("stack", "queue", "fixed"))
 
   dep_attach({
     toggle <- tags$input(
@@ -108,6 +121,7 @@ chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
         "btn-group dropup"
       ),
       `data-max` = if (max == Inf) -1 else max,
+      `data-sort` = sort,
       toggle,
       tags$div(
         class = "dropdown-menu",
