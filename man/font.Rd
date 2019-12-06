@@ -9,6 +9,8 @@ font(tag, color = NULL, size = NULL, weight = NULL, case = NULL, align = NULL)
 \arguments{
 \item{tag}{A tag element.}
 
+\item{color}{One of "\code{primary}", "\code{secondary}", "\code{success}", "\code{info}", "\code{warning}", "\code{danger}", "\code{light}" or "\code{dark}" specifying the text color of the tag element, defaults to \code{NULL}}
+
 \item{size}{Deprecated, in future versions of bootstrap resonsive font sizing
 will be enabled by default, \link{https://github.com/twbs/bootstrap/pull/29152}.
 

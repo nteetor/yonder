@@ -134,10 +134,6 @@ switchInput <- function(id, choices, values = choices, selected = NULL, ...) {
   assert_id()
   assert_choices()
 
-  qargs <- enquos(...)
-
-  input_args_poke(id, choices, values, selected, qargs)
-
   with_deps({
     switches <- map_checkboxes(choices, values, selected, FALSE, TRUE)
 
