@@ -177,6 +177,10 @@ background <- function(tag, color) {
   UseMethod("background")
 }
 
+background.yonder_style_accumulator <- function(tag, color) {
+  style_class_add(tag, style_class_build(tag, color, "bg"))
+}
+
 background.shiny.tag <- function(tag, color) {
   tag_class_add(tag, sprintf("bg-%s", color))
 }

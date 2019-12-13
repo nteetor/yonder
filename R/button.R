@@ -107,6 +107,11 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
   assert_id()
   assert_label()
 
+  qargs <- rlang::enquos(...)
+  args <- lapply(qargs, function(qarg) {
+    rlang::eval_tidy(qarg, list(.style = style_create_context(prefix = "btn")))
+  })
+
   tag <- dep_attach({
     (if (download) tags$a else tags$button)(
       class = str_collate(
@@ -122,7 +127,7 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
       download = if (download) NA,
       id = id,
       label,
-      ...,
+      !!!args,
       autocomplete = "off"
     )
   })
