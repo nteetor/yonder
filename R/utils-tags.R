@@ -11,6 +11,29 @@ tag_name_is <- function(x, name) {
   isTRUE(x$name == name)
 }
 
+tag_extend_with <- function(x, pieces) {
+  stopifnot(is_tag(x))
+
+  x <- tag_children_add(x, unnamed_values(pieces))
+  x <- tag_attributes_add(x, named_values(pieces))
+
+  x
+}
+
+tag_children_add <- function(x, children = NULL, ...) {
+  stopifnot(is_tag(x))
+
+  args <- c(children, list(...))
+
+  if (length(args) == 0) {
+    return(x)
+  }
+
+  x$children <- c(x$children, args)
+
+  x
+}
+
 tag_attributes_add <- function(x, attrs = NULL, ...) {
   stopifnot(is_tag(x))
 
