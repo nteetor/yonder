@@ -137,7 +137,7 @@ listGroupInput <- function(id, choices = NULL, values = choices,
     )
   })
 
-  obj_class_add(tag, c("yonder.listgroup", "yonder.input"))
+  s3_class_add(tag, c("yonder.listgroup", "yonder.input"))
 }
 
 #' @rdname listGroupInput

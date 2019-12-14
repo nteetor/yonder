@@ -91,7 +91,7 @@ checkboxInput <- function(id, choices = NULL, values = choices, selected = NULL,
     )
   })
 
-  obj_class_add(tag, c("yonder.checkbox", "yonder.input"))
+  s3_class_add(tag, c("yonder.checkbox", "yonder.input"))
 }
 
 #' @rdname checkboxInput
@@ -140,7 +140,7 @@ switchInput <- function(id, choices, values = choices, selected = NULL, ...) {
     )
   })
 
-  obj_class_add(tag, c("yonder.switch", "yonder.input"))
+  s3_class_add(tag, c("yonder.switch", "yonder.input"))
 }
 
 #' @rdname checkboxInput
@@ -285,7 +285,7 @@ checkbarInput <- function(id, choices = NULL, values = choices,
     )
   })
 
-  obj_class_add(tag, c("yonder.checkbar", "yonder.input"))
+  s3_class_add(tag, c("yonder.checkbar", "yonder.input"))
 }
 
 #' @rdname checkbarInput

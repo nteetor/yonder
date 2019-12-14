@@ -48,7 +48,7 @@ assert_label <- function() {
   fun <- get_caller()
 
   if (!(is.null(label) || is_tag(label) ||
-        is_strictly_list(label) || is.atomic(label))) {
+        is_bare_list(label) || is_atomic(label))) {
     stop(
       "invalid argument in `", fun, "`, `label` must be a tag element, ",
       "character string, list, or NULL",
@@ -213,7 +213,7 @@ assert_right <- function() {
 }
 
 is_addon <- function(x) {
-  if (is_strictly_list(x)) {
+  if (is_bare_list(x)) {
     all(vapply(x, tag_name_is, logical(1), name = "button"))
   } else {
     is.character(x) ||

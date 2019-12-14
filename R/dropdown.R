@@ -152,5 +152,5 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
 
   tag <- tag_attributes_add(tag, named_values(list(...)))
 
-  obj_class_add(tag, c("yonder.dropdown"))
+  s3_class_add(tag, c("yonder.dropdown"))
 }
