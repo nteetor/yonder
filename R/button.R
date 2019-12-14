@@ -107,11 +107,6 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
   assert_id()
   assert_label()
 
-  qargs <- rlang::enquos(...)
-  args <- lapply(qargs, function(qarg) {
-    rlang::eval_tidy(qarg, list(.style = style_create_context(prefix = "btn")))
-  })
-
   tag <- dep_attach({
     (if (download) tags$a else tags$button)(
       class = str_collate(
@@ -127,14 +122,15 @@ buttonInput <- function(id, label, ..., stretch = FALSE, download = FALSE,
       download = if (download) NA,
       id = id,
       label,
-      !!!args,
       autocomplete = "off"
     )
   })
 
-  tag <- tag_tooltip_add(tag, tooltip)
+  ## tag <- tag_tooltip_add(tag, tooltip)
+  args <- style_eval_dots(..., .context = list(prefix = "btn"))
+  tag <- tag_extend_with(tag, args)
 
-  obj_class_add(tag, c("yonder.button", "yonder.input"))
+  s3_class_add(tag, c("yonder.button", "yonder.input"))
 }
 
 #' @rdname buttonInput
@@ -299,7 +295,7 @@ buttonGroupInput <- function(id, choices = NULL, values = choices, ..., labels =
     )
   })
 
-  obj_class_add(tag, c("yonder.buttongroup", "yonder.input"))
+  s3_class_add(tag, c("yonder.buttongroup", "yonder.input"))
 }
 
 #' @rdname buttonGroupInput
