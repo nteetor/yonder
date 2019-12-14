@@ -11,12 +11,6 @@ tag_name_is <- function(x, name) {
   isTRUE(x$name == name)
 }
 
-tag_dots_eval <- function(..., .mask) {
-  qargs <- enquos(...)
-
-  lapply(qargs, eval_tidy, data = .mask)
-}
-
 tag_extend_with <- function(x, pieces) {
   stopifnot(is_tag(x))
 
