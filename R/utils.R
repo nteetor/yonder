@@ -55,7 +55,7 @@ generate_id <- function(prefix) {
 }
 
 named_values <- function(x) {
-  x[rlang::names2(x) != ""]
+  x[names2(x) != ""]
 }
 
 unnamed_values <- function(x) {
