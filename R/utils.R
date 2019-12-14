@@ -1,17 +1,6 @@
 # necessary for `createRenderFunction()`
 globalVariables("func")
 
-# plain utils ----
-`%||%` <- function(a, b) if (is.null(a)) b else a
-
-encode_commas <- function(x) {
-  gsub(",", "&#44;", x, fixed = TRUE)
-}
-
-is_strictly_list <- function(x) {
-  length(class(x)) == 1 && class(x) == "list"
-}
-
 drop_nulls <- function(x) {
   if (length(x) == 0) {
     x
@@ -22,7 +11,7 @@ drop_nulls <- function(x) {
 
 # Included until rlang exports `is_present()`
 is_present <- function(arg) {
-  !rlang::is_missing(rlang::maybe_missing(arg))
+  !is_missing(maybe_missing(arg))
 }
 
 str_conjoin <- function(x, con = "or") {
@@ -64,16 +53,15 @@ generate_id <- function(prefix) {
 }
 
 named_values <- function(x) {
-  x[rlang::names2(x) != ""]
+  x[names2(x) != ""]
 }
 
 unnamed_values <- function(x) {
-  x[rlang::names2(x) == ""]
+  x[names2(x) == ""]
 }
 
-obj_class_add <- function(x, new) {
-  full <- unique(c(new, class(x)))
-  class(x) <- full
+s3_class_add <- function(x, new) {
+  class(x) <- unique(c(new, class(x)))
   x
 }
 
