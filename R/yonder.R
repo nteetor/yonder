@@ -4,6 +4,7 @@
 #' @importFrom shiny observe getDefaultReactiveDomain installExprFunction
 #'   createRenderFunction createWebDependency
 #' @importFrom lifecycle deprecate_soft deprecated
+#' @import rlang
 NULL
 
 #' An opinionated shiny framework

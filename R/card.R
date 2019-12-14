@@ -180,7 +180,7 @@ card <- function(..., header = NULL, footer = NULL) {
     )
 
     body <- lapply(body, function(x) {
-      if (is_strictly_list(x)) {
+      if (is_bare_list(x)) {
         tags$div(class = "card-body", x)
       } else {
         x

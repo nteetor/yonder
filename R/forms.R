@@ -231,7 +231,7 @@ formGroup <- function(label, input, ..., help = NULL, width = NULL) {
   assert_found(label)
   assert_found(input)
 
-  if (!is_tag(input) && !is_strictly_list(input)) {
+  if (!is_tag(input) && !is_bare_list(input)) {
     stop(
       "invalid argument in `formGroup()`, `input` must be a tag element or list",
       call. = FALSE
