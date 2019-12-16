@@ -8,7 +8,7 @@
 \alias{tooltip}
 \title{Button and link inputs}
 \usage{
-buttonInput(id, label, ..., stretch = FALSE, download = FALSE, tooltip = NULL)
+buttonInput(..., id, label, stretch = FALSE, download = FALSE, tooltip = NULL)
 
 updateButtonInput(
   id,
@@ -20,7 +20,7 @@ updateButtonInput(
   session = getDefaultReactiveDomain()
 )
 
-linkInput(id, label, ..., stretch = FALSE, download = FALSE, tooltip = NULL)
+linkInput(..., id, label, stretch = FALSE, download = FALSE, tooltip = NULL)
 
 updateLinkInput(
   id,
@@ -35,13 +35,13 @@ updateLinkInput(
 tooltip(..., placement = "top", fade = TRUE)
 }
 \arguments{
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
+
 \item{id}{A character string specifying the id of the reactive input.}
 
 \item{label}{A character string specifying the label text on the button or
 link input.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
 
 \item{stretch}{One of \code{TRUE} or \code{FALSE} specifying stretched behaviour for
 the button or link input, defaults to \code{FALSE}. If \code{TRUE}, the button or
@@ -85,31 +85,42 @@ To remove a button or link input's tooltip pass an empty tooltip,
 }
 \examples{
 
-### A simple button
+### A plain button
 
 buttonInput(
   id = "button1",
   label = "Simple"
 )
 
+### Add a little color
+
+buttonInput(
+  .style \%>\%
+    background("primary"),
+  id = "button2",
+  label = "Blue"
+)
+
 # Alternatively, a button can fill the width of its parent element.
 
 buttonInput(
-  id = "button2",
+  .style \%>\%
+    background("danger"),
+  id = "button3",
   label = "Full-width",
   fill = TRUE  # <-
-) \%>\%
-  background("danger")
+)
 
 # Use design utilities to further adjust the width of a button.
 
 buttonInput(
-  id = "button3",
+  .style \%>\%
+    background("danger") \%>\%
+    width(75)  # <-
+  id = "button4",
   label = "Full and back again",
   fill = TRUE  # <-
-) \%>\%
-  background("danger") \%>\%
-  width(75)  # <-
+)
 
 ### Reactive links
 
@@ -122,13 +133,13 @@ card(
   p("Notice when you hover over the card, the button also detects ",
     "the hover."),
   buttonInput(
+    .style \%>\%
+      background("primary")
     id = "go",
     label = "Go go go",
     stretch = TRUE
-  ) \%>\%
-    background("blue")
-) \%>\%
-  width(20)
+  )
+)
 
 ### Download button
 

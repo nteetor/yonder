@@ -31,24 +31,24 @@
   s
 })
 
-style_test <- function(...) {
-  style_eval_dots(...)
+style_pronoun <- function(extra = NULL) {
+  if (!is.null(extra)) {
+    extra <- paste0("yonder_", extra)
+  }
+
+  structure(list(), class = c("yonder_style_accumulator", extra))
 }
 
-style_eval_dots <- function(..., .context = list()) {
-  style_mask <- list(
-    .style = exec(style_create_pronoun, !!!.context)
-  )
+style_dots_eval <- function(..., .style = NULL, .mask = NULL) {
+  .style <- .style %||% style_pronoun(.style)
 
-  # All this because,
-  # 1. with_bindings splices its arguments, can't do the following,
-  #    with_bindings(dots_list(...), .style = ..)
-  # 2. eval_tidy(quo(dots_list(...)), style_mask) does _not_ work
+  .mask <- list2(.style = .style, !!!.mask)
 
+  # eval_tidy and with_bindings don't seem to affect ... evaluation
   qargs <- enquos(...)
-  args <- lapply(qargs, eval_tidy, data = style_mask)
+  args <- lapply(qargs, eval_tidy, data = .mask)
 
-  Reduce(function(a, b) dots_list(!!!a, b), args, init = list())
+  flatten_if(args)
 }
 
 style_create_pronoun <- function(...) {
@@ -56,7 +56,17 @@ style_create_pronoun <- function(...) {
 }
 
 style_class_add <- function(x, new) {
-  x <- unbox(x)
+  if (!nzchar(new) || length(new) == 0) {
+    return(x)
+  }
+
+  if (is_box(x)) {
+    x <- unbox(x)
+  }
+
+  if (length(new) > 1) {
+    new <- paste(new, collapse = " ")
+  }
 
   if (!is.null(x$class)) {
     new <- paste(x$class, new)
@@ -67,14 +77,16 @@ style_class_add <- function(x, new) {
   style_splice2(x)
 }
 
-style_class_build <- function(x, body, prefix = NULL) {
+style_class_build <- function(x, prefix, ...) {
   x <- unbox(x)
 
   if (is.null(prefix)) {
     return(body)
   }
 
-  sprintf("%s-%s", style_get_prefix(x, prefix), body)
+  args <- vapply(list(...), as.character, character(1))
+
+  paste(c(style_get_prefix(x, prefix), args), collapse = "-")
 }
 
 style_get_prefix <- function(x, default) {

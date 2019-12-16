@@ -4,9 +4,9 @@
 #' is placed around any number of cards. Additionally, grouping cards with
 #' `deck` has the benefit of aligning the footer of each card.
 #'
-#' @param ... For **card**, `tag$div()`s, tag elements, or list groups to
-#'   include in the card or additional named arguments passed as HTML attributes
-#'   to the parent element.
+#' @param ... For **card**, `div()`s, tag elements, or list groups to include in
+#'   the card or additional named arguments passed as HTML attributes to the
+#'   card element.
 #'
 #'   For **deck**, any number of `card()`s or additional named arguments passed
 #'   as HTML attributes to the parent element.
@@ -119,6 +119,8 @@
 #'
 #' deck(
 #'   card(
+#'     .style %>%
+#'       background("info"),
 #'     title = "Nullam tristique",
 #'     p("Fusce sagittis, libero non molestie mollis, magna orci ultrices ",
 #'       "dolor, at vulputate neque nulla lacinia eros."),
@@ -126,12 +128,16 @@
 #'     footer = "Cras placerat accumsan nulla."
 #'   ),
 #'   card(
+#'     .style %>%
+#'       background("dark"),
 #'     title = "Integer placerat",
 #'     p("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ",
 #'       "hendrerit tempor tellus."),
 #'     footer = "Cras placerat accumsan nulla."
 #'   ),
 #'   card(
+#'     .style %>%
+#'       background("primary"),
 #'     title = "Phasellus neque",
 #'     p("Donec at pede. Etiam vel neque nec dui dignissim bibendum."),
 #'     footer = "Cras placerat accumsan nulla."
@@ -139,9 +145,7 @@
 #' )
 #'
 card <- function(..., header = NULL, footer = NULL) {
-  dep_attach({
-    args <- eval(substitute(alist(...)))
-
+  with_deps({
     if (!is.null(header)) {
       if (is_tag(header) && tag_class_re(header, "nav-tabs")) {
         header <- tags$div(
@@ -162,7 +166,7 @@ card <- function(..., header = NULL, footer = NULL) {
       footer <- tags$div(class = "card-footer", footer)
     }
 
-    formatted_tags <- list(
+    card_mask <- list(
       p = function(...) tags$p(class = "card-text", ...),
       h1 = function(...) tags$h1(class = "card-title", ...),
       h2 = function(...) tags$h2(class = "card-title", ...),
@@ -170,52 +174,41 @@ card <- function(..., header = NULL, footer = NULL) {
       h4 = function(...) tags$h4(class = "card-title", ...),
       h5 = function(...) tags$h5(class = "card-title", ...),
       h6 = function(...) tags$h6(class = "card-subtitle", ...),
+      a = function(...) tags$a(class = "card-link", ...),
       linkInput = function(...) linkInput(class = "card-link", ...)
     )
 
-    body <- lapply(
-      unnamed_values(args),
-      eval,
-      envir = list2env(formatted_tags, envir = parent.frame())
+    args <- style_dots_eval(
+      ...,
+      .context = list(prefix = "card"),
+      .mask = card_mask
     )
 
-    body <- lapply(body, function(x) {
-      if (is_bare_list(x)) {
-        tags$div(class = "card-body", x)
-      } else {
+    is_named <- which(names2(args) != "")
+
+    args[!is_named] <- lapply(args[!is_named], function(x) {
+      if (is_tag(x) && tag_class_re(x, "row|list-group")) {
         x
+      } else {
+        tags$div(class = "card-body", x)
       }
     })
 
-    if (any(!vapply(body, is_tag, logical(1)))) {
-      stop(
-        "invalid arguments in `card()`, all top-level arguments must be tag ",
-        "elements",
-        call. = FALSE
-      )
-    }
-
-    flags <- vapply(body, tag_class_re, logical(1), regex = "row|list-group")
-
-    if (!any(flags)) {
-      body <- tags$div(class = "card-body", body)
-    }
-
-    component <- tags$div(
+    tag <- tags$div(
       class = "card",
       header,
-      body,
+      !!!args,
       footer
     )
 
-    tag_attributes_add(component, named_values(list(...)))
+    s3_class_add(tag, "yonder_card")
   })
 }
 
 #' @rdname card
 #' @export
 deck <- function(...) {
-  dep_attach({
+  with_deps({
     tags$div(class = "card-deck", ...)
   })
 }

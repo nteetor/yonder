@@ -80,18 +80,23 @@ checkboxInput <- function(id, choices = NULL, values = choices, selected = NULL,
   assert_id()
   assert_choices()
 
-  tag <- dep_attach({
+  with_deps({
     checkboxes <- map_checkboxes(choices, values, selected, inline)
 
-    tags$div(
+    args <- style_dots_eval(
+      ...,
+      .context = list(prefix = "custom-control-group")
+    )
+
+    tag <- tags$div(
       class = "yonder-checkbox",
       id = id,
       checkboxes,
-      ...
+      !!!args
     )
-  })
 
-  s3_class_add(tag, c("yonder.checkbox", "yonder.input"))
+    s3_class_add(tag, c("yonder_checkbox", "yonder_input"))
+  })
 }
 
 #' @rdname checkboxInput
@@ -129,18 +134,27 @@ switchInput <- function(id, choices, values = choices, selected = NULL, ...) {
   assert_id()
   assert_choices()
 
-  tag <- dep_attach({
+  qargs <- enquos(...)
+
+  input_args_poke(id, choices, values, selected, qargs)
+
+  with_deps({
     switches <- map_checkboxes(choices, values, selected, FALSE, TRUE)
 
-    tags$div(
+    args <- style_dots_eval(
+      ...,
+      .context = list(prefix = "custom-control-group")
+    )
+
+    tag <- tags$div(
       class = "yonder-checkbox",
       id = id,
       switches,
-      ...
+      !!!args
     )
-  })
 
-  s3_class_add(tag, c("yonder.switch", "yonder.input"))
+    s3_class_add(tag, c("yonder_switch", "yonder_input"))
+  })
 }
 
 #' @rdname checkboxInput
@@ -285,7 +299,7 @@ checkbarInput <- function(id, choices = NULL, values = choices,
     )
   })
 
-  s3_class_add(tag, c("yonder.checkbar", "yonder.input"))
+  s3_class_add(tag, c("yonder_checkbar", "yonder_input"))
 }
 
 #' @rdname checkbarInput

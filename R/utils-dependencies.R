@@ -33,6 +33,10 @@ dep_attach <- function(tag) {
   }
 }
 
+with_deps <- function(expr) {
+  dep_attach(expr)
+}
+
 dep_meta <- function() {
   htmltools::singleton(tags$head(
     tags$meta(

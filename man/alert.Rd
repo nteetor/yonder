@@ -25,16 +25,17 @@ to problems.
 ### Default alert
 
 alert("Donec at pede.") \%>\%
-  background("blue")
+  background("primary")
 
 ### A more complex alert
 
 alert(
+  .style \%>\%
+    background("warning"),
   h4("Etiam vel tortor sodales"),
   hr(),
   p("Fusce commodo.")
-) \%>\%
-  background("amber")
+)
 
 }
 \seealso{

@@ -6,10 +6,10 @@
 \title{Button group inputs}
 \usage{
 buttonGroupInput(
+  ...,
   id,
   choices = NULL,
   values = choices,
-  ...,
   labels = deprecated()
 )
 
@@ -23,6 +23,9 @@ updateButtonGroupInput(
 )
 }
 \arguments{
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
+
 \item{id}{A character string specifying the id of the reactive input.}
 
 \item{choices}{A character vector specifying the labels for each button in
@@ -30,9 +33,6 @@ the group.}
 
 \item{values}{A vector of values specifying the values of each button in the
 group, defaults to \code{labels}.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
 
 \item{enable}{One of \code{values} indicating individual buttons to enable or
 \code{TRUE} to enable the entire input, defaults to \code{NULL}.}

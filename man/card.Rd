@@ -10,9 +10,9 @@ card(..., header = NULL, footer = NULL)
 deck(...)
 }
 \arguments{
-\item{...}{For \strong{card}, \code{tag$div()}s, tag elements, or list groups to
-include in the card or additional named arguments passed as HTML attributes
-to the parent element.
+\item{...}{For \strong{card}, \code{div()}s, tag elements, or list groups to include in
+the card or additional named arguments passed as HTML attributes to the
+card element.
 
 For \strong{deck}, any number of \code{card()}s or additional named arguments passed
 as HTML attributes to the parent element.}
@@ -128,6 +128,8 @@ card(
 
 deck(
   card(
+    .style \%>\%
+      background("info"),
     title = "Nullam tristique",
     p("Fusce sagittis, libero non molestie mollis, magna orci ultrices ",
       "dolor, at vulputate neque nulla lacinia eros."),
@@ -135,12 +137,16 @@ deck(
     footer = "Cras placerat accumsan nulla."
   ),
   card(
+    .style \%>\%
+      background("dark"),
     title = "Integer placerat",
     p("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ",
       "hendrerit tempor tellus."),
     footer = "Cras placerat accumsan nulla."
   ),
   card(
+    .style \%>\%
+      background("primary"),
     title = "Phasellus neque",
     p("Donec at pede. Etiam vel neque nec dui dignissim bibendum."),
     footer = "Cras placerat accumsan nulla."
