@@ -10369,6 +10369,16 @@ a.text-dark:hover, a.text-dark:focus {
   }
 }
 
+.btn-link {
+  padding: 0;
+  vertical-align: inherit;
+  text-align: inherit;
+}
+
+.btn-link.active, .btn-link:active {
+  box-shadow: none;
+}
+
 .custom-control-group-primary .custom-control-input:checked ~ .custom-control-label::before {
   background-color: #007bff;
   border-color: #007bff;

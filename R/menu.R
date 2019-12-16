@@ -94,7 +94,7 @@ menuInput <- function(id, label, choices = NULL, values = choices,
     )
   })
 
-  s3_class_add(tag, c("yonder.menu", "yonder.input"))
+  s3_class_add(tag, c("yonder_menu", "yonder_input"))
 }
 
 #' @rdname menuInput

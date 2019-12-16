@@ -30,14 +30,16 @@ str_collate <- function(..., collapse = " ") {
   args <- unique(c(...))
 
   if (is.null(args)) {
-    NULL
-  } else if (all(args == "")) {
-    NULL
-  } else if (all(is.na(args))) {
-    NA_character_
-  } else {
-    paste(args, collapse = collapse)
+    return(NULL)
   }
+
+  args <- args[nzchar(args) & !is_na(args)]
+
+  if (length(args) == 0) {
+    return(NULL)
+  }
+
+  paste(args, collapse = collapse)
 }
 
 str_re <- function(string, pattern, len0 = TRUE) {
