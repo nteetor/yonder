@@ -1,13 +1,13 @@
 // Button group top-level theming
 
 @each $color, $value in $theme-colors {
-  .btn-group-#{$color} .btn {
+  .btn-group-#{$color} > .btn {
     @extend .btn-#{$color};
   }
 }
 
 @each $color, $value in $theme-colors {
-  .btn-group-outline-#{$color} .btn {
+  .btn-group-outline-#{$color} > .btn {
     @extend .btn-outline-#{$color};
   }
 }

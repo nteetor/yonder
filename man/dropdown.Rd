@@ -36,17 +36,17 @@ argument \code{...} for details on composing dropdown menus.
 
 dropdown(
   label = "Choices",
-  buttonInput("choice1", "Choice 1"),
-  buttonInput("choice2", "Choice 2"),
-  buttonInput("choice3", "Choice 3")
+  buttonInput(id = "choice1", label = "Choice 1"),
+  buttonInput(id = "choice2", label = "Choice 2"),
+  buttonInput(id = "choice3", label = "Choice 3")
 )
 
 ### Dropdown with links
 
 dropdown(
   label = "Choices",
-  linkInput("link1", "Choice 1"),
-  linkInput("link2", "Choice 2")
+  linkInput(id = "link1", label = "Choice 1"),
+  linkInput(id = "link2", label = "Choice 2")
 )
 
 ### Grouped sections
@@ -54,12 +54,12 @@ dropdown(
 dropdown(
   label = "Sections",
   h6("Section 1"),
-  buttonInput("a", "Option A"),
-  buttonInput("b", "Option B"),
+  buttonInput(id = "a", label = "Option A"),
+  buttonInput(id = "b", label = "Option B"),
   hr(),
   h6("Section 2"),
-  buttonInput("c", "Option C"),
-  buttonInput("d", "Option D")
+  buttonInput(id = "c", label = "Option C"),
+  buttonInput(id = "d", label = "Option D")
 )
 
 ### Direction variations

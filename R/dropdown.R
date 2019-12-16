@@ -30,17 +30,17 @@
 #'
 #' dropdown(
 #'   label = "Choices",
-#'   buttonInput("choice1", "Choice 1"),
-#'   buttonInput("choice2", "Choice 2"),
-#'   buttonInput("choice3", "Choice 3")
+#'   buttonInput(id = "choice1", label = "Choice 1"),
+#'   buttonInput(id = "choice2", label = "Choice 2"),
+#'   buttonInput(id = "choice3", label = "Choice 3")
 #' )
 #'
 #' ### Dropdown with links
 #'
 #' dropdown(
 #'   label = "Choices",
-#'   linkInput("link1", "Choice 1"),
-#'   linkInput("link2", "Choice 2")
+#'   linkInput(id = "link1", label = "Choice 1"),
+#'   linkInput(id = "link2", label = "Choice 2")
 #' )
 #'
 #' ### Grouped sections
@@ -48,12 +48,12 @@
 #' dropdown(
 #'   label = "Sections",
 #'   h6("Section 1"),
-#'   buttonInput("a", "Option A"),
-#'   buttonInput("b", "Option B"),
+#'   buttonInput(id = "a", label = "Option A"),
+#'   buttonInput(id = "b", label = "Option B"),
 #'   hr(),
 #'   h6("Section 2"),
-#'   buttonInput("c", "Option C"),
-#'   buttonInput("d", "Option D")
+#'   buttonInput(id = "c", label = "Option C"),
+#'   buttonInput(id = "d", label = "Option D")
 #' )
 #'
 #' ### Direction variations
@@ -98,33 +98,22 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
   assert_possible(direction, c("up", "right", "down", "left"))
   assert_possible(align, c("right", "left"))
 
-  tag <- dep_attach({
-    args <- eval(substitute(alist(...)))
-
-    formatted_tags <- list(
+  with_deps({
+    dropdown_mask <- list(
       h6 = function(...) tags$h6(class = "dropdown-header", ...),
       hr = function(...) tags$div(class = "dropdown-divider", ...),
+      linkInput = function(...) linkInput(class = "dropdown-item", ...),
+      buttonInput = function(...) buttonInput(class = "dropdown-item", ...),
       formInput = function(...) formInput(...)
     )
 
-    items <- lapply(
-      unnamed_values(args),
-      eval,
-      envir = list2env(formatted_tags, envir = parent.frame())
+    args <- style_dots_eval(
+      ...,
+      .style = style_pronoun("dropdown"),
+      .mask = dropdown_mask
     )
 
-    items <- lapply(
-      items,
-      function(i) {
-        if (tag_name_is(i, "a") || tag_name_is(i, "button")) {
-          tag_class_add(i, "dropdown-item")
-        } else {
-          i
-        }
-      }
-    )
-
-    tags$div(
+    tag <- tags$div(
       class = str_collate(
         "dropdown",
         paste0("drop", direction)
@@ -145,12 +134,12 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
           "dropdown-menu",
           if (align == "right") "dropdown-menu-right"
         ),
-        items
+        unnamed_values(args)
       )
     )
+
+    tag <- tag_attributes_add(tag, named_values(args))
+
+    s3_class_add(tag, "yonder_dropdown")
   })
-
-  tag <- tag_attributes_add(tag, named_values(list(...)))
-
-  s3_class_add(tag, "yonder_dropdown")
 }
