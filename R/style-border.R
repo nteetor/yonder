@@ -30,9 +30,9 @@ border <- function(tag, color = NULL, sides = "all", round = NULL) {
   UseMethod("border")
 }
 
-border.yonder_style_accumulator <- function(tag, color = NULL, sides = "all",
-                                            round = NULL) {
-  UseMethod("border.yonder_style_accumulator", tag)
+border.yonder_style_pronoun <- function(tag, color = NULL, sides = "all",
+                                        round = NULL) {
+  UseMethod("border.yonder_style_pronoun", tag)
 }
 
 border.shiny.tag <- function(tag, color = NULL, sides = "all", round = NULL) {

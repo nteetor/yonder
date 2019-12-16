@@ -138,7 +138,6 @@ buttonInput <- function(..., id, label, stretch = FALSE, download = FALSE,
 
     ## tag <- tag_tooltip_add(tag, tooltip)
     args <- style_dots_eval(..., .style = style_pronoun("yonder_button"))
-
     tag <- tag_extend_with(tag, args)
 
     s3_class_add(tag, c("yonder_button", "yonder_input"))

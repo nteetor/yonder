@@ -61,13 +61,13 @@ font <- function(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
   UseMethod("font", tag)
 }
 
-font.yonder_style_accumulator <- function(tag, ...) {
-  UseMethod("font.yonder_style_accumulator", tag)
+font.yonder_style_pronoun <- function(tag, ...) {
+  UseMethod("font.yonder_style_pronoun", tag)
 }
 
-font.yonder_style_accumulator.default <- function(tag, color = NULL,
-                                                  weight = NULL, case = NULL,
-                                                  align = NULL) {
+font.yonder_style_pronoun.default <- function(tag, color = NULL,
+                                              weight = NULL, case = NULL,
+                                              align = NULL) {
   style_class_add(tag, c(
     font_color(color),
     font_weight(weight),
