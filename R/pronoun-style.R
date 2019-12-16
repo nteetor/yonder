@@ -10,9 +10,9 @@
 #' div() %>% background("primary") %>% display("flex")
 #' ```
 #'
-#' Once the content of `div()` grows to more than a few lines associating the
-#' styles with the `div()` becomes increasingly unintuitive. In these
-#' situations, make use of the `.style` pronoun.
+#' Once the content of a tag element grows to more than a few lines, associating
+#' the element's styles with the element itself becomes increasingly
+#' unintuitive. In these situations, make use of the `.style` pronoun.
 #'
 #' ```R
 #' div(
@@ -24,23 +24,28 @@
 #'
 #' @include utils.R
 #' @export
-## .style <- s3_class_add(rlang::splice(list()), "yonder_style_accumulator")
-.style <- local({
-  s <- splice(list())
-  class(s) <- unique(c("yonder_style_accumulator", class(s)))
-  s
-})
+.style <- structure(list(), class = "yonder_style_pronoun")
 
-style_pronoun <- function(extra = NULL) {
-  if (!is.null(extra)) {
-    extra <- paste0("yonder_", extra)
-  }
+style_pronoun <- function(subclass = NULL) {
+  structure(list(), class = c("yonder_style_pronoun", subclass))
+}
 
-  structure(list(), class = c("yonder_style_accumulator", extra))
+is_style_pronoun <- function(x) {
+  inherits(x, "yonder_style_pronoun")
+}
+
+print.yonder_style_pronoun <- function(x, ...) {
+  cat("<pronoun>\n")
+  invisible(x)
+}
+
+str.yonder_style_pronoun <- function(object, ...) {
+  cat("<pronoun>\n")
+  invisible(NULL)
 }
 
 style_dots_eval <- function(..., .style = NULL, .mask = NULL) {
-  .style <- .style %||% style_pronoun(.style)
+  .style <- .style %||% style_pronoun()
 
   .mask <- list2(.style = .style, !!!.mask)
 
@@ -51,17 +56,20 @@ style_dots_eval <- function(..., .style = NULL, .mask = NULL) {
   flatten_if(args)
 }
 
-style_create_pronoun <- function(...) {
-  style_splice2(structure(list(), ...))
-}
-
 style_class_add <- function(x, new) {
   if (!nzchar(new) || length(new) == 0) {
     return(x)
   }
 
-  if (is_box(x)) {
+  if (is_spliced(x)) {
     x <- unbox(x)
+
+    if (!is_style_pronoun(x)) {
+      stop(
+        "unexpected `.style` object",
+        call. = FALSE
+      )
+    }
   }
 
   if (length(new) > 1) {
@@ -74,31 +82,5 @@ style_class_add <- function(x, new) {
 
   x$class <- new
 
-  style_splice2(x)
-}
-
-style_class_build <- function(x, prefix, ...) {
-  x <- unbox(x)
-
-  if (is.null(prefix)) {
-    return(body)
-  }
-
-  args <- vapply(list(...), as.character, character(1))
-
-  paste(c(style_get_prefix(x, prefix), args), collapse = "-")
-}
-
-style_get_prefix <- function(x, default) {
-  x %@% "prefix" %||% default
-}
-
-style_splice <- function(x) {
-  s3_class_add(splice(x), "yonder_style_accumulator")
-}
-
-style_splice2 <- function(x) {
-  s <- splice(x)
-  class(s) <- unique(c("yonder_style_accumulator", class(s)))
-  s
+  rlang::splice(x)
 }

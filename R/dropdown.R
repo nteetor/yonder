@@ -109,7 +109,7 @@ dropdown <- function(label, ..., direction = "down", align = "left") {
 
     args <- style_dots_eval(
       ...,
-      .style = style_pronoun("dropdown"),
+      .style = style_pronoun("yonder_dropdown"),
       .mask = dropdown_mask
     )
 
