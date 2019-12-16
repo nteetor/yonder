@@ -80,6 +80,26 @@ background.yonder_style_accumulator.yonder_checkbox <- function(tag, color) {
   style_class_add(tag, sprintf("custom-control-group-%s", color))
 }
 
+background.yonder_checkbar <- function(tag, color) {
+  tag_class_add(tag, sprintf("btn-group-%s", color))
+}
+
+background.yonder_style_accumulator.yonder_checkbar <- function(tag, color) {
+  style_class_add(tag, sprintf("btn-group-%s", color))
+}
+
+background.yonder_dropdown <- function(tag, color) {
+  toggle <- tag$children[[1]]
+
+  tag$children[[1]] <- tag_class_add(toggle, sprintf("btn-%s", color))
+
+  tag
+}
+
+background.yonder_style_accumulator.yonder_dropdown <- function(tag, color) {
+  style_class_add(tag, sprintf("btn-group-%s", color))
+}
+
 background.yonder_listgroup <- function(tag, color) {
   tag_class_add(tag, sprintf("list-group-%s", color))
 }
@@ -112,26 +132,6 @@ background.yonder_style_accumulator.yonder_radiobar <- function(tag, color) {
   style_class_add(tag, sprintf("btn-group-%s", color))
 }
 
-background.yonder_checkbar <- function(tag, color) {
-  tag_class_add(tag, sprintf("btn-group-%s", color))
-}
-
-background.yonder_style_accumulator.yonder_checkbar <- function(tag, color) {
-  style_class_add(tag, sprintf("btn-group-%s", color))
-}
-
-background.yonder_dropdown <- function(tag, color) {
-  toggle <- tag$children[[1]]
-
-  tag$children[[1]] <- tag_class_add(toggle, sprintf("btn-%s", color))
-
-  tag
-}
-
-background.yonder_style_accumulator.yonder_dropdown <- function(tag, color) {
-  stop("Problematic")
-}
-
 background.yonder_menu <- function(tag, color) {
   toggle <- tag$children[[1]]
 
@@ -141,5 +141,5 @@ background.yonder_menu <- function(tag, color) {
 }
 
 background.yonder_style_accumulator.yonder_menu <- function(tag, color) {
-  stop("Problematic")
+  style_class_add(tag, sprintf("btn-group-%s", color))
 }

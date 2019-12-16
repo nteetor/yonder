@@ -10,7 +10,8 @@ buttonGroupInput(
   id,
   choices = NULL,
   values = choices,
-  labels = deprecated()
+  labels = deprecated(),
+  direction = "horizontal"
 )
 
 updateButtonGroupInput(
@@ -32,7 +33,10 @@ element.}
 the group.}
 
 \item{values}{A vector of values specifying the values of each button in the
-group, defaults to \code{labels}.}
+group, defaults to \code{choices}.}
+
+\item{direction}{One of \code{"horizontal"} or \code{"vertical"} specifying the layout
+of the buttons, defaults to \code{"horizontal"}.}
 
 \item{enable}{One of \code{values} indicating individual buttons to enable or
 \code{TRUE} to enable the entire input, defaults to \code{NULL}.}

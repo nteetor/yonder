@@ -250,7 +250,10 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #'   the group.
 #'
 #' @param values A vector of values specifying the values of each button in the
-#'   group, defaults to `labels`.
+#'   group, defaults to `choices`.
+#'
+#' @param direction One of `"horizontal"` or `"vertical"` specifying the layout
+#'   of the buttons, defaults to `"horizontal"`.
 #'
 #' @param enable One of `values` indicating individual buttons to enable or
 #'   `TRUE` to enable the entire input, defaults to `NULL`.
@@ -279,7 +282,9 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #'   background("blue") %>%
 #'   width("1/3")
 #'
-buttonGroupInput <- function(..., id, choices = NULL, values = choices, labels = deprecated()) {
+buttonGroupInput <- function(..., id, choices = NULL, values = choices,
+                             labels = deprecated(),
+                             direction = "horizontal") {
   if (is_present(labels)) {
     deprecate_soft(
       "0.2.0",
