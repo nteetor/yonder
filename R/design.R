@@ -10,8 +10,8 @@ theme_colors <- c(
 )
 
 param_color <- function(what) {
-  q_start <- '"`'
-  q_end <- '`"'
+  q_start <- '`"'
+  q_end <- '"`'
 
   paste(
     "@param color One of",

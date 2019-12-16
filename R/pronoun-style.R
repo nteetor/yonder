@@ -45,10 +45,6 @@ style_class_add <- function(x, new) {
     x <- unbox(x)
   }
 
-  if (length(new) < 1 || all(!nzchar(new)) || is_na(new)) {
-    return(x)
-  }
-
   if (length(new) > 1) {
     new <- paste(new, collapse = " ")
   }
