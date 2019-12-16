@@ -19,49 +19,50 @@
 #' ### Default alert
 #'
 #' alert("Donec at pede.") %>%
-#'   background("blue")
+#'   background("primary")
 #'
 #' ### A more complex alert
 #'
 #' alert(
+#'   .style %>%
+#'     background("warning"),
 #'   h4("Etiam vel tortor sodales"),
 #'   hr(),
 #'   p("Fusce commodo.")
-#' ) %>%
-#'   background("amber")
+#' )
 #'
 alert <- function(..., dismissible = TRUE, fade = TRUE) {
-  c_env <- parent.frame()
-
-  dep_attach({
-    args <- eval(substitute(alist(...)))
-
-    body <- lapply(
-      unnamed_values(args),
-      eval,
-      envir = list2env(
-        list(
-          a = function(...) tags$a(class = "alert-link", ...),
-          h1 = function(...) tags$h1(class = "alert-heading", ...),
-          h2 = function(...) tags$h2(class = "alert-heading", ...),
-          h3 = function(...) tags$h3(class = "alert-heading", ...),
-          h4 = function(...) tags$h4(class = "alert-heading", ...),
-          h5 = function(...) tags$h5(class = "alert-heading", ...),
-          h6 = function(...) tags$h6(class = "alert-heading", ...)
-        ),
-        parent = c_env
-      )
-    )
-
-    component <- tags$div(
+  with_deps({
+    tag <- tags$div(
       class = str_collate(
-        "alert alert-grey",
+        "alert",
         if (dismissible) "alert-dismissible",
         if (dismissible && fade) "fade show"
       ),
-      role = "alert",
-      body,
-      if (dismissible) {
+      role = "alert"
+    )
+
+    alert_mask <- list(
+      a = function(...) tags$a(class = "alert-link", ...),
+      linkInput = function(...) linkInput(class = "alert-link", ...),
+      h1 = function(...) tags$h1(class = "alert-heading", ...),
+      h2 = function(...) tags$h2(class = "alert-heading", ...),
+      h3 = function(...) tags$h3(class = "alert-heading", ...),
+      h4 = function(...) tags$h4(class = "alert-heading", ...),
+      h5 = function(...) tags$h5(class = "alert-heading", ...),
+      h6 = function(...) tags$h6(class = "alert-heading", ...)
+    )
+
+    args <- style_dots_eval(
+      ...,
+      .style = style_pronoun("alert"),
+      .mask = alert_mask
+    )
+
+    tag <- tag_extend_with(tag, args)
+
+    if (dismissible) {
+      tag <- tag_children_add(tag, list(
         tags$button(
           type = "button",
           class = "close",
@@ -72,9 +73,9 @@ alert <- function(..., dismissible = TRUE, fade = TRUE) {
             HTML("&times;")
           )
         )
-      }
-    )
+      ))
+    }
 
-    tag_attributes_add(component, named_values(list(...)))
+    s3_class_add(tag, "yonder_alert")
   })
 }

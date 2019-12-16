@@ -36,29 +36,24 @@
 #' @export
 #' @examples
 #'
-#' ### Possible colors
+#' ### Button & badge
 #'
-#' colors <- c(
-#'   "red", "purple", "indigo", "blue", "cyan", "teal", "green",
-#'   "yellow", "amber", "orange", "grey", "white"
+#' buttonInput(
+#'   .style %>%
+#'     background("primary"),
+#'   id = "counter",
+#'   label = "Count",
+#'   badge(3) %>% background("light")
 #' )
 #'
-#' div(
-#'   lapply(colors, function(color) {
-#'     badge(color) %>%
-#'       background(color) %>%
-#'       margin(2) %>%
-#'       padding(1)
-#'   })
-#' ) %>%
-#'   display("flex") %>%
-#'   flex(wrap = TRUE)
-#'
 badge <- function(...) {
-  dep_attach({
-    tags$span(
-      class = "badge",
-      ...
-    )
+  with_deps({
+    tag <- tags$span(class = "badge")
+
+    args <- style_dots_eval(..., .style = style_pronoun("badge"))
+
+    tag <- tag_extend_with(tag, args)
+
+    s3_class_add(tag, "yonder_badge")
   })
 }

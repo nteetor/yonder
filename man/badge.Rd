@@ -41,23 +41,15 @@ shinyApp(ui, server)
 
 \examples{
 
-### Possible colors
+### Button & badge
 
-colors <- c(
-  "red", "purple", "indigo", "blue", "cyan", "teal", "green",
-  "yellow", "amber", "orange", "grey", "white"
+buttonInput(
+  .style \%>\%
+    background("primary"),
+  id = "counter",
+  label = "Count",
+  badge(3) \%>\% background("light")
 )
-
-div(
-  lapply(colors, function(color) {
-    badge(color) \%>\%
-      background(color) \%>\%
-      margin(2) \%>\%
-      padding(1)
-  })
-) \%>\%
-  display("flex") \%>\%
-  flex(wrap = TRUE)
 
 }
 \seealso{

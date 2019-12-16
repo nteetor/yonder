@@ -1,20 +1,10 @@
-@import '../node_modules/bootstrap/scss/buttons';
+.btn-link {
+  padding: 0;
+  vertical-align: inherit;
+  text-align: inherit;
 
-@include button-active-variant();
-
-.yonder-link {
-  &:not(.dropdown-item) {
-    padding: 0 !important;
-    vertical-align: inherit !important;
-    text-align: inherit !important;
-  }
-}
-
-.btn {
-  cursor: pointer;
-
-  &.disabled,
-  &[disabled] {
-    cursor: not-allowed;
+  &.active,
+  &:active {
+    box-shadow: none;
   }
 }

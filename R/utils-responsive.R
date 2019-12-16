@@ -57,7 +57,7 @@ resp_check <- function(...) {
   passed <- as.character(as.list(substitute(list(...)))[-1])
   args <- list(...)
   args_flat <- unlist(args)
-  args_names <- rlang::names2(args_flat)
+  args_names <- names2(args_flat)
 
   if (any(duplicated(args_names))) {
     dups <- args_names[duplicated(args_names)]
@@ -76,7 +76,7 @@ resp_check_breaks <- function(values) {
     return(NULL)
   }
 
-  v_names <- rlang::names2(values)
+  v_names <- names2(values)
 
   v_names[!str_re(v_names, "default|xs|sm|md|lg|xl")]
 }
@@ -86,7 +86,7 @@ resp_check_lengths <- function(values) {
     return(NULL)
   }
 
-  rlang::names2(values)[vapply(values, length, numeric(1)) > 1]
+  names2(values)[vapply(values, length, numeric(1)) > 1]
 }
 
 resp_check_value <- function(values, possible) {
@@ -103,7 +103,7 @@ resp_construct <- function(values, possible) {
   }
 
   values <- as.list(values)
-  v_names <- rlang::names2(values)
+  v_names <- names2(values)
   args <- match.call()$values
 
   if (is.null(v_names) && length(values) > 1) {
@@ -148,7 +148,7 @@ resp_classes <- function(values, prefix) {
     return(NULL)
   }
 
-  v_names <- rlang::names2(values)
+  v_names <- names2(values)
 
   default <- values[v_names == "default"]
   if (length(default)) {
@@ -159,7 +159,7 @@ resp_classes <- function(values, prefix) {
 
   points <- values[v_names != "default"]
   if (length(points)) {
-    points <- paste0(prefix, "-", rlang::names2(points), "-", points)
+    points <- paste0(prefix, "-", names2(points), "-", points)
   } else {
     points <- NULL
   }
