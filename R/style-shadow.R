@@ -50,8 +50,8 @@ shadow <- function(tag, size = "medium") {
   UseMethod("shadow", tag)
 }
 
-shadow.yonder_style_accumulator <- function(tag, ...) {
-  UseMethod("shadow.yonder_style_accumulator", tag)
+shadow.yonder_style_pronoun <- function(tag, ...) {
+  UseMethod("shadow.yonder_style_pronoun", tag)
 }
 
 shadow.shiny.tag <- function(tag, size) {
@@ -69,7 +69,7 @@ shadow.shiny.tag <- function(tag, size) {
   ))
 }
 
-shadow.yonder_style_accumulator.default <- function(tag, size) {
+shadow.yonder_style_pronoun.default <- function(tag, size) {
   if (size == "regular") {
     deprecate_soft(
       "0.2.0", 'yonder::shadow(size = )', 'yonder::shadow(size = )',

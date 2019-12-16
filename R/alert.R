@@ -55,7 +55,7 @@ alert <- function(..., dismissible = TRUE, fade = TRUE) {
 
     args <- style_dots_eval(
       ...,
-      .style = style_pronoun("alert"),
+      .style = style_pronoun("yonder_alert"),
       .mask = alert_mask
     )
 

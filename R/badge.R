@@ -50,7 +50,7 @@ badge <- function(...) {
   with_deps({
     tag <- tags$span(class = "badge")
 
-    args <- style_dots_eval(..., .style = style_pronoun("badge"))
+    args <- style_dots_eval(..., .style = style_pronoun("yonder_badge"))
 
     tag <- tag_extend_with(tag, args)
 
