@@ -2,7 +2,7 @@
 % Please edit documentation in R/style-border.R
 \name{border}
 \alias{border}
-\title{Border color}
+\title{Border colors}
 \usage{
 border(x, color = NULL, sides = "all", round = NULL)
 }
@@ -28,6 +28,7 @@ Other design utilities:
 \code{\link{affix}()},
 \code{\link{background}()},
 \code{\link{display}()},
+\code{\link{flex}()},
 \code{\link{float}()},
 \code{\link{font}()},
 \code{\link{height}()},

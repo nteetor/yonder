@@ -1,4 +1,4 @@
-#' Display property
+#' Display
 #'
 #' Use the `display()` utility to adjust how a tag element is rendered. All
 #' arguments are responsive allowing you to hide elements on small screens or
@@ -17,12 +17,12 @@ display <- function(x, type) {
 
 #' @export
 display.yonder_style_pronoun <- function(x, type) {
-  UseMethod("display.yonder_style_pronoun", x)
+  NextMethod("display", x)
 }
 
 #' @export
 display.rlang_box_splice <- function(x, type) {
-  UseMethod("display.yonder_style_pronound", unbox(x))
+  NextMethod("display", unbox(x))
 }
 
 #' @export
@@ -31,8 +31,8 @@ display.shiny.tag <- function(x, type) {
 }
 
 #' @export
-display.yonder_style_pronoun.default <- function(x, type) {
-  style_class_add(x, display_type(type))
+display.default <- function(x, type) {
+  tag_class_add(x, display_type(type))
 }
 
 display_type <- function(type) {

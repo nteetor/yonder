@@ -1,12 +1,10 @@
 #' Shadows
 #'
-#' The `shadow` utility applies a shadow to a tag element. Elements with a
-#' shadow may appear to pop off the page. The material design set of components,
-#' used on Android and for Google applications, commonly uses shadowing.
-#' Although `"none"` is an allowed `size`, most elements do not have a shadow by
-#' default.
+#' The `shadow` utility applies a shadow to a tag element. By default many
+#' elements include a shadow to help distinguish them. Use `"none"` to remove an
+#' element's shadow.
 #'
-#' @param tag A tag element.
+#' @inheritParams affix
 #'
 #' @param size One of `"none"`, `"small"`, `"medium"`, or `"large"` specifying
 #'   the amount of shadow added, defaults to `"medium"`.
@@ -44,19 +42,24 @@
 #'     shadow("large")
 #' )
 #'
-shadow <- function(tag, size = "medium") {
+shadow <- function(x, size = "medium") {
   assert_possible(size, c("none", "small", "medium", "large"))
 
-  UseMethod("shadow", tag)
+  UseMethod("shadow", x)
 }
 
 #' @export
-shadow.yonder_style_pronoun <- function(tag, size = "medium") {
-  UseMethod("shadow.yonder_style_pronoun", tag)
+shadow.yonder_style_pronoun <- function(x, size = "medium") {
+  NextMethod("shadow", x)
 }
 
 #' @export
-shadow.shiny.tag <- function(tag, size) {
+shadow.rlang_box_splice <- function(x, size = "medium") {
+  NextMethod("shadow", unbox(x))
+}
+
+#' @export
+shadow.shiny.tag <- function(x, size = "medium") {
   if (size == "regular") {
     deprecate_soft(
       "0.2.0", 'yonder::shadow(size = )', 'yonder::shadow(size = )',
@@ -66,13 +69,11 @@ shadow.shiny.tag <- function(tag, size) {
     size <- "medium"
   }
 
-  tag_class_add(tag, c(
-    shadow_size(size)
-  ))
+  tag_class_add(x, shadow_size(size))
 }
 
 #' @export
-shadow.yonder_style_pronoun.default <- function(tag, size) {
+shadow.default <- function(x, size = "medium") {
   if (size == "regular") {
     deprecate_soft(
       "0.2.0", 'yonder::shadow(size = )', 'yonder::shadow(size = )',
@@ -82,9 +83,7 @@ shadow.yonder_style_pronoun.default <- function(tag, size) {
     size <- "medium"
   }
 
-  style_class_add(tag, c(
-    shadow_size(size)
-  ))
+  tag_class_add(x, shadow_size(size))
 }
 
 shadow_size <- function(size) {

@@ -1,9 +1,9 @@
-#' Tag element padding
+#' Padding
 #'
-#' Use the `padding()` function to change the inner spacing of a tag element.
-#' The padding of a tag element is the space between the tag element's border
-#' and its content or child elements. All arguments default to `NULL`, in which
-#' case they are ignored.
+#' The `padding` utility changes the inner spacing of a tag element. The padding
+#' of a tag element is the space between the tag element's border and its
+#' content or child elements. All arguments default to `NULL`, in which case
+#' they are ignored.
 #'
 #' @inheritParams affix
 #'
@@ -22,13 +22,13 @@ padding <- function(x, all = NULL, top = NULL, right = NULL, bottom = NULL,
 padding.yonder_style_pronoun <- function(x, all = NULL, top = NULL,
                                          right = NULL, bottom = NULL,
                                          left = NULL) {
-  UseMethod("padding.yonder_style_pronoun", x)
+  NextMethod("padding", x)
 }
 
 #' @export
 padding.rlang_box_splice <- function(x, all = NULL, top = NULL, right = NULL,
                                      bottom = NULL, left = NULL) {
-  UseMethod("padding.yonder_style_pronoun", unbox(x))
+  NextMethod("padding", unbox(x))
 }
 
 #' @export
@@ -44,10 +44,9 @@ padding.shiny.tag <- function(x, all = NULL, top = NULL, right = NULL,
 }
 
 #' @export
-padding.yonder_style_pronoun.default <- function(x, all = NULL, top = NULL,
-                                                 right = NULL, bottom = NULL,
-                                                 left = NULL) {
-  style_class_add(x, c(
+padding.default <- function(x, all = NULL, top = NULL, right = NULL,
+                            bottom = NULL, left = NULL) {
+  tag_class_add(x, c(
     padding_all(all),
     padding_top(top),
     padding_right(right),
@@ -106,12 +105,12 @@ padding_all <- function(all) {
   resp_classes(all, "p")
 }
 
-#' Tag element margins
+#' Margins
 #'
-#' Use the `margin()` function to change the outer spacing of a tag element.
-#' The margin of a tag element is the space outside and around the tag element,
-#' its border, and its content.  All arguments default to `NULL`, in which case
-#' they are ignored.
+#' The `margin` utilty changes the outer spacing of a tag element. The margin of
+#' a tag element is the space outside and around the tag element, its border,
+#' and its content. All arguments default to `NULL`, in which case they are
+#' ignored.
 #'
 #' @inheritParams affix
 #'
@@ -204,13 +203,13 @@ margin <- function(x, all = NULL, top = NULL, right = NULL, bottom = NULL,
 margin.yonder_style_pronoun <- function(x, all = NULL, top = NULL,
                                         right = NULL, bottom = NULL,
                                         left = NULL) {
-  UseMethod("margin.yonder_style_pronoun", x)
+  NextMethod("margin", x)
 }
 
 #' @export
 margin.rlang_box_splice <- function(x, all = NULL, top = NULL, right = NULL,
                                     bottom = NULL, left = NULL) {
-  UseMethod("margin.yonder_style_pronoun", unbox(x))
+  NextMethod("margin", unbox(x))
 }
 
 #' @export
@@ -226,10 +225,9 @@ margin.shiny.tag <- function(x, all = NULL, top = NULL, right = NULL,
 }
 
 #' @export
-margin.yonder_style_pronoun.default <- function(x, all = NULL, top = NULL,
-                                                right = NULL, bottom = NULL,
-                                                left = NULL) {
-  style_class_add(x, c(
+margin.default <- function(x, all = NULL, top = NULL, right = NULL,
+                           bottom = NULL, left = NULL) {
+  tag_class_add(x, c(
     margin_all(all),
     margin_top(top),
     margin_right(right),

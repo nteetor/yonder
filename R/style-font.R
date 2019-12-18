@@ -52,7 +52,9 @@
 #'
 font <- function(x, color = NULL, size = NULL, weight = NULL, case = NULL,
                  align = NULL) {
-  deprecate_soft("0.2.0", "yonder::font(size = )")
+  if (!is.null(size)) {
+    deprecate_soft("0.2.0", "yonder::font(size = )")
+  }
 
   assert_possible(color, theme_colors)
   assert_possible(weight, c("bold", "bolder", "normal", "lighter", "light"))
@@ -65,13 +67,13 @@ font <- function(x, color = NULL, size = NULL, weight = NULL, case = NULL,
 font.yonder_style_pronoun <- function(x,  color = NULL, size = NULL,
                                       weight = NULL, case = NULL,
                                       align = NULL) {
-  UseMethod("font.yonder_style_pronoun", x)
+  NextMethod("font", x)
 }
 
 #' @export
 font.rlang_box_splice <- function(x, color = NULL, size = NULL, weight = NULL,
                                   case = NULL, align = NULL) {
-  UseMethod("font.yonder_style_pronoun", unbox(x))
+  NextMethod("font", unbox(x))
 }
 
 #' @export
@@ -86,10 +88,9 @@ font.shiny.tag <- function(x, color = NULL, size = NULL, weight = NULL,
 }
 
 #' @export
-font.yonder_style_pronoun.default <- function(x, color = NULL,
-                                              weight = NULL, case = NULL,
-                                              align = NULL) {
-  style_class_add(x, c(
+font.default <- function(x, color = NULL, size = NULL, weight = NULL,
+                         case = NULL, align = NULL) {
+  tag_class_add(x, c(
     font_color(color),
     font_weight(weight),
     font_case(case),

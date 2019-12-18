@@ -38,8 +38,6 @@ webpage(
 Other layout functions: 
 \code{\link{column}()},
 \code{\link{fieldset}()},
-\code{\link{flex}()},
-\code{\link{navbar}()},
-\code{\link{responsive}}
+\code{\link{navbar}()}
 }
 \concept{layout functions}

@@ -2,7 +2,7 @@
 % Please edit documentation in R/style-background.R
 \name{background}
 \alias{background}
-\title{Background color}
+\title{Backgrounds}
 \usage{
 background(x, color)
 }
@@ -35,6 +35,7 @@ Other design utilities:
 \code{\link{affix}()},
 \code{\link{border}()},
 \code{\link{display}()},
+\code{\link{flex}()},
 \code{\link{float}()},
 \code{\link{font}()},
 \code{\link{height}()},

@@ -54,7 +54,6 @@
 #' When: the style is applied when the viewport is at least 1200px wide, think
 #' large desktops.
 #'
-#' @family layout functions
 #' @name responsive
 NULL
 
@@ -65,7 +64,7 @@ NULL
 #' container see [display()]. By default tag elements within a flex container
 #' are treated as flex items.
 #'
-#' @param tag A tag element.
+#' @inheritParams affix
 #'
 #' @param direction A [responsive] argument. One of `"row"` or `"column"`
 #'   specifying the placement of flex items, defaults to `NULL`. If `"row"`
@@ -92,7 +91,7 @@ NULL
 #'   to `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
 #'   not wrap. See the **wrap** section below for more.
 #'
-#' @family layout functions
+#' @family design utilities
 #' @export
 #' @examples
 #'
@@ -104,6 +103,13 @@ NULL
 #' # or larger screens the items are placed horizontally once again.
 #'
 #' div(
+#'   .style %>%
+#'     display("flex") %>%
+#'     flex(
+#'       direction = list(xs = "column", md = "row")  # <-
+#'     ) %>%
+#'     background("secondary") %>%
+#'     border(),
 #'   div("A flex item") %>%
 #'     padding(3) %>%
 #'     border(),
@@ -113,19 +119,16 @@ NULL
 #'   div("A flex item") %>%
 #'     padding(3) %>%
 #'     border()
-#' ) %>%
-#'   display("flex") %>%
-#'   flex(
-#'     direction = list(xs = "column", md = "row")  # <-
-#'   ) %>%
-#'   background("secondary") %>%
-#'   border()
+#' )
 #'
 #' # *Resize the browser for this example.*
 #'
 #' # You can keep items as a column by specifying only `"column"`.
 #'
 #' div(
+#'   .style %>%
+#'     display("flex") %>%
+#'     flex("column"),  # <-
 #'   div("A flex item") %>%
 #'     padding(3) %>%
 #'     border(),
@@ -133,11 +136,9 @@ NULL
 #'     padding(3) %>%
 #'     border(),
 #'   div("A flex item") %>%
-#'      padding(3) %>%
-#'      border()
-#' ) %>%
-#'   display("flex") %>%
-#'   flex(direction = "column")  # <-
+#'     padding(3) %>%
+#'     border()
+#' )
 #'
 #' ### Spacing items with `justify`
 #'
@@ -221,49 +222,97 @@ NULL
 #' # Using flexbox we can also control how items wrap onto new lines.
 #'
 #' div(
+#'   .style %>%
+#'     display("flex") %>%
+#'     flex(wrap = TRUE),
 #'   replicate(
 #'     div("A flex item") %>%
 #'       padding(3) %>%
+#'       margin(1) %>%
 #'       border(),
-#'     n = 5,
+#'     n = 10,
 #'     simplify = FALSE
 #'   )
-#' ) %>%
-#'   display("flex") %>%
-#'   flex(wrap = TRUE)
+#' )
 #'
-flex <- function(tag, direction = NULL, justify = NULL, align = NULL,
+flex <- function(x, direction = NULL, justify = NULL, align = NULL,
                  wrap = NULL, reverse = NULL) {
-  dep_attach({
-    direction <- resp_construct(direction, c("row", "column"))
-    reverse <- resp_construct(reverse, c(TRUE, FALSE))
-    justify <- resp_construct(justify, c("start", "end", "center", "between", "around"))
-    align <- resp_construct(align, c("start", "end", "center", "baseline", "stretch"))
-    wrap <- resp_construct(wrap, c(TRUE, FALSE))
+  UseMethod("flex", x)
+}
 
-    if (length(direction) || length(reverse)) {
-      for (breakpoint in names(reverse)) {
-        old <- direction[[breakpoint]] %||% "row"
+#' @export
+flex.yonder_style_pronoun <- function(x, direction = NULL, justify = NULL,
+                                      align = NULL, wrap = NULL,
+                                      reverse = NULL) {
+  NextMethod("flex", x)
+}
 
-        if (reverse[[breakpoint]]) {
-          direction[[breakpoint]] <- paste0(old, "-reverse")
-        } else {
-          direction[[breakpoint]] <- old
-        }
+#' @export
+flex.rlang_box_splice <- function(x, direction = NULL, justify = NULL,
+                                  align = NULL, wrap = NULL, reverse = NULL) {
+  NextMethod("flex", unbox(x))
+}
+
+#' @export
+flex.shiny.tag <- function(x, direction = NULL, justify = NULL, align = NULL,
+                           wrap = NULL, reverse = NULL) {
+  tag_class_add(x, c(
+    flex_direction(direction, reverse),
+    flex_justify(justify),
+    flex_align(align),
+    flex_wrap(wrap)
+  ))
+}
+
+#' @export
+flex.default <- function(x, direction = NULL, justify = NULL, align = NULL,
+                         wrap = NULL, reverse = NULL) {
+  tag_class_add(x, c(
+    flex_direction(direction, reverse),
+    flex_justify(justify),
+    flex_align(align),
+    flex_wrap(wrap)
+  ))
+}
+
+flex_direction <- function(direction, reverse) {
+  direction <- resp_construct(direction, c("row", "column"))
+
+  if (!is.null(names(reverse))) {
+    direction[names2(reverse)] <- lapply(names2(reverse), function(n) {
+      # This is necessary because "row" may be implied and not explicitly
+      # passed in `direction`
+      prev <- direction[[n]] %||% "row"
+
+      if (reverse[[n]]) {
+        sprintf("%s-reverse", prev)
+      } else {
+        prev
       }
-    }
+    })
+  }
 
-    if (length(wrap)) {
-      wrap <- lapply(wrap, function(w) if (w) "wrap" else "nowrap")
-    }
+  resp_classes(direction, "flex")
+}
 
-    classes <- c(
-      resp_classes(direction, "flex"),
-      resp_classes(justify, "justify-content"),
-      resp_classes(align, "align-items"),
-      resp_classes(wrap, "flex")
-    )
+flex_justify <- function(justify) {
+  j <- resp_construct(justify, c("start", "end", "center", "between", "around"))
 
-    tag_class_add(tag, classes)
-  })
+  resp_classes(j, "justify-content")
+}
+
+flex_align <- function(align) {
+  a <- resp_construct(align, c("start", "end", "center", "baseline", "stretch"))
+
+  resp_classes(a, "align-items")
+}
+
+flex_wrap <- function(wrap) {
+  w <- resp_construct(wrap, c(TRUE, FALSE))
+
+  if (length(w)) {
+    w <- lapply(w, function(w) if (w) "wrap" else "nowrap")
+  }
+
+  resp_classes(w, "flex")
 }
