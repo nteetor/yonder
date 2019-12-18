@@ -61,8 +61,8 @@
 #' dropdown(
 #'   label = "Up!",
 #'   direction = "up",
-#'   buttonInput("up1", "Choice 1"),
-#'   buttonInput("up2", "Choice 2")
+#'   buttonInput(id = "up1", label = "Choice 1"),
+#'   buttonInput(id = "up2", label = "Choice 2")
 #' )
 #'
 #' ### Dropdowns with forms

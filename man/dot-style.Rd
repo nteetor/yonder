@@ -4,22 +4,21 @@
 \name{.style}
 \alias{.style}
 \title{Style pronoun}
-\format{An object of class \code{yonder_style_accumulator} (inherits from \code{rlang_box_splice}, \code{rlang_box}) of length 1.}
 \usage{
 .style
 }
 \description{
 The \code{.style} pronoun allows you to define styles for a tag element within the
-element's context. Prior to the introduction of the \code{.style} pronoun tag
-elements had to be piped into design utilities.\if{html}{\out{<div class="R">}}\preformatted{div() \%>\% background("primary") \%>\% display("flex")
+context of the element. Prior to the introduction of the \code{.style} pronoun tag
+styles were always applied outside or after constructing a tag element.\if{html}{\out{<div class="R">}}\preformatted{card() \%>\% background("primary") \%>\% display("flex")
 }\if{html}{\out{</div>}}
 
-Once the content of \code{div()} grows to more than a few lines associating the
-styles with the \code{div()} becomes increasingly unintuitive. In these
-situations, make use of the \code{.style} pronoun.\if{html}{\out{<div class="R">}}\preformatted{div(
+However, once the content of a tag element grows to more than a few lines,
+associating the element's styles with the element becomes increasingly
+unintuitive. In these situations, make use of the \code{.style} pronoun.\if{html}{\out{<div class="R">}}\preformatted{card(
   .style \%>\%
-    background("primary") \%>\%
-    display("flex")
+    border("primary") \%>\%
+    font("primary)
 )
 }\if{html}{\out{</div>}}
 }

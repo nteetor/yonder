@@ -46,8 +46,8 @@
 #'
 #' fileInput(
 #'   id = "file2",
-#'   left = buttonInput("upload", "Upload") %>%
-#'     background("green")
+#'   left = buttonInput(id = "upload", label = "Upload") %>%
+#'     background("success")
 #' )
 #'
 #' ### Customizing text

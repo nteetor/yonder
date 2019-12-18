@@ -43,12 +43,12 @@
 #' ```R
 #' ui <- container(
 #'   chipInput(
+#'     .style %>% width(50),
 #'     id = "chips",
 #'     choices = paste("Option number", 1:10),
 #'     values = 1:10,
 #'     inline = TRUE
-#'   ) %>%
-#'     width("1/2")
+#'   )
 #' )
 #'
 #' server <- function(input, output) {
@@ -63,6 +63,9 @@
 #' ```R
 #' ui <- container(
 #'   chipInput(
+#'     .style %>%
+#'       width(50) %>%
+#'       background("primary"),
 #'     id = "chips",
 #'     choices = c(
 #'       "A rather long option, isn't it?",
@@ -72,10 +75,7 @@
 #'     ),
 #'     values = 1:4,
 #'     fill = FALSE
-#'   ) %>%
-#'     width("1/2") %>%
-#'     background("blue") %>%
-#'     shadow("small")
+#'   )
 #' )
 #'
 #' server <- function(input, output) {

@@ -5,16 +5,16 @@
 #' ignored.  For example, `font(.., size = "lg")` increases font size without
 #' affecting color, weight, case, or alignment.
 #'
-#' @param tag A tag element.
+#' @inheritParams affix
 #'
 #' @eval param_color("text")
 #'
 #' @param size Deprecated, in future versions of bootstrap resonsive font sizing
-#'   will be enabled by default, [https://github.com/twbs/bootstrap/pull/29152].
+#'   will be enabled by default,
+#'   \url{https://github.com/twbs/bootstrap/pull/29152}.
 #'
-#'   One of `"xs"`, `"sm"`, `"base"`, `"lg"`, `"xl"`
-#'   specifying a font size relative to the default base page font size,
-#'   defaults to `NULL`.
+#'   One of `"xs"`, `"sm"`, `"base"`, `"lg"`, `"xl"` specifying a font size
+#'   relative to the default base page font size, defaults to `NULL`.
 #'
 #' @param weight One of `"bold"`, `"bolder"`, `"normal"`, `"lighter"`, or
 #'   `"light"` specifying the font weight of the element's text, defaults to
@@ -25,8 +25,8 @@
 #'   transformation of the tag element's text, default to `NULL`.
 #'
 #' @param align A [responsive] argument. One of `"left"`, `"center"`, `"right"`,
-#'   or `"justify"`, specifying the alignment of the tag element's text, defaults
-#'   to `NULL`.
+#'   or `"justify"`, specifying the alignment of the tag element's text,
+#'   defaults to `NULL`.
 #'
 #' @family design utilities
 #' @export
@@ -50,25 +50,34 @@
 #' p("Proin quam nisl, tincidunt et.") %>%
 #'   font(weight = "light")
 #'
-font <- function(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
+font <- function(x, color = NULL, size = NULL, weight = NULL, case = NULL,
                  align = NULL) {
-  deprecate_soft("0.2.0", "font(size = )")
+  deprecate_soft("0.2.0", "yonder::font(size = )")
 
   assert_possible(color, theme_colors)
   assert_possible(weight, c("bold", "bolder", "normal", "lighter", "light"))
   assert_possible(case, c("lower", "upper", "title"))
 
-  UseMethod("font", tag)
+  UseMethod("font", x)
 }
 
-font.yonder_style_pronoun <- function(tag, ...) {
-  UseMethod("font.yonder_style_pronoun", tag)
+#' @export
+font.yonder_style_pronoun <- function(x,  color = NULL, size = NULL,
+                                      weight = NULL, case = NULL,
+                                      align = NULL) {
+  UseMethod("font.yonder_style_pronoun", x)
 }
 
-font.yonder_style_pronoun.default <- function(tag, color = NULL,
-                                              weight = NULL, case = NULL,
-                                              align = NULL) {
-  style_class_add(tag, c(
+#' @export
+font.rlang_box_splice <- function(x, color = NULL, size = NULL, weight = NULL,
+                                  case = NULL, align = NULL) {
+  UseMethod("font.yonder_style_pronoun", unbox(x))
+}
+
+#' @export
+font.shiny.tag <- function(x, color = NULL, size = NULL, weight = NULL,
+                           case = NULL, align = NULL) {
+  tag_class_add(x, c(
     font_color(color),
     font_weight(weight),
     font_case(case),
@@ -76,9 +85,11 @@ font.yonder_style_pronoun.default <- function(tag, color = NULL,
   ))
 }
 
-font.shiny.tag <- function(tag, color = NULL, size = NULL, weight = NULL,
-                           case = NULL, align = NULL) {
-  tag_class_add(tag, c(
+#' @export
+font.yonder_style_pronoun.default <- function(x, color = NULL,
+                                              weight = NULL, case = NULL,
+                                              align = NULL) {
+  style_class_add(x, c(
     font_color(color),
     font_weight(weight),
     font_case(case),

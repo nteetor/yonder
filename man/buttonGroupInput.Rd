@@ -32,8 +32,10 @@ element.}
 \item{choices}{A character vector specifying the labels for each button in
 the group.}
 
-\item{values}{A vector of values specifying the values of each button in the
+\item{values}{A character vector specifying the values of each button in the
 group, defaults to \code{choices}.}
+
+\item{labels}{Deprecated, see \code{values}.}
 
 \item{direction}{One of \code{"horizontal"} or \code{"vertical"} specifying the layout
 of the buttons, defaults to \code{"horizontal"}.}
@@ -62,11 +64,11 @@ buttonGroupInput(
 ### Styling the button group
 
 buttonGroupInput(
+  .style \%>\%
+    background("primary"),
   id = "group2",
   choices = c("Button 1", "Button 2", "Button 3")
-) \%>\%
-  background("blue") \%>\%
-  width("1/3")
+)
 
 }
 \seealso{

@@ -103,10 +103,10 @@
 #'       )
 #'     ),
 #'     formSubmit("Make choice", "choice") %>%
-#'       background("teal")
+#'       background("info")
 #'   )
 #' ) %>%
-#'   border("teal") %>%
+#'   border("info") %>%
 #'   width(50)
 #'
 formInput <- function(id, ..., inline = FALSE) {
@@ -194,6 +194,9 @@ updateFormInput <- function(id, submit = FALSE,
 #' # Be sure to adjust the size of your browser window between large and small.
 #'
 #' card(
+#'   .style %>%
+#'     background("secondary") %>%
+#'     margin(3),
 #'   formRow(
 #'     formGroup(
 #'       width = c(md = 6),  # <-
@@ -222,10 +225,8 @@ updateFormInput <- function(id, submit = FALSE,
 #'     id = "go",
 #'     label = "Go!"
 #'   ) %>%
-#'     background("blue")
-#' ) %>%
-#'   margin(3) %>%
-#'   background("grey")
+#'     background("primary")
+#' )
 #'
 formGroup <- function(label, input, ..., help = NULL, width = NULL) {
   assert_found(label)

@@ -5,7 +5,7 @@
 \alias{updateCheckbarInput}
 \title{Checkbar input}
 \usage{
-checkbarInput(id, choices = NULL, values = choices, selected = NULL, ...)
+checkbarInput(..., id, choices = NULL, values = choices, selected = NULL)
 
 updateCheckbarInput(
   id,
@@ -18,6 +18,10 @@ updateCheckbarInput(
 )
 }
 \arguments{
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element or tag elements passed as child elements to the parent
+element.}
+
 \item{id}{A character string specifying the id of the reactive input.}
 
 \item{choices}{A character vector or list of tag element specifying the
@@ -28,10 +32,6 @@ choices, defaults to \code{choices}.}
 
 \item{selected}{One or more of \code{values} specifying the input's default
 selected values, defaults to \code{NULL}.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element or tag elements passed as child elements to the parent
-element.}
 
 \item{enable}{One of \code{values} specifying particular choices to enable or
 \code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
@@ -60,7 +60,7 @@ checkbarInput(
   id = "cb2",
   choices = c("What", "Which")
 ) \%>\%
-  background("teal")
+  background("info")
 
 ### Labeling a checkbar
 

@@ -33,6 +33,7 @@ Depends:
 Imports:
     htmltools (>= 0.4.0),
     magrittr,
+    rlang,
     lifecycle,
     utils
 Suggests:
@@ -50,7 +51,6 @@ Collate:
     'collapse.R'
     'components.R'
     'content.R'
-    'design.R'
     'dropdown.R'
     'file.R'
     'flex.R'
@@ -69,10 +69,17 @@ Collate:
     'range.R'
     'reexports.R'
     'select.R'
+    'style-affix.R'
     'style-background.R'
     'style-border.R'
+    'style-display.R'
+    'style-float.R'
     'style-font.R'
+    'style-scroll.R'
     'style-shadow.R'
+    'style-sizing.R'
+    'style-spacing.R'
+    'style.R'
     'textual.R'
     'toast.R'
     'tooltip.R'

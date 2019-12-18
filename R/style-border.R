@@ -2,60 +2,91 @@
 #'
 #' Use `border()` to add or modify tag element borders.
 #'
-#' @param tag A tag element.
+#' @inheritParams affix
 #'
 #' @eval param_color("border")
 #'
-#' @param sides One or more of `"top"`, `"right"`, `"bottom"`, `"left"` or
+#' @param sides One or more of `"top"`, `"right"`, `"bottom"`, `"left"`, or
 #'   `"all"` or `"none"` specifying which sides to add a border to, defaults to
-#'   `"all"`.
+#'   `"all"`. Specifying `"none"` will remove the element's borders.
 #'
 #' @param round One or more of `"top"`, `"right"`, `"bottom"`, `"left"`,
-#'   `"circle"`, `"all"`, or `"none"` specifying how to round the border(s) of a
-#'   tag element, defaults to `NULL`, in which case the argument is ignored.
+#'   `"all"`, or `"none"` specifying how to round the border(s) of a tag
+#'   element, defaults to `NULL`, in which case the argument is ignored.
 #'
 #' @family design utilities
 #' @export
-border <- function(tag, color = NULL, sides = "all", round = NULL) {
+border <- function(x, color = NULL, sides = "all", round = NULL) {
   assert_possible(color, theme_colors)
-  assert_possible(
-    sides,
-    c("top", "right", "bottom", "left", "all", "none", "circle")
-  )
-  assert_possible(
-    round,
-    c("top", "right", "bottom", "left", "all", "none")
-  )
+  assert_possible(sides, c("top", "right", "bottom", "left", "all", "none"))
+  assert_possible(round, c("top", "right", "bottom", "left", "all", "none"))
 
-  UseMethod("border")
+  UseMethod("border", x)
 }
 
-border.yonder_style_pronoun <- function(tag, color = NULL, sides = "all",
+#' @export
+border.yonder_style_pronoun <- function(x, color = NULL, sides = "all",
                                         round = NULL) {
-  UseMethod("border.yonder_style_pronoun", tag)
+  UseMethod("border.yonder_style_pronoun", x)
 }
 
-border.shiny.tag <- function(tag, color = NULL, sides = "all", round = NULL) {
+#' @export
+border.rlang_box_splice <- function(x, color = NULL, sides = "all",
+                                    round = NULL) {
+  UseMethod("border.yonder_style_pronoun", unbox(x))
+}
+
+#' @export
+border.shiny.tag <- function(x, color = NULL, sides = "all", round = NULL) {
+  tag_class_add(x, c(
+    border_sides(sides),
+    border_color(color),
+    border_round(round)
+  ))
+}
+
+#' @export
+border.yonder_style_pronoun.default <- function(x, color = NULL,
+                                                sides = "all", round = NULL) {
+  style_class_add(x, c(
+    border_sides(sides),
+    border_color(color),
+    border_round(round)
+  ))
+}
+
+border_sides <- function(sides) {
+  if (is.null(sides)) {
+    return(NULL)
+  }
+
   if ("all" %in% sides) {
-    tag <- tag_class_add(tag, "border")
+    "border"
   } else if ("none" %in% sides) {
-    tag <- tag_class_add(tag, "border-0")
+    "border-0"
   } else {
-    tag <- tag_class_add(tag, sprintf("border-%s", sides))
+    sprintf("border-%s", sides)
+  }
+}
+
+border_color <- function(color) {
+  if (is.null(color)) {
+    return(NULL)
   }
 
-  if (!is.null(color)) {
-    tag <- tag_class_add(tag, sprintf("border-%s", color))
+  sprintf("border-%s", color)
+}
+
+border_round <- function(round) {
+  if (is.null(round)) {
+    return(NULL)
   }
 
-  if (!is.null(round)) {
-    round <- sprintf("rounded-%s", round)
-
-    round[round == "rounded-none"] <- "rounded-0"
-    round[round == "rounded-all"] <- "rounded"
-
-    tag <- tag_class_add(tag, round)
+  if ("all" %in% round) {
+    "rounded"
+  } else if ("none" %in% round) {
+    "rounded-0"
+  } else {
+    sprintf("rounded-%s", round)
   }
-
-  tag
 }
