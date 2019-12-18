@@ -19,7 +19,7 @@ param_color <- function(what) {
     "or",
     paste0(q_start, utils::tail(theme_colors, 1), q_end),
     "specifying the", what, "color of the tag element,",
-    "defaults to `NULL`"
+    "defaults to `NULL`."
   )
 }
 
