@@ -11,7 +11,7 @@ background(x, color)
 \arguments{
 \item{x}{A tag element or \link{.style} pronoun.}
 
-\item{color}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"} or \code{"dark"} specifying the background color of the tag element, defaults to \code{NULL}}
+\item{color}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"} or \code{"dark"} specifying the background color of the tag element, defaults to \code{NULL}.}
 
 \item{tag}{A tag element.}
 }
