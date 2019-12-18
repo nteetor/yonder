@@ -2,7 +2,7 @@
 % Please edit documentation in R/style-spacing.R
 \name{padding}
 \alias{padding}
-\title{Tag element padding}
+\title{Padding}
 \usage{
 padding(x, all = NULL, top = NULL, right = NULL, bottom = NULL, left = NULL)
 }
@@ -14,10 +14,10 @@ padding(x, all = NULL, top = NULL, right = NULL, bottom = NULL, left = NULL)
 removes all inner space and 5 adds the most space.}
 }
 \description{
-Use the \code{padding()} function to change the inner spacing of a tag element.
-The padding of a tag element is the space between the tag element's border
-and its content or child elements. All arguments default to \code{NULL}, in which
-case they are ignored.
+The \code{padding} utility changes the inner spacing of a tag element. The padding
+of a tag element is the space between the tag element's border and its
+content or child elements. All arguments default to \code{NULL}, in which case
+they are ignored.
 }
 \seealso{
 Other design utilities: 
@@ -26,6 +26,7 @@ Other design utilities:
 \code{\link{background}()},
 \code{\link{border}()},
 \code{\link{display}()},
+\code{\link{flex}()},
 \code{\link{float}()},
 \code{\link{font}()},
 \code{\link{height}()},

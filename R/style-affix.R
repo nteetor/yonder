@@ -20,12 +20,12 @@ affix <- function(x, position) {
 
 #' @export
 affix.yonder_style_pronoun <- function(x, position) {
-  UseMethod("affix.yonder_style_pronoun", x)
+  NextMethod("affix", x)
 }
 
 #' @export
 affix.rlang_box_splice <- function(x, position) {
-  UseMethod("affix.yonder_style_pronoun", unbox(x))
+  NextMethod("affix", unbox(x))
 }
 
 #' @export
@@ -34,8 +34,8 @@ affix.shiny.tag <- function(x, position) {
 }
 
 #' @export
-affix.yonder_style_pronoun.default <- function(x, position) {
-  style_class_add(x, affix_position(position))
+affix.default <- function(x, position) {
+  tag_class_add(x, affix_position(position))
 }
 
 affix_position <- function(position) {

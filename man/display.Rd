@@ -2,7 +2,7 @@
 % Please edit documentation in R/style-display.R
 \name{display}
 \alias{display}
-\title{Display property}
+\title{Display}
 \usage{
 display(x, type)
 }
@@ -23,6 +23,7 @@ Other design utilities:
 \code{\link{affix}()},
 \code{\link{background}()},
 \code{\link{border}()},
+\code{\link{flex}()},
 \code{\link{float}()},
 \code{\link{font}()},
 \code{\link{height}()},

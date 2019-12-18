@@ -2,7 +2,7 @@
 % Please edit documentation in R/style-sizing.R
 \name{width}
 \alias{width}
-\title{Tag element width}
+\title{Width}
 \usage{
 width(x, size)
 }
@@ -37,6 +37,7 @@ Other design utilities:
 \code{\link{background}()},
 \code{\link{border}()},
 \code{\link{display}()},
+\code{\link{flex}()},
 \code{\link{float}()},
 \code{\link{font}()},
 \code{\link{height}()},

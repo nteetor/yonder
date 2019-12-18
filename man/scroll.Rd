@@ -4,10 +4,10 @@
 \alias{scroll}
 \title{Vertical and horizontal scroll}
 \usage{
-scroll(tag, direction = "vertical")
+scroll(x, direction = "vertical")
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{x}{A tag element or \link{.style} pronoun.}
 
 \item{direction}{One of \code{"horizontal"} or \code{"vertical"} specifying which
 direction to scroll overflowing content, defaults to \code{"vertical"}, in which
@@ -25,6 +25,7 @@ Other design utilities:
 \code{\link{background}()},
 \code{\link{border}()},
 \code{\link{display}()},
+\code{\link{flex}()},
 \code{\link{float}()},
 \code{\link{font}()},
 \code{\link{height}()},

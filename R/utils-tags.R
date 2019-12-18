@@ -54,30 +54,35 @@ tag_attributes_add <- function(x, attrs = NULL, ...) {
   x
 }
 
-tag_class_add <- function(x, class) {
+tag_class_add <- function(x, new) {
+  if (is_style_pronoun(x) || is_style_box(x)) {
+    return(style_class_add(x, new))
+  }
+
   stopifnot(is_tag(x))
 
-  class <- trimws(class, "both")
+  new <- trimws(new, "both")
+  prev <- x$attribs$class
 
-  if (length(class) < 1 || !all(nzchar(class))) {
+  if (length(new) < 1 || !all(nzchar(new))) {
     return(x)
   }
 
-  if (is.null(x$attribs$class)) {
-    x$attribs$class <- paste(class, collapse = " ")
+  if (is.null(prev)) {
+    x$attribs$class <- paste(new, collapse = " ")
     return(x)
   }
 
-  class <- unlist(strsplit(class, "\\s+"))
+  new <- unlist(strsplit(new, "\\s+"))
 
-  dups <- vapply(class, grepl, logical(1), x = x$attribs$class, fixed = TRUE)
-  new <- paste0(class[!dups], collapse = " ")
+  dups <- vapply(new, grepl, logical(1), x = prev, fixed = TRUE)
+  new <- paste0(new[!dups], collapse = " ")
 
   if (isTRUE(nzchar(new))) {
-    x$attribs$class <- paste(x$attribs$class, new)
+    x$attribs$class <- paste(prev, new)
   }
 
-  x
+  dep_attach(x)
 }
 
 tag_class_remove <- function(x, regex) {

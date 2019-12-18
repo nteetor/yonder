@@ -1,10 +1,10 @@
-#' Float
+#' Floats
 #'
 #' Use `float()` to float an element to the left or right side of its parent
 #' element. A newspaper layout is a classic example where an image is floated
 #' with text wrapped around.
 #'
-#' @param tag A tag element.
+#' @inheritParams affix
 #'
 #' @param side A [responsive] argument. One of `"left"` or `"right"` specifying
 #'   the side to float the element.
@@ -36,23 +36,28 @@
 #'     "amet risus.")
 #' )
 #'
-float <- function(tag, side) {
-  UseMethod("float", tag)
+float <- function(x, side) {
+  UseMethod("float", x)
 }
 
 #' @export
-float.yonder_style_pronoun <- function(tag, side) {
-  UseMethod("float.yonder_style_pronoun", tag)
+float.yonder_style_pronoun <- function(x, side) {
+  NextMethod("float", x)
 }
 
 #' @export
-float.shiny.tag <- function(tag, side) {
-  tag_class_add(tag, float_side(side))
+float.rlang_box_splice <- function(x, side) {
+  NextMethod("float", unbox(x))
 }
 
 #' @export
-float.yonder_style_pronoun.default <- function(tag, side) {
-  style_class_add(tag, float_side(side))
+float.shiny.tag <- function(x, side) {
+  tag_class_add(x, float_side(side))
+}
+
+#' @export
+float.default <- function(x, side) {
+  tag_class_add(x, float_side(side))
 }
 
 float_side <- function(side) {

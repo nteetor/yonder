@@ -24,6 +24,7 @@ Other design utilities:
 \code{\link{background}()},
 \code{\link{border}()},
 \code{\link{display}()},
+\code{\link{flex}()},
 \code{\link{float}()},
 \code{\link{font}()},
 \code{\link{height}()},

@@ -18,7 +18,7 @@ associating the element's styles with the element becomes increasingly
 unintuitive. In these situations, make use of the \code{.style} pronoun.\if{html}{\out{<div class="R">}}\preformatted{card(
   .style \%>\%
     border("primary") \%>\%
-    font("primary)
+    font("primary")
 )
 }\if{html}{\out{</div>}}
 }

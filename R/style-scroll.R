@@ -4,7 +4,7 @@
 #' onto a single page. To help scroll long content alongside shorter content use
 #' the `scroll()` utility function.
 #'
-#' @param tag A tag element.
+#' @inheritParams affix
 #'
 #' @param direction One of `"horizontal"` or `"vertical"` specifying which
 #'   direction to scroll overflowing content, defaults to `"vertical"`, in which
@@ -12,10 +12,36 @@
 #'
 #' @family design utilities
 #' @export
-scroll <- function(tag, direction = "vertical") {
+scroll <- function(x, direction = "vertical") {
   assert_possible(direction, c("vertical", "horizontal"))
 
-  direction <- if (direction == "vertical") "scroll-y" else "scroll-x"
+  UseMethod("scroll", x)
+}
 
-  tag_class_add(tag, direction)
+#' @export
+scroll.yonder_style_pronoun <- function(x, direction = "vertical") {
+  NextMethod("scroll", x)
+}
+
+#' @export
+scroll.rlang_box_splice <- function(x, direction = "vertical") {
+  NextMethod("scroll", unbox(x))
+}
+
+#' @export
+scroll.shiny.tag <- function(x, direction = "vertical") {
+  tag_class_add(x, scroll_direction(direction))
+}
+
+#' @export
+scroll.default <- function(x, direction = "vertical") {
+  tag_class_add(x, scroll_direction(direction))
+}
+
+scroll_direction <- function(direction) {
+  if (direction == "vertical") {
+    "scroll-y"
+  } else {
+    "scroll-x"
+  }
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/style-spacing.R
 \name{margin}
 \alias{margin}
-\title{Tag element margins}
+\title{Margins}
 \usage{
 margin(x, all = NULL, top = NULL, right = NULL, bottom = NULL, left = NULL)
 }
@@ -15,10 +15,10 @@ removes all outer space, 5 adds the most space, and negative values will
 consume space pulling the element in that direction.}
 }
 \description{
-Use the \code{margin()} function to change the outer spacing of a tag element.
-The margin of a tag element is the space outside and around the tag element,
-its border, and its content.  All arguments default to \code{NULL}, in which case
-they are ignored.
+The \code{margin} utilty changes the outer spacing of a tag element. The margin of
+a tag element is the space outside and around the tag element, its border,
+and its content. All arguments default to \code{NULL}, in which case they are
+ignored.
 }
 \examples{
 
@@ -101,6 +101,7 @@ Other design utilities:
 \code{\link{background}()},
 \code{\link{border}()},
 \code{\link{display}()},
+\code{\link{flex}()},
 \code{\link{float}()},
 \code{\link{font}()},
 \code{\link{height}()},
