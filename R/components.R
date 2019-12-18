@@ -267,8 +267,11 @@ pre <- function(...) {
 #'       choice = "Deliver"
 #'     )
 #'   ),
-#'   buttonInput("order", "Place order") %>%
-#'     background("blue")
+#'   buttonInput(
+#'     .style %>% background("primary"),
+#'     id = "order",
+#'     label = "Place order"
+#'   )
 #' )
 #'
 fieldset <- function(..., legend = NULL) {

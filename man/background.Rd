@@ -4,10 +4,10 @@
 \alias{background}
 \title{Background color}
 \usage{
-background(tag, color, ...)
+background(x, color)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{x}{A tag element or \link{.style} pronoun.}
 
 \item{color}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"} or \code{"dark"} specifying the background color of the tag element, defaults to \code{NULL}}
 }
@@ -19,14 +19,14 @@ Use \code{background()} to modify the background color of a tag element.
 ### Modifying input elements
 
 checkbarInput(
+  .style \%>\% background("info"),
   id = "bar1",
   choices = c(
     "Nunc rutrum turpis sed pede.",
     "Etiam vel neque.",
     "Lorem ipsum dolor sit amet."
   )
-) \%>\%
-  background("info")
+)
 
 }
 \seealso{
@@ -38,6 +38,7 @@ Other design utilities:
 \code{\link{float}()},
 \code{\link{font}()},
 \code{\link{height}()},
+\code{\link{margin}()},
 \code{\link{padding}()},
 \code{\link{scroll}()},
 \code{\link{shadow}()},

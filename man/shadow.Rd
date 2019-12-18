@@ -25,8 +25,8 @@ default.
 
 div(
   navbar(brand = "Navbar") \%>\%
-    background("cyan") \%>\%
-    shadow("small") \%>\%
+    background("dark") \%>\%
+    font("light") \%>\%
     margin(bottom = 3),
   p(
     "Cras mattis consectetur purus sit amet fermentum. Donec sed ",
@@ -61,6 +61,7 @@ Other design utilities:
 \code{\link{float}()},
 \code{\link{font}()},
 \code{\link{height}()},
+\code{\link{margin}()},
 \code{\link{padding}()},
 \code{\link{scroll}()},
 \code{\link{width}()}

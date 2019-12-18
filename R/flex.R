@@ -118,7 +118,7 @@ NULL
 #'   flex(
 #'     direction = list(xs = "column", md = "row")  # <-
 #'   ) %>%
-#'   background("grey") %>%
+#'   background("secondary") %>%
 #'   border()
 #'
 #' # *Resize the browser for this example.*

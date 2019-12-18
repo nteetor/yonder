@@ -4,19 +4,19 @@
 \alias{font}
 \title{Font color, size, weight}
 \usage{
-font(tag, color = NULL, size = NULL, weight = NULL, case = NULL, align = NULL)
+font(x, color = NULL, size = NULL, weight = NULL, case = NULL, align = NULL)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{x}{A tag element or \link{.style} pronoun.}
 
 \item{color}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"} or \code{"dark"} specifying the text color of the tag element, defaults to \code{NULL}}
 
 \item{size}{Deprecated, in future versions of bootstrap resonsive font sizing
-will be enabled by default, \link{https://github.com/twbs/bootstrap/pull/29152}.
+will be enabled by default,
+\url{https://github.com/twbs/bootstrap/pull/29152}.
 
-One of \code{"xs"}, \code{"sm"}, \code{"base"}, \code{"lg"}, \code{"xl"}
-specifying a font size relative to the default base page font size,
-defaults to \code{NULL}.}
+One of \code{"xs"}, \code{"sm"}, \code{"base"}, \code{"lg"}, \code{"xl"} specifying a font size
+relative to the default base page font size, defaults to \code{NULL}.}
 
 \item{weight}{One of \code{"bold"}, \code{"bolder"}, \code{"normal"}, \code{"lighter"}, or
 \code{"light"} specifying the font weight of the element's text, defaults to
@@ -27,8 +27,8 @@ current font weight of the element.}
 transformation of the tag element's text, default to \code{NULL}.}
 
 \item{align}{A \link{responsive} argument. One of \code{"left"}, \code{"center"}, \code{"right"},
-or \code{"justify"}, specifying the alignment of the tag element's text, defaults
-to \code{NULL}.}
+or \code{"justify"}, specifying the alignment of the tag element's text,
+defaults to \code{NULL}.}
 }
 \description{
 The \code{font()} utility modifies the color, size, weight, case, or alignment of
@@ -66,6 +66,7 @@ Other design utilities:
 \code{\link{display}()},
 \code{\link{float}()},
 \code{\link{height}()},
+\code{\link{margin}()},
 \code{\link{padding}()},
 \code{\link{scroll}()},
 \code{\link{shadow}()},

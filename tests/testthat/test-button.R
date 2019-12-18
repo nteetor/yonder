@@ -8,5 +8,5 @@ test_that("argument id must be character or null", {
 })
 
 test_that("has dependencies", {
-  expect_dependencies(buttonInput("ID", "LABEL"))
+  expect_dependencies(buttonInput(id = "ID", label = "LABEL"))
 })

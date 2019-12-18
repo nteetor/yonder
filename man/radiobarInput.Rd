@@ -60,7 +60,7 @@ radiobarInput(
   ),
   selected = "ultrices dolor"
 ) \%>\%
-  background("grey")
+  background("secondary")
 
 }
 \seealso{

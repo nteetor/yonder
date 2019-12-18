@@ -41,6 +41,9 @@ develop shiny applications for devices and screens of varying sizes.
 # Be sure to adjust the size of your browser window between large and small.
 
 card(
+  .style \%>\%
+    background("secondary") \%>\%
+    margin(3),
   formRow(
     formGroup(
       width = c(md = 6),  # <-
@@ -69,10 +72,8 @@ card(
     id = "go",
     label = "Go!"
   ) \%>\%
-    background("blue")
-) \%>\%
-  margin(3) \%>\%
-  background("grey")
+    background("primary")
+)
 
 }
 \concept{layout}

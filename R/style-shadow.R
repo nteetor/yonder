@@ -19,8 +19,8 @@
 #'
 #' div(
 #'   navbar(brand = "Navbar") %>%
-#'     background("cyan") %>%
-#'     shadow("small") %>%
+#'     background("dark") %>%
+#'     font("light") %>%
 #'     margin(bottom = 3),
 #'   p(
 #'     "Cras mattis consectetur purus sit amet fermentum. Donec sed ",
@@ -50,15 +50,17 @@ shadow <- function(tag, size = "medium") {
   UseMethod("shadow", tag)
 }
 
-shadow.yonder_style_pronoun <- function(tag, ...) {
+#' @export
+shadow.yonder_style_pronoun <- function(tag, size = "medium") {
   UseMethod("shadow.yonder_style_pronoun", tag)
 }
 
+#' @export
 shadow.shiny.tag <- function(tag, size) {
   if (size == "regular") {
     deprecate_soft(
       "0.2.0", 'yonder::shadow(size = )', 'yonder::shadow(size = )',
-      "Value 'medium' has been replaced by the value 'regular'"
+      "Value 'regular' has been replaced by the value 'medium'"
     )
 
     size <- "medium"
@@ -69,11 +71,12 @@ shadow.shiny.tag <- function(tag, size) {
   ))
 }
 
+#' @export
 shadow.yonder_style_pronoun.default <- function(tag, size) {
   if (size == "regular") {
     deprecate_soft(
       "0.2.0", 'yonder::shadow(size = )', 'yonder::shadow(size = )',
-      "Value 'medium' has been replaced by the value 'regular'"
+      "Value 'regular' has been replaced by the value 'medium'"
     )
 
     size <- "medium"

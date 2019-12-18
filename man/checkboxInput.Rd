@@ -8,11 +8,11 @@
 \title{Checkbox and switch inputs}
 \usage{
 checkboxInput(
+  ...,
   id,
   choices = NULL,
   values = choices,
   selected = NULL,
-  ...,
   inline = FALSE
 )
 
@@ -29,7 +29,7 @@ updateCheckboxInput(
   session = getDefaultReactiveDomain()
 )
 
-switchInput(id, choices, values = choices, selected = NULL, ...)
+switchInput(..., id, choices, values = choices, selected = NULL)
 
 updateSwitchInput(
   id,
@@ -44,6 +44,10 @@ updateSwitchInput(
 )
 }
 \arguments{
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element or tag elements passed as child elements to the parent
+element.}
+
 \item{id}{A character string specifying the id of the reactive input.}
 
 \item{choices}{A character string or vector specifying a label or labels for
@@ -55,10 +59,6 @@ checkbox or checkbar input, defaults to \code{choice} or \code{values}, respecti
 \item{selected}{One or more of \code{values} specifying which choices are
 selected by default, defaults to \code{NULL}, in which case no choices are
 initially selected.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element or tag elements passed as child elements to the parent
-element.}
 
 \item{inline}{One of \code{TRUE} or \code{FALSE} specifying if the checkbox input
 choices render inline or stacked, defaults to \code{FALSE}, in which case the
@@ -113,10 +113,10 @@ checkboxInput(
 
 switchInput(
   id = "switch1",
+  .style \%>\% background("success"),
   choices = paste("Switch choice", 1:3),
   selected = "Switch choice 3"
-) \%>\%
-  active("indigo")
+)
 
 }
 \seealso{

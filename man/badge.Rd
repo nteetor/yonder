@@ -23,7 +23,7 @@ pass an \code{id} argument as part of \code{...}.
       "Clicks",
       badge(id = "counter") \%>\%
         margin(left = 2) \%>\%
-        background("teal")
+        background("info")
     )
   )
 )

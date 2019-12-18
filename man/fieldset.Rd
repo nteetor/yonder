@@ -42,8 +42,11 @@ fieldset(
       choice = "Deliver"
     )
   ),
-  buttonInput("order", "Place order") \%>\%
-    background("blue")
+  buttonInput(
+    .style \%>\% background("primary"),
+    id = "order",
+    label = "Place order"
+  )
 )
 
 }

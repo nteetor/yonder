@@ -71,12 +71,12 @@ number of choices a user may select.
 \section{\strong{Example} simple application}{
 \if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   chipInput(
+    .style \%>\% width(50),
     id = "chips",
     choices = paste("Option number", 1:10),
     values = 1:10,
     inline = TRUE
-  ) \%>\%
-    width("1/2")
+  )
 )
 
 server <- function(input, output) \{
@@ -90,6 +90,9 @@ shinyApp(ui, server)
 \section{\strong{Example} inline chips}{
 \if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   chipInput(
+    .style \%>\%
+      width(50) \%>\%
+      background("primary"),
     id = "chips",
     choices = c(
       "A rather long option, isn't it?",
@@ -99,10 +102,7 @@ shinyApp(ui, server)
     ),
     values = 1:4,
     fill = FALSE
-  ) \%>\%
-    width("1/2") \%>\%
-    background("blue") \%>\%
-    shadow("small")
+  )
 )
 
 server <- function(input, output) \{

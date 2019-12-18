@@ -44,10 +44,10 @@
 #'         label = "Search",
 #'         value = "search"
 #'       ) %>%
-#'         background("amber")
+#'         background("warning")
 #'     )
 #'   ) %>%
-#'     background("teal"),
+#'     background("info"),
 #'   container(
 #'     navContent(
 #'       navPane(
@@ -67,27 +67,26 @@ navbar <- function(..., brand = NULL, collapse = NULL) {
   assert_possible(collapse, c("sm", "md", "lg", "xl"))
 
   dep_attach({
-    args <- drop_nulls(list(...))
+    args <- dots_list(...)
 
-    items <- lapply(
-      unnamed_values(args),
-      function(item) {
-        if (tag_class_re(item, "nav")) {
-          item <- tag_class_add(item, "navbar-nav")
-        } else if (tag_name_is(item, "form")) {
-          if (!tag_class_re(item, "form-inline")) {
-            warning("non-inline form element passed to `navbar()`", call. = FALSE)
-          }
-        } else if (!is_tag(item)) {
-          item <- tags$span(class = "navbar-text", item)
+    is_named <- names2(args) != ""
+
+    args[!is_named] <- lapply(args[!is_named], function(item) {
+      if (!is_tag(item)) {
+        tags$span(class = "navbar-text", item)
+      } else if (tag_class_re(item, "nav")) {
+        tag_class_add(item, "navbar-nav")
+      } else if (tag_name_is(item, "form")) {
+        if (!tag_class_re(item, "form-inline")) {
+          warning("non-inline form element passed to `navbar()`", call. = FALSE)
         }
-
+      } else {
         item
       }
-    )
+    })
 
-    brand <- if (!is.null(brand)) {
-      tags$a(
+    if (!is.null(brand)) {
+      brand <- tags$a(
         class = "navbar-brand",
         href = "#",
         brand
@@ -96,12 +95,13 @@ navbar <- function(..., brand = NULL, collapse = NULL) {
 
     content_id <- generate_id("nav-content")
 
-    component <- tags$nav(
+    tags$nav(
       class = str_collate(
         "navbar",
         paste(c("navbar", "expand", collapse), collapse = "-"),
         "navbar-light"
       ),
+      !!!named_values(args),
       brand,
       tags$button(
         class = "navbar-toggler",
@@ -118,10 +118,8 @@ navbar <- function(..., brand = NULL, collapse = NULL) {
       tags$div(
         class = "collapse navbar-collapse",
         id = content_id,
-        items
+        !!!unnamed_values(args)
       )
     )
-
-    tag_attributes_add(component, named_values(args))
   })
 }
