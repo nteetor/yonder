@@ -4,22 +4,24 @@
 \alias{border}
 \title{Border colors}
 \usage{
-border(tag, color = NULL, sides = "all", round = NULL)
+border(x, color = NULL, sides = "all", round = NULL)
 
-border(tag, color = NULL, sides = "all", round = NULL)
+border(x, color = NULL, sides = "all", round = NULL)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{x}{A tag element or \link{.style} pronoun.}
 
 \item{color}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"} or \code{"dark"} specifying the border color of the tag element, defaults to \code{NULL}}
 
-\item{sides}{One or more of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"} or
+\item{sides}{One or more of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"}, or
 \code{"all"} or \code{"none"} specifying which sides to add a border to, defaults to
-\code{"all"}.}
+\code{"all"}. Specifying \code{"none"} will remove the element's borders.}
 
 \item{round}{One or more of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"},
-\code{"circle"}, \code{"all"}, or \code{"none"} specifying how to round the border(s) of a
-tag element, defaults to \code{NULL}, in which case the argument is ignored.}
+\code{"all"}, or \code{"none"} specifying how to round the border(s) of a tag
+element, defaults to \code{NULL}, in which case the argument is ignored.}
+
+\item{tag}{A tag element.}
 }
 \description{
 Use \code{border()} to add or modify tag element borders.
@@ -28,6 +30,7 @@ Use \code{border()} to add or modify tag element borders.
 }
 \seealso{
 Other design utilities: 
+\code{\link{active}()},
 \code{\link{affix}()},
 \code{\link{background}()},
 \code{\link{display}()},
@@ -42,6 +45,7 @@ Other design utilities:
 \code{\link{width}()}
 
 Other design utilities: 
+\code{\link{active}()},
 \code{\link{affix}()},
 \code{\link{background}()},
 \code{\link{display}()},

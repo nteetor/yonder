@@ -116,7 +116,7 @@ buttonInput(
 buttonInput(
   .style \%>\%
     background("danger") \%>\%
-    width(75)  # <-
+    width(75),  # <-
   id = "button4",
   label = "Full and back again",
   fill = TRUE  # <-
@@ -124,7 +124,8 @@ buttonInput(
 
 ### Reactive links
 
-div("Curabitur ", linkInput("link1", "vulputate"), " vestibulum lorem.")
+div("Curabitur", linkInput(id = "link1", label = "vulputate"),
+    "vestibulum lorem.")
 
 ### Stretched buttons and links
 
@@ -134,7 +135,7 @@ card(
     "the hover."),
   buttonInput(
     .style \%>\%
-      background("primary")
+      background("primary"),
     id = "go",
     label = "Go go go",
     stretch = TRUE

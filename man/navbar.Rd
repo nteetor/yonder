@@ -50,10 +50,10 @@ div(
         label = "Search",
         value = "search"
       ) \%>\%
-        background("amber")
+        background("warning")
     )
   ) \%>\%
-    background("teal"),
+    background("info"),
   container(
     navContent(
       navPane(

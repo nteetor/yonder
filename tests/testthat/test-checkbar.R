@@ -5,5 +5,5 @@ test_that("id argument", {
 })
 
 test_that("has dependencies", {
-  expect_dependencies(checkbarInput("ID"))
+  expect_dependencies(checkbarInput(id = "ID"))
 })

@@ -136,8 +136,7 @@ groupSelectInput(
   choices = 1:5,
   left = "$",
   right = ".00"
-) \%>\%
-  width(10)
+)
 
 }
 \seealso{

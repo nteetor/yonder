@@ -176,7 +176,7 @@ map_radios <- function(choices, values, selected, parent_id, inline) {
 #'   ),
 #'   selected = "ultrices dolor"
 #' ) %>%
-#'   background("grey")
+#'   background("secondary")
 #'
 radiobarInput <- function(id, choices, values = choices, selected = values[[1]],
                           ...) {

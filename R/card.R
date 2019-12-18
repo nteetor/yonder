@@ -46,25 +46,30 @@
 #'
 #' deck(
 #'   card(
+#'     .style %>%
+#'       border("info") %>%
+#'       font("info"),
 #'     header = "Donec pretium posuere tellus",
 #'     p("Donec hendrerit tempor tellus."),
 #'     p("Cras placerat accumsan nulla.")
-#'   ) %>%
-#'     font(color = "teal"),
+#'   ),
 #'   card(
+#'     .style %>%
+#'       border("danger") %>%
+#'       font("danger"),
 #'     p("Aliquam posuere."),
 #'     p("Phasellus neque orci, porta a, aliquet quis, semper a, massa."),
 #'     p("Pellentesque dapibus suscipit ligula.")
-#'   ) %>%
-#'     border("orange"),
+#'   ),
 #'   card(
+#'     .style %>%
+#'       background("dark") %>%
+#'       font("light"),
 #'     header = "Phasellus lacus",
 #'     p("Etiam laoreet quam sed arcu."),
 #'     p("Etiam vel tortor sodales tellus ultricies commodo."),
 #'     footer = "Nam euismod tellus id erat."
-#'   ) %>%
-#'     background("grey") %>%
-#'     font(color = "indigo")
+#'   )
 #' )
 #'
 #' ### Cards with list groups
@@ -180,11 +185,11 @@ card <- function(..., header = NULL, footer = NULL) {
 
     args <- style_dots_eval(
       ...,
-      .context = list(prefix = "card"),
+      .style = style_pronoun("yonder_card"),
       .mask = card_mask
     )
 
-    is_named <- which(names2(args) != "")
+    is_named <- names2(args) != ""
 
     args[!is_named] <- lapply(args[!is_named], function(x) {
       if (is_tag(x) && tag_class_re(x, "row|list-group")) {

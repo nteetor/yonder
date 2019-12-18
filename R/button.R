@@ -79,7 +79,7 @@
 #' buttonInput(
 #'   .style %>%
 #'     background("danger") %>%
-#'     width(75)  # <-
+#'     width(75),  # <-
 #'   id = "button4",
 #'   label = "Full and back again",
 #'   fill = TRUE  # <-
@@ -87,7 +87,8 @@
 #'
 #' ### Reactive links
 #'
-#' div("Curabitur ", linkInput("link1", "vulputate"), " vestibulum lorem.")
+#' div("Curabitur", linkInput(id = "link1", label = "vulputate"),
+#'     "vestibulum lorem.")
 #'
 #' ### Stretched buttons and links
 #'
@@ -97,7 +98,7 @@
 #'     "the hover."),
 #'   buttonInput(
 #'     .style %>%
-#'       background("primary")
+#'       background("primary"),
 #'     id = "go",
 #'     label = "Go go go",
 #'     stretch = TRUE
@@ -249,7 +250,7 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #' @param choices A character vector specifying the labels for each button in
 #'   the group.
 #'
-#' @param values A vector of values specifying the values of each button in the
+#' @param values A character vector specifying the values of each button in the
 #'   group, defaults to `choices`.
 #'
 #' @param direction One of `"horizontal"` or `"vertical"` specifying the layout
@@ -260,6 +261,8 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #'
 #' @param disable One of `values` indicating individual buttons to disable or
 #'   `TRUE` to disable the entire input, defaults to `NULL`.
+#'
+#' @param labels Deprecated, see `values`.
 #'
 #' @family inputs
 #' @export
@@ -276,11 +279,11 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 #' ### Styling the button group
 #'
 #' buttonGroupInput(
+#'   .style %>%
+#'     background("primary"),
 #'   id = "group2",
 #'   choices = c("Button 1", "Button 2", "Button 3")
-#' ) %>%
-#'   background("blue") %>%
-#'   width("1/3")
+#' )
 #'
 buttonGroupInput <- function(..., id, choices = NULL, values = choices,
                              labels = deprecated(),
@@ -316,10 +319,7 @@ buttonGroupInput <- function(..., id, choices = NULL, values = choices,
       buttons
     )
 
-    args <- style_dots_eval(
-      ...,
-      .style = style_pronoun("yonder_button_group")
-    )
+    args <- style_dots_eval(..., .style = style_pronoun("yonder_button_group"))
 
     tag <- tag_extend_with(tag, args)
 

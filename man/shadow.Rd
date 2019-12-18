@@ -61,8 +61,8 @@ div(
 
 div(
   navbar(brand = "Navbar") \%>\%
-    background("cyan") \%>\%
-    shadow("small") \%>\%
+    background("dark") \%>\%
+    font("light") \%>\%
     margin(bottom = 3),
   p(
     "Cras mattis consectetur purus sit amet fermentum. Donec sed ",
@@ -89,6 +89,7 @@ div(
 }
 \seealso{
 Other design utilities: 
+\code{\link{active}()},
 \code{\link{affix}()},
 \code{\link{background}()},
 \code{\link{border}()},
@@ -103,6 +104,7 @@ Other design utilities:
 \code{\link{width}()}
 
 Other design utilities: 
+\code{\link{active}()},
 \code{\link{affix}()},
 \code{\link{background}()},
 \code{\link{border}()},

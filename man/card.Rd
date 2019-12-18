@@ -55,25 +55,30 @@ column(
 
 deck(
   card(
+    .style \%>\%
+      border("info") \%>\%
+      font("info"),
     header = "Donec pretium posuere tellus",
     p("Donec hendrerit tempor tellus."),
     p("Cras placerat accumsan nulla.")
-  ) \%>\%
-    font(color = "teal"),
+  ),
   card(
+    .style \%>\%
+      border("danger") \%>\%
+      font("danger"),
     p("Aliquam posuere."),
     p("Phasellus neque orci, porta a, aliquet quis, semper a, massa."),
     p("Pellentesque dapibus suscipit ligula.")
-  ) \%>\%
-    border("orange"),
+  ),
   card(
+    .style \%>\%
+      background("dark") \%>\%
+      font("light"),
     header = "Phasellus lacus",
     p("Etiam laoreet quam sed arcu."),
     p("Etiam vel tortor sodales tellus ultricies commodo."),
     footer = "Nam euismod tellus id erat."
-  ) \%>\%
-    background("grey") \%>\%
-    font(color = "indigo")
+  )
 )
 
 ### Cards with list groups

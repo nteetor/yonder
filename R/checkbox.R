@@ -70,23 +70,20 @@
 #'
 #' switchInput(
 #'   id = "switch1",
+#'   .style %>% background("success"),
 #'   choices = paste("Switch choice", 1:3),
 #'   selected = "Switch choice 3"
-#' ) %>%
-#'   active("indigo")
+#' )
 #'
-checkboxInput <- function(id, choices = NULL, values = choices, selected = NULL,
-                          ..., inline = FALSE) {
+checkboxInput <- function(..., id, choices = NULL, values = choices,
+                          selected = NULL, inline = FALSE) {
   assert_id()
   assert_choices()
 
   with_deps({
     checkboxes <- map_checkboxes(choices, values, selected, inline)
 
-    args <- style_dots_eval(
-      ...,
-      .context = list(prefix = "custom-control-group")
-    )
+    args <- style_dots_eval(..., .style = style_pronoun("yonder_checkbox"))
 
     tag <- tags$div(
       class = "yonder-checkbox",
@@ -130,17 +127,14 @@ updateCheckboxInput <- function(id, choices = NULL, values = choices,
 
 #' @rdname checkboxInput
 #' @export
-switchInput <- function(id, choices, values = choices, selected = NULL, ...) {
+switchInput <- function(..., id, choices, values = choices, selected = NULL) {
   assert_id()
   assert_choices()
 
   with_deps({
     switches <- map_checkboxes(choices, values, selected, FALSE, TRUE)
 
-    args <- style_dots_eval(
-      ...,
-      .context = list(prefix = "custom-control-group")
-    )
+    args <- style_dots_eval(..., .style = style_pronoun("yonder_switch"))
 
     tag <- tags$div(
       class = "yonder-checkbox",
@@ -262,7 +256,7 @@ map_checkboxes <- function(choices, values, selected, inline,
 #'   id = "cb2",
 #'   choices = c("What", "Which")
 #' ) %>%
-#'   background("teal")
+#'   background("info")
 #'
 #' ### Labeling a checkbar
 #'
@@ -278,8 +272,8 @@ map_checkboxes <- function(choices, values, selected, inline,
 #'   )
 #' )
 #'
-checkbarInput <- function(id, choices = NULL, values = choices,
-                          selected = NULL, ...) {
+checkbarInput <- function(..., id, choices = NULL, values = choices,
+                          selected = NULL) {
   assert_id()
   assert_choices()
 

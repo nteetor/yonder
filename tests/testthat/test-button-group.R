@@ -13,14 +13,9 @@ test_that("labels argument", {
 })
 
 test_that("has dependencies", {
-  expect_dependencies(buttonGroupInput("ID"))
+  expect_dependencies(buttonGroupInput(id = "ID"))
 })
 
 test_that("`labels` is deprecated", {
-  expect_warning(
-    buttonGroupInput(
-      id = "ID",
-      labels = c("hello", "world")
-    )
-  )
+  expect_warning(buttonGroupInput(id = "ID", labels = c("hello", "world")))
 })

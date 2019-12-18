@@ -113,10 +113,10 @@ card(
       )
     ),
     formSubmit("Make choice", "choice") \%>\%
-      background("teal")
+      background("info")
   )
 ) \%>\%
-  border("teal") \%>\%
+  border("info") \%>\%
   width(50)
 
 }

@@ -2,7 +2,7 @@
 #'
 #' Use `background()` to modify the background color of a tag element.
 #'
-#' @param tag A tag element.
+#' @inheritParams affix
 #'
 #' @eval param_color("background")
 #'
@@ -13,133 +13,159 @@
 #' ### Modifying input elements
 #'
 #' checkbarInput(
+#'   .style %>% background("info"),
 #'   id = "bar1",
 #'   choices = c(
 #'     "Nunc rutrum turpis sed pede.",
 #'     "Etiam vel neque.",
 #'     "Lorem ipsum dolor sit amet."
 #'   )
-#' ) %>%
-#'   background("info")
+#' )
 #'
-background <- function(tag, color, ...) {
+background <- function(x, color) {
   assert_possible(color, theme_colors)
 
-  UseMethod("background", tag)
+  UseMethod("background", x)
 }
 
-background.yonder_style_pronoun <- function(tag, color, ...) {
-  UseMethod("background.yonder_style_pronoun", tag)
+#' @export
+background.yonder_style_pronoun <- function(x, color) {
+  assert_possible(color, theme_colors)
+
+  UseMethod("background.yonder_style_pronoun", x)
 }
 
-background.shiny.tag <- function(tag, color) {
-  tag_class_add(tag, sprintf("bg-%s", color))
+#' @export
+background.rlang_box_splice <- function(x, color) {
+  UseMethod("background.yonder_style_pronoun", unbox(x))
 }
 
-background.yonder_style_pronoun.default <- function(tag, color) {
-  style_class_add(tag, sprintf("bg-%s", color))
+#' @export
+background.shiny.tag <- function(x, color) {
+  tag_class_add(x, sprintf("bg-%s", color))
 }
 
-background.yonder_alert <- function(tag, color) {
-  tag_class_add(tag, sprintf("alert-%s", color))
+#' @export
+background.yonder_style_pronoun.default <- function(x, color) {
+  style_class_add(x, sprintf("bg-%s", color))
 }
 
-background.yonder_style_pronoun.yonder_alert <- function(tag, color) {
-  style_class_add(tag, sprintf("alert-%s", color))
+#' @export
+background.yonder_alert <- function(x, color) {
+  tag_class_add(x, sprintf("alert-%s", color))
 }
 
-background.yonder_badge <- function(tag, color) {
-  tag_class_add(tag, sprintf("badge-%s", color))
+#' @export
+background.yonder_style_pronoun.yonder_alert <- function(x, color) {
+  style_class_add(x, sprintf("alert-%s", color))
 }
 
-background.yonder_style_pronoun.yonder_badge <- function(tag, color) {
-  style_class_add(tag, sprintf("badge-%s", color))
+#' @export
+background.yonder_badge <- function(x, color) {
+  tag_class_add(x, sprintf("badge-%s", color))
 }
 
-background.yonder_button <- function(tag, color) {
-  tag_class_add(tag, sprintf("btn-%s", color))
+#' @export
+background.yonder_style_pronoun.yonder_badge <- function(x, color) {
+  style_class_add(x, sprintf("badge-%s", color))
 }
 
-background.yonder_style_pronoun.yonder_button <- function(tag, color) {
-  style_class_add(tag, sprintf("btn-%s", color))
+#' @export
+background.yonder_button <- function(x, color) {
+  tag_class_add(x, sprintf("btn-%s", color))
 }
 
-background.yonder_button_group <- function(tag, color) {
-  tag_class_add(tag, sprintf("btn-group-%s", color))
+#' @export
+background.yonder_style_pronoun.yonder_button <- function(x, color) {
+  style_class_add(x, sprintf("btn-%s", color))
 }
 
-background.yonder_style_pronoun.yonder_button_group <- function(tag, color) {
-  style_class_add(tag, sprintf("btn-group-%s", color))
+#' @export
+background.yonder_button_group <- function(x, color) {
+  tag_class_add(x, sprintf("btn-group-%s", color))
 }
 
-background.yonder_checkbox <- function(tag, color) {
-  tag_class_add(tag, sprintf("custom-control-group-%s", color))
+#' @export
+background.yonder_style_pronoun.yonder_button_group <- function(x, color) {
+  style_class_add(x, sprintf("btn-group-%s", color))
 }
 
-background.yonder_style_pronoun.yonder_checkbox <- function(tag, color) {
-  style_class_add(tag, sprintf("custom-control-group-%s", color))
+#' @export
+background.yonder_checkbox <- function(x, color) {
+  tag_class_add(x, sprintf("custom-control-group-%s", color))
 }
 
-background.yonder_checkbar <- function(tag, color) {
-  tag_class_add(tag, sprintf("btn-group-%s", color))
+#' @export
+background.yonder_style_pronoun.yonder_checkbox <- function(x, color) {
+  style_class_add(x, sprintf("custom-control-group-%s", color))
 }
 
-background.yonder_style_pronoun.yonder_checkbar <- function(tag, color) {
-  style_class_add(tag, sprintf("btn-group-%s", color))
+#' @export
+background.yonder_checkbar <- function(x, color) {
+  tag_class_add(x, sprintf("btn-group-%s", color))
 }
 
-background.yonder_dropdown <- function(tag, color) {
-  toggle <- tag$children[[1]]
-
-  tag$children[[1]] <- tag_class_add(toggle, sprintf("btn-%s", color))
-
-  tag
+#' @export
+background.yonder_style_pronoun.yonder_checkbar <- function(x, color) {
+  style_class_add(x, sprintf("btn-group-%s", color))
 }
 
-background.yonder_style_pronoun.yonder_dropdown <- function(tag, color) {
-  style_class_add(tag, sprintf("btn-group-%s", color))
+#' @export
+background.yonder_dropdown <- function(x, color) {
+  tag_class_add(x, sprintf("btn-group-%s", color))
 }
 
-background.yonder_listgroup <- function(tag, color) {
-  tag_class_add(tag, sprintf("list-group-%s", color))
+#' @export
+background.yonder_style_pronoun.yonder_dropdown <- function(x, color) {
+  style_class_add(x, sprintf("btn-group-%s", color))
 }
 
-background.yonder_style_pronoun.yonder_listgroup <- function(tag, color) {
-  style_class_(tag, sprintf("list-group-%s", color))
+#' @export
+background.yonder_listgroup <- function(x, color) {
+  tag_class_add(x, sprintf("list-group-%s", color))
 }
 
-background.yonder_radio <- function(tag, color) {
-  tag_class_add(tag, sprintf("custom-control-group-%s", color))
+#' @export
+background.yonder_style_pronoun.yonder_listgroup <- function(x, color) {
+  style_class_add(x, sprintf("list-group-%s", color))
 }
 
-background.yonder_style_pronoun.yonder_radio <- function(tag, color) {
-  style_class_add(tag, sprintf("custom-control-group-%s", color))
+#' @export
+background.yonder_radio <- function(x, color) {
+  tag_class_add(x, sprintf("custom-control-group-%s", color))
 }
 
-background.yonder_switch <- function(tag, color) {
-  tag_class_add(tag, sprintf("custom-control-group-%s", color))
+#' @export
+background.yonder_style_pronoun.yonder_radio <- function(x, color) {
+  style_class_add(x, sprintf("custom-control-group-%s", color))
 }
 
-background.yonder_style_pronoun.yonder_switch <- function(tag, color) {
-  style_class_add(tag, sprintf("custom-control-group-%s", color))
+#' @export
+background.yonder_switch <- function(x, color) {
+  tag_class_add(x, sprintf("custom-control-group-%s", color))
 }
 
-background.yonder_radiobar <- function(tag, color) {
-  tag_class_add(tag, sprintf("btn-group-%s", color))
+#' @export
+background.yonder_style_pronoun.yonder_switch <- function(x, color) {
+  style_class_add(x, sprintf("custom-control-group-%s", color))
 }
 
-background.yonder_style_pronoun.yonder_radiobar <- function(tag, color) {
-  style_class_add(tag, sprintf("btn-group-%s", color))
+#' @export
+background.yonder_radiobar <- function(x, color) {
+  tag_class_add(x, sprintf("btn-group-%s", color))
 }
 
-background.yonder_menu <- function(tag, color) {
-  toggle <- tag$children[[1]]
-
-  tag$children[[1]] <- tag_class_add(toggle, sprintf("btn-%s", color))
-
-  tag
+#' @export
+background.yonder_style_pronoun.yonder_radiobar <- function(x, color) {
+  style_class_add(x, sprintf("btn-group-%s", color))
 }
 
-background.yonder_style_pronoun.yonder_menu <- function(tag, color) {
-  style_class_add(tag, sprintf("btn-group-%s", color))
+#' @export
+background.yonder_menu <- function(x, color) {
+  tag_class_add(x, sprintf("btn-group-%s", color))
+}
+
+#' @export
+background.yonder_style_pronoun.yonder_menu <- function(x, color) {
+  style_class_add(x, sprintf("btn-group-%s", color))
 }

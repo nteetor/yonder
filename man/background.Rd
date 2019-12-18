@@ -4,14 +4,16 @@
 \alias{background}
 \title{Backgrounds}
 \usage{
-background(tag, color, ...)
+background(x, color)
 
-background(tag, color, ...)
+background(x, color)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{x}{A tag element or \link{.style} pronoun.}
 
 \item{color}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"} or \code{"dark"} specifying the background color of the tag element, defaults to \code{NULL}}
+
+\item{tag}{A tag element.}
 }
 \description{
 Use \code{background()} to modify the background color of a tag element.
@@ -36,18 +38,19 @@ checkbarInput(
 ### Modifying input elements
 
 checkbarInput(
+  .style \%>\% background("info"),
   id = "bar1",
   choices = c(
     "Nunc rutrum turpis sed pede.",
     "Etiam vel neque.",
     "Lorem ipsum dolor sit amet."
   )
-) \%>\%
-  background("info")
+)
 
 }
 \seealso{
 Other design utilities: 
+\code{\link{active}()},
 \code{\link{affix}()},
 \code{\link{border}()},
 \code{\link{display}()},
@@ -62,6 +65,7 @@ Other design utilities:
 \code{\link{width}()}
 
 Other design utilities: 
+\code{\link{active}()},
 \code{\link{affix}()},
 \code{\link{border}()},
 \code{\link{display}()},

@@ -70,8 +70,7 @@
 #'   choices = 1:5,
 #'   left = "$",
 #'   right = ".00"
-#' ) %>%
-#'   width(10)
+#' )
 #'
 selectInput <- function(id, choices = NULL, values = choices,
                         selected = values[[1]], ..., placeholder = NULL) {

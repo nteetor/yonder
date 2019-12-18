@@ -123,10 +123,10 @@ navInput <- function(id, choices = NULL, values = choices,
   assert_selected(len = 1)
   assert_possible(appearance, c("links", "pills", "tabs"))
 
-  dep_attach({
+  with_deps({
     items <- map_navitems(choices, values, selected)
 
-    tags$ul(
+    tag <- tags$ul(
       class = str_collate(
         "yonder-nav",
         "nav",
@@ -137,6 +137,8 @@ navInput <- function(id, choices = NULL, values = choices,
       items,
       ...
     )
+
+    s3_class_add(tag, c("yonder_nav", "yonder_input"))
   })
 }
 
@@ -178,10 +180,6 @@ map_navitems <- function(choices, values, selected) {
     select = selected,
     function(choice, value, select) {
       if (is_tag(choice) && tag_class_re(choice, "yonder-menu")) {
-        choice$children[[1]] <- tag_class_remove(
-          choice$children[[1]],
-          paste0("btn-(?:", paste0(possible_colors, collapse = "|"), ")")
-        )
         choice$children[[1]] <- tag_class_add(
           choice$children[[1]],
           "nav-link btn-link"
