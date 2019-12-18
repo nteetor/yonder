@@ -4,12 +4,12 @@
 \alias{float}
 \title{Floats}
 \usage{
-float(tag, side)
+float(x, side)
 
-float(tag, side)
+float(x, side)
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{x}{A tag element or \link{.style} pronoun.}
 
 \item{side}{A \link{responsive} argument. One of \code{"left"} or \code{"right"} specifying
 the side to float the element.}

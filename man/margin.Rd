@@ -22,10 +22,10 @@ a tag element is the space outside and around the tag element, its border,
 and its content. All arguments default to \code{NULL}, in which case they are
 ignored.
 
-Use the \code{margin()} function to change the outer spacing of a tag element.
-The margin of a tag element is the space outside and around the tag element,
-its border, and its content.  All arguments default to \code{NULL}, in which case
-they are ignored.
+The \code{margin} utilty changes the outer spacing of a tag element. The margin of
+a tag element is the space outside and around the tag element, its border,
+and its content. All arguments default to \code{NULL}, in which case they are
+ignored.
 }
 \examples{
 

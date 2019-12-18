@@ -1,4 +1,4 @@
-#' Border color
+#' Border colors
 #'
 #' Use `border()` to add or modify tag element borders.
 #'
@@ -27,13 +27,13 @@ border <- function(x, color = NULL, sides = "all", round = NULL) {
 #' @export
 border.yonder_style_pronoun <- function(x, color = NULL, sides = "all",
                                         round = NULL) {
-  UseMethod("border.yonder_style_pronoun", x)
+  NextMethod("border", x)
 }
 
 #' @export
 border.rlang_box_splice <- function(x, color = NULL, sides = "all",
                                     round = NULL) {
-  UseMethod("border.yonder_style_pronoun", unbox(x))
+  NextMethod("border", unbox(x))
 }
 
 #' @export
@@ -46,9 +46,8 @@ border.shiny.tag <- function(x, color = NULL, sides = "all", round = NULL) {
 }
 
 #' @export
-border.yonder_style_pronoun.default <- function(x, color = NULL,
-                                                sides = "all", round = NULL) {
-  style_class_add(x, c(
+border.default <- function(x, color = NULL, sides = "all", round = NULL) {
+  tag_class_add(x, c(
     border_sides(sides),
     border_color(color),
     border_round(round)

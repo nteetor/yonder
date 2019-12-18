@@ -1,4 +1,4 @@
-#' Tag element width
+#' Width
 #'
 #' Utility function to change a tag element's width. Widths are specified
 #' relative the width of a parent element, an element's content, or the size of
@@ -32,12 +32,12 @@ width <- function(x, size) {
 
 #' @export
 width.yonder_style_pronoun <- function(x, size) {
-  UseMethod("width.yonder_style_pronoun", x)
+  NextMethod("width", x)
 }
 
 #' @export
 width.rlang_box_splice <- function(x, size) {
-  UseMethod("width.yonder_style_pronoun", unbox(x))
+  NextMethod("width", unbox(x))
 }
 
 #' @export
@@ -46,8 +46,8 @@ width.shiny.tag <- function(x, size) {
 }
 
 #' @export
-width.yonder_style_pronoun.default <- function(x, size) {
-  style_class_add(x, width_size(size))
+width.default <- function(x, size) {
+  tag_class_add(x, width_size(size))
 }
 
 width_size <- function(size) {
@@ -92,12 +92,12 @@ height <- function(x, size) {
 
 #' @export
 height.yonder_style_pronoun <- function(x, size) {
-  UseMethod("height", x)
+  NextMethod("height", x)
 }
 
 #' @export
 height.rlang_box_splice <- function(x, size) {
-  UseMethod("height", unbox(x))
+  NextMethod("height", unbox(x))
 }
 
 #' @export
@@ -107,7 +107,7 @@ height.shiny.tag <- function(x, size) {
 
 #' @export
 height.yonder_style_pronoun.default <- function(x, size) {
-  style_class_add(x, height_size(size))
+  tag_class_add(x, height_size(size))
 }
 
 height_size <- function(size) {

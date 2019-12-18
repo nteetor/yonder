@@ -84,6 +84,7 @@ Collate:
     'style-background.R'
     'style-border.R'
     'style-display.R'
+    'style-flex.R'
     'style-float.R'
     'style-font.R'
     'style-scroll.R'

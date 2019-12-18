@@ -4,12 +4,12 @@
 \alias{shadow}
 \title{Shadows}
 \usage{
-shadow(tag, size = "medium")
+shadow(x, size = "medium")
 
-shadow(tag, size = "medium")
+shadow(x, size = "medium")
 }
 \arguments{
-\item{tag}{A tag element.}
+\item{x}{A tag element or \link{.style} pronoun.}
 
 \item{size}{One of \code{"none"}, \code{"small"}, \code{"medium"}, or \code{"large"} specifying
 the amount of shadow added, defaults to \code{"medium"}.}
@@ -19,11 +19,9 @@ The \code{shadow} utility applies a shadow to a tag element. By default many
 elements include a shadow to help distinguish them. Use \code{"none"} to remove an
 element's shadow.
 
-The \code{shadow} utility applies a shadow to a tag element. Elements with a
-shadow may appear to pop off the page. The material design set of components,
-used on Android and for Google applications, commonly uses shadowing.
-Although \code{"none"} is an allowed \code{size}, most elements do not have a shadow by
-default.
+The \code{shadow} utility applies a shadow to a tag element. By default many
+elements include a shadow to help distinguish them. Use \code{"none"} to remove an
+element's shadow.
 }
 \examples{
 

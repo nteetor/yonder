@@ -6,6 +6,14 @@ is_style_pronoun <- function(x) {
   inherits(x, "yonder_style_pronoun")
 }
 
+is_style_box <- function(x) {
+  is_box(x) && is_style_pronoun(unbox(x))
+}
+
+is_style_bare <- function(x) {
+  is_style_pronoun(x) && length(class(x)) == 1
+}
+
 print.yonder_style_pronoun <- function(x, ...) {
   cat("<pronoun>\n")
   invisible(x)
@@ -33,7 +41,7 @@ style_class_add <- function(x, new) {
 
   stopifnot(is_style_pronoun(x))
 
-  if (!nzchar(new) || length(new) == 0 || is_na(new)) {
+  if (length(new) < 1 || all(!nzchar(new)) || is_na(new)) {
     return(x)
   }
 
@@ -70,7 +78,7 @@ style_class_add <- function(x, new) {
 #' card(
 #'   .style %>%
 #'     border("primary") %>%
-#'     font("primary)
+#'     font("primary")
 #' )
 #' ```
 #'
