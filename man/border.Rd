@@ -9,7 +9,7 @@ border(x, color = NULL, sides = "all", round = NULL)
 \arguments{
 \item{x}{A tag element or \link{.style} pronoun.}
 
-\item{color}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"} or \code{"dark"} specifying the border color of the tag element, defaults to \code{NULL}}
+\item{color}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"} or \code{"dark"} specifying the border color of the tag element, defaults to \code{NULL}.}
 
 \item{sides}{One or more of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"}, or
 \code{"all"} or \code{"none"} specifying which sides to add a border to, defaults to
