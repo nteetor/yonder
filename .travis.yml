@@ -7,6 +7,15 @@ cache: packages
 r_github_packages:
   - r-lib/callr@v3.3.2
 
+before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
+
+deploy:
+  provider: script
+  script: Rscript -e 'pkgdown::deploy_site_github()'
+  skip_cleanup: true
+  on:
+    branch: v0-dev
+
 jobs:
   include:
     - r: 3.2
