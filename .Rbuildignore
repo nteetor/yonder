@@ -15,3 +15,4 @@
 ^CRAN-RELEASE$
 ^renv$
 ^renv\.lock$
+^.github$
