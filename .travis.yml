@@ -4,22 +4,24 @@ language: R
 sudo: false
 cache: packages
 
-before_cache: Rscript -e 'remotes::install_cran("pkgdown")'
-
-deploy:
-  provider: script
-  script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
-  skip_cleanup: true
-  on:
-    branch: master
-
 jobs:
   include:
     - r: 3.2
     - r: oldrel
     - r: release
+      before_deploy:
+        Rscript -e 'remotes::install_cran("pkgdown")'
+      deploy:
+        provider: script
+        script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
+        skip_cleanup: true
     - r: devel
     - os: osx
+      # before_install:
+      # - brew update
+      # - brew cask reinstall xquartz
+      # - brew install tcl-tk --with-tk
+      # - brew link --overwrite --force tcl-tk; brew unlink tcl-tk
 
 matrix:
   fast_finish: true
