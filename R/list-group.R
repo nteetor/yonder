@@ -124,6 +124,8 @@ listGroupInput <- function(..., id, choices = NULL, values = choices,
 
     items <- map_listitems(choices, values, selected)
 
+    args <- style_dots_eval(..., .style = style_pronoun("yonder_list_group"))
+
     tag <- div(
       class = str_collate(
         "yonder-list-group",
@@ -133,7 +135,7 @@ listGroupInput <- function(..., id, choices = NULL, values = choices,
       ),
       id = id,
       items,
-      ...
+      !!!args
     )
 
     s3_class_add(tag, c("yonder_list_group", "yonder_input"))

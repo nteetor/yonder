@@ -12,12 +12,12 @@ NULL
 #' Yonder is a set of tools for flexible and creative shiny application
 #' construction and design.
 #'
-#' @section Inputs:
+#' @section Getting started:
+#'
+#' ## Inputs
 #'
 #' Yonder provides many familiar inputs like [selectInput()] or [radioInput()].
 #' There are also new inputs like [groupTextInput()] or [formInput()].
-#'
-#' **Changes to be mindful of**
 #'
 #' * Input functions have an `id` argument instead of `inputId`.
 #'
@@ -26,9 +26,7 @@ NULL
 #'   argument, but these arguments refer to button labels. If you would like to
 #'   add a label above an input please use [formGroup()].
 #'
-#' **Familiar variants**
-#'
-#' Looking for ... ?
+#' ### Looking for ... ?
 #'
 #' * `actionButton()` or `actionLink()` use [buttonInput()] or [linkInput()]
 #'
@@ -42,15 +40,13 @@ NULL
 #'
 #' * `submitButton()` use [formInput()] and [formSubmit()]
 #'
-#' @section Layout and content:
+#' ## Layout and content
 #'
 #' Included are a handful of utilities for building applications suited for
 #' devices and screens of varying sizes. For real control over spacing elements
 #' be sure to check out [flex()], which gives you the power of flexbox layout.
 #'
-#' **Familiar variants**
-#'
-#' Looking for ... ?
+#' ### Looking for ... ?
 #'
 #' * `fluidRow()` or `fixedRow()` use [columns()]
 #'
@@ -63,4 +59,5 @@ NULL
 #'
 #' * `modalDialog()` use [modal()]
 #'
+#' @name yonder
 "_PACKAGE"

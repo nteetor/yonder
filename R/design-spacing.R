@@ -244,7 +244,7 @@ margin_top <- function(top) {
   top <- lapply(top, margin_negative)
   top <- resp_construct(top, c(0:5, "auto", "n1", "n2", "n3", "n4", "n5"))
 
-  sprintf("p%s", resp_classes(top, "t"))
+  sprintf("m%s", resp_classes(top, "t"))
 }
 
 margin_right <- function(right) {
@@ -255,7 +255,7 @@ margin_right <- function(right) {
   right <- lapply(right, margin_negative)
   right <- resp_construct(right, c(0:5, "auto", "n1", "n2", "n3", "n4", "n5"))
 
-  sprintf("p%s", resp_classes(right, "r"))
+  sprintf("m%s", resp_classes(right, "r"))
 }
 
 margin_bottom <- function(bottom) {
@@ -266,7 +266,7 @@ margin_bottom <- function(bottom) {
   bottom <- lapply(bottom, margin_negative)
   bottom <- resp_construct(bottom, c(0:5, "auto", "n1", "n2", "n3", "n4", "n5"))
 
-  sprintf("p%s", resp_classes(bottom, "b"))
+  sprintf("m%s", resp_classes(bottom, "b"))
 }
 
 margin_left <- function(left) {

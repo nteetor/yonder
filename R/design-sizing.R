@@ -107,8 +107,7 @@ height.shiny.tag <- function(x, size) {
 
 #' @export
 height.default <- function(x, size) {
-  # abort("No method implemented for ", class(x))
-  abort_design_default()
+  tag_class_add(x, height_size(size))
 }
 
 height_size <- function(size) {
