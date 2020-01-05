@@ -46,3 +46,54 @@ Other design utilities:
 \code{\link{width}()}
 }
 \concept{design utilities}
+\section{Changing input backgrounds}{
+
+Input backgrounds will change differently according to the particular
+input. Changing the background of a \code{buttonGroupInput()} will change the
+background colors of the buttons in the group.\if{html}{\out{<div class="r">}}\preformatted{buttonGroupInput(
+  .style \%>\%
+    background("info"),
+  id = "flavors",
+  choices = c("Mint", "Strawberry", "Swirl"),
+  values = c("mint", "sberry", "swirl")
+)
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div id="flavors" class="yonder-button-group btn-group btn-group-info" role="group">
+}}
+\if{html}{\out{
+<button type="button" class="btn" value="mint">
+}}
+
+
+Mint\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<button type="button" class="btn" value="sberry">
+}}
+
+
+Strawberry\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<button type="button" class="btn" value="swirl">
+}}
+
+
+Swirl\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+
+Another one.
+}

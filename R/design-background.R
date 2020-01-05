@@ -6,6 +6,8 @@
 #'
 #' @eval param_color("background")
 #'
+#' @includeRmd man/roxygen/background-inputs.Rmd
+#'
 #' @family design utilities
 #' @export
 #' @examples

@@ -15,7 +15,17 @@ dep_complete <- function() {
   flag_set("deps", NULL)
 }
 
+dep_skip <- function() {
+  opt <- getOption("yonder.deps", TRUE)
+
+  is_false(opt) || is_na(opt)
+}
+
 dep_attach <- function(tag) {
+  if (dep_skip()) {
+    return(tag)
+  }
+
   deps <- dep_fetch()
 
   if (!is.null(deps)) {
@@ -31,6 +41,11 @@ dep_attach <- function(tag) {
   } else {
     tag
   }
+}
+
+dep_remove <- function(tag) {
+  attr(tag, "html_dependecies") <- NULL
+  tag
 }
 
 with_deps <- function(expr) {
