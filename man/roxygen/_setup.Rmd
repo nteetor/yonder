@@ -1,0 +1,9 @@
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  results = "asis",
+  eval = TRUE
+)
+
+library(yonder)
+options(yonder.deps = FALSE)
+```
