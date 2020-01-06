@@ -7,7 +7,7 @@
 #' @import rlang
 NULL
 
-#' An opinionated shiny framework
+#' A shiny framework
 #'
 #' Yonder is a set of tools for flexible and creative shiny application
 #' construction and design.
