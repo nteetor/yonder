@@ -4,7 +4,7 @@
 \name{yonder}
 \alias{yonder}
 \alias{yonder-package}
-\title{An opinionated shiny framework}
+\title{A shiny framework}
 \description{
 Yonder is a set of tools for flexible and creative shiny application
 construction and design.
