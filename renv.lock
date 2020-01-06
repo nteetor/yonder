@@ -11,10 +11,10 @@
   "Packages": {
     "BH": {
       "Package": "BH",
-      "Version": "1.69.0-1",
+      "Version": "1.72.0-2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f4605d46264b35f53072fc9ee7ace15f"
+      "Hash": "00d67366d2b1bbd0a4dd0279817a66d4"
     },
     "MASS": {
       "Package": "MASS",
@@ -235,10 +235,10 @@
     },
     "mime": {
       "Package": "mime",
-      "Version": "0.7",
+      "Version": "0.8",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "f085cb5d1548336cafa5ee7ec56d7e34"
+      "Hash": "3d8abfab430c94a15e20eb91f052293f"
     },
     "openssl": {
       "Package": "openssl",
@@ -263,10 +263,11 @@
     },
     "pkgdown": {
       "Package": "pkgdown",
-      "Version": "1.4.1",
+      "Version": "1.4.1.3030",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "96f7c798b04acb01cee43b266b884755"
+      "Remotes": "nteetor/yonder@v0-dev",
+      "Hash": "ea8994808a1b1b4aceb9982f67090158"
     },
     "praise": {
       "Package": "praise",
@@ -312,10 +313,10 @@
     },
     "renv": {
       "Package": "renv",
-      "Version": "0.9.1",
+      "Version": "0.9.2",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "2493509e836304c687514e4ff635d8e5"
+      "Hash": "5181d5f316c7a6589219866d640e004c"
     },
     "rlang": {
       "Package": "rlang",
@@ -326,10 +327,10 @@
     },
     "rmarkdown": {
       "Package": "rmarkdown",
-      "Version": "1.12",
+      "Version": "2.0",
       "Source": "Repository",
       "Repository": "CRAN",
-      "Hash": "15e7b0aef61f78f9b5887619e533b09d"
+      "Hash": "745a60d9256842b1abae2dcf7b64ebc1"
     },
     "rprojroot": {
       "Package": "rprojroot",
