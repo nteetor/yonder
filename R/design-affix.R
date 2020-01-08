@@ -10,6 +10,7 @@
 #' @param position One of `"top"`, `"bottom"`, or `"sticky"` specifying the
 #'   fixed behavior of an element.
 #'
+#' @include design.R
 #' @family design utilities
 #' @export
 affix <- function(x, position) {

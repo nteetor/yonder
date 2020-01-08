@@ -52,7 +52,7 @@ radioInput <- function(id, choices = NULL, values = choices,
                        selected = values[[1]], ..., inline = FALSE) {
   assert_id()
   assert_choices()
-  assert_selected(length = 1)
+  assert_selected(len = 1)
 
   dep_attach({
     radios <- map_radios(choices, values, selected, id, inline)
@@ -75,7 +75,7 @@ updateRadioInput <- function(id, choices = NULL, values = choices,
                              session = getDefaultReactiveDomain()) {
   assert_id()
   assert_choices()
-  assert_selected(length = 1)
+  assert_selected(len = 1)
   assert_session()
 
   radios <- map_radios(choices, values, selected, id, inline)
@@ -182,7 +182,7 @@ radiobarInput <- function(id, choices, values = choices, selected = values[[1]],
                           ...) {
   assert_id()
   assert_choices()
-  assert_selected(length = 1)
+  assert_selected(len = 1)
 
   dep_attach({
     radios <- map_radiobuttons(choices, values, selected, id)
@@ -204,7 +204,7 @@ updateRadiobarInput <- function(id, choices = NULL, values = choices,
                                 session = getDefaultReactiveDomain()) {
   assert_id()
   assert_choices()
-  assert_selected(length = 1)
+  assert_selected(len = 1)
   assert_session()
 
   radios <- map_radiobuttons(choices, values, selected, id)

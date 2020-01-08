@@ -17,12 +17,12 @@ display <- function(x, type) {
 
 #' @export
 display.yonder_style_pronoun <- function(x, type) {
-  NextMethod("display", x)
+  style_class_add(x, display_type(type))
 }
 
 #' @export
 display.rlang_box_splice <- function(x, type) {
-  NextMethod("display", unbox(x))
+  display(unbox(x), type)
 }
 
 #' @export

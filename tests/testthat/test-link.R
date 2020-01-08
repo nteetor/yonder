@@ -1,7 +1,7 @@
 context("link input")
 
 test_that("id argument", {
-  expect_error(linkInput(), "please specify `id`")
+  expect_missing_id_error(linkInput())
   expect_error(linkInput(id = 2, "TEXT"))
 
   expect_silent(linkInput(id = "ID", label = "TEXT"))

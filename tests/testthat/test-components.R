@@ -27,7 +27,7 @@ test_that("img", {
 })
 
 test_that("figure", {
-  expect_error(figure(), "please specify `image`")
+  expect_error(figure(), "argument `image` is required")
   expect_is(figure(img("/path/to/file")), "shiny.tag")
 
   expect_dependencies(figure(img("path")))
