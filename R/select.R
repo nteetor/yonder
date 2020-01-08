@@ -76,7 +76,7 @@ selectInput <- function(id, choices = NULL, values = choices,
                         selected = values[[1]], ..., placeholder = NULL) {
   assert_id()
   assert_choices()
-  assert_selected(length = 1)
+  assert_selected(len = 1)
 
   dep_attach({
     items <- map_selectitems(choices, values, selected)
@@ -112,7 +112,7 @@ updateSelectInput <- function(id, choices = NULL, values = choices,
                               session = getDefaultReactiveDomain()) {
   assert_id()
   assert_choices()
-  assert_selected(length = 1)
+  assert_selected(len = 1)
   assert_session()
 
   options <- map_selectitems(choices, values, selected)
@@ -165,7 +165,7 @@ groupSelectInput <- function(id, choices, values = choices,
                              right = NULL) {
   assert_id()
   assert_choices()
-  assert_selected(length = 1)
+  assert_selected(len = 1)
   assert_left()
   assert_right()
 
@@ -205,7 +205,7 @@ updateGroupSelectInput <- function(id, choices = NULL, values = choices,
                                    session = getDefaultReactiveDomain()) {
   assert_id()
   assert_choices()
-  assert_selected(length = 1)
+  assert_selected(len = 1)
   assert_session()
 
   options <- map_options(choices, values, selected)

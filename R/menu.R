@@ -105,7 +105,7 @@ updateMenuInput <- function(id, label = NULL, choices = NULL, values = choices,
   assert_id()
   assert_label()
   assert_choices()
-  assert_selected(length = 1)
+  assert_selected(len = 1)
   assert_session()
 
   items <- map_menuitems(choices, values, selected)
