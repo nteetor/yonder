@@ -1,5 +1,5 @@
 style_pronoun <- function(subclass = NULL) {
-  structure(list(), class = c("yonder_style_pronoun", subclass))
+  structure(list(), class = c(subclass, "yonder_style_pronoun"))
 }
 
 is_style_pronoun <- function(x) {

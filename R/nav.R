@@ -120,7 +120,7 @@ navInput <- function(id, choices = NULL, values = choices,
                      selected = values[[1]], ..., appearance = "links",
                      fill = FALSE) {
   assert_id()
-  assert_selected(length = 1)
+  assert_selected(len = 1)
   assert_possible(appearance, c("links", "pills", "tabs"))
 
   dep_attach({
@@ -147,7 +147,7 @@ updateNavInput <- function(id, choices = NULL, values = choices,
                            session = getDefaultReactiveDomain()) {
   assert_id()
   assert_choices()
-  assert_selected(length = 1)
+  assert_selected(len = 1)
   assert_session()
 
   items <- map_navitems(choices, values, selected)

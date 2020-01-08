@@ -92,12 +92,12 @@ height <- function(x, size) {
 
 #' @export
 height.yonder_style_pronoun <- function(x, size) {
-  NextMethod("height", x)
+  style_class_add(x, height_size(size))
 }
 
 #' @export
 height.rlang_box_splice <- function(x, size) {
-  NextMethod("height", unbox(x))
+  height(unbox(x), size)
 }
 
 #' @export
@@ -106,8 +106,9 @@ height.shiny.tag <- function(x, size) {
 }
 
 #' @export
-height.yonder_style_pronoun.default <- function(x, size) {
-  tag_class_add(x, height_size(size))
+height.default <- function(x, size) {
+  # abort("No method implemented for ", class(x))
+  abort_design_default()
 }
 
 height_size <- function(size) {

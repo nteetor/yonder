@@ -1,7 +1,7 @@
 context("checkbar input")
 
 test_that("id argument", {
-  expect_error(checkbarInput(), "please specify `id`")
+  expect_missing_id_error(checkbarInput())
 })
 
 test_that("has dependencies", {
