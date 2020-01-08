@@ -2,7 +2,7 @@
 #'
 #' Use `background()` to modify the background color of a tag element.
 #'
-#' @param tag A tag element.
+#' @inheritParams affix
 #'
 #' @eval param_color("background")
 #'
@@ -13,19 +13,19 @@
 #' ### Modifying input elements
 #'
 #' checkbarInput(
+#'   .style %>% background("info"),
 #'   id = "bar1",
 #'   choices = c(
 #'     "Nunc rutrum turpis sed pede.",
 #'     "Etiam vel neque.",
 #'     "Lorem ipsum dolor sit amet."
 #'   )
-#' ) %>%
-#'   background("info")
+#' )
 #'
-background <- function(tag, color, ...) {
+background <- function(x, color) {
   assert_possible(color, theme_colors)
 
-  UseMethod("background", tag)
+  UseMethod("background", x)
 }
 
 #' @export
