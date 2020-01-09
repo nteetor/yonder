@@ -14,6 +14,10 @@
 
 * Chip input argument `stack` added to control the ordering of selected chips
 
+## Minor improvements
+
+* Upgraded to Bootstrap 4.4.1
+
 # yonder 0.1.2
 
 ## Breaking changes
