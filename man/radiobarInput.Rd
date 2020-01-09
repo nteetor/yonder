@@ -27,7 +27,7 @@ labels of the input's choices.}
 defaults to \code{choices}.}
 
 \item{selected}{One of \code{values} specifying the input's default selected
-choice, defualts to \code{values[[1]]}.}
+choice, defaults to \code{values[[1]]}.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the
 parent element or tag elements passed as child elements to the parent

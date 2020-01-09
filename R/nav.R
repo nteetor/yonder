@@ -13,7 +13,7 @@
 #'   navigation items of the input.
 #'
 #' @param values A character vector specifying the values of the input's
-#'   chocies, defaults to `choices`.
+#'   choices, defaults to `choices`.
 #'
 #' @param selected One of `values` specifying which choice is selected by
 #'   default, defaults to `values[[1]]`.

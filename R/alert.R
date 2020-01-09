@@ -7,7 +7,7 @@
 #'   named arguments passed as HTML attributes to the alert element.
 #'
 #' @param dismissible One of `TRUE` or `FALSE` specifying if the alert may be
-#'   dismissed by the user, deafults to `TRUE`.
+#'   dismissed by the user, defaults to `TRUE`.
 #'
 #' @param fade One of `TRUE` or `FALSE` specifying if the alert fades out or
 #'   immediately disappears when dismissed, defaults to `TRUE`.

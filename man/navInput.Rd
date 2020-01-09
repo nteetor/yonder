@@ -32,7 +32,7 @@ updateNavInput(
 navigation items of the input.}
 
 \item{values}{A character vector specifying the values of the input's
-chocies, defaults to \code{choices}.}
+choices, defaults to \code{choices}.}
 
 \item{selected}{One of \code{values} specifying which choice is selected by
 default, defaults to \code{values[[1]]}.}

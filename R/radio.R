@@ -158,7 +158,7 @@ map_radios <- function(choices, values, selected, parent_id, inline) {
 #'   defaults to `choices`.
 #'
 #' @param selected One of `values` specifying the input's default selected
-#'   choice, defualts to `values[[1]]`.
+#'   choice, defaults to `values[[1]]`.
 #'
 #' @family inputs
 #' @export

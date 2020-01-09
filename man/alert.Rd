@@ -11,7 +11,7 @@ alert(..., dismissible = TRUE, fade = TRUE)
 named arguments passed as HTML attributes to the alert element.}
 
 \item{dismissible}{One of \code{TRUE} or \code{FALSE} specifying if the alert may be
-dismissed by the user, deafults to \code{TRUE}.}
+dismissed by the user, defaults to \code{TRUE}.}
 
 \item{fade}{One of \code{TRUE} or \code{FALSE} specifying if the alert fades out or
 immediately disappears when dismissed, defaults to \code{TRUE}.}

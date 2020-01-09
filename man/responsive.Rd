@@ -18,7 +18,7 @@ that size and larger. For example, specifying \code{list(default = x, md = y)}
 will apply \code{x} on extra small and small viewports, but for medium, large, and
 extra large viewports \code{y} is applied.
 
-Styles for larger viewports take precedance. See below for details about each
+Styles for larger viewports take precedence. See below for details about each
 breakpoint.
 
 \strong{extra small}

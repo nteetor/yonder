@@ -32,8 +32,8 @@ defaults to \code{NULL}. See the \strong{align} section below for more on how th
 different values affect vertical spacing.}
 
 \item{wrap}{A \link{responsive} argument. One of \code{TRUE} or \code{FALSE} specifying
-whether to wrap flex items inside the flex containter, \code{tag}, defaults
-to \code{NULL}. If \code{TRUE} items wrap inside the container, if \code{FALSE} items will
+whether to wrap flex items inside the flex container, \code{tag}, defaults to
+\code{NULL}. If \code{TRUE} items wrap inside the container, if \code{FALSE} items will
 not wrap. See the \strong{wrap} section below for more.}
 
 \item{reverse}{A \link{responsive} argument. One of \code{TRUE} or \code{FALSE} specifying

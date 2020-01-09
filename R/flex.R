@@ -16,7 +16,7 @@
 #' will apply `x` on extra small and small viewports, but for medium, large, and
 #' extra large viewports `y` is applied.
 #'
-#' Styles for larger viewports take precedance. See below for details about each
+#' Styles for larger viewports take precedence. See below for details about each
 #' breakpoint.
 #'
 #' **extra small**
@@ -88,8 +88,8 @@ NULL
 #'   different values affect vertical spacing.
 #'
 #' @param wrap A [responsive] argument. One of `TRUE` or `FALSE` specifying
-#'   whether to wrap flex items inside the flex containter, `tag`, defaults
-#'   to `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
+#'   whether to wrap flex items inside the flex container, `tag`, defaults to
+#'   `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
 #'   not wrap. See the **wrap** section below for more.
 #'
 #' @family layout functions
