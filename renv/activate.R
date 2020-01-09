@@ -2,7 +2,7 @@
 local({
 
   # the requested version of renv
-  version <- "0.8.2-11"
+  version <- "0.9.2"
 
   # avoid recursion
   if (!is.na(Sys.getenv("RENV_R_INITIALIZING", unset = NA)))
@@ -53,8 +53,36 @@ local({
   })
 
   # try to load renv from the project library
-  if (requireNamespace("renv", lib.loc = libpath, quietly = TRUE))
+  if (requireNamespace("renv", lib.loc = libpath, quietly = TRUE)) {
+
+    # warn if the version of renv loaded does not match
+    loadedversion <- utils::packageDescription("renv", fields = "Version")
+    if (version != loadedversion) {
+
+      # assume four-component versions are from GitHub; three-component
+      # versions are from CRAN
+      components <- strsplit(loadedversion, "[.-]")[[1]]
+      remote <- if (length(components) == 4L)
+        paste("rstudio/renv", loadedversion, sep = "@")
+      else
+        paste("renv", loadedversion, sep = "@")
+
+      fmt <- paste(
+        "renv %1$s was loaded from project library, but renv %2$s is recorded in lockfile.",
+        "Use `renv::record(\"%3$s\")` to record this version in the lockfile.",
+        "Use `renv::restore(packages = \"renv\")` to install renv %2$s into the project library.",
+        sep = "\n"
+      )
+
+      msg <- sprintf(fmt, loadedversion, version, remote)
+      warning(msg, call. = FALSE)
+
+    }
+
+    # load the project
     return(renv::load())
+
+  }
 
   # failed to find renv locally; we'll try to install from GitHub.
   # first, set up download options as appropriate (try to use GITHUB_PAT)
