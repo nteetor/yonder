@@ -79,7 +79,7 @@ dropdown elements please see dropdown()." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">yonder</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.1.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">0.2.0</span>
       </span>
     </div>
 
@@ -93,18 +93,6 @@ dropdown elements please see dropdown()." />
 </li>
 <li>
   <a href="../reference/index.html">Documentation</a>
-</li>
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">
-    Articles
-     
-    <span class="caret"></span>
-  </a>
-  <ul class="dropdown-menu" role="menu">
-    <li>
-      <a href="../articles/layout.html">Application layouts</a>
-    </li>
-  </ul>
 </li>
 <li>
   <a href="https://github.com/nteetor/yonder">
@@ -136,12 +124,27 @@ reactive inputs or within a <code><a href='navInput.html'>navInput()</a></code>.
 dropdown elements please see <code><a href='dropdown.html'>dropdown()</a></code>.</p>
     </div>
 
-    <pre class="usage"><span class='fu'>menuInput</span>(<span class='no'>id</span>, <span class='no'>label</span>, <span class='kw'>choices</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='no'>choices</span>,
-  <span class='kw'>selected</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='no'>...</span>, <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"down"</span>, <span class='kw'>align</span> <span class='kw'>=</span> <span class='st'>"left"</span>)
+    <pre class="usage"><span class='fu'>menuInput</span>(
+  <span class='no'>id</span>,
+  <span class='no'>label</span>,
+  <span class='kw'>choices</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>values</span> <span class='kw'>=</span> <span class='no'>choices</span>,
+  <span class='kw'>selected</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='no'>...</span>,
+  <span class='kw'>direction</span> <span class='kw'>=</span> <span class='st'>"down"</span>,
+  <span class='kw'>align</span> <span class='kw'>=</span> <span class='st'>"left"</span>
+)
 
-<span class='fu'>updateMenuInput</span>(<span class='no'>id</span>, <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>choices</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>values</span> <span class='kw'>=</span> <span class='no'>choices</span>,
-  <span class='kw'>selected</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>enable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>, <span class='kw'>disable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
-  <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>())</pre>
+<span class='fu'>updateMenuInput</span>(
+  <span class='no'>id</span>,
+  <span class='kw'>label</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>choices</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>values</span> <span class='kw'>=</span> <span class='no'>choices</span>,
+  <span class='kw'>selected</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>enable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>disable</span> <span class='kw'>=</span> <span class='kw'>NULL</span>,
+  <span class='kw'>session</span> <span class='kw'>=</span> <span class='fu'>getDefaultReactiveDomain</span>()
+)</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
@@ -205,14 +208,21 @@ toggle button the menu aligns to, defaults to <code>"left"</code>.`</p></td>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p>Other inputs: <code><a href='buttonGroupInput.html'>buttonGroupInput</a></code>,
-  <code><a href='buttonInput.html'>buttonInput</a></code>, <code><a href='checkbarInput.html'>checkbarInput</a></code>,
-  <code><a href='checkboxInput.html'>checkboxInput</a></code>, <code><a href='chipInput.html'>chipInput</a></code>,
-  <code><a href='fileInput.html'>fileInput</a></code>, <code><a href='formInput.html'>formInput</a></code>,
-  <code><a href='listGroupInput.html'>listGroupInput</a></code>, <code><a href='navInput.html'>navInput</a></code>,
-  <code><a href='radioInput.html'>radioInput</a></code>, <code><a href='radiobarInput.html'>radiobarInput</a></code>,
-  <code><a href='rangeInput.html'>rangeInput</a></code>, <code><a href='selectInput.html'>selectInput</a></code>,
-  <code><a href='textInput.html'>textInput</a></code></p></div>
+    <div class='dont-index'><p>Other inputs: 
+<code><a href='buttonGroupInput.html'>buttonGroupInput</a>()</code>,
+<code><a href='buttonInput.html'>buttonInput</a>()</code>,
+<code><a href='checkbarInput.html'>checkbarInput</a>()</code>,
+<code><a href='checkboxInput.html'>checkboxInput</a>()</code>,
+<code><a href='chipInput.html'>chipInput</a>()</code>,
+<code><a href='fileInput.html'>fileInput</a>()</code>,
+<code><a href='formInput.html'>formInput</a>()</code>,
+<code><a href='listGroupInput.html'>listGroupInput</a>()</code>,
+<code><a href='navInput.html'>navInput</a>()</code>,
+<code><a href='radioInput.html'>radioInput</a>()</code>,
+<code><a href='radiobarInput.html'>radiobarInput</a>()</code>,
+<code><a href='rangeInput.html'>rangeInput</a>()</code>,
+<code><a href='selectInput.html'>selectInput</a>()</code>,
+<code><a href='textInput.html'>textInput</a>()</code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'>
