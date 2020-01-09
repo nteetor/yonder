@@ -17,7 +17,7 @@ defaults to \code{NULL}.}
 \item{align}{One of \code{"left"} or \code{"right"}, defaults to \code{"left"}.}
 }
 \description{
-Stylized blockquotes, an updated builder function for \code{<blockquote>}.
+Stylized blockquotes, an updated builder function for \verb{<blockquote>}.
 }
 \examples{
 
@@ -36,12 +36,19 @@ blockquote(
 
 }
 \seealso{
-Other components: \code{\link{alert}}, \code{\link{badge}},
-  \code{\link{card}}, \code{\link{collapsePane}},
-  \code{\link{d1}}, \code{\link{dropdown}},
-  \code{\link{img}}, \code{\link{jumbotron}},
-  \code{\link{modal}}, \code{\link{navContent}},
-  \code{\link{popover}}, \code{\link{pre}},
-  \code{\link{toast}}
+Other components: 
+\code{\link{alert}()},
+\code{\link{badge}()},
+\code{\link{card}()},
+\code{\link{collapsePane}()},
+\code{\link{d1}()},
+\code{\link{dropdown}()},
+\code{\link{img}()},
+\code{\link{jumbotron}()},
+\code{\link{modal}()},
+\code{\link{navContent}()},
+\code{\link{popover}()},
+\code{\link{pre}()},
+\code{\link{toast}()}
 }
 \concept{components}

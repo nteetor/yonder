@@ -35,8 +35,11 @@ webpage(
 
 }
 \seealso{
-Other layout functions: \code{\link{column}},
-  \code{\link{fieldset}}, \code{\link{flex}},
-  \code{\link{navbar}}, \code{\link{responsive}}
+Other layout functions: 
+\code{\link{column}()},
+\code{\link{fieldset}()},
+\code{\link{flex}()},
+\code{\link{navbar}()},
+\code{\link{responsive}}
 }
 \concept{layout functions}

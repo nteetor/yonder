@@ -1,9 +1,0 @@
-pandoc: '2.4'
-pkgdown: 1.4.1
-pkgdown_sha: ~
-articles:
-  layout: layout.html
-urls:
-  reference: https://nteetor.github.io/yonder/reference
-  article: https://nteetor.github.io/yonder/articles
-

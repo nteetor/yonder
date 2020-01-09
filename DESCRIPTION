@@ -1,7 +1,7 @@
 Package: yonder
 Type: Package
 Title: A Reactive Web Framework Built on 'shiny'
-Version: 0.1.2
+Version: 0.2.0
 Authors@R: c(
     person("Nathan", "Teetor", role = c("aut", "cre"),
       email = "nathanteetor@gmail.com"),
@@ -26,12 +26,12 @@ BugReports: https://github.com/nteetor/yonder/issues
 Encoding: UTF-8
 LazyData: true
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 6.1.1
+RoxygenNote: 7.0.2
 Depends:
     R (>= 3.2),
-    shiny (>= 1.1.0)
+    shiny (>= 1.4.0)
 Imports:
-    htmltools,
+    htmltools (>= 0.4.0),
     magrittr,
     utils
 Suggests:

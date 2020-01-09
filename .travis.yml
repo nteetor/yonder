@@ -15,13 +15,10 @@ jobs:
         provider: script
         script: Rscript -e 'pkgdown::deploy_site_github(verbose = TRUE)'
         skip_cleanup: true
+        on:
+          branch: master
     - r: devel
     - os: osx
-      # before_install:
-      # - brew update
-      # - brew cask reinstall xquartz
-      # - brew install tcl-tk --with-tk
-      # - brew link --overwrite --force tcl-tk; brew unlink tcl-tk
 
 matrix:
   fast_finish: true

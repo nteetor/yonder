@@ -4,8 +4,7 @@
 \alias{font}
 \title{Font color, size, weight}
 \usage{
-font(tag, color = NULL, size = NULL, weight = NULL, case = NULL,
-  align = NULL)
+font(tag, color = NULL, size = NULL, weight = NULL, case = NULL, align = NULL)
 }
 \arguments{
 \item{tag}{A tag element.}
@@ -72,11 +71,17 @@ p("Proin quam nisl, tincidunt et.") \%>\%
 
 }
 \seealso{
-Other design utilities: \code{\link{active}},
-  \code{\link{affix}}, \code{\link{background}},
-  \code{\link{border}}, \code{\link{display}},
-  \code{\link{float}}, \code{\link{height}},
-  \code{\link{padding}}, \code{\link{scroll}},
-  \code{\link{shadow}}, \code{\link{width}}
+Other design utilities: 
+\code{\link{active}()},
+\code{\link{affix}()},
+\code{\link{background}()},
+\code{\link{border}()},
+\code{\link{display}()},
+\code{\link{float}()},
+\code{\link{height}()},
+\code{\link{padding}()},
+\code{\link{scroll}()},
+\code{\link{shadow}()},
+\code{\link{width}()}
 }
 \concept{design utilities}

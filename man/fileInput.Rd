@@ -4,8 +4,14 @@
 \alias{fileInput}
 \title{File inputs}
 \usage{
-fileInput(id, placeholder = "Choose file", browse = "Browse", ...,
-  multiple = TRUE, accept = NULL)
+fileInput(
+  id,
+  placeholder = "Choose file",
+  browse = "Browse",
+  ...,
+  multiple = TRUE,
+  accept = NULL
+)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -30,20 +36,20 @@ defaults to \code{NULL}, in which case any file type may be selected.}
 Upload files to the server.
 }
 \section{\strong{Example} uploading a file}{
-\preformatted{shinyApp(
+\if{html}{\out{<div class="R">}}\preformatted{shinyApp(
   ui = container(
     fileInput("upload") \%>\%
       margin(0, "auto", 0, "auto")
   ),
-  server = function(input, output) {
-    observe({
+  server = function(input, output) \{
+    observe(\{
       req(input$upload)
 
       print(input$upload)
-    })
-  }
+    \})
+  \}
 )
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{
@@ -70,13 +76,20 @@ fileInput(
 
 }
 \seealso{
-Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{chipInput}},
-  \code{\link{formInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{radiobarInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: 
+\code{\link{buttonGroupInput}()},
+\code{\link{buttonInput}()},
+\code{\link{checkbarInput}()},
+\code{\link{checkboxInput}()},
+\code{\link{chipInput}()},
+\code{\link{formInput}()},
+\code{\link{listGroupInput}()},
+\code{\link{menuInput}()},
+\code{\link{navInput}()},
+\code{\link{radioInput}()},
+\code{\link{radiobarInput}()},
+\code{\link{rangeInput}()},
+\code{\link{selectInput}()},
+\code{\link{textInput}()}
 }
 \concept{inputs}

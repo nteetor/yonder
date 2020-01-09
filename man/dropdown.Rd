@@ -101,12 +101,19 @@ dropdown(
 
 }
 \seealso{
-Other components: \code{\link{alert}}, \code{\link{badge}},
-  \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{collapsePane}}, \code{\link{d1}},
-  \code{\link{img}}, \code{\link{jumbotron}},
-  \code{\link{modal}}, \code{\link{navContent}},
-  \code{\link{popover}}, \code{\link{pre}},
-  \code{\link{toast}}
+Other components: 
+\code{\link{alert}()},
+\code{\link{badge}()},
+\code{\link{blockquote}()},
+\code{\link{card}()},
+\code{\link{collapsePane}()},
+\code{\link{d1}()},
+\code{\link{img}()},
+\code{\link{jumbotron}()},
+\code{\link{modal}()},
+\code{\link{navContent}()},
+\code{\link{popover}()},
+\code{\link{pre}()},
+\code{\link{toast}()}
 }
 \concept{components}

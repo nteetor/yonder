@@ -7,18 +7,41 @@
 \alias{updateSwitchInput}
 \title{Checkbox and switch inputs}
 \usage{
-checkboxInput(id, choices = NULL, values = choices, selected = NULL,
-  ..., inline = FALSE)
+checkboxInput(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  ...,
+  inline = FALSE
+)
 
-updateCheckboxInput(id, choices = NULL, values = choices,
-  selected = NULL, inline = FALSE, enable = NULL, disable = NULL,
-  valid = NULL, invalid = NULL, session = getDefaultReactiveDomain())
+updateCheckboxInput(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  inline = FALSE,
+  enable = NULL,
+  disable = NULL,
+  valid = NULL,
+  invalid = NULL,
+  session = getDefaultReactiveDomain()
+)
 
 switchInput(id, choices, values = choices, selected = NULL, ...)
 
-updateSwitchInput(id, choices = NULL, values = choices,
-  selected = NULL, enable = NULL, disable = NULL, valid = NULL,
-  invalid = NULL, session = getDefaultReactiveDomain())
+updateSwitchInput(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  enable = NULL,
+  disable = NULL,
+  valid = NULL,
+  invalid = NULL,
+  session = getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -97,13 +120,20 @@ switchInput(
 
 }
 \seealso{
-Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{radiobarInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: 
+\code{\link{buttonGroupInput}()},
+\code{\link{buttonInput}()},
+\code{\link{checkbarInput}()},
+\code{\link{chipInput}()},
+\code{\link{fileInput}()},
+\code{\link{formInput}()},
+\code{\link{listGroupInput}()},
+\code{\link{menuInput}()},
+\code{\link{navInput}()},
+\code{\link{radioInput}()},
+\code{\link{radiobarInput}()},
+\code{\link{rangeInput}()},
+\code{\link{selectInput}()},
+\code{\link{textInput}()}
 }
 \concept{inputs}

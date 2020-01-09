@@ -28,12 +28,12 @@ pass an \code{id} argument as part of \code{...}.
   )
 )
 
-server <- function(input, output) {
-  observe({
+server <- function(input, output) \{
+  observe(\{
     clicks <- if (is.null(input$clicker)) 0 else input$clicker
     replaceContent("counter", clicks)
-  })
-}
+  \})
+\}
 
 shinyApp(ui, server)
 }
@@ -61,12 +61,19 @@ div(
 
 }
 \seealso{
-Other components: \code{\link{alert}},
-  \code{\link{blockquote}}, \code{\link{card}},
-  \code{\link{collapsePane}}, \code{\link{d1}},
-  \code{\link{dropdown}}, \code{\link{img}},
-  \code{\link{jumbotron}}, \code{\link{modal}},
-  \code{\link{navContent}}, \code{\link{popover}},
-  \code{\link{pre}}, \code{\link{toast}}
+Other components: 
+\code{\link{alert}()},
+\code{\link{blockquote}()},
+\code{\link{card}()},
+\code{\link{collapsePane}()},
+\code{\link{d1}()},
+\code{\link{dropdown}()},
+\code{\link{img}()},
+\code{\link{jumbotron}()},
+\code{\link{modal}()},
+\code{\link{navContent}()},
+\code{\link{popover}()},
+\code{\link{pre}()},
+\code{\link{toast}()}
 }
 \concept{components}

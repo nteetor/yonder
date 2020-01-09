@@ -8,19 +8,29 @@
 \alias{tooltip}
 \title{Button and link inputs}
 \usage{
-buttonInput(id, label, ..., stretch = FALSE, download = FALSE,
-  tooltip = NULL)
+buttonInput(id, label, ..., stretch = FALSE, download = FALSE, tooltip = NULL)
 
-updateButtonInput(id, label = NULL, value = NULL, disable = NULL,
-  enable = NULL, tooltip = NULL,
-  session = getDefaultReactiveDomain())
+updateButtonInput(
+  id,
+  label = NULL,
+  value = NULL,
+  disable = NULL,
+  enable = NULL,
+  tooltip = NULL,
+  session = getDefaultReactiveDomain()
+)
 
-linkInput(id, label, ..., stretch = FALSE, download = FALSE,
-  tooltip = NULL)
+linkInput(id, label, ..., stretch = FALSE, download = FALSE, tooltip = NULL)
 
-updateLinkInput(id, label = NULL, value = NULL, enable = NULL,
-  disable = NULL, tooltip = NULL,
-  session = getDefaultReactiveDomain())
+updateLinkInput(
+  id,
+  label = NULL,
+  value = NULL,
+  enable = NULL,
+  disable = NULL,
+  tooltip = NULL,
+  session = getDefaultReactiveDomain()
+)
 
 tooltip(..., placement = "top", fade = TRUE)
 }
@@ -153,13 +163,20 @@ buttonInput(
 
 }
 \seealso{
-Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{checkbarInput}}, \code{\link{checkboxInput}},
-  \code{\link{chipInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{radiobarInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: 
+\code{\link{buttonGroupInput}()},
+\code{\link{checkbarInput}()},
+\code{\link{checkboxInput}()},
+\code{\link{chipInput}()},
+\code{\link{fileInput}()},
+\code{\link{formInput}()},
+\code{\link{listGroupInput}()},
+\code{\link{menuInput}()},
+\code{\link{navInput}()},
+\code{\link{radioInput}()},
+\code{\link{radiobarInput}()},
+\code{\link{rangeInput}()},
+\code{\link{selectInput}()},
+\code{\link{textInput}()}
 }
 \concept{inputs}

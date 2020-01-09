@@ -7,8 +7,13 @@
 \usage{
 rangeInput(id, min = 0, max = 100, default = min, step = 1, ...)
 
-updateRangeInput(id, value = NULL, enable = NULL, disable = NULL,
-  session = getDefaultReactiveDomain())
+updateRangeInput(
+  id,
+  value = NULL,
+  enable = NULL,
+  disable = NULL,
+  session = getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -61,13 +66,20 @@ rangeInput(id = "range2", step = 10)
 
 }
 \seealso{
-Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{chipInput}},
-  \code{\link{fileInput}}, \code{\link{formInput}},
-  \code{\link{listGroupInput}}, \code{\link{menuInput}},
-  \code{\link{navInput}}, \code{\link{radioInput}},
-  \code{\link{radiobarInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: 
+\code{\link{buttonGroupInput}()},
+\code{\link{buttonInput}()},
+\code{\link{checkbarInput}()},
+\code{\link{checkboxInput}()},
+\code{\link{chipInput}()},
+\code{\link{fileInput}()},
+\code{\link{formInput}()},
+\code{\link{listGroupInput}()},
+\code{\link{menuInput}()},
+\code{\link{navInput}()},
+\code{\link{radioInput}()},
+\code{\link{radiobarInput}()},
+\code{\link{selectInput}()},
+\code{\link{textInput}()}
 }
 \concept{inputs}

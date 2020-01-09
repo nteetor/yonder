@@ -5,12 +5,28 @@
 \alias{updateChipInput}
 \title{Chip inputs}
 \usage{
-chipInput(id, choices = NULL, values = choices, selected = NULL, ...,
-  placeholder = NULL, max = Inf, inline = TRUE)
+chipInput(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  ...,
+  placeholder = NULL,
+  max = Inf,
+  inline = TRUE,
+  sort = "stack"
+)
 
-updateChipInput(id, choices = NULL, values = choices,
-  selected = NULL, max = NULL, enable = NULL, disable = NULL,
-  session = getDefaultReactiveDomain())
+updateChipInput(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  max = NULL,
+  enable = NULL,
+  disable = NULL,
+  session = getDefaultReactiveDomain()
+)
 }
 \arguments{
 \item{id}{A character string specifying the id of the reactive input.}
@@ -38,6 +54,17 @@ inline. If \code{TRUE} multiple chips may fit onto a single row, otherwise, if
 \code{FALSE}, chips expand to fill the width of their parent element, one chip
 per row.}
 
+\item{sort}{One of \code{"stack"}, \code{"queue"}, or \code{"fixed"} specifying how
+selected chips are ordered, defaults to \code{"stack"}.
+
+\code{"stack"}, selected chips are placed ahead of other selected chips.
+
+\code{"queue"}, selected chips are placed behind other selected chips.
+
+\code{"fixed"}, selected chips appear in the order specified by
+\code{choices} and \code{values}. Use \code{"fixed"} and sort \code{choices} to keep selected
+chips in the same sorted order.}
+
 \item{enable}{One of \code{values} specifying particular choices to enable or
 \code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
 
@@ -54,7 +81,7 @@ specified by the \code{choices} argument. Use the \code{max} argument to limit t
 number of choices a user may select.
 }
 \section{\strong{Example} simple application}{
-\preformatted{ui <- container(
+\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   chipInput(
     id = "chips",
     choices = paste("Option number", 1:10),
@@ -64,16 +91,16 @@ number of choices a user may select.
     width("1/2")
 )
 
-server <- function(input, output) {
+server <- function(input, output) \{
 
-}
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \section{\strong{Example} inline chips}{
-\preformatted{ui <- container(
+\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
   chipInput(
     id = "chips",
     choices = c(
@@ -90,12 +117,12 @@ shinyApp(ui, server)
     shadow("small")
 )
 
-server <- function(input, output) {
+server <- function(input, output) \{
 
-}
+\}
 
 shinyApp(ui, server)
-}
+}\if{html}{\out{</div>}}
 }
 
 \examples{
@@ -110,13 +137,20 @@ chipInput(
 
 }
 \seealso{
-Other inputs: \code{\link{buttonGroupInput}},
-  \code{\link{buttonInput}}, \code{\link{checkbarInput}},
-  \code{\link{checkboxInput}}, \code{\link{fileInput}},
-  \code{\link{formInput}}, \code{\link{listGroupInput}},
-  \code{\link{menuInput}}, \code{\link{navInput}},
-  \code{\link{radioInput}}, \code{\link{radiobarInput}},
-  \code{\link{rangeInput}}, \code{\link{selectInput}},
-  \code{\link{textInput}}
+Other inputs: 
+\code{\link{buttonGroupInput}()},
+\code{\link{buttonInput}()},
+\code{\link{checkbarInput}()},
+\code{\link{checkboxInput}()},
+\code{\link{fileInput}()},
+\code{\link{formInput}()},
+\code{\link{listGroupInput}()},
+\code{\link{menuInput}()},
+\code{\link{navInput}()},
+\code{\link{radioInput}()},
+\code{\link{radiobarInput}()},
+\code{\link{rangeInput}()},
+\code{\link{selectInput}()},
+\code{\link{textInput}()}
 }
 \concept{inputs}

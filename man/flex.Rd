@@ -4,8 +4,14 @@
 \alias{flex}
 \title{Flex layout}
 \usage{
-flex(tag, direction = NULL, justify = NULL, align = NULL,
-  wrap = NULL, reverse = NULL)
+flex(
+  tag,
+  direction = NULL,
+  justify = NULL,
+  align = NULL,
+  wrap = NULL,
+  reverse = NULL
+)
 }
 \arguments{
 \item{tag}{A tag element.}
@@ -181,8 +187,11 @@ div(
 
 }
 \seealso{
-Other layout functions: \code{\link{column}},
-  \code{\link{fieldset}}, \code{\link{navbar}},
-  \code{\link{responsive}}, \code{\link{webpage}}
+Other layout functions: 
+\code{\link{column}()},
+\code{\link{fieldset}()},
+\code{\link{navbar}()},
+\code{\link{responsive}},
+\code{\link{webpage}()}
 }
 \concept{layout functions}
