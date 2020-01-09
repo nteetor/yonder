@@ -1,3 +1,19 @@
+# yonder 0.2.0
+
+## Breaking changes
+
+* Select input `selected` behaviour has been reverted, `selected` will once
+  again default to the first choice unless otherwise specified
+
+## Bug fixes
+
+* Select input will correctly start with the default value specified by
+  `selected`
+
+## New features
+
+* Chip input argument `stack` added to control the ordering of selected chips
+
 # yonder 0.1.2
 
 ## Breaking changes
