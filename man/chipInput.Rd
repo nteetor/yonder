@@ -13,7 +13,8 @@ chipInput(
   ...,
   placeholder = NULL,
   max = Inf,
-  inline = TRUE
+  inline = TRUE,
+  sort = "stack"
 )
 
 updateChipInput(
@@ -52,6 +53,17 @@ defaults to \code{Inf}.}
 inline. If \code{TRUE} multiple chips may fit onto a single row, otherwise, if
 \code{FALSE}, chips expand to fill the width of their parent element, one chip
 per row.}
+
+\item{sort}{One of \code{"stack"}, \code{"queue"}, or \code{"fixed"} specifying how
+selected chips are ordered, defaults to \code{"stack"}.
+
+\code{"stack"}, selected chips are placed ahead of other selected chips.
+
+\code{"queue"}, selected chips are placed behind other selected chips.
+
+\code{"fixed"}, selected chips appear in the order specified by
+\code{choices} and \code{values}. Use \code{"fixed"} and sort \code{choices} to keep selected
+chips in the same sorted order.}
 
 \item{enable}{One of \code{values} specifying particular choices to enable or
 \code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}

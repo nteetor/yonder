@@ -7,10 +7,6 @@ navbar:
     href: index.html
   - text: Documentation
     href: reference/index.html
-  - text: Articles
-    menu:
-    - text: Application layouts
-      href: articles/layout.html
   - icon: fa-github fa-lg
     href: https://github.com/nteetor/yonder
 
