@@ -438,10 +438,15 @@
     },
     "pkgdown": {
       "Package": "pkgdown",
-      "Version": "1.4.1",
-      "Source": "Repository",
-      "Repository": "CRAN",
-      "Hash": "96f7c798b04acb01cee43b266b884755"
+      "Version": "1.4.1.3030",
+      "Source": "GitHub",
+      "RemoteType": "github",
+      "RemoteHost": "api.github.com",
+      "RemoteUsername": "nteetor",
+      "RemoteRepo": "pkgdown",
+      "RemoteRef": "master-nt-yonder",
+      "RemoteSha": "d2fbbaff333cd91d88268f1fd6e1580eef0b86b3",
+      "Hash": "7e9ab488b92d3a1077390ae7222e0648"
     },
     "pkgload": {
       "Package": "pkgload",
