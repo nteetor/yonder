@@ -191,19 +191,36 @@ card <- function(..., header = NULL, footer = NULL) {
 
     is_named <- names2(args) != ""
 
-    args[!is_named] <- lapply(args[!is_named], function(x) {
-      if (is_tag(x) && tag_class_re(x, "row|list-group")) {
-        x
+    attrs <- args[is_named]
+    args <- args[!is_named]
+
+    grouped <- reduce(args, function(acc, arg) {
+      if (is_tag(arg) && tag_class_re(arg, "row|list-group")) {
+        acc[[length(acc) + 1]] <- arg
+        acc[length(acc) + 1] <- list(NULL)
       } else {
-        tags$div(class = "card-body", x)
+        acc[[length(acc)]] <- c(acc[[length(acc)]], list(arg))
+      }
+
+      acc
+    }, init = list(NULL))
+
+    body <- lapply(grouped, function(grp) {
+      if (is_bare_list(grp)) {
+        div(class = "card-body", grp)
+      } else {
+        grp
       }
     })
 
-    tag <- tags$div(
+    tag <- div(
       class = "card",
-      header,
-      !!!args,
-      footer
+      !!!attrs,
+      !!!drop_nulls(list2(
+        header,
+        !!!body,
+        footer
+      ))
     )
 
     s3_class_add(tag, "yonder_card")
