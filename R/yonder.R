@@ -1,5 +1,5 @@
 #' @importFrom htmltools HTML htmlDependency attachDependencies
-#'   suppressDependencies resolveDependencies findDependencies tags
+#'   suppressDependencies resolveDependencies findDependencies tags div
 #'   tagAppendAttributes tagAppendChildren surroundSingletons takeSingletons
 #' @importFrom shiny observe getDefaultReactiveDomain installExprFunction
 #'   createRenderFunction createWebDependency

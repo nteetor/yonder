@@ -1,17 +1,16 @@
 # necessary for `createRenderFunction()`
 globalVariables("func")
 
+reduce <- function(x, f, init) {
+  Reduce(f, x, init)
+}
+
 drop_nulls <- function(x) {
   if (length(x) == 0) {
     x
   } else {
     x[!vapply(x, is.null, logical(1))]
   }
-}
-
-# Included until rlang exports `is_present()`
-is_present <- function(arg) {
-  !is_missing(maybe_missing(arg))
 }
 
 str_conjoin <- function(x, con = "or") {

@@ -8,7 +8,7 @@
 #'
 #' @param direction One of `"horizontal"` or `"vertical"` specifying which
 #'   direction to scroll overflowing content, defaults to `"vertical"`, in which
-#'   case the content may croll up and down.
+#'   case the content may scroll up and down.
 #'
 #' @family design utilities
 #' @export
