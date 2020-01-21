@@ -6,11 +6,11 @@
 \title{List group inputs}
 \usage{
 listGroupInput(
+  ...,
   id,
   choices = NULL,
   values = choices,
   selected = NULL,
-  ...,
   layout = "vertical",
   flush = FALSE
 )
@@ -26,6 +26,10 @@ updateListGroupInput(
 )
 }
 \arguments{
+\item{...}{Additional named arguments passed as HTML attributes to the
+parent element or tag elements passed as child elements to the parent
+element.}
+
 \item{id}{A character string specifying the id of the reactive input.}
 
 \item{choices}{A vector of character strings or list of tag elements specifying
@@ -36,10 +40,6 @@ defaults to \code{choices}.}
 
 \item{selected}{One or more of \code{values} specifying which choices are selected
 by default, defaults to \code{NULL}, in which case no choice is selected.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element or tag elements passed as child elements to the parent
-element.}
 
 \item{layout}{A \link{responsive} argument. One of \code{"vertical"} or \code{"horizontal"}
 specifying how list items are laid out, defaults to \code{"vertical"}. Note, if

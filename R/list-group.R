@@ -107,15 +107,15 @@
 #'   layout = "horizontal"
 #' )
 #'
-listGroupInput <- function(id, choices = NULL, values = choices,
-                           selected = NULL, ..., layout = "vertical",
+listGroupInput <- function(..., id, choices = NULL, values = choices,
+                           selected = NULL, layout = "vertical",
                            flush = FALSE) {
   assert_id()
   assert_choices()
   assert_possible(layout, c("vertical", "horizontal"))
   assert_possible(flush, c(TRUE, FALSE))
 
-  tag <- dep_attach({
+  with_deps({
     layout <- resp_construct(layout, c("vertical", "horizontal"))
     classes <- resp_classes(layout, "list-group")
 
@@ -124,7 +124,7 @@ listGroupInput <- function(id, choices = NULL, values = choices,
 
     items <- map_listitems(choices, values, selected)
 
-    tags$div(
+    tag <- div(
       class = str_collate(
         "yonder-list-group",
         "list-group",
@@ -135,9 +135,9 @@ listGroupInput <- function(id, choices = NULL, values = choices,
       items,
       ...
     )
-  })
 
-  s3_class_add(tag, c("yonder_list_group", "yonder_input"))
+    s3_class_add(tag, c("yonder_list_group", "yonder_input"))
+  })
 }
 
 #' @rdname listGroupInput
