@@ -288,11 +288,11 @@ updateLinkInput <- function(id, label = NULL, value = NULL,
 buttonGroupInput <- function(..., id, choices = NULL, values = choices,
                              labels = deprecated(),
                              direction = "horizontal") {
-  if (is_present(labels)) {
+  if (!is_missing(labels)) {
     deprecate_soft(
       "0.2.0",
-      "buttonGroupInput(labels = )",
-      "buttonGroupInput(choices = )"
+      "yonder::buttonGroupInput(labels = )",
+      "yonder::buttonGroupInput(choices = )"
     )
 
     choices <- labels
