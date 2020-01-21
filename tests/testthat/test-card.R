@@ -20,8 +20,8 @@ test_that("can pass strings to card", {
   expect_silent(card("hello", "world"))
 
   this <- card("hello")
-  expect_true(is_tag(this$children[[2]]))
-  expect_true(tag_class_re(this$children[[2]], "card-body"))
+  expect_true(is_tag(this$children[[1]]))
+  expect_true(tag_class_re(this$children[[1]], "card-body"))
 })
 
 test_that("card paragraphs are wrapped in .card-body", {
