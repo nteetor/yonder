@@ -30,28 +30,137 @@ to align the dropdown menu to, defaults to \code{"left"}.}
 Dropdown menus are a container for buttons, text, and form inputs. See
 argument \code{...} for details on composing dropdown menus.
 }
-\examples{
+\details{
+\subsection{Getting started}{
 
-### Dropdown with buttons
+In some cases a \code{menuInput()} isn’t enough and you will want to build a
+more complex dropdown menu.
 
-dropdown(
+To recreate a menut input.
+}
+
+\subsection{Dropdown with buttons}{\if{html}{\out{<div class="r">}}\preformatted{dropdown(
   label = "Choices",
   buttonInput(id = "choice1", label = "Choice 1"),
   buttonInput(id = "choice2", label = "Choice 2"),
   buttonInput(id = "choice3", label = "Choice 3")
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="dropdown">
+}}
+\if{html}{\out{
+<button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+}}
 
-### Dropdown with links
 
-dropdown(
+Choices\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<div class="dropdown-menu">
+}}
+\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn dropdown-item" id="choice1" role="button" type="button">
+}}
+
+
+Choice 1\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn dropdown-item" id="choice2" role="button" type="button">
+}}
+
+
+Choice 2\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn dropdown-item" id="choice3" role="button" type="button">
+}}
+
+
+Choice 3\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
+
+\subsection{Dropdown with links}{\if{html}{\out{<div class="r">}}\preformatted{dropdown(
   label = "Choices",
   linkInput(id = "link1", label = "Choice 1"),
   linkInput(id = "link2", label = "Choice 2")
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="dropdown">
+}}
+\if{html}{\out{
+<button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+}}
 
-### Grouped sections
 
-dropdown(
+Choices\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<div class="dropdown-menu">
+}}
+\if{html}{\out{
+<button class="yonder-link btn btn-link dropdown-item" id="link1">
+}}
+
+
+Choice 1\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<button class="yonder-link btn btn-link dropdown-item" id="link2">
+}}
+
+
+Choice 2\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
+
+\subsection{Grouped sections}{\if{html}{\out{<div class="r">}}\preformatted{dropdown(
   label = "Sections",
   h6("Section 1"),
   buttonInput(id = "a", label = "Option A"),
@@ -61,19 +170,153 @@ dropdown(
   buttonInput(id = "c", label = "Option C"),
   buttonInput(id = "d", label = "Option D")
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="dropdown">
+}}
+\if{html}{\out{
+<button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+}}
 
-### Direction variations
 
-dropdown(
+Sections\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<div class="dropdown-menu">
+}}
+\if{html}{\out{
+<h6 class="dropdown-header">
+}}
+
+
+Section 1\if{html}{\out{
+</h6>
+}}
+\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn dropdown-item" id="a" role="button" type="button">
+}}
+
+
+Option A\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn dropdown-item" id="b" role="button" type="button">
+}}
+
+
+Option B\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<div class="dropdown-divider">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<h6 class="dropdown-header">
+}}
+
+
+Section 2\if{html}{\out{
+</h6>
+}}
+\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn dropdown-item" id="c" role="button" type="button">
+}}
+
+
+Option C\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn dropdown-item" id="d" role="button" type="button">
+}}
+
+
+Option D\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
+
+\subsection{Direction variations}{\if{html}{\out{<div class="r">}}\preformatted{dropdown(
   label = "Up!",
   direction = "up",
   buttonInput(id = "up1", label = "Choice 1"),
   buttonInput(id = "up2", label = "Choice 2")
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="dropdown dropup">
+}}
+\if{html}{\out{
+<button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+}}
 
-### Dropdowns with forms
 
-dropdown(
+Up!\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<div class="dropdown-menu">
+}}
+\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn dropdown-item" id="up1" role="button" type="button">
+}}
+
+
+Choice 1\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn dropdown-item" id="up2" role="button" type="button">
+}}
+
+
+Choice 2\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
+
+\subsection{Dropdowns with forms}{\if{html}{\out{<div class="r">}}\preformatted{dropdown(
   label = "Sign in",
   formInput(
     id = "login",
@@ -98,7 +341,112 @@ dropdown(
   ) \%>\%
     padding(3, 4, 3, 4)
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="dropdown">
+}}
+\if{html}{\out{
+<button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspop="true" aria-expanded="false">
+}}
 
+
+Sign in\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+<div class="dropdown-menu">
+}}
+\if{html}{\out{
+<form class="yonder-form p-3 pt-4 pr-3 pb-4" id="login">
+}}
+\if{html}{\out{
+<div class="form-group">
+}}
+
+
+\if{html}{\out{<label>}}Username / Email\if{html}{\out{</label>}}\if{html}{\out{
+<div id="user" class="yonder-textual">
+}}
+\if{html}{\out{
+<input class="form-control" type="email" autocomplete="off"/>
+}}
+\if{html}{\out{
+<div class="valid-feedback">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="invalid-feedback">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="form-group">
+}}
+
+
+\if{html}{\out{<label>}}Password\if{html}{\out{</label>}}\if{html}{\out{
+<div id="pass" class="yonder-textual">
+}}
+\if{html}{\out{
+<input class="form-control" type="password" autocomplete="off"/>
+}}
+\if{html}{\out{
+<div class="valid-feedback">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="invalid-feedback">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<button class="yonder-form-submit btn btn-blue" value="signin">
+}}
+
+
+Sign in\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</form>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
 }
 \seealso{
 Other components: 

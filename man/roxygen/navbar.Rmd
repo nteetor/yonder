@@ -1,0 +1,38 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Navbar with tabs
+
+```{r}
+div(
+  navbar(
+    brand = "Navbar",
+    navInput(
+      .style %>%
+        margin(right = "auto"),
+      id = NULL,
+      choices = c("Home", "About", "Our process")
+    ),
+    formInput(
+      inline = TRUE,
+      id = NULL,
+      textInput(
+        .style %>%
+          margin(right = c(sm = 2)),
+        type = "search",
+        id = NULL,
+        placeholder = "Search"
+      ),
+      formSubmit(
+        .style %>%
+          background("primary"),
+        label = "Search",
+        value = "search"
+      )
+    )
+  ),
+  container(
+    p(". . .")
+  )
+)
+```

@@ -1,0 +1,13 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Getting started
+
+```{r}
+radiobarInput(
+  .style %>%
+    background("secondary"),
+  id = NULL,
+  choices = c("Choice 1", "Choice 2", "Choice 3")
+)
+```

@@ -1,0 +1,44 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Getting started
+
+Use responsive arguments to adjust form layouts based on viewport size. Be sure
+to adjust the size of your browser window between large and small.
+
+```{r}
+card(
+  .style %>%
+    background("secondary") %>%
+    margin(3),
+  formRow(
+    formGroup(
+      width = c(md = 6),  # <-
+      label = "Username",
+      textInput(
+        id = "user"
+      )
+    ),
+    formGroup(
+      width = c(md = 6),  # <-
+      label = "Password",
+      textInput(
+        type = "password",
+        id = "pass"
+      )
+    )
+  ),
+  formGroup(
+    label = "Username",
+    groupTextInput(
+      id = "username",
+      left = "@"
+    )
+  ),
+  buttonInput(
+    .style %>% background("primary"),
+    id = "go",
+    label = "Go!"
+  )
+)
+```

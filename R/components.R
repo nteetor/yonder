@@ -6,26 +6,10 @@
 #' @param ... Any number of character strings or tag elements or named arguments
 #'   passed as HTML attributes to the parent element.
 #'
+#' @includeRmd man/roxygen/d.Rmd
+#'
 #' @family components
 #' @export
-#' @examples
-#'
-#' ### d1
-#'
-#' d1("Eye-catching!")
-#'
-#' ### d2
-#'
-#' d2("Just incredible")
-#'
-#' ### d3
-#'
-#' d3("Wowie, zowie")
-#'
-#' ### d4
-#'
-#' d4("You'll never guess what happens next.")
-#'
 d1 <- function(...) d(1, ...)
 
 #' @rdname d1

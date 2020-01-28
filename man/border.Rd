@@ -22,6 +22,68 @@ element, defaults to \code{NULL}, in which case the argument is ignored.}
 \description{
 Use \code{border()} to add or modify tag element borders.
 }
+\details{
+\subsection{Cards}{
+
+Card borders and font colors.\if{html}{\out{<div class="r">}}\preformatted{card(
+  .style \%>\% 
+    border("primary") \%>\% 
+    font("primary"),
+  header = "Primary",
+  p("Cras justo odio, dapibus ac facilisis in, egestas eget quam."),
+  p("Etiam porta sem malesuada magna mollis euismod.")
+)
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="card border border-primary text-primary">
+}}
+\if{html}{\out{
+<div class="card-header">
+}}
+
+
+Primary\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="card-body">
+}}
+\if{html}{\out{
+<p class="card-text">
+}}
+
+
+Cras justo odio, dapibus ac facilisis in, egestas eget quam.\if{html}{\out{
+</p>
+}}
+\if{html}{\out{
+<p class="card-text">
+}}
+
+
+Etiam porta sem malesuada magna mollis euismod.\if{html}{\out{
+</p>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
+}
 \seealso{
 Other design utilities: 
 \code{\link{active}()},

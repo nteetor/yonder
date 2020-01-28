@@ -1,12 +1,18 @@
 url: https://nteetor.github.io/yonder
 
+template:
+  params:
+    docsearch:
+      api_key: 0abd37bf7d49806c800983edd56409bf
+      index_name: yonder
+
 navbar:
-  left: []
-  right:
+  left:
   - text: Home
     href: index.html
   - text: Documentation
     href: reference/index.html
+  right:
   - icon: fa-github fa-lg
     href: https://github.com/nteetor/yonder
 

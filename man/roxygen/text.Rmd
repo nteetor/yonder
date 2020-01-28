@@ -1,0 +1,29 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Getting started
+
+```{r}
+textInput(
+  id = NULL,
+  placeholder = "Placeholder ..."
+)
+```
+
+```{r}
+numberInput(
+  id = NULL,
+  placeholder = "Number"
+)
+```
+
+### Specify `min`, `max`, and `step`
+
+```
+numberInput(
+  id = NULL,
+  min = 1,
+  max = 10,
+  step = 2
+)
+```

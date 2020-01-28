@@ -12,25 +12,10 @@
 #' @param fade One of `TRUE` or `FALSE` specifying if the alert fades out or
 #'   immediately disappears when dismissed, defaults to `TRUE`.
 #'
+#' @includeRmd man/roxygen/alert.Rmd
+#'
 #' @family components
 #' @export
-#' @examples
-#'
-#' ### Default alert
-#'
-#' alert("Donec at pede.") %>%
-#'   background("primary")
-#'
-#' ### A more complex alert
-#'
-#' alert(
-#'   .style %>%
-#'     background("warning"),
-#'   h4("Etiam vel tortor sodales"),
-#'   hr(),
-#'   p("Fusce commodo.")
-#' )
-#'
 alert <- function(..., dismissible = TRUE, fade = TRUE) {
   with_deps({
     tag <- tags$div(

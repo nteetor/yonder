@@ -17,52 +17,10 @@
 #'   the breakpoint at which the navbar collaspes, defaults to `NULL`, in which
 #'   case the navbar is always expanded.
 #'
+#' @includeRmd man/roxygen/navbar.Rmd
+#'
 #' @family layout functions
 #' @export
-#' @examples
-#'
-#' ### Navbar with tabs
-#'
-#' div(
-#'   navbar(
-#'     brand = "Navbar",
-#'     navInput(
-#'       id = "tabs",
-#'       choices = c("Home", "About", "Our process")
-#'     ) %>%
-#'       margin(right = "auto"),
-#'     formInput(
-#'       inline = TRUE,
-#'       id = "navForm",
-#'       textInput(
-#'         type = "search",
-#'         id = "site_search",
-#'         placeholder = "Search"
-#'       ) %>%
-#'         margin(right = c(sm = 2)),
-#'       formSubmit(
-#'         label = "Search",
-#'         value = "search"
-#'       ) %>%
-#'         background("warning")
-#'     )
-#'   ) %>%
-#'     background("info"),
-#'   container(
-#'     navContent(
-#'       navPane(
-#'         h3("Home")
-#'       ),
-#'       navPane(
-#'         h3("About")
-#'       ),
-#'       navPane(
-#'         h3("The process")
-#'       )
-#'     )
-#'   )
-#' )
-#'
 navbar <- function(..., brand = NULL, collapse = NULL) {
   assert_possible(collapse, c("sm", "md", "lg", "xl"))
 

@@ -6,24 +6,10 @@
 #'
 #' @eval param_color("background")
 #'
-#' @includeRmd man/roxygen/background-inputs.Rmd
+#' @includeRmd man/roxygen/background.Rmd
 #'
 #' @family design utilities
 #' @export
-#' @examples
-#'
-#' ### Modifying input elements
-#'
-#' checkbarInput(
-#'   .style %>% background("info"),
-#'   id = "bar1",
-#'   choices = c(
-#'     "Nunc rutrum turpis sed pede.",
-#'     "Etiam vel neque.",
-#'     "Lorem ipsum dolor sit amet."
-#'   )
-#' )
-#'
 background <- function(x, color) {
   assert_possible(color, theme_colors)
 

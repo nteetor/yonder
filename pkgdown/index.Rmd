@@ -6,6 +6,8 @@ output:
 ---
 
 ```{r, setup, include = FALSE}
+set.seed(3030)
+
 knitr::opts_chunk$set(
   eval = TRUE,
   results = "asis"
@@ -16,7 +18,7 @@ devtools::load_all("..")
 options(yonder.deps = FALSE)
 ```
 
-```{r}
+```{r, title}
 d3("yonder")
 ```
 
@@ -24,7 +26,7 @@ d3("yonder")
 A shiny framework.
 </p>
 
-```{r, echo = FALSE}
+```{r, description, echo = FALSE}
 p(
   class = "lead",
   "Build shiny applications with an all new set of",
@@ -43,7 +45,13 @@ p(
 
 ::: { .row }
 ::: { .col-md-6 .col-12 }
-```{r}
+New inputs let you build a variety of user interfaces. Develop the best ui for
+your users' needs. Whether you are building an application for personal use,
+internal use, or public use an intuitive ui helps guide users through your
+application.
+:::
+::: { .col-md-6 .col-12 }
+```{r, button-group}
 # button group input
 div(
   .style %>%
@@ -58,24 +66,17 @@ div(
 )
 ```
 :::
-
-::: { .col-md-6 .col-12 }
-New inputs let you build a variety of user interfaces. Develop the best ui for
-your users' needs. Whether you are building an application for personal use,
-internal use, or public use an intuitive ui helps guide users through your
-application.
-:::
 :::
 
 ::: { .row }
 ::: { .col-md-6 .col-12 }
 As shiny developers we are not only developing programs and scripts for a
 variety of users we are developing applications for many different devices.
+
 Yonder's inputs are ready for both mobile and web. Once you include
 :::
-
 ::: { .col-md-6 .col-12 }
-```{r}
+```{r, list-group}
 # list group input
 div(
   .style %>%
@@ -113,7 +114,6 @@ utilities to help prototype and produce the shiny apps you imagine.
 ::: { .col-4-md .col-12 }
 That control panel never has to sit on the left again.
 :::
-
 ::: { .col-8-md .col-12 }
 ```{r}
 div(
@@ -190,41 +190,12 @@ div(
 ::: { .col-md-4 .col-12 }
 Convey more.
 :::
-
-::: { .col-md-8 .col-12 .d-flex .flex-row .justify-content-around }
-```{r}
-checkboxInput(
-  .style %>% background("success"),
-  id = NULL,
-  choices = c("Choice 1", "Choice 2"),
-  selected = "Choice 1"
-)
-```
-
-```{r}
-checkboxInput(
-  .style %>% background("dark"),
-  id = NULL,
-  choices = c("Choice 1", "Choice 2"),
-  selected = "Choice 2"
-)
-```
-
-```{r}
-checkboxInput(
-  .style %>% background("danger"),
-  id = NULL,
-  choices = c("Choice 1", "Choice 2", "Choice 3"),
-  selected = "Choice 2"
-)
-```
-:::
 :::
 
 ::: { .row }
 ::: { .col-12 .d-flex .justify-content-center }
 
-::: { .display-4 }
+::: { .display-4 .my-3 }
 ... and much [more](reference/index.html)!
 :::
 

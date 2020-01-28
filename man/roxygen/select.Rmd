@@ -1,0 +1,23 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Getting started
+
+```{r}
+selectInput(
+  id = "select1",
+  choices = c("Choice 1", "Choice 2", "Choice 3"),
+  values = as.character(c(1, 2, 3))
+)
+```
+
+### Group select input
+
+```{r}
+groupSelectInput(
+  id = "select2",
+  choices = as.character(1:5),
+  left = "$",
+  right = ".00"
+)
+```

@@ -33,14 +33,12 @@ Form groups are a way of labeling an input. Form rows are similar to
 flexibility provided by form rows and groups means you can confidently
 develop shiny applications for devices and screens of varying sizes.
 }
-\examples{
+\details{
+\subsection{Getting started}{
 
-### Grid layout forms
-
-# Use responsive arguments to adjust form layouts based on viewport size.
-# Be sure to adjust the size of your browser window between large and small.
-
-card(
+Use responsive arguments to adjust form layouts based on viewport size.
+Be sure to adjust the size of your browser window between large and
+small.\if{html}{\out{<div class="r">}}\preformatted{card(
   .style \%>\%
     background("secondary") \%>\%
     margin(3),
@@ -69,11 +67,145 @@ card(
     )
   ),
   buttonInput(
+    .style \%>\% background("primary"),
     id = "go",
     label = "Go!"
-  ) \%>\%
-    background("primary")
+  )
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="card bg-secondary m-3">
+}}
+\if{html}{\out{
+<div class="card-body">
+}}
+\if{html}{\out{
+<div class="form-row">
+}}
+\if{html}{\out{
+<div class="form-group col-md-6">
+}}
 
+
+\if{html}{\out{<label>}}Username\if{html}{\out{</label>}}\if{html}{\out{
+<div id="user" class="yonder-textual">
+}}
+\if{html}{\out{
+<input class="form-control" type="text" autocomplete="off"/>
+}}
+\if{html}{\out{
+<div class="valid-feedback">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="invalid-feedback">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="form-group col-md-6">
+}}
+
+
+\if{html}{\out{<label>}}Password\if{html}{\out{</label>}}\if{html}{\out{
+<div id="pass" class="yonder-textual">
+}}
+\if{html}{\out{
+<input class="form-control" type="password" autocomplete="off"/>
+}}
+\if{html}{\out{
+<div class="valid-feedback">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="invalid-feedback">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="form-group">
+}}
+
+
+\if{html}{\out{<label>}}Username\if{html}{\out{</label>}}\if{html}{\out{
+<div id="username" class="yonder-group-text input-group">
+}}
+\if{html}{\out{
+<div class="input-group-prepend">
+}}
+
+
+\if{html}{\out{<span class="input-group-text">}}@\if{html}{\out{</span>}}\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<input type="text" class="form-control" autocomplete="off"/>
+}}
+\if{html}{\out{
+<div class="valid-feedback">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="invalid-feedback">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn btn-primary" id="go" role="button" type="button">
+}}
+
+
+Go!\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
 }
 \concept{layout}

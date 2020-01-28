@@ -23,24 +23,30 @@ passed as HTML attributes to the parent element.}
 Display headings are not meant to replace the standard HTML heading tags,
 they are a stand out alternative for eye-catching titles.
 }
-\examples{
+\details{
+\subsection{Getting started}{\if{html}{\out{<div class="r">}}\preformatted{d4("Display 4")
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<h1 class="display-4">
+}}
 
-### d1
 
-d1("Eye-catching!")
+Display 4\if{html}{\out{
+</h1>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
 
-### d2
-
-d2("Just incredible")
-
-### d3
-
-d3("Wowie, zowie")
-
-### d4
-
-d4("You'll never guess what happens next.")
-
+}
 }
 \seealso{
 Other components: 

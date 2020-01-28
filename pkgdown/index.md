@@ -19,6 +19,12 @@ to see these great new tools help build pieces of this page.
 <h2 id="inputs">Inputs</h2>
 <div class="row">
 <div class="col-md-6 col-12">
+<p>New inputs let you build a variety of user interfaces. Develop the best ui for
+your users’ needs. Whether you are building an application for personal use,
+internal use, or public use an intuitive ui helps guide users through your
+application.</p>
+</div>
+<div class="col-md-6 col-12">
 <div class="sourceCode" id="cb2"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb2-1"><a href="#cb2-1"></a><span class="co"># button group input</span></span>
 <span id="cb2-2"><a href="#cb2-2"></a><span class="kw">div</span>(</span>
 <span id="cb2-3"><a href="#cb2-3"></a>  .style <span class="op">%&gt;%</span></span>
@@ -47,18 +53,12 @@ Download
 </div>
 <!--/html_preserve-->
 </div>
-<div class="col-md-6 col-12">
-<p>New inputs let you build a variety of user interfaces. Develop the best ui for
-your users’ needs. Whether you are building an application for personal use,
-internal use, or public use an intuitive ui helps guide users through your
-application.</p>
-</div>
 </div>
 <div class="row">
 <div class="col-md-6 col-12">
 <p>As shiny developers we are not only developing programs and scripts for a
-variety of users we are developing applications for many different devices.
-Yonder’s inputs are ready for both mobile and web. Once you include</p>
+variety of users we are developing applications for many different devices.</p>
+<p>Yonder’s inputs are ready for both mobile and web. Once you include</p>
 </div>
 <div class="col-md-6 col-12">
 <div class="sourceCode" id="cb3"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb3-1"><a href="#cb3-1"></a><span class="co"># list group input</span></span>
@@ -172,8 +172,6 @@ Option 3
 </div>
 </div>
 </div>
-</div>
-<div class="card-body">
 <button autocomplete="off" class="yonder-button btn btn-primary" role="button" type="button">
 Run
 </button>
@@ -269,88 +267,10 @@ Update
 <div class="col-md-4 col-12">
 <p>Convey more.</p>
 </div>
-<div class="col-md-8 col-12 d-flex flex-row justify-content-around">
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1"></a><span class="kw">checkboxInput</span>(</span>
-<span id="cb6-2"><a href="#cb6-2"></a>  .style <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">background</span>(<span class="st">&quot;success&quot;</span>),</span>
-<span id="cb6-3"><a href="#cb6-3"></a>  <span class="dt">id =</span> <span class="ot">NULL</span>,</span>
-<span id="cb6-4"><a href="#cb6-4"></a>  <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;Choice 1&quot;</span>, <span class="st">&quot;Choice 2&quot;</span>),</span>
-<span id="cb6-5"><a href="#cb6-5"></a>  <span class="dt">selected =</span> <span class="st">&quot;Choice 1&quot;</span></span>
-<span id="cb6-6"><a href="#cb6-6"></a>)</span></code></pre></div>
-<!--html_preserve-->
-<div class="yonder-checkbox custom-control-group-success">
-<div class="custom-control custom-checkbox">
-<p><input class="custom-control-input" type="checkbox" id="checkbox-787-920" name="checkbox-787-920" value="Choice 1" checked autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-787-920">Choice 1</label></p>
-</div>
-<div class="custom-control custom-checkbox">
-<input class="custom-control-input" type="checkbox" id="checkbox-277-30" name="checkbox-277-30" value="Choice 2" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-277-30">Choice 2</label>
-<div class="valid-feedback">
-
-</div>
-<div class="invalid-feedback">
-
-</div>
-</div>
-</div>
-<!--/html_preserve-->
-<div class="sourceCode" id="cb7"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1"></a><span class="kw">checkboxInput</span>(</span>
-<span id="cb7-2"><a href="#cb7-2"></a>  .style <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">background</span>(<span class="st">&quot;dark&quot;</span>),</span>
-<span id="cb7-3"><a href="#cb7-3"></a>  <span class="dt">id =</span> <span class="ot">NULL</span>,</span>
-<span id="cb7-4"><a href="#cb7-4"></a>  <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;Choice 1&quot;</span>, <span class="st">&quot;Choice 2&quot;</span>),</span>
-<span id="cb7-5"><a href="#cb7-5"></a>  <span class="dt">selected =</span> <span class="st">&quot;Choice 2&quot;</span></span>
-<span id="cb7-6"><a href="#cb7-6"></a>)</span></code></pre></div>
-<!--html_preserve-->
-<div class="yonder-checkbox custom-control-group-dark">
-<div class="custom-control custom-checkbox">
-<p><input class="custom-control-input" type="checkbox" id="checkbox-834-612" name="checkbox-834-612" value="Choice 1" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-834-612">Choice 1</label></p>
-</div>
-<div class="custom-control custom-checkbox">
-<input class="custom-control-input" type="checkbox" id="checkbox-239-336" name="checkbox-239-336" value="Choice 2" checked autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-239-336">Choice 2</label>
-<div class="valid-feedback">
-
-</div>
-<div class="invalid-feedback">
-
-</div>
-</div>
-</div>
-<!--/html_preserve-->
-<div class="sourceCode" id="cb8"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb8-1"><a href="#cb8-1"></a><span class="kw">checkboxInput</span>(</span>
-<span id="cb8-2"><a href="#cb8-2"></a>  .style <span class="op">%&gt;%</span><span class="st"> </span><span class="kw">background</span>(<span class="st">&quot;danger&quot;</span>),</span>
-<span id="cb8-3"><a href="#cb8-3"></a>  <span class="dt">id =</span> <span class="ot">NULL</span>,</span>
-<span id="cb8-4"><a href="#cb8-4"></a>  <span class="dt">choices =</span> <span class="kw">c</span>(<span class="st">&quot;Choice 1&quot;</span>, <span class="st">&quot;Choice 2&quot;</span>, <span class="st">&quot;Choice 3&quot;</span>),</span>
-<span id="cb8-5"><a href="#cb8-5"></a>  <span class="dt">selected =</span> <span class="st">&quot;Choice 2&quot;</span></span>
-<span id="cb8-6"><a href="#cb8-6"></a>)</span></code></pre></div>
-<!--html_preserve-->
-<div class="yonder-checkbox custom-control-group-danger">
-<div class="custom-control custom-checkbox">
-<p><input class="custom-control-input" type="checkbox" id="checkbox-869-58" name="checkbox-869-58" value="Choice 1" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-869-58">Choice 1</label></p>
-</div>
-<div class="custom-control custom-checkbox">
-<p><input class="custom-control-input" type="checkbox" id="checkbox-221-441" name="checkbox-221-441" value="Choice 2" checked autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-221-441">Choice 2</label></p>
-</div>
-<div class="custom-control custom-checkbox">
-<input class="custom-control-input" type="checkbox" id="checkbox-844-188" name="checkbox-844-188" value="Choice 3" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-844-188">Choice 3</label>
-<div class="valid-feedback">
-
-</div>
-<div class="invalid-feedback">
-
-</div>
-</div>
-</div>
-<!--/html_preserve-->
-</div>
 </div>
 <div class="row">
 <div class="col-12 d-flex justify-content-center">
-<div class="display-4">
+<div class="display-4 my-3">
 <p>… and much <a href="reference/index.html">more</a>!</p>
 </div>
 </div>

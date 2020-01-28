@@ -1,8 +1,0 @@
-pandoc: 2.9.1
-pkgdown: 1.4.1.3030
-pkgdown_sha: ~
-articles: {}
-urls:
-  reference: https://nteetor.github.io/yonder/reference
-  article: https://nteetor.github.io/yonder/articles
-
