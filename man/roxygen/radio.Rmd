@@ -1,0 +1,25 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Getting started
+
+```{r}
+radioInput(
+  id = NULL,
+  choices = c("Choice 1", "Choice 2", "Choice 3")
+)
+```
+
+### Inline input
+
+```{r}
+radioInput(
+  id = NULL,
+  choices = c(
+    "Choice 1",
+    "Choice 2",
+    "Choice 3"
+  ),
+  inline = TRUE  # <-
+)
+```

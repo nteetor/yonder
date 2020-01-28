@@ -34,66 +34,10 @@
 #'
 #' @inheritParams collapsePane
 #'
-#' @section Example application:
-#'
-#' ```R
-#' ui <- container(
-#'   buttonInput(
-#'     id = "open",
-#'     "Open modal",
-#'     icon("plus")
-#'   )
-#' )
-#'
-#' server <- function(input, output) {
-#'   modal1 <- modal(
-#'     title = "A simple modal",
-#'     p(
-#'       "Cras mattis consectetur purus sit amet fermentum.",
-#'       "Cras justo odio, dapibus ac facilisis in, egestas",
-#'       "eget quam. Morbi leo risus, porta ac consectetur",
-#'       "ac, vestibulum at eros."
-#'     )
-#'   )
-#'
-#'   observeEvent(input$open, ignoreInit = TRUE, {
-#'     showModal(modal1)
-#'   })
-#' }
-#'
-#' shinyApp(ui, server)
-#' ```
+#' @includeRmd man/roxygen/modal.Rmd
 #'
 #' @family components
 #' @export
-#' @examples
-#'
-#' ### Simple modal
-#'
-#' modal(
-#'   id = "simple",
-#'   header = h5("Title"),
-#'   p("Cras placerat accumsan nulla.")
-#' )
-#'
-#' ### Modal with container body
-#'
-#' modal(
-#'   id = "more_complex",
-#'   size = "lg",
-#'   header = h5("More complex"),
-#'   container(
-#'     columns(
-#'       column("Cras placerat accumsan nulla."),
-#'       column("Curabitur lacinia pulvinar nibh."),
-#'       column(
-#'         "Aliquam posuere.",
-#'         "Praesent fermentum tempor tellus."
-#'       )
-#'     )
-#'   )
-#' )
-#'
 modal <- function(id, ..., header = NULL, footer = NULL, center = FALSE,
                   size = "md", fade = TRUE) {
   assert_id()

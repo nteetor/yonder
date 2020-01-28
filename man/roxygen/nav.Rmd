@@ -1,0 +1,72 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Nav styled as tabs
+
+```{r}
+navInput(
+  id = "tabs1",
+  choices = c(
+    "Tab 1",
+    "Tab 2",
+    "Tab 3"
+  ),
+  selected = "Tab 1",
+  appearance = "tabs"
+)
+```
+
+### Nav styled as pills
+
+```{r}
+navInput(
+  id = "tabs2",
+  choices = paste("Tab", 1:3),
+  selected = "Tab 1",
+  appearance = "pills"
+)
+```
+
+### Nav with dropdown
+
+```{r}
+navInput(
+  id = "tabs3",
+  choices = list(
+    "Tab 1",
+    menuInput(
+      id = "menu1",
+      label = "Tab 2",
+      choices = c(
+        "Action",
+        "Another action"
+      )
+    ),
+    "Tab 2"
+  ),
+  values = c("tab1", "tab2", "tab3")
+)
+```
+
+### Full width nav input
+
+```{r}
+navInput(
+  id = "tabs4",
+  choices = paste("Tab", 1:5),
+  values = paste0("tab", 1:5),
+  appearance = "pills",
+  fill = TRUE
+)
+```
+
+### Centering a nav input
+
+```{r}
+navInput(
+  .style %>%
+    flex(justify = "center"),
+  id = NULL,
+  choices = c("Tab 1", "Tab 2", "Tab 3")
+)
+```

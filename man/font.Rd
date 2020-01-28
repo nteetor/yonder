@@ -36,26 +36,130 @@ a tag element's text. All arguments default to \code{NULL}, in which case they a
 ignored.  For example, \code{font(.., size = "lg")} increases font size without
 affecting color, weight, case, or alignment.
 }
-\examples{
+\details{
+\subsection{Getting started}{
+}
 
-### Changing text color
-
-card(
+\subsection{Changing text color}{\if{html}{\out{<div class="r">}}\preformatted{card(
   .style \%>\%
     font("primary") \%>\%
     border("primary"),
-  header = h3("Important!"),
-  p("This is a reminder.")
+  header = h3("Header"),
+  p("Nullam tristique diam non turpis.",
+    "Pellentesque dapibus suscipit ligula.",
+    "Nullam eu ante vel est convallis dignissim."),
+  p("Aliquam posuere.")
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="card text-primary border border-primary">
+}}
+\if{html}{\out{
+<div class="card-header">
+}}
+\if{html}{\out{
+<h3>
+}}
 
-### Changing font weight
 
-p("Curabitur lacinia pulvinar nibh.") \%>\%
-  font(weight = "bold")
+Header\if{html}{\out{
+</h3>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="card-body">
+}}
+\if{html}{\out{
+<p class="card-text">
+}}
 
-p("Proin quam nisl, tincidunt et.") \%>\%
-  font(weight = "light")
 
+Nullam tristique diam non turpis. Pellentesque dapibus suscipit ligula.
+Nullam eu ante vel est convallis dignissim.\if{html}{\out{
+</p>
+}}
+\if{html}{\out{
+<p class="card-text">
+}}
+
+
+Aliquam posuere.\if{html}{\out{
+</p>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
+
+\subsection{Changing font weight}{\if{html}{\out{<div class="r">}}\preformatted{p(
+  .style \%>\%
+    font(weight = "bold"),
+  "Curabitur lacinia pulvinar nibh."
+)
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<p class="font-weight-bold">
+}}
+
+
+Curabitur lacinia pulvinar nibh.\if{html}{\out{
+</p>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+\if{html}{\out{<div class="r">}}\preformatted{p(
+  .style \%>\%
+    font(weight = "light"),
+  "Proin quam nisl, tincidunt et."
+)
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<p class="font-weight-light">
+}}
+
+
+Proin quam nisl, tincidunt et.\if{html}{\out{
+</p>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
 }
 \seealso{
 Other design utilities: 

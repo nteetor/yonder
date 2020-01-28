@@ -14,6 +14,8 @@
 #'   `"circle"`, `"all"`, or `"none"` specifying how to round the border(s) of a
 #'   tag element, defaults to `NULL`, in which case the argument is ignored.
 #'
+#' @includeRmd man/roxygen/border.Rmd
+#'
 #' @family design utilities
 #' @export
 border <- function(tag, color = NULL, sides = "all", round = NULL) {

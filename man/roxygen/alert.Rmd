@@ -1,0 +1,76 @@
+```{r, child = "_setup.Rmd"}
+```
+
+## Dismissible alerts
+
+With `dismissible = TRUE` you can allow the user to remove an alert. By default,
+alerts are dismissible, well suited for one-time messages or warnings.
+
+```{r}
+alert(
+  .style %>%
+    background("primary"),
+  "I'm around till you say goodbye"
+)
+```
+
+## Static alerts
+
+If you do want to keep an alert or control an alert with `renderUI()` you can
+then use `dismissible = FALSE`.
+
+```{r}
+alert(
+  .style %>%
+    background("warning"),
+  dismissible = FALSE,  # <-
+  "I'm calling attention to something, forever."
+)
+```
+
+## Contextual content
+
+Alerts include a few contextual variations. Links and headings are both styled
+differently inside an alert.
+
+```{r}
+alert(
+  .style %>%
+    background("success"),
+  h5("Success!"),
+  "Your results can be found",
+  a(href = "#", "here")
+)
+```
+
+If you want to avoid these automatic styles you can use `tags$a`, `tags$h1`,
+`tags$h2`, etc.
+
+```{r}
+alert(
+  .style %>%
+    background("light") %>%
+    border("dark"),
+  tags$h6("Default heading"),
+  h6("Alert heading"),
+  hr(),
+  tags$a(href = "#", "Default link"),
+  a(href = "#", "Alert link")
+)
+```
+
+Like the `a()` tag elements, yonder's `linkInput()`s also receive contextual
+styling.
+
+```{r}
+alert(
+  .style %>%
+    background("danger"),
+  h5("Problem"),
+  hr(),
+  linkInput(
+    id = "rerun",
+    label = "Click to run again"
+  )
+)
+```

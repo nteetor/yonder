@@ -9,39 +9,10 @@
 #' @param size One of `"none"`, `"small"`, `"medium"`, or `"large"` specifying
 #'   the amount of shadow added, defaults to `"medium"`.
 #'
+#' @includeRmd man/roxygen/shadow.Rmd
+#'
 #' @family design utilities
 #' @export
-#' @examples
-#'
-#' ### Styling a navbar
-#'
-#' div(
-#'   navbar(brand = "Navbar") %>%
-#'     background("dark") %>%
-#'     font("light") %>%
-#'     margin(bottom = 3),
-#'   p(
-#'     "Cras mattis consectetur purus sit amet fermentum. Donec sed ",
-#'     "odio dui. Lorem ipsum dolor sit amet, consectetur adipiscing ",
-#'     "elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam ",
-#'     "venenatis vestibulum."
-#'   )
-#' )
-#'
-#' ### Different shadows
-#'
-#' div(
-#'   buttonInput(id = "b1", label = "Small") %>%
-#'     margin(2) %>%
-#'     shadow("small"),
-#'   buttonInput(id = "b2", label = "Medium") %>%
-#'     margin(2) %>%
-#'     shadow("medium"),
-#'   buttonInput(id = "b3", label = "Large") %>%
-#'     margin(2) %>%
-#'     shadow("large")
-#' )
-#'
 shadow <- function(x, size = "medium") {
   assert_possible(size, c("none", "small", "medium", "large"))
 

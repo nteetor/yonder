@@ -15,42 +15,112 @@ Small highlighted content which scales to its parent's size. A badge may
 be dynamically updated with \code{\link[=replaceContent]{replaceContent()}}, in which case be sure to
 pass an \code{id} argument as part of \code{...}.
 }
-\section{Example application}{
-\preformatted{ui <- container(
-  buttonInput(
-    id = "clicker",
-    label = list(
-      "Clicks",
-      badge(id = "counter") \%>\%
-        margin(left = 2) \%>\%
-        background("info")
-    )
-  )
-)
+\details{
+\subsection{Combining badges}{
 
-server <- function(input, output) \{
-  observe(\{
-    clicks <- if (is.null(input$clicker)) 0 else input$clicker
-    replaceContent("counter", clicks)
-  \})
-\}
-
-shinyApp(ui, server)
-}
-}
-
-\examples{
-
-### Button & badge
-
-buttonInput(
+Badges may be combined with other elements. They can be placed inside
+buttons.\if{html}{\out{<div class="r">}}\preformatted{buttonInput(
   .style \%>\%
     background("primary"),
-  id = "counter",
-  label = "Count",
-  badge(3) \%>\% background("light")
+  id = NULL,
+  label = "Counter",
+  badge(2) \%>\% background("light")
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn btn-primary" role="button" type="button">
+}}
 
+
+Counter \if{html}{\out{<span class="badge badge-light">}}2\if{html}{\out{</span>}}\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+
+You can also pair badges with list groups.\if{html}{\out{<div class="r">}}\preformatted{listGroupItem <- function(...) \{
+  div(...) \%>\%
+    width(100) \%>\%
+    display("flex") \%>\%
+    flex(justify = "between", align = "center")
+\}
+
+listGroupInput(
+  .style \%>\%
+    width(50) \%>\%
+    background("secondary"),
+  id = NULL,
+  choices = list(
+    listGroupItem("Mail", badge(tags$i(class = "fas fa-envelope fa-lg"))),
+    listGroupItem("Research", badge(tags$i(class = "fas fa-vial fa-lg")))
+  )
+)
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="yonder-list-group list-group w-50 list-group-secondary">
+}}
+
+
+\if{html}{\out{<button class="list-group-item list-group-item-action" value="&lt;div class=&quot;w-100 d-flex justify-content-between align-items-center&quot;&gt;
+Mail
+&lt;span class=&quot;badge&quot;&gt;
+&lt;i class=&quot;fas fa-envelope fa-lg&quot;&gt;&lt;/i&gt;
+&lt;/span&gt;
+&lt;/div&gt;">}}\if{html}{\out{
+<div class="w-100 d-flex justify-content-between align-items-center">
+}}
+
+
+Mail \if{html}{\out{<span class="badge">}} \if{html}{\out{<i class="fas fa-envelope fa-lg">}}\if{html}{\out{</i>}} \if{html}{\out{</span>}}\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</button>
+}}
+
+
+\if{html}{\out{<button class="list-group-item list-group-item-action" value="&lt;div class=&quot;w-100 d-flex justify-content-between align-items-center&quot;&gt;
+Research
+&lt;span class=&quot;badge&quot;&gt;
+&lt;i class=&quot;fas fa-vial fa-lg&quot;&gt;&lt;/i&gt;
+&lt;/span&gt;
+&lt;/div&gt;">}}\if{html}{\out{
+<div class="w-100 d-flex justify-content-between align-items-center">
+}}
+
+
+Research \if{html}{\out{<span class="badge">}} \if{html}{\out{<i class="fas fa-vial fa-lg">}}\if{html}{\out{</i>}} \if{html}{\out{</span>}}\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
 }
 \seealso{
 Other components: 

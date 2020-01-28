@@ -32,11 +32,8 @@ column automatically to its content use \code{width = "content"}. To divide the
 space in a row evenly amongst all columns use \code{width = "equal"}. For examples
 and usage tips see the sections below.
 }
-\examples{
-
-### Equal width columns
-
-container(
+\details{
+\subsection{Equal width columns}{\if{html}{\out{<div class="r">}}\preformatted{container(
   columns(
     column(
       "Aliquam erat volutpat."
@@ -50,85 +47,338 @@ container(
     )
   )
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="container-fluid">
+}}
+\if{html}{\out{
+<div class="row">
+}}
+\if{html}{\out{
+<div class="col">
+}}
 
-###  Shiny's panel with sidebar layout
 
-container(
+Aliquam erat volutpat.\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="col">
+}}
+
+
+Mauris mollis tincidunt felis.\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="col">
+}}
+
+
+Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
+ridiculus mus.\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
+
+\subsection{Sidebar layout}{\if{html}{\out{<div class="r">}}\preformatted{container(
   columns(
     column(
-      width = 4,
+      width = 4,  # <-
       card(
-        title = "Sidebar",
-        formGroup(
-          label = "Control 1",
-          selectInput("control1", "...")
-        ),
-        formGroup(
-          label = "Control 2",
-          selectInput("control2", "...")
-        ),
-        formGroup(
-          label = "Control 3",
-          selectInput("control3", "...")
-        )
+        h5("Sidebar panel")
       )
     ),
     column(
-      d4("Main panel")
+      h5("Main panel")
     )
   )
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="container-fluid">
+}}
+\if{html}{\out{
+<div class="row">
+}}
+\if{html}{\out{
+<div class="col-4">
+}}
+\if{html}{\out{
+<div class="card">
+}}
+\if{html}{\out{
+<div class="card-body">
+}}
+\if{html}{\out{
+<h5 class="card-title">
+}}
 
-### Mobile friendly grids
 
-# Use `column()`s [responsive] `width` argument to make mobile friendly
-# applications.
+Sidebar panel\if{html}{\out{
+</h5>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="col">
+}}
+\if{html}{\out{
+<h5>
+}}
 
-container(
+
+Main panel\if{html}{\out{
+</h5>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
+
+\subsection{Mobile friendly}{
+
+Use the \link{responsive} \code{width} argument to make mobile
+friendly applications. On extra small screens each column spans the
+entire width of the row. On larger screens the columns will instead
+split the row width evenly.\if{html}{\out{<div class="r">}}\preformatted{container(
   columns(
     column(
-      width = c(sm = 4),
+      width = c(xs = 12, sm = 4),
       "Mauris ac felis vel velit tristique imperdiet."
     ),
     column(
-      width = c(sm = 4),
+      width = c(xs = 12, sm = 4),
       "Nam vestibulum accumsan nisl."
     ),
     column(
-      width = c(sm = 4),
+      width = c(xs = 12, sm = 4),
       "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
     )
   )
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="container-fluid">
+}}
+\if{html}{\out{
+<div class="row">
+}}
+\if{html}{\out{
+<div class="col-12 col-sm-4">
+}}
 
-# or
 
-container(
+Mauris ac felis vel velit tristique imperdiet.\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="col-12 col-sm-4">
+}}
+
+
+Nam vestibulum accumsan nisl.\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="col-12 col-sm-4">
+}}
+
+
+Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
+
+\subsection{Automatic column sizing}{
+
+Columns may be fit to the width of their content. Other columns in this
+example will split the remaining space equally.\if{html}{\out{<div class="r">}}\preformatted{container(
   columns(
     column(
-      width = c(sm = 4),
-      "Aenean in sem ac leo mollis blandit."
+      .style \%>\%
+        background("warning")
     ),
     column(
-      width = c(sm = 8),
-      "Nulla posuere. In id erat non orci commodo lobortis."
+      width = "content",
+      "Cras placerat accumsan nulla. Aenean in sem ac leo mollis blandit.",
+      "Nam euismod tellus id erat.",
+      "Donec neque quam, dignissim in, mollis nec, sagittis eu, wisi."
+    ),
+    column(
+      .style \%>\%
+        background("warning")
     )
   )
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="container-fluid">
+}}
+\if{html}{\out{
+<div class="row">
+}}
+\if{html}{\out{
+<div class="bg-warning col">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="col-auto">
+}}
 
-### Fit columns to their content
 
-container(
+Cras placerat accumsan nulla. Aenean in sem ac leo mollis blandit. Nam
+euismod tellus id erat. Donec neque quam, dignissim in, mollis nec,
+sagittis eu, wisi.\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="bg-warning col">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+
+Without specficiying widths the space in a row is evenly split between
+columns.\if{html}{\out{<div class="r">}}\preformatted{container(
   columns(
     column(),
-    column(
-      width = "content",
-      "Cras placerat accumsan nulla. Aenean in sem ac leo mollis blandit."
-    ),
+    column(),
+    column(),
     column()
   )
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="container-fluid">
+}}
+\if{html}{\out{
+<div class="row">
+}}
+\if{html}{\out{
+<div class="col">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="col">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="col">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="col">
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
 
+}
 }
 \seealso{
 Other layout functions: 

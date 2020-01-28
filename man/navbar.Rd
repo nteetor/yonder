@@ -25,50 +25,136 @@ text. Navbars are responsive and will collapse on small screens, think mobile
 device. A button is automatically added to toggle between the collapsed and
 expanded states.
 }
-\examples{
-
-### Navbar with tabs
-
-div(
+\details{
+\subsection{Navbar with tabs}{\if{html}{\out{<div class="r">}}\preformatted{div(
   navbar(
     brand = "Navbar",
     navInput(
-      id = "tabs",
+      .style \%>\%
+        margin(right = "auto"),
+      id = NULL,
       choices = c("Home", "About", "Our process")
-    ) \%>\%
-      margin(right = "auto"),
+    ),
     formInput(
       inline = TRUE,
-      id = "navForm",
+      id = NULL,
       textInput(
+        .style \%>\%
+          margin(right = c(sm = 2)),
         type = "search",
-        id = "site_search",
+        id = NULL,
         placeholder = "Search"
-      ) \%>\%
-        margin(right = c(sm = 2)),
+      ),
       formSubmit(
+        .style \%>\%
+          background("primary"),
         label = "Search",
         value = "search"
-      ) \%>\%
-        background("warning")
-    )
-  ) \%>\%
-    background("info"),
-  container(
-    navContent(
-      navPane(
-        h3("Home")
-      ),
-      navPane(
-        h3("About")
-      ),
-      navPane(
-        h3("The process")
       )
     )
+  ),
+  container(
+    p(". . .")
   )
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div>
+}}
+\if{html}{\out{
+<nav class="navbar navbar-expand navbar-light">
+}}
 
+
+\if{html}{\out{<a class="navbar-brand" href="#">}}Navbar\if{html}{\out{</a>}}
+\if{html}{\out{<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-433-345" aria-controls="nav-content-433-345" aria-expanded="false" aria-label="Toggle navigation">}}
+\if{html}{\out{<span class="navbar-toggler-icon">}}\if{html}{\out{</span>}} \if{html}{\out{</button>}}\if{html}{\out{
+<div id="nav-content-433-345" class="collapse navbar-collapse">
+}}
+\if{html}{\out{
+<ul class="yonder-nav nav navbar-nav mr-auto">
+}}
+\if{html}{\out{
+<li class="nav-item">
+}}
+\if{html}{\out{
+<button class="nav-link btn btn-link active" value="Home">
+}}
+
+
+Home\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</li>
+}}
+\if{html}{\out{
+<li class="nav-item">
+}}
+\if{html}{\out{
+<button class="nav-link btn btn-link" value="About">
+}}
+
+
+About\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</li>
+}}
+\if{html}{\out{
+<li class="nav-item">
+}}
+\if{html}{\out{
+<button class="nav-link btn btn-link" value="Our process">
+}}
+
+
+Our process\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</li>
+}}
+\if{html}{\out{
+</ul>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</nav>
+}}
+\if{html}{\out{
+<div class="container-fluid">
+}}
+\if{html}{\out{
+<p>
+}}
+
+
+. . .\if{html}{\out{
+</p>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
 }
 \seealso{
 Other layout functions: 

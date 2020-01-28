@@ -28,28 +28,10 @@
 #'   or `"justify"`, specifying the alignment of the tag element's text,
 #'   defaults to `NULL`.
 #'
+#' @includeRmd man/roxygen/font.Rmd
+#'
 #' @family design utilities
 #' @export
-#' @examples
-#'
-#' ### Changing text color
-#'
-#' card(
-#'   .style %>%
-#'     font("primary") %>%
-#'     border("primary"),
-#'   header = h3("Important!"),
-#'   p("This is a reminder.")
-#' )
-#'
-#' ### Changing font weight
-#'
-#' p("Curabitur lacinia pulvinar nibh.") %>%
-#'   font(weight = "bold")
-#'
-#' p("Proin quam nisl, tincidunt et.") %>%
-#'   font(weight = "light")
-#'
 font <- function(x, color = NULL, size = NULL, weight = NULL, case = NULL,
                  align = NULL) {
   if (!is.null(size)) {

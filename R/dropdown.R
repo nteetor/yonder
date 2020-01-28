@@ -22,77 +22,10 @@
 #' @param align One of `"left"` or `"right"` specifying which side of the button
 #'   to align the dropdown menu to, defaults to `"left"`.
 #'
+#' @includeRmd man/roxygen/dropdown.Rmd
+#'
 #' @family components
 #' @export
-#' @examples
-#'
-#' ### Dropdown with buttons
-#'
-#' dropdown(
-#'   label = "Choices",
-#'   buttonInput(id = "choice1", label = "Choice 1"),
-#'   buttonInput(id = "choice2", label = "Choice 2"),
-#'   buttonInput(id = "choice3", label = "Choice 3")
-#' )
-#'
-#' ### Dropdown with links
-#'
-#' dropdown(
-#'   label = "Choices",
-#'   linkInput(id = "link1", label = "Choice 1"),
-#'   linkInput(id = "link2", label = "Choice 2")
-#' )
-#'
-#' ### Grouped sections
-#'
-#' dropdown(
-#'   label = "Sections",
-#'   h6("Section 1"),
-#'   buttonInput(id = "a", label = "Option A"),
-#'   buttonInput(id = "b", label = "Option B"),
-#'   hr(),
-#'   h6("Section 2"),
-#'   buttonInput(id = "c", label = "Option C"),
-#'   buttonInput(id = "d", label = "Option D")
-#' )
-#'
-#' ### Direction variations
-#'
-#' dropdown(
-#'   label = "Up!",
-#'   direction = "up",
-#'   buttonInput(id = "up1", label = "Choice 1"),
-#'   buttonInput(id = "up2", label = "Choice 2")
-#' )
-#'
-#' ### Dropdowns with forms
-#'
-#' dropdown(
-#'   label = "Sign in",
-#'   formInput(
-#'     id = "login",
-#'     formGroup(
-#'       label = "Username / Email",
-#'       textInput(
-#'         type = "email",
-#'         id = "user"
-#'       )
-#'     ),
-#'     formGroup(
-#'       label = "Password",
-#'       textInput(
-#'         type = "password",
-#'         id = "pass"
-#'       )
-#'     ),
-#'     formSubmit(
-#'       label = "Sign in",
-#'       value = "signin"
-#'     )
-#'   ) %>%
-#'     padding(3, 4, 3, 4)
-#' )
-#'
 dropdown <- function(label, ..., direction = "down", align = "left") {
   assert_found(label)
   assert_possible(direction, c("up", "right", "down", "left"))

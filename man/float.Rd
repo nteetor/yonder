@@ -17,17 +17,18 @@ Use \code{float()} to float an element to the left or right side of its parent
 element. A newspaper layout is a classic example where an image is floated
 with text wrapped around.
 }
-\examples{
-
-### Float an alert
-
-div(
+\details{
+\subsection{Getting started}{\if{html}{\out{<div class="r">}}\preformatted{div(
   .style \%>\%
     padding(2),
-  alert("This just in!") \%>\%
-    margin(3) \%>\%
-    background("warning") \%>\%
-    float("left"),
+  alert(
+    .style \%>\%
+      margin(3) \%>\%
+      background("warning") \%>\%
+      float("left"),  # <-
+    dismissible = FALSE,
+    "This just in!"
+  ),
   p("Fusce commodo. Nullam tempus. Nunc rutrum turpis sed pede.",
     "Phasellus lacus.  Cras placerat accumsan nulla.",
     "Fusce sagittis, libero non molestie mollis, ",
@@ -41,7 +42,72 @@ div(
     "tortor mauris condimentum nibh, ut fermentum massa justo sit",
     "amet risus.")
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div class="p-2">
+}}
+\if{html}{\out{
+<div class="alert m-3 alert-warning float-left" role="alert">
+}}
 
+
+This just in!\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<p>
+}}
+
+
+Fusce commodo. Nullam tempus. Nunc rutrum turpis sed pede. Phasellus
+lacus. Cras placerat accumsan nulla. Fusce sagittis, libero non molestie
+mollis, magna orci ultrices dolor, at vulputate neque nulla lacinia
+eros.\if{html}{\out{
+</p>
+}}
+\if{html}{\out{
+<p>
+}}
+
+
+Nulla facilisis, risus a rhoncus fermentum, tellus tellus lacinia purus,
+et dictum nunc justo sit amet elit.\if{html}{\out{
+</p>
+}}
+\if{html}{\out{
+<p>
+}}
+
+
+Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus. Aliquam
+posuere. Sed id ligula quis est convallis tempor.\if{html}{\out{
+</p>
+}}
+\if{html}{\out{
+<p>
+}}
+
+
+Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh,
+ut fermentum massa justo sit amet risus.\if{html}{\out{
+</p>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
 }
 \seealso{
 Other design utilities: 

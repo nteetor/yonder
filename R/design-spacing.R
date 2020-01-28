@@ -11,6 +11,8 @@
 #'   `"auto"` specifying padding for one or more sides of the tag element. 0
 #'   removes all inner space and 5 adds the most space.
 #'
+#' @includeRmd man/roxygen/margin.Rmd
+#'
 #' @family design utilities
 #' @export
 padding <- function(x, all = NULL, top = NULL, right = NULL, bottom = NULL,
@@ -119,81 +121,10 @@ padding_all <- function(all) {
 #'   removes all outer space, 5 adds the most space, and negative values will
 #'   consume space pulling the element in that direction.
 #'
+#' @includeRmd man/roxygen/margin.Rmd
+#'
 #' @family design utilities
 #' @export
-#' @examples
-#'
-#' ### Centering an element
-#'
-#' # In most modern browsers you want to horizontally center a tag element using
-#' # the flex layout. Alternatively, you can horizontally center an element
-#' # using `margin(.., right = "auto", left = "auto")`.
-#'
-#' div(
-#'   "Nam a sapien. Integer placerat tristique nisl.",
-#'   style = "height: 100px; width: 200px;"
-#' ) %>%
-#'   margin(top = 2, r = "auto", b = 2, l = "auto") %>%  # <-
-#'   padding(3) %>%
-#'   background("info")
-#'
-#' ### Building an inline form
-#'
-#' # Inline form elements automatically use the flex layout providing you a
-#' # means of creating condensed sets of inputs. However, you may need to adjust
-#' # the spacing of the form's child elements.
-#'
-#' # Here is an inline form without any additional spacing applied.
-#'
-#' formInput(
-#'   id = "form1",
-#'   inline = TRUE,
-#'   textInput(
-#'     id = "name",
-#'     placeholder = "Full name"
-#'   ),
-#'   groupTextInput(
-#'     id = "username",
-#'     left = "@@",
-#'     placeholder = "Username"
-#'   ),
-#'   checkboxInput(
-#'     id = "remember",
-#'     choice = "Remember me"
-#'   ),
-#'   formSubmit("Login", "login")
-#' )
-#'
-#' # Without any adjustments the layout is not great. But, with some styling we
-#' # can make this form sparkle. Notice we are also adjusting the default submit
-#' # button added to the form input.
-#'
-#' formInput(
-#'   id = "form2",
-#'   inline = TRUE,
-#'   textInput(
-#'     id = "name",
-#'     placeholder = "Full name"
-#'   ) %>%
-#'     margin(r = c(sm = 2), b = 2),  # <-
-#'   groupTextInput(
-#'     id = "username",
-#'     left = "@@",
-#'     placeholder = "Username"
-#'   ) %>%
-#'     margin(r = c(sm = 2), b = 2),  # <-
-#'   checkboxInput(
-#'     id = "remember",
-#'     choice = "Remember me"
-#'   ) %>%
-#'     margin(r = c(sm = 2), b = 2),  # <-
-#'   formSubmit(
-#'     label = "Login",
-#'     value = "login"
-#'   ) %>%
-#'     margin(b = 2)  # <-
-#' )
-#'
 margin <- function(x, all = NULL, top = NULL, right = NULL, bottom = NULL,
                    left = NULL) {
   UseMethod("margin", x)

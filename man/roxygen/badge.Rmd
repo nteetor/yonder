@@ -1,0 +1,39 @@
+```{r, child = "_setup.Rmd", include = FALSE}
+```
+
+## Combining badges
+
+Badges may be combined with other elements. They can be placed inside
+buttons.
+
+```{r}
+buttonInput(
+  .style %>%
+    background("primary"),
+  id = NULL,
+  label = "Counter",
+  badge(2) %>% background("light")
+)
+```
+
+You can also pair badges with list groups.
+
+```{r}
+listGroupItem <- function(...) {
+  div(...) %>%
+    width(100) %>%
+    display("flex") %>%
+    flex(justify = "between", align = "center")
+}
+
+listGroupInput(
+  .style %>%
+    width(50) %>%
+    background("secondary"),
+  id = NULL,
+  choices = list(
+    listGroupItem("Mail", badge(tags$i(class = "fas fa-envelope fa-lg"))),
+    listGroupItem("Research", badge(tags$i(class = "fas fa-vial fa-lg")))
+  )
+)
+```

@@ -34,6 +34,10 @@ assert_id <- function() {
 assert_label <- function() {
   var <- env_get(caller_env(), "label")
 
+  if (is_missing(var)) {
+    abort_assertion("argument `label` is required")
+  }
+
   if (!(is_null(var) || is_tag(var) || is_bare_list(var) || is_scalar_character(var))) {
     abort_assertion(
       c("argument `label` must be one of",

@@ -11,22 +11,6 @@
 #'
 #' @family layout functions
 #' @export
-#' @examples
-#'
-#' webpage(
-#'   p("Pretty simple")
-#' )
-#'
-#' webpage(
-#'   nav = navbar(),
-#'   container(
-#'     columns(
-#'       column(),
-#'       column()
-#'     )
-#'   )
-#' )
-#'
 webpage <- function(..., nav = NULL) {
   dep_attach({
     args <- list(...)

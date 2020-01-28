@@ -1,0 +1,45 @@
+```{r, child = "_setup.Rmd"}
+```
+
+## Layout options
+
+Button groups can be laid in two directions, horizontal or vertical.
+
+```{r}
+buttonGroupInput(
+  .style %>%
+    background("primary"),
+  id = NULL,
+  choices = c("Grape", "Raspberry", "Kiwi")
+)
+```
+
+Vertical button groups can help fill available space.
+
+```{r}
+buttonGroupInput(
+  .style %>%
+    background("primary"),
+  id = NULL,
+  choices = c("Cherry", "Apple", "Pear")
+)
+```
+
+```{r}
+buttonGroupInput(
+  id = "group1",
+  choices = c("Once", "Twice", "Thrice"),
+  values = c(1, 2, 3)
+)
+```
+
+## Styling the button group
+
+```{r}
+buttonGroupInput(
+  .style %>%
+    background("primary"),
+  id = "group2",
+  choices = c("Button 1", "Button 2", "Button 3")
+)
+```

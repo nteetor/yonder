@@ -1,0 +1,58 @@
+```{r, child = "_setup.Rmd"}
+```
+
+## Getting started
+
+Checkbars will expand to fill the width of their parent element.
+
+```{r}
+checkbarInput(
+  .style %>%
+    background("secondary"),
+  id = NULL,
+  choices = c("Choice 1", "Choice 2", "Choice 3")
+)
+```
+
+If you want to adjust the width you can use the `width()` utility.
+
+```{r}
+checkbarInput(
+  .style %>%
+    background("secondary") %>%
+    width(50),  # <-
+  id = NULL,
+  choices = c("Choice 1", "Choice 2", "Choice 3")
+)
+```
+
+## Background color
+
+Like other inputs, checkbar inputs apply modified background styles
+
+```{r}
+checkbarInput(
+  .style %>%
+    background("info"),
+  id = NULL,
+  choices = c("Choice 1", "Choice 2")
+)
+```
+
+## Labelling
+
+Use a `formGroup()` to add a label or help text to checkbar input.
+
+```{r}
+formGroup(
+  label = "Label",  # <-
+  checkbarInput(
+    .style %>%
+      border("dark") %>%
+      font("light"),
+    id = NULL,
+    choices = c("Choice 1", "Choice 2")
+  ),
+  help = "Help text about the input"
+)
+```
