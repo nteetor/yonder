@@ -3,6 +3,8 @@
 
 ## Getting started
 
+The font utility is used to change text colors, font weights, and more.
+
 ## Changing text color
 
 ```{r}
