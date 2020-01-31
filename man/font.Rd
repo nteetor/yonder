@@ -38,6 +38,8 @@ affecting color, weight, case, or alignment.
 }
 \details{
 \subsection{Getting started}{
+
+The font utility is used to change text colors, font weights, and more.
 }
 
 \subsection{Changing text color}{\if{html}{\out{<div class="r">}}\preformatted{card(

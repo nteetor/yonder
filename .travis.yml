@@ -1,13 +1,14 @@
 # R for travis: see documentation at https://docs.travis-ci.com/user/languages/r
 
-language: R
-sudo: false
+language: r
 cache: packages
+latex: false
 
 r_github_packages:
   - r-lib/callr@v3.3.2
 
-jobs:
+matrix:
+  fast_finish: true
   include:
     - r: 3.2
     - r: oldrel
@@ -22,9 +23,6 @@ jobs:
           branch: master
     - r: devel
     - os: osx
-
-matrix:
-  fast_finish: true
 
 notifications:
   email:

@@ -1,7 +1,9 @@
 context("design utilities")
 
-test_that("font() `size` argument valid values", {
-  expect_warning(font(div(), size = "lg"), "deprecated")
+test_that("font() `size` is deprecated", {
+  rlang::with_options(lifecycle_verbosity = "warning", {
+    expect_warning(font(div(), size = "lg"), "deprecated")
+  })
 })
 
 test_that("background color uses correct base class", {
