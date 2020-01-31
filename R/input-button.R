@@ -39,81 +39,15 @@
 #'
 #' @details
 #'
-#' **Tooltips**
+#' ### Tooltips
 #'
 #' To remove a button or link input's tooltip pass an empty tooltip,
 #' `tooltip()`, to `updateButtonInput()` or `updateLinkInput()`.
 #'
+#' @includeRmd man/roxygen/button.Rmd
+#'
 #' @family inputs
 #' @export
-#' @examples
-#'
-#' ### A plain button
-#'
-#' buttonInput(
-#'   id = "button1",
-#'   label = "Simple"
-#' )
-#'
-#' ### Add a little color
-#'
-#' buttonInput(
-#'   .style %>%
-#'     background("primary"),
-#'   id = "button2",
-#'   label = "Blue"
-#' )
-#'
-#' # Alternatively, a button can fill the width of its parent element.
-#'
-#' buttonInput(
-#'   .style %>%
-#'     background("danger"),
-#'   id = "button3",
-#'   label = "Full-width",
-#'   fill = TRUE  # <-
-#' )
-#'
-#' # Use design utilities to further adjust the width of a button.
-#'
-#' buttonInput(
-#'   .style %>%
-#'     background("danger") %>%
-#'     width(75),  # <-
-#'   id = "button4",
-#'   label = "Full and back again",
-#'   fill = TRUE  # <-
-#' )
-#'
-#' ### Reactive links
-#'
-#' div("Curabitur", linkInput(id = "link1", label = "vulputate"),
-#'     "vestibulum lorem.")
-#'
-#' ### Stretched buttons and links
-#'
-#' card(
-#'   header = "Card with stretched button",
-#'   p("Notice when you hover over the card, the button also detects ",
-#'     "the hover."),
-#'   buttonInput(
-#'     .style %>%
-#'       background("primary"),
-#'     id = "go",
-#'     label = "Go go go",
-#'     stretch = TRUE
-#'   )
-#' )
-#'
-#' ### Download button
-#'
-#' buttonInput(
-#'   download = TRUE,
-#'   id = "download1",
-#'   label = "Download",
-#'   icon("download")
-#' )
-#'
 buttonInput <- function(..., id, label, stretch = FALSE, download = FALSE,
                         tooltip = NULL) {
   assert_id()

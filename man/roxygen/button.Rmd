@@ -21,19 +21,7 @@ buttonInput(
 )
 ```
 
-Alternatively, a button can fill the width of its parent element.
-
-```{r}
-buttonInput(
-  .style %>%
-    background("danger"),
-  id = NULL,
-  label = "Longer label",
-  fill = TRUE  # <-
-)
-```
-
-Use design utilities to further adjust the width of a button.
+Use the `width()` utility to adjust the size of a button.
 
 ```{r}
 buttonInput(
@@ -41,12 +29,11 @@ buttonInput(
     background("danger") %>%
     width(75),  # <-
   id = NULL,
-  label = "Label",
-  fill = TRUE  # <-
+  label = "Label"
 )
 ```
 
-## Reactive links
+### Reactive links
 
 ```{r}
 div(
@@ -55,9 +42,7 @@ div(
 )
 ```
 
-## Stretched buttons and links
-
-### Stretched buttons
+### Stretched buttons and links
 
 Use a stretched button to make an entire card clickable.
 
@@ -100,7 +85,9 @@ card(
 )
 ```
 
-## Download button
+### Download button
+
+Pair a download button input with `shiny::downloadHandler()`.
 
 ```{r}
 buttonInput(

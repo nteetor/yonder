@@ -139,42 +139,12 @@ Label\if{html}{\out{
 }}
 
 
-Alternatively, a button can fill the width of its parent element.\if{html}{\out{<div class="r">}}\preformatted{buttonInput(
-  .style \%>\%
-    background("danger"),
-  id = NULL,
-  label = "Longer label",
-  fill = TRUE  # <-
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<button autocomplete="off" class="yonder-button btn btn-danger" fill="TRUE" role="button" type="button">
-}}
-
-
-Longer label\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-
-
-Use design utilities to further adjust the width of a button.\if{html}{\out{<div class="r">}}\preformatted{buttonInput(
+Use the \code{width()} utility to adjust the size of a button.\if{html}{\out{<div class="r">}}\preformatted{buttonInput(
   .style \%>\%
     background("danger") \%>\%
     width(75),  # <-
   id = NULL,
-  label = "Label",
-  fill = TRUE  # <-
+  label = "Label"
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
 <!--html_preserve-->
@@ -183,7 +153,7 @@ Use design utilities to further adjust the width of a button.\if{html}{\out{<div
 <div class="r-output">
 }}
 \if{html}{\out{
-<button autocomplete="off" class="yonder-button btn btn-danger w-75" fill="TRUE" role="button" type="button">
+<button autocomplete="off" class="yonder-button btn btn-danger w-75" role="button" type="button">
 }}
 
 
@@ -229,7 +199,6 @@ vestibulum lorem.\if{html}{\out{
 }
 
 \subsection{Stretched buttons and links}{
-\subsection{Stretched buttons}{
 
 Use a stretched button to make an entire card clickable.\if{html}{\out{<div class="r">}}\preformatted{card(
   .style \%>\%
@@ -377,9 +346,9 @@ Label\if{html}{\out{
 
 }
 
-}
+\subsection{Download button}{
 
-\subsection{Download button}{\if{html}{\out{<div class="r">}}\preformatted{buttonInput(
+Pair a download button input with \code{shiny::downloadHandler()}.\if{html}{\out{<div class="r">}}\preformatted{buttonInput(
   download = TRUE,  # <-
   id = NULL,
   label = "Download",
