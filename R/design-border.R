@@ -18,7 +18,7 @@
 #'
 #' @family design utilities
 #' @export
-border <- function(tag, color = NULL, sides = "all", round = NULL) {
+border <- function(x, color = NULL, sides = "all", round = NULL) {
   assert_possible(color, theme_colors)
   assert_possible(
     sides,
@@ -35,7 +35,7 @@ border <- function(tag, color = NULL, sides = "all", round = NULL) {
 #' @export
 border.rlang_box_splice <- function(x, color = NULL, sides = "all",
                                     round = NULL) {
-  NextMethod("border", unbox(x))
+  border(unbox(x), color, sides, round)
 }
 
 #' @export
@@ -56,31 +56,33 @@ border.default <- function(x, color = NULL, sides = "all", round = NULL) {
   ))
 }
 
+border_color <- function(color) {
+  sprintf("border-%s", color)
+}
+
 border_sides <- function(sides) {
   if (is.null(sides)) {
     return(NULL)
   }
 
   if ("all" %in% sides) {
-    tag <- tag_class_add(tag, "border")
+    "border"
   } else if ("none" %in% sides) {
-    tag <- tag_class_add(tag, "border-0")
+    "border-0"
   } else {
-    tag <- tag_class_add(tag, sprintf("border-%s", sides))
+    sprintf("border-%s", sides)
+  }
+}
+
+border_round <- function(round) {
+  if (is.null(round)) {
+    return(NULL)
   }
 
-  if (!is.null(color)) {
-    tag <- tag_class_add(tag, sprintf("border-%s", color))
-  }
+  round <- sprintf("rounded-%s", round)
 
-  if (!is.null(round)) {
-    round <- sprintf("rounded-%s", round)
+  round[round == "rounded-none"] <- "rounded-0"
+  round[round == "rounded-all"] <- "rounded"
 
-    round[round == "rounded-none"] <- "rounded-0"
-    round[round == "rounded-all"] <- "rounded"
-
-    tag <- tag_class_add(tag, round)
-  }
-
-  tag
+  round
 }

@@ -4,7 +4,7 @@ Title: A Reactive Web Framework Built on 'shiny'
 Version: 0.2.0.9000
 Authors@R: c(
     person("Nathan", "Teetor", email = "nathanteetor@gmail.com",
-           role = c("aut", "cre"),
+           role = c("aut", "cre")),
     person(family = "The Bootstrap Authors", comment = "Bootstrap library",
            role = "cph"),
     person(family = "Twitter, Inc", comment = "Bootstrap library",

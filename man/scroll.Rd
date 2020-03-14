@@ -11,7 +11,7 @@ scroll(x, direction = "vertical")
 
 \item{direction}{One of \code{"horizontal"} or \code{"vertical"} specifying which
 direction to scroll overflowing content, defaults to \code{"vertical"}, in which
-case the content may croll up and down.}
+case the content may scroll up and down.}
 }
 \description{
 Many of the applications you build despite a complex layout will still fit
