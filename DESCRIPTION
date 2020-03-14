@@ -1,25 +1,23 @@
 Package: yonder
 Type: Package
 Title: A Reactive Web Framework Built on 'shiny'
-Version: 0.3.0
+Version: 0.2.0.9000
 Authors@R: c(
-    person("Nathan", "Teetor", role = c("aut", "cre"),
-      email = "nathanteetor@gmail.com"),
-    person(family = "The Bootstrap Authors", role = "cph",
-      comment = "Bootstrap library"),
-    person(family = "Twitter, Inc", role = "cph",
-      comment = "Bootstrap library"),
-    person(family = "JS Foundation", role = "cph",
-      comment = "jQuery library"),
-    person("Federico", "Zivolo", role = c("ctb", "cph"),
-      comment = "popper.js library"),
-    person("Johann", "Servoire", role = c("ctb", "cph"),
-      comment = "bs-custom-file-input library")
+    person("Nathan", "Teetor", email = "nathanteetor@gmail.com",
+           role = c("aut", "cre"),
+    person(family = "The Bootstrap Authors", comment = "Bootstrap library",
+           role = "cph"),
+    person(family = "Twitter, Inc", comment = "Bootstrap library",
+           role = "cph"),
+    person(family = "JS Foundation", comment = "jQuery library",
+           role = "cph"),
+    person("Federico", "Zivolo", comment = "popper.js library",
+           role = c("ctb", "cph")),
+    person("Johann", "Servoire", comment = "bs-custom-file-input library",
+           role = c("ctb", "cph"))
     )
-Description: Build 'shiny' applications with the latest Bootstrap components
-    and design utilities. Includes refreshed reactive inputs and outputs.
-    Use responsive layouts to design and construct applications for devices
-    of all sizes.
+Description: Build 'shiny' applications with a brand new set of components and
+    reactive inputs.
 License: GPL-3
 URL: https://nteetor.github.io/yonder
 BugReports: https://github.com/nteetor/yonder/issues
@@ -32,13 +30,13 @@ Depends:
     shiny (>= 1.4.0)
 Imports:
     htmltools (>= 0.4.0),
+    lifecycle,
     magrittr,
     rlang,
-    lifecycle,
     utils
 Suggests:
-    testthat (>= 2.1.0),
     knitr,
+    testthat (>= 2.1.0),
     rmarkdown
 VignetteBuilder: knitr
 Collate:
