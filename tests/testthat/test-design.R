@@ -1,17 +1,19 @@
 context("design utilities")
 
-test_that("size argument valid values", {
-  expect_error(font(div(), size = "BIG"))
+test_that("font() `size` is deprecated", {
+  rlang::with_options(lifecycle_verbosity = "warning", {
+    expect_warning(font(div(), size = "lg"), "deprecated")
+  })
 })
 
 test_that("background color uses correct base class", {
-  button <- background(buttonInput("ID", "LABEL"), "red")
-  expect_false(tag_class_re(button, "bg-red"))
-  expect_true(tag_class_re(button, "btn-red"))
+  button <- buttonInput(id = "ID", label = "LABEL") %>%
+    background("danger")
+  expect_false(tag_class_re(button, "bg-danger"))
+  expect_true(tag_class_re(button, "btn-danger"))
 
-  group <- background(buttonGroupInput("ID", c("1", "2")), "blue")
-  expect_false(tag_class_re(group, "bg-blue"))
-  expect_false(tag_class_re(group, "btn-blue"))
-  expect_true(tag_class_re(group$children[[1]][[1]], "btn-blue"))
-  expect_true(tag_class_re(group$children[[1]][[2]], "btn-blue"))
+  group <- buttonGroupInput(id = "ID", choices = c("1", "2")) %>%
+    background("primary")
+  expect_false(tag_class_re(group, "bg-primary"))
+  expect_true(tag_class_re(group, "btn-group-primary"))
 })

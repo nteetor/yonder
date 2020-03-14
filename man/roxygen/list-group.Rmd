@@ -1,0 +1,39 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Getting started
+
+Action lists.
+
+```{r}
+listGroupInput(
+  id = "list1",
+  choices = paste("Item", 1:5)
+)
+```
+
+### Combining lists with other elements
+
+```{r}
+card(
+  header = h6("Card header"),
+  listGroupInput(
+    id = NULL,
+    flush = TRUE,
+    choices = c(
+      "Item 1", "Item 2", "Item 3",
+      "Item 4", "Item 5"
+    )
+  )
+)
+```
+
+### Horizontal list groups
+
+```{r}
+listGroupInput(
+  layout = "horizontal",
+  id = NULL,
+  choices = c("Item 1", "Item 2", "Item 3")
+)
+```

@@ -17,29 +17,10 @@ top of the page, defaults to \code{NULL}.}
 Begin creating a user interface. The \code{webpage()} function properly lays out a
 navigation bar and main section of elements.
 }
-\examples{
-
-webpage(
-  p("Pretty simple")
-)
-
-webpage(
-  nav = navbar(),
-  container(
-    columns(
-      column(),
-      column()
-    )
-  )
-)
-
-}
 \seealso{
 Other layout functions: 
 \code{\link{column}()},
 \code{\link{fieldset}()},
-\code{\link{flex}()},
-\code{\link{navbar}()},
-\code{\link{responsive}}
+\code{\link{navbar}()}
 }
 \concept{layout functions}

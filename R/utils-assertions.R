@@ -1,238 +1,198 @@
-get_caller <- function(gen = 1) {
-  paste0(sys.call(sys.parent() - gen)[[1]], "()")
-}
+arg_scalar_character <- "non-empty character string"
+arg_vector_character <- "character vector"
+arg_tag_element <- "tag element (e.g. `div()`, `tags$span()`)"
+arg_list <- "list"
+arg_in_values <- "value from `values`"
+arg_null <- "`NULL`"
+arg_addon <- c("`buttonInput()`", "list of `buttonInput()`s", "`dropdown()`")
+arg_counting_number <- "integer greater than zero"
 
-get_variable <- function(x) {
-  g_env <- parent.frame(2)
-
-  if (is.symbol(g_env[[x]]) && !nzchar(g_env[[x]])) {
-    stop(
-      "invalid argument in `", get_caller(2), "`, please specify `", x, "`",
-      call. = FALSE
-    )
-  }
-
-  g_env[[x]]
+abort_assertion <- function(...) {
+  abort(..., trace = trace_back(bottom = 3))
 }
 
 assert_id <- function() {
-  id <- get_variable("id")
-  fun <- get_caller()
+  var <- env_get(caller_env(), "id")
 
-  if (!is.null(id) && !is.character(id)) {
-    stop(
-      "invalid argument in `", fun, "`, `id` must be a character string ",
-      "or NULL",
-      call. = FALSE
-    )
+  if (is_missing(var)) {
+    abort_assertion("argument `id` is required")
   }
 
-  if (length(id) > 1) {
-    stop(
-      "invalid argument in `", fun, "`, `id` must be a single character string",
-      call. = FALSE
-    )
+  if (is_null(var)) {
+    return()
   }
 
-  if (!is.null(id) && (isTRUE(is.na(id)) || isTRUE(id == ""))) {
-    stop(
-      "invalid argument in `", fun, "`, `id` must be a non-zero length ",
-      "character string",
-      call. = FALSE
+  if (is_chr_na(var) || is_string(var, "") || !is_scalar_character(var)) {
+    abort_assertion(
+      c("argument `id` must be one of",
+        arg_scalar_character,
+        arg_null)
     )
   }
 }
 
 assert_label <- function() {
-  label <- get_variable("label")
-  fun <- get_caller()
+  var <- env_get(caller_env(), "label")
 
-  if (!(is.null(label) || is_tag(label) ||
-        is_strictly_list(label) || is.atomic(label))) {
-    stop(
-      "invalid argument in `", fun, "`, `label` must be a tag element, ",
-      "character string, list, or NULL",
-      call. = FALSE
+  if (is_missing(var)) {
+    abort_assertion("argument `label` is required")
+  }
+
+  if (!(is_null(var) || is_tag(var) || is_bare_list(var) || is_scalar_character(var))) {
+    abort_assertion(
+      c("argument `label` must be one of",
+        arg_scalar_character,
+        arg_tag_element,
+        arg_list,
+        arg_null)
     )
   }
 }
 
-assert_choices <- function(strict = TRUE) {
-  choices <- get_variable("choices")
-  values <- get_variable("values")
-  fun <- get_caller()
+assert_choices <- function() {
+  var <- env_get(caller_env(), "choices")
 
-  if (strict) {
-    pass <- length(choices) == length(values)
-  } else {
-    pass <- is.null(choices) || is.null(values) ||
-      length(choices) == length(values)
+  if (!(is_null(var) || is_character(var) || is_bare_list(var))) {
+    abort_assertion(
+      c("argument `choices` must be one of",
+        arg_scalar_character,
+        arg_vector_character,
+        arg_list,
+        arg_null)
+    )
   }
 
-  if (!pass) {
-    addendum <- if (is_tag(choices)) {
-      "if `choices` is a single tag element be sure to wrap the value in list()"
-    }
+  val <- env_get(caller_env(), "values")
 
-    stop(
-      "invalid arguments in `", fun, "`, `choices` and `values` must be the ",
-      "same length", addendum,
-      call. = FALSE
-    )
+  if (length(var) != length(val)) {
+    abort_assertion("arguments `choices` and `values` must be the same length")
   }
 }
 
-assert_labels <- function(strict = TRUE) {
-  labels <- get_variable("labels")
-  values <- get_variable("values")
-  fun <- get_caller()
+assert_selected <- function(len) {
+  var <- env_get(caller_env(), "selected")
 
-  if (strict) {
-    pass <- length(labels) == length(values)
-  } else {
-    pass <- is.null(labels) || is.null(values) ||
-      length(labels) == length(values)
+  if (is_null(var)) {
+    return()
   }
 
-  if (!pass) {
-    addendum <- if (is_tag(labels)) {
-      "if `labels` is a single tag element be sure to wrap the value in list()"
-    }
-
-    stop(
-      "invalid arguments in `", fun, "`, `labels` and `values` must be the ",
-      "same length", addendum,
-      call. = FALSE
-    )
+  if (length(var) > len) {
+    abort_assertion("argument `selected` has too many values")
   }
-}
 
-assert_selected <- function(length) {
-  selected <- get_variable("selected")
-  fun <- get_caller()
-
-  if (!is.null(selected) && length(selected) != length) {
-    stop(
-      "invalid argument in `", fun, "`, `selected` must be NULL or a ",
-      "single value",
-      call. = FALSE
-    )
+  if (length(var) < len) {
+    abort_assertion("argument `selected` has too few values")
   }
-}
 
-assert_possible <- function(x, possible) {
-  if (!is.null(x) && !all(x %in% possible)) {
-    arg <- as.character(match.call()[[2]])
-    fun <- get_caller()
+  val <- env_get(caller_env(), "values")
 
-    if (is.character(possible)) {
-      possible <- paste0('"', possible, '"')
-    }
-
-    if (length(possible) == 1) {
-      items <- possible
-    } else if (length(possible) == 2) {
-      items <- paste(possible[1], "or", possible[2])
-    } else {
-      items <- paste0(
-        paste(utils::head(possible, -1), collapse = ", "),
-        ", or ",
-        utils::tail(possible, 1)
-      )
-    }
-
-    stop(
-      "invalid argument in `", fun, "`, `", arg, "` must be one ",
-      "of ", items,
-      call. = FALSE
-    )
-  }
-}
-
-assert_found <- function(x) {
-  if (missing(x)) {
-    arg <- as.character(match.call()[[2]])
-    fun <- get_caller()
-
-    stop(
-      "invalid argument in `", fun, "`, please specify `", arg, "`",
-      call. = FALSE
+  if (!(var %in% val)) {
+    abort_assertion(
+      c("argument `selected` must be one of",
+        arg_in_values,
+        arg_null)
     )
   }
 }
 
 assert_session <- function() {
-  session <- get_variable("session")
-  fun <- get_caller()
+  var <- env_get(caller_env(), "session")
 
-  if (is.null(session)) {
-    stop(
-      "invalid argument in `", fun, "`, `session` is NULL, but expected a ",
-      "reactive context",
-      call. = FALSE
-    )
-  }
-}
-
-assert_tag <- function() {
-  tag <- get_variable("tag")
-  fun <- get_caller()
-
-  if (!is_tag(tag)) {
-    stop(
-      "invalid argument in `", fun, "`, `tag` must be shiny.tag element",
-      call. = FALSE
-    )
+  if (is_null(var)) {
+    abort_assertion("`session` must be a reactive context")
   }
 }
 
 assert_left <- function() {
-  left <- get_variable("left")
-  fun <- get_caller()
+  var <- env_get(caller_env(), "left")
 
-  if (!is.null(left) && !is_addon(left)) {
-    stop(
-      "invalid argument in `", fun, "`, `left` must be a character string, ",
-      "buttonInput(), dropdown(), or NULL",
-      call. = FALSE
+  if (is_null(var)) {
+    return()
+  }
+
+  if (!is_addon(var)) {
+    abort_assertion(
+      c("argument `left` must be one of",
+        arg_scalar_character,
+        arg_vector_character,
+        arg_addon,
+        arg_null)
     )
   }
 }
 
 assert_right <- function() {
-  right <- get_variable("right")
-  fun <- get_caller()
+  var <- env_get(caller_env(), "right")
 
-  if (!is.null(right) && !is_addon(right)) {
-    stop(
-      "invalid argument in `", fun, "`, `right` must be a character string, ",
-      "buttonInput(), dropdown(), or NULL",
-      call. = FALSE
+  if (is_null(var)) {
+    return()
+  }
+
+  if (!is_addon(var)) {
+    abort_assertion(
+      c("argument `right` must be one of",
+        arg_scalar_character,
+        arg_vector_character,
+        arg_addon,
+        arg_null)
     )
   }
 }
 
 is_addon <- function(x) {
-  if (is_strictly_list(x)) {
+  if (is_bare_list(x)) {
     all(vapply(x, tag_name_is, logical(1), name = "button"))
   } else {
-    is.character(x) ||
-      tag_name_is(x, "button") ||
-      tag_class_re(x, "dropdown")
+    is_character(x) ||
+      inherits_all(x, c("yonder_button", "yonder_input")) ||
+      inherits_all(x, c("yonder_dropdown"))
   }
 }
 
-assert_duration <- function(x) {
-  duration <- get_variable("duration")
-  fun <- get_caller()
+assert_duration <- function() {
+  var <- env_get(caller_env(), "duration")
 
-  if (!is.null(duration)) {
-    if (!is.numeric(duration) || duration <= 0) {
-      stop(
-        "invalid argument in `", fun, "`, `duration` must be a positive ",
-        "integer or NULL",
-        call. = FALSE
+  if (is_null(var)) {
+    return()
+  }
+
+  if (!is_scalar_integerish(var) || var <= 0) {
+    abort_assertion(
+      c("argument `duration` must be one of",
+        arg_counting_number,
+        arg_null
       )
+    )
+  }
+}
+
+assert_possible <- function(var, possible) {
+  var_q <- enquo(var)
+  var_v <- eval_tidy(var_q)
+
+  if (is_null(var_v)) {
+    return()
+  }
+
+  if (!all(var_v %in% possible)) {
+    if (is_character(possible)) {
+      possible <- paste0('"', possible, '"')
     }
+
+    abort_assertion(
+      c(sprintf("argument `%s` must be one of", as_label(var_q)),
+        possible)
+    )
+  }
+}
+
+assert_found <- function(var) {
+  var_q <- enquo(var)
+
+  var_nm <- as_label(var_q)
+  var_env <- quo_get_env(var_q)
+
+  if (is_missing(env_get(var_env, var_nm))) {
+    abort_assertion(sprintf("argument `%s` is required", var_nm))
   }
 }

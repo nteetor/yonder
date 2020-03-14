@@ -1,0 +1,48 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Getting started
+
+```{r}
+modal(
+  id = "modal1",
+  header = h5("Header"),
+  p("Cras placerat accumsan nulla.")
+)
+```
+
+```{r, echo = FALSE}
+tags$button(
+  `data-toggle` = "modal",
+  `data-target` = "#modal1",
+  "Open modal"
+)
+```
+
+### Modals with containers
+
+```{r}
+modal(
+  id = "modal2",
+  size = "lg",
+  header = h5("More complex"),
+  container(
+    columns(
+      column("Cras placerat accumsan nulla."),
+      column("Curabitur lacinia pulvinar nibh."),
+      column(
+        "Aliquam posuere.",
+        "Praesent fermentum tempor tellus."
+      )
+    )
+  )
+)
+```
+
+```{r, echo = FALSE}
+tags$button(
+  `data-toggle` = "modal",
+  `data-target` = "#modal2",
+  "Open modal"
+)
+```

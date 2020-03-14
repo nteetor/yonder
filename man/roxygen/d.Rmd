@@ -1,0 +1,8 @@
+```{r, child = "_setup.Rmd"}
+```
+
+## Getting started
+
+```{r}
+d4("Display 4")
+```

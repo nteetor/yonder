@@ -1,0 +1,55 @@
+```{r, child = "_setup.Rmd", include = FALSE}
+```
+
+## Input backgrounds
+
+Input backgrounds will change differently according to the particular input.
+Changing the background of a `buttonGroupInput()` will change the background
+colors of the buttons in the group.
+
+```{r}
+buttonGroupInput(
+  .style %>%
+    background("info") %>%  # <-
+    display("flex"),
+  id = "flavors",
+  choices = c("Mint", "Strawberry", "Swirl"),
+  values = c("mint", "strawberry", "swirl")
+)
+```
+
+Changing the background of an input is different than changing a tag
+element. More is done under the hood to apply the correct background
+styles. For example, changing the background of a radio or checkbox input
+changes the color of the selected choices.
+
+```{r}
+radioInput(
+  .style %>%
+    background("warning"),
+  id = "drinks",
+  choices = c("Limemade", "Lemonade", "Orangeade"),
+  values = c("lime", "lemon", "orange"),
+  selected = "lime"
+)
+```
+
+If you needed to change the entire background of an input, you can wrap the input
+in a `div()` and modify its background.
+
+```{r}
+div(
+  .style %>%
+    padding(2) %>%
+    background("dark"),  # <-
+  radioInput(
+    .style %>%
+      font("light") %>%
+      background("success"),
+    id = "valid",
+    choices = c("Yes", "No"),
+    values = c("y", "n"),
+    selected = "n"
+  )
+)
+```

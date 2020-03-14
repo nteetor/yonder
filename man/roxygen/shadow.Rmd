@@ -1,0 +1,48 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Getting started
+
+```{r}
+div(
+  navbar(
+    .style %>%
+      background("dark") %>%
+      font("light") %>%
+      margin(bottom = 3),
+    brand = "Navbar"
+  ),
+  p("Cras mattis consectetur purus sit amet fermentum. Donec sed ",
+    "odio dui. Lorem ipsum dolor sit amet, consectetur adipiscing ",
+    "elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam ",
+    "venenatis vestibulum.")
+)
+```
+
+### Shadow sizes
+
+```{r}
+div(
+  buttonInput(
+    .style %>%
+      margin(2) %>%
+      shadow("small"),  # <-
+    id = NULL,
+    label = "Small"
+  ),
+  buttonInput(
+    .style %>%
+      margin(2) %>%
+      shadow("medium"),  # <-
+    id = NULL,
+    label = "Medium"
+  ),
+  buttonInput(
+    .style %>%
+      margin(2) %>%
+      shadow("large"),  # <-
+    id = NULL,
+    label = "Large"
+  )
+)
+```

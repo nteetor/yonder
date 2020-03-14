@@ -56,49 +56,103 @@ you may instead specify a modal's \code{id} in which case only that modal is
 closed. Additionally, when \code{id} is not \code{NULL} observers and reactives may
 watch for the modal's close event.
 }
-\section{Example application}{
-\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
-  buttonInput(
-    id = "open",
-    "Open modal",
-    icon("plus")
-  )
-)
-
-server <- function(input, output) \{
-  modal1 <- modal(
-    title = "A simple modal",
-    p(
-      "Cras mattis consectetur purus sit amet fermentum.",
-      "Cras justo odio, dapibus ac facilisis in, egestas",
-      "eget quam. Morbi leo risus, porta ac consectetur",
-      "ac, vestibulum at eros."
-    )
-  )
-
-  observeEvent(input$open, ignoreInit = TRUE, \{
-    showModal(modal1)
-  \})
-\}
-
-shinyApp(ui, server)
-}\if{html}{\out{</div>}}
-}
-
-\examples{
-
-### Simple modal
-
-modal(
-  id = "simple",
-  header = h5("Title"),
+\details{
+\subsection{Getting started}{\if{html}{\out{<div class="r">}}\preformatted{modal(
+  id = "modal1",
+  header = h5("Header"),
   p("Cras placerat accumsan nulla.")
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div id="modal1" class="yonder-modal modal fade" tabindex="-1" role="dialog">
+}}
+\if{html}{\out{
+<div class="modal-dialog" role="document">
+}}
+\if{html}{\out{
+<div class="modal-content">
+}}
+\if{html}{\out{
+<div class="modal-header">
+}}
+\if{html}{\out{
+<h5 class="modal-title">
+}}
 
-### Modal with container body
 
-modal(
-  id = "more_complex",
+Header\if{html}{\out{
+</h5>
+}}
+\if{html}{\out{
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+}}
+
+
+\if{html}{\out{<span aria-hidden="true">}}×\if{html}{\out{</span>}}\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="modal-body">
+}}
+\if{html}{\out{
+<p>
+}}
+
+
+Cras placerat accumsan nulla.\if{html}{\out{
+</p>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<button data-toggle="modal" data-target="#modal1">
+}}
+
+
+Open modal\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
+
+\subsection{Modals with containers}{\if{html}{\out{<div class="r">}}\preformatted{modal(
+  id = "modal2",
   size = "lg",
   header = h5("More complex"),
   container(
@@ -112,7 +166,122 @@ modal(
     )
   )
 )
+}\if{html}{\out{</div>}}\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<div id="modal2" class="yonder-modal modal fade" tabindex="-1" role="dialog">
+}}
+\if{html}{\out{
+<div class="modal-dialog modal-lg" role="document">
+}}
+\if{html}{\out{
+<div class="modal-content">
+}}
+\if{html}{\out{
+<div class="modal-header">
+}}
+\if{html}{\out{
+<h5 class="modal-title">
+}}
 
+
+More complex\if{html}{\out{
+</h5>
+}}
+\if{html}{\out{
+<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+}}
+
+
+\if{html}{\out{<span aria-hidden="true">}}×\if{html}{\out{</span>}}\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="modal-body">
+}}
+\if{html}{\out{
+<div class="container-fluid">
+}}
+\if{html}{\out{
+<div class="row">
+}}
+\if{html}{\out{
+<div class="col">
+}}
+
+
+Cras placerat accumsan nulla.\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="col">
+}}
+
+
+Curabitur lacinia pulvinar nibh.\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<div class="col">
+}}
+
+
+Aliquam posuere. Praesent fermentum tempor tellus.\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+\if{html}{\out{
+<!--html_preserve-->
+}}
+\if{html}{\out{
+<div class="r-output">
+}}
+\if{html}{\out{
+<button data-toggle="modal" data-target="#modal2">
+}}
+
+
+Open modal\if{html}{\out{
+</button>
+}}
+\if{html}{\out{
+</div>
+}}
+\if{html}{\out{
+<!--/html_preserve-->
+}}
+
+}
 }
 \seealso{
 Other components: 

@@ -1,0 +1,31 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Getting started
+
+The `"fade"` and `"show"` classes have been added for the sake of these
+examples.
+
+```{r}
+toast(
+  class = "fade show",
+  header = div("Header") %>%
+    margin(right = "auto"),
+  "Pellentesque condimentum, magna ut suscipit hendrerit, ",
+  "ipsum augue ornare nulla, non luctus diam neque sit amet urna."
+)
+```
+
+```{r}
+toast(
+  class = "fade show",
+  list(
+    span(
+      .style %>% margin(right = "auto"),
+      "Header"
+    ),
+    tags$small("1 min ago")
+  ),
+  "Nullam eu ante vel est convallis dignissim."
+)
+```

@@ -1,0 +1,39 @@
+```{r, child = "_setup.Rmd"}
+```
+
+## Getting started
+
+The font utility is used to change text colors, font weights, and more.
+
+## Changing text color
+
+```{r}
+card(
+  .style %>%
+    font("primary") %>%
+    border("primary"),
+  header = h3("Header"),
+  p("Nullam tristique diam non turpis.",
+    "Pellentesque dapibus suscipit ligula.",
+    "Nullam eu ante vel est convallis dignissim."),
+  p("Aliquam posuere.")
+)
+```
+
+## Changing font weight
+
+```{r}
+p(
+  .style %>%
+    font(weight = "bold"),
+  "Curabitur lacinia pulvinar nibh."
+)
+```
+
+```{r}
+p(
+  .style %>%
+    font(weight = "light"),
+  "Proin quam nisl, tincidunt et."
+)
+```

@@ -1,10 +1,23 @@
-@import '../node_modules/bootstrap/scss/custom-forms';
+@each $color, $value in $theme-colors {
+  .custom-control-group-#{$color} {
+    // .custom-control-label::before {
+    //   // color: color-yiq($value);
+    //   background-color: $value;
+    //   border-color: darken(color-yiq($value), 12.5%);
+    // }
 
-@include custom-control-active-variant();
+    // .custom-control-label::after {
+    //   background-color: darken(color-yiq($value), 12.5%);
+    //   // background-color: darken($value, 12.5%);
+    // }
 
-.custom-control-label {
-  &::before,
-  &::after {
-    cursor: pointer;
+    .custom-control-input:checked ~ .custom-control-label::before {
+      background-color: $value;
+      border-color: $value;
+    }
+
+    // .custom-control-input:checked ~ .custom-control-label::after {
+    //   background-color: color-yiq($value);
+    // }
   }
 }

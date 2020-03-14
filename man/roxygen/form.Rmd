@@ -1,0 +1,35 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Getting started
+
+```{r}
+card(
+  .style %>%
+    border("info") %>%
+    width(50),
+  header = "Please pick a flavor",
+  formInput(
+    id = "form1",
+    formGroup(
+      label = "Ice creams",
+      radioInput(
+        id = "flavor",
+        choices = c("Mint", "Moose tracks", "Marble"),
+      )
+    ),
+    formSubmit(
+      .style %>% background("info"),
+      label = "Make choice",
+      value = "choice"
+    )
+  )
+)
+```
+
+### Inline forms
+
+When `inline` is `TRUE` you may want to adjust the right margin of each child
+element for viewports larger than mobile, `margin(right = c(sm = 2))`, see
+[margin()]. You only need to apply extra space for larger viewports because
+inline forms do not take effect on small viewports.

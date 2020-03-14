@@ -1,0 +1,99 @@
+```{r, child = "_setup.Rmd"}
+```
+
+### Getting started
+
+```{r}
+buttonInput(
+  id = NULL,
+  label = "Label"
+)
+```
+
+### Add a little color
+
+```{r}
+buttonInput(
+  .style %>%
+    background("primary"),
+  id = NULL,
+  label = "Label"
+)
+```
+
+Use the `width()` utility to adjust the size of a button.
+
+```{r}
+buttonInput(
+  .style %>%
+    background("danger") %>%
+    width(75),  # <-
+  id = NULL,
+  label = "Label"
+)
+```
+
+### Reactive links
+
+```{r}
+div(
+  "Curabitur", linkInput(id = "link1", label = "vulputate"),
+  "vestibulum lorem."
+)
+```
+
+### Stretched buttons and links
+
+Use a stretched button to make an entire card clickable.
+
+```{r}
+card(
+  .style %>%
+    border("primary") %>%
+    font("primary"),
+  header = "Product summary",
+  p("Here is a summary"),
+  p("This is a second paragraph"),
+  footer = list(
+    buttonInput(
+      .style %>%
+        background("primary"),
+      id = "seemore",
+      label = "See more",
+      stretch = TRUE
+    )
+  )
+)
+```
+
+Notice, when you hover over the card the mouse cursor changes and the button
+appears hovered. The card is now passing clicks on to the button. Clicking
+anywhere on the card will trigger a click on the button.
+
+```{r}
+card(
+  header = "Card with stretched button",
+  p("Notice when you hover over the card, the button also detects ",
+    "the hover."),
+  buttonInput(
+    .style %>%
+      background("primary"),
+    id = NULL,
+    label = "Label",
+    stretch = TRUE
+  )
+)
+```
+
+### Download button
+
+Pair a download button input with `shiny::downloadHandler()`.
+
+```{r}
+buttonInput(
+  download = TRUE,  # <-
+  id = NULL,
+  label = "Download",
+  tags$i(class = "fas fa-download")
+)
+```

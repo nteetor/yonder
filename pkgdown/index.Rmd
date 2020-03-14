@@ -1,0 +1,203 @@
+---
+always_allow_html: yes
+output:
+  github_document:
+    pandoc_args: ["--wrap=preserve", "--to", "html5", "--quiet"]
+---
+
+```{r, setup, include = FALSE}
+set.seed(3030)
+
+knitr::opts_chunk$set(
+  eval = TRUE,
+  results = "asis"
+)
+
+# library(yonder)
+devtools::load_all("..")
+options(yonder.deps = FALSE)
+```
+
+```{r, title}
+d3("yonder")
+```
+
+<p class="lead">
+A shiny framework.
+</p>
+
+```{r, description, echo = FALSE}
+p(
+  class = "lead",
+  "Build shiny applications with an all new set of",
+  "inputs, utilties, and design tools. Click",
+  linkInput(
+    id = NULL,
+    label = "here",
+    `data-toggle` = "collapse",
+    `data-target` = ".hasCopyButton"
+  ),
+  "to see these great new tools help build pieces of this page."
+)
+```
+
+## Inputs
+
+::: { .row }
+::: { .col-md-6 .col-12 }
+New inputs let you build a variety of user interfaces. Develop the best ui for
+your users' needs. Whether you are building an application for personal use,
+internal use, or public use an intuitive ui helps guide users through your
+application.
+:::
+::: { .col-md-6 .col-12 }
+```{r, button-group}
+# button group input
+div(
+  .style %>%
+    display("flex") %>%
+    flex(justify = "center"),
+  buttonGroupInput(
+    .style %>%
+      background("primary"),
+    id = NULL,
+    choices = c("Sample", "Model", "Download")
+  )
+)
+```
+:::
+:::
+
+::: { .row }
+::: { .col-md-6 .col-12 }
+As shiny developers we are not only developing programs and scripts for a
+variety of users we are developing applications for many different devices.
+
+Yonder's inputs are ready for both mobile and web. Once you include
+:::
+::: { .col-md-6 .col-12 }
+```{r, list-group}
+# list group input
+div(
+  .style %>%
+    display("flex") %>%
+    flex(align = "center", justify = "center"),
+  card(
+    .style %>%
+      border("info") %>%
+      background("info") %>%
+      font("light"),
+    header = "Learn more",
+    listGroupInput(
+      .style %>%
+        background("info"),
+      flush = TRUE,
+      id = NULL,
+      choices = c("About", "Our process", "Partners", "License")
+    )
+  )
+)
+```
+:::
+:::
+
+## Designs
+
+::: { .row }
+::: { .col-12 }
+Based on the widely used Bootstrap library, yonder provides a series of design
+utilities to help prototype and produce the shiny apps you imagine.
+:::
+:::
+
+::: { .row }
+::: { .col-4-md .col-12 }
+That control panel never has to sit on the left again.
+:::
+::: { .col-8-md .col-12 }
+```{r}
+div(
+  .style %>%
+    width(100) %>%
+    padding(2) %>%
+    display("flex") %>%
+    flex(justify = "center") %>%
+    border("dark", round = "all"),
+  card(
+    header = "Controls",
+    formGroup(
+      label = "Options",
+      selectInput(
+        id = NULL,
+        choices = c("Option 1", "Option 2", "Option 3")
+      )
+    ),
+    buttonInput(
+      .style %>%
+        background("primary"),
+      id = NULL,
+      label = "Run"
+    )
+  )
+)
+```
+:::
+:::
+
+::: { .row .mt-5 }
+::: { .col-12 }
+```{r}
+div(
+  .style %>%
+    width(100) %>%
+    padding(2) %>%
+    display("flex") %>%
+    flex(justify = "end") %>%
+    border("dark", round = "all"),
+  dropdown(
+    .style %>%
+      background("secondary"),
+    label = "Menu",
+    h5("Controls") %>% margin(r = 3, l = 3),
+    formInput(
+      .style %>% padding(r = 3, l = 3),
+      id = NULL,
+      formGroup(
+        label = "Target",
+        input = textInput(
+          id = NULL
+        )
+      ),
+      formGroup(
+        label = "Description",
+        input = textInput(
+          id = NULL
+        )
+      ),
+      buttonInput(
+        .style %>% background("primary"),
+        id = NULL,
+        label = "Update"
+      )
+    )
+  )
+)
+```
+:::
+:::
+
+::: { .row }
+::: { .col-md-4 .col-12 }
+Convey more.
+:::
+:::
+
+::: { .row }
+::: { .col-12 .d-flex .justify-content-center }
+
+::: { .display-4 .my-3 }
+... and much [more](reference/index.html)!
+:::
+
+:::
+:::

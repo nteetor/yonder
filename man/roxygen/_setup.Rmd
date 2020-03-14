@@ -1,0 +1,33 @@
+```{r, include = FALSE}
+set.seed(3030)
+
+knitr::opts_chunk$set(
+  results = "asis",
+  eval = TRUE,
+  R.options = list(yonder.deps = FALSE)
+)
+
+knitr::knit_hooks$set(output = local({
+  function(x, options) {
+    print(x)
+    paste0("<div class='r-example'>\n", x, "\n</div>")
+  }
+}))
+
+knitr::knit_hooks$set(chunk = local({
+  prev <- knitr::knit_hooks$get("chunk")
+
+  html_open <- "<!--html_preserve-->"
+  html_close <- "<!--/html_preserve-->"
+
+  new_open <- sprintf("%s\n<div class=\"r-output\">\n", html_open)
+  new_close <- sprintf("\n</div>\n%s", html_close)
+
+  function(x, options) {
+    x1 <- gsub(html_open, new_open, x, fixed = TRUE)
+    x2 <- gsub(html_close, new_close, x1, fixed = TRUE)
+
+    prev(x2, options)
+  }
+}))
+```

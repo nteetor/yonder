@@ -1,0 +1,16 @@
+```{r, child = "_setup.Rmd"}
+```
+
+## Getting started
+
+```{r}
+webpage(
+  nav = navbar(),
+  container(
+    columns(
+      column(),
+      column()
+    )
+  )
+)
+```

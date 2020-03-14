@@ -1,0 +1,168 @@
+```{r, child = "_setup.Rmd"}
+```
+
+## A simple card
+
+Cards expand to fill the width of their parent element.
+
+```{r}
+card(
+  p("Praesent fermentum tempor tellus.")
+)
+```
+
+## Contextual styles
+
+Cards include contextual content. Headings 1 through 5 are styled as main
+titles and heading 6 as a subtitle.
+
+
+```{r}
+card(
+  h5("Title"),
+  h6("Subtitle"),
+  p("Nullam tempus. Mauris mollis tincidunt felis."),
+  p("Nullam libero mauris, consequat quis, varius et, dictum id, arcu."),
+  footer = list(
+    a(href = "#", "Link"),
+    a(href = "#", "Link")
+  )
+)
+```
+
+## Styling cards
+
+Cards can have different borders and fonts.
+
+```{r}
+card(
+  .style %>%
+    border("info") %>%
+    font("info"),
+  header = "Donec pretium posuere tellus",
+  p("Donec hendrerit tempor tellus."),
+  p("Cras placerat accumsan nulla.")
+)
+```
+
+```{r}
+card(
+  .style %>%
+    border("danger") %>%
+    font("danger"),
+  p("Aliquam posuere."),
+  p("Phasellus neque orci, porta a, aliquet quis, semper a, massa."),
+  p("Pellentesque dapibus suscipit ligula.")
+)
+```
+
+You can also change the background.
+
+```{r}
+card(
+  .style %>%
+    background("warning"),
+  header = "Phasellus lacus",
+  p("Etiam laoreet quam sed arcu."),
+  p("Etiam vel tortor sodales tellus ultricies commodo."),
+  footer = "Nam euismod tellus id erat."
+)
+```
+
+## Cards with list groups
+
+Combine a list group with a card.
+
+```{r}
+card(
+  listGroupInput(
+    id = NULL,
+    flush = TRUE,
+    choices = c(
+      "Pellentesque tristique imperdiet tortor.",
+      "Lorem ipsum dolor sit amet, consectetuer adipiscing elit.",
+      "Phasellus purus."
+    ),
+    values = c(
+      "choice1",
+      "choice2",
+      "choice3"
+    )
+  )
+)
+```
+
+You can include other elements, too.
+
+```{r}
+card(
+  h5("Title"),
+  listGroupInput(
+    id = NULL,
+    flush = TRUE,
+    choices = c("Choice 1", "Choice 2")
+  ),
+  linkInput(id = NULL, label = "Link"),
+  linkInput(id = NULL, label = "Link")
+)
+```
+
+## Tabbed content in cards
+
+```{r}
+card(
+  header = navInput(
+    id = "tabs",
+    choices = c("Tab 1", "Tab 2", "Tab 3"),
+    appearance = "tabs"
+  ),
+  navContent(
+    navPane(
+      "Phasellus purus.",
+      "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.",
+      "Phasellus purus."
+    ),
+    navPane(
+      "Donec at pede. Praesent augue.",
+      "Pellentesque tristique imperdiet tortor."
+    ),
+    navPane(
+      "Fusce suscipit, wisi nec facilisis facilisis,",
+      "est dui fermentum leo, quis tempor ligula erat quis odio.",
+      "Donec hendrerit tempor tellus."
+    )
+  )
+)
+```
+
+## Deck of cards
+
+```{r}
+deck(
+  card(
+    .style %>%
+      background("info"),
+    title = "Nullam tristique",
+    p("Fusce sagittis, libero non molestie mollis, magna orci ultrices ",
+      "dolor, at vulputate neque nulla lacinia eros."),
+    p("Nunc rutrum turpis sed pede."),
+    footer = "Cras placerat accumsan nulla."
+  ),
+  card(
+    .style %>%
+      background("dark") %>%
+      font("light"),
+    title = "Integer placerat",
+    p("Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec ",
+      "hendrerit tempor tellus."),
+    footer = "Cras placerat accumsan nulla."
+  ),
+  card(
+    .style %>%
+      background("primary"),
+    title = "Phasellus neque",
+    p("Donec at pede. Etiam vel neque nec dui dignissim bibendum."),
+    footer = "Cras placerat accumsan nulla."
+  )
+)
+```

@@ -94,33 +94,6 @@
 #'
 #' @family components
 #' @export
-#' @examples
-#'
-#' ### A simple toast
-#'
-#' # The `"fade"` and `"show"` classes have been added for the sake of
-#' # these examples.
-#'
-#' toast(
-#'   class = "fade show",
-#'   header = div("Header") %>%
-#'     margin(right = "auto"),
-#'   "Hello, world!"
-#' )
-#'
-#' ### Styling pieces of a toast
-#'
-#' toast(
-#'   class = "fade show",
-#'   list(
-#'     div("Notification") %>%
-#'       font(weight = "bold") %>%
-#'       margin(right = "auto"),
-#'     tags$small("1 min ago")
-#'   ),
-#'   "Hello, world!"
-#' )
-#'
 toast <- function(header, ...) {
   dep_attach({
     args <- list(...)

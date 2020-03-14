@@ -16,8 +16,12 @@ test_that("card with nav tabs has .nav-header-tabs", {
   expect_true(grepl("card-header-tabs", as.character(this)))
 })
 
-test_that("cannot pass strings to card (old behaviour)", {
-  expect_error(card("hello", "world"))
+test_that("can pass strings to card", {
+  expect_silent(card("hello", "world"))
+
+  this <- card("hello")
+  expect_true(is_tag(this$children[[1]]))
+  expect_true(tag_class_re(this$children[[1]], "card-body"))
 })
 
 test_that("card paragraphs are wrapped in .card-body", {

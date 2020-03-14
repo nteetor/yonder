@@ -1,0 +1,103 @@
+```{r, child = "_setup.Rmd"}
+```
+
+## Equal width columns
+
+```{r}
+container(
+  columns(
+    column(
+      "Aliquam erat volutpat."
+    ),
+    column(
+      "Mauris mollis tincidunt felis."
+    ),
+    column(
+      "Cum sociis natoque penatibus et magnis dis parturient montes,",
+      "nascetur ridiculus mus."
+    )
+  )
+)
+```
+
+## Sidebar layout
+
+```{r}
+container(
+  columns(
+    column(
+      width = 4,  # <-
+      card(
+        h5("Sidebar panel")
+      )
+    ),
+    column(
+      h5("Main panel")
+    )
+  )
+)
+```
+
+## Mobile friendly
+
+Use the [responsive] `width` argument to make mobile friendly applications. On
+extra small screens each column spans the entire width of the row. On larger
+screens the columns will instead split the row width evenly.
+
+```{r}
+container(
+  columns(
+    column(
+      width = c(xs = 12, sm = 4),
+      "Mauris ac felis vel velit tristique imperdiet."
+    ),
+    column(
+      width = c(xs = 12, sm = 4),
+      "Nam vestibulum accumsan nisl."
+    ),
+    column(
+      width = c(xs = 12, sm = 4),
+      "Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus."
+    )
+  )
+)
+```
+
+## Automatic column sizing
+
+Columns may be fit to the width of their content. Other columns in this example
+will split the remaining space equally.
+
+```{r}
+container(
+  columns(
+    column(
+      .style %>%
+        background("warning")
+    ),
+    column(
+      width = "content",
+      "Cras placerat accumsan nulla. Aenean in sem ac leo mollis blandit.",
+      "Nam euismod tellus id erat.",
+      "Donec neque quam, dignissim in, mollis nec, sagittis eu, wisi."
+    ),
+    column(
+      .style %>%
+        background("warning")
+    )
+  )
+)
+```
+
+Without specficiying widths the space in a row is evenly split between columns.
+
+```{r}
+container(
+  columns(
+    column(),
+    column(),
+    column(),
+    column()
+  )
+)
+```

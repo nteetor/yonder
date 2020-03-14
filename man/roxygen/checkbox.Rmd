@@ -1,0 +1,88 @@
+```{r, child = "_setup.Rmd"}
+```
+
+## Getting started
+
+Checkbox inputs may have a single possible value.
+
+```{r}
+checkboxInput(
+  id = NULL,
+  choices = "Choice 1",
+  selected = "Choice 1"
+)
+```
+
+You may also specify multiple possible values.
+
+```{r}
+checkboxInput(
+  id = NULL,
+  choices = c("Choice 1", "Choice 2", "Choice 3"),
+  selected = c("Choice 1", "Choice 2")
+)
+```
+
+## Layout
+
+While checkbox input choices are typically laid out vertically you can lay out
+the choices horizontally with `inline = TRUE`.
+
+```{r}
+checkboxInput(
+  id = NULL,
+  choices = c("Choice 1", "Choice 2", "Choice 3"),
+  inline = TRUE  # <-
+)
+```
+
+## Switch variant
+
+The switch input functions identical to the checkbox input with a different
+appearance.
+
+```{r}
+switchInput(
+  id = NULL,
+  choices = c("Toggle 1", "Toggle 2", "Toggle 3"),
+  selected = "Toggle 2"
+)
+```
+
+## Background color
+
+Changing the background color of a checkbox or switch input will modify the
+background color of the _selected_ choices.
+
+```{r}
+checkboxInput(
+  .style %>%
+    background("warning"),
+  id = NULL,
+  choices = c("Choice 1", "Choice 2"),
+  selected = c("Choice 1", "Choice 2")
+)
+```
+
+```{r}
+switchInput(
+  .style %>%
+    background("success"),
+  id = NULL,
+  choices = c("Toggle 1", "Toggle 2"),
+  selected = "Toggle 1"
+)
+```
+
+## Labelling
+
+```{r}
+formGroup(
+  label = "Label",
+  checkboxInput(
+    id = NULL,
+    choices = c("Choice 1", "Choice 2")
+  ),
+  help = "Help text for the input"
+)
+```

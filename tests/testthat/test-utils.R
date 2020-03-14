@@ -1,7 +1,7 @@
 context("general utilities")
 
-test_that("tag is not strict list", {
-  expect_false(is_strictly_list(div()))
+test_that("tag is not bare list", {
+  expect_false(is_bare_list(div()))
 })
 
 test_that("str_re allows NULL", {

@@ -5,4 +5,5 @@
 .DS_Store
 docs/.sass-cache
 inst/doc
+pkgdown/site
 renv/library
