@@ -110,7 +110,7 @@ dep_yonder <- function() {
       script = "js/bs-custom-file-input.min.js"
     ),
     htmlDependency(
-      name = "shiny",
+      name = "shiny-javascript",
       version = "3.3.3",
       src = c(
         file = system.file("www/shared/", package = "shiny"),
