@@ -57,101 +57,38 @@ closed. Additionally, when \code{id} is not \code{NULL} observers and reactives 
 watch for the modal's close event.
 }
 \details{
-\subsection{Getting started}{\if{html}{\out{<div class="r">}}\preformatted{modal(
+\subsection{Getting started}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{modal(
   id = "modal1",
   header = h5("Header"),
   p("Cras placerat accumsan nulla.")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<div id="modal1" class="yonder-modal modal fade" tabindex="-1" role="dialog">
-}}
-\if{html}{\out{
+<div class="yonder-modal modal fade" id="modal1" tabindex="-1" role="dialog">
 <div class="modal-dialog" role="document">
-}}
-\if{html}{\out{
 <div class="modal-content">
-}}
-\if{html}{\out{
 <div class="modal-header">
-}}
-\if{html}{\out{
-<h5 class="modal-title">
-}}
-
-
-Header\if{html}{\out{
-</h5>
-}}
-\if{html}{\out{
+<h5 class="modal-title">Header</h5>
 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-}}
-
-
-\if{html}{\out{<span aria-hidden="true">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span aria-hidden="true">&times;</span>
 </button>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 <div class="modal-body">
-}}
-\if{html}{\out{
-<p>
+<p>Cras placerat accumsan nulla.</p>
+</div>
+</div>
+</div>
+</div>
 }}
 
 
-Cras placerat accumsan nulla.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<button data-toggle="modal" data-target="#modal1">
-}}
-
-
-Open modal\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-
+\if{html}{\out{<button data-toggle="modal" data-target="#modal1">}}Open modal\if{html}{\out{</button>}}
 }
 
-\subsection{Modals with containers}{\if{html}{\out{<div class="r">}}\preformatted{modal(
+\subsection{Modals with containers}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{modal(
   id = "modal2",
   size = "lg",
   header = h5("More complex"),
@@ -167,120 +104,34 @@ Open modal\if{html}{\out{
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<div id="modal2" class="yonder-modal modal fade" tabindex="-1" role="dialog">
-}}
-\if{html}{\out{
+<div class="yonder-modal modal fade" id="modal2" tabindex="-1" role="dialog">
 <div class="modal-dialog modal-lg" role="document">
-}}
-\if{html}{\out{
 <div class="modal-content">
-}}
-\if{html}{\out{
 <div class="modal-header">
-}}
-\if{html}{\out{
-<h5 class="modal-title">
-}}
-
-
-More complex\if{html}{\out{
-</h5>
-}}
-\if{html}{\out{
+<h5 class="modal-title">More complex</h5>
 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-}}
-
-
-\if{html}{\out{<span aria-hidden="true">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span aria-hidden="true">&times;</span>
 </button>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 <div class="modal-body">
-}}
-\if{html}{\out{
 <div class="container-fluid">
-}}
-\if{html}{\out{
 <div class="row">
-}}
-\if{html}{\out{
+<div class="col">Cras placerat accumsan nulla.</div>
+<div class="col">Curabitur lacinia pulvinar nibh.</div>
 <div class="col">
+Aliquam posuere.
+Praesent fermentum tempor tellus.
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 }}
 
 
-Cras placerat accumsan nulla.\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="col">
-}}
-
-
-Curabitur lacinia pulvinar nibh.\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="col">
-}}
-
-
-Aliquam posuere. Praesent fermentum tempor tellus.\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<button data-toggle="modal" data-target="#modal2">
-}}
-
-
-Open modal\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-
+\if{html}{\out{<button data-toggle="modal" data-target="#modal2">}}Open modal\if{html}{\out{</button>}}
 }
 }
 \seealso{

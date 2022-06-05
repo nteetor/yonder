@@ -54,201 +54,69 @@ A set of buttons with custom values.
 \details{
 \subsection{Layout options}{
 
-Button groups can be laid in two directions, horizontal or vertical.\if{html}{\out{<div class="r">}}\preformatted{buttonGroupInput(
+Button groups can be laid in two directions, horizontal or vertical.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonGroupInput(
   .style \%>\%
     background("primary"),
   id = NULL,
   choices = c("Grape", "Raspberry", "Kiwi")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-button-group btn-group btn-group-primary" role="group">
-}}
-\if{html}{\out{
-<button type="button" class="btn" value="Grape">
-}}
-
-
-Grape\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button type="button" class="btn" value="Raspberry">
-}}
-
-
-Raspberry\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button type="button" class="btn" value="Kiwi">
-}}
-
-
-Kiwi\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button type="button" class="btn" value="Grape">Grape</button>
+<button type="button" class="btn" value="Raspberry">Raspberry</button>
+<button type="button" class="btn" value="Kiwi">Kiwi</button>
 </div>
 }}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
 
 
-Vertical button groups can help fill available space.\if{html}{\out{<div class="r">}}\preformatted{buttonGroupInput(
+Vertical button groups can help fill available space.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonGroupInput(
   .style \%>\%
     background("primary"),
   id = NULL,
   choices = c("Cherry", "Apple", "Pear")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-button-group btn-group btn-group-primary" role="group">
-}}
-\if{html}{\out{
-<button type="button" class="btn" value="Cherry">
-}}
-
-
-Cherry\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button type="button" class="btn" value="Apple">
-}}
-
-
-Apple\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button type="button" class="btn" value="Pear">
-}}
-
-
-Pear\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button type="button" class="btn" value="Cherry">Cherry</button>
+<button type="button" class="btn" value="Apple">Apple</button>
+<button type="button" class="btn" value="Pear">Pear</button>
 </div>
 }}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-\if{html}{\out{<div class="r">}}\preformatted{buttonGroupInput(
+
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonGroupInput(
   id = "group1",
   choices = c("Once", "Twice", "Thrice"),
   values = c(1, 2, 3)
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<div id="group1" class="yonder-button-group btn-group" role="group">
-}}
-\if{html}{\out{
-<button type="button" class="btn" value="1">
-}}
-
-
-Once\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button type="button" class="btn" value="2">
-}}
-
-
-Twice\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button type="button" class="btn" value="3">
-}}
-
-
-Thrice\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<div class="yonder-button-group btn-group" id="group1" role="group">
+<button type="button" class="btn" value="1">Once</button>
+<button type="button" class="btn" value="2">Twice</button>
+<button type="button" class="btn" value="3">Thrice</button>
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Styling the button group}{\if{html}{\out{<div class="r">}}\preformatted{buttonGroupInput(
+\subsection{Styling the button group}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonGroupInput(
   .style \%>\%
     background("primary"),
   id = "group2",
   choices = c("Button 1", "Button 2", "Button 3")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<div id="group2" class="yonder-button-group btn-group btn-group-primary" role="group">
-}}
-\if{html}{\out{
-<button type="button" class="btn" value="Button 1">
-}}
-
-
-Button 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button type="button" class="btn" value="Button 2">
-}}
-
-
-Button 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button type="button" class="btn" value="Button 3">
-}}
-
-
-Button 3\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<div class="yonder-button-group btn-group btn-group-primary" id="group2" role="group">
+<button type="button" class="btn" value="Button 1">Button 1</button>
+<button type="button" class="btn" value="Button 2">Button 2</button>
+<button type="button" class="btn" value="Button 3">Button 3</button>
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

@@ -54,52 +54,24 @@ HTML standards.
 
 \subsection{Getting started}{
 
-Select from a range of numeric values.\if{html}{\out{<div class="r">}}\preformatted{rangeInput(id = "range1")
+Select from a range of numeric values.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rangeInput(id = "range1")
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<div id="range1" class="yonder-range">
-}}
-\if{html}{\out{
+<div class="yonder-range" id="range1">
 <input class="custom-range" type="range" step="1" min="0" max="100" value="0" autocomplete="off"/>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Custom step}{\if{html}{\out{<div class="r">}}\preformatted{rangeInput(id = "range2", step = 10)
+\subsection{Custom step}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{rangeInput(id = "range2", step = 10)
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<div id="range2" class="yonder-range">
-}}
-\if{html}{\out{
+<div class="yonder-range" id="range2">
 <input class="custom-range" type="range" step="10" min="0" max="100" value="0" autocomplete="off"/>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

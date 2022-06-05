@@ -2,7 +2,7 @@
 #'
 #' Use `border()` to add or modify tag element borders.
 #'
-#' @param tag A tag element.
+#' @inheritParams affix
 #'
 #' @eval param_color("border")
 #'

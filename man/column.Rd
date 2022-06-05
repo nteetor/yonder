@@ -33,7 +33,9 @@ space in a row evenly amongst all columns use \code{width = "equal"}. For exampl
 and usage tips see the sections below.
 }
 \details{
-\subsection{Equal width columns}{\if{html}{\out{<div class="r">}}\preformatted{container(
+\subsection{Equal width columns}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{container(
   columns(
     column(
       "Aliquam erat volutpat."
@@ -48,58 +50,23 @@ and usage tips see the sections below.
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="container-fluid">
-}}
-\if{html}{\out{
 <div class="row">
-}}
-\if{html}{\out{
+<div class="col">Aliquam erat volutpat.</div>
+<div class="col">Mauris mollis tincidunt felis.</div>
 <div class="col">
-}}
-
-
-Aliquam erat volutpat.\if{html}{\out{
+Cum sociis natoque penatibus et magnis dis parturient montes,
+nascetur ridiculus mus.
 </div>
-}}
-\if{html}{\out{
-<div class="col">
-}}
-
-
-Mauris mollis tincidunt felis.\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-<div class="col">
-}}
-
-
-Cum sociis natoque penatibus et magnis dis parturient montes, nascetur
-ridiculus mus.\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Sidebar layout}{\if{html}{\out{<div class="r">}}\preformatted{container(
+\subsection{Sidebar layout}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{container(
   columns(
     column(
       width = 4,  # <-
@@ -113,68 +80,20 @@ ridiculus mus.\if{html}{\out{
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="container-fluid">
-}}
-\if{html}{\out{
 <div class="row">
-}}
-\if{html}{\out{
 <div class="col-4">
-}}
-\if{html}{\out{
 <div class="card">
-}}
-\if{html}{\out{
 <div class="card-body">
-}}
-\if{html}{\out{
-<h5 class="card-title">
-}}
-
-
-Sidebar panel\if{html}{\out{
-</h5>
-}}
-\if{html}{\out{
+<h5 class="card-title">Sidebar panel</h5>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 <div class="col">
-}}
-\if{html}{\out{
-<h5>
-}}
-
-
-Main panel\if{html}{\out{
-</h5>
-}}
-\if{html}{\out{
+<h5>Main panel</h5>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
@@ -184,7 +103,9 @@ Main panel\if{html}{\out{
 Use the \link{responsive} \code{width} argument to make mobile
 friendly applications. On extra small screens each column spans the
 entire width of the row. On larger screens the columns will instead
-split the row width evenly.\if{html}{\out{<div class="r">}}\preformatted{container(
+split the row width evenly.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{container(
   columns(
     column(
       width = c(xs = 12, sm = 4),
@@ -201,52 +122,13 @@ split the row width evenly.\if{html}{\out{<div class="r">}}\preformatted{contain
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="container-fluid">
-}}
-\if{html}{\out{
 <div class="row">
-}}
-\if{html}{\out{
-<div class="col-12 col-sm-4">
-}}
-
-
-Mauris ac felis vel velit tristique imperdiet.\if{html}{\out{
+<div class="col-12 col-sm-4">Mauris ac felis vel velit tristique imperdiet.</div>
+<div class="col-12 col-sm-4">Nam vestibulum accumsan nisl.</div>
+<div class="col-12 col-sm-4">Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.</div>
 </div>
-}}
-\if{html}{\out{
-<div class="col-12 col-sm-4">
-}}
-
-
-Nam vestibulum accumsan nisl.\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-<div class="col-12 col-sm-4">
-}}
-
-
-Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
@@ -254,7 +136,9 @@ Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.\if{html}{\out{
 \subsection{Automatic column sizing}{
 
 Columns may be fit to the width of their content. Other columns in this
-example will split the remaining space equally.\if{html}{\out{<div class="r">}}\preformatted{container(
+example will split the remaining space equally.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{container(
   columns(
     column(
       .style \%>\%
@@ -273,55 +157,24 @@ example will split the remaining space equally.\if{html}{\out{<div class="r">}}\
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="container-fluid">
-}}
-\if{html}{\out{
 <div class="row">
-}}
-\if{html}{\out{
-<div class="bg-warning col">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
+<div class="bg-warning col"></div>
 <div class="col-auto">
-}}
-
-
-Cras placerat accumsan nulla. Aenean in sem ac leo mollis blandit. Nam
-euismod tellus id erat. Donec neque quam, dignissim in, mollis nec,
-sagittis eu, wisi.\if{html}{\out{
+Cras placerat accumsan nulla. Aenean in sem ac leo mollis blandit.
+Nam euismod tellus id erat.
+Donec neque quam, dignissim in, mollis nec, sagittis eu, wisi.
 </div>
-}}
-\if{html}{\out{
-<div class="bg-warning col">
-}}
-\if{html}{\out{
+<div class="bg-warning col"></div>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 
 Without specficiying widths the space in a row is evenly split between
-columns.\if{html}{\out{<div class="r">}}\preformatted{container(
+columns.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{container(
   columns(
     column(),
     column(),
@@ -330,52 +183,14 @@ columns.\if{html}{\out{<div class="r">}}\preformatted{container(
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="container-fluid">
-}}
-\if{html}{\out{
 <div class="row">
-}}
-\if{html}{\out{
-<div class="col">
-}}
-\if{html}{\out{
+<div class="col"></div>
+<div class="col"></div>
+<div class="col"></div>
+<div class="col"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="col">
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-<div class="col">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="col">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

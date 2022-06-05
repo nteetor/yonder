@@ -52,7 +52,9 @@ will \emph{never} update if a form submit button is not included in \code{...} p
 to \code{formInput()}.
 }
 \details{
-\subsection{Getting started}{\if{html}{\out{<div class="r">}}\preformatted{card(
+\subsection{Getting started}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   .style \%>\%
     border("info") \%>\%
     width(50),
@@ -74,107 +76,33 @@ to \code{formInput()}.
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card border border-info w-50">
-}}
-\if{html}{\out{
-<div class="card-header">
-}}
-
-
-Please pick a flavor\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
+<div class="card-header">Please pick a flavor</div>
 <div class="card-body">
-}}
-\if{html}{\out{
 <form class="yonder-form" id="form1">
-}}
-\if{html}{\out{
 <div class="form-group">
-}}
-
-
-\if{html}{\out{<label>}}Ice creams\if{html}{\out{</label>}}\if{html}{\out{
-<div id="flavor" class="yonder-radio">
-}}
-\if{html}{\out{
+<label>Ice creams</label>
+<div class="yonder-radio" id="flavor">
 <div class="custom-control custom-radio">
-}}
-\if{html}{\out{
 <input class="custom-control-input" type="radio" id="radio-433-345" name="flavor" value="Mint" checked autocomplete="off"/>
 <label class="custom-control-label" for="radio-433-345">Mint</label>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 <div class="custom-control custom-radio">
-}}
-\if{html}{\out{
 <input class="custom-control-input" type="radio" id="radio-665-165" name="flavor" value="Moose tracks" autocomplete="off"/>
-<label class="custom-control-label" for="radio-665-165">Moose
-tracks</label>
-}}
-\if{html}{\out{
+<label class="custom-control-label" for="radio-665-165">Moose tracks</label>
 </div>
-}}
-\if{html}{\out{
 <div class="custom-control custom-radio">
-}}
-\if{html}{\out{
 <input class="custom-control-input" type="radio" id="radio-332-323" name="flavor" value="Marble" autocomplete="off"/>
 <label class="custom-control-label" for="radio-332-323">Marble</label>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<button class="yonder-form-submit btn btn-blue bg-info" value="choice">
-}}
-
-
-Make choice\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="yonder-form-submit btn btn-blue bg-info" value="choice">Make choice</button>
 </form>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
@@ -182,9 +110,10 @@ Make choice\if{html}{\out{
 \subsection{Inline forms}{
 
 When \code{inline} is \code{TRUE} you may want to adjust the right margin of each
-child element for viewports larger than mobile, \code{margin(right = c(sm = 2))}, see \code{\link[=margin]{margin()}}. You only need to apply extra space
-for larger viewports because inline forms do not take effect on small
-viewports.
+child element for viewports larger than mobile,
+\code{margin(right = c(sm = 2))}, see \code{\link[=margin]{margin()}}. You only need
+to apply extra space for larger viewports because inline forms do not
+take effect on small viewports.
 }
 }
 \seealso{

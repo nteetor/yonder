@@ -45,7 +45,9 @@ the \code{toast()} function. Display toasts with \code{showToast()} and remove a
 active toasts with \code{closeToast()}.
 }
 \section{Showing notifications}{
-\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
+
+
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{ui <- container(
   buttonInput(
     id = "show",
     label = "Show notification"
@@ -78,7 +80,9 @@ shinyApp(ui, server)
 
 
 When a notification is not automatically closed you may want to know
-when the notification is manually closed.\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
+when the notification is manually closed.
+
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{ui <- container(
   buttonInput(
     id = "show",
     label = "Show notification"

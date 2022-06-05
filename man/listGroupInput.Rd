@@ -66,72 +66,27 @@ list. However, list group items may include highly variable content.
 \details{
 \subsection{Getting started}{
 
-Action lists.\if{html}{\out{<div class="r">}}\preformatted{listGroupInput(
+Action lists.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{listGroupInput(
   id = "list1",
   choices = paste("Item", 1:5)
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<div id="list1" class="yonder-list-group list-group">
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 1">
-}}
-
-
-Item 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 2">
-}}
-
-
-Item 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 3">
-}}
-
-
-Item 3\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 4">
-}}
-
-
-Item 4\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 5">
-}}
-
-
-Item 5\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<div class="yonder-list-group list-group" id="list1">
+<button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
+<button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
+<button class="list-group-item list-group-item-action" value="Item 3">Item 3</button>
+<button class="list-group-item list-group-item-action" value="Item 4">Item 4</button>
+<button class="list-group-item list-group-item-action" value="Item 5">Item 5</button>
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Combining lists with other elements}{\if{html}{\out{<div class="r">}}\preformatted{card(
+\subsection{Combining lists with other elements}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   header = h6("Card header"),
   listGroupInput(
     id = NULL,
@@ -143,132 +98,35 @@ Item 5\if{html}{\out{
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card">
-}}
-\if{html}{\out{
 <div class="card-header">
-}}
-\if{html}{\out{
-<h6>
-}}
-
-
-Card header\if{html}{\out{
-</h6>
-}}
-\if{html}{\out{
+<h6>Card header</h6>
 </div>
-}}
-\if{html}{\out{
 <div class="yonder-list-group list-group list-group-flush">
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 1">
-}}
-
-
-Item 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 2">
-}}
-
-
-Item 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 3">
-}}
-
-
-Item 3\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 4">
-}}
-
-
-Item 4\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 5">
-}}
-
-
-Item 5\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
+<button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
+<button class="list-group-item list-group-item-action" value="Item 3">Item 3</button>
+<button class="list-group-item list-group-item-action" value="Item 4">Item 4</button>
+<button class="list-group-item list-group-item-action" value="Item 5">Item 5</button>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Horizontal list groups}{\if{html}{\out{<div class="r">}}\preformatted{listGroupInput(
+\subsection{Horizontal list groups}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{listGroupInput(
   layout = "horizontal",
   id = NULL,
   choices = c("Item 1", "Item 2", "Item 3")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-list-group list-group list-group-horizontal">
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 1">
-}}
-
-
-Item 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 2">
-}}
-
-
-Item 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Item 3">
-}}
-
-
-Item 3\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
+<button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
+<button class="list-group-item list-group-item-action" value="Item 3">Item 3</button>
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

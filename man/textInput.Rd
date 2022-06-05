@@ -90,33 +90,7 @@ indicating how the input's value is invalid, defaults to \code{NULL}.}
 
 \item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 
-\item{left}{A character vector specifying static addons or
-\code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons. Addons
-affect the reactive value of the group input, see the Details section below
-for more information.
-
-\strong{\code{left} is character or \code{right} is character}
-
-If \code{left} or \code{right} are character vectors, then the group input functions
-like a text input. The value will update and trigger a reactive event when
-the text box is modified. The group input's reactive value is the
-concatenation of the static addons specified by \code{left} or \code{right} and the
-value of the text input.
-
-\strong{\code{left} is button or \code{right} is button}
-
-The button does not change the value of the group input. However, the input
-no longer triggers event when the text box is updated. Instead the value is
-updated when a button is clicked. Static addons are still applied to the
-group input value.
-
-\strong{\code{left} is a dropdown or \code{right} is a dropdown}
-
-The value of the group input does chance depending on the clicked dropdown
-menu item. The value of the input group is the concatenation of the
-dropdown input value, the value of the text input, and any static addons.}
-
-\item{right}{A character vector specifying static addons or
+\item{left, right}{A character vector specifying static addons or
 \code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons. Addons
 affect the reactive value of the group input, see the Details section below
 for more information.
@@ -152,90 +126,44 @@ input.
 the step amount. Use \code{updateTextInput()} to update a number input.
 }
 \details{
-\subsection{Getting started}{\if{html}{\out{<div class="r">}}\preformatted{textInput(
+\subsection{Getting started}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{textInput(
   id = NULL,
   placeholder = "Placeholder ..."
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-textual">
-}}
-\if{html}{\out{
 <input class="form-control" type="text" placeholder="Placeholder ..." autocomplete="off"/>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
 }}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-\if{html}{\out{<div class="r">}}\preformatted{numberInput(
+
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{numberInput(
   id = NULL,
   placeholder = "Number"
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-textual">
-}}
-\if{html}{\out{
 <input class="form-control" type="number" placeholder="Number" autocomplete="off" step="1"/>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Specify \code{min}, \code{max}, and \code{step}}{\preformatted{numberInput(
+\subsection{Specify \code{min}, \code{max}, and \code{step}}{
+
+\if{html}{\out{<div class="sourceCode">}}\preformatted{numberInput(
   id = NULL,
   min = 1,
   max = 10,
   step = 2
 )
-}
+}\if{html}{\out{</div>}}
 }
 }
 \seealso{

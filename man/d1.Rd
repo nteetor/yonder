@@ -24,26 +24,11 @@ Display headings are not meant to replace the standard HTML heading tags,
 they are a stand out alternative for eye-catching titles.
 }
 \details{
-\subsection{Getting started}{\if{html}{\out{<div class="r">}}\preformatted{d4("Display 4")
+\subsection{Getting started}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{d4("Display 4")
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<h1 class="display-4">
-}}
-
-
-Display 4\if{html}{\out{
-</h1>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
+<h1 class="display-4">Display 4</h1>
 }}
 
 }

@@ -51,7 +51,9 @@ are treated as flex items.
 \subsection{Getting started}{
 
 This section needs pretty specific examples of how to use flex. I don’t
-know that people will want a tutorial on flex.\if{html}{\out{<div class="r">}}\preformatted{flex(
+know that people will want a tutorial on flex.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{flex(
 
 )
 }\if{html}{\out{</div>}}
@@ -62,7 +64,9 @@ know that people will want a tutorial on flex.\if{html}{\out{<div class="r">}}\p
 Many of \code{flex()}’s arguments are viewport responsive and below we will
 see how useful this can be. On small screens the flex items are placed
 vertically and can occupy the full width of the mobile device. On medium
-or larger screens the items are placed horizontally once again.\if{html}{\out{<div class="r">}}\preformatted{div(
+or larger screens the items are placed horizontally once again.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   .style \%>\%
     display("flex") \%>\%
     flex(
@@ -81,52 +85,19 @@ or larger screens the items are placed horizontally once again.\if{html}{\out{<d
     border()
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="d-flex flex-column flex-md-row bg-secondary border">
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
 </div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 
 \emph{Resize the browser for this example.}
 
-You can keep items as a column by specifying only \code{"column"}.\if{html}{\out{<div class="r">}}\preformatted{div(
+You can keep items as a column by specifying only \code{"column"}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   .style \%>\%
     display("flex") \%>\%
     flex("column"),  # <-
@@ -141,46 +112,11 @@ You can keep items as a column by specifying only \code{"column"}.\if{html}{\out
     border()
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="d-flex flex-column">
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
 </div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
@@ -189,7 +125,9 @@ A flex item\if{html}{\out{
 
 Below is a series of examples showing how to change the horizontal
 alignment of your flex items. Let’s start by pushing items to the
-beginning of their parent container.\if{html}{\out{<div class="r">}}\preformatted{div(
+beginning of their parent container.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   .style \%>\%
     display("flex") \%>\%
     flex(justify = "start"),  # <-
@@ -207,58 +145,18 @@ beginning of their parent container.\if{html}{\out{<div class="r">}}\preformatte
     border()
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="d-flex justify-content-start">
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
 </div>
 }}
-\if{html}{\out{
-<div class="p-3 border">
-}}
 
 
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
+We can also push items to the \strong{end}.
 
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-
-
-We can also push items to the \strong{end}.\if{html}{\out{<div class="r">}}\preformatted{div(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   .style \%>\%
     display("flex") \%>\%
     flex(justify = "end"),  # <-
@@ -276,58 +174,18 @@ We can also push items to the \strong{end}.\if{html}{\out{<div class="r">}}\pref
     border()
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="d-flex justify-content-end">
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
 </div>
 }}
-\if{html}{\out{
-<div class="p-3 border">
-}}
 
 
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
+Without using a table layout we can \strong{center} items.
 
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-
-
-Without using a table layout we can \strong{center} items.\if{html}{\out{<div class="r">}}\preformatted{div(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   .style \%>\%
     display("flex") \%>\%
     flex(justify = "center"),  # <-
@@ -345,58 +203,18 @@ Without using a table layout we can \strong{center} items.\if{html}{\out{<div cl
     border()
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="d-flex justify-content-center">
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
 </div>
 }}
-\if{html}{\out{
-<div class="p-3 border">
-}}
 
 
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
+You can also put space \strong{between} items
 
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-
-
-You can also put space \strong{between} items\if{html}{\out{<div class="r">}}\preformatted{div(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   .style \%>\%
     display("flex") \%>\%
     flex(justify = "between"),  # <-
@@ -414,58 +232,18 @@ You can also put space \strong{between} items\if{html}{\out{<div class="r">}}\pr
     border()
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="d-flex justify-content-between">
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
 </div>
 }}
-\if{html}{\out{
-<div class="p-3 border">
-}}
 
 
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
+… or put space \strong{around} items.
 
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-
-
-… or put space \strong{around} items.\if{html}{\out{<div class="r">}}\preformatted{div(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   .style \%>\%
     display("flex") \%>\%
     flex(justify = "around"),  # <-
@@ -483,54 +261,12 @@ A flex item\if{html}{\out{
     border()
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="d-flex justify-content-around">
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
 </div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 
@@ -538,7 +274,9 @@ The \code{"between"} and \code{"around"} values come from the original CSS value
 \code{"space-between"} and \code{"space-around"}.
 \subsection{Wrap onto new lines}{
 
-Using flexbox we can also control how items wrap onto new lines.\if{html}{\out{<div class="r">}}\preformatted{div(
+Using flexbox we can also control how items wrap onto new lines.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   .style \%>\%
     display("flex") \%>\%
     flex(wrap = TRUE),
@@ -556,54 +294,12 @@ Using flexbox we can also control how items wrap onto new lines.\if{html}{\out{<
     border()
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="d-flex flex-wrap">
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
+<div class="p-3 border">A flex item</div>
 </div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div class="p-3 border">
-}}
-
-
-A flex item\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

@@ -65,7 +65,9 @@ of a nav input is \code{NULL} or a singleton character string. The value of any
 menus in the nav input must be retrieved with its own reactive id.
 }
 \details{
-\subsection{Nav styled as tabs}{\if{html}{\out{<div class="r">}}\preformatted{navInput(
+\subsection{Nav styled as tabs}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{navInput(
   id = "tabs1",
   choices = c(
     "Tab 1",
@@ -76,138 +78,48 @@ menus in the nav input must be retrieved with its own reactive id.
   appearance = "tabs"
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <ul class="yonder-nav nav nav-tabs" id="tabs1">
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link active" value="Tab 1">
-}}
-
-
-Tab 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link active" value="Tab 1">Tab 1</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="Tab 2">
-}}
-
-
-Tab 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="Tab 2">Tab 2</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="Tab 3">
-}}
-
-
-Tab 3\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="Tab 3">Tab 3</button>
 </li>
-}}
-\if{html}{\out{
 </ul>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Nav styled as pills}{\if{html}{\out{<div class="r">}}\preformatted{navInput(
+\subsection{Nav styled as pills}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{navInput(
   id = "tabs2",
   choices = paste("Tab", 1:3),
   selected = "Tab 1",
   appearance = "pills"
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <ul class="yonder-nav nav nav-pills" id="tabs2">
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link active" value="Tab 1">
-}}
-
-
-Tab 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link active" value="Tab 1">Tab 1</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="Tab 2">
-}}
-
-
-Tab 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="Tab 2">Tab 2</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="Tab 3">
-}}
-
-
-Tab 3\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="Tab 3">Tab 3</button>
 </li>
-}}
-\if{html}{\out{
 </ul>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Nav with dropdown}{\if{html}{\out{<div class="r">}}\preformatted{navInput(
+\subsection{Nav with dropdown}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{navInput(
   id = "tabs3",
   choices = list(
     "Tab 1",
@@ -224,91 +136,28 @@ Tab 3\if{html}{\out{
   values = c("tab1", "tab2", "tab3")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <ul class="yonder-nav nav" id="tabs3">
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link active" value="tab1">
-}}
-
-
-Tab 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link active" value="tab1">Tab 1</button>
 </li>
-}}
-\if{html}{\out{
 <li class="yonder-menu dropdown nav-item" id="menu1">
-}}
-\if{html}{\out{
-<button class="btn dropdown-toggle nav-link btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="tab2">
-}}
-
-
-Tab 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="btn dropdown-toggle nav-link btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="tab2">Tab 2</button>
 <div class="dropdown-menu">
-}}
-\if{html}{\out{
-<button class="dropdown-item" type="button" value="Action">
-}}
-
-
-Action\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" type="button" value="Another action">
-}}
-
-
-Another action\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="dropdown-item" type="button" value="Action">Action</button>
+<button class="dropdown-item" type="button" value="Another action">Another action</button>
 </div>
-}}
-\if{html}{\out{
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="tab3">
-}}
-
-
-Tab 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="tab3">Tab 2</button>
 </li>
-}}
-\if{html}{\out{
 </ul>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Full width nav input}{\if{html}{\out{<div class="r">}}\preformatted{navInput(
+\subsection{Full width nav input}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{navInput(
   id = "tabs4",
   choices = paste("Tab", 1:5),
   values = paste0("tab", 1:5),
@@ -316,161 +165,47 @@ Tab 2\if{html}{\out{
   fill = TRUE
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <ul class="yonder-nav nav nav-fill nav-pills" id="tabs4">
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link active" value="tab1">
-}}
-
-
-Tab 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link active" value="tab1">Tab 1</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="tab2">
-}}
-
-
-Tab 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="tab2">Tab 2</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="tab3">
-}}
-
-
-Tab 3\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="tab3">Tab 3</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="tab4">
-}}
-
-
-Tab 4\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="tab4">Tab 4</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="tab5">
-}}
-
-
-Tab 5\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="tab5">Tab 5</button>
 </li>
-}}
-\if{html}{\out{
 </ul>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Centering a nav input}{\if{html}{\out{<div class="r">}}\preformatted{navInput(
+\subsection{Centering a nav input}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{navInput(
   .style \%>\%
     flex(justify = "center"),
   id = NULL,
   choices = c("Tab 1", "Tab 2", "Tab 3")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <ul class="yonder-nav nav justify-content-center">
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link active" value="Tab 1">
-}}
-
-
-Tab 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link active" value="Tab 1">Tab 1</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="Tab 2">
-}}
-
-
-Tab 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="Tab 2">Tab 2</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="Tab 3">
-}}
-
-
-Tab 3\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="Tab 3">Tab 3</button>
 </li>
-}}
-\if{html}{\out{
 </ul>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

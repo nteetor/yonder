@@ -116,134 +116,54 @@ to change the reactivity or value of the input, see Details for more
 information.
 }
 \details{
-\subsection{Getting started}{\if{html}{\out{<div class="r">}}\preformatted{selectInput(
+\subsection{Getting started}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{selectInput(
   id = "select1",
   choices = c("Choice 1", "Choice 2", "Choice 3"),
   values = as.character(c(1, 2, 3))
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<div id="select1" class="yonder-select">
-}}
-\if{html}{\out{
+<div class="yonder-select" id="select1">
 <input type="text" class="form-control custom-select" data-toggle="dropdown" data-boundary="window" placeholder="Choice 1"/>
-}}
-\if{html}{\out{
 <div class="dropdown-menu">
-}}
-\if{html}{\out{
-<button class="dropdown-item active" value="1">
-}}
-
-
-Choice 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="2">
-}}
-
-
-Choice 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="3">
-}}
-
-
-Choice 3\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="dropdown-item active" value="1">Choice 1</button>
+<button class="dropdown-item" value="2">Choice 2</button>
+<button class="dropdown-item" value="3">Choice 3</button>
 </div>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Group select input}{\if{html}{\out{<div class="r">}}\preformatted{groupSelectInput(
+\subsection{Group select input}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{groupSelectInput(
   id = "select2",
   choices = as.character(1:5),
   left = "$",
   right = ".00"
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<div id="select2" class="yonder-group-select input-group">
-}}
-\if{html}{\out{
+<div class="yonder-group-select input-group" id="select2">
 <div class="input-group-prepend">
-}}
-
-
-\if{html}{\out{<span class="input-group-text">}}$\if{html}{\out{</span>}}\if{html}{\out{
+<span class="input-group-text">$</span>
 </div>
-}}
-
-
-\if{html}{\out{<select class="custom-select">}} \if{html}{\out{<option selected value="1">}}1\if{html}{\out{</option>}}\if{html}{\out{
-<option value="2">2</option> <option value="3">3</option>
-<option value="4">4</option> <option value="5">5</option> </select>
-}}
-\if{html}{\out{
+<select class="custom-select">
+<option selected value="1">1</option>
+<option value="2">2</option>
+<option value="3">3</option>
+<option value="4">4</option>
+<option value="5">5</option>
+</select>
 <div class="input-group-append">
-}}
-
-
-\if{html}{\out{<span class="input-group-text">}}.00\if{html}{\out{</span>}}\if{html}{\out{
+<span class="input-group-text">.00</span>
 </div>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

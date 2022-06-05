@@ -40,7 +40,9 @@ collapsible pane first wrap the pane in another element and add padding to
 this new element.
 }
 \section{App with collapse}{
-\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
+
+
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{ui <- container(
   buttonInput(
     id = "demo",
     label = "Toggle collapse"

@@ -68,74 +68,36 @@ A stylized radio input. A reactive input with multiple choices where only one
 choice and value at most may be selected.
 }
 \details{
-\subsection{Getting started}{\if{html}{\out{<div class="r">}}\preformatted{radioInput(
+\subsection{Getting started}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{radioInput(
   id = NULL,
   choices = c("Choice 1", "Choice 2", "Choice 3")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-radio">
-}}
-\if{html}{\out{
 <div class="custom-control custom-radio">
-}}
-\if{html}{\out{
 <input class="custom-control-input" type="radio" id="radio-433-345" value="Choice 1" checked autocomplete="off"/>
 <label class="custom-control-label" for="radio-433-345">Choice 1</label>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 <div class="custom-control custom-radio">
-}}
-\if{html}{\out{
 <input class="custom-control-input" type="radio" id="radio-665-165" value="Choice 2" autocomplete="off"/>
 <label class="custom-control-label" for="radio-665-165">Choice 2</label>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 <div class="custom-control custom-radio">
-}}
-\if{html}{\out{
 <input class="custom-control-input" type="radio" id="radio-332-323" value="Choice 3" autocomplete="off"/>
 <label class="custom-control-label" for="radio-332-323">Choice 3</label>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Inline input}{\if{html}{\out{<div class="r">}}\preformatted{radioInput(
+\subsection{Inline input}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{radioInput(
   id = NULL,
   choices = c(
     "Choice 1",
@@ -145,64 +107,22 @@ choice and value at most may be selected.
   inline = TRUE  # <-
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-radio">
-}}
-\if{html}{\out{
 <div class="custom-control custom-radio custom-control-inline">
-}}
-\if{html}{\out{
 <input class="custom-control-input" type="radio" id="radio-274-68" value="Choice 1" checked autocomplete="off"/>
 <label class="custom-control-label" for="radio-274-68">Choice 1</label>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 <div class="custom-control custom-radio custom-control-inline">
-}}
-\if{html}{\out{
 <input class="custom-control-input" type="radio" id="radio-187-927" value="Choice 2" autocomplete="off"/>
 <label class="custom-control-label" for="radio-187-927">Choice 2</label>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 <div class="custom-control custom-radio custom-control-inline">
-}}
-\if{html}{\out{
 <input class="custom-control-input" type="radio" id="radio-230-504" value="Choice 3" autocomplete="off"/>
 <label class="custom-control-label" for="radio-230-504">Choice 3</label>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

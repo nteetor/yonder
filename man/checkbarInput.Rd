@@ -48,42 +48,35 @@ buttons, but with a checked or highlighted state.
 \details{
 \subsection{Getting started}{
 
-Checkbars will expand to fill the width of their parent element.\if{html}{\out{<div class="r">}}\preformatted{checkbarInput(
+Checkbars will expand to fill the width of their parent element.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{checkbarInput(
   .style \%>\%
     background("secondary"),
   id = NULL,
   choices = c("Choice 1", "Choice 2", "Choice 3")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-checkbar btn-group btn-group-toggle d-flex bg-secondary" data-toggle="buttons">
-}}
-\if{html}{\out{
 <label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 1"/> Choice 1
-</label> <label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 2"/> Choice 2
-</label> <label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 3"/> Choice 3
+<input type="checkbox" autocomplete="off" value="Choice 1"/>
+Choice 1
 </label>
-}}
-\if{html}{\out{
+<label class="btn">
+<input type="checkbox" autocomplete="off" value="Choice 2"/>
+Choice 2
+</label>
+<label class="btn">
+<input type="checkbox" autocomplete="off" value="Choice 3"/>
+Choice 3
+</label>
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 
-If you want to adjust the width you can use the \code{width()} utility.\if{html}{\out{<div class="r">}}\preformatted{checkbarInput(
+If you want to adjust the width you can use the \code{width()} utility.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{checkbarInput(
   .style \%>\%
     background("secondary") \%>\%
     width(50),  # <-
@@ -91,74 +84,54 @@ If you want to adjust the width you can use the \code{width()} utility.\if{html}
   choices = c("Choice 1", "Choice 2", "Choice 3")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-checkbar btn-group btn-group-toggle d-flex bg-secondary w-50" data-toggle="buttons">
-}}
-\if{html}{\out{
 <label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 1"/> Choice 1
-</label> <label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 2"/> Choice 2
-</label> <label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 3"/> Choice 3
+<input type="checkbox" autocomplete="off" value="Choice 1"/>
+Choice 1
 </label>
-}}
-\if{html}{\out{
+<label class="btn">
+<input type="checkbox" autocomplete="off" value="Choice 2"/>
+Choice 2
+</label>
+<label class="btn">
+<input type="checkbox" autocomplete="off" value="Choice 3"/>
+Choice 3
+</label>
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
 \subsection{Background color}{
 
-Like other inputs, checkbar inputs apply modified background styles\if{html}{\out{<div class="r">}}\preformatted{checkbarInput(
+Like other inputs, checkbar inputs apply modified background styles
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{checkbarInput(
   .style \%>\%
     background("info"),
   id = NULL,
   choices = c("Choice 1", "Choice 2")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-checkbar btn-group btn-group-toggle d-flex bg-info" data-toggle="buttons">
-}}
-\if{html}{\out{
 <label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 1"/> Choice 1
-</label> <label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 2"/> Choice 2
+<input type="checkbox" autocomplete="off" value="Choice 1"/>
+Choice 1
 </label>
-}}
-\if{html}{\out{
+<label class="btn">
+<input type="checkbox" autocomplete="off" value="Choice 2"/>
+Choice 2
+</label>
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
 \subsection{Labelling}{
 
-Use a \code{formGroup()} to add a label or help text to checkbar input.\if{html}{\out{<div class="r">}}\preformatted{formGroup(
+Use a \code{formGroup()} to add a label or help text to checkbar input.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{formGroup(
   label = "Label",  # <-
   checkbarInput(
     .style \%>\%
@@ -170,39 +143,20 @@ Use a \code{formGroup()} to add a label or help text to checkbar input.\if{html}
   help = "Help text about the input"
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="form-group">
-}}
-
-
-\if{html}{\out{<label>}}Label\if{html}{\out{</label>}}\if{html}{\out{
+<label>Label</label>
 <div class="yonder-checkbar btn-group btn-group-toggle d-flex border border-dark text-light" data-toggle="buttons">
-}}
-\if{html}{\out{
 <label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 1"/> Choice 1
-</label> <label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 2"/> Choice 2
+<input type="checkbox" autocomplete="off" value="Choice 1"/>
+Choice 1
 </label>
-}}
-\if{html}{\out{
+<label class="btn">
+<input type="checkbox" autocomplete="off" value="Choice 2"/>
+Choice 2
+</label>
 </div>
-}}
-
-
-\if{html}{\out{<small class="form-text text-muted">}}Help text about the input\if{html}{\out{</small>}}\if{html}{\out{
+<small class="form-text text-muted">Help text about the input</small>
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

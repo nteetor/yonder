@@ -40,7 +40,9 @@ when you do not have a new pane to show, but want to hide the current active
 pane.
 }
 \section{App with pills}{
-\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
+
+
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{ui <- container(
   navInput(
     id = "tabs",
     choices = paste("Tab", 1:3),
@@ -85,7 +87,9 @@ shinyApp(ui, server)
 }
 
 \section{App with dropdown}{
-\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
+
+
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{ui <- container(
   navInput(
     id = "tabs",
     choices = list(
@@ -139,7 +143,9 @@ shinyApp(ui, server)
 }
 
 \section{App with multiple sets of panes}{
-\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
+
+
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{ui <- container(
   navInput(
     id = "tabs",
     choices = paste("Tab", 1:3),

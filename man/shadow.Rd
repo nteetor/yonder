@@ -18,7 +18,9 @@ elements include a shadow to help distinguish them. Use \code{"none"} to remove 
 element's shadow.
 }
 \details{
-\subsection{Getting started}{\if{html}{\out{<div class="r">}}\preformatted{div(
+\subsection{Getting started}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   navbar(
     .style \%>\%
       background("dark") \%>\%
@@ -32,53 +34,28 @@ element's shadow.
     "venenatis vestibulum.")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div>
-}}
-\if{html}{\out{
 <nav class="navbar navbar-expand navbar-light bg-dark text-light mb-3">
-}}
-
-
-\if{html}{\out{<a class="navbar-brand" href="#">}}Navbar\if{html}{\out{</a>}}
-\if{html}{\out{<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-433-345" aria-controls="nav-content-433-345" aria-expanded="false" aria-label="Toggle navigation">}}
-\if{html}{\out{<span class="navbar-toggler-icon">}}\if{html}{\out{</span>}} \if{html}{\out{</button>}}\if{html}{\out{
-<div id="nav-content-433-345" class="collapse navbar-collapse">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
+<a class="navbar-brand" href="#">Navbar</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-433-345" aria-controls="nav-content-433-345" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="nav-content-433-345"></div>
 </nav>
-}}
-\if{html}{\out{
 <p>
-}}
-
-
-Cras mattis consectetur purus sit amet fermentum. Donec sed odio dui.
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean eu leo
-quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.\if{html}{\out{
+Cras mattis consectetur purus sit amet fermentum. Donec sed 
+odio dui. Lorem ipsum dolor sit amet, consectetur adipiscing 
+elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam 
+venenatis vestibulum.
 </p>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Shadow sizes}{\if{html}{\out{<div class="r">}}\preformatted{div(
+\subsection{Shadow sizes}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   buttonInput(
     .style \%>\%
       margin(2) \%>\%
@@ -102,46 +79,11 @@ quam. Pellentesque ornare sem lacinia quam venenatis vestibulum.\if{html}{\out{
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div>
-}}
-\if{html}{\out{
-<button autocomplete="off" class="yonder-button btn m-2 shadow-sm" role="button" type="button">
-}}
-
-
-Small\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button autocomplete="off" class="yonder-button btn m-2 shadow" role="button" type="button">
-}}
-
-
-Medium\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button autocomplete="off" class="yonder-button btn m-2 shadow-lg" role="button" type="button">
-}}
-
-
-Large\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn m-2 shadow-sm" role="button" type="button">Small</button>
+<button autocomplete="off" class="yonder-button btn m-2 shadow" role="button" type="button">Medium</button>
+<button autocomplete="off" class="yonder-button btn m-2 shadow-lg" role="button" type="button">Large</button>
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

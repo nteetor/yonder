@@ -26,7 +26,9 @@ device. A button is automatically added to toggle between the collapsed and
 expanded states.
 }
 \details{
-\subsection{Navbar with tabs}{\if{html}{\out{<div class="r">}}\preformatted{div(
+\subsection{Navbar with tabs}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   navbar(
     brand = "Navbar",
     navInput(
@@ -58,100 +60,30 @@ expanded states.
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div>
-}}
-\if{html}{\out{
 <nav class="navbar navbar-expand navbar-light">
-}}
-
-
-\if{html}{\out{<a class="navbar-brand" href="#">}}Navbar\if{html}{\out{</a>}}
-\if{html}{\out{<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-433-345" aria-controls="nav-content-433-345" aria-expanded="false" aria-label="Toggle navigation">}}
-\if{html}{\out{<span class="navbar-toggler-icon">}}\if{html}{\out{</span>}} \if{html}{\out{</button>}}\if{html}{\out{
-<div id="nav-content-433-345" class="collapse navbar-collapse">
-}}
-\if{html}{\out{
+<a class="navbar-brand" href="#">Navbar</a>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-433-345" aria-controls="nav-content-433-345" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div class="collapse navbar-collapse" id="nav-content-433-345">
 <ul class="yonder-nav nav navbar-nav mr-auto">
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link active" value="Home">
-}}
-
-
-Home\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link active" value="Home">Home</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="About">
-}}
-
-
-About\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="About">About</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="Our process">
-}}
-
-
-Our process\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="Our process">Our process</button>
 </li>
-}}
-\if{html}{\out{
 </ul>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 </nav>
-}}
-\if{html}{\out{
 <div class="container-fluid">
-}}
-\if{html}{\out{
-<p>
-}}
-
-
-. . .\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
+<p>. . .</p>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

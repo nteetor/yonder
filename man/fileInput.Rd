@@ -38,84 +38,35 @@ Upload files to the server.
 \details{
 \subsection{Getting started}{
 
-File inputs come with default placeholder text.\if{html}{\out{<div class="r">}}\preformatted{fileInput(
+File inputs come with default placeholder text.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fileInput(
   id = NULL
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-file custom-file">
-}}
-\if{html}{\out{
 <input type="file" class="custom-file-input" multiple autocomplete="off"/>
-<label class="custom-file-label" data-browse="Browse">Choose
-file</label>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<label class="custom-file-label" data-browse="Browse">Choose file</label>
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 
-You can also specify different text.\if{html}{\out{<div class="r">}}\preformatted{fileInput(
+You can also specify different text.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{fileInput(
   id = NULL,
   placeholder = "Pick a file",
   browse = "Click"
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-file custom-file">
-}}
-\if{html}{\out{
 <input type="file" class="custom-file-input" multiple autocomplete="off"/>
 <label class="custom-file-label" data-browse="Click">Pick a file</label>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

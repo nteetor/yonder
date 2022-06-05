@@ -24,7 +24,9 @@ they are ignored.
 
 In most modern browsers you want to horizontally center a tag element
 using the flex layout. Alternatively, you can horizontally center an
-element using \code{margin(.., right = "auto", left = "auto")}.\if{html}{\out{<div class="r">}}\preformatted{div(
+element using \code{margin(.., right = "auto", left = "auto")}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   .style \%>\%
     margin(t = 2, r = "auto", b = 2, l = "auto") \%>\%  # <-
     padding(3) \%>\%
@@ -32,24 +34,7 @@ element using \code{margin(.., right = "auto", left = "auto")}.\if{html}{\out{<d
   "Nam a sapien. Integer placerat tristique nisl."
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<div class="mt-2 mr-auto mb-2 ml-auto p-3 bg-info">
-}}
-
-
-Nam a sapien. Integer placerat tristique nisl.\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
+<div class="mt-2 mr-auto mb-2 ml-auto p-3 bg-info">Nam a sapien. Integer placerat tristique nisl.</div>
 }}
 
 }
@@ -60,7 +45,9 @@ Inline form elements automatically use the flex layout providing you a
 means of creating condensed sets of inputs. However, you may need to
 adjust the spacing of the form’s child elements.
 
-Here is an inline form \strong{without} any additional spacing applied.\if{html}{\out{<div class="r">}}\preformatted{formInput(
+Here is an inline form \strong{without} any additional spacing applied.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{formInput(
   id = NULL,
   inline = TRUE,
   textInput(
@@ -79,92 +66,31 @@ Here is an inline form \strong{without} any additional spacing applied.\if{html}
   formSubmit("Login", "login")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <form class="yonder-form form-inline">
-}}
-\if{html}{\out{
-<div id="name" class="yonder-textual">
-}}
-\if{html}{\out{
+<div class="yonder-textual" id="name">
 <input class="form-control" type="text" placeholder="Full name" autocomplete="off"/>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div id="username" class="yonder-group-text input-group">
-}}
-\if{html}{\out{
+<div class="yonder-group-text input-group" id="username">
 <div class="input-group-prepend">
-}}
-
-
-\if{html}{\out{<span class="input-group-text">}}@@\if{html}{\out{</span>}}\if{html}{\out{
+<span class="input-group-text">@@</span>
 </div>
-}}
-\if{html}{\out{
 <input type="text" class="form-control" placeholder="Username" autocomplete="off"/>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div id="remember" class="yonder-checkbox" data-choice="Remember me">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<button class="yonder-form-submit btn btn-blue" value="login">
-}}
-
-
-Login\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<div class="yonder-checkbox" id="remember" choice="Remember me"></div>
+<button class="yonder-form-submit btn btn-blue" value="login">Login</button>
 </form>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 
 Without any adjustments the layout is not great. But, \strong{with} some
 styling we can make this form sparkle. Notice we are also adjusting the
-default submit button added to the form input.\if{html}{\out{<div class="r">}}\preformatted{formInput(
+default submit button added to the form input.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{formInput(
   id = NULL,
   inline = TRUE,
   textInput(
@@ -194,86 +120,23 @@ default submit button added to the form input.\if{html}{\out{<div class="r">}}\p
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <form class="yonder-form form-inline">
-}}
-\if{html}{\out{
-<div id="name" class="yonder-textual mr-sm-2 mb-2">
-}}
-\if{html}{\out{
+<div class="yonder-textual mr-sm-2 mb-2" id="name">
 <input class="form-control" type="text" placeholder="Full name" autocomplete="off"/>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div id="username" class="yonder-group-text input-group mr-sm-2 mb-2">
-}}
-\if{html}{\out{
+<div class="yonder-group-text input-group mr-sm-2 mb-2" id="username">
 <div class="input-group-prepend">
-}}
-
-
-\if{html}{\out{<span class="input-group-text">}}@@\if{html}{\out{</span>}}\if{html}{\out{
+<span class="input-group-text">@@</span>
 </div>
-}}
-\if{html}{\out{
 <input type="text" class="form-control" placeholder="Username" autocomplete="off"/>
-}}
-\if{html}{\out{
-<div class="valid-feedback">
-}}
-\if{html}{\out{
+<div class="valid-feedback"></div>
+<div class="invalid-feedback"></div>
 </div>
-}}
-\if{html}{\out{
-<div class="invalid-feedback">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<div id="remember" class="yonder-checkbox mr-sm-2 mb-2" data-choice="Remember me">
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<button class="yonder-form-submit btn btn-blue mb-2" value="login">
-}}
-
-
-Login\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<div choice="Remember me" class="yonder-checkbox mr-sm-2 mb-2" id="remember"></div>
+<button class="yonder-form-submit btn btn-blue mb-2" value="login">Login</button>
 </form>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

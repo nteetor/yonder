@@ -42,7 +42,9 @@ affecting color, weight, case, or alignment.
 The font utility is used to change text colors, font weights, and more.
 }
 
-\subsection{Changing text color}{\if{html}{\out{<div class="r">}}\preformatted{card(
+\subsection{Changing text color}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   .style \%>\%
     font("primary") \%>\%
     border("primary"),
@@ -53,112 +55,42 @@ The font utility is used to change text colors, font weights, and more.
   p("Aliquam posuere.")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card text-primary border border-primary">
-}}
-\if{html}{\out{
 <div class="card-header">
-}}
-\if{html}{\out{
-<h3>
-}}
-
-
-Header\if{html}{\out{
-</h3>
-}}
-\if{html}{\out{
+<h3>Header</h3>
 </div>
-}}
-\if{html}{\out{
 <div class="card-body">
-}}
-\if{html}{\out{
 <p class="card-text">
-}}
-
-
-Nullam tristique diam non turpis. Pellentesque dapibus suscipit ligula.
-Nullam eu ante vel est convallis dignissim.\if{html}{\out{
+Nullam tristique diam non turpis.
+Pellentesque dapibus suscipit ligula.
+Nullam eu ante vel est convallis dignissim.
 </p>
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Aliquam posuere.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
+<p class="card-text">Aliquam posuere.</p>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Changing font weight}{\if{html}{\out{<div class="r">}}\preformatted{p(
+\subsection{Changing font weight}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{p(
   .style \%>\%
     font(weight = "bold"),
   "Curabitur lacinia pulvinar nibh."
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<p class="font-weight-bold">
+<p class="font-weight-bold">Curabitur lacinia pulvinar nibh.</p>
 }}
 
 
-Curabitur lacinia pulvinar nibh.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-\if{html}{\out{<div class="r">}}\preformatted{p(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{p(
   .style \%>\%
     font(weight = "light"),
   "Proin quam nisl, tincidunt et."
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<p class="font-weight-light">
-}}
-
-
-Proin quam nisl, tincidunt et.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
+<p class="font-weight-light">Proin quam nisl, tincidunt et.</p>
 }}
 
 }

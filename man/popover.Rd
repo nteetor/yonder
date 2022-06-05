@@ -48,7 +48,9 @@ element with an HTML id. Popovers are great for explaining inputs and giving
 hints to the users. Popovers are hidden with \code{closePopover()}.
 }
 \section{Example application}{
-\if{html}{\out{<div class="R">}}\preformatted{ui <- container(
+
+
+\if{html}{\out{<div class="sourceCode R">}}\preformatted{ui <- container(
   buttonInput("showHelp", "Help!"),
   div(
     id = "textBlock1",

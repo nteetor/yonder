@@ -7,6 +7,8 @@
 border(x, color = NULL, sides = "all", round = NULL)
 }
 \arguments{
+\item{x}{A tag element or \link{.style} pronoun.}
+
 \item{color}{One of \code{"primary"}, \code{"secondary"}, \code{"success"}, \code{"info"}, \code{"warning"}, \code{"danger"}, \code{"light"} or \code{"dark"} specifying the border color of the tag element, defaults to \code{NULL}.}
 
 \item{sides}{One or more of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"} or
@@ -16,8 +18,6 @@ border(x, color = NULL, sides = "all", round = NULL)
 \item{round}{One or more of \code{"top"}, \code{"right"}, \code{"bottom"}, \code{"left"},
 \code{"circle"}, \code{"all"}, or \code{"none"} specifying how to round the border(s) of a
 tag element, defaults to \code{NULL}, in which case the argument is ignored.}
-
-\item{tag}{A tag element.}
 }
 \description{
 Use \code{border()} to add or modify tag element borders.
@@ -25,7 +25,9 @@ Use \code{border()} to add or modify tag element borders.
 \details{
 \subsection{Cards}{
 
-Card borders and font colors.\if{html}{\out{<div class="r">}}\preformatted{card(
+Card borders and font colors.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   .style \%>\% 
     border("primary") \%>\% 
     font("primary"),
@@ -34,52 +36,13 @@ Card borders and font colors.\if{html}{\out{<div class="r">}}\preformatted{card(
   p("Etiam porta sem malesuada magna mollis euismod.")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card border border-primary text-primary">
-}}
-\if{html}{\out{
-<div class="card-header">
-}}
-
-
-Primary\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
+<div class="card-header">Primary</div>
 <div class="card-body">
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Etiam porta sem malesuada magna mollis euismod.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
+<p class="card-text">Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
+<p class="card-text">Etiam porta sem malesuada magna mollis euismod.</p>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

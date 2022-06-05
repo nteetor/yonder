@@ -19,7 +19,9 @@ pass an \code{id} argument as part of \code{...}.
 \subsection{Combining badges}{
 
 Badges may be combined with other elements. They can be placed inside
-buttons.\if{html}{\out{<div class="r">}}\preformatted{buttonInput(
+buttons.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonInput(
   .style \%>\%
     background("primary"),
   id = NULL,
@@ -27,28 +29,16 @@ buttons.\if{html}{\out{<div class="r">}}\preformatted{buttonInput(
   badge(2) \%>\% background("light")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <button autocomplete="off" class="yonder-button btn btn-primary" role="button" type="button">
-}}
-
-
-Counter \if{html}{\out{<span class="badge badge-light">}}2\if{html}{\out{</span>}}\if{html}{\out{
+Counter
+<span class="badge badge-light">2</span>
 </button>
 }}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
 
 
-You can also pair badges with list groups.\if{html}{\out{<div class="r">}}\preformatted{listGroupItem <- function(...) \{
+You can also pair badges with list groups.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{listGroupItem <- function(...) \{
   div(...) \%>\%
     width(100) \%>\%
     display("flex") \%>\%
@@ -66,58 +56,24 @@ listGroupInput(
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="yonder-list-group list-group w-50 list-group-secondary">
-}}
-
-
-\if{html}{\out{<button class="list-group-item list-group-item-action" value="&lt;div class=&quot;w-100 d-flex justify-content-between align-items-center&quot;&gt;
+<button class="list-group-item list-group-item-action" value="&lt;div class=&quot;w-100 d-flex justify-content-between align-items-center&quot;&gt;&#10;  Mail&#10;  &lt;span class=&quot;badge&quot;&gt;&#10;    &lt;i class=&quot;fas fa-envelope fa-lg&quot;&gt;&lt;/i&gt;&#10;  &lt;/span&gt;&#10;&lt;/div&gt;">
+<div class="w-100 d-flex justify-content-between align-items-center">
 Mail
-&lt;span class=&quot;badge&quot;&gt;
-&lt;i class=&quot;fas fa-envelope fa-lg&quot;&gt;&lt;/i&gt;
-&lt;/span&gt;
-&lt;/div&gt;">}}\if{html}{\out{
-<div class="w-100 d-flex justify-content-between align-items-center">
-}}
-
-
-Mail \if{html}{\out{<span class="badge">}} \if{html}{\out{<i class="fas fa-envelope fa-lg">}}\if{html}{\out{</i>}} \if{html}{\out{</span>}}\if{html}{\out{
+<span class="badge">
+<i class="fas fa-envelope fa-lg"></i>
+</span>
 </div>
-}}
-\if{html}{\out{
 </button>
-}}
-
-
-\if{html}{\out{<button class="list-group-item list-group-item-action" value="&lt;div class=&quot;w-100 d-flex justify-content-between align-items-center&quot;&gt;
+<button class="list-group-item list-group-item-action" value="&lt;div class=&quot;w-100 d-flex justify-content-between align-items-center&quot;&gt;&#10;  Research&#10;  &lt;span class=&quot;badge&quot;&gt;&#10;    &lt;i class=&quot;fas fa-vial fa-lg&quot;&gt;&lt;/i&gt;&#10;  &lt;/span&gt;&#10;&lt;/div&gt;">
+<div class="w-100 d-flex justify-content-between align-items-center">
 Research
-&lt;span class=&quot;badge&quot;&gt;
-&lt;i class=&quot;fas fa-vial fa-lg&quot;&gt;&lt;/i&gt;
-&lt;/span&gt;
-&lt;/div&gt;">}}\if{html}{\out{
-<div class="w-100 d-flex justify-content-between align-items-center">
-}}
-
-
-Research \if{html}{\out{<span class="badge">}} \if{html}{\out{<i class="fas fa-vial fa-lg">}}\if{html}{\out{</i>}} \if{html}{\out{</span>}}\if{html}{\out{
+<span class="badge">
+<i class="fas fa-vial fa-lg"></i>
+</span>
 </div>
-}}
-\if{html}{\out{
 </button>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

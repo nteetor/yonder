@@ -31,40 +31,17 @@ is placed around any number of cards. Additionally, grouping cards with
 \details{
 \subsection{A simple card}{
 
-Cards expand to fill the width of their parent element.\if{html}{\out{<div class="r">}}\preformatted{card(
+Cards expand to fill the width of their parent element.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   p("Praesent fermentum tempor tellus.")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card">
-}}
-\if{html}{\out{
 <div class="card-body">
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Praesent fermentum tempor tellus.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
+<p class="card-text">Praesent fermentum tempor tellus.</p>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
@@ -72,7 +49,9 @@ Praesent fermentum tempor tellus.\if{html}{\out{
 \subsection{Contextual styles}{
 
 Cards include contextual content. Headings 1 through 5 are styled as
-main titles and heading 6 as a subtitle.\if{html}{\out{<div class="r">}}\preformatted{card(
+main titles and heading 6 as a subtitle.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   h5("Title"),
   h6("Subtitle"),
   p("Nullam tempus. Mauris mollis tincidunt felis."),
@@ -83,75 +62,27 @@ main titles and heading 6 as a subtitle.\if{html}{\out{<div class="r">}}\preform
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card">
-}}
-\if{html}{\out{
 <div class="card-body">
-}}
-\if{html}{\out{
-<h5 class="card-title">
-}}
-
-
-Title\if{html}{\out{
-</h5>
-}}
-\if{html}{\out{
-<h6 class="card-subtitle">
-}}
-
-
-Subtitle\if{html}{\out{
-</h6>
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Nullam tempus. Mauris mollis tincidunt felis.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Nullam libero mauris, consequat quis, varius et, dictum id, arcu.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
+<h5 class="card-title">Title</h5>
+<h6 class="card-subtitle">Subtitle</h6>
+<p class="card-text">Nullam tempus. Mauris mollis tincidunt felis.</p>
+<p class="card-text">Nullam libero mauris, consequat quis, varius et, dictum id, arcu.</p>
 </div>
-}}
-\if{html}{\out{
 <div class="card-footer">
-}}
-
-
-\if{html}{\out{<a href="#">}}Link\if{html}{\out{</a>}} \if{html}{\out{<a href="#">}}Link\if{html}{\out{</a>}}\if{html}{\out{
+<a href="#">Link</a>
+<a href="#">Link</a>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
 \subsection{Styling cards}{
 
-Cards can have different borders and fonts.\if{html}{\out{<div class="r">}}\preformatted{card(
+Cards can have different borders and fonts.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   .style \%>\%
     border("info") \%>\%
     font("info"),
@@ -160,54 +91,17 @@ Cards can have different borders and fonts.\if{html}{\out{<div class="r">}}\pref
   p("Cras placerat accumsan nulla.")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card border border-info text-info">
-}}
-\if{html}{\out{
-<div class="card-header">
-}}
-
-
-Donec pretium posuere tellus\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
+<div class="card-header">Donec pretium posuere tellus</div>
 <div class="card-body">
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Donec hendrerit tempor tellus.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Cras placerat accumsan nulla.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
+<p class="card-text">Donec hendrerit tempor tellus.</p>
+<p class="card-text">Cras placerat accumsan nulla.</p>
+</div>
 </div>
 }}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-\if{html}{\out{<div class="r">}}\preformatted{card(
+
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   .style \%>\%
     border("danger") \%>\%
     font("danger"),
@@ -216,56 +110,19 @@ Cras placerat accumsan nulla.\if{html}{\out{
   p("Pellentesque dapibus suscipit ligula.")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card border border-danger text-danger">
-}}
-\if{html}{\out{
 <div class="card-body">
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Aliquam posuere.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Phasellus neque orci, porta a, aliquet quis, semper a, massa.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Pellentesque dapibus suscipit ligula.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
+<p class="card-text">Aliquam posuere.</p>
+<p class="card-text">Phasellus neque orci, porta a, aliquet quis, semper a, massa.</p>
+<p class="card-text">Pellentesque dapibus suscipit ligula.</p>
+</div>
 </div>
 }}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
 
 
-You can also change the background.\if{html}{\out{<div class="r">}}\preformatted{card(
+You can also change the background.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   .style \%>\%
     background("warning"),
   header = "Phasellus lacus",
@@ -274,67 +131,23 @@ You can also change the background.\if{html}{\out{<div class="r">}}\preformatted
   footer = "Nam euismod tellus id erat."
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card bg-warning">
-}}
-\if{html}{\out{
-<div class="card-header">
-}}
-
-
-Phasellus lacus\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
+<div class="card-header">Phasellus lacus</div>
 <div class="card-body">
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Etiam laoreet quam sed arcu.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Etiam vel tortor sodales tellus ultricies commodo.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
+<p class="card-text">Etiam laoreet quam sed arcu.</p>
+<p class="card-text">Etiam vel tortor sodales tellus ultricies commodo.</p>
 </div>
-}}
-\if{html}{\out{
-<div class="card-footer">
-}}
-
-
-Nam euismod tellus id erat.\if{html}{\out{
+<div class="card-footer">Nam euismod tellus id erat.</div>
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
 \subsection{Cards with list groups}{
 
-Combine a list group with a card.\if{html}{\out{<div class="r">}}\preformatted{card(
+Combine a list group with a card.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   listGroupInput(
     id = NULL,
     flush = TRUE,
@@ -351,56 +164,19 @@ Combine a list group with a card.\if{html}{\out{<div class="r">}}\preformatted{c
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card">
-}}
-\if{html}{\out{
 <div class="yonder-list-group list-group list-group-flush">
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="choice1">
-}}
-
-
-Pellentesque tristique imperdiet tortor.\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="choice2">
-}}
-
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit.\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="choice3">
-}}
-
-
-Phasellus purus.\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="list-group-item list-group-item-action" value="choice1">Pellentesque tristique imperdiet tortor.</button>
+<button class="list-group-item list-group-item-action" value="choice2">Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</button>
+<button class="list-group-item list-group-item-action" value="choice3">Phasellus purus.</button>
+</div>
 </div>
 }}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
 
 
-You can include other elements, too.\if{html}{\out{<div class="r">}}\preformatted{card(
+You can include other elements, too.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   h5("Title"),
   listGroupInput(
     id = NULL,
@@ -411,85 +187,26 @@ You can include other elements, too.\if{html}{\out{<div class="r">}}\preformatte
   linkInput(id = NULL, label = "Link")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card">
-}}
-\if{html}{\out{
 <div class="card-body">
-}}
-\if{html}{\out{
-<h5 class="card-title">
-}}
-
-
-Title\if{html}{\out{
-</h5>
-}}
-\if{html}{\out{
+<h5 class="card-title">Title</h5>
 </div>
-}}
-\if{html}{\out{
 <div class="yonder-list-group list-group list-group-flush">
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Choice 1">
-}}
-
-
-Choice 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="list-group-item list-group-item-action" value="Choice 2">
-}}
-
-
-Choice 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="list-group-item list-group-item-action" value="Choice 1">Choice 1</button>
+<button class="list-group-item list-group-item-action" value="Choice 2">Choice 2</button>
 </div>
-}}
-\if{html}{\out{
 <div class="card-body">
-}}
-\if{html}{\out{
-<button class="yonder-link btn btn-link card-link">
-}}
-
-
-Link\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="yonder-link btn btn-link card-link">
-}}
-
-
-Link\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="yonder-link btn btn-link card-link">Link</button>
+<button class="yonder-link btn btn-link card-link">Link</button>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Tabbed content in cards}{\if{html}{\out{<div class="r">}}\preformatted{card(
+\subsection{Tabbed content in cards}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   header = navInput(
     id = "tabs",
     choices = c("Tab 1", "Tab 2", "Tab 3"),
@@ -513,119 +230,41 @@ Link\if{html}{\out{
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card">
-}}
-\if{html}{\out{
 <div class="card-header">
-}}
-\if{html}{\out{
 <ul class="yonder-nav nav nav-tabs card-header-tabs" id="tabs">
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link active" value="Tab 1">
-}}
-
-
-Tab 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link active" value="Tab 1">Tab 1</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="Tab 2">
-}}
-
-
-Tab 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="Tab 2">Tab 2</button>
 </li>
-}}
-\if{html}{\out{
 <li class="nav-item">
-}}
-\if{html}{\out{
-<button class="nav-link btn btn-link" value="Tab 3">
-}}
-
-
-Tab 3\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="nav-link btn btn-link" value="Tab 3">Tab 3</button>
 </li>
-}}
-\if{html}{\out{
 </ul>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 <div class="card-body">
-}}
-\if{html}{\out{
 <div class="tab-content">
-}}
-\if{html}{\out{
-<div id="Phasellus purus." class="tab-pane fade" role="tab-panel">
-}}
-
-
+<div class="tab-pane fade" role="tab-panel" id="Phasellus purus.">
 Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.
-Phasellus purus.\if{html}{\out{
+Phasellus purus.
 </div>
-}}
-\if{html}{\out{
-<div id="Donec at pede. Praesent augue." class="tab-pane fade" role="tab-panel">
-}}
-
-
-Pellentesque tristique imperdiet tortor.\if{html}{\out{
+<div class="tab-pane fade" role="tab-panel" id="Donec at pede. Praesent augue.">Pellentesque tristique imperdiet tortor.</div>
+<div class="tab-pane fade" role="tab-panel" id="Fusce suscipit, wisi nec facilisis facilisis,">
+est dui fermentum leo, quis tempor ligula erat quis odio.
+Donec hendrerit tempor tellus.
 </div>
-}}
-\if{html}{\out{
-<div id="Fusce suscipit, wisi nec facilisis facilisis," class="tab-pane fade" role="tab-panel">
-}}
-
-
-est dui fermentum leo, quis tempor ligula erat quis odio. Donec
-hendrerit tempor tellus.\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
-\subsection{Deck of cards}{\if{html}{\out{<div class="r">}}\preformatted{deck(
+\subsection{Deck of cards}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{deck(
   card(
     .style \%>\%
       background("info"),
@@ -653,116 +292,33 @@ hendrerit tempor tellus.\if{html}{\out{
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card-deck">
-}}
-\if{html}{\out{
 <div class="card bg-info" title="Nullam tristique">
-}}
-\if{html}{\out{
 <div class="card-body">
-}}
-\if{html}{\out{
 <p class="card-text">
-}}
-
-
-Fusce sagittis, libero non molestie mollis, magna orci ultrices dolor,
-at vulputate neque nulla lacinia eros.\if{html}{\out{
+Fusce sagittis, libero non molestie mollis, magna orci ultrices 
+dolor, at vulputate neque nulla lacinia eros.
 </p>
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Nunc rutrum turpis sed pede.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
+<p class="card-text">Nunc rutrum turpis sed pede.</p>
 </div>
-}}
-\if{html}{\out{
-<div class="card-footer">
-}}
-
-
-Cras placerat accumsan nulla.\if{html}{\out{
+<div class="card-footer">Cras placerat accumsan nulla.</div>
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
 <div class="card bg-dark text-light" title="Integer placerat">
-}}
-\if{html}{\out{
 <div class="card-body">
-}}
-\if{html}{\out{
 <p class="card-text">
-}}
-
-
-Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec
-hendrerit tempor tellus.\if{html}{\out{
+Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec 
+hendrerit tempor tellus.
 </p>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-<div class="card-footer">
-}}
-
-
-Cras placerat accumsan nulla.\if{html}{\out{
+<div class="card-footer">Cras placerat accumsan nulla.</div>
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
 <div class="card bg-primary" title="Phasellus neque">
-}}
-\if{html}{\out{
 <div class="card-body">
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Donec at pede. Etiam vel neque nec dui dignissim bibendum.\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
+<p class="card-text">Donec at pede. Etiam vel neque nec dui dignissim bibendum.</p>
 </div>
-}}
-\if{html}{\out{
-<div class="card-footer">
-}}
-
-
-Cras placerat accumsan nulla.\if{html}{\out{
+<div class="card-footer">Cras placerat accumsan nulla.</div>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }

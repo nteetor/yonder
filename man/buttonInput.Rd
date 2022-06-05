@@ -84,123 +84,64 @@ To remove a button or link input's tooltip pass an empty tooltip,
 \code{tooltip()}, to \code{updateButtonInput()} or \code{updateLinkInput()}.
 }
 
-\subsection{Getting started}{\if{html}{\out{<div class="r">}}\preformatted{buttonInput(
+\subsection{Getting started}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonInput(
   id = NULL,
   label = "Label"
 )
-}\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<button class="yonder-button btn" type="button" role="button" autocomplete="off">
-}}
+}\if{html}{\out{</div>}}
 
-
-Label\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-
+\if{html}{\out{<button class="yonder-button btn" type="button" role="button" autocomplete="off">}}Label\if{html}{\out{</button>}}
 }
 
-\subsection{Add a little color}{\if{html}{\out{<div class="r">}}\preformatted{buttonInput(
+\subsection{Add a little color}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonInput(
   .style \%>\%
     background("primary"),
   id = NULL,
   label = "Label"
 )
-}\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<button autocomplete="off" class="yonder-button btn btn-primary" role="button" type="button">
-}}
+}\if{html}{\out{</div>}}
 
+\if{html}{\out{<button autocomplete="off" class="yonder-button btn btn-primary" role="button" type="button">}}Label\if{html}{\out{</button>}}
 
-Label\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
+Use the \code{width()} utility to adjust the size of a button.
 
-
-Use the \code{width()} utility to adjust the size of a button.\if{html}{\out{<div class="r">}}\preformatted{buttonInput(
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonInput(
   .style \%>\%
     background("danger") \%>\%
     width(75),  # <-
   id = NULL,
   label = "Label"
 )
-}\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<button autocomplete="off" class="yonder-button btn btn-danger w-75" role="button" type="button">
-}}
+}\if{html}{\out{</div>}}
 
-
-Label\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-
+\if{html}{\out{<button autocomplete="off" class="yonder-button btn btn-danger w-75" role="button" type="button">}}Label\if{html}{\out{</button>}}
 }
 
-\subsection{Reactive links}{\if{html}{\out{<div class="r">}}\preformatted{div(
+\subsection{Reactive links}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
   "Curabitur", linkInput(id = "link1", label = "vulputate"),
   "vestibulum lorem."
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div>
-}}
-
-
 Curabitur
-\if{html}{\out{<button class="yonder-link btn btn-link" id="link1">}}vulputate\if{html}{\out{</button>}}
-vestibulum lorem.\if{html}{\out{
+<button class="yonder-link btn btn-link" id="link1">vulputate</button>
+vestibulum lorem.
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
 \subsection{Stretched buttons and links}{
 
-Use a stretched button to make an entire card clickable.\if{html}{\out{<div class="r">}}\preformatted{card(
+Use a stretched button to make an entire card clickable.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   .style \%>\%
     border("primary") \%>\%
     font("primary"),
@@ -218,72 +159,24 @@ Use a stretched button to make an entire card clickable.\if{html}{\out{<div clas
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card border border-primary text-primary">
-}}
-\if{html}{\out{
-<div class="card-header">
-}}
-
-
-Product summary\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
+<div class="card-header">Product summary</div>
 <div class="card-body">
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-Here is a summary\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
-<p class="card-text">
-}}
-
-
-This is a second paragraph\if{html}{\out{
-</p>
-}}
-\if{html}{\out{
+<p class="card-text">Here is a summary</p>
+<p class="card-text">This is a second paragraph</p>
 </div>
-}}
-\if{html}{\out{
 <div class="card-footer">
-}}
-\if{html}{\out{
-<button autocomplete="off" class="yonder-button btn stretched-link btn-primary" id="seemore" role="button" type="button">
-}}
-
-
-See more\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn stretched-link btn-primary" id="seemore" role="button" type="button">See more</button>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 
 Notice, when you hover over the card the mouse cursor changes and the
 button appears hovered. The card is now passing clicks on to the button.
-Clicking anywhere on the card will trigger a click on the button.\if{html}{\out{<div class="r">}}\preformatted{card(
+Clicking anywhere on the card will trigger a click on the button.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
   header = "Card with stretched button",
   p("Notice when you hover over the card, the button also detects ",
     "the hover."),
@@ -296,79 +189,35 @@ Clicking anywhere on the card will trigger a click on the button.\if{html}{\out{
   )
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div class="card">
-}}
-\if{html}{\out{
-<div class="card-header">
-}}
-
-
-Card with stretched button\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
+<div class="card-header">Card with stretched button</div>
 <div class="card-body">
-}}
-\if{html}{\out{
 <p class="card-text">
-}}
-
-
-Notice when you hover over the card, the button also detects the hover.\if{html}{\out{
+Notice when you hover over the card, the button also detects 
+the hover.
 </p>
-}}
-\if{html}{\out{
-<button autocomplete="off" class="yonder-button btn stretched-link btn-primary" role="button" type="button">
-}}
-
-
-Label\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button autocomplete="off" class="yonder-button btn stretched-link btn-primary" role="button" type="button">Label</button>
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
 
 \subsection{Download button}{
 
-Pair a download button input with \code{shiny::downloadHandler()}.\if{html}{\out{<div class="r">}}\preformatted{buttonInput(
+Pair a download button input with \code{shiny::downloadHandler()}.
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonInput(
   download = TRUE,  # <-
   id = NULL,
   label = "Download",
   tags$i(class = "fas fa-download")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-
-
-<a class=“yonder-button btn shiny-download-link” type=“button”
-role=“button” href="" _target download autocomplete=“off”> Download
-\if{html}{\out{<i class="fas fa-download">}}\if{html}{\out{</i>}} \if{html}{\out{</a>}}\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
+<a class="yonder-button btn shiny-download-link" type="button" role="button" href="" _target download autocomplete="off">
+Download
+<i class="fas fa-download"></i>
+</a>
 }}
 
 }

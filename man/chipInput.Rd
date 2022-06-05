@@ -81,7 +81,9 @@ specified by the \code{choices} argument. Use the \code{max} argument to limit t
 number of choices a user may select.
 }
 \details{
-\subsection{Getting started}{\if{html}{\out{<div class="r">}}\preformatted{chipInput(
+\subsection{Getting started}{
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{chipInput(
   .style \%>\% width(50),
   id = "chips",
   choices = paste("Option number", 1:10),
@@ -89,209 +91,67 @@ number of choices a user may select.
   inline = TRUE
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div id="chips" class="yonder-chip btn-group dropup" data-max="-1" data-sort="stack">
-}}
-\if{html}{\out{
 <input class="form-control custom-select" data-toggle="dropdown"/>
-}}
-\if{html}{\out{
 <div class="dropdown-menu">
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="1">
-}}
-
-
-Option number 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="2">
-}}
-
-
-Option number 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="3">
-}}
-
-
-Option number 3\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="4">
-}}
-
-
-Option number 4\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="5">
-}}
-
-
-Option number 5\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="6">
-}}
-
-
-Option number 6\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="7">
-}}
-
-
-Option number 7\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="8">
-}}
-
-
-Option number 8\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="9">
-}}
-
-
-Option number 9\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="10">
-}}
-
-
-Option number 10\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="dropdown-item" value="1">Option number 1</button>
+<button class="dropdown-item" value="2">Option number 2</button>
+<button class="dropdown-item" value="3">Option number 3</button>
+<button class="dropdown-item" value="4">Option number 4</button>
+<button class="dropdown-item" value="5">Option number 5</button>
+<button class="dropdown-item" value="6">Option number 6</button>
+<button class="dropdown-item" value="7">Option number 7</button>
+<button class="dropdown-item" value="8">Option number 8</button>
+<button class="dropdown-item" value="9">Option number 9</button>
+<button class="dropdown-item" value="10">Option number 10</button>
 </div>
-}}
-\if{html}{\out{
 <div class="chips chips-inline chips-grey">
-}}
-\if{html}{\out{
 <button class="chip" value="1">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Option number 1\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Option number 1</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="2">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Option number 2\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Option number 2</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="3">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Option number 3\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Option number 3</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="4">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Option number 4\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Option number 4</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="5">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Option number 5\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Option number 5</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="6">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Option number 6\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Option number 6</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="7">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Option number 7\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Option number 7</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="8">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Option number 8\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Option number 8</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="9">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Option number 9\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Option number 9</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="10">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Option number 10\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Option number 10</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
+</div>
 </div>
 }}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-\if{html}{\out{<div class="r">}}\preformatted{chipInput(
+
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{chipInput(
   .style \%>\%
     width(50) \%>\%
     background("primary"),
@@ -306,229 +166,75 @@ Option number 10\if{html}{\out{
   fill = FALSE
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
-<div id="chips" class="yonder-chip btn-group dropup" data-max="-1" data-sort="stack" data-fill="FALSE">
-}}
-\if{html}{\out{
+<div id="chips" class="yonder-chip btn-group dropup" data-max="-1" data-sort="stack" fill="FALSE">
 <input class="form-control custom-select" data-toggle="dropdown"/>
-}}
-\if{html}{\out{
 <div class="dropdown-menu">
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="1">
-}}
-
-
-A rather long option, isn’t it?\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="2">
-}}
-
-
-Shorter\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="3">
-}}
-
-
-A middle-size option\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="4">
-}}
-
-
-One more\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="dropdown-item" value="1">A rather long option, isn't it?</button>
+<button class="dropdown-item" value="2">Shorter</button>
+<button class="dropdown-item" value="3">A middle-size option</button>
+<button class="dropdown-item" value="4">One more</button>
 </div>
-}}
-\if{html}{\out{
 <div class="chips chips-inline chips-grey">
-}}
-\if{html}{\out{
 <button class="chip" value="1">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}A rather long option, isn’t it?\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">A rather long option, isn't it?</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="2">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Shorter\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Shorter</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="3">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}A middle-size option\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">A middle-size option</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="4">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}One more\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">One more</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
+</div>
 </div>
 }}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
-}}
-\if{html}{\out{<div class="r">}}\preformatted{chipInput(
+
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{chipInput(
   id = "chip1",
   choices = c("Choice 1", "Choice 2", "Choice 3",
               "Choice 4", "Choice 5"),
   selected = c("Choice 3", "Choice 4")
 )
 }\if{html}{\out{</div>}}\if{html}{\out{
-<!--html_preserve-->
-}}
-\if{html}{\out{
-<div class="r-output">
-}}
-\if{html}{\out{
 <div id="chip1" class="yonder-chip btn-group dropup" data-max="-1" data-sort="stack">
-}}
-\if{html}{\out{
 <input class="form-control custom-select" data-toggle="dropdown"/>
-}}
-\if{html}{\out{
 <div class="dropdown-menu">
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="Choice 1">
-}}
-
-
-Choice 1\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="Choice 2">
-}}
-
-
-Choice 2\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item selected" value="Choice 3">
-}}
-
-
-Choice 3\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item selected" value="Choice 4">
-}}
-
-
-Choice 4\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
-<button class="dropdown-item" value="Choice 5">
-}}
-
-
-Choice 5\if{html}{\out{
-</button>
-}}
-\if{html}{\out{
+<button class="dropdown-item" value="Choice 1">Choice 1</button>
+<button class="dropdown-item" value="Choice 2">Choice 2</button>
+<button class="dropdown-item selected" value="Choice 3">Choice 3</button>
+<button class="dropdown-item selected" value="Choice 4">Choice 4</button>
+<button class="dropdown-item" value="Choice 5">Choice 5</button>
 </div>
-}}
-\if{html}{\out{
 <div class="chips chips-inline chips-grey">
-}}
-\if{html}{\out{
 <button class="chip" value="Choice 1">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Choice 1\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Choice 1</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="Choice 2">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Choice 2\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Choice 2</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip active" value="Choice 3">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Choice 3\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Choice 3</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip active" value="Choice 4">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Choice 4\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Choice 4</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 <button class="chip" value="Choice 5">
-}}
-
-
-\if{html}{\out{<span class="chip-content">}}Choice 5\if{html}{\out{</span>}}
-\if{html}{\out{<span class="chip-close">}}×\if{html}{\out{</span>}}\if{html}{\out{
+<span class="chip-content">Choice 5</span>
+<span class="chip-close">&times;</span>
 </button>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
 </div>
-}}
-\if{html}{\out{
-</div>
-}}
-\if{html}{\out{
-<!--/html_preserve-->
 }}
 
 }
