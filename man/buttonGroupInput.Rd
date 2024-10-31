@@ -10,7 +10,6 @@ buttonGroupInput(
   id,
   choices = NULL,
   values = choices,
-  labels = deprecated(),
   direction = "horizontal"
 )
 
@@ -34,8 +33,6 @@ the group.}
 
 \item{values}{A character vector specifying the values of each button in the
 group, defaults to \code{choices}.}
-
-\item{labels}{Deprecated, see \code{values}.}
 
 \item{direction}{One of \code{"horizontal"} or \code{"vertical"} specifying the layout
 of the buttons, defaults to \code{"horizontal"}.}

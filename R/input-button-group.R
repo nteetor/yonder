@@ -19,25 +19,12 @@
 #' @param disable One of `values` indicating individual buttons to disable or
 #'   `TRUE` to disable the entire input, defaults to `NULL`.
 #'
-#' @param labels Deprecated, see `values`.
-#'
 #' @includeRmd man/roxygen/button-group.Rmd
 #'
 #' @family inputs
 #' @export
 buttonGroupInput <- function(..., id, choices = NULL, values = choices,
-                             labels = deprecated(),
                              direction = "horizontal") {
-  if (!is_missing(labels)) {
-    deprecate_soft(
-      "0.2.0",
-      "yonder::buttonGroupInput(labels = )",
-      "yonder::buttonGroupInput(choices = )"
-    )
-
-    choices <- labels
-  }
-
   assert_id()
   assert_choices()
 

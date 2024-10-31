@@ -3,7 +3,6 @@
 #'   tagAppendAttributes tagAppendChildren surroundSingletons takeSingletons
 #' @importFrom shiny observe getDefaultReactiveDomain installExprFunction
 #'   createRenderFunction createWebDependency
-#' @importFrom lifecycle deprecate_soft deprecated
 #' @import rlang
 NULL
 
