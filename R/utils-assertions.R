@@ -86,7 +86,7 @@ assert_selected <- function(len) {
 
   val <- env_get(caller_env(), "values")
 
-  if (!(var %in% val)) {
+  if (!is.null(val) && !(var %in% val)) {
     abort_assertion(
       c("argument `selected` must be one of",
         arg_in_values,
