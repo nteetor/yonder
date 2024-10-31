@@ -1,7 +1,6 @@
-import babel from "rollup-plugin-babel";
-import babelrc from "./babel.config.js";
+import { babel } from "@rollup/plugin-babel";
 
-import { terser } from "rollup-plugin-terser";
+// import { terser } from "rollup-plugin-terser";
 
 export default {
   input: "src/yonder.js",
@@ -13,7 +12,8 @@ export default {
   },
   plugins: [
     babel({
-      ...babelrc
+      exclude: "node_modules/**",
+      babelHelpers: "bundled"
     })
   ]
 };
