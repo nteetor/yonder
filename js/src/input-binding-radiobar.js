@@ -24,6 +24,7 @@ $.extend(radiobarInputBinding, {
 
     $el.on("click.yonder", e => callback());
     $el.on("change.yonder", e => callback());
+    $el.on("radiobar.select.yonder", e => callback());
   },
   unsubscribe: (el) => {
     $(el).off(".yonder");
