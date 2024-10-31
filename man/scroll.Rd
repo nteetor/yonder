@@ -18,20 +18,11 @@ Many of the applications you build despite a complex layout will still fit
 onto a single page. To help scroll long content alongside shorter content use
 the \code{scroll()} utility function.
 }
-\seealso{
-Other design utilities: 
-\code{\link{active}()},
-\code{\link{affix}()},
-\code{\link{background}()},
-\code{\link{border}()},
-\code{\link{display}()},
-\code{\link{flex}()},
-\code{\link{float}()},
-\code{\link{font}()},
-\code{\link{height}()},
-\code{\link{margin}()},
-\code{\link{padding}()},
-\code{\link{shadow}()},
-\code{\link{width}()}
+\examples{
+
+div() \%>\% scroll()
+# ->
+div() \%>\% cascadess::overflow_all()
+
 }
-\concept{design utilities}
+\keyword{internal}

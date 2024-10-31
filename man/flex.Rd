@@ -2,7 +2,7 @@
 % Please edit documentation in R/design-flex.R
 \name{flex}
 \alias{flex}
-\title{Flex layout}
+\title{Understanding responsive arguments}
 \usage{
 flex(
   x,
@@ -42,284 +42,69 @@ items are placed from right to left when \code{direction} is \code{"row"} or bot
 to top when \code{direction} is \code{"column"}.}
 }
 \description{
+A responsive argument may be a single value or a named list. Possible names
+includes \code{default} or \code{xs}, \code{sm}, \code{md}, \code{lg}, and \code{xl}. Specifying a single
+unnamed value is equivalent to specifying \code{default} or \code{xs}. The possible
+values will be described in the specific help page. Most responsive arguments
+will default to \code{NULL} in which case no corresponding style is applied.
+
+Responsive arguments allow you to apply styles to tag elements based on the
+size of the viewport. This is important when developing applications for both
+web and mobile.  Specifying a single unnamed value the style will be applied
+for all viewport sizes. Use the names above to apply a style for viewports of
+that size and larger. For example, specifying \code{list(default = x, md = y)}
+will apply \code{x} on extra small and small viewports, but for medium, large, and
+extra large viewports \code{y} is applied.
+
+Styles for larger viewports take precedence. See below for details about each
+breakpoint.
+
+\strong{extra small}
+
+How: pass a single value, use name \code{xs}, or use name \code{default}.
+
+When: the style is always applied, unless supplanted by a style for any other
+viewport size.
+
+\strong{small}
+
+How: use name \code{sm}.
+
+When: the style is applied when the viewport is at least 576px wide, think
+landscape phones.
+
+\strong{medium}
+
+How: use name \code{md}.
+
+When: the style is applied when the viewport is at least 768px wide, think
+tablets.
+
+\strong{large}
+
+How: use name \code{lg}.
+
+When: the style is applied when the viewport is at least 992px wide, think
+laptop or smaller desktops.
+
+\strong{extra large}
+
+How: use name \code{xl}.
+
+When: the style is applied when the viewport is at least 1200px wide, think
+large desktops.
+Flex layout
+
 Use \code{flex()} to control how a flex container tag element places its flex
 items or child tag elements. For more on turning a tag element into a flex
 container see \code{\link[=display]{display()}}. By default tag elements within a flex container
 are treated as flex items.
 }
-\details{
-\subsection{Getting started}{
+\examples{
 
-This section needs pretty specific examples of how to use flex. I don’t
-know that people will want a tutorial on flex.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{flex(
-
-)
-}\if{html}{\out{</div>}}
-}
-
-\subsection{Different \code{direction}s}{
-
-Many of \code{flex()}’s arguments are viewport responsive and below we will
-see how useful this can be. On small screens the flex items are placed
-vertically and can occupy the full width of the mobile device. On medium
-or larger screens the items are placed horizontally once again.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
-  .style \%>\%
-    display("flex") \%>\%
-    flex(
-      direction = list(xs = "column", md = "row")  # <-
-    ) \%>\%
-    background("secondary") \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border()
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="d-flex flex-column flex-md-row bg-secondary border">
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-</div>
-}}
-
-
-\emph{Resize the browser for this example.}
-
-You can keep items as a column by specifying only \code{"column"}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
-  .style \%>\%
-    display("flex") \%>\%
-    flex("column"),  # <-
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border()
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="d-flex flex-column">
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-</div>
-}}
+div() \%>\% flex()
+# ->
+div() \%>\% cascadess::flex_display()
 
 }
-
-\subsection{Spacing items with \code{justify}}{
-
-Below is a series of examples showing how to change the horizontal
-alignment of your flex items. Let’s start by pushing items to the
-beginning of their parent container.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
-  .style \%>\%
-    display("flex") \%>\%
-    flex(justify = "start"),  # <-
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border()
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="d-flex justify-content-start">
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-</div>
-}}
-
-
-We can also push items to the \strong{end}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
-  .style \%>\%
-    display("flex") \%>\%
-    flex(justify = "end"),  # <-
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border()
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="d-flex justify-content-end">
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-</div>
-}}
-
-
-Without using a table layout we can \strong{center} items.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
-  .style \%>\%
-    display("flex") \%>\%
-    flex(justify = "center"),  # <-
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border()
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="d-flex justify-content-center">
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-</div>
-}}
-
-
-You can also put space \strong{between} items
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
-  .style \%>\%
-    display("flex") \%>\%
-    flex(justify = "between"),  # <-
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border()
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="d-flex justify-content-between">
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-</div>
-}}
-
-
-… or put space \strong{around} items.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
-  .style \%>\%
-    display("flex") \%>\%
-    flex(justify = "around"),  # <-
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border()
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="d-flex justify-content-around">
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-</div>
-}}
-
-
-The \code{"between"} and \code{"around"} values come from the original CSS values
-\code{"space-between"} and \code{"space-around"}.
-\subsection{Wrap onto new lines}{
-
-Using flexbox we can also control how items wrap onto new lines.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
-  .style \%>\%
-    display("flex") \%>\%
-    flex(wrap = TRUE),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border(),
-  div("A flex item") \%>\%
-    padding(3) \%>\%
-    border()
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="d-flex flex-wrap">
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-<div class="p-3 border">A flex item</div>
-</div>
-}}
-
-}
-
-}
-}
-\seealso{
-Other design utilities: 
-\code{\link{active}()},
-\code{\link{affix}()},
-\code{\link{background}()},
-\code{\link{border}()},
-\code{\link{display}()},
-\code{\link{float}()},
-\code{\link{font}()},
-\code{\link{height}()},
-\code{\link{margin}()},
-\code{\link{padding}()},
-\code{\link{scroll}()},
-\code{\link{shadow}()},
-\code{\link{width}()}
-}
-\concept{design utilities}
+\keyword{internal}

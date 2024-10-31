@@ -9,11 +9,23 @@
 #' @param side A [responsive] argument. One of `"left"` or `"right"` specifying
 #'   the side to float the element.
 #'
-#' @includeRmd man/roxygen/float.Rmd
+#' @keywords internal
 #'
-#' @family design utilities
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% float("left")
+#' # ->
+#' div() %>% cascadess::float("left")
+#'
 float <- function(x, side) {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "float()",
+    "cascadess::float()"
+  )
+
   UseMethod("float", x)
 }
 

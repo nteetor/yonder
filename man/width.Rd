@@ -30,20 +30,11 @@ Utility function to change a tag element's width. Widths are specified
 relative the width of a parent element, an element's content, or the size of
 the browser window.
 }
-\seealso{
-Other design utilities: 
-\code{\link{active}()},
-\code{\link{affix}()},
-\code{\link{background}()},
-\code{\link{border}()},
-\code{\link{display}()},
-\code{\link{flex}()},
-\code{\link{float}()},
-\code{\link{font}()},
-\code{\link{height}()},
-\code{\link{margin}()},
-\code{\link{padding}()},
-\code{\link{scroll}()},
-\code{\link{shadow}()}
+\examples{
+
+div() \%>\% width(25)
+# ->
+div() \%>\% casacdess::width_relative(25)
+
 }
-\concept{design utilities}
+\keyword{internal}

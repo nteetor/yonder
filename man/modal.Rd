@@ -80,10 +80,9 @@ watch for the modal's close event.
 </div>
 </div>
 </div>
+<button data-toggle="modal" data-target="#modal1">Open modal</button>
 }}
 
-
-\if{html}{\out{<button data-toggle="modal" data-target="#modal1">}}Open modal\if{html}{\out{</button>}}
 }
 
 \subsection{Modals with containers}{
@@ -128,10 +127,9 @@ Praesent fermentum tempor tellus.
 </div>
 </div>
 </div>
+<button data-toggle="modal" data-target="#modal2">Open modal</button>
 }}
 
-
-\if{html}{\out{<button data-toggle="modal" data-target="#modal2">}}Open modal\if{html}{\out{</button>}}
 }
 }
 \seealso{

@@ -11,9 +11,22 @@
 #'   fixed behavior of an element.
 #'
 #' @include design.R
-#' @family design utilities
+#'
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% affix("sticky")
+#' # ->
+#' div() %>% cascadess::position_sticky()
+#'
 affix <- function(x, position) {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "affix()",
+    "cascadess::position_sticky()"
+  )
+
   assert_possible(position, c("top", "bottom", "sticky"))
 
   UseMethod("affix", x)

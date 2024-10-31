@@ -22,45 +22,11 @@ tag element, defaults to \code{NULL}, in which case the argument is ignored.}
 \description{
 Use \code{border()} to add or modify tag element borders.
 }
-\details{
-\subsection{Cards}{
+\examples{
 
-Card borders and font colors.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
-  .style \%>\% 
-    border("primary") \%>\% 
-    font("primary"),
-  header = "Primary",
-  p("Cras justo odio, dapibus ac facilisis in, egestas eget quam."),
-  p("Etiam porta sem malesuada magna mollis euismod.")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="card border border-primary text-primary">
-<div class="card-header">Primary</div>
-<div class="card-body">
-<p class="card-text">Cras justo odio, dapibus ac facilisis in, egestas eget quam.</p>
-<p class="card-text">Etiam porta sem malesuada magna mollis euismod.</p>
-</div>
-</div>
-}}
+div() \%>\% border("primary")
+# ->
+div() \%>\% border_color("primary")
 
 }
-}
-\seealso{
-Other design utilities: 
-\code{\link{active}()},
-\code{\link{affix}()},
-\code{\link{background}()},
-\code{\link{display}()},
-\code{\link{flex}()},
-\code{\link{float}()},
-\code{\link{font}()},
-\code{\link{height}()},
-\code{\link{margin}()},
-\code{\link{padding}()},
-\code{\link{scroll}()},
-\code{\link{shadow}()},
-\code{\link{width}()}
-}
-\concept{design utilities}
+\keyword{internal}

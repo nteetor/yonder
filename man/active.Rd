@@ -19,20 +19,4 @@ the function will be removed entirely.
 Previously, \code{active()} would change the
 highlight color of an input's selected choices.
 }
-\seealso{
-Other design utilities: 
-\code{\link{affix}()},
-\code{\link{background}()},
-\code{\link{border}()},
-\code{\link{display}()},
-\code{\link{flex}()},
-\code{\link{float}()},
-\code{\link{font}()},
-\code{\link{height}()},
-\code{\link{margin}()},
-\code{\link{padding}()},
-\code{\link{scroll}()},
-\code{\link{shadow}()},
-\code{\link{width}()}
-}
 \concept{design utilities}

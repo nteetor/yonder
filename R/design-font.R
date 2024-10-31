@@ -28,14 +28,26 @@
 #'   or `"justify"`, specifying the alignment of the tag element's text,
 #'   defaults to `NULL`.
 #'
-#' @includeRmd man/roxygen/font.Rmd
+#' @keywords internal
 #'
-#' @family design utilities
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% font("primary")
+#' # ->
+#' div() %>% cascadess::font_color("primary")
+#'
 font <- function(x, color = NULL, size = NULL, weight = NULL, case = NULL,
                  align = NULL) {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "font()",
+    "cascadess::font_color()"
+  )
+
   if (!is.null(size)) {
-    deprecate_soft("0.2.0", "yonder::font(size = )")
+    lifecycle::deprecate_soft("0.2.0", "yonder::font(size = )")
   }
 
   assert_possible(color, theme_colors)

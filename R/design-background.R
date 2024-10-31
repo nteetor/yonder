@@ -6,11 +6,23 @@
 #'
 #' @eval param_color("background")
 #'
-#' @includeRmd man/roxygen/background.Rmd
+#' @keywords internal
 #'
-#' @family design utilities
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% background("primary")
+#' # ->
+#' div() %>% cascadess::background_color("primary")
+#'
 background <- function(x, color) {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "background()",
+    "cascadess::background_color()"
+  )
+
   assert_possible(color, theme_colors)
 
   UseMethod("background", x)

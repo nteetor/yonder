@@ -17,91 +17,11 @@ The \code{shadow} utility applies a shadow to a tag element. By default many
 elements include a shadow to help distinguish them. Use \code{"none"} to remove an
 element's shadow.
 }
-\details{
-\subsection{Getting started}{
+\examples{
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
-  navbar(
-    .style \%>\%
-      background("dark") \%>\%
-      font("light") \%>\%
-      margin(bottom = 3),
-    brand = "Navbar"
-  ),
-  p("Cras mattis consectetur purus sit amet fermentum. Donec sed ",
-    "odio dui. Lorem ipsum dolor sit amet, consectetur adipiscing ",
-    "elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam ",
-    "venenatis vestibulum.")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div>
-<nav class="navbar navbar-expand navbar-light bg-dark text-light mb-3">
-<a class="navbar-brand" href="#">Navbar</a>
-<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#nav-content-433-345" aria-controls="nav-content-433-345" aria-expanded="false" aria-label="Toggle navigation">
-<span class="navbar-toggler-icon"></span>
-</button>
-<div class="collapse navbar-collapse" id="nav-content-433-345"></div>
-</nav>
-<p>
-Cras mattis consectetur purus sit amet fermentum. Donec sed 
-odio dui. Lorem ipsum dolor sit amet, consectetur adipiscing 
-elit. Aenean eu leo quam. Pellentesque ornare sem lacinia quam 
-venenatis vestibulum.
-</p>
-</div>
-}}
+div() \%>\% shadow("small")
+# ->
+div() \%>\% cascadess::shadow("small")
 
 }
-
-\subsection{Shadow sizes}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
-  buttonInput(
-    .style \%>\%
-      margin(2) \%>\%
-      shadow("small"),  # <-
-    id = NULL,
-    label = "Small"
-  ),
-  buttonInput(
-    .style \%>\%
-      margin(2) \%>\%
-      shadow("medium"),  # <-
-    id = NULL,
-    label = "Medium"
-  ),
-  buttonInput(
-    .style \%>\%
-      margin(2) \%>\%
-      shadow("large"),  # <-
-    id = NULL,
-    label = "Large"
-  )
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div>
-<button autocomplete="off" class="yonder-button btn m-2 shadow-sm" role="button" type="button">Small</button>
-<button autocomplete="off" class="yonder-button btn m-2 shadow" role="button" type="button">Medium</button>
-<button autocomplete="off" class="yonder-button btn m-2 shadow-lg" role="button" type="button">Large</button>
-</div>
-}}
-
-}
-}
-\seealso{
-Other design utilities: 
-\code{\link{active}()},
-\code{\link{affix}()},
-\code{\link{background}()},
-\code{\link{border}()},
-\code{\link{display}()},
-\code{\link{flex}()},
-\code{\link{float}()},
-\code{\link{font}()},
-\code{\link{height}()},
-\code{\link{margin}()},
-\code{\link{padding}()},
-\code{\link{scroll}()},
-\code{\link{width}()}
-}
-\concept{design utilities}
+\keyword{internal}

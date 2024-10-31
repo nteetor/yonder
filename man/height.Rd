@@ -30,20 +30,11 @@ Utility function to change a tag element's height. Heights are specified
 relative the height of a parent element, an element's content, or the
 size of the browser window.
 }
-\seealso{
-Other design utilities: 
-\code{\link{active}()},
-\code{\link{affix}()},
-\code{\link{background}()},
-\code{\link{border}()},
-\code{\link{display}()},
-\code{\link{flex}()},
-\code{\link{float}()},
-\code{\link{font}()},
-\code{\link{margin}()},
-\code{\link{padding}()},
-\code{\link{scroll}()},
-\code{\link{shadow}()},
-\code{\link{width}()}
+\examples{
+
+div() \%>\% height(25)
+# ->
+div() \%>\% cascadess::height_relative(25)
+
 }
-\concept{design utilities}
+\keyword{internal}

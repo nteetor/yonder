@@ -17,75 +17,11 @@ Use \code{float()} to float an element to the left or right side of its parent
 element. A newspaper layout is a classic example where an image is floated
 with text wrapped around.
 }
-\details{
-\subsection{Getting started}{
+\examples{
 
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{div(
-  .style \%>\%
-    padding(2),
-  alert(
-    .style \%>\%
-      margin(3) \%>\%
-      background("warning") \%>\%
-      float("left"),  # <-
-    dismissible = FALSE,
-    "This just in!"
-  ),
-  p("Fusce commodo. Nullam tempus. Nunc rutrum turpis sed pede.",
-    "Phasellus lacus.  Cras placerat accumsan nulla.",
-    "Fusce sagittis, libero non molestie mollis, ",
-    "magna orci ultrices dolor, at vulputate neque nulla lacinia eros."),
-  p("Nulla facilisis, risus a rhoncus fermentum, tellus tellus",
-    "lacinia purus, et dictum nunc justo sit amet elit."),
-  p("Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.",
-    "Aliquam posuere.",
-    "Sed id ligula quis est convallis tempor."),
-  p("Fusce dapibus, tellus ac cursus commodo, ",
-    "tortor mauris condimentum nibh, ut fermentum massa justo sit",
-    "amet risus.")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="p-2">
-<div class="alert m-3 alert-warning float-left" role="alert">This just in!</div>
-<p>
-Fusce commodo. Nullam tempus. Nunc rutrum turpis sed pede.
-Phasellus lacus.  Cras placerat accumsan nulla.
-Fusce sagittis, libero non molestie mollis, 
-magna orci ultrices dolor, at vulputate neque nulla lacinia eros.
-</p>
-<p>
-Nulla facilisis, risus a rhoncus fermentum, tellus tellus
-lacinia purus, et dictum nunc justo sit amet elit.
-</p>
-<p>
-Proin neque massa, cursus ut, gravida ut, lobortis eget, lacus.
-Aliquam posuere.
-Sed id ligula quis est convallis tempor.
-</p>
-<p>
-Fusce dapibus, tellus ac cursus commodo, 
-tortor mauris condimentum nibh, ut fermentum massa justo sit
-amet risus.
-</p>
-</div>
-}}
+div() \%>\% float("left")
+# ->
+div() \%>\% cascadess::float("left")
 
 }
-}
-\seealso{
-Other design utilities: 
-\code{\link{active}()},
-\code{\link{affix}()},
-\code{\link{background}()},
-\code{\link{border}()},
-\code{\link{display}()},
-\code{\link{flex}()},
-\code{\link{font}()},
-\code{\link{height}()},
-\code{\link{margin}()},
-\code{\link{padding}()},
-\code{\link{scroll}()},
-\code{\link{shadow}()},
-\code{\link{width}()}
-}
-\concept{design utilities}
+\keyword{internal}

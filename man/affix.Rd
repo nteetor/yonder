@@ -18,20 +18,10 @@ top or bottom of a page. Use \code{"sticky"} to cause an element to fix to the t
 of a page after the element is scrolled past. \emph{Important}, the IE11 and Edge
 browsers do not support the sticky behavior.
 }
-\seealso{
-Other design utilities: 
-\code{\link{active}()},
-\code{\link{background}()},
-\code{\link{border}()},
-\code{\link{display}()},
-\code{\link{flex}()},
-\code{\link{float}()},
-\code{\link{font}()},
-\code{\link{height}()},
-\code{\link{margin}()},
-\code{\link{padding}()},
-\code{\link{scroll}()},
-\code{\link{shadow}()},
-\code{\link{width}()}
+\examples{
+
+div() \%>\% affix("sticky")
+# ->
+div() \%>\% cascadess::position_sticky()
+
 }
-\concept{design utilities}

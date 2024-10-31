@@ -11,12 +11,24 @@
 #'   `"auto"` specifying padding for one or more sides of the tag element. 0
 #'   removes all inner space and 5 adds the most space.
 #'
-#' @includeRmd man/roxygen/margin.Rmd
+#' @keywords internal
 #'
-#' @family design utilities
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% padding(2)
+#' # ->
+#' div() %>% cascadess::padding_all(2)
+#'
 padding <- function(x, all = NULL, top = NULL, right = NULL, bottom = NULL,
                     left = NULL) {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "padding()",
+    "cascadess::padding_all()"
+  )
+
   UseMethod("padding", x)
 }
 
@@ -121,12 +133,24 @@ padding_all <- function(all) {
 #'   removes all outer space, 5 adds the most space, and negative values will
 #'   consume space pulling the element in that direction.
 #'
-#' @includeRmd man/roxygen/margin.Rmd
+#' @keywords internal
 #'
-#' @family design utilities
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% margin(2)
+#' # ->
+#' div() %>% cascadess::margin_all(2)
+#'
 margin <- function(x, all = NULL, top = NULL, right = NULL, bottom = NULL,
                    left = NULL) {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "margin()",
+    "cascadess::margin_all()"
+  )
+
   UseMethod("margin", x)
 }
 

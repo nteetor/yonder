@@ -53,9 +53,6 @@
 #'
 #' When: the style is applied when the viewport is at least 1200px wide, think
 #' large desktops.
-#'
-#' @name responsive
-NULL
 
 #' Flex layout
 #'
@@ -91,12 +88,24 @@ NULL
 #'   `NULL`. If `TRUE` items wrap inside the container, if `FALSE` items will
 #'   not wrap. See the **wrap** section below for more.
 #'
-#' @includeRmd man/roxygen/flex.Rmd
+#' @keywords internal
 #'
-#' @family design utilities
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% flex()
+#' # ->
+#' div() %>% cascadess::flex_display()
+#'
 flex <- function(x, direction = NULL, justify = NULL, align = NULL,
                  wrap = NULL, reverse = NULL) {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "flex()",
+    "cascadess::display_flex()"
+  )
+
   UseMethod("flex", x)
 }
 

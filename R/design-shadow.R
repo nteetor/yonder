@@ -9,11 +9,23 @@
 #' @param size One of `"none"`, `"small"`, `"medium"`, or `"large"` specifying
 #'   the amount of shadow added, defaults to `"medium"`.
 #'
-#' @includeRmd man/roxygen/shadow.Rmd
+#' @keywords internal
 #'
-#' @family design utilities
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% shadow("small")
+#' # ->
+#' div() %>% cascadess::shadow("small")
+#'
 shadow <- function(x, size = "medium") {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "shadow()",
+    "cascadess::shadow()"
+  )
+
   assert_possible(size, c("none", "small", "medium", "large"))
 
   UseMethod("shadow", x)

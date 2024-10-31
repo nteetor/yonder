@@ -2,8 +2,8 @@
 % Please edit documentation in R/yonder.R
 \docType{package}
 \name{yonder}
-\alias{yonder}
 \alias{yonder-package}
+\alias{yonder}
 \title{A shiny framework}
 \description{
 Yonder is a set of tools for flexible and creative shiny application

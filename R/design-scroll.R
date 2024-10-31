@@ -10,9 +10,23 @@
 #'   direction to scroll overflowing content, defaults to `"vertical"`, in which
 #'   case the content may scroll up and down.
 #'
-#' @family design utilities
+#' @keywords internal
+#'
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% scroll()
+#' # ->
+#' div() %>% cascadess::overflow_all()
+#'
 scroll <- function(x, direction = "vertical") {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "scroll()",
+    "cascadess::overflow_all()"
+  )
+
   assert_possible(direction, c("vertical", "horizontal"))
 
   UseMethod("scroll", x)

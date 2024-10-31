@@ -17,20 +17,11 @@ Use the \code{display()} utility to adjust how a tag element is rendered. All
 arguments are responsive allowing you to hide elements on small screens or
 convert elements from inline to block on large screens.
 }
-\seealso{
-Other design utilities: 
-\code{\link{active}()},
-\code{\link{affix}()},
-\code{\link{background}()},
-\code{\link{border}()},
-\code{\link{flex}()},
-\code{\link{float}()},
-\code{\link{font}()},
-\code{\link{height}()},
-\code{\link{margin}()},
-\code{\link{padding}()},
-\code{\link{scroll}()},
-\code{\link{shadow}()},
-\code{\link{width}()}
+\examples{
+
+div() \%>\% display()
+# ->
+div() \%>\% cascadess::display()
+
 }
-\concept{design utilities}
+\keyword{internal}

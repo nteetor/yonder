@@ -14,11 +14,23 @@
 #'   `"circle"`, `"all"`, or `"none"` specifying how to round the border(s) of a
 #'   tag element, defaults to `NULL`, in which case the argument is ignored.
 #'
-#' @includeRmd man/roxygen/border.Rmd
+#' @keywords internal
 #'
-#' @family design utilities
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% border("primary")
+#' # ->
+#' div() %>% border_color("primary")
+#'
 border <- function(x, color = NULL, sides = "all", round = NULL) {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "border()",
+    "cascadess::border_color()"
+  )
+
   assert_possible(color, theme_colors)
   assert_possible(
     sides,

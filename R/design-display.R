@@ -9,9 +9,23 @@
 #' @param type A [responsive] argument. One of `"inline"`, `"block"`,
 #'   `"inline-block"`, `"flex"`, `"inline-flex"`, or `"none"`.
 #'
-#' @family design utilities
+#' @keywords internal
+#'
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% display()
+#' # ->
+#' div() %>% cascadess::display()
+#'
 display <- function(x, type) {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "display()",
+    "cascadess::display()"
+  )
+
   UseMethod("display", x)
 }
 

@@ -36,79 +36,11 @@ a tag element's text. All arguments default to \code{NULL}, in which case they a
 ignored.  For example, \code{font(.., size = "lg")} increases font size without
 affecting color, weight, case, or alignment.
 }
-\details{
-\subsection{Getting started}{
+\examples{
 
-The font utility is used to change text colors, font weights, and more.
-}
-
-\subsection{Changing text color}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
-  .style \%>\%
-    font("primary") \%>\%
-    border("primary"),
-  header = h3("Header"),
-  p("Nullam tristique diam non turpis.",
-    "Pellentesque dapibus suscipit ligula.",
-    "Nullam eu ante vel est convallis dignissim."),
-  p("Aliquam posuere.")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="card text-primary border border-primary">
-<div class="card-header">
-<h3>Header</h3>
-</div>
-<div class="card-body">
-<p class="card-text">
-Nullam tristique diam non turpis.
-Pellentesque dapibus suscipit ligula.
-Nullam eu ante vel est convallis dignissim.
-</p>
-<p class="card-text">Aliquam posuere.</p>
-</div>
-</div>
-}}
+div() \%>\% font("primary")
+# ->
+div() \%>\% cascadess::font_color("primary")
 
 }
-
-\subsection{Changing font weight}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{p(
-  .style \%>\%
-    font(weight = "bold"),
-  "Curabitur lacinia pulvinar nibh."
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<p class="font-weight-bold">Curabitur lacinia pulvinar nibh.</p>
-}}
-
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{p(
-  .style \%>\%
-    font(weight = "light"),
-  "Proin quam nisl, tincidunt et."
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<p class="font-weight-light">Proin quam nisl, tincidunt et.</p>
-}}
-
-}
-}
-\seealso{
-Other design utilities: 
-\code{\link{active}()},
-\code{\link{affix}()},
-\code{\link{background}()},
-\code{\link{border}()},
-\code{\link{display}()},
-\code{\link{flex}()},
-\code{\link{float}()},
-\code{\link{height}()},
-\code{\link{margin}()},
-\code{\link{padding}()},
-\code{\link{scroll}()},
-\code{\link{shadow}()},
-\code{\link{width}()}
-}
-\concept{design utilities}
+\keyword{internal}

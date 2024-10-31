@@ -22,9 +22,23 @@
 #'   `"viewport"`, in which case the element's width is determined by the size
 #'   of the browser window.
 #'
-#' @family design utilities
+#' @keywords internal
+#'
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% width(25)
+#' # ->
+#' div() %>% casacdess::width_relative(25)
+#'
 width <- function(x, size) {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "width()",
+    "cascadess::width_relative()"
+  )
+
   assert_possible(size, c(25, 50, 75, 100, "auto", "viewport"))
 
   UseMethod("width", x)
@@ -82,9 +96,23 @@ width_size <- function(size) {
 #'   `"viewport"`, in which case the element's height is determined by the size
 #'   of the browser window.
 #'
-#' @family design utilities
+#' @keywords internal
+#'
 #' @export
+#'
+#' @examples
+#'
+#' div() %>% height(25)
+#' # ->
+#' div() %>% cascadess::height_relative(25)
+#'
 height <- function(x, size) {
+  lifecycle::deprecate_warn(
+    "0.3.0",
+    "height()",
+    "cascadess::height_relative()"
+  )
+
   assert_possible(size, c(25, 50, 75, 100, "auto", "viewport"))
 
   UseMethod("height", x)
