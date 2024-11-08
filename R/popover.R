@@ -44,7 +44,7 @@
 #' server <- function(input, output) {
 #'   observeEvent(input$showHelp, ignoreInit = TRUE, {
 #'     showPopover(
-#'       target = "textBlock1",
+#'       id = "textBlock1",
 #'       popover(title = "Hint", "I am a <div> element!"),
 #'       placement = "bottom",
 #'       duration = 4
