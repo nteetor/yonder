@@ -37,8 +37,6 @@
 #'   string, the form is submitted and the reactive value passed is the character
 #'   string specified.
 #'
-#' @includeRmd man/roxygen/form.Rmd
-#'
 #' @family inputs
 #' @export
 formInput <- function(..., id, inline = FALSE) {

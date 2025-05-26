@@ -39,15 +39,12 @@ Other components:
 \code{\link{alert}()},
 \code{\link{badge}()},
 \code{\link{blockquote}()},
-\code{\link{card}()},
 \code{\link{collapsePane}()},
 \code{\link{d1}()},
 \code{\link{dropdown}()},
 \code{\link{img}()},
 \code{\link{jumbotron}()},
 \code{\link{modal}()},
-\code{\link{navContent}()},
-\code{\link{popover}()},
 \code{\link{toast}()}
 }
 \concept{components}

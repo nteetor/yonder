@@ -56,95 +56,16 @@ you may instead specify a modal's \code{id} in which case only that modal is
 closed. Additionally, when \code{id} is not \code{NULL} observers and reactives may
 watch for the modal's close event.
 }
-\details{
-\subsection{Getting started}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{modal(
-  id = "modal1",
-  header = h5("Header"),
-  p("Cras placerat accumsan nulla.")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-modal modal fade" id="modal1" tabindex="-1" role="dialog">
-<div class="modal-dialog" role="document">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title">Header</h5>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-<div class="modal-body">
-<p>Cras placerat accumsan nulla.</p>
-</div>
-</div>
-</div>
-</div>
-<button data-toggle="modal" data-target="#modal1">Open modal</button>
-}}
-
-}
-
-\subsection{Modals with containers}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{modal(
-  id = "modal2",
-  size = "lg",
-  header = h5("More complex"),
-  container(
-    columns(
-      column("Cras placerat accumsan nulla."),
-      column("Curabitur lacinia pulvinar nibh."),
-      column(
-        "Aliquam posuere.",
-        "Praesent fermentum tempor tellus."
-      )
-    )
-  )
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-modal modal fade" id="modal2" tabindex="-1" role="dialog">
-<div class="modal-dialog modal-lg" role="document">
-<div class="modal-content">
-<div class="modal-header">
-<h5 class="modal-title">More complex</h5>
-<button type="button" class="close" data-dismiss="modal" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-<div class="modal-body">
-<div class="container-fluid">
-<div class="row">
-<div class="col">Cras placerat accumsan nulla.</div>
-<div class="col">Curabitur lacinia pulvinar nibh.</div>
-<div class="col">
-Aliquam posuere.
-Praesent fermentum tempor tellus.
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-</div>
-<button data-toggle="modal" data-target="#modal2">Open modal</button>
-}}
-
-}
-}
 \seealso{
 Other components: 
 \code{\link{alert}()},
 \code{\link{badge}()},
 \code{\link{blockquote}()},
-\code{\link{card}()},
 \code{\link{collapsePane}()},
 \code{\link{d1}()},
 \code{\link{dropdown}()},
 \code{\link{img}()},
 \code{\link{jumbotron}()},
-\code{\link{navContent}()},
-\code{\link{popover}()},
 \code{\link{pre}()},
 \code{\link{toast}()}
 }

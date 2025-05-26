@@ -19,8 +19,6 @@
 #' @param disable One of `values` indicating individual buttons to disable or
 #'   `TRUE` to disable the entire input, defaults to `NULL`.
 #'
-#' @includeRmd man/roxygen/button-group.Rmd
-#'
 #' @family inputs
 #' @export
 buttonGroupInput <- function(..., id, choices = NULL, values = choices,

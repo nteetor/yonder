@@ -63,74 +63,6 @@ List group inputs are an actionable list of items. They behave similarly to
 checkboxes or radios, that is, users may select one or more items from the
 list. However, list group items may include highly variable content.
 }
-\details{
-\subsection{Getting started}{
-
-Action lists.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{listGroupInput(
-  id = "list1",
-  choices = paste("Item", 1:5)
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-list-group list-group" id="list1">
-<button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
-<button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
-<button class="list-group-item list-group-item-action" value="Item 3">Item 3</button>
-<button class="list-group-item list-group-item-action" value="Item 4">Item 4</button>
-<button class="list-group-item list-group-item-action" value="Item 5">Item 5</button>
-</div>
-}}
-
-}
-
-\subsection{Combining lists with other elements}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
-  header = h6("Card header"),
-  listGroupInput(
-    id = NULL,
-    flush = TRUE,
-    choices = c(
-      "Item 1", "Item 2", "Item 3",
-      "Item 4", "Item 5"
-    )
-  )
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="card">
-<div class="card-header">
-<h6>Card header</h6>
-</div>
-<div class="yonder-list-group list-group list-group-flush">
-<button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
-<button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
-<button class="list-group-item list-group-item-action" value="Item 3">Item 3</button>
-<button class="list-group-item list-group-item-action" value="Item 4">Item 4</button>
-<button class="list-group-item list-group-item-action" value="Item 5">Item 5</button>
-</div>
-</div>
-}}
-
-}
-
-\subsection{Horizontal list groups}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{listGroupInput(
-  layout = "horizontal",
-  id = NULL,
-  choices = c("Item 1", "Item 2", "Item 3")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-list-group list-group list-group-horizontal">
-<button class="list-group-item list-group-item-action" value="Item 1">Item 1</button>
-<button class="list-group-item list-group-item-action" value="Item 2">Item 2</button>
-<button class="list-group-item list-group-item-action" value="Item 3">Item 3</button>
-</div>
-}}
-
-}
-}
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
@@ -141,7 +73,6 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{formInput}()},
 \code{\link{menuInput}()},
-\code{\link{navInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},
 \code{\link{rangeInput}()},

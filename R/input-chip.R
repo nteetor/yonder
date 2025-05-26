@@ -38,8 +38,6 @@
 #'   `choices` and `values`. Use `"fixed"` and sort `choices` to keep selected
 #'   chips in the same sorted order.
 #'
-#' @includeRmd man/roxygen/chip.Rmd
-#'
 #' @family inputs
 #' @export
 chipInput <- function(id, choices = NULL, values = choices, selected = NULL,

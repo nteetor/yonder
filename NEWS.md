@@ -1,8 +1,13 @@
 # yonder 0.2.0.9000
 
-## Breaking changes
-
-## Bug fixes
+* Remove design and style utilities in favor of {cascadess}
+* Remove `card()` in favor of bslib::card
+* Remove `navInput()` and `navbar()` in favor of bslib::nav
+* Remove `column()` in favor of bslib::column
+* Remove `webpage()` in favor of bslib::page
+* Remove `popover()` in favor of bslib::popover
+* Remove `tooltip()` in favor of bslib::tooltip
+* Remove `switchInput()` in favor of bslib::input_switch
 
 # yonder 0.2.0
 

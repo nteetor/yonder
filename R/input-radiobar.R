@@ -15,8 +15,6 @@
 #' @param selected One of `values` specifying the input's default selected
 #'   choice, defaults to `values[[1]]`.
 #'
-#' @includeRmd man/roxygen/radiobar.Rmd
-#'
 #' @family inputs
 #' @export
 radiobarInput <- function(..., id, choices, values = choices,

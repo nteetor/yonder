@@ -44,8 +44,6 @@
 #' To remove a button or link input's tooltip pass an empty tooltip,
 #' `tooltip()`, to `updateButtonInput()` or `updateLinkInput()`.
 #'
-#' @includeRmd man/roxygen/button.Rmd
-#'
 #' @family inputs
 #' @export
 buttonInput <- function(..., id, label, stretch = FALSE, download = FALSE,

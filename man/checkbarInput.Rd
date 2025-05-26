@@ -45,122 +45,6 @@ selected values, defaults to \code{NULL}.}
 A stylized checkbox input. The checkbar input appears similar to a group of
 buttons, but with a checked or highlighted state.
 }
-\details{
-\subsection{Getting started}{
-
-Checkbars will expand to fill the width of their parent element.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{checkbarInput(
-  .style \%>\%
-    background("secondary"),
-  id = NULL,
-  choices = c("Choice 1", "Choice 2", "Choice 3")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-checkbar btn-group btn-group-toggle d-flex bg-secondary" data-toggle="buttons">
-<label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 1"/>
-Choice 1
-</label>
-<label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 2"/>
-Choice 2
-</label>
-<label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 3"/>
-Choice 3
-</label>
-</div>
-}}
-
-
-If you want to adjust the width you can use the \code{width()} utility.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{checkbarInput(
-  .style \%>\%
-    background("secondary") \%>\%
-    width(50),  # <-
-  id = NULL,
-  choices = c("Choice 1", "Choice 2", "Choice 3")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-checkbar btn-group btn-group-toggle d-flex bg-secondary w-50" data-toggle="buttons">
-<label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 1"/>
-Choice 1
-</label>
-<label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 2"/>
-Choice 2
-</label>
-<label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 3"/>
-Choice 3
-</label>
-</div>
-}}
-
-}
-
-\subsection{Background color}{
-
-Like other inputs, checkbar inputs apply modified background styles
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{checkbarInput(
-  .style \%>\%
-    background("info"),
-  id = NULL,
-  choices = c("Choice 1", "Choice 2")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-checkbar btn-group btn-group-toggle d-flex bg-info" data-toggle="buttons">
-<label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 1"/>
-Choice 1
-</label>
-<label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 2"/>
-Choice 2
-</label>
-</div>
-}}
-
-}
-
-\subsection{Labelling}{
-
-Use a \code{formGroup()} to add a label or help text to checkbar input.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{formGroup(
-  label = "Label",  # <-
-  checkbarInput(
-    .style \%>\%
-      border("dark") \%>\%
-      font("light"),
-    id = NULL,
-    choices = c("Choice 1", "Choice 2")
-  ),
-  help = "Help text about the input"
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="form-group">
-<label>Label</label>
-<div class="yonder-checkbar btn-group btn-group-toggle d-flex border border-dark text-light" data-toggle="buttons">
-<label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 1"/>
-Choice 1
-</label>
-<label class="btn">
-<input type="checkbox" autocomplete="off" value="Choice 2"/>
-Choice 2
-</label>
-</div>
-<small class="form-text text-muted">Help text about the input</small>
-</div>
-}}
-
-}
-}
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
@@ -171,7 +55,6 @@ Other inputs:
 \code{\link{formInput}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
-\code{\link{navInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},
 \code{\link{rangeInput}()},

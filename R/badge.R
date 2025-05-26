@@ -7,8 +7,6 @@
 #' @param ... Named arguments passed as HTML attributes to the parent
 #'   element or tag elements passed as children to the parent element.
 #'
-#' @includeRmd man/roxygen/badge.Rmd
-#'
 #' @family components
 #' @export
 badge <- function(...) {

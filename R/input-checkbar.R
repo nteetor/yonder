@@ -14,8 +14,6 @@
 #' @param selected One or more of `values` specifying the input's default
 #'   selected values, defaults to `NULL`.
 #'
-#' @includeRmd man/roxygen/checkbar.Rmd
-#'
 #' @family inputs
 #' @export
 checkbarInput <- function(..., id, choices = NULL, values = choices,

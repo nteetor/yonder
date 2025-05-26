@@ -22,8 +22,6 @@
 #' @param width A [responsive] argument. One of `1:12`, `"content"`, or
 #'   `"equal"` specifying a column width for the form group, defaults to `NULL`.
 #'
-#' @includeRmd man/roxygen/form-group.Rmd
-#'
 #' @family layout
 #' @export
 formGroup <- function(label, input, ..., help = NULL, width = NULL) {

@@ -48,76 +48,6 @@ of the buttons, defaults to \code{"horizontal"}.}
 \description{
 A set of buttons with custom values.
 }
-\details{
-\subsection{Layout options}{
-
-Button groups can be laid in two directions, horizontal or vertical.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonGroupInput(
-  .style \%>\%
-    background("primary"),
-  id = NULL,
-  choices = c("Grape", "Raspberry", "Kiwi")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-button-group btn-group btn-group-primary" role="group">
-<button type="button" class="btn" value="Grape">Grape</button>
-<button type="button" class="btn" value="Raspberry">Raspberry</button>
-<button type="button" class="btn" value="Kiwi">Kiwi</button>
-</div>
-}}
-
-
-Vertical button groups can help fill available space.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonGroupInput(
-  .style \%>\%
-    background("primary"),
-  id = NULL,
-  choices = c("Cherry", "Apple", "Pear")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-button-group btn-group btn-group-primary" role="group">
-<button type="button" class="btn" value="Cherry">Cherry</button>
-<button type="button" class="btn" value="Apple">Apple</button>
-<button type="button" class="btn" value="Pear">Pear</button>
-</div>
-}}
-
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonGroupInput(
-  id = "group1",
-  choices = c("Once", "Twice", "Thrice"),
-  values = c(1, 2, 3)
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-button-group btn-group" id="group1" role="group">
-<button type="button" class="btn" value="1">Once</button>
-<button type="button" class="btn" value="2">Twice</button>
-<button type="button" class="btn" value="3">Thrice</button>
-</div>
-}}
-
-}
-
-\subsection{Styling the button group}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonGroupInput(
-  .style \%>\%
-    background("primary"),
-  id = "group2",
-  choices = c("Button 1", "Button 2", "Button 3")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-button-group btn-group btn-group-primary" id="group2" role="group">
-<button type="button" class="btn" value="Button 1">Button 1</button>
-<button type="button" class="btn" value="Button 2">Button 2</button>
-<button type="button" class="btn" value="Button 3">Button 3</button>
-</div>
-}}
-
-}
-}
 \seealso{
 Other inputs: 
 \code{\link{buttonInput}()},
@@ -128,7 +58,6 @@ Other inputs:
 \code{\link{formInput}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
-\code{\link{navInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},
 \code{\link{rangeInput}()},

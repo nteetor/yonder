@@ -35,42 +35,6 @@ defaults to \code{NULL}, in which case any file type may be selected.}
 \description{
 Upload files to the server.
 }
-\details{
-\subsection{Getting started}{
-
-File inputs come with default placeholder text.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{fileInput(
-  id = NULL
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-file custom-file">
-<input type="file" class="custom-file-input" multiple autocomplete="off"/>
-<label class="custom-file-label" data-browse="Browse">Choose file</label>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-}}
-
-
-You can also specify different text.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{fileInput(
-  id = NULL,
-  placeholder = "Pick a file",
-  browse = "Click"
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-file custom-file">
-<input type="file" class="custom-file-input" multiple autocomplete="off"/>
-<label class="custom-file-label" data-browse="Click">Pick a file</label>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-}}
-
-}
-}
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
@@ -81,7 +45,6 @@ Other inputs:
 \code{\link{formInput}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
-\code{\link{navInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},
 \code{\link{rangeInput}()},

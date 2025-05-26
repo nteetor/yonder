@@ -39,8 +39,6 @@
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
-#' @includeRmd man/roxygen/checkbox.Rmd
-#'
 #' @family inputs
 #' @export
 checkboxInput <- function(..., id, choices = NULL, values = choices,
@@ -77,57 +75,6 @@ updateCheckboxInput <- function(id, choices = NULL, values = choices,
   checkboxes <- map_checkboxes(choices, values, selected, inline, FALSE)
 
   content <- coerce_content(checkboxes)
-  selected <- coerce_selected(selected)
-  enable <- coerce_enable(enable)
-  disable <- coerce_disable(disable)
-  valid <- coerce_valid(valid)
-  invalid <- coerce_invalid(invalid)
-
-  session$sendInputMessage(id, list(
-    content = content,
-    selected = selected,
-    enable = enable,
-    disable = disable,
-    valid = valid,
-    invalid = invalid
-  ))
-}
-
-#' @rdname checkboxInput
-#' @export
-switchInput <- function(..., id, choices, values = choices, selected = NULL) {
-  assert_id()
-  assert_choices()
-
-  with_deps({
-    switches <- map_checkboxes(choices, values, selected, FALSE, TRUE)
-
-    args <- style_dots_eval(..., .style = style_pronoun("yonder_switch"))
-
-    tag <- tags$div(
-      class = "yonder-checkbox",
-      id = id,
-      switches,
-      !!!args
-    )
-
-    s3_class_add(tag, c("yonder_switch", "yonder_input"))
-  })
-}
-
-#' @rdname checkboxInput
-#' @export
-updateSwitchInput <- function(id, choices = NULL, values = choices,
-                              selected = NULL, enable = NULL,
-                              disable = NULL, valid = NULL, invalid = NULL,
-                              session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_choices()
-  assert_session()
-
-  switches <- map_checkboxes(choices, values, selected, FALSE, TRUE)
-
-  content <- coerce_content(switches)
   selected <- coerce_selected(selected)
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)

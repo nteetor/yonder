@@ -47,8 +47,6 @@
 #'   menu item. The value of the input group is the concatenation of the
 #'   dropdown input value, the value of the text input, and any static addons.
 #'
-#' @includeRmd man/roxygen/select.Rmd
-#'
 #' @family inputs
 #' @export
 selectInput <- function(id, choices = NULL, values = choices,

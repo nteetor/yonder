@@ -20,136 +20,16 @@ immediately disappears when dismissed, defaults to \code{TRUE}.}
 Use an alert element to let the user know of successes or to call attention
 to problems.
 }
-\details{
-\subsection{Dismissible alerts}{
-
-With \code{dismissible = TRUE} you can allow the user to remove an alert. By
-default, alerts are dismissible, well suited for one-time messages or
-warnings.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{alert(
-  .style \%>\%
-    background("primary"),
-  "I'm around till you say goodbye"
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="alert alert-dismissible fade show alert-primary" role="alert">
-I'm around till you say goodbye
-<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-}}
-
-}
-
-\subsection{Static alerts}{
-
-If you do want to keep an alert or control an alert with \code{renderUI()}
-you can then use \code{dismissible = FALSE}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{alert(
-  .style \%>\%
-    background("warning"),
-  dismissible = FALSE,  # <-
-  "I'm calling attention to something, forever."
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="alert alert-warning" role="alert">I'm calling attention to something, forever.</div>
-}}
-
-}
-
-\subsection{Contextual content}{
-
-Alerts include a few contextual variations. Links and headings are both
-styled differently inside an alert.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{alert(
-  .style \%>\%
-    background("success"),
-  h5("Success!"),
-  "Your results can be found",
-  a(href = "#", "here")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="alert alert-dismissible fade show alert-success" role="alert">
-<h5 class="alert-heading">Success!</h5>
-Your results can be found
-<a class="alert-link" href="#">here</a>
-<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-}}
-
-
-If you want to avoid these automatic styles you can use \code{tags$a},
-\code{tags$h1}, \code{tags$h2}, etc.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{alert(
-  .style \%>\%
-    background("light") \%>\%
-    border("dark"),
-  tags$h6("Default heading"),
-  h6("Alert heading"),
-  hr(),
-  tags$a(href = "#", "Default link"),
-  a(href = "#", "Alert link")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="alert alert-dismissible fade show alert-light border border-dark" role="alert">
-<h6>Default heading</h6>
-<h6 class="alert-heading">Alert heading</h6>
-<hr/>
-<a href="#">Default link</a>
-<a class="alert-link" href="#">Alert link</a>
-<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-}}
-
-
-Like the \code{a()} tag elements, yonder’s \code{linkInput()}s also receive
-contextual styling.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{alert(
-  .style \%>\%
-    background("danger"),
-  h5("Problem"),
-  hr(),
-  linkInput(
-    id = "rerun",
-    label = "Click to run again"
-  )
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="alert alert-dismissible fade show alert-danger" role="alert">
-<h5 class="alert-heading">Problem</h5>
-<hr/>
-<button class="yonder-link btn btn-link alert-link" id="rerun">Click to run again</button>
-<button type="button" class="close" data-dismiss="alert" aria-label="Close">
-<span aria-hidden="true">&times;</span>
-</button>
-</div>
-}}
-
-}
-}
 \seealso{
 Other components: 
 \code{\link{badge}()},
 \code{\link{blockquote}()},
-\code{\link{card}()},
 \code{\link{collapsePane}()},
 \code{\link{d1}()},
 \code{\link{dropdown}()},
 \code{\link{img}()},
 \code{\link{jumbotron}()},
 \code{\link{modal}()},
-\code{\link{navContent}()},
-\code{\link{popover}()},
 \code{\link{pre}()},
 \code{\link{toast}()}
 }

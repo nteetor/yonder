@@ -24,8 +24,6 @@
 #' The sophistication of this input will improve as browsers adopt the latest
 #' HTML standards.
 #'
-#' @includeRmd man/roxygen/range.Rmd
-#'
 #' @family inputs
 #' @export
 rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...) {

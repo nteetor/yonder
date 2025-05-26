@@ -22,8 +22,6 @@
 #' @param align One of `"left"` or `"right"` specifying which side of the button
 #'   to align the dropdown menu to, defaults to `"left"`.
 #'
-#' @includeRmd man/roxygen/dropdown.Rmd
-#'
 #' @family components
 #' @export
 dropdown <- function(label, ..., direction = "down", align = "left") {

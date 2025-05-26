@@ -125,47 +125,6 @@ input.
 \code{"number"} and explicit arguments for specifying a min value, max value, and
 the step amount. Use \code{updateTextInput()} to update a number input.
 }
-\details{
-\subsection{Getting started}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{textInput(
-  id = NULL,
-  placeholder = "Placeholder ..."
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-textual">
-<input class="form-control" type="text" placeholder="Placeholder ..." autocomplete="off"/>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-}}
-
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{numberInput(
-  id = NULL,
-  placeholder = "Number"
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-textual">
-<input class="form-control" type="number" placeholder="Number" autocomplete="off" step="1"/>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-}}
-
-}
-
-\subsection{Specify \code{min}, \code{max}, and \code{step}}{
-
-\if{html}{\out{<div class="sourceCode">}}\preformatted{numberInput(
-  id = NULL,
-  min = 1,
-  max = 10,
-  step = 2
-)
-}\if{html}{\out{</div>}}
-}
-}
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
@@ -177,7 +136,6 @@ Other inputs:
 \code{\link{formInput}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
-\code{\link{navInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},
 \code{\link{rangeInput}()},

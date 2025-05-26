@@ -66,75 +66,6 @@ A toggleable dropdown menu input. Menu inputs may be used as standalone
 reactive inputs or within a \code{\link[=navInput]{navInput()}}. For building custom, more complex
 dropdown elements please see \code{\link[=dropdown]{dropdown()}}.
 }
-\details{
-\subsection{Getting Started}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{menuInput(
-  id = "menu1",
-  label = "Menu",
-  choices = c(
-    "Choice 1",
-    "Choice 2",
-    "Choice 3"
-  )
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-menu dropdown" id="menu1">
-<button class="btn dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Menu</button>
-<div class="dropdown-menu">
-<button class="dropdown-item" type="button" value="Choice 1">Choice 1</button>
-<button class="dropdown-item" type="button" value="Choice 2">Choice 2</button>
-<button class="dropdown-item" type="button" value="Choice 3">Choice 3</button>
-</div>
-</div>
-}}
-
-\subsection{Use in navigation}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{navInput(
-  id = "nav1",
-  choices = list(
-    "Tab 1",
-    menuInput(
-      id = "navOptions",
-      label = "Tab 2",
-      choices = c(
-        "Option 1",
-        "Option 2",
-        "Option 3"
-      )
-    ),
-    "Tab 3",
-    "Tab 4"
-  ),
-  values = paste0("tab", 1:4)
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<ul class="yonder-nav nav" id="nav1">
-<li class="nav-item">
-<button class="nav-link btn btn-link active" value="tab1">Tab 1</button>
-</li>
-<li class="yonder-menu dropdown nav-item" id="navOptions">
-<button class="btn dropdown-toggle nav-link btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" value="tab2">Tab 2</button>
-<div class="dropdown-menu">
-<button class="dropdown-item" type="button" value="Option 1">Option 1</button>
-<button class="dropdown-item" type="button" value="Option 2">Option 2</button>
-<button class="dropdown-item" type="button" value="Option 3">Option 3</button>
-</div>
-</li>
-<li class="nav-item">
-<button class="nav-link btn btn-link" value="tab3">Tab 3</button>
-</li>
-<li class="nav-item">
-<button class="nav-link btn btn-link" value="tab4">Tab 4</button>
-</li>
-</ul>
-}}
-
-}
-
-}
-}
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
@@ -145,7 +76,6 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{formInput}()},
 \code{\link{listGroupInput}()},
-\code{\link{navInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},
 \code{\link{rangeInput}()},

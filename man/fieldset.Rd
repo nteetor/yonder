@@ -50,10 +50,4 @@ fieldset(
 )
 
 }
-\seealso{
-Other layout functions: 
-\code{\link{column}()},
-\code{\link{navbar}()},
-\code{\link{webpage}()}
-}
 \concept{layout functions}

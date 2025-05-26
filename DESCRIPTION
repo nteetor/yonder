@@ -31,7 +31,6 @@ Depends:
 Imports:
     htmltools (>= 0.4.0),
     lifecycle,
-    magrittr,
     rlang,
     utils
 Suggests:
@@ -42,22 +41,9 @@ VignetteBuilder: knitr
 Collate:
     'alert.R'
     'badge.R'
-    'card.R'
     'collapse.R'
     'components.R'
     'content.R'
-    'design.R'
-    'design-affix.R'
-    'design-background.R'
-    'design-border.R'
-    'design-display.R'
-    'design-flex.R'
-    'design-float.R'
-    'design-font.R'
-    'design-scroll.R'
-    'design-shadow.R'
-    'design-sizing.R'
-    'design-spacing.R'
     'dropdown.R'
     'forms.R'
     'input-button-group.R'
@@ -69,26 +55,18 @@ Collate:
     'input-form.R'
     'input-list-group.R'
     'input-menu.R'
-    'input-nav.R'
     'input-radio.R'
     'input-radiobar.R'
     'input-range.R'
     'input-select.R'
     'input-textual.R'
-    'layout.R'
     'modal.R'
-    'navbar.R'
-    'page.R'
-    'popover.R'
     'utils.R'
-    'pronoun-style.R'
-    'reexports.R'
-    'style.R'
     'toast.R'
-    'tooltip.R'
     'utils-arguments.R'
     'utils-assertions.R'
     'utils-dependencies.R'
     'utils-responsive.R'
     'utils-tags.R'
     'yonder.R'
+    'zzz.R'

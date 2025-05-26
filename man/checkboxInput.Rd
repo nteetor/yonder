@@ -3,8 +3,6 @@
 \name{checkboxInput}
 \alias{checkboxInput}
 \alias{updateCheckboxInput}
-\alias{switchInput}
-\alias{updateSwitchInput}
 \title{Checkbox and switch inputs}
 \usage{
 checkboxInput(
@@ -22,20 +20,6 @@ updateCheckboxInput(
   values = choices,
   selected = NULL,
   inline = FALSE,
-  enable = NULL,
-  disable = NULL,
-  valid = NULL,
-  invalid = NULL,
-  session = getDefaultReactiveDomain()
-)
-
-switchInput(..., id, choices, values = choices, selected = NULL)
-
-updateSwitchInput(
-  id,
-  choices = NULL,
-  values = choices,
-  selected = NULL,
   enable = NULL,
   disable = NULL,
   valid = NULL,
@@ -84,201 +68,6 @@ The checkbox input appears as a standard checkbox or set of checkboxes. When
 a checkbox input has no selected choices the reactive value is \code{NULL}. Switch
 inputs differ from checkboxes only in appearance.
 }
-\details{
-\subsection{Getting started}{
-
-Checkbox inputs may have a single possible value.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{checkboxInput(
-  id = NULL,
-  choices = "Choice 1",
-  selected = "Choice 1"
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-checkbox">
-<div class="custom-control custom-checkbox">
-<input class="custom-control-input" type="checkbox" id="checkbox-433-345" name="checkbox-433-345" value="Choice 1" checked autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-433-345">Choice 1</label>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-</div>
-}}
-
-
-You may also specify multiple possible values.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{checkboxInput(
-  id = NULL,
-  choices = c("Choice 1", "Choice 2", "Choice 3"),
-  selected = c("Choice 1", "Choice 2")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-checkbox">
-<div class="custom-control custom-checkbox">
-<input class="custom-control-input" type="checkbox" id="checkbox-665-165" name="checkbox-665-165" value="Choice 1" checked autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-665-165">Choice 1</label>
-</div>
-<div class="custom-control custom-checkbox">
-<input class="custom-control-input" type="checkbox" id="checkbox-332-323" name="checkbox-332-323" value="Choice 2" checked autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-332-323">Choice 2</label>
-</div>
-<div class="custom-control custom-checkbox">
-<input class="custom-control-input" type="checkbox" id="checkbox-274-68" name="checkbox-274-68" value="Choice 3" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-274-68">Choice 3</label>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-</div>
-}}
-
-}
-
-\subsection{Layout}{
-
-While checkbox input choices are typically laid out vertically you can
-lay out the choices horizontally with \code{inline = TRUE}.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{checkboxInput(
-  id = NULL,
-  choices = c("Choice 1", "Choice 2", "Choice 3"),
-  inline = TRUE  # <-
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-checkbox">
-<div class="custom-control custom-checkbox custom-control-inline">
-<input class="custom-control-input" type="checkbox" id="checkbox-187-927" name="checkbox-187-927" value="Choice 1" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-187-927">Choice 1</label>
-</div>
-<div class="custom-control custom-checkbox custom-control-inline">
-<input class="custom-control-input" type="checkbox" id="checkbox-230-504" name="checkbox-230-504" value="Choice 2" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-230-504">Choice 2</label>
-</div>
-<div class="custom-control custom-checkbox custom-control-inline">
-<input class="custom-control-input" type="checkbox" id="checkbox-932-422" name="checkbox-932-422" value="Choice 3" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-932-422">Choice 3</label>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-</div>
-}}
-
-}
-
-\subsection{Switch variant}{
-
-The switch input functions identical to the checkbox input with a
-different appearance.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{switchInput(
-  id = NULL,
-  choices = c("Toggle 1", "Toggle 2", "Toggle 3"),
-  selected = "Toggle 2"
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-checkbox">
-<div class="custom-control custom-switch">
-<input class="custom-control-input" type="checkbox" id="checkbox-197-573" name="checkbox-197-573" value="Toggle 1" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-197-573">Toggle 1</label>
-</div>
-<div class="custom-control custom-switch">
-<input class="custom-control-input" type="checkbox" id="checkbox-971-210" name="checkbox-971-210" value="Toggle 2" checked autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-971-210">Toggle 2</label>
-</div>
-<div class="custom-control custom-switch">
-<input class="custom-control-input" type="checkbox" id="checkbox-552-87" name="checkbox-552-87" value="Toggle 3" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-552-87">Toggle 3</label>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-</div>
-}}
-
-}
-
-\subsection{Background color}{
-
-Changing the background color of a checkbox or switch input will modify
-the background color of the \emph{selected} choices.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{checkboxInput(
-  .style \%>\%
-    background("warning"),
-  id = NULL,
-  choices = c("Choice 1", "Choice 2"),
-  selected = c("Choice 1", "Choice 2")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-checkbox custom-control-group-warning">
-<div class="custom-control custom-checkbox">
-<input class="custom-control-input" type="checkbox" id="checkbox-76-608" name="checkbox-76-608" value="Choice 1" checked autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-76-608">Choice 1</label>
-</div>
-<div class="custom-control custom-checkbox">
-<input class="custom-control-input" type="checkbox" id="checkbox-371-304" name="checkbox-371-304" value="Choice 2" checked autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-371-304">Choice 2</label>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-</div>
-}}
-
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{switchInput(
-  .style \%>\%
-    background("success"),
-  id = NULL,
-  choices = c("Toggle 1", "Toggle 2"),
-  selected = "Toggle 1"
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-checkbox custom-control-group-success">
-<div class="custom-control custom-switch">
-<input class="custom-control-input" type="checkbox" id="checkbox-803-708" name="checkbox-803-708" value="Toggle 1" checked autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-803-708">Toggle 1</label>
-</div>
-<div class="custom-control custom-switch">
-<input class="custom-control-input" type="checkbox" id="checkbox-724-573" name="checkbox-724-573" value="Toggle 2" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-724-573">Toggle 2</label>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-</div>
-}}
-
-}
-
-\subsection{Labelling}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{formGroup(
-  label = "Label",
-  checkboxInput(
-    id = NULL,
-    choices = c("Choice 1", "Choice 2")
-  ),
-  help = "Help text for the input"
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="form-group">
-<label>Label</label>
-<div class="yonder-checkbox">
-<div class="custom-control custom-checkbox">
-<input class="custom-control-input" type="checkbox" id="checkbox-621-340" name="checkbox-621-340" value="Choice 1" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-621-340">Choice 1</label>
-</div>
-<div class="custom-control custom-checkbox">
-<input class="custom-control-input" type="checkbox" id="checkbox-372-504" name="checkbox-372-504" value="Choice 2" autocomplete="off"/>
-<label class="custom-control-label" for="checkbox-372-504">Choice 2</label>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-</div>
-<small class="form-text text-muted">Help text for the input</small>
-</div>
-}}
-
-}
-}
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
@@ -289,7 +78,6 @@ Other inputs:
 \code{\link{formInput}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
-\code{\link{navInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},
 \code{\link{rangeInput}()},

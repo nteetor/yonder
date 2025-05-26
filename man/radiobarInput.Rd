@@ -46,34 +46,6 @@ A stylized group of radio inputs. A radiobar input is similar to a button
 group, but with a checked or highlighted stated. Additionally, only one value
 at most may be selected at any given time.
 }
-\details{
-\subsection{Getting started}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{radiobarInput(
-  .style \%>\%
-    background("secondary"),
-  id = NULL,
-  choices = c("Choice 1", "Choice 2", "Choice 3")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-radiobar btn-group btn-group-toggle d-flex bg-secondary" data-toggle="buttons">
-<label class="btn active">
-<input type="radio" value="Choice 1" checked autocomplete="off"/>
-Choice 1
-</label>
-<label class="btn">
-<input type="radio" value="Choice 2" autocomplete="off"/>
-Choice 2
-</label>
-<label class="btn">
-<input type="radio" value="Choice 3" autocomplete="off"/>
-Choice 3
-</label>
-</div>
-}}
-
-}
-}
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
@@ -85,7 +57,6 @@ Other inputs:
 \code{\link{formInput}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
-\code{\link{navInput}()},
 \code{\link{radioInput}()},
 \code{\link{rangeInput}()},
 \code{\link{selectInput}()},

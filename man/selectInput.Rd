@@ -115,59 +115,6 @@ input with one or two additional components. These addon components are used
 to change the reactivity or value of the input, see Details for more
 information.
 }
-\details{
-\subsection{Getting started}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{selectInput(
-  id = "select1",
-  choices = c("Choice 1", "Choice 2", "Choice 3"),
-  values = as.character(c(1, 2, 3))
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-select" id="select1">
-<input type="text" class="form-control custom-select" data-toggle="dropdown" data-boundary="window" placeholder="Choice 1"/>
-<div class="dropdown-menu">
-<button class="dropdown-item active" value="1">Choice 1</button>
-<button class="dropdown-item" value="2">Choice 2</button>
-<button class="dropdown-item" value="3">Choice 3</button>
-</div>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-}}
-
-}
-
-\subsection{Group select input}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{groupSelectInput(
-  id = "select2",
-  choices = as.character(1:5),
-  left = "$",
-  right = ".00"
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-group-select input-group" id="select2">
-<div class="input-group-prepend">
-<span class="input-group-text">$</span>
-</div>
-<select class="custom-select">
-<option selected value="1">1</option>
-<option value="2">2</option>
-<option value="3">3</option>
-<option value="4">4</option>
-<option value="5">5</option>
-</select>
-<div class="input-group-append">
-<span class="input-group-text">.00</span>
-</div>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-}}
-
-}
-}
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
@@ -179,7 +126,6 @@ Other inputs:
 \code{\link{formInput}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
-\code{\link{navInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},
 \code{\link{rangeInput}()},

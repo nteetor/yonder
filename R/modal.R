@@ -34,8 +34,6 @@
 #'
 #' @inheritParams collapsePane
 #'
-#' @includeRmd man/roxygen/modal.Rmd
-#'
 #' @family components
 #' @export
 modal <- function(id, ..., header = NULL, footer = NULL, center = FALSE,

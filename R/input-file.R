@@ -16,8 +16,6 @@
 #' @param accept A character vector of possible MIME types or file extensions,
 #'   defaults to `NULL`, in which case any file type may be selected.
 #'
-#' @includeRmd man/roxygen/file.Rmd
-#'
 #' @family inputs
 #' @export
 fileInput <- function(..., id, placeholder = "Choose file", browse = "Browse",

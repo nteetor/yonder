@@ -63,8 +63,6 @@ param_type <- function() {
 #' @param step A number specifying the increment step of the number input,
 #'   defaults to 1.
 #'
-#' @includeRmd man/roxygen/text.Rmd
-#'
 #' @family inputs
 #' @export
 textInput <- function(..., id, value = NULL, placeholder = NULL,

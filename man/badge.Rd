@@ -15,82 +15,16 @@ Small highlighted content which scales to its parent's size. A badge may
 be dynamically updated with \code{\link[=replaceContent]{replaceContent()}}, in which case be sure to
 pass an \code{id} argument as part of \code{...}.
 }
-\details{
-\subsection{Combining badges}{
-
-Badges may be combined with other elements. They can be placed inside
-buttons.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{buttonInput(
-  .style \%>\%
-    background("primary"),
-  id = NULL,
-  label = "Counter",
-  badge(2) \%>\% background("light")
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<button autocomplete="off" class="yonder-button btn btn-primary" role="button" type="button">
-Counter
-<span class="badge badge-light">2</span>
-</button>
-}}
-
-
-You can also pair badges with list groups.
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{listGroupItem <- function(...) \{
-  div(...) \%>\%
-    width(100) \%>\%
-    display("flex") \%>\%
-    flex(justify = "between", align = "center")
-\}
-
-listGroupInput(
-  .style \%>\%
-    width(50) \%>\%
-    background("secondary"),
-  id = NULL,
-  choices = list(
-    listGroupItem("Mail", badge(tags$i(class = "fas fa-envelope fa-lg"))),
-    listGroupItem("Research", badge(tags$i(class = "fas fa-vial fa-lg")))
-  )
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="yonder-list-group list-group w-50 list-group-secondary">
-<button class="list-group-item list-group-item-action" value="&lt;div class=&quot;w-100 d-flex justify-content-between align-items-center&quot;&gt;&#10;  Mail&#10;  &lt;span class=&quot;badge&quot;&gt;&#10;    &lt;i class=&quot;fas fa-envelope fa-lg&quot;&gt;&lt;/i&gt;&#10;  &lt;/span&gt;&#10;&lt;/div&gt;">
-<div class="w-100 d-flex justify-content-between align-items-center">
-Mail
-<span class="badge">
-<i class="fas fa-envelope fa-lg"></i>
-</span>
-</div>
-</button>
-<button class="list-group-item list-group-item-action" value="&lt;div class=&quot;w-100 d-flex justify-content-between align-items-center&quot;&gt;&#10;  Research&#10;  &lt;span class=&quot;badge&quot;&gt;&#10;    &lt;i class=&quot;fas fa-vial fa-lg&quot;&gt;&lt;/i&gt;&#10;  &lt;/span&gt;&#10;&lt;/div&gt;">
-<div class="w-100 d-flex justify-content-between align-items-center">
-Research
-<span class="badge">
-<i class="fas fa-vial fa-lg"></i>
-</span>
-</div>
-</button>
-</div>
-}}
-
-}
-}
 \seealso{
 Other components: 
 \code{\link{alert}()},
 \code{\link{blockquote}()},
-\code{\link{card}()},
 \code{\link{collapsePane}()},
 \code{\link{d1}()},
 \code{\link{dropdown}()},
 \code{\link{img}()},
 \code{\link{jumbotron}()},
 \code{\link{modal}()},
-\code{\link{navContent}()},
-\code{\link{popover}()},
 \code{\link{pre}()},
 \code{\link{toast}()}
 }

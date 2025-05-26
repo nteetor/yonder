@@ -23,29 +23,16 @@ passed as HTML attributes to the parent element.}
 Display headings are not meant to replace the standard HTML heading tags,
 they are a stand out alternative for eye-catching titles.
 }
-\details{
-\subsection{Getting started}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{d4("Display 4")
-}\if{html}{\out{</div>}}\if{html}{\out{
-<h1 class="display-4">Display 4</h1>
-}}
-
-}
-}
 \seealso{
 Other components: 
 \code{\link{alert}()},
 \code{\link{badge}()},
 \code{\link{blockquote}()},
-\code{\link{card}()},
 \code{\link{collapsePane}()},
 \code{\link{dropdown}()},
 \code{\link{img}()},
 \code{\link{jumbotron}()},
 \code{\link{modal}()},
-\code{\link{navContent}()},
-\code{\link{popover}()},
 \code{\link{pre}()},
 \code{\link{toast}()}
 }

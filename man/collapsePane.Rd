@@ -84,14 +84,11 @@ Other components:
 \code{\link{alert}()},
 \code{\link{badge}()},
 \code{\link{blockquote}()},
-\code{\link{card}()},
 \code{\link{d1}()},
 \code{\link{dropdown}()},
 \code{\link{img}()},
 \code{\link{jumbotron}()},
 \code{\link{modal}()},
-\code{\link{navContent}()},
-\code{\link{popover}()},
 \code{\link{pre}()},
 \code{\link{toast}()}
 }

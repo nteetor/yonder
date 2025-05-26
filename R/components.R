@@ -6,8 +6,6 @@
 #' @param ... Any number of character strings or tag elements or named arguments
 #'   passed as HTML attributes to the parent element.
 #'
-#' @includeRmd man/roxygen/d.Rmd
-#'
 #' @family components
 #' @export
 d1 <- function(...) d(1, ...)

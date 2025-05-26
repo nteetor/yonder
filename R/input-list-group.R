@@ -24,8 +24,6 @@
 #'   group border is useful when rendering a list group inside a custom parent
 #'   container, e.g. inside a [card()].
 #'
-#' @includeRmd man/roxygen/list-group.Rmd
-#'
 #' @family inputs
 #' @export
 listGroupInput <- function(..., id, choices = NULL, values = choices,

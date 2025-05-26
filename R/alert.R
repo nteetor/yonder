@@ -12,8 +12,6 @@
 #' @param fade One of `TRUE` or `FALSE` specifying if the alert fades out or
 #'   immediately disappears when dismissed, defaults to `TRUE`.
 #'
-#' @includeRmd man/roxygen/alert.Rmd
-#'
 #' @family components
 #' @export
 alert <- function(..., dismissible = TRUE, fade = TRUE) {

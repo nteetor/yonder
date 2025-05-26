@@ -51,71 +51,6 @@ control form input submission. A form input and its child reactive inputs
 will \emph{never} update if a form submit button is not included in \code{...} passed
 to \code{formInput()}.
 }
-\details{
-\subsection{Getting started}{
-
-\if{html}{\out{<div class="sourceCode r">}}\preformatted{card(
-  .style \%>\%
-    border("info") \%>\%
-    width(50),
-  header = "Please pick a flavor",
-  formInput(
-    id = "form1",
-    formGroup(
-      label = "Ice creams",
-      radioInput(
-        id = "flavor",
-        choices = c("Mint", "Moose tracks", "Marble"),
-      )
-    ),
-    formSubmit(
-      .style \%>\% background("info"),
-      label = "Make choice",
-      value = "choice"
-    )
-  )
-)
-}\if{html}{\out{</div>}}\if{html}{\out{
-<div class="card border border-info w-50">
-<div class="card-header">Please pick a flavor</div>
-<div class="card-body">
-<form class="yonder-form" id="form1">
-<div class="form-group">
-<label>Ice creams</label>
-<div class="yonder-radio" id="flavor">
-<div class="custom-control custom-radio">
-<input class="custom-control-input" type="radio" id="radio-433-345" name="flavor" value="Mint" checked autocomplete="off"/>
-<label class="custom-control-label" for="radio-433-345">Mint</label>
-</div>
-<div class="custom-control custom-radio">
-<input class="custom-control-input" type="radio" id="radio-665-165" name="flavor" value="Moose tracks" autocomplete="off"/>
-<label class="custom-control-label" for="radio-665-165">Moose tracks</label>
-</div>
-<div class="custom-control custom-radio">
-<input class="custom-control-input" type="radio" id="radio-332-323" name="flavor" value="Marble" autocomplete="off"/>
-<label class="custom-control-label" for="radio-332-323">Marble</label>
-<div class="valid-feedback"></div>
-<div class="invalid-feedback"></div>
-</div>
-</div>
-</div>
-<button class="yonder-form-submit btn btn-blue bg-info" value="choice">Make choice</button>
-</form>
-</div>
-</div>
-}}
-
-}
-
-\subsection{Inline forms}{
-
-When \code{inline} is \code{TRUE} you may want to adjust the right margin of each
-child element for viewports larger than mobile,
-\code{margin(right = c(sm = 2))}, see \code{\link[=margin]{margin()}}. You only need
-to apply extra space for larger viewports because inline forms do not
-take effect on small viewports.
-}
-}
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
@@ -126,7 +61,6 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
-\code{\link{navInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},
 \code{\link{rangeInput}()},

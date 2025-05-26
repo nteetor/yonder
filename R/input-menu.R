@@ -21,8 +21,6 @@
 #' @param align One or `"right"` or `"left"` specifying which side of the
 #'   toggle button the menu aligns to, defaults to `"left"`.`
 #'
-#' @includeRmd man/roxygen/menu.Rmd
-#'
 #' @family inputs
 #' @export
 menuInput <- function(id, label, choices = NULL, values = choices,

@@ -20,8 +20,6 @@
 #' @param inline If `TRUE`, the radio input renders inline, defaults to `FALSE`,
 #'   in which case the radio controls render on separate lines.
 #'
-#' @includeRmd man/roxygen/radio.Rmd
-#'
 #' @family inputs
 #' @export
 radioInput <- function(..., id, choices = NULL, values = choices,
