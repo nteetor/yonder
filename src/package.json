@@ -1,0 +1,50 @@
+{
+  "name": "bsides",
+  "version": "0.2.0.9000",
+  "description": "An extension of the {bslib} R package.",
+  "main": "dist/bsides.min.css",
+  "dependencies": {
+    "bootstrap": "^5.3.6",
+    "popper.js": "^1.16.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "@rollup/plugin-babel": "^6.0.4",
+    "autoprefixer": "^10.4.21",
+    "clean-css-cli": "^5.6.3",
+    "concat": "^1.0.3",
+    "eslint": "^9.27.0",
+    "eslint-config-xo": "^0.47.0",
+    "globals": "^16.2.0",
+    "npm-run-all2": "^8.0.4",
+    "postcss-cli": "^11.0.1",
+    "rollup": "^4.41.1",
+    "sass": "^1.89.0",
+    "stylelint": "^16.19.1",
+    "terser": "^5.40.0"
+  },
+  "scripts": {
+    "css-compile": "sass --style expanded --source-map --embed-sources scss/:dist/css",
+    "css-prefix": "postcss --config build/postcss.config.js --replace \"dist/css/*.css\" \"!dist/css/*.min.css\"",
+    "css-minify": "cleancss -O1 --format breakWith=lf --with-rebase --source-map --source-map-inline-sources --output dist/css/",
+    "css-vend": "cp dist/css/yonder.min.css ../inst/www/yonder/css/",
+    "css": "npm-run-all css-compile css-prefix css-minify css-vend",
+    "js-compile": "rollup --config build/rollup.config.mjs --sourcemap",
+    "js-lint": "eslint --cache --cache-location .cache/.eslintcache --report-unused-disable-directives .",
+    "js-minify": "terser --compress passes=2 --mangle --comments \"/^!/\" --source-map \"content=dist/js/bsides.esm.js.map,includeSources,url=bsides.esm.min.js.map\" --output dist/js/bsides.esm.min.js dist/js/bsides.esm.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nteetor/yonder.git"
+  },
+  "keywords": [
+    "shiny",
+    "reactive"
+  ],
+  "author": "Nathan Teetor <nathanteetor@gmail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nteetor/yonder/issues"
+  },
+  "homepage": "https://nteetor.github.com/yonder"
+}

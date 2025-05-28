@@ -1,7 +1,0 @@
-// list group top-level theming
-
-@each $color, $value in $theme-colors {
-  .list-group-#{$color} .list-group-item {
-    @extend .list-group-item-#{$color};
-  }
-}

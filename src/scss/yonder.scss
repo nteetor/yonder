@@ -1,15 +1,10 @@
-/*!
- * An opinionated build of Bootstrap 4 for the yonder r package
- */
-
 @import '../node_modules/bootstrap/scss/functions';
 @import '../node_modules/bootstrap/scss/variables';
-
-@import 'variables';
-
 @import '../node_modules/bootstrap/scss/bootstrap';
 
 @import 'buttons';
 @import 'button-group';
-@import 'custom-forms';
-@import 'list-group';
+@import 'chip';
+@import 'modal';
+@import 'select';
+@import 'toasts';

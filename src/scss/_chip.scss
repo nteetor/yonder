@@ -68,7 +68,7 @@
   box-shadow: none;
   border: 1px solid transparent;
   @include border-radius($badge-border-radius);
-  @include transition($badge-transition);
+  @include transition($transition-fade);
   cursor: pointer;
 
   &.active {
@@ -102,5 +102,3 @@
   opacity: .65;
   transform: translateY(-10%); // I don't like this.
 }
-
-@include chip-active-variant();
