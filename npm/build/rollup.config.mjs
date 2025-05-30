@@ -17,6 +17,9 @@ export default {
       jquery: '$'
     }
   },
+  external: [
+    'jquery'
+  ],
   plugins: [
     babel({
       exclude: 'node_modules/**',

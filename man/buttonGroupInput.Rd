@@ -23,6 +23,11 @@ updateButtonGroupInput(
 )
 }
 \arguments{
+\item{...}{Additional named arguments passed as HTML attributes to the parent
+element.}
+
+\item{id}{A character string. specifying the id of the reactive input.}
+
 \item{choices}{A character vector specifying the labels for each button in
 the group.}
 

@@ -2,6 +2,7 @@
 % Please edit documentation in R/input-button.R
 \name{update_button}
 \alias{update_button}
+\alias{update_link}
 \title{Change button}
 \usage{
 update_button(
@@ -9,7 +10,15 @@ update_button(
   label = NULL,
   value = NULL,
   disable = NULL,
-  session = getDefaultReactiveDomain()
+  session = default_reactive_domain()
+)
+
+update_link(
+  id,
+  label = NULL,
+  value = NULL,
+  disable = NULL,
+  session = default_reactive_domain()
 )
 }
 \arguments{
@@ -23,7 +32,7 @@ update_button(
 \item If \code{NULL}, the argument is ignored.
 }}
 
-\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
+\item{session}{A reactive context, defaults to \code{\link[=default_reactive_domain]{default_reactive_domain()}}.}
 }
 \description{
 Change button.

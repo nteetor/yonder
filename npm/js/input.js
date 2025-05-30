@@ -1,5 +1,6 @@
 import $ from 'jquery'
-import BoundInputs from './bound-inputs.js'
+
+import InputStore from './input-store.js'
 
 class Input {
   // getters
@@ -28,7 +29,7 @@ class Input {
     this._debounce = false
     this._callback = (debounce) => {}
 
-    BoundInputs.set(element, this.constructor.BINDING_KEY, this)
+    InputStore.set(element, this.constructor.BINDING_KEY, this)
   }
 
   value(x) {
@@ -41,7 +42,7 @@ class Input {
 
   dispose() {
     this._callback = () => {}
-    BoundInputs.remove(element, this.constructor.BINDING_KEY)
+    InputStore.remove(element, this.constructor.BINDING_KEY)
   }
 
   // static
@@ -60,7 +61,7 @@ class Input {
   }
 
   static getValue(element) {
-    let input = BoundInputs.get(element, this.BINDING_KEY)
+    let input = InputStore.get(element, this.BINDING_KEY)
 
     if (!input) {
       return null
@@ -70,21 +71,17 @@ class Input {
   }
 
   static subscribe(element, callback) {
-    let input = BoundInputs.get(element, this.BINDING_KEY)
+    let input = InputStore.get(element, this.BINDING_KEY)
 
     if (!input) {
       return
     }
 
-    console.log(input)
-
     input._callback = callback
-
-    console.log(input._callback)
   }
 
   static unsubscribe(element) {
-    let input = BoundInputs.get(element, this.BINDING_KEY)
+    let input = InputStore.get(element, this.BINDING_KEY)
 
     if (!input) {
       return
@@ -94,21 +91,19 @@ class Input {
   }
 
   static receiveMessage(element, data) {
-    let input = BoundInputs.get(element, this.BINDING_KEY)
+    let input = InputStore.get(element, this.BINDING_KEY)
 
     if (!input) {
       return
     }
 
-    data.forEach((msg) => {
-      let [method, args = []] = msg
-
-      input[method](...args)
-    })
+    for (const [method, args] of Object.entries(data)) {
+      input[method](args)
+    }
   }
 
   static getState(element) {
-    let input = BoundInputs.get(element, this.BINDING_KEY)
+    let input = InputStore.get(element, this.BINDING_KEY)
 
     if (!input) {
       return
@@ -128,7 +123,7 @@ class Input {
   }
 
   static dispose(element) {
-    let input = BoundInputs.get(element, this.BINDING_KEY)
+    let input = InputStore.get(element, this.BINDING_KEY)
 
     if (!input) {
       return
@@ -138,19 +133,6 @@ class Input {
   }
 
   static ShinyInterface() {
-    /*return {
-      find: this.find,
-      getId: this.getId,
-      getType: this.getType,
-      getValue: this.getValue,
-      subscribe: this.subscribe,
-      unsubscribe: this.unsubscribe,
-      receiveMessage: this.receiveMessage,
-      getState: this.getState,
-      getRatePolicy: this.getRatePolicy,
-      initialize: this.initialize,
-      dispose: this.dispose
-    }*/
     return this
   }
 }

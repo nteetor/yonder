@@ -2,7 +2,7 @@
 #'
 #' A set of buttons with custom values.
 #'
-#' @inheritParams buttonInput
+#' @inheritParams input_button
 #'
 #' @param choices A character vector specifying the labels for each button in
 #'   the group.

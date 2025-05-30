@@ -26,7 +26,7 @@ input_button <- function(
 
   tag <-
     tags$button(
-      class = "bsides-button btn",
+      class = "bsides-button btn btn-primary",
       type = "button",
       role = "button",
       id = id,
@@ -35,19 +35,7 @@ input_button <- function(
     )
 
   tag <-
-    tagAppendChild(
-      tag,
-      htmlDependency(
-        name = "yonder",
-        version = utils::packageVersion("yonder"),
-        src = c(
-          file = system.file("www/yonder", package = "yonder"),
-          href = "yonder/yonder"
-        ),
-        # stylesheet = "css/yonder.min.css",
-        script = "js/bsides.js"
-      ),
-    )
+    dependency_append(tag)
 
   tag
 }
@@ -106,55 +94,40 @@ update_button <- function(
 
   session$sendInputMessage(
     id,
-    list(
+    drop_nulls(list(
       content = content,
       value = value,
-      disable = disable,
-      enable = enable,
-      tooltip = tooltip
-    )
+      disable = disable
+    ))
   )
 }
 
 
-#' @rdname buttonInput
+#' @rdname update_button
 #' @export
-updateLinkInput <- function(
+update_link <- function(
   id,
   label = NULL,
   value = NULL,
-  enable = NULL,
   disable = NULL,
-  tooltip = NULL,
-  session = getDefaultReactiveDomain()
+  session = default_reactive_domain()
 ) {
   assert_id()
   assert_session()
 
-  if (!is.null(value) && !is.numeric(value)) {
-    stop(
-      "invalid argument in `updateLinkInput()`, `value` must be numeric or ",
-      "NULL",
-      call. = FALSE
-    )
-  }
-
-  if (!is.null(value)) {
-    value <- as.numeric(value)
-  }
+  stopifnot(
+    is.null(value) || is.numeric(value)
+  )
 
   content <- coerce_content(label)
-  enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 
   session$sendInputMessage(
     id,
-    list(
+    drop_nulls(list(
       content = content,
       value = value,
-      enable = enable,
-      disable = disable,
-      tooltip = tooltip
-    )
+      disable = disable
+    ))
   )
 }

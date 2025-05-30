@@ -1,6 +1,7 @@
 import $ from 'jquery'
+
+import InputStore from './input-store.js'
 import Input from './input.js'
-import BoundInputs from './bound-inputs.js'
 
 class ButtonInput extends Input {
   static get NAME() {
@@ -28,29 +29,34 @@ class ButtonInput extends Input {
     return this
   }
 
-  content(text) {
-    this._element.innerHTML = text
+  content(x) {
+    this._element.innerHTML = x
+
+    return this
+  }
+
+  // this argument name is garbo
+  disable(x) {
+    if (x === true) {
+      this._element.setAttribute('disabled', '')
+    } else {
+      this._element.removeAttribute('disabled')
+    }
 
     return this
   }
 
   static initialize(element) {
-    let input = BoundInputs.get(element, this.BINDING_KEY)
+    let input = InputStore.get(element, this.BINDING_KEY)
 
     if (!input) {
       input = new ButtonInput(element)
     }
   }
-
-  static subscribe(element, callback) {
-    $(element).on("click", (event) => {
-      callback()
-    })
-  }
 }
 
 $(document).on(ButtonInput.EVENTS, ButtonInput.SELECTOR, (event) => {
-  let button = BoundInputs.get(event.currentTarget, ButtonInput.BINDING_KEY)
+  let button = InputStore.get(event.currentTarget, ButtonInput.BINDING_KEY)
 
   if (!button) {
     return
