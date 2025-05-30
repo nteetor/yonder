@@ -66,12 +66,12 @@ list. However, list group items may include highly variable content.
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
-\code{\link{buttonInput}()},
 \code{\link{checkbarInput}()},
 \code{\link{checkboxInput}()},
 \code{\link{chipInput}()},
 \code{\link{fileInput}()},
 \code{\link{formInput}()},
+\code{\link{input_button}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},

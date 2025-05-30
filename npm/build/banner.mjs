@@ -1,4 +1,4 @@
-import fs = 'node:fs/promises'
+import fs from 'node:fs/promises'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 
@@ -14,7 +14,7 @@ function banner(filename) {
   * bsides${filename ? ` ${filename}` : ''} v${pkg.version} (${pkg.homepage})
   * Copyright 2011-${year} ${pkg.author}
   * Licensed under MIT (https://github.com/nteetor/yonder/blob/main/LICENSE.note)
-  `
+  */`
 }
 
 export default banner

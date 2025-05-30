@@ -5,15 +5,17 @@ import banner from './banner.mjs'
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
-let destFile = 'bootstrap.esm'
-
 export default {
-  input: path.resolve(__dirname, '../src/js/yonder.js'),
+  input: path.resolve(__dirname, '../js/bsides.js'),
   output: {
+    name: 'bsides',
     banner: banner(),
-    file: path.resolve(__dirname, '../dist/js/yonder.js'),
-    format: 'esm',
-    generatedCode: 'es2015'
+    file: path.resolve(__dirname, '../dist/js/bsides.js'),
+    format: 'umd',
+    generatedCode: 'es2015',
+    globals: {
+      jquery: '$'
+    }
   },
   plugins: [
     babel({

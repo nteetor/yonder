@@ -69,12 +69,12 @@ dropdown elements please see \code{\link[=dropdown]{dropdown()}}.
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
-\code{\link{buttonInput}()},
 \code{\link{checkbarInput}()},
 \code{\link{checkboxInput}()},
 \code{\link{chipInput}()},
 \code{\link{fileInput}()},
 \code{\link{formInput}()},
+\code{\link{input_button}()},
 \code{\link{listGroupInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},

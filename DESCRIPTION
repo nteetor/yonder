@@ -62,6 +62,7 @@ Collate:
     'input-textual.R'
     'modal.R'
     'utils.R'
+    'reactive-domain.R'
     'toast.R'
     'utils-arguments.R'
     'utils-assertions.R'

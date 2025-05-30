@@ -48,11 +48,11 @@ buttons, but with a checked or highlighted state.
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
-\code{\link{buttonInput}()},
 \code{\link{checkboxInput}()},
 \code{\link{chipInput}()},
 \code{\link{fileInput}()},
 \code{\link{formInput}()},
+\code{\link{input_button}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},

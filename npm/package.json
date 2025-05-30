@@ -5,6 +5,7 @@
   "main": "dist/bsides.min.css",
   "dependencies": {
     "bootstrap": "^5.3.6",
+    "jquery": "^3.7.1",
     "popper.js": "^1.16.0"
   },
   "devDependencies": {
@@ -31,7 +32,9 @@
     "css": "npm-run-all css-compile css-prefix css-minify css-vend",
     "js-compile": "rollup --config build/rollup.config.mjs --sourcemap",
     "js-lint": "eslint --cache --cache-location .cache/.eslintcache --report-unused-disable-directives .",
-    "js-minify": "terser --compress passes=2 --mangle --comments \"/^!/\" --source-map \"content=dist/js/bsides.esm.js.map,includeSources,url=bsides.esm.min.js.map\" --output dist/js/bsides.esm.min.js dist/js/bsides.esm.js"
+    "js-minify": "terser --compress passes=2 --mangle --comments \"/^!/\" --source-map \"content=dist/js/bsides.js.map,includeSources,url=bsides.min.js.map\" --output dist/js/bsides.min.js dist/js/bsides.js",
+    "js-vend": "cp dist/js/* ../inst/www/yonder/js/",
+    "js": "npm-run-all js-compile js-minify js-vend"
   },
   "repository": {
     "type": "git",
@@ -41,7 +44,7 @@
     "shiny",
     "reactive"
   ],
-  "author": "Nathan Teetor <nathanteetor@gmail.com>",
+  "author": "Nathan Teetor <nate@haufin.ch>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/nteetor/yonder/issues"

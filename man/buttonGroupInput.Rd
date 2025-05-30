@@ -23,11 +23,6 @@ updateButtonGroupInput(
 )
 }
 \arguments{
-\item{...}{Additional named arguments passed as HTML attributes to the parent
-element.}
-
-\item{id}{A character string specifying the id of the reactive input.}
-
 \item{choices}{A character vector specifying the labels for each button in
 the group.}
 
@@ -42,20 +37,18 @@ of the buttons, defaults to \code{"horizontal"}.}
 
 \item{disable}{One of \code{values} indicating individual buttons to disable or
 \code{TRUE} to disable the entire input, defaults to \code{NULL}.}
-
-\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 A set of buttons with custom values.
 }
 \seealso{
 Other inputs: 
-\code{\link{buttonInput}()},
 \code{\link{checkbarInput}()},
 \code{\link{checkboxInput}()},
 \code{\link{chipInput}()},
 \code{\link{fileInput}()},
 \code{\link{formInput}()},
+\code{\link{input_button}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},

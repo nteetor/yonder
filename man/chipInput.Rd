@@ -83,11 +83,11 @@ number of choices a user may select.
 \seealso{
 Other inputs: 
 \code{\link{buttonGroupInput}()},
-\code{\link{buttonInput}()},
 \code{\link{checkbarInput}()},
 \code{\link{checkboxInput}()},
 \code{\link{fileInput}()},
 \code{\link{formInput}()},
+\code{\link{input_button}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},
