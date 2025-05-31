@@ -40,45 +40,60 @@
   };
 
   class Input {
-    // getters
-
-    static get BINDING_KEY() {
-      return `bsides.${this.NAME}`;
+    static get type() {
+      return `bsides.${this.name}`;
     }
-    static get EVENT_KEY() {
-      return `.${this.BINDING_KEY}`;
+    static get namespace() {
+      return `.${this.type}`;
     }
-    static get EVENTS() {
+    static get events() {
       return null;
     }
-    static get SELECTOR() {
-      return `.bsides-${this.NAME}`;
+    static get selector() {
+      return `.bsides-${this.name}`;
     }
-
-    // public
-
+    #value = null;
+    #debounce = false;
+    #callback = debounce => {};
+    #element = null;
     constructor(element) {
-      this._element = element;
-      this._value = null;
-      this._debounce = false;
-      this._callback = debounce => {};
-      InputStore.set(element, this.constructor.BINDING_KEY, this);
+      this.#element = element;
+      InputStore.set(element, this.constructor.type, this);
     }
-    value(x) {
+    get value() {
+      return this.#value;
+    }
+    set value(x) {
+      this.#value = x;
+      this.#callback(this.#debounce);
+    }
+
+    // garbo arg name
+    set label(x) {
+      throw "not implemented";
+    }
+    get label() {
       return null;
     }
-    content(x) {
-      return null;
+    get callback() {
+      return this.#callback;
+    }
+    set callback(f) {
+      this.#callback = f;
+    }
+    get element() {
+      return this.#element;
     }
     dispose() {
-      this._callback = () => {};
-      InputStore.remove(element, this.constructor.BINDING_KEY);
+      this.#callback = debounce => {};
+      this.#value = null;
+      InputStore.remove(element, this.constructor.type);
     }
 
     // static
 
     static find(scope) {
-      return $(scope).find(this.SELECTOR);
+      return $(scope).find(this.selector);
     }
     static getId(element) {
       return element.id;
@@ -87,42 +102,49 @@
       return null;
     }
     static getValue(element) {
-      let input = InputStore.get(element, this.BINDING_KEY);
+      let input = InputStore.get(element, this.type);
       if (!input) {
         return null;
       }
-      return input.value();
+      return input.value;
     }
     static subscribe(element, callback) {
-      let input = InputStore.get(element, this.BINDING_KEY);
+      let input = InputStore.get(element, this.type);
       if (!input) {
         return;
       }
-      input._callback = callback;
+      input.callback = callback;
     }
     static unsubscribe(element) {
-      let input = InputStore.get(element, this.BINDING_KEY);
+      let input = InputStore.get(element, this.type);
       if (!input) {
         return;
       }
       input.dispose();
     }
     static receiveMessage(element, data) {
-      let input = InputStore.get(element, this.BINDING_KEY);
+      let input = InputStore.get(element, this.type);
       if (!input) {
         return;
       }
-      for (const [method, args] of Object.entries(data)) {
-        input[method](args);
+      for (const [key, value] of Object.entries(data)) {
+        if (key === 'value') {
+          // nothing confusing here
+          input.value = value;
+        } else if (key === 'label') {
+          input.label = value;
+        } else if (key === 'disable') {
+          input.disable(value);
+        }
       }
     }
     static getState(element) {
-      let input = InputStore.get(element, this.BINDING_KEY);
+      let input = InputStore.get(element, this.type);
       if (!input) {
         return;
       }
       return {
-        value: input.value()
+        value: input.value
       };
     }
 
@@ -131,9 +153,13 @@
       return null;
     }
     static initialize(element) {
+      let input = InputStore.get(element, this.type);
+      if (!input) {
+        input = new this(element);
+      }
     }
     static dispose(element) {
-      let input = InputStore.get(element, this.BINDING_KEY);
+      let input = InputStore.get(element, this.type);
       if (!input) {
         return;
       }
@@ -145,58 +171,83 @@
   }
 
   class ButtonInput extends Input {
-    static get NAME() {
+    static get name() {
       return 'button';
     }
-    static get EVENTS() {
-      return `click${this.EVENT_KEY}`;
+    static get events() {
+      return `click${this.namespace}`;
     }
     constructor(element) {
       super(element);
-      this._value = 0;
+      this.value = 0;
     }
-    value(x) {
-      if (typeof x === 'undefined') {
-        return this._value;
-      }
-      this._value = x;
-      this._callback(this._debounce);
-      return this;
+    set label(x) {
+      this.element.innerHTML = x;
     }
-    content(x) {
-      this._element.innerHTML = x;
-      return this;
+    get label() {
+      this.element.innerHTML;
     }
 
     // this argument name is garbo
     disable(x) {
       if (x === true) {
-        this._element.setAttribute('disabled', '');
+        this.element.setAttribute('disabled', '');
       } else {
-        this._element.removeAttribute('disabled');
+        this.element.removeAttribute('disabled');
       }
       return this;
     }
-    static initialize(element) {
-      let input = InputStore.get(element, this.BINDING_KEY);
-      if (!input) {
-        input = new ButtonInput(element);
-      }
-    }
   }
-  $(document).on(ButtonInput.EVENTS, ButtonInput.SELECTOR, event => {
-    let button = InputStore.get(event.currentTarget, ButtonInput.BINDING_KEY);
+  $(document).on(ButtonInput.events, ButtonInput.selector, event => {
+    let button = InputStore.get(event.currentTarget, ButtonInput.type);
     if (!button) {
       return;
     }
-    button.value(button.value() + 1);
+    button.value++;
   });
   if (Shiny) {
     Shiny.inputBindings.register(ButtonInput.ShinyInterface());
   }
 
+  class LinkInput extends Input {
+    static get name() {
+      return 'link';
+    }
+    static get events() {
+      return `click.${this.namespace}`;
+    }
+    constructor(element) {
+      super(element);
+      this.value = 0;
+    }
+    set label(x) {
+      this.element.innerHTML = x;
+    }
+    get label() {
+      this.element.innerHTML;
+    }
+    disable(x) {
+      if (x === "true") {
+        this.element.setAttribute("disabled", "");
+      } else {
+        this.element.removeAttribute("disabled");
+      }
+    }
+  }
+  $(document).on(LinkInput.events, LinkInput.selector, event => {
+    let link = InputStore.get(event.currentTarget, LinkInput.type);
+    if (!link) {
+      return;
+    }
+    link.value++;
+  });
+  if (Shiny) {
+    Shiny.inputBindings.register(LinkInput.ShinyInterface());
+  }
+
   const bsides = {
-    ButtonInput
+    ButtonInput,
+    LinkInput
   };
 
   return bsides;

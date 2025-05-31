@@ -7,7 +7,7 @@
 \usage{
 input_button(id, label, ...)
 
-input_link(id, label, stretch = FALSE, ...)
+input_link(id, label, stretch = FALSE, icon = NULL, ...)
 }
 \arguments{
 \item{id}{A character string. specifying the id of the reactive input.}
@@ -17,6 +17,8 @@ link input.}
 
 \item{...}{Additional named arguments passed as HTML attributes to the parent
 element.}
+
+\item{icon}{An icon, see \link[bsicons:bs_icon]{bsicons::bs_icon}.}
 }
 \description{
 Button inputs are useful as triggers for reactive or observer expressions.

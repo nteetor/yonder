@@ -11,6 +11,8 @@
 #' @param label A character string specifying the label text on the button or
 #'   link input.
 #'
+#' @param icon An icon, see [bsicons::bs_icon].
+#'
 #' @param ... Additional named arguments passed as HTML attributes to the parent
 #'   element.
 #'
@@ -46,18 +48,29 @@ input_link <- function(
   id,
   label,
   stretch = FALSE,
+  icon = NULL,
   ...
 ) {
   assert_id()
   assert_label()
 
-  tags$button(
-    class = c(
-      "btn",
-      if (stretch) "stretched-link",
-    ),
-    label
-  )
+  tag <-
+    tags$a(
+      class = c(
+        "bsides-link",
+        if (stretch) "stretched-link",
+        if (!is.null(icon)) "icon-link"
+      ),
+      id = id,
+      label,
+      icon,
+      ...
+    )
+
+  tag <-
+    dependency_append(tag)
+
+  tag
 }
 
 #' Change button
