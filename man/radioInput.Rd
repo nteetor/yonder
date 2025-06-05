@@ -28,12 +28,6 @@ updateRadioInput(
 )
 }
 \arguments{
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element or tag elements passed as child elements to the parent
-element.}
-
-\item{id}{A character string specifying the id of the reactive input.}
-
 \item{choices}{A character vector or list of tag elements specifying the
 input's choices.}
 
@@ -48,20 +42,6 @@ selected by default.}
 
 \item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
 in which case the radio controls render on separate lines.}
-
-\item{enable}{One of \code{values} specifying particular choices to enable or
-\code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
-
-\item{disable}{One of \code{values} specifying particular choices to disable or
-\code{TRUE} specifying the entire input is disabled, defaults to \code{NULL}.}
-
-\item{valid}{A character string specifying a message to the user indicating
-how the input's value is valid, defaults to \code{NULL.}}
-
-\item{invalid}{A character string specifying a message to the user
-indicating how the input's value is invalid, defaults to \code{NULL}.}
-
-\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 A stylized radio input. A reactive input with multiple choices where only one
@@ -69,13 +49,12 @@ choice and value at most may be selected.
 }
 \seealso{
 Other inputs: 
-\code{\link{buttonGroupInput}()},
 \code{\link{checkbarInput}()},
-\code{\link{checkboxInput}()},
 \code{\link{chipInput}()},
 \code{\link{fileInput}()},
 \code{\link{formInput}()},
 \code{\link{input_button}()},
+\code{\link{input_checkbox}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
 \code{\link{radiobarInput}()},

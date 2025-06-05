@@ -14,12 +14,6 @@ fileInput(
 )
 }
 \arguments{
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element or tag elements passed as child elements to the parent
-element.}
-
-\item{id}{A character string specifying the id of the reactive input.}
-
 \item{placeholder}{A character string specifying the text inside the file
 input, defaults to \code{"Choose file"}.}
 
@@ -37,12 +31,11 @@ Upload files to the server.
 }
 \seealso{
 Other inputs: 
-\code{\link{buttonGroupInput}()},
 \code{\link{checkbarInput}()},
-\code{\link{checkboxInput}()},
 \code{\link{chipInput}()},
 \code{\link{formInput}()},
 \code{\link{input_button}()},
+\code{\link{input_checkbox}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},

@@ -16,8 +16,13 @@
 #'
 #' @family inputs
 #' @export
-checkbarInput <- function(..., id, choices = NULL, values = choices,
-                          selected = NULL) {
+checkbarInput <- function(
+  ...,
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL
+) {
   assert_id()
   assert_choices()
 
@@ -38,9 +43,15 @@ checkbarInput <- function(..., id, choices = NULL, values = choices,
 
 #' @rdname checkbarInput
 #' @export
-updateCheckbarInput <- function(id, choices = NULL, values = choices,
-                                selected = NULL, enable = NULL, disable = NULL,
-                                session = getDefaultReactiveDomain()) {
+updateCheckbarInput <- function(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  enable = NULL,
+  disable = NULL,
+  session = getDefaultReactiveDomain()
+) {
   assert_id()
   assert_choices()
   assert_session()
@@ -52,12 +63,15 @@ updateCheckbarInput <- function(id, choices = NULL, values = choices,
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 
-  session$sendInputMessage(id, list(
-    content = content,
-    selected = selected,
-    enable = enable,
-    disable = disable
-  ))
+  session$sendInputMessage(
+    id,
+    list(
+      content = content,
+      selected = selected,
+      enable = enable,
+      disable = disable
+    )
+  )
 }
 
 map_checkbuttons <- function(choices, values, selected) {

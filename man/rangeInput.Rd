@@ -16,8 +16,6 @@ updateRangeInput(
 )
 }
 \arguments{
-\item{id}{A character string specifying the id of the reactive input.}
-
 \item{min}{A number specifying the minimum value of the input, defaults to
 \code{0}.}
 
@@ -30,20 +28,8 @@ of the input, defaults to \code{min}.}
 \item{step}{A number specifying the interval step of the input, defaults to
 \code{1}.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element or tag elements passed as child elements to the parent
-element.}
-
 \item{value}{A number specifying a new value for the input, defaults to
 \code{NULL}.}
-
-\item{enable}{One of \code{values} specifying particular choices to enable or
-\code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
-
-\item{disable}{One of \code{values} specifying particular choices to disable or
-\code{TRUE} specifying the entire input is disabled, defaults to \code{NULL}.}
-
-\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 \code{rangeInput()} creates a simple numeric range input.
@@ -54,13 +40,12 @@ HTML standards.
 }
 \seealso{
 Other inputs: 
-\code{\link{buttonGroupInput}()},
 \code{\link{checkbarInput}()},
-\code{\link{checkboxInput}()},
 \code{\link{chipInput}()},
 \code{\link{fileInput}()},
 \code{\link{formInput}()},
 \code{\link{input_button}()},
+\code{\link{input_checkbox}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},

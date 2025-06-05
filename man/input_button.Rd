@@ -27,12 +27,11 @@ the number of clicks.
 }
 \seealso{
 Other inputs: 
-\code{\link{buttonGroupInput}()},
 \code{\link{checkbarInput}()},
-\code{\link{checkboxInput}()},
 \code{\link{chipInput}()},
 \code{\link{fileInput}()},
 \code{\link{formInput}()},
+\code{\link{input_checkbox}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},

@@ -29,8 +29,6 @@ updateChipInput(
 )
 }
 \arguments{
-\item{id}{A character string specifying the id of the reactive input.}
-
 \item{choices}{A character vector or list specifying the possible choices.}
 
 \item{values}{A character vector or list of strings specifying the input's
@@ -38,10 +36,6 @@ values, defaults to \code{choices}.}
 
 \item{selected}{One or more of \code{values} specifying which values are selected
 by default.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element or tag elements passed as child elements to the parent
-element.}
 
 \item{placeholder}{A character string specifying placeholder text of the
 chip input, defaults to \code{NULL}.}
@@ -64,14 +58,6 @@ selected chips are ordered, defaults to \code{"stack"}.
 \code{"fixed"}, selected chips appear in the order specified by
 \code{choices} and \code{values}. Use \code{"fixed"} and sort \code{choices} to keep selected
 chips in the same sorted order.}
-
-\item{enable}{One of \code{values} specifying particular choices to enable or
-\code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
-
-\item{disable}{One of \code{values} specifying particular choices to disable or
-\code{TRUE} specifying the entire input is disabled, defaults to \code{NULL}.}
-
-\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 The chip input is a selectize alternative. Choices are selected from a
@@ -82,12 +68,11 @@ number of choices a user may select.
 }
 \seealso{
 Other inputs: 
-\code{\link{buttonGroupInput}()},
 \code{\link{checkbarInput}()},
-\code{\link{checkboxInput}()},
 \code{\link{fileInput}()},
 \code{\link{formInput}()},
 \code{\link{input_button}()},
+\code{\link{input_checkbox}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},

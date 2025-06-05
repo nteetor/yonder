@@ -25,74 +25,50 @@
 #'   parent element or tag elements passed as child elements to the parent
 #'   element.
 #'
-#' @param enable One of `values` specifying particular choices to enable or
-#'   `TRUE` specifying the entire input is enabled, defaults to `NULL`.
-#'
 #' @param disable One of `values` specifying particular choices to disable or
 #'   `TRUE` specifying the entire input is disabled, defaults to `NULL`.
-#'
-#' @param valid A character string specifying a message to the user indicating
-#'   how the input's value is valid, defaults to `NULL.`
-#'
-#' @param invalid A character string specifying a message to the user
-#'   indicating how the input's value is invalid, defaults to `NULL`.
 #'
 #' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
 #'
 #' @family inputs
 #' @export
-checkboxInput <- function(..., id, choices = NULL, values = choices,
-                          selected = NULL, inline = FALSE) {
+input_checkbox <- function(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  inline = FALSE,
+  ...
+) {
   assert_id()
   assert_choices()
 
-  with_deps({
-    checkboxes <- map_checkboxes(choices, values, selected, inline)
+  checkboxes <-
+    checkbox_build(choices, values, selected, inline)
 
-    args <- style_dots_eval(..., .style = style_pronoun("yonder_checkbox"))
-
-    tag <- tags$div(
-      class = "yonder-checkbox",
+  tag <-
+    tags$div(
+      class = "bsides-checkbox",
       id = id,
       checkboxes,
-      !!!args
+      ...
     )
 
+  tag <-
+    dependency_append(tag)
+
+  tag <-
     s3_class_add(tag, c("yonder_checkbox", "yonder_input"))
-  })
+
+  tag
 }
 
-#' @rdname checkboxInput
-#' @export
-updateCheckboxInput <- function(id, choices = NULL, values = choices,
-                                selected = NULL, inline = FALSE, enable = NULL,
-                                disable = NULL, valid = NULL, invalid = NULL,
-                                session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_choices()
-  assert_session()
-
-  checkboxes <- map_checkboxes(choices, values, selected, inline, FALSE)
-
-  content <- coerce_content(checkboxes)
-  selected <- coerce_selected(selected)
-  enable <- coerce_enable(enable)
-  disable <- coerce_disable(disable)
-  valid <- coerce_valid(valid)
-  invalid <- coerce_invalid(invalid)
-
-  session$sendInputMessage(id, list(
-    content = content,
-    selected = selected,
-    enable = enable,
-    disable = disable,
-    valid = valid,
-    invalid = invalid
-  ))
-}
-
-map_checkboxes <- function(choices, values, selected, inline,
-                           switches = FALSE) {
+checkbox_build <- function(
+  choices,
+  values,
+  selected,
+  inline
+) {
   if (is.null(choices) && is.null(values)) {
     return(NULL)
   }
@@ -103,18 +79,13 @@ map_checkboxes <- function(choices, values, selected, inline,
     choice = choices,
     value = values,
     select = selected,
-    last = seq_along(choices) == length(choices),
-    function(choice, value, select, last) {
+    function(choice, value, select) {
       id <- generate_id("checkbox")
 
       tags$div(
-        class = str_collate(
-          "custom-control",
-          if (switches) "custom-switch" else "custom-checkbox",
-          if (inline) "custom-control-inline"
-        ),
+        class = "form-check",
         tags$input(
-          class = "custom-control-input",
+          class = "form-check-input",
           type = "checkbox",
           id = id,
           name = id,
@@ -123,17 +94,117 @@ map_checkboxes <- function(choices, values, selected, inline,
           autocomplete = "off"
         ),
         tags$label(
-          class = "custom-control-label",
+          class = "form-check-label",
           `for` = id,
           choice
-        ),
-        if (last) {
-          list(
-            tags$div(class = "valid-feedback"),
-            tags$div(class = "invalid-feedback")
-          )
-        }
+        )
       )
     }
+  )
+}
+
+checkbox_handler <- function(
+  value,
+  session,
+  name
+) {
+  if (length(value) <= 0) {
+    return(NULL)
+  }
+
+  vapply(value, as.logical, logical(1), USE.NAMES = TRUE)
+}
+
+#' @rdname input_checkbox
+#' @export
+input_checkbox_button <- function(
+  id,
+  choices,
+  values = choices,
+  selected = NULL,
+  ...
+) {
+  tag <-
+    tags$div(
+      id = id,
+      class = "bsides-checkbox-button",
+      ...
+    )
+
+  tag <-
+    dependency_append(tag)
+
+  tag
+}
+
+build_checkbox_buttons <- function(
+  choices,
+  values,
+  selected
+) {
+  mapply(
+    choices,
+    values,
+    selected,
+    function(choice, value, select) {
+      id <- generate_id("checkbox")
+
+      list(
+        tags$input(
+          type = "checkbox",
+          id = id,
+          checked = if (select) NA,
+          autocomplete = "off"
+        ),
+        tags$label(
+          class = "btn btn-primary",
+          `for` = id,
+          choice
+        )
+      )
+    }
+  )
+}
+
+#' Update checkbox
+#'
+#' Update checkbox
+#'
+#' @param choices choices
+#'
+#' @param values values
+#'
+#' @param selected selected
+#'
+#' @param disable disable
+#'
+#' @param session A reactive session, [default_reactive_domain()].
+#'
+#' @export
+update_checkbox <- function(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  disable = NULL,
+  session = default_reactive_domain()
+) {
+  assert_id()
+  assert_choices()
+  assert_session()
+
+  checkboxes <- build_checkboxes(choices, values, selected)
+
+  content <- coerce_content(checkboxes)
+  selected <- coerce_selected(selected)
+  disable <- coerce_disable(disable)
+
+  session$sendInputMessage(
+    id,
+    list(
+      content = content,
+      selected = selected,
+      disable = disable
+    )
   )
 }

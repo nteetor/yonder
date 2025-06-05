@@ -26,12 +26,6 @@ updateListGroupInput(
 )
 }
 \arguments{
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element or tag elements passed as child elements to the parent
-element.}
-
-\item{id}{A character string specifying the id of the reactive input.}
-
 \item{choices}{A vector of character strings or list of tag elements specifying
 the content of the list group's items.}
 
@@ -49,14 +43,6 @@ specifying how list items are laid out, defaults to \code{"vertical"}. Note, if
 rendered without an outside border, defaults to \code{FALSE}. Removing the list
 group border is useful when rendering a list group inside a custom parent
 container, e.g. inside a \code{\link[=card]{card()}}.}
-
-\item{enable}{One of \code{values} specifying particular choices to enable or
-\code{TRUE} specifying the entire input is enabled, defaults to \code{NULL}.}
-
-\item{disable}{One of \code{values} specifying particular choices to disable or
-\code{TRUE} specifying the entire input is disabled, defaults to \code{NULL}.}
-
-\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 List group inputs are an actionable list of items. They behave similarly to
@@ -65,13 +51,12 @@ list. However, list group items may include highly variable content.
 }
 \seealso{
 Other inputs: 
-\code{\link{buttonGroupInput}()},
 \code{\link{checkbarInput}()},
-\code{\link{checkboxInput}()},
 \code{\link{chipInput}()},
 \code{\link{fileInput}()},
 \code{\link{formInput}()},
 \code{\link{input_button}()},
+\code{\link{input_checkbox}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},

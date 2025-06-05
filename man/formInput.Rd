@@ -17,8 +17,6 @@ updateFormInput(id, submit = FALSE, session = getDefaultReactiveDomain())
 parent form element or named arguments passed as HTML attributes to the
 parent element. At least one \code{formSubmit()} must be included.}
 
-\item{id}{A character string specifying the id of the reactive input.}
-
 \item{inline}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} the form and its child
 elements are rendered in a horizontal row, defaults to \code{FALSE}. On small
 viewports, think mobile device, \code{inline} intentionally has no effect and
@@ -35,8 +33,6 @@ defaults to \code{label}.}
 whether to trigger a form submission, defaults to \code{FALSE}. If a character
 string, the form is submitted and the reactive value passed is the character
 string specified.}
-
-\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
 }
 \description{
 Form inputs are a new reactive input. Form inputs are an alternative to
@@ -53,12 +49,11 @@ to \code{formInput()}.
 }
 \seealso{
 Other inputs: 
-\code{\link{buttonGroupInput}()},
 \code{\link{checkbarInput}()},
-\code{\link{checkboxInput}()},
 \code{\link{chipInput}()},
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
+\code{\link{input_checkbox}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},
