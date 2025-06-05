@@ -209,6 +209,32 @@
     Shiny.inputBindings.register(ButtonInput.ShinyInterface());
   }
 
+  class ValuesMap {
+    #values = null;
+    #callback = null;
+    constructor(iterable = {}) {
+      this.#callback = debounce => {};
+      this.#values = Object.fromEntries(iterable);
+    }
+    set callback(f) {
+      this.#callback = f;
+    }
+    get callback() {
+      return this.#callback;
+    }
+    set(key, value) {
+      this.#values[key] = value;
+      this.#callback();
+      return this;
+    }
+    get(key) {
+      return this.#values[key];
+    }
+    entries() {
+      return this.#values;
+    }
+  }
+
   class CheckboxInput extends Input {
     static get name() {
       return 'checkbox';
@@ -219,19 +245,23 @@
     constructor(element) {
       super(element);
       let entries = $(element).find('input').toArray().map(element => {
-        return {
-          [element.value]: element.checked
-        };
+        return [element.value, element.checked];
       });
-      this.value = Object.assign(...entries);
+      this.value = new ValuesMap(entries);
     }
-    setValue(key, x) {
-      this.value[key] = x;
-      this.callback();
-      return this;
+    set callback(f) {
+      this.value.callback = f;
+      super.callback = f;
     }
     static getType(element) {
       return this.type;
+    }
+    static getValue(element) {
+      let checkbox = InputStore.get(element, this.type);
+      if (!checkbox) {
+        return null;
+      }
+      return checkbox.value.entries();
     }
   }
   $(document).on(CheckboxInput.events, CheckboxInput.selector, event => {
@@ -241,8 +271,8 @@
     }
     let text = event.target.nextElementSibling.innerText;
     let checked = event.target.checked;
-    checkbox.setValue(text, checked);
-    console.log(checkbox.value);
+    checkbox.value.set(text, checked);
+    console.log(checkbox.value.toObject());
   });
   if (Shiny) {
     Shiny.inputBindings.register(CheckboxInput.ShinyInterface());

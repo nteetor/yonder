@@ -108,11 +108,13 @@ checkbox_handler <- function(
   session,
   name
 ) {
-  if (length(value) <= 0) {
+  value <- unlist(value, FALSE, TRUE)
+
+  if (length(value) < 1 || !any(value)) {
     return(NULL)
   }
 
-  vapply(value, as.logical, logical(1), USE.NAMES = TRUE)
+  value
 }
 
 #' @rdname input_checkbox
