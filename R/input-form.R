@@ -39,53 +39,95 @@
 #'
 #' @family inputs
 #' @export
-formInput <- function(..., id, inline = FALSE) {
+input_form <- function(
+    id,
+    ...,
+    label = NULL,
+    disable = FALSE,
+    inline = FALSE
+) {
   assert_id()
 
-  dep_attach({
+  args <- list(...)
+
+  tag <-
     tags$form(
-      class = str_collate(
-        "yonder-form",
+      class = c(
+        "bsides-form",
         if (inline) "form-inline"
       ),
       id = id,
-      ...
+      !!!keep_named(args),
+      tags$fieldset(
+        disabled = if (isTRUE(disable)) NA,
+        if (non_null(label)) {
+          tags$legend(label)
+        },
+        unnamed_values(...)
+      )
     )
-  })
+
+  tag <-
+    dependency_append(tag)
+
+  tag
 }
 
-#' @rdname formInput
+#' @rdname input_form
 #' @export
-formSubmit <- function(label, value = label, ...) {
-  dep_attach({
-    tags$button(
-      class = "yonder-form-submit btn btn-blue",
-      value = value,
-      label,
-      ...
-    )
-  })
+form_submit_button <- function(
+  label,
+  value = label,
+  ...
+) {
+  tags$button(
+    class = "bsides-btn-submit btn btn-primary",
+    value = value,
+    label,
+    ...
+  )
 }
 
-#' @rdname formInput
+#' Update form
+#'
+#' Update form
+#'
+#' @param id A character string.
+#'
+#' @param submit A boolean or character string.
+#'
+#'   * If `TRUE`, the form is submitted.
+#'   * If `FALSE`, nothing happens.
+#'   * If character, the form is submitted and the reactive value passed is the
+#'   character string specified.
+#'
+#' @param session A reactive domain.
+#'
 #' @export
-updateFormInput <- function(id, submit = FALSE,
-                            session = getDefaultReactiveDomain()) {
+form_submit <- function(
+  id,
+  value = NULL,
+  disable = NULL,
+  session = default_reactive_domain()
+) {
   assert_id()
   assert_session()
 
-  if (!(is.logical(submit) || is.character(submit)) ||
-        (is.character(submit) && length(submit) > 1)) {
-    stop(
-      "invalid argument in `updateFormInput()`, `submit` must be one of ",
-      "TRUE or FALSE or a character string",
-      call. = FALSE
+  if (
+    !(is.logical(submit) || is.character(submit)) ||
+      (is.character(submit) && length(submit) > 1)
+  ) {
+    rlang::abort(
+      "`submit` must be one of `TRUE`, `FALSE`, or a character string",
     )
   }
 
   submit <- coerce_submit(submit)
 
-  session$sendInputMessage(id, list(
-    submit = submit
-  ))
+  session$sendInputMessage(
+    id,
+    list(
+      submit = submit
+    )
+  )
 }

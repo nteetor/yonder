@@ -5,12 +5,59 @@ reduce <- function(x, f, init) {
   Reduce(f, x, init)
 }
 
+non_null <- function(x) {
+  !is.null(x)
+}
+
 drop_nulls <- function(x) {
   if (length(x) == 0) {
     x
   } else {
-    x[!vapply(x, is.null, logical(1))]
+    x[vapply(x, non_null, logical(1))]
   }
+}
+
+mapply2 <- function(f, ...) {
+  args <- lapply(list(...), function(arg) {
+    if (is.null(arg)) {
+      list(NULL)
+    } else {
+      arg
+    }
+  })
+
+  .mapply(f, args, NULL)
+}
+
+build_input_choices <- function(
+  f,
+  choices,
+  values,
+  select,
+  disable,
+  ...
+) {
+  if (length(choices) < 1) {
+    return(NULL)
+  }
+
+  select <-
+    if (non_null(select)) {
+      values %in% select
+    } else {
+      list(NULL)
+    }
+
+  disable <-
+    if (non_null(disable)) {
+      values %in% disable
+    } else {
+      list(NULL)
+    }
+
+  htmltools::as.tags(
+    .mapply(f, list(choices, values, select, disable), list(...))
+  )
 }
 
 str_conjoin <- function(x, con = "or") {
@@ -53,7 +100,7 @@ generate_id <- function(prefix) {
   paste(c(prefix, sample(1000, 2, TRUE)), collapse = "-")
 }
 
-named_values <- function(x) {
+keep_named <- named_values <- function(x) {
   x[names2(x) != ""]
 }
 

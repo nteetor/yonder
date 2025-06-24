@@ -28,6 +28,11 @@ class ValuesMap {
   entries() {
     return this.#values
   }
+
+  apply(f) {
+    Object.entries(this.#values).forEach(f)
+    return this
+  }
 }
 
 export default ValuesMap

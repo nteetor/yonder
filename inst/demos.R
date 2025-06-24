@@ -1,0 +1,98 @@
+# input chip ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_chip(
+      id = "testchip",
+      choices = c("Choice 1", "Choice 2 ")
+    )
+  ),
+  server = function(input, output) {}
+)
+
+# input checkbox button ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_checkbutton(
+      id = "checkbutton",
+      choices = c("Choice 1", "Choice 2")
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$checkbutton)
+    })
+  }
+)
+
+
+# input checkbox ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_checkbox(
+      id = "check",
+      choices = c("Left", "Right")
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$check)
+    })
+
+    observe({
+      update_checkbox(
+        id = "check",
+        choices = c("Hello", "World"),
+        select = "Hello",
+        disable = "World"
+      )
+    })
+  }
+)
+
+shiny::shinyApp(
+  ui = fluidPage(
+    checkboxInput("id", "Label")
+  ),
+  server = function(input, output) {}
+)
+
+
+# input link ----
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    bslib::card(
+      p(
+        "Hello",
+        input_link(
+          id = "link",
+          label = "world",
+          stretch = TRUE,
+          icon = bsicons::bs_icon("globe")
+        )
+      )
+    ),
+    input_button(
+      id = "button",
+      label = "Button"
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$link)
+    })
+
+    observe({
+      print(input$button)
+    })
+
+    # observe({
+    #   update_button(
+    #     id = "bsidesButton",
+    #     value = input$shinyButton
+    #   )
+    # })
+  }
+)

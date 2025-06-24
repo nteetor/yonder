@@ -27,8 +27,8 @@
   "scripts": {
     "css-compile": "sass --style expanded --source-map --embed-sources scss/:dist/css",
     "css-prefix": "postcss --config build/postcss.config.js --replace \"dist/css/*.css\" \"!dist/css/*.min.css\"",
-    "css-minify": "cleancss -O1 --format breakWith=lf --with-rebase --source-map --source-map-inline-sources --output dist/css/",
-    "css-vend": "cp dist/css/yonder.min.css ../inst/www/yonder/css/",
+    "css-minify": "cleancss -O1 --format breakWith=lf --with-rebase --source-map --source-map-inline-sources --output dist/css/bsides.min.css dist/css/bsides.css",
+    "css-vend": "cp dist/css/bsides.* ../inst/www/yonder/css/",
     "css": "npm-run-all css-compile css-prefix css-minify css-vend",
     "js-compile": "rollup --config build/rollup.config.mjs --sourcemap",
     "js-lint": "eslint --cache --cache-location .cache/.eslintcache --report-unused-disable-directives .",

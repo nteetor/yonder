@@ -1,12 +1,9 @@
 #' Chip inputs
 #'
 #' The chip input is a selectize alternative. Choices are selected from a
-#' dropdown menu and appear as chips below the input's text box. Chips do not
-#' appear in the order they are selected. Instead chips are shown in the order
-#' specified by the `choices` argument. Use the `max` argument to limit the
-#' number of choices a user may select.
+#' dropdown menu and appear as chips below the input's text box.
 #'
-#' @inheritParams checkboxInput
+#' @inheritParams input_checkbox
 #'
 #' @param choices A character vector or list specifying the possible choices.
 #'
@@ -38,31 +35,43 @@
 #'   `choices` and `values`. Use `"fixed"` and sort `choices` to keep selected
 #'   chips in the same sorted order.
 #'
+#' @details
+#'
+#' Chips do not appear in the order they are selected. Instead chips are shown
+#' in the order specified by the `choices` argument. Use the `max` argument to
+#' limit the number of choices a user may select.
+#'
 #' @family inputs
 #' @export
-chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
-                      ..., placeholder = NULL, max = Inf, inline = TRUE,
-                      sort = "stack") {
+input_chip <- function(
+  id,
+  choices,
+  values = choices,
+  selected = NULL,
+  ...,
+  placeholder = NULL,
+  max = Inf,
+  inline = TRUE,
+  sort = "stack"
+) {
   assert_id()
   assert_choices()
   assert_possible(sort, c("stack", "queue", "fixed"))
 
-  dep_attach({
-    toggle <- tags$input(
-      class = "form-control custom-select",
+  toggle <-
+    tags$input(
+      class = "form-select",
       `data-toggle` = "dropdown",
       placeholder = placeholder
     )
 
-    chips <- map_chipchips(choices, values, selected)
-    items <- map_chipitems(choices, values, selected)
+  chips <- map_chipchips(choices, values, selected)
+  items <- map_chipitems(choices, values, selected)
 
+  tag <-
     tags$div(
       id = id,
-      class = str_collate(
-        "yonder-chip",
-        "btn-group dropup"
-      ),
+      class = "bsides-chip btn-group dropup",
       `data-max` = if (max == Inf) -1 else max,
       `data-sort` = sort,
       toggle,
@@ -80,15 +89,25 @@ chipInput <- function(id, choices = NULL, values = choices, selected = NULL,
       ),
       ...
     )
-  })
+
+  tag <-
+    dependency_append(tag)
+
+  tag
 }
 
 #' @rdname chipInput
 #' @export
-updateChipInput <- function(id, choices = NULL, values = choices,
-                            selected = NULL, max = NULL,
-                            enable = NULL, disable = NULL,
-                            session = getDefaultReactiveDomain()) {
+updateChipInput <- function(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  max = NULL,
+  enable = NULL,
+  disable = NULL,
+  session = getDefaultReactiveDomain()
+) {
   assert_id()
   assert_choices()
   assert_session()
@@ -102,13 +121,16 @@ updateChipInput <- function(id, choices = NULL, values = choices,
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 
-  session$sendInputMessage(id, list(
-    chips = chips,
-    items = items,
-    selected = selected,
-    enable = enable,
-    disable = disable
-  ))
+  session$sendInputMessage(
+    id,
+    list(
+      chips = chips,
+      items = items,
+      selected = selected,
+      enable = enable,
+      disable = disable
+    )
+  )
 }
 
 map_chipitems <- function(choices, values, selected) {

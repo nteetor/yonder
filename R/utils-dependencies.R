@@ -6,7 +6,7 @@ dependency_get <- function(x) {
       file = system.file("www/yonder", package = "yonder"),
       href = "yonder/yonder"
     ),
-    # stylesheet = "css/yonder.min.css",
+    stylesheet = "css/bsides.min.css",
     script = "js/bsides.js"
   )
 }

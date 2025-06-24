@@ -2,59 +2,76 @@
 % Please edit documentation in R/input-checkbox.R
 \name{input_checkbox}
 \alias{input_checkbox}
-\alias{input_checkbox_button}
-\title{Checkbox and switch inputs}
+\alias{update_checkbox}
+\title{Checkbox input}
 \usage{
 input_checkbox(
   id,
-  choices = NULL,
+  choices,
+  ...,
   values = choices,
-  selected = NULL,
-  inline = FALSE,
-  ...
+  select = NULL,
+  disable = NULL,
+  layout = "column",
+  label = "after"
 )
 
-input_checkbox_button(id, choices, values = choices, selected = NULL, ...)
+update_checkbox(
+  id,
+  choices = NULL,
+  values = choices,
+  select = NULL,
+  disable = NULL,
+  layout = "column",
+  label = "after",
+  session = default_reactive_domain()
+)
 }
 \arguments{
-\item{id}{A character string specifying the id of the reactive input.}
+\item{id}{A character string. The id of the reactive input.}
 
-\item{choices}{A character string or vector specifying a label or labels for
-the checkbox or checkbar.}
+\item{choices}{A character vector or list. The labels for the input choices.}
 
-\item{values}{A character string or vector specifying values for the
-checkbox or checkbar input, defaults to \code{choice} or \code{values}, respectively.}
-
-\item{selected}{One or more of \code{values} specifying which choices are
-selected by default, defaults to \code{NULL}, in which case no choices are
-initially selected.}
-
-\item{inline}{One of \code{TRUE} or \code{FALSE} specifying if the checkbox input
-choices render inline or stacked, defaults to \code{FALSE}, in which case the
-choices are stacked.}
-
-\item{...}{Additional named arguments passed as HTML attributes to the
-parent element or tag elements passed as child elements to the parent
+\item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
 
-\item{disable}{One of \code{values} specifying particular choices to disable or
-\code{TRUE} specifying the entire input is disabled, defaults to \code{NULL}.}
+\item{values}{A character vector. The values for the input, defaults to
+\code{choices}.}
 
-\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
+\item{select}{A character vector. The values selected by default, one or more
+of \code{values}.}
+
+\item{disable}{A character vector. The values disabled by default.}
+
+\item{layout}{A character string. The layout of the input choices, one of
+\code{"column"} or \code{"row"}.}
+
+\item{label}{A character string. The placement of the choice label relative
+to the checkboxes, one of \code{"after"} or "\code{before}".}
+
+\item{session}{A shiny session object.}
+}
+\value{
+A shiny tag object.
 }
 \description{
-Reactive checkbox and checkbar inputs. Users may select one or more choices.
-The checkbox input appears as a standard checkbox or set of checkboxes. When
-a checkbox input has no selected choices the reactive value is \code{NULL}. Switch
-inputs differ from checkboxes only in appearance.
+A reactive checkbox input. Users may select one or more choices. When a
+checkbox input has no selected choices the reactive value is \code{NULL}.
+}
+\details{
+\subsection{Server value}{
+
+A named logical vector.
+}
 }
 \seealso{
 Other inputs: 
 \code{\link{checkbarInput}()},
-\code{\link{chipInput}()},
 \code{\link{fileInput}()},
-\code{\link{formInput}()},
 \code{\link{input_button}()},
+\code{\link{input_checkbutton}()},
+\code{\link{input_chip}()},
+\code{\link{input_form}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},

@@ -33,11 +33,12 @@ buttons, but with a checked or highlighted state.
 }
 \seealso{
 Other inputs: 
-\code{\link{chipInput}()},
 \code{\link{fileInput}()},
-\code{\link{formInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
+\code{\link{input_checkbutton}()},
+\code{\link{input_chip}()},
+\code{\link{input_form}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},

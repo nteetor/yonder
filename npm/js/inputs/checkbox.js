@@ -10,56 +10,52 @@ class CheckboxInput extends Input {
   }
 
   static get events() {
-    return `change${this.namespace}`
+    return ['change']
   }
 
-  constructor(element) {
-    super(element)
-
-    let entries = $(element).find('input').toArray().map((element) => {
-      return [element.value, element.checked]
-    })
-
-    this.value = new ValuesMap(entries)
+  static get selectors() {
+    return {
+      choice: '.form-check-label',
+      value: '.form-check-input'
+    }
   }
 
-  set callback(f) {
-    this.value.callback = f
-    super.callback = f
-  }
+/*  choices(labels) {
+    let $parent = $(this.element)
+    let $choices =
+      $parent
+      .find(this.constructor.selectorChoice)
+      .slice(0, labels.length)
+      .map((i, el) => {
+        el.innerHTML = labels[i]
+        return el
+      })
+  }*/
 
   static getType(element) {
     return this.type
   }
 
   static getValue(element) {
-    let checkbox = InputStore.get(element, this.type)
+    let pairs =
+      $(element)
+      .find(this.selectors.value)
+      .map((i, e) => [[e.value, e.checked]])
+      .get()
 
-    if (!checkbox) {
-      return null
+    return Object.fromEntries(pairs)
+  }
+
+  static receiveMessage(element, data) {
+    const $element = $(element)
+
+    if (data.hasOwnProperty('choices')) {
+      $element.find('.form-check').remove()
+      $element.html(data['choices'])
     }
 
-    return checkbox.value.entries()
+    $element.trigger('change')
   }
-}
-
-$(document).on(CheckboxInput.events, CheckboxInput.selector, (event) => {
-  let checkbox = InputStore.get(event.currentTarget, CheckboxInput.type)
-
-  if (!checkbox) {
-    return
-  }
-
-  let text = event.target.nextElementSibling.innerText
-  let checked = event.target.checked
-
-  checkbox.value.set(text, checked)
-
-  console.log(checkbox.value.toObject())
-})
-
-if (Shiny) {
-  Shiny.inputBindings.register(CheckboxInput.ShinyInterface())
 }
 
 export default CheckboxInput

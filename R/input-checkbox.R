@@ -1,105 +1,183 @@
-#' Checkbox and switch inputs
+#' Checkbox input
 #'
-#' Reactive checkbox and checkbar inputs. Users may select one or more choices.
-#' The checkbox input appears as a standard checkbox or set of checkboxes. When
-#' a checkbox input has no selected choices the reactive value is `NULL`. Switch
-#' inputs differ from checkboxes only in appearance.
+#' A reactive checkbox input. Users may select one or more choices. When a
+#' checkbox input has no selected choices the reactive value is `NULL`.
 #'
-#' @param id A character string specifying the id of the reactive input.
+#' @param id A character string. The id of the reactive input.
 #'
-#' @param choices A character string or vector specifying a label or labels for
-#'   the checkbox or checkbar.
+#' @param choices A character vector or list. The labels for the input choices.
 #'
-#' @param values A character string or vector specifying values for the
-#'   checkbox or checkbar input, defaults to `choice` or `values`, respectively.
-#'
-#' @param selected One or more of `values` specifying which choices are
-#'   selected by default, defaults to `NULL`, in which case no choices are
-#'   initially selected.
-#'
-#' @param inline One of `TRUE` or `FALSE` specifying if the checkbox input
-#'   choices render inline or stacked, defaults to `FALSE`, in which case the
-#'   choices are stacked.
-#'
-#' @param ... Additional named arguments passed as HTML attributes to the
-#'   parent element or tag elements passed as child elements to the parent
+#' @param ... Optional named arguments specifying HTML attributes for the input
 #'   element.
 #'
-#' @param disable One of `values` specifying particular choices to disable or
-#'   `TRUE` specifying the entire input is disabled, defaults to `NULL`.
+#' @param values A character vector. The values for the input, defaults to
+#'   `choices`.
 #'
-#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#' @param select A character vector. The values selected by default, one or more
+#'   of `values`.
+#'
+#' @param disable A character vector. The values disabled by default.
+#'
+#' @param layout A character string. The layout of the input choices, one of
+#'   `"column"` or `"row"`.
+#'
+#' @param label A character string. The placement of the choice label relative
+#'   to the checkboxes, one of `"after"` or "`before`".
+#'
+#' @param session A shiny session object.
+#'
+#' @details
+#'
+#' ## Server value
+#'
+#' A named logical vector.
+#'
+#' @return A shiny tag object.
 #'
 #' @family inputs
 #' @export
 input_checkbox <- function(
   id,
-  choices = NULL,
+  choices,
+  ...,
   values = choices,
-  selected = NULL,
-  inline = FALSE,
-  ...
+  select = NULL,
+  disable = NULL,
+  layout = "column",
+  label = "after"
 ) {
-  assert_id()
-  assert_choices()
+  check_string(id, allow_empty = FALSE)
+  # @TODO check choices
+  check_character(values, allow_na = FALSE)
+  check_character(select, allow_na = FALSE, allow_null = TRUE)
+  check_character(disable, allow_na = FALSE, allow_null = TRUE)
+  check_string(layout, allow_empty = FALSE)
+  check_string(label, allow_empty = FALSE)
+
+  args <- list(...)
+  attrs <- keep_named(args)
+
+  select <- values %in% select
+  disable <- values %in% disable
 
   checkboxes <-
-    checkbox_build(choices, values, selected, inline)
+    build_input_choices(
+      as_checkbox,
+      choices,
+      values,
+      select,
+      disable,
+      layout,
+      label
+    )
 
   tag <-
     tags$div(
       class = "bsides-checkbox",
       id = id,
       checkboxes,
-      ...
+      !!!attrs
     )
 
   tag <-
     dependency_append(tag)
 
   tag <-
-    s3_class_add(tag, c("yonder_checkbox", "yonder_input"))
+    s3_class_add(tag, c("yonder_checkbox_input", "yonder_input"))
 
   tag
 }
 
-checkbox_build <- function(
-  choices,
-  values,
-  selected,
-  inline
+#' @rdname input_checkbox
+#' @export
+update_checkbox <- function(
+  id,
+  choices = NULL,
+  values = choices,
+  select = NULL,
+  disable = NULL,
+  layout = "column",
+  label = "after",
+  session = default_reactive_domain()
 ) {
-  if (is.null(choices) && is.null(values)) {
+  choices <-
+    build_input_choices(
+      as_checkbox,
+      choices,
+      values,
+      select,
+      disable,
+      layout,
+      label
+    )
+
+  msg <-
+    list(
+      choices = format(choices),
+      select = select,
+      disable = disable
+    )
+
+  session$sendInputMessage(id, drop_nulls(msg))
+}
+
+as_checkbox <- function(
+  choice,
+  value,
+  select,
+  disable,
+  layout,
+  label
+) {
+  if (is.null(choice) && is.null(value)) {
     return(NULL)
   }
 
-  selected <- values %in% selected
+  id <- generate_id("checkbox")
 
-  Map(
-    choice = choices,
-    value = values,
-    select = selected,
-    function(choice, value, select) {
-      id <- generate_id("checkbox")
-
-      tags$div(
-        class = "form-check",
-        tags$input(
-          class = "form-check-input",
-          type = "checkbox",
-          id = id,
-          name = id,
-          value = value,
-          checked = if (select) NA,
-          autocomplete = "off"
-        ),
-        tags$label(
-          class = "form-check-label",
-          `for` = id,
-          choice
-        )
+  tag <-
+    tags$div(
+      class = c(
+        "form-check",
+        checkbox_class_layout(layout),
+        checkbox_class_label(label)
+      ),
+      tags$input(
+        class = "form-check-input",
+        type = "checkbox",
+        id = id,
+        value = value,
+        checked = if (isTRUE(select)) NA,
+        disabled = if (isTRUE(disable)) NA,
+        autocomplete = "off",
+        `data-shiny-no-bind-input` = NA
+      ),
+      tags$label(
+        class = "form-check-label",
+        `for` = id,
+        choice
       )
-    }
+    )
+
+  tag <-
+    s3_class_add(tag, "yonder_checkbox")
+
+  tag
+}
+
+checkbox_class_layout <- function(layout) {
+  switch(
+    layout,
+    row = "form-check-inline",
+    column =
+  )
+}
+
+checkbox_class_label <- function(label) {
+  switch(
+    label,
+    before = "form-check-reverse",
+    after =
   )
 }
 
@@ -108,105 +186,11 @@ checkbox_handler <- function(
   session,
   name
 ) {
-  value <- unlist(value, FALSE, TRUE)
+  value <- unlist(value, recursive = FALSE, use.names = TRUE)
 
   if (length(value) < 1 || !any(value)) {
     return(NULL)
   }
 
   value
-}
-
-#' @rdname input_checkbox
-#' @export
-input_checkbox_button <- function(
-  id,
-  choices,
-  values = choices,
-  selected = NULL,
-  ...
-) {
-  tag <-
-    tags$div(
-      id = id,
-      class = "bsides-checkbox-button",
-      ...
-    )
-
-  tag <-
-    dependency_append(tag)
-
-  tag
-}
-
-build_checkbox_buttons <- function(
-  choices,
-  values,
-  selected
-) {
-  mapply(
-    choices,
-    values,
-    selected,
-    function(choice, value, select) {
-      id <- generate_id("checkbox")
-
-      list(
-        tags$input(
-          type = "checkbox",
-          id = id,
-          checked = if (select) NA,
-          autocomplete = "off"
-        ),
-        tags$label(
-          class = "btn btn-primary",
-          `for` = id,
-          choice
-        )
-      )
-    }
-  )
-}
-
-#' Update checkbox
-#'
-#' Update checkbox
-#'
-#' @param choices choices
-#'
-#' @param values values
-#'
-#' @param selected selected
-#'
-#' @param disable disable
-#'
-#' @param session A reactive session, [default_reactive_domain()].
-#'
-#' @export
-update_checkbox <- function(
-  id,
-  choices = NULL,
-  values = choices,
-  selected = NULL,
-  disable = NULL,
-  session = default_reactive_domain()
-) {
-  assert_id()
-  assert_choices()
-  assert_session()
-
-  checkboxes <- build_checkboxes(choices, values, selected)
-
-  content <- coerce_content(checkboxes)
-  selected <- coerce_selected(selected)
-  disable <- coerce_disable(disable)
-
-  session$sendInputMessage(
-    id,
-    list(
-      content = content,
-      selected = selected,
-      disable = disable
-    )
-  )
 }

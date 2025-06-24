@@ -31,7 +31,7 @@ Depends:
 Imports:
     htmltools (>= 0.4.0),
     lifecycle,
-    rlang,
+    rlang (>= 1.1.0),
     utils
 Suggests:
     knitr,
@@ -50,6 +50,7 @@ Collate:
     'input-button.R'
     'input-checkbar.R'
     'input-checkbox.R'
+    'input-checkbutton.R'
     'input-chip.R'
     'input-file.R'
     'input-form.R'

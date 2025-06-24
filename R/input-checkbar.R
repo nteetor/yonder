@@ -15,7 +15,6 @@
 #'   selected values, defaults to `NULL`.
 #'
 #' @family inputs
-#' @export
 checkbarInput <- function(
   ...,
   id,

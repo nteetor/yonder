@@ -9,36 +9,6 @@
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.bsides = factory(global.$));
 })(this, (function ($) { 'use strict';
 
-  const inputStore = new Map();
-  const InputStore = {
-    set(element, key, instance) {
-      if (!inputStore.has(element)) {
-        inputStore.set(element, new Map());
-      }
-      const instanceStore = inputStore.get(element);
-      if (!instanceStore.has(key) && instanceStore.size !== 0) {
-        return;
-      }
-      instanceStore.set(key, instance);
-    },
-    get(element, key) {
-      if (inputStore.has(element)) {
-        return inputStore.get(element).get(key) || null;
-      }
-      return null;
-    },
-    remove(element, key) {
-      if (!inputStore.has(element)) {
-        return;
-      }
-      const store = inputStore.get(element);
-      store.delete(key);
-      if (store.size === 0) {
-        inputStore.delete(element);
-      }
-    }
-  };
-
   class Input {
     static get type() {
       return `bsides.${this.name}`;
@@ -46,54 +16,14 @@
     static get namespace() {
       return `.${this.type}`;
     }
+    static get priority() {
+      return 'deferred';
+    }
     static get events() {
-      return null;
+      return [];
     }
-    static get selector() {
-      return `.bsides-${this.name}`;
-    }
-    #value = null;
-    #debounce = false;
-    #callback = debounce => {};
-    #element = null;
-    constructor(element) {
-      this.#element = element;
-      InputStore.set(element, this.constructor.type, this);
-    }
-    get value() {
-      return this.#value;
-    }
-    set value(x) {
-      this.#value = x;
-      this.#callback(this.#debounce);
-    }
-
-    // garbo arg name
-    set label(x) {
-      throw "not implemented";
-    }
-    get label() {
-      return null;
-    }
-    get callback() {
-      return this.#callback;
-    }
-    set callback(f) {
-      this.#callback = f;
-    }
-    get element() {
-      return this.#element;
-    }
-    dispose() {
-      this.#callback = debounce => {};
-      this.#value = null;
-      InputStore.remove(element, this.constructor.type);
-    }
-
-    // static
-
     static find(scope) {
-      return $(scope).find(this.selector);
+      return $(scope).find(`.bsides-${this.name}`);
     }
     static getId(element) {
       return element.id;
@@ -102,41 +32,20 @@
       return null;
     }
     static getValue(element) {
-      let input = InputStore.get(element, this.type);
-      if (!input) {
-        return null;
-      }
-      return input.value;
+      throw 'not implemented';
     }
     static subscribe(element, callback) {
-      let input = InputStore.get(element, this.type);
-      if (!input) {
-        return;
-      }
-      input.callback = callback;
+      this.events.forEach(event => {
+        $(element).on(`${event}${this.namespace}`, () => {
+          callback(this.priority);
+        });
+      });
     }
     static unsubscribe(element) {
-      let input = InputStore.get(element, this.type);
-      if (!input) {
-        return;
-      }
-      input.dispose();
+      $(element).off(this.namespace);
     }
     static receiveMessage(element, data) {
-      let input = InputStore.get(element, this.type);
-      if (!input) {
-        return;
-      }
-      for (const [key, value] of Object.entries(data)) {
-        if (key === 'value') {
-          // nothing confusing here
-          input.value = value;
-        } else if (key === 'label') {
-          input.label = value;
-        } else if (key === 'disable') {
-          input.disable(value);
-        }
-      }
+      throw 'not implemented';
     }
     static getState(element) {
       let input = InputStore.get(element, this.type);
@@ -144,7 +53,7 @@
         return;
       }
       return {
-        value: input.value
+        value: input.values()
       };
     }
 
@@ -152,87 +61,8 @@
     static getRatePolicy(element) {
       return null;
     }
-    static initialize(element) {
-      let input = InputStore.get(element, this.type);
-      if (!input) {
-        input = new this(element);
-      }
-    }
-    static dispose(element) {
-      let input = InputStore.get(element, this.type);
-      if (!input) {
-        return;
-      }
-      input.dispose();
-    }
-    static ShinyInterface() {
-      return this;
-    }
-  }
-
-  class ButtonInput extends Input {
-    static get name() {
-      return 'button';
-    }
-    static get events() {
-      return `click${this.namespace}`;
-    }
-    constructor(element) {
-      super(element);
-      this.value = 0;
-    }
-    set label(x) {
-      this.element.innerHTML = x;
-    }
-    get label() {
-      this.element.innerHTML;
-    }
-
-    // this argument name is garbo
-    disable(x) {
-      if (x === true) {
-        this.element.setAttribute('disabled', '');
-      } else {
-        this.element.removeAttribute('disabled');
-      }
-      return this;
-    }
-  }
-  $(document).on(ButtonInput.events, ButtonInput.selector, event => {
-    let button = InputStore.get(event.currentTarget, ButtonInput.type);
-    if (!button) {
-      return;
-    }
-    button.value++;
-  });
-  if (Shiny) {
-    Shiny.inputBindings.register(ButtonInput.ShinyInterface());
-  }
-
-  class ValuesMap {
-    #values = null;
-    #callback = null;
-    constructor(iterable = {}) {
-      this.#callback = debounce => {};
-      this.#values = Object.fromEntries(iterable);
-    }
-    set callback(f) {
-      this.#callback = f;
-    }
-    get callback() {
-      return this.#callback;
-    }
-    set(key, value) {
-      this.#values[key] = value;
-      this.#callback();
-      return this;
-    }
-    get(key) {
-      return this.#values[key];
-    }
-    entries() {
-      return this.#values;
-    }
+    static initialize(element) {}
+    static dispose(element) {}
   }
 
   class CheckboxInput extends Input {
@@ -240,85 +70,56 @@
       return 'checkbox';
     }
     static get events() {
-      return `change${this.namespace}`;
+      return ['change'];
     }
-    constructor(element) {
-      super(element);
-      let entries = $(element).find('input').toArray().map(element => {
-        return [element.value, element.checked];
-      });
-      this.value = new ValuesMap(entries);
+    static get selectors() {
+      return {
+        choice: '.form-check-label',
+        value: '.form-check-input'
+      };
     }
-    set callback(f) {
-      this.value.callback = f;
-      super.callback = f;
-    }
+
+    /*  choices(labels) {
+        let $parent = $(this.element)
+        let $choices =
+          $parent
+          .find(this.constructor.selectorChoice)
+          .slice(0, labels.length)
+          .map((i, el) => {
+            el.innerHTML = labels[i]
+            return el
+          })
+      }*/
+
     static getType(element) {
       return this.type;
     }
     static getValue(element) {
-      let checkbox = InputStore.get(element, this.type);
-      if (!checkbox) {
-        return null;
+      let pairs = $(element).find(this.selectors.value).map((i, e) => [[e.value, e.checked]]).get();
+      return Object.fromEntries(pairs);
+    }
+    static receiveMessage(element, data) {
+      const $element = $(element);
+      if (data.hasOwnProperty('choices')) {
+        $element.find('.form-check').remove();
+        $element.html(data['choices']);
       }
-      return checkbox.value.entries();
+      $element.trigger('change');
     }
-  }
-  $(document).on(CheckboxInput.events, CheckboxInput.selector, event => {
-    let checkbox = InputStore.get(event.currentTarget, CheckboxInput.type);
-    if (!checkbox) {
-      return;
-    }
-    let text = event.target.nextElementSibling.innerText;
-    let checked = event.target.checked;
-    checkbox.value.set(text, checked);
-    console.log(checkbox.value.toObject());
-  });
-  if (Shiny) {
-    Shiny.inputBindings.register(CheckboxInput.ShinyInterface());
   }
 
-  class LinkInput extends Input {
-    static get name() {
-      return 'link';
-    }
-    static get events() {
-      return `click.${this.namespace}`;
-    }
-    constructor(element) {
-      super(element);
-      this.value = 0;
-    }
-    set label(x) {
-      this.element.innerHTML = x;
-    }
-    get label() {
-      this.element.innerHTML;
-    }
-    disable(x) {
-      if (x === "true") {
-        this.element.setAttribute("disabled", "");
-      } else {
-        this.element.removeAttribute("disabled");
-      }
-    }
-  }
-  $(document).on(LinkInput.events, LinkInput.selector, event => {
-    let link = InputStore.get(event.currentTarget, LinkInput.type);
-    if (!link) {
-      return;
-    }
-    event.preventDefault();
-    link.value++;
-  });
-  if (Shiny) {
-    Shiny.inputBindings.register(LinkInput.ShinyInterface());
-  }
+  //import ButtonInput from './inputs/button.js'
+  //import CheckbuttonInput from './inputs/checkbutton.js'
+  //import LinkInput from './inputs/link.js'
 
+  if (Shiny) {
+    Shiny.inputBindings.register(CheckboxInput);
+  }
   const bsides = {
-    ButtonInput,
-    CheckboxInput,
-    LinkInput
+    //  ButtonInput,
+    CheckboxInput
+    //  CheckbuttonInput,
+    //  LinkInput
   };
 
   return bsides;
