@@ -78,19 +78,6 @@
         value: '.form-check-input'
       };
     }
-
-    /*  choices(labels) {
-        let $parent = $(this.element)
-        let $choices =
-          $parent
-          .find(this.constructor.selectorChoice)
-          .slice(0, labels.length)
-          .map((i, el) => {
-            el.innerHTML = labels[i]
-            return el
-          })
-      }*/
-
     static getType(element) {
       return this.type;
     }
@@ -100,9 +87,19 @@
     }
     static receiveMessage(element, data) {
       const $element = $(element);
-      if (data.hasOwnProperty('choices')) {
+      const $values = $element.find(this.selectors.value);
+      if (data.hasOwnProperty('options')) {
         $element.find('.form-check').remove();
-        $element.html(data['choices']);
+        $element.html(data.options);
+      }
+      if (data.hasOwnProperty('select')) {
+        $values.prop('checked', false);
+        $values.filter((i, e) => data.select.includes(e.value)).prop('checked', true);
+      }
+      if (data.hasOwnProperty('disable')) {
+        console.log($values);
+        $values.prop('disabled', false);
+        $values.filter((i, e) => data.disable.includes(e.value)).prop('disabled', true);
       }
       $element.trigger('change');
     }

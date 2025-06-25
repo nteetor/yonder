@@ -29,7 +29,7 @@ mapply2 <- function(f, ...) {
   .mapply(f, args, NULL)
 }
 
-build_input_choices <- function(
+build_input_options <- function(
   f,
   choices,
   values,
@@ -37,26 +37,16 @@ build_input_choices <- function(
   disable,
   ...
 ) {
-  if (length(choices) < 1) {
-    return(NULL)
-  }
+  stopifnot(
+    length(choices) == length(values)
+  )
 
-  select <-
-    if (non_null(select)) {
-      values %in% select
-    } else {
-      list(NULL)
-    }
-
-  disable <-
-    if (non_null(disable)) {
-      values %in% disable
-    } else {
-      list(NULL)
-    }
-
-  htmltools::as.tags(
-    .mapply(f, list(choices, values, select, disable), list(...))
+  htmltools::tagList(
+    !!!.mapply(
+      f,
+      list(choices, values),
+      list(select, disable, ...)
+    )
   )
 }
 

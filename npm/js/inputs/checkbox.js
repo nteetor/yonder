@@ -20,18 +20,6 @@ class CheckboxInput extends Input {
     }
   }
 
-/*  choices(labels) {
-    let $parent = $(this.element)
-    let $choices =
-      $parent
-      .find(this.constructor.selectorChoice)
-      .slice(0, labels.length)
-      .map((i, el) => {
-        el.innerHTML = labels[i]
-        return el
-      })
-  }*/
-
   static getType(element) {
     return this.type
   }
@@ -48,10 +36,27 @@ class CheckboxInput extends Input {
 
   static receiveMessage(element, data) {
     const $element = $(element)
+    const $values = $element.find(this.selectors.value)
 
-    if (data.hasOwnProperty('choices')) {
+    if (data.hasOwnProperty('options')) {
       $element.find('.form-check').remove()
-      $element.html(data['choices'])
+      $element.html(data.options)
+    }
+
+    if (data.hasOwnProperty('select')) {
+      $values.prop('checked', false)
+
+      $values
+        .filter((i, e) => data.select.includes(e.value))
+        .prop('checked', true)
+    }
+
+    if (data.hasOwnProperty('disable')) {
+      $values.prop('disabled', false)
+
+      $values
+        .filter((i, e) => data.disable.includes(e.value))
+        .prop('disabled', true)
     }
 
     $element.trigger('change')

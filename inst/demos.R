@@ -31,22 +31,26 @@ shiny::shinyApp(
 
 shiny::shinyApp(
   ui = bslib::page_fluid(
+    shiny::actionButton(
+      inputId = "swap",
+      label = "Swap"
+    ),
     input_checkbox(
       id = "check",
       choices = c("Left", "Right")
     )
   ),
   server = function(input, output) {
-    observe({
-      print(input$check)
-    })
+    LAYOUTS <- c("column", "row")
 
     observe({
+      i <- (input$swap %% 2) + 1
+
       update_checkbox(
         id = "check",
-        choices = c("Hello", "World"),
-        select = "Hello",
-        disable = "World"
+        choices = c("Left", "Right"),
+        select = isolate(names(which(input$check))),
+        layout = LAYOUTS[i]
       )
     })
   }

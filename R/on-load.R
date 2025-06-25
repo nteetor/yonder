@@ -27,7 +27,7 @@ register_input_handlers <- function() {
 
   shiny::registerInputHandler(
     "bsides.checkbox",
-    checkbox_handler,
+    checkbox_input_handler,
     force = TRUE
   )
 

@@ -57,12 +57,9 @@ input_checkbox <- function(
   args <- list(...)
   attrs <- keep_named(args)
 
-  select <- values %in% select
-  disable <- values %in% disable
-
   checkboxes <-
-    build_input_choices(
-      as_checkbox,
+    build_input_options(
+      checkbox_option,
       choices,
       values,
       select,
@@ -100,28 +97,34 @@ update_checkbox <- function(
   label = "after",
   session = default_reactive_domain()
 ) {
-  choices <-
-    build_input_choices(
-      as_checkbox,
-      choices,
-      values,
-      select,
-      disable,
-      layout,
-      label
-    )
+  options <-
+    if (non_null(choices)) {
+      format(
+        build_input_options(
+          checkbox_option,
+          choices,
+          values,
+          select,
+          disable,
+          layout,
+          label
+        )
+      )
+    }
 
   msg <-
-    list(
-      choices = format(choices),
-      select = select,
-      disable = disable
+    drop_nulls(
+      list(
+        options = options,
+        select = select,
+        disable = disable
+      )
     )
 
-  session$sendInputMessage(id, drop_nulls(msg))
+  session$sendInputMessage(id, msg)
 }
 
-as_checkbox <- function(
+checkbox_option <- function(
   choice,
   value,
   select,
@@ -129,13 +132,13 @@ as_checkbox <- function(
   layout,
   label
 ) {
-  if (is.null(choice) && is.null(value)) {
+  if (is.null(choice)) {
     return(NULL)
   }
 
-  id <- generate_id("checkbox")
+  option_id <- generate_id("checkbox")
 
-  tag <-
+  option <-
     tags$div(
       class = c(
         "form-check",
@@ -145,24 +148,24 @@ as_checkbox <- function(
       tags$input(
         class = "form-check-input",
         type = "checkbox",
-        id = id,
+        id = option_id,
         value = value,
-        checked = if (isTRUE(select)) NA,
-        disabled = if (isTRUE(disable)) NA,
+        checked = if (isTRUE(value %in% select)) NA,
+        disabled = if (isTRUE(value %in% disable)) NA,
         autocomplete = "off",
         `data-shiny-no-bind-input` = NA
       ),
       tags$label(
         class = "form-check-label",
-        `for` = id,
+        `for` = option_id,
         choice
       )
     )
 
-  tag <-
-    s3_class_add(tag, "yonder_checkbox")
+  option <-
+    s3_class_add(option, "yonder_checkbox_option")
 
-  tag
+  option
 }
 
 checkbox_class_layout <- function(layout) {
@@ -181,7 +184,7 @@ checkbox_class_label <- function(label) {
   )
 }
 
-checkbox_handler <- function(
+checkbox_input_handler <- function(
   value,
   session,
   name
