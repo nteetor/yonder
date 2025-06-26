@@ -2,7 +2,7 @@
 #'
 #' `rangeInput()` creates a simple numeric range input.
 #'
-#' @inheritParams checkboxInput
+#' @inheritParams input_checkbox
 #'
 #' @param min A number specifying the minimum value of the input, defaults to
 #'   `0`.

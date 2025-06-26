@@ -4,12 +4,7 @@
 \alias{form_submit}
 \title{Update form}
 \usage{
-form_submit(
-  id,
-  value = NULL,
-  disable = NULL,
-  session = default_reactive_domain()
-)
+form_submit(id, value = NULL, disable = NULL, session = get_current_session())
 }
 \arguments{
 \item{id}{A character string.}

@@ -85,7 +85,7 @@ input_link <- function(
 #'   * If `FALSE`, the button is enabled.
 #'   * If `NULL`, the argument is ignored.
 #'
-#' @param session A reactive context, defaults to [default_reactive_domain()].
+#' @param session A reactive context, defaults to [get_current_session()].
 #'
 #' @export
 update_button <- function(
@@ -93,7 +93,7 @@ update_button <- function(
   label = NULL,
   value = NULL,
   disable = NULL,
-  session = default_reactive_domain()
+  session = get_current_session()
 ) {
   assert_id()
   assert_session()
@@ -123,7 +123,7 @@ update_link <- function(
   label = NULL,
   value = NULL,
   disable = NULL,
-  session = default_reactive_domain()
+  session = get_current_session()
 ) {
   assert_id()
   assert_session()

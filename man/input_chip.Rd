@@ -2,6 +2,7 @@
 % Please edit documentation in R/input-chip.R
 \name{input_chip}
 \alias{input_chip}
+\alias{update_chip}
 \title{Chip inputs}
 \usage{
 input_chip(
@@ -14,6 +15,17 @@ input_chip(
   max = Inf,
   inline = TRUE,
   sort = "stack"
+)
+
+update_chip(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  max = NULL,
+  enable = NULL,
+  disable = NULL,
+  session = getDefaultReactiveDomain()
 )
 }
 \arguments{
@@ -51,6 +63,10 @@ selected chips are ordered, defaults to \code{"stack"}.
 \code{"fixed"}, selected chips appear in the order specified by
 \code{choices} and \code{values}. Use \code{"fixed"} and sort \code{choices} to keep selected
 chips in the same sorted order.}
+
+\item{disable}{A character vector. The values disabled by default.}
+
+\item{session}{A shiny session object.}
 }
 \description{
 The chip input is a selectize alternative. Choices are selected from a
@@ -67,7 +83,7 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbutton}()},
+\code{\link{input_checkbox_button}()},
 \code{\link{input_form}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},

@@ -96,9 +96,9 @@ input_chip <- function(
   tag
 }
 
-#' @rdname chipInput
+#' @rdname input_chip
 #' @export
-updateChipInput <- function(
+update_chip <- function(
   id,
   choices = NULL,
   values = choices,

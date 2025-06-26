@@ -4,7 +4,7 @@
 #' group, but with a checked or highlighted stated. Additionally, only one value
 #' at most may be selected at any given time.
 #'
-#' @inheritParams checkboxInput
+#' @inheritParams input_checkbox
 #'
 #' @param choices A character vector or list of tag elements specifying the
 #'   labels of the input's choices.

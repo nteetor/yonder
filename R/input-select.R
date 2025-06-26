@@ -8,7 +8,7 @@
 #' to change the reactivity or value of the input, see Details for more
 #' information.
 #'
-#' @inheritParams checkboxInput
+#' @inheritParams input_checkbox
 #'
 #' @param choices A character vector specifying the input's choices.
 #'

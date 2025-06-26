@@ -28,6 +28,11 @@ updateRadioInput(
 )
 }
 \arguments{
+\item{...}{Optional named arguments specifying HTML attributes for the input
+element.}
+
+\item{id}{A character string. The id of the reactive input.}
+
 \item{choices}{A character vector or list of tag elements specifying the
 input's choices.}
 
@@ -42,6 +47,10 @@ selected by default.}
 
 \item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
 in which case the radio controls render on separate lines.}
+
+\item{disable}{A character vector. The values disabled by default.}
+
+\item{session}{A shiny session object.}
 }
 \description{
 A stylized radio input. A reactive input with multiple choices where only one
@@ -53,7 +62,7 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbutton}()},
+\code{\link{input_checkbox_button}()},
 \code{\link{input_chip}()},
 \code{\link{input_form}()},
 \code{\link{listGroupInput}()},

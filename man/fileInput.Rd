@@ -14,6 +14,11 @@ fileInput(
 )
 }
 \arguments{
+\item{...}{Optional named arguments specifying HTML attributes for the input
+element.}
+
+\item{id}{A character string. The id of the reactive input.}
+
 \item{placeholder}{A character string specifying the text inside the file
 input, defaults to \code{"Choose file"}.}
 
@@ -34,7 +39,7 @@ Other inputs:
 \code{\link{checkbarInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbutton}()},
+\code{\link{input_checkbox_button}()},
 \code{\link{input_chip}()},
 \code{\link{input_form}()},
 \code{\link{listGroupInput}()},

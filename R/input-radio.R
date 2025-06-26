@@ -3,7 +3,7 @@
 #' A stylized radio input. A reactive input with multiple choices where only one
 #' choice and value at most may be selected.
 #'
-#' @inheritParams checkboxInput
+#' @inheritParams input_checkbox
 #'
 #' @param choices A character vector or list of tag elements specifying the
 #'   input's choices.

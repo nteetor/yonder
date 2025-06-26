@@ -10,7 +10,7 @@ update_button(
   label = NULL,
   value = NULL,
   disable = NULL,
-  session = default_reactive_domain()
+  session = get_current_session()
 )
 
 update_link(
@@ -18,7 +18,7 @@ update_link(
   label = NULL,
   value = NULL,
   disable = NULL,
-  session = default_reactive_domain()
+  session = get_current_session()
 )
 }
 \arguments{
@@ -32,7 +32,7 @@ update_link(
 \item If \code{NULL}, the argument is ignored.
 }}
 
-\item{session}{A reactive context, defaults to \code{\link[=default_reactive_domain]{default_reactive_domain()}}.}
+\item{session}{A reactive context, defaults to \code{\link[=get_current_session]{get_current_session()}}.}
 }
 \description{
 Change button.

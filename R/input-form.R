@@ -14,7 +14,7 @@
 #' will _never_ update if a form submit button is not included in `...` passed
 #' to `formInput()`.
 #'
-#' @inheritParams checkboxInput
+#' @inheritParams input_checkbox
 #'
 #' @param ... Any number of unnamed arguments passed as child elements to the
 #'   parent form element or named arguments passed as HTML attributes to the
@@ -108,7 +108,7 @@ form_submit <- function(
   id,
   value = NULL,
   disable = NULL,
-  session = default_reactive_domain()
+  session = get_current_session()
 ) {
   assert_id()
   assert_session()

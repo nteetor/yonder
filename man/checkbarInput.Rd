@@ -18,6 +18,11 @@ updateCheckbarInput(
 )
 }
 \arguments{
+\item{...}{Optional named arguments specifying HTML attributes for the input
+element.}
+
+\item{id}{A character string. The id of the reactive input.}
+
 \item{choices}{A character vector or list of tag element specifying the
 input's choices, defaults to \code{NULL}.}
 
@@ -26,6 +31,10 @@ choices, defaults to \code{choices}.}
 
 \item{selected}{One or more of \code{values} specifying the input's default
 selected values, defaults to \code{NULL}.}
+
+\item{disable}{A character vector. The values disabled by default.}
+
+\item{session}{A shiny session object.}
 }
 \description{
 A stylized checkbox input. The checkbar input appears similar to a group of
@@ -36,7 +45,7 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbutton}()},
+\code{\link{input_checkbox_button}()},
 \code{\link{input_chip}()},
 \code{\link{input_form}()},
 \code{\link{listGroupInput}()},

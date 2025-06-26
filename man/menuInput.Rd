@@ -28,6 +28,8 @@ updateMenuInput(
 )
 }
 \arguments{
+\item{id}{A character string. The id of the reactive input.}
+
 \item{label}{A character string or tag element specifying the label of the
 menu's toggle button.}
 
@@ -37,11 +39,18 @@ items.}
 \item{values}{A character vector specifying the values of the menu's items,
 defaults to \code{choices}.}
 
+\item{...}{Optional named arguments specifying HTML attributes for the input
+element.}
+
 \item{direction}{One of \code{"up"}, \code{"right"}, \code{"down"}, or \code{"left"} specifying
 which direction the menu opens, defaults to \code{"down"}.}
 
 \item{align}{One or \code{"right"} or \code{"left"} specifying which side of the
 toggle button the menu aligns to, defaults to \code{"left"}.`}
+
+\item{disable}{A character vector. The values disabled by default.}
+
+\item{session}{A shiny session object.}
 }
 \description{
 A toggleable dropdown menu input. Menu inputs may be used as standalone
@@ -54,7 +63,7 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbutton}()},
+\code{\link{input_checkbox_button}()},
 \code{\link{input_chip}()},
 \code{\link{input_form}()},
 \code{\link{listGroupInput}()},

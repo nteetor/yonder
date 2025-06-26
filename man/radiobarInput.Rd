@@ -18,6 +18,11 @@ updateRadiobarInput(
 )
 }
 \arguments{
+\item{...}{Optional named arguments specifying HTML attributes for the input
+element.}
+
+\item{id}{A character string. The id of the reactive input.}
+
 \item{choices}{A character vector or list of tag elements specifying the
 labels of the input's choices.}
 
@@ -26,6 +31,10 @@ defaults to \code{choices}.}
 
 \item{selected}{One of \code{values} specifying the input's default selected
 choice, defaults to \code{values[[1]]}.}
+
+\item{disable}{A character vector. The values disabled by default.}
+
+\item{session}{A shiny session object.}
 }
 \description{
 A stylized group of radio inputs. A radiobar input is similar to a button
@@ -38,7 +47,7 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbutton}()},
+\code{\link{input_checkbox_button}()},
 \code{\link{input_chip}()},
 \code{\link{input_form}()},
 \code{\link{listGroupInput}()},

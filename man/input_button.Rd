@@ -30,7 +30,7 @@ Other inputs:
 \code{\link{checkbarInput}()},
 \code{\link{fileInput}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbutton}()},
+\code{\link{input_checkbox_button}()},
 \code{\link{input_chip}()},
 \code{\link{input_form}()},
 \code{\link{listGroupInput}()},

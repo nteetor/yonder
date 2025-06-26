@@ -3,7 +3,7 @@
 #' A stylized checkbox input. The checkbar input appears similar to a group of
 #' buttons, but with a checked or highlighted state.
 #'
-#' @inheritParams checkboxInput
+#' @inheritParams input_checkbox
 #'
 #' @param choices A character vector or list of tag element specifying the
 #'   input's choices, defaults to `NULL`.

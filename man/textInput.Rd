@@ -51,6 +51,11 @@ updateGroupTextInput(
 )
 }
 \arguments{
+\item{...}{Optional named arguments specifying HTML attributes for the input
+element.}
+
+\item{id}{A character string. The id of the reactive input.}
+
 \item{value}{A character string or a value coerced to a character string
 specifying the default value of the textual input.}
 
@@ -69,6 +74,10 @@ defaults to \code{NULL}.}
 
 \item{step}{A number specifying the increment step of the number input,
 defaults to 1.}
+
+\item{disable}{A character vector. The values disabled by default.}
+
+\item{session}{A shiny session object.}
 
 \item{left, right}{A character vector specifying static addons or
 \code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons. Addons
@@ -111,7 +120,7 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbutton}()},
+\code{\link{input_checkbox_button}()},
 \code{\link{input_chip}()},
 \code{\link{input_form}()},
 \code{\link{listGroupInput}()},

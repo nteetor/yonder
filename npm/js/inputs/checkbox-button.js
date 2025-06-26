@@ -2,9 +2,9 @@ import $ from 'jquery'
 
 import Input from './input.js'
 
-class CheckboxInput extends Input {
+class CheckboxButtonInput extends Input {
   static get name() {
-    return 'checkbox'
+    return 'checkbox-button'
   }
 
   static get events() {
@@ -13,8 +13,8 @@ class CheckboxInput extends Input {
 
   static get selectors() {
     return {
-      choice: '.form-check-label',
-      value: '.form-check-input'
+      choice: '.btn',
+      value: '.btn-check'
     }
   }
 
@@ -37,12 +37,18 @@ class CheckboxInput extends Input {
     const $values = $element.find(this.selectors.value)
 
     if (data.hasOwnProperty('options')) {
-      $element.find('.form-check').remove()
+      $element
+        .find(`${this.selectors.choice},${this.selectors.value}`)
+        .remove()
+
       $element.html(data.options)
     }
 
     if (data.hasOwnProperty('select')) {
       $values.prop('checked', false)
+
+      console.log($values)
+      console.log($values.filter((i, e) => data.select.includes(e.value)))
 
       $values
         .filter((i, e) => data.select.includes(e.value))
@@ -61,4 +67,4 @@ class CheckboxInput extends Input {
   }
 }
 
-export default CheckboxInput
+export default CheckboxButtonInput

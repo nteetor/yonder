@@ -26,6 +26,11 @@ updateListGroupInput(
 )
 }
 \arguments{
+\item{...}{Optional named arguments specifying HTML attributes for the input
+element.}
+
+\item{id}{A character string. The id of the reactive input.}
+
 \item{choices}{A vector of character strings or list of tag elements specifying
 the content of the list group's items.}
 
@@ -43,6 +48,10 @@ specifying how list items are laid out, defaults to \code{"vertical"}. Note, if
 rendered without an outside border, defaults to \code{FALSE}. Removing the list
 group border is useful when rendering a list group inside a custom parent
 container, e.g. inside a \code{\link[=card]{card()}}.}
+
+\item{disable}{A character vector. The values disabled by default.}
+
+\item{session}{A shiny session object.}
 }
 \description{
 List group inputs are an actionable list of items. They behave similarly to
@@ -55,7 +64,7 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbutton}()},
+\code{\link{input_checkbox_button}()},
 \code{\link{input_chip}()},
 \code{\link{input_form}()},
 \code{\link{menuInput}()},

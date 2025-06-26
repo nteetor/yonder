@@ -120,3 +120,7 @@ processDeps <- function(tags, session) {
   # )
   dependencies
 }
+
+get_current_session <- function() {
+  shiny::getDefaultReactiveDomain()
+}

@@ -57,7 +57,7 @@ input_checkbox <- function(
   args <- list(...)
   attrs <- keep_named(args)
 
-  checkboxes <-
+  options <-
     build_input_options(
       checkbox_option,
       choices,
@@ -72,7 +72,7 @@ input_checkbox <- function(
     tags$div(
       class = "bsides-checkbox",
       id = id,
-      checkboxes,
+      options,
       !!!attrs
     )
 
@@ -80,7 +80,7 @@ input_checkbox <- function(
     dependency_append(tag)
 
   tag <-
-    s3_class_add(tag, c("yonder_checkbox_input", "yonder_input"))
+    s3_class_add(tag, c("bsides_checkbox_input", "bsides_input"))
 
   tag
 }
@@ -95,7 +95,7 @@ update_checkbox <- function(
   disable = NULL,
   layout = "column",
   label = "after",
-  session = default_reactive_domain()
+  session = get_current_session()
 ) {
   options <-
     if (non_null(choices)) {
@@ -163,7 +163,7 @@ checkbox_option <- function(
     )
 
   option <-
-    s3_class_add(option, "yonder_checkbox_option")
+    s3_class_add(option, "bsides_checkbox_option")
 
   option
 }

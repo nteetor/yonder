@@ -42,7 +42,7 @@ param_type <- function() {
 #' `"number"` and explicit arguments for specifying a min value, max value, and
 #' the step amount. Use `updateTextInput()` to update a number input.
 #'
-#' @inheritParams checkboxInput
+#' @inheritParams input_checkbox
 #'
 #' @inheritParams selectInput
 #'

@@ -4,7 +4,7 @@
 #' checkboxes or radios, that is, users may select one or more items from the
 #' list. However, list group items may include highly variable content.
 #'
-#' @inheritParams checkboxInput
+#' @inheritParams input_checkbox
 #'
 #' @param choices A vector of character strings or list of tag elements specifying
 #'   the content of the list group's items.

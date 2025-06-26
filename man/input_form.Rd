@@ -10,12 +10,16 @@ input_form(id, ..., label = NULL, disable = FALSE, inline = FALSE)
 form_submit_button(label, value = label, ...)
 }
 \arguments{
+\item{id}{A character string. The id of the reactive input.}
+
 \item{...}{Any number of unnamed arguments passed as child elements to the
 parent form element or named arguments passed as HTML attributes to the
 parent element. At least one \code{formSubmit()} must be included.}
 
 \item{label}{A character string specifying the label of the form submit
 button.}
+
+\item{disable}{A character vector. The values disabled by default.}
 
 \item{inline}{One of \code{TRUE} or \code{FALSE}, if \code{TRUE} the form and its child
 elements are rendered in a horizontal row, defaults to \code{FALSE}. On small
@@ -50,7 +54,7 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbutton}()},
+\code{\link{input_checkbox_button}()},
 \code{\link{input_chip}()},
 \code{\link{listGroupInput}()},
 \code{\link{menuInput}()},

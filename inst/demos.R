@@ -14,14 +14,18 @@ shiny::shinyApp(
 
 shiny::shinyApp(
   ui = bslib::page_fluid(
-    input_checkbutton(
-      id = "checkbutton",
-      choices = c("Choice 1", "Choice 2")
+    input_checkbox_button(
+      id = "greetings",
+      choices = c("Hello", "Howdy", "Hey there")
     )
   ),
   server = function(input, output) {
     observe({
-      print(input$checkbutton)
+      update_checkbox_button(
+        id = "greetings",
+        select = "Howdy",
+        disable = "Hey there"
+      )
     })
   }
 )
@@ -46,10 +50,15 @@ shiny::shinyApp(
     observe({
       i <- (input$swap %% 2) + 1
 
+      s <-
+        if (non_null(isolate(input$check))) {
+          names(which(isolate(input$check)))
+        }
+
       update_checkbox(
         id = "check",
         choices = c("Left", "Right"),
-        select = isolate(names(which(input$check))),
+        select = s,
         layout = LAYOUTS[i]
       )
     })

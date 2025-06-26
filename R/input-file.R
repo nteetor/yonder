@@ -2,7 +2,7 @@
 #'
 #' Upload files to the server.
 #'
-#' @inheritParams checkboxInput
+#' @inheritParams input_checkbox
 #'
 #' @param placeholder A character string specifying the text inside the file
 #'   input, defaults to `"Choose file"`.

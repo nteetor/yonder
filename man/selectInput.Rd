@@ -51,6 +51,8 @@ updateGroupSelectInput(
 )
 }
 \arguments{
+\item{id}{A character string. The id of the reactive input.}
+
 \item{choices}{A character vector specifying the input's choices.}
 
 \item{values}{A character vector specifying the values of the input's
@@ -59,8 +61,15 @@ choices, defaults to \code{choices}.}
 \item{selected}{One of \code{values} indicating the default value of the input,
 defaults to \code{values[[1]]}.}
 
+\item{...}{Optional named arguments specifying HTML attributes for the input
+element.}
+
 \item{placeholder}{A character string specifying the placeholder text of
 the select input, defaults to \code{NULL}.}
+
+\item{disable}{A character vector. The values disabled by default.}
+
+\item{session}{A shiny session object.}
 
 \item{left, right}{A character vector specifying static addons or
 \code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons. Addons
@@ -101,7 +110,7 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbutton}()},
+\code{\link{input_checkbox_button}()},
 \code{\link{input_chip}()},
 \code{\link{input_form}()},
 \code{\link{listGroupInput}()},

@@ -16,6 +16,8 @@ updateRangeInput(
 )
 }
 \arguments{
+\item{id}{A character string. The id of the reactive input.}
+
 \item{min}{A number specifying the minimum value of the input, defaults to
 \code{0}.}
 
@@ -28,8 +30,15 @@ of the input, defaults to \code{min}.}
 \item{step}{A number specifying the interval step of the input, defaults to
 \code{1}.}
 
+\item{...}{Optional named arguments specifying HTML attributes for the input
+element.}
+
 \item{value}{A number specifying a new value for the input, defaults to
 \code{NULL}.}
+
+\item{disable}{A character vector. The values disabled by default.}
+
+\item{session}{A shiny session object.}
 }
 \description{
 \code{rangeInput()} creates a simple numeric range input.
@@ -44,7 +53,7 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbutton}()},
+\code{\link{input_checkbox_button}()},
 \code{\link{input_chip}()},
 \code{\link{input_form}()},
 \code{\link{listGroupInput}()},
