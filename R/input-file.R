@@ -18,9 +18,15 @@
 #'
 #' @family inputs
 #' @export
-fileInput <- function(..., id, placeholder = "Choose file", browse = "Browse",
-                      multiple = TRUE, accept = NULL) {
-  assert_id()
+fileInput <- function(
+  id,
+  ...,
+  placeholder = "Choose file",
+  browse = "Browse",
+  multiple = TRUE,
+  accept = NULL
+) {
+  check_string(id, allow_empty = FALSE)
 
   if (!is.character(browse)) {
     stop(

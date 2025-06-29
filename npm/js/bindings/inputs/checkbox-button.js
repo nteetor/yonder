@@ -1,28 +1,29 @@
 import $ from 'jquery'
 
-import Input from './input.js'
+import InputBinding from './input.js'
 
-class CheckboxInput extends Input {
-  static get name() {
-    return 'checkbox'
+class CheckboxButtonInputBinding extends InputBinding {
+  static get type() {
+    return 'checkboxbutton'
   }
 
-  static get events() {
+  get events() {
     return ['change']
   }
 
-  static get selectors() {
+  get selectors() {
     return {
-      choice: '.form-check-label',
-      value: '.form-check-input'
+      choice: '.btn',
+      value: '.btn-check'
     }
   }
 
-  static getType(element) {
-    return this.type
+  getType(element) {
+    console.log(this.constructor)
+    return `${this.constructor.prefix}${this.constructor.namespace}`
   }
 
-  static getValue(element) {
+  getValue(element) {
     let pairs =
       $(element)
       .find(this.selectors.value)
@@ -32,17 +33,23 @@ class CheckboxInput extends Input {
     return Object.fromEntries(pairs)
   }
 
-  static receiveMessage(element, data) {
+  receiveMessage(element, data) {
     const $element = $(element)
     const $values = $element.find(this.selectors.value)
 
     if (data.hasOwnProperty('options')) {
-      $element.find('.form-check').remove()
+      $element
+        .find(`${this.selectors.choice},${this.selectors.value}`)
+        .remove()
+
       $element.html(data.options)
     }
 
     if (data.hasOwnProperty('select')) {
       $values.prop('checked', false)
+
+      console.log($values)
+      console.log($values.filter((i, e) => data.select.includes(e.value)))
 
       $values
         .filter((i, e) => data.select.includes(e.value))
@@ -61,4 +68,4 @@ class CheckboxInput extends Input {
   }
 }
 
-export default CheckboxInput
+export default CheckboxButtonInputBinding

@@ -46,48 +46,57 @@
 input_chip <- function(
   id,
   choices,
-  values = choices,
-  selected = NULL,
   ...,
+  values = choices,
+  select = NULL,
+  disable = NULL,
   placeholder = NULL,
-  max = Inf,
-  inline = TRUE,
+  max = NULL,
   sort = "stack"
 ) {
-  assert_id()
-  assert_choices()
-  assert_possible(sort, c("stack", "queue", "fixed"))
+  check_string(id, allow_empty = FALSE)
+  # @TODO check choices
+
+  check_character(values, allow_na = FALSE, allow_null = FALSE)
+  check_character(select, allow_null = TRUE)
+  check_character(disable, allow_null = TRUE)
+  check_number_whole(max, allow_null = TRUE)
+
+  args <- list(...)
+  attrs <- keep_named(args)
 
   toggle <-
     tags$input(
-      class = "form-select",
+      class = "form-control dropdown-toggle",
       `data-toggle` = "dropdown",
+      type = "text",
       placeholder = placeholder
     )
 
-  chips <- map_chipchips(choices, values, selected)
-  items <- map_chipitems(choices, values, selected)
+  options <-
+    build_input_options(
+      chip_option,
+      choices,
+      values,
+      select,
+      disable
+    )
 
   tag <-
-    tags$div(
+    div(
       id = id,
-      class = "bsides-chip btn-group dropup",
-      `data-max` = if (max == Inf) -1 else max,
+      class = "bsides-chip btn-group dropdown",
+      `data-max` = if (non_null(max)) max,
       `data-sort` = sort,
+      !!!attrs,
+      div(
+        class = "chips"
+      ),
       toggle,
-      tags$div(
+      div(
         class = "dropdown-menu",
-        items
-      ),
-      tags$div(
-        class = str_collate(
-          "chips",
-          if (!inline) "chips-block" else "chips-inline",
-          "chips-grey"
-        ),
-        chips
-      ),
-      ...
+        options
+      )
     )
 
   tag <-
@@ -133,27 +142,20 @@ update_chip <- function(
   )
 }
 
-map_chipitems <- function(choices, values, selected) {
-  if (is.null(choices) && is.null(values)) {
-    return(NULL)
-  }
-
-  selected <- values %in% selected
-
-  Map(
-    choice = choices,
-    value = values,
-    select = selected,
-    function(choice, value, select) {
-      tags$button(
-        class = str_collate(
-          "dropdown-item",
-          if (select) "selected"
-        ),
-        value = value,
-        choice
-      )
-    }
+chip_option <- function(
+  choice,
+  value,
+  select
+) {
+  tags$li(
+    tags$button(
+      class = c(
+        "dropdown-item",
+        if (isTRUE(value %in% select)) "selected"
+      ),
+      value = value,
+      choice
+    )
   )
 }
 

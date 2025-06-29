@@ -8,12 +8,12 @@
 input_chip(
   id,
   choices,
-  values = choices,
-  selected = NULL,
   ...,
+  values = choices,
+  select = NULL,
+  disable = NULL,
   placeholder = NULL,
-  max = Inf,
-  inline = TRUE,
+  max = NULL,
   sort = "stack"
 )
 
@@ -33,25 +33,22 @@ update_chip(
 
 \item{choices}{A character vector or list specifying the possible choices.}
 
+\item{...}{Optional named arguments specifying HTML attributes for the input
+element.}
+
 \item{values}{A character vector or list of strings specifying the input's
 values, defaults to \code{choices}.}
 
-\item{selected}{One or more of \code{values} specifying which values are selected
-by default.}
+\item{select}{A character vector. The values selected by default, one or more
+of \code{values}.}
 
-\item{...}{Optional named arguments specifying HTML attributes for the input
-element.}
+\item{disable}{A character vector. The values disabled by default.}
 
 \item{placeholder}{A character string specifying placeholder text of the
 chip input, defaults to \code{NULL}.}
 
 \item{max}{A number specifying the maximum number of items a user may select,
 defaults to \code{Inf}.}
-
-\item{inline}{One of \code{TRUE} or \code{FALSE} specifying if chips are rendered
-inline. If \code{TRUE} multiple chips may fit onto a single row, otherwise, if
-\code{FALSE}, chips expand to fill the width of their parent element, one chip
-per row.}
 
 \item{sort}{One of \code{"stack"}, \code{"queue"}, or \code{"fixed"} specifying how
 selected chips are ordered, defaults to \code{"stack"}.
@@ -64,9 +61,15 @@ selected chips are ordered, defaults to \code{"stack"}.
 \code{choices} and \code{values}. Use \code{"fixed"} and sort \code{choices} to keep selected
 chips in the same sorted order.}
 
-\item{disable}{A character vector. The values disabled by default.}
+\item{selected}{One or more of \code{values} specifying which values are selected
+by default.}
 
 \item{session}{A shiny session object.}
+
+\item{inline}{One of \code{TRUE} or \code{FALSE} specifying if chips are rendered
+inline. If \code{TRUE} multiple chips may fit onto a single row, otherwise, if
+\code{FALSE}, chips expand to fill the width of their parent element, one chip
+per row.}
 }
 \description{
 The chip input is a selectize alternative. Choices are selected from a
@@ -79,7 +82,6 @@ limit the number of choices a user may select.
 }
 \seealso{
 Other inputs: 
-\code{\link{checkbarInput}()},
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},

@@ -94,7 +94,7 @@ keep_named <- named_values <- function(x) {
   x[names2(x) != ""]
 }
 
-unnamed_values <- function(x) {
+keep_unnamed <- unnamed_values <- function(x) {
   x[names2(x) == ""]
 }
 

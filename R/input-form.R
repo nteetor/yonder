@@ -40,37 +40,43 @@
 #' @family inputs
 #' @export
 input_form <- function(
-    id,
-    ...,
-    label = NULL,
-    disable = FALSE,
-    inline = FALSE
+  id,
+  ...,
+  label = NULL,
+  disable = FALSE,
+  inline = FALSE
 ) {
-  assert_id()
+  check_string(id, allow_empty = FALSE)
+  check_string(label, allow_null = TRUE)
 
   args <- list(...)
+  attrs <- keep_named(args)
+  children <- keep_unnamed(args)
 
-  tag <-
+  input <-
     tags$form(
       class = c(
         "bsides-form",
         if (inline) "form-inline"
       ),
       id = id,
-      !!!keep_named(args),
+      !!!attrs,
       tags$fieldset(
         disabled = if (isTRUE(disable)) NA,
         if (non_null(label)) {
           tags$legend(label)
         },
-        unnamed_values(...)
+        !!!children
       )
     )
 
-  tag <-
-    dependency_append(tag)
+  input <-
+    dependency_append(input)
 
-  tag
+  input <-
+    s3_class_add(input, "bsides_form_input")
+
+  input
 }
 
 #' @rdname input_form
@@ -88,46 +94,18 @@ form_submit_button <- function(
   )
 }
 
-#' Update form
-#'
-#' Update form
-#'
-#' @param id A character string.
-#'
-#' @param submit A boolean or character string.
-#'
-#'   * If `TRUE`, the form is submitted.
-#'   * If `FALSE`, nothing happens.
-#'   * If character, the form is submitted and the reactive value passed is the
-#'   character string specified.
-#'
-#' @param session A reactive domain.
-#'
+#' @rdname input_form
 #' @export
-form_submit <- function(
+submit_form <- function(
   id,
-  value = NULL,
-  disable = NULL,
   session = get_current_session()
 ) {
-  assert_id()
-  assert_session()
+  check_string(id, allow_empty = FALSE)
 
-  if (
-    !(is.logical(submit) || is.character(submit)) ||
-      (is.character(submit) && length(submit) > 1)
-  ) {
-    rlang::abort(
-      "`submit` must be one of `TRUE`, `FALSE`, or a character string",
-    )
-  }
-
-  submit <- coerce_submit(submit)
-
-  session$sendInputMessage(
-    id,
+  msg <-
     list(
-      submit = submit
+      submit = TRUE
     )
-  )
+
+  session$sendInputMessage(id, msg)
 }

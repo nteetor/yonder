@@ -4,88 +4,86 @@
   * Licensed under MIT (https://github.com/nteetor/yonder/blob/main/LICENSE.note)
   */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory(require('jquery')) :
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery')) :
   typeof define === 'function' && define.amd ? define(['jquery'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, global.bsides = factory(global.$));
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.$));
 })(this, (function ($) { 'use strict';
 
-  class Input {
+  class InputBinding {
+    static get prefix() {
+      return 'bsides';
+    }
     static get type() {
-      return `bsides.${this.name}`;
+      throw 'not implemented';
     }
     static get namespace() {
       return `.${this.type}`;
     }
-    static get priority() {
-      return 'deferred';
-    }
-    static get events() {
+    get events() {
       return [];
     }
-    static find(scope) {
-      return $(scope).find(`.bsides-${this.name}`);
+    constructor() {
+      this.priority = 'deferred';
     }
-    static getId(element) {
+    find(scope) {
+      return $(scope).find(`.${this.constructor.prefix}-${this.constructor.type}`);
+    }
+    getId(element) {
       return element.id;
     }
-    static getType(element) {
+    getType(element) {
       return null;
     }
-    static getValue(element) {
+    getValue(element) {
       throw 'not implemented';
     }
-    static subscribe(element, callback) {
+    subscribe(element, callback) {
       this.events.forEach(event => {
-        $(element).on(`${event}${this.namespace}`, () => {
+        $(element).on(`${event}${this.constructor.namespace}`, () => {
           callback(this.priority);
         });
       });
     }
-    static unsubscribe(element) {
+    unsubscribe(element) {
       $(element).off(this.namespace);
     }
-    static receiveMessage(element, data) {
+    receiveMessage(element, data) {
       throw 'not implemented';
     }
-    static getState(element) {
-      let input = InputStore.get(element, this.type);
-      if (!input) {
-        return;
-      }
-      return {
-        value: input.values()
-      };
+    getState(element) {
+      throw 'not implemented';
     }
 
     // @return { policy: RatePolicyModes, delay: number }
-    static getRatePolicy(element) {
+    getRatePolicy(element) {
       return null;
     }
-    static initialize(element) {}
-    static dispose(element) {}
+    initialize(element) {}
+    dispose(element) {}
   }
 
-  class CheckboxInput extends Input {
-    static get name() {
+  class CheckboxInputBinding extends InputBinding {
+    static get type() {
       return 'checkbox';
     }
-    static get events() {
+    get events() {
       return ['change'];
     }
-    static get selectors() {
+    get selectors() {
       return {
         choice: '.form-check-label',
         value: '.form-check-input'
       };
     }
-    static getType(element) {
-      return this.type;
+    getType(element) {
+      console.log(this.constructor);
+      return `${this.constructor.prefix}${this.constructor.namespace}`;
     }
-    static getValue(element) {
+    getValue(element) {
       let pairs = $(element).find(this.selectors.value).map((i, e) => [[e.value, e.checked]]).get();
       return Object.fromEntries(pairs);
     }
-    static receiveMessage(element, data) {
+    receiveMessage(element, data) {
       const $element = $(element);
       const $values = $element.find(this.selectors.value);
       if (data.hasOwnProperty('options')) {
@@ -104,27 +102,28 @@
     }
   }
 
-  class CheckboxButtonInput extends Input {
-    static get name() {
-      return 'checkbox-button';
+  class CheckboxButtonInputBinding extends InputBinding {
+    static get type() {
+      return 'checkboxbutton';
     }
-    static get events() {
+    get events() {
       return ['change'];
     }
-    static get selectors() {
+    get selectors() {
       return {
         choice: '.btn',
         value: '.btn-check'
       };
     }
-    static getType(element) {
-      return this.type;
+    getType(element) {
+      console.log(this.constructor);
+      return `${this.constructor.prefix}${this.constructor.namespace}`;
     }
-    static getValue(element) {
+    getValue(element) {
       let pairs = $(element).find(this.selectors.value).map((i, e) => [[e.value, e.checked]]).get();
       return Object.fromEntries(pairs);
     }
-    static receiveMessage(element, data) {
+    receiveMessage(element, data) {
       const $element = $(element);
       const $values = $element.find(this.selectors.value);
       if (data.hasOwnProperty('options')) {
@@ -145,21 +144,67 @@
     }
   }
 
-  //import ButtonInput from './inputs/button.js'
-  //import LinkInput from './inputs/link.js'
-
-  if (Shiny) {
-    Shiny.inputBindings.register(CheckboxInput);
-    Shiny.inputBindings.register(CheckboxButtonInput);
+  class FormInputBinding extends InputBinding {
+    static get type() {
+      return 'form';
+    }
+    get events() {
+      return ['submit'];
+    }
+    get selectors() {
+      return {
+        submit: '.bsides-btn-submit'
+      };
+    }
+    initialize(element) {
+      const $element = $(element);
+      let inputValues = new Map();
+      $element.on(`shiny:inputchanged${this.constructor.namespace}`, event => {
+        console.log(event);
+        if (!event.el || event.priority === 'event') {
+          return;
+        }
+        if (event.el.id === element.id) {
+          // Shiny.setInputValue(element.id, value, { priority: 'event' })
+          event.preventDefault();
+          return;
+        }
+        if (element.contains(event.el)) {
+          inputValues.set(event.name, event.value);
+          event.preventDefault();
+        }
+      });
+      $element.on(`click${this.constructor.namespace}`, this.selectors.submit, event => {
+        event.preventDefault();
+        for (const [key, value] of inputValues.entries()) {
+          console.log(`${key}: ${value}`);
+          Shiny.setInputValue(key, value, {
+            priority: 'event'
+          });
+        }
+      });
+    }
+    getValue(element) {
+      return null;
+    }
+    receiveMessage(element, data) {
+      const $element = $(element);
+      if (data.submit === true) {
+        $element.trigger(`submit${namespace}`);
+      }
+    }
   }
-  const bsides = {
-    //  ButtonInput,
-    CheckboxInput,
-    CheckboxButtonInput
-    //  LinkInput
-  };
 
-  return bsides;
+  function registerInputBindings() {
+    if (Shiny) {
+      const inputBindings = Shiny.inputBindings;
+      inputBindings.register(new CheckboxInputBinding(), CheckboxInputBinding.type);
+      inputBindings.register(new CheckboxButtonInputBinding(), CheckboxButtonInputBinding.type);
+      inputBindings.register(new FormInputBinding(), FormInputBinding.type);
+    }
+  }
+
+  registerInputBindings();
 
 }));
 //# sourceMappingURL=bsides.js.map

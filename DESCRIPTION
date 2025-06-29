@@ -50,7 +50,6 @@ Collate:
     'import-standalone-obj-type.R'
     'import-standalone-types-check.R'
     'input-button.R'
-    'input-checkbar.R'
     'input-checkbox.R'
     'input-checkbox-button.R'
     'input-chip.R'

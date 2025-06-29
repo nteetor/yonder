@@ -60,7 +60,6 @@ list. However, list group items may include highly variable content.
 }
 \seealso{
 Other inputs: 
-\code{\link{checkbarInput}()},
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},

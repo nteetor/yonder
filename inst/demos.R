@@ -1,4 +1,4 @@
-# input chip ----
+# chip input ----
 
 shiny::shinyApp(
   ui = bslib::page_fluid(
@@ -10,7 +10,7 @@ shiny::shinyApp(
   server = function(input, output) {}
 )
 
-# input checkbox button ----
+# checkbox button input ----
 
 shiny::shinyApp(
   ui = bslib::page_fluid(
@@ -31,7 +31,7 @@ shiny::shinyApp(
 )
 
 
-# input checkbox ----
+# checkbox input ----
 
 shiny::shinyApp(
   ui = bslib::page_fluid(
@@ -62,6 +62,10 @@ shiny::shinyApp(
         layout = LAYOUTS[i]
       )
     })
+
+    observe({
+      print(input$check)
+    })
   }
 )
 
@@ -70,6 +74,29 @@ shiny::shinyApp(
     checkboxInput("id", "Label")
   ),
   server = function(input, output) {}
+)
+
+# form input ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_form(
+      id = "testForm",
+      label = "Test form",
+      input_checkbox(
+        id = "locations",
+        choices = c("Home", "Work", "Other")
+      ),
+      form_submit_button(
+        label = "Submit"
+      )
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$locations)
+    })
+  }
 )
 
 

@@ -53,7 +53,6 @@ A checkbox appearing as a button.
 }
 \seealso{
 Other inputs: 
-\code{\link{checkbarInput}()},
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},

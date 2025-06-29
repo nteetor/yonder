@@ -3,11 +3,14 @@
 \name{input_form}
 \alias{input_form}
 \alias{form_submit_button}
+\alias{submit_form}
 \title{Form inputs}
 \usage{
 input_form(id, ..., label = NULL, disable = FALSE, inline = FALSE)
 
 form_submit_button(label, value = label, ...)
+
+submit_form(id, session = get_current_session())
 }
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
@@ -30,6 +33,8 @@ the form will span multiple lines.}
 button and the value of the form input when the button is clicked,
 defaults to \code{label}.}
 
+\item{session}{A shiny session object.}
+
 \item{submit}{One of \code{TRUE} or \code{FALSE} or a character string specifying
 whether to trigger a form submission, defaults to \code{FALSE}. If a character
 string, the form is submitted and the reactive value passed is the character
@@ -50,7 +55,6 @@ to \code{formInput()}.
 }
 \seealso{
 Other inputs: 
-\code{\link{checkbarInput}()},
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},

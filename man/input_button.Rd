@@ -27,7 +27,6 @@ the number of clicks.
 }
 \seealso{
 Other inputs: 
-\code{\link{checkbarInput}()},
 \code{\link{fileInput}()},
 \code{\link{input_checkbox}()},
 \code{\link{input_checkbox_button}()},

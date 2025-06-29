@@ -5,8 +5,8 @@
 \title{File inputs}
 \usage{
 fileInput(
-  ...,
   id,
+  ...,
   placeholder = "Choose file",
   browse = "Browse",
   multiple = TRUE,
@@ -14,10 +14,10 @@ fileInput(
 )
 }
 \arguments{
+\item{id}{A character string. The id of the reactive input.}
+
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
-
-\item{id}{A character string. The id of the reactive input.}
 
 \item{placeholder}{A character string specifying the text inside the file
 input, defaults to \code{"Choose file"}.}
@@ -36,7 +36,6 @@ Upload files to the server.
 }
 \seealso{
 Other inputs: 
-\code{\link{checkbarInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
 \code{\link{input_checkbox_button}()},
