@@ -8,12 +8,20 @@ class FormInputBinding extends InputBinding {
   }
 
   get events() {
-    return ['submit']
+    return [
+      { event: 'click', selector: this.selectors.submit }
+    ]
   }
 
   get selectors() {
     return {
       submit: '.bsides-btn-submit'
+    }
+  }
+
+  get data() {
+    return {
+      value: `${this.constructor.prefix}-value`
     }
   }
 
@@ -23,20 +31,14 @@ class FormInputBinding extends InputBinding {
     let inputValues = new Map()
 
     $element.on(`shiny:inputchanged${this.constructor.namespace}`, (event) => {
-      console.log(event)
-
       if (!event.el || event.priority === 'event') {
         return
       }
 
-      if (event.el.id === element.id) {
-        // Shiny.setInputValue(element.id, value, { priority: 'event' })
-        event.preventDefault()
-        return
-      }
-
       if (element.contains(event.el)) {
-        inputValues.set(event.name, event.value)
+        const name = event.inputType ? `${event.name}:${event.inputType}` : event.name
+
+        inputValues.set(name, event.value)
         event.preventDefault()
       }
     })
@@ -45,21 +47,30 @@ class FormInputBinding extends InputBinding {
       event.preventDefault()
 
       for (const [key, value] of inputValues.entries()) {
-        console.log(`${key}: ${value}`)
         Shiny.setInputValue(key, value, { priority: 'event' })
       }
+
+      const value = event.currentTarget.value
+
+      $element.data(this.data.value, value)
     })
   }
 
   getValue(element) {
-    return null
+    return $(element).data(this.data.value)
   }
 
   receiveMessage(element, data) {
     const $element = $(element)
 
-    if (data.submit === true) {
-      $element.trigger(`submit${namespace}`)
+    if (data.hasOwnProperty('submit')) {
+      console.log(data)
+
+      const value = data.submit
+
+      $element
+        .find(`${this.selectors.submit}[value=${value}]`)
+        .trigger('click')
     }
   }
 }

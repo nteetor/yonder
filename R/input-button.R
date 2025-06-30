@@ -44,50 +44,6 @@ input_button <- function(
 
 #' @rdname input_button
 #' @export
-input_link <- function(
-  id,
-  label,
-  stretch = FALSE,
-  icon = NULL,
-  ...
-) {
-  assert_id()
-  assert_label()
-
-  tag <-
-    tags$a(
-      class = c(
-        "bsides-link",
-        if (stretch) "stretched-link",
-        if (!is.null(icon)) "icon-link"
-      ),
-      id = id,
-      label,
-      icon,
-      ...
-    )
-
-  tag <-
-    dependency_append(tag)
-
-  tag
-}
-
-#' Change button
-#'
-#' Change button.
-#'
-#' @param value A number specifying a new value for the button, defaults to
-#'   `NULL`.
-#'
-#' @param disable A boolean or `NULL`.
-#'   * If `TRUE`, the button is disabled and will not react to clicks from the user.
-#'   * If `FALSE`, the button is enabled.
-#'   * If `NULL`, the argument is ignored.
-#'
-#' @param session A reactive context, defaults to [get_current_session()].
-#'
-#' @export
 update_button <- function(
   id,
   label = NULL,
@@ -115,32 +71,22 @@ update_button <- function(
   )
 }
 
+button_input_type <- "bsides.button"
 
-#' @rdname update_button
-#' @export
-update_link <- function(
-  id,
-  label = NULL,
-  value = NULL,
-  disable = NULL,
-  session = get_current_session()
-) {
-  assert_id()
-  assert_session()
+button_input_register_handler <- function() {
+  shiny::registerInputHandler(
+    button_input_type,
+    function(
+      value,
+      session,
+      name
+    ) {
+      if (identical(value, 0L)) {
+        return(NULL)
+      }
 
-  stopifnot(
-    is.null(value) || is.numeric(value)
-  )
-
-  content <- coerce_content(label)
-  disable <- coerce_disable(disable)
-
-  session$sendInputMessage(
-    id,
-    drop_nulls(list(
-      content = content,
-      value = value,
-      disable = disable
-    ))
+      value
+    },
+    force = TRUE
   )
 }

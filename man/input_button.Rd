@@ -2,12 +2,18 @@
 % Please edit documentation in R/input-button.R
 \name{input_button}
 \alias{input_button}
-\alias{input_link}
+\alias{update_button}
 \title{Button and link inputs}
 \usage{
 input_button(id, label, ...)
 
-input_link(id, label, stretch = FALSE, icon = NULL, ...)
+update_button(
+  id,
+  label = NULL,
+  value = NULL,
+  disable = NULL,
+  session = get_current_session()
+)
 }
 \arguments{
 \item{id}{A character string. specifying the id of the reactive input.}

@@ -1,54 +1,40 @@
 import $ from 'jquery'
 
-import Input from './input.js'
-import InputStore from '../utils/input-store.js'
+import InputBinding from './input.js'
 
-class LinkInput extends Input {
-  static get name() {
+class LinkInputBinding extends InputBinding {
+  static get type() {
     return 'link'
   }
 
-  static get events() {
-    return `click.${this.namespace}`
+  get events() {
+    return ['click']
   }
 
-  constructor(element) {
-    super(element)
-
-    this.value = 0
-  }
-
-  set label(x) {
-    this.element.innerHTML = x
-  }
-
-  get label() {
-    this.element.innerHTML
-  }
-
-  disable(x) {
-    if (x === "true") {
-      this.element.setAttribute("disabled", "")
-    } else {
-      this.element.removeAttribute("disabled")
+  get data() {
+    return {
+      clicks: `${this.constructor.prefix}-clicks`
     }
   }
-}
 
-$(document).on(LinkInput.events, LinkInput.selector, (event) => {
-  let link = InputStore.get(event.currentTarget, LinkInput.type)
+  initialize(element) {
+    const $element = $(element)
 
-  if (!link) {
-    return
+    $element.data(this.data.clicks, 0)
+
+    $element.on(`click${this.constructor.namespace}`, (event) => {
+      const clicks = +$element.data(this.data.clicks)
+      $element.data(this.data.clicks, clicks + 1)
+    })
   }
 
-  event.preventDefault();
+  getType(element) {
+    return `${this.constructor.prefix}${this.constructor.namespace}`
+  }
 
-  link.value++
-})
-
-if (Shiny) {
-  Shiny.inputBindings.register(LinkInput.ShinyInterface())
+  getValue(element) {
+    return $(element).data(this.data.clicks)
+  }
 }
 
-export default LinkInput
+export default LinkInputBinding

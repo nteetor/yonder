@@ -1,3 +1,19 @@
+# button input ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_button(
+      id = "count",
+      label = "Count"
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$count)
+    })
+  }
+)
+
 # chip input ----
 
 shiny::shinyApp(
@@ -80,59 +96,69 @@ shiny::shinyApp(
 
 shiny::shinyApp(
   ui = bslib::page_fluid(
-    input_form(
-      id = "testForm",
-      label = "Test form",
-      input_checkbox(
-        id = "locations",
-        choices = c("Home", "Work", "Other")
+    bslib::layout_columns(
+      input_form(
+        id = "testForm",
+        label = "Test form",
+        input_button(
+          id = "counter",
+          label = "Counter"
+        ),
+        input_checkbox(
+          id = "locations",
+          choices = c("Home", "Work", "Other")
+        ),
+        form_submit_button(
+          label = "Submit"
+        )
       ),
-      form_submit_button(
-        label = "Submit"
+      input_button(
+        id = "alt",
+        label = "Alternate submission"
       )
     )
   ),
   server = function(input, output) {
     observe({
+      req(input$alt > 0)
+
+      submit_form("testForm", "Submit")
+    })
+
+    observe({
+      print(input$testForm)
+    })
+
+    observe({
       print(input$locations)
+    })
+
+    observe({
+      print(input$counter)
     })
   }
 )
 
 
-# input link ----
+# link input ----
+
 shiny::shinyApp(
   ui = bslib::page_fluid(
     bslib::card(
       p(
-        "Hello",
+        "Give it a try",
         input_link(
-          id = "link",
-          label = "world",
+          id = "go",
+          label = "Go!",
           stretch = TRUE,
           icon = bsicons::bs_icon("globe")
         )
       )
-    ),
-    input_button(
-      id = "button",
-      label = "Button"
     )
   ),
   server = function(input, output) {
     observe({
-      print(input$link)
+      print(input$go)
     })
-
-    observe({
-      print(input$button)
-    })
-
-    # observe({
-    #   update_button(
-    #     id = "bsidesButton",
-    #     value = input$shinyButton
-    #   )
-    # })
   }
 )

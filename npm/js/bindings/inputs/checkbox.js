@@ -19,7 +19,6 @@ class CheckboxInputBinding extends InputBinding {
   }
 
   getType(element) {
-    console.log(this.constructor)
     return `${this.constructor.prefix}${this.constructor.namespace}`
   }
 

@@ -98,13 +98,15 @@ form_submit_button <- function(
 #' @export
 submit_form <- function(
   id,
+  value,
   session = get_current_session()
 ) {
   check_string(id, allow_empty = FALSE)
+  check_string(value)
 
   msg <-
     list(
-      submit = TRUE
+      submit = value
     )
 
   session$sendInputMessage(id, msg)

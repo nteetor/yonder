@@ -10,7 +10,7 @@ input_form(id, ..., label = NULL, disable = FALSE, inline = FALSE)
 
 form_submit_button(label, value = label, ...)
 
-submit_form(id, session = get_current_session())
+submit_form(id, value, session = get_current_session())
 }
 \arguments{
 \item{id}{A character string. The id of the reactive input.}

@@ -38,8 +38,12 @@
       throw 'not implemented';
     }
     subscribe(element, callback) {
-      this.events.forEach(event => {
-        $(element).on(`${event}${this.constructor.namespace}`, () => {
+      this.events.forEach(e => {
+        const event = `${e.type ? e.type : e}${this.constructor.namespace}`;
+        const selector = e.selector ? e.selector : null;
+        console.log(event);
+        console.log(selector);
+        $(element).on(event, selector, e => {
           callback(this.priority);
         });
       });
@@ -62,6 +66,35 @@
     dispose(element) {}
   }
 
+  class ButtonInputBinding extends InputBinding {
+    static get type() {
+      return 'button';
+    }
+    get events() {
+      return ['click'];
+    }
+    get data() {
+      return {
+        clicks: `${this.constructor.prefix}-clicks`
+      };
+    }
+    initialize(element) {
+      const $element = $(element);
+      $element.data(this.data.clicks, 0);
+      $element.on(`click${this.constructor.namespace}`, event => {
+        const clicks = +$element.data(this.data.clicks);
+        $element.data(this.data.clicks, clicks + 1);
+      });
+    }
+    getType(element) {
+      return `${this.constructor.prefix}${this.constructor.namespace}`;
+    }
+    getValue(element) {
+      return $(element).data(this.data.clicks);
+    }
+    receiveMessage(element, data) {}
+  }
+
   class CheckboxInputBinding extends InputBinding {
     static get type() {
       return 'checkbox';
@@ -76,7 +109,6 @@
       };
     }
     getType(element) {
-      console.log(this.constructor);
       return `${this.constructor.prefix}${this.constructor.namespace}`;
     }
     getValue(element) {
@@ -149,58 +181,94 @@
       return 'form';
     }
     get events() {
-      return ['submit'];
+      return [{
+        event: 'click',
+        selector: this.selectors.submit
+      }];
     }
     get selectors() {
       return {
         submit: '.bsides-btn-submit'
       };
     }
+    get data() {
+      return {
+        value: `${this.constructor.prefix}-value`
+      };
+    }
     initialize(element) {
       const $element = $(element);
       let inputValues = new Map();
       $element.on(`shiny:inputchanged${this.constructor.namespace}`, event => {
-        console.log(event);
         if (!event.el || event.priority === 'event') {
           return;
         }
-        if (event.el.id === element.id) {
-          // Shiny.setInputValue(element.id, value, { priority: 'event' })
-          event.preventDefault();
-          return;
-        }
         if (element.contains(event.el)) {
-          inputValues.set(event.name, event.value);
+          const name = event.inputType ? `${event.name}:${event.inputType}` : event.name;
+          inputValues.set(name, event.value);
           event.preventDefault();
         }
       });
       $element.on(`click${this.constructor.namespace}`, this.selectors.submit, event => {
         event.preventDefault();
         for (const [key, value] of inputValues.entries()) {
-          console.log(`${key}: ${value}`);
           Shiny.setInputValue(key, value, {
             priority: 'event'
           });
         }
+        const value = event.currentTarget.value;
+        $element.data(this.data.value, value);
       });
     }
     getValue(element) {
-      return null;
+      return $(element).data(this.data.value);
     }
     receiveMessage(element, data) {
       const $element = $(element);
-      if (data.submit === true) {
-        $element.trigger(`submit${namespace}`);
+      if (data.hasOwnProperty('submit')) {
+        console.log(data);
+        const value = data.submit;
+        $element.find(`${this.selectors.submit}[value=${value}]`).trigger('click');
       }
+    }
+  }
+
+  class LinkInputBinding extends InputBinding {
+    static get type() {
+      return 'link';
+    }
+    get events() {
+      return ['click'];
+    }
+    get data() {
+      return {
+        clicks: `${this.constructor.prefix}-clicks`
+      };
+    }
+    initialize(element) {
+      const $element = $(element);
+      $element.data(this.data.clicks, 0);
+      $element.on(`click${this.constructor.namespace}`, event => {
+        const clicks = +$element.data(this.data.clicks);
+        $element.data(this.data.clicks, clicks + 1);
+      });
+    }
+    getType(element) {
+      return `${this.constructor.prefix}${this.constructor.namespace}`;
+    }
+    getValue(element) {
+      return $(element).data(this.data.clicks);
     }
   }
 
   function registerInputBindings() {
     if (Shiny) {
       const inputBindings = Shiny.inputBindings;
+      inputBindings.register(new ButtonInputBinding(), ButtonInputBinding.type);
       inputBindings.register(new CheckboxInputBinding(), CheckboxInputBinding.type);
       inputBindings.register(new CheckboxButtonInputBinding(), CheckboxButtonInputBinding.type);
       inputBindings.register(new FormInputBinding(), FormInputBinding.type);
+      inputBindings.register(new LinkInputBinding(), LinkInputBinding.type);
     }
   }
 

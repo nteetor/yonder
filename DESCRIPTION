@@ -55,6 +55,7 @@ Collate:
     'input-chip.R'
     'input-file.R'
     'input-form.R'
+    'input-link.R'
     'input-list-group.R'
     'input-menu.R'
     'input-radio.R'

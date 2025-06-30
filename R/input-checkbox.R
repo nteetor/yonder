@@ -184,16 +184,24 @@ checkbox_class_label <- function(label) {
   )
 }
 
-checkbox_input_handler <- function(
-  value,
-  session,
-  name
-) {
-  value <- unlist(value, recursive = FALSE, use.names = TRUE)
+checkbox_input_type <- "bsides.checkbox"
 
-  if (length(value) < 1 || !any(value)) {
-    return(NULL)
-  }
+checkbox_input_register_handler <- function() {
+  shiny::registerInputHandler(
+    checkbox_input_type,
+    function(
+      value,
+      session,
+      name
+    ) {
+      value <- unlist(value, recursive = FALSE, use.names = TRUE)
 
-  value
+      if (length(value) < 1 || !any(value)) {
+        return(NULL)
+      }
+
+      value
+    },
+    force = TRUE
+  )
 }

@@ -136,16 +136,24 @@ checkbox_button_class_layout <- function(
   }
 }
 
-checkbox_button_input_handler <- function(
-  value,
-  session,
-  name
-) {
-  value <- unlist(value, FALSE, TRUE)
+checkbox_button_input_type <- "bsides.checkboxbutton"
 
-  if (length(value) < 1 || !any(value)) {
-    return(NULL)
-  }
+checkbox_button_input_register_handler <- function() {
+  shiny::registerInputHandler(
+    checkbox_button_input_type,
+    function(
+      value,
+      session,
+      name
+    ) {
+      value <- unlist(value, FALSE, TRUE)
 
-  value
+      if (length(value) < 1 || !any(value)) {
+        return(NULL)
+      }
+
+      value
+    },
+    force = TRUE
+  )
 }
