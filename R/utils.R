@@ -121,6 +121,10 @@ processDeps <- function(tags, session) {
   dependencies
 }
 
+is_breakpoints <- function(x) {
+  inherits(x, "bslib_breakpoints")
+}
+
 get_current_session <- function() {
   shiny::getDefaultReactiveDomain()
 }

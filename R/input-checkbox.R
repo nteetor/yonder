@@ -14,7 +14,7 @@
 #'
 #' @param disable A boolean. The checkbox starts disabled if `TRUE`.
 #'
-#' @param label A character string. The placement of a label relative to a
+#' @param label A character string. The placement of a label relative to its
 #'   checkbox.
 #'
 #' @param session A shiny session object.
@@ -79,20 +79,20 @@ input_checkbox <- function(
 #' @export
 update_checkbox <- function(
   id,
-  label = NULL,
-  select = NULL,
+  choice = NULL,
+  value = NULL,
   disable = NULL,
-  session = get_default_session()
+  session = get_current_session()
 ) {
   check_string(id, allow_empty = FALSE)
-  check_string(label, allow_null = TRUE)
-  check_bool(select, allow_null = TRUE)
+  check_string(choice, allow_null = TRUE)
+  check_bool(value, allow_null = TRUE)
   check_bool(disable, allow_null = TRUE)
 
   msg <-
     drop_nulls(list(
-      label = label,
-      select = select,
+      choice = choice,
+      value = value,
       disable = disable
     ))
 

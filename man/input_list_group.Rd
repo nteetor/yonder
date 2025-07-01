@@ -10,19 +10,19 @@ input_list_group(
   choices,
   ...,
   values = choices,
-  selected = NULL,
-  layout = "vertical",
-  flush = FALSE
+  select = NULL,
+  disable = NULL,
+  appearance = c("default", "flush"),
+  layout = c("column", "row")
 )
 
 update_list_group(
   id,
   choices = NULL,
   values = choices,
-  selected = NULL,
-  enable = NULL,
+  select = NULL,
   disable = NULL,
-  session = getDefaultReactiveDomain()
+  session = get_current_session()
 )
 }
 \arguments{
@@ -36,15 +36,17 @@ element.}
 \item{values}{A character vector. The values for the input, defaults to
 \code{choices}.}
 
-\item{layout}{<\link{responsive}> A character vector. The layout of the list
-group, \code{"column"} or \code{"row"}.}
-
-\item{flush}{One of \code{TRUE} or \code{FALSE} specifying if the list group is
-rendered without an outside border, defaults to \code{FALSE}. Removing the list
-group border is useful when rendering a list group inside a custom parent
-container, e.g. inside a \code{\link[=card]{card()}}.}
+\item{select}{A character vector. The values selected by default, one or more
+of \code{values}.}
 
 \item{disable}{A character vector. The values disabled by default.}
+
+\item{appearance}{A character string. The appearance of the input's list
+items.
+
+Flush list items have their outer borders and rounded corners removed.}
+
+\item{layout}{<\link{responsive}> A character vector. The layout of the choices.}
 
 \item{session}{A shiny session object.}
 }

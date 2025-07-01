@@ -23,7 +23,7 @@
 #'
 #' @param layout A character string. The layout of the choices.
 #'
-#' @param label A character string. The placement of a label relative to a
+#' @param label A character string. The placement of a label relative to its
 #'   checkbox.
 #'
 #' @param session A shiny session object.
@@ -105,6 +105,11 @@ update_checkbox_group <- function(
   label = "after",
   session = get_current_session()
 ) {
+  check_string(id, allow_empty = FALSE)
+  check_character(values, allow_null = TRUE)
+  check_character(select, allow_null = TRUE)
+  check_character(disable, allow_null = TRUE)
+
   options <-
     if (non_null(choices)) {
       format(

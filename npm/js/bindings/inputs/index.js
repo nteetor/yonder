@@ -3,6 +3,7 @@ import CheckboxInputBinding from './checkbox.js'
 import CheckboxGroupInputBinding from './checkbox-group.js'
 import FormInputBinding from './form.js'
 import LinkInputBinding from './link.js'
+import ListGroupInputBinding from './list-group.js'
 
 function registerInputBindings() {
   if (Shiny) {
@@ -13,6 +14,7 @@ function registerInputBindings() {
     inputBindings.register(new CheckboxGroupInputBinding(), CheckboxGroupInputBinding.type)
     inputBindings.register(new FormInputBinding(), FormInputBinding.type)
     inputBindings.register(new LinkInputBinding(), LinkInputBinding.type)
+    inputBindings.register(new ListGroupInputBinding(), ListGroupInputBinding.type)
   }
 }
 

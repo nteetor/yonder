@@ -6,13 +6,12 @@
 #'
 #' @inheritParams input_checkbox_group
 #'
-#' @param layout <[responsive]> A character vector. The layout of the list
-#'   group, `"column"` or `"row"`.
+#' @param appearance A character string. The appearance of the input's list
+#'   items.
 #'
-#' @param flush One of `TRUE` or `FALSE` specifying if the list group is
-#'   rendered without an outside border, defaults to `FALSE`. Removing the list
-#'   group border is useful when rendering a list group inside a custom parent
-#'   container, e.g. inside a [card()].
+#'   Flush list items have their outer borders and rounded corners removed.
+#'
+#' @param layout <[responsive]> A character vector. The layout of the choices.
 #'
 #' @family inputs
 #' @export
@@ -21,40 +20,52 @@ input_list_group <- function(
   choices,
   ...,
   values = choices,
-  selected = NULL,
-  layout = "vertical",
-  flush = FALSE
+  select = NULL,
+  disable = NULL,
+  appearance = c("default", "flush"),
+  layout = c("column", "row")
 ) {
-  assert_id()
-  assert_choices()
-  assert_possible(layout, c("vertical", "horizontal"))
-  assert_possible(flush, c(TRUE, FALSE))
+  check_string(id, allow_empty = FALSE)
 
-  with_deps({
-    layout <- resp_construct(layout, c("vertical", "horizontal"))
-    classes <- resp_classes(layout, "list-group")
+  check_character(values)
+  check_character(select, allow_null = TRUE)
+  check_character(disable, allow_null = TRUE)
 
-    # drop vertical classes as they do not actually exist
-    classes <- classes[!grepl("vertical", classes, fixed = TRUE)]
+  appearance <- arg_match(appearance)
+  layout <- arg_match(layout)
 
-    items <- map_listitems(choices, values, selected)
+  args <- list(...)
+  attrs <- keep_named(args)
 
-    args <- style_dots_eval(..., .style = style_pronoun("yonder_list_group"))
-
-    tag <- div(
-      class = str_collate(
-        "yonder-list-group",
-        "list-group",
-        classes,
-        if (flush) "list-group-flush"
-      ),
-      id = id,
-      items,
-      !!!args
+  options <-
+    build_input_options(
+      list_group_option,
+      choices,
+      values,
+      select,
+      disable
     )
 
-    s3_class_add(tag, c("yonder_list_group", "yonder_input"))
-  })
+  input <-
+    div(
+      class = c(
+        "bsides-listgroup",
+        "list-group",
+        list_group_class_flush(appearance),
+        list_group_class_layout(layout)
+      ),
+      id = id,
+      !!!attrs,
+      !!!options
+    )
+
+  input <-
+    dependency_append(input)
+
+  input <-
+    s3_class_add(input, c("bsides_list_group_input", "bsides_input"))
+
+  input
 }
 
 #' @rdname input_list_group
@@ -63,55 +74,101 @@ update_list_group <- function(
   id,
   choices = NULL,
   values = choices,
-  selected = NULL,
-  enable = NULL,
+  select = NULL,
   disable = NULL,
-  session = getDefaultReactiveDomain()
+  session = get_current_session()
 ) {
-  assert_id()
-  assert_choices()
-  assert_session()
+  check_string(id, allow_empty = FALSE)
+  check_character(values)
+  check_character(select, allow_null = TRUE)
+  check_character(disable, allow_null = TRUE)
 
-  items <- map_listitems(choices, values, selected)
-
-  content <- coerce_content(items)
-  selected <- coerce_selected(selected)
-  enable <- coerce_enable(enable)
-  disable <- coerce_disable(disable)
-
-  session$sendInputMessage(
-    id,
-    list(
-      content = content,
-      selected = selected,
-      enable = enable,
+  msg <-
+    drop_nulls(list(
+      select = select,
       disable = disable
-    )
-  )
+    ))
+
+  session$sendInputMessage(id, msg)
 }
 
-map_listitems <- function(choices, values, selected) {
-  if (is.null(choices) && is.null(values)) {
+list_group_class_flush <- function(
+  appearance
+) {
+  if (appearance == "flush") {
+    "list-group-flush"
+  }
+}
+
+list_group_class_layout <- function(
+  layout
+) {
+  if (is_breakpoints(layout)) {
+    layout[layout == "row"] <- "horizontal"
+    layout[layout == "column"] <- NULL
+
+    sprintf("list-group-%s-%s", layout, names(layout))
+  } else if (layout == "row") {
+    "list-group-horizontal"
+  }
+}
+
+list_group_option <- function(
+  choice,
+  value,
+  select,
+  disable
+) {
+  if (is.null(choice)) {
     return(NULL)
   }
 
-  selected <- values %in% selected
+  tags$a(
+    class = c(
+      "list-group-item",
+      "list-group-item-action",
+      list_group_option_class_select(value, select),
+      list_group_option_class_disable(value, disable)
+    ),
+    `data-bsides-value` = value,
+    choice
+  )
+}
 
-  Map(
-    choice = choices,
-    value = values,
-    select = selected,
-    function(choice, value, select) {
-      tags$button(
-        class = str_collate(
-          "list-group-item",
-          "list-group-item-action",
-          # if (fill && length(classes) > 0) "flex-fill",
-          if (select) "active"
-        ),
-        value = value,
-        choice
-      )
-    }
+list_group_option_class_select <- function(
+  value,
+  select
+) {
+  if (isTRUE(value %in% select)) {
+    "active"
+  }
+}
+
+list_group_option_class_disable <- function(
+  value,
+  disable
+) {
+  if (isTRUE(value %in% disable)) {
+    "disabled"
+  }
+}
+
+list_group_input_type <- "bsides.listgroup"
+
+list_group_input_register_handler <- function() {
+  shiny::registerInputHandler(
+    list_group_input_type,
+    function(
+      value,
+      session,
+      name
+    ) {
+      if (length(value) > 1) {
+        return(NULL)
+      }
+
+      unlist(value, recursive = FALSE, use.names = FALSE)
+    },
+    force = TRUE
   )
 }

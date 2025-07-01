@@ -17,10 +17,10 @@ input_checkbox(
 
 update_checkbox(
   id,
-  label = NULL,
-  select = NULL,
+  choice = NULL,
+  value = NULL,
   disable = NULL,
-  session = get_default_session()
+  session = get_current_session()
 )
 
 update_checkbox_group(
@@ -46,7 +46,7 @@ element.}
 
 \item{disable}{A boolean. The checkbox starts disabled if \code{TRUE}.}
 
-\item{label}{A character string. The placement of a label relative to a
+\item{label}{A character string. The placement of a label relative to its
 checkbox.}
 
 \item{session}{A shiny session object.}

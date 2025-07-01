@@ -37,7 +37,7 @@ checkboxes.}
 
 \item{layout}{A character string. The layout of the choices.}
 
-\item{label}{A character string. The placement of a label relative to a
+\item{label}{A character string. The placement of a label relative to its
 checkbox.}
 
 \item{session}{A shiny session object.}

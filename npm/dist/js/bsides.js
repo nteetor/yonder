@@ -109,6 +109,19 @@
     getValue(element) {
       return $(element).children(this.selectors.value).prop('checked');
     }
+    receiveMessage(element, data) {
+      const $element = $(element);
+      if (data.hasOwnProperty('choice')) {
+        $element.find(this.selectors.label).html(data.choice);
+      }
+      if (data.hasOwnProperty('value')) {
+        console.log(data.value);
+        $element.find(this.selectors.value).prop('checked', data.value);
+      }
+      if (data.hasOwnProperty('disable')) {
+        $element.find(this.selectors.value).prop('disabled', data.disable);
+      }
+    }
   }
 
   class CheckboxGroupInputBinding extends InputBinding {
@@ -128,9 +141,7 @@
       return `${this.constructor.prefix}${this.constructor.namespace}`;
     }
     getValue(element) {
-      const values = $(element).find(this.selectors.value).filter(':checked').map((i, el) => el.value).get();
-      console.log(values);
-      return values;
+      return $(element).find(this.selectors.value).filter(':checked').map((i, el) => el.value).get();
     }
     receiveMessage(element, data) {
       const $element = $(element);
@@ -235,6 +246,36 @@
     }
   }
 
+  class ListGroupInputBinding extends InputBinding {
+    static get type() {
+      return 'listgroup';
+    }
+    get events() {
+      return ['click'];
+    }
+    get selectors() {
+      return {
+        choice: '.list-group-item-action',
+        value: '.list-group-item-action'
+      };
+    }
+    get data() {
+      return {
+        value: `${this.constructor.prefix}-value`
+      };
+    }
+    initialize(element) {
+      const $element = $(element);
+      $element.on('click', this.selectors.choice, event => {
+        const $choice = $(event.currentTarget);
+        $choice.toggleClass('active');
+      });
+    }
+    getValue(element) {
+      return $(element).find(`${this.selectors.value}.active`).map((i, el) => el.getAttribute(`data-${this.data.value}`)).get();
+    }
+  }
+
   function registerInputBindings() {
     if (Shiny) {
       const inputBindings = Shiny.inputBindings;
@@ -243,6 +284,7 @@
       inputBindings.register(new CheckboxGroupInputBinding(), CheckboxGroupInputBinding.type);
       inputBindings.register(new FormInputBinding(), FormInputBinding.type);
       inputBindings.register(new LinkInputBinding(), LinkInputBinding.type);
+      inputBindings.register(new ListGroupInputBinding(), ListGroupInputBinding.type);
     }
   }
 

@@ -30,6 +30,28 @@ shiny::shinyApp(
   }
 )
 
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_checkbox(
+      id = "include",
+      choice = "Include",
+      disable = TRUE
+    ),
+    shiny::textInput(
+      inputId = "feature",
+      label = NULL
+    )
+  ),
+  server = function(input, output) {
+    observeEvent(input$feature, {
+      update_checkbox(
+        id = "include",
+        choice = paste("Include", input$feature),
+        value = TRUE
+      )
+    })
+  }
+)
 
 # checkbox group input ----
 
@@ -187,6 +209,23 @@ shiny::shinyApp(
   server = function(input, output) {
     observe({
       print(input$go)
+    })
+  }
+)
+
+# list group input ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_list_group(
+      id = "items",
+      choices = paste("Item", 1:5),
+      layout = "row"
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$items)
     })
   }
 )

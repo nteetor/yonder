@@ -23,16 +23,11 @@ class CheckboxGroupInputBinding extends InputBinding {
   }
 
   getValue(element) {
-    const values =
-      $(element)
+    return $(element)
       .find(this.selectors.value)
       .filter(':checked')
       .map((i, el) => el.value)
       .get()
-
-    console.log(values)
-
-    return values
   }
 
   receiveMessage(element, data) {
