@@ -41,8 +41,6 @@
       this.events.forEach(e => {
         const event = `${e.type ? e.type : e}${this.constructor.namespace}`;
         const selector = e.selector ? e.selector : null;
-        console.log(event);
-        console.log(selector);
         $(element).on(event, selector, e => {
           callback(this.priority);
         });
@@ -104,16 +102,35 @@
     }
     get selectors() {
       return {
-        choice: '.form-check-label',
+        label: '.form-check-label',
         value: '.form-check-input'
+      };
+    }
+    getValue(element) {
+      return $(element).children(this.selectors.value).prop('checked');
+    }
+  }
+
+  class CheckboxGroupInputBinding extends InputBinding {
+    static get type() {
+      return 'checkboxgroup';
+    }
+    get events() {
+      return ['change'];
+    }
+    get selectors() {
+      return {
+        choice: '.form-check-label,.btn',
+        value: '.form-check-input,.btn-check'
       };
     }
     getType(element) {
       return `${this.constructor.prefix}${this.constructor.namespace}`;
     }
     getValue(element) {
-      let pairs = $(element).find(this.selectors.value).map((i, e) => [[e.value, e.checked]]).get();
-      return Object.fromEntries(pairs);
+      const values = $(element).find(this.selectors.value).filter(':checked').map((i, el) => el.value).get();
+      console.log(values);
+      return values;
     }
     receiveMessage(element, data) {
       const $element = $(element);
@@ -124,48 +141,6 @@
       }
       if (data.hasOwnProperty('select')) {
         $values.prop('checked', false);
-        $values.filter((i, e) => data.select.includes(e.value)).prop('checked', true);
-      }
-      if (data.hasOwnProperty('disable')) {
-        $values.prop('disabled', false);
-        $values.filter((i, e) => data.disable.includes(e.value)).prop('disabled', true);
-      }
-      $element.trigger('change');
-    }
-  }
-
-  class CheckboxButtonInputBinding extends InputBinding {
-    static get type() {
-      return 'checkboxbutton';
-    }
-    get events() {
-      return ['change'];
-    }
-    get selectors() {
-      return {
-        choice: '.btn',
-        value: '.btn-check'
-      };
-    }
-    getType(element) {
-      console.log(this.constructor);
-      return `${this.constructor.prefix}${this.constructor.namespace}`;
-    }
-    getValue(element) {
-      let pairs = $(element).find(this.selectors.value).map((i, e) => [[e.value, e.checked]]).get();
-      return Object.fromEntries(pairs);
-    }
-    receiveMessage(element, data) {
-      const $element = $(element);
-      const $values = $element.find(this.selectors.value);
-      if (data.hasOwnProperty('options')) {
-        $element.find(`${this.selectors.choice},${this.selectors.value}`).remove();
-        $element.html(data.options);
-      }
-      if (data.hasOwnProperty('select')) {
-        $values.prop('checked', false);
-        console.log($values);
-        console.log($values.filter((i, e) => data.select.includes(e.value)));
         $values.filter((i, e) => data.select.includes(e.value)).prop('checked', true);
       }
       if (data.hasOwnProperty('disable')) {
@@ -226,7 +201,6 @@
     receiveMessage(element, data) {
       const $element = $(element);
       if (data.hasOwnProperty('submit')) {
-        console.log(data);
         const value = data.submit;
         $element.find(`${this.selectors.submit}[value=${value}]`).trigger('click');
       }
@@ -266,7 +240,7 @@
       const inputBindings = Shiny.inputBindings;
       inputBindings.register(new ButtonInputBinding(), ButtonInputBinding.type);
       inputBindings.register(new CheckboxInputBinding(), CheckboxInputBinding.type);
-      inputBindings.register(new CheckboxButtonInputBinding(), CheckboxButtonInputBinding.type);
+      inputBindings.register(new CheckboxGroupInputBinding(), CheckboxGroupInputBinding.type);
       inputBindings.register(new FormInputBinding(), FormInputBinding.type);
       inputBindings.register(new LinkInputBinding(), LinkInputBinding.type);
     }

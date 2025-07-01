@@ -35,10 +35,10 @@ the number of clicks.
 Other inputs: 
 \code{\link{fileInput}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbox_button}()},
+\code{\link{input_checkbox_group}()},
 \code{\link{input_chip}()},
 \code{\link{input_form}()},
-\code{\link{listGroupInput}()},
+\code{\link{input_list_group}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},

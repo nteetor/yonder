@@ -12,8 +12,8 @@ update_link(id, label = NULL, session = get_current_session())
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
 
-\item{label}{A character string. The placement of the choice label relative
-to the checkboxes, one of \code{"after"} or "\code{before}".}
+\item{label}{A character string. The placement of a label relative to a
+checkbox.}
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}

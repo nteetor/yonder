@@ -26,8 +26,7 @@ register_input_handlers <- function() {
   }
 
   button_input_register_handler()
-  checkbox_input_register_handler()
-  checkbox_button_input_register_handler()
+  checkbox_group_input_register_handler()
   link_input_register_handler()
 
   TRUE

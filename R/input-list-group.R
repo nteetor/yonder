@@ -4,20 +4,10 @@
 #' checkboxes or radios, that is, users may select one or more items from the
 #' list. However, list group items may include highly variable content.
 #'
-#' @inheritParams input_checkbox
+#' @inheritParams input_checkbox_group
 #'
-#' @param choices A vector of character strings or list of tag elements specifying
-#'   the content of the list group's items.
-#'
-#' @param values A character vector specifying the values of the list items,
-#'   defaults to `choices`.
-#'
-#' @param selected One or more of `values` specifying which choices are selected
-#'   by default, defaults to `NULL`, in which case no choice is selected.
-#'
-#' @param layout A [responsive] argument. One of `"vertical"` or `"horizontal"`
-#'   specifying how list items are laid out, defaults to `"vertical"`. Note, if
-#'   `layout` is `"horizontal"` and the `flush` argument is ignored.
+#' @param layout <[responsive]> A character vector. The layout of the list
+#'   group, `"column"` or `"row"`.
 #'
 #' @param flush One of `TRUE` or `FALSE` specifying if the list group is
 #'   rendered without an outside border, defaults to `FALSE`. Removing the list
@@ -26,9 +16,15 @@
 #'
 #' @family inputs
 #' @export
-listGroupInput <- function(..., id, choices = NULL, values = choices,
-                           selected = NULL, layout = "vertical",
-                           flush = FALSE) {
+input_list_group <- function(
+  id,
+  choices,
+  ...,
+  values = choices,
+  selected = NULL,
+  layout = "vertical",
+  flush = FALSE
+) {
   assert_id()
   assert_choices()
   assert_possible(layout, c("vertical", "horizontal"))
@@ -61,11 +57,17 @@ listGroupInput <- function(..., id, choices = NULL, values = choices,
   })
 }
 
-#' @rdname listGroupInput
+#' @rdname input_list_group
 #' @export
-updateListGroupInput <- function(id, choices = NULL, values = choices,
-                                 selected = NULL, enable = NULL, disable = NULL,
-                                 session = getDefaultReactiveDomain()) {
+update_list_group <- function(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  enable = NULL,
+  disable = NULL,
+  session = getDefaultReactiveDomain()
+) {
   assert_id()
   assert_choices()
   assert_session()
@@ -77,12 +79,15 @@ updateListGroupInput <- function(id, choices = NULL, values = choices,
   enable <- coerce_enable(enable)
   disable <- coerce_disable(disable)
 
-  session$sendInputMessage(id, list(
-    content = content,
-    selected = selected,
-    enable = enable,
-    disable = disable
-  ))
+  session$sendInputMessage(
+    id,
+    list(
+      content = content,
+      selected = selected,
+      enable = enable,
+      disable = disable
+    )
+  )
 }
 
 map_listitems <- function(choices, values, selected) {

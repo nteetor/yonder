@@ -51,7 +51,7 @@ Collate:
     'import-standalone-types-check.R'
     'input-button.R'
     'input-checkbox.R'
-    'input-checkbox-button.R'
+    'input-checkbox-group.R'
     'input-chip.R'
     'input-file.R'
     'input-form.R'

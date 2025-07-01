@@ -14,6 +14,100 @@ shiny::shinyApp(
   }
 )
 
+# checkbox  input ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_checkbox(
+      id = "include",
+      choice = "Include"
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$include)
+    })
+  }
+)
+
+
+# checkbox group input ----
+
+shiny::shinyApp(
+  ui = local({
+    choices <- c("Hello", "Howdy", "Hey there")
+
+    bslib::page_fluid(
+      bslib::layout_columns(
+        bslib::card(
+          bslib::card_body(
+            input_checkbox_group(
+              id = "default1",
+              choices = choices
+            )
+          ),
+          bslib::card_body(
+            input_checkbox_group(
+              id = "default2",
+              choices = choices,
+              label = "before"
+            )
+          )
+        ),
+        bslib::card(
+          input_checkbox_group(
+            id = "buttons",
+            choices = choices,
+            appearance = "buttons"
+          )
+        ),
+        bslib::card(
+          bslib::card_body(
+            input_checkbox_group(
+              id = "switches1",
+              choices = choices,
+              appearance = "switches"
+            )
+          ),
+          bslib::card_body(
+            input_checkbox_group(
+              id = "switches2",
+              choices = choices,
+              appearance = "switches",
+              label = "before"
+            )
+          )
+        ),
+        bslib::card(
+          bslib::card_body(
+            input_checkbox_group(
+              id = "list1",
+              choices = choices,
+              appearance = "list"
+            )
+          ),
+          bslib::card_body(
+            input_checkbox_group(
+              id = "list2",
+              choices = choices,
+              appearance = "list",
+              label = "before"
+            )
+          )
+        )
+      )
+    )
+  }),
+  server = function(input, output) {}
+)
+
+shiny::shinyApp(
+  ui = fluidPage(
+    checkboxInput("id", "Label")
+  ),
+  server = function(input, output) {}
+)
+
 # chip input ----
 
 shiny::shinyApp(
@@ -22,72 +116,6 @@ shiny::shinyApp(
       id = "testchip",
       choices = c("Choice 1", "Choice 2 ")
     )
-  ),
-  server = function(input, output) {}
-)
-
-# checkbox button input ----
-
-shiny::shinyApp(
-  ui = bslib::page_fluid(
-    input_checkbox_button(
-      id = "greetings",
-      choices = c("Hello", "Howdy", "Hey there")
-    )
-  ),
-  server = function(input, output) {
-    observe({
-      update_checkbox_button(
-        id = "greetings",
-        select = "Howdy",
-        disable = "Hey there"
-      )
-    })
-  }
-)
-
-
-# checkbox input ----
-
-shiny::shinyApp(
-  ui = bslib::page_fluid(
-    shiny::actionButton(
-      inputId = "swap",
-      label = "Swap"
-    ),
-    input_checkbox(
-      id = "check",
-      choices = c("Left", "Right")
-    )
-  ),
-  server = function(input, output) {
-    LAYOUTS <- c("column", "row")
-
-    observe({
-      i <- (input$swap %% 2) + 1
-
-      s <-
-        if (non_null(isolate(input$check))) {
-          names(which(isolate(input$check)))
-        }
-
-      update_checkbox(
-        id = "check",
-        choices = c("Left", "Right"),
-        select = s,
-        layout = LAYOUTS[i]
-      )
-    })
-
-    observe({
-      print(input$check)
-    })
-  }
-)
-
-shiny::shinyApp(
-  ui = fluidPage(
-    checkboxInput("id", "Label")
   ),
   server = function(input, output) {}
 )

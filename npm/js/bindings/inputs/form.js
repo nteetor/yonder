@@ -64,8 +64,6 @@ class FormInputBinding extends InputBinding {
     const $element = $(element)
 
     if (data.hasOwnProperty('submit')) {
-      console.log(data)
-
       const value = data.submit
 
       $element

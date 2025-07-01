@@ -39,10 +39,7 @@ element.}
 \item{values}{A character vector or list of strings specifying the input's
 values, defaults to \code{choices}.}
 
-\item{select}{A character vector. The values selected by default, one or more
-of \code{values}.}
-
-\item{disable}{A character vector. The values disabled by default.}
+\item{disable}{A boolean. The checkbox starts disabled if \code{TRUE}.}
 
 \item{placeholder}{A character string specifying placeholder text of the
 chip input, defaults to \code{NULL}.}
@@ -85,9 +82,9 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbox_button}()},
+\code{\link{input_checkbox_group}()},
 \code{\link{input_form}()},
-\code{\link{listGroupInput}()},
+\code{\link{input_list_group}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},

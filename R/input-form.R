@@ -3,39 +3,26 @@
 #' @description
 #'
 #' Form inputs are a new reactive input. Form inputs are an alternative to
-#' shiny's submit buttons. A form input is comprised of any number of inputs.
-#' The value of these inputs will _not_ change until a form submit button within
-#' the form input is clicked. A form input's reactive value depends on the
-#' clicked form submit button. This allows you to distinguish between different
-#' form submission types, think "login" versus "register".
+#' [shiny::submitButton]. A form input is comprised of any number of inputs. The
+#' values of these inputs do not reactively update. The inputs will reactively
+#' update when a form submit button is clicked.
 #'
-#' A form submit button, `formSubmit()`, is a special type of button used to
-#' control form input submission. A form input and its child reactive inputs
-#' will _never_ update if a form submit button is not included in `...` passed
-#' to `formInput()`.
+#' A form input's reactive value depends on the clicked form submit button. This
+#' allows server logic to distinguish between different form submission types,
+#' think "login" versus "register".
 #'
-#' @inheritParams input_checkbox
+#' @inheritParams input_checkbox_group
 #'
-#' @param ... Any number of unnamed arguments passed as child elements to the
-#'   parent form element or named arguments passed as HTML attributes to the
-#'   parent element. At least one `formSubmit()` must be included.
+#' @param ... Reactive inputs.
 #'
-#' @param inline One of `TRUE` or `FALSE`, if `TRUE` the form and its child
-#'   elements are rendered in a horizontal row, defaults to `FALSE`. On small
-#'   viewports, think mobile device, `inline` intentionally has no effect and
-#'   the form will span multiple lines.
+#' @param label A character string. The label of the input.
 #'
-#' @param label A character string specifying the label of the form submit
-#'   button.
+#' @param value A character string. The input's value when the submit button is
+#'   clicked.
 #'
-#' @param value A character string specifying the value of the form submit
-#'   button and the value of the form input when the button is clicked,
-#'   defaults to `label`.
+#' @param layout <[responsive]> A character string.
 #'
-#' @param submit One of `TRUE` or `FALSE` or a character string specifying
-#'   whether to trigger a form submission, defaults to `FALSE`. If a character
-#'   string, the form is submitted and the reactive value passed is the character
-#'   string specified.
+#' @param gap A number. The space between inputs, `0` through `5`.
 #'
 #' @family inputs
 #' @export
@@ -43,8 +30,7 @@ input_form <- function(
   id,
   ...,
   label = NULL,
-  disable = FALSE,
-  inline = FALSE
+  layout = NULL
 ) {
   check_string(id, allow_empty = FALSE)
   check_string(label, allow_null = TRUE)
@@ -83,15 +69,39 @@ input_form <- function(
 #' @export
 form_submit_button <- function(
   label,
-  value = label,
-  ...
+  ...,
+  value = label
 ) {
-  tags$button(
-    class = "bsides-btn-submit btn btn-primary",
-    value = value,
-    label,
-    ...
-  )
+  button <-
+    tags$button(
+      class = "bsides-btn-submit btn btn-primary",
+      value = value,
+      label,
+      ...
+    )
+
+  button <-
+    s3_class_add(button, "bsides_form_submit_button")
+
+  button
+}
+
+#' @rdname input_form
+#' @export
+update_form <- function(
+  id,
+  label = NULL,
+  session = get_current_session()
+) {
+  check_string(id, allow_empty = FALSE)
+  check_string(label, allow_null = TRUE)
+
+  msg <-
+    list(
+      label = label
+    )
+
+  session$sendInputMessage(id, msg)
 }
 
 #' @rdname input_form

@@ -75,7 +75,7 @@ defaults to \code{NULL}.}
 \item{step}{A number specifying the increment step of the number input,
 defaults to 1.}
 
-\item{disable}{A character vector. The values disabled by default.}
+\item{disable}{A boolean. The checkbox starts disabled if \code{TRUE}.}
 
 \item{session}{A shiny session object.}
 
@@ -119,10 +119,10 @@ Other inputs:
 \code{\link{fileInput}()},
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
-\code{\link{input_checkbox_button}()},
+\code{\link{input_checkbox_group}()},
 \code{\link{input_chip}()},
 \code{\link{input_form}()},
-\code{\link{listGroupInput}()},
+\code{\link{input_list_group}()},
 \code{\link{menuInput}()},
 \code{\link{radioInput}()},
 \code{\link{radiobarInput}()},

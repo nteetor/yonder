@@ -2,9 +2,9 @@ import $ from 'jquery'
 
 import InputBinding from './input.js'
 
-class CheckboxButtonInputBinding extends InputBinding {
+class CheckboxGroupInputBinding extends InputBinding {
   static get type() {
-    return 'checkboxbutton'
+    return 'checkboxgroup'
   }
 
   get events() {
@@ -13,24 +13,26 @@ class CheckboxButtonInputBinding extends InputBinding {
 
   get selectors() {
     return {
-      choice: '.btn',
-      value: '.btn-check'
+      choice: '.form-check-label,.btn',
+      value: '.form-check-input,.btn-check'
     }
   }
 
   getType(element) {
-    console.log(this.constructor)
     return `${this.constructor.prefix}${this.constructor.namespace}`
   }
 
   getValue(element) {
-    let pairs =
+    const values =
       $(element)
       .find(this.selectors.value)
-      .map((i, e) => [[e.value, e.checked]])
+      .filter(':checked')
+      .map((i, el) => el.value)
       .get()
 
-    return Object.fromEntries(pairs)
+    console.log(values)
+
+    return values
   }
 
   receiveMessage(element, data) {
@@ -38,18 +40,12 @@ class CheckboxButtonInputBinding extends InputBinding {
     const $values = $element.find(this.selectors.value)
 
     if (data.hasOwnProperty('options')) {
-      $element
-        .find(`${this.selectors.choice},${this.selectors.value}`)
-        .remove()
-
+      $element.find('.form-check').remove()
       $element.html(data.options)
     }
 
     if (data.hasOwnProperty('select')) {
       $values.prop('checked', false)
-
-      console.log($values)
-      console.log($values.filter((i, e) => data.select.includes(e.value)))
 
       $values
         .filter((i, e) => data.select.includes(e.value))
@@ -68,4 +64,4 @@ class CheckboxButtonInputBinding extends InputBinding {
   }
 }
 
-export default CheckboxButtonInputBinding
+export default CheckboxGroupInputBinding
