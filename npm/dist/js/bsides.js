@@ -41,6 +41,7 @@
       this.events.forEach(e => {
         const event = `${e.type ? e.type : e}${this.constructor.namespace}`;
         const selector = e.selector ? e.selector : null;
+        console.log(`${event}, ${selector}`);
         $(element).on(event, selector, e => {
           callback(this.priority);
         });
@@ -276,6 +277,40 @@
     }
   }
 
+  class MenuInputBinding extends InputBinding {
+    static get type() {
+      return 'menu';
+    }
+    get events() {
+      return [{
+        type: 'click',
+        selector: this.selectors.choice
+      }];
+    }
+    get selectors() {
+      return {
+        choice: '.dropdown-item',
+        value: '.dropdown-item'
+      };
+    }
+    get data() {
+      return {
+        value: `${this.constructor.prefix}-value`
+      };
+    }
+    initialize(element) {
+      const $element = $(element);
+      $element.on('click', this.selectors.value, event => {
+        console.log(event.currentTarget.value);
+        $element.data(this.data.value, event.currentTarget.value);
+        console.log($element.data(this.data.value));
+      });
+    }
+    getValue(element) {
+      return $(element).data(this.data.value);
+    }
+  }
+
   function registerInputBindings() {
     if (Shiny) {
       const inputBindings = Shiny.inputBindings;
@@ -285,6 +320,7 @@
       inputBindings.register(new FormInputBinding(), FormInputBinding.type);
       inputBindings.register(new LinkInputBinding(), LinkInputBinding.type);
       inputBindings.register(new ListGroupInputBinding(), ListGroupInputBinding.type);
+      inputBindings.register(new MenuInputBinding(), MenuInputBinding.type);
     }
   }
 

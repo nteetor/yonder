@@ -22,8 +22,15 @@
 #'
 #' @family inputs
 #' @export
-radioInput <- function(..., id, choices = NULL, values = choices,
-                       selected = values[[1]], inline = FALSE) {
+input_radio_group <- function(
+  id,
+  choices = NULL,
+  ...,
+  values = choices,
+  select = NULL,
+  disable = NULL,
+  appearance = c("default", "buttons", "list")
+) {
   assert_id()
   assert_choices()
   assert_selected(len = 1)
@@ -40,13 +47,20 @@ radioInput <- function(..., id, choices = NULL, values = choices,
   })
 }
 
-#' @rdname radioInput
+#' @rdname input_radio_group
 #' @export
-updateRadioInput <- function(id, choices = NULL, values = choices,
-                             selected = NULL, inline = FALSE,
-                             enable = NULL, disable = NULL,
-                             valid = NULL, invalid = NULL,
-                             session = getDefaultReactiveDomain()) {
+update_radio_group <- function(
+  id,
+  choices = NULL,
+  values = choices,
+  selected = NULL,
+  inline = FALSE,
+  enable = NULL,
+  disable = NULL,
+  valid = NULL,
+  invalid = NULL,
+  session = getDefaultReactiveDomain()
+) {
   assert_id()
   assert_choices()
   assert_selected(len = 1)
@@ -61,14 +75,17 @@ updateRadioInput <- function(id, choices = NULL, values = choices,
   valid <- coerce_valid(valid)
   invalid <- coerce_invalid(invalid)
 
-  session$sendInputMessage(id, list(
-    content = content,
-    selected = selected,
-    enable = enable,
-    disable = disable,
-    valid = valid,
-    invalid = invalid
-  ))
+  session$sendInputMessage(
+    id,
+    list(
+      content = content,
+      selected = selected,
+      enable = enable,
+      disable = disable,
+      valid = valid,
+      invalid = invalid
+    )
+  )
 }
 
 map_radios <- function(choices, values, selected, parent_id, inline) {

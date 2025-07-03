@@ -142,6 +142,23 @@ shiny::shinyApp(
   server = function(input, output) {}
 )
 
+# dropdown input ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_menu(
+      id = "choices",
+      label = "Choices",
+      choices = paste("Choice", 1:5)
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$choices)
+    })
+  }
+)
+
 # form input ----
 
 shiny::shinyApp(

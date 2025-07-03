@@ -58,7 +58,7 @@ Collate:
     'input-link.R'
     'input-list-group.R'
     'input-menu.R'
-    'input-radio.R'
+    'input-radio-group.R'
     'input-radiobar.R'
     'input-range.R'
     'input-select.R'

@@ -273,7 +273,7 @@ checkbox_group_option_button <- function(
       `data-shiny-no-bind-input` = NA
     ),
     tags$label(
-      class = "btn btn-primary",
+      class = "btn btn-outline-primary",
       `for` = id,
       choice
     )
