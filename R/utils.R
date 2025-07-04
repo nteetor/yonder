@@ -33,8 +33,6 @@ build_input_options <- function(
   f,
   choices,
   values,
-  select,
-  disable,
   ...
 ) {
   stopifnot(
@@ -45,7 +43,7 @@ build_input_options <- function(
     !!!.mapply(
       f,
       list(choices, values),
-      list(select, disable, ...)
+      list(...)
     )
   )
 }

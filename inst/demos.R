@@ -246,3 +246,24 @@ shiny::shinyApp(
     })
   }
 )
+
+# menu input ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_menu(
+      id = "print",
+      label = "Print",
+      choices = c(
+        "Print all",
+        "Print header",
+        "Print first page"
+      )
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$print)
+    })
+  }
+)

@@ -11,9 +11,10 @@ input_menu(
   choices,
   ...,
   values = choices,
-  select = NULL,
   disable = NULL,
-  menu_options = NULL
+  direction = c("down", "up", "left", "right"),
+  align = c("left", "right"),
+  close = c("auto", "inside", "outside", "manual")
 )
 
 update_menu_input(
@@ -21,10 +22,9 @@ update_menu_input(
   label = NULL,
   choices = NULL,
   values = choices,
-  selected = NULL,
-  enable = NULL,
+  select = NULL,
   disable = NULL,
-  session = getDefaultReactiveDomain()
+  session = get_current_session()
 )
 }
 \arguments{
@@ -33,27 +33,26 @@ update_menu_input(
 \item{label}{A character string or tag element specifying the label of the
 menu's toggle button.}
 
-\item{choices}{A character vector specifying the choice text of the menu's
-items.}
+\item{choices}{A character vector or list. The labels for the input choices.}
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
 
-\item{values}{A character vector specifying the values of the menu's items,
-defaults to \code{choices}.}
+\item{values}{A character vector. The values for the input, defaults to
+\code{choices}.}
+
+\item{disable}{A character vector. The values disabled by default.}
+
+\item{direction}{A character string.}
+
+\item{align}{<\link{responsive}> A character vector.}
+
+\item{close}{A character string.}
 
 \item{select}{A character vector. The values selected by default, one or more
 of \code{values}.}
 
-\item{disable}{A character vector. The values disabled by default.}
-
 \item{session}{A shiny session object.}
-
-\item{direction}{One of \code{"up"}, \code{"right"}, \code{"down"}, or \code{"left"} specifying
-which direction the menu opens, defaults to \code{"down"}.}
-
-\item{align}{One or \code{"right"} or \code{"left"} specifying which side of the
-toggle button the menu aligns to, defaults to \code{"left"}.`}
 }
 \description{
 A dropdown menu.
