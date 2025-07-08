@@ -24,19 +24,22 @@ class CheckboxInputBinding extends InputBinding {
 
   receiveMessage(element, data) {
     const $element = $(element)
+    const $label = $element.find(this.selectors.label)
+    const $value = $element.find(this.selectors.value)
 
     if (data.hasOwnProperty('choice')) {
-      $element.find(this.selectors.label).html(data.choice)
+      $label.html(data.choice)
     }
 
     if (data.hasOwnProperty('value')) {
-      console.log(data.value)
-      $element.find(this.selectors.value).prop('checked', data.value)
+      $value.prop('checked', data.value)
     }
 
     if (data.hasOwnProperty('disable')) {
-      $element.find(this.selectors.value).prop('disabled', data.disable)
+      $value.prop('disabled', data.disable)
     }
+
+    $element.trigger('change')
   }
 }
 

@@ -3,28 +3,26 @@
 \name{input_button}
 \alias{input_button}
 \alias{update_button}
-\title{Button and link inputs}
+\title{Button inputs}
 \usage{
-input_button(id, label, ...)
+input_button(id, text, ...)
 
-update_button(
-  id,
-  label = NULL,
-  value = NULL,
-  disable = NULL,
-  session = get_current_session()
-)
+update_button(id, text = NULL, disable = NULL, session = get_current_session())
 }
 \arguments{
-\item{id}{A character string. specifying the id of the reactive input.}
+\item{id}{A character string. The id of the reactive input.}
 
-\item{label}{A character string specifying the label text on the button or
-link input.}
+\item{text}{A character string. The text content of the button.}
 
-\item{...}{Additional named arguments passed as HTML attributes to the parent
+\item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
 
-\item{icon}{An icon, see \link[bsicons:bs_icon]{bsicons::bs_icon}.}
+\item{disable}{A boolean. The checkbox starts disabled if \code{TRUE}.}
+
+\item{session}{A shiny session object.}
+}
+\value{
+A \link[htmltools:builder]{htmltools::tag} object.
 }
 \description{
 Button inputs are useful as triggers for reactive or observer expressions.
@@ -41,8 +39,7 @@ Other inputs:
 \code{\link{input_list_group}()},
 \code{\link{input_menu}()},
 \code{\link{input_radio_group}()},
-\code{\link{radiobarInput}()},
-\code{\link{rangeInput}()},
+\code{\link{input_range}()},
 \code{\link{selectInput}()},
 \code{\link{textInput}()}
 }

@@ -115,8 +115,7 @@ Other inputs:
 \code{\link{input_list_group}()},
 \code{\link{input_menu}()},
 \code{\link{input_radio_group}()},
-\code{\link{radiobarInput}()},
-\code{\link{rangeInput}()},
+\code{\link{input_range}()},
 \code{\link{textInput}()}
 }
 \concept{inputs}

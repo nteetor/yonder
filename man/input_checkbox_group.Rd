@@ -32,8 +32,7 @@ of \code{values}.}
 
 \item{disable}{A character vector. The values disabled by default.}
 
-\item{appearance}{A character string. The appearance of the input's
-checkboxes.}
+\item{appearance}{A character string. The appearance of the input's choices.}
 
 \item{layout}{A character string. The layout of the choices.}
 
@@ -65,8 +64,7 @@ Other inputs:
 \code{\link{input_list_group}()},
 \code{\link{input_menu}()},
 \code{\link{input_radio_group}()},
-\code{\link{radiobarInput}()},
-\code{\link{rangeInput}()},
+\code{\link{input_range}()},
 \code{\link{selectInput}()},
 \code{\link{textInput}()}
 }

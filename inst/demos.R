@@ -78,9 +78,15 @@ shiny::shinyApp(
         ),
         bslib::card(
           input_checkbox_group(
-            id = "buttons",
+            id = "buttons1",
             choices = choices,
             appearance = "buttons"
+          ),
+          input_checkbox_group(
+            id = "button2",
+            choices = choices,
+            appearance = "buttons",
+            layout = "row"
           )
         ),
         bslib::card(

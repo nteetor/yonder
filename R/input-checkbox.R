@@ -25,7 +25,7 @@
 #'
 #' A named logical vector.
 #'
-#' @return A shiny tag object.
+#' @returns A [htmltools::tag] object.
 #'
 #' @family inputs
 #' @export

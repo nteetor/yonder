@@ -52,7 +52,7 @@ checkbox.}
 \item{session}{A shiny session object.}
 }
 \value{
-A shiny tag object.
+A \link[htmltools:builder]{htmltools::tag} object.
 }
 \description{
 A reactive checkbox input. Users may select one or more choices. When a
@@ -74,8 +74,7 @@ Other inputs:
 \code{\link{input_list_group}()},
 \code{\link{input_menu}()},
 \code{\link{input_radio_group}()},
-\code{\link{radiobarInput}()},
-\code{\link{rangeInput}()},
+\code{\link{input_range}()},
 \code{\link{selectInput}()},
 \code{\link{textInput}()}
 }

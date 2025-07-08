@@ -7,49 +7,47 @@
 \usage{
 input_radio_group(
   id,
-  choices = NULL,
+  choices,
   ...,
   values = choices,
   select = NULL,
   disable = NULL,
-  appearance = c("default", "buttons", "list")
+  appearance = c("default", "buttons", "switches", "list"),
+  layout = c("column", "row"),
+  label = c("after", "before")
 )
 
 update_radio_group(
   id,
   choices = NULL,
   values = choices,
-  selected = NULL,
-  inline = FALSE,
-  enable = NULL,
+  select = NULL,
   disable = NULL,
-  valid = NULL,
-  invalid = NULL,
-  session = getDefaultReactiveDomain()
+  session = get_current_session()
 )
 }
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
 
-\item{choices}{A character vector or list of tag elements specifying the
-input's choices.}
+\item{choices}{A character vector or list. The labels for the input choices.}
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
 
-\item{values}{A character vector, list of character strings, vector of values
-to coerce to character strings, or list of values to coerce to character
-strings specifying the values of the radio input's choices, defaults to
+\item{values}{A character vector. The values for the input, defaults to
 \code{choices}.}
 
-\item{disable}{A boolean. The checkbox starts disabled if \code{TRUE}.}
+\item{select}{A character vector. The values selected by default, one or more
+of \code{values}.}
 
-\item{selected}{One of \code{values} indicating the default selected value of the
-radio input, defaults to \code{NULL}, in which case the first choice is
-selected by default.}
+\item{disable}{A character vector. The values disabled by default.}
 
-\item{inline}{If \code{TRUE}, the radio input renders inline, defaults to \code{FALSE},
-in which case the radio controls render on separate lines.}
+\item{appearance}{A character string. The appearance of the input's choices.}
+
+\item{layout}{A character string. The layout of the choices.}
+
+\item{label}{A character string. The placement of a label relative to its
+checkbox.}
 
 \item{session}{A shiny session object.}
 }
@@ -67,8 +65,7 @@ Other inputs:
 \code{\link{input_form}()},
 \code{\link{input_list_group}()},
 \code{\link{input_menu}()},
-\code{\link{radiobarInput}()},
-\code{\link{rangeInput}()},
+\code{\link{input_range}()},
 \code{\link{selectInput}()},
 \code{\link{textInput}()}
 }

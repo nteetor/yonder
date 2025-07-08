@@ -18,8 +18,7 @@
 #'
 #' @param disable A character vector. The values disabled by default.
 #'
-#' @param appearance A character string. The appearance of the input's
-#'   checkboxes.
+#' @param appearance A character string. The appearance of the input's choices.
 #'
 #' @param layout A character string. The layout of the choices.
 #'
@@ -78,6 +77,7 @@ input_checkbox_group <- function(
     checkbox_group_container(
       id,
       appearance,
+      layout,
       attrs
     )
 
@@ -142,6 +142,7 @@ checkbox_group_class <- "bsides-checkboxgroup"
 checkbox_group_container <- function(
   id,
   appearance,
+  layout,
   attrs
 ) {
   switch(
@@ -154,7 +155,7 @@ checkbox_group_container <- function(
     buttons = tags$div(
       class = c(
         checkbox_group_class,
-        "btn-group"
+        if (layout == "row") "btn-group" else "btn-group-vertical"
       ),
       id = id,
       role = "group",
