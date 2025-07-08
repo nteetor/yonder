@@ -267,3 +267,78 @@ shiny::shinyApp(
     })
   }
 )
+
+# radio group input ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    bslib::layout_columns(
+      bslib::card(
+        input_radio_group(
+          id = "default1",
+          choices = c("Veggie", "Meat", "Other")
+        ),
+        input_radio_group(
+          id = "default2",
+          choices = c("Veggie", "Meat", "Other"),
+          layout = "row"
+        ),
+        input_radio_group(
+          id = "default3",
+          choices = c("Veggie", "Meat", "Other"),
+          label = "before"
+        )
+      ),
+      bslib::card(
+        input_radio_group(
+          id = "buttons1",
+          choices = c("Veggie", "Meat", "Other"),
+          appearance = "buttons"
+        ),
+        input_radio_group(
+          id = "buttons2",
+          choices = c("Veggie", "Meat", "Other"),
+          appearance = "buttons",
+          layout = "row"
+        )
+      ),
+      bslib::card(
+        input_radio_group(
+          id = "switches1",
+          choices = c("Veggie", "Meat", "Other"),
+          appearance = "switches"
+        ),
+        input_radio_group(
+          id = "switches2",
+          choices = c("Veggie", "Meat", "Other"),
+          appearance = "switches",
+          layout = "row"
+        ),
+        input_radio_group(
+          id = "switches3",
+          choices = c("Veggie", "Meat", "Other"),
+          appearance = "switches",
+          label = "before"
+        )
+      ),
+      bslib::card(
+        input_radio_group(
+          id = "list1",
+          choices = c("Veggie", "Meat", "Other"),
+          appearance = "list"
+        ),
+        input_radio_group(
+          id = "list2",
+          choices = c("Veggie", "Meat", "Other"),
+          appearance = "list",
+          label = "before"
+        )
+      )
+    )
+  ),
+  server = function(input, output, session) {
+    observe({
+      print(input$radio1)
+    })
+  }
+)
