@@ -1,105 +1,83 @@
 #' Range input
 #'
-#' `rangeInput()` creates a simple numeric range input.
+#' A simple numeric range input.
 #'
 #' @inheritParams input_checkbox
 #'
-#' @param min A number specifying the minimum value of the input, defaults to
-#'   `0`.
+#' @param min A number. The input's minimum value, defaults to `0`.
 #'
-#' @param max A number specifying the maximum value of the input, defaults to
-#'   `100`.
+#' @param max A number. The input's maximum value, defaults to `100`.
 #'
-#' @param default A number between `min` and `max` specifying the default value
-#'   of the input, defaults to `min`.
+#' @param value A number. The value of the input, between `min` and
+#'   `max`.
 #'
-#' @param step A number specifying the interval step of the input, defaults to
-#'   `1`.
-#'
-#' @param value A number specifying a new value for the input, defaults to
-#'   `NULL`.
+#' @param step A number. The input's step interval.
 #'
 #' @details
 #'
 #' The sophistication of this input will improve as browsers adopt the latest
 #' HTML standards.
 #'
+#' @inherit input_checkbox return
+#'
 #' @family inputs
+#'
 #' @export
-rangeInput <- function(id, min = 0, max = 100, default = min, step = 1, ...) {
-  assert_id()
+input_range <- function(
+  id,
+  ...,
+  min = 0,
+  max = 100,
+  value = min,
+  step = 1
+) {
+  check_string(id, allow_empty = FALSE)
+  check_number_decimal(min)
+  check_number_decimal(max)
+  check_number_decimal(value, min = min, max = max)
+  check_number_decimal(step)
 
-  if (!is.numeric(min)) {
-    stop(
-      "invalid argument in `rangeInput()`, `min` must be a number",
-      call. = FALSE
-    )
-  }
-
-  if (!is.numeric(max)) {
-    stop(
-      "invalid argument in `rangeInput()`, `max` must be a number",
-      call. = FALSE
-    )
-  }
-
-  if (!is.numeric(default)) {
-    stop(
-      "invalid argument in `rangeInput()`, `default` must be a number",
-      call. = FALSE
-    )
-  }
-
-  if (default < min || default > max) {
-    stop(
-      "invalid argument in `rangeInput()`, `default` must be between `min` ",
-      "and `max`",
-      call. = FALSE
-    )
-  }
-
-  if (!is.numeric(step)) {
-    stop(
-      "invalid argument in `rangeInput()`, `step` must be a number",
-      call. = FALSE
-    )
-  }
-
-  dep_attach({
+  input <-
     tags$div(
-      class = "yonder-range",
+      class = "bsides-range",
       id = id,
       tags$input(
-        class = "custom-range",
+        class = "form-range",
         type = "range",
         step = step,
         min = min,
         max = max,
-        value = default,
-        autocomplete = "off"
+        value = value
       ),
       ...
     )
-  })
+
+  input <-
+    dependency_append(input)
+
+  input <-
+    s3_class_add(input, c("bsides_range_input", "bsides_input"))
+
+  input
 }
 
-#' @rdname rangeInput
+#' @rdname input_range
 #' @export
-updateRangeInput <- function(id, value = NULL, enable = NULL, disable = NULL,
-                             session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_session()
+update_range <- function(
+  id,
+  value = NULL,
+  disable = NULL,
+  session = get_current_session()
+) {
+  check_string(id, allow_empty = FALSE)
+  check_number_decimal(value, allow_null = TRUE)
+  check_number_decimal(disable, allow_null = TRUE)
 
-  if (!is.null(value)) {
-    value <- as.numeric(value)
-  }
+  msg <-
+    drop_nulls(list(
+      value = value,
+      disable = disable
+    ))
 
-  enable <- coerce_enable(enable)
-  disable <- coerce_disable(disable)
-
-  session$sendInputMessage(id, list(
-    value = value,
-    enable = enable,
-    disable = disable
-  ))
+  session$sendInputMessage(id, msg)
 }

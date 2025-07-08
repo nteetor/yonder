@@ -342,3 +342,18 @@ shiny::shinyApp(
     })
   }
 )
+
+# range input ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_range(
+      id = "volume"
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$volume)
+    })
+  }
+)
