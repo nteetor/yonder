@@ -363,3 +363,36 @@ shiny::shinyApp(
     })
   }
 )
+
+# select input ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_select(
+      id = "choices",
+      choices = paste("Choice", 1:5)
+    ),
+    input_checkbox(
+      id = "disable",
+      choice = "Disable"
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$choices)
+    })
+
+    observeEvent(input$disable, {
+      print("disable")
+
+      update_select(
+        id = "choices",
+        disable = if (isTRUE(input$disable)) {
+          paste("Choice", c(1, 3, 5))
+        } else {
+          FALSE
+        }
+      )
+    })
+  }
+)

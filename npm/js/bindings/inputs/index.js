@@ -7,6 +7,7 @@ import ListGroupInputBinding from './list-group.js'
 import MenuInputBinding from './menu.js'
 import RadioGroupInputBinding from './radio-group.js'
 import RangeInputBinding from './range.js'
+import SelectInputBinding from './select.js'
 
 function registerInputBindings() {
   if (Shiny) {
@@ -21,6 +22,7 @@ function registerInputBindings() {
     inputBindings.register(new MenuInputBinding(), MenuInputBinding.type)
     inputBindings.register(new RadioGroupInputBinding(), RadioGroupInputBinding.type)
     inputBindings.register(new RangeInputBinding(), RangeInputBinding.type)
+    inputBindings.register(new SelectInputBinding(), SelectInputBinding.type)
   }
 }
 

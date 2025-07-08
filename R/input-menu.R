@@ -37,16 +37,16 @@ input_menu <- function(
 
   options <-
     build_input_options(
-      menu_input_option,
+      menu_option,
       choices,
       values,
-      disable = disable
+      disable
     )
 
   input <-
     tags$div(
       class = "bsides-menu",
-      !!!menu_input_container_attrs(direction, align),
+      !!!menu_container_attrs(direction, align),
       id = id,
       !!!attrs,
       tags$button(
@@ -54,7 +54,7 @@ input_menu <- function(
         type = "button",
         `data-bs-toggle` = "dropdown",
         `aria-expanded` = "false",
-        !!!menu_input_toggle_attrs(align),
+        !!!menu_toggle_attrs(align),
         label
       ),
       tags$ul(
@@ -113,7 +113,7 @@ menu_divider <- function() {}
 
 menu_text <- function(text) {}
 
-menu_input_option <- function(
+menu_option <- function(
   choice,
   value,
   disable
@@ -141,7 +141,7 @@ menu_input_option <- function(
   option
 }
 
-menu_input_container_attrs <- function(
+menu_container_attrs <- function(
   direction,
   align
 ) {
@@ -169,7 +169,7 @@ menu_input_container_attrs <- function(
   attrs
 }
 
-menu_input_toggle_attrs <- function(
+menu_toggle_attrs <- function(
   align
 ) {
   attrs <-

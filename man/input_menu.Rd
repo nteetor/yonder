@@ -68,7 +68,7 @@ Other inputs:
 \code{\link{input_list_group}()},
 \code{\link{input_radio_group}()},
 \code{\link{input_range}()},
-\code{\link{selectInput}()},
+\code{\link{input_select}()},
 \code{\link{textInput}()}
 }
 \concept{inputs}

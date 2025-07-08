@@ -78,32 +78,6 @@ defaults to 1.}
 \item{disable}{A boolean. The checkbox starts disabled if \code{TRUE}.}
 
 \item{session}{A shiny session object.}
-
-\item{left, right}{A character vector specifying static addons or
-\code{\link[=buttonInput]{buttonInput()}} or \code{\link[=dropdown]{dropdown()}} elements specifying dynamic addons. Addons
-affect the reactive value of the group input, see the Details section below
-for more information.
-
-\strong{\code{left} is character or \code{right} is character}
-
-If \code{left} or \code{right} are character vectors, then the group input functions
-like a text input. The value will update and trigger a reactive event when
-the text box is modified. The group input's reactive value is the
-concatenation of the static addons specified by \code{left} or \code{right} and the
-value of the text input.
-
-\strong{\code{left} is button or \code{right} is button}
-
-The button does not change the value of the group input. However, the input
-no longer triggers event when the text box is updated. Instead the value is
-updated when a button is clicked. Static addons are still applied to the
-group input value.
-
-\strong{\code{left} is a dropdown or \code{right} is a dropdown}
-
-The value of the group input does chance depending on the clicked dropdown
-menu item. The value of the input group is the concatenation of the
-dropdown input value, the value of the text input, and any static addons.}
 }
 \description{
 A text input. A group text input is an alternative text input. The group text
@@ -126,6 +100,6 @@ Other inputs:
 \code{\link{input_menu}()},
 \code{\link{input_radio_group}()},
 \code{\link{input_range}()},
-\code{\link{selectInput}()}
+\code{\link{input_select}()}
 }
 \concept{inputs}

@@ -44,8 +44,6 @@ param_type <- function() {
 #'
 #' @inheritParams input_checkbox
 #'
-#' @inheritParams selectInput
-#'
 #' @param value A character string or a value coerced to a character string
 #'   specifying the default value of the textual input.
 #'
@@ -65,8 +63,13 @@ param_type <- function() {
 #'
 #' @family inputs
 #' @export
-textInput <- function(..., id, value = NULL, placeholder = NULL,
-                      type = "text") {
+textInput <- function(
+  ...,
+  id,
+  value = NULL,
+  placeholder = NULL,
+  type = "text"
+) {
   assert_id()
   assert_possible(type, possible_types)
 
@@ -90,13 +93,23 @@ textInput <- function(..., id, value = NULL, placeholder = NULL,
 
 #' @rdname textInput
 #' @export
-numberInput <- function(..., id, value = NULL, placeholder = NULL, min = NULL,
-                        max = NULL, step = 1) {
+numberInput <- function(
+  ...,
+  id,
+  value = NULL,
+  placeholder = NULL,
+  min = NULL,
+  max = NULL,
+  step = 1
+) {
   assert_id()
 
   dep_attach({
     component <- textInput(
-      id = id, value = value, placeholder = placeholder, ...,
+      id = id,
+      value = value,
+      placeholder = placeholder,
+      ...,
       type = "number"
     )
 
@@ -112,9 +125,15 @@ numberInput <- function(..., id, value = NULL, placeholder = NULL, min = NULL,
 
 #' @rdname textInput
 #' @export
-updateTextInput <- function(id, value = NULL, enable = NULL, disable = NULL,
-                            valid = NULL, invalid = NULL,
-                            session = getDefaultReactiveDomain()) {
+updateTextInput <- function(
+  id,
+  value = NULL,
+  enable = NULL,
+  disable = NULL,
+  valid = NULL,
+  invalid = NULL,
+  session = getDefaultReactiveDomain()
+) {
   assert_id()
   assert_session()
 
@@ -123,19 +142,29 @@ updateTextInput <- function(id, value = NULL, enable = NULL, disable = NULL,
   valid <- coerce_valid(valid)
   invalid <- coerce_invalid(invalid)
 
-  session$sendInputMessage(id, list(
-    value = value,
-    enable = enable,
-    disable = disable,
-    valid = valid,
-    invalid = invalid
-  ))
+  session$sendInputMessage(
+    id,
+    list(
+      value = value,
+      enable = enable,
+      disable = disable,
+      valid = valid,
+      invalid = invalid
+    )
+  )
 }
 
 #' @rdname textInput
 #' @export
-groupTextInput <- function(..., id, value = NULL, placeholder = NULL,
-                           type = "text", left = NULL, right = NULL) {
+groupTextInput <- function(
+  ...,
+  id,
+  value = NULL,
+  placeholder = NULL,
+  type = "text",
+  left = NULL,
+  right = NULL
+) {
   assert_id()
   assert_possible(type, possible_types)
   assert_left()
@@ -172,10 +201,15 @@ groupTextInput <- function(..., id, value = NULL, placeholder = NULL,
 
 #' @rdname textInput
 #' @export
-updateGroupTextInput <- function(id, value = NULL,
-                                 enable = NULL, disable = NULL, valid = NULL,
-                                 invalid = NULL,
-                                 session = getDefaultReactiveDomain()) {
+updateGroupTextInput <- function(
+  id,
+  value = NULL,
+  enable = NULL,
+  disable = NULL,
+  valid = NULL,
+  invalid = NULL,
+  session = getDefaultReactiveDomain()
+) {
   assert_id()
   assert_session()
 
@@ -184,11 +218,14 @@ updateGroupTextInput <- function(id, value = NULL,
   valid <- coerce_valid(valid)
   invalid <- coerce_invalid(invalid)
 
-  session$sendInputMessage(id, list(
-    value = value,
-    enable = enable,
-    disable = disable,
-    valid = valid,
-    invalid = invalid
-  ))
+  session$sendInputMessage(
+    id,
+    list(
+      value = value,
+      enable = enable,
+      disable = disable,
+      valid = valid,
+      invalid = invalid
+    )
+  )
 }

@@ -112,16 +112,18 @@
     }
     receiveMessage(element, data) {
       const $element = $(element);
+      const $label = $element.find(this.selectors.label);
+      const $value = $element.find(this.selectors.value);
       if (data.hasOwnProperty('choice')) {
-        $element.find(this.selectors.label).html(data.choice);
+        $label.html(data.choice);
       }
       if (data.hasOwnProperty('value')) {
-        console.log(data.value);
-        $element.find(this.selectors.value).prop('checked', data.value);
+        $value.prop('checked', data.value);
       }
       if (data.hasOwnProperty('disable')) {
-        $element.find(this.selectors.value).prop('disabled', data.disable);
+        $value.prop('disabled', data.disable);
       }
+      $element.trigger('change');
     }
   }
 
@@ -355,8 +357,6 @@
     }
     get events() {
       return ['change'];
-      //      { type: 'change', selector: this.selectors.value }
-      //    ]
     }
     get selectors() {
       return {
@@ -366,7 +366,52 @@
     getValue(element) {
       return +$(element).find(this.selectors.value).val();
     }
-    receiveMessage(element, data) {}
+    receiveMessage(element, data) {
+      const $element = $(element);
+      const $value = $element.find(this.selectors.value);
+      if (data.hasOwnProperty('value')) {
+        $value.val(data.value);
+      }
+      if (data.hasOwnProperty('disable')) {
+        $value.prop('disable', data.disable);
+      }
+      $element.trigger('change');
+    }
+  }
+
+  class SelectInputBinding extends InputBinding {
+    static get type() {
+      return 'select';
+    }
+    get events() {
+      return ['change'];
+    }
+    get selectors() {
+      return {
+        value: 'option'
+      };
+    }
+    getValue(element) {
+      return element.value;
+    }
+    receiveMessage(element, data) {
+      const $element = $(element);
+      console.log(data);
+      if (data.hasOwnProperty('options')) {
+        $element.find(this.selectors.value).remove();
+        $element.html(data.options);
+      }
+      if (data.hasOwnProperty('select')) {
+        $element.val(data.select);
+      }
+      if (data.hasOwnProperty('disable')) {
+        console.log('disable');
+        const $values = $element.find('option');
+        $values.prop('disabled', false);
+        $values.filter((i, e) => data.disable.includes(e.value)).prop('disabled', true);
+      }
+      $element.trigger('change');
+    }
   }
 
   function registerInputBindings() {
@@ -381,6 +426,7 @@
       inputBindings.register(new MenuInputBinding(), MenuInputBinding.type);
       inputBindings.register(new RadioGroupInputBinding(), RadioGroupInputBinding.type);
       inputBindings.register(new RangeInputBinding(), RangeInputBinding.type);
+      inputBindings.register(new SelectInputBinding(), SelectInputBinding.type);
     }
   }
 
