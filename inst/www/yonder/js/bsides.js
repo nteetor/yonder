@@ -41,7 +41,7 @@
       this.events.forEach(e => {
         const event = `${e.type ? e.type : e}${this.constructor.namespace}`;
         const selector = e.selector ? e.selector : null;
-        console.log(`${event}, ${selector}`);
+        console.log(`${event}, ${selector}, ${this.priority}`);
         $(element).on(event, selector, e => {
           callback(this.priority);
         });
@@ -414,6 +414,78 @@
     }
   }
 
+  class TextInputBinding extends InputBinding {
+    static get type() {
+      return 'text';
+    }
+    get events() {
+      return ['keyup', 'input', 'change'];
+    }
+    get selectors() {
+      return {
+        value: 'input'
+      };
+    }
+    getValue(element) {
+      return element.value;
+    }
+    getRatePolicy(element) {
+      return {
+        policy: 'debounce',
+        delay: 250
+      };
+    }
+    receiveMessage(element, data) {
+      const $element = $(element);
+      if (data.hasOwnProperty('value')) {
+        $element.val(data.value);
+      }
+      if (data.hasOwnProperty('disable')) {
+        $element.prop('disabled', data.disable);
+      }
+      $element.trigger('change');
+    }
+  }
+
+  class TextGroupInputBinding extends InputBinding {
+    static get type() {
+      return 'textgroup';
+    }
+    get events() {
+      return ['keyup', 'input', 'change'];
+    }
+    get selectors() {
+      return {
+        value: 'input',
+        text: '.input-group-text'
+      };
+    }
+    getValue(element) {
+      const $element = $(element);
+      if (!$element.find(this.selectors.value).val()) {
+        return null;
+      }
+      return $element.find(`${this.selectors.text},${this.selectors.value}`).map((i, e) => e.innerText || e.value || '').get().join('');
+    }
+    getRatePolicy(element) {
+      return {
+        policy: 'debounce',
+        delay: 250
+      };
+    }
+    receiveMessage(element, data) {
+      const $element = $(element);
+      const $value = $(element).find(this.selectors.value);
+      if (data.hasOwnProperty('value')) {
+        $value.val(data.value);
+      }
+      if (data.hasOwnProperty('disable')) {
+        $value.prop('disabled', data.disable);
+      }
+      $element.trigger('change');
+    }
+  }
+
   function registerInputBindings() {
     if (Shiny) {
       const inputBindings = Shiny.inputBindings;
@@ -427,6 +499,8 @@
       inputBindings.register(new RadioGroupInputBinding(), RadioGroupInputBinding.type);
       inputBindings.register(new RangeInputBinding(), RangeInputBinding.type);
       inputBindings.register(new SelectInputBinding(), SelectInputBinding.type);
+      inputBindings.register(new TextInputBinding(), TextInputBinding.type);
+      inputBindings.register(new TextGroupInputBinding(), TextGroupInputBinding.type);
     }
   }
 

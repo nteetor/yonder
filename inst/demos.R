@@ -396,3 +396,77 @@ shiny::shinyApp(
     })
   }
 )
+
+# text input ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_text(
+      id = "name",
+      placeholder = "Name"
+    ),
+    shiny::textInput(
+      inputId = "name2",
+      label = NULL,
+      placeholder = "Shiny name"
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$name)
+    })
+
+    observe({
+      print(input$name2)
+    })
+  }
+)
+
+# text group input ----
+
+shiny::shinyApp(
+  ui = bslib::page_fluid(
+    input_text_group(
+      id = "cents1"
+    ),
+    input_text_group(
+      id = "cents2",
+      left = "$"
+    ),
+    input_text_group(
+      id = "cents3",
+      left = c("$", "0.")
+    ),
+    input_text_group(
+      id = "cents4",
+      left = c("user", "@"),
+      right = ".com"
+    )
+  ),
+  server = function(input, output) {
+    observe({
+      print(input$cents1)
+    })
+
+    observe({
+      freezeReactiveValue(input, "cents2")
+      update_text_group(
+        id = "cents2",
+        value = "420",
+        disable = TRUE
+      )
+    })
+
+    observe({
+      print(input$cents2)
+    })
+
+    observe({
+      print(input$cents3)
+    })
+
+    observe({
+      print(input$cents4)
+    })
+  }
+)

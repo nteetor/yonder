@@ -42,7 +42,7 @@ class InputBinding {
       const event = `${e.type ? e.type : e}${this.constructor.namespace}`
       const selector = e.selector ? e.selector : (null)
 
-      console.log(`${event}, ${selector}`)
+      console.log(`${event}, ${selector}, ${this.priority}`)
 
       $(element).on(event, selector, (e) => {
         callback(this.priority)

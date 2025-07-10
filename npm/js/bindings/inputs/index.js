@@ -8,6 +8,8 @@ import MenuInputBinding from './menu.js'
 import RadioGroupInputBinding from './radio-group.js'
 import RangeInputBinding from './range.js'
 import SelectInputBinding from './select.js'
+import TextInputBinding from './text.js'
+import TextGroupInputBinding from './text-group.js'
 
 function registerInputBindings() {
   if (Shiny) {
@@ -23,6 +25,8 @@ function registerInputBindings() {
     inputBindings.register(new RadioGroupInputBinding(), RadioGroupInputBinding.type)
     inputBindings.register(new RangeInputBinding(), RangeInputBinding.type)
     inputBindings.register(new SelectInputBinding(), SelectInputBinding.type)
+    inputBindings.register(new TextInputBinding(), TextInputBinding.type)
+    inputBindings.register(new TextGroupInputBinding(), TextGroupInputBinding.type)
   }
 }
 

@@ -48,8 +48,10 @@ Other inputs:
 \code{\link{input_form}()},
 \code{\link{input_list_group}()},
 \code{\link{input_menu}()},
+\code{\link{input_numeric}()},
 \code{\link{input_radio_group}()},
 \code{\link{input_select}()},
-\code{\link{textInput}()}
+\code{\link{input_text}()},
+\code{\link{input_text_group}()}
 }
 \concept{inputs}
