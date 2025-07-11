@@ -66,6 +66,7 @@ Collate:
     'input-text-group.R'
     'modal.R'
     'on-load.R'
+    'placeholder.R'
     'toast.R'
     'utils.R'
     'utils-dependencies.R'
