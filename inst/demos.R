@@ -4,7 +4,7 @@ shiny::shinyApp(
   ui = bslib::page_fluid(
     input_button(
       id = "count",
-      label = "Count"
+      text = "Count"
     )
   ),
   server = function(input, output) {

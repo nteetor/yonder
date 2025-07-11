@@ -1,43 +1,37 @@
 #' Toasts
 #'
-#' Send notifications to the user. Create notification elements, toasts, with
-#' the `toast()` function. Display toasts with `showToast()` and remove all
-#' active toasts with `closeToast()`.
+#' Toasts relay notification-level information to the user.
 #'
-#' @param ... Any number of character strings or tag elements to include in the
-#'   body of the toast.
+#' @param ... Components to include inside a toast. Named arguments are added as
+#'   HTML attributes to the parent element.
 #'
-#'   Any number of named arguments passed as HTML attributes to the parent
-#'   element.
+#' @param id A character string. An optional reactive id to track the state of
+#'   the toast via `input$<id>`. When visible this value is `"shown"` and when
+#'   the toast is dismissed the value is `"hidden"`.
 #'
-#' @param header A character string or tag element specifying a header for the
-#'   toast, defaults to `NULL`. A close button is always included in the
-#'   header.
+#' @family components
 #'
-#' @param toast A toast element, typically built with `toast()`.
+#' @export
 #'
-#' @param duration A positive integer or `NULL` specifying the duration of the
-#'   toast in seconds by default a toast is removed after 4 seconds. If `NULL`
-#'   the toast is not automatically removed.
+#' @examplesIf rlang::is_interactive()
 #'
-#' @param action A character string specifying a reactive id. If specified, the
-#'   hiding or closing of the toast will set the reactive id `action` to `TRUE`.
+#' library(shiny)
+#' library(bslib)
 #'
-#' @inheritParams collapsePane
-#'
-#' @section Showing notifications:
-#'
-#' ```R
-#' ui <- container(
-#'   buttonInput(
-#'     id = "show",
-#'     label = "Show notification"
-#'   ) %>%
-#'     margin(3)
+#' ui <- page_fluid(
+#'   toast_container(
+#'     toast()
+#'   ),
+#'   card(
+#'     input_button(
+#'       id = "begin",
+#'       label = "Show notification"
+#'     )
+#'   )
 #' )
 #'
 #' server <- function(input, output) {
-#'   observeEvent(input$show, {
+#'   observeEvent(input$begin, {
 #'     showToast(
 #'       toast(
 #'         list(
@@ -54,122 +48,254 @@
 #' }
 #'
 #' shinyApp(ui, server)
-#' ```
 #'
-#' @section Reacting to notifications:
 #'
-#' When a notification is not automatically closed you may want to know
-#' when the notification is manually closed.
-#'
-#' ```R
-#' ui <- container(
-#'   buttonInput(
-#'     id = "show",
-#'     label = "Show notification"
-#'   ) %>%
-#'     margin(3)
-#' )
-#'
-#' server <- function(input, output) {
-#'   observeEvent(input$show, {
-#'     showToast(
-#'       action = "undo",
-#'       duration = NULL,
-#'       toast(
-#'         tags$strong("Close") %>%
-#'           margin(right = "auto"),
-#'         "When closing this notification, see the console"
-#'       ) %>%
-#'         margin(right = 2, top = 2)
-#'     )
-#'   })
-#'
-#'   observeEvent(input$undo, {
-#'     print("The notification was closed")
-#'   })
-#' }
-#'
-#' shinyApp(ui, server)
-#' ```
-#'
-#' @family components
-#' @export
-toast <- function(header, ...) {
-  dep_attach({
-    args <- list(...)
+toast <- function(
+  ...,
+  id = NULL,
+  visibility = c("show", "hide"),
+  wrapper = toast_body
+) {
+  check_string(id, allow_empty = FALSE, allow_null = TRUE)
 
-    header <- tags$div(
-      class = "toast-header",
-      list(
-        header,
-        tags$button(
-          type = "button",
-          class = "ml-auto close",
-          `data-dismiss` = "toast",
-          `aria-label` = "Close",
-          tags$span(
-            `aria-hidden` = "true",
-            HTML("&times;")
-          )
-        )
-      )
-    )
+  visibility <- arg_match(visibility)
 
-    component <- tags$div(
-      class = "toast",
+  args <- rlang::list2(...)
+  attrs <- keep_named(args)
+  children <- keep_unnamed(args)
+
+  items <-
+    as_toast_items(children, wrapper)
+
+  component <-
+    tags$div(
+      class = c(
+        "toast",
+        visibility
+      ),
       role = "alert",
-      `aria-live` = "polite",
+      `aria-live` = "assertive",
       `aria-atomic` = "true",
-      header,
-      tags$div(
-        class = "toast-body",
-        unnamed_values(args)
+      !!!attrs,
+      !!!items
+    )
+
+  component <-
+    dependency_append(component)
+
+  component <-
+    s3_class_add(component, c("bsides_toast"))
+
+  component
+}
+
+#' @rdname toast
+#' @export
+toast_container <- function(
+  ...,
+  position = c("top", "bottom"),
+  padding = 3
+) {
+  if (non_null(position)) {
+    position <- arg_match(position)
+  }
+
+  args <- rlang::list2(...)
+  attrs <- keep_named(args)
+
+  position <-
+    if (non_null(position)) {
+      sprintf("%s-0 end-0", position)
+    }
+
+  padding <-
+    if (non_null(padding)) {
+      sprintf("p-%s", padding)
+    }
+
+  tags$div(
+    class = c(
+      "toast-container",
+      position,
+      padding
+    ),
+    !!!attrs
+  )
+}
+
+as_toast_items <- function(
+  children,
+  wrapper
+) {
+  children <- drop_nulls(children)
+
+  are_items <- vapply(children, is_toast_item, logical(1))
+
+  if (all(are_items)) {
+    return(children)
+  }
+
+  are_items_rle <- rle(are_items)
+  start_indeces <- c(1, head(cumsum(are_items_rle$lengths) + 1, -1))
+
+  children <-
+    Map(
+      start = start_indeces,
+      length = are_items_rle$length,
+      already_item = are_items_rle$value,
+      function(start, length, already_item) {
+        child_subset <- children[start:(start + length - 1)]
+
+        if (already_item) {
+          child_subset
+        } else {
+          list(wrapper(child_subset))
+        }
+      }
+    )
+
+  unlist(children, recursive = FALSE)
+}
+
+is_toast_item <- function(x) {
+  inherits(x, "toast_item")
+}
+
+as_toast_item <- function(x) {
+  class(x) <- c("toast_item", class(x))
+  x
+}
+
+#' Toast components
+#'
+#' Components to include inside a [toast].
+#'
+#' @returns A `shiny.tag` object.
+#'
+#' @seealso [toast()] for creating toasts.
+#'
+#' @export
+toast_body <- function(
+  ...
+) {
+  as_toast_item(
+    tags$div(
+      class = "toast-body",
+      ...
+    )
+  )
+}
+
+#' @rdname toast_body
+#' @export
+toast_header <- function(
+  title,
+  ...,
+  icon = NULL,
+  dismiss = toast_button()
+) {
+  check_string(title, allow_null = TRUE)
+  check_string(icon, allow_null = TRUE)
+
+  title <-
+    if (non_null(title)) {
+      tags$strong(
+        class = c(
+          if (non_null(icon)) "ms-2",
+          "me-auto"
+        ),
+        title
       )
-    )
+    }
 
-    tag_attributes_add(component, named_values(args))
-  })
+  as_toast_item(
+    tags$div(
+      class = "toast-header",
+      icon,
+      title,
+      ...,
+      dismiss
+    )
+  )
 }
 
-#' @rdname toast
+#' @rdname toast_body
 #' @export
-showToast <- function(toast, duration = 4, action = NULL,
-                      session = getDefaultReactiveDomain()) {
-  assert_session()
-  assert_duration()
-
-  if (!is_tag(toast)) {
-    stop(
-      "invalid argument in `showToast()`, `toast` must be a tag element",
-      call. = FALSE
-    )
-  }
-
-  if (is.null(duration)) {
-    toast[["attribs"]][["data-autohide"]] <- "false"
-  } else {
-    toast[["attribs"]][["data-delay"]] <- duration * 1000
-  }
-
-  toast[["attribs"]][["data-action"]] <- action
-
-  content <- coerce_content(toast)
-
-  session$sendCustomMessage("yonder:toast", list(
-    type = "show",
-    data = list(
-      content = content
-    )
-  ))
+toast_button <- function() {
+  tags$button(
+    type = "button",
+    class = "btn-close",
+    `data-bs-dimiss` = "toast",
+    `aria-label` = "Close"
+  )
 }
 
-#' @rdname toast
+#' Toast actions
+#'
+#' Do things with toasts.
+#'
+#' @param id A string. The id of a [toast_container()].
+#'
+#' @param toast A [toast()]. A toast component to add to a toast container.
+#'   Once added the toast may be shown or hidden.
+#'
+#' @param target A string. The id of a toast.
+#'
+#' @param duration A number. The number of seconds to show a toast before
+#'   automatically hiding it. If `NULL`, the toast is shown until manually
+#'   hidden.
+#'
+#' @inheritParams input_checkbox_group
+#'
+#' @describeIn toast_add Add a toast to a toast container.
+#'
 #' @export
-closeToast <- function(session = getDefaultReactiveDomain()) {
-  assert_session()
+toast_add <- function(
+  id,
+  toast,
+  session = get_current_session()
+) {
+  msg <-
+    drop_nulls(list(
+      id = id,
+      toast = I(format(toast))
+    ))
 
-  session$sendCustomMessage("yonder:toast", list(
-    type = "close",
-    data = list()
-  ))
+  session$sendCustomMessage("bsides:toastAdd", msg)
+}
+
+#' @describeIn toast_add Show a toast within a toast container.
+#'
+#' @export
+toast_show <- function(
+  id,
+  target,
+  duration = NULL,
+  session = get_current_session()
+) {
+  msg <-
+    drop_nulls(list(
+      id = id,
+      target = target,
+      duration = duration
+    ))
+
+  session$sendCustomMessage("bsides:toastShow", msg)
+}
+
+#' @describeIn toast_add Hide a toast within a toast container.
+#'
+#' @export
+toast_hide <- function(
+  id,
+  target = NULL,
+  session = get_current_session()
+) {
+  msg <-
+    drop_nulls(list(
+      id = id,
+      target = target
+    ))
+
+  session$sendCustomMessage("bsides:toastHide", msg)
 }

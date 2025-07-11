@@ -1,10 +1,6 @@
 # necessary for `createRenderFunction()`
 globalVariables("func")
 
-reduce <- function(x, f, init) {
-  Reduce(f, x, init)
-}
-
 non_null <- function(x) {
   !is.null(x)
 }
@@ -89,15 +85,15 @@ generate_id <- function(prefix) {
 }
 
 keep_named <- named_values <- function(x) {
-  x[names2(x) != ""]
+  x[rlang::names2(x) != ""]
 }
 
 keep_unnamed <- unnamed_values <- function(x) {
-  x[names2(x) == ""]
+  x[rlang::names2(x) == ""]
 }
 
 s3_class_add <- function(x, new) {
-  class(x) <- unique(c(new, class(x)))
+  class(x) <- c(new, class(x))
   x
 }
 

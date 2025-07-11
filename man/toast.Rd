@@ -2,61 +2,44 @@
 % Please edit documentation in R/toast.R
 \name{toast}
 \alias{toast}
-\alias{showToast}
-\alias{closeToast}
+\alias{toast_container}
 \title{Toasts}
 \usage{
-toast(header, ...)
+toast(..., id = NULL, visibility = c("show", "hide"), wrapper = toast_body)
 
-showToast(
-  toast,
-  duration = 4,
-  action = NULL,
-  session = getDefaultReactiveDomain()
-)
-
-closeToast(session = getDefaultReactiveDomain())
+toast_container(..., position = c("top", "bottom"), padding = 3)
 }
 \arguments{
-\item{header}{A character string or tag element specifying a header for the
-toast, defaults to \code{NULL}. A close button is always included in the
-header.}
+\item{...}{Components to include inside a toast. Named arguments are added as
+HTML attributes to the parent element.}
 
-\item{...}{Any number of character strings or tag elements to include in the
-body of the toast.
-
-Any number of named arguments passed as HTML attributes to the parent
-element.}
-
-\item{toast}{A toast element, typically built with \code{toast()}.}
-
-\item{duration}{A positive integer or \code{NULL} specifying the duration of the
-toast in seconds by default a toast is removed after 4 seconds. If \code{NULL}
-the toast is not automatically removed.}
-
-\item{action}{A character string specifying a reactive id. If specified, the
-hiding or closing of the toast will set the reactive id \code{action} to \code{TRUE}.}
-
-\item{session}{A reactive context, defaults to \code{\link[=getDefaultReactiveDomain]{getDefaultReactiveDomain()}}.}
+\item{id}{A character string. An optional reactive id to track the state of
+the toast via \verb{input$<id>}. When visible this value is \code{"shown"} and when
+the toast is dismissed the value is \code{"hidden"}.}
 }
 \description{
-Send notifications to the user. Create notification elements, toasts, with
-the \code{toast()} function. Display toasts with \code{showToast()} and remove all
-active toasts with \code{closeToast()}.
+Toasts relay notification-level information to the user.
 }
-\section{Showing notifications}{
+\examples{
+\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
 
+library(shiny)
+library(bslib)
 
-\if{html}{\out{<div class="sourceCode R">}}\preformatted{ui <- container(
-  buttonInput(
-    id = "show",
-    label = "Show notification"
-  ) \%>\%
-    margin(3)
+ui <- page_fluid(
+  toast_container(
+    toast()
+  ),
+  card(
+    input_button(
+      id = "begin",
+      label = "Show notification"
+    )
+  )
 )
 
-server <- function(input, output) \{
-  observeEvent(input$show, \{
+server <- function(input, output) {
+  observeEvent(input$begin, {
     showToast(
       toast(
         list(
@@ -69,50 +52,13 @@ server <- function(input, output) \{
       ) \%>\%
         margin(right = 2, top = 2)
     )
-  \})
-\}
-
-shinyApp(ui, server)
-}\if{html}{\out{</div>}}
+  })
 }
 
-\section{Reacting to notifications}{
-
-
-When a notification is not automatically closed you may want to know
-when the notification is manually closed.
-
-\if{html}{\out{<div class="sourceCode R">}}\preformatted{ui <- container(
-  buttonInput(
-    id = "show",
-    label = "Show notification"
-  ) \%>\%
-    margin(3)
-)
-
-server <- function(input, output) \{
-  observeEvent(input$show, \{
-    showToast(
-      action = "undo",
-      duration = NULL,
-      toast(
-        tags$strong("Close") \%>\%
-          margin(right = "auto"),
-        "When closing this notification, see the console"
-      ) \%>\%
-        margin(right = 2, top = 2)
-    )
-  \})
-
-  observeEvent(input$undo, \{
-    print("The notification was closed")
-  \})
-\}
-
 shinyApp(ui, server)
-}\if{html}{\out{</div>}}
-}
 
+\dontshow{\}) # examplesIf}
+}
 \seealso{
 Other components: 
 \code{\link{alert}()},

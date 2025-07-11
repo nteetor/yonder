@@ -1,3 +1,6 @@
-import { registerInputBindings } from './bindings/inputs'
+import { initialize } from './utils'
+import { registerInputs } from './bindings/inputs'
 
-registerInputBindings()
+initialize(() => {
+  registerInputs()
+})

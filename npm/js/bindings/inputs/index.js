@@ -1,3 +1,5 @@
+import { registerInput } from '../../utils'
+
 import ButtonInputBinding from './button.js'
 import CheckboxInputBinding from './checkbox.js'
 import CheckboxGroupInputBinding from './checkbox-group.js'
@@ -11,25 +13,21 @@ import SelectInputBinding from './select.js'
 import TextInputBinding from './text.js'
 import TextGroupInputBinding from './text-group.js'
 
-function registerInputBindings() {
-  if (Shiny) {
-    const inputBindings = Shiny.inputBindings
-
-    inputBindings.register(new ButtonInputBinding(), ButtonInputBinding.type)
-    inputBindings.register(new CheckboxInputBinding(), CheckboxInputBinding.type)
-    inputBindings.register(new CheckboxGroupInputBinding(), CheckboxGroupInputBinding.type)
-    inputBindings.register(new FormInputBinding(), FormInputBinding.type)
-    inputBindings.register(new LinkInputBinding(), LinkInputBinding.type)
-    inputBindings.register(new ListGroupInputBinding(), ListGroupInputBinding.type)
-    inputBindings.register(new MenuInputBinding(), MenuInputBinding.type)
-    inputBindings.register(new RadioGroupInputBinding(), RadioGroupInputBinding.type)
-    inputBindings.register(new RangeInputBinding(), RangeInputBinding.type)
-    inputBindings.register(new SelectInputBinding(), SelectInputBinding.type)
-    inputBindings.register(new TextInputBinding(), TextInputBinding.type)
-    inputBindings.register(new TextGroupInputBinding(), TextGroupInputBinding.type)
-  }
+function registerInputs() {
+  registerInput(ButtonInputBinding)
+  registerInput(CheckboxInputBinding)
+  registerInput(CheckboxGroupInputBinding)
+  registerInput(FormInputBinding)
+  registerInput(LinkInputBinding)
+  registerInput(ListGroupInputBinding)
+  registerInput(MenuInputBinding)
+  registerInput(RadioGroupInputBinding)
+  registerInput(RangeInputBinding)
+  registerInput(SelectInputBinding)
+  registerInput(TextInputBinding)
+  registerInput(TextGroupInputBinding)
 }
 
 export {
-  registerInputBindings
+  registerInputs
 }
