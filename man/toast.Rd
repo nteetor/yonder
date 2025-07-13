@@ -5,7 +5,13 @@
 \alias{toast_container}
 \title{Toasts}
 \usage{
-toast(..., id = NULL, visibility = c("show", "hide"), wrapper = toast_body)
+toast(
+  ...,
+  id = NULL,
+  visibility = c("hide", "show"),
+  duration = NULL,
+  wrapper = toast_body
+)
 
 toast_container(..., position = c("top", "bottom"), padding = 3)
 }
@@ -13,9 +19,16 @@ toast_container(..., position = c("top", "bottom"), padding = 3)
 \item{...}{Components to include inside a toast. Named arguments are added as
 HTML attributes to the parent element.}
 
-\item{id}{A character string. An optional reactive id to track the state of
+\item{id}{A string. An optional reactive id to track the state of
 the toast via \verb{input$<id>}. When visible this value is \code{"shown"} and when
 the toast is dismissed the value is \code{"hidden"}.}
+
+\item{visibility}{A string. The default visibility of the toast.}
+
+\item{duration}{A number. The number of seconds to show the toast for.}
+
+\item{wrapper}{A \link[htmltools:builder]{htmltools::tag} function. The function used to wrap the
+components passed in \code{...}.}
 }
 \description{
 Toasts relay notification-level information to the user.
@@ -26,35 +39,30 @@ Toasts relay notification-level information to the user.
 library(shiny)
 library(bslib)
 
-ui <- page_fluid(
-  toast_container(
-    id = "notifications",
-    toast()
-  ),
-  card(
-    input_button(
-      id = "begin",
-      text = "Begin task"
-    )
-  )
-)
-
-server <- function(input, output) {
-  observeEvent(input$begin, {
-    toast_add(
-      target = "notifications",
+ui <-
+  page_fluid(
+    toast_container(
       toast(
-        id = sprintf("task\%s", input$begin),
-        toast_header("Task beginning"),
-        "This may take a while"
+        id = "notify_begin",
+        duration = 5,
+        toast_header("Starting task"),
+        "This task may take a while."
+      )
+    ),
+    card(
+      input_button(
+        id = "begin",
+        text = "Begin task"
       )
     )
-  })
+  )
 
-  observe({
-    print(input$task1)
-  })
-}
+server <-
+  function(input, output) {
+    observeEvent(input$begin, {
+      toast_show("notify_begin", 2)
+    })
+  }
 
 shinyApp(ui, server)
 

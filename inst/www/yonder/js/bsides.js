@@ -524,12 +524,17 @@
 
   class Toast extends bootstrap.Toast {
     constructor(toast) {
-      super(toast, {
-        autoHide: false
-      });
+      super(toast, {});
     }
     get state() {
       return this.isShown() ? 'shown' : 'hidden';
+    }
+    show(duration) {
+      if (duration) {
+        this._config.delay = duration;
+        this._config.autohide = true;
+      }
+      super.show();
     }
     static addMessageHandlers() {
       addCustomMessageHandler('toastAdd', async function (data) {
@@ -567,7 +572,7 @@
         return;
       }
       if (data.method === 'show') {
-        toast.show();
+        toast.show(data.duration);
       } else if (data.method === 'hide') {
         toast.hide();
       }

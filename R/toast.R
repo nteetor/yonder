@@ -5,9 +5,16 @@
 #' @param ... Components to include inside a toast. Named arguments are added as
 #'   HTML attributes to the parent element.
 #'
-#' @param id A character string. An optional reactive id to track the state of
+#' @param id A string. An optional reactive id to track the state of
 #'   the toast via `input$<id>`. When visible this value is `"shown"` and when
 #'   the toast is dismissed the value is `"hidden"`.
+#'
+#' @param visibility A string. The default visibility of the toast.
+#'
+#' @param duration A number. The number of seconds to show the toast for.
+#'
+#' @param wrapper A [htmltools::tag] function. The function used to wrap the
+#'   components passed in `...`.
 #'
 #' @family components
 #'
@@ -18,35 +25,30 @@
 #' library(shiny)
 #' library(bslib)
 #'
-#' ui <- page_fluid(
-#'   toast_container(
-#'     id = "notifications",
-#'     toast()
-#'   ),
-#'   card(
-#'     input_button(
-#'       id = "begin",
-#'       text = "Begin task"
-#'     )
-#'   )
-#' )
-#'
-#' server <- function(input, output) {
-#'   observeEvent(input$begin, {
-#'     toast_add(
-#'       target = "notifications",
+#' ui <-
+#'   page_fluid(
+#'     toast_container(
 #'       toast(
-#'         id = sprintf("task%s", input$begin),
-#'         toast_header("Task beginning"),
-#'         "This may take a while"
+#'         id = "notify_begin",
+#'         duration = 5,
+#'         toast_header("Starting task"),
+#'         "This task may take a while."
+#'       )
+#'     ),
+#'     card(
+#'       input_button(
+#'         id = "begin",
+#'         text = "Begin task"
 #'       )
 #'     )
-#'   })
+#'   )
 #'
-#'   observe({
-#'     print(input$task1)
-#'   })
-#' }
+#' server <-
+#'   function(input, output) {
+#'     observeEvent(input$begin, {
+#'       toast_show("notify_begin", 2)
+#'     })
+#'   }
 #'
 #' shinyApp(ui, server)
 #'
@@ -54,10 +56,12 @@
 toast <- function(
   ...,
   id = NULL,
-  visibility = c("show", "hide"),
+  visibility = c("hide", "show"),
+  duration = NULL,
   wrapper = toast_body
 ) {
   check_string(id, allow_empty = FALSE, allow_null = TRUE)
+  check_number_decimal(duration, min = 0, allow_null = TRUE)
 
   visibility <- arg_match(visibility)
 
@@ -77,6 +81,8 @@ toast <- function(
       ),
       id = id,
       role = "alert",
+      `data-bs-autohide` = if (non_null(duration)) "true" else "false",
+      `data-bs-delay` = if (non_null(duration)) duration * 1000,
       `aria-live` = "assertive",
       `aria-atomic` = "true",
       !!!attrs,
@@ -104,7 +110,6 @@ toast_container <- function(
   }
 
   args <- rlang::list2(...)
-  attrs <- keep_named(args)
 
   position <-
     if (non_null(position)) {
@@ -122,7 +127,7 @@ toast_container <- function(
       position,
       padding
     ),
-    !!!attrs
+    !!!args
   )
 }
 
@@ -275,12 +280,12 @@ toast_show <- function(
   duration = NULL,
   session = get_current_session()
 ) {
+  check_number_decimal(duration, min = 0, allow_null = TRUE)
+
   msg <-
     drop_nulls(list(
       method = "show",
-      id = id,
-      target = target,
-      duration = duration
+      duration = if (non_null(duration)) duration * 1000
     ))
 
   session$sendInputMessage(id, msg)
@@ -296,9 +301,7 @@ toast_hide <- function(
   msg <-
     drop_nulls(list(
       method = "hide",
-      id = id,
-      target = target
     ))
 
-  input$sendInputMessage(id, msg)
+  session$sendInputMessage(id, msg)
 }
