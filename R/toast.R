@@ -20,30 +20,31 @@
 #'
 #' ui <- page_fluid(
 #'   toast_container(
+#'     id = "notifications",
 #'     toast()
 #'   ),
 #'   card(
 #'     input_button(
 #'       id = "begin",
-#'       label = "Show notification"
+#'       text = "Begin task"
 #'     )
 #'   )
 #' )
 #'
 #' server <- function(input, output) {
 #'   observeEvent(input$begin, {
-#'     showToast(
+#'     toast_add(
+#'       target = "notifications",
 #'       toast(
-#'         list(
-#'           span("Notification") %>%
-#'             margin(right = "4"),
-#'           span(strftime(Sys.time(), "%H:%M")) %>%
-#'             margin(right = 1)
-#'         ),
-#'         "This is notification ", input$show
-#'       ) %>%
-#'         margin(right = 2, top = 2)
+#'         id = sprintf("task%s", input$begin),
+#'         toast_header("Task beginning"),
+#'         "This may take a while"
+#'       )
 #'     )
+#'   })
+#'
+#'   observe({
+#'     print(input$task1)
 #'   })
 #' }
 #'
@@ -70,9 +71,11 @@ toast <- function(
   component <-
     tags$div(
       class = c(
+        "bsides-toast",
         "toast",
         visibility
       ),
+      id = id,
       role = "alert",
       `aria-live` = "assertive",
       `aria-atomic` = "true",
@@ -225,7 +228,7 @@ toast_button <- function() {
   tags$button(
     type = "button",
     class = "btn-close",
-    `data-bs-dimiss` = "toast",
+    `data-bs-dismiss` = "toast",
     `aria-label` = "Close"
   )
 }
@@ -236,13 +239,13 @@ toast_button <- function() {
 #'
 #' @param id A string. The id of a [toast_container()].
 #'
-#' @param toast A [toast()]. A toast component to add to a toast container.
-#'   Once added the toast may be shown or hidden.
+#' @param toast A [toast()]. A toast component to add to a toast container. Once
+#'   added, the toast may be shown or hidden.
 #'
-#' @param target A string. The id of a toast.
+#' @param target A string. The id of a toast container.
 #'
 #' @param duration A number. The number of seconds to show a toast before
-#'   automatically hiding it. If `NULL`, the toast is shown until manually
+#'   automatically hiding it. If `NULL`, the toast remains shown until manually
 #'   hidden.
 #'
 #' @inheritParams input_checkbox_group
@@ -251,51 +254,51 @@ toast_button <- function() {
 #'
 #' @export
 toast_add <- function(
-  id,
+  target,
   toast,
   session = get_current_session()
 ) {
   msg <-
     drop_nulls(list(
-      id = id,
-      toast = I(format(toast))
+      target = target,
+      toast = htmltools::doRenderTags(toast)
     ))
 
   session$sendCustomMessage("bsides:toastAdd", msg)
 }
 
-#' @describeIn toast_add Show a toast within a toast container.
+#' @describeIn toast_add Show a toast.
 #'
 #' @export
 toast_show <- function(
   id,
-  target,
   duration = NULL,
   session = get_current_session()
 ) {
   msg <-
     drop_nulls(list(
+      method = "show",
       id = id,
       target = target,
       duration = duration
     ))
 
-  session$sendCustomMessage("bsides:toastShow", msg)
+  session$sendInputMessage(id, msg)
 }
 
-#' @describeIn toast_add Hide a toast within a toast container.
+#' @describeIn toast_add Hide a toast.
 #'
 #' @export
 toast_hide <- function(
   id,
-  target = NULL,
   session = get_current_session()
 ) {
   msg <-
     drop_nulls(list(
+      method = "hide",
       id = id,
       target = target
     ))
 
-  session$sendCustomMessage("bsides:toastHide", msg)
+  input$sendInputMessage(id, msg)
 }

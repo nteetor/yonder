@@ -6,24 +6,24 @@
 \alias{toast_hide}
 \title{Toast actions}
 \usage{
-toast_add(id, toast, session = get_current_session())
+toast_add(target, toast, session = get_current_session())
 
-toast_show(id, target, duration = NULL, session = get_current_session())
+toast_show(id, duration = NULL, session = get_current_session())
 
-toast_hide(id, target = NULL, session = get_current_session())
+toast_hide(id, session = get_current_session())
 }
 \arguments{
-\item{id}{A string. The id of a \code{\link[=toast_container]{toast_container()}}.}
+\item{target}{A string. The id of a toast container.}
 
-\item{toast}{A \code{\link[=toast]{toast()}}. A toast component to add to a toast container.
-Once added the toast may be shown or hidden.}
+\item{toast}{A \code{\link[=toast]{toast()}}. A toast component to add to a toast container. Once
+added, the toast may be shown or hidden.}
 
 \item{session}{A shiny session object.}
 
-\item{target}{A string. The id of a toast.}
+\item{id}{A string. The id of a \code{\link[=toast_container]{toast_container()}}.}
 
 \item{duration}{A number. The number of seconds to show a toast before
-automatically hiding it. If \code{NULL}, the toast is shown until manually
+automatically hiding it. If \code{NULL}, the toast remains shown until manually
 hidden.}
 }
 \description{
@@ -33,8 +33,8 @@ Do things with toasts.
 \itemize{
 \item \code{toast_add()}: Add a toast to a toast container.
 
-\item \code{toast_show()}: Show a toast within a toast container.
+\item \code{toast_show()}: Show a toast.
 
-\item \code{toast_hide()}: Hide a toast within a toast container.
+\item \code{toast_hide()}: Hide a toast.
 
 }}

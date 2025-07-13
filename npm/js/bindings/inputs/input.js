@@ -1,8 +1,10 @@
 import $ from 'jquery'
 
+import { pkg } from '../../utils'
+
 class InputBinding {
   static get prefix() {
-    return 'bsides'
+    return pkg.prefix
   }
 
   static get type() {

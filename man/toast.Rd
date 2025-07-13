@@ -28,30 +28,31 @@ library(bslib)
 
 ui <- page_fluid(
   toast_container(
+    id = "notifications",
     toast()
   ),
   card(
     input_button(
       id = "begin",
-      label = "Show notification"
+      text = "Begin task"
     )
   )
 )
 
 server <- function(input, output) {
   observeEvent(input$begin, {
-    showToast(
+    toast_add(
+      target = "notifications",
       toast(
-        list(
-          span("Notification") \%>\%
-            margin(right = "4"),
-          span(strftime(Sys.time(), "\%H:\%M")) \%>\%
-            margin(right = 1)
-        ),
-        "This is notification ", input$show
-      ) \%>\%
-        margin(right = 2, top = 2)
+        id = sprintf("task\%s", input$begin),
+        toast_header("Task beginning"),
+        "This may take a while"
+      )
     )
+  })
+
+  observe({
+    print(input$task1)
   })
 }
 

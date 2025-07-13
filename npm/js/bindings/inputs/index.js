@@ -1,4 +1,6 @@
-import { registerInput } from '../../utils'
+import { registerBinding } from '../../utils'
+
+import InputBinding from './input.js'
 
 import ButtonInputBinding from './button.js'
 import CheckboxInputBinding from './checkbox.js'
@@ -14,20 +16,21 @@ import TextInputBinding from './text.js'
 import TextGroupInputBinding from './text-group.js'
 
 function registerInputs() {
-  registerInput(ButtonInputBinding)
-  registerInput(CheckboxInputBinding)
-  registerInput(CheckboxGroupInputBinding)
-  registerInput(FormInputBinding)
-  registerInput(LinkInputBinding)
-  registerInput(ListGroupInputBinding)
-  registerInput(MenuInputBinding)
-  registerInput(RadioGroupInputBinding)
-  registerInput(RangeInputBinding)
-  registerInput(SelectInputBinding)
-  registerInput(TextInputBinding)
-  registerInput(TextGroupInputBinding)
+  registerBinding(ButtonInputBinding)
+  registerBinding(CheckboxInputBinding)
+  registerBinding(CheckboxGroupInputBinding)
+  registerBinding(FormInputBinding)
+  registerBinding(LinkInputBinding)
+  registerBinding(ListGroupInputBinding)
+  registerBinding(MenuInputBinding)
+  registerBinding(RadioGroupInputBinding)
+  registerBinding(RangeInputBinding)
+  registerBinding(SelectInputBinding)
+  registerBinding(TextInputBinding)
+  registerBinding(TextGroupInputBinding)
 }
 
 export {
+  InputBinding,
   registerInputs
 }

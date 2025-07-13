@@ -4,11 +4,19 @@
   * Licensed under MIT (https://github.com/nteetor/yonder/blob/main/LICENSE.note)
   */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery')) :
-  typeof define === 'function' && define.amd ? define(['jquery'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.$));
-})(this, (function ($) { 'use strict';
+  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery'), require('Shiny')) :
+  typeof define === 'function' && define.amd ? define(['jquery', 'Shiny'], factory) :
+  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.$, global.Shiny));
+})(this, (function ($, Shiny$1) { 'use strict';
 
+  const pkg = {
+    prefix: 'bsides'
+  };
+  function addCustomMessageHandler(type, handler) {
+    if (window.Shiny) {
+      Shiny.addCustomMessageHandler(`${pkg.prefix}:${type}`, handler);
+    }
+  }
   function initialize(callback) {
     if (document.readyState === 'complete') {
       callback();
@@ -16,16 +24,15 @@
       document.addEventListener('DOMContentLoaded', callback);
     }
   }
-
-  function registerInput(inputBindingClass) {
+  function registerBinding(binding) {
     if (window.Shiny) {
-      Shiny.inputBindings.register(new inputBindingClass(), inputBindingClass.type);
+      Shiny.inputBindings.register(new binding(), `${pkg.prefix}.${binding.type}`);
     }
   }
 
   class InputBinding {
     static get prefix() {
-      return 'bsides';
+      return pkg.prefix;
     }
     static get type() {
       throw 'not implemented';
@@ -501,19 +508,95 @@
   }
 
   function registerInputs() {
-    registerInput(ButtonInputBinding);
-    registerInput(CheckboxInputBinding);
-    registerInput(CheckboxGroupInputBinding);
-    registerInput(FormInputBinding);
-    registerInput(LinkInputBinding);
-    registerInput(ListGroupInputBinding);
-    registerInput(MenuInputBinding);
-    registerInput(RadioGroupInputBinding);
-    registerInput(RangeInputBinding);
-    registerInput(SelectInputBinding);
-    registerInput(TextInputBinding);
-    registerInput(TextGroupInputBinding);
+    registerBinding(ButtonInputBinding);
+    registerBinding(CheckboxInputBinding);
+    registerBinding(CheckboxGroupInputBinding);
+    registerBinding(FormInputBinding);
+    registerBinding(LinkInputBinding);
+    registerBinding(ListGroupInputBinding);
+    registerBinding(MenuInputBinding);
+    registerBinding(RadioGroupInputBinding);
+    registerBinding(RangeInputBinding);
+    registerBinding(SelectInputBinding);
+    registerBinding(TextInputBinding);
+    registerBinding(TextGroupInputBinding);
   }
+
+  class Toast extends bootstrap.Toast {
+    constructor(toast) {
+      super(toast, {
+        autoHide: false
+      });
+    }
+    get state() {
+      return this.isShown() ? 'shown' : 'hidden';
+    }
+    static addMessageHandlers() {
+      addCustomMessageHandler('toastAdd', async function (data) {
+        if (!data.target) {
+          return;
+        }
+        const container = document.getElementById(data.target);
+        if (!container) {
+          return;
+        }
+        await Shiny$1.renderContentAsync(container, data.toast, 'beforeend');
+      });
+    }
+  }
+  class ToastInputBinding extends InputBinding {
+    static get type() {
+      return 'toast';
+    }
+    get events() {
+      return ['shown.bs.toast', 'hidden.bs.toast'];
+    }
+    initialize(element) {
+      new Toast(element);
+    }
+    getValue(element) {
+      const toast = Toast.getInstance(element);
+      if (!toast) {
+        return;
+      }
+      return toast.state;
+    }
+    receiveMessage(element, data) {
+      const toast = Toast.getInstance(element);
+      if (!toast) {
+        return;
+      }
+      if (data.method === 'show') {
+        toast.show();
+      } else if (data.method === 'hide') {
+        toast.hide();
+      }
+    }
+  }
+  Shiny.addCustomMessageHandler("yonder:toast", msg => {
+    let _show = function (data) {
+      document.querySelector(".yonder-toasts").insertAdjacentHTML("beforeend", data.content);
+      $(".yonder-toasts > .toast:last-child").toast("show");
+    };
+    let _close = function (data) {
+      let toasts = document.querySelectorAll(".yonder-toasts .toast");
+      if (toasts.length) {
+        $(toasts).toast("hide");
+      }
+    };
+    if (!msg.type) {
+      return;
+    }
+    if (msg.type === "show") {
+      _show(msg.data);
+    } else if (msg.type === "close") {
+      _close(msg.data);
+    } else {
+      console.warn(`no toast ${msg.type} method`);
+    }
+  });
+  Toast.addMessageHandlers();
+  registerBinding(ToastInputBinding);
 
   initialize(() => {
     registerInputs();

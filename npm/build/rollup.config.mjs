@@ -15,11 +15,15 @@ export default {
     format: 'umd',
     generatedCode: 'es2015',
     globals: {
-      jquery: '$'
+      jquery: '$',
+      bootstrap: 'bootstrap',
+      Shiny: 'Shiny'
     }
   },
   external: [
-    'jquery'
+    'jquery',
+    'bootstrap',
+    'Shiny'
   ],
   plugins: [
     babel({
