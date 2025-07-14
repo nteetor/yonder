@@ -4,16 +4,28 @@
 \alias{badge}
 \title{Badges}
 \usage{
-badge(...)
+badge(..., appearance = c("default", "pill"))
 }
 \arguments{
-\item{...}{Named arguments passed as HTML attributes to the parent
-element or tag elements passed as children to the parent element.}
+\item{...}{Components to include inside the badge. Named arguments are passed
+as HTML attributes to the parent element.}
+
+\item{appearance}{A string. The appearance of the badge.}
 }
 \description{
-Small highlighted content which scales to its parent's size. A badge may
-be dynamically updated with \code{\link[=replaceContent]{replaceContent()}}, in which case be sure to
-pass an \code{id} argument as part of \code{...}.
+Highlight small pieces of content with badges. A badge's size scales with
+their parent's size.
+}
+\examples{
+\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
+badge(99)
+
+badge(
+  class = "text-bg-primary",
+   "New"
+)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other components: 

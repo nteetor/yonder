@@ -1,22 +1,46 @@
 #' Badges
 #'
-#' Small highlighted content which scales to its parent's size. A badge may
-#' be dynamically updated with [replaceContent()], in which case be sure to
-#' pass an `id` argument as part of `...`.
+#' Highlight small pieces of content with badges. A badge's size scales with
+#' their parent's size.
 #'
-#' @param ... Named arguments passed as HTML attributes to the parent
-#'   element or tag elements passed as children to the parent element.
+#' @param ... Components to include inside the badge. Named arguments are passed
+#'   as HTML attributes to the parent element.
+#'
+#' @param appearance A string. The appearance of the badge.
 #'
 #' @family components
+#'
 #' @export
-badge <- function(...) {
-  with_deps({
-    tag <- tags$span(class = "badge")
+#'
+#' @examplesIf rlang::is_interactive()
+#'
+#' badge(99)
+#'
+#' badge(
+#'   class = "text-bg-primary",
+#'    "New"
+#' )
+#'
+badge <- function(
+  ...,
+  appearance = c("default", "pill")
+) {
+  appearance <- arg_match(appearance)
 
-    args <- style_dots_eval(..., .style = style_pronoun("yonder_badge"))
+  component <-
+    tags$span(
+      class = c(
+        "badge",
+        if (appearance == "pill") "rounded-pill"
+      ),
+      ...
+    )
 
-    tag <- tag_extend_with(tag, args)
+  component <-
+    dependency_append(component)
 
-    s3_class_add(tag, "yonder_badge")
-  })
+  component <-
+    s3_class_add(component, "bsides_badge")
+
+  component
 }
