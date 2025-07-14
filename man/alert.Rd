@@ -2,23 +2,44 @@
 % Please edit documentation in R/alert.R
 \name{alert}
 \alias{alert}
-\title{Alert boxes}
+\alias{alert_heading}
+\alias{alert_button}
+\title{Alerts}
 \usage{
-alert(..., dismissible = TRUE, fade = TRUE)
+alert(..., class = NULL)
+
+alert_heading(..., container = htmltools::h6)
+
+alert_button()
 }
 \arguments{
-\item{...}{Character strings specifying the text of the alert or additional
-named arguments passed as HTML attributes to the alert element.}
+\item{...}{Components to include. Named arguments are passed as HTML
+attributes to the parent element.}
 
-\item{dismissible}{One of \code{TRUE} or \code{FALSE} specifying if the alert may be
-dismissed by the user, defaults to \code{TRUE}.}
+\item{class}{Additional CSS classes for the alert element.}
 
-\item{fade}{One of \code{TRUE} or \code{FALSE} specifying if the alert fades out or
-immediately disappears when dismissed, defaults to \code{TRUE}.}
+\item{container}{An \link[htmltools:builder]{htmltools::tag} function.}
 }
 \description{
-Use an alert element to let the user know of successes or to call attention
-to problems.
+Alerts highlight information for users.
+}
+\examples{
+\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+
+alert(
+  class = "alert-info",
+  alert_heading("Heads up!"),
+  "Make sure you know the thing is happening",
+  htmltools::hr(),
+  "Use alert classes to change the color of an alert"
+)
+
+alert(
+  class = "alert-warning",
+  "Double check those figures.",
+  alert_button()
+)
+\dontshow{\}) # examplesIf}
 }
 \seealso{
 Other components: 

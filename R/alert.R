@@ -1,64 +1,82 @@
-#' Alert boxes
+#' Alerts
 #'
-#' Use an alert element to let the user know of successes or to call attention
-#' to problems.
+#' Alerts highlight information for users.
 #'
-#' @param ... Character strings specifying the text of the alert or additional
-#'   named arguments passed as HTML attributes to the alert element.
+#' @param ... Components to include. Named arguments are passed as HTML
+#'   attributes to the parent element.
 #'
-#' @param dismissible One of `TRUE` or `FALSE` specifying if the alert may be
-#'   dismissed by the user, defaults to `TRUE`.
+#' @param class Additional CSS classes for the alert element.
 #'
-#' @param fade One of `TRUE` or `FALSE` specifying if the alert fades out or
-#'   immediately disappears when dismissed, defaults to `TRUE`.
+#' @param container An [htmltools::tag] function.
 #'
 #' @family components
+#'
 #' @export
-alert <- function(..., dismissible = TRUE, fade = TRUE) {
-  with_deps({
-    tag <- tags$div(
-      class = str_collate(
-        "alert",
-        if (dismissible) "alert-dismissible",
-        if (dismissible && fade) "fade show"
-      ),
-      role = "alert"
+#'
+#' @examplesIf rlang::is_interactive()
+#'
+#' alert(
+#'   class = "alert-info",
+#'   alert_heading("Heads up!"),
+#'   "Make sure you know the thing is happening",
+#'   htmltools::hr(),
+#'   "Use alert classes to change the color of an alert"
+#' )
+#'
+#' alert(
+#'   class = "alert-warning",
+#'   "Double check those figures.",
+#'   alert_button()
+#' )
+#'
+alert <- function(
+  ...,
+  class = NULL
+) {
+  component <-
+    tags$div(
+      class = "alert",
+      role = "alert",
+      class = class,
+      ...
     )
 
-    alert_mask <- list(
-      a = function(...) tags$a(class = "alert-link", ...),
-      linkInput = function(...) linkInput(class = "alert-link", ...),
-      h1 = function(...) tags$h1(class = "alert-heading", ...),
-      h2 = function(...) tags$h2(class = "alert-heading", ...),
-      h3 = function(...) tags$h3(class = "alert-heading", ...),
-      h4 = function(...) tags$h4(class = "alert-heading", ...),
-      h5 = function(...) tags$h5(class = "alert-heading", ...),
-      h6 = function(...) tags$h6(class = "alert-heading", ...)
-    )
+  query <-
+    htmltools::tagQuery(component)
 
-    args <- style_dots_eval(
-      ...,
-      .style = style_pronoun("yonder_alert"),
-      .mask = alert_mask
-    )
+  if (query$find(".btn-close")$length() > 0) {
+    component <-
+      query$addClass("alert-dismissible fade show")$allTags()
+  }
 
-    tag <- tag_extend_with(tag, args)
+  component <-
+    dependency_append(component)
 
-    if (dismissible) {
-      tag <- tag_children_add(tag, list(
-        tags$button(
-          type = "button",
-          class = "close",
-          `data-dismiss` = "alert",
-          `aria-label` = "Close",
-          tags$span(
-            `aria-hidden` = "true",
-            HTML("&times;")
-          )
-        )
-      ))
-    }
+  component <-
+    s3_class_add(component, "bsides_alert")
 
-    s3_class_add(tag, "yonder_alert")
-  })
+  component
+}
+
+#' @rdname alert
+#' @export
+alert_heading <- function(
+  ...,
+  container = htmltools::h6
+) {
+  container(
+    class = "alert-heading",
+    ...
+  )
+}
+
+#' @rdname alert
+#' @export
+alert_button <- function() {
+  tags$button(
+    type = "button",
+    class = "btn-close",
+    `data-bs-dismiss` = "alert",
+    `aria-label` = "Close"
+  )
 }
