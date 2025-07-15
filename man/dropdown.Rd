@@ -39,7 +39,7 @@ Other components:
 \code{\link{d1}()},
 \code{\link{img}()},
 \code{\link{jumbotron}()},
-\code{\link{modal}()},
+\code{\link{modal_dialog}()},
 \code{\link{pre}()},
 \code{\link{toast}()}
 }

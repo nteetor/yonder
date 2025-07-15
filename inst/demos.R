@@ -470,3 +470,22 @@ shiny::shinyApp(
     })
   }
 )
+
+# modal ----
+
+library(shiny)
+library(bslib)
+
+shinyApp(
+  page_fluid(
+    input_button("click", "Click")
+  ),
+  function(input, output) {
+    observeEvent(input$click, {
+      modal_show(modal_dialog(
+        id = "test",
+        "Hello, world"
+      ))
+    })
+  }
+)

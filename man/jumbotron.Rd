@@ -41,7 +41,7 @@ Other components:
 \code{\link{d1}()},
 \code{\link{dropdown}()},
 \code{\link{img}()},
-\code{\link{modal}()},
+\code{\link{modal_dialog}()},
 \code{\link{pre}()},
 \code{\link{toast}()}
 }

@@ -80,35 +80,6 @@ class ToastInputBinding extends InputBinding {
   }
 }
 
-Shiny.addCustomMessageHandler("yonder:toast", (msg) => {
-  let _show = function(data) {
-    document.querySelector(".yonder-toasts")
-      .insertAdjacentHTML("beforeend", data.content);
-
-    $(".yonder-toasts > .toast:last-child").toast("show");
-  };
-
-  let _close = function(data) {
-    let toasts = document.querySelectorAll(".yonder-toasts .toast");
-
-    if (toasts.length) {
-      $(toasts).toast("hide");
-    }
-  };
-
-  if (!msg.type) {
-    return;
-  }
-
-  if (msg.type === "show") {
-    _show(msg.data);
-  } else if (msg.type === "close") {
-    _close(msg.data);
-  } else {
-    console.warn(`no toast ${ msg.type } method`);
-  }
-});
-
 Toast.addMessageHandlers()
 
 registerBinding(ToastInputBinding)

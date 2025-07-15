@@ -41,10 +41,8 @@ class InputBinding {
 
   subscribe(element, callback) {
     this.events.forEach((e) => {
-      const event = `${e.type ? e.type : e}${this.constructor.namespace}`
-      const selector = e.selector ? e.selector : (null)
-
-      console.log(`${event}, ${selector}, ${this.priority}`)
+      const event = `${e.type || e}${this.constructor.namespace}`
+      const selector = e.selector || null
 
       $(element).on(event, selector, (e) => {
         callback(this.priority)

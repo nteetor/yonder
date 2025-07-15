@@ -44,7 +44,7 @@ Other components:
 \code{\link{dropdown}()},
 \code{\link{img}()},
 \code{\link{jumbotron}()},
-\code{\link{modal}()},
+\code{\link{modal_dialog}()},
 \code{\link{toast}()}
 }
 \concept{components}

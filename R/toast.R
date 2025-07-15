@@ -137,32 +137,11 @@ as_toast_items <- function(
 ) {
   children <- drop_nulls(children)
 
-  are_items <- vapply(children, is_toast_item, logical(1))
-
-  if (all(are_items)) {
-    return(children)
-  }
-
-  are_items_rle <- rle(are_items)
-  start_indeces <- c(1, head(cumsum(are_items_rle$lengths) + 1, -1))
-
-  children <-
-    Map(
-      start = start_indeces,
-      length = are_items_rle$length,
-      already_item = are_items_rle$value,
-      function(start, length, already_item) {
-        child_subset <- children[start:(start + length - 1)]
-
-        if (already_item) {
-          child_subset
-        } else {
-          list(wrapper(child_subset))
-        }
-      }
-    )
-
-  unlist(children, recursive = FALSE)
+  wrap_items(
+    children,
+    is_toast_item,
+    wrapper
+  )
 }
 
 is_toast_item <- function(x) {

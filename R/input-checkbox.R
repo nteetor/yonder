@@ -1,7 +1,7 @@
 #' Checkbox input
 #'
-#' A reactive checkbox input. Users may select one or more choices. When a
-#' checkbox input has no selected choices the reactive value is `NULL`.
+#' A reactive checkbox input. When a checkbox input has no selected choices the
+#' reactive value is `NULL`.
 #'
 #' @param id A character string. The id of the reactive input.
 #'
@@ -28,6 +28,7 @@
 #' @returns A [htmltools::tag] object.
 #'
 #' @family inputs
+#'
 #' @export
 input_checkbox <- function(
   id,

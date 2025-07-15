@@ -1,148 +1,250 @@
 #' Modal dialogs
 #'
-#' Modals are a flexible alert window, which disable interaction with the page
-#' behind them. Modals may include inputs, buttons, or simply text. Each modal
-#' may be assigned an `id`. By default `hideModal()` will hide all modals, but
-#' you may instead specify a modal's `id` in which case only that modal is
-#' closed. Additionally, when `id` is not `NULL` observers and reactives may
-#' watch for the modal's close event.
+#' Modals are flexible alert windows, which disable interaction with the page
+#' behind them. Modals may include inputs, buttons, or simply text.
 #'
-#' @param id A character string specifying the id of the modal, when closed
-#'   `input[[id]]` is set to `TRUE`.
+#' @param ... Any number of child elements passed to the parent element. Named
+#'   values are passed as HTML attributes to the parent element.
 #'
-#' @param ... Unnamed values passed as tag elements to the body of the modal.
-#'   or named values passed as HTML attributes to the body element of the
-#'   modal.
+#' @param id A string. The id of a modal. Use `input$<id>` to query the state of
+#'   the modal.
 #'
-#' @param header A character string or tag element specifying the header of the
-#'   modal.
+#' @param position A string. The position of the modal on the screen.
 #'
-#' @param footer A character string or tag element specifying the footer of the
-#'   modal.
-#'
-#' @param center One of `TRUE` or `FALSE` specifying whether the modal is
-#'   vertically centered on the page, defaults to `FALSE`.
-#'
-#' @param size One of `"sm"` (small), `"md"` (medium), `"lg"` (large), or `"xl"`
-#'   (extra large) specifying the relative width of the modal, defaults to
-#'   `"md"`.
-#'
-#' @param fade One of `TRUE` or `FALSE` specifying if the modal fades in when
-#'   shown and fades out when closed, defaults to `TRUE`.
+#' @param size A string. The size of the modal.
 #'
 #' @param modal A modal tag element created using `modal()`.
 #'
-#' @inheritParams collapsePane
+#' @describeIn modal_dialog Construct a modal.
 #'
 #' @family components
+#'
 #' @export
-modal <- function(id, ..., header = NULL, footer = NULL, center = FALSE,
-                  size = "md", fade = TRUE) {
-  assert_id()
-  assert_possible(size, c("sm", "md", "lg", "xl"))
+#'
+#' @examplesIf rlang::is_interactive()
+#'
+#' modal_dialog(
+#'   id = "example1",
+#'   modal_header(modal_title("Example 1")),
+#'   "Our first modal example.",
+#'   "It's simple, but it gets the job done.",
+#'   modal_footer()
+#' )
+#'
+modal_dialog <- function(
+  id,
+  ...,
+  position = c("top", "center"),
+  size = c("md", "sm", "lg", "xl", "fullscreen"),
+  wrapper = modal_body
+) {
+  check_string(id, allow_null = TRUE)
 
-  dep_attach({
-    args <- list(...)
+  position <- arg_match(position)
+  size <- arg_match(size)
 
-    if (!is.null(header)) {
-      formatted_tags <- list(
-        h1 = function(...) tags$h1(class = "modal-title", ...),
-        h2 = function(...) tags$h2(class = "modal-title", ...),
-        h3 = function(...) tags$h3(class = "modal-title", ...),
-        h4 = function(...) tags$h4(class = "modal-title", ...),
-        h5 = function(...) tags$h5(class = "modal-title", ...),
-        h6 = function(...) tags$h6(class = "modal-title", ...)
-      )
+  args <- rlang::list2(...)
+  attrs <- keep_named(args)
+  children <- as_modal_items(keep_unnamed(args), wrapper)
 
-      header <- eval(
-        substitute(header),
-        envir = list2env(formatted_tags, envir = parent.frame())
-      )
-    }
-
-    header <- tags$div(
-      class = "modal-header",
-      header,
-      tags$button(
-        type = "button",
-        class = "close",
-        `data-dismiss` = "modal",
-        `aria-label` = "Close",
-        tags$span(
-          `aria-hidden` = "true",
-          HTML("&times;")
+  component <-
+    tags$div(
+      class = "modal fade",
+      id = id,
+      tabindex = "-1",
+      `aria-hidden` = "true",
+      !!!attrs,
+      tags$div(
+        class = c(
+          "modal-dialog",
+          sprintf("modal-%s", size)
+        ),
+        tags$div(
+          class = "modal-content",
+          !!!children
         )
       )
     )
 
-    if (!is.null(footer)) {
-      footer <- tags$div(
-        class = "modal-footer",
-        footer
-      )
-    }
+  component <-
+    dependency_append(component)
 
-    content <- tags$div(
-      class = "modal-content",
-      header,
-      tag_attributes_add(
-        tags$div(
-          class = "modal-body",
-          unnamed_values(args)
-        ),
-        named_values(args)
-      ),
-      footer
-    )
+  component <-
+    s3_class_add(component, "bsides_modal")
 
+  component
+}
+
+#' @describeIn modal_dialog Open a modal.
+#'
+#' @export
+modal_toggle <- function(
+  id,
+  text,
+  ...
+) {
+  check_string(id)
+
+  tags$button(
+    type = "button",
+    class = "btn btn-primary",
+    `data-bs-toggle` = "modal",
+    `data-bs-target` = sprintf("#%s", id),
+    text,
+    ...
+  )
+}
+
+is_modal <- function(x) {
+  inherits(x, "bsides_modal")
+}
+
+is_modal_item <- function(x) {
+  inherits(x, "modal_item")
+}
+
+as_modal_item <- function(x) {
+  class(x) <- c("modal_item", class(x))
+  x
+}
+
+as_modal_items <- function(
+  children,
+  wrapper
+) {
+  children <- drop_nulls(children)
+
+  wrap_items(
+    children,
+    is_modal_item,
+    wrapper
+  )
+}
+
+#' Modal items
+#'
+#' Components of a modal dialog.
+#'
+#' @describeIn modal_body The main content of a modal.
+#'
+#' @export
+modal_body <- function(
+  ...
+) {
+  as_modal_item(
     tags$div(
-      class = str_collate(
-        "yonder-modal modal",
-        if (fade) "fade"
-      ),
-      id = id,
-      tabindex = "-1",
-      role = "dialog",
-      tags$div(
-        class = str_collate(
-          "modal-dialog",
-          if (center) "modal-dialog-centered",
-          if (!is.null(size) && size != "md") paste0("modal-", size)
-        ),
-        role = "document",
-        content
-      )
+      class = "modal-body",
+      ...
     )
-  })
+  )
 }
 
-#' @rdname modal
+#' @describeIn modal_body A title suitable for use in modal dialog.
+#'
 #' @export
-showModal <- function(modal, session = getDefaultReactiveDomain()) {
-  assert_session()
-
-  id <- modal$attribs$id
-
-  session$sendCustomMessage("yonder:modal", list(
-    type = "show",
-    data = list(
-      id = id,
-      content = HTML(as.character(modal)),
-      dependencies = processDeps(modal, session)
-    )
-  ))
+modal_title <- function(
+  ...
+) {
+  tags$h1(
+    class = "modal-title fs-5",
+    ...
+  )
 }
 
-#' @rdname modal
+#' @describeIn modal_body Add a header to a modal dialog.
+#'
 #' @export
-closeModal <- function(id = NULL, session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_session()
-
-  session$sendCustomMessage("yonder:modal", list(
-    type = "close",
-    data = list(
-      id = id
+modal_header <- function(
+  ...,
+  close = modal_close()
+) {
+  as_modal_item(
+    tags$div(
+      class = "modal-header",
+      ...,
+      close
     )
-  ))
+  )
+}
+
+#' @describeIn modal_body A button stylized as a large "X" used to close a modal
+#'   dialog, typically found in the modal header.
+#'
+#' @export
+modal_close <- function() {
+  tags$button(
+    type = "button",
+    class = "btn-close",
+    `data-bs-dismiss` = "modal",
+    `aria-label` = "Close"
+  )
+}
+
+#' @describeIn modal_body Add a footer to a modal dialog.
+#'
+#' @export
+modal_footer <- function(
+  ...,
+  close = modal_dismiss()
+) {
+  as_modal_item(
+    tags$div(
+      class = "modal-footer",
+      ...,
+      close
+    )
+  )
+}
+
+#' @describeIn modal_body A button with text used to close a modal dialog,
+#'   typically found the modal footer.
+#'
+#' @export
+modal_dismiss <- function(
+  ...,
+  text = "Close"
+) {
+  tags$button(
+    type = "button",
+    class = "btn btn-primary",
+    `data-bs-dismiss` = "modal",
+    `aria-label` = text,
+    text
+  )
+}
+
+#' Modal server functions
+#'
+#' Modal server functions.
+#'
+#' @param modal A [modal_dialog] or string. A new modal to show or the id of an
+#'   existing modal.
+#'
+#' @inheritParams update_checkbox
+#'
+#' @export
+modal_show <- function(
+  modal,
+  session = get_current_session()
+) {
+  if (is_tag(modal)) {
+    modal <-
+      dependency_process(modal, session)
+  }
+
+  msg <-
+    list(
+      modal = modal
+    )
+
+  session$sendCustomMessage("bsides:modalShow", msg)
+}
+
+#' @rdname modal_show
+#'
+#' @export
+modal_hide <- function(
+  session = get_current_session()
+) {
+  session$sendCustomMessage("bsides:modalClose", list())
 }

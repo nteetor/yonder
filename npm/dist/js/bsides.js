@@ -7,7 +7,7 @@
   typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery'), require('Shiny')) :
   typeof define === 'function' && define.amd ? define(['jquery', 'Shiny'], factory) :
   (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.$, global.Shiny));
-})(this, (function ($, Shiny$1) { 'use strict';
+})(this, (function ($$1, Shiny$1) { 'use strict';
 
   const pkg = {
     prefix: 'bsides'
@@ -47,7 +47,7 @@
       this.priority = 'deferred';
     }
     find(scope) {
-      return $(scope).find(`.${this.constructor.prefix}-${this.constructor.type}`);
+      return $$1(scope).find(`.${this.constructor.prefix}-${this.constructor.type}`);
     }
     getId(element) {
       return element.id;
@@ -60,16 +60,15 @@
     }
     subscribe(element, callback) {
       this.events.forEach(e => {
-        const event = `${e.type ? e.type : e}${this.constructor.namespace}`;
-        const selector = e.selector ? e.selector : null;
-        console.log(`${event}, ${selector}, ${this.priority}`);
-        $(element).on(event, selector, e => {
+        const event = `${e.type || e}${this.constructor.namespace}`;
+        const selector = e.selector || null;
+        $$1(element).on(event, selector, e => {
           callback(this.priority);
         });
       });
     }
     unsubscribe(element) {
-      $(element).off(this.namespace);
+      $$1(element).off(this.namespace);
     }
     receiveMessage(element, data) {
       throw 'not implemented';
@@ -99,7 +98,7 @@
       };
     }
     initialize(element) {
-      const $element = $(element);
+      const $element = $$1(element);
       $element.data(this.data.clicks, 0);
       $element.on(`click${this.constructor.namespace}`, event => {
         const clicks = +$element.data(this.data.clicks);
@@ -110,7 +109,7 @@
       return `${this.constructor.prefix}${this.constructor.namespace}`;
     }
     getValue(element) {
-      return $(element).data(this.data.clicks);
+      return $$1(element).data(this.data.clicks);
     }
     receiveMessage(element, data) {}
   }
@@ -129,10 +128,10 @@
       };
     }
     getValue(element) {
-      return $(element).children(this.selectors.value).prop('checked');
+      return $$1(element).children(this.selectors.value).prop('checked');
     }
     receiveMessage(element, data) {
-      const $element = $(element);
+      const $element = $$1(element);
       const $label = $element.find(this.selectors.label);
       const $value = $element.find(this.selectors.value);
       if (data.hasOwnProperty('choice')) {
@@ -165,10 +164,10 @@
       return `${this.constructor.prefix}${this.constructor.namespace}`;
     }
     getValue(element) {
-      return $(element).find(this.selectors.value).filter(':checked').map((i, el) => el.value).get();
+      return $$1(element).find(this.selectors.value).filter(':checked').map((i, el) => el.value).get();
     }
     receiveMessage(element, data) {
-      const $element = $(element);
+      const $element = $$1(element);
       const $values = $element.find(this.selectors.value);
       if (data.hasOwnProperty('options')) {
         $element.find('.form-check').remove();
@@ -207,7 +206,7 @@
       };
     }
     initialize(element) {
-      const $element = $(element);
+      const $element = $$1(element);
       let inputValues = new Map();
       $element.on(`shiny:inputchanged${this.constructor.namespace}`, event => {
         if (!event.el || event.priority === 'event') {
@@ -231,10 +230,10 @@
       });
     }
     getValue(element) {
-      return $(element).data(this.data.value);
+      return $$1(element).data(this.data.value);
     }
     receiveMessage(element, data) {
-      const $element = $(element);
+      const $element = $$1(element);
       if (data.hasOwnProperty('submit')) {
         const value = data.submit;
         $element.find(`${this.selectors.submit}[value=${value}]`).trigger('click');
@@ -255,7 +254,7 @@
       };
     }
     initialize(element) {
-      const $element = $(element);
+      const $element = $$1(element);
       $element.data(this.data.clicks, 0);
       $element.on(`click${this.constructor.namespace}`, event => {
         const clicks = +$element.data(this.data.clicks);
@@ -266,7 +265,7 @@
       return `${this.constructor.prefix}${this.constructor.namespace}`;
     }
     getValue(element) {
-      return $(element).data(this.data.clicks);
+      return $$1(element).data(this.data.clicks);
     }
   }
 
@@ -289,14 +288,14 @@
       };
     }
     initialize(element) {
-      const $element = $(element);
+      const $element = $$1(element);
       $element.on('click', this.selectors.choice, event => {
-        const $choice = $(event.currentTarget);
+        const $choice = $$1(event.currentTarget);
         $choice.toggleClass('active');
       });
     }
     getValue(element) {
-      return $(element).find(`${this.selectors.value}.active`).map((i, el) => el.getAttribute(`data-${this.data.value}`)).get();
+      return $$1(element).find(`${this.selectors.value}.active`).map((i, el) => el.getAttribute(`data-${this.data.value}`)).get();
     }
   }
 
@@ -322,13 +321,13 @@
       };
     }
     initialize(element) {
-      const $element = $(element);
+      const $element = $$1(element);
       $element.on('click', this.selectors.value, event => {
         $element.data(this.data.value, event.currentTarget.value);
       });
     }
     getValue(element) {
-      return $(element).data(this.data.value);
+      return $$1(element).data(this.data.value);
     }
   }
 
@@ -351,10 +350,10 @@
     }*/
 
     getValue(element) {
-      return $(element).find(this.selectors.value).filter(':checked').val();
+      return $$1(element).find(this.selectors.value).filter(':checked').val();
     }
     receiveMessage(element, data) {
-      const $element = $(element);
+      const $element = $$1(element);
       const $values = $element.find(this.selectors.value);
       if (data.hasOwnProperty('options')) {
         $element.find('.form-check').remove();
@@ -385,10 +384,10 @@
       };
     }
     getValue(element) {
-      return +$(element).find(this.selectors.value).val();
+      return +$$1(element).find(this.selectors.value).val();
     }
     receiveMessage(element, data) {
-      const $element = $(element);
+      const $element = $$1(element);
       const $value = $element.find(this.selectors.value);
       if (data.hasOwnProperty('value')) {
         $value.val(data.value);
@@ -416,7 +415,7 @@
       return element.value;
     }
     receiveMessage(element, data) {
-      const $element = $(element);
+      const $element = $$1(element);
       console.log(data);
       if (data.hasOwnProperty('options')) {
         $element.find(this.selectors.value).remove();
@@ -457,7 +456,7 @@
       };
     }
     receiveMessage(element, data) {
-      const $element = $(element);
+      const $element = $$1(element);
       if (data.hasOwnProperty('value')) {
         $element.val(data.value);
       }
@@ -482,7 +481,7 @@
       };
     }
     getValue(element) {
-      const $element = $(element);
+      const $element = $$1(element);
       if (!$element.find(this.selectors.value).val()) {
         return null;
       }
@@ -495,8 +494,8 @@
       };
     }
     receiveMessage(element, data) {
-      const $element = $(element);
-      const $value = $(element).find(this.selectors.value);
+      const $element = $$1(element);
+      const $value = $$1(element).find(this.selectors.value);
       if (data.hasOwnProperty('value')) {
         $value.val(data.value);
       }
@@ -578,30 +577,86 @@
       }
     }
   }
-  Shiny.addCustomMessageHandler("yonder:toast", msg => {
-    let _show = function (data) {
-      document.querySelector(".yonder-toasts").insertAdjacentHTML("beforeend", data.content);
-      $(".yonder-toasts > .toast:last-child").toast("show");
-    };
-    let _close = function (data) {
-      let toasts = document.querySelectorAll(".yonder-toasts .toast");
-      if (toasts.length) {
-        $(toasts).toast("hide");
-      }
-    };
-    if (!msg.type) {
-      return;
-    }
-    if (msg.type === "show") {
-      _show(msg.data);
-    } else if (msg.type === "close") {
-      _close(msg.data);
-    } else {
-      console.warn(`no toast ${msg.type} method`);
-    }
-  });
   Toast.addMessageHandlers();
   registerBinding(ToastInputBinding);
+
+  class Modal extends bootstrap.Modal {
+    static addMessageHandlers() {
+      addCustomMessageHandler('modalShow', data => {
+        if (typeof data.modal === 'object') {
+          this.showOrInsertModal(data.modal);
+        }
+      });
+    }
+    static async showOrInsertModal(content) {
+      const el = document.createElement('div');
+      el.innerHTML = content.html;
+      const id = el.firstChild && el.firstChild.id;
+      const existing = document.getElementById(id);
+      if (existing) {
+        Shiny$1.unbindAll(existing);
+        existing.remove();
+      }
+      await Shiny$1.renderContentAsync(document.body, content, 'beforeend');
+      const modal = new Modal(document.getElementById(id));
+      modal.show();
+    }
+  }
+  Shiny.addCustomMessageHandler("yonder:modal", function (msg) {
+    if (msg.type === undefined) {
+      return false;
+    }
+    let _close = function (data) {
+      let modals = document.querySelector(".yonder-modals").childNodes;
+      if (modals.length === 0) {
+        return;
+      }
+      if (data.id) {
+        modals = Array.prototype.filter.call(modals, m => m.id === data.id);
+      }
+      modals.forEach(modal => {
+        if (!modal.classList.contains("yonder-modal")) {
+          return;
+        }
+        $(modal).modal("hide");
+      });
+    };
+    let _show = function (data) {
+      if (data.id) {
+        let possible = document.getElementById(data.id);
+        if (possible && possible.classList.contains("yonder-modal")) {
+          console.warn("ignoring modal with duplicate id");
+          return;
+        }
+      }
+      if (data.dependencies) {
+        Shiny.renderDependencies(data.dependencies);
+      }
+      let container = document.querySelector(".yonder-modals");
+      container.insertAdjacentHTML("beforeend", data.content);
+      let modal = container.querySelector(".yonder-modal:last-child");
+      Shiny.initializeInputs(modal);
+      Shiny.bindAll(modal);
+      let $modal = $(modal);
+      $modal.one("hidden.bs.modal", e => {
+        if (modal.id) {
+          Shiny.onInputChange(modal.id, true);
+          setTimeout(() => Shiny.onInputChange(modal.id, null), 100);
+        }
+        Shiny.unbindAll(modal);
+        container.removeChild(modal);
+      });
+      $(modal).modal("show");
+    };
+    if (msg.type === "close") {
+      _close(msg.data);
+    } else if (msg.type === "show") {
+      _show(msg.data);
+    } else {
+      console.warn(`no modal ${msg.type} method`);
+    }
+  });
+  Modal.addMessageHandlers();
 
   initialize(() => {
     registerInputs();

@@ -1,6 +1,36 @@
-$(() => {
-  document.body.insertAdjacentHTML("beforeend", "<div class='yonder-modals'></div>");
-});
+import { unbindAll, renderContentAsync } from 'Shiny'
+
+import { addCustomMessageHandler, registerBinding } from '../utils'
+import { InputBinding } from '../bindings/inputs'
+
+class Modal extends bootstrap.Modal {
+  static addMessageHandlers() {
+    addCustomMessageHandler('modalShow', (data) => {
+      if (typeof data.modal === 'object') {
+        this.showOrInsertModal(data.modal)
+      }
+    })
+  }
+
+  static async showOrInsertModal(content) {
+    const el = document.createElement('div')
+    el.innerHTML = content.html
+
+    const id = el.firstChild && el.firstChild.id
+    const existing = document.getElementById(id)
+
+    if (existing) {
+      unbindAll(existing)
+      existing.remove()
+    }
+
+    await renderContentAsync(document.body, content, 'beforeend')
+
+    const modal = new Modal(document.getElementById(id))
+
+    modal.show()
+  }
+}
 
 Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
   if (msg.type === undefined) {
@@ -73,3 +103,9 @@ Shiny.addCustomMessageHandler("yonder:modal", function(msg) {
     console.warn(`no modal ${ msg.type } method`);
   }
 });
+
+Modal.addMessageHandlers()
+
+export default {
+  Modal
+}
