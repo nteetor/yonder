@@ -1,8 +1,11 @@
 # yonder <img src="man/figures/logo.png" align="right" width=120 height=139 alt=""/>
 
-An opinionated [shiny](https://github.com/rstudio/shiny) framework.
+A [bslib](https://github.com/rstudio/bslib) companion.
 
-[![can we build it?](https://travis-ci.org/nteetor/yonder.svg?branch=master)](https://travis-ci.org/nteetor/yonder)
+<!-- badges: start -->
+[![R-CMD-check](https://github.com/nteetor/yonder/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/nteetor/yonder/actions/workflows/R-CMD-check.yaml)
+[![Codecov test coverage](https://codecov.io/gh/nteetor/yonder/graph/badge.svg)](https://app.codecov.io/gh/nteetor/yonder)
+<!-- badges: end -->
 
 ## Introduction
 

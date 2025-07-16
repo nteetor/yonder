@@ -14,4 +14,5 @@
 ^CRAN-RELEASE$
 ^renv$
 ^renv\.lock$
-^.github$
+^\.github$
+^codecov\.yml$
