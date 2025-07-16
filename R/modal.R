@@ -36,28 +36,43 @@ modal_dialog <- function(
   ...,
   position = c("top", "center"),
   size = c("md", "sm", "lg", "xl", "fullscreen"),
+  scroll = c("modal", "body"),
+  backdrop = c("default", "static", "none"),
   wrapper = modal_body
 ) {
   check_string(id, allow_null = TRUE)
 
   position <- arg_match(position)
   size <- arg_match(size)
+  scroll <- arg_match(scroll)
+  backdrop <- arg_match(backdrop)
 
   args <- rlang::list2(...)
   attrs <- keep_named(args)
   children <- as_modal_items(keep_unnamed(args), wrapper)
 
+  backdrop <-
+    switch(
+      backdrop,
+      default = "true",
+      none = "false",
+      static = "static"
+    )
+
   component <-
     tags$div(
-      class = "modal fade",
+      class = "bsides-modal modal fade",
       id = id,
       tabindex = "-1",
       `aria-hidden` = "true",
+      `data-bs-backdrop` = backdrop,
       !!!attrs,
       tags$div(
         class = c(
           "modal-dialog",
-          sprintf("modal-%s", size)
+          sprintf("modal-%s", size),
+          if (position == "center") "modal-dialog-centered",
+          if (scroll == "body") "modal-dialog-scrollable"
         ),
         tags$div(
           class = "modal-content",
@@ -167,14 +182,14 @@ modal_header <- function(
   )
 }
 
-#' @describeIn modal_body A button stylized as a large "X" used to close a modal
-#'   dialog, typically found in the modal header.
+#' @describeIn modal_body A button without text used to close a modal dialog,
+#'   typically found in the modal header.
 #'
 #' @export
 modal_close <- function() {
   tags$button(
     type = "button",
-    class = "btn-close",
+    class = "btn-close align-self-auto",
     `data-bs-dismiss` = "modal",
     `aria-label` = "Close"
   )

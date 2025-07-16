@@ -480,12 +480,47 @@ shinyApp(
   page_fluid(
     input_button("click", "Click")
   ),
-  function(input, output) {
+  function(input, output, session) {
     observeEvent(input$click, {
       modal_show(modal_dialog(
         id = "test",
         "Hello, world"
       ))
+    })
+
+    observeEvent(input$test, {
+      print(input$test)
+    })
+  }
+)
+
+shinyApp(
+  page_fluid(
+    input_button("show1", "Show Modal 1"),
+    input_button("show2", "Show Modal 2"),
+    modal_dialog(
+      id = "modal1",
+      modal_header(modal_title("Modal 1")),
+      "You clicked button 1"
+    ),
+    modal_dialog(
+      id = "modal2",
+      position = "center",
+      backdrop = "none",
+      scroll = "body",
+      modal_header(modal_title("Modal 2")),
+      "You clicked button 2",
+      !!!replicate(40, br(), FALSE),
+      "Surprise!"
+    )
+  ),
+  function(input, output) {
+    observeEvent(input$show1, {
+      modal_show("modal1")
+    })
+
+    observeEvent(input$show2, {
+      modal_show("modal2")
     })
   }
 )
