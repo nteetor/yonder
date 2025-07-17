@@ -32,8 +32,8 @@ Components of a modal dialog.
 
 \item \code{modal_header()}: Add a header to a modal dialog.
 
-\item \code{modal_close()}: A button stylized as a large "X" used to close a modal
-dialog, typically found in the modal header.
+\item \code{modal_close()}: A button without text used to close a modal dialog,
+typically found in the modal header.
 
 \item \code{modal_footer()}: Add a footer to a modal dialog.
 

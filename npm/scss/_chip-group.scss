@@ -1,0 +1,14 @@
+.chip-group {
+  position: relative;
+  display: inline-flex;
+  vertical-align: middle;
+
+  &:empty {
+    display: none;
+  }
+
+  > .chip {
+    position: relative;
+    margin: .25rem;
+  }
+}

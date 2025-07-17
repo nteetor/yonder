@@ -2,8 +2,7 @@
 #'
 #' Toasts relay notification-level information to the user.
 #'
-#' @param ... Components to include inside a toast. Named arguments are added as
-#'   HTML attributes to the parent element.
+#' @inheritParams badge
 #'
 #' @param id A string. An optional reactive id to track the state of
 #'   the toast via `input$<id>`. When visible this value is `"shown"` and when

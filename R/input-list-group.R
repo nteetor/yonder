@@ -47,7 +47,7 @@ input_list_group <- function(
     )
 
   input <-
-    div(
+    tags$div(
       class = c(
         "bsides-listgroup",
         "list-group",

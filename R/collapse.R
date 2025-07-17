@@ -1,122 +1,136 @@
 #' Collapsible panes
 #'
-#' The `collapsePane()` creates a collapsible container. The state of the
-#' container, expanded or collapsed, is toggled using `showCollapsePane()`,
-#' `hideCollapsePane()`, and `toggleCollapsePane()`.
+#' Create collapsible containers to hide and show content. Open and close a
+#' panel with `collapse_panel_toggle()`.
 #'
-#' @param id A character string specifying the id of the collapse pane.
+#' @inheritParams badge
 #'
-#' @param show One of `TRUE` or `FALSE` specifying if the collapsible pane
-#'   is shown when the page renders, defaults to `FALSE`.
+#' @inheritParams input_checkbox
 #'
-#' @param animate One of `TRUE` or `FALSE` specifying if showing and closing the
-#'   collapsible pane is animated, defaults to `TRUE`.
+#' @param state A string. The default state of the panel.
 #'
-#' @param ... Tag elements inside the collapsible pane or additional named
-#'   arguments passed as HTML attributes to parent element.
+#' @param direction A string. The direction to open the panel.
 #'
-#' @param session A reactive context, defaults to [getDefaultReactiveDomain()].
+#' @param target A string. A panel id.
 #'
-#' @details
+#' @param text A string. The content of the button.
 #'
-#' Padding may not be applied to the collapsible pane div element. To pad a
-#' collapsible pane first wrap the pane in another element and add padding to
-#' this new element.
-#'
-#' @section App with collapse:
-#'
-#' ```R
-#' ui <- container(
-#'   buttonInput(
-#'     id = "demo",
-#'     label = "Toggle collapse"
-#'   ),
-#'   collapsePane(
-#'     id = "collapse",
-#'     p(
-#'       "Pellentesque condimentum, magna ut suscipit hendrerit, ",
-#'       "ipsum augue ornare nulla, non luctus diam neque sit amet urna."
-#'     ),
-#'     p(
-#'       "Praesent fermentum tempor tellus.  Vestibulum convallis, ",
-#'       "lorem a tempus semper, dui dui euismod elit, vitae placerat ",
-#'       "urna tortor vitae lacus."
-#'     )
-#'   )
-#' )
-#'
-#' server <- function(input, output) {
-#'   observeEvent(input$demo, {
-#'     toggleCollapsePane("collapse")
-#'   })
-#' }
-#'
-#' shinyApp(ui, server)
-#' ```
+#' @returns A [htmltools::tag] object.
 #'
 #' @family components
+#'
 #' @export
+#'
 #' @examples
 #'
-#' ### Examples
+#' collapse_panel("panel1", "Hidden panel")
 #'
-#' # As these are server-side utilities, please run the example applications
-#' # above.
+#' collapse_panel_button("panel1", "Toggle the hidden panel")
 #'
-collapsePane <- function(id, ..., show = FALSE, animate = TRUE) {
-  assert_id()
+collapse_panel <- function(
+  id,
+  ...,
+  state = c("closed", "open"),
+  direction = c("vertical", "horizontal")
+) {
+  check_string(id)
 
-  dep_attach({
+  state <- arg_match(state)
+  direction <- arg_match(direction)
+
+  component <-
     tags$div(
       id = id,
-      class = str_collate(
-        "collapse",
-        if (show) "show",
-        if (!animate) "no-transition"
+      class = c(
+        "bsides-collapse collapse",
+        if (direction == "horizontal") "collapse-horizontal",
+        if (state == "open") "show"
       ),
       ...
     )
-  })
+
+  component <-
+    dependency_append(component)
+
+  component <-
+    s3_class_add(component, "bsides_collapse_panel")
+
+  component
 }
 
-#' @rdname collapsePane
+#' @rdname collapse_panel
+#'
 #' @export
-hideCollapsePane <- function(id, session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_session()
+collapse_panel_button <- function(
+  target,
+  text
+) {
+  check_string(target)
 
-  session$sendCustomMessage("yonder:collapse", list(
-    type = "hide",
-    data = list(
-      target = id
-    )
-  ))
+  tags$button(
+    type = "button",
+    class = "btn btn-primary",
+    `data-bs-toggle` = "collapse",
+    `data-bs-target` = sprintf("#%s", target),
+    `aria-expanded` = "false",
+    `aria-controls` = target,
+    text
+  )
 }
 
-#' @rdname collapsePane
+#' Collapse panel logic
+#'
+#' Server-side functions for [collapse_panel]s.
+#'
+#' @inheritParams update_checkbox
+#'
+#' @describeIn collapse_panel_open Open a collapse panel.
+#'
 #' @export
-showCollapsePane <- function(id, session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_session()
+collapse_panel_open <- function(
+  id,
+  session = get_current_session()
+) {
+  check_string(id)
 
-  session$sendCustomMessage("yonder:collapse", list(
-    type = "show",
-    data = list(
-      target = id
+  msg <-
+    list(
+      method = "open"
     )
-  ))
+
+  session$sendInputMessage(id, msg)
 }
 
-#' @rdname collapsePane
+#' @describeIn collapse_panel_open Close a collapse panel.
+#'
 #' @export
-toggleCollapsePane <- function(id, session = getDefaultReactiveDomain()) {
-  assert_id()
-  assert_session()
+collapse_panel_close <- function(
+  id,
+  session = get_current_session()
+) {
+  check_string(id)
 
-  session$sendCustomMessage("yonder:collapse", list(
-    type = "toggle",
-    data = list(
-      target = id
+  msg <-
+    list(
+      method = "close"
     )
-  ))
+
+  session$sendInputMessage(id, msg)
+}
+
+#' @describeIn collapse_panel_open Toggle a collapse panel open or closed.
+#'
+#' @export
+collapse_panel_toggle <- function(
+  id,
+  session = get_current_session()
+) {
+  check_string(id)
+
+  msg <-
+    list(
+      method = "toggle"
+    )
+
+  session$sendInputMessage(id, msg)
 }

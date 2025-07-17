@@ -524,3 +524,55 @@ shinyApp(
     })
   }
 )
+
+# collapse ----
+
+library(shiny)
+library(bslib)
+
+shinyApp(
+  page_fluid(
+    collapse_panel_button("panel1", "Open panel 1"),
+    collapse_panel(
+      id = "panel1",
+      card(
+        "Peek-a-boo!"
+      )
+    )
+  ),
+  function(input, output) {}
+)
+
+# multi select ---
+
+shinyApp(
+  page_fluid(
+    card(
+      tags$div(
+        class = "chip-group",
+        tags$div(
+          class = "chip",
+          "Chip 1"
+        ),
+        tags$div(
+          class = "chip",
+          "Chip 2",
+          tags$button(
+            type = "button",
+            class = "btn-close"
+          )
+        )
+      )
+    ),
+    card(
+      input_multi_select(
+        id = "ms"
+      )
+    )
+  ),
+  function(input, output) {
+    observe({
+      print(input$ms)
+    })
+  }
+)

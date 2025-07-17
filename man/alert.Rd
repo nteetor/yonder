@@ -44,14 +44,9 @@ alert(
 \seealso{
 Other components: 
 \code{\link{badge}()},
-\code{\link{blockquote}()},
-\code{\link{collapsePane}()},
+\code{\link{collapse_panel}()},
 \code{\link{d1}()},
-\code{\link{dropdown}()},
-\code{\link{img}()},
-\code{\link{jumbotron}()},
 \code{\link{modal_dialog}()},
-\code{\link{pre}()},
 \code{\link{toast}()}
 }
 \concept{components}

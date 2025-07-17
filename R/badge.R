@@ -3,10 +3,12 @@
 #' Highlight small pieces of content with badges. A badge's size scales with
 #' their parent's size.
 #'
-#' @param ... Components to include inside the badge. Named arguments are passed
-#'   as HTML attributes to the parent element.
+#' @param ... Any number of child elements passed to the parent element. Named
+#'   values are passed as HTML attributes to the parent element.
 #'
 #' @param appearance A string. The appearance of the badge.
+#'
+#' @return A [htmltools::tag] object.
 #'
 #' @family components
 #'
@@ -18,7 +20,7 @@
 #'
 #' badge(
 #'   class = "text-bg-primary",
-#'    "New"
+#'   "New"
 #' )
 #'
 badge <- function(

@@ -7,7 +7,7 @@
 \usage{
 input_menu(
   id,
-  label,
+  text,
   choices,
   ...,
   values = choices,
@@ -30,9 +30,6 @@ update_menu_input(
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
 
-\item{label}{A character string or tag element specifying the label of the
-menu's toggle button.}
-
 \item{choices}{A character vector or list. The labels for the input choices.}
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
@@ -49,6 +46,9 @@ element.}
 
 \item{close}{A character string.}
 
+\item{label}{A character string or tag element specifying the label of the
+menu's toggle button.}
+
 \item{select}{A character vector. The values selected by default, one or more
 of \code{values}.}
 
@@ -63,9 +63,9 @@ Other inputs:
 \code{\link{input_button}()},
 \code{\link{input_checkbox}()},
 \code{\link{input_checkbox_group}()},
-\code{\link{input_chip}()},
 \code{\link{input_form}()},
 \code{\link{input_list_group}()},
+\code{\link{input_multi_select}()},
 \code{\link{input_numeric}()},
 \code{\link{input_radio_group}()},
 \code{\link{input_range}()},

@@ -6,27 +6,32 @@
 \title{Modal dialogs}
 \usage{
 modal_dialog(
+  id,
   ...,
-  id = NULL,
   position = c("top", "center"),
   size = c("md", "sm", "lg", "xl", "fullscreen"),
+  scroll = c("modal", "body"),
+  backdrop = c("default", "static", "none"),
   wrapper = modal_body
 )
 
 modal_toggle(id, text, ...)
 }
 \arguments{
+\item{id}{A string. The id of a modal. Use \verb{input$<id>} to query the state of
+the modal.}
+
 \item{...}{Any number of child elements passed to the parent element. Named
 values are passed as HTML attributes to the parent element.}
-
-\item{id}{A string. The reactive id of a modal. Use \verb{input$<id>} to query the
-state of the modal.}
 
 \item{position}{A string. The position of the modal on the screen.}
 
 \item{size}{A string. The size of the modal.}
 
 \item{modal}{A modal tag element created using \code{modal()}.}
+}
+\value{
+A \link[htmltools:builder]{htmltools::tag} object.
 }
 \description{
 Modals are flexible alert windows, which disable interaction with the page
@@ -55,13 +60,8 @@ modal_dialog(
 Other components: 
 \code{\link{alert}()},
 \code{\link{badge}()},
-\code{\link{blockquote}()},
-\code{\link{collapsePane}()},
+\code{\link{collapse_panel}()},
 \code{\link{d1}()},
-\code{\link{dropdown}()},
-\code{\link{img}()},
-\code{\link{jumbotron}()},
-\code{\link{pre}()},
 \code{\link{toast}()}
 }
 \concept{components}

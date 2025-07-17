@@ -17,7 +17,7 @@
 #' @export
 input_menu <- function(
   id,
-  label,
+  text,
   choices,
   ...,
   values = choices,
@@ -55,7 +55,7 @@ input_menu <- function(
         `data-bs-toggle` = "dropdown",
         `aria-expanded` = "false",
         !!!menu_toggle_attrs(align),
-        label
+        text
       ),
       tags$ul(
         class = "dropdown-menu",

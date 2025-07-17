@@ -11,8 +11,6 @@ button_toolbar(...)
 }
 \arguments{
 \item{...}{Button inputs to group.}
-
-\item{vertical}{A boolean. If \code{TRUE}, vertically stack the buttons.}
 }
 \description{
 A set of buttons with custom values.

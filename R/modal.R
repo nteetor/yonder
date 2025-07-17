@@ -3,8 +3,7 @@
 #' Modals are flexible alert windows, which disable interaction with the page
 #' behind them. Modals may include inputs, buttons, or simply text.
 #'
-#' @param ... Any number of child elements passed to the parent element. Named
-#'   values are passed as HTML attributes to the parent element.
+#' @inheritParams badge
 #'
 #' @param id A string. The id of a modal. Use `input$<id>` to query the state of
 #'   the modal.
@@ -14,6 +13,8 @@
 #' @param size A string. The size of the modal.
 #'
 #' @param modal A modal tag element created using `modal()`.
+#'
+#' @inherit badge return
 #'
 #' @describeIn modal_dialog Construct a modal.
 #'

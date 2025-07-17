@@ -7,10 +7,13 @@
 badge(..., appearance = c("default", "pill"))
 }
 \arguments{
-\item{...}{Components to include inside the badge. Named arguments are passed
-as HTML attributes to the parent element.}
+\item{...}{Any number of child elements passed to the parent element. Named
+values are passed as HTML attributes to the parent element.}
 
 \item{appearance}{A string. The appearance of the badge.}
+}
+\value{
+A \link[htmltools:builder]{htmltools::tag} object.
 }
 \description{
 Highlight small pieces of content with badges. A badge's size scales with
@@ -23,21 +26,16 @@ badge(99)
 
 badge(
   class = "text-bg-primary",
-   "New"
+  "New"
 )
 \dontshow{\}) # examplesIf}
 }
 \seealso{
 Other components: 
 \code{\link{alert}()},
-\code{\link{blockquote}()},
-\code{\link{collapsePane}()},
+\code{\link{collapse_panel}()},
 \code{\link{d1}()},
-\code{\link{dropdown}()},
-\code{\link{img}()},
-\code{\link{jumbotron}()},
 \code{\link{modal_dialog}()},
-\code{\link{pre}()},
 \code{\link{toast}()}
 }
 \concept{components}

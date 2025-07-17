@@ -16,8 +16,8 @@ toast(
 toast_container(..., position = c("top", "bottom"), padding = 3)
 }
 \arguments{
-\item{...}{Components to include inside a toast. Named arguments are added as
-HTML attributes to the parent element.}
+\item{...}{Any number of child elements passed to the parent element. Named
+values are passed as HTML attributes to the parent element.}
 
 \item{id}{A string. An optional reactive id to track the state of
 the toast via \verb{input$<id>}. When visible this value is \code{"shown"} and when
@@ -72,13 +72,8 @@ shinyApp(ui, server)
 Other components: 
 \code{\link{alert}()},
 \code{\link{badge}()},
-\code{\link{blockquote}()},
-\code{\link{collapsePane}()},
+\code{\link{collapse_panel}()},
 \code{\link{d1}()},
-\code{\link{dropdown}()},
-\code{\link{img}()},
-\code{\link{jumbotron}()},
-\code{\link{modal_dialog}()},
-\code{\link{pre}()}
+\code{\link{modal_dialog}()}
 }
 \concept{components}

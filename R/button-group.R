@@ -4,22 +4,23 @@
 #'
 #' @param ... Button inputs to group.
 #'
-#' @param vertical A boolean. If `TRUE`, vertically stack the buttons.
-#'
 #' @export
 button_group <- function(
   ...
 ) {
-  tag <-
-    div(
+  component <-
+    tags$div(
       class = "btn-group",
       ...
     )
 
-  tag <-
-    s3_class_add(tag, "yonder_button_group")
+  component <-
+    dependency_append(component)
 
-  tag
+  component <-
+    s3_class_add(component, "bsides_button_group")
+
+  component
 }
 
 #' @rdname button_group
@@ -27,15 +28,18 @@ button_group <- function(
 button_toolbar <- function(
   ...
 ) {
-  tag <-
-    div(
+  component <-
+    tag$div(
       class = "btn-toolbar",
       role = "toolbar",
       ...
     )
 
-  tag <-
-    s3_class_add(tag, "yonder_button_toolbar")
+  component <-
+    dependency_append(component)
 
-  tag
+  compnent <-
+    s3_class_add(component, "bsides_button_toolbar")
+
+  component
 }
