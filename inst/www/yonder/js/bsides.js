@@ -186,7 +186,24 @@
   }
 
   class Chip {
-    static create(text) {
+    #element;
+    #instances = new WeakMap();
+    constructor(element) {
+      this.#element = element;
+      this.#instances.set(element, this);
+    }
+    close() {
+      const $element = $(this.#element);
+      $element.trigger('close.bsides.chip');
+      $element.fadeOut(200, () => this.#remove());
+    }
+    #remove() {
+      console.log(this.#element);
+      this.#element.remove();
+      $(this.#element).trigger('closed.bsides.chip');
+      this.#instances.delete(this.#element);
+    }
+    static createElement(text) {
       if (!text) {
         return;
       }
@@ -195,25 +212,29 @@
       chip.setAttribute('data-value', text);
       const closeButton = document.createElement('button');
       closeButton.setAttribute('type', 'button');
+      closeButton.setAttribute('data-bs-dismiss', 'chip');
       closeButton.classList.add('btn-close');
       chip.innerText = text;
       chip.appendChild(closeButton);
       return chip;
     }
+    static getInstance(element) {
+      return this.#instances.get(element);
+    }
+    static getOrCreateInstance(element) {
+      const chip = this.getInstance(element);
+      if (!chip) {
+        return new this(element);
+      }
+      return chip;
+    }
     static addEventListeners() {
-      $(document).on('click.bsides.chip', '.chip .btn-close', event => {
-        const button = event.currentTarget;
-        const $chip = $(button.parentElement);
-        $chip.trigger('chip:remove.bsides.chip');
-      });
-      $(document).on('chip:remove.bsides.chip', '.chip', event => {
-        event.currentTarget.remove();
+      $(document).on('click.bsides.chip', '[data-bs-dismiss="chip"]', event => {
+        const chip = new Chip(event.currentTarget.parentElement);
+        chip.close();
       });
     }
   }
-  $(document).on('chip:remove', event => {
-    console.log(event);
-  });
   class MultiSelectInput {
     #element;
     #chipGroupElement;
@@ -234,13 +255,17 @@
       });
     }
     text() {
-      return this.#textInputElement.value;
+      return (this.#textInputElement.value || '').trim();
     }
     add() {
-      const chip = Chip.create(this.text());
+      const chip = Chip.createElement(this.text());
+      new Chip(chip);
       this.#chipGroupElement.appendChild(chip);
       this.#textInputElement.value = '';
       $(this.#element).trigger('update.bsides.multiselect');
+    }
+    static getInstance(element) {
+      return this.#instances.get(element);
     }
     static addEventListeners() {
       const $document = $(document);
@@ -253,9 +278,9 @@
           multiSelect.add();
         }
       });
-    }
-    static getInstance(element) {
-      return this.#instances.get(element);
+      $document.on('close.bsides.chip', '.multi-select', event => {
+        $(event.currentTarget).trigger('update.bsides.multiselect');
+      });
     }
   }
   class MultiSelectInputBinding extends InputBinding {
@@ -263,7 +288,7 @@
       return 'multiselect';
     }
     get events() {
-      return ['update', 'chip:remove'];
+      return ['update.bsides.multiselect'];
     }
     get selectors() {}
     getType(element) {

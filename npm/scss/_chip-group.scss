@@ -9,6 +9,9 @@
 
   > .chip {
     position: relative;
-    margin: .25rem;
+  }
+
+  > .chip:not(:first-child) {
+    margin-left: .25rem;
   }
 }

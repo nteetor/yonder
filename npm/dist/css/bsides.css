@@ -12842,6 +12842,7 @@ textarea.form-control-lg {
 }
 .chip > .btn-close {
   margin-left: 0.375rem;
+  padding: 0;
 }
 
 .chip-group {
@@ -12855,7 +12856,16 @@ textarea.form-control-lg {
 }
 .chip-group > .chip {
   position: relative;
-  margin: 0.25rem;
+}
+.chip-group > .chip:not(:first-child) {
+  margin-left: 0.25rem;
+}
+
+.multi-select > .chip-group {
+  margin-bottom: 0.375rem;
+}
+.multi-select > .chip-group:empty {
+  margin-bottom: 0;
 }
 
 .multi-select-input {

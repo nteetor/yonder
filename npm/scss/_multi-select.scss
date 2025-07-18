@@ -1,5 +1,11 @@
 .multi-select {
+  > .chip-group {
+    margin-bottom: .375rem;
 
+    &:empty {
+      margin-bottom: 0;
+    }
+  }
 }
 
 .multi-select-input {

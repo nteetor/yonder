@@ -4,7 +4,28 @@ import { addCustomMessageHandler, registerBinding } from '../../utils'
 import InputBinding from './input.js'
 
 class Chip {
-  static create(text) {
+  #element
+  #instances = new WeakMap()
+
+  constructor(element) {
+    this.#element = element
+    this.#instances.set(element, this)
+  }
+
+  close() {
+    const $element = $(this.#element)
+
+    $element.trigger('close.bsides.chip')
+    $element.fadeOut(200, () => this.#remove())
+  }
+
+  #remove() {
+    this.#element.remove()
+    $(this.#element).trigger('closed.bsides.chip')
+    this.#instances.delete(this.#element)
+  }
+
+  static createElement(text) {
     if (!text) {
       return
     }
@@ -15,7 +36,9 @@ class Chip {
 
     const closeButton = document.createElement('button')
     closeButton.setAttribute('type', 'button')
+    closeButton.setAttribute('data-bs-dismiss', 'chip')
     closeButton.classList.add('btn-close')
+
 
     chip.innerText = text
     chip.appendChild(closeButton)
@@ -23,16 +46,25 @@ class Chip {
     return chip
   }
 
+  static getInstance(element) {
+    return this.#instances.get(element)
+  }
+
+  static getOrCreateInstance(element) {
+    const chip = this.getInstance(element)
+
+    if (!chip) {
+      return new this(element)
+    }
+
+    return chip
+  }
+
   static addEventListeners() {
-    $(document).on('click.bsides.chip', '.chip .btn-close', (event) => {
-      const button = event.currentTarget
-      const $chip = $(button.parentElement)
+    $(document).on('click.bsides.chip', '[data-bs-dismiss="chip"]', (event) => {
+      const chip = new Chip(event.currentTarget.parentElement)
 
-      $chip.trigger('chip:remove.bsides.chip')
-    })
-
-    $(document).on('chip:remove.bsides.chip', '.chip', (event) => {
-      event.currentTarget.remove()
+      chip.close()
     })
   }
 }
@@ -64,14 +96,19 @@ class MultiSelectInput {
   }
 
   text() {
-    return this.#textInputElement.value
+    return (this.#textInputElement.value || '').trim()
   }
 
   add() {
-    const chip = Chip.create(this.text())
+    const chip = Chip.createElement(this.text())
+    new Chip(chip)
     this.#chipGroupElement.appendChild(chip)
     this.#textInputElement.value = ''
     $(this.#element).trigger('update.bsides.multiselect')
+  }
+
+  static getInstance(element) {
+    return this.#instances.get(element)
   }
 
   static addEventListeners() {
@@ -88,10 +125,10 @@ class MultiSelectInput {
         multiSelect.add()
       }
     })
-  }
 
-  static getInstance(element) {
-    return this.#instances.get(element)
+    $document.on('close.bsides.chip', '.multi-select', (event) => {
+      $(event.currentTarget).trigger('update.bsides.multiselect')
+    })
   }
 }
 
@@ -102,8 +139,7 @@ class MultiSelectInputBinding extends InputBinding {
 
   get events() {
     return [
-      'update',
-      'chip:remove'
+      'update.bsides.multiselect'
     ]
   }
 

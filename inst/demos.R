@@ -543,7 +543,10 @@ shinyApp(
   function(input, output) {}
 )
 
-# multi select ---
+# multi select input ----
+
+library(shiny)
+library(bslib)
 
 shinyApp(
   page_fluid(
@@ -559,6 +562,7 @@ shinyApp(
           "Chip 2",
           tags$button(
             type = "button",
+            `data-bs-dismiss` = "chip",
             class = "btn-close"
           )
         )
