@@ -42,13 +42,13 @@ input_form <- function(
   input <-
     tags$form(
       class = c(
-        "bsides-form",
-        if (inline) "form-inline"
+        "bsides-form"
+        # if (inline) "form-inline"
       ),
       id = id,
       !!!attrs,
       tags$fieldset(
-        disabled = if (isTRUE(disable)) NA,
+        # disabled = if (isTRUE(disable)) NA,
         if (non_null(label)) {
           tags$legend(label)
         },

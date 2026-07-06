@@ -1,41 +1,81 @@
 /*!
   * bsides v0.2.0.9000 (https://nteetor.github.com/yonder)
-  * Copyright 2011-2025 Nathan Teetor <nate@haufin.ch>
+  * Copyright 2011-2026 Nathan Teetor <nate@haufin.ch>
   * Licensed under MIT (https://github.com/nteetor/yonder/blob/main/LICENSE.note)
   */
-(function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(require('jquery'), require('Shiny')) :
-  typeof define === 'function' && define.amd ? define(['jquery', 'Shiny'], factory) :
-  (global = typeof globalThis !== 'undefined' ? globalThis : global || self, factory(global.$, global.Shiny));
-})(this, (function ($, Shiny$1) { 'use strict';
+"use strict";
+(() => {
+  var __create = Object.create;
+  var __defProp = Object.defineProperty;
+  var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
+  var __getOwnPropNames = Object.getOwnPropertyNames;
+  var __getProtoOf = Object.getPrototypeOf;
+  var __hasOwnProp = Object.prototype.hasOwnProperty;
+  var __commonJS = (cb, mod) => function __require() {
+    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+  };
+  var __copyProps = (to, from, except, desc) => {
+    if (from && typeof from === "object" || typeof from === "function") {
+      for (let key of __getOwnPropNames(from))
+        if (!__hasOwnProp.call(to, key) && key !== except)
+          __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
+    }
+    return to;
+  };
+  var __toESM = (mod, isNodeMode, target) => (target = mod != null ? __create(__getProtoOf(mod)) : {}, __copyProps(
+    // If the importer is in node compatibility mode or this is not an ESM
+    // file that has been converted to a CommonJS file using a Babel-
+    // compatible transform (i.e. "__esModule" has not been set), then set
+    // "default" to the CommonJS "module.exports" for node compatibility.
+    isNodeMode || !mod || !mod.__esModule ? __defProp(target, "default", { value: mod, enumerable: true }) : target,
+    mod
+  ));
 
-  const pkg = {
-    prefix: 'bsides'
+  // globals:jquery
+  var require_jquery = __commonJS({
+    "globals:jquery"(exports, module) {
+      module.exports = window.jQuery;
+    }
+  });
+
+  // globals:bootstrap
+  var require_bootstrap = __commonJS({
+    "globals:bootstrap"(exports, module) {
+      module.exports = window.bootstrap;
+    }
+  });
+
+  // srcts/src/utils/index.ts
+  var pkg = {
+    prefix: "bsides"
   };
   function addCustomMessageHandler(type, handler) {
     if (window.Shiny) {
-      Shiny.addCustomMessageHandler(`${pkg.prefix}:${type}`, handler);
+      window.Shiny.addCustomMessageHandler(`${pkg.prefix}:${type}`, handler);
     }
   }
   function initialize(callback) {
-    if (document.readyState === 'complete') {
+    if (document.readyState === "complete") {
       callback();
     } else {
-      document.addEventListener('DOMContentLoaded', callback);
+      document.addEventListener("DOMContentLoaded", callback);
     }
   }
   function registerBinding(binding) {
     if (window.Shiny) {
-      Shiny.inputBindings.register(new binding(), `${pkg.prefix}.${binding.type}`);
+      window.Shiny.inputBindings.register(new binding(), `${pkg.prefix}.${binding.type}`);
     }
   }
 
-  class InputBinding {
+  // srcts/src/bindings/inputs/input.ts
+  var import_jquery = __toESM(require_jquery());
+  var InputBinding = class {
+    priority;
     static get prefix() {
       return pkg.prefix;
     }
     static get type() {
-      throw 'not implemented';
+      throw new Error("not implemented");
     }
     static get namespace() {
       return `.${this.type}`;
@@ -44,642 +84,724 @@
       return [];
     }
     constructor() {
-      this.priority = 'deferred';
+      this.priority = "deferred";
+    }
+    // Typed access to static members overridden by subclasses.
+    get ctor() {
+      return this.constructor;
     }
     find(scope) {
-      return $(scope).find(`.${this.constructor.prefix}-${this.constructor.type}`);
+      return (0, import_jquery.default)(scope).find(`.${this.ctor.prefix}-${this.ctor.type}`);
     }
     getId(element) {
       return element.id;
     }
     getType(element) {
+      void element;
       return null;
     }
     getValue(element) {
-      throw 'not implemented';
+      void element;
+      throw new Error("not implemented");
     }
     subscribe(element, callback) {
-      this.events.forEach(e => {
-        const event = `${e.type || e}.${this.constructor.prefix}${this.constructor.namespace}`;
-        const selector = e.selector || null;
-        $(element).on(event, selector, e => {
+      for (const e of this.events) {
+        const type = typeof e === "string" ? e : e.type;
+        const selector = typeof e === "string" ? null : e.selector ?? null;
+        const event = `${type}.${this.ctor.prefix}${this.ctor.namespace}`;
+        (0, import_jquery.default)(element).on(event, selector, () => {
           callback(this.priority);
         });
-      });
+      }
     }
     unsubscribe(element) {
-      $(element).off(this.namespace);
+      (0, import_jquery.default)(element).off(`.${this.ctor.prefix}${this.ctor.namespace}`);
     }
     receiveMessage(element, data) {
-      throw 'not implemented';
+      void element;
+      void data;
+      throw new Error("not implemented");
     }
     getState(element) {
-      throw 'not implemented';
+      void element;
+      throw new Error("not implemented");
     }
-
-    // @return { policy: RatePolicyModes, delay: number }
     getRatePolicy(element) {
+      void element;
       return null;
     }
-    initialize(element) {}
-    dispose(element) {}
-  }
+    initialize(element) {
+      void element;
+    }
+    dispose(element) {
+      void element;
+    }
+  };
+  var input_default = InputBinding;
 
-  class ButtonInputBinding extends InputBinding {
+  // srcts/src/bindings/inputs/button.ts
+  var import_jquery2 = __toESM(require_jquery());
+  var ButtonInputBinding = class extends input_default {
     static get type() {
-      return 'button';
+      return "button";
     }
     get events() {
-      return ['click'];
+      return ["click"];
     }
     get data() {
       return {
-        clicks: `${this.constructor.prefix}-clicks`
+        clicks: `${this.ctor.prefix}-clicks`
       };
     }
     initialize(element) {
-      const $element = $(element);
+      const $element = (0, import_jquery2.default)(element);
       $element.data(this.data.clicks, 0);
-      $element.on(`click${this.constructor.namespace}`, event => {
-        const clicks = +$element.data(this.data.clicks);
+      $element.on(`click${this.ctor.namespace}`, () => {
+        const clicks = Number($element.data(this.data.clicks));
         $element.data(this.data.clicks, clicks + 1);
       });
     }
     getType(element) {
-      return `${this.constructor.prefix}${this.constructor.namespace}`;
+      void element;
+      return `${this.ctor.prefix}${this.ctor.namespace}`;
     }
     getValue(element) {
-      return $(element).data(this.data.clicks);
+      return (0, import_jquery2.default)(element).data(this.data.clicks);
     }
-    receiveMessage(element, data) {}
-  }
+    receiveMessage(element, data) {
+      void element;
+      void data;
+    }
+  };
+  var button_default = ButtonInputBinding;
 
-  class CheckboxInputBinding extends InputBinding {
+  // srcts/src/bindings/inputs/checkbox.ts
+  var import_jquery3 = __toESM(require_jquery());
+  var CheckboxInputBinding = class extends input_default {
     static get type() {
-      return 'checkbox';
+      return "checkbox";
     }
     get events() {
-      return ['change'];
+      return ["change"];
     }
     get selectors() {
       return {
-        label: '.form-check-label',
-        value: '.form-check-input'
+        label: ".form-check-label",
+        value: ".form-check-input"
       };
     }
     getValue(element) {
-      return $(element).children(this.selectors.value).prop('checked');
+      return (0, import_jquery3.default)(element).children(this.selectors.value).prop("checked");
     }
     receiveMessage(element, data) {
-      const $element = $(element);
+      const $element = (0, import_jquery3.default)(element);
       const $label = $element.find(this.selectors.label);
       const $value = $element.find(this.selectors.value);
-      if (data.hasOwnProperty('choice')) {
+      if (Object.hasOwn(data, "choice")) {
         $label.html(data.choice);
       }
-      if (data.hasOwnProperty('value')) {
-        $value.prop('checked', data.value);
+      if (Object.hasOwn(data, "value")) {
+        $value.prop("checked", data.value);
       }
-      if (data.hasOwnProperty('disable')) {
-        $value.prop('disabled', data.disable);
+      if (Object.hasOwn(data, "disable")) {
+        $value.prop("disabled", data.disable);
       }
-      $element.trigger('change');
+      $element.trigger("change");
     }
-  }
+  };
+  var checkbox_default = CheckboxInputBinding;
 
-  class CheckboxGroupInputBinding extends InputBinding {
+  // srcts/src/bindings/inputs/checkbox-group.ts
+  var import_jquery4 = __toESM(require_jquery());
+  var CheckboxGroupInputBinding = class extends input_default {
     static get type() {
-      return 'checkboxgroup';
+      return "checkboxgroup";
     }
     get events() {
-      return ['change'];
+      return ["change"];
     }
     get selectors() {
       return {
-        choice: '.form-check-label,.btn',
-        value: '.form-check-input,.btn-check'
+        choice: ".form-check-label,.btn",
+        value: ".form-check-input,.btn-check"
       };
     }
     getType(element) {
-      return `${this.constructor.prefix}${this.constructor.namespace}`;
+      void element;
+      return `${this.ctor.prefix}${this.ctor.namespace}`;
     }
     getValue(element) {
-      return $(element).find(this.selectors.value).filter(':checked').map((i, el) => el.value).get();
+      return (0, import_jquery4.default)(element).find(this.selectors.value).filter(":checked").map((i, el) => el.value).get();
     }
     receiveMessage(element, data) {
-      const $element = $(element);
+      const $element = (0, import_jquery4.default)(element);
       const $values = $element.find(this.selectors.value);
-      if (data.hasOwnProperty('options')) {
-        $element.find('.form-check').remove();
+      if (Object.hasOwn(data, "options")) {
+        $element.find(".form-check").remove();
         $element.html(data.options);
       }
-      if (data.hasOwnProperty('select')) {
-        $values.prop('checked', false);
-        $values.filter((i, e) => data.select.includes(e.value)).prop('checked', true);
+      if (Object.hasOwn(data, "select")) {
+        $values.prop("checked", false);
+        $values.filter((i, e) => data.select.includes(e.value)).prop("checked", true);
       }
-      if (data.hasOwnProperty('disable')) {
-        $values.prop('disabled', false);
-        $values.filter((i, e) => data.disable.includes(e.value)).prop('disabled', true);
+      if (Object.hasOwn(data, "disable")) {
+        $values.prop("disabled", false);
+        $values.filter((i, e) => data.disable.includes(e.value)).prop("disabled", true);
       }
-      $element.trigger('change');
+      $element.trigger("change");
     }
-  }
+  };
+  var checkbox_group_default = CheckboxGroupInputBinding;
 
-  class Chip {
+  // srcts/src/bindings/inputs/form.ts
+  var import_jquery5 = __toESM(require_jquery());
+  var FormInputBinding = class extends input_default {
+    static get type() {
+      return "form";
+    }
+    get events() {
+      return [
+        { type: "click", selector: this.selectors.submit }
+      ];
+    }
+    get selectors() {
+      return {
+        submit: ".bsides-btn-submit"
+      };
+    }
+    get data() {
+      return {
+        value: `${this.ctor.prefix}-value`
+      };
+    }
+    initialize(element) {
+      const $element = (0, import_jquery5.default)(element);
+      const inputValues = /* @__PURE__ */ new Map();
+      $element.on(
+        `shiny:inputchanged${this.ctor.namespace}`,
+        (event) => {
+          const inputEvent = event;
+          if (!inputEvent.el || inputEvent.priority === "event") {
+            return;
+          }
+          if (element.contains(inputEvent.el)) {
+            const name = inputEvent.inputType ? `${inputEvent.name}:${inputEvent.inputType}` : inputEvent.name;
+            inputValues.set(name, inputEvent.value);
+            inputEvent.preventDefault();
+          }
+        }
+      );
+      $element.on(
+        `click${this.ctor.namespace}`,
+        this.selectors.submit,
+        (event) => {
+          event.preventDefault();
+          for (const [key, value2] of inputValues.entries()) {
+            window.Shiny?.setInputValue(key, value2, { priority: "event" });
+          }
+          const value = event.currentTarget.value;
+          $element.data(this.data.value, value);
+        }
+      );
+    }
+    getValue(element) {
+      return (0, import_jquery5.default)(element).data(this.data.value);
+    }
+    receiveMessage(element, data) {
+      const $element = (0, import_jquery5.default)(element);
+      if (Object.hasOwn(data, "submit")) {
+        const value = data.submit;
+        $element.find(`${this.selectors.submit}[value=${value}]`).trigger("click");
+      }
+    }
+  };
+  var form_default = FormInputBinding;
+
+  // srcts/src/bindings/inputs/link.ts
+  var import_jquery6 = __toESM(require_jquery());
+  var LinkInputBinding = class extends input_default {
+    static get type() {
+      return "link";
+    }
+    get events() {
+      return ["click"];
+    }
+    get data() {
+      return {
+        clicks: `${this.ctor.prefix}-clicks`
+      };
+    }
+    initialize(element) {
+      const $element = (0, import_jquery6.default)(element);
+      $element.data(this.data.clicks, 0);
+      $element.on(`click${this.ctor.namespace}`, () => {
+        const clicks = Number($element.data(this.data.clicks));
+        $element.data(this.data.clicks, clicks + 1);
+      });
+    }
+    getType(element) {
+      void element;
+      return `${this.ctor.prefix}${this.ctor.namespace}`;
+    }
+    getValue(element) {
+      return (0, import_jquery6.default)(element).data(this.data.clicks);
+    }
+  };
+  var link_default = LinkInputBinding;
+
+  // srcts/src/bindings/inputs/list-group.ts
+  var import_jquery7 = __toESM(require_jquery());
+  var ListGroupInputBinding = class extends input_default {
+    static get type() {
+      return "listgroup";
+    }
+    get events() {
+      return ["click"];
+    }
+    get selectors() {
+      return {
+        choice: ".list-group-item-action",
+        value: ".list-group-item-action"
+      };
+    }
+    get data() {
+      return {
+        value: `${this.ctor.prefix}-value`
+      };
+    }
+    initialize(element) {
+      const $element = (0, import_jquery7.default)(element);
+      $element.on("click", this.selectors.choice, (event) => {
+        const $choice = (0, import_jquery7.default)(event.currentTarget);
+        $choice.toggleClass("active");
+      });
+    }
+    getValue(element) {
+      return (0, import_jquery7.default)(element).find(`${this.selectors.value}.active`).map((i, el) => el.getAttribute(`data-${this.data.value}`)).get();
+    }
+  };
+  var list_group_default = ListGroupInputBinding;
+
+  // srcts/src/bindings/inputs/menu.ts
+  var import_jquery8 = __toESM(require_jquery());
+  var MenuInputBinding = class extends input_default {
+    static get type() {
+      return "menu";
+    }
+    get events() {
+      return [
+        { type: "click", selector: this.selectors.choice }
+      ];
+    }
+    get selectors() {
+      return {
+        choice: ".dropdown-item",
+        value: ".dropdown-item"
+      };
+    }
+    get data() {
+      return {
+        value: `${this.ctor.prefix}-value`
+      };
+    }
+    initialize(element) {
+      const $element = (0, import_jquery8.default)(element);
+      $element.on("click", this.selectors.value, (event) => {
+        $element.data(
+          this.data.value,
+          event.currentTarget.value
+        );
+      });
+    }
+    getValue(element) {
+      return (0, import_jquery8.default)(element).data(this.data.value);
+    }
+  };
+  var menu_default = MenuInputBinding;
+
+  // srcts/src/bindings/inputs/radio-group.ts
+  var import_jquery9 = __toESM(require_jquery());
+  var RadioGroupInputBinding = class extends input_default {
+    static get type() {
+      return "radiogroup";
+    }
+    get events() {
+      return ["change"];
+    }
+    get selectors() {
+      return {
+        choice: ".form-check-label,.btn",
+        value: ".form-check-input,.btn-check"
+      };
+    }
+    getValue(element) {
+      return (0, import_jquery9.default)(element).find(this.selectors.value).filter(":checked").val();
+    }
+    receiveMessage(element, data) {
+      const $element = (0, import_jquery9.default)(element);
+      const $values = $element.find(this.selectors.value);
+      if (Object.hasOwn(data, "options")) {
+        $element.find(".form-check").remove();
+        $element.html(data.options);
+      }
+      if (Object.hasOwn(data, "select")) {
+        $values.prop("checked", false);
+        $values.filter((i, e) => data.select.includes(e.value)).prop("checked", true);
+      }
+      if (Object.hasOwn(data, "disable")) {
+        $values.prop("disabled", false);
+        $values.filter((i, e) => data.disable.includes(e.value)).prop("disabled", true);
+      }
+      $element.trigger("change");
+    }
+  };
+  var radio_group_default = RadioGroupInputBinding;
+
+  // srcts/src/bindings/inputs/range.ts
+  var import_jquery10 = __toESM(require_jquery());
+  var RangeInputBinding = class extends input_default {
+    static get type() {
+      return "range";
+    }
+    get events() {
+      return ["change"];
+    }
+    get selectors() {
+      return {
+        value: ".form-range"
+      };
+    }
+    getValue(element) {
+      return Number((0, import_jquery10.default)(element).find(this.selectors.value).val());
+    }
+    receiveMessage(element, data) {
+      const $element = (0, import_jquery10.default)(element);
+      const $value = $element.find(this.selectors.value);
+      if (Object.hasOwn(data, "value")) {
+        $value.val(data.value);
+      }
+      if (Object.hasOwn(data, "disable")) {
+        $value.prop("disable", data.disable);
+      }
+      $element.trigger("change");
+    }
+  };
+  var range_default = RangeInputBinding;
+
+  // srcts/src/bindings/inputs/select.ts
+  var import_jquery11 = __toESM(require_jquery());
+  var SelectInputBinding = class extends input_default {
+    static get type() {
+      return "select";
+    }
+    get events() {
+      return ["change"];
+    }
+    get selectors() {
+      return {
+        value: "option"
+      };
+    }
+    getValue(element) {
+      return element.value;
+    }
+    receiveMessage(element, data) {
+      const $element = (0, import_jquery11.default)(element);
+      if (Object.hasOwn(data, "options")) {
+        $element.find(this.selectors.value).remove();
+        $element.html(data.options);
+      }
+      if (Object.hasOwn(data, "select")) {
+        $element.val(data.select);
+      }
+      if (Object.hasOwn(data, "disable")) {
+        const $values = $element.find("option");
+        $values.prop("disabled", false);
+        $values.filter((i, e) => data.disable.includes(e.value)).prop("disabled", true);
+      }
+      $element.trigger("change");
+    }
+  };
+  var select_default = SelectInputBinding;
+
+  // srcts/src/bindings/inputs/text.ts
+  var import_jquery12 = __toESM(require_jquery());
+  var TextInputBinding = class extends input_default {
+    static get type() {
+      return "text";
+    }
+    get events() {
+      return [
+        "keyup",
+        "input",
+        "change"
+      ];
+    }
+    get selectors() {
+      return {
+        value: "input"
+      };
+    }
+    getValue(element) {
+      return element.value;
+    }
+    getRatePolicy(element) {
+      void element;
+      return {
+        policy: "debounce",
+        delay: 250
+      };
+    }
+    receiveMessage(element, data) {
+      const $element = (0, import_jquery12.default)(element);
+      if (Object.hasOwn(data, "value")) {
+        $element.val(data.value);
+      }
+      if (Object.hasOwn(data, "disable")) {
+        $element.prop("disabled", data.disable);
+      }
+      $element.trigger("change");
+    }
+  };
+  var text_default = TextInputBinding;
+
+  // srcts/src/bindings/inputs/text-group.ts
+  var import_jquery13 = __toESM(require_jquery());
+  var TextGroupInputBinding = class extends input_default {
+    static get type() {
+      return "textgroup";
+    }
+    get events() {
+      return [
+        "keyup",
+        "input",
+        "change"
+      ];
+    }
+    get selectors() {
+      return {
+        value: "input",
+        text: ".input-group-text"
+      };
+    }
+    getValue(element) {
+      const $element = (0, import_jquery13.default)(element);
+      if (!$element.find(this.selectors.value).val()) {
+        return null;
+      }
+      return $element.find(`${this.selectors.text},${this.selectors.value}`).map((i, e) => e.innerText || e.value || "").get().join("");
+    }
+    getRatePolicy(element) {
+      void element;
+      return {
+        policy: "debounce",
+        delay: 250
+      };
+    }
+    receiveMessage(element, data) {
+      const $element = (0, import_jquery13.default)(element);
+      const $value = $element.find(this.selectors.value);
+      if (Object.hasOwn(data, "value")) {
+        $value.val(data.value);
+      }
+      if (Object.hasOwn(data, "disable")) {
+        $value.prop("disabled", data.disable);
+      }
+      $element.trigger("change");
+    }
+  };
+  var text_group_default = TextGroupInputBinding;
+
+  // srcts/src/bindings/inputs/multi-select.ts
+  var import_jquery14 = __toESM(require_jquery());
+  var Chip = class _Chip {
     #element;
-    #instances = new WeakMap();
+    static #instances = /* @__PURE__ */ new WeakMap();
     constructor(element) {
       this.#element = element;
-      this.#instances.set(element, this);
+      _Chip.#instances.set(element, this);
     }
     close() {
-      const $element = $(this.#element);
-      $element.trigger('close.bsides.chip');
+      const $element = (0, import_jquery14.default)(this.#element);
+      $element.trigger("close.bsides.chip");
       $element.fadeOut(200, () => this.#remove());
     }
     #remove() {
-      console.log(this.#element);
       this.#element.remove();
-      $(this.#element).trigger('closed.bsides.chip');
-      this.#instances.delete(this.#element);
+      (0, import_jquery14.default)(this.#element).trigger("closed.bsides.chip");
+      _Chip.#instances.delete(this.#element);
     }
     static createElement(text) {
       if (!text) {
-        return;
+        return void 0;
       }
-      const chip = document.createElement('div');
-      chip.classList.add('chip');
-      chip.setAttribute('data-value', text);
-      const closeButton = document.createElement('button');
-      closeButton.setAttribute('type', 'button');
-      closeButton.setAttribute('data-bs-dismiss', 'chip');
-      closeButton.classList.add('btn-close');
+      const chip = document.createElement("div");
+      chip.classList.add("chip");
+      chip.setAttribute("data-value", text);
+      const closeButton = document.createElement("button");
+      closeButton.setAttribute("type", "button");
+      closeButton.setAttribute("data-bs-dismiss", "chip");
+      closeButton.classList.add("btn-close");
       chip.innerText = text;
       chip.appendChild(closeButton);
       return chip;
     }
     static getInstance(element) {
-      return this.#instances.get(element);
+      return _Chip.#instances.get(element);
     }
     static getOrCreateInstance(element) {
-      const chip = this.getInstance(element);
-      if (!chip) {
-        return new this(element);
-      }
-      return chip;
+      return this.getInstance(element) ?? new this(element);
     }
     static addEventListeners() {
-      $(document).on('click.bsides.chip', '[data-bs-dismiss="chip"]', event => {
-        const chip = new Chip(event.currentTarget.parentElement);
+      (0, import_jquery14.default)(document).on("click.bsides.chip", '[data-bs-dismiss="chip"]', (event) => {
+        const element = event.currentTarget.parentElement;
+        if (!element) {
+          return;
+        }
+        const chip = new _Chip(element);
         chip.close();
       });
     }
-  }
-  class MultiSelectInput {
+  };
+  var MultiSelectInput = class _MultiSelectInput {
     #element;
     #chipGroupElement;
     #textInputElement;
-    static #instances = new WeakMap();
-    get selectors() {
-      return {};
-    }
+    static #instances = /* @__PURE__ */ new WeakMap();
     constructor(element) {
       this.#element = element;
-      this.#textInputElement = element.querySelector('.multi-select-input');
-      this.#chipGroupElement = element.querySelector('.chip-group');
-      this.constructor.#instances.set(element, this);
+      this.#textInputElement = element.querySelector(
+        ".multi-select-input"
+      );
+      this.#chipGroupElement = element.querySelector(".chip-group");
+      _MultiSelectInput.#instances.set(element, this);
     }
     value() {
-      return Array.from(this.#chipGroupElement.children).map(chip => {
+      return Array.from(this.#chipGroupElement.children).map((chip) => {
         return chip.dataset.value;
       });
     }
     text() {
-      return (this.#textInputElement.value || '').trim();
+      return (this.#textInputElement.value || "").trim();
     }
     add() {
       const chip = Chip.createElement(this.text());
+      if (!chip) {
+        return;
+      }
       new Chip(chip);
       this.#chipGroupElement.appendChild(chip);
-      this.#textInputElement.value = '';
-      $(this.#element).trigger('update.bsides.multiselect');
+      this.#textInputElement.value = "";
+      (0, import_jquery14.default)(this.#element).trigger("update.bsides.multiselect");
     }
     static getInstance(element) {
-      return this.#instances.get(element);
+      return _MultiSelectInput.#instances.get(element);
     }
     static addEventListeners() {
-      const $document = $(document);
-      $document.on('keyup.bsides.multiselect', '.multi-select', event => {
-        if (event.key == 'Enter' || event.keyCode == 13) {
-          const multiSelect = MultiSelectInput.getInstance(event.currentTarget);
+      const $document = (0, import_jquery14.default)(document);
+      $document.on("keyup.bsides.multiselect", ".multi-select", (event) => {
+        if (event.key === "Enter" || event.keyCode === 13) {
+          const multiSelect = _MultiSelectInput.getInstance(
+            event.currentTarget
+          );
           if (!multiSelect) {
             return;
           }
           multiSelect.add();
         }
       });
-      $document.on('close.bsides.chip', '.multi-select', event => {
-        $(event.currentTarget).trigger('update.bsides.multiselect');
+      $document.on("close.bsides.chip", ".multi-select", (event) => {
+        (0, import_jquery14.default)(event.currentTarget).trigger("update.bsides.multiselect");
       });
     }
-  }
-  class MultiSelectInputBinding extends InputBinding {
+  };
+  var MultiSelectInputBinding = class extends input_default {
     static get type() {
-      return 'multiselect';
+      return "multiselect";
     }
     get events() {
-      return ['update.bsides.multiselect'];
+      return [
+        "update.bsides.multiselect"
+      ];
     }
-    get selectors() {}
     getType(element) {
-      // return `${this.constructor.prefix}${this.constructor.namespace}`
-      return;
+      void element;
+      return null;
     }
     getValue(element) {
       const multiSelect = MultiSelectInput.getInstance(element);
       if (!multiSelect) {
-        return;
+        return void 0;
       }
       return multiSelect.value();
     }
     initialize(element) {
       new MultiSelectInput(element);
     }
-    receiveMessage(element, data) {}
-  }
+    receiveMessage(element, data) {
+      void element;
+      void data;
+    }
+  };
   Chip.addEventListeners();
   MultiSelectInput.addEventListeners();
   registerBinding(MultiSelectInputBinding);
 
-  class FormInputBinding extends InputBinding {
-    static get type() {
-      return 'form';
-    }
-    get events() {
-      return [{
-        event: 'click',
-        selector: this.selectors.submit
-      }];
-    }
-    get selectors() {
-      return {
-        submit: '.bsides-btn-submit'
-      };
-    }
-    get data() {
-      return {
-        value: `${this.constructor.prefix}-value`
-      };
-    }
-    initialize(element) {
-      const $element = $(element);
-      let inputValues = new Map();
-      $element.on(`shiny:inputchanged${this.constructor.namespace}`, event => {
-        if (!event.el || event.priority === 'event') {
-          return;
-        }
-        if (element.contains(event.el)) {
-          const name = event.inputType ? `${event.name}:${event.inputType}` : event.name;
-          inputValues.set(name, event.value);
-          event.preventDefault();
-        }
-      });
-      $element.on(`click${this.constructor.namespace}`, this.selectors.submit, event => {
-        event.preventDefault();
-        for (const [key, value] of inputValues.entries()) {
-          Shiny.setInputValue(key, value, {
-            priority: 'event'
-          });
-        }
-        const value = event.currentTarget.value;
-        $element.data(this.data.value, value);
-      });
-    }
-    getValue(element) {
-      return $(element).data(this.data.value);
-    }
-    receiveMessage(element, data) {
-      const $element = $(element);
-      if (data.hasOwnProperty('submit')) {
-        const value = data.submit;
-        $element.find(`${this.selectors.submit}[value=${value}]`).trigger('click');
-      }
-    }
-  }
-
-  class LinkInputBinding extends InputBinding {
-    static get type() {
-      return 'link';
-    }
-    get events() {
-      return ['click'];
-    }
-    get data() {
-      return {
-        clicks: `${this.constructor.prefix}-clicks`
-      };
-    }
-    initialize(element) {
-      const $element = $(element);
-      $element.data(this.data.clicks, 0);
-      $element.on(`click${this.constructor.namespace}`, event => {
-        const clicks = +$element.data(this.data.clicks);
-        $element.data(this.data.clicks, clicks + 1);
-      });
-    }
-    getType(element) {
-      return `${this.constructor.prefix}${this.constructor.namespace}`;
-    }
-    getValue(element) {
-      return $(element).data(this.data.clicks);
-    }
-  }
-
-  class ListGroupInputBinding extends InputBinding {
-    static get type() {
-      return 'listgroup';
-    }
-    get events() {
-      return ['click'];
-    }
-    get selectors() {
-      return {
-        choice: '.list-group-item-action',
-        value: '.list-group-item-action'
-      };
-    }
-    get data() {
-      return {
-        value: `${this.constructor.prefix}-value`
-      };
-    }
-    initialize(element) {
-      const $element = $(element);
-      $element.on('click', this.selectors.choice, event => {
-        const $choice = $(event.currentTarget);
-        $choice.toggleClass('active');
-      });
-    }
-    getValue(element) {
-      return $(element).find(`${this.selectors.value}.active`).map((i, el) => el.getAttribute(`data-${this.data.value}`)).get();
-    }
-  }
-
-  class MenuInputBinding extends InputBinding {
-    static get type() {
-      return 'menu';
-    }
-    get events() {
-      return [{
-        type: 'click',
-        selector: this.selectors.choice
-      }];
-    }
-    get selectors() {
-      return {
-        choice: '.dropdown-item',
-        value: '.dropdown-item'
-      };
-    }
-    get data() {
-      return {
-        value: `${this.constructor.prefix}-value`
-      };
-    }
-    initialize(element) {
-      const $element = $(element);
-      $element.on('click', this.selectors.value, event => {
-        $element.data(this.data.value, event.currentTarget.value);
-      });
-    }
-    getValue(element) {
-      return $(element).data(this.data.value);
-    }
-  }
-
-  class RadioGroupInputBinding extends InputBinding {
-    static get type() {
-      return 'radiogroup';
-    }
-    get events() {
-      return ['change'];
-    }
-    get selectors() {
-      return {
-        choice: '.form-check-label,.btn',
-        value: '.form-check-input,.btn-check'
-      };
-    }
-
-    /*getType(element) {
-      return `${this.constructor.prefix}${this.constructor.namespace}`
-    }*/
-
-    getValue(element) {
-      return $(element).find(this.selectors.value).filter(':checked').val();
-    }
-    receiveMessage(element, data) {
-      const $element = $(element);
-      const $values = $element.find(this.selectors.value);
-      if (data.hasOwnProperty('options')) {
-        $element.find('.form-check').remove();
-        $element.html(data.options);
-      }
-      if (data.hasOwnProperty('select')) {
-        $values.prop('checked', false);
-        $values.filter((i, e) => data.select.includes(e.value)).prop('checked', true);
-      }
-      if (data.hasOwnProperty('disable')) {
-        $values.prop('disabled', false);
-        $values.filter((i, e) => data.disable.includes(e.value)).prop('disabled', true);
-      }
-      $element.trigger('change');
-    }
-  }
-
-  class RangeInputBinding extends InputBinding {
-    static get type() {
-      return 'range';
-    }
-    get events() {
-      return ['change'];
-    }
-    get selectors() {
-      return {
-        value: '.form-range'
-      };
-    }
-    getValue(element) {
-      return +$(element).find(this.selectors.value).val();
-    }
-    receiveMessage(element, data) {
-      const $element = $(element);
-      const $value = $element.find(this.selectors.value);
-      if (data.hasOwnProperty('value')) {
-        $value.val(data.value);
-      }
-      if (data.hasOwnProperty('disable')) {
-        $value.prop('disable', data.disable);
-      }
-      $element.trigger('change');
-    }
-  }
-
-  class SelectInputBinding extends InputBinding {
-    static get type() {
-      return 'select';
-    }
-    get events() {
-      return ['change'];
-    }
-    get selectors() {
-      return {
-        value: 'option'
-      };
-    }
-    getValue(element) {
-      return element.value;
-    }
-    receiveMessage(element, data) {
-      const $element = $(element);
-      console.log(data);
-      if (data.hasOwnProperty('options')) {
-        $element.find(this.selectors.value).remove();
-        $element.html(data.options);
-      }
-      if (data.hasOwnProperty('select')) {
-        $element.val(data.select);
-      }
-      if (data.hasOwnProperty('disable')) {
-        console.log('disable');
-        const $values = $element.find('option');
-        $values.prop('disabled', false);
-        $values.filter((i, e) => data.disable.includes(e.value)).prop('disabled', true);
-      }
-      $element.trigger('change');
-    }
-  }
-
-  class TextInputBinding extends InputBinding {
-    static get type() {
-      return 'text';
-    }
-    get events() {
-      return ['keyup', 'input', 'change'];
-    }
-    get selectors() {
-      return {
-        value: 'input'
-      };
-    }
-    getValue(element) {
-      return element.value;
-    }
-    getRatePolicy(element) {
-      return {
-        policy: 'debounce',
-        delay: 250
-      };
-    }
-    receiveMessage(element, data) {
-      const $element = $(element);
-      if (data.hasOwnProperty('value')) {
-        $element.val(data.value);
-      }
-      if (data.hasOwnProperty('disable')) {
-        $element.prop('disabled', data.disable);
-      }
-      $element.trigger('change');
-    }
-  }
-
-  class TextGroupInputBinding extends InputBinding {
-    static get type() {
-      return 'textgroup';
-    }
-    get events() {
-      return ['keyup', 'input', 'change'];
-    }
-    get selectors() {
-      return {
-        value: 'input',
-        text: '.input-group-text'
-      };
-    }
-    getValue(element) {
-      const $element = $(element);
-      if (!$element.find(this.selectors.value).val()) {
-        return null;
-      }
-      return $element.find(`${this.selectors.text},${this.selectors.value}`).map((i, e) => e.innerText || e.value || '').get().join('');
-    }
-    getRatePolicy(element) {
-      return {
-        policy: 'debounce',
-        delay: 250
-      };
-    }
-    receiveMessage(element, data) {
-      const $element = $(element);
-      const $value = $(element).find(this.selectors.value);
-      if (data.hasOwnProperty('value')) {
-        $value.val(data.value);
-      }
-      if (data.hasOwnProperty('disable')) {
-        $value.prop('disabled', data.disable);
-      }
-      $element.trigger('change');
-    }
-  }
-
+  // srcts/src/bindings/inputs/index.ts
   function registerInputs() {
-    registerBinding(ButtonInputBinding);
-    registerBinding(CheckboxInputBinding);
-    registerBinding(CheckboxGroupInputBinding);
-    registerBinding(FormInputBinding);
-    registerBinding(LinkInputBinding);
-    registerBinding(ListGroupInputBinding);
-    registerBinding(MenuInputBinding);
-    registerBinding(RadioGroupInputBinding);
-    registerBinding(RangeInputBinding);
-    registerBinding(SelectInputBinding);
-    registerBinding(TextInputBinding);
-    registerBinding(TextGroupInputBinding);
+    registerBinding(button_default);
+    registerBinding(checkbox_default);
+    registerBinding(checkbox_group_default);
+    registerBinding(form_default);
+    registerBinding(link_default);
+    registerBinding(list_group_default);
+    registerBinding(menu_default);
+    registerBinding(radio_group_default);
+    registerBinding(range_default);
+    registerBinding(select_default);
+    registerBinding(text_default);
+    registerBinding(text_group_default);
   }
 
-  class Toast extends bootstrap.Toast {
+  // srcts/src/components/toast.ts
+  var import_bootstrap = __toESM(require_bootstrap());
+  var Toast = class extends import_bootstrap.Toast {
     constructor(toast) {
       super(toast, {});
     }
     get state() {
-      return this.isShown() ? 'shown' : 'hidden';
+      return this.isShown() ? "shown" : "hidden";
     }
     show(duration) {
       if (duration) {
-        this._config.delay = duration;
-        this._config.autohide = true;
+        const config = this._config;
+        config.delay = duration;
+        config.autohide = true;
       }
       super.show();
     }
     static addMessageHandlers() {
-      addCustomMessageHandler('toastAdd', async function (data) {
+      addCustomMessageHandler("toastAdd", async (data) => {
         if (!data.target) {
           return;
         }
         const container = document.getElementById(data.target);
-        if (!container) {
+        if (!container || !window.Shiny) {
           return;
         }
-        await Shiny$1.renderContentAsync(container, data.toast, 'beforeend');
+        await window.Shiny.renderContentAsync(container, data.toast, "beforeend");
       });
     }
-  }
-  class ToastInputBinding extends InputBinding {
+  };
+  var ToastInputBinding = class extends input_default {
     static get type() {
-      return 'toast';
+      return "toast";
     }
     get events() {
-      return ['shown.bs.toast', 'hidden.bs.toast'];
+      return [
+        "shown.bs.toast",
+        "hidden.bs.toast"
+      ];
     }
     initialize(element) {
       new Toast(element);
@@ -687,7 +809,7 @@
     getValue(element) {
       const toast = Toast.getInstance(element);
       if (!toast) {
-        return;
+        return void 0;
       }
       return toast.state;
     }
@@ -696,69 +818,81 @@
       if (!toast) {
         return;
       }
-      if (data.method === 'show') {
+      if (data.method === "show") {
         toast.show(data.duration);
-      } else if (data.method === 'hide') {
+      } else if (data.method === "hide") {
         toast.hide();
       }
     }
-  }
+  };
   Toast.addMessageHandlers();
   registerBinding(ToastInputBinding);
 
-  class Modal extends bootstrap.Modal {
+  // srcts/src/components/modal.ts
+  var import_bootstrap2 = __toESM(require_bootstrap());
+  var Modal = class _Modal extends import_bootstrap2.Modal {
     isShown() {
       return this._isShown;
     }
     static addMessageHandlers() {
-      addCustomMessageHandler('modalShow', data => {
-        if (typeof data.modal === 'object') {
-          this.showOrInsertModal(data.modal);
+      addCustomMessageHandler("modalShow", (data) => {
+        if (typeof data.modal === "object") {
+          _Modal.showOrInsertModal(data.modal);
         } else {
           const el = document.getElementById(data.modal);
           if (!el) {
             return;
           }
-          const modal = Modal.getOrCreateInstance(el);
+          const modal = _Modal.getOrCreateInstance(el);
           modal.show();
         }
       });
     }
     static async showOrInsertModal(content) {
-      const el = document.createElement('div');
+      const el = document.createElement("div");
       el.innerHTML = content.html;
       const id = el.firstChild && el.firstChild.id;
+      if (!id || !window.Shiny) {
+        return;
+      }
       const existing = document.getElementById(id);
       if (existing) {
-        Shiny$1.unbindAll(existing, true);
+        window.Shiny.unbindAll(existing, true);
         existing.remove();
       }
-      await Shiny$1.renderContentAsync(document.body, content, 'beforeend');
-      const modal = new Modal(document.getElementById(id));
+      await window.Shiny.renderContentAsync(document.body, content, "beforeend");
+      const target = document.getElementById(id);
+      if (!target) {
+        return;
+      }
+      const modal = new _Modal(target);
       modal.show();
     }
-  }
-  class ModalInputBinding extends InputBinding {
+  };
+  var ModalInputBinding = class extends input_default {
     static get type() {
-      return 'modal';
+      return "modal";
     }
     get events() {
-      return ['shown.bs.modal', 'hidden.bs.modal'];
+      return [
+        "shown.bs.modal",
+        "hidden.bs.modal"
+      ];
     }
     getValue(element) {
       const modal = Modal.getInstance(element);
       if (!modal) {
         return null;
       }
-      return modal.isShown() ? 'shown' : 'hidden';
+      return modal.isShown() ? "shown" : "hidden";
     }
-  }
+  };
   Modal.addMessageHandlers();
   registerBinding(ModalInputBinding);
 
+  // srcts/src/index.ts
   initialize(() => {
     registerInputs();
   });
-
-}));
+})();
 //# sourceMappingURL=bsides.js.map

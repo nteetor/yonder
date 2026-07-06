@@ -2,7 +2,15 @@
 ^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^npm$
+^srcts$
+^node_modules$
+^package\.json$
+^package-lock\.json$
+^tsconfig\.json$
+^eslint\.config\.mjs$
+^\.browserslistrc$
+^\.stylelintrc$
+^BSLIB\.md$
 ^docs$
 ^bin$
 ^man-roxygen$
