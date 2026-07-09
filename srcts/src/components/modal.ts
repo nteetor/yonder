@@ -1,8 +1,12 @@
+import $ from 'jquery'
 import { Modal as BootstrapModal } from 'bootstrap'
 
-import { addCustomMessageHandler, registerBinding } from '../utils'
-import { InputBinding } from '../bindings/inputs'
-import type { BindingEvent } from '../bindings/inputs/input'
+import {
+  InputBinding,
+  registerBinding,
+  addCustomMessageHandler,
+  Shiny
+} from './_utils'
 
 interface ModalShowMessage {
   modal: string | ShinyRenderContent
@@ -29,6 +33,15 @@ class Modal extends BootstrapModal {
         modal.show()
       }
     })
+
+    // Shiny requires message handlers to declare exactly one parameter.
+    addCustomMessageHandler('modalClose', (data: unknown) => {
+      void data
+
+      for (const el of document.querySelectorAll('.modal.show')) {
+        ;(Modal.getInstance(el) as Modal | null)?.hide()
+      }
+    })
   }
 
   static async showOrInsertModal(content: ShinyRenderContent): Promise<void> {
@@ -37,18 +50,18 @@ class Modal extends BootstrapModal {
 
     const id = el.firstChild && (el.firstChild as HTMLElement).id
 
-    if (!id || !window.Shiny) {
+    if (!id || !Shiny) {
       return
     }
 
     const existing = document.getElementById(id)
 
     if (existing) {
-      window.Shiny.unbindAll(existing, true)
+      Shiny.unbindAll?.(existing, true)
       existing.remove()
     }
 
-    await window.Shiny.renderContentAsync(document.body, content, 'beforeend')
+    await Shiny.renderContentAsync(document.body, content, 'beforeEnd')
 
     const target = document.getElementById(id)
 
@@ -63,19 +76,12 @@ class Modal extends BootstrapModal {
 }
 
 class ModalInputBinding extends InputBinding {
-  static override get type(): string {
-    return 'modal'
+  override find(scope: HTMLElement): JQuery<HTMLElement> {
+    return $(scope).find('.bsides-modal')
   }
 
-  override get events(): BindingEvent[] {
-    return [
-      'shown.bs.modal',
-      'hidden.bs.modal'
-    ]
-  }
-
-  override getValue(element: HTMLElement): string | null {
-    const modal = Modal.getInstance(element) as Modal | null
+  override getValue(el: HTMLElement): string | null {
+    const modal = Modal.getInstance(el) as Modal | null
 
     if (!modal) {
       return null
@@ -83,13 +89,27 @@ class ModalInputBinding extends InputBinding {
 
     return modal.isShown() ? 'shown' : 'hidden'
   }
+
+  override subscribe(
+    el: HTMLElement,
+    callback: (allowDeferred: boolean) => void
+  ): void {
+    $(el).on(
+      'shown.bs.modal.bsidesModalInputBinding hidden.bs.modal.bsidesModalInputBinding',
+      () => {
+        callback(false)
+      }
+    )
+  }
+
+  override unsubscribe(el: HTMLElement): void {
+    $(el).off('.bsidesModalInputBinding')
+  }
 }
 
 Modal.addMessageHandlers()
 
-registerBinding(ModalInputBinding)
+registerBinding(ModalInputBinding, 'modal')
 
-export {
-  Modal,
-  ModalInputBinding
-}
+export { Modal, ModalInputBinding }
+export type { ModalShowMessage }

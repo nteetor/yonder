@@ -34,9 +34,11 @@ Imports:
     rlang (>= 1.1.0),
     utils
 Suggests:
+    bslib,
     knitr,
     testthat (>= 2.1.0),
-    rmarkdown
+    rmarkdown,
+    shinytest2
 VignetteBuilder: knitr
 Collate:
     'alert.R'

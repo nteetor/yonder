@@ -1,8 +1,6 @@
 import $ from 'jquery'
 
-import { registerBinding } from '../../utils'
-import InputBinding from './input'
-import type { BindingEvent } from './input'
+import { InputBinding, registerBinding } from './_utils'
 
 class Chip {
   #element: HTMLElement
@@ -22,9 +20,16 @@ class Chip {
   }
 
   #remove(): void {
+    // Announce from the parent: the chip itself is detached after remove(),
+    // so an event triggered on it could no longer bubble to listeners.
+    const parent = this.#element.parentElement
+
     this.#element.remove()
-    $(this.#element).trigger('closed.bsides.chip')
     Chip.#instances.delete(this.#element)
+
+    if (parent) {
+      $(parent).trigger('closed.bsides.chip')
+    }
   }
 
   static createElement(text: string): HTMLElement | undefined {
@@ -131,30 +136,26 @@ class MultiSelectInput {
       }
     })
 
-    $document.on('close.bsides.chip', '.multi-select', (event) => {
+    // Update on 'closed' (after the chip is removed from the DOM), not
+    // 'close' — otherwise the value reported to the server still includes
+    // the closing chip.
+    $document.on('closed.bsides.chip', '.multi-select', (event) => {
       $(event.currentTarget as HTMLElement).trigger('update.bsides.multiselect')
     })
   }
 }
 
 class MultiSelectInputBinding extends InputBinding {
-  static override get type(): string {
-    return 'multiselect'
+  override find(scope: HTMLElement): JQuery<HTMLElement> {
+    return $(scope).find('.bsides-multiselect')
   }
 
-  override get events(): BindingEvent[] {
-    return [
-      'update.bsides.multiselect'
-    ]
+  override initialize(el: HTMLElement): void {
+    new MultiSelectInput(el)
   }
 
-  override getType(element: HTMLElement): string | null {
-    void element
-    return null
-  }
-
-  override getValue(element: HTMLElement): Array<string | undefined> | undefined {
-    const multiSelect = MultiSelectInput.getInstance(element)
+  override getValue(el: HTMLElement): Array<string | undefined> | undefined {
+    const multiSelect = MultiSelectInput.getInstance(el)
 
     if (!multiSelect) {
       return undefined
@@ -163,12 +164,23 @@ class MultiSelectInputBinding extends InputBinding {
     return multiSelect.value()
   }
 
-  override initialize(element: HTMLElement): void {
-    new MultiSelectInput(element)
+  override subscribe(
+    el: HTMLElement,
+    callback: (allowDeferred: boolean) => void
+  ): void {
+    $(el).on('update.bsides.multiselect', () => {
+      callback(false)
+    })
   }
 
-  override receiveMessage(element: HTMLElement, data: unknown): void {
-    void element
+  override unsubscribe(el: HTMLElement): void {
+    $(el).off('update.bsides.multiselect')
+  }
+
+  // update_multi_select() is still a stub on the R side; nothing to receive
+  // yet.
+  override receiveMessage(el: HTMLElement, data: unknown): void {
+    void el
     void data
   }
 }
@@ -176,7 +188,6 @@ class MultiSelectInputBinding extends InputBinding {
 Chip.addEventListeners()
 MultiSelectInput.addEventListeners()
 
-registerBinding(MultiSelectInputBinding)
+registerBinding(MultiSelectInputBinding, 'multiselect')
 
-export default MultiSelectInputBinding
-export { Chip, MultiSelectInput }
+export { Chip, MultiSelectInput, MultiSelectInputBinding }

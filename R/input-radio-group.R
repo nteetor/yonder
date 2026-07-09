@@ -75,25 +75,33 @@ update_radio_group <- function(
   values = choices,
   select = NULL,
   disable = NULL,
+  appearance = "default",
+  layout = "column",
+  label = "after",
   session = get_current_session()
 ) {
   check_string(id, allow_empty = FALSE)
 
   options <-
     if (non_null(choices)) {
-      build_input_options(
-        radio_group_option,
-        choices,
-        values,
-        select,
-        disable,
-        input_id = id
+      format(
+        build_input_options(
+          radio_group_option,
+          choices,
+          values,
+          select,
+          disable,
+          appearance,
+          layout,
+          label,
+          input_id = id
+        )
       )
     }
 
   msg <-
     drop_nulls(list(
-      optins = options,
+      options = options,
       select = select,
       disable = disable
     ))

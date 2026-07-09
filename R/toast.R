@@ -278,7 +278,7 @@ toast_hide <- function(
 ) {
   msg <-
     drop_nulls(list(
-      method = "hide",
+      method = "hide"
     ))
 
   session$sendInputMessage(id, msg)

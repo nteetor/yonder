@@ -79,7 +79,7 @@ update_list_group <- function(
   session = get_current_session()
 ) {
   check_string(id, allow_empty = FALSE)
-  check_character(values)
+  check_character(values, allow_null = TRUE)
   check_character(select, allow_null = TRUE)
   check_character(disable, allow_null = TRUE)
 

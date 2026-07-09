@@ -1,15 +1,21 @@
+import $ from 'jquery'
 import { Toast as BootstrapToast } from 'bootstrap'
 
-import { addCustomMessageHandler, registerBinding } from '../utils'
-import { InputBinding } from '../bindings/inputs'
-import type { BindingEvent } from '../bindings/inputs/input'
+import {
+  InputBinding,
+  registerBinding,
+  addCustomMessageHandler,
+  hasDefinedProperty,
+  Shiny
+} from './_utils'
 
 interface ToastAddMessage {
   target?: string
-  toast: ShinyRenderContent
+  // The R side renders the toast to an HTML string with doRenderTags().
+  toast: string | ShinyRenderContent
 }
 
-interface ToastReceiveMessage {
+interface ToastReceiveMessageData {
   method?: 'show' | 'hide'
   duration?: number
 }
@@ -44,33 +50,26 @@ class Toast extends BootstrapToast {
 
       const container = document.getElementById(data.target)
 
-      if (!container || !window.Shiny) {
+      if (!container || !Shiny) {
         return
       }
 
-      await window.Shiny.renderContentAsync(container, data.toast, 'beforeend')
+      await Shiny.renderContentAsync(container, data.toast, 'beforeEnd')
     })
   }
 }
 
 class ToastInputBinding extends InputBinding {
-  static override get type(): string {
-    return 'toast'
+  override find(scope: HTMLElement): JQuery<HTMLElement> {
+    return $(scope).find('.bsides-toast')
   }
 
-  override get events(): BindingEvent[] {
-    return [
-      'shown.bs.toast',
-      'hidden.bs.toast'
-    ]
+  override initialize(el: HTMLElement): void {
+    new Toast(el)
   }
 
-  override initialize(element: HTMLElement): void {
-    new Toast(element)
-  }
-
-  override getValue(element: HTMLElement): string | undefined {
-    const toast = Toast.getInstance(element) as Toast | null
+  override getValue(el: HTMLElement): string | undefined {
+    const toast = Toast.getInstance(el) as Toast | null
 
     if (!toast) {
       return undefined
@@ -79,15 +78,31 @@ class ToastInputBinding extends InputBinding {
     return toast.state
   }
 
-  override receiveMessage(element: HTMLElement, data: ToastReceiveMessage): void {
-    const toast = Toast.getInstance(element) as Toast | null
+  override subscribe(
+    el: HTMLElement,
+    callback: (allowDeferred: boolean) => void
+  ): void {
+    $(el).on(
+      'shown.bs.toast.bsidesToastInputBinding hidden.bs.toast.bsidesToastInputBinding',
+      () => {
+        callback(false)
+      }
+    )
+  }
+
+  override unsubscribe(el: HTMLElement): void {
+    $(el).off('.bsidesToastInputBinding')
+  }
+
+  override receiveMessage(el: HTMLElement, data: ToastReceiveMessageData): void {
+    const toast = Toast.getInstance(el) as Toast | null
 
     if (!toast) {
       return
     }
 
     if (data.method === 'show') {
-      toast.show(data.duration)
+      toast.show(hasDefinedProperty(data, 'duration') ? data.duration : undefined)
     } else if (data.method === 'hide') {
       toast.hide()
     }
@@ -96,9 +111,7 @@ class ToastInputBinding extends InputBinding {
 
 Toast.addMessageHandlers()
 
-registerBinding(ToastInputBinding)
+registerBinding(ToastInputBinding, 'toast')
 
-export {
-  Toast,
-  ToastInputBinding
-}
+export { Toast, ToastInputBinding }
+export type { ToastAddMessage, ToastReceiveMessageData }

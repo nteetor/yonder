@@ -1,44 +1,30 @@
-// Minimal declarations for the globals Shiny provides at runtime. Shiny is
-// loaded from a separate script tag, so only the pieces bsides touches are
-// declared here.
+// Shiny's real types come from the rstudio/shiny repo (installed as
+// @types/rstudio-shiny, same approach as bslib). Only declarations Shiny's
+// types don't provide live here.
 
-interface ShinyRenderContent {
-  html: string
-  deps?: unknown[]
+import type { ShinyClass } from 'rstudio-shiny/srcts/types/src'
+import type { HtmlDep } from 'rstudio-shiny/srcts/types/src/shiny/render'
+
+declare global {
+  interface Window {
+    Shiny?: ShinyClass
+  }
+
+  // The { html, deps } payload shape produced by the R side for
+  // renderContentAsync().
+  interface ShinyRenderContent {
+    html: string
+    deps?: HtmlDep[]
+  }
+
+  // Events triggered by Shiny carry extra fields beyond jQuery's event object.
+  interface ShinyInputChangedEvent extends JQuery.TriggeredEvent {
+    el: HTMLElement | null
+    name: string
+    value: unknown
+    inputType: string
+    priority?: string
+  }
 }
 
-interface ShinyInputBindings {
-  register(binding: object, name?: string): void
-}
-
-interface Shiny {
-  addCustomMessageHandler(
-    type: string,
-    handler: (data: any) => void | Promise<void>
-  ): void
-  inputBindings: ShinyInputBindings
-  setInputValue(
-    name: string,
-    value: unknown,
-    opts?: { priority?: 'event' | 'deferred' | 'immediate' }
-  ): void
-  unbindAll(scope: Element, includeSelf?: boolean): void
-  renderContentAsync(
-    el: Element,
-    content: ShinyRenderContent | string,
-    where?: InsertPosition
-  ): Promise<void>
-}
-
-interface Window {
-  Shiny?: Shiny
-}
-
-// Events triggered by Shiny carry extra fields beyond jQuery's event object.
-interface ShinyInputChangedEvent extends JQuery.TriggeredEvent {
-  el: HTMLElement | null
-  name: string
-  value: unknown
-  inputType: string
-  priority?: string
-}
+export {}
