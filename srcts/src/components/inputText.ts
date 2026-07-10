@@ -13,7 +13,7 @@ type TextReceiveMessageData = {
 
 class TextInputBinding extends InputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-text')
+    return $(scope).find('.bsides-input-text')
   }
 
   override getValue(el: TextHTMLElement): TextHTMLElement['value'] {

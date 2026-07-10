@@ -15,14 +15,8 @@ type FormReceiveMessageData = {
 // (event.preventDefault() on shiny:inputchanged) and replayed to the server
 // only when a submit button is clicked.
 class FormInputBinding extends InputBinding {
-  get selectors(): { submit: string } {
-    return {
-      submit: '.bsides-btn-submit'
-    }
-  }
-
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-form')
+    return $(scope).find('.bsides-input-form')
   }
 
   override getValue(el: HTMLElement): unknown {
@@ -59,7 +53,7 @@ class FormInputBinding extends InputBinding {
 
     $el.on(
       'click.bsidesFormInputBinding',
-      this.selectors.submit,
+      '.bsides-input-form-submit',
       (event) => {
         event.preventDefault()
 
@@ -80,7 +74,7 @@ class FormInputBinding extends InputBinding {
   override receiveMessage(el: HTMLElement, data: FormReceiveMessageData): void {
     if (hasDefinedProperty(data, 'submit')) {
       $(el)
-        .find(`${this.selectors.submit}[value=${data.submit}]`)
+        .find(`.bsides-input-form-submit[value=${data.submit}]`)
         .trigger('click')
     }
   }

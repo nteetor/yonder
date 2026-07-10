@@ -10,7 +10,7 @@ type CheckboxReceiveMessageData = {
 
 class CheckboxInputBinding extends InputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-checkbox')
+    return $(scope).find('.bsides-input-checkbox')
   }
 
   override getValue(el: HTMLElement): boolean {

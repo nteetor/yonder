@@ -69,7 +69,7 @@
   // srcts/src/components/inputButton.ts
   var ButtonInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery.default)(scope).find(".bsides-button");
+      return (0, import_jquery.default)(scope).find(".bsides-input-button");
     }
     getValue(el) {
       return Number((0, import_jquery.default)(el).data("bsides-clicks")) || 0;
@@ -110,7 +110,7 @@
   var import_jquery2 = __toESM(require_jquery());
   var CheckboxInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery2.default)(scope).find(".bsides-checkbox");
+      return (0, import_jquery2.default)(scope).find(".bsides-input-checkbox");
     }
     getValue(el) {
       return (0, import_jquery2.default)(el).children(".form-check-input").prop("checked");
@@ -147,13 +147,8 @@
   // srcts/src/components/inputCheckboxGroup.ts
   var import_jquery3 = __toESM(require_jquery());
   var CheckboxGroupInputBinding = class extends InputBinding {
-    get selectors() {
-      return {
-        value: ".form-check-input,.btn-check"
-      };
-    }
     find(scope) {
-      return (0, import_jquery3.default)(scope).find(".bsides-checkboxgroup");
+      return (0, import_jquery3.default)(scope).find(".bsides-input-checkbox-group");
     }
     // Matches the input handler registered by the R side.
     getType(el) {
@@ -161,7 +156,7 @@
       return "bsides.checkboxgroup";
     }
     getValue(el) {
-      return (0, import_jquery3.default)(el).find(this.selectors.value).filter(":checked").map((i, e) => e.value).get();
+      return (0, import_jquery3.default)(el).find(".form-check-input,.btn-check").filter(":checked").map((i, e) => e.value).get();
     }
     subscribe(el, callback) {
       (0, import_jquery3.default)(el).on("change.bsidesCheckboxGroupInputBinding", () => {
@@ -181,7 +176,7 @@
       if (hasDefinedProperty(data, "options")) {
         $el.html(data.options);
       }
-      const $values = $el.find(this.selectors.value);
+      const $values = $el.find(".form-check-input,.btn-check");
       if (hasDefinedProperty(data, "select")) {
         $values.prop("checked", false);
         $values.filter((i, e) => data.select.includes(e.value)).prop("checked", true);
@@ -198,13 +193,8 @@
   // srcts/src/components/inputForm.ts
   var import_jquery4 = __toESM(require_jquery());
   var FormInputBinding = class extends InputBinding {
-    get selectors() {
-      return {
-        submit: ".bsides-btn-submit"
-      };
-    }
     find(scope) {
-      return (0, import_jquery4.default)(scope).find(".bsides-form");
+      return (0, import_jquery4.default)(scope).find(".bsides-input-form");
     }
     getValue(el) {
       return (0, import_jquery4.default)(el).data("bsides-value");
@@ -225,7 +215,7 @@
       });
       $el.on(
         "click.bsidesFormInputBinding",
-        this.selectors.submit,
+        ".bsides-input-form-submit",
         (event) => {
           event.preventDefault();
           for (const [key, value] of inputValues.entries()) {
@@ -241,7 +231,7 @@
     }
     receiveMessage(el, data) {
       if (hasDefinedProperty(data, "submit")) {
-        (0, import_jquery4.default)(el).find(`${this.selectors.submit}[value=${data.submit}]`).trigger("click");
+        (0, import_jquery4.default)(el).find(`.bsides-input-form-submit[value=${data.submit}]`).trigger("click");
       }
     }
   };
@@ -251,7 +241,7 @@
   var import_jquery5 = __toESM(require_jquery());
   var LinkInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery5.default)(scope).find(".bsides-link");
+      return (0, import_jquery5.default)(scope).find(".bsides-input-link");
     }
     getValue(el) {
       return Number((0, import_jquery5.default)(el).data("bsides-clicks")) || 0;
@@ -287,22 +277,17 @@
   // srcts/src/components/inputListGroup.ts
   var import_jquery6 = __toESM(require_jquery());
   var ListGroupInputBinding = class extends InputBinding {
-    get selectors() {
-      return {
-        choice: ".list-group-item-action"
-      };
-    }
     find(scope) {
-      return (0, import_jquery6.default)(scope).find(".bsides-listgroup");
+      return (0, import_jquery6.default)(scope).find(".bsides-input-list-group");
     }
     getValue(el) {
-      return (0, import_jquery6.default)(el).find(`${this.selectors.choice}.active`).map((i, e) => e.getAttribute("data-bsides-value")).get();
+      return (0, import_jquery6.default)(el).find(".list-group-item-action.active").map((i, e) => e.getAttribute("data-bsides-value")).get();
     }
     subscribe(el, callback) {
       const $el = (0, import_jquery6.default)(el);
       $el.on(
         "click.bsidesListGroupInputBinding",
-        this.selectors.choice,
+        ".list-group-item-action",
         (event) => {
           (0, import_jquery6.default)(event.currentTarget).toggleClass("active");
           callback(false);
@@ -322,7 +307,7 @@
     }
     receiveMessage(el, data) {
       const $el = (0, import_jquery6.default)(el);
-      const $choices = $el.find(this.selectors.choice);
+      const $choices = $el.find(".list-group-item-action");
       const valueOf = (e) => e.getAttribute("data-bsides-value") ?? "";
       if (hasDefinedProperty(data, "select")) {
         $choices.removeClass("active");
@@ -340,21 +325,15 @@
   // srcts/src/components/inputMenu.ts
   var import_jquery7 = __toESM(require_jquery());
   var MenuInputBinding = class extends InputBinding {
-    get selectors() {
-      return {
-        toggle: ".dropdown-toggle",
-        choice: ".dropdown-item"
-      };
-    }
     find(scope) {
-      return (0, import_jquery7.default)(scope).find(".bsides-menu");
+      return (0, import_jquery7.default)(scope).find(".bsides-input-menu");
     }
     getValue(el) {
       return (0, import_jquery7.default)(el).data("bsides-value");
     }
     subscribe(el, callback) {
       const $el = (0, import_jquery7.default)(el);
-      $el.on("click.bsidesMenuInputBinding", this.selectors.choice, (event) => {
+      $el.on("click.bsidesMenuInputBinding", ".dropdown-item", (event) => {
         $el.data("bsides-value", event.currentTarget.value);
         callback(false);
       });
@@ -373,10 +352,10 @@
     receiveMessage(el, data) {
       const $el = (0, import_jquery7.default)(el);
       if (hasDefinedProperty(data, "label")) {
-        $el.children(this.selectors.toggle).html(data.label);
+        $el.children(".dropdown-toggle").html(data.label);
       }
       if (hasDefinedProperty(data, "disable")) {
-        const $choices = $el.find(this.selectors.choice);
+        const $choices = $el.find(".dropdown-item");
         $choices.prop("disabled", false).removeClass("disabled");
         $choices.filter((i, e) => data.disable.includes(e.value)).prop("disabled", true).addClass("disabled");
       }
@@ -496,7 +475,7 @@
   };
   var MultiSelectInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery8.default)(scope).find(".bsides-multiselect");
+      return (0, import_jquery8.default)(scope).find(".bsides-input-multi-select");
     }
     initialize(el) {
       new MultiSelectInput(el);
@@ -530,16 +509,11 @@
   // srcts/src/components/inputRadioGroup.ts
   var import_jquery9 = __toESM(require_jquery());
   var RadioGroupInputBinding = class extends InputBinding {
-    get selectors() {
-      return {
-        value: ".form-check-input,.btn-check"
-      };
-    }
     find(scope) {
-      return (0, import_jquery9.default)(scope).find(".bsides-radiogroup");
+      return (0, import_jquery9.default)(scope).find(".bsides-input-radio-group");
     }
     getValue(el) {
-      return (0, import_jquery9.default)(el).find(this.selectors.value).filter(":checked").val();
+      return (0, import_jquery9.default)(el).find(".form-check-input,.btn-check").filter(":checked").val();
     }
     subscribe(el, callback) {
       (0, import_jquery9.default)(el).on("change.bsidesRadioGroupInputBinding", () => {
@@ -559,7 +533,7 @@
       if (hasDefinedProperty(data, "options")) {
         $el.html(data.options);
       }
-      const $values = $el.find(this.selectors.value);
+      const $values = $el.find(".form-check-input,.btn-check");
       if (hasDefinedProperty(data, "select")) {
         $values.prop("checked", false);
         $values.filter((i, e) => data.select.includes(e.value)).prop("checked", true);
@@ -576,16 +550,11 @@
   // srcts/src/components/inputRange.ts
   var import_jquery10 = __toESM(require_jquery());
   var RangeInputBinding = class extends InputBinding {
-    get selectors() {
-      return {
-        value: ".form-range"
-      };
-    }
     find(scope) {
-      return (0, import_jquery10.default)(scope).find(".bsides-range");
+      return (0, import_jquery10.default)(scope).find(".bsides-input-range");
     }
     getValue(el) {
-      return Number((0, import_jquery10.default)(el).find(this.selectors.value).val());
+      return Number((0, import_jquery10.default)(el).find(".form-range").val());
     }
     subscribe(el, callback) {
       (0, import_jquery10.default)(el).on("change.bsidesRangeInputBinding", () => {
@@ -602,7 +571,7 @@
     }
     receiveMessage(el, data) {
       const $el = (0, import_jquery10.default)(el);
-      const $value = $el.find(this.selectors.value);
+      const $value = $el.find(".form-range");
       if (hasDefinedProperty(data, "value")) {
         $value.val(data.value);
       }
@@ -618,7 +587,7 @@
   var import_jquery11 = __toESM(require_jquery());
   var SelectInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery11.default)(scope).find(".bsides-select");
+      return (0, import_jquery11.default)(scope).find(".bsides-input-select");
     }
     getValue(el) {
       return el.value;
@@ -661,7 +630,7 @@
   var import_jquery12 = __toESM(require_jquery());
   var TextInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery12.default)(scope).find(".bsides-text");
+      return (0, import_jquery12.default)(scope).find(".bsides-input-text");
     }
     getValue(el) {
       return el.value;
@@ -708,21 +677,15 @@
   // srcts/src/components/inputTextGroup.ts
   var import_jquery13 = __toESM(require_jquery());
   var TextGroupInputBinding = class extends InputBinding {
-    get selectors() {
-      return {
-        value: "input",
-        text: ".input-group-text"
-      };
-    }
     find(scope) {
-      return (0, import_jquery13.default)(scope).find(".bsides-textgroup");
+      return (0, import_jquery13.default)(scope).find(".bsides-input-text-group");
     }
     getValue(el) {
       const $el = (0, import_jquery13.default)(el);
-      if (!$el.find(this.selectors.value).val()) {
+      if (!$el.find("input").val()) {
         return null;
       }
-      return $el.find(`${this.selectors.text},${this.selectors.value}`).map((i, e) => e.textContent || e.value || "").get().join("");
+      return $el.find(".input-group-text,input").map((i, e) => e.textContent || e.value || "").get().join("");
     }
     subscribe(el, callback) {
       const $el = (0, import_jquery13.default)(el);
@@ -753,7 +716,7 @@
     }
     receiveMessage(el, data) {
       const $el = (0, import_jquery13.default)(el);
-      const $value = $el.find(this.selectors.value);
+      const $value = $el.find("input");
       if (hasDefinedProperty(data, "value")) {
         $value.val(data.value);
       }

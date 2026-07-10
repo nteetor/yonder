@@ -137,7 +137,7 @@ update_checkbox_group <- function(
   session$sendInputMessage(id, msg)
 }
 
-checkbox_group_class <- "bsides-checkboxgroup"
+checkbox_group_class <- "bsides-input-checkbox-group"
 
 checkbox_group_container <- function(
   id,

@@ -8,26 +8,19 @@ type TextGroupReceiveMessageData = {
 }
 
 class TextGroupInputBinding extends InputBinding {
-  get selectors(): { value: string; text: string } {
-    return {
-      value: 'input',
-      text: '.input-group-text'
-    }
-  }
-
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-textgroup')
+    return $(scope).find('.bsides-input-text-group')
   }
 
   override getValue(el: HTMLElement): string | null {
     const $el = $(el)
 
-    if (!$el.find(this.selectors.value).val()) {
+    if (!$el.find('input').val()) {
       return null
     }
 
     return $el
-      .find(`${this.selectors.text},${this.selectors.value}`)
+      .find('.input-group-text,input')
       .map((i, e) => e.textContent || (e as HTMLInputElement).value || '')
       .get()
       .join('')
@@ -76,7 +69,7 @@ class TextGroupInputBinding extends InputBinding {
     data: TextGroupReceiveMessageData
   ): void {
     const $el = $(el)
-    const $value = $el.find(this.selectors.value)
+    const $value = $el.find('input')
 
     if (hasDefinedProperty(data, 'value')) {
       $value.val(data.value!)

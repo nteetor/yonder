@@ -11,7 +11,7 @@ type ButtonReceiveMessageData = {
 
 class ButtonInputBinding extends InputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-button')
+    return $(scope).find('.bsides-input-button')
   }
 
   override getValue(el: HTMLElement): number {

@@ -9,7 +9,7 @@ type LinkReceiveMessageData = {
 
 class LinkInputBinding extends InputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-link')
+    return $(scope).find('.bsides-input-link')
   }
 
   override getValue(el: HTMLElement): number {

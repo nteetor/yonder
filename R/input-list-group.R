@@ -49,7 +49,7 @@ input_list_group <- function(
   input <-
     tags$div(
       class = c(
-        "bsides-listgroup",
+        "bsides-input-list-group",
         "list-group",
         list_group_class_flush(appearance),
         list_group_class_layout(layout)

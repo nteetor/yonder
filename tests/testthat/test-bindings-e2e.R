@@ -123,7 +123,7 @@ test_that("forms hold back child inputs until submit", {
   # bind-time snapshot ("") and must not have seen the typed value
   expect_identical(app$get_value(input = "frmtext"), "")
 
-  app$click(selector = "#frm .bsides-btn-submit")
+  app$click(selector = "#frm .bsides-input-form-submit")
   expect_equal(app$get_value(input = "frmtext"), "held-back")
   expect_equal(app$get_value(input = "frm"), "go")
 

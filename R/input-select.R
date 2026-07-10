@@ -49,7 +49,7 @@ input_select <- function(
 
   input <-
     tags$select(
-      class = "bsides-select form-select",
+      class = "bsides-input-select form-select",
       id = id,
       !!!attrs,
       options

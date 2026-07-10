@@ -8,18 +8,12 @@ type RangeReceiveMessageData = {
 }
 
 class RangeInputBinding extends InputBinding {
-  get selectors(): { value: string } {
-    return {
-      value: '.form-range'
-    }
-  }
-
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-range')
+    return $(scope).find('.bsides-input-range')
   }
 
   override getValue(el: HTMLElement): number {
-    return Number($(el).find(this.selectors.value).val())
+    return Number($(el).find('.form-range').val())
   }
 
   override subscribe(
@@ -43,7 +37,7 @@ class RangeInputBinding extends InputBinding {
 
   override receiveMessage(el: HTMLElement, data: RangeReceiveMessageData): void {
     const $el = $(el)
-    const $value = $el.find(this.selectors.value)
+    const $value = $el.find('.form-range')
 
     if (hasDefinedProperty(data, 'value')) {
       $value.val(data.value!)

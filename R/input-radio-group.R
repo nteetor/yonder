@@ -43,7 +43,7 @@ input_radio_group <- function(
   input <-
     (if (appearance == "list") tags$ul else tags$div)(
       class = c(
-        "bsides-radiogroup",
+        "bsides-input-radio-group",
         if (appearance == "list") "list-group",
         if (appearance == "buttons") {
           if (layout == "row") {

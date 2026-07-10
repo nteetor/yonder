@@ -24,7 +24,7 @@ input_link <- function(
   input <-
     tags$a(
       class = c(
-        "bsides-link",
+        "bsides-input-link",
         if (stretch) "stretched-link",
         if (!is.null(icon)) "icon-link"
       ),

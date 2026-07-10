@@ -30,7 +30,7 @@ input_text_group <- function(
 
   input <-
     tags$div(
-      class = "bsides-textgroup input-group",
+      class = "bsides-input-text-group input-group",
       id = id,
       !!!attrs,
       !!!text_group_input_text(left),

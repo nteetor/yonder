@@ -12,7 +12,7 @@ type SelectReceiveMessageData = {
 
 class SelectInputBinding extends InputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-select')
+    return $(scope).find('.bsides-input-select')
   }
 
   override getValue(el: SelectHTMLElement): string {

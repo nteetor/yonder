@@ -22,7 +22,7 @@ input_text <- function(
 
   input <-
     tags$input(
-      class = "bsides-text form-control",
+      class = "bsides-input-text form-control",
       id = id,
       type = "text",
       value = value,

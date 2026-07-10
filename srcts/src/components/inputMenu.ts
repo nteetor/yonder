@@ -9,15 +9,8 @@ type MenuReceiveMessageData = {
 }
 
 class MenuInputBinding extends InputBinding {
-  get selectors(): { toggle: string; choice: string } {
-    return {
-      toggle: '.dropdown-toggle',
-      choice: '.dropdown-item'
-    }
-  }
-
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-menu')
+    return $(scope).find('.bsides-input-menu')
   }
 
   override getValue(el: HTMLElement): unknown {
@@ -30,7 +23,7 @@ class MenuInputBinding extends InputBinding {
   ): void {
     const $el = $(el)
 
-    $el.on('click.bsidesMenuInputBinding', this.selectors.choice, (event) => {
+    $el.on('click.bsidesMenuInputBinding', '.dropdown-item', (event) => {
       $el.data('bsides-value', (event.currentTarget as HTMLButtonElement).value)
       callback(false)
     })
@@ -55,11 +48,11 @@ class MenuInputBinding extends InputBinding {
     const $el = $(el)
 
     if (hasDefinedProperty(data, 'label')) {
-      $el.children(this.selectors.toggle).html(data.label!)
+      $el.children('.dropdown-toggle').html(data.label!)
     }
 
     if (hasDefinedProperty(data, 'disable')) {
-      const $choices = $el.find<HTMLButtonElement>(this.selectors.choice)
+      const $choices = $el.find<HTMLButtonElement>('.dropdown-item')
 
       $choices.prop('disabled', false).removeClass('disabled')
 

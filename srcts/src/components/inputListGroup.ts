@@ -8,19 +8,13 @@ type ListGroupReceiveMessageData = {
 }
 
 class ListGroupInputBinding extends InputBinding {
-  get selectors(): { choice: string } {
-    return {
-      choice: '.list-group-item-action'
-    }
-  }
-
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-listgroup')
+    return $(scope).find('.bsides-input-list-group')
   }
 
   override getValue(el: HTMLElement): Array<string | null> {
     return $(el)
-      .find(`${this.selectors.choice}.active`)
+      .find('.list-group-item-action.active')
       .map((i, e) => e.getAttribute('data-bsides-value'))
       .get()
   }
@@ -33,7 +27,7 @@ class ListGroupInputBinding extends InputBinding {
 
     $el.on(
       'click.bsidesListGroupInputBinding',
-      this.selectors.choice,
+      '.list-group-item-action',
       (event) => {
         $(event.currentTarget).toggleClass('active')
         callback(false)
@@ -61,7 +55,7 @@ class ListGroupInputBinding extends InputBinding {
     data: ListGroupReceiveMessageData
   ): void {
     const $el = $(el)
-    const $choices = $el.find(this.selectors.choice)
+    const $choices = $el.find('.list-group-item-action')
 
     const valueOf = (e: HTMLElement) => e.getAttribute('data-bsides-value') ?? ''
 

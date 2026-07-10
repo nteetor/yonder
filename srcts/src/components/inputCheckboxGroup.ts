@@ -9,14 +9,8 @@ type CheckboxGroupReceiveMessageData = {
 }
 
 class CheckboxGroupInputBinding extends InputBinding {
-  get selectors(): { value: string } {
-    return {
-      value: '.form-check-input,.btn-check'
-    }
-  }
-
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-checkboxgroup')
+    return $(scope).find('.bsides-input-checkbox-group')
   }
 
   // Matches the input handler registered by the R side.
@@ -27,7 +21,7 @@ class CheckboxGroupInputBinding extends InputBinding {
 
   override getValue(el: HTMLElement): string[] {
     return $(el)
-      .find<HTMLInputElement>(this.selectors.value)
+      .find<HTMLInputElement>('.form-check-input,.btn-check')
       .filter(':checked')
       .map((i, e) => e.value)
       .get()
@@ -62,7 +56,7 @@ class CheckboxGroupInputBinding extends InputBinding {
       $el.html(data.options!)
     }
 
-    const $values = $el.find<HTMLInputElement>(this.selectors.value)
+    const $values = $el.find<HTMLInputElement>('.form-check-input,.btn-check')
 
     if (hasDefinedProperty(data, 'select')) {
       $values.prop('checked', false)

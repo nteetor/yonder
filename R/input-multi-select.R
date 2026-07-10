@@ -44,7 +44,7 @@ input_multi_select <- function(
   input <-
     tags$div(
       id = id,
-      class = "bsides-multiselect multi-select",
+      class = "bsides-input-multi-select multi-select",
       !!!attrs,
       tags$div(
         class = "chip-group"

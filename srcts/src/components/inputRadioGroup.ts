@@ -9,19 +9,13 @@ type RadioGroupReceiveMessageData = {
 }
 
 class RadioGroupInputBinding extends InputBinding {
-  get selectors(): { value: string } {
-    return {
-      value: '.form-check-input,.btn-check'
-    }
-  }
-
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-radiogroup')
+    return $(scope).find('.bsides-input-radio-group')
   }
 
   override getValue(el: HTMLElement): string | number | string[] | undefined {
     return $(el)
-      .find(this.selectors.value)
+      .find('.form-check-input,.btn-check')
       .filter(':checked')
       .val()
   }
@@ -55,7 +49,7 @@ class RadioGroupInputBinding extends InputBinding {
       $el.html(data.options!)
     }
 
-    const $values = $el.find<HTMLInputElement>(this.selectors.value)
+    const $values = $el.find<HTMLInputElement>('.form-check-input,.btn-check')
 
     if (hasDefinedProperty(data, 'select')) {
       $values.prop('checked', false)

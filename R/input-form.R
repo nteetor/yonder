@@ -42,7 +42,7 @@ input_form <- function(
   input <-
     tags$form(
       class = c(
-        "bsides-form"
+        "bsides-input-form"
         # if (inline) "form-inline"
       ),
       id = id,
@@ -74,7 +74,7 @@ form_submit_button <- function(
 ) {
   button <-
     tags$button(
-      class = "bsides-btn-submit btn btn-primary",
+      class = "bsides-input-form-submit btn btn-primary",
       value = value,
       label,
       ...

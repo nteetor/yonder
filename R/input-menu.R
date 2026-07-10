@@ -45,7 +45,7 @@ input_menu <- function(
 
   input <-
     tags$div(
-      class = "bsides-menu",
+      class = "bsides-input-menu",
       !!!menu_container_attrs(direction, align),
       id = id,
       !!!attrs,

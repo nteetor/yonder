@@ -49,7 +49,7 @@ input_checkbox <- function(
 
   input <-
     tags$div(
-      class = "bsides-checkbox form-check",
+      class = "bsides-input-checkbox form-check",
       id = id,
       !!!attrs,
       tags$input(

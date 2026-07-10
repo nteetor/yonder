@@ -147,7 +147,7 @@ class MultiSelectInput {
 
 class MultiSelectInputBinding extends InputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-multiselect')
+    return $(scope).find('.bsides-input-multi-select')
   }
 
   override initialize(el: HTMLElement): void {
