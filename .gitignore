@@ -10,3 +10,4 @@ pkgdown/site
 renv/library
 node_modules/
 .cache/
+srcts/tests/html/

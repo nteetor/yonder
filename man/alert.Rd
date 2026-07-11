@@ -18,13 +18,13 @@ attributes to the parent element.}
 
 \item{class}{Additional CSS classes for the alert element.}
 
-\item{container}{An \link[htmltools:builder]{htmltools::tag} function.}
+\item{container}{An \link[htmltools:tag]{htmltools::tag} function.}
 }
 \description{
 Alerts highlight information for users.
 }
 \examples{
-\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 
 alert(
   class = "alert-info",
@@ -42,11 +42,11 @@ alert(
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other components: 
-\code{\link{badge}()},
-\code{\link{collapse_panel}()},
-\code{\link{d1}()},
-\code{\link{modal_dialog}()},
-\code{\link{toast}()}
+Other components:
+\code{\link[=badge]{badge()}},
+\code{\link[=collapse_panel]{collapse_panel()}},
+\code{\link[=d1]{d1()}},
+\code{\link[=modal_dialog]{modal_dialog()}},
+\code{\link[=toast]{toast()}}
 }
 \concept{components}

@@ -13,14 +13,14 @@ values are passed as HTML attributes to the parent element.}
 \item{appearance}{A string. The appearance of the badge.}
 }
 \value{
-A \link[htmltools:builder]{htmltools::tag} object.
+A \link[htmltools:tag]{htmltools::tag} object.
 }
 \description{
 Highlight small pieces of content with badges. A badge's size scales with
 their parent's size.
 }
 \examples{
-\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 
 badge(99)
 
@@ -31,11 +31,11 @@ badge(
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other components: 
-\code{\link{alert}()},
-\code{\link{collapse_panel}()},
-\code{\link{d1}()},
-\code{\link{modal_dialog}()},
-\code{\link{toast}()}
+Other components:
+\code{\link[=alert]{alert()}},
+\code{\link[=collapse_panel]{collapse_panel()}},
+\code{\link[=d1]{d1()}},
+\code{\link[=modal_dialog]{modal_dialog()}},
+\code{\link[=toast]{toast()}}
 }
 \concept{components}

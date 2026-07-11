@@ -24,6 +24,36 @@ function registerBinding(
   }
 }
 
+// Base class for bindings that use native DOM events instead of jQuery.
+// jQuery bindings clean up by event namespace; native listeners have no
+// namespaces, so each binding instance keeps a per-element AbortController:
+// listen() registers listeners under the element's signal and unsubscribe()
+// aborts it, detaching them all at once. The controller map is an instance
+// field, so every binding owns its listeners independently.
+abstract class NativeEventInputBinding extends InputBinding {
+  #controllers = new WeakMap<HTMLElement, AbortController>()
+
+  protected listen(
+    el: HTMLElement,
+    type: string,
+    handler: (event: Event) => void
+  ): void {
+    let controller = this.#controllers.get(el)
+
+    if (!controller) {
+      controller = new AbortController()
+      this.#controllers.set(el, controller)
+    }
+
+    el.addEventListener(type, handler, { signal: controller.signal })
+  }
+
+  override unsubscribe(el: HTMLElement): void {
+    this.#controllers.get(el)?.abort()
+    this.#controllers.delete(el)
+  }
+}
+
 // Handlers for messages sent from the R side via
 // session$sendCustomMessage("bsides:<type>", ...).
 function addCustomMessageHandler(
@@ -55,6 +85,7 @@ function hasDefinedProperty<
 
 export {
   InputBinding,
+  NativeEventInputBinding,
   registerBinding,
   addCustomMessageHandler,
   hasDefinedProperty,

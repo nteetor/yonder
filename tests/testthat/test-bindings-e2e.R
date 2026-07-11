@@ -1,11 +1,7 @@
 # End-to-end tests for the TypeScript input bindings: real browser
 # (headless Chrome), real Shiny session, real websocket round trips.
-
-skip_if_no_e2e <- function() {
-  skip_on_cran()
-  skip_if_not_installed("shinytest2")
-  skip_if_not_installed("bslib")
-}
+# Shared helpers live in helper-e2e.R; multi-select has its own file
+# (test-multi-select-e2e.R).
 
 launch_bindings_app <- function() {
   shinytest2::AppDriver$new(
@@ -14,30 +10,6 @@ launch_bindings_app <- function() {
     variant = NULL,
     load_timeout = 30 * 1000
   )
-}
-
-# Fire a server-side observer defined in the app.
-trigger <- function(app, id) {
-  app$run_js(sprintf(
-    "Shiny.setInputValue('%s', Date.now(), {priority: 'event'});",
-    id
-  ))
-  app$wait_for_idle()
-}
-
-# Dispatch a native, bubbling event on the element matching `selector`.
-dispatch <- function(app, selector, event, value = NULL) {
-  app$run_js(sprintf(
-    "(() => {
-      const el = document.querySelector('%s');
-      %s
-      el.dispatchEvent(new Event('%s', { bubbles: true }));
-    })();",
-    selector,
-    if (is.null(value)) "" else sprintf("el.value = '%s';", value),
-    event
-  ))
-  app$wait_for_idle()
 }
 
 test_that("click-driven bindings report values", {
@@ -132,28 +104,6 @@ test_that("forms hold back child inputs until submit", {
   Sys.sleep(0.4)
   trigger(app, "do_submit_form")
   expect_equal(app$get_value(input = "frmtext"), "second")
-})
-
-test_that("multi-select adds chips on Enter and drops them on close", {
-  skip_if_no_e2e()
-
-  app <- launch_bindings_app()
-  withr::defer(app$stop())
-
-  app$run_js("
-    const input = document.querySelector('#ms .multi-select-input');
-    input.value = 'Tag1';
-    input.dispatchEvent(new KeyboardEvent('keyup', { key: 'Enter', bubbles: true }));
-  ")
-  app$wait_for_idle()
-  expect_equal(app$get_value(input = "ms"), "Tag1")
-
-  # closing the chip must report the post-removal value (regression: the
-  # update used to fire before the fadeOut removed the chip)
-  app$click(selector = "#ms .chip .btn-close")
-  Sys.sleep(0.5)
-  app$wait_for_idle()
-  expect_length(app$get_value(input = "ms"), 0)
 })
 
 test_that("update_* functions reach the client and report back", {

@@ -1,14 +1,16 @@
-.multi-select {
-  > .chip-group {
+bsides-multi-select {
+  display: block;
+
+  > bsides-chip-group {
     margin-bottom: .375rem;
 
-    &:empty {
+    &:not(:has(bsides-chip)) {
       margin-bottom: 0;
     }
   }
-}
 
-.multi-select-input {
-  display: block;
-  width: 100%;
+  > .multi-select-input {
+    display: block;
+    width: 100%;
+  }
 }

@@ -5,7 +5,7 @@
 \alias{update_multi_select}
 \title{Multi select input}
 \usage{
-input_multi_select(id, ...)
+input_multi_select(id, ..., select = NULL, placeholder = NULL, max = NULL)
 
 update_multi_select(
   id,
@@ -24,30 +24,40 @@ update_multi_select(
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
 
+\item{select}{A character vector of initial values, defaults to \code{NULL}.}
+
+\item{placeholder}{A string specifying placeholder text for the input,
+defaults to \code{NULL}.}
+
+\item{max}{A whole number specifying the maximum number of values, defaults
+to \code{NULL}. Once reached, the text input is disabled until a value is
+removed.}
+
 \item{disable}{A boolean. The checkbox starts disabled if \code{TRUE}.}
 
 \item{session}{A shiny session object.}
 }
 \value{
-A \link[htmltools:builder]{htmltools::tag} object.
+A \link[htmltools:tag]{htmltools::tag} object.
 }
 \description{
-The multi select input is a selectize alternative.
+The multi select input is a selectize alternative. Values typed into the
+input become removable chips.
 }
 \seealso{
-Other inputs: 
-\code{\link{fileInput}()},
-\code{\link{input_button}()},
-\code{\link{input_checkbox}()},
-\code{\link{input_checkbox_group}()},
-\code{\link{input_form}()},
-\code{\link{input_list_group}()},
-\code{\link{input_menu}()},
-\code{\link{input_numeric}()},
-\code{\link{input_radio_group}()},
-\code{\link{input_range}()},
-\code{\link{input_select}()},
-\code{\link{input_text}()},
-\code{\link{input_text_group}()}
+Other inputs:
+\code{\link[=fileInput]{fileInput()}},
+\code{\link[=input_button]{input_button()}},
+\code{\link[=input_checkbox]{input_checkbox()}},
+\code{\link[=input_checkbox_group]{input_checkbox_group()}},
+\code{\link[=input_form]{input_form()}},
+\code{\link[=input_list_group]{input_list_group()}},
+\code{\link[=input_menu]{input_menu()}},
+\code{\link[=input_numeric]{input_numeric()}},
+\code{\link[=input_radio_group]{input_radio_group()}},
+\code{\link[=input_range]{input_range()}},
+\code{\link[=input_select]{input_select()}},
+\code{\link[=input_text]{input_text()}},
+\code{\link[=input_text_group]{input_text_group()}}
 }
 \concept{inputs}

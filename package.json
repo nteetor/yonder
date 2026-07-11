@@ -5,7 +5,8 @@
   "main": "inst/www/yonder/js/bsides.js",
   "dependencies": {
     "bootstrap": "^5.3.6",
-    "jquery": "^3.7.1"
+    "jquery": "^3.7.1",
+    "lit": "^3.3.3"
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",
@@ -17,6 +18,7 @@
     "esbuild": "^0.25.5",
     "eslint": "^9.27.0",
     "globals": "^16.2.0",
+    "jsdom": "^29.1.1",
     "npm-run-all2": "^8.0.4",
     "postcss-cli": "^11.0.1",
     "sass": "^1.89.0",
@@ -34,7 +36,8 @@
     "css-compile": "sass --style expanded --source-map --embed-sources --load-path node_modules inst/components/scss/bsides.scss:inst/www/yonder/css/bsides.css",
     "css-prefix": "postcss --config srcts/build/postcss.config.mjs --replace \"inst/www/yonder/css/bsides.css\"",
     "css-minify": "cleancss -O1 --format breakWith=lf --with-rebase --source-map --source-map-inline-sources --output inst/www/yonder/css/bsides.min.css inst/www/yonder/css/bsides.css",
-    "css": "npm-run-all css-compile css-prefix css-minify"
+    "css": "npm-run-all css-compile css-prefix css-minify",
+    "test-dom": "Rscript srcts/tests/gen-html.R && node srcts/tests/test-bindings.mjs"
   },
   "repository": {
     "type": "git",

@@ -27,7 +27,7 @@ percentages. The width of the placeholder.}
 
 \item{height}{A string. The height of the placeholder.}
 
-\item{container}{An \link[htmltools:builder]{htmltools::tag} function.}
+\item{container}{An \link[htmltools:tag]{htmltools::tag} function.}
 
 \item{lines}{A number. The number of lines within the placeholder block.}
 
@@ -37,7 +37,7 @@ percentages. The width of the placeholder.}
 A handy placeholder component.
 }
 \examples{
-\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 
 placeholder()
 

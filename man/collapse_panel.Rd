@@ -29,7 +29,7 @@ values are passed as HTML attributes to the parent element.}
 \item{text}{A string. The content of the button.}
 }
 \value{
-A \link[htmltools:builder]{htmltools::tag} object.
+A \link[htmltools:tag]{htmltools::tag} object.
 }
 \description{
 Create collapsible containers to hide and show content. Open and close a
@@ -43,11 +43,11 @@ collapse_panel_button("panel1", "Toggle the hidden panel")
 
 }
 \seealso{
-Other components: 
-\code{\link{alert}()},
-\code{\link{badge}()},
-\code{\link{d1}()},
-\code{\link{modal_dialog}()},
-\code{\link{toast}()}
+Other components:
+\code{\link[=alert]{alert()}},
+\code{\link[=badge]{badge()}},
+\code{\link[=d1]{d1()}},
+\code{\link[=modal_dialog]{modal_dialog()}},
+\code{\link[=toast]{toast()}}
 }
 \concept{components}

@@ -38,7 +38,6 @@ shiny::shinyApp(
       input_text(id = "frmtext"),
       form_submit_button(label = "Submit", value = "go")
     ),
-    input_multi_select(id = "ms"),
     modal_dialog(id = "mdl", "Hello modal"),
     toast(id = "tst", "Hello toast")
   ),

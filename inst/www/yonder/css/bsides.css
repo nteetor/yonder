@@ -12830,7 +12830,7 @@ textarea.form-control-lg {
   box-shadow: none;
 }
 
-.chip {
+bsides-chip {
   display: -ms-inline-flexbox;
   display: inline-flex;
   -ms-flex-align: center;
@@ -12844,38 +12844,37 @@ textarea.form-control-lg {
   border: solid 1px;
   border-radius: 0.375rem;
 }
-.chip:empty {
-  display: none;
-}
-.chip > .btn-close {
+bsides-chip > .btn-close {
   margin-left: 0.375rem;
   padding: 0;
 }
 
-.chip-group {
+bsides-chip-group {
   position: relative;
   display: -ms-inline-flexbox;
   display: inline-flex;
   vertical-align: middle;
 }
-.chip-group:empty {
+bsides-chip-group:not(:has(bsides-chip)) {
   display: none;
 }
-.chip-group > .chip {
+bsides-chip-group > bsides-chip {
   position: relative;
 }
-.chip-group > .chip:not(:first-child) {
+bsides-chip-group > bsides-chip:not(:first-child) {
   margin-left: 0.25rem;
 }
 
-.multi-select > .chip-group {
+bsides-multi-select {
+  display: block;
+}
+bsides-multi-select > bsides-chip-group {
   margin-bottom: 0.375rem;
 }
-.multi-select > .chip-group:empty {
+bsides-multi-select > bsides-chip-group:not(:has(bsides-chip)) {
   margin-bottom: 0;
 }
-
-.multi-select-input {
+bsides-multi-select > .multi-select-input {
   display: block;
   width: 100%;
 }

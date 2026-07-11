@@ -1,17 +1,19 @@
-.chip-group {
+bsides-chip-group {
   position: relative;
   display: inline-flex;
   vertical-align: middle;
 
-  &:empty {
+  // Lit renders comment and whitespace nodes, so :empty never matches;
+  // check for the absence of chips instead.
+  &:not(:has(bsides-chip)) {
     display: none;
   }
 
-  > .chip {
+  > bsides-chip {
     position: relative;
   }
 
-  > .chip:not(:first-child) {
+  > bsides-chip:not(:first-child) {
     margin-left: .25rem;
   }
 }

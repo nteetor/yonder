@@ -1,4 +1,4 @@
-.chip {
+bsides-chip {
   display: inline-flex;
   align-items: center;
   padding: .375rem;
@@ -11,10 +11,6 @@
 
   border: solid 1px;
   border-radius: .375rem;
-
-  &:empty {
-    display: none;
-  }
 
   > .btn-close {
     margin-left: .375rem;
