@@ -159,3 +159,19 @@ is_breakpoints <- function(x) {
 get_current_session <- function() {
   shiny::getDefaultReactiveDomain()
 }
+
+run_demo <-
+  function(
+    demo_name
+  ) {
+    demo_path <-
+      system.file("examples-shiny", demo_name, package = "yonder")
+
+    stopifnot(
+      file.exists(demo_path)
+    )
+
+    options(shiny.autoreload = TRUE)
+
+    shiny::runApp(demo_path)
+  }

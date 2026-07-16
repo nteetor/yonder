@@ -205,185 +205,8 @@
   };
   registerBinding(CheckboxGroupInputBinding, "checkboxgroup");
 
-  // srcts/src/components/inputForm.ts
+  // srcts/src/components/inputChipGroup.ts
   var import_jquery4 = __toESM(require_jquery());
-  var FormInputBinding = class extends InputBinding {
-    find(scope) {
-      return (0, import_jquery4.default)(scope).find(".bsides-input-form");
-    }
-    getValue(el) {
-      return (0, import_jquery4.default)(el).data("bsides-value");
-    }
-    subscribe(el, callback) {
-      const $el = (0, import_jquery4.default)(el);
-      const inputValues = /* @__PURE__ */ new Map();
-      $el.on("shiny:inputchanged.bsidesFormInputBinding", (event) => {
-        const inputEvent = event;
-        if (!inputEvent.el || inputEvent.priority === "event") {
-          return;
-        }
-        if (inputEvent.el !== el && el.contains(inputEvent.el)) {
-          const name = inputEvent.inputType ? `${inputEvent.name}:${inputEvent.inputType}` : inputEvent.name;
-          inputValues.set(name, inputEvent.value);
-          inputEvent.preventDefault();
-        }
-      });
-      $el.on(
-        "click.bsidesFormInputBinding",
-        ".bsides-input-form-submit",
-        (event) => {
-          event.preventDefault();
-          for (const [key, value] of inputValues.entries()) {
-            Shiny?.setInputValue?.(key, value, { priority: "event" });
-          }
-          $el.data("bsides-value", event.currentTarget.value);
-          callback(false);
-        }
-      );
-    }
-    unsubscribe(el) {
-      (0, import_jquery4.default)(el).off(".bsidesFormInputBinding");
-    }
-    receiveMessage(el, data) {
-      if (hasDefinedProperty(data, "submit")) {
-        (0, import_jquery4.default)(el).find(`.bsides-input-form-submit[value=${data.submit}]`).trigger("click");
-      }
-    }
-  };
-  registerBinding(FormInputBinding, "form");
-
-  // srcts/src/components/inputLink.ts
-  var import_jquery5 = __toESM(require_jquery());
-  var LinkInputBinding = class extends InputBinding {
-    find(scope) {
-      return (0, import_jquery5.default)(scope).find(".bsides-input-link");
-    }
-    getValue(el) {
-      return Number((0, import_jquery5.default)(el).data("bsides-clicks")) || 0;
-    }
-    // Matches the input handler registered by the R side.
-    getType(el) {
-      void el;
-      return "bsides.link";
-    }
-    subscribe(el, callback) {
-      (0, import_jquery5.default)(el).on("click.bsidesLinkInputBinding", () => {
-        const clicks = Number((0, import_jquery5.default)(el).data("bsides-clicks")) || 0;
-        (0, import_jquery5.default)(el).data("bsides-clicks", clicks + 1);
-        callback(false);
-      });
-    }
-    unsubscribe(el) {
-      (0, import_jquery5.default)(el).off(".bsidesLinkInputBinding");
-    }
-    getState(el) {
-      return {
-        value: this.getValue(el)
-      };
-    }
-    receiveMessage(el, data) {
-      if (data.label != null) {
-        el.innerHTML = data.label;
-      }
-    }
-  };
-  registerBinding(LinkInputBinding, "link");
-
-  // srcts/src/components/inputListGroup.ts
-  var import_jquery6 = __toESM(require_jquery());
-  var ListGroupInputBinding = class extends InputBinding {
-    find(scope) {
-      return (0, import_jquery6.default)(scope).find(".bsides-input-list-group");
-    }
-    getValue(el) {
-      return (0, import_jquery6.default)(el).find(".list-group-item-action.active").map((i7, e5) => e5.getAttribute("data-bsides-value")).get();
-    }
-    subscribe(el, callback) {
-      const $el = (0, import_jquery6.default)(el);
-      $el.on(
-        "click.bsidesListGroupInputBinding",
-        ".list-group-item-action",
-        (event) => {
-          (0, import_jquery6.default)(event.currentTarget).toggleClass("active");
-          callback(false);
-        }
-      );
-      $el.on("change.bsidesListGroupInputBinding", () => {
-        callback(false);
-      });
-    }
-    unsubscribe(el) {
-      (0, import_jquery6.default)(el).off(".bsidesListGroupInputBinding");
-    }
-    getState(el) {
-      return {
-        value: this.getValue(el)
-      };
-    }
-    receiveMessage(el, data) {
-      const $el = (0, import_jquery6.default)(el);
-      const $choices = $el.find(".list-group-item-action");
-      const valueOf = (e5) => e5.getAttribute("data-bsides-value") ?? "";
-      if (hasDefinedProperty(data, "select")) {
-        $choices.removeClass("active");
-        $choices.filter((i7, e5) => data.select.includes(valueOf(e5))).addClass("active");
-      }
-      if (hasDefinedProperty(data, "disable")) {
-        $choices.removeClass("disabled").prop("disabled", false);
-        $choices.filter((i7, e5) => data.disable.includes(valueOf(e5))).addClass("disabled").prop("disabled", true);
-      }
-      $el.trigger("change");
-    }
-  };
-  registerBinding(ListGroupInputBinding, "listgroup");
-
-  // srcts/src/components/inputMenu.ts
-  var import_jquery7 = __toESM(require_jquery());
-  var MenuInputBinding = class extends InputBinding {
-    find(scope) {
-      return (0, import_jquery7.default)(scope).find(".bsides-input-menu");
-    }
-    getValue(el) {
-      return (0, import_jquery7.default)(el).data("bsides-value");
-    }
-    subscribe(el, callback) {
-      const $el = (0, import_jquery7.default)(el);
-      $el.on("click.bsidesMenuInputBinding", ".dropdown-item", (event) => {
-        $el.data("bsides-value", event.currentTarget.value);
-        callback(false);
-      });
-      $el.on("change.bsidesMenuInputBinding", () => {
-        callback(false);
-      });
-    }
-    unsubscribe(el) {
-      (0, import_jquery7.default)(el).off(".bsidesMenuInputBinding");
-    }
-    getState(el) {
-      return {
-        value: this.getValue(el)
-      };
-    }
-    receiveMessage(el, data) {
-      const $el = (0, import_jquery7.default)(el);
-      if (hasDefinedProperty(data, "label")) {
-        $el.children(".dropdown-toggle").html(data.label);
-      }
-      if (hasDefinedProperty(data, "disable")) {
-        const $choices = $el.find(".dropdown-item");
-        $choices.prop("disabled", false).removeClass("disabled");
-        $choices.filter((i7, e5) => data.disable.includes(e5.value)).prop("disabled", true).addClass("disabled");
-      }
-      if (hasDefinedProperty(data, "select")) {
-        $el.data("bsides-value", data.select);
-        $el.trigger("change");
-      }
-    }
-  };
-  registerBinding(MenuInputBinding, "menu");
-
-  // srcts/src/components/inputMultiSelect.ts
-  var import_jquery8 = __toESM(require_jquery());
 
   // node_modules/@lit/reactive-element/css-tag.js
   var t = globalThis;
@@ -665,7 +488,7 @@
   var p2 = RegExp(`>|${f2}(?:([^\\s"'>=/]+)(${f2}*=${f2}*(?:[^ 	
 \f\r"'\`<>=]|("|')|))|$)`, "g");
   var g = /'/g;
-  var $8 = /"/g;
+  var $4 = /"/g;
   var y2 = /^(?:script|style|textarea|title)$/i;
   var x = (t5) => (i7, ...s5) => ({ _$litType$: t5, strings: i7, values: s5 });
   var b2 = x(1);
@@ -685,7 +508,7 @@
     for (let i8 = 0; i8 < s5; i8++) {
       const s6 = t5[i8];
       let a3, u5, d3 = -1, f3 = 0;
-      for (; f3 < s6.length && (c5.lastIndex = f3, u5 = c5.exec(s6), null !== u5); ) f3 = c5.lastIndex, c5 === v ? "!--" === u5[1] ? c5 = _ : void 0 !== u5[1] ? c5 = m : void 0 !== u5[2] ? (y2.test(u5[2]) && (n4 = RegExp("</" + u5[2], "g")), c5 = p2) : void 0 !== u5[3] && (c5 = p2) : c5 === p2 ? ">" === u5[0] ? (c5 = n4 ?? v, d3 = -1) : void 0 === u5[1] ? d3 = -2 : (d3 = c5.lastIndex - u5[2].length, a3 = u5[1], c5 = void 0 === u5[3] ? p2 : '"' === u5[3] ? $8 : g) : c5 === $8 || c5 === g ? c5 = p2 : c5 === _ || c5 === m ? c5 = v : (c5 = p2, n4 = void 0);
+      for (; f3 < s6.length && (c5.lastIndex = f3, u5 = c5.exec(s6), null !== u5); ) f3 = c5.lastIndex, c5 === v ? "!--" === u5[1] ? c5 = _ : void 0 !== u5[1] ? c5 = m : void 0 !== u5[2] ? (y2.test(u5[2]) && (n4 = RegExp("</" + u5[2], "g")), c5 = p2) : void 0 !== u5[3] && (c5 = p2) : c5 === p2 ? ">" === u5[0] ? (c5 = n4 ?? v, d3 = -1) : void 0 === u5[1] ? d3 = -2 : (d3 = c5.lastIndex - u5[2].length, a3 = u5[1], c5 = void 0 === u5[3] ? p2 : '"' === u5[3] ? $4 : g) : c5 === $4 || c5 === g ? c5 = p2 : c5 === _ || c5 === m ? c5 = v : (c5 = p2, n4 = void 0);
       const x2 = c5 === p2 && t5[i8 + 1].startsWith("/>") ? " " : "";
       l3 += c5 === v ? s6 + r3 : d3 >= 0 ? (e5.push(a3), s6.slice(0, d3) + h2 + s6.slice(d3) + o3 + x2) : s6 + o3 + (-2 === d3 ? i8 : x2);
     }
@@ -928,9 +751,6 @@
   o4?.({ LitElement: i4 });
   (s3.litElementVersions ??= []).push("4.2.2");
 
-  // node_modules/lit-html/directives/if-defined.js
-  var o5 = (o6) => o6 ?? A;
-
   // node_modules/lit-html/directive.js
   var t3 = { ATTRIBUTE: 1, CHILD: 2, PROPERTY: 3, BOOLEAN_ATTRIBUTE: 4, EVENT: 5, ELEMENT: 6 };
   var e4 = (t5) => (...e5) => ({ _$litDirective$: t5, values: e5 });
@@ -1041,33 +861,101 @@
   var BsidesChip = class extends i4 {
     static properties = {
       value: { type: String },
+      label: { type: String },
+      checkable: { type: Boolean, reflect: true },
+      checked: { type: Boolean, reflect: true },
+      type: { type: String },
       removable: { type: Boolean, reflect: true },
       disabled: { type: Boolean, reflect: true }
     };
+    #appliedType = "";
     constructor() {
       super();
       this.value = "";
+      this.label = "";
+      this.checkable = false;
+      this.checked = false;
+      this.type = "";
       this.removable = false;
       this.disabled = false;
+      this.addEventListener("click", this.#onClick);
+      this.addEventListener("keydown", this.#onKeydown);
     }
     // Render into light DOM so Bootstrap variables and the bsides theme apply.
     createRenderRoot() {
       return this;
     }
-    connectedCallback() {
-      super.connectedCallback();
-      if (!this.hasAttribute("role")) {
-        this.setAttribute("role", "option");
+    // Host attributes and theme classes depend on reactive properties, so
+    // they are (re)applied after every update.
+    updated() {
+      if (this.checkable) {
+        this.setAttribute("role", "button");
+        this.setAttribute("tabindex", this.disabled ? "-1" : "0");
+        this.setAttribute("aria-pressed", this.checked ? "true" : "false");
+      } else {
+        this.removeAttribute("aria-pressed");
+      }
+      this.#applyType();
+    }
+    // The class is constant per type; checked/unchecked looks are derived in
+    // CSS from the reflected attributes.
+    #applyType() {
+      if (this.#appliedType && this.#appliedType !== this.type) {
+        this.classList.remove(`chip-${this.#appliedType}`);
+      }
+      this.#appliedType = this.type;
+      if (this.type) {
+        this.classList.add(`chip-${this.type}`);
       }
     }
     render() {
-      return b2`${this.value}${this.removable ? b2`<button
+      const label = this.label || this.value;
+      return b2`${this.checked ? b2`<svg
+          class="chip-check"
+          viewBox="0 0 16 16"
+          width="1em"
+          height="1em"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.5"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          aria-hidden="true"
+        >
+          <path d="M3 8.5 6.5 12 13 4.5" />
+        </svg>` : A}${label}${this.removable ? b2`<button
           type="button"
           class="btn-close"
-          aria-label=${`Remove ${this.value}`}
+          aria-label=${`Remove ${label}`}
           ?disabled=${this.disabled}
           @click=${this.#onRemoveClick}
         ></button>` : A}`;
+    }
+    #onClick = (event) => {
+      if (!this.checkable || this.disabled) {
+        return;
+      }
+      if (event.target.closest(".btn-close")) {
+        return;
+      }
+      this.#requestToggle();
+    };
+    #onKeydown = (event) => {
+      if (!this.checkable || this.disabled || event.target !== this) {
+        return;
+      }
+      if (event.key === "Enter" || event.key === " ") {
+        event.preventDefault();
+        this.#requestToggle();
+      }
+    };
+    #requestToggle() {
+      this.dispatchEvent(
+        new CustomEvent("bsides-chip:toggle", {
+          detail: { value: this.value },
+          bubbles: true
+        })
+      );
     }
     #onRemoveClick = () => {
       this.dispatchEvent(
@@ -1083,140 +971,841 @@
   // srcts/src/components/webcomponents/chipGroup.ts
   var BsidesChipGroup = class extends i4 {
     static properties = {
-      chips: { type: Array },
-      removable: { type: Boolean, reflect: true },
+      choices: { type: Array },
+      checked: { type: Array },
+      type: { type: String },
+      layout: { type: String, reflect: true },
       disabled: { type: Boolean, reflect: true },
-      label: { type: String }
-    };
-    constructor() {
-      super();
-      this.chips = [];
-      this.removable = false;
-      this.disabled = false;
-      this.label = "";
-      this.addEventListener("bsides-chip:remove", this.#onChipRemove);
-    }
-    createRenderRoot() {
-      return this;
-    }
-    connectedCallback() {
-      super.connectedCallback();
-      if (!this.hasAttribute("role")) {
-        this.setAttribute("role", "listbox");
-      }
-    }
-    willUpdate() {
-      if (this.label) {
-        this.setAttribute("aria-label", this.label);
-      }
-    }
-    render() {
-      return b2`${c4(
-        this.chips,
-        (chip) => chip,
-        (chip) => b2`<bsides-chip
-        .value=${chip}
-        ?removable=${this.removable}
-        ?disabled=${this.disabled}
-      ></bsides-chip>`
-      )}`;
-    }
-    #onChipRemove = (event) => {
-      const { value } = event.detail;
-      this.chips = this.chips.filter((chip) => chip !== value);
-      void this.updateComplete.then(() => {
-        this.dispatchEvent(
-          new CustomEvent("bsides-chip-group:change", { bubbles: true })
-        );
-      });
-    };
-  };
-  customElements.define("bsides-chip-group", BsidesChipGroup);
-
-  // srcts/src/components/webcomponents/multiSelect.ts
-  var BsidesMultiSelect = class extends i4 {
-    static properties = {
-      value: { type: Array },
-      max: { type: Number },
-      placeholder: { type: String },
-      disabled: { type: Boolean, reflect: true },
+      label: { type: String },
       _announcement: { state: true }
     };
     constructor() {
       super();
-      this.value = [];
-      this.max = null;
-      this.placeholder = "";
+      this.choices = [];
+      this.checked = [];
+      this.type = "primary";
+      this.layout = "vertical";
       this.disabled = false;
+      this.label = "";
       this._announcement = "";
-      this.addEventListener("bsides-chip-group:change", this.#onGroupChange);
+      this.addEventListener("bsides-chip:toggle", this.#onChipToggle);
     }
     createRenderRoot() {
       return this;
     }
     render() {
       return b2`
-      <bsides-chip-group
-        .chips=${this.value}
-        removable
-        ?disabled=${this.disabled}
-        label="Selected values"
-      ></bsides-chip-group>
-      <input
-        type="text"
-        class="multi-select-input"
-        placeholder=${o5(this.placeholder || void 0)}
-        ?disabled=${this.disabled || this.#atMax()}
-        data-shiny-no-bind-input
-        @keydown=${this.#onKeydown}
-      />
+      <div
+        class="chip-group-chips"
+        role="group"
+        aria-label=${this.label || "Chips"}
+      >
+        ${c4(
+        this.choices,
+        (choice) => choice.value,
+        (choice) => b2`<bsides-chip
+            .value=${choice.value}
+            .label=${choice.label}
+            .type=${this.type}
+            checkable
+            ?checked=${this.checked.includes(choice.value)}
+            ?disabled=${this.disabled}
+          ></bsides-chip>`
+      )}
+      </div>
       <span class="visually-hidden" aria-live="polite">
         ${this._announcement}
       </span>
     `;
     }
+    // Apply a server update (update_chip_group() → receiveMessage() → here).
+    // All state changes stay inside the component; a change event is
+    // dispatched afterwards so the binding reports the (possibly new) value.
+    receiveUpdate(msg) {
+      if (msg.choices !== void 0) {
+        this.choices = msg.choices;
+        this.checked = this.checked.filter((value) => this.#isChoice(value));
+      }
+      if (msg.select !== void 0) {
+        const select = Array.isArray(msg.select) ? msg.select : [msg.select];
+        const known = select.filter((value) => this.#isChoice(value));
+        if (known.length !== select.length) {
+          console.warn(
+            `bsides-chip-group: dropping value(s) not found in choices: ` + select.filter((value) => !this.#isChoice(value)).join(", ")
+          );
+        }
+        this.checked = this.choices.map((choice) => choice.value).filter((value) => known.includes(value));
+      }
+      if (msg.enable === true) {
+        this.disabled = false;
+      }
+      if (msg.disable === true) {
+        this.disabled = true;
+      }
+      this.#dispatchChange();
+    }
+    #isChoice(value) {
+      return this.choices.some((choice) => choice.value === value);
+    }
+    #labelFor(value) {
+      return this.choices.find((choice) => choice.value === value)?.label ?? value;
+    }
+    // A chip requested a checked-state toggle (click, Enter, or Space).
+    #onChipToggle = (event) => {
+      const { value } = event.detail;
+      const checked = new Set(this.checked);
+      if (checked.has(value)) {
+        checked.delete(value);
+        this._announcement = `${this.#labelFor(value)} unchecked`;
+      } else {
+        checked.add(value);
+        this._announcement = `${this.#labelFor(value)} checked`;
+      }
+      this.checked = this.choices.map((choice) => choice.value).filter((choiceValue) => checked.has(choiceValue));
+      this.#dispatchChange();
+    };
+    #dispatchChange() {
+      void this.updateComplete.then(() => {
+        this.dispatchEvent(
+          new CustomEvent("bsides-chip-group:change", { bubbles: true })
+        );
+      });
+    }
+  };
+  customElements.define("bsides-chip-group", BsidesChipGroup);
+
+  // srcts/src/components/inputChipGroup.ts
+  var ChipGroupInputBinding = class extends NativeEventInputBinding {
+    find(scope) {
+      return (0, import_jquery4.default)(scope).find("bsides-chip-group");
+    }
+    getValue(el) {
+      return el.checked;
+    }
+    // Matches the input handler registered by the R side (empty selection
+    // becomes NULL).
+    getType(el) {
+      void el;
+      return "bsides.chipgroup";
+    }
+    subscribe(el, callback) {
+      this.listen(el, "bsides-chip-group:change", () => {
+        callback(false);
+      });
+    }
+    // All state changes live in the component; the binding only forwards.
+    receiveMessage(el, data) {
+      ;
+      el.receiveUpdate(data);
+    }
+  };
+  registerBinding(ChipGroupInputBinding, "chipgroup");
+
+  // srcts/src/components/inputForm.ts
+  var import_jquery5 = __toESM(require_jquery());
+  var FormInputBinding = class extends InputBinding {
+    find(scope) {
+      return (0, import_jquery5.default)(scope).find(".bsides-input-form");
+    }
+    getValue(el) {
+      return (0, import_jquery5.default)(el).data("bsides-value");
+    }
+    subscribe(el, callback) {
+      const $el = (0, import_jquery5.default)(el);
+      const inputValues = /* @__PURE__ */ new Map();
+      $el.on("shiny:inputchanged.bsidesFormInputBinding", (event) => {
+        const inputEvent = event;
+        if (!inputEvent.el || inputEvent.priority === "event") {
+          return;
+        }
+        if (inputEvent.el !== el && el.contains(inputEvent.el)) {
+          const name = inputEvent.inputType ? `${inputEvent.name}:${inputEvent.inputType}` : inputEvent.name;
+          inputValues.set(name, inputEvent.value);
+          inputEvent.preventDefault();
+        }
+      });
+      $el.on(
+        "click.bsidesFormInputBinding",
+        ".bsides-input-form-submit",
+        (event) => {
+          event.preventDefault();
+          for (const [key, value] of inputValues.entries()) {
+            Shiny?.setInputValue?.(key, value, { priority: "event" });
+          }
+          $el.data("bsides-value", event.currentTarget.value);
+          callback(false);
+        }
+      );
+    }
+    unsubscribe(el) {
+      (0, import_jquery5.default)(el).off(".bsidesFormInputBinding");
+    }
+    receiveMessage(el, data) {
+      if (hasDefinedProperty(data, "submit")) {
+        (0, import_jquery5.default)(el).find(`.bsides-input-form-submit[value=${data.submit}]`).trigger("click");
+      }
+    }
+  };
+  registerBinding(FormInputBinding, "form");
+
+  // srcts/src/components/inputLink.ts
+  var import_jquery6 = __toESM(require_jquery());
+  var LinkInputBinding = class extends InputBinding {
+    find(scope) {
+      return (0, import_jquery6.default)(scope).find(".bsides-input-link");
+    }
+    getValue(el) {
+      return Number((0, import_jquery6.default)(el).data("bsides-clicks")) || 0;
+    }
+    // Matches the input handler registered by the R side.
+    getType(el) {
+      void el;
+      return "bsides.link";
+    }
+    subscribe(el, callback) {
+      (0, import_jquery6.default)(el).on("click.bsidesLinkInputBinding", () => {
+        const clicks = Number((0, import_jquery6.default)(el).data("bsides-clicks")) || 0;
+        (0, import_jquery6.default)(el).data("bsides-clicks", clicks + 1);
+        callback(false);
+      });
+    }
+    unsubscribe(el) {
+      (0, import_jquery6.default)(el).off(".bsidesLinkInputBinding");
+    }
+    getState(el) {
+      return {
+        value: this.getValue(el)
+      };
+    }
+    receiveMessage(el, data) {
+      if (data.label != null) {
+        el.innerHTML = data.label;
+      }
+    }
+  };
+  registerBinding(LinkInputBinding, "link");
+
+  // srcts/src/components/inputListGroup.ts
+  var import_jquery7 = __toESM(require_jquery());
+  var ListGroupInputBinding = class extends InputBinding {
+    find(scope) {
+      return (0, import_jquery7.default)(scope).find(".bsides-input-list-group");
+    }
+    getValue(el) {
+      return (0, import_jquery7.default)(el).find(".list-group-item-action.active").map((i7, e5) => e5.getAttribute("data-bsides-value")).get();
+    }
+    subscribe(el, callback) {
+      const $el = (0, import_jquery7.default)(el);
+      $el.on(
+        "click.bsidesListGroupInputBinding",
+        ".list-group-item-action",
+        (event) => {
+          (0, import_jquery7.default)(event.currentTarget).toggleClass("active");
+          callback(false);
+        }
+      );
+      $el.on("change.bsidesListGroupInputBinding", () => {
+        callback(false);
+      });
+    }
+    unsubscribe(el) {
+      (0, import_jquery7.default)(el).off(".bsidesListGroupInputBinding");
+    }
+    getState(el) {
+      return {
+        value: this.getValue(el)
+      };
+    }
+    receiveMessage(el, data) {
+      const $el = (0, import_jquery7.default)(el);
+      const $choices = $el.find(".list-group-item-action");
+      const valueOf = (e5) => e5.getAttribute("data-bsides-value") ?? "";
+      if (hasDefinedProperty(data, "select")) {
+        $choices.removeClass("active");
+        $choices.filter((i7, e5) => data.select.includes(valueOf(e5))).addClass("active");
+      }
+      if (hasDefinedProperty(data, "disable")) {
+        $choices.removeClass("disabled").prop("disabled", false);
+        $choices.filter((i7, e5) => data.disable.includes(valueOf(e5))).addClass("disabled").prop("disabled", true);
+      }
+      $el.trigger("change");
+    }
+  };
+  registerBinding(ListGroupInputBinding, "listgroup");
+
+  // srcts/src/components/inputMenu.ts
+  var import_jquery8 = __toESM(require_jquery());
+  var MenuInputBinding = class extends InputBinding {
+    find(scope) {
+      return (0, import_jquery8.default)(scope).find(".bsides-input-menu");
+    }
+    getValue(el) {
+      return (0, import_jquery8.default)(el).data("bsides-value");
+    }
+    subscribe(el, callback) {
+      const $el = (0, import_jquery8.default)(el);
+      $el.on("click.bsidesMenuInputBinding", ".dropdown-item", (event) => {
+        $el.data("bsides-value", event.currentTarget.value);
+        callback(false);
+      });
+      $el.on("change.bsidesMenuInputBinding", () => {
+        callback(false);
+      });
+    }
+    unsubscribe(el) {
+      (0, import_jquery8.default)(el).off(".bsidesMenuInputBinding");
+    }
+    getState(el) {
+      return {
+        value: this.getValue(el)
+      };
+    }
+    receiveMessage(el, data) {
+      const $el = (0, import_jquery8.default)(el);
+      if (hasDefinedProperty(data, "label")) {
+        $el.children(".dropdown-toggle").html(data.label);
+      }
+      if (hasDefinedProperty(data, "disable")) {
+        const $choices = $el.find(".dropdown-item");
+        $choices.prop("disabled", false).removeClass("disabled");
+        $choices.filter((i7, e5) => data.disable.includes(e5.value)).prop("disabled", true).addClass("disabled");
+      }
+      if (hasDefinedProperty(data, "select")) {
+        $el.data("bsides-value", data.select);
+        $el.trigger("change");
+      }
+    }
+  };
+  registerBinding(MenuInputBinding, "menu");
+
+  // srcts/src/components/inputMultiSelect.ts
+  var import_jquery9 = __toESM(require_jquery());
+
+  // node_modules/lit-html/directives/if-defined.js
+  var o5 = (o6) => o6 ?? A;
+
+  // srcts/src/components/webcomponents/multiSelect.ts
+  var supportsPopover = typeof HTMLElement.prototype.showPopover === "function";
+  var menuMaxHeight = 240;
+  var menuSpacer = 2;
+  var menuViewportGutter = 8;
+  var BsidesMultiSelect = class extends i4 {
+    static properties = {
+      chips: { type: Array },
+      choices: { type: Array },
+      edit: { type: String, reflect: true },
+      type: { type: String },
+      layout: { type: String, reflect: true },
+      max: { type: Number },
+      placeholder: { type: String },
+      disabled: { type: Boolean, reflect: true },
+      label: { type: String },
+      _announcement: { state: true },
+      _open: { state: true },
+      _query: { state: true },
+      _activeIndex: { state: true }
+    };
+    // Fallback for aria-controls/aria-activedescendant ids when the element
+    // itself has no id.
+    #uid = `bsides-multi-select-${Math.random().toString(36).slice(2, 8)}`;
+    // Whether the menu is currently shown as a top-layer popover. Tracked
+    // here rather than via :popover-open so show/hide stay balanced even
+    // when a close lands before the open's render round trip completes.
+    #popoverShown = false;
+    constructor() {
+      super();
+      this.chips = [];
+      this.choices = [];
+      this.edit = "choices";
+      this.type = "primary";
+      this.layout = "vertical";
+      this.max = null;
+      this.placeholder = "";
+      this.disabled = false;
+      this.label = "";
+      this._announcement = "";
+      this._open = false;
+      this._query = "";
+      this._activeIndex = -1;
+      this.addEventListener("bsides-chip:remove", this.#onChipRemove);
+    }
+    createRenderRoot() {
+      return this;
+    }
+    disconnectedCallback() {
+      super.disconnectedCallback();
+      document.removeEventListener("pointerdown", this.#onOutsidePointerdown);
+      this.#removeViewportListeners();
+      this.#popoverShown = false;
+    }
+    // Re-anchor an open top-layer menu after any re-render: chip changes
+    // resize the field, which moves the menu's anchor point.
+    updated() {
+      if (this.#popoverShown) {
+        this.#positionMenu();
+      }
+    }
+    render() {
+      return b2`
+      <div class="multi-select-field" @mousedown=${this.#onFieldMousedown}>
+        <div class="multi-select-field-content">
+          <div
+            class="multi-select-chips"
+            role="group"
+            aria-label=${this.label || "Selected values"}
+          >
+            ${c4(
+        this.chips,
+        (value) => value,
+        (value) => {
+          const chip = this.#chipFor(value);
+          return b2`<bsides-chip
+                  .value=${chip.value}
+                  .label=${chip.label}
+                  .type=${this.type}
+                  removable
+                  ?disabled=${this.disabled}
+                ></bsides-chip>`;
+        }
+      )}
+          </div>
+          <input
+            type="text"
+            class="multi-select-input"
+            placeholder=${o5(
+        this.chips.length === 0 ? this.placeholder || void 0 : void 0
+      )}
+            ?disabled=${this.disabled || this.#atMax()}
+            data-shiny-no-bind-input
+            role=${o5(this.#comboboxAttr("combobox"))}
+            aria-expanded=${o5(this.#comboboxAttr(String(this._open)))}
+            aria-controls=${o5(this.#comboboxAttr(this.#menuId()))}
+            aria-autocomplete=${o5(this.#comboboxAttr("list"))}
+            aria-activedescendant=${o5(this.#activeOptionId())}
+            @keydown=${this.#onKeydown}
+            @input=${this.#onInput}
+            @focus=${this.#onFocus}
+            @blur=${this.#onBlur}
+          />
+        </div>
+        ${this.#renderCaret()}
+      </div>
+      ${this.#renderMenu()}
+      <span class="visually-hidden" aria-live="polite">
+        ${this._announcement}
+      </span>
+    `;
+    }
+    // The dropdown indicator at the field's trailing edge. Decorative: its
+    // clicks fall through to the field (pointer-events: none), which opens
+    // the menu — open-only, never a toggle. Rendered outside
+    // .multi-select-field-content so horizontal scrolling passes under it.
+    #renderCaret() {
+      if (!this.#hasMenu()) {
+        return A;
+      }
+      return b2`<svg
+      class="multi-select-caret${this._open ? " open" : ""}"
+      viewBox="0 0 16 16"
+      width="1em"
+      height="1em"
+      fill="none"
+      stroke="currentColor"
+      stroke-width="2"
+      stroke-linecap="round"
+      stroke-linejoin="round"
+      aria-hidden="true"
+    >
+      <path d="M4 6 8 10 12 6" />
+    </svg>`;
+    }
+    // The filtering listbox: all choices, a checkmark beside current
+    // members, selection toggles membership. Bootstrap's
+    // .dropdown-menu/.dropdown-item CSS classes only — the dropdown plugin's
+    // menu-button focus model doesn't fit a combobox, so visibility and
+    // selection are handled here (see plan-multi-select-input.md).
+    #renderMenu() {
+      if (!this.#hasMenu()) {
+        return A;
+      }
+      const options = this.#filteredChoices();
+      return b2`
+      <ul
+        id=${this.#menuId()}
+        class="dropdown-menu${this._open ? " show" : ""}"
+        popover=${o5(supportsPopover ? "manual" : void 0)}
+        role="listbox"
+        aria-label="Options"
+        @mousedown=${this.#onMenuMousedown}
+      >
+        ${options.length === 0 ? b2`<li><span class="dropdown-item disabled">No matches</span></li>` : options.map((choice, index) => {
+        const member = this.chips.includes(choice.value);
+        return b2`
+                <li role="presentation">
+                  <button
+                    type="button"
+                    id=${this.#optionId(index)}
+                    class="dropdown-item${index === this._activeIndex ? " active" : ""}"
+                    role="option"
+                    aria-selected=${member ? "true" : "false"}
+                    @click=${() => this.#toggleChoice(choice)}
+                  >
+                    ${member ? b2`<svg
+                          class="option-check"
+                          viewBox="0 0 16 16"
+                          width="1em"
+                          height="1em"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2.5"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          aria-hidden="true"
+                        >
+                          <path d="M3 8.5 6.5 12 13 4.5" />
+                        </svg>` : A}
+                    ${choice.label}
+                  </button>
+                </li>
+              `;
+      })}
+      </ul>
+    `;
+    }
+    // Apply a server update (update_multi_select() → receiveMessage() →
+    // here). All state changes stay inside the component; a change event is
+    // dispatched afterwards so the binding reports the (possibly new) value.
+    receiveUpdate(msg) {
+      if (msg.choices !== void 0) {
+        this.choices = msg.choices;
+        if (this.edit !== "free") {
+          this.chips = this.chips.filter((value) => this.#isChoice(value));
+        }
+      }
+      if (msg.select !== void 0) {
+        const select = Array.isArray(msg.select) ? msg.select : [msg.select];
+        const known = this.edit === "free" ? select : select.filter((value) => this.#isChoice(value));
+        if (known.length !== select.length) {
+          console.warn(
+            `bsides-multi-select: dropping value(s) not found in choices: ` + select.filter((value) => !this.#isChoice(value)).join(", ")
+          );
+        }
+        this.chips = known;
+      }
+      if (msg.placeholder !== void 0) {
+        this.placeholder = msg.placeholder;
+      }
+      if (msg.max !== void 0) {
+        this.max = msg.max;
+      }
+      if (msg.enable === true) {
+        this.disabled = false;
+      }
+      if (msg.disable === true) {
+        this.disabled = true;
+        this.#closeMenu();
+      }
+      this.#dispatchChange();
+    }
+    // There is a dropdown whenever the set is bounded by choices, or
+    // choices exist to suggest at edit = "free" (the mixed mode). A free
+    // input without choices is pure tag entry.
+    #hasMenu() {
+      return this.edit === "choices" || this.choices.length > 0;
+    }
     #atMax() {
-      return this.max != null && this.value.length >= this.max;
+      return this.max != null && this.chips.length >= this.max;
+    }
+    #isChoice(value) {
+      return this.choices.some((choice) => choice.value === value);
+    }
+    // The chip for a member value: its choice's label when one exists,
+    // otherwise the value labels itself (free-created chips).
+    #chipFor(value) {
+      const choice = this.choices.find((choice2) => choice2.value === value);
+      return choice ?? { label: value, value };
+    }
+    // All choices matching the typed text, case-insensitively, by label —
+    // members included (they show a checkmark and toggle off).
+    #filteredChoices() {
+      const query = this._query.trim().toLowerCase();
+      return this.choices.filter(
+        (choice) => choice.label.toLowerCase().includes(query)
+      );
     }
     get #inputElement() {
       return this.querySelector(".multi-select-input");
     }
-    #onKeydown = (event) => {
-      const input = event.target;
-      if (event.key === "Enter") {
-        event.preventDefault();
-        this.#add(input);
-      } else if (event.key === "Backspace" && input.value === "") {
-        this.#removeLast();
+    #comboboxAttr(value) {
+      return this.#hasMenu() ? value : void 0;
+    }
+    #menuId() {
+      return `${this.id || this.#uid}-listbox`;
+    }
+    #optionId(index) {
+      return `${this.#menuId()}-option-${index}`;
+    }
+    #activeOptionId() {
+      return this._open && this._activeIndex >= 0 ? this.#optionId(this._activeIndex) : void 0;
+    }
+    #openMenu() {
+      if (this._open || !this.#hasMenu() || this.disabled || this.#atMax()) {
+        return;
+      }
+      this._open = true;
+      document.addEventListener("pointerdown", this.#onOutsidePointerdown);
+      if (supportsPopover) {
+        window.addEventListener("resize", this.#onViewportChange);
+        document.addEventListener("scroll", this.#onViewportChange, {
+          capture: true,
+          passive: true
+        });
+        void this.updateComplete.then(() => {
+          if (this._open) {
+            this.#showMenuPopover();
+          }
+        });
+      }
+    }
+    #closeMenu() {
+      if (!this._open) {
+        return;
+      }
+      this._open = false;
+      this._activeIndex = -1;
+      document.removeEventListener("pointerdown", this.#onOutsidePointerdown);
+      this.#removeViewportListeners();
+      this.#hideMenuPopover();
+    }
+    #removeViewportListeners() {
+      window.removeEventListener("resize", this.#onViewportChange);
+      document.removeEventListener("scroll", this.#onViewportChange, {
+        capture: true
+      });
+    }
+    #onViewportChange = () => {
+      this.#positionMenu();
+    };
+    #showMenuPopover() {
+      const menu = this.#menuElement;
+      if (!supportsPopover || !menu || this.#popoverShown) {
+        return;
+      }
+      menu.showPopover();
+      this.#popoverShown = true;
+      this.#positionMenu();
+    }
+    #hideMenuPopover() {
+      const menu = this.#menuElement;
+      if (!supportsPopover || !menu || !this.#popoverShown) {
+        return;
+      }
+      menu.hidePopover();
+      this.#popoverShown = false;
+    }
+    // Anchor the top-layer menu to the field in viewport coordinates: below
+    // the field, spanning its width, capped to the space above the
+    // viewport's bottom edge so a low menu scrolls internally rather than
+    // running off screen. (The absolute fallback positions in CSS instead.)
+    #positionMenu() {
+      const menu = this.#menuElement;
+      const field = this.querySelector(".multi-select-field");
+      if (!menu || !field) {
+        return;
+      }
+      const rect = field.getBoundingClientRect();
+      const top = rect.bottom + menuSpacer;
+      menu.style.left = `${rect.left}px`;
+      menu.style.top = `${top}px`;
+      menu.style.width = `${rect.width}px`;
+      menu.style.maxHeight = `${Math.max(
+        0,
+        Math.min(menuMaxHeight, window.innerHeight - top - menuViewportGutter)
+      )}px`;
+    }
+    get #menuElement() {
+      return this.querySelector(".dropdown-menu");
+    }
+    #onOutsidePointerdown = (event) => {
+      if (!this.contains(event.target)) {
+        this.#closeMenu();
       }
     };
-    #add(input) {
-      const text = input.value.trim();
-      if (!text || this.#atMax()) {
+    // Pressing on the menu must not steal focus from the text input —
+    // otherwise the input blurs before the option's click event lands.
+    #onMenuMousedown = (event) => {
+      event.preventDefault();
+    };
+    // Clicking anywhere in the field — its padding or the caret — focuses
+    // the text input and opens the menu. Clicks on the input itself or
+    // inside a chip keep their native behavior (caret placement, removal).
+    // preventDefault stops the press from blurring an already-focused input,
+    // which would flicker the menu closed and back open.
+    #onFieldMousedown = (event) => {
+      const target = event.target;
+      if (this.disabled || target.closest(".multi-select-input, bsides-chip") !== null) {
         return;
       }
-      if (this.value.includes(text)) {
+      event.preventDefault();
+      this.#inputElement?.focus();
+      this.#openMenu();
+    };
+    #onFocus = () => {
+      this.#openMenu();
+    };
+    #onBlur = () => {
+      this.#closeMenu();
+    };
+    #onInput = (event) => {
+      this._query = event.target.value;
+      this.#openMenu();
+      this._activeIndex = this.#filteredChoices().length > 0 ? 0 : -1;
+      this.#scrollActiveIntoView();
+    };
+    #onKeydown = (event) => {
+      const input = event.target;
+      if (event.key === "Backspace" && input.value === "") {
+        this.#removeLast();
         return;
       }
-      this.value = [...this.value, text];
-      input.value = "";
-      this._announcement = `${text} added`;
+      if (!this.#hasMenu()) {
+        if (event.key === "Enter") {
+          event.preventDefault();
+          this.#createFree(input.value);
+        }
+        return;
+      }
+      const options = this.#filteredChoices();
+      switch (event.key) {
+        case "ArrowDown":
+          event.preventDefault();
+          this.#openMenu();
+          this.#moveActive(1, options.length);
+          this.#scrollActiveIntoView();
+          break;
+        case "ArrowUp":
+          event.preventDefault();
+          this.#openMenu();
+          this.#moveActive(-1, options.length);
+          this.#scrollActiveIntoView();
+          break;
+        case "Enter": {
+          event.preventDefault();
+          const choice = this._activeIndex >= 0 && this._activeIndex < options.length ? options[this._activeIndex] : this.#exactMatch(options, input.value);
+          if (choice) {
+            this.#toggleChoice(choice);
+          } else if (this.edit === "free") {
+            this.#createFree(input.value);
+          }
+          break;
+        }
+        case "Escape":
+          if (this._open) {
+            this.#closeMenu();
+          } else {
+            this.#clearQuery();
+          }
+          break;
+        case "Tab":
+          this.#closeMenu();
+          break;
+      }
+    };
+    // Keep the active option visible. The combobox pattern focuses the
+    // text input, never the option — the active option is only virtually
+    // focused, and browsers auto-scroll only the truly focused element.
+    // Scoped scrollTop math rather than scrollIntoView so only the menu
+    // ever scrolls (never the page or a containing card); the options'
+    // offsetParent is the menu on both positioning paths.
+    #scrollActiveIntoView() {
+      void this.updateComplete.then(() => {
+        const menu = this.#menuElement;
+        const option = menu?.querySelector(".dropdown-item.active");
+        if (!menu || !option) {
+          return;
+        }
+        const styles = getComputedStyle(menu);
+        const top = option.offsetTop - (parseFloat(styles.paddingTop) || 0);
+        const bottom = option.offsetTop + option.offsetHeight + (parseFloat(styles.paddingBottom) || 0);
+        if (top < menu.scrollTop) {
+          menu.scrollTop = top;
+        } else if (bottom > menu.scrollTop + menu.clientHeight) {
+          menu.scrollTop = bottom - menu.clientHeight;
+        }
+      });
+    }
+    // Move the active option by delta, wrapping at the ends; entering the
+    // list lands on the first (down) or last (up) option.
+    #moveActive(delta, count) {
+      if (count === 0) {
+        this._activeIndex = -1;
+        return;
+      }
+      this._activeIndex = this._activeIndex < 0 ? delta > 0 ? 0 : count - 1 : (this._activeIndex + delta + count) % count;
+    }
+    #exactMatch(options, text) {
+      const query = text.trim().toLowerCase();
+      if (!query) {
+        return void 0;
+      }
+      const matches = options.filter(
+        (choice) => choice.label.toLowerCase() === query
+      );
+      return matches.length === 1 ? matches[0] : void 0;
+    }
+    // Selecting a listed choice toggles its membership: members are
+    // removed, non-members added (dropdown click or Enter).
+    #toggleChoice(choice) {
+      if (this.chips.includes(choice.value)) {
+        this.#removeMember(choice.value);
+        return;
+      }
+      this.#addMember(choice);
+    }
+    #addMember(choice) {
+      if (this.#atMax() || this.chips.includes(choice.value)) {
+        return;
+      }
+      this.chips = [...this.chips, choice.value];
+      this.#clearQuery();
+      this._activeIndex = -1;
+      this._announcement = `${choice.label} added`;
       this.#dispatchChange();
+      if (this.#atMax()) {
+        this.#closeMenu();
+      }
+    }
+    // Create a chip from typed text (edit = "free"). Duplicates are
+    // rejected; the typed text stays so the collision is visible.
+    #createFree(text) {
+      const value = text.trim();
+      if (!value || this.#atMax() || this.chips.includes(value)) {
+        return;
+      }
+      this.#addMember({ label: value, value });
     }
     #removeLast() {
-      if (this.value.length === 0) {
+      if (this.chips.length === 0) {
         return;
       }
-      const removed = this.value[this.value.length - 1];
-      this.value = this.value.slice(0, -1);
-      this._announcement = `${removed} removed`;
+      this.#removeMember(this.chips[this.chips.length - 1]);
+    }
+    #removeMember(value) {
+      this.chips = this.chips.filter((chip) => chip !== value);
+      this._announcement = `${this.#chipFor(value).label} removed`;
       this.#dispatchChange();
     }
-    // A chip was removed through the group (close button).
-    #onGroupChange = (event) => {
-      this.value = event.target.chips;
-      this._announcement = "Value removed";
-      this.#dispatchChange();
+    #clearQuery() {
+      const input = this.#inputElement;
+      if (input) {
+        input.value = "";
+      }
+      this._query = "";
+    }
+    // A chip's close button requested removal.
+    #onChipRemove = (event) => {
+      const { value } = event.detail;
+      this.#removeMember(value);
       void this.updateComplete.then(() => {
         this.#inputElement?.focus();
       });
@@ -1234,41 +1823,46 @@
   // srcts/src/components/inputMultiSelect.ts
   var MultiSelectInputBinding = class extends NativeEventInputBinding {
     find(scope) {
-      return (0, import_jquery8.default)(scope).find("bsides-multi-select");
+      return (0, import_jquery9.default)(scope).find("bsides-multi-select");
     }
     getValue(el) {
-      return el.value;
+      return el.chips;
+    }
+    // Matches the input handler registered by the R side (empty selection
+    // becomes NULL).
+    getType(el) {
+      void el;
+      return "bsides.multiselect";
     }
     subscribe(el, callback) {
       this.listen(el, "bsides-multi-select:change", () => {
         callback(false);
       });
     }
-    // update_multi_select() is still a stub on the R side; wiring arrives in
-    // phase 2 of the multi-select plan.
+    // All state changes live in the component; the binding only forwards.
     receiveMessage(el, data) {
-      void el;
-      void data;
+      ;
+      el.receiveUpdate(data);
     }
   };
   registerBinding(MultiSelectInputBinding, "multiselect");
 
   // srcts/src/components/inputRadioGroup.ts
-  var import_jquery9 = __toESM(require_jquery());
+  var import_jquery10 = __toESM(require_jquery());
   var RadioGroupInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery9.default)(scope).find(".bsides-input-radio-group");
+      return (0, import_jquery10.default)(scope).find(".bsides-input-radio-group");
     }
     getValue(el) {
-      return (0, import_jquery9.default)(el).find(".form-check-input,.btn-check").filter(":checked").val();
+      return (0, import_jquery10.default)(el).find(".form-check-input,.btn-check").filter(":checked").val();
     }
     subscribe(el, callback) {
-      (0, import_jquery9.default)(el).on("change.bsidesRadioGroupInputBinding", () => {
+      (0, import_jquery10.default)(el).on("change.bsidesRadioGroupInputBinding", () => {
         callback(false);
       });
     }
     unsubscribe(el) {
-      (0, import_jquery9.default)(el).off(".bsidesRadioGroupInputBinding");
+      (0, import_jquery10.default)(el).off(".bsidesRadioGroupInputBinding");
     }
     getState(el) {
       return {
@@ -1276,7 +1870,7 @@
       };
     }
     receiveMessage(el, data) {
-      const $el = (0, import_jquery9.default)(el);
+      const $el = (0, import_jquery10.default)(el);
       if (hasDefinedProperty(data, "options")) {
         $el.html(data.options);
       }
@@ -1295,21 +1889,21 @@
   registerBinding(RadioGroupInputBinding, "radiogroup");
 
   // srcts/src/components/inputRange.ts
-  var import_jquery10 = __toESM(require_jquery());
+  var import_jquery11 = __toESM(require_jquery());
   var RangeInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery10.default)(scope).find(".bsides-input-range");
+      return (0, import_jquery11.default)(scope).find(".bsides-input-range");
     }
     getValue(el) {
-      return Number((0, import_jquery10.default)(el).find(".form-range").val());
+      return Number((0, import_jquery11.default)(el).find(".form-range").val());
     }
     subscribe(el, callback) {
-      (0, import_jquery10.default)(el).on("change.bsidesRangeInputBinding", () => {
+      (0, import_jquery11.default)(el).on("change.bsidesRangeInputBinding", () => {
         callback(false);
       });
     }
     unsubscribe(el) {
-      (0, import_jquery10.default)(el).off(".bsidesRangeInputBinding");
+      (0, import_jquery11.default)(el).off(".bsidesRangeInputBinding");
     }
     getState(el) {
       return {
@@ -1317,7 +1911,7 @@
       };
     }
     receiveMessage(el, data) {
-      const $el = (0, import_jquery10.default)(el);
+      const $el = (0, import_jquery11.default)(el);
       const $value = $el.find(".form-range");
       if (hasDefinedProperty(data, "value")) {
         $value.val(data.value);
@@ -1331,10 +1925,10 @@
   registerBinding(RangeInputBinding, "range");
 
   // srcts/src/components/inputSelect.ts
-  var import_jquery11 = __toESM(require_jquery());
+  var import_jquery12 = __toESM(require_jquery());
   var SelectInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery11.default)(scope).find(".bsides-input-select");
+      return (0, import_jquery12.default)(scope).find(".bsides-input-select");
     }
     getValue(el) {
       return el.value;
@@ -1343,12 +1937,12 @@
       el.value = value;
     }
     subscribe(el, callback) {
-      (0, import_jquery11.default)(el).on("change.bsidesSelectInputBinding", () => {
+      (0, import_jquery12.default)(el).on("change.bsidesSelectInputBinding", () => {
         callback(false);
       });
     }
     unsubscribe(el) {
-      (0, import_jquery11.default)(el).off(".bsidesSelectInputBinding");
+      (0, import_jquery12.default)(el).off(".bsidesSelectInputBinding");
     }
     getState(el) {
       return {
@@ -1356,7 +1950,7 @@
       };
     }
     receiveMessage(el, data) {
-      const $el = (0, import_jquery11.default)(el);
+      const $el = (0, import_jquery12.default)(el);
       if (hasDefinedProperty(data, "options")) {
         $el.html(data.options);
       }
@@ -1374,10 +1968,10 @@
   registerBinding(SelectInputBinding, "select");
 
   // srcts/src/components/inputText.ts
-  var import_jquery12 = __toESM(require_jquery());
+  var import_jquery13 = __toESM(require_jquery());
   var TextInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery12.default)(scope).find(".bsides-input-text");
+      return (0, import_jquery13.default)(scope).find(".bsides-input-text");
     }
     getValue(el) {
       return el.value;
@@ -1386,7 +1980,7 @@
       el.value = value;
     }
     subscribe(el, callback) {
-      const $el = (0, import_jquery12.default)(el);
+      const $el = (0, import_jquery13.default)(el);
       $el.on("keyup.bsidesTextInputBinding input.bsidesTextInputBinding", () => {
         callback(true);
       });
@@ -1395,7 +1989,7 @@
       });
     }
     unsubscribe(el) {
-      (0, import_jquery12.default)(el).off(".bsidesTextInputBinding");
+      (0, import_jquery13.default)(el).off(".bsidesTextInputBinding");
     }
     getState(el) {
       return {
@@ -1409,7 +2003,7 @@
       if (hasDefinedProperty(data, "disable")) {
         el.disabled = data.disable;
       }
-      (0, import_jquery12.default)(el).trigger("change");
+      (0, import_jquery13.default)(el).trigger("change");
     }
     getRatePolicy(el) {
       void el;
@@ -1422,20 +2016,20 @@
   registerBinding(TextInputBinding, "text");
 
   // srcts/src/components/inputTextGroup.ts
-  var import_jquery13 = __toESM(require_jquery());
+  var import_jquery14 = __toESM(require_jquery());
   var TextGroupInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery13.default)(scope).find(".bsides-input-text-group");
+      return (0, import_jquery14.default)(scope).find(".bsides-input-text-group");
     }
     getValue(el) {
-      const $el = (0, import_jquery13.default)(el);
+      const $el = (0, import_jquery14.default)(el);
       if (!$el.find("input").val()) {
         return null;
       }
       return $el.find(".input-group-text,input").map((i7, e5) => e5.textContent || e5.value || "").get().join("");
     }
     subscribe(el, callback) {
-      const $el = (0, import_jquery13.default)(el);
+      const $el = (0, import_jquery14.default)(el);
       $el.on(
         "keyup.bsidesTextGroupInputBinding input.bsidesTextGroupInputBinding",
         () => {
@@ -1447,7 +2041,7 @@
       });
     }
     unsubscribe(el) {
-      (0, import_jquery13.default)(el).off(".bsidesTextGroupInputBinding");
+      (0, import_jquery14.default)(el).off(".bsidesTextGroupInputBinding");
     }
     getState(el) {
       return {
@@ -1462,7 +2056,7 @@
       };
     }
     receiveMessage(el, data) {
-      const $el = (0, import_jquery13.default)(el);
+      const $el = (0, import_jquery14.default)(el);
       const $value = $el.find("input");
       if (hasDefinedProperty(data, "value")) {
         $value.val(data.value);
@@ -1476,7 +2070,7 @@
   registerBinding(TextGroupInputBinding, "textgroup");
 
   // srcts/src/components/modal.ts
-  var import_jquery14 = __toESM(require_jquery());
+  var import_jquery15 = __toESM(require_jquery());
   var import_bootstrap = __toESM(require_bootstrap());
   var Modal = class _Modal extends import_bootstrap.Modal {
     isShown() {
@@ -1526,7 +2120,7 @@
   };
   var ModalInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery14.default)(scope).find(".bsides-modal");
+      return (0, import_jquery15.default)(scope).find(".bsides-modal");
     }
     getValue(el) {
       const modal = Modal.getInstance(el);
@@ -1536,7 +2130,7 @@
       return modal.isShown() ? "shown" : "hidden";
     }
     subscribe(el, callback) {
-      (0, import_jquery14.default)(el).on(
+      (0, import_jquery15.default)(el).on(
         "shown.bs.modal.bsidesModalInputBinding hidden.bs.modal.bsidesModalInputBinding",
         () => {
           callback(false);
@@ -1544,14 +2138,14 @@
       );
     }
     unsubscribe(el) {
-      (0, import_jquery14.default)(el).off(".bsidesModalInputBinding");
+      (0, import_jquery15.default)(el).off(".bsidesModalInputBinding");
     }
   };
   Modal.addMessageHandlers();
   registerBinding(ModalInputBinding, "modal");
 
   // srcts/src/components/toast.ts
-  var import_jquery15 = __toESM(require_jquery());
+  var import_jquery16 = __toESM(require_jquery());
   var import_bootstrap2 = __toESM(require_bootstrap());
   var Toast = class extends import_bootstrap2.Toast {
     constructor(toast) {
@@ -1583,7 +2177,7 @@
   };
   var ToastInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery15.default)(scope).find(".bsides-toast");
+      return (0, import_jquery16.default)(scope).find(".bsides-toast");
     }
     initialize(el) {
       new Toast(el);
@@ -1596,7 +2190,7 @@
       return toast.state;
     }
     subscribe(el, callback) {
-      (0, import_jquery15.default)(el).on(
+      (0, import_jquery16.default)(el).on(
         "shown.bs.toast.bsidesToastInputBinding hidden.bs.toast.bsidesToastInputBinding",
         () => {
           callback(false);
@@ -1604,7 +2198,7 @@
       );
     }
     unsubscribe(el) {
-      (0, import_jquery15.default)(el).off(".bsidesToastInputBinding");
+      (0, import_jquery16.default)(el).off(".bsidesToastInputBinding");
     }
     receiveMessage(el, data) {
       const toast = Toast.getInstance(el);
@@ -1648,17 +2242,17 @@ lit-html/is-server.js:
    * SPDX-License-Identifier: BSD-3-Clause
    *)
 
-lit-html/directives/if-defined.js:
-  (**
-   * @license
-   * Copyright 2018 Google LLC
-   * SPDX-License-Identifier: BSD-3-Clause
-   *)
-
 lit-html/directive-helpers.js:
   (**
    * @license
    * Copyright 2020 Google LLC
+   * SPDX-License-Identifier: BSD-3-Clause
+   *)
+
+lit-html/directives/if-defined.js:
+  (**
+   * @license
+   * Copyright 2018 Google LLC
    * SPDX-License-Identifier: BSD-3-Clause
    *)
 */

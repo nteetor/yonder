@@ -39,10 +39,45 @@ render(
   "menu",
   input_menu(id = "mnu", text = "Menu", choices = c("One", "Two"))
 )
-render("multi-select", input_multi_select(id = "ms"))
 render(
-  "multi-select-preset",
-  input_multi_select(id = "ms2", select = c("A", "B"), max = 3)
+  "chip-group",
+  input_chip_group(
+    id = "cg",
+    choices = c("Red", "Green", "Blue"),
+    values = c("r", "g", "b")
+  )
+)
+render(
+  "chip-group-none",
+  input_chip_group(
+    id = "cg3",
+    choices = c("Red", "Green", "Blue"),
+    values = c("r", "g", "b"),
+    select = NULL
+  )
+)
+render(
+  "chip-group-select",
+  input_chip_group(
+    id = "cg2",
+    choices = c("Small", "Medium", "Large"),
+    values = c("s", "m", "l"),
+    select = "m",
+    type = "warning"
+  )
+)
+render(
+  "multi-select",
+  input_multi_select(
+    id = "ms",
+    choices = c("Red", "Green", "Blue"),
+    values = c("r", "g", "b"),
+    select = "r"
+  )
+)
+render(
+  "multi-select-free",
+  input_multi_select(id = "msfree", edit = "free", placeholder = "Add a tag")
 )
 render(
   "radio-group",

@@ -53,6 +53,7 @@ Collate:
     'input-button.R'
     'input-checkbox.R'
     'input-checkbox-group.R'
+    'input-chip-group.R'
     'input-multi-select.R'
     'input-file.R'
     'input-form.R'

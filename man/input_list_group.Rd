@@ -61,6 +61,7 @@ Other inputs:
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},
+\code{\link[=input_chip_group]{input_chip_group()}},
 \code{\link[=input_form]{input_form()}},
 \code{\link[=input_menu]{input_menu()}},
 \code{\link[=input_multi_select]{input_multi_select()}},

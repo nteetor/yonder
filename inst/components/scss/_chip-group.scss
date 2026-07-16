@@ -1,19 +1,17 @@
 bsides-chip-group {
-  position: relative;
-  display: inline-flex;
-  vertical-align: middle;
+  display: block;
 
-  // Lit renders comment and whitespace nodes, so :empty never matches;
-  // check for the absence of chips instead.
-  &:not(:has(bsides-chip)) {
-    display: none;
+  // The default (vertical) layout wraps chips onto new lines instead of
+  // letting the container cut them off.
+  > .chip-group-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem;
   }
 
-  > bsides-chip {
-    position: relative;
-  }
-
-  > bsides-chip:not(:first-child) {
-    margin-left: .25rem;
+  // The horizontal layout keeps one row and scrolls instead of wrapping.
+  &[layout='horizontal'] > .chip-group-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
   }
 }

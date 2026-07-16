@@ -1,7 +1,7 @@
 # End-to-end tests for the TypeScript input bindings: real browser
 # (headless Chrome), real Shiny session, real websocket round trips.
-# Shared helpers live in helper-e2e.R; multi-select has its own file
-# (test-multi-select-e2e.R).
+# Shared helpers live in helper-e2e.R; the chip group has its own file
+# (test-chip-group-e2e.R).
 
 launch_bindings_app <- function() {
   shinytest2::AppDriver$new(
