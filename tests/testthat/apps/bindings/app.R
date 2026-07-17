@@ -4,24 +4,11 @@
 # Server-side update_*() calls are triggered from tests with
 # Shiny.setInputValue("do_<action>", ..., {priority: "event"}).
 
-local({
-  pkg_root <- normalizePath(
-    file.path(getwd(), "..", "..", "..", ".."),
-    mustWork = FALSE
-  )
+library(yonder)
+library(bslib)
 
-  if (
-    file.exists(file.path(pkg_root, "DESCRIPTION")) &&
-      requireNamespace("pkgload", quietly = TRUE)
-  ) {
-    pkgload::load_all(pkg_root, quiet = TRUE)
-  } else {
-    library(yonder)
-  }
-})
-
-shiny::shinyApp(
-  ui = bslib::page_fluid(
+shinyApp(
+  ui = page_fluid(
     input_button(id = "btn", text = "Count"),
     input_link(id = "lnk", label = "Go"),
     input_checkbox(id = "chk", choice = "Include"),
@@ -39,11 +26,12 @@ shiny::shinyApp(
       form_submit_button(label = "Submit", value = "go")
     ),
     modal_dialog(id = "mdl", "Hello modal"),
-    toast(id = "tst", "Hello toast")
+    # bslib also exports toast() and is attached after yonder, so qualify
+    yonder::toast(id = "tst", "Hello toast")
   ),
   server = function(input, output, session) {
     trigger <- function(id, handler) {
-      shiny::observeEvent(input[[id]], handler(), ignoreInit = TRUE)
+      observeEvent(input[[id]], handler(), ignoreInit = TRUE)
     }
 
     trigger("do_update_button", \() update_button("btn", text = "Updated"))

@@ -1,24 +1,11 @@
 # Test app for input_multi_select(). Driven by
 # tests/testthat/test-multi-select-e2e.R via {shinytest2}.
 
-local({
-  pkg_root <- normalizePath(
-    file.path(getwd(), "..", "..", "..", ".."),
-    mustWork = FALSE
-  )
+library(yonder)
+library(bslib)
 
-  if (
-    file.exists(file.path(pkg_root, "DESCRIPTION")) &&
-      requireNamespace("pkgload", quietly = TRUE)
-  ) {
-    pkgload::load_all(pkg_root, quiet = TRUE)
-  } else {
-    library(yonder)
-  }
-})
-
-shiny::shinyApp(
-  ui = bslib::page_fluid(
+shinyApp(
+  ui = page_fluid(
     input_multi_select(
       id = "ms",
       choices = c("Red", "Green", "Blue"),
@@ -37,7 +24,7 @@ shiny::shinyApp(
     # open menu must escape the card via the top layer. Ten choices so
     # the menu also overflows its max-height (the active-option
     # scrolling tests need a scrollable menu).
-    bslib::card(
+    card(
       height = 150,
       input_multi_select(
         id = "msclip",
@@ -60,7 +47,7 @@ shiny::shinyApp(
   ),
   server = function(input, output, session) {
     trigger <- function(id, handler) {
-      shiny::observeEvent(input[[id]], handler(), ignoreInit = TRUE)
+      observeEvent(input[[id]], handler(), ignoreInit = TRUE)
     }
 
     trigger(

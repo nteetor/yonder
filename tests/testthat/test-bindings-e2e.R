@@ -156,23 +156,29 @@ test_that("modal and toast report shown/hidden state", {
 
   expect_null(app$get_value(input = "mdl"))
 
+  # the binding reports only after Bootstrap's fade transition, during which
+  # the app is idle -- poll for the value instead of waiting for idleness
   trigger(app, "do_show_modal")
-  Sys.sleep(0.5)
-  app$wait_for_idle()
-  expect_equal(app$get_value(input = "mdl"), "shown")
+  expect_equal(
+    app$wait_for_value(input = "mdl", ignore = list(NULL)),
+    "shown"
+  )
 
   trigger(app, "do_hide_modal")
-  Sys.sleep(0.5)
-  app$wait_for_idle()
-  expect_equal(app$get_value(input = "mdl"), "hidden")
+  expect_equal(
+    app$wait_for_value(input = "mdl", ignore = list(NULL, "shown")),
+    "hidden"
+  )
 
   trigger(app, "do_show_toast")
-  Sys.sleep(0.5)
-  app$wait_for_idle()
-  expect_equal(app$get_value(input = "tst"), "shown")
+  expect_equal(
+    app$wait_for_value(input = "tst", ignore = list(NULL)),
+    "shown"
+  )
 
   trigger(app, "do_hide_toast")
-  Sys.sleep(0.5)
-  app$wait_for_idle()
-  expect_equal(app$get_value(input = "tst"), "hidden")
+  expect_equal(
+    app$wait_for_value(input = "tst", ignore = list(NULL, "shown")),
+    "hidden"
+  )
 })

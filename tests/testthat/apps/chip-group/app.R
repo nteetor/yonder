@@ -1,24 +1,11 @@
 # Test app for input_chip_group(). Driven by
 # tests/testthat/test-chip-group-e2e.R via {shinytest2}.
 
-local({
-  pkg_root <- normalizePath(
-    file.path(getwd(), "..", "..", "..", ".."),
-    mustWork = FALSE
-  )
+library(yonder)
+library(bslib)
 
-  if (
-    file.exists(file.path(pkg_root, "DESCRIPTION")) &&
-      requireNamespace("pkgload", quietly = TRUE)
-  ) {
-    pkgload::load_all(pkg_root, quiet = TRUE)
-  } else {
-    library(yonder)
-  }
-})
-
-shiny::shinyApp(
-  ui = bslib::page_fluid(
+shinyApp(
+  ui = page_fluid(
     input_chip_group(
       id = "cg",
       choices = c("Red", "Green", "Blue"),
