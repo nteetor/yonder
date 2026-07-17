@@ -1,0 +1,128 @@
+bsides-chip {
+  // Tight elevation shadows (Material 1-2dp), deliberately not Bootstrap's
+  // diffuse $box-shadow scale. Overridable per theme.
+  --bsides-chip-shadow: 0 1px 2px rgba(0, 0, 0, .2), 0 1px 1px rgba(0, 0, 0, .12);
+  --bsides-chip-shadow-raised: 0 2px 4px rgba(0, 0, 0, .2), 0 1px 3px rgba(0, 0, 0, .12);
+
+  // Black-alpha shadows fade into dark surfaces; strengthen them there.
+  [data-bs-theme='dark'] & {
+    --bsides-chip-shadow: 0 1px 2px rgba(0, 0, 0, .55), 0 1px 1px rgba(0, 0, 0, .4);
+    --bsides-chip-shadow-raised: 0 2px 5px rgba(0, 0, 0, .6), 0 1px 3px rgba(0, 0, 0, .45);
+  }
+
+  display: inline-flex;
+  align-items: center;
+  padding: .375rem .75rem;
+  line-height: 1;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: center;
+
+  font-weight: 400;
+
+  // Plain chip: a soft neutral fill and no visible border. The border is
+  // transparent (not none) so checkable chips keep the same geometry when
+  // a chip-{type} class colors it in the unchecked state.
+  background-color: var(--bs-secondary-bg);
+  border: solid 1px transparent;
+  border-radius: .375rem;
+
+  transition:
+    background-color .15s ease-in-out,
+    border-color .15s ease-in-out,
+    padding .15s ease-in-out,
+    box-shadow .15s ease-in-out;
+
+  @media (prefers-reduced-motion: reduce) {
+    transition: none;
+  }
+
+  // A leading check icon or trailing close button carries its own visual
+  // weight; tighten the padding on that side. Without either, the wider
+  // horizontal padding above applies.
+  &:has(> .chip-check) {
+    padding-left: .5rem;
+  }
+
+  &:has(> .btn-close) {
+    padding-right: .5rem;
+  }
+
+  > .chip-check {
+    flex-shrink: 0;
+    margin-right: .375rem;
+  }
+
+  &[checkable] {
+    cursor: pointer;
+    user-select: none;
+
+    // Elevation marks interactivity; color marks checked state. Hover
+    // raises, pressing drops back to resting. :active after :hover so the
+    // press wins while both match.
+    box-shadow: var(--bsides-chip-shadow);
+
+    &:hover {
+      box-shadow: var(--bsides-chip-shadow-raised);
+    }
+
+    &:active {
+      box-shadow: var(--bsides-chip-shadow);
+    }
+
+    // Outline instead of a box-shadow ring: the elevation shadow owns
+    // box-shadow, and outline follows the rounded box.
+    &:focus-visible {
+      outline: var(--bs-focus-ring-width) solid var(--bs-focus-ring-color);
+      outline-offset: 1px;
+    }
+  }
+
+  &[disabled] {
+    pointer-events: none;
+    box-shadow: none;
+    opacity: .65;
+  }
+
+  > .btn-close {
+    flex-shrink: 0;
+    margin-left: .5rem;
+    padding: 0;
+    font-size: .75em;
+  }
+}
+
+// Chip type classes. The class is constant per chip; the reflected
+// attributes select the look: checked chips get the solid themed fill,
+// checkable-but-unchecked chips get the body background with a themed
+// border, and non-checkable chips (the multi select's — no checked state
+// to signal) get the solid fill outright.
+@each $name, $color in $theme-colors {
+  bsides-chip.chip-#{$name} {
+    &[checked],
+    &:not([checkable]) {
+      color: color-contrast($color);
+      background-color: rgba(var(--bs-#{$name}-rgb), var(--bs-bg-opacity, 1));
+    }
+
+    &[checked] {
+      // Dim the solid fill on hover/press without swapping colors.
+      &:hover {
+        --bs-bg-opacity: .9;
+      }
+
+      &:active {
+        --bs-bg-opacity: .8;
+      }
+    }
+
+    &[checkable]:not([checked]) {
+      background-color: var(--bs-body-bg);
+      border-color: var(--bs-#{$name});
+
+      &:hover {
+        background-color: var(--bs-secondary-bg);
+      }
+    }
+  }
+}

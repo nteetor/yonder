@@ -21,6 +21,15 @@ modal_footer(..., close = modal_dismiss())
 
 modal_dismiss(..., text = "Close")
 }
+\arguments{
+\item{...}{Any number of child elements passed to the parent element. Named
+values are passed as HTML attributes to the parent element.}
+
+\item{close}{A button tag element used to close the modal, defaults to
+\code{\link[=modal_close]{modal_close()}} for headers and \code{\link[=modal_dismiss]{modal_dismiss()}} for footers.}
+
+\item{text}{A string. The content of the dismiss button.}
+}
 \description{
 Components of a modal dialog.
 }

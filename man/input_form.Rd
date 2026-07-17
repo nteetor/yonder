@@ -22,14 +22,12 @@ submit_form(id, value, session = get_current_session())
 
 \item{label}{A character string. The label of the input.}
 
-\item{layout}{<\link{responsive}> A character string.}
+\item{layout}{A character string.}
 
 \item{value}{A character string. The input's value when the submit button is
 clicked.}
 
 \item{session}{A shiny session object.}
-
-\item{gap}{A number. The space between inputs, \code{0} through \code{5}.}
 }
 \description{
 Form inputs are a new reactive input. Form inputs are an alternative to
@@ -42,19 +40,20 @@ allows server logic to distinguish between different form submission types,
 think "login" versus "register".
 }
 \seealso{
-Other inputs: 
-\code{\link{fileInput}()},
-\code{\link{input_button}()},
-\code{\link{input_checkbox}()},
-\code{\link{input_checkbox_group}()},
-\code{\link{input_list_group}()},
-\code{\link{input_menu}()},
-\code{\link{input_multi_select}()},
-\code{\link{input_numeric}()},
-\code{\link{input_radio_group}()},
-\code{\link{input_range}()},
-\code{\link{input_select}()},
-\code{\link{input_text}()},
-\code{\link{input_text_group}()}
+Other inputs:
+\code{\link[=fileInput]{fileInput()}},
+\code{\link[=input_button]{input_button()}},
+\code{\link[=input_checkbox]{input_checkbox()}},
+\code{\link[=input_checkbox_group]{input_checkbox_group()}},
+\code{\link[=input_chip_group]{input_chip_group()}},
+\code{\link[=input_list_group]{input_list_group()}},
+\code{\link[=input_menu]{input_menu()}},
+\code{\link[=input_multi_select]{input_multi_select()}},
+\code{\link[=input_numeric]{input_numeric()}},
+\code{\link[=input_radio_group]{input_radio_group()}},
+\code{\link[=input_range]{input_range()}},
+\code{\link[=input_select]{input_select()}},
+\code{\link[=input_text]{input_text()}},
+\code{\link[=input_text_group]{input_text_group()}}
 }
 \concept{inputs}

@@ -24,7 +24,7 @@ input_button <- function(
 
   input <-
     tags$button(
-      class = "bsides-button btn btn-primary",
+      class = "bsides-input-button btn btn-primary",
       type = "button",
       role = "button",
       id = id,

@@ -29,7 +29,7 @@ button_toolbar <- function(
   ...
 ) {
   component <-
-    tag$div(
+    tags$div(
       class = "btn-toolbar",
       role = "toolbar",
       ...

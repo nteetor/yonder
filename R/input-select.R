@@ -15,8 +15,8 @@
 #' @param values A character vector specifying the values of the input's
 #'   choices, defaults to `choices`.
 #'
-#' @param selected One of `values` indicating the default value of the input,
-#'   defaults to `values[[1]]`.
+#' @param select One of `values` indicating the default value of the input,
+#'   defaults to `NULL`.
 #'
 #' @param placeholder A character string specifying the placeholder text of
 #'   the select input, defaults to `NULL`.
@@ -49,7 +49,7 @@ input_select <- function(
 
   input <-
     tags$select(
-      class = "bsides-select form-select",
+      class = "bsides-input-select form-select",
       id = id,
       !!!attrs,
       options

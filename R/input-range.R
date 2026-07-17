@@ -39,7 +39,7 @@ input_range <- function(
 
   input <-
     tags$div(
-      class = "bsides-range",
+      class = "bsides-input-range",
       id = id,
       tags$input(
         class = "form-range",

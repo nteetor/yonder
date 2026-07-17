@@ -33,7 +33,13 @@ the reactive value of the input.}
 \item{right}{A character vector. One or more character strings appended to
 the reactive value of the input.}
 
+\item{value}{A character string. The value of the input.}
+
 \item{placeholder}{A string. The placeholder text displayed inside the input.}
+
+\item{disable}{A boolean. If \code{TRUE}, disable the input.}
+
+\item{session}{A shiny session object.}
 }
 \value{
 A shiny tag object.
@@ -42,19 +48,20 @@ A shiny tag object.
 A text input with a possible static prefix or suffix.
 }
 \seealso{
-Other inputs: 
-\code{\link{fileInput}()},
-\code{\link{input_button}()},
-\code{\link{input_checkbox}()},
-\code{\link{input_checkbox_group}()},
-\code{\link{input_form}()},
-\code{\link{input_list_group}()},
-\code{\link{input_menu}()},
-\code{\link{input_multi_select}()},
-\code{\link{input_numeric}()},
-\code{\link{input_radio_group}()},
-\code{\link{input_range}()},
-\code{\link{input_select}()},
-\code{\link{input_text}()}
+Other inputs:
+\code{\link[=fileInput]{fileInput()}},
+\code{\link[=input_button]{input_button()}},
+\code{\link[=input_checkbox]{input_checkbox()}},
+\code{\link[=input_checkbox_group]{input_checkbox_group()}},
+\code{\link[=input_chip_group]{input_chip_group()}},
+\code{\link[=input_form]{input_form()}},
+\code{\link[=input_list_group]{input_list_group()}},
+\code{\link[=input_menu]{input_menu()}},
+\code{\link[=input_multi_select]{input_multi_select()}},
+\code{\link[=input_numeric]{input_numeric()}},
+\code{\link[=input_radio_group]{input_radio_group()}},
+\code{\link[=input_range]{input_range()}},
+\code{\link[=input_select]{input_select()}},
+\code{\link[=input_text]{input_text()}}
 }
 \concept{inputs}

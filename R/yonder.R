@@ -1,8 +1,20 @@
-#' @importFrom htmltools HTML htmlDependency attachDependencies
-#'   suppressDependencies resolveDependencies findDependencies tags div
-#'   tagAppendAttributes tagAppendChildren surroundSingletons takeSingletons
-#' @importFrom shiny observe getDefaultReactiveDomain installExprFunction
-#'   createRenderFunction createWebDependency
+#' @importFrom htmltools HTML
+#' @importFrom htmltools htmlDependency
+#' @importFrom htmltools attachDependencies
+#' @importFrom htmltools suppressDependencies
+#' @importFrom htmltools resolveDependencies
+#' @importFrom htmltools findDependencies
+#' @importFrom htmltools tags
+#' @importFrom htmltools div
+#' @importFrom htmltools tagAppendAttributes
+#' @importFrom htmltools tagAppendChild
+#' @importFrom htmltools surroundSingletons
+#' @importFrom htmltools takeSingletons
+#' @importFrom shiny observe
+#' @importFrom shiny getDefaultReactiveDomain
+#' @importFrom shiny installExprFunction
+#' @importFrom shiny createRenderFunction
+#' @importFrom shiny createWebDependency
 #' @import rlang
 NULL
 
@@ -15,8 +27,9 @@ NULL
 #'
 #' ## Inputs
 #'
-#' Yonder provides many familiar inputs like [selectInput()] or [radioInput()].
-#' There are also new inputs like [groupTextInput()] or [formInput()].
+#' Yonder provides many familiar inputs like [input_select()] or
+#' [input_radio_group()]. There are also new inputs like [input_text_group()] or
+#' [input_form()].
 #'
 #' * Input functions have an `id` argument instead of `inputId`.
 #'
@@ -27,36 +40,17 @@ NULL
 #'
 #' ### Looking for ... ?
 #'
-#' * `actionButton()` or `actionLink()` use [buttonInput()] or [linkInput()]
+#' * `actionButton()` or `actionLink()` use [input_button()] or [input_link()]
 #'
-#' * `radioButtons()` use [radioInput()]
+#' * `radioButtons()` use [input_radio_group()]
 #'
-#' * `checkboxGroupInput()` use [checkbarInput()] or [checkboxInput()]
+#' * `checkboxGroupInput()` use [input_checkbox_group()] or [input_checkbox()]
 #'
-#' * `numericInput()` use [numberInput()]
+#' * `numericInput()` use [input_numeric()]
 #'
-#' * `selectizeInput()` use [selectInput()] or [chipInput()]
+#' * `selectizeInput()` use [input_select()] or [input_multi_select()]
 #'
-#' * `submitButton()` use [formInput()] and [formSubmit()]
-#'
-#' ## Layout and content
-#'
-#' Included are a handful of utilities for building applications suited for
-#' devices and screens of varying sizes. For real control over spacing elements
-#' be sure to check out [flex()], which gives you the power of flexbox layout.
-#'
-#' ### Looking for ... ?
-#'
-#' * `fluidRow()` or `fixedRow()` use [columns()]
-#'
-#' * `fixedPage()`, `fluidPage()`, or `sidebarLayout()` use [container()],
-#'   [columns()], and [column()]
-#'
-#' * `navbarPage()` use [navbar()]
-#'
-#' * `tabPanel()` use [navContent()] and [navPane()]
-#'
-#' * `modalDialog()` use [modal()]
+#' * `submitButton()` use [input_form()] and [form_submit_button()]
 #'
 #' @name yonder
 "_PACKAGE"

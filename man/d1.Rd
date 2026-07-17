@@ -30,11 +30,11 @@ Display headings are not meant to replace the standard HTML heading tags,
 they are a stand out alternative for eye-catching titles.
 }
 \seealso{
-Other components: 
-\code{\link{alert}()},
-\code{\link{badge}()},
-\code{\link{collapse_panel}()},
-\code{\link{modal_dialog}()},
-\code{\link{toast}()}
+Other components:
+\code{\link[=alert]{alert()}},
+\code{\link[=badge]{badge()}},
+\code{\link[=collapse_panel]{collapse_panel()}},
+\code{\link[=modal_dialog]{modal_dialog()}},
+\code{\link[=toast]{toast()}}
 }
 \concept{components}

@@ -27,14 +27,20 @@ the toast is dismissed the value is \code{"hidden"}.}
 
 \item{duration}{A number. The number of seconds to show the toast for.}
 
-\item{wrapper}{A \link[htmltools:builder]{htmltools::tag} function. The function used to wrap the
+\item{wrapper}{A \link[htmltools:tag]{htmltools::tag} function. The function used to wrap the
 components passed in \code{...}.}
+
+\item{position}{A string. The vertical position of a toast container,
+anchored to the right edge of the screen.}
+
+\item{padding}{A number. The padding applied to a toast container, \code{0}
+through \code{5}.}
 }
 \description{
 Toasts relay notification-level information to the user.
 }
 \examples{
-\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 
 library(shiny)
 library(bslib)
@@ -69,11 +75,11 @@ shinyApp(ui, server)
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other components: 
-\code{\link{alert}()},
-\code{\link{badge}()},
-\code{\link{collapse_panel}()},
-\code{\link{d1}()},
-\code{\link{modal_dialog}()}
+Other components:
+\code{\link[=alert]{alert()}},
+\code{\link[=badge]{badge()}},
+\code{\link[=collapse_panel]{collapse_panel()}},
+\code{\link[=d1]{d1()}},
+\code{\link[=modal_dialog]{modal_dialog()}}
 }
 \concept{components}

@@ -1,0 +1,146 @@
+bsides-multi-select {
+  display: block;
+  // Anchor for the choices dropdown below.
+  position: relative;
+
+  // The bordered field wrapping the chips and the text entry. Styled from
+  // Bootstrap's input tokens rather than .form-control, whose single-line
+  // display/height assumptions fight this flex layout.
+  > .multi-select-field {
+    display: flex;
+    gap: .25rem;
+    align-items: center;
+    min-height: $input-height;
+    padding: .25rem .5rem;
+    cursor: text;
+    background-color: var(--bs-body-bg);
+    border: var(--bs-border-width) solid var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
+    // The focus ring lives on the field — the inner input is borderless
+    // and carries no ring of its own.
+    &:focus-within {
+      border-color: $input-focus-border-color;
+      box-shadow: $input-btn-focus-box-shadow;
+    }
+  }
+
+  .multi-select-field-content {
+    display: flex;
+    flex: 1 1 auto;
+    flex-wrap: wrap;
+    gap: .25rem;
+    align-items: center;
+    // Let the horizontal scroll container shrink below its content width.
+    min-width: 0;
+  }
+
+  // Semantics only (role=group around the chips); the chips participate
+  // directly in the field content's flex flow.
+  .multi-select-chips {
+    display: contents;
+  }
+
+  // The horizontal layout keeps the field one chip high and scrolls the
+  // chips instead of wrapping; the caret sits outside this container, so
+  // chips pass under it.
+  &[layout='horizontal'] .multi-select-field-content {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    // A scrolling x-axis promotes overflow-y from visible to auto; close
+    // off the pointless vertical axis.
+    overflow-y: hidden;
+    // No scrollbar: the expanded system scrollbar would overlay half the
+    // one-chip-high row (chips cut off at the field edge signal the
+    // overflow; trackpad/wheel/keyboard still scroll).
+    scrollbar-width: none;
+
+    &::-webkit-scrollbar {
+      display: none;
+    }
+
+    bsides-chip {
+      flex-shrink: 0;
+    }
+  }
+
+  .multi-select-input {
+    flex: 1 1 4rem;
+    // Stay typeable when chips crowd the row; the intrinsic size of a bare
+    // <input> would otherwise force a full extra line.
+    width: 4rem;
+    min-width: 4rem;
+    padding: 0;
+    color: var(--bs-body-color);
+    background-color: transparent;
+    border: 0;
+    outline: 0;
+    box-shadow: none;
+  }
+
+  .multi-select-caret {
+    flex-shrink: 0;
+    // Decorative: clicks fall through to the field's mousedown handler.
+    pointer-events: none;
+    color: var(--bs-secondary-color);
+    transition: transform .15s ease-in-out;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
+    &.open {
+      transform: rotate(180deg);
+    }
+  }
+
+  &[disabled] > .multi-select-field {
+    cursor: default;
+    background-color: var(--bs-secondary-bg);
+  }
+
+  // The filtering listbox. Borrows Bootstrap's
+  // .dropdown-menu/.dropdown-item styling only — visibility and selection
+  // are handled by the component, not the dropdown plugin.
+  > .dropdown-menu {
+    max-height: 15rem;
+    overflow-y: auto;
+
+    // Visibility is class-driven on both positioning paths: the author
+    // display: none from .dropdown-menu outranks the UA popover styles,
+    // so :popover-open alone would stay hidden.
+    &.show {
+      display: block;
+    }
+
+    // Absolute fallback (no Popover API): anchored below the field — the
+    // host's only in-flow child — spanning its width, and clipped by any
+    // overflow ancestor, as before.
+    &:not([popover]) {
+      top: 100%;
+      width: 100%;
+      margin-top: .125rem;
+    }
+
+    // Top-layer popover: the component sets left/top/width/max-height
+    // inline from the field's viewport rect. Reset Bootstrap's absolute
+    // positioning and the UA popover margin/inset, which would otherwise
+    // center the menu in the viewport.
+    &[popover] {
+      position: fixed;
+      inset: auto;
+      margin: 0;
+    }
+
+    // The checkmark beside options that are current members.
+    .option-check {
+      flex-shrink: 0;
+      margin-right: .375rem;
+    }
+  }
+}

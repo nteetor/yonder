@@ -4,6 +4,8 @@
 #'
 #' @inheritParams input_checkbox_group
 #'
+#' @param value A number. The default value of the input.
+#'
 #' @param min A number. A possible minimum value for the input.
 #'
 #' @param max A number. A possible maximum value for the input.

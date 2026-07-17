@@ -30,6 +30,8 @@ update_menu_input(
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
 
+\item{text}{A character string. The text of the menu's toggle button.}
+
 \item{choices}{A character vector or list. The labels for the input choices.}
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
@@ -42,7 +44,7 @@ element.}
 
 \item{direction}{A character string.}
 
-\item{align}{<\link{responsive}> A character vector.}
+\item{align}{A character vector.}
 
 \item{close}{A character string.}
 
@@ -58,19 +60,20 @@ of \code{values}.}
 A dropdown menu.
 }
 \seealso{
-Other inputs: 
-\code{\link{fileInput}()},
-\code{\link{input_button}()},
-\code{\link{input_checkbox}()},
-\code{\link{input_checkbox_group}()},
-\code{\link{input_form}()},
-\code{\link{input_list_group}()},
-\code{\link{input_multi_select}()},
-\code{\link{input_numeric}()},
-\code{\link{input_radio_group}()},
-\code{\link{input_range}()},
-\code{\link{input_select}()},
-\code{\link{input_text}()},
-\code{\link{input_text_group}()}
+Other inputs:
+\code{\link[=fileInput]{fileInput()}},
+\code{\link[=input_button]{input_button()}},
+\code{\link[=input_checkbox]{input_checkbox()}},
+\code{\link[=input_checkbox_group]{input_checkbox_group()}},
+\code{\link[=input_chip_group]{input_chip_group()}},
+\code{\link[=input_form]{input_form()}},
+\code{\link[=input_list_group]{input_list_group()}},
+\code{\link[=input_multi_select]{input_multi_select()}},
+\code{\link[=input_numeric]{input_numeric()}},
+\code{\link[=input_radio_group]{input_radio_group()}},
+\code{\link[=input_range]{input_range()}},
+\code{\link[=input_select]{input_select()}},
+\code{\link[=input_text]{input_text()}},
+\code{\link[=input_text_group]{input_text_group()}}
 }
 \concept{inputs}

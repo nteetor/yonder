@@ -13,6 +13,8 @@
 #'
 #' @param animate A string. An animation for the placeholders within the block.
 #'
+#' @returns A [htmltools::tag] object.
+#'
 #' @export
 #'
 #' @examplesIf rlang::is_interactive()
@@ -20,6 +22,8 @@
 #' placeholder()
 #'
 #' placeholder(height = "lg")
+#'
+#' library(bslib)
 #'
 #' card(
 #'   class = "text-bg-info",

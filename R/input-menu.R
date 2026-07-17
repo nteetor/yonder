@@ -4,12 +4,14 @@
 #'
 #' @inheritParams input_checkbox_group
 #'
+#' @param text A character string. The text of the menu's toggle button.
+#'
 #' @param label A character string or tag element specifying the label of the
 #'   menu's toggle button.
 #'
 #' @param direction A character string.
 #'
-#' @param align <[responsive]> A character vector.
+#' @param align A character vector.
 #'
 #' @param close A character string.
 #'
@@ -45,7 +47,7 @@ input_menu <- function(
 
   input <-
     tags$div(
-      class = "bsides-menu",
+      class = "bsides-input-menu",
       !!!menu_container_attrs(direction, align),
       id = id,
       !!!attrs,
@@ -97,7 +99,7 @@ update_menu_input <- function(
 
 #' Menu choices
 #'
-#'
+#' @noRd
 menu_choices <- function(
   ...
 ) {}

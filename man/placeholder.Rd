@@ -27,21 +27,26 @@ percentages. The width of the placeholder.}
 
 \item{height}{A string. The height of the placeholder.}
 
-\item{container}{An \link[htmltools:builder]{htmltools::tag} function.}
+\item{container}{An \link[htmltools:tag]{htmltools::tag} function.}
 
 \item{lines}{A number. The number of lines within the placeholder block.}
 
 \item{animate}{A string. An animation for the placeholders within the block.}
 }
+\value{
+A \link[htmltools:tag]{htmltools::tag} object.
+}
 \description{
 A handy placeholder component.
 }
 \examples{
-\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 
 placeholder()
 
 placeholder(height = "lg")
+
+library(bslib)
 
 card(
   class = "text-bg-info",

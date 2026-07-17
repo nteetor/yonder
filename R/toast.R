@@ -15,6 +15,12 @@
 #' @param wrapper A [htmltools::tag] function. The function used to wrap the
 #'   components passed in `...`.
 #'
+#' @param position A string. The vertical position of a toast container,
+#'   anchored to the right edge of the screen.
+#'
+#' @param padding A number. The padding applied to a toast container, `0`
+#'   through `5`.
+#'
 #' @family components
 #'
 #' @export
@@ -156,6 +162,17 @@ as_toast_item <- function(x) {
 #'
 #' Components to include inside a [toast].
 #'
+#' @param ... Any number of child elements passed to the parent element. Named
+#'   values are passed as HTML attributes to the parent element.
+#'
+#' @param title A string. The title of the toast, displayed in the toast
+#'   header.
+#'
+#' @param icon A tag element. An icon displayed before the toast title.
+#'
+#' @param dismiss A button tag element used to dismiss the toast, defaults to
+#'   [toast_button()].
+#'
 #' @returns A `shiny.tag` object.
 #'
 #' @seealso [toast()] for creating toasts.
@@ -278,7 +295,7 @@ toast_hide <- function(
 ) {
   msg <-
     drop_nulls(list(
-      method = "hide",
+      method = "hide"
     ))
 
   session$sendInputMessage(id, msg)

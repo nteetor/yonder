@@ -1,7 +1,7 @@
 #' Input labels, help text, and formatting to inputs
 #'
-#' Form groups are a way of labeling an input. Form rows are similar to
-#' [columns()]s, but include additional styles intended for forms. The
+#' Form groups are a way of labeling an input. Form rows arrange form groups
+#' into a row and include additional styles intended for forms. The
 #' flexibility provided by form rows and groups means you can confidently
 #' develop shiny applications for devices and screens of varying sizes.
 #'
@@ -19,14 +19,11 @@
 #'   For **formRow**, any number of `formGroup`s or additional named arguments
 #'   passed as HTML attributes to the parent element.
 #'
-#' @param width A [responsive] argument. One of `1:12`, `"content"`, or
-#'   `"equal"` specifying a column width for the form group, defaults to `NULL`.
-#'
 #' @family layout
 #' @export
-formGroup <- function(label, input, ..., help = NULL, width = NULL) {
-  assert_found(label)
-  assert_found(input)
+formGroup <- function(label, input, ..., help = NULL) {
+  check_character(label)
+  check_required(input)
 
   if (!is_tag(input) && !is_bare_list(input)) {
     stop(
@@ -35,24 +32,13 @@ formGroup <- function(label, input, ..., help = NULL, width = NULL) {
     )
   }
 
-  col_classes <- if (!is.null(width)) column(width = width)$attribs$class
-
   dep_attach({
-    if (is_tag(label) && tag_name_is(label, "label")) {
-      # do nothing
-    } else {
-      label <- tags$label(coerce_content(label))
-    }
-
-    if (is.character(help)) {
-      help <- coerce_content(help)
+    if (!is_tag(label)) {
+      label <- tags$label(label)
     }
 
     tags$div(
-      class = str_collate(
-        "form-group",
-        col_classes
-      ),
+      class = "form-group",
       ...,
       label,
       input,

@@ -12,7 +12,17 @@
 #'
 #' @param size A string. The size of the modal.
 #'
-#' @param modal A modal tag element created using `modal()`.
+#' @param scroll A string. Which element scrolls when modal content overflows,
+#'   the whole modal or only the modal body.
+#'
+#' @param backdrop A string. The behavior of the modal backdrop: `"static"`
+#'   keeps the modal open when the backdrop is clicked, `"none"` removes the
+#'   backdrop.
+#'
+#' @param wrapper A [htmltools::tag] function. The function used to wrap
+#'   unnamed components passed in `...`.
+#'
+#' @param text A string. The content of the button.
 #'
 #' @inherit badge return
 #'
@@ -140,6 +150,14 @@ as_modal_items <- function(
 #' Modal items
 #'
 #' Components of a modal dialog.
+#'
+#' @param ... Any number of child elements passed to the parent element. Named
+#'   values are passed as HTML attributes to the parent element.
+#'
+#' @param close A button tag element used to close the modal, defaults to
+#'   [modal_close()] for headers and [modal_dismiss()] for footers.
+#'
+#' @param text A string. The content of the dismiss button.
 #'
 #' @describeIn modal_body The main content of a modal.
 #'

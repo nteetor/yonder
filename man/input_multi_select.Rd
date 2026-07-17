@@ -5,13 +5,25 @@
 \alias{update_multi_select}
 \title{Multi select input}
 \usage{
-input_multi_select(id, ...)
+input_multi_select(
+  id,
+  ...,
+  choices = NULL,
+  values = choices,
+  select = NULL,
+  edit = c("choices", "free"),
+  type = "primary",
+  layout = c("vertical", "horizontal"),
+  placeholder = NULL,
+  max = NULL
+)
 
 update_multi_select(
   id,
   choices = NULL,
   values = choices,
-  selected = NULL,
+  select = NULL,
+  placeholder = NULL,
   max = NULL,
   enable = NULL,
   disable = NULL,
@@ -24,30 +36,84 @@ update_multi_select(
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
 
-\item{disable}{A boolean. The checkbox starts disabled if \code{TRUE}.}
+\item{choices}{A character vector of choice labels, defaults to \code{NULL}.
+May be empty and populated later with \code{\link[=update_multi_select]{update_multi_select()}}.}
+
+\item{values}{A character vector of values for the input's choices,
+defaults to \code{choices}.}
+
+\item{select}{A character vector of the selected values, defaults to
+\code{NULL} — no chips render by default. With \code{edit = "choices"} these
+must be found in \code{values}; with \code{edit = "free"} any strings are
+allowed. In \code{\link[=update_multi_select]{update_multi_select()}}, \code{select} replaces the chip set —
+the current selection is reset and the new selection applied.}
+
+\item{edit}{A character string bounding what users may select:
+\itemize{
+\item \code{"choices"} (default), selections come only from the choices.
+\item \code{"free"}, typed text also creates new values. Without \code{choices}
+there is no dropdown at all — a free-text tag input.
+}}
+
+\item{type}{A character string, a Bootstrap theme color name coloring
+the chips. Defaults to \code{"primary"}.}
+
+\item{layout}{A character string. With \code{"vertical"} (default) chips wrap
+onto new lines; with \code{"horizontal"} chips stay on one scrolling row.}
+
+\item{placeholder}{A string specifying placeholder text for the text
+input, defaults to \code{NULL}.}
+
+\item{max}{A whole number specifying the maximum number of selections,
+defaults to \code{NULL}. Once reached, the text input is disabled until a
+value is removed.}
+
+\item{enable}{If \code{TRUE}, enable the input, defaults to \code{NULL}.}
+
+\item{disable}{If \code{TRUE}, disable the input, defaults to \code{NULL}. When both
+\code{enable} and \code{disable} are \code{TRUE}, \code{disable} wins.}
 
 \item{session}{A shiny session object.}
 }
 \value{
-A \link[htmltools:builder]{htmltools::tag} object.
+A \link[htmltools:tag]{htmltools::tag} object.
 }
 \description{
-The multi select input is a selectize alternative.
+A selectize alternative: selected values render as removable chips,
+edited through a text entry with a filtering dropdown. The dropdown
+lists the choices with a checkmark beside the current selections —
+picking a listed selection removes it, picking anything else adds it.
+Chips do not toggle; the set of chips is the input's value. For fixed,
+toggleable chips see \code{\link[=input_chip_group]{input_chip_group()}}.
+}
+\details{
+\subsection{Server value}{
+
+A character vector of the selected values, or \code{NULL} when nothing is
+selected.
+}
+
+When \code{update_multi_select()} replaces an input's choices, selections no
+longer among the new choices are removed (free-text chips of an
+\code{edit = "free"} input are kept). Without \code{values} in the call, \code{select}
+cannot be validated server-side; on an \code{edit = "choices"} input,
+unmatched values are dropped with a warning in the browser console.
 }
 \seealso{
-Other inputs: 
-\code{\link{fileInput}()},
-\code{\link{input_button}()},
-\code{\link{input_checkbox}()},
-\code{\link{input_checkbox_group}()},
-\code{\link{input_form}()},
-\code{\link{input_list_group}()},
-\code{\link{input_menu}()},
-\code{\link{input_numeric}()},
-\code{\link{input_radio_group}()},
-\code{\link{input_range}()},
-\code{\link{input_select}()},
-\code{\link{input_text}()},
-\code{\link{input_text_group}()}
+Other inputs:
+\code{\link[=fileInput]{fileInput()}},
+\code{\link[=input_button]{input_button()}},
+\code{\link[=input_checkbox]{input_checkbox()}},
+\code{\link[=input_checkbox_group]{input_checkbox_group()}},
+\code{\link[=input_chip_group]{input_chip_group()}},
+\code{\link[=input_form]{input_form()}},
+\code{\link[=input_list_group]{input_list_group()}},
+\code{\link[=input_menu]{input_menu()}},
+\code{\link[=input_numeric]{input_numeric()}},
+\code{\link[=input_radio_group]{input_radio_group()}},
+\code{\link[=input_range]{input_range()}},
+\code{\link[=input_select]{input_select()}},
+\code{\link[=input_text]{input_text()}},
+\code{\link[=input_text_group]{input_text_group()}}
 }
 \concept{inputs}

@@ -10,6 +10,12 @@
 #' @param right A character vector. One or more character strings appended to
 #'   the reactive value of the input.
 #'
+#' @param value A character string. The value of the input.
+#'
+#' @param disable A boolean. If `TRUE`, disable the input.
+#'
+#' @param session A shiny session object.
+#'
 #' @inherit input_numeric return
 #'
 #' @family inputs
@@ -30,7 +36,7 @@ input_text_group <- function(
 
   input <-
     tags$div(
-      class = "bsides-textgroup input-group",
+      class = "bsides-input-text-group input-group",
       id = id,
       !!!attrs,
       !!!text_group_input_text(left),

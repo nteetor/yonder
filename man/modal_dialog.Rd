@@ -28,10 +28,20 @@ values are passed as HTML attributes to the parent element.}
 
 \item{size}{A string. The size of the modal.}
 
-\item{modal}{A modal tag element created using \code{modal()}.}
+\item{scroll}{A string. Which element scrolls when modal content overflows,
+the whole modal or only the modal body.}
+
+\item{backdrop}{A string. The behavior of the modal backdrop: \code{"static"}
+keeps the modal open when the backdrop is clicked, \code{"none"} removes the
+backdrop.}
+
+\item{wrapper}{A \link[htmltools:tag]{htmltools::tag} function. The function used to wrap
+unnamed components passed in \code{...}.}
+
+\item{text}{A string. The content of the button.}
 }
 \value{
-A \link[htmltools:builder]{htmltools::tag} object.
+A \link[htmltools:tag]{htmltools::tag} object.
 }
 \description{
 Modals are flexible alert windows, which disable interaction with the page
@@ -45,7 +55,7 @@ behind them. Modals may include inputs, buttons, or simply text.
 
 }}
 \examples{
-\dontshow{if (rlang::is_interactive()) (if (getRversion() >= "3.4") withAutoprint else force)(\{ # examplesIf}
+\dontshow{if (rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 
 modal_dialog(
   id = "example1",
@@ -57,11 +67,11 @@ modal_dialog(
 \dontshow{\}) # examplesIf}
 }
 \seealso{
-Other components: 
-\code{\link{alert}()},
-\code{\link{badge}()},
-\code{\link{collapse_panel}()},
-\code{\link{d1}()},
-\code{\link{toast}()}
+Other components:
+\code{\link[=alert]{alert()}},
+\code{\link[=badge]{badge()}},
+\code{\link[=collapse_panel]{collapse_panel()}},
+\code{\link[=d1]{d1()}},
+\code{\link[=toast]{toast()}}
 }
 \concept{components}

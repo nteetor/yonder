@@ -1,8 +1,20 @@
 ^cran-comments\.md$
+^\.git$
+^\.claude$
+^\.vscode$
+^plan-.*\.md$
 ^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
-^npm$
+^srcts$
+^node_modules$
+^package\.json$
+^package-lock\.json$
+^tsconfig\.json$
+^eslint\.config\.mjs$
+^\.browserslistrc$
+^\.stylelintrc$
+^BSLIB\.md$
 ^docs$
 ^bin$
 ^man-roxygen$
@@ -16,3 +28,4 @@
 ^renv\.lock$
 ^\.github$
 ^codecov\.yml$
+^AGENTS.md$

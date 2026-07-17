@@ -35,15 +35,15 @@ element.}
 \item{values}{A character vector specifying the values of the input's
 choices, defaults to \code{choices}.}
 
+\item{select}{One of \code{values} indicating the default value of the input,
+defaults to \code{NULL}.}
+
 \item{disable}{A boolean. The checkbox starts disabled if \code{TRUE}.}
 
 \item{placeholder}{A character string specifying the placeholder text of
 the select input, defaults to \code{NULL}.}
 
 \item{session}{A shiny session object.}
-
-\item{selected}{One of \code{values} indicating the default value of the input,
-defaults to \code{values[[1]]}.}
 }
 \description{
 Create a select input. Select elements typically appear as a simple menu of
@@ -53,19 +53,20 @@ to change the reactivity or value of the input, see Details for more
 information.
 }
 \seealso{
-Other inputs: 
-\code{\link{fileInput}()},
-\code{\link{input_button}()},
-\code{\link{input_checkbox}()},
-\code{\link{input_checkbox_group}()},
-\code{\link{input_form}()},
-\code{\link{input_list_group}()},
-\code{\link{input_menu}()},
-\code{\link{input_multi_select}()},
-\code{\link{input_numeric}()},
-\code{\link{input_radio_group}()},
-\code{\link{input_range}()},
-\code{\link{input_text}()},
-\code{\link{input_text_group}()}
+Other inputs:
+\code{\link[=fileInput]{fileInput()}},
+\code{\link[=input_button]{input_button()}},
+\code{\link[=input_checkbox]{input_checkbox()}},
+\code{\link[=input_checkbox_group]{input_checkbox_group()}},
+\code{\link[=input_chip_group]{input_chip_group()}},
+\code{\link[=input_form]{input_form()}},
+\code{\link[=input_list_group]{input_list_group()}},
+\code{\link[=input_menu]{input_menu()}},
+\code{\link[=input_multi_select]{input_multi_select()}},
+\code{\link[=input_numeric]{input_numeric()}},
+\code{\link[=input_radio_group]{input_radio_group()}},
+\code{\link[=input_range]{input_range()}},
+\code{\link[=input_text]{input_text()}},
+\code{\link[=input_text_group]{input_text_group()}}
 }
 \concept{inputs}

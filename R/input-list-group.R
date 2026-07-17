@@ -11,7 +11,7 @@
 #'
 #'   Flush list items have their outer borders and rounded corners removed.
 #'
-#' @param layout <[responsive]> A character vector. The layout of the choices.
+#' @param layout A character vector. The layout of the choices.
 #'
 #' @family inputs
 #' @export
@@ -49,7 +49,7 @@ input_list_group <- function(
   input <-
     tags$div(
       class = c(
-        "bsides-listgroup",
+        "bsides-input-list-group",
         "list-group",
         list_group_class_flush(appearance),
         list_group_class_layout(layout)
@@ -79,7 +79,7 @@ update_list_group <- function(
   session = get_current_session()
 ) {
   check_string(id, allow_empty = FALSE)
-  check_character(values)
+  check_character(values, allow_null = TRUE)
   check_character(select, allow_null = TRUE)
   check_character(disable, allow_null = TRUE)
 

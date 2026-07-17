@@ -8,3 +8,6 @@ docs/.sass-cache
 inst/doc
 pkgdown/site
 renv/library
+node_modules/
+.cache/
+srcts/tests/html/

@@ -13,8 +13,9 @@ construction and design.
 
 \subsection{Inputs}{
 
-Yonder provides many familiar inputs like \code{\link[=selectInput]{selectInput()}} or \code{\link[=radioInput]{radioInput()}}.
-There are also new inputs like \code{\link[=groupTextInput]{groupTextInput()}} or \code{\link[=formInput]{formInput()}}.
+Yonder provides many familiar inputs like \code{\link[=input_select]{input_select()}} or
+\code{\link[=input_radio_group]{input_radio_group()}}. There are also new inputs like \code{\link[=input_text_group]{input_text_group()}} or
+\code{\link[=input_form]{input_form()}}.
 \itemize{
 \item Input functions have an \code{id} argument instead of \code{inputId}.
 \item Input functions do not include a \code{label} argument for the purpose of adding
@@ -24,30 +25,12 @@ add a label above an input please use \code{\link[=formGroup]{formGroup()}}.
 }
 \subsection{Looking for ... ?}{
 \itemize{
-\item \code{actionButton()} or \code{actionLink()} use \code{\link[=buttonInput]{buttonInput()}} or \code{\link[=linkInput]{linkInput()}}
-\item \code{radioButtons()} use \code{\link[=radioInput]{radioInput()}}
-\item \code{checkboxGroupInput()} use \code{\link[=checkbarInput]{checkbarInput()}} or \code{\link[=checkboxInput]{checkboxInput()}}
-\item \code{numericInput()} use \code{\link[=numberInput]{numberInput()}}
-\item \code{selectizeInput()} use \code{\link[=selectInput]{selectInput()}} or \code{\link[=chipInput]{chipInput()}}
-\item \code{submitButton()} use \code{\link[=formInput]{formInput()}} and \code{\link[=formSubmit]{formSubmit()}}
-}
-}
-
-}
-
-\subsection{Layout and content}{
-
-Included are a handful of utilities for building applications suited for
-devices and screens of varying sizes. For real control over spacing elements
-be sure to check out \code{\link[=flex]{flex()}}, which gives you the power of flexbox layout.
-\subsection{Looking for ... ?}{
-\itemize{
-\item \code{fluidRow()} or \code{fixedRow()} use \code{\link[=columns]{columns()}}
-\item \code{fixedPage()}, \code{fluidPage()}, or \code{sidebarLayout()} use \code{\link[=container]{container()}},
-\code{\link[=columns]{columns()}}, and \code{\link[=column]{column()}}
-\item \code{navbarPage()} use \code{\link[=navbar]{navbar()}}
-\item \code{tabPanel()} use \code{\link[=navContent]{navContent()}} and \code{\link[=navPane]{navPane()}}
-\item \code{modalDialog()} use \code{\link[=modal]{modal()}}
+\item \code{actionButton()} or \code{actionLink()} use \code{\link[=input_button]{input_button()}} or \code{\link[=input_link]{input_link()}}
+\item \code{radioButtons()} use \code{\link[=input_radio_group]{input_radio_group()}}
+\item \code{checkboxGroupInput()} use \code{\link[=input_checkbox_group]{input_checkbox_group()}} or \code{\link[=input_checkbox]{input_checkbox()}}
+\item \code{numericInput()} use \code{\link[=input_numeric]{input_numeric()}}
+\item \code{selectizeInput()} use \code{\link[=input_select]{input_select()}} or \code{\link[=input_multi_select]{input_multi_select()}}
+\item \code{submitButton()} use \code{\link[=input_form]{input_form()}} and \code{\link[=form_submit_button]{form_submit_button()}}
 }
 }
 
@@ -64,6 +47,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Nathan Teetor \email{nathanteetor@gmail.com}
+
+Authors:
+\itemize{
+  \item Nathan Teetor \email{nathanteetor@gmail.com}
+}
 
 Other contributors:
 \itemize{

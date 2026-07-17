@@ -20,9 +20,7 @@
 #' @param value A character string. The input's value when the submit button is
 #'   clicked.
 #'
-#' @param layout <[responsive]> A character string.
-#'
-#' @param gap A number. The space between inputs, `0` through `5`.
+#' @param layout A character string.
 #'
 #' @family inputs
 #' @export
@@ -42,13 +40,13 @@ input_form <- function(
   input <-
     tags$form(
       class = c(
-        "bsides-form",
-        if (inline) "form-inline"
+        "bsides-input-form"
+        # if (inline) "form-inline"
       ),
       id = id,
       !!!attrs,
       tags$fieldset(
-        disabled = if (isTRUE(disable)) NA,
+        # disabled = if (isTRUE(disable)) NA,
         if (non_null(label)) {
           tags$legend(label)
         },
@@ -74,7 +72,7 @@ form_submit_button <- function(
 ) {
   button <-
     tags$button(
-      class = "bsides-btn-submit btn btn-primary",
+      class = "bsides-input-form-submit btn btn-primary",
       value = value,
       label,
       ...

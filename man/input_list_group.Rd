@@ -46,7 +46,7 @@ items.
 
 Flush list items have their outer borders and rounded corners removed.}
 
-\item{layout}{<\link{responsive}> A character vector. The layout of the choices.}
+\item{layout}{A character vector. The layout of the choices.}
 
 \item{session}{A shiny session object.}
 }
@@ -56,19 +56,20 @@ checkboxes or radios, that is, users may select one or more items from the
 list. However, list group items may include highly variable content.
 }
 \seealso{
-Other inputs: 
-\code{\link{fileInput}()},
-\code{\link{input_button}()},
-\code{\link{input_checkbox}()},
-\code{\link{input_checkbox_group}()},
-\code{\link{input_form}()},
-\code{\link{input_menu}()},
-\code{\link{input_multi_select}()},
-\code{\link{input_numeric}()},
-\code{\link{input_radio_group}()},
-\code{\link{input_range}()},
-\code{\link{input_select}()},
-\code{\link{input_text}()},
-\code{\link{input_text_group}()}
+Other inputs:
+\code{\link[=fileInput]{fileInput()}},
+\code{\link[=input_button]{input_button()}},
+\code{\link[=input_checkbox]{input_checkbox()}},
+\code{\link[=input_checkbox_group]{input_checkbox_group()}},
+\code{\link[=input_chip_group]{input_chip_group()}},
+\code{\link[=input_form]{input_form()}},
+\code{\link[=input_menu]{input_menu()}},
+\code{\link[=input_multi_select]{input_multi_select()}},
+\code{\link[=input_numeric]{input_numeric()}},
+\code{\link[=input_radio_group]{input_radio_group()}},
+\code{\link[=input_range]{input_range()}},
+\code{\link[=input_select]{input_select()}},
+\code{\link[=input_text]{input_text()}},
+\code{\link[=input_text_group]{input_text_group()}}
 }
 \concept{inputs}

@@ -2,6 +2,7 @@
 % Please edit documentation in R/input-checkbox-group.R
 \name{input_checkbox_group}
 \alias{input_checkbox_group}
+\alias{update_checkbox_group}
 \title{Checkbox input}
 \usage{
 input_checkbox_group(
@@ -14,6 +15,17 @@ input_checkbox_group(
   appearance = c("default", "buttons", "switches", "list"),
   layout = c("column", "row"),
   label = c("after", "before")
+)
+
+update_checkbox_group(
+  id,
+  choices = NULL,
+  values = choices,
+  select = NULL,
+  disable = NULL,
+  layout = "column",
+  label = "after",
+  session = get_current_session()
 )
 }
 \arguments{
@@ -55,19 +67,20 @@ A named logical vector.
 }
 }
 \seealso{
-Other inputs: 
-\code{\link{fileInput}()},
-\code{\link{input_button}()},
-\code{\link{input_checkbox}()},
-\code{\link{input_form}()},
-\code{\link{input_list_group}()},
-\code{\link{input_menu}()},
-\code{\link{input_multi_select}()},
-\code{\link{input_numeric}()},
-\code{\link{input_radio_group}()},
-\code{\link{input_range}()},
-\code{\link{input_select}()},
-\code{\link{input_text}()},
-\code{\link{input_text_group}()}
+Other inputs:
+\code{\link[=fileInput]{fileInput()}},
+\code{\link[=input_button]{input_button()}},
+\code{\link[=input_checkbox]{input_checkbox()}},
+\code{\link[=input_chip_group]{input_chip_group()}},
+\code{\link[=input_form]{input_form()}},
+\code{\link[=input_list_group]{input_list_group()}},
+\code{\link[=input_menu]{input_menu()}},
+\code{\link[=input_multi_select]{input_multi_select()}},
+\code{\link[=input_numeric]{input_numeric()}},
+\code{\link[=input_radio_group]{input_radio_group()}},
+\code{\link[=input_range]{input_range()}},
+\code{\link[=input_select]{input_select()}},
+\code{\link[=input_text]{input_text()}},
+\code{\link[=input_text_group]{input_text_group()}}
 }
 \concept{inputs}

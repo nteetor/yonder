@@ -22,22 +22,24 @@ License: GPL-3
 URL: https://nteetor.github.io/yonder
 BugReports: https://github.com/nteetor/yonder/issues
 Encoding: UTF-8
-LazyData: true
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+Config/roxygen2/version: 8.0.0
+Config/roxygen2/markdown: TRUE
 Depends:
-    R (>= 3.2),
+    R (>= 4.1),
     shiny (>= 1.6.0)
 Imports:
+    cli,
     htmltools (>= 0.4.0),
-    lifecycle,
+    jsonlite,
     rlang (>= 1.1.0),
     utils
 Suggests:
-    knitr,
+    bslib,
+    chromote,
     testthat (>= 2.1.0),
-    rmarkdown
-VignetteBuilder: knitr
+    rmarkdown,
+    shinytest2,
+    withr
 Collate:
     'alert.R'
     'badge.R'
@@ -50,6 +52,7 @@ Collate:
     'input-button.R'
     'input-checkbox.R'
     'input-checkbox-group.R'
+    'input-chip-group.R'
     'input-multi-select.R'
     'input-file.R'
     'input-form.R'
@@ -71,3 +74,4 @@ Collate:
     'utils-dependencies.R'
     'utils-tags.R'
     'yonder.R'
+

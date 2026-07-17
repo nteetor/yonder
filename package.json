@@ -1,0 +1,56 @@
+{
+  "name": "bsides",
+  "version": "0.2.0.9000",
+  "description": "An extension of the {bslib} R package.",
+  "main": "inst/www/yonder/js/bsides.js",
+  "dependencies": {
+    "bootstrap": "^5.3.6",
+    "jquery": "^3.7.1",
+    "lit": "^3.3.3"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.27.0",
+    "@types/bootstrap": "^5.2.10",
+    "@types/jquery": "^3.5.32",
+    "@types/rstudio-shiny": "github:rstudio/shiny#main",
+    "autoprefixer": "^10.4.21",
+    "clean-css-cli": "^5.6.3",
+    "esbuild": "^0.25.5",
+    "eslint": "^9.27.0",
+    "globals": "^16.2.0",
+    "jsdom": "^29.1.1",
+    "npm-run-all2": "^8.0.4",
+    "postcss-cli": "^11.0.1",
+    "sass": "^1.89.0",
+    "stylelint": "^16.19.1",
+    "typescript": "^5.8.3",
+    "typescript-eslint": "^8.33.0"
+  },
+  "scripts": {
+    "build": "npm-run-all js css",
+    "watch": "node srcts/build/index.mjs --watch",
+    "check_types": "tsc --noEmit",
+    "check_lint": "eslint srcts/src",
+    "js-compile": "node srcts/build/index.mjs",
+    "js": "npm-run-all check_types check_lint js-compile",
+    "css-compile": "sass --style expanded --source-map --embed-sources --load-path node_modules inst/components/scss/bsides.scss:inst/www/yonder/css/bsides.css",
+    "css-prefix": "postcss --config srcts/build/postcss.config.mjs --replace \"inst/www/yonder/css/bsides.css\"",
+    "css-minify": "cleancss -O1 --format breakWith=lf --with-rebase --source-map --source-map-inline-sources --output inst/www/yonder/css/bsides.min.css inst/www/yonder/css/bsides.css",
+    "css": "npm-run-all css-compile css-prefix css-minify",
+    "test-dom": "Rscript srcts/tests/gen-html.R && node srcts/tests/test-bindings.mjs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/nteetor/yonder.git"
+  },
+  "keywords": [
+    "shiny",
+    "reactive"
+  ],
+  "author": "Nathan Teetor <nate@haufin.ch>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nteetor/yonder/issues"
+  },
+  "homepage": "https://nteetor.github.com/yonder"
+}

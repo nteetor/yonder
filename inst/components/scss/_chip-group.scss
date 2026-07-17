@@ -1,0 +1,17 @@
+bsides-chip-group {
+  display: block;
+
+  // The default (vertical) layout wraps chips onto new lines instead of
+  // letting the container cut them off.
+  > .chip-group-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .25rem;
+  }
+
+  // The horizontal layout keeps one row and scrolls instead of wrapping.
+  &[layout='horizontal'] > .chip-group-chips {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+  }
+}
