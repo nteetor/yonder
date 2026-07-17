@@ -22,7 +22,7 @@ submit_form(id, value, session = get_current_session())
 
 \item{label}{A character string. The label of the input.}
 
-\item{layout}{<\link{responsive}> A character string.}
+\item{layout}{A character string.}
 
 \item{value}{A character string. The input's value when the submit button is
 clicked.}

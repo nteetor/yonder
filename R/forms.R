@@ -1,7 +1,7 @@
 #' Input labels, help text, and formatting to inputs
 #'
-#' Form groups are a way of labeling an input. Form rows are similar to
-#' [columns()]s, but include additional styles intended for forms. The
+#' Form groups are a way of labeling an input. Form rows arrange form groups
+#' into a row and include additional styles intended for forms. The
 #' flexibility provided by form rows and groups means you can confidently
 #' develop shiny applications for devices and screens of varying sizes.
 #'
@@ -19,8 +19,8 @@
 #'   For **formRow**, any number of `formGroup`s or additional named arguments
 #'   passed as HTML attributes to the parent element.
 #'
-#' @param width A [responsive] argument. One of `1:12`, `"content"`, or
-#'   `"equal"` specifying a column width for the form group, defaults to `NULL`.
+#' @param width One of `1:12`, `"content"`, or `"equal"` specifying a column
+#'   width for the form group, defaults to `NULL`.
 #'
 #' @family layout
 #' @export

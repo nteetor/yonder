@@ -11,7 +11,7 @@
 #'
 #'   Flush list items have their outer borders and rounded corners removed.
 #'
-#' @param layout <[responsive]> A character vector. The layout of the choices.
+#' @param layout A character vector. The layout of the choices.
 #'
 #' @family inputs
 #' @export

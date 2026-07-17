@@ -9,7 +9,7 @@
 #'
 #' @param direction A character string.
 #'
-#' @param align <[responsive]> A character vector.
+#' @param align A character vector.
 #'
 #' @param close A character string.
 #'

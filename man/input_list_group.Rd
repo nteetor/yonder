@@ -46,7 +46,7 @@ items.
 
 Flush list items have their outer borders and rounded corners removed.}
 
-\item{layout}{<\link{responsive}> A character vector. The layout of the choices.}
+\item{layout}{A character vector. The layout of the choices.}
 
 \item{session}{A shiny session object.}
 }

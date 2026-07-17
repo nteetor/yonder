@@ -24,12 +24,12 @@ passed as HTML attributes to the parent element.}
 \item{help}{A character string specifying help text for the input, defaults
 to \code{NULL}, in which case help text is not added.}
 
-\item{width}{A \link{responsive} argument. One of \code{1:12}, \code{"content"}, or
-\code{"equal"} specifying a column width for the form group, defaults to \code{NULL}.}
+\item{width}{One of \code{1:12}, \code{"content"}, or \code{"equal"} specifying a column
+width for the form group, defaults to \code{NULL}.}
 }
 \description{
-Form groups are a way of labeling an input. Form rows are similar to
-\code{\link[=columns]{columns()}}s, but include additional styles intended for forms. The
+Form groups are a way of labeling an input. Form rows arrange form groups
+into a row and include additional styles intended for forms. The
 flexibility provided by form rows and groups means you can confidently
 develop shiny applications for devices and screens of varying sizes.
 }

@@ -42,7 +42,7 @@ element.}
 
 \item{direction}{A character string.}
 
-\item{align}{<\link{responsive}> A character vector.}
+\item{align}{A character vector.}
 
 \item{close}{A character string.}
 

@@ -1,8 +1,20 @@
-#' @importFrom htmltools HTML htmlDependency attachDependencies
-#'   suppressDependencies resolveDependencies findDependencies tags div
-#'   tagAppendAttributes tagAppendChildren surroundSingletons takeSingletons
-#' @importFrom shiny observe getDefaultReactiveDomain installExprFunction
-#'   createRenderFunction createWebDependency
+#' @importFrom htmltools HTML
+#' @importFrom htmltools htmlDependency
+#' @importFrom htmltools attachDependencies
+#' @importFrom htmltools suppressDependencies
+#' @importFrom htmltools resolveDependencies
+#' @importFrom htmltools findDependencies
+#' @importFrom htmltools tags
+#' @importFrom htmltools div
+#' @importFrom htmltools tagAppendAttributes
+#' @importFrom htmltools tagAppendChildren
+#' @importFrom htmltools surroundSingletons
+#' @importFrom htmltools takeSingletons
+#' @importFrom shiny observe
+#' @importFrom shiny getDefaultReactiveDomain
+#' @importFrom shiny installExprFunction
+#' @importFrom shiny createRenderFunction
+#' @importFrom shiny createWebDependency
 #' @import rlang
 NULL
 

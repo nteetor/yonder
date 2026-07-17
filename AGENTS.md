@@ -1,5 +1,9 @@
 # yonder
 
+## Documentation
+
+- Rebuild the package namespace and documentation with `devtools::document()`. 
+
 ## Testing
 
 - Run the R suite with `Rscript -e 'devtools::test()'` (or `devtools::test()` in

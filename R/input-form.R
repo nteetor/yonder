@@ -20,7 +20,7 @@
 #' @param value A character string. The input's value when the submit button is
 #'   clicked.
 #'
-#' @param layout <[responsive]> A character string.
+#' @param layout A character string.
 #'
 #' @param gap A number. The space between inputs, `0` through `5`.
 #'
