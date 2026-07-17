@@ -35,15 +35,15 @@ element.}
 \item{values}{A character vector specifying the values of the input's
 choices, defaults to \code{choices}.}
 
+\item{select}{One of \code{values} indicating the default value of the input,
+defaults to \code{NULL}.}
+
 \item{disable}{A boolean. The checkbox starts disabled if \code{TRUE}.}
 
 \item{placeholder}{A character string specifying the placeholder text of
 the select input, defaults to \code{NULL}.}
 
 \item{session}{A shiny session object.}
-
-\item{selected}{One of \code{values} indicating the default value of the input,
-defaults to \code{values[[1]]}.}
 }
 \description{
 Create a select input. Select elements typically appear as a simple menu of

@@ -28,7 +28,17 @@ values are passed as HTML attributes to the parent element.}
 
 \item{size}{A string. The size of the modal.}
 
-\item{modal}{A modal tag element created using \code{modal()}.}
+\item{scroll}{A string. Which element scrolls when modal content overflows,
+the whole modal or only the modal body.}
+
+\item{backdrop}{A string. The behavior of the modal backdrop: \code{"static"}
+keeps the modal open when the backdrop is clicked, \code{"none"} removes the
+backdrop.}
+
+\item{wrapper}{A \link[htmltools:tag]{htmltools::tag} function. The function used to wrap
+unnamed components passed in \code{...}.}
+
+\item{text}{A string. The content of the button.}
 }
 \value{
 A \link[htmltools:tag]{htmltools::tag} object.

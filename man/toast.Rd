@@ -29,6 +29,12 @@ the toast is dismissed the value is \code{"hidden"}.}
 
 \item{wrapper}{A \link[htmltools:tag]{htmltools::tag} function. The function used to wrap the
 components passed in \code{...}.}
+
+\item{position}{A string. The vertical position of a toast container,
+anchored to the right edge of the screen.}
+
+\item{padding}{A number. The padding applied to a toast container, \code{0}
+through \code{5}.}
 }
 \description{
 Toasts relay notification-level information to the user.

@@ -93,7 +93,7 @@ input_checkbox_group <- function(
   input
 }
 
-#' @rdname input_checkbox
+#' @rdname input_checkbox_group
 #' @export
 update_checkbox_group <- function(
   id,

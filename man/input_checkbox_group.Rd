@@ -2,6 +2,7 @@
 % Please edit documentation in R/input-checkbox-group.R
 \name{input_checkbox_group}
 \alias{input_checkbox_group}
+\alias{update_checkbox_group}
 \title{Checkbox input}
 \usage{
 input_checkbox_group(
@@ -14,6 +15,17 @@ input_checkbox_group(
   appearance = c("default", "buttons", "switches", "list"),
   layout = c("column", "row"),
   label = c("after", "before")
+)
+
+update_checkbox_group(
+  id,
+  choices = NULL,
+  values = choices,
+  select = NULL,
+  disable = NULL,
+  layout = "column",
+  label = "after",
+  session = get_current_session()
 )
 }
 \arguments{

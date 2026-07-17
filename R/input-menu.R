@@ -4,6 +4,8 @@
 #'
 #' @inheritParams input_checkbox_group
 #'
+#' @param text A character string. The text of the menu's toggle button.
+#'
 #' @param label A character string or tag element specifying the label of the
 #'   menu's toggle button.
 #'
@@ -97,7 +99,7 @@ update_menu_input <- function(
 
 #' Menu choices
 #'
-#'
+#' @noRd
 menu_choices <- function(
   ...
 ) {}

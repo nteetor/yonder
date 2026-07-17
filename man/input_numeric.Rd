@@ -20,6 +20,8 @@ input_numeric(
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
 
+\item{value}{A number. The default value of the input.}
+
 \item{min}{A number. A possible minimum value for the input.}
 
 \item{max}{A number. A possible maximum value for the input.}

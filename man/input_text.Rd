@@ -15,7 +15,13 @@ update_text(id, value = NULL, disable = NULL, session = get_current_session())
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
 
+\item{value}{A character string. The value of the input.}
+
 \item{placeholder}{A string. The placeholder text displayed inside the input.}
+
+\item{disable}{A boolean. If \code{TRUE}, disable the input.}
+
+\item{session}{A shiny session object.}
 }
 \value{
 A shiny tag object.

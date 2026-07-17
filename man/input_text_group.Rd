@@ -33,7 +33,13 @@ the reactive value of the input.}
 \item{right}{A character vector. One or more character strings appended to
 the reactive value of the input.}
 
+\item{value}{A character string. The value of the input.}
+
 \item{placeholder}{A string. The placeholder text displayed inside the input.}
+
+\item{disable}{A boolean. If \code{TRUE}, disable the input.}
+
+\item{session}{A shiny session object.}
 }
 \value{
 A shiny tag object.

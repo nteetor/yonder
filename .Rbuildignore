@@ -1,4 +1,8 @@
 ^cran-comments\.md$
+^\.git$
+^\.claude$
+^\.vscode$
+^plan-.*\.md$
 ^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
@@ -24,3 +28,4 @@
 ^renv\.lock$
 ^\.github$
 ^codecov\.yml$
+^AGENTS.md$

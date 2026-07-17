@@ -56,7 +56,7 @@ wrap_items <- function(
   }
 
   wrap_rle <- rle(needs_wrap)
-  start_indeces <- c(1, head(cumsum(wrap_rle$lengths) + 1, -1))
+  start_indeces <- c(1, utils::head(cumsum(wrap_rle$lengths) + 1, -1))
 
   items <-
     Map(

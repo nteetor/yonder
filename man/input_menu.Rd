@@ -30,6 +30,8 @@ update_menu_input(
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
 
+\item{text}{A character string. The text of the menu's toggle button.}
+
 \item{choices}{A character vector or list. The labels for the input choices.}
 
 \item{...}{Optional named arguments specifying HTML attributes for the input

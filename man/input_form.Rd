@@ -28,8 +28,6 @@ submit_form(id, value, session = get_current_session())
 clicked.}
 
 \item{session}{A shiny session object.}
-
-\item{gap}{A number. The space between inputs, \code{0} through \code{5}.}
 }
 \description{
 Form inputs are a new reactive input. Form inputs are an alternative to

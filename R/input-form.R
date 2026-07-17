@@ -22,8 +22,6 @@
 #'
 #' @param layout A character string.
 #'
-#' @param gap A number. The space between inputs, `0` through `5`.
-#'
 #' @family inputs
 #' @export
 input_form <- function(

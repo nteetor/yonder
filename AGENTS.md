@@ -1,9 +1,13 @@
 # yonder
 
-## Documentation
+## Documenting
 
 - Rebuild the package namespace and documentation with `devtools::document()`. 
 - Run roxygen examples with `devtools::run_examples()`.
+
+## Checking (R CMD check)
+
+- Check the package with `devtools::check()`
 
 ## Testing
 
