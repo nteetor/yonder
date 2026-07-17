@@ -33,6 +33,9 @@ percentages. The width of the placeholder.}
 
 \item{animate}{A string. An animation for the placeholders within the block.}
 }
+\value{
+A \link[htmltools:tag]{htmltools::tag} object.
+}
 \description{
 A handy placeholder component.
 }
@@ -42,6 +45,8 @@ A handy placeholder component.
 placeholder()
 
 placeholder(height = "lg")
+
+library(bslib)
 
 card(
   class = "text-bg-info",

@@ -20,6 +20,9 @@ attributes to the parent element.}
 
 \item{container}{An \link[htmltools:tag]{htmltools::tag} function.}
 }
+\value{
+A \link[htmltools:tag]{htmltools::tag} object.
+}
 \description{
 Alerts highlight information for users.
 }

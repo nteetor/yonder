@@ -9,6 +9,8 @@
 #'
 #' @param container An [htmltools::tag] function.
 #'
+#' @returns A [htmltools::tag] object.
+#'
 #' @family components
 #'
 #' @export

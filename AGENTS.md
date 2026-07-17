@@ -3,6 +3,7 @@
 ## Documentation
 
 - Rebuild the package namespace and documentation with `devtools::document()`. 
+- Run roxygen examples with `devtools::run_examples()`.
 
 ## Testing
 
