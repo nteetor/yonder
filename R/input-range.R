@@ -23,61 +23,63 @@
 #' @family inputs
 #'
 #' @export
-input_range <- function(
-  id,
-  ...,
-  min = 0,
-  max = 100,
-  value = min,
-  step = 1
-) {
-  check_string(id, allow_empty = FALSE)
-  check_number_decimal(min)
-  check_number_decimal(max)
-  check_number_decimal(value, min = min, max = max)
-  check_number_decimal(step)
+input_range <-
+  function(
+    id,
+    ...,
+    min = 0,
+    max = 100,
+    value = min,
+    step = 1
+  ) {
+    check_string(id, allow_empty = FALSE)
+    check_number_decimal(min)
+    check_number_decimal(max)
+    check_number_decimal(value, min = min, max = max)
+    check_number_decimal(step)
 
-  input <-
-    tags$div(
-      class = "bsides-input-range",
-      id = id,
-      tags$input(
-        class = "form-range",
-        type = "range",
-        step = step,
-        min = min,
-        max = max,
-        value = value
-      ),
-      ...
-    )
+    input <-
+      tags$div(
+        class = "bsides-input-range",
+        id = id,
+        tags$input(
+          class = "form-range",
+          type = "range",
+          step = step,
+          min = min,
+          max = max,
+          value = value
+        ),
+        ...
+      )
 
-  input <-
-    dependency_append(input)
+    input <-
+      dependency_append(input)
 
-  input <-
-    s3_class_add(input, c("bsides_range_input", "bsides_input"))
+    input <-
+      s3_class_add(input, c("bsides_range_input", "bsides_input"))
 
-  input
-}
+    input
+  }
 
 #' @rdname input_range
 #' @export
-update_range <- function(
-  id,
-  value = NULL,
-  disable = NULL,
-  session = get_current_session()
-) {
-  check_string(id, allow_empty = FALSE)
-  check_number_decimal(value, allow_null = TRUE)
-  check_number_decimal(disable, allow_null = TRUE)
+update_range <-
+  function(
+    id,
+    value = NULL,
+    disable = NULL,
+    session = get_current_session()
+  ) {
+    check_string(id, allow_empty = FALSE)
+    check_number_decimal(value, allow_null = TRUE)
+    check_number_decimal(disable, allow_null = TRUE)
 
-  msg <-
-    drop_nulls(list(
-      value = value,
-      disable = disable
-    ))
+    msg <-
+      drop_nulls(list(
+        value = value,
+        disable = disable
+      ))
 
-  session$sendInputMessage(id, msg)
-}
+    session$sendInputMessage(id, msg)
+  }

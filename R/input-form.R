@@ -24,98 +24,102 @@
 #'
 #' @family inputs
 #' @export
-input_form <- function(
-  id,
-  ...,
-  label = NULL,
-  layout = NULL
-) {
-  check_string(id, allow_empty = FALSE)
-  check_string(label, allow_null = TRUE)
+input_form <-
+  function(
+    id,
+    ...,
+    label = NULL,
+    layout = NULL
+  ) {
+    check_string(id, allow_empty = FALSE)
+    check_string(label, allow_null = TRUE)
 
-  args <- list(...)
-  attrs <- keep_named(args)
-  children <- keep_unnamed(args)
+    args <- list(...)
+    attrs <- keep_named(args)
+    children <- keep_unnamed(args)
 
-  input <-
-    tags$form(
-      class = c(
-        "bsides-input-form"
-        # if (inline) "form-inline"
-      ),
-      id = id,
-      !!!attrs,
-      tags$fieldset(
-        # disabled = if (isTRUE(disable)) NA,
-        if (non_null(label)) {
-          tags$legend(label)
-        },
-        !!!children
+    input <-
+      tags$form(
+        class = c(
+          "bsides-input-form"
+          # if (inline) "form-inline"
+        ),
+        id = id,
+        !!!attrs,
+        tags$fieldset(
+          # disabled = if (isTRUE(disable)) NA,
+          if (non_null(label)) {
+            tags$legend(label)
+          },
+          !!!children
+        )
       )
-    )
 
-  input <-
-    dependency_append(input)
+    input <-
+      dependency_append(input)
 
-  input <-
-    s3_class_add(input, "bsides_form_input")
+    input <-
+      s3_class_add(input, "bsides_form_input")
 
-  input
-}
-
-#' @rdname input_form
-#' @export
-form_submit_button <- function(
-  label,
-  ...,
-  value = label
-) {
-  button <-
-    tags$button(
-      class = "bsides-input-form-submit btn btn-primary",
-      value = value,
-      label,
-      ...
-    )
-
-  button <-
-    s3_class_add(button, "bsides_form_submit_button")
-
-  button
-}
+    input
+  }
 
 #' @rdname input_form
 #' @export
-update_form <- function(
-  id,
-  label = NULL,
-  session = get_current_session()
-) {
-  check_string(id, allow_empty = FALSE)
-  check_string(label, allow_null = TRUE)
+form_submit_button <-
+  function(
+    label,
+    ...,
+    value = label
+  ) {
+    button <-
+      tags$button(
+        class = "bsides-input-form-submit btn btn-primary",
+        value = value,
+        label,
+        ...
+      )
 
-  msg <-
-    list(
-      label = label
-    )
+    button <-
+      s3_class_add(button, "bsides_form_submit_button")
 
-  session$sendInputMessage(id, msg)
-}
+    button
+  }
 
 #' @rdname input_form
 #' @export
-submit_form <- function(
-  id,
-  value,
-  session = get_current_session()
-) {
-  check_string(id, allow_empty = FALSE)
-  check_string(value)
+update_form <-
+  function(
+    id,
+    label = NULL,
+    session = get_current_session()
+  ) {
+    check_string(id, allow_empty = FALSE)
+    check_string(label, allow_null = TRUE)
 
-  msg <-
-    list(
-      submit = value
-    )
+    msg <-
+      list(
+        label = label
+      )
 
-  session$sendInputMessage(id, msg)
-}
+    session$sendInputMessage(id, msg)
+  }
+
+#' @rdname input_form
+#' @export
+submit_form <-
+  function(
+    id,
+    value,
+    session = get_current_session()
+  ) {
+    check_string(id, allow_empty = FALSE)
+    check_string(value)
+
+    msg <-
+      list(
+        submit = value
+      )
+
+    session$sendInputMessage(id, msg)
+  }

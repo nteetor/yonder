@@ -41,51 +41,52 @@
 #' @family inputs
 #'
 #' @export
-input_chip_group <- function(
-  id,
-  ...,
-  choices = NULL,
-  values = choices,
-  select = values,
-  type = "primary",
-  layout = c("vertical", "horizontal")
-) {
-  check_string(id, allow_empty = FALSE)
-  check_character(choices, allow_null = TRUE)
-  check_character(values, allow_null = TRUE)
-  check_character(select, allow_null = TRUE)
-  type <- arg_match(type, chip_group_types)
-  layout <- arg_match(layout)
-  chip_group_check_choices(choices, values, select, strict = TRUE)
+input_chip_group <-
+  function(
+    id,
+    ...,
+    choices = NULL,
+    values = choices,
+    select = values,
+    type = "primary",
+    layout = c("vertical", "horizontal")
+  ) {
+    check_string(id, allow_empty = FALSE)
+    check_character(choices, allow_null = TRUE)
+    check_character(values, allow_null = TRUE)
+    check_character(select, allow_null = TRUE)
+    type <- arg_match(type, chip_group_types)
+    layout <- arg_match(layout)
+    chip_group_check_choices(choices, values, select, strict = TRUE)
 
-  args <- list2(...)
-  attrs <- keep_named(args)
+    args <- list2(...)
+    attrs <- keep_named(args)
 
-  input <-
-    htmltools::tag(
-      "bsides-chip-group",
-      list2(
-        id = id,
-        choices = if (non_null(choices)) {
-          chip_group_choices_json(choices, values)
-        },
-        checked = if (non_null(select)) {
-          format(jsonlite::toJSON(select))
-        },
-        type = type,
-        layout = if (layout != "vertical") layout,
-        !!!attrs
+    input <-
+      htmltools::tag(
+        "bsides-chip-group",
+        list2(
+          id = id,
+          choices = if (non_null(choices)) {
+            chip_group_choices_json(choices, values)
+          },
+          checked = if (non_null(select)) {
+            format(jsonlite::toJSON(select))
+          },
+          type = type,
+          layout = if (layout != "vertical") layout,
+          !!!attrs
+        )
       )
-    )
 
-  input <-
-    dependency_append(input)
+    input <-
+      dependency_append(input)
 
-  input <-
-    s3_class_add(input, "bsides_chip_group")
+    input <-
+      s3_class_add(input, "bsides_chip_group")
 
-  input
-}
+    input
+  }
 
 #' @rdname input_chip_group
 #'
@@ -103,35 +104,36 @@ input_chip_group <- function(
 #' dropped with a warning in the browser console.
 #'
 #' @export
-update_chip_group <- function(
-  id,
-  choices = NULL,
-  values = choices,
-  select = NULL,
-  enable = NULL,
-  disable = NULL,
-  session = get_current_session()
-) {
-  check_string(id, allow_empty = FALSE)
-  check_character(choices, allow_null = TRUE)
-  check_character(values, allow_null = TRUE)
-  check_character(select, allow_null = TRUE)
-  check_bool(enable, allow_null = TRUE)
-  check_bool(disable, allow_null = TRUE)
-  chip_group_check_choices(choices, values, select, strict = FALSE)
+update_chip_group <-
+  function(
+    id,
+    choices = NULL,
+    values = choices,
+    select = NULL,
+    enable = NULL,
+    disable = NULL,
+    session = get_current_session()
+  ) {
+    check_string(id, allow_empty = FALSE)
+    check_character(choices, allow_null = TRUE)
+    check_character(values, allow_null = TRUE)
+    check_character(select, allow_null = TRUE)
+    check_bool(enable, allow_null = TRUE)
+    check_bool(disable, allow_null = TRUE)
+    chip_group_check_choices(choices, values, select, strict = FALSE)
 
-  msg <-
-    drop_nulls(list(
-      choices = if (non_null(choices)) {
-        chip_group_choices_list(choices, values)
-      },
-      select = select,
-      enable = enable,
-      disable = disable
-    ))
+    msg <-
+      drop_nulls(list(
+        choices = if (non_null(choices)) {
+          chip_group_choices_list(choices, values)
+        },
+        select = select,
+        enable = enable,
+        disable = disable
+      ))
 
-  session$sendInputMessage(id, msg)
-}
+    session$sendInputMessage(id, msg)
+  }
 
 chip_group_types <- c(
   "primary",
@@ -149,77 +151,77 @@ chip_group_types <- c(
 # `values`; with `strict = FALSE` (the update function) it is validated
 # only when `values` is part of the same call — otherwise the client warns
 # in the browser console for values matching no chip.
-chip_group_check_choices <- function(
-  choices,
-  values,
-  select,
-  strict,
-  call = caller_env()
-) {
-  if (non_null(choices) && length(choices) != length(values)) {
-    abort(
-      "`choices` and `values` must be the same length.",
-      call = call
+chip_group_check_choices <-
+  function(
+    choices,
+    values,
+    select,
+    strict,
+    call = caller_env()
+  ) {
+    if (non_null(choices) && length(choices) != length(values)) {
+      abort(
+        "`choices` and `values` must be the same length.",
+        call = call
+      )
+    }
+
+    if (is.null(select)) {
+      return(invisible(NULL))
+    }
+
+    if (strict && is.null(values)) {
+      abort(
+        "`select` must be `NULL` when `choices` is `NULL`.",
+        call = call
+      )
+    }
+
+    if (non_null(values) && !all(select %in% values)) {
+      missing <- setdiff(select, values)
+
+      abort(
+        sprintf(
+          "`select` values must be found in `values`, not %s.",
+          str_conjoin(sprintf('"%s"', missing))
+        ),
+        call = call
+      )
+    }
+  }
+
+chip_group_choices_list <-
+  function(choices, values) {
+    .mapply(
+      function(label, value) list(label = label, value = value),
+      list(as.character(choices), as.character(values)),
+      NULL
     )
   }
 
-  if (is.null(select)) {
-    return(invisible(NULL))
-  }
-
-  if (strict && is.null(values)) {
-    abort(
-      "`select` must be `NULL` when `choices` is `NULL`.",
-      call = call
+chip_group_choices_json <-
+  function(choices, values) {
+    format(
+      jsonlite::toJSON(
+        chip_group_choices_list(choices, values),
+        auto_unbox = TRUE
+      )
     )
   }
-
-  if (non_null(values) && !all(select %in% values)) {
-    missing <- setdiff(select, values)
-
-    abort(
-      sprintf(
-        "`select` values must be found in `values`, not %s.",
-        str_conjoin(sprintf('"%s"', missing))
-      ),
-      call = call
-    )
-  }
-}
-
-chip_group_choices_list <- function(choices, values) {
-  .mapply(
-    function(label, value) list(label = label, value = value),
-    list(as.character(choices), as.character(values)),
-    NULL
-  )
-}
-
-chip_group_choices_json <- function(choices, values) {
-  format(
-    jsonlite::toJSON(
-      chip_group_choices_list(choices, values),
-      auto_unbox = TRUE
-    )
-  )
-}
 
 chip_group_input_type <- "bsides.chipgroup"
 
-chip_group_input_register_handler <- function() {
-  shiny::registerInputHandler(
-    chip_group_input_type,
-    function(
-      value,
-      session,
-      name
-    ) {
-      if (length(value) < 1) {
-        return(NULL)
-      }
+chip_group_input_register_handler <-
+  function() {
+    shiny::registerInputHandler(
+      chip_group_input_type,
+      function(value, session, name) {
+        if (length(value) < 1) {
+          return(NULL)
+        }
 
-      unlist(value, recursive = FALSE, use.names = FALSE)
-    },
-    force = TRUE
-  )
-}
+        unlist(value, recursive = FALSE, use.names = FALSE)
+      },
+      force = TRUE
+    )
+  }

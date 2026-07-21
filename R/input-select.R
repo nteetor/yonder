@@ -23,61 +23,23 @@
 #'
 #' @family inputs
 #' @export
-input_select <- function(
-  id,
-  choices,
-  ...,
-  values = choices,
-  select = NULL,
-  disable = NULL,
-  placeholder = NULL
-) {
-  check_string(id, allow_empty = FALSE)
-  check_string(placeholder, allow_null = TRUE)
+input_select <-
+  function(
+    id,
+    choices,
+    ...,
+    values = choices,
+    select = NULL,
+    disable = NULL,
+    placeholder = NULL
+  ) {
+    check_string(id, allow_empty = FALSE)
+    check_string(placeholder, allow_null = TRUE)
 
-  args <- list(...)
-  attrs <- keep_named(args)
+    args <- list(...)
+    attrs <- keep_named(args)
 
-  options <-
-    build_input_options(
-      select_option,
-      choices,
-      values,
-      select,
-      disable
-    )
-
-  input <-
-    tags$select(
-      class = "bsides-input-select form-select",
-      id = id,
-      !!!attrs,
-      options
-    )
-
-  input <-
-    dependency_append(input)
-
-  input <-
-    s3_class_add(input, c("bsides_select_input", "bsides_input"))
-
-  input
-}
-
-#' @rdname input_select
-#' @export
-update_select <- function(
-  id,
-  choices = NULL,
-  values = choices,
-  select = NULL,
-  disable = NULL,
-  session = get_current_session()
-) {
-  check_string(id, allow_empty = FALSE)
-
-  options <-
-    if (non_null(choices)) {
+    options <-
       build_input_options(
         select_option,
         choices,
@@ -85,28 +47,69 @@ update_select <- function(
         select,
         disable
       )
-    }
 
-  msg <-
-    drop_nulls(list(
-      options = options,
-      select = select,
-      disable = disable
-    ))
+    input <-
+      tags$select(
+        class = "bsides-input-select form-select",
+        id = id,
+        !!!attrs,
+        options
+      )
 
-  session$sendInputMessage(id, msg)
-}
+    input <-
+      dependency_append(input)
 
-select_option <- function(
-  choice,
-  value,
-  select,
-  disable
-) {
-  tags$option(
-    checked = if (value %in% select) NA,
-    disabled = if (value %in% disable) NA,
-    value = value,
-    choice
-  )
-}
+    input <-
+      s3_class_add(input, c("bsides_select_input", "bsides_input"))
+
+    input
+  }
+
+#' @rdname input_select
+#' @export
+update_select <-
+  function(
+    id,
+    choices = NULL,
+    values = choices,
+    select = NULL,
+    disable = NULL,
+    session = get_current_session()
+  ) {
+    check_string(id, allow_empty = FALSE)
+
+    options <-
+      if (non_null(choices)) {
+        build_input_options(
+          select_option,
+          choices,
+          values,
+          select,
+          disable
+        )
+      }
+
+    msg <-
+      drop_nulls(list(
+        options = options,
+        select = select,
+        disable = disable
+      ))
+
+    session$sendInputMessage(id, msg)
+  }
+
+select_option <-
+  function(
+    choice,
+    value,
+    select,
+    disable
+  ) {
+    tags$option(
+      checked = if (value %in% select) NA,
+      disabled = if (value %in% disable) NA,
+      value = value,
+      choice
+    )
+  }

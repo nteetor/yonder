@@ -52,60 +52,61 @@
 #' @family inputs
 #'
 #' @export
-input_multi_select <- function(
-  id,
-  ...,
-  choices = NULL,
-  values = choices,
-  select = NULL,
-  edit = c("choices", "free"),
-  type = "primary",
-  layout = c("vertical", "horizontal"),
-  placeholder = NULL,
-  max = NULL
-) {
-  check_string(id, allow_empty = FALSE)
-  check_character(choices, allow_null = TRUE)
-  check_character(values, allow_null = TRUE)
-  check_character(select, allow_null = TRUE)
-  edit <- arg_match(edit)
-  type <- arg_match(type, chip_group_types)
-  layout <- arg_match(layout)
-  check_string(placeholder, allow_null = TRUE)
-  check_number_whole(max, allow_null = TRUE)
-  multi_select_check_choices(choices, values, select, edit = edit)
+input_multi_select <-
+  function(
+    id,
+    ...,
+    choices = NULL,
+    values = choices,
+    select = NULL,
+    edit = c("choices", "free"),
+    type = "primary",
+    layout = c("vertical", "horizontal"),
+    placeholder = NULL,
+    max = NULL
+  ) {
+    check_string(id, allow_empty = FALSE)
+    check_character(choices, allow_null = TRUE)
+    check_character(values, allow_null = TRUE)
+    check_character(select, allow_null = TRUE)
+    edit <- arg_match(edit)
+    type <- arg_match(type, chip_group_types)
+    layout <- arg_match(layout)
+    check_string(placeholder, allow_null = TRUE)
+    check_number_whole(max, allow_null = TRUE)
+    multi_select_check_choices(choices, values, select, edit = edit)
 
-  args <- list2(...)
-  attrs <- keep_named(args)
+    args <- list2(...)
+    attrs <- keep_named(args)
 
-  input <-
-    htmltools::tag(
-      "bsides-multi-select",
-      list2(
-        id = id,
-        choices = if (non_null(choices)) {
-          chip_group_choices_json(choices, values)
-        },
-        chips = if (non_null(select)) {
-          format(jsonlite::toJSON(select))
-        },
-        edit = if (edit != "choices") edit,
-        type = type,
-        layout = if (layout != "vertical") layout,
-        placeholder = placeholder,
-        max = max,
-        !!!attrs
+    input <-
+      htmltools::tag(
+        "bsides-multi-select",
+        list2(
+          id = id,
+          choices = if (non_null(choices)) {
+            chip_group_choices_json(choices, values)
+          },
+          chips = if (non_null(select)) {
+            format(jsonlite::toJSON(select))
+          },
+          edit = if (edit != "choices") edit,
+          type = type,
+          layout = if (layout != "vertical") layout,
+          placeholder = placeholder,
+          max = max,
+          !!!attrs
+        )
       )
-    )
 
-  input <-
-    dependency_append(input)
+    input <-
+      dependency_append(input)
 
-  input <-
-    s3_class_add(input, "bsides_multi_select")
+    input <-
+      s3_class_add(input, "bsides_multi_select")
 
-  input
-}
+    input
+  }
 
 #' @rdname input_multi_select
 #'
@@ -123,41 +124,42 @@ input_multi_select <- function(
 #' unmatched values are dropped with a warning in the browser console.
 #'
 #' @export
-update_multi_select <- function(
-  id,
-  choices = NULL,
-  values = choices,
-  select = NULL,
-  placeholder = NULL,
-  max = NULL,
-  enable = NULL,
-  disable = NULL,
-  session = get_current_session()
-) {
-  check_string(id, allow_empty = FALSE)
-  check_character(choices, allow_null = TRUE)
-  check_character(values, allow_null = TRUE)
-  check_character(select, allow_null = TRUE)
-  check_string(placeholder, allow_null = TRUE)
-  check_number_whole(max, allow_null = TRUE)
-  check_bool(enable, allow_null = TRUE)
-  check_bool(disable, allow_null = TRUE)
-  multi_select_check_choices(choices, values, select, edit = NULL)
+update_multi_select <-
+  function(
+    id,
+    choices = NULL,
+    values = choices,
+    select = NULL,
+    placeholder = NULL,
+    max = NULL,
+    enable = NULL,
+    disable = NULL,
+    session = get_current_session()
+  ) {
+    check_string(id, allow_empty = FALSE)
+    check_character(choices, allow_null = TRUE)
+    check_character(values, allow_null = TRUE)
+    check_character(select, allow_null = TRUE)
+    check_string(placeholder, allow_null = TRUE)
+    check_number_whole(max, allow_null = TRUE)
+    check_bool(enable, allow_null = TRUE)
+    check_bool(disable, allow_null = TRUE)
+    multi_select_check_choices(choices, values, select, edit = NULL)
 
-  msg <-
-    drop_nulls(list(
-      choices = if (non_null(choices)) {
-        chip_group_choices_list(choices, values)
-      },
-      select = select,
-      placeholder = placeholder,
-      max = max,
-      enable = enable,
-      disable = disable
-    ))
+    msg <-
+      drop_nulls(list(
+        choices = if (non_null(choices)) {
+          chip_group_choices_list(choices, values)
+        },
+        select = select,
+        placeholder = placeholder,
+        max = max,
+        enable = enable,
+        disable = disable
+      ))
 
-  session$sendInputMessage(id, msg)
-}
+    session$sendInputMessage(id, msg)
+  }
 
 # Validation for the choices/values/select trio. At edit = "choices" the
 # set is bounded: `select` must resolve against `values` (and must be NULL
@@ -165,60 +167,62 @@ update_multi_select <- function(
 # `edit = NULL` (the update function, which cannot know the input's mode)
 # validates `select` only when `values` is part of the same call —
 # otherwise the client warns in the browser console.
-multi_select_check_choices <- function(
-  choices,
-  values,
-  select,
-  edit,
-  call = caller_env()
-) {
-  if (non_null(choices) && length(choices) != length(values)) {
-    abort(
-      "`choices` and `values` must be the same length.",
-      call = call
-    )
-  }
+multi_select_check_choices <-
+  function(
+    choices,
+    values,
+    select,
+    edit,
+    call = caller_env()
+  ) {
+    if (non_null(choices) && length(choices) != length(values)) {
+      abort(
+        "`choices` and `values` must be the same length.",
+        call = call
+      )
+    }
 
-  if (is.null(select) || identical(edit, "free")) {
-    return(invisible(NULL))
-  }
+    if (is.null(select) || identical(edit, "free")) {
+      return(invisible(NULL))
+    }
 
-  if (identical(edit, "choices") && is.null(values)) {
-    abort(
-      '`select` must be `NULL` when `choices` is `NULL` and `edit` is "choices".',
-      call = call
-    )
-  }
+    if (identical(edit, "choices") && is.null(values)) {
+      abort(
+        '`select` must be `NULL` when `choices` is `NULL` and `edit` is "choices".',
+        call = call
+      )
+    }
 
-  if (non_null(values) && !all(select %in% values)) {
-    missing <- setdiff(select, values)
+    if (non_null(values) && !all(select %in% values)) {
+      missing <- setdiff(select, values)
 
-    abort(
-      sprintf(
-        "`select` values must be found in `values`, not %s.",
-        str_conjoin(sprintf('"%s"', missing))
-      ),
-      call = call
-    )
+      abort(
+        sprintf(
+          "`select` values must be found in `values`, not %s.",
+          str_conjoin(sprintf('"%s"', missing))
+        ),
+        call = call
+      )
+    }
   }
-}
 
 multi_select_input_type <- "bsides.multiselect"
 
-multi_select_input_register_handler <- function() {
-  shiny::registerInputHandler(
-    multi_select_input_type,
-    function(
-      value,
-      session,
-      name
-    ) {
-      if (length(value) < 1) {
-        return(NULL)
-      }
+multi_select_input_register_handler <-
+  function() {
+    shiny::registerInputHandler(
+      multi_select_input_type,
+      function(
+        value,
+        session,
+        name
+      ) {
+        if (length(value) < 1) {
+          return(NULL)
+        }
 
-      unlist(value, recursive = FALSE, use.names = FALSE)
-    },
-    force = TRUE
-  )
-}
+        unlist(value, recursive = FALSE, use.names = FALSE)
+      },
+      force = TRUE
+    )
+  }

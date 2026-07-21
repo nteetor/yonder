@@ -15,64 +15,67 @@
 #' @family inputs
 #'
 #' @export
-input_button <- function(
-  id,
-  text,
-  ...
-) {
-  check_string(id, allow_empty = FALSE)
+input_button <-
+  function(
+    id,
+    text,
+    ...
+  ) {
+    check_string(id, allow_empty = FALSE)
 
-  input <-
-    tags$button(
-      class = "bsides-input-button btn btn-primary",
-      type = "button",
-      role = "button",
-      id = id,
-      text,
-      ...
-    )
+    input <-
+      tags$button(
+        class = "bsides-input-button btn btn-primary",
+        type = "button",
+        role = "button",
+        id = id,
+        text,
+        ...
+      )
 
-  input <-
-    dependency_append(input)
+    input <-
+      dependency_append(input)
 
-  input
-}
+    input
+  }
 
 #' @rdname input_button
 #' @export
-update_button <- function(
-  id,
-  text = NULL,
-  disable = NULL,
-  session = get_current_session()
-) {
-  check_string(id, allow_empty = FALSE)
+update_button <-
+  function(
+    id,
+    text = NULL,
+    disable = NULL,
+    session = get_current_session()
+  ) {
+    check_string(id, allow_empty = FALSE)
 
-  msg <-
-    drop_nulls(list(
-      text = text,
-      disable = disable
-    ))
+    msg <-
+      drop_nulls(list(
+        text = text,
+        disable = disable
+      ))
 
-  session$sendInputMessage(id, msg)
-}
+    session$sendInputMessage(id, msg)
+  }
 
 button_input_type <- "bsides.button"
 
-button_input_register_handler <- function() {
-  shiny::registerInputHandler(
-    button_input_type,
-    function(
-      value,
-      session,
-      name
-    ) {
-      if (identical(value, 0L)) {
-        return(NULL)
-      }
+button_input_register_handler <-
+  function() {
+    shiny::registerInputHandler(
+      button_input_type,
+      function(
+        value,
+        session,
+        name
+      ) {
+        if (identical(value, 0L)) {
+          return(NULL)
+        }
 
-      value
-    },
-    force = TRUE
-  )
-}
+        value
+      },
+      force = TRUE
+    )
+  }

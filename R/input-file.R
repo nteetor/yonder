@@ -18,50 +18,51 @@
 #'
 #' @family inputs
 #' @export
-fileInput <- function(
-  id,
-  ...,
-  placeholder = "Choose file",
-  browse = "Browse",
-  multiple = TRUE,
-  accept = NULL
-) {
-  check_string(id, allow_empty = FALSE)
+fileInput <-
+  function(
+    id,
+    ...,
+    placeholder = "Choose file",
+    browse = "Browse",
+    multiple = TRUE,
+    accept = NULL
+  ) {
+    check_string(id, allow_empty = FALSE)
 
-  if (!is.character(browse)) {
-    stop(
-      "invalid argument in `fileInput()`, `browse` must be a character string",
-      call. = FALSE
-    )
-  }
-
-  dep_attach({
-    if (length(accept) > 1) {
-      accept <- paste(accept, collapse = ",")
+    if (!is.character(browse)) {
+      stop(
+        "invalid argument in `fileInput()`, `browse` must be a character string",
+        call. = FALSE
+      )
     }
 
-    tags$div(
-      class = "yonder-file custom-file",
-      id = id,
-      tags$input(
-        type = "file",
-        class = "custom-file-input",
-        accept = accept,
-        multiple = if (multiple) NA,
-        autocomplete = "off"
-      ),
-      tags$label(
-        class = "custom-file-label",
-        `data-browse` = browse,
-        placeholder
-      ),
+    dep_attach({
+      if (length(accept) > 1) {
+        accept <- paste(accept, collapse = ",")
+      }
+
       tags$div(
-        class = "valid-feedback"
-      ),
-      tags$div(
-        class = "invalid-feedback"
-      ),
-      ...
-    )
-  })
-}
+        class = "yonder-file custom-file",
+        id = id,
+        tags$input(
+          type = "file",
+          class = "custom-file-input",
+          accept = accept,
+          multiple = if (multiple) NA,
+          autocomplete = "off"
+        ),
+        tags$label(
+          class = "custom-file-label",
+          `data-browse` = browse,
+          placeholder
+        ),
+        tags$div(
+          class = "valid-feedback"
+        ),
+        tags$div(
+          class = "invalid-feedback"
+        ),
+        ...
+      )
+    })
+  }

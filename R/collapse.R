@@ -27,56 +27,58 @@
 #'
 #' collapse_panel_button("panel1", "Toggle the hidden panel")
 #'
-collapse_panel <- function(
-  id,
-  ...,
-  state = c("closed", "open"),
-  direction = c("vertical", "horizontal")
-) {
-  check_string(id)
+collapse_panel <-
+  function(
+    id,
+    ...,
+    state = c("closed", "open"),
+    direction = c("vertical", "horizontal")
+  ) {
+    check_string(id)
 
-  state <- arg_match(state)
-  direction <- arg_match(direction)
+    state <- arg_match(state)
+    direction <- arg_match(direction)
 
-  component <-
-    tags$div(
-      id = id,
-      class = c(
-        "bsides-collapse collapse",
-        if (direction == "horizontal") "collapse-horizontal",
-        if (state == "open") "show"
-      ),
-      ...
-    )
+    component <-
+      tags$div(
+        id = id,
+        class = c(
+          "bsides-collapse collapse",
+          if (direction == "horizontal") "collapse-horizontal",
+          if (state == "open") "show"
+        ),
+        ...
+      )
 
-  component <-
-    dependency_append(component)
+    component <-
+      dependency_append(component)
 
-  component <-
-    s3_class_add(component, "bsides_collapse_panel")
+    component <-
+      s3_class_add(component, "bsides_collapse_panel")
 
-  component
-}
+    component
+  }
 
 #' @rdname collapse_panel
 #'
 #' @export
-collapse_panel_button <- function(
-  target,
-  text
-) {
-  check_string(target)
-
-  tags$button(
-    type = "button",
-    class = "btn btn-primary",
-    `data-bs-toggle` = "collapse",
-    `data-bs-target` = sprintf("#%s", target),
-    `aria-expanded` = "false",
-    `aria-controls` = target,
+collapse_panel_button <-
+  function(
+    target,
     text
-  )
-}
+  ) {
+    check_string(target)
+
+    tags$button(
+      type = "button",
+      class = "btn btn-primary",
+      `data-bs-toggle` = "collapse",
+      `data-bs-target` = sprintf("#%s", target),
+      `aria-expanded` = "false",
+      `aria-controls` = target,
+      text
+    )
+  }
 
 #' Collapse panel logic
 #'
@@ -87,50 +89,53 @@ collapse_panel_button <- function(
 #' @describeIn collapse_panel_open Open a collapse panel.
 #'
 #' @export
-collapse_panel_open <- function(
-  id,
-  session = get_current_session()
-) {
-  check_string(id)
+collapse_panel_open <-
+  function(
+    id,
+    session = get_current_session()
+  ) {
+    check_string(id)
 
-  msg <-
-    list(
-      method = "open"
-    )
+    msg <-
+      list(
+        method = "open"
+      )
 
-  session$sendInputMessage(id, msg)
-}
+    session$sendInputMessage(id, msg)
+  }
 
 #' @describeIn collapse_panel_open Close a collapse panel.
 #'
 #' @export
-collapse_panel_close <- function(
-  id,
-  session = get_current_session()
-) {
-  check_string(id)
+collapse_panel_close <-
+  function(
+    id,
+    session = get_current_session()
+  ) {
+    check_string(id)
 
-  msg <-
-    list(
-      method = "close"
-    )
+    msg <-
+      list(
+        method = "close"
+      )
 
-  session$sendInputMessage(id, msg)
-}
+    session$sendInputMessage(id, msg)
+  }
 
 #' @describeIn collapse_panel_open Toggle a collapse panel open or closed.
 #'
 #' @export
-collapse_panel_toggle <- function(
-  id,
-  session = get_current_session()
-) {
-  check_string(id)
+collapse_panel_toggle <-
+  function(
+    id,
+    session = get_current_session()
+  ) {
+    check_string(id)
 
-  msg <-
-    list(
-      method = "toggle"
-    )
+    msg <-
+      list(
+        method = "toggle"
+      )
 
-  session$sendInputMessage(id, msg)
-}
+    session$sendInputMessage(id, msg)
+  }

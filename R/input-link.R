@@ -11,69 +11,72 @@
 #' @param icon A `[bsicons::bs_icon]`.
 #'
 #' @export
-input_link <- function(
-  id,
-  label,
-  ...,
-  stretch = FALSE,
-  icon = NULL
-) {
-  check_string(id, allow_empty = FALSE)
-  check_string(label)
+input_link <-
+  function(
+    id,
+    label,
+    ...,
+    stretch = FALSE,
+    icon = NULL
+  ) {
+    check_string(id, allow_empty = FALSE)
+    check_string(label)
 
-  input <-
-    tags$a(
-      class = c(
-        "bsides-input-link",
-        if (stretch) "stretched-link",
-        if (!is.null(icon)) "icon-link"
-      ),
-      id = id,
-      label,
-      icon,
-      ...
-    )
+    input <-
+      tags$a(
+        class = c(
+          "bsides-input-link",
+          if (stretch) "stretched-link",
+          if (!is.null(icon)) "icon-link"
+        ),
+        id = id,
+        label,
+        icon,
+        ...
+      )
 
-  input <-
-    dependency_append(input)
+    input <-
+      dependency_append(input)
 
-  input
-}
+    input
+  }
 
 #' @rdname input_link
 #' @export
-update_link <- function(
-  id,
-  label = NULL,
-  session = get_current_session()
-) {
-  check_string(id, allow_empty = FALSE)
-  check_string(label, allow_null = TRUE)
+update_link <-
+  function(
+    id,
+    label = NULL,
+    session = get_current_session()
+  ) {
+    check_string(id, allow_empty = FALSE)
+    check_string(label, allow_null = TRUE)
 
-  msg <-
-    list(
-      label = label
-    )
+    msg <-
+      list(
+        label = label
+      )
 
-  session$sendInputMessage(id, msg)
-}
+    session$sendInputMessage(id, msg)
+  }
 
 link_input_type <- "bsides.link"
 
-link_input_register_handler <- function() {
-  shiny::registerInputHandler(
-    link_input_type,
-    function(
-      value,
-      session,
-      name
-    ) {
-      if (identical(value, 0L)) {
-        return(NULL)
-      }
+link_input_register_handler <-
+  function() {
+    shiny::registerInputHandler(
+      link_input_type,
+      function(
+        value,
+        session,
+        name
+      ) {
+        if (identical(value, 0L)) {
+          return(NULL)
+        }
 
-      value
-    },
-    force = TRUE
-  )
-}
+        value
+      },
+      force = TRUE
+    )
+  }

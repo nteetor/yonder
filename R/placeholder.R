@@ -38,69 +38,73 @@
 #' )
 #'
 #'
-placeholder <- function(
-  width = NULL,
-  height = c("md", "xs", "sm", "lg"),
-  container = htmltools::div
-) {
-  height <- arg_match(height)
+placeholder <-
+  function(
+    width = NULL,
+    height = c("md", "xs", "sm", "lg"),
+    container = htmltools::div
+  ) {
+    height <- arg_match(height)
 
-  width <-
-    placeholder_width(width)
+    width <-
+      placeholder_width(width)
 
-  container(
-    class = c(
-      "placeholder",
-      if (height != "md") sprintf("placeholder-%s", height)
-    ),
-    style = sprintf("width: %s", width)
-  )
-}
-
-#' @rdname placeholder
-#' @export
-placeholder_button <- function(
-  width = NULL
-) {
-  width <-
-    placeholder_width(width)
-
-  tags$a(
-    class = "btn btn-primary disabled placeholder",
-    style = sprintf("width: %s", width)
-  )
-}
-
-#' @rdname placeholder
-#' @export
-placeholder_block <- function(
-  lines = 3,
-  width = NULL,
-  height = c("md", "xs", "sm", "lg"),
-  animate = c("none", "glow", "wave")
-) {
-  check_number_whole(lines)
-
-  height <- arg_match(height)
-  animate <- arg_match(animate)
-
-  tags$div(
-    class = if (animate != "none") sprintf("placeholder-%s", animate),
-    replicate(
-      lines,
-      placeholder(width = width, height = height),
-      simplify = FALSE
+    container(
+      class = c(
+        "placeholder",
+        if (height != "md") sprintf("placeholder-%s", height)
+      ),
+      style = sprintf("width: %s", width)
     )
-  )
-}
-
-placeholder_width <- function(value) {
-  if (is.null(value)) {
-    sprintf("%s%%", sample(50:100, 1))
-  } else if (is.numeric(value)) {
-    sprintf("%s%%", value)
-  } else {
-    htmltools::validateCssUnit(value)
-    value
   }
-}
+
+#' @rdname placeholder
+#' @export
+placeholder_button <-
+  function(
+    width = NULL
+  ) {
+    width <-
+      placeholder_width(width)
+
+    tags$a(
+      class = "btn btn-primary disabled placeholder",
+      style = sprintf("width: %s", width)
+    )
+  }
+
+#' @rdname placeholder
+#' @export
+placeholder_block <-
+  function(
+    lines = 3,
+    width = NULL,
+    height = c("md", "xs", "sm", "lg"),
+    animate = c("none", "glow", "wave")
+  ) {
+    check_number_whole(lines)
+
+    height <- arg_match(height)
+    animate <- arg_match(animate)
+
+    tags$div(
+      class = if (animate != "none") sprintf("placeholder-%s", animate),
+      replicate(
+        lines,
+        placeholder(width = width, height = height),
+        simplify = FALSE
+      )
+    )
+  }
+
+placeholder_width <-
+  function(value) {
+    if (is.null(value)) {
+      sprintf("%s%%", sample(50:100, 1))
+    } else if (is.numeric(value)) {
+      sprintf("%s%%", value)
+    } else {
+      htmltools::validateCssUnit(value)
+      value
+    }
+  }

@@ -5,41 +5,43 @@
 #' @param ... Button inputs to group.
 #'
 #' @export
-button_group <- function(
-  ...
-) {
-  component <-
-    tags$div(
-      class = "btn-group",
-      ...
-    )
+button_group <-
+  function(
+    ...
+  ) {
+    component <-
+      tags$div(
+        class = "btn-group",
+        ...
+      )
 
-  component <-
-    dependency_append(component)
+    component <-
+      dependency_append(component)
 
-  component <-
-    s3_class_add(component, "bsides_button_group")
+    component <-
+      s3_class_add(component, "bsides_button_group")
 
-  component
-}
+    component
+  }
 
 #' @rdname button_group
 #' @export
-button_toolbar <- function(
-  ...
-) {
-  component <-
-    tags$div(
-      class = "btn-toolbar",
-      role = "toolbar",
-      ...
-    )
+button_toolbar <-
+  function(
+    ...
+  ) {
+    component <-
+      tags$div(
+        class = "btn-toolbar",
+        role = "toolbar",
+        ...
+      )
 
-  component <-
-    dependency_append(component)
+    component <-
+      dependency_append(component)
 
-  compnent <-
-    s3_class_add(component, "bsides_button_toolbar")
+    compnent <-
+      s3_class_add(component, "bsides_button_toolbar")
 
-  component
-}
+    component
+  }

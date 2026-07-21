@@ -21,41 +21,48 @@
 #'
 #' @family layout
 #' @export
-formGroup <- function(label, input, ..., help = NULL) {
-  check_character(label)
-  check_required(input)
+formGroup <-
+  function(
+    label,
+    input,
+    ...,
+    help = NULL
+  ) {
+    check_character(label)
+    check_required(input)
 
-  if (!is_tag(input) && !is_bare_list(input)) {
-    stop(
-      "invalid argument in `formGroup()`, `input` must be a tag element or list",
-      call. = FALSE
-    )
-  }
-
-  dep_attach({
-    if (!is_tag(label)) {
-      label <- tags$label(label)
+    if (!is_tag(input) && !is_bare_list(input)) {
+      stop(
+        "invalid argument in `formGroup()`, `input` must be a tag element or list",
+        call. = FALSE
+      )
     }
 
-    tags$div(
-      class = "form-group",
-      ...,
-      label,
-      input,
-      if (!is.null(help)) {
-        tags$small(
-          class = "form-text text-muted",
-          help
-        )
+    dep_attach({
+      if (!is_tag(label)) {
+        label <- tags$label(label)
       }
-    )
-  })
-}
+
+      tags$div(
+        class = "form-group",
+        ...,
+        label,
+        input,
+        if (!is.null(help)) {
+          tags$small(
+            class = "form-text text-muted",
+            help
+          )
+        }
+      )
+    })
+  }
 
 #' @rdname formGroup
 #' @export
-formRow <- function(...) {
-  dep_attach({
-    tags$div(class = "form-row", ...)
-  })
-}
+formRow <-
+  function(...) {
+    dep_attach({
+      tags$div(class = "form-row", ...)
+    })
+  }

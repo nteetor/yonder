@@ -23,26 +23,27 @@
 #'   "New"
 #' )
 #'
-badge <- function(
-  ...,
-  appearance = c("default", "pill")
-) {
-  appearance <- arg_match(appearance)
+badge <-
+  function(
+    ...,
+    appearance = c("default", "pill")
+  ) {
+    appearance <- arg_match(appearance)
 
-  component <-
-    tags$span(
-      class = c(
-        "badge",
-        if (appearance == "pill") "rounded-pill"
-      ),
-      ...
-    )
+    component <-
+      tags$span(
+        class = c(
+          "badge",
+          if (appearance == "pill") "rounded-pill"
+        ),
+        ...
+      )
 
-  component <-
-    dependency_append(component)
+    component <-
+      dependency_append(component)
 
-  component <-
-    s3_class_add(component, "bsides_badge")
+    component <-
+      s3_class_add(component, "bsides_badge")
 
-  component
-}
+    component
+  }
