@@ -6,9 +6,14 @@
 \alias{alert_button}
 \title{Alerts}
 \usage{
-alert(..., class = NULL)
+alert(
+  ...,
+  type = NULL,
+  dismiss = c("animate", "instant", "none"),
+  dismiss_button = alert_button()
+)
 
-alert_heading(..., container = htmltools::h6)
+alert_heading(..., container = htmltools::h5)
 
 alert_button()
 }
@@ -16,7 +21,12 @@ alert_button()
 \item{...}{Components to include. Named arguments are passed as HTML
 attributes to the parent element.}
 
-\item{class}{Additional CSS classes for the alert element.}
+\item{type}{Optional semantic type.}
+
+\item{dismiss}{The method for removing the alert. One of \code{"animate"},
+\code{"instant"}, or \code{"none"}.}
+
+\item{dismiss_button}{The dismiss button element. A \link[htmltools:tag]{htmltools::tag} object.}
 
 \item{container}{An \link[htmltools:tag]{htmltools::tag} function.}
 }
@@ -30,7 +40,8 @@ Alerts highlight information for users.
 \dontshow{if (rlang::is_interactive()) withAutoprint(\{ # examplesIf}
 
 alert(
-  class = "alert-info",
+  type = "info",
+  dismiss = "none",
   alert_heading("Heads up!"),
   "Make sure you know the thing is happening",
   htmltools::hr(),
@@ -38,9 +49,8 @@ alert(
 )
 
 alert(
-  class = "alert-warning",
-  "Double check those figures.",
-  alert_button()
+  type = "warning",
+  "Double check those figures."
 )
 \dontshow{\}) # examplesIf}
 }
