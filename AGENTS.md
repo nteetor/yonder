@@ -19,7 +19,30 @@
 - Both the harness and e2e load the committed bundles in `inst/www/` —
   run `npm run build` first whenever `srcts/` or the SCSS changed.
 
-## CSS / Bootstrap
+## Code design and style
+
+- When defining top-level functions, use the following format. The `function`
+  keyword is on its own line, required arguments are placed ahead of `...`,
+  optional arguments are placed after `...`.
+  ```r
+  function_name <-
+    function(
+      argument_required,
+      ...,
+      argument_optional = c("value1", "value2"),
+      argument_ignored_by_default = NULL
+    ) {
+      
+    }
+  ```
+
+- When defining optional function arguments avoid boolean values and prefer
+  character values. The argument name combined with the possible value describes
+  the argument's effect. 
+
+## CSS
+
+### Bootstrap classes
 
 - When a custom component needs a Bootstrap component's look, style our
   own class from Bootstrap variables/tokens (`--bs-*`, Sass vars like
