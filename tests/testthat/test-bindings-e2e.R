@@ -148,7 +148,7 @@ test_that("update_* functions reach the client and report back", {
   expect_equal(app$get_value(input = "mnu"), "Two")
 })
 
-test_that("modal and toast report shown/hidden state", {
+test_that("modal reports shown/hidden state", {
   skip_if_no_e2e()
 
   app <- launch_bindings_app()
@@ -167,18 +167,6 @@ test_that("modal and toast report shown/hidden state", {
   trigger(app, "do_hide_modal")
   expect_equal(
     app$wait_for_value(input = "mdl", ignore = list(NULL, "shown")),
-    "hidden"
-  )
-
-  trigger(app, "do_show_toast")
-  expect_equal(
-    app$wait_for_value(input = "tst", ignore = list(NULL)),
-    "shown"
-  )
-
-  trigger(app, "do_hide_toast")
-  expect_equal(
-    app$wait_for_value(input = "tst", ignore = list(NULL, "shown")),
     "hidden"
   )
 })

@@ -12,7 +12,7 @@ A [bslib](https://github.com/rstudio/bslib) companion.
 yonder is designed to make building pragmatic applications fun and rewarding. On
 the UI side yonder features new reactive inputs such as `navInput()`,
 `chipInput()` and `menuInput()`, as well as the latest Bootstrap components. On
-the server side yonder includes tools for showing alerts and toasts, displaying
+the server side yonder includes tools for showing alerts, displaying
 modal and popovers, hiding and showing panes of content, and more!
 
 ## Examples

@@ -24,9 +24,8 @@ const body = [
   'button', 'checkbox', 'checkbox-group', 'form', 'link', 'list-group',
   'menu', 'chip-group', 'chip-group-none', 'chip-group-select',
   'multi-select', 'multi-select-free', 'radio-group', 'range', 'select',
-  'text-group', 'modal', 'toast'
+  'text-group', 'modal'
 ].map((n) => `<section data-component="${n}">${html(n)}</section>`).join('\n')
-  + '<div id="toast-container"></div>'
 
 const dom = new JSDOM(
   `<!doctype html><html><head></head><body>${body}</body></html>`,
@@ -736,28 +735,6 @@ const native = (el, type, Ctor = win.Event, init = {}) =>
   handlers['bsides:modalClose']({})
   await tick(400)
   check('modal: hidden after modalClose', binding.getValue(el) === 'hidden', binding.getValue(el))
-}
-
-// ---- toast ----
-{
-  const { binding, els, events } = bind('bsides.toast')
-  check('toast: found', els.length === 1, els.length)
-  check('toast: initial hidden', binding.getValue(els[0]) === 'hidden', binding.getValue(els[0]))
-
-  binding.receiveMessage(els[0], { method: 'show' })
-  await tick(100)
-  check('toast: shown', binding.getValue(els[0]) === 'shown', binding.getValue(els[0]))
-  check('toast: shown event fired', events.some((e) => e.value === 'shown'), events)
-
-  binding.receiveMessage(els[0], { method: 'hide' })
-  await tick(400)
-  check('toast: hidden again', binding.getValue(els[0]) === 'hidden', binding.getValue(els[0]))
-
-  await handlers['bsides:toastAdd']({
-    target: 'toast-container',
-    toast: '<div class="bsides-toast toast" id="t2">More</div>'
-  })
-  check('toast: toastAdd inserts', doc.getElementById('t2') !== null)
 }
 
 console.log(`\n${checks} checks, ${failures.length} failures`)

@@ -87,6 +87,5 @@ render("range", input_range(id = "rng"))
 render("select", input_select(id = "sel", choices = c("S1", "S2", "S3")))
 render("text-group", input_text_group(id = "txtgrp", left = "$"))
 render("modal", modal_dialog(id = "mdl", "Hello modal"))
-render("toast", toast(id = "tst", "Hello toast"))
 
 cat("wrote", length(dir(out_dir)), "files to", out_dir, "\n")

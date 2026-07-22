@@ -68,7 +68,6 @@ Collate:
     'modal.R'
     'on-load.R'
     'placeholder.R'
-    'toast.R'
     'typography.R'
     'utils.R'
     'utils-dependencies.R'

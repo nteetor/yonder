@@ -25,9 +25,7 @@ shinyApp(
       input_text(id = "frmtext"),
       form_submit_button(label = "Submit", value = "go")
     ),
-    modal_dialog(id = "mdl", "Hello modal"),
-    # bslib also exports toast() and is attached after yonder, so qualify
-    yonder::toast(id = "tst", "Hello toast")
+    modal_dialog(id = "mdl", "Hello modal")
   ),
   server = function(input, output, session) {
     trigger <- function(id, handler) {
@@ -63,7 +61,5 @@ shinyApp(
     trigger("do_submit_form", \() submit_form("frm", "go"))
     trigger("do_show_modal", \() modal_show("mdl"))
     trigger("do_hide_modal", \() modal_hide())
-    trigger("do_show_toast", \() toast_show("tst"))
-    trigger("do_hide_toast", \() toast_hide("tst"))
   }
 )

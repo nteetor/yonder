@@ -71,7 +71,6 @@ Other components:
 \code{\link[=alert]{alert()}},
 \code{\link[=badge]{badge()}},
 \code{\link[=collapse_panel]{collapse_panel()}},
-\code{\link[=d1]{d1()}},
-\code{\link[=toast]{toast()}}
+\code{\link[=d1]{d1()}}
 }
 \concept{components}

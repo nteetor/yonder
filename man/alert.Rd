@@ -59,7 +59,6 @@ Other components:
 \code{\link[=badge]{badge()}},
 \code{\link[=collapse_panel]{collapse_panel()}},
 \code{\link[=d1]{d1()}},
-\code{\link[=modal_dialog]{modal_dialog()}},
-\code{\link[=toast]{toast()}}
+\code{\link[=modal_dialog]{modal_dialog()}}
 }
 \concept{components}
