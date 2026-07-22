@@ -1,11 +1,18 @@
+# R package files
 ^cran-comments\.md$
-^\.git$
-^\.claude$
-^\.vscode$
-^plan-.*\.md$
-^\.travis\.yml$
 ^.*\.Rproj$
 ^\.Rproj\.user$
+^man-roxygen$
+^LICENSE\.md$
+^index.Rmd$
+^pkgdown$
+^pkgdown/_pkgdown\.yaml$
+^docs$
+^CRAN-RELEASE$
+^renv$
+^renv\.lock$
+
+# npm files
 ^srcts$
 ^node_modules$
 ^package\.json$
@@ -14,18 +21,16 @@
 ^eslint\.config\.mjs$
 ^\.browserslistrc$
 ^\.stylelintrc$
-^BSLIB\.md$
-^docs$
-^bin$
-^man-roxygen$
-^LICENSE\.md$
-^CONTRIBUTING\.md$
-^pkgdown/_pkgdown\.yaml$
-^pkgdown$
-^index.Rmd$
-^CRAN-RELEASE$
-^renv$
-^renv\.lock$
+
+# config and meta files
+^\.git$
 ^\.github$
+^\.travis\.yml$
 ^codecov\.yml$
+^\.vscode$
+^\.claude$
+^plan-.*\.md$
 ^AGENTS.md$
+^BSLIB\.md$
+^CONTRIBUTING\.md$
+^bin$
