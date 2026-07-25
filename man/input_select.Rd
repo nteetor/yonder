@@ -9,6 +9,7 @@ input_select(
   id,
   choices,
   ...,
+  label = NULL,
   values = choices,
   select = NULL,
   disable = NULL,
@@ -31,6 +32,10 @@ update_select(
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
+
+\item{label}{A character string or \code{\link[=floating_label]{floating_label()}}. The label of the
+input. A character string renders a standard label ahead of the input,
+a \code{\link[=floating_label]{floating_label()}} renders a floating label inside the input.}
 
 \item{values}{A character vector specifying the values of the input's
 choices, defaults to \code{choices}.}
@@ -55,6 +60,7 @@ information.
 \seealso{
 Other inputs:
 \code{\link[=fileInput]{fileInput()}},
+\code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},

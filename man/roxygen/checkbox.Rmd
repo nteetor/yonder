@@ -77,12 +77,9 @@ switchInput(
 ## Labelling
 
 ```{r}
-formGroup(
-  label = "Label",
-  checkboxInput(
-    id = NULL,
-    choices = c("Choice 1", "Choice 2")
-  ),
-  help = "Help text for the input"
+input_checkbox_group(
+  id = NULL,
+  label = "Label",  # <-
+  choices = c("Choice 1", "Choice 2")
 )
 ```

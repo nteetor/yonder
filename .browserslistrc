@@ -1,11 +1,10 @@
->= 1%
-last 1 major version
+>= 0.5%
+last 2 major versions
 not dead
-Chrome >= 45
-Firefox >= 38
-Edge >= 12
-Explorer >= 10
-iOS >= 9
-Safari >= 9
-Android >= 4.4
-Opera >= 30
+Chrome >= 60
+Firefox >= 60
+Firefox ESR
+iOS >= 12
+Safari >= 12
+not Explorer <= 11
+not kaios <= 2.5 # fix floating label issues in Firefox (see https://github.com/postcss/autoprefixer/issues/1533)

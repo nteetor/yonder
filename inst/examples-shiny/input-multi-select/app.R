@@ -86,9 +86,9 @@ shinyApp(
       ),
       card(
         card_header("Server updates"),
-        input_button(id = "set", text = "Select Belgium + Japan"),
-        input_button(id = "swap", text = "Swap choices (prunes)"),
-        input_button(id = "hint", text = "Change placeholder"),
+        input_button(id = "set", label = "Select Belgium + Japan"),
+        input_button(id = "swap", label = "Swap choices (prunes)"),
+        input_button(id = "hint", label = "Change placeholder"),
         input_checkbox(id = "disable", choice = "Disable countries input")
       )
     )

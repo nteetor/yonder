@@ -8,6 +8,7 @@
 input_multi_select(
   id,
   ...,
+  label = NULL,
   choices = NULL,
   values = choices,
   select = NULL,
@@ -35,6 +36,9 @@ update_multi_select(
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
+
+\item{label}{A character string. The label of the input, rendered ahead
+of the input. Floating labels are not supported.}
 
 \item{choices}{A character vector of choice labels, defaults to \code{NULL}.
 May be empty and populated later with \code{\link[=update_multi_select]{update_multi_select()}}.}
@@ -102,6 +106,7 @@ unmatched values are dropped with a warning in the browser console.
 \seealso{
 Other inputs:
 \code{\link[=fileInput]{fileInput()}},
+\code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},

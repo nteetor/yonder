@@ -8,7 +8,7 @@
 #'
 #' @inheritParams input_checkbox
 #'
-#' @param text A character string. The text content of the button.
+#' @param label A character string. The text content of the button.
 #'
 #' @inherit input_checkbox return
 #'
@@ -18,7 +18,7 @@
 input_button <-
   function(
     id,
-    text,
+    label,
     ...
   ) {
     check_string(id, allow_empty = FALSE)
@@ -29,7 +29,7 @@ input_button <-
         type = "button",
         role = "button",
         id = id,
-        text,
+        label,
         ...
       )
 
@@ -44,7 +44,7 @@ input_button <-
 update_button <-
   function(
     id,
-    text = NULL,
+    label = NULL,
     disable = NULL,
     session = get_current_session()
   ) {
@@ -52,7 +52,7 @@ update_button <-
 
     msg <-
       drop_nulls(list(
-        text = text,
+        label = label,
         disable = disable
       ))
 

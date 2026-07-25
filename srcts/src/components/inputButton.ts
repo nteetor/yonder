@@ -5,7 +5,7 @@ import $ from 'jquery'
 import { InputBinding, registerBinding, hasDefinedProperty } from './_utils'
 
 type ButtonReceiveMessageData = {
-  text?: string
+  label?: string
   disable?: boolean
 }
 
@@ -51,8 +51,8 @@ class ButtonInputBinding extends InputBinding {
   ): void {
     const button = el as HTMLButtonElement
 
-    if (hasDefinedProperty(data, 'text')) {
-      button.innerHTML = data.text!
+    if (hasDefinedProperty(data, 'label')) {
+      button.innerHTML = data.label!
     }
 
     if (hasDefinedProperty(data, 'disable')) {

@@ -4,10 +4,7 @@
 #'
 #' @inheritParams input_checkbox_group
 #'
-#' @param text A character string. The text of the menu's toggle button.
-#'
-#' @param label A character string or tag element specifying the label of the
-#'   menu's toggle button.
+#' @param label A character string. The text of the menu's toggle button.
 #'
 #' @param direction A character string.
 #'
@@ -20,7 +17,7 @@
 input_menu <-
   function(
     id,
-    text,
+    label,
     choices,
     ...,
     values = choices,
@@ -58,7 +55,7 @@ input_menu <-
           `data-bs-toggle` = "dropdown",
           `aria-expanded` = "false",
           !!!menu_toggle_attrs(align),
-          text
+          label
         ),
         tags$ul(
           class = "dropdown-menu",

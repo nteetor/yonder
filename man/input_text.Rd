@@ -5,7 +5,7 @@
 \alias{update_text}
 \title{Text inputs}
 \usage{
-input_text(id, ..., value = NULL, placeholder = NULL)
+input_text(id, ..., label = NULL, value = NULL, placeholder = NULL)
 
 update_text(id, value = NULL, disable = NULL, session = get_current_session())
 }
@@ -14,6 +14,10 @@ update_text(id, value = NULL, disable = NULL, session = get_current_session())
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
+
+\item{label}{A character string or \code{\link[=floating_label]{floating_label()}}. The label of the
+input. A character string renders a standard label ahead of the input,
+a \code{\link[=floating_label]{floating_label()}} renders a floating label inside the input.}
 
 \item{value}{A character string. The value of the input.}
 
@@ -32,6 +36,7 @@ A text input.
 \seealso{
 Other inputs:
 \code{\link[=fileInput]{fileInput()}},
+\code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},

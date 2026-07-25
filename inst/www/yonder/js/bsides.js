@@ -111,8 +111,8 @@
     }
     receiveMessage(el, data) {
       const button = el;
-      if (hasDefinedProperty(data, "text")) {
-        button.innerHTML = data.text;
+      if (hasDefinedProperty(data, "label")) {
+        button.innerHTML = data.label;
       }
       if (hasDefinedProperty(data, "disable")) {
         button.disabled = data.disable;

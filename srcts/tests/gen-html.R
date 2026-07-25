@@ -16,7 +16,7 @@ render <- function(name, tag) {
   writeLines(as.character(htmltools::doRenderTags(tag)), path)
 }
 
-render("button", input_button(id = "btn", text = "Count"))
+render("button", input_button(id = "btn", label = "Count"))
 render("checkbox", input_checkbox(id = "chk", choice = "Include"))
 render(
   "checkbox-group",
@@ -37,7 +37,7 @@ render(
 )
 render(
   "menu",
-  input_menu(id = "mnu", text = "Menu", choices = c("One", "Two"))
+  input_menu(id = "mnu", label = "Menu", choices = c("One", "Two"))
 )
 render(
   "chip-group",

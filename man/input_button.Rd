@@ -5,14 +5,19 @@
 \alias{update_button}
 \title{Button inputs}
 \usage{
-input_button(id, text, ...)
+input_button(id, label, ...)
 
-update_button(id, text = NULL, disable = NULL, session = get_current_session())
+update_button(
+  id,
+  label = NULL,
+  disable = NULL,
+  session = get_current_session()
+)
 }
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
 
-\item{text}{A character string. The text content of the button.}
+\item{label}{A character string. The text content of the button.}
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
@@ -32,6 +37,7 @@ the number of clicks.
 \seealso{
 Other inputs:
 \code{\link[=fileInput]{fileInput()}},
+\code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},
 \code{\link[=input_chip_group]{input_chip_group()}},

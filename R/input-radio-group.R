@@ -15,15 +15,16 @@ input_radio_group <-
     values = choices,
     select = NULL,
     disable = NULL,
+    label = NULL,
     appearance = c("default", "buttons", "switches", "list"),
     layout = c("column", "row"),
-    label = c("after", "before")
+    choice_placement = c("after", "before")
   ) {
     check_string(id, allow_empty = FALSE)
 
     appearance <- arg_match(appearance)
     layout <- arg_match(layout)
-    label <- arg_match(label)
+    choice_placement <- arg_match(choice_placement)
 
     args <- list(...)
     attrs <- keep_named(args)
@@ -37,7 +38,7 @@ input_radio_group <-
         disable,
         appearance,
         layout,
-        label,
+        choice_placement,
         input_id = id
       )
 
@@ -60,6 +61,9 @@ input_radio_group <-
       )
 
     input <-
+      wrap_label(input, label, wrapper = "fieldset")
+
+    input <-
       dependency_append(input)
 
     input <-
@@ -79,7 +83,7 @@ update_radio_group <-
     disable = NULL,
     appearance = "default",
     layout = "column",
-    label = "after",
+    choice_placement = "after",
     session = get_current_session()
   ) {
     check_string(id, allow_empty = FALSE)
@@ -95,7 +99,7 @@ update_radio_group <-
             disable,
             appearance,
             layout,
-            label,
+            choice_placement,
             input_id = id
           )
         )
@@ -119,7 +123,7 @@ radio_group_option <-
     disable,
     appearance,
     layout,
-    label,
+    choice_placement,
     input_id
   ) {
     func <- switch(
@@ -130,7 +134,7 @@ radio_group_option <-
       list = radio_group_option_list_item
     )
 
-    func(choice, value, select, disable, layout, label, input_id)
+    func(choice, value, select, disable, layout, choice_placement, input_id)
   }
 
 radio_group_option_default <-
@@ -140,7 +144,7 @@ radio_group_option_default <-
     select,
     disable,
     layout,
-    label,
+    choice_placement,
     input_id
   ) {
     option_id <- generate_id("radio")
@@ -149,7 +153,7 @@ radio_group_option_default <-
       class = c(
         "form-check",
         if (layout == "row") "form-check-inline",
-        if (label == "before") "form-check-reverse"
+        if (choice_placement == "before") "form-check-reverse"
       ),
       tags$input(
         class = "form-check-input",
@@ -177,7 +181,7 @@ radio_group_option_button <-
     select,
     disable,
     layout,
-    label,
+    choice_placement,
     input_id
   ) {
     option_id <- generate_id("radio")
@@ -209,7 +213,7 @@ radio_group_option_switch <-
     select,
     disable,
     layout,
-    label,
+    choice_placement,
     input_id
   ) {
     option_id <- generate_id("radio")
@@ -218,7 +222,7 @@ radio_group_option_switch <-
       class = c(
         "form-check form-switch",
         if (layout == "row") "form-check-inline",
-        if (label == "before") "form-check-reverse"
+        if (choice_placement == "before") "form-check-reverse"
       ),
       tags$input(
         class = "form-check-input",
@@ -246,7 +250,7 @@ radio_group_option_list_item <-
     select,
     disable,
     layout,
-    label,
+    choice_placement,
     input_id
   ) {
     option_id <- generate_id("radio")
@@ -254,7 +258,7 @@ radio_group_option_list_item <-
     tags$li(
       class = c(
         "list-group-item",
-        if (label == "before") "form-check-reverse"
+        if (choice_placement == "before") "form-check-reverse"
       ),
       tags$input(
         class = "form-check-input me-0 ms-1",

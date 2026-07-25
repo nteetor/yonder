@@ -12,9 +12,10 @@ input_checkbox_group(
   values = choices,
   select = NULL,
   disable = NULL,
+  label = NULL,
   appearance = c("default", "buttons", "switches", "list"),
   layout = c("column", "row"),
-  label = c("after", "before")
+  choice_placement = c("after", "before")
 )
 
 update_checkbox_group(
@@ -24,7 +25,7 @@ update_checkbox_group(
   select = NULL,
   disable = NULL,
   layout = "column",
-  label = "after",
+  choice_placement = "after",
   session = get_current_session()
 )
 }
@@ -44,12 +45,16 @@ of \code{values}.}
 
 \item{disable}{A character vector. The values disabled by default.}
 
+\item{label}{A character string. The label of the input, rendered ahead
+of the input. Floating labels are not supported.}
+
 \item{appearance}{A character string. The appearance of the input's choices.}
 
 \item{layout}{A character string. The layout of the choices.}
 
-\item{label}{A character string. The placement of a label relative to its
-checkbox.}
+\item{choice_placement}{A character string. The placement of a choice's
+text relative to its checkbox. Ignored when \code{appearance} is \code{"buttons"},
+where the choice's text is the button itself and no checkbox renders.}
 
 \item{session}{A shiny session object.}
 }
@@ -69,6 +74,7 @@ A named logical vector.
 \seealso{
 Other inputs:
 \code{\link[=fileInput]{fileInput()}},
+\code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_chip_group]{input_chip_group()}},

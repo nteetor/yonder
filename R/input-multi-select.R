@@ -56,6 +56,7 @@ input_multi_select <-
   function(
     id,
     ...,
+    label = NULL,
     choices = NULL,
     values = choices,
     select = NULL,
@@ -98,6 +99,9 @@ input_multi_select <-
           !!!attrs
         )
       )
+
+    input <-
+      wrap_label(input, label, wrapper = "fieldset")
 
     input <-
       dependency_append(input)

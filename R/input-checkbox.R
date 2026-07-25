@@ -14,8 +14,11 @@
 #'
 #' @param disable A boolean. The checkbox starts disabled if `TRUE`.
 #'
-#' @param label A character string. The placement of a label relative to its
-#'   checkbox.
+#' @param label A character string. The label of the input, rendered ahead
+#'   of the input. Floating labels are not supported.
+#'
+#' @param choice_placement A character string. The placement of the choice's
+#'   text relative to its checkbox.
 #'
 #' @param session A shiny session object.
 #'
@@ -35,13 +38,14 @@ input_checkbox <-
     id,
     choice,
     ...,
+    label = NULL,
     value = FALSE,
     disable = NULL,
-    label = c("after", "before")
+    choice_placement = c("after", "before")
   ) {
     check_string(id, allow_empty = FALSE)
 
-    label <- arg_match(label)
+    choice_placement <- arg_match(choice_placement)
 
     args <- list(...)
     attrs <- keep_named(args)
@@ -50,7 +54,10 @@ input_checkbox <-
 
     input <-
       tags$div(
-        class = "bsides-input-checkbox form-check",
+        class = c(
+          "bsides-input-checkbox form-check",
+          if (choice_placement == "before") "form-check-reverse"
+        ),
         id = id,
         !!!attrs,
         tags$input(
@@ -67,6 +74,9 @@ input_checkbox <-
           choice
         )
       )
+
+    input <-
+      wrap_label(input, label, wrapper = "label", for_id = checkbox_id)
 
     input <-
       dependency_append(input)

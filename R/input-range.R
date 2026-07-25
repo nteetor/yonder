@@ -27,6 +27,7 @@ input_range <-
   function(
     id,
     ...,
+    label = NULL,
     min = 0,
     max = 100,
     value = min,
@@ -38,12 +39,16 @@ input_range <-
     check_number_decimal(value, min = min, max = max)
     check_number_decimal(step)
 
+    control_id <-
+      if (non_null(label)) generate_id("range")
+
     input <-
       tags$div(
         class = "bsides-input-range",
         id = id,
         tags$input(
           class = "form-range",
+          id = control_id,
           type = "range",
           step = step,
           min = min,
@@ -52,6 +57,9 @@ input_range <-
         ),
         ...
       )
+
+    input <-
+      wrap_label(input, label, wrapper = "label", for_id = control_id)
 
     input <-
       dependency_append(input)

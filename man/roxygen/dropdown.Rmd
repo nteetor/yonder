@@ -62,19 +62,15 @@ dropdown(
   label = "Sign in",
   formInput(
     id = "login",
-    formGroup(
-      label = "Username / Email",
-      textInput(
-        type = "email",
-        id = "user"
-      )
+    textInput(
+      type = "email",
+      id = "user",
+      label = "Username / Email"
     ),
-    formGroup(
-      label = "Password",
-      textInput(
-        type = "password",
-        id = "pass"
-      )
+    textInput(
+      type = "password",
+      id = "pass",
+      label = "Password"
     ),
     formSubmit(
       label = "Sign in",

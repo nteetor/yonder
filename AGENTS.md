@@ -40,6 +40,9 @@
   character values. The argument name combined with the possible value describes
   the argument's effect. 
 
+- Wrap lines at width 80. Fill comments and roxygen text out to column 80
+  before breaking — don't wrap early.
+
 ## CSS
 
 ### Bootstrap classes
