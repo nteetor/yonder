@@ -178,6 +178,30 @@ test_that("a NULL label leaves the input unwrapped", {
   expect_no_match(html, "<div", fixed = TRUE)
 })
 
+test_that("inputs render without a label", {
+  expect_silent(format(input_text(id = "x")))
+  expect_silent(format(input_numeric(id = "x")))
+  expect_silent(format(input_select(id = "x", choices = "A")))
+  expect_silent(format(input_text_group(id = "x", left = "@")))
+  expect_silent(format(input_range(id = "x")))
+  expect_silent(format(input_checkbox(id = "x", choice = "A")))
+  expect_silent(format(input_checkbox_group(id = "x", choices = "A")))
+  expect_silent(format(input_radio_group(id = "x", choices = "A")))
+  expect_silent(format(input_chip_group(id = "x", choices = "A")))
+  expect_silent(format(input_list_group(id = "x", choices = "A")))
+  expect_silent(format(input_multi_select(id = "x", choices = "A")))
+})
+
+test_that("an unlabelled input carries no label markup", {
+  for (html in list(
+    format(input_range(id = "x")),
+    format(input_text_group(id = "x", left = "@"))
+  )) {
+    expect_no_match(html, "<label", fixed = TRUE)
+    expect_no_match(html, "<fieldset", fixed = TRUE)
+  }
+})
+
 test_that("argument `choice_placement`", {
   html <-
     format(input_checkbox(
