@@ -1,6 +1,6 @@
 # Demo app for input labels.
 #
-# Covers the three ways an input gets labelled:
+# Covers the two ways an input gets labelled:
 #
 #   1. Standard labels — `label = "text"` renders a <label for> ahead of the
 #      input, or a <fieldset>/<legend> for group inputs and custom elements,
@@ -8,9 +8,6 @@
 #   2. Floating labels — `label = floating_label("text")` renders Bootstrap's
 #      .form-floating markup. Only the .form-control / .form-select inputs
 #      support it; every other input errors rather than degrading silently.
-#   3. Label updating — only inputs whose own content IS their label can have
-#      it changed from the server: button, link, menu, and form submit. See
-#      the note in the "Updating" card.
 
 library(yonder)
 library(bslib)
@@ -18,15 +15,12 @@ library(bslib)
 shinyApp(
   ui = page_fluid(
     title = "Input labels",
-    tags$style(
-      "fieldset { margin-bottom: 1rem; } .demo-stack > * { margin-bottom: 1rem; }"
-    ),
     layout_columns(
       col_widths = c(6, 6),
+      gap = "1rem",
 
       card(
         card_header("Standard labels"),
-        class = "demo-stack",
         input_text(
           id = "std_text",
           label = "Text input"
@@ -51,7 +45,6 @@ shinyApp(
 
       card(
         card_header("Floating labels"),
-        class = "demo-stack",
         p(
           class = "text-muted small",
           "Click into an input, or type, to float the label. The select",
@@ -80,7 +73,6 @@ shinyApp(
 
       card(
         card_header("Group inputs — fieldset and legend"),
-        class = "demo-stack",
         p(
           class = "text-muted small",
           "A group has no single control for <label for> to point at, so a",
@@ -104,72 +96,6 @@ shinyApp(
           choices = c("Tag A", "Tag B")
         ),
         verbatimTextOutput("group_values")
-      ),
-
-      card(
-        card_header("choice_placement"),
-        class = "demo-stack",
-        p(
-          class = "text-muted small",
-          "Where a choice's text sits relative to its checkbox. Ignored when",
-          "appearance is \"buttons\" — there the text is the button and no",
-          "checkbox renders."
-        ),
-        input_checkbox_group(
-          id = "place_after",
-          label = "choice_placement = \"after\" (default)",
-          choices = c("One", "Two")
-        ),
-        input_checkbox_group(
-          id = "place_before",
-          label = "choice_placement = \"before\"",
-          choices = c("One", "Two"),
-          choice_placement = "before"
-        ),
-        input_checkbox_group(
-          id = "place_buttons",
-          label = "appearance = \"buttons\" (placement ignored)",
-          choices = c("One", "Two"),
-          appearance = "buttons",
-          choice_placement = "before"
-        )
-      ),
-
-      card(
-        card_header("Updating"),
-        class = "demo-stack",
-        p(
-          class = "text-muted small",
-          "Only inputs whose own content is their label can be relabelled",
-          "from the server. There is no update path for the external labels",
-          "in the cards above — no update_*() function takes a `label`",
-          "meaning \"the text beside this input\"."
-        ),
-        input_button(
-          id = "upd_button",
-          label = "Button label"
-        ),
-        tags$div(
-          input_link(
-            id = "upd_link",
-            label = "Link label"
-          )
-        ),
-        input_menu(
-          id = "upd_menu",
-          label = "Menu label",
-          choices = c("One", "Two")
-        ),
-        tags$hr(),
-        input_button(
-          id = "relabel",
-          label = "Relabel all three"
-        ),
-        input_button(
-          id = "reset",
-          label = "Reset labels"
-        ),
-        verbatimTextOutput("update_values")
       )
     )
   ),
@@ -198,26 +124,6 @@ shinyApp(
         radio = input$grp_radio,
         chip = input$grp_chip
       )
-    })
-
-    output$update_values <- renderPrint({
-      list(
-        button = input$upd_button,
-        link = input$upd_link,
-        menu = input$upd_menu
-      )
-    })
-
-    observeEvent(input$relabel, {
-      update_button(id = "upd_button", label = "Relabelled button")
-      update_link(id = "upd_link", label = "Relabelled link")
-      update_menu_input(id = "upd_menu", label = "Relabelled menu")
-    })
-
-    observeEvent(input$reset, {
-      update_button(id = "upd_button", label = "Button label")
-      update_link(id = "upd_link", label = "Link label")
-      update_menu_input(id = "upd_menu", label = "Menu label")
     })
   }
 )
