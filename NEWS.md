@@ -1,13 +1,40 @@
 # yonder 0.2.0.9000
 
-* Remove design and style utilities in favor of {cascadess}
-* Remove `card()` in favor of bslib::card
-* Remove `navInput()` and `navbar()` in favor of bslib::nav
-* Remove `column()` in favor of bslib::column
-* Remove `webpage()` in favor of bslib::page
-* Remove `popover()` in favor of bslib::popover
-* Remove `tooltip()` in favor of bslib::tooltip
-* Remove `switchInput()` in favor of bslib::input_switch
+## Breaking changes
+
+* Removed `formGroup()` and `formRow()` in favor of the new `label`
+  argument. Help text, previously `formGroup(help = )`, was dropped for now
+  and will return in a later release.
+* Removed design and style utilities in favor of {cascadess}.
+* Removed the following in favor of bslib.
+  * `card()`, use bslib::card.
+  * `navInput()` and `navbar()`, use bslib::nav.
+  * `column()`, use bslib::column.
+  * `webpage()`, use bslib::page.
+  * `popover()`, use bslib::popover.
+  * `tooltip()`, use bslib::tooltip.
+  * `switchInput()`, use bslib::input_switch.
+* Renamed the `label` argument of `input_checkbox()`,
+  `input_checkbox_group()`, and `input_radio_group()` to `choice_placement`,
+  freeing `label` to mean label text everywhere. The argument continues to
+  place a choice's text before or after its checkbox and is ignored when
+  `appearance` is `"buttons"`.
+* Renamed the `text` argument of `input_button()` and `input_menu()` to
+  `label`, matching shiny's `actionButton()` and bslib. `update_button()`
+  and `update_menu_input()` followed suit.
+
+## New features
+
+* Inputs gain a `label` argument, the familiar way to label an input in
+  shiny and bslib. A character string renders a standard label ahead of the
+  input. Group inputs, whose choices no single `<label for>` can name, are
+  labelled with a `<fieldset>` and `<legend>` instead.
+* New `floating_label()`. Passing `floating_label("text")` as an input's
+  `label` renders Bootstrap's floating label, which starts inside the input
+  and floats up once the input is focused or filled. Floating labels are
+  limited to the text, numeric, select, and text group inputs; the other
+  inputs signal an error rather than quietly falling back to a standard
+  label.
 
 # yonder 0.2.0
 
