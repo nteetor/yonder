@@ -25,6 +25,7 @@ input_text_group <-
   function(
     id,
     ...,
+    label = NULL,
     left = NULL,
     right = NULL,
     value = NULL,
@@ -35,18 +36,45 @@ input_text_group <-
     args <- list(...)
     attrs <- keep_named(args)
 
+    control_id <-
+      if (non_null(label)) generate_id("text")
+
+    control <-
+      tags$input(
+        class = "form-control",
+        id = control_id,
+        type = "text",
+        value = value,
+        placeholder = placeholder
+      )
+
+    # A floating label lives inside the group, wrapped around the control
+    # itself; a standard label sits ahead of the whole group.
+    if (is_floating_label(label)) {
+      control <-
+        wrap_label(
+          control,
+          label,
+          wrapper = "label",
+          for_id = control_id,
+          floating = "supported"
+        )
+    }
+
     input <-
       tags$div(
         class = "bsides-input-text-group input-group",
         id = id,
         !!!attrs,
         !!!text_group_input_text(left),
-        tags$input(
-          class = "form-control",
-          type = "text"
-        ),
+        control,
         !!!text_group_input_text(right),
       )
+
+    if (non_null(label) && !is_floating_label(label)) {
+      input <-
+        wrap_label(input, label, wrapper = "label", for_id = control_id)
+    }
 
     input <-
       dependency_append(input)

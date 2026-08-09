@@ -18,10 +18,9 @@ Yonder provides many familiar inputs like \code{\link[=input_select]{input_selec
 \code{\link[=input_form]{input_form()}}.
 \itemize{
 \item Input functions have an \code{id} argument instead of \code{inputId}.
-\item Input functions do not include a \code{label} argument for the purpose of adding
-a label above the input. Button and menu inputs do include a \code{label}
-argument, but these arguments refer to button labels. If you would like to
-add a label above an input please use \code{\link[=formGroup]{formGroup()}}.
+\item Input functions include a \code{label} argument for adding a label above the
+input. Pass a \code{\link[=floating_label]{floating_label()}} to a text, numeric, select, or text
+group input to render a floating label instead.
 }
 \subsection{Looking for ... ?}{
 \itemize{

@@ -12,8 +12,8 @@ update_link(id, label = NULL, session = get_current_session())
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
 
-\item{label}{A character string. The placement of a label relative to its
-checkbox.}
+\item{label}{A character string. The label of the input, rendered ahead
+of the input. Floating labels are not supported.}
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}

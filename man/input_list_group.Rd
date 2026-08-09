@@ -9,6 +9,7 @@ input_list_group(
   id,
   choices,
   ...,
+  label = NULL,
   values = choices,
   select = NULL,
   disable = NULL,
@@ -32,6 +33,9 @@ update_list_group(
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
+
+\item{label}{A character string. The label of the input, rendered ahead
+of the input. Floating labels are not supported.}
 
 \item{values}{A character vector. The values for the input, defaults to
 \code{choices}.}
@@ -58,6 +62,7 @@ list. However, list group items may include highly variable content.
 \seealso{
 Other inputs:
 \code{\link[=fileInput]{fileInput()}},
+\code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},

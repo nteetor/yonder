@@ -21,6 +21,10 @@
 #' @param placeholder A character string specifying the placeholder text of
 #'   the select input, defaults to `NULL`.
 #'
+#' @param label A character string or [floating_label()]. The label of the
+#'   input. A character string renders a standard label ahead of the input,
+#'   a [floating_label()] renders a floating label inside the input.
+#'
 #' @family inputs
 #' @export
 input_select <-
@@ -28,6 +32,7 @@ input_select <-
     id,
     choices,
     ...,
+    label = NULL,
     values = choices,
     select = NULL,
     disable = NULL,
@@ -54,6 +59,15 @@ input_select <-
         id = id,
         !!!attrs,
         options
+      )
+
+    input <-
+      wrap_label(
+        input,
+        label,
+        wrapper = "label",
+        for_id = id,
+        floating = "supported"
       )
 
     input <-

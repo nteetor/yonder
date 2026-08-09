@@ -20,6 +20,7 @@ input_list_group <-
     id,
     choices,
     ...,
+    label = NULL,
     values = choices,
     select = NULL,
     disable = NULL,
@@ -59,6 +60,9 @@ input_list_group <-
         !!!attrs,
         !!!options
       )
+
+    input <-
+      wrap_label(input, label, wrapper = "fieldset")
 
     input <-
       dependency_append(input)

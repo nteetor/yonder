@@ -112,8 +112,8 @@ const native = (el, type, Ctor = win.Event, init = {}) =>
   el.click()
   check('button: clicks counted', binding.getValue(el) === 2, binding.getValue(el))
   check('button: 2 events, immediate', events.length === 2 && events.every((e) => e.deferred === false), events)
-  binding.receiveMessage(el, { text: 'Go', disable: true })
-  check('button: text updated', el.innerHTML === 'Go', el.innerHTML)
+  binding.receiveMessage(el, { label: 'Go', disable: true })
+  check('button: label updated', el.innerHTML === 'Go', el.innerHTML)
   check('button: disabled', el.disabled === true)
 }
 

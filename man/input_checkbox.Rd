@@ -9,9 +9,10 @@ input_checkbox(
   id,
   choice,
   ...,
+  label = NULL,
   value = FALSE,
   disable = NULL,
-  label = c("after", "before")
+  choice_placement = c("after", "before")
 )
 
 update_checkbox(
@@ -30,12 +31,15 @@ update_checkbox(
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
 
+\item{label}{A character string. The label of the input, rendered ahead
+of the input. Floating labels are not supported.}
+
 \item{value}{A boolean. The default value for the checkbox.}
 
 \item{disable}{A boolean. The checkbox starts disabled if \code{TRUE}.}
 
-\item{label}{A character string. The placement of a label relative to its
-checkbox.}
+\item{choice_placement}{A character string. The placement of the choice's
+text relative to its checkbox.}
 
 \item{session}{A shiny session object.}
 }
@@ -55,6 +59,7 @@ A named logical vector.
 \seealso{
 Other inputs:
 \code{\link[=fileInput]{fileInput()}},
+\code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},
 \code{\link[=input_chip_group]{input_chip_group()}},

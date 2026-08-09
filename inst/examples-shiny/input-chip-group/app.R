@@ -45,9 +45,9 @@ shinyApp(
       ),
       card(
         card_header("Server updates"),
-        input_button(id = "set", text = "Select red + blue"),
-        input_button(id = "clear", text = "Clear selection"),
-        input_button(id = "swap", text = "Swap size choices"),
+        input_button(id = "set", label = "Select red + blue"),
+        input_button(id = "clear", label = "Clear selection"),
+        input_button(id = "swap", label = "Swap size choices"),
         input_checkbox(id = "disable", choice = "Disable colors input")
       )
     )

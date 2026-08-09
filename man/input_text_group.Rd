@@ -8,6 +8,7 @@
 input_text_group(
   id,
   ...,
+  label = NULL,
   left = NULL,
   right = NULL,
   value = NULL,
@@ -26,6 +27,10 @@ update_text_group(
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
+
+\item{label}{A character string or \code{\link[=floating_label]{floating_label()}}. The label of the
+input. A character string renders a standard label ahead of the input,
+a \code{\link[=floating_label]{floating_label()}} renders a floating label inside the input.}
 
 \item{left}{A character vector. One or more character strings prepended to
 the reactive value of the input.}
@@ -50,6 +55,7 @@ A text input with a possible static prefix or suffix.
 \seealso{
 Other inputs:
 \code{\link[=fileInput]{fileInput()}},
+\code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},

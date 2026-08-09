@@ -14,6 +14,10 @@
 #'
 #' @param placeholder A string. The placeholder text displayed inside the input.
 #'
+#' @param label A character string or [floating_label()]. The label of the
+#'   input. A character string renders a standard label ahead of the input,
+#'   a [floating_label()] renders a floating label inside the input.
+#'
 #' @inherit input_checkbox_group return
 #'
 #' @family inputs
@@ -23,6 +27,7 @@ input_numeric <-
   function(
     id,
     ...,
+    label = NULL,
     value = NULL,
     min = NULL,
     max = NULL,
@@ -33,6 +38,7 @@ input_numeric <-
 
     input <-
       tags$input(
+        class = "form-control",
         id = id,
         type = "number",
         value = value,
@@ -40,6 +46,15 @@ input_numeric <-
         min = min,
         max = max,
         step = step
+      )
+
+    input <-
+      wrap_label(
+        input,
+        label,
+        wrapper = "label",
+        for_id = id,
+        floating = "supported"
       )
 
     input <-

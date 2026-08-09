@@ -8,6 +8,7 @@
 input_chip_group(
   id,
   ...,
+  label = NULL,
   choices = NULL,
   values = choices,
   select = values,
@@ -30,6 +31,9 @@ update_chip_group(
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
+
+\item{label}{A character string. The label of the input, rendered ahead
+of the input. Floating labels are not supported.}
 
 \item{choices}{A character vector of chip labels, defaults to \code{NULL}.
 When \code{NULL}, the input renders without chips and may be populated
@@ -85,6 +89,7 @@ dropped with a warning in the browser console.
 \seealso{
 Other inputs:
 \code{\link[=fileInput]{fileInput()}},
+\code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},

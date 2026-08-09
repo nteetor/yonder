@@ -19,6 +19,7 @@ input_text <-
   function(
     id,
     ...,
+    label = NULL,
     value = NULL,
     placeholder = NULL
   ) {
@@ -35,6 +36,15 @@ input_text <-
         value = value,
         placeholder = placeholder,
         !!!attrs
+      )
+
+    input <-
+      wrap_label(
+        input,
+        label,
+        wrapper = "label",
+        for_id = id,
+        floating = "supported"
       )
 
     input <-

@@ -7,7 +7,7 @@
 \usage{
 input_menu(
   id,
-  text,
+  label,
   choices,
   ...,
   values = choices,
@@ -30,7 +30,7 @@ update_menu_input(
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
 
-\item{text}{A character string. The text of the menu's toggle button.}
+\item{label}{A character string. The text of the menu's toggle button.}
 
 \item{choices}{A character vector or list. The labels for the input choices.}
 
@@ -48,9 +48,6 @@ element.}
 
 \item{close}{A character string.}
 
-\item{label}{A character string or tag element specifying the label of the
-menu's toggle button.}
-
 \item{select}{A character vector. The values selected by default, one or more
 of \code{values}.}
 
@@ -62,6 +59,7 @@ A dropdown menu.
 \seealso{
 Other inputs:
 \code{\link[=fileInput]{fileInput()}},
+\code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},

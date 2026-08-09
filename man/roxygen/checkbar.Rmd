@@ -41,18 +41,12 @@ checkbarInput(
 
 ## Labelling
 
-Use a `formGroup()` to add a label or help text to checkbar input.
+Use the `label` argument to add a label to an input.
 
 ```{r}
-formGroup(
+input_checkbox_group(
+  id = NULL,
   label = "Label",  # <-
-  checkbarInput(
-    .style %>%
-      border("dark") %>%
-      font("light"),
-    id = NULL,
-    choices = c("Choice 1", "Choice 2")
-  ),
-  help = "Help text about the input"
+  choices = c("Choice 1", "Choice 2")
 )
 ```

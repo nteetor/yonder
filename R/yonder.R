@@ -33,10 +33,9 @@ NULL
 #'
 #' * Input functions have an `id` argument instead of `inputId`.
 #'
-#' * Input functions do not include a `label` argument for the purpose of adding
-#'   a label above the input. Button and menu inputs do include a `label`
-#'   argument, but these arguments refer to button labels. If you would like to
-#'   add a label above an input please use [formGroup()].
+#' * Input functions include a `label` argument for adding a label above the
+#'   input. Pass a [floating_label()] to a text, numeric, select, or text
+#'   group input to render a floating label instead.
 #'
 #' ### Looking for ... ?
 #'

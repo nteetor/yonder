@@ -9,7 +9,7 @@ library(bslib)
 
 shinyApp(
   ui = page_fluid(
-    input_button(id = "btn", text = "Count"),
+    input_button(id = "btn", label = "Count"),
     input_link(id = "lnk", label = "Go"),
     input_checkbox(id = "chk", choice = "Include"),
     input_checkbox_group(id = "chkgrp", choices = c("A", "B", "C")),
@@ -19,7 +19,7 @@ shinyApp(
     input_text(id = "txt"),
     input_text_group(id = "txtgrp", left = "$"),
     input_list_group(id = "lst", choices = paste("Item", 1:3)),
-    input_menu(id = "mnu", text = "Menu", choices = c("One", "Two")),
+    input_menu(id = "mnu", label = "Menu", choices = c("One", "Two")),
     input_form(
       id = "frm",
       input_text(id = "frmtext"),
@@ -32,7 +32,7 @@ shinyApp(
       observeEvent(input[[id]], handler(), ignoreInit = TRUE)
     }
 
-    trigger("do_update_button", \() update_button("btn", text = "Updated"))
+    trigger("do_update_button", \() update_button("btn", label = "Updated"))
     trigger("do_update_link", \() update_link("lnk", label = "NewLink"))
     trigger("do_update_checkbox", \() update_checkbox("chk", value = TRUE))
     trigger(

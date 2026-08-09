@@ -30,7 +30,7 @@ shinyApp(
         card_header("Server updates"),
         input_button(
           id = "set",
-          text = "Set value to 'hello, world'"
+          label = "Set value to 'hello, world'"
         ),
         input_checkbox(
           id = "disable",

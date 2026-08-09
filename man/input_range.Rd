@@ -5,7 +5,7 @@
 \alias{update_range}
 \title{Range input}
 \usage{
-input_range(id, ..., min = 0, max = 100, value = min, step = 1)
+input_range(id, ..., label = NULL, min = 0, max = 100, value = min, step = 1)
 
 update_range(id, value = NULL, disable = NULL, session = get_current_session())
 }
@@ -14,6 +14,9 @@ update_range(id, value = NULL, disable = NULL, session = get_current_session())
 
 \item{...}{Optional named arguments specifying HTML attributes for the input
 element.}
+
+\item{label}{A character string. The label of the input, rendered ahead
+of the input. Floating labels are not supported.}
 
 \item{min}{A number. The input's minimum value, defaults to \code{0}.}
 
@@ -41,6 +44,7 @@ HTML standards.
 \seealso{
 Other inputs:
 \code{\link[=fileInput]{fileInput()}},
+\code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},

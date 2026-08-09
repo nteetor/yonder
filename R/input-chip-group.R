@@ -45,6 +45,7 @@ input_chip_group <-
   function(
     id,
     ...,
+    label = NULL,
     choices = NULL,
     values = choices,
     select = values,
@@ -78,6 +79,9 @@ input_chip_group <-
           !!!attrs
         )
       )
+
+    input <-
+      wrap_label(input, label, wrapper = "fieldset")
 
     input <-
       dependency_append(input)

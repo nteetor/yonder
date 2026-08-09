@@ -22,8 +22,12 @@
 #'
 #' @param layout A character string. The layout of the choices.
 #'
-#' @param label A character string. The placement of a label relative to its
-#'   checkbox.
+#' @param label A character string. The label of the input, rendered ahead
+#'   of the input. Floating labels are not supported.
+#'
+#' @param choice_placement A character string. The placement of a choice's
+#'   text relative to its checkbox. Ignored when `appearance` is `"buttons"`,
+#'   where the choice's text is the button itself and no checkbox renders.
 #'
 #' @param session A shiny session object.
 #'
@@ -45,9 +49,10 @@ input_checkbox_group <-
     values = choices,
     select = NULL,
     disable = NULL,
+    label = NULL,
     appearance = c("default", "buttons", "switches", "list"),
     layout = c("column", "row"),
-    label = c("after", "before")
+    choice_placement = c("after", "before")
   ) {
     check_string(id, allow_empty = FALSE)
     # @TODO check choices
@@ -57,7 +62,7 @@ input_checkbox_group <-
 
     appearance <- arg_match(appearance)
     layout <- arg_match(layout)
-    label <- arg_match(label)
+    choice_placement <- arg_match(choice_placement)
 
     args <- list(...)
     attrs <- keep_named(args)
@@ -71,7 +76,7 @@ input_checkbox_group <-
         disable,
         appearance,
         layout,
-        label
+        choice_placement
       )
 
     input <-
@@ -84,6 +89,9 @@ input_checkbox_group <-
 
     input <-
       tag_children_add(input, !!!options)
+
+    input <-
+      wrap_label(input, label, wrapper = "fieldset")
 
     input <-
       dependency_append(input)
@@ -104,7 +112,7 @@ update_checkbox_group <-
     select = NULL,
     disable = NULL,
     layout = "column",
-    label = "after",
+    choice_placement = "after",
     session = get_current_session()
   ) {
     check_string(id, allow_empty = FALSE)
@@ -122,7 +130,7 @@ update_checkbox_group <-
             select,
             disable,
             layout,
-            label
+            choice_placement
           )
         )
       }
@@ -189,7 +197,7 @@ checkbox_group_option <-
     disable,
     appearance,
     layout,
-    label
+    choice_placement
   ) {
     if (is.null(choice)) {
       return(NULL)
@@ -205,7 +213,7 @@ checkbox_group_option <-
         select,
         disable,
         layout,
-        label
+        choice_placement
       )
 
     option <-
@@ -235,12 +243,12 @@ checkbox_group_option_default <-
     select,
     disable,
     layout,
-    label
+    choice_placement
   ) {
     tags$div(
       class = c(
         "form-check",
-        checkbox_group_option_class_label(label),
+        checkbox_group_option_class_choice_placement(choice_placement),
         checkbox_group_option_class_layout(layout)
       ),
       tags$input(
@@ -269,7 +277,7 @@ checkbox_group_option_button <-
     select,
     disable,
     layout,
-    label
+    choice_placement
   ) {
     list(
       tags$input(
@@ -296,13 +304,13 @@ checkbox_group_option_switch <-
     select,
     disable,
     layout,
-    label
+    choice_placement
   ) {
     tags$div(
       class = c(
         "form-check",
         "form-switch",
-        checkbox_group_option_class_label(label),
+        checkbox_group_option_class_choice_placement(choice_placement),
         checkbox_group_option_class_layout(layout)
       ),
       tags$input(
@@ -331,12 +339,12 @@ checkbox_group_option_list_item <-
     select,
     disable,
     layout,
-    label
+    choice_placement
   ) {
     tags$li(
       class = c(
         "list-group-item",
-        checkbox_group_option_class_label(label)
+        checkbox_group_option_class_choice_placement(choice_placement)
       ),
       tags$input(
         class = "form-check-input me-0 ms-1",
@@ -400,12 +408,12 @@ checkbox_group_option_class_layout <-
     )
   }
 
-checkbox_group_option_class_label <-
+checkbox_group_option_class_choice_placement <-
   function(
-    label
+    choice_placement
   ) {
     switch(
-      label,
+      choice_placement,
       before = "form-check-reverse",
       after =
     )

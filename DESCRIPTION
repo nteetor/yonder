@@ -46,7 +46,7 @@ Collate:
     'button-group.R'
     'collapse.R'
     'dropdown.R'
-    'forms.R'
+    'floating-label.R'
     'import-standalone-obj-type.R'
     'import-standalone-types-check.R'
     'input-button.R'
