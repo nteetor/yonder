@@ -1,5 +1,3 @@
-context("dependencies")
-
 test_that("dependency expectation", {
   my_div <- htmltools::attachDependencies(div(), dep_yonder())
 

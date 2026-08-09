@@ -24,6 +24,9 @@ BugReports: https://github.com/nteetor/yonder/issues
 Encoding: UTF-8
 Config/roxygen2/version: 8.0.0
 Config/roxygen2/markdown: TRUE
+Config/testthat/edition: 3
+Config/testthat/parallel: true
+Config/testthat/start-first: multi-select-e2e, bindings-e2e
 Depends:
     R (>= 4.1),
     shiny (>= 1.6.0)
@@ -36,7 +39,7 @@ Imports:
 Suggests:
     bslib,
     chromote,
-    testthat (>= 2.1.0),
+    testthat (>= 3.1.6),
     rmarkdown,
     shinytest2,
     withr

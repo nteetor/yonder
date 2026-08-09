@@ -1,5 +1,3 @@
-context("general utilities")
-
 test_that("tag is not bare list", {
   expect_false(is_bare_list(div()))
 })
