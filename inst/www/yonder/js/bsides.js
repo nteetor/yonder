@@ -12,7 +12,11 @@
   var __getProtoOf = Object.getPrototypeOf;
   var __hasOwnProp = Object.prototype.hasOwnProperty;
   var __commonJS = (cb, mod) => function __require() {
-    return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+    try {
+      return mod || (0, cb[__getOwnPropNames(cb)[0]])((mod = { exports: {} }).exports, mod), mod.exports;
+    } catch (e5) {
+      throw mod = 0, e5;
+    }
   };
   var __copyProps = (to, from, except, desc) => {
     if (from && typeof from === "object" || typeof from === "function") {
@@ -211,7 +215,7 @@
   // node_modules/@lit/reactive-element/css-tag.js
   var t = globalThis;
   var e = t.ShadowRoot && (void 0 === t.ShadyCSS || t.ShadyCSS.nativeShadow) && "adoptedStyleSheets" in Document.prototype && "replace" in CSSStyleSheet.prototype;
-  var s = Symbol();
+  var s = /* @__PURE__ */ Symbol();
   var o = /* @__PURE__ */ new WeakMap();
   var n = class {
     constructor(t5, e5, o6) {
@@ -283,7 +287,7 @@
   } };
   var f = (t5, s5) => !i2(t5, s5);
   var b = { attribute: true, type: String, converter: u, reflect: false, useDefault: false, hasChanged: f };
-  Symbol.metadata ??= Symbol("metadata"), a.litPropertyMetadata ??= /* @__PURE__ */ new WeakMap();
+  Symbol.metadata ??= /* @__PURE__ */ Symbol("metadata"), a.litPropertyMetadata ??= /* @__PURE__ */ new WeakMap();
   var y = class extends HTMLElement {
     static addInitializer(t5) {
       this._$Ei(), (this.l ??= []).push(t5);
@@ -293,7 +297,7 @@
     }
     static createProperty(t5, s5 = b) {
       if (s5.state && (s5.attribute = false), this._$Ei(), this.prototype.hasOwnProperty(t5) && ((s5 = Object.create(s5)).wrapped = true), this.elementProperties.set(t5, s5), !s5.noAccessor) {
-        const i7 = Symbol(), h4 = this.getPropertyDescriptor(t5, i7, s5);
+        const i7 = /* @__PURE__ */ Symbol(), h4 = this.getPropertyDescriptor(t5, i7, s5);
         void 0 !== h4 && e2(this.prototype, t5, h4);
       }
     }
@@ -494,8 +498,8 @@
   var b2 = x(1);
   var w = x(2);
   var T = x(3);
-  var E = Symbol.for("lit-noChange");
-  var A = Symbol.for("lit-nothing");
+  var E = /* @__PURE__ */ Symbol.for("lit-noChange");
+  var A = /* @__PURE__ */ Symbol.for("lit-nothing");
   var C = /* @__PURE__ */ new WeakMap();
   var P = l2.createTreeWalker(l2, 129);
   function V(t5, i7) {
