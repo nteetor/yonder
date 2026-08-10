@@ -1,57 +1,60 @@
-import $ from 'jquery'
+import $ from 'jquery';
 
-import { InputBinding, registerBinding, hasDefinedProperty } from './_utils'
+import { InputBinding, registerBinding, hasDefinedProperty } from './_utils';
 
 type RangeReceiveMessageData = {
-  value?: number
-  disable?: boolean
-}
+  value?: number;
+  disable?: boolean;
+};
 
 class RangeInputBinding extends InputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-range')
+    return $(scope).find('.bsides-input-range');
   }
 
   override getValue(el: HTMLElement): number {
-    return Number($(el).find('.form-range').val())
+    return Number($(el).find('.form-range').val());
   }
 
   override subscribe(
     el: HTMLElement,
-    callback: (allowDeferred: boolean) => void
+    callback: (allowDeferred: boolean) => void,
   ): void {
     $(el).on('change.bsidesRangeInputBinding', () => {
-      callback(false)
-    })
+      callback(false);
+    });
   }
 
   override unsubscribe(el: HTMLElement): void {
-    $(el).off('.bsidesRangeInputBinding')
+    $(el).off('.bsidesRangeInputBinding');
   }
 
   override getState(el: HTMLElement): { value: number } {
     return {
-      value: this.getValue(el)
-    }
+      value: this.getValue(el),
+    };
   }
 
-  override receiveMessage(el: HTMLElement, data: RangeReceiveMessageData): void {
-    const $el = $(el)
-    const $value = $el.find('.form-range')
+  override receiveMessage(
+    el: HTMLElement,
+    data: RangeReceiveMessageData,
+  ): void {
+    const $el = $(el);
+    const $value = $el.find('.form-range');
 
     if (hasDefinedProperty(data, 'value')) {
-      $value.val(data.value!)
+      $value.val(data.value!);
     }
 
     if (hasDefinedProperty(data, 'disable')) {
-      $value.prop('disabled', data.disable!)
+      $value.prop('disabled', data.disable!);
     }
 
-    $el.trigger('change')
+    $el.trigger('change');
   }
 }
 
-registerBinding(RangeInputBinding, 'range')
+registerBinding(RangeInputBinding, 'range');
 
-export { RangeInputBinding }
-export type { RangeReceiveMessageData }
+export { RangeInputBinding };
+export type { RangeReceiveMessageData };

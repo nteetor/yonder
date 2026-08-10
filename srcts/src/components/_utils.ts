@@ -1,26 +1,26 @@
 // Modeled on bslib's srcts/src/components/_utils.ts.
 
-import type { InputBinding as InputBindingType } from 'rstudio-shiny/srcts/types/src/bindings/input'
-import type { ShinyClass } from 'rstudio-shiny/srcts/types/src'
+import type { InputBinding as InputBindingType } from 'rstudio-shiny/srcts/types/src/bindings/input';
+import type { ShinyClass } from 'rstudio-shiny/srcts/types/src';
 
-const Shiny: ShinyClass | undefined = window.Shiny
+const Shiny: ShinyClass | undefined = window.Shiny;
 
 // Exclude undefined from T
-type NotUndefined<T> = T extends undefined ? never : T
+type NotUndefined<T> = T extends undefined ? never : T;
 
 // Shiny's own InputBinding class, so bindings inherit the real contract
 // (including methods added in future Shiny versions). The fallback keeps this
 // module loadable outside a Shiny app; registerBinding() no-ops there anyway.
 const InputBinding = (
   Shiny ? Shiny.InputBinding : class {}
-) as typeof InputBindingType
+) as typeof InputBindingType;
 
 function registerBinding(
   inputBindingClass: new () => InputBindingType,
-  name: string
+  name: string,
 ): void {
   if (Shiny) {
-    Shiny.inputBindings.register(new inputBindingClass(), 'bsides.' + name)
+    Shiny.inputBindings.register(new inputBindingClass(), 'bsides.' + name);
   }
 }
 
@@ -31,26 +31,26 @@ function registerBinding(
 // aborts it, detaching them all at once. The controller map is an instance
 // field, so every binding owns its listeners independently.
 abstract class NativeEventInputBinding extends InputBinding {
-  #controllers = new WeakMap<HTMLElement, AbortController>()
+  #controllers = new WeakMap<HTMLElement, AbortController>();
 
   protected listen(
     el: HTMLElement,
     type: string,
-    handler: (event: Event) => void
+    handler: (event: Event) => void,
   ): void {
-    let controller = this.#controllers.get(el)
+    let controller = this.#controllers.get(el);
 
     if (!controller) {
-      controller = new AbortController()
-      this.#controllers.set(el, controller)
+      controller = new AbortController();
+      this.#controllers.set(el, controller);
     }
 
-    el.addEventListener(type, handler, { signal: controller.signal })
+    el.addEventListener(type, handler, { signal: controller.signal });
   }
 
   override unsubscribe(el: HTMLElement): void {
-    this.#controllers.get(el)?.abort()
-    this.#controllers.delete(el)
+    this.#controllers.get(el)?.abort();
+    this.#controllers.delete(el);
   }
 }
 
@@ -58,10 +58,10 @@ abstract class NativeEventInputBinding extends InputBinding {
 // session$sendCustomMessage("bsides:<type>", ...).
 function addCustomMessageHandler(
   type: string,
-  handler: (data: any) => void | Promise<void>
+  handler: (data: any) => void | Promise<void>,
 ): void {
   if (Shiny) {
-    Shiny.addCustomMessageHandler('bsides:' + type, handler)
+    Shiny.addCustomMessageHandler('bsides:' + type, handler);
   }
 }
 
@@ -73,14 +73,14 @@ function addCustomMessageHandler(
 // not `undefined`.
 function hasDefinedProperty<
   Prop extends keyof X,
-  X extends { [key: string]: any }
+  X extends { [key: string]: any },
 >(
   obj: X,
-  prop: Prop
+  prop: Prop,
 ): obj is X & { [key in NonNullable<Prop>]: NotUndefined<X[key]> } {
   return (
     Object.prototype.hasOwnProperty.call(obj, prop) && obj[prop] !== undefined
-  )
+  );
 }
 
 export {
@@ -89,5 +89,5 @@ export {
   registerBinding,
   addCustomMessageHandler,
   hasDefinedProperty,
-  Shiny
-}
+  Shiny,
+};

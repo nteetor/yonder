@@ -1099,7 +1099,6 @@
     }
     // All state changes live in the component; the binding only forwards.
     receiveMessage(el, data) {
-      ;
       el.receiveUpdate(data);
     }
   };
@@ -1136,7 +1135,10 @@
           for (const [key, value] of inputValues.entries()) {
             Shiny?.setInputValue?.(key, value, { priority: "event" });
           }
-          $el.data("bsides-value", event.currentTarget.value);
+          $el.data(
+            "bsides-value",
+            event.currentTarget.value
+          );
           callback(false);
         }
       );
@@ -1249,7 +1251,10 @@
     subscribe(el, callback) {
       const $el = (0, import_jquery8.default)(el);
       $el.on("click.bsidesMenuInputBinding", ".dropdown-item", (event) => {
-        $el.data("bsides-value", event.currentTarget.value);
+        $el.data(
+          "bsides-value",
+          event.currentTarget.value
+        );
         callback(false);
       });
       $el.on("change.bsidesMenuInputBinding", () => {
@@ -1845,7 +1850,6 @@
     }
     // All state changes live in the component; the binding only forwards.
     receiveMessage(el, data) {
-      ;
       el.receiveUpdate(data);
     }
   };
@@ -2083,7 +2087,7 @@
     static addMessageHandlers() {
       addCustomMessageHandler("modalShow", (data) => {
         if (typeof data.modal === "object") {
-          _Modal.showOrInsertModal(data.modal);
+          void _Modal.showOrInsertModal(data.modal);
         } else {
           const el = document.getElementById(data.modal);
           if (!el) {
@@ -2096,7 +2100,6 @@
       addCustomMessageHandler("modalClose", (data) => {
         void data;
         for (const el of document.querySelectorAll(".modal.show")) {
-          ;
           _Modal.getInstance(el)?.hide();
         }
       });

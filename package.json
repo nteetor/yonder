@@ -21,6 +21,7 @@
     "jsdom": "^29.1.1",
     "npm-run-all2": "^8.0.4",
     "postcss-cli": "^11.0.1",
+    "prettier": "^3.9.6",
     "sass": "^1.89.0",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.33.0"
@@ -28,10 +29,12 @@
   "scripts": {
     "build": "npm-run-all js css",
     "watch": "node srcts/build/index.mjs --watch",
-    "check_types": "tsc --noEmit",
-    "check_lint": "eslint srcts/src",
+    "check-types": "tsc --noEmit",
+    "check-lint": "eslint srcts/src",
+    "check-format": "prettier --check srcts/src",
+    "format": "prettier --write srcts/src",
     "js-compile": "node srcts/build/index.mjs",
-    "js": "npm-run-all check_types check_lint js-compile",
+    "js": "npm-run-all check-types check-format check-lint js-compile",
     "css-compile": "sass --style expanded --source-map --embed-sources --load-path node_modules inst/components/scss/bsides.scss:inst/www/yonder/css/bsides.css",
     "css-prefix": "postcss --config srcts/build/postcss.config.mjs --replace \"inst/www/yonder/css/bsides.css\"",
     "css-minify": "cleancss -O1 --format breakWith=lf --with-rebase --source-map --source-map-inline-sources --output inst/www/yonder/css/bsides.min.css inst/www/yonder/css/bsides.css",

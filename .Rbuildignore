@@ -19,6 +19,7 @@
 ^package-lock\.json$
 ^tsconfig\.json$
 ^eslint\.config\.mjs$
+^\.prettierrc$
 ^\.browserslistrc$
 
 # config and meta files

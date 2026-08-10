@@ -1,18 +1,18 @@
-import { LitElement, html } from 'lit'
-import { repeat } from 'lit/directives/repeat.js'
+import { LitElement, html } from 'lit';
+import { repeat } from 'lit/directives/repeat.js';
 
-import './chip'
-import type { ChipData } from './chip'
+import './chip';
+import type { ChipData } from './chip';
 
 // Message shape sent by update_chip_group() on the R side. `select`
 // replaces the checked set (shiny's convention — no merging) and may
 // arrive as a bare string: Shiny serializes length-1 vectors as scalars.
 // `enable`/`disable` are whole-input switches.
 interface ChipGroupUpdate {
-  choices?: ChipData[]
-  select?: string | string[]
-  enable?: boolean
-  disable?: boolean
+  choices?: ChipData[];
+  select?: string | string[];
+  enable?: boolean;
+  disable?: boolean;
 }
 
 // The chip group input element: a checkbox group rendered as chips. Every
@@ -28,32 +28,32 @@ class BsidesChipGroup extends LitElement {
     layout: { type: String, reflect: true },
     disabled: { type: Boolean, reflect: true },
     label: { type: String },
-    _announcement: { state: true }
-  }
+    _announcement: { state: true },
+  };
 
-  declare choices: ChipData[]
-  declare checked: string[]
-  declare type: string
-  declare layout: 'vertical' | 'horizontal'
-  declare disabled: boolean
-  declare label: string
-  declare _announcement: string
+  declare choices: ChipData[];
+  declare checked: string[];
+  declare type: string;
+  declare layout: 'vertical' | 'horizontal';
+  declare disabled: boolean;
+  declare label: string;
+  declare _announcement: string;
 
   constructor() {
-    super()
-    this.choices = []
-    this.checked = []
-    this.type = 'primary'
-    this.layout = 'vertical'
-    this.disabled = false
-    this.label = ''
-    this._announcement = ''
+    super();
+    this.choices = [];
+    this.checked = [];
+    this.type = 'primary';
+    this.layout = 'vertical';
+    this.disabled = false;
+    this.label = '';
+    this._announcement = '';
 
-    this.addEventListener('bsides-chip:toggle', this.#onChipToggle)
+    this.addEventListener('bsides-chip:toggle', this.#onChipToggle);
   }
 
   override createRenderRoot(): this {
-    return this
+    return this;
   }
 
   override render(): unknown {
@@ -73,13 +73,13 @@ class BsidesChipGroup extends LitElement {
             checkable
             ?checked=${this.checked.includes(choice.value)}
             ?disabled=${this.disabled}
-          ></bsides-chip>`
+          ></bsides-chip>`,
         )}
       </div>
       <span class="visually-hidden" aria-live="polite">
         ${this._announcement}
       </span>
-    `
+    `;
   }
 
   // Apply a server update (update_chip_group() → receiveMessage() → here).
@@ -89,93 +89,93 @@ class BsidesChipGroup extends LitElement {
     // Choices apply before select so a combined update evaluates the new
     // selection against the new choices.
     if (msg.choices !== undefined) {
-      this.choices = msg.choices
+      this.choices = msg.choices;
       // A checked value whose chip no longer exists necessarily falls out
       // of the checked set; the change event reports the new value.
-      this.checked = this.checked.filter((value) => this.#isChoice(value))
+      this.checked = this.checked.filter((value) => this.#isChoice(value));
     }
 
     if (msg.select !== undefined) {
-      const select = Array.isArray(msg.select) ? msg.select : [msg.select]
+      const select = Array.isArray(msg.select) ? msg.select : [msg.select];
       // update_chip_group() errors when it can see `values`; this guards
       // the values-unspecified path and hand-written JS.
-      const known = select.filter((value) => this.#isChoice(value))
+      const known = select.filter((value) => this.#isChoice(value));
 
       if (known.length !== select.length) {
         console.warn(
           `bsides-chip-group: dropping value(s) not found in choices: ` +
-            select.filter((value) => !this.#isChoice(value)).join(', ')
-        )
+            select.filter((value) => !this.#isChoice(value)).join(', '),
+        );
       }
 
       // Replaces the checked set, in choices order (no merging).
       this.checked = this.choices
         .map((choice) => choice.value)
-        .filter((value) => known.includes(value))
+        .filter((value) => known.includes(value));
     }
 
     // Two one-way switches; when both arrive, disable wins.
     if (msg.enable === true) {
-      this.disabled = false
+      this.disabled = false;
     }
 
     if (msg.disable === true) {
-      this.disabled = true
+      this.disabled = true;
     }
 
-    this.#dispatchChange()
+    this.#dispatchChange();
   }
 
   #isChoice(value: string): boolean {
-    return this.choices.some((choice) => choice.value === value)
+    return this.choices.some((choice) => choice.value === value);
   }
 
   #labelFor(value: string): string {
     return (
       this.choices.find((choice) => choice.value === value)?.label ?? value
-    )
+    );
   }
 
   // A chip requested a checked-state toggle (click, Enter, or Space).
   #onChipToggle = (event: Event): void => {
-    const { value } = (event as CustomEvent<{ value: string }>).detail
-    const checked = new Set(this.checked)
+    const { value } = (event as CustomEvent<{ value: string }>).detail;
+    const checked = new Set(this.checked);
 
     if (checked.has(value)) {
-      checked.delete(value)
-      this._announcement = `${this.#labelFor(value)} unchecked`
+      checked.delete(value);
+      this._announcement = `${this.#labelFor(value)} unchecked`;
     } else {
-      checked.add(value)
-      this._announcement = `${this.#labelFor(value)} checked`
+      checked.add(value);
+      this._announcement = `${this.#labelFor(value)} checked`;
     }
 
     // Report checked in choices order.
     this.checked = this.choices
       .map((choice) => choice.value)
-      .filter((choiceValue) => checked.has(choiceValue))
-    this.#dispatchChange()
-  }
+      .filter((choiceValue) => checked.has(choiceValue));
+    this.#dispatchChange();
+  };
 
   #dispatchChange(): void {
     void this.updateComplete.then(() => {
       this.dispatchEvent(
-        new CustomEvent('bsides-chip-group:change', { bubbles: true })
-      )
-    })
+        new CustomEvent('bsides-chip-group:change', { bubbles: true }),
+      );
+    });
   }
 }
 
-customElements.define('bsides-chip-group', BsidesChipGroup)
+customElements.define('bsides-chip-group', BsidesChipGroup);
 
 declare global {
   interface HTMLElementTagNameMap {
-    'bsides-chip-group': BsidesChipGroup
+    'bsides-chip-group': BsidesChipGroup;
   }
 
   interface GlobalEventHandlersEventMap {
-    'bsides-chip-group:change': CustomEvent<void>
+    'bsides-chip-group:change': CustomEvent<void>;
   }
 }
 
-export { BsidesChipGroup }
-export type { ChipGroupUpdate }
+export { BsidesChipGroup };
+export type { ChipGroupUpdate };
