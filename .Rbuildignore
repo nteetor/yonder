@@ -20,7 +20,6 @@
 ^tsconfig\.json$
 ^eslint\.config\.mjs$
 ^\.browserslistrc$
-^\.stylelintrc$
 
 # config and meta files
 ^\.git$

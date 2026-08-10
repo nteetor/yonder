@@ -22,7 +22,6 @@
     "npm-run-all2": "^8.0.4",
     "postcss-cli": "^11.0.1",
     "sass": "^1.89.0",
-    "stylelint": "^17.14.1",
     "typescript": "^6.0.3",
     "typescript-eslint": "^8.33.0"
   },
