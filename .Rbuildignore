@@ -29,7 +29,8 @@
 ^codecov\.yml$
 ^\.vscode$
 ^\.claude$
-^plan-.*\.md$
+^plan.*\.md$
+^research.*\.md$
 ^AGENTS.md$
 ^BSLIB\.md$
 ^CONTRIBUTING\.md$

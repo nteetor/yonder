@@ -14,6 +14,7 @@ shinyApp(
     input_checkbox(id = "chk", choice = "Include"),
     input_checkbox_group(id = "chkgrp", choices = c("A", "B", "C")),
     input_radio_group(id = "rad", choices = c("R1", "R2")),
+    input_numeric(id = "num"),
     input_range(id = "rng"),
     input_select(id = "sel", choices = c("S1", "S2", "S3")),
     input_text(id = "txt"),
@@ -43,6 +44,7 @@ shinyApp(
       "do_update_radio",
       \() update_radio_group("rad", choices = c("N1", "N2"), select = "N1")
     )
+    trigger("do_update_numeric", \() update_numeric("num", value = 42))
     trigger("do_update_range", \() update_range("rng", value = 30))
     trigger("do_update_select", \() update_select("sel", select = "S3"))
     trigger("do_update_text", \() update_text("txt", value = "from-server"))

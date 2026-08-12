@@ -23,8 +23,8 @@ const tick = (ms = 60) => new Promise((r) => setTimeout(r, ms))
 const body = [
   'button', 'checkbox', 'checkbox-group', 'form', 'link', 'list-group',
   'menu', 'chip-group', 'chip-group-none', 'chip-group-select',
-  'multi-select', 'multi-select-free', 'radio-group', 'range', 'select',
-  'text-group', 'modal'
+  'multi-select', 'multi-select-free', 'numeric', 'radio-group', 'range',
+  'select', 'text-group', 'modal'
 ].map((n) => `<section data-component="${n}">${html(n)}</section>`).join('\n')
 
 const dom = new JSDOM(
@@ -203,6 +203,47 @@ const native = (el, type, Ctor = win.Event, init = {}) =>
   binding.receiveMessage(target, { value: 20, disable: true })
   check('range: value applied', binding.getValue(target) === 20, binding.getValue(target))
   check('range: disabled prop', rangeInput.disabled === true)
+}
+
+// ---- numeric ----
+{
+  const { binding, els, events } = bind('bsides.numeric')
+  const el = doc.getElementById('num')
+  check('numeric: found', els.includes(el))
+  check('numeric: initial value is a number', binding.getValue(el) === 5, binding.getValue(el))
+  el.value = '7'
+  native(el, 'input')
+  check('numeric: input deferred', events.at(-1)?.deferred === true, events)
+  check('numeric: value is a number, not a string', binding.getValue(el) === 7, binding.getValue(el))
+  native(el, 'change')
+  check('numeric: change immediate', events.at(-1)?.deferred === false, events)
+  check('numeric: rate policy', eq(binding.getRatePolicy(el), { policy: 'debounce', delay: 250 }))
+
+  // an empty field reports null, which reaches the server as NULL
+  el.value = ''
+  check('numeric: empty is null', binding.getValue(el) === null, binding.getValue(el))
+
+  // format_no_sci() sends strings; a hand-built message may send numbers
+  binding.receiveMessage(el, { value: '42', min: '0', max: '100', step: '2' })
+  check('numeric: string value applied', binding.getValue(el) === 42, binding.getValue(el))
+  check('numeric: min applied', el.min === '0', el.min)
+  check('numeric: max applied', el.max === '100', el.max)
+  check('numeric: step applied', el.step === '2', el.step)
+  binding.receiveMessage(el, { value: 13 })
+  check('numeric: number value applied', binding.getValue(el) === 13, binding.getValue(el))
+
+  // an explicit null clears the attribute
+  binding.receiveMessage(el, { min: null })
+  check('numeric: null clears min', el.min === '', el.min)
+
+  binding.receiveMessage(el, { disable: true })
+  check('numeric: disabled prop', el.disabled === true)
+
+  check('numeric: state', eq(binding.getState(el), { value: 13, min: '', max: '100', step: '2' }), binding.getState(el))
+
+  // no getType(): values are sent under the bare id, and an empty field
+  // reports NULL rather than shiny's NA
+  check('numeric: no input type', binding.getType(el) === null || binding.getType(el) === undefined, binding.getType(el))
 }
 
 // ---- select ----

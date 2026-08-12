@@ -42,6 +42,8 @@ A shiny tag object.
 A numeric input.
 }
 \seealso{
+\code{\link[=update_numeric]{update_numeric()}}
+
 Other inputs:
 \code{\link[=fileInput]{fileInput()}},
 \code{\link[=floating_label]{floating_label()}},

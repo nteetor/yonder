@@ -10,6 +10,7 @@ import './components/inputLink';
 import './components/inputListGroup';
 import './components/inputMenu';
 import './components/inputMultiSelect';
+import './components/inputNumeric';
 import './components/inputRadioGroup';
 import './components/inputRange';
 import './components/inputSelect';
