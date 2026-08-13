@@ -79,6 +79,22 @@ test_that("change- and keystroke-driven bindings report values", {
   # range
   dispatch(app, "#rng .form-range", "change", value = "60")
   expect_equal(app$get_value(input = "rng"), 60L)
+
+  # numeric: debounced like the text input, and the value arrives as a number
+  dispatch(app, "#num", "input", value = "7")
+  Sys.sleep(0.4)
+  app$wait_for_idle()
+  expect_equal(app$get_value(input = "num"), 7L)
+
+  # the bsides binding takes the input over from shiny's `shiny.number`
+  expect_equal(
+    app$get_js("$('#num').data('shiny-input-binding').name"),
+    "bsides.numeric"
+  )
+
+  # an emptied input reports NULL, not shiny's NA
+  dispatch(app, "#num", "change", value = "")
+  expect_null(app$get_value(input = "num"))
 })
 
 test_that("forms hold back child inputs until submit", {
@@ -127,6 +143,9 @@ test_that("update_* functions reach the client and report back", {
   trigger(app, "do_update_radio")
   expect_match(app$get_html("#rad"), "N1")
   expect_equal(app$get_value(input = "rad"), "N1")
+
+  trigger(app, "do_update_numeric")
+  expect_equal(app$get_value(input = "num"), 42L)
 
   trigger(app, "do_update_range")
   expect_equal(app$get_value(input = "rng"), 30L)

@@ -1855,22 +1855,95 @@
   };
   registerBinding(MultiSelectInputBinding, "multiselect");
 
-  // srcts/src/components/inputRadioGroup.ts
+  // srcts/src/components/inputNumeric.ts
   var import_jquery10 = __toESM(require_jquery());
-  var RadioGroupInputBinding = class extends InputBinding {
+  function asAttr(value) {
+    return value == null ? "" : `${value}`;
+  }
+  var NumericInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery10.default)(scope).find(".bsides-input-radio-group");
+      return (0, import_jquery10.default)(scope).find(".bsides-input-numeric");
     }
+    // An empty or unparseable field reports `null`, which reaches the server as
+    // `NULL`. Shiny's binding returns the raw string when it cannot parse; that
+    // would hand R a character where it expects a number.
     getValue(el) {
-      return (0, import_jquery10.default)(el).find(".form-check-input,.btn-check").filter(":checked").val();
+      if (/^\s*$/.test(el.value)) {
+        return null;
+      }
+      const value = Number(el.value);
+      return isNaN(value) ? null : value;
+    }
+    setValue(el, value) {
+      el.value = asAttr(value);
     }
     subscribe(el, callback) {
-      (0, import_jquery10.default)(el).on("change.bsidesRadioGroupInputBinding", () => {
+      const $el = (0, import_jquery10.default)(el);
+      $el.on(
+        "keyup.bsidesNumericInputBinding input.bsidesNumericInputBinding",
+        () => {
+          callback(true);
+        }
+      );
+      $el.on("change.bsidesNumericInputBinding", () => {
         callback(false);
       });
     }
     unsubscribe(el) {
-      (0, import_jquery10.default)(el).off(".bsidesRadioGroupInputBinding");
+      (0, import_jquery10.default)(el).off(".bsidesNumericInputBinding");
+    }
+    getState(el) {
+      return {
+        value: this.getValue(el),
+        min: el.min,
+        max: el.max,
+        step: el.step
+      };
+    }
+    receiveMessage(el, data) {
+      if (hasDefinedProperty(data, "value")) {
+        this.setValue(el, data.value);
+      }
+      if (hasDefinedProperty(data, "min")) {
+        el.min = asAttr(data.min);
+      }
+      if (hasDefinedProperty(data, "max")) {
+        el.max = asAttr(data.max);
+      }
+      if (hasDefinedProperty(data, "step")) {
+        el.step = asAttr(data.step);
+      }
+      if (hasDefinedProperty(data, "disable")) {
+        el.disabled = data.disable;
+      }
+      (0, import_jquery10.default)(el).trigger("change");
+    }
+    getRatePolicy(el) {
+      void el;
+      return {
+        policy: "debounce",
+        delay: 250
+      };
+    }
+  };
+  registerBinding(NumericInputBinding, "numeric");
+
+  // srcts/src/components/inputRadioGroup.ts
+  var import_jquery11 = __toESM(require_jquery());
+  var RadioGroupInputBinding = class extends InputBinding {
+    find(scope) {
+      return (0, import_jquery11.default)(scope).find(".bsides-input-radio-group");
+    }
+    getValue(el) {
+      return (0, import_jquery11.default)(el).find(".form-check-input,.btn-check").filter(":checked").val();
+    }
+    subscribe(el, callback) {
+      (0, import_jquery11.default)(el).on("change.bsidesRadioGroupInputBinding", () => {
+        callback(false);
+      });
+    }
+    unsubscribe(el) {
+      (0, import_jquery11.default)(el).off(".bsidesRadioGroupInputBinding");
     }
     getState(el) {
       return {
@@ -1878,7 +1951,7 @@
       };
     }
     receiveMessage(el, data) {
-      const $el = (0, import_jquery10.default)(el);
+      const $el = (0, import_jquery11.default)(el);
       if (hasDefinedProperty(data, "options")) {
         $el.html(data.options);
       }
@@ -1897,21 +1970,21 @@
   registerBinding(RadioGroupInputBinding, "radiogroup");
 
   // srcts/src/components/inputRange.ts
-  var import_jquery11 = __toESM(require_jquery());
+  var import_jquery12 = __toESM(require_jquery());
   var RangeInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery11.default)(scope).find(".bsides-input-range");
+      return (0, import_jquery12.default)(scope).find(".bsides-input-range");
     }
     getValue(el) {
-      return Number((0, import_jquery11.default)(el).find(".form-range").val());
+      return Number((0, import_jquery12.default)(el).find(".form-range").val());
     }
     subscribe(el, callback) {
-      (0, import_jquery11.default)(el).on("change.bsidesRangeInputBinding", () => {
+      (0, import_jquery12.default)(el).on("change.bsidesRangeInputBinding", () => {
         callback(false);
       });
     }
     unsubscribe(el) {
-      (0, import_jquery11.default)(el).off(".bsidesRangeInputBinding");
+      (0, import_jquery12.default)(el).off(".bsidesRangeInputBinding");
     }
     getState(el) {
       return {
@@ -1919,7 +1992,7 @@
       };
     }
     receiveMessage(el, data) {
-      const $el = (0, import_jquery11.default)(el);
+      const $el = (0, import_jquery12.default)(el);
       const $value = $el.find(".form-range");
       if (hasDefinedProperty(data, "value")) {
         $value.val(data.value);
@@ -1933,10 +2006,10 @@
   registerBinding(RangeInputBinding, "range");
 
   // srcts/src/components/inputSelect.ts
-  var import_jquery12 = __toESM(require_jquery());
+  var import_jquery13 = __toESM(require_jquery());
   var SelectInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery12.default)(scope).find(".bsides-input-select");
+      return (0, import_jquery13.default)(scope).find(".bsides-input-select");
     }
     getValue(el) {
       return el.value;
@@ -1945,12 +2018,12 @@
       el.value = value;
     }
     subscribe(el, callback) {
-      (0, import_jquery12.default)(el).on("change.bsidesSelectInputBinding", () => {
+      (0, import_jquery13.default)(el).on("change.bsidesSelectInputBinding", () => {
         callback(false);
       });
     }
     unsubscribe(el) {
-      (0, import_jquery12.default)(el).off(".bsidesSelectInputBinding");
+      (0, import_jquery13.default)(el).off(".bsidesSelectInputBinding");
     }
     getState(el) {
       return {
@@ -1958,7 +2031,7 @@
       };
     }
     receiveMessage(el, data) {
-      const $el = (0, import_jquery12.default)(el);
+      const $el = (0, import_jquery13.default)(el);
       if (hasDefinedProperty(data, "options")) {
         $el.html(data.options);
       }
@@ -1976,10 +2049,10 @@
   registerBinding(SelectInputBinding, "select");
 
   // srcts/src/components/inputText.ts
-  var import_jquery13 = __toESM(require_jquery());
+  var import_jquery14 = __toESM(require_jquery());
   var TextInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery13.default)(scope).find(".bsides-input-text");
+      return (0, import_jquery14.default)(scope).find(".bsides-input-text");
     }
     getValue(el) {
       return el.value;
@@ -1988,7 +2061,7 @@
       el.value = value;
     }
     subscribe(el, callback) {
-      const $el = (0, import_jquery13.default)(el);
+      const $el = (0, import_jquery14.default)(el);
       $el.on("keyup.bsidesTextInputBinding input.bsidesTextInputBinding", () => {
         callback(true);
       });
@@ -1997,7 +2070,7 @@
       });
     }
     unsubscribe(el) {
-      (0, import_jquery13.default)(el).off(".bsidesTextInputBinding");
+      (0, import_jquery14.default)(el).off(".bsidesTextInputBinding");
     }
     getState(el) {
       return {
@@ -2011,7 +2084,7 @@
       if (hasDefinedProperty(data, "disable")) {
         el.disabled = data.disable;
       }
-      (0, import_jquery13.default)(el).trigger("change");
+      (0, import_jquery14.default)(el).trigger("change");
     }
     getRatePolicy(el) {
       void el;
@@ -2024,20 +2097,20 @@
   registerBinding(TextInputBinding, "text");
 
   // srcts/src/components/inputTextGroup.ts
-  var import_jquery14 = __toESM(require_jquery());
+  var import_jquery15 = __toESM(require_jquery());
   var TextGroupInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery14.default)(scope).find(".bsides-input-text-group");
+      return (0, import_jquery15.default)(scope).find(".bsides-input-text-group");
     }
     getValue(el) {
-      const $el = (0, import_jquery14.default)(el);
+      const $el = (0, import_jquery15.default)(el);
       if (!$el.find("input").val()) {
         return null;
       }
       return $el.find(".input-group-text,input").map((i7, e5) => e5.textContent || e5.value || "").get().join("");
     }
     subscribe(el, callback) {
-      const $el = (0, import_jquery14.default)(el);
+      const $el = (0, import_jquery15.default)(el);
       $el.on(
         "keyup.bsidesTextGroupInputBinding input.bsidesTextGroupInputBinding",
         () => {
@@ -2049,7 +2122,7 @@
       });
     }
     unsubscribe(el) {
-      (0, import_jquery14.default)(el).off(".bsidesTextGroupInputBinding");
+      (0, import_jquery15.default)(el).off(".bsidesTextGroupInputBinding");
     }
     getState(el) {
       return {
@@ -2064,7 +2137,7 @@
       };
     }
     receiveMessage(el, data) {
-      const $el = (0, import_jquery14.default)(el);
+      const $el = (0, import_jquery15.default)(el);
       const $value = $el.find("input");
       if (hasDefinedProperty(data, "value")) {
         $value.val(data.value);
@@ -2078,7 +2151,7 @@
   registerBinding(TextGroupInputBinding, "textgroup");
 
   // srcts/src/components/modal.ts
-  var import_jquery15 = __toESM(require_jquery());
+  var import_jquery16 = __toESM(require_jquery());
   var import_bootstrap = __toESM(require_bootstrap());
   var Modal = class _Modal extends import_bootstrap.Modal {
     isShown() {
@@ -2127,7 +2200,7 @@
   };
   var ModalInputBinding = class extends InputBinding {
     find(scope) {
-      return (0, import_jquery15.default)(scope).find(".bsides-modal");
+      return (0, import_jquery16.default)(scope).find(".bsides-modal");
     }
     getValue(el) {
       const modal = Modal.getInstance(el);
@@ -2137,7 +2210,7 @@
       return modal.isShown() ? "shown" : "hidden";
     }
     subscribe(el, callback) {
-      (0, import_jquery15.default)(el).on(
+      (0, import_jquery16.default)(el).on(
         "shown.bs.modal.bsidesModalInputBinding hidden.bs.modal.bsidesModalInputBinding",
         () => {
           callback(false);
@@ -2145,7 +2218,7 @@
       );
     }
     unsubscribe(el) {
-      (0, import_jquery15.default)(el).off(".bsidesModalInputBinding");
+      (0, import_jquery16.default)(el).off(".bsidesModalInputBinding");
     }
   };
   Modal.addMessageHandlers();

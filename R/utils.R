@@ -140,6 +140,18 @@ s3_class_add <-
     x
   }
 
+# Numbers reach HTML attributes through `as.character()`, where `options(scipen)`
+# decides whether a value renders as `1e+05` or `100000`. Format them the way
+# shiny's `formatNoSci()` does so the markup never depends on that option.
+format_no_sci <-
+  function(x) {
+    if (is.null(x)) {
+      return(NULL)
+    }
+
+    format(x, scientific = FALSE, digits = 15)
+  }
+
 # https://github.com/rstudio/shiny/blob/c332c051f33fe325f6c2e75426daaabb6366d50a/R/html-deps.R#L43
 dependency_process <-
   function(tags, session) {

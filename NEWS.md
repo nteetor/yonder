@@ -2,6 +2,13 @@
 
 ## Breaking changes
 
+* `input_numeric()` now carries a bsides binding. Previously the input was
+  driven by shiny's own `shiny.number` binding, and two behaviours change as a
+  result. An emptied numeric input reports `NULL` where it used to report `NA`.
+
+* `input_numeric()` passes `...` on as HTML attributes of the input element.
+  The argument was previously accepted and silently discarded.
+
 * Removed `formGroup()` and `formRow()` in favor of the new `label`
   argument. Help text, previously `formGroup(help = )`, was dropped for now
   and will return in a later release.
@@ -24,6 +31,11 @@
   and `update_menu_input()` followed suit.
 
 ## New features
+
+* New `update_numeric()`, the counterpart to `input_numeric()`. Update a
+  numeric input's `value`, `min`, `max`, `step`, or disabled state from the
+  server. The numeric input also gains its own binding, bringing it in line
+  with the rest of the inputs.
 
 * Inputs gain a `label` argument, the familiar way to label an input in
   shiny and bslib. A character string renders a standard label ahead of the

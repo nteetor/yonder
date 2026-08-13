@@ -83,6 +83,7 @@ render(
   "radio-group",
   input_radio_group(id = "rad", choices = c("Veggie", "Meat"))
 )
+render("numeric", input_numeric(id = "num", value = 5))
 render("range", input_range(id = "rng"))
 render("select", input_select(id = "sel", choices = c("S1", "S2", "S3")))
 render("text-group", input_text_group(id = "txtgrp", left = "$"))
