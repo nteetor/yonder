@@ -5,7 +5,6 @@
 #
 # Output lands in srcts/tests/html/ (gitignored; regenerated every run).
 
-options(yonder.deps = FALSE)
 suppressMessages(pkgload::load_all(quiet = TRUE))
 
 out_dir <- file.path("srcts", "tests", "html")

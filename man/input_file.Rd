@@ -104,6 +104,14 @@ enforced again by the server on every upload.
 submitted. A file input is not held back: its value is set by the
 server when the upload finishes, not by a client-side input change.
 }
+
+\subsection{Known limitations}{
+
+Bookmarking saves an uploaded file, but restoring a bookmark does not
+re-populate the input. Whole directories cannot be uploaded: the
+protocol carries bare file names, so the paths within a directory
+would not survive.
+}
 }
 \seealso{
 \code{\link[=update_file]{update_file()}}
