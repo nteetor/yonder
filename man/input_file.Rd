@@ -56,13 +56,19 @@ zone, defaults to \code{"Choose a file"}.}
 
 \item{summary}{A character string, a template for the file list's
 summary line, defaults to \code{NULL}, in which case
-\code{"{files} · {size}"} applies. Tokens are replaced from upload
-state: \code{{files}} is the pluralized count ("3 files"), \code{{n}} the bare
-count, \code{{size}} the total size, \code{{done}} the files uploaded so far,
-\code{{failed}} the files that failed, and \code{{percent}} the batch progress
-as a whole number. Unknown tokens are left as-is. The summary stays
-visible while the file list is collapsed, so the state tokens can
-make it a compact status line, e.g. \code{"{done}/{n} uploaded"}.}
+\code{"{files} · {size}"} applies. Tokens are replaced from upload state:
+\itemize{
+\item \code{{files}}, the pluralized file count, "3 files".
+\item \code{{n}}, the bare file count, "3".
+\item \code{{size}}, the total size of the batch, "2.0 MB".
+\item \code{{done}}, the number of files uploaded so far.
+\item \code{{failed}}, the number of files that failed.
+\item \code{{percent}}, the batch progress as a whole number, "63".
+}
+
+Unknown tokens are left as-is. The summary stays visible while the
+file list is collapsed, so the state tokens can make it a compact
+status line, e.g. \code{"{done}/{n} uploaded"}.}
 
 \item{height}{A character string, a CSS length setting the minimum
 height of the drop zone, defaults to \code{NULL}, in which case the drop

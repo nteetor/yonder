@@ -26,13 +26,18 @@
 #'
 #' @param summary A character string, a template for the file list's
 #'   summary line, defaults to `NULL`, in which case
-#'   `"{files} · {size}"` applies. Tokens are replaced from upload
-#'   state: `{files}` is the pluralized count ("3 files"), `{n}` the bare
-#'   count, `{size}` the total size, `{done}` the files uploaded so far,
-#'   `{failed}` the files that failed, and `{percent}` the batch progress
-#'   as a whole number. Unknown tokens are left as-is. The summary stays
-#'   visible while the file list is collapsed, so the state tokens can
-#'   make it a compact status line, e.g. `"{done}/{n} uploaded"`.
+#'   `"{files} · {size}"` applies. Tokens are replaced from upload state:
+#'
+#'   * `{files}`, the pluralized file count, "3 files".
+#'   * `{n}`, the bare file count, "3".
+#'   * `{size}`, the total size of the batch, "2.0 MB".
+#'   * `{done}`, the number of files uploaded so far.
+#'   * `{failed}`, the number of files that failed.
+#'   * `{percent}`, the batch progress as a whole number, "63".
+#'
+#'   Unknown tokens are left as-is. The summary stays visible while the
+#'   file list is collapsed, so the state tokens can make it a compact
+#'   status line, e.g. `"{done}/{n} uploaded"`.
 #'
 #' @param height A character string, a CSS length setting the minimum
 #'   height of the drop zone, defaults to `NULL`, in which case the drop
