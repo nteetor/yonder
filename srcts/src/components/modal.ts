@@ -1,10 +1,10 @@
-import $ from 'jquery';
 import { Modal as BootstrapModal } from 'bootstrap';
 
 import {
-  InputBinding,
+  NativeEventInputBinding,
   registerBinding,
   addCustomMessageHandler,
+  findAll,
   Shiny,
 } from './_utils';
 
@@ -75,9 +75,9 @@ class Modal extends BootstrapModal {
   }
 }
 
-class ModalInputBinding extends InputBinding {
+class ModalInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-modal');
+    return findAll(scope, '.bsides-modal');
   }
 
   override getValue(el: HTMLElement): string | null {
@@ -94,16 +94,15 @@ class ModalInputBinding extends InputBinding {
     el: HTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    $(el).on(
-      'shown.bs.modal.bsidesModalInputBinding hidden.bs.modal.bsidesModalInputBinding',
-      () => {
-        callback(false);
-      },
-    );
-  }
+    // Bootstrap dispatches native events whose type is the full dotted
+    // name.
+    this.listen(el, 'shown.bs.modal', () => {
+      callback(false);
+    });
 
-  override unsubscribe(el: HTMLElement): void {
-    $(el).off('.bsidesModalInputBinding');
+    this.listen(el, 'hidden.bs.modal', () => {
+      callback(false);
+    });
   }
 }
 

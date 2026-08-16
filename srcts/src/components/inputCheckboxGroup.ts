@@ -1,6 +1,10 @@
-import $ from 'jquery';
-
-import { InputBinding, registerBinding, hasDefinedProperty } from './_utils';
+import {
+  NativeEventInputBinding,
+  registerBinding,
+  announce,
+  findAll,
+  hasDefinedProperty,
+} from './_utils';
 
 type CheckboxGroupReceiveMessageData = {
   options?: string;
@@ -8,9 +12,9 @@ type CheckboxGroupReceiveMessageData = {
   disable?: string[];
 };
 
-class CheckboxGroupInputBinding extends InputBinding {
+class CheckboxGroupInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-checkbox-group');
+    return findAll(scope, '.bsides-input-checkbox-group');
   }
 
   // Matches the input handler registered by the R side.
@@ -20,24 +24,18 @@ class CheckboxGroupInputBinding extends InputBinding {
   }
 
   override getValue(el: HTMLElement): string[] {
-    return $(el)
-      .find<HTMLInputElement>('.form-check-input,.btn-check')
-      .filter(':checked')
-      .map((i, e) => e.value)
-      .get();
+    return this.#checkboxesOf(el)
+      .filter((checkbox) => checkbox.checked)
+      .map((checkbox) => checkbox.value);
   }
 
   override subscribe(
     el: HTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    $(el).on('change.bsidesCheckboxGroupInputBinding', () => {
+    this.listen(el, 'change', () => {
       callback(false);
     });
-  }
-
-  override unsubscribe(el: HTMLElement): void {
-    $(el).off('.bsidesCheckboxGroupInputBinding');
   }
 
   override getState(el: HTMLElement): { value: string[] } {
@@ -50,31 +48,31 @@ class CheckboxGroupInputBinding extends InputBinding {
     el: HTMLElement,
     data: CheckboxGroupReceiveMessageData,
   ): void {
-    const $el = $(el);
-
     if (hasDefinedProperty(data, 'options')) {
-      $el.html(data.options!);
+      el.innerHTML = data.options!;
     }
 
-    const $values = $el.find<HTMLInputElement>('.form-check-input,.btn-check');
+    const checkboxes = this.#checkboxesOf(el);
 
     if (hasDefinedProperty(data, 'select')) {
-      $values.prop('checked', false);
-
-      $values
-        .filter((i, e) => data.select!.includes(e.value))
-        .prop('checked', true);
+      for (const checkbox of checkboxes) {
+        checkbox.checked = data.select!.includes(checkbox.value);
+      }
     }
 
     if (hasDefinedProperty(data, 'disable')) {
-      $values.prop('disabled', false);
-
-      $values
-        .filter((i, e) => data.disable!.includes(e.value))
-        .prop('disabled', true);
+      for (const checkbox of checkboxes) {
+        checkbox.disabled = data.disable!.includes(checkbox.value);
+      }
     }
 
-    $el.trigger('change');
+    announce(el);
+  }
+
+  #checkboxesOf(el: HTMLElement): HTMLInputElement[] {
+    return [
+      ...el.querySelectorAll<HTMLInputElement>('.form-check-input,.btn-check'),
+    ];
   }
 }
 

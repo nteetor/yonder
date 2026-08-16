@@ -1,8 +1,12 @@
 // Modeled on Shiny's NumberInputBinding (srcts/src/bindings/input/number.ts).
 
-import $ from 'jquery';
-
-import { InputBinding, registerBinding, hasDefinedProperty } from './_utils';
+import {
+  NativeEventInputBinding,
+  registerBinding,
+  announce,
+  findAll,
+  hasDefinedProperty,
+} from './_utils';
 
 type NumericHTMLElement = HTMLInputElement;
 
@@ -24,9 +28,9 @@ function asAttr(value: NumericValue | undefined): string {
   return value == null ? '' : `${value}`;
 }
 
-class NumericInputBinding extends InputBinding {
+class NumericInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-numeric');
+    return findAll(scope, '.bsides-input-numeric');
   }
 
   // An empty or unparseable field reports `null`, which reaches the server as
@@ -50,24 +54,19 @@ class NumericInputBinding extends InputBinding {
     el: NumericHTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    const $el = $(el);
-
     // Rapid-fire events defer to the rate policy (debounce); committed
     // changes are sent immediately.
-    $el.on(
-      'keyup.bsidesNumericInputBinding input.bsidesNumericInputBinding',
-      () => {
-        callback(true);
-      },
-    );
+    this.listen(el, 'keyup', () => {
+      callback(true);
+    });
 
-    $el.on('change.bsidesNumericInputBinding', () => {
+    this.listen(el, 'input', () => {
+      callback(true);
+    });
+
+    this.listen(el, 'change', () => {
       callback(false);
     });
-  }
-
-  override unsubscribe(el: NumericHTMLElement): void {
-    $(el).off('.bsidesNumericInputBinding');
   }
 
   override getState(el: NumericHTMLElement): {
@@ -108,7 +107,7 @@ class NumericInputBinding extends InputBinding {
       el.disabled = data.disable!;
     }
 
-    $(el).trigger('change');
+    announce(el);
   }
 
   override getRatePolicy(el: HTMLElement): {

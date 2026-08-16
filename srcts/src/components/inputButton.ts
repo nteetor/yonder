@@ -1,21 +1,24 @@
 // Modeled on Shiny's ActionButtonInputBinding.
 
-import $ from 'jquery';
-
-import { InputBinding, registerBinding, hasDefinedProperty } from './_utils';
+import {
+  NativeEventInputBinding,
+  registerBinding,
+  findAll,
+  hasDefinedProperty,
+} from './_utils';
 
 type ButtonReceiveMessageData = {
   label?: string;
   disable?: boolean;
 };
 
-class ButtonInputBinding extends InputBinding {
+class ButtonInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-button');
+    return findAll(scope, '.bsides-input-button');
   }
 
   override getValue(el: HTMLElement): number {
-    return Number($(el).data('bsides-clicks')) || 0;
+    return Number(el.dataset.bsidesClicks) || 0;
   }
 
   // Matches the input handler registered by the R side.
@@ -28,15 +31,10 @@ class ButtonInputBinding extends InputBinding {
     el: HTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    $(el).on('click.bsidesButtonInputBinding', () => {
-      const clicks = Number($(el).data('bsides-clicks')) || 0;
-      $(el).data('bsides-clicks', clicks + 1);
+    this.listen(el, 'click', () => {
+      el.dataset.bsidesClicks = String(this.getValue(el) + 1);
       callback(false);
     });
-  }
-
-  override unsubscribe(el: HTMLElement): void {
-    $(el).off('.bsidesButtonInputBinding');
   }
 
   override getState(el: HTMLElement): { value: number } {

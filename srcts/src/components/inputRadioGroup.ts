@@ -1,6 +1,10 @@
-import $ from 'jquery';
-
-import { InputBinding, registerBinding, hasDefinedProperty } from './_utils';
+import {
+  NativeEventInputBinding,
+  registerBinding,
+  announce,
+  findAll,
+  hasDefinedProperty,
+} from './_utils';
 
 type RadioGroupReceiveMessageData = {
   options?: string;
@@ -8,26 +12,24 @@ type RadioGroupReceiveMessageData = {
   disable?: string[];
 };
 
-class RadioGroupInputBinding extends InputBinding {
+class RadioGroupInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-radio-group');
+    return findAll(scope, '.bsides-input-radio-group');
   }
 
-  override getValue(el: HTMLElement): string | number | string[] | undefined {
-    return $(el).find('.form-check-input,.btn-check').filter(':checked').val();
+  override getValue(el: HTMLElement): string | undefined {
+    return el.querySelector<HTMLInputElement>(
+      '.form-check-input:checked,.btn-check:checked',
+    )?.value;
   }
 
   override subscribe(
     el: HTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    $(el).on('change.bsidesRadioGroupInputBinding', () => {
+    this.listen(el, 'change', () => {
       callback(false);
     });
-  }
-
-  override unsubscribe(el: HTMLElement): void {
-    $(el).off('.bsidesRadioGroupInputBinding');
   }
 
   override getState(el: HTMLElement): { value: unknown } {
@@ -40,31 +42,27 @@ class RadioGroupInputBinding extends InputBinding {
     el: HTMLElement,
     data: RadioGroupReceiveMessageData,
   ): void {
-    const $el = $(el);
-
     if (hasDefinedProperty(data, 'options')) {
-      $el.html(data.options!);
+      el.innerHTML = data.options!;
     }
 
-    const $values = $el.find<HTMLInputElement>('.form-check-input,.btn-check');
+    const radios = el.querySelectorAll<HTMLInputElement>(
+      '.form-check-input,.btn-check',
+    );
 
     if (hasDefinedProperty(data, 'select')) {
-      $values.prop('checked', false);
-
-      $values
-        .filter((i, e) => data.select!.includes(e.value))
-        .prop('checked', true);
+      for (const radio of radios) {
+        radio.checked = data.select!.includes(radio.value);
+      }
     }
 
     if (hasDefinedProperty(data, 'disable')) {
-      $values.prop('disabled', false);
-
-      $values
-        .filter((i, e) => data.disable!.includes(e.value))
-        .prop('disabled', true);
+      for (const radio of radios) {
+        radio.disabled = data.disable!.includes(radio.value);
+      }
     }
 
-    $el.trigger('change');
+    announce(el);
   }
 }
 

@@ -1,28 +1,28 @@
-import $ from 'jquery';
-
-import { InputBinding, registerBinding, hasDefinedProperty } from './_utils';
+import {
+  NativeEventInputBinding,
+  registerBinding,
+  announce,
+  findAll,
+  hasDefinedProperty,
+} from './_utils';
 
 type TextGroupReceiveMessageData = {
   value?: string;
   disable?: boolean;
 };
 
-class TextGroupInputBinding extends InputBinding {
+class TextGroupInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-text-group');
+    return findAll(scope, '.bsides-input-text-group');
   }
 
   override getValue(el: HTMLElement): string | null {
-    const $el = $(el);
-
-    if (!$el.find('input').val()) {
+    if (!this.#inputOf(el).value) {
       return null;
     }
 
-    return $el
-      .find('.input-group-text,input')
-      .map((i, e) => e.textContent || (e as HTMLInputElement).value || '')
-      .get()
+    return [...el.querySelectorAll('.input-group-text,input')]
+      .map((e) => e.textContent || (e as HTMLInputElement).value || '')
       .join('');
   }
 
@@ -30,24 +30,19 @@ class TextGroupInputBinding extends InputBinding {
     el: HTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    const $el = $(el);
-
     // Rapid-fire events defer to the rate policy (debounce); committed
     // changes are sent immediately.
-    $el.on(
-      'keyup.bsidesTextGroupInputBinding input.bsidesTextGroupInputBinding',
-      () => {
-        callback(true);
-      },
-    );
+    this.listen(el, 'keyup', () => {
+      callback(true);
+    });
 
-    $el.on('change.bsidesTextGroupInputBinding', () => {
+    this.listen(el, 'input', () => {
+      callback(true);
+    });
+
+    this.listen(el, 'change', () => {
       callback(false);
     });
-  }
-
-  override unsubscribe(el: HTMLElement): void {
-    $(el).off('.bsidesTextGroupInputBinding');
   }
 
   override getState(el: HTMLElement): { value: string | null } {
@@ -71,18 +66,21 @@ class TextGroupInputBinding extends InputBinding {
     el: HTMLElement,
     data: TextGroupReceiveMessageData,
   ): void {
-    const $el = $(el);
-    const $value = $el.find('input');
+    const input = this.#inputOf(el);
 
     if (hasDefinedProperty(data, 'value')) {
-      $value.val(data.value!);
+      input.value = data.value!;
     }
 
     if (hasDefinedProperty(data, 'disable')) {
-      $value.prop('disabled', data.disable!);
+      input.disabled = data.disable!;
     }
 
-    $el.trigger('change');
+    announce(el);
+  }
+
+  #inputOf(el: HTMLElement): HTMLInputElement {
+    return el.querySelector<HTMLInputElement>('input')!;
   }
 }
 

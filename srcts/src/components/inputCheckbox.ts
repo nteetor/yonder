@@ -1,6 +1,10 @@
-import $ from 'jquery';
-
-import { InputBinding, registerBinding, hasDefinedProperty } from './_utils';
+import {
+  NativeEventInputBinding,
+  registerBinding,
+  announce,
+  findAll,
+  hasDefinedProperty,
+} from './_utils';
 
 type CheckboxReceiveMessageData = {
   choice?: string;
@@ -8,26 +12,22 @@ type CheckboxReceiveMessageData = {
   disable?: boolean;
 };
 
-class CheckboxInputBinding extends InputBinding {
+class CheckboxInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-checkbox');
+    return findAll(scope, '.bsides-input-checkbox');
   }
 
   override getValue(el: HTMLElement): boolean {
-    return $(el).children('.form-check-input').prop('checked') as boolean;
+    return this.#checkboxOf(el).checked;
   }
 
   override subscribe(
     el: HTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    $(el).on('change.bsidesCheckboxInputBinding', () => {
+    this.listen(el, 'change', () => {
       callback(false);
     });
-  }
-
-  override unsubscribe(el: HTMLElement): void {
-    $(el).off('.bsidesCheckboxInputBinding');
   }
 
   override getState(el: HTMLElement): { value: boolean } {
@@ -40,21 +40,27 @@ class CheckboxInputBinding extends InputBinding {
     el: HTMLElement,
     data: CheckboxReceiveMessageData,
   ): void {
-    const $el = $(el);
-
     if (hasDefinedProperty(data, 'choice')) {
-      $el.find('.form-check-label').html(data.choice!);
+      const label = el.querySelector('.form-check-label');
+
+      if (label) {
+        label.innerHTML = data.choice!;
+      }
     }
 
     if (hasDefinedProperty(data, 'value')) {
-      $el.find('.form-check-input').prop('checked', data.value!);
+      this.#checkboxOf(el).checked = data.value!;
     }
 
     if (hasDefinedProperty(data, 'disable')) {
-      $el.find('.form-check-input').prop('disabled', data.disable!);
+      this.#checkboxOf(el).disabled = data.disable!;
     }
 
-    $el.trigger('change');
+    announce(el);
+  }
+
+  #checkboxOf(el: HTMLElement): HTMLInputElement {
+    return el.querySelector<HTMLInputElement>(':scope > .form-check-input')!;
   }
 }
 

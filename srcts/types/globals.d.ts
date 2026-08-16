@@ -8,6 +8,8 @@ import type { HtmlDep } from 'rstudio-shiny/srcts/types/src/shiny/render'
 declare global {
   interface Window {
     Shiny?: ShinyClass
+    // Shiny's page-global jQuery (see inputForm.ts).
+    jQuery?: JQueryStatic
   }
 
   // The { html, deps } payload shape produced by the R side for

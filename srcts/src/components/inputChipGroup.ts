@@ -1,6 +1,4 @@
-import $ from 'jquery';
-
-import { NativeEventInputBinding, registerBinding } from './_utils';
+import { NativeEventInputBinding, findAll, registerBinding } from './_utils';
 import './webcomponents/chipGroup';
 import type {
   BsidesChipGroup,
@@ -12,7 +10,7 @@ import type {
 // Listener cleanup is inherited from NativeEventInputBinding.
 class ChipGroupInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('bsides-chip-group');
+    return findAll(scope, 'bsides-chip-group');
   }
 
   override getValue(el: HTMLElement): string[] {

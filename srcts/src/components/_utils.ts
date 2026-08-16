@@ -24,6 +24,18 @@ function registerBinding(
   }
 }
 
+// Shiny consumes find() results via .length and indexing only, so a
+// NodeList satisfies the declared JQuery return type.
+function findAll(scope: HTMLElement, selector: string): JQuery<HTMLElement> {
+  return scope.querySelectorAll<HTMLElement>(
+    selector,
+  ) as unknown as JQuery<HTMLElement>;
+}
+
+function announce(el: HTMLElement): void {
+  el.dispatchEvent(new Event('change', { bubbles: true }));
+}
+
 // Base class for bindings that use native DOM events instead of jQuery.
 // jQuery bindings clean up by event namespace; native listeners have no
 // namespaces, so each binding instance keeps a per-element AbortController:
@@ -46,6 +58,23 @@ abstract class NativeEventInputBinding extends InputBinding {
     }
 
     el.addEventListener(type, handler, { signal: controller.signal });
+  }
+
+  protected listenDelegated(
+    el: HTMLElement,
+    type: string,
+    selector: string,
+    handler: (event: Event, target: HTMLElement) => void,
+  ): void {
+    this.listen(el, type, (event) => {
+      const target = (event.target as HTMLElement | null)?.closest<HTMLElement>(
+        selector,
+      );
+
+      if (target && el.contains(target)) {
+        handler(event, target);
+      }
+    });
   }
 
   override unsubscribe(el: HTMLElement): void {
@@ -88,6 +117,8 @@ export {
   NativeEventInputBinding,
   registerBinding,
   addCustomMessageHandler,
+  announce,
+  findAll,
   hasDefinedProperty,
   Shiny,
 };

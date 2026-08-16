@@ -76,7 +76,7 @@ function bind(name) {
   const binding = registered[name]
   if (!binding) throw new Error(`binding not registered: ${name}`)
 
-  const els = binding.find(doc.body).get()
+  const els = [...binding.find(doc.body)]
   const events = []
 
   for (const el of els) {
