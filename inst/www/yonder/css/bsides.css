@@ -12300,14 +12300,6 @@ bsides-file .file-item.error .file-item-progress::before {
 }
 bsides-file .file-cancel {
   flex-shrink: 0;
-  padding: 0;
-  color: var(--bs-link-color);
-  background: none;
-  border: 0;
-}
-bsides-file .file-cancel:hover {
-  color: var(--bs-link-hover-color);
-  text-decoration: underline;
 }
 bsides-file .file-errors {
   margin: 0.5rem 0 0;

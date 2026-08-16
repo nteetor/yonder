@@ -1462,7 +1462,11 @@
         this._batch,
         "Upload progress"
       )}
-        <button type="button" class="file-cancel" @click=${this.#onCancel}>
+        <button
+          type="button"
+          class="btn btn-danger btn-sm file-cancel"
+          @click=${this.#onCancel}
+        >
           Cancel
         </button>
       </div>

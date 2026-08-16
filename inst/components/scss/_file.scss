@@ -154,17 +154,9 @@ bsides-file {
     }
   }
 
+  // Appearance comes from Bootstrap's button classes on the element.
   .file-cancel {
     flex-shrink: 0;
-    padding: 0;
-    color: var(--bs-link-color);
-    background: none;
-    border: 0;
-
-    &:hover {
-      color: var(--bs-link-hover-color);
-      text-decoration: underline;
-    }
   }
 
   .file-errors {

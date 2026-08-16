@@ -963,6 +963,9 @@ for (const name of Object.keys(registered)) {
     el.querySelector('.file-item-size').textContent === '10 B',
     el.querySelector('.file-item-size').textContent)
   check('file: cancel offered while in flight', el.querySelector('.file-cancel') !== null)
+  check('file: cancel is a danger button',
+    el.querySelector('.file-cancel').className === 'btn btn-danger btn-sm file-cancel',
+    el.querySelector('.file-cancel').className)
 
   await tick(30)
   await el.updateComplete
