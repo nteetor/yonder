@@ -5,6 +5,7 @@ import './components/inputButton';
 import './components/inputCheckbox';
 import './components/inputCheckboxGroup';
 import './components/inputChipGroup';
+import './components/inputFile';
 import './components/inputForm';
 import './components/inputLink';
 import './components/inputListGroup';

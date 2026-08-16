@@ -1114,6 +1114,492 @@
   };
   registerBinding(ChipGroupInputBinding, "chipgroup");
 
+  // node_modules/lit-html/directives/if-defined.js
+  var o5 = (o6) => o6 ?? A;
+
+  // srcts/src/components/upload.ts
+  var Uploader = class {
+    #inputId;
+    #files;
+    #callbacks;
+    #totalBytes;
+    #doneBytes = 0;
+    #shinyapp = null;
+    #xhr = null;
+    #cancelled = false;
+    #finished = false;
+    constructor(options) {
+      const { inputId, files, ...callbacks } = options;
+      this.#inputId = inputId;
+      this.#files = files;
+      this.#callbacks = callbacks;
+      this.#totalBytes = files.reduce((total, file) => total + file.size, 0);
+    }
+    // Runs the whole batch. Resolves once the batch has ended for any
+    // reason — completion, error, or cancellation; callers observe which
+    // through the callbacks.
+    async run() {
+      const shinyapp = window.Shiny?.shinyapp;
+      if (!shinyapp?.isConnected()) {
+        this.#fail("Not connected to the server.");
+        return;
+      }
+      this.#shinyapp = shinyapp;
+      if (this.#files.length === 0) {
+        this.#finish();
+        return;
+      }
+      this.#progress(null, 0, 0);
+      let job;
+      try {
+        job = await this.#uploadInit();
+      } catch (error) {
+        this.#fail(messageOf(error));
+        return;
+      }
+      if (this.#isCancelled()) {
+        return;
+      }
+      for (const file of this.#files) {
+        this.#progress(file, 0, this.#fraction(this.#doneBytes));
+        try {
+          await this.#post(job.uploadUrl, file);
+        } catch (error) {
+          this.#fail(messageOf(error));
+          return;
+        }
+        if (this.#isCancelled()) {
+          return;
+        }
+        this.#doneBytes += file.size;
+        this.#callbacks.onFileDone?.(file);
+      }
+      try {
+        await this.#uploadEnd(job.jobId);
+      } catch (error) {
+        this.#fail(messageOf(error));
+        return;
+      }
+      if (this.#isCancelled()) {
+        return;
+      }
+      this.#progress(null, 0, 1);
+      this.#finish();
+    }
+    // Abandons the batch: the in-flight POST is aborted and `uploadEnd`
+    // never runs, so the server never sets input$<id>. The session cleans up
+    // the orphaned upload operation and its temp files.
+    cancel() {
+      if (this.#finished) {
+        return;
+      }
+      this.#cancelled = true;
+      this.#finished = true;
+      this.#xhr?.abort();
+      this.#xhr = null;
+    }
+    #uploadInit() {
+      const info = this.#files.map((file) => ({
+        name: file.name,
+        size: file.size,
+        type: file.type
+      }));
+      return this.#request("uploadInit", [info]);
+    }
+    #uploadEnd(jobId) {
+      return this.#request("uploadEnd", [jobId, this.#inputId]);
+    }
+    // Only reachable after run() has resolved and stored the connected app.
+    #request(method, args) {
+      const shinyapp = this.#shinyapp;
+      if (!shinyapp) {
+        return Promise.reject(new Error("Not connected to the server."));
+      }
+      return new Promise((resolve, reject) => {
+        shinyapp.makeRequest(
+          method,
+          args,
+          resolve,
+          (error) => reject(new Error(error)),
+          void 0
+        );
+      });
+    }
+    #post(url, file) {
+      return new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest();
+        this.#xhr = xhr;
+        xhr.open("POST", url, true);
+        xhr.setRequestHeader("Content-Type", "application/octet-stream");
+        xhr.upload.onprogress = (event) => {
+          if (event.lengthComputable) {
+            this.#progress(
+              file,
+              event.loaded,
+              this.#fraction(this.#doneBytes + event.loaded)
+            );
+          }
+        };
+        xhr.onload = () => {
+          this.#xhr = null;
+          if (xhr.status >= 200 && xhr.status < 300) {
+            resolve();
+          } else {
+            reject(
+              new Error(xhr.responseText || `Upload failed (${xhr.status})`)
+            );
+          }
+        };
+        xhr.onerror = () => {
+          this.#xhr = null;
+          reject(new Error("Upload failed."));
+        };
+        xhr.onabort = () => {
+          this.#xhr = null;
+          resolve();
+        };
+        xhr.send(file);
+      });
+    }
+    // Read through a call, not the field: cancel() runs between the awaits
+    // in run(), which control-flow narrowing of a plain field read cannot
+    // account for.
+    #isCancelled() {
+      return this.#cancelled;
+    }
+    #fraction(bytes) {
+      return this.#totalBytes > 0 ? bytes / this.#totalBytes : 0;
+    }
+    #progress(file, loaded, batch) {
+      this.#callbacks.onProgress?.({
+        file,
+        loaded,
+        batch: Math.min(Math.max(batch, 0), 1)
+      });
+    }
+    #fail(message) {
+      if (this.#finished) {
+        return;
+      }
+      this.#finished = true;
+      this.#callbacks.onError?.(message);
+    }
+    #finish() {
+      if (this.#finished) {
+        return;
+      }
+      this.#finished = true;
+      this.#callbacks.onDone?.();
+    }
+  };
+  function messageOf(error) {
+    if (error instanceof Error) {
+      return error.message || "Upload failed.";
+    }
+    return typeof error === "string" && error ? error : "Upload failed.";
+  }
+
+  // srcts/src/components/webcomponents/file.ts
+  var BsidesFile = class extends i4 {
+    static properties = {
+      multiple: { type: Boolean, reflect: true },
+      accept: { type: String, reflect: true },
+      capture: { type: String, reflect: true },
+      placeholder: { type: String },
+      disabled: { type: Boolean, reflect: true },
+      maxSize: { type: Number, attribute: "data-max-size" },
+      _items: { state: true },
+      _error: { state: true },
+      _announcement: { state: true },
+      _batch: { state: true },
+      _uploading: { state: true }
+    };
+    // The batch in flight, if any. One at a time: a new selection cancels
+    // and restarts, matching "the selection is the value" semantics.
+    #uploader = null;
+    constructor() {
+      super();
+      this.multiple = false;
+      this.accept = "";
+      this.capture = "";
+      this.placeholder = "Choose a file";
+      this.disabled = false;
+      this.maxSize = null;
+      this._items = [];
+      this._error = "";
+      this._announcement = "";
+      this._batch = 0;
+      this._uploading = false;
+    }
+    createRenderRoot() {
+      return this;
+    }
+    disconnectedCallback() {
+      super.disconnectedCallback();
+      this.#uploader?.cancel();
+      this.#uploader = null;
+    }
+    render() {
+      return b2`
+      <div class="file-dropzone" @click=${this.#onDropzoneClick}>
+        <!-- The real, focusable control, visually hidden by the SCSS so
+             native keyboard and screen reader behavior survive.
+             data-shiny-no-bind-input is required: Shiny's own file input
+             binding finds every input[type="file"] and would otherwise
+             attach its uploader, and its progress markup, to this one. -->
+        <input
+          type="file"
+          class="file-input"
+          ?multiple=${this.multiple}
+          accept=${o5(this.accept || void 0)}
+          capture=${o5(this.capture || void 0)}
+          ?disabled=${this.disabled || this._uploading}
+          data-shiny-no-bind-input
+          @change=${this.#onChange}
+        />
+        <span class="file-prompt">${this.placeholder}</span>
+      </div>
+      ${this.#renderList()} ${this.#renderBatch()}
+      <p class="file-errors" role="alert">${this._error}</p>
+      <span class="visually-hidden" aria-live="polite"
+        >${this._announcement}</span
+      >
+    `;
+    }
+    #renderList() {
+      if (this._items.length === 0) {
+        return A;
+      }
+      return b2`
+      <ul class="file-list" role="list">
+        ${c4(
+        this._items,
+        (item) => item.file,
+        (item) => b2`
+            <li class="file-item ${item.status}">
+              <span class="file-item-name">${item.file.name}</span>
+              <span class="file-item-size">${formatSize(item.file.size)}</span>
+              ${this.#renderProgress(
+          "file-item-progress",
+          item.progress,
+          `${item.file.name} upload progress`
+        )}
+            </li>
+          `
+      )}
+      </ul>
+    `;
+    }
+    // Batch progress and the cancel control, both meaningful only while a
+    // batch is in flight.
+    #renderBatch() {
+      if (!this._uploading) {
+        return A;
+      }
+      return b2`
+      <div class="file-batch">
+        ${this.#renderProgress(
+        "file-batch-progress",
+        this._batch,
+        "Upload progress"
+      )}
+        <button type="button" class="file-cancel" @click=${this.#onCancel}>
+          Cancel
+        </button>
+      </div>
+    `;
+    }
+    // Progress as an inline custom property rather than a nested bar with a
+    // width: the markup stays flat and the SCSS owns the visual.
+    #renderProgress(className, fraction, label) {
+      const percent = Math.round(fraction * 100);
+      return b2`<span
+      class=${className}
+      role="progressbar"
+      aria-label=${label}
+      aria-valuemin="0"
+      aria-valuemax="100"
+      aria-valuenow=${percent}
+      style="--bsides-file-progress: ${percent}%"
+    ></span>`;
+    }
+    // Apply a server update (update_file() → receiveMessage() → here).
+    receiveUpdate(msg) {
+      if (msg.reset === true) {
+        this.#reset();
+      }
+      if (msg.accept !== void 0) {
+        this.accept = msg.accept;
+      }
+      if (msg.placeholder !== void 0) {
+        this.placeholder = msg.placeholder;
+      }
+      if (msg.enable === true) {
+        this.disabled = false;
+      }
+      if (msg.disable === true) {
+        this.disabled = true;
+      }
+    }
+    get #inputElement() {
+      return this.querySelector(".file-input");
+    }
+    // The dropzone forwards clicks to the real input. Clicks landing on the
+    // input itself already open the picker; forwarding them would open it
+    // twice.
+    #onDropzoneClick = (event) => {
+      if (this.disabled || this._uploading) {
+        return;
+      }
+      if (event.target !== this.#inputElement) {
+        this.#inputElement?.click();
+      }
+    };
+    #onChange = (event) => {
+      const input = event.target;
+      const files = Array.from(input.files ?? []);
+      input.value = "";
+      if (files.length > 0) {
+        this.upload(files);
+      }
+    };
+    #onCancel = () => {
+      this.#uploader?.cancel();
+      this.#uploader = null;
+      this._uploading = false;
+      this._items = this._items.map(
+        (item) => item.status === "done" ? item : { ...item, status: "error" }
+      );
+      this.#announce("Upload cancelled");
+    };
+    // Starts a batch, replacing any batch already in flight.
+    upload(files) {
+      this.#uploader?.cancel();
+      this._error = "";
+      this._batch = 0;
+      this._uploading = true;
+      this._items = files.map((file) => ({
+        file,
+        status: "pending",
+        progress: 0
+      }));
+      this.#announce(
+        files.length === 1 ? `Uploading ${files[0].name}` : `Uploading ${files.length} files`
+      );
+      const uploader = new Uploader({
+        inputId: this.id,
+        files,
+        onProgress: ({ file, loaded, batch }) => {
+          this._batch = batch;
+          if (file) {
+            this.#updateItem(file, {
+              status: "uploading",
+              progress: file.size > 0 ? loaded / file.size : 1
+            });
+          }
+          this.dispatchEvent(
+            new CustomEvent("bsides-file:progress", {
+              bubbles: true,
+              detail: { file, loaded, batch }
+            })
+          );
+        },
+        onFileDone: (file) => {
+          this.#updateItem(file, { status: "done", progress: 1 });
+        },
+        onError: (message) => {
+          this.#uploader = null;
+          this._uploading = false;
+          this._error = message;
+          this._items = this._items.map(
+            (item) => item.status === "done" ? item : { ...item, status: "error" }
+          );
+          this.#announce(message);
+        },
+        onDone: () => {
+          this.#uploader = null;
+          this._uploading = false;
+          this._batch = 1;
+          this.#announce(
+            files.length === 1 ? `${files[0].name} uploaded` : `${files.length} files uploaded`
+          );
+        }
+      });
+      this.#uploader = uploader;
+      void uploader.run();
+    }
+    #updateItem(file, changes) {
+      this._items = this._items.map(
+        (item) => item.file === file ? { ...item, ...changes } : item
+      );
+    }
+    #reset() {
+      this.#uploader?.cancel();
+      this.#uploader = null;
+      this._items = [];
+      this._error = "";
+      this._batch = 0;
+      this._uploading = false;
+      const input = this.#inputElement;
+      if (input) {
+        input.value = "";
+      }
+    }
+    #announce(message) {
+      this._announcement = message;
+    }
+    // Marks the whole component busy while bytes are in transit. Set on the
+    // host, which render() cannot reach: this element renders into light DOM
+    // and so owns its children, not its own attributes.
+    updated(changed) {
+      if (changed.has("_uploading")) {
+        if (this._uploading) {
+          this.setAttribute("aria-busy", "true");
+        } else {
+          this.removeAttribute("aria-busy");
+        }
+      }
+    }
+  };
+  function formatSize(bytes) {
+    const units = ["B", "kB", "MB", "GB", "TB"];
+    let size = bytes;
+    let unit = 0;
+    while (size >= 1e3 && unit < units.length - 1) {
+      size = size / 1e3;
+      unit++;
+    }
+    const rounded = unit === 0 ? size : Math.round(size * 10) / 10;
+    return `${rounded} ${units[unit]}`;
+  }
+  customElements.define("bsides-file", BsidesFile);
+
+  // srcts/src/components/inputFile.ts
+  var FileInputBinding = class extends NativeEventInputBinding {
+    find(scope) {
+      return findAll(scope, "bsides-file");
+    }
+    getValue(el) {
+      void el;
+      return null;
+    }
+    getType(el) {
+      void el;
+      return "shiny.file";
+    }
+    // Nothing to subscribe to: uploads reach the server over HTTP and are
+    // announced by the protocol's uploadEnd, not by an input change.
+    subscribe(el, callback) {
+      void el;
+      void callback;
+    }
+    // All state changes live in the component; the binding only forwards.
+    receiveMessage(el, data) {
+      el.receiveUpdate(data);
+    }
+  };
+  registerBinding(FileInputBinding, "file");
+
   // srcts/src/components/inputForm.ts
   var formValues = /* @__PURE__ */ new WeakMap();
   var FormInputBinding = class extends NativeEventInputBinding {
@@ -1292,9 +1778,6 @@
     }
   };
   registerBinding(MenuInputBinding, "menu");
-
-  // node_modules/lit-html/directives/if-defined.js
-  var o5 = (o6) => o6 ?? A;
 
   // srcts/src/components/webcomponents/multiSelect.ts
   var supportsPopover = typeof HTMLElement.prototype.showPopover === "function";

@@ -1,0 +1,172 @@
+bsides-file {
+  // The theme override API: the progress fill's color and track, and the
+  // dropzone's accent while a drag hovers it.
+  --bsides-file-progress-bg: var(--bs-primary);
+  --bsides-file-track-bg: var(--bs-secondary-bg);
+  --bsides-file-accent: var(--bs-primary);
+
+  display: block;
+
+  // The drop target and click surface. Styled from Bootstrap's input
+  // tokens rather than .form-control, whose single-line display/height
+  // assumptions fight this layout.
+  > .file-dropzone {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    // Room to aim a drag at, without a fixed height that would clip a
+    // long prompt.
+    min-height: calc(#{$input-height} * 2);
+    padding: .75rem 1rem;
+    text-align: center;
+    cursor: pointer;
+    background-color: var(--bs-body-bg);
+    border: var(--bs-border-width) dashed var(--bs-border-color);
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+
+    @media (prefers-reduced-motion: reduce) {
+      transition: none;
+    }
+
+    // The focus ring lives on the dropzone: the real input inside it is
+    // clipped to a point and can show no ring of its own.
+    &:focus-within {
+      border-color: $input-focus-border-color;
+      box-shadow: $input-btn-focus-box-shadow;
+    }
+  }
+
+  // Hidden but not display: none — the input stays focusable, keyboard
+  // operable, and the accessible name-bearer for the control.
+  .file-input {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
+    border: 0;
+  }
+
+  .file-prompt {
+    color: var(--bs-secondary-color);
+  }
+
+  .file-list {
+    margin: .5rem 0 0;
+    padding: 0;
+    list-style: none;
+  }
+
+  .file-item {
+    display: grid;
+    // Name takes the slack; size and progress hold their own columns.
+    grid-template-columns: 1fr auto;
+    gap: .125rem .5rem;
+    align-items: center;
+    padding: .375rem 0;
+
+    + .file-item {
+      border-top: var(--bs-border-width) solid var(--bs-border-color);
+    }
+  }
+
+  .file-item-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .file-item-size {
+    color: var(--bs-secondary-color);
+    font-size: .875em;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .file-item-progress {
+    // Spans both columns, under the name and size.
+    grid-column: 1 / -1;
+  }
+
+  .file-batch {
+    display: flex;
+    gap: .5rem;
+    align-items: center;
+    margin-top: .5rem;
+
+    .file-batch-progress {
+      flex: 1 1 auto;
+    }
+  }
+
+  // Both bars: a track filled to --bsides-file-progress, which the
+  // component sets inline per render.
+  .file-item-progress,
+  .file-batch-progress {
+    display: block;
+    height: .25rem;
+    overflow: hidden;
+    background-color: var(--bsides-file-track-bg);
+    border-radius: var(--bs-border-radius-pill);
+
+    &::before {
+      display: block;
+      width: var(--bsides-file-progress, 0%);
+      height: 100%;
+      content: '';
+      background-color: var(--bsides-file-progress-bg);
+      transition: width .15s linear;
+
+      @media (prefers-reduced-motion: reduce) {
+        transition: none;
+      }
+    }
+  }
+
+  // A finished file needs no bar; a failed one shows how far it got, in
+  // the danger color.
+  .file-item.done .file-item-progress {
+    visibility: hidden;
+  }
+
+  .file-item.error {
+    color: var(--bs-danger);
+
+    .file-item-progress::before {
+      background-color: var(--bs-danger);
+    }
+  }
+
+  .file-cancel {
+    flex-shrink: 0;
+    padding: 0;
+    color: var(--bs-link-color);
+    background: none;
+    border: 0;
+
+    &:hover {
+      color: var(--bs-link-hover-color);
+      text-decoration: underline;
+    }
+  }
+
+  .file-errors {
+    margin: .5rem 0 0;
+    color: var(--bs-danger);
+    font-size: .875em;
+
+    // The element is always present for role="alert" to work; collapse it
+    // when there is nothing to announce.
+    &:empty {
+      display: none;
+    }
+  }
+
+  &[disabled] > .file-dropzone {
+    cursor: default;
+    background-color: var(--bs-secondary-bg);
+  }
+}

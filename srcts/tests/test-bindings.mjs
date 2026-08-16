@@ -22,7 +22,7 @@ const html = (name) => read(path.join('srcts/tests/html', `${name}.html`))
 const tick = (ms = 60) => new Promise((r) => setTimeout(r, ms))
 
 const body = [
-  'button', 'checkbox', 'checkbox-group', 'form', 'link', 'list-group',
+  'button', 'checkbox', 'checkbox-group', 'file', 'form', 'link', 'list-group',
   'menu', 'chip-group', 'chip-group-none', 'chip-group-select',
   'multi-select', 'multi-select-free', 'numeric', 'radio-group', 'range',
   'select', 'text-group', 'modal'
@@ -906,6 +906,132 @@ for (const name of Object.keys(registered)) {
   handlers['bsides:modalClose']({})
   await tick(400)
   check('modal: hidden after modalClose', binding.getValue(el) === 'hidden', binding.getValue(el))
+}
+
+// ---- file ----
+{
+  const { binding, els, events } = bind('bsides.file')
+  const el = doc.getElementById('upl')
+  const input = el.querySelector('.file-input')
+
+  win.__connected = true
+  win.__requests = []
+  win.__posts = []
+  win.__requestPlan = null
+  win.__postPlan = null
+  win.__deferredPosts = []
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+
+  check('file: found', els.includes(el))
+  // The server sets input$<id> at uploadEnd, so bind time is all the
+  // binding answers — the stock file input's null/"shiny.file" pair.
+  check('file: getValue is null', binding.getValue(el) === null)
+  check('file: getType', binding.getType(el) === 'shiny.file')
+
+  // R attributes reach the component's properties.
+  check('file: multiple from attribute', el.multiple === true)
+  check('file: accept from attribute', el.accept === '.csv,text/csv', el.accept)
+  check('file: max size from data attribute', el.maxSize === 5242880, el.maxSize)
+
+  await el.updateComplete
+
+  check('file: renders a real file input', input !== null)
+  check('file: inner input carries accept/multiple',
+    input.getAttribute('accept') === '.csv,text/csv' && input.multiple === true)
+  // Without this, Shiny's own file binding would claim the inner input.
+  check('file: inner input opts out of shiny binding',
+    input.hasAttribute('data-shiny-no-bind-input'))
+  check('file: no list before a selection', el.querySelector('.file-list') === null)
+
+  // A batch, driven through the picker path.
+  win.__postPlan = () => ({ progress: [5, 10] })
+  el.upload([file('a.csv', 10, 'text/csv')])
+  await el.updateComplete
+
+  check('file: busy while uploading', el.getAttribute('aria-busy') === 'true')
+  check('file: picker disabled while uploading', input.disabled === true)
+  check('file: row rendered', el.querySelectorAll('.file-item').length === 1)
+  check('file: row names the file',
+    el.querySelector('.file-item-name').textContent === 'a.csv')
+  check('file: row shows a formatted size',
+    el.querySelector('.file-item-size').textContent === '10 B',
+    el.querySelector('.file-item-size').textContent)
+  check('file: cancel offered while in flight', el.querySelector('.file-cancel') !== null)
+
+  await tick(30)
+  await el.updateComplete
+
+  check('file: uploaded through the protocol',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+  check('file: row marked done',
+    el.querySelector('.file-item').className === 'file-item done',
+    el.querySelector('.file-item').className)
+  check('file: batch controls gone', el.querySelector('.file-batch') === null)
+  check('file: no longer busy', el.hasAttribute('aria-busy') === false)
+  check('file: picker re-enabled', input.disabled === false)
+  check('file: completion announced',
+    el.querySelector('[aria-live]').textContent.trim() === 'a.csv uploaded',
+    el.querySelector('[aria-live]').textContent)
+  check('file: no value ever reported', events.length === 0, events)
+
+  // An init rejection (the oversize path) surfaces in the alert region.
+  win.__requestPlan = () => ({ error: 'Maximum upload size exceeded' })
+  el.upload([file('big.csv', 20)])
+  await tick(30)
+  await el.updateComplete
+
+  check('file: error rendered',
+    el.querySelector('.file-errors').textContent === 'Maximum upload size exceeded',
+    el.querySelector('.file-errors').textContent)
+  check('file: error row marked',
+    el.querySelector('.file-item').className === 'file-item error',
+    el.querySelector('.file-item').className)
+  win.__requestPlan = null
+
+  // Cancelling mid-batch abandons it: no uploadEnd, so the server never
+  // sets the value.
+  win.__requests = []
+  win.__postPlan = () => ({ defer: true })
+  el.upload([file('slow.csv', 10)])
+  await tick(30)
+  await el.updateComplete
+
+  el.querySelector('.file-cancel').click()
+  await tick(20)
+  await el.updateComplete
+
+  check('file: cancel skipped uploadEnd',
+    eq(win.__requests.map((r) => r.method), ['uploadInit']),
+    win.__requests.map((r) => r.method))
+  check('file: cancel announced',
+    el.querySelector('[aria-live]').textContent.trim() === 'Upload cancelled')
+  win.__postPlan = null
+
+  // update_file() messages.
+  binding.receiveMessage(el, { accept: '.txt', placeholder: 'Drop a text file' })
+  await el.updateComplete
+  check('file: accept updated', input.getAttribute('accept') === '.txt', input.getAttribute('accept'))
+  check('file: placeholder updated',
+    el.querySelector('.file-prompt').textContent === 'Drop a text file',
+    el.querySelector('.file-prompt').textContent)
+
+  binding.receiveMessage(el, { disable: true })
+  await el.updateComplete
+  check('file: disabled', input.disabled === true && el.hasAttribute('disabled'))
+
+  binding.receiveMessage(el, { enable: true })
+  await el.updateComplete
+  check('file: enabled', input.disabled === false && el.hasAttribute('disabled') === false)
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+  check('file: reset clears the list', el.querySelector('.file-list') === null)
+  check('file: reset clears the error',
+    el.querySelector('.file-errors').textContent === '',
+    el.querySelector('.file-errors').textContent)
 }
 
 // ---- uploader (protocol module, no DOM) ----

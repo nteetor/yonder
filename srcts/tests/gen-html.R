@@ -23,6 +23,15 @@ render(
   input_checkbox_group(id = "chkgrp", choices = c("A", "B", "C"))
 )
 render(
+  "file",
+  input_file(
+    id = "upl",
+    label = "Upload data",
+    select = "many",
+    accept = c(".csv", "text/csv")
+  )
+)
+render(
   "form",
   input_form(
     id = "frm",
