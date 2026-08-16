@@ -67,12 +67,16 @@ upload_files <- function(app, selector, paths) {
 }
 
 # Write `lines` to a file named `name` in a fresh temporary directory, so
-# uploads carry a predictable name as well as predictable contents.
+# uploads carry a predictable name as well as predictable contents. The
+# connection is binary: a text-mode writeLines() writes CRLF on Windows,
+# and the tests assert exact byte sizes.
 temp_upload <- function(name, lines, envir = parent.frame()) {
   dir <- withr::local_tempdir(.local_envir = envir)
   path <- file.path(dir, name)
 
-  writeLines(lines, path)
+  con <- file(path, open = "wb")
+  writeLines(lines, con, sep = "\n")
+  close(con)
 
   path
 }
