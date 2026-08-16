@@ -99,7 +99,12 @@ bsides-file {
     padding: .375rem 0;
 
     + .file-item {
-      border-top: var(--bs-border-width) solid var(--bs-border-color);
+      // Translucent, not --bs-border-color: the progress track below is
+      // --bs-secondary-bg, a near-identical gray to the plain border
+      // color in light mode, and the two read as one muddle. This is
+      // also the token card borders use, so rows separate consistently
+      // inside a card.
+      border-top: var(--bs-border-width) solid var(--bs-border-color-translucent);
     }
   }
 
