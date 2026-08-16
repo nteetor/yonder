@@ -1026,6 +1026,25 @@ for (const name of Object.keys(registered)) {
   check('file: single file has no per-file bar',
     el.querySelectorAll('.file-item-progress').length === 0,
     el.querySelectorAll('.file-item-progress').length)
+  // The list sits in an always-available disclosure, open by default,
+  // with a count-and-size summary line.
+  check('file: list wrapped in an open disclosure',
+    el.querySelector('.file-disclosure') !== null &&
+      el.querySelector('.file-disclosure').hasAttribute('open'))
+  check('file: summary counts one file',
+    el.querySelector('.file-summary').textContent.replace(/\s+/g, ' ').trim() === '1 file · 10 B',
+    el.querySelector('.file-summary').textContent)
+
+  // A user's fold survives re-renders: sync runs through the toggle
+  // handler, and progress updates must not reopen the list.
+  el.querySelector('.file-disclosure').open = false
+  el.querySelector('.file-disclosure').dispatchEvent(new win.Event('toggle'))
+  await el.updateComplete
+  win.__deferredPosts[0].upload.onprogress({ lengthComputable: true, loaded: 5 })
+  await el.updateComplete
+  check('file: fold survives a progress re-render',
+    el.querySelector('.file-disclosure').hasAttribute('open') === false)
+
   // The batch row (bar + cancel) renders above the file list.
   check('file: batch row precedes the list',
     (el.querySelector('.file-batch').compareDocumentPosition(
@@ -1043,6 +1062,11 @@ for (const name of Object.keys(registered)) {
     el.querySelectorAll('.file-item-progress').length)
   check('file: several files still get a batch bar',
     el.querySelectorAll('.file-batch-progress').length === 1)
+  check('file: summary counts several files',
+    el.querySelector('.file-summary').textContent.replace(/\s+/g, ' ').trim() === '2 files · 20 B',
+    el.querySelector('.file-summary').textContent)
+  check('file: a new batch reopens the fold',
+    el.querySelector('.file-disclosure').hasAttribute('open'))
   el.querySelector('.file-cancel').click()
   await el.updateComplete
   win.__postPlan = null

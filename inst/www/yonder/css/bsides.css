@@ -12229,8 +12229,21 @@ bsides-file .file-input {
 bsides-file .file-prompt {
   color: var(--bs-secondary-color);
 }
+bsides-file .file-disclosure {
+  margin-top: 0.5rem;
+}
+bsides-file .file-summary {
+  color: var(--bs-secondary-color);
+  font-size: 0.875em;
+  cursor: pointer;
+  -webkit-user-select: none;
+  user-select: none;
+}
+bsides-file .file-summary:hover {
+  color: var(--bs-body-color);
+}
 bsides-file .file-list {
-  margin: 0.5rem 0 0;
+  margin: 0.25rem 0 0;
   padding: 0;
   list-style: none;
 }

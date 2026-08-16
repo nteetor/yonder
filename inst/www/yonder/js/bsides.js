@@ -1350,6 +1350,7 @@
       disabled: { type: Boolean, reflect: true },
       maxSize: { type: Number, attribute: "data-max-size" },
       _items: { state: true },
+      _listOpen: { state: true },
       _errors: { state: true },
       _dragover: { state: true },
       _announcement: { state: true },
@@ -1371,6 +1372,7 @@
       this.disabled = false;
       this.maxSize = null;
       this._items = [];
+      this._listOpen = true;
       this._errors = [];
       this._dragover = false;
       this._announcement = "";
@@ -1429,9 +1431,19 @@
         return A;
       }
       const perFile = this._items.length > 1;
+      const count = this._items.length;
+      const total = this._items.reduce((sum, item) => sum + item.file.size, 0);
       return b2`
-      <ul class="file-list" role="list">
-        ${c4(
+      <details
+        class="file-disclosure"
+        ?open=${this._listOpen}
+        @toggle=${this.#onListToggle}
+      >
+        <summary class="file-summary">
+          ${count === 1 ? "1 file" : `${count} files`} · ${formatSize(total)}
+        </summary>
+        <ul class="file-list" role="list">
+          ${c4(
         this._items,
         (item) => item.file,
         (item) => b2`
@@ -1444,9 +1456,10 @@
           `${item.file.name} upload progress`
         ) : A}
             </li>
-          `
+            `
       )}
-      </ul>
+        </ul>
+      </details>
     `;
     }
     // Batch progress and the cancel control, both meaningful only while a
@@ -1587,6 +1600,11 @@
       event.preventDefault();
       this.upload(files);
     };
+    // <details open> is DOM state; bind it to _listOpen and sync back here
+    // so a mid-upload re-render cannot clobber a user's fold.
+    #onListToggle = (event) => {
+      this._listOpen = event.target.open;
+    };
     #onCancel = () => {
       this.#uploader?.cancel();
       this.#uploader = null;
@@ -1634,6 +1652,7 @@
       this.#uploader?.cancel();
       this._batch = 0;
       this._uploading = true;
+      this._listOpen = true;
       this._items = files.map((file) => ({
         file,
         status: "pending",
@@ -1693,6 +1712,7 @@
       this.#uploader?.cancel();
       this.#uploader = null;
       this._items = [];
+      this._listOpen = true;
       this._errors = [];
       this._dragover = false;
       this._batch = 0;

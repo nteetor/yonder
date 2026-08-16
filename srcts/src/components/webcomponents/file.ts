@@ -42,6 +42,7 @@ class BsidesFile extends LitElement {
     disabled: { type: Boolean, reflect: true },
     maxSize: { type: Number, attribute: 'data-max-size' },
     _items: { state: true },
+    _listOpen: { state: true },
     _errors: { state: true },
     _dragover: { state: true },
     _announcement: { state: true },
@@ -56,6 +57,7 @@ class BsidesFile extends LitElement {
   declare disabled: boolean;
   declare maxSize: number | null;
   declare _items: FileItem[];
+  declare _listOpen: boolean;
   declare _errors: string[];
   declare _dragover: boolean;
   declare _announcement: string;
@@ -79,6 +81,7 @@ class BsidesFile extends LitElement {
     this.disabled = false;
     this.maxSize = null;
     this._items = [];
+    this._listOpen = true;
     this._errors = [];
     this._dragover = false;
     this._announcement = '';
@@ -142,15 +145,26 @@ class BsidesFile extends LitElement {
     }
 
     // A one-file batch has nothing to break down: its per-file bar and the
-    // batch bar below carry the same number, so only the batch bar renders.
+    // batch bar above carry the same number, so only the batch bar renders.
     const perFile = this._items.length > 1;
 
+    const count = this._items.length;
+    const total = this._items.reduce((sum, item) => sum + item.file.size, 0);
+
     return html`
-      <ul class="file-list" role="list">
-        ${repeat(
-          this._items,
-          (item) => item.file,
-          (item) => html`
+      <details
+        class="file-disclosure"
+        ?open=${this._listOpen}
+        @toggle=${this.#onListToggle}
+      >
+        <summary class="file-summary">
+          ${count === 1 ? '1 file' : `${count} files`} · ${formatSize(total)}
+        </summary>
+        <ul class="file-list" role="list">
+          ${repeat(
+            this._items,
+            (item) => item.file,
+            (item) => html`
             <li class="file-item ${item.status}">
               <span class="file-item-name">${item.file.name}</span>
               <span class="file-item-size">${formatSize(item.file.size)}</span>
@@ -164,9 +178,10 @@ class BsidesFile extends LitElement {
                   : nothing
               }
             </li>
-          `,
-        )}
-      </ul>
+            `,
+          )}
+        </ul>
+      </details>
     `;
   }
 
@@ -346,6 +361,12 @@ class BsidesFile extends LitElement {
     this.upload(files);
   };
 
+  // <details open> is DOM state; bind it to _listOpen and sync back here
+  // so a mid-upload re-render cannot clobber a user's fold.
+  #onListToggle = (event: Event): void => {
+    this._listOpen = (event.target as HTMLDetailsElement).open;
+  };
+
   #onCancel = (): void => {
     this.#uploader?.cancel();
     this.#uploader = null;
@@ -403,6 +424,7 @@ class BsidesFile extends LitElement {
 
     this._batch = 0;
     this._uploading = true;
+    this._listOpen = true;
     this._items = files.map((file) => ({
       file,
       status: 'pending' as const,
@@ -476,6 +498,7 @@ class BsidesFile extends LitElement {
     this.#uploader?.cancel();
     this.#uploader = null;
     this._items = [];
+    this._listOpen = true;
     this._errors = [];
     this._dragover = false;
     this._batch = 0;

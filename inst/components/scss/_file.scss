@@ -69,8 +69,23 @@ bsides-file {
     color: var(--bs-secondary-color);
   }
 
+  .file-disclosure {
+    margin-top: .5rem;
+  }
+
+  .file-summary {
+    color: var(--bs-secondary-color);
+    font-size: .875em;
+    cursor: pointer;
+    user-select: none;
+
+    &:hover {
+      color: var(--bs-body-color);
+    }
+  }
+
   .file-list {
-    margin: .5rem 0 0;
+    margin: .25rem 0 0;
     padding: 0;
     list-style: none;
   }
