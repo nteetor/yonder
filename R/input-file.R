@@ -1,9 +1,7 @@
 #' File input
 #'
-#' Upload files to the server. Files upload as soon as they are chosen —
-#' over HTTP, beside the WebSocket — so the app stays responsive while
-#' bytes are in transit. A progress bar tracks the batch and a cancel
-#' control abandons it.
+#' Upload files to the server. Files upload as soon as they are chosen.
+#' A progress bar tracks the batch and a cancel control abandons it.
 #'
 #' @inheritParams input_checkbox
 #'
@@ -27,6 +25,13 @@
 #'   zone, defaults to `"Choose a file"`.
 #'
 #' @details
+#'
+#' ## Uploading
+#'
+#' Uploaded bytes travel over HTTP rather than the app's websocket
+#' connection, so the session stays responsive while an upload is in
+#' flight — a long upload does not block reactivity, and the R process
+#' does work only when a batch begins and ends.
 #'
 #' ## Server value
 #'
