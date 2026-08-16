@@ -43,6 +43,16 @@
 - Wrap lines at width 80. Fill comments and roxygen text out to column 80
   before breaking — don't wrap early.
 
+- Comments for exported or user-facing functions need to document purpose,
+  arguments, return value. 
+
+- Keep internal function comments terse. Do not add comments which simply
+  reiterate what the code does.
+
+- Comments explain constraints the code cannot show (cross-system contracts,
+  casts, traps) — never the history of a change or how it compares to what it
+  replaced.
+
 ## CSS
 
 ### Bootstrap classes
