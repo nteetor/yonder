@@ -13,6 +13,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { JSDOM } from 'jsdom'
+import esbuild from 'esbuild'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 
@@ -63,9 +64,107 @@ win.eval(`
   };
 `)
 
+// Upload scaffolding: a scripted shinyapp.makeRequest standing in for the
+// WebSocket RPC leg, and a stub XMLHttpRequest standing in for the POST
+// leg. Both record every call and are steered per test through
+// __requestPlan / __postPlan; the defaults answer uploadInit with a job
+// and complete each POST with a single full-size progress event.
+win.eval(`
+  window.__connected = true;
+  window.__requests = [];
+  window.__posts = [];
+  window.__requestPlan = null;
+  window.__postPlan = null;
+
+  window.Shiny.shinyapp = {
+    isConnected() { return window.__connected; },
+    makeRequest(method, args, onSuccess, onError) {
+      const call = { method, args };
+      window.__requests.push(call);
+      const plan = window.__requestPlan
+        ? window.__requestPlan(call, window.__requests.length - 1)
+        : null;
+      setTimeout(() => {
+        if (plan && plan.error) {
+          onError(plan.error);
+        } else if (plan && 'value' in plan) {
+          onSuccess(plan.value);
+        } else if (method === 'uploadInit') {
+          onSuccess({ jobId: 'job1', uploadUrl: '/session/tok/upload/job1?w=' });
+        } else {
+          onSuccess({});
+        }
+      }, 0);
+    }
+  };
+
+  window.__deferredPosts = [];
+
+  window.XMLHttpRequest = class StubXHR {
+    constructor() {
+      this.upload = {};
+      this.status = 0;
+      this.responseText = '';
+      this.aborted = false;
+    }
+    open(method, url) { this.method = method; this.url = url; }
+    setRequestHeader(name, value) {
+      this.headers = this.headers || {};
+      this.headers[name] = value;
+    }
+    send(body) {
+      const call = {
+        method: this.method,
+        url: this.url,
+        headers: this.headers,
+        name: body && body.name,
+        size: body && body.size
+      };
+      window.__posts.push(call);
+      const plan = (window.__postPlan
+        ? window.__postPlan(call, window.__posts.length - 1)
+        : null) || {};
+      if (plan.defer) {
+        window.__deferredPosts.push(this);
+        return;
+      }
+      setTimeout(() => {
+        if (this.aborted) return;
+        const loaded = plan.progress || [call.size];
+        for (const n of loaded) {
+          if (this.upload.onprogress) {
+            this.upload.onprogress({ lengthComputable: true, loaded: n });
+          }
+        }
+        this.status = plan.status || 200;
+        this.responseText = plan.responseText || '';
+        if (this.onload) this.onload();
+      }, 0);
+    }
+    abort() {
+      this.aborted = true;
+      if (this.onabort) this.onabort();
+    }
+  };
+`)
+
 win.eval(read('node_modules/jquery/dist/jquery.js'))
 win.eval(read('node_modules/bootstrap/dist/js/bootstrap.bundle.js'))
 win.eval(read('inst/www/yonder/js/bsides.js'))
+
+// The uploader is internal to the bundle (an IIFE exporting nothing), so
+// bundle it a second time under a global name for direct unit tests. The
+// footer is what publishes it: esbuild emits "use strict", and a strict
+// eval keeps its own var scope instead of writing to the global object.
+win.eval(esbuild.buildSync({
+  entryPoints: [path.join(root, 'srcts/src/components/upload.ts')],
+  bundle: true,
+  format: 'iife',
+  globalName: '__upload',
+  target: 'es2022',
+  footer: { js: 'window.__upload = __upload' },
+  write: false
+}).outputFiles[0].text)
 
 const registered = win.__registered
 const handlers = win.__handlers
@@ -807,6 +906,161 @@ for (const name of Object.keys(registered)) {
   handlers['bsides:modalClose']({})
   await tick(400)
   check('modal: hidden after modalClose', binding.getValue(el) === 'hidden', binding.getValue(el))
+}
+
+// ---- uploader (protocol module, no DOM) ----
+{
+  const { Uploader } = win.__upload
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+
+  // Fresh recorders and default plans for each scenario.
+  const reset = () => {
+    win.__connected = true
+    win.__requests = []
+    win.__posts = []
+    win.__requestPlan = null
+    win.__postPlan = null
+    win.__deferredPosts = []
+
+    const events = { progress: [], done: [], errors: [], finished: 0 }
+
+    return {
+      events,
+      callbacks: {
+        onProgress: ({ file: f, loaded, batch }) =>
+          events.progress.push([f && f.name, loaded, batch]),
+        onFileDone: (f) => events.done.push(f.name),
+        onError: (message) => events.errors.push(message),
+        onDone: () => { events.finished++ }
+      }
+    }
+  }
+
+  // Happy path: init payload, sequential POSTs, progress math, uploadEnd.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = (call, i) => (i === 0 ? { progress: [10] } : { progress: [15, 30] })
+
+    await new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10, 'text/csv'), file('b.csv', 30)],
+      ...callbacks
+    }).run()
+
+    check('uploader: two requests', win.__requests.length === 2, win.__requests.map((r) => r.method))
+    check('uploader: uploadInit payload', eq(win.__requests[0], {
+      method: 'uploadInit',
+      args: [[
+        { name: 'a.csv', size: 10, type: 'text/csv' },
+        { name: 'b.csv', size: 30, type: '' }
+      ]]
+    }), win.__requests[0])
+    check('uploader: uploadEnd payload', eq(win.__requests[1], {
+      method: 'uploadEnd',
+      args: ['job1', 'upload']
+    }), win.__requests[1])
+
+    check('uploader: one POST per file, in order',
+      eq(win.__posts.map((p) => p.name), ['a.csv', 'b.csv']), win.__posts.map((p) => p.name))
+    check('uploader: POSTs to the job url',
+      win.__posts.every((p) => p.method === 'POST' && p.url === '/session/tok/upload/job1?w='),
+      win.__posts)
+    check('uploader: octet-stream content type',
+      win.__posts.every((p) => p.headers['Content-Type'] === 'application/octet-stream'),
+      win.__posts.map((p) => p.headers))
+
+    // Batch fractions, not per-file: 10 of 40 bytes done when b.csv is at
+    // 15, so 25/40.
+    const fractions = events.progress.map(([, , batch]) => batch)
+    check('uploader: progress starts at 0', fractions[0] === 0, fractions)
+    check('uploader: progress is batch-relative',
+      fractions.includes(0.25) && fractions.includes(0.625) && fractions.includes(1),
+      fractions)
+    check('uploader: progress never decreases',
+      fractions.every((f, i) => i === 0 || f >= fractions[i - 1]), fractions)
+    check('uploader: per-file progress names the file and its bytes',
+      events.progress.some(([n, loaded]) => n === 'b.csv' && loaded === 15),
+      events.progress)
+
+    check('uploader: each file reported done', eq(events.done, ['a.csv', 'b.csv']), events.done)
+    check('uploader: batch done once', events.finished === 1, events.finished)
+    check('uploader: no errors', eq(events.errors, []), events.errors)
+  }
+
+  // uploadInit rejection (the oversize-batch path) never reaches the POSTs.
+  {
+    const { events, callbacks } = reset()
+    win.__requestPlan = () => ({ error: 'Maximum upload size exceeded' })
+
+    await new Uploader({ inputId: 'upload', files: [file('big.csv', 10)], ...callbacks }).run()
+
+    check('uploader: init error reported',
+      eq(events.errors, ['Maximum upload size exceeded']), events.errors)
+    check('uploader: init error skips POSTs', win.__posts.length === 0, win.__posts.length)
+    check('uploader: init error skips uploadEnd',
+      win.__requests.length === 1, win.__requests.map((r) => r.method))
+    check('uploader: init error is not done', events.finished === 0, events.finished)
+  }
+
+  // A non-2xx POST fails the batch: no further files, no uploadEnd.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = () => ({ status: 500, responseText: 'upload handler failed' })
+
+    await new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10), file('b.csv', 10)],
+      ...callbacks
+    }).run()
+
+    check('uploader: POST error reported',
+      eq(events.errors, ['upload handler failed']), events.errors)
+    check('uploader: POST error stops the batch', win.__posts.length === 1, win.__posts.length)
+    check('uploader: POST error skips uploadEnd',
+      eq(win.__requests.map((r) => r.method), ['uploadInit']), win.__requests.map((r) => r.method))
+  }
+
+  // Cancel mid-batch: the in-flight POST is aborted, uploadEnd never runs,
+  // so the server never sets the input value.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = () => ({ defer: true })
+
+    const uploader = new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10), file('b.csv', 10)],
+      ...callbacks
+    })
+    const running = uploader.run()
+
+    await tick(20)
+    check('uploader: first POST in flight', win.__deferredPosts.length === 1, win.__deferredPosts.length)
+
+    uploader.cancel()
+    await running
+
+    check('uploader: cancel aborted the request', win.__deferredPosts[0].aborted === true)
+    check('uploader: cancel skips uploadEnd',
+      eq(win.__requests.map((r) => r.method), ['uploadInit']), win.__requests.map((r) => r.method))
+    check('uploader: cancel skips remaining files', win.__posts.length === 1, win.__posts.length)
+    check('uploader: cancel is neither done nor error',
+      events.finished === 0 && events.errors.length === 0, events)
+  }
+
+  // No live connection: report it rather than issuing a dead uploadInit.
+  {
+    const { events, callbacks } = reset()
+    win.__connected = false
+
+    await new Uploader({ inputId: 'upload', files: [file('a.csv', 10)], ...callbacks }).run()
+
+    check('uploader: disconnected reports an error', events.errors.length === 1, events.errors)
+    check('uploader: disconnected makes no requests', win.__requests.length === 0, win.__requests)
+  }
+
+  reset()
 }
 
 console.log(`\n${checks} checks, ${failures.length} failures`)
