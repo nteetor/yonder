@@ -31,10 +31,14 @@ library(bslib)
 options(shiny.maxRequestSize = 50 * 1024^2)
 
 # Listens for the component's progress event and hands it back to the
-# server as an input value.
+# server as an input value. The event bubbles from every file input on
+# the page, so a page with several must filter by the event's target --
+# here, only the Progress card's input.
 progress_listener <-
   htmltools::tags$script(htmltools::HTML(
     "document.addEventListener('bsides-file:progress', (event) => {
+       if (event.target.id !== 'big') return;
+
        const { file, batch } = event.detail;
 
        Shiny.setInputValue('progress', {
