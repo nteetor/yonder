@@ -6,7 +6,9 @@
 #      and press Enter) to browse. The value arrives as a one-row data
 #      frame once the upload finishes.
 #
-#   2. Many files, .csv only: `select = "many"` with an `accept` filter.
+#   2. Many files, .csv only: `select = "many"` with an `accept` filter,
+#      and a templated summary line ("{done}/{n} uploaded") that stays
+#      live while the file list is collapsed.
 #      Drop a folder, drop a .txt, or drop something over the size limit
 #      and the rejection is reported inline without a round trip — the
 #      picker's own filtering does not apply to drops. Pasting works the
@@ -70,7 +72,10 @@ shinyApp(
           label = "Data files",
           select = "many",
           accept = c(".csv", "text/csv"),
-          placeholder = "Drop .csv files here, or click to browse"
+          placeholder = "Drop .csv files here, or click to browse",
+          # The file list's summary line is a template; state tokens keep
+          # it live through the upload. Default: "{files} · {size}".
+          summary = "{done}/{n} uploaded · {size}"
         ),
         verbatimTextOutput("many_value")
       ),
