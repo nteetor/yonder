@@ -51,10 +51,12 @@
   responsive; the server value is the familiar data frame of `name`,
   `size`, `type`, and `datapath`. Beyond `shiny::fileInput()` it adds
   drag and drop, paste (screenshots included), a cancel control for a
-  batch in flight, per-file and batch progress, and client-side
-  validation of size, `accept`, and `multiple` — the checks a drop or a
-  paste would otherwise skip entirely. Bookmark restore and directory
-  upload are not supported.
+  batch in flight, per-file and batch progress, a collapsible file list
+  whose summary line is a small template (`"{done}/{n} uploaded"`), a
+  `height` argument for the drop zone, and client-side validation of
+  size, `accept`, and `multiple` — the checks a drop or a paste would
+  otherwise skip entirely. Bookmark restore and directory upload are not
+  supported.
 
 * New `update_numeric()`, the counterpart to `input_numeric()`. Update a
   numeric input's `value`, `min`, `max`, `step`, or disabled state from the
