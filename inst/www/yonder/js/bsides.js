@@ -1428,6 +1428,7 @@
       if (this._items.length === 0) {
         return A;
       }
+      const perFile = this._items.length > 1;
       return b2`
       <ul class="file-list" role="list">
         ${c4(
@@ -1437,11 +1438,11 @@
             <li class="file-item ${item.status}">
               <span class="file-item-name">${item.file.name}</span>
               <span class="file-item-size">${formatSize(item.file.size)}</span>
-              ${this.#renderProgress(
+              ${perFile ? this.#renderProgress(
           "file-item-progress",
           item.progress,
           `${item.file.name} upload progress`
-        )}
+        ) : A}
             </li>
           `
       )}

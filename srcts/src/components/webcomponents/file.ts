@@ -141,6 +141,10 @@ class BsidesFile extends LitElement {
       return nothing;
     }
 
+    // A one-file batch has nothing to break down: its per-file bar and the
+    // batch bar below carry the same number, so only the batch bar renders.
+    const perFile = this._items.length > 1;
+
     return html`
       <ul class="file-list" role="list">
         ${repeat(
@@ -150,11 +154,15 @@ class BsidesFile extends LitElement {
             <li class="file-item ${item.status}">
               <span class="file-item-name">${item.file.name}</span>
               <span class="file-item-size">${formatSize(item.file.size)}</span>
-              ${this.#renderProgress(
-                'file-item-progress',
-                item.progress,
-                `${item.file.name} upload progress`,
-              )}
+              ${
+                perFile
+                  ? this.#renderProgress(
+                      'file-item-progress',
+                      item.progress,
+                      `${item.file.name} upload progress`,
+                    )
+                  : nothing
+              }
             </li>
           `,
         )}

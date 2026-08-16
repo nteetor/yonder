@@ -1014,6 +1014,32 @@ for (const name of Object.keys(registered)) {
     el.querySelector('[aria-live]').textContent.trim() === 'Upload cancelled')
   win.__postPlan = null
 
+  // One bar, not two: a single file's own progress is the batch progress,
+  // so only the batch bar renders. Several files each get their own.
+  win.__postPlan = () => ({ defer: true })
+  el.upload([file('solo.csv', 10, 'text/csv')])
+  await tick(20)
+  await el.updateComplete
+  check('file: single file has no per-file bar',
+    el.querySelectorAll('.file-item-progress').length === 0,
+    el.querySelectorAll('.file-item-progress').length)
+  check('file: single file still has a batch bar',
+    el.querySelectorAll('.file-batch-progress').length === 1)
+  el.querySelector('.file-cancel').click()
+  await el.updateComplete
+
+  el.upload([file('a.csv', 10, 'text/csv'), file('b.csv', 10, 'text/csv')])
+  await tick(20)
+  await el.updateComplete
+  check('file: several files each get a bar',
+    el.querySelectorAll('.file-item-progress').length === 2,
+    el.querySelectorAll('.file-item-progress').length)
+  check('file: several files still get a batch bar',
+    el.querySelectorAll('.file-batch-progress').length === 1)
+  el.querySelector('.file-cancel').click()
+  await el.updateComplete
+  win.__postPlan = null
+
   // update_file() messages.
   binding.receiveMessage(el, { accept: '.txt', placeholder: 'Drop a text file' })
   await el.updateComplete
