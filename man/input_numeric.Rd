@@ -45,7 +45,6 @@ A numeric input.
 \code{\link[=update_numeric]{update_numeric()}}
 
 Other inputs:
-\code{\link[=fileInput]{fileInput()}},
 \code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},

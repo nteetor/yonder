@@ -25,7 +25,6 @@ error when passed a \code{floating_label()}.
 }
 \seealso{
 Other inputs:
-\code{\link[=fileInput]{fileInput()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},

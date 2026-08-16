@@ -1,11 +1,14 @@
-test_that("dependency expectation", {
-  my_div <- htmltools::attachDependencies(div(), dep_yonder())
+test_that("dependency_get() describes the bsides bundle", {
+  dep <- dependency_get()
 
-  expect_silent(
-    expect_dependencies(my_div)
-  )
+  expect_s3_class(dep, "html_dependency")
+  expect_equal(dep$name, "yonder")
+  expect_equal(dep$stylesheet, "css/bsides.min.css")
+  expect_equal(dep$script, "js/bsides.js")
+})
 
-  expect_error(
-    expect_dependencies(div())
-  )
+test_that("dependency_append() attaches the bundle as a child", {
+  tag <- dependency_append(div())
+
+  expect_equal(tag$children[[1]], dependency_get())
 })

@@ -36,7 +36,6 @@ the number of clicks.
 }
 \seealso{
 Other inputs:
-\code{\link[=fileInput]{fileInput()}},
 \code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},
