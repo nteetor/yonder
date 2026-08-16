@@ -1413,7 +1413,7 @@
         />
         <span class="file-prompt">${this.placeholder}</span>
       </div>
-      ${this.#renderList()} ${this.#renderBatch()}
+      ${this.#renderBatch()} ${this.#renderList()}
       <p class="file-errors" role="alert">
         ${this._errors.map(
         (message) => b2`<span class="file-error">${message}</span>`

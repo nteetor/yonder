@@ -1026,6 +1026,10 @@ for (const name of Object.keys(registered)) {
   check('file: single file has no per-file bar',
     el.querySelectorAll('.file-item-progress').length === 0,
     el.querySelectorAll('.file-item-progress').length)
+  // The batch row (bar + cancel) renders above the file list.
+  check('file: batch row precedes the list',
+    (el.querySelector('.file-batch').compareDocumentPosition(
+      el.querySelector('.file-list')) & win.Node.DOCUMENT_POSITION_FOLLOWING) !== 0)
   check('file: single file still has a batch bar',
     el.querySelectorAll('.file-batch-progress').length === 1)
   el.querySelector('.file-cancel').click()
