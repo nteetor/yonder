@@ -1299,6 +1299,47 @@
     return typeof error === "string" && error ? error : "Upload failed.";
   }
 
+  // srcts/src/components/fileValidate.ts
+  function matchesToken(file, token) {
+    const type = file.type.toLowerCase();
+    if (token.startsWith(".")) {
+      return file.name.toLowerCase().endsWith(token);
+    }
+    if (type === "") {
+      return false;
+    }
+    if (token.endsWith("/*")) {
+      return type.startsWith(token.slice(0, -1));
+    }
+    return type === token;
+  }
+  function isAccepted(file, accept) {
+    const tokens = accept.split(",").map((token) => token.trim().toLowerCase()).filter((token) => token !== "");
+    if (tokens.length === 0) {
+      return true;
+    }
+    return tokens.some((token) => matchesToken(file, token));
+  }
+  function validateFiles(files, options) {
+    const accepted = [];
+    const rejected = [];
+    for (const file of files) {
+      if (options.maxSize !== null && file.size > options.maxSize) {
+        rejected.push({
+          name: file.name,
+          reason: { kind: "size", limit: options.maxSize }
+        });
+        continue;
+      }
+      if (!isAccepted(file, options.accept)) {
+        rejected.push({ name: file.name, reason: { kind: "accept" } });
+        continue;
+      }
+      accepted.push(file);
+    }
+    return { accepted, rejected };
+  }
+
   // srcts/src/components/webcomponents/file.ts
   var BsidesFile = class extends i4 {
     static properties = {
@@ -1309,7 +1350,8 @@
       disabled: { type: Boolean, reflect: true },
       maxSize: { type: Number, attribute: "data-max-size" },
       _items: { state: true },
-      _error: { state: true },
+      _errors: { state: true },
+      _dragover: { state: true },
       _announcement: { state: true },
       _batch: { state: true },
       _uploading: { state: true }
@@ -1317,6 +1359,9 @@
     // The batch in flight, if any. One at a time: a new selection cancels
     // and restarts, matching "the selection is the value" semantics.
     #uploader = null;
+    // dragenter/dragleave fire for every descendant a drag crosses, so the
+    // hover state counts entries rather than trusting a single leave.
+    #dragDepth = 0;
     constructor() {
       super();
       this.multiple = false;
@@ -1326,7 +1371,8 @@
       this.disabled = false;
       this.maxSize = null;
       this._items = [];
-      this._error = "";
+      this._errors = [];
+      this._dragover = false;
       this._announcement = "";
       this._batch = 0;
       this._uploading = false;
@@ -1341,7 +1387,15 @@
     }
     render() {
       return b2`
-      <div class="file-dropzone" @click=${this.#onDropzoneClick}>
+      <div
+        class="file-dropzone${this._dragover ? " dragover" : ""}"
+        @click=${this.#onDropzoneClick}
+        @dragenter=${this.#onDragEnter}
+        @dragover=${this.#onDragOver}
+        @dragleave=${this.#onDragLeave}
+        @drop=${this.#onDrop}
+        @paste=${this.#onPaste}
+      >
         <!-- The real, focusable control, visually hidden by the SCSS so
              native keyboard and screen reader behavior survive.
              data-shiny-no-bind-input is required: Shiny's own file input
@@ -1360,7 +1414,11 @@
         <span class="file-prompt">${this.placeholder}</span>
       </div>
       ${this.#renderList()} ${this.#renderBatch()}
-      <p class="file-errors" role="alert">${this._error}</p>
+      <p class="file-errors" role="alert">
+        ${this._errors.map(
+        (message) => b2`<span class="file-error">${message}</span>`
+      )}
+      </p>
       <span class="visually-hidden" aria-live="polite"
         >${this._announcement}</span
       >
@@ -1463,6 +1521,67 @@
         this.upload(files);
       }
     };
+    #acceptsFiles() {
+      return !this.disabled && !this._uploading;
+    }
+    #onDragEnter = (event) => {
+      if (!this.#acceptsFiles()) {
+        return;
+      }
+      event.preventDefault();
+      this.#dragDepth++;
+      this._dragover = true;
+    };
+    #onDragOver = (event) => {
+      if (!this.#acceptsFiles()) {
+        return;
+      }
+      event.preventDefault();
+      if (event.dataTransfer) {
+        event.dataTransfer.dropEffect = "copy";
+      }
+    };
+    #onDragLeave = () => {
+      this.#dragDepth = Math.max(this.#dragDepth - 1, 0);
+      if (this.#dragDepth === 0) {
+        this._dragover = false;
+      }
+    };
+    #onDrop = (event) => {
+      if (!this.#acceptsFiles()) {
+        return;
+      }
+      event.preventDefault();
+      this.#dragDepth = 0;
+      this._dragover = false;
+      if (!event.dataTransfer) {
+        return;
+      }
+      const { files, directories } = readTransfer(event.dataTransfer);
+      if (files.length === 0 && directories.length === 0) {
+        return;
+      }
+      this.upload(
+        files,
+        directories.map((name) => ({
+          name,
+          reason: { kind: "directory" }
+        }))
+      );
+    };
+    // Pasting a screenshot is a file drop by another route; jsdom aside,
+    // clipboardData.files carries it.
+    #onPaste = (event) => {
+      if (!this.#acceptsFiles()) {
+        return;
+      }
+      const files = Array.from(event.clipboardData?.files ?? []);
+      if (files.length === 0) {
+        return;
+      }
+      event.preventDefault();
+      this.upload(files);
+    };
     #onCancel = () => {
       this.#uploader?.cancel();
       this.#uploader = null;
@@ -1472,10 +1591,42 @@
       );
       this.#announce("Upload cancelled");
     };
-    // Starts a batch, replacing any batch already in flight.
-    upload(files) {
+    // Validates a set of files and uploads whatever survives, replacing any
+    // batch already in flight. Files arriving by drop or paste never passed
+    // the picker's own filtering, so `accept` and `multiple` are enforced
+    // here as well as by the picker.
+    //
+    // `rejected` carries checks the caller already made — dropped folders,
+    // which only a DataTransfer can identify.
+    upload(files, rejected = []) {
+      const errors = rejected.map((rejection) => rejectionMessage(rejection));
+      if (!this.multiple && files.length > 1) {
+        errors.push("Only one file may be uploaded.");
+        this.#reject(errors);
+        return;
+      }
+      const validation = validateFiles(files, {
+        accept: this.accept,
+        maxSize: this.maxSize
+      });
+      errors.push(
+        ...validation.rejected.map((rejection) => rejectionMessage(rejection))
+      );
+      if (validation.accepted.length === 0) {
+        this.#reject(errors);
+        return;
+      }
+      this._errors = errors;
+      this.#start(validation.accepted);
+    }
+    // Reports a batch that never started.
+    #reject(errors) {
+      this._errors = errors;
+      this._items = [];
+      this.#announce(errors.join(" "));
+    }
+    #start(files) {
       this.#uploader?.cancel();
-      this._error = "";
       this._batch = 0;
       this._uploading = true;
       this._items = files.map((file) => ({
@@ -1510,7 +1661,7 @@
         onError: (message) => {
           this.#uploader = null;
           this._uploading = false;
-          this._error = message;
+          this._errors = [message];
           this._items = this._items.map(
             (item) => item.status === "done" ? item : { ...item, status: "error" }
           );
@@ -1537,7 +1688,8 @@
       this.#uploader?.cancel();
       this.#uploader = null;
       this._items = [];
-      this._error = "";
+      this._errors = [];
+      this._dragover = false;
       this._batch = 0;
       this._uploading = false;
       const input = this.#inputElement;
@@ -1561,12 +1713,43 @@
       }
     }
   };
+  function readTransfer(transfer) {
+    const files = [];
+    const directories = [];
+    for (const item of Array.from(transfer.items)) {
+      if (item.kind !== "file") {
+        continue;
+      }
+      const entry = item.webkitGetAsEntry();
+      if (entry?.isDirectory) {
+        directories.push(entry.name);
+        continue;
+      }
+      const file = item.getAsFile();
+      if (file) {
+        files.push(file);
+      }
+    }
+    return { files, directories };
+  }
+  function rejectionMessage(rejection) {
+    switch (rejection.reason.kind) {
+      case "size":
+        return `${rejection.name} is larger than the ${formatSize(
+          rejection.reason.limit
+        )} upload limit.`;
+      case "accept":
+        return `${rejection.name} is not an accepted file type.`;
+      case "directory":
+        return `${rejection.name} is a folder, and folders cannot be uploaded.`;
+    }
+  }
   function formatSize(bytes) {
     const units = ["B", "kB", "MB", "GB", "TB"];
     let size = bytes;
     let unit = 0;
-    while (size >= 1e3 && unit < units.length - 1) {
-      size = size / 1e3;
+    while (size >= 1024 && unit < units.length - 1) {
+      size = size / 1024;
       unit++;
     }
     const rounded = unit === 0 ? size : Math.round(size * 10) / 10;

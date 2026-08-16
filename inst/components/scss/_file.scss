@@ -35,6 +35,17 @@ bsides-file {
       border-color: $input-focus-border-color;
       box-shadow: $input-btn-focus-box-shadow;
     }
+
+    // A drag is over the zone and would be accepted.
+    &.dragover {
+      color: var(--bsides-file-accent);
+      border-color: var(--bsides-file-accent);
+      border-style: solid;
+
+      .file-prompt {
+        color: inherit;
+      }
+    }
   }
 
   // Hidden but not display: none — the input stays focusable, keyboard
@@ -158,11 +169,16 @@ bsides-file {
     color: var(--bs-danger);
     font-size: .875em;
 
-    // The element is always present for role="alert" to work; collapse it
-    // when there is nothing to announce.
-    &:empty {
+    // The element stays in the DOM for role="alert" to observe; collapse
+    // it when there is nothing to announce. :has() rather than :empty —
+    // the rendered element keeps whitespace between messages.
+    &:not(:has(.file-error)) {
       display: none;
     }
+  }
+
+  .file-error {
+    display: block;
   }
 
   &[disabled] > .file-dropzone {

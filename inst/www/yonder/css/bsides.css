@@ -12207,6 +12207,14 @@ bsides-file > .file-dropzone:focus-within {
   border-color: rgb(52.5490196078%, 71.568627451%, 99.6078431373%);
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, 0.25);
 }
+bsides-file > .file-dropzone.dragover {
+  color: var(--bsides-file-accent);
+  border-color: var(--bsides-file-accent);
+  border-style: solid;
+}
+bsides-file > .file-dropzone.dragover .file-prompt {
+  color: inherit;
+}
 bsides-file .file-input {
   position: absolute;
   width: 1px;
@@ -12306,8 +12314,11 @@ bsides-file .file-errors {
   color: var(--bs-danger);
   font-size: 0.875em;
 }
-bsides-file .file-errors:empty {
+bsides-file .file-errors:not(:has(.file-error)) {
   display: none;
+}
+bsides-file .file-error {
+  display: block;
 }
 bsides-file[disabled] > .file-dropzone {
   cursor: default;

@@ -152,19 +152,23 @@ win.eval(read('node_modules/jquery/dist/jquery.js'))
 win.eval(read('node_modules/bootstrap/dist/js/bootstrap.bundle.js'))
 win.eval(read('inst/www/yonder/js/bsides.js'))
 
-// The uploader is internal to the bundle (an IIFE exporting nothing), so
-// bundle it a second time under a global name for direct unit tests. The
-// footer is what publishes it: esbuild emits "use strict", and a strict
-// eval keeps its own var scope instead of writing to the global object.
-win.eval(esbuild.buildSync({
-  entryPoints: [path.join(root, 'srcts/src/components/upload.ts')],
+// The uploader and the validation helpers are internal to the bundle (an
+// IIFE exporting nothing), so bundle them a second time under global names
+// for direct unit tests. The footer is what publishes them: esbuild emits
+// "use strict", and a strict eval keeps its own var scope instead of
+// writing to the global object.
+const expose = (entry, name) => win.eval(esbuild.buildSync({
+  entryPoints: [path.join(root, entry)],
   bundle: true,
   format: 'iife',
-  globalName: '__upload',
+  globalName: name,
   target: 'es2022',
-  footer: { js: 'window.__upload = __upload' },
+  footer: { js: `window.${name} = ${name}` },
   write: false
 }).outputFiles[0].text)
+
+expose('srcts/src/components/upload.ts', '__upload')
+expose('srcts/src/components/fileValidate.ts', '__validate')
 
 const registered = win.__registered
 const handlers = win.__handlers
@@ -984,7 +988,7 @@ for (const name of Object.keys(registered)) {
   await el.updateComplete
 
   check('file: error rendered',
-    el.querySelector('.file-errors').textContent === 'Maximum upload size exceeded',
+    el.querySelector('.file-errors').textContent.trim() === 'Maximum upload size exceeded',
     el.querySelector('.file-errors').textContent)
   check('file: error row marked',
     el.querySelector('.file-item').className === 'file-item error',
@@ -1030,8 +1034,168 @@ for (const name of Object.keys(registered)) {
   await el.updateComplete
   check('file: reset clears the list', el.querySelector('.file-list') === null)
   check('file: reset clears the error',
-    el.querySelector('.file-errors').textContent === '',
+    el.querySelector('.file-error') === null,
     el.querySelector('.file-errors').textContent)
+
+  // Restore the fixture's accept for the drop cases below.
+  binding.receiveMessage(el, { accept: '.csv,text/csv' })
+  await el.updateComplete
+
+  // ---- drop, paste, pre-validation ----
+  //
+  // jsdom has no DragEvent and no DataTransfer, so drops carry a minimal
+  // stand-in: the items list (with webkitGetAsEntry for folder detection)
+  // the component actually reads.
+  const transfer = (entries) => ({
+    dropEffect: '',
+    files: entries.filter((e) => !e.directory).map((e) => e.file),
+    items: entries.map((e) => ({
+      kind: 'file',
+      getAsFile: () => e.file ?? null,
+      webkitGetAsEntry: () =>
+        e.directory ? { isDirectory: true, name: e.name } : { isDirectory: false }
+    }))
+  })
+
+  const fire = (type, prop, value) => {
+    const event = new win.Event(type, { bubbles: true, cancelable: true })
+    if (prop) Object.defineProperty(event, prop, { value })
+    el.querySelector('.file-dropzone').dispatchEvent(event)
+    return event
+  }
+
+  const errorText = () =>
+    [...el.querySelectorAll('.file-error')].map((n) => n.textContent)
+
+  const dropzone = () => el.querySelector('.file-dropzone')
+
+  // Drag-over state is entry-counted, so crossing a child does not clear it.
+  fire('dragenter', 'dataTransfer', transfer([]))
+  await el.updateComplete
+  check('file: dragover state on', dropzone().classList.contains('dragover'))
+  fire('dragenter', 'dataTransfer', transfer([]))
+  fire('dragleave')
+  await el.updateComplete
+  check('file: dragover survives a child leave', dropzone().classList.contains('dragover'))
+  fire('dragleave')
+  await el.updateComplete
+  check('file: dragover state off', dropzone().classList.contains('dragover') === false)
+
+  // dragover must be cancelled or the browser navigates to the file.
+  const dragover = fire('dragover', 'dataTransfer', transfer([]))
+  check('file: dragover is cancelled', dragover.defaultPrevented === true)
+
+  // A dropped file goes through the same path as a picked one.
+  win.__requests = []
+  win.__postPlan = null
+  fire('drop', 'dataTransfer', transfer([{ file: file('dropped.csv', 8, 'text/csv') }]))
+  await tick(30)
+  await el.updateComplete
+  check('file: dropped file uploaded',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+  check('file: dropped file listed',
+    el.querySelector('.file-item-name').textContent === 'dropped.csv')
+
+  // Drops bypass the picker's accept filtering, so the component redoes it.
+  win.__requests = []
+  fire('drop', 'dataTransfer', transfer([{ file: file('notes.txt', 8, 'text/plain') }]))
+  await tick(20)
+  await el.updateComplete
+  check('file: accept mismatch rejected',
+    eq(errorText(), ['notes.txt is not an accepted file type.']), errorText())
+  check('file: accept mismatch never uploads', win.__requests.length === 0, win.__requests)
+
+  // Oversize files fail here rather than costing a round trip.
+  el.maxSize = 10
+  fire('drop', 'dataTransfer', transfer([{ file: file('huge.csv', 12, 'text/csv') }]))
+  await tick(20)
+  await el.updateComplete
+  check('file: oversize rejected with the limit',
+    eq(errorText(), ['huge.csv is larger than the 10 B upload limit.']), errorText())
+  el.maxSize = 5242880
+
+  // A folder drops as a File that would fail opaquely mid-POST.
+  fire('drop', 'dataTransfer', transfer([{ directory: true, name: 'reports' }]))
+  await tick(20)
+  await el.updateComplete
+  check('file: folder rejected',
+    eq(errorText(), ['reports is a folder, and folders cannot be uploaded.']), errorText())
+
+  // Pasted files (screenshots) take the same route as drops.
+  win.__requests = []
+  fire('paste', 'clipboardData', { files: [file('pasted.csv', 6, 'text/csv')] })
+  await tick(30)
+  await el.updateComplete
+  check('file: pasted file uploaded',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+
+  // A single-file input given several: reject rather than silently keep one.
+  el.multiple = false
+  await el.updateComplete
+  win.__requests = []
+  fire('drop', 'dataTransfer', transfer([
+    { file: file('a.csv', 4, 'text/csv') },
+    { file: file('b.csv', 4, 'text/csv') }
+  ]))
+  await tick(20)
+  await el.updateComplete
+  check('file: multi-file drop on a single-file input rejected',
+    eq(errorText(), ['Only one file may be uploaded.']), errorText())
+  check('file: rejected batch never uploads', win.__requests.length === 0, win.__requests)
+  el.multiple = true
+
+  // Disabled inputs ignore drops entirely.
+  binding.receiveMessage(el, { disable: true })
+  await el.updateComplete
+  win.__requests = []
+  fire('drop', 'dataTransfer', transfer([{ file: file('late.csv', 4, 'text/csv') }]))
+  await tick(20)
+  check('file: disabled ignores drops', win.__requests.length === 0, win.__requests)
+  binding.receiveMessage(el, { enable: true })
+  await el.updateComplete
+}
+
+// ---- file validation (pure functions) ----
+{
+  const { isAccepted, validateFiles } = win.__validate
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+
+  check('accept: empty accepts anything', isAccepted(file('a.bin', 1), '') === true)
+  check('accept: extension token', isAccepted(file('a.CSV', 1), '.csv') === true)
+  check('accept: extension token mismatch', isAccepted(file('a.txt', 1), '.csv') === false)
+  check('accept: exact mime', isAccepted(file('a', 1, 'text/csv'), 'text/csv') === true)
+  check('accept: mime wildcard',
+    isAccepted(file('a.png', 1, 'image/png'), 'image/*') === true)
+  check('accept: mime wildcard mismatch',
+    isAccepted(file('a.txt', 1, 'text/plain'), 'image/*') === false)
+  check('accept: any token may match',
+    isAccepted(file('a.tsv', 1), '.csv, .tsv') === true)
+  // File.type is extension-sniffed and often blank (.parquet, .rds);
+  // nothing MIME-shaped can match, so an extension token has to carry it.
+  check('accept: blank type falls back to the extension',
+    isAccepted(file('a.parquet', 1, ''), '.parquet') === true)
+  check('accept: blank type cannot match a mime token',
+    isAccepted(file('a.parquet', 1, ''), 'application/octet-stream') === false)
+
+  const result = validateFiles(
+    [file('ok.csv', 10, 'text/csv'), file('big.csv', 50, 'text/csv'), file('n.txt', 1)],
+    { accept: '.csv', maxSize: 20 }
+  )
+  check('validate: keeps what passes',
+    eq(result.accepted.map((f) => f.name), ['ok.csv']),
+    result.accepted.map((f) => f.name))
+  check('validate: reports why each file was dropped',
+    eq(result.rejected, [
+      { name: 'big.csv', reason: { kind: 'size', limit: 20 } },
+      { name: 'n.txt', reason: { kind: 'accept' } }
+    ]), result.rejected)
+
+  check('validate: no limit means no size check',
+    validateFiles([file('big.csv', 50, 'text/csv')], { accept: '', maxSize: null })
+      .accepted.length === 1)
 }
 
 // ---- uploader (protocol module, no DOM) ----

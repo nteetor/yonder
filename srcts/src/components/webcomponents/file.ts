@@ -3,6 +3,8 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { repeat } from 'lit/directives/repeat.js';
 
 import { Uploader } from '../upload';
+import { validateFiles } from '../fileValidate';
+import type { Rejection } from '../fileValidate';
 
 // Message shape sent by update_file() on the R side. The value itself is
 // never among these: the server sets input$<id> at uploadEnd, so there is
@@ -40,7 +42,8 @@ class BsidesFile extends LitElement {
     disabled: { type: Boolean, reflect: true },
     maxSize: { type: Number, attribute: 'data-max-size' },
     _items: { state: true },
-    _error: { state: true },
+    _errors: { state: true },
+    _dragover: { state: true },
     _announcement: { state: true },
     _batch: { state: true },
     _uploading: { state: true },
@@ -53,7 +56,8 @@ class BsidesFile extends LitElement {
   declare disabled: boolean;
   declare maxSize: number | null;
   declare _items: FileItem[];
-  declare _error: string;
+  declare _errors: string[];
+  declare _dragover: boolean;
   declare _announcement: string;
   declare _batch: number;
   declare _uploading: boolean;
@@ -61,6 +65,10 @@ class BsidesFile extends LitElement {
   // The batch in flight, if any. One at a time: a new selection cancels
   // and restarts, matching "the selection is the value" semantics.
   #uploader: Uploader | null = null;
+
+  // dragenter/dragleave fire for every descendant a drag crosses, so the
+  // hover state counts entries rather than trusting a single leave.
+  #dragDepth = 0;
 
   constructor() {
     super();
@@ -71,7 +79,8 @@ class BsidesFile extends LitElement {
     this.disabled = false;
     this.maxSize = null;
     this._items = [];
-    this._error = '';
+    this._errors = [];
+    this._dragover = false;
     this._announcement = '';
     this._batch = 0;
     this._uploading = false;
@@ -89,7 +98,15 @@ class BsidesFile extends LitElement {
 
   override render(): unknown {
     return html`
-      <div class="file-dropzone" @click=${this.#onDropzoneClick}>
+      <div
+        class="file-dropzone${this._dragover ? ' dragover' : ''}"
+        @click=${this.#onDropzoneClick}
+        @dragenter=${this.#onDragEnter}
+        @dragover=${this.#onDragOver}
+        @dragleave=${this.#onDragLeave}
+        @drop=${this.#onDrop}
+        @paste=${this.#onPaste}
+      >
         <!-- The real, focusable control, visually hidden by the SCSS so
              native keyboard and screen reader behavior survive.
              data-shiny-no-bind-input is required: Shiny's own file input
@@ -108,7 +125,11 @@ class BsidesFile extends LitElement {
         <span class="file-prompt">${this.placeholder}</span>
       </div>
       ${this.#renderList()} ${this.#renderBatch()}
-      <p class="file-errors" role="alert">${this._error}</p>
+      <p class="file-errors" role="alert">
+        ${this._errors.map(
+          (message) => html`<span class="file-error">${message}</span>`,
+        )}
+      </p>
       <span class="visually-hidden" aria-live="polite"
         >${this._announcement}</span
       >
@@ -232,6 +253,87 @@ class BsidesFile extends LitElement {
     }
   };
 
+  #acceptsFiles(): boolean {
+    return !this.disabled && !this._uploading;
+  }
+
+  #onDragEnter = (event: DragEvent): void => {
+    if (!this.#acceptsFiles()) {
+      return;
+    }
+
+    event.preventDefault();
+    this.#dragDepth++;
+    this._dragover = true;
+  };
+
+  #onDragOver = (event: DragEvent): void => {
+    if (!this.#acceptsFiles()) {
+      return;
+    }
+
+    // Without this the browser treats the drop as navigation and opens
+    // the file.
+    event.preventDefault();
+
+    if (event.dataTransfer) {
+      event.dataTransfer.dropEffect = 'copy';
+    }
+  };
+
+  #onDragLeave = (): void => {
+    this.#dragDepth = Math.max(this.#dragDepth - 1, 0);
+
+    if (this.#dragDepth === 0) {
+      this._dragover = false;
+    }
+  };
+
+  #onDrop = (event: DragEvent): void => {
+    if (!this.#acceptsFiles()) {
+      return;
+    }
+
+    event.preventDefault();
+    this.#dragDepth = 0;
+    this._dragover = false;
+
+    if (!event.dataTransfer) {
+      return;
+    }
+
+    const { files, directories } = readTransfer(event.dataTransfer);
+
+    if (files.length === 0 && directories.length === 0) {
+      return;
+    }
+
+    this.upload(
+      files,
+      directories.map((name) => ({
+        name,
+        reason: { kind: 'directory' as const },
+      })),
+    );
+  };
+
+  // Pasting a screenshot is a file drop by another route; jsdom aside,
+  // clipboardData.files carries it.
+  #onPaste = (event: ClipboardEvent): void => {
+    if (!this.#acceptsFiles()) {
+      return;
+    }
+
+    const files = Array.from(event.clipboardData?.files ?? []);
+
+    if (files.length === 0) {
+      return;
+    }
+
+    event.preventDefault();
+    this.upload(files);
+  };
+
   #onCancel = (): void => {
     this.#uploader?.cancel();
     this.#uploader = null;
@@ -242,11 +344,51 @@ class BsidesFile extends LitElement {
     this.#announce('Upload cancelled');
   };
 
-  // Starts a batch, replacing any batch already in flight.
-  upload(files: File[]): void {
+  // Validates a set of files and uploads whatever survives, replacing any
+  // batch already in flight. Files arriving by drop or paste never passed
+  // the picker's own filtering, so `accept` and `multiple` are enforced
+  // here as well as by the picker.
+  //
+  // `rejected` carries checks the caller already made — dropped folders,
+  // which only a DataTransfer can identify.
+  upload(files: File[], rejected: Rejection[] = []): void {
+    const errors = rejected.map((rejection) => rejectionMessage(rejection));
+
+    // Silently keeping the first file would read as data loss.
+    if (!this.multiple && files.length > 1) {
+      errors.push('Only one file may be uploaded.');
+      this.#reject(errors);
+      return;
+    }
+
+    const validation = validateFiles(files, {
+      accept: this.accept,
+      maxSize: this.maxSize,
+    });
+
+    errors.push(
+      ...validation.rejected.map((rejection) => rejectionMessage(rejection)),
+    );
+
+    if (validation.accepted.length === 0) {
+      this.#reject(errors);
+      return;
+    }
+
+    this._errors = errors;
+    this.#start(validation.accepted);
+  }
+
+  // Reports a batch that never started.
+  #reject(errors: string[]): void {
+    this._errors = errors;
+    this._items = [];
+    this.#announce(errors.join(' '));
+  }
+
+  #start(files: File[]): void {
     this.#uploader?.cancel();
 
-    this._error = '';
     this._batch = 0;
     this._uploading = true;
     this._items = files.map((file) => ({
@@ -289,7 +431,7 @@ class BsidesFile extends LitElement {
       onError: (message) => {
         this.#uploader = null;
         this._uploading = false;
-        this._error = message;
+        this._errors = [message];
         this._items = this._items.map((item) =>
           item.status === 'done' ? item : { ...item, status: 'error' as const },
         );
@@ -322,7 +464,8 @@ class BsidesFile extends LitElement {
     this.#uploader?.cancel();
     this.#uploader = null;
     this._items = [];
-    this._error = '';
+    this._errors = [];
+    this._dragover = false;
     this._batch = 0;
     this._uploading = false;
 
@@ -351,16 +494,62 @@ class BsidesFile extends LitElement {
   }
 }
 
-// Decimal units, matching how shiny.maxRequestSize is written (5e6 is
-// "5 MB").
+// A dropped folder yields File objects that fail opaquely mid-POST;
+// webkitGetAsEntry is the only way to tell a folder from a file before
+// then, and only a DataTransfer offers it.
+function readTransfer(transfer: DataTransfer): {
+  files: File[];
+  directories: string[];
+} {
+  const files: File[] = [];
+  const directories: string[] = [];
+
+  for (const item of Array.from(transfer.items)) {
+    if (item.kind !== 'file') {
+      continue;
+    }
+
+    const entry = item.webkitGetAsEntry();
+
+    if (entry?.isDirectory) {
+      directories.push(entry.name);
+      continue;
+    }
+
+    const file = item.getAsFile();
+
+    if (file) {
+      files.push(file);
+    }
+  }
+
+  return { files, directories };
+}
+
+function rejectionMessage(rejection: Rejection): string {
+  switch (rejection.reason.kind) {
+    case 'size':
+      return `${rejection.name} is larger than the ${formatSize(
+        rejection.reason.limit,
+      )} upload limit.`;
+    case 'accept':
+      return `${rejection.name} is not an accepted file type.`;
+    case 'directory':
+      return `${rejection.name} is a folder, and folders cannot be uploaded.`;
+  }
+}
+
+// Binary steps under decimal labels, the convention shiny.maxRequestSize
+// is written in: its 5 * 1024 * 1024 default is "5 MB" everywhere it is
+// documented, and the limit is what this formats most often.
 function formatSize(bytes: number): string {
   const units = ['B', 'kB', 'MB', 'GB', 'TB'];
 
   let size = bytes;
   let unit = 0;
 
-  while (size >= 1000 && unit < units.length - 1) {
-    size = size / 1000;
+  while (size >= 1024 && unit < units.length - 1) {
+    size = size / 1024;
     unit++;
   }
 
