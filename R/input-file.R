@@ -127,37 +127,26 @@ input_file <-
     args <- list2(...)
     attrs <- keep_named(args)
 
-    input <-
-      htmltools::tag(
-        "bsides-file",
-        list2(
-          id = id,
-          multiple = if (select == "many") NA,
-          accept = if (non_null(accept)) paste0(accept, collapse = ","),
-          capture = capture,
-          placeholder = placeholder,
-          summary = summary,
-          # A render-time mirror of the server's limit, letting the client
-          # reject an oversize file before it costs a round trip. The
-          # server enforces the option in force at upload time regardless.
-          `data-max-size` = format_no_sci(file_max_size()),
-          !!!attrs
-        )
+    htmltools::tag(
+      "bsides-file",
+      list2(
+        id = id,
+        multiple = if (select == "many") NA,
+        accept = if (non_null(accept)) paste0(accept, collapse = ","),
+        capture = capture,
+        placeholder = placeholder,
+        summary = summary,
+        # A render-time mirror of the server's limit, letting the client
+        # reject an oversize file before it costs a round trip. The
+        # server enforces the option in force at upload time regardless.
+        `data-max-size` = format_no_sci(file_max_size()),
+        !!!attrs
       )
-
-    input <-
-      tag_style_add(input, `--bsides-file-dropzone-height` = height)
-
-    input <-
-      wrap_label(input, label, wrapper = "fieldset")
-
-    input <-
-      dependency_append(input)
-
-    input <-
-      s3_class_add(input, "bsides_file")
-
-    input
+    ) |>
+      tag_style_add(`--bsides-file-dropzone-height` = height) |>
+      wrap_label(label, wrapper = "fieldset") |>
+      dependency_append() |>
+      s3_class_add("bsides_file")
   }
 
 #' @rdname input_file
