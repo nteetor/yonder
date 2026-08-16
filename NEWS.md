@@ -9,6 +9,15 @@
 * `input_numeric()` passes `...` on as HTML attributes of the input element.
   The argument was previously accepted and silently discarded.
 
+* Input bindings no longer use jQuery; they observe only native DOM
+  events. Custom JavaScript that updates a bsides input and announces the
+  change with jQuery (`$(el).trigger("change")`) must dispatch a native
+  bubbling event instead:
+  `el.dispatchEvent(new Event("change", { bubbles: true }))`. Server-side
+  `update_*()` functions and Shiny's own machinery are unaffected. (The
+  one exception is `input_form()`, which still listens to Shiny's
+  jQuery-only `shiny:inputchanged` event through the page's jQuery.)
+
 * Removed `formGroup()` and `formRow()` in favor of the new `label`
   argument. Help text, previously `formGroup(help = )`, was dropped for now
   and will return in a later release.
