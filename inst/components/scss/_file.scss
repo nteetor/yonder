@@ -99,12 +99,12 @@ bsides-file {
     padding: .375rem 0;
 
     + .file-item {
-      // Translucent, not --bs-border-color: the progress track below is
-      // --bs-secondary-bg, a near-identical gray to the plain border
-      // color in light mode, and the two read as one muddle. This is
-      // also the token card borders use, so rows separate consistently
-      // inside a card.
-      border-top: var(--bs-border-width) solid var(--bs-border-color-translucent);
+      // The list-group separator seam: rows read as list items, so they
+      // take the list-group token when a theme defines it in reachable
+      // scope and the plain border color otherwise (Bootstrap declares
+      // the token on .list-group itself, where we cannot see it).
+      border-top: var(--bs-border-width) solid
+        var(--bs-list-group-border-color, var(--bs-border-color));
     }
   }
 

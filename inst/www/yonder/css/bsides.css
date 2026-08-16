@@ -12255,7 +12255,7 @@ bsides-file .file-item {
   padding: 0.375rem 0;
 }
 bsides-file .file-item + .file-item {
-  border-top: var(--bs-border-width) solid var(--bs-border-color-translucent);
+  border-top: var(--bs-border-width) solid var(--bs-list-group-border-color, var(--bs-border-color));
 }
 bsides-file .file-item-name {
   overflow: hidden;
