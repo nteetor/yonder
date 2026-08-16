@@ -12189,7 +12189,7 @@ bsides-file > .file-dropzone {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: calc(calc(1.5em + 0.75rem + calc(var(--bs-border-width) * 2)) * 2);
+  min-height: var(--bsides-file-dropzone-height, calc(calc(1.5em + 0.75rem + calc(var(--bs-border-width) * 2)) * 2));
   padding: 0.75rem 1rem;
   text-align: center;
   cursor: pointer;

@@ -200,3 +200,49 @@ run_demo <-
 
     shiny::runApp(demo_path)
   }
+
+# A shape check, not a grammar: rejecting an empty value or a pasted
+# declaration is worthwhile, while a unit allow-list would reject valid
+# CSS as the language grows (htmltools::validateCssUnit() rejects
+# clamp(), dvh, cqw, ...). A typo like "12rm" passes and is a no-op in
+# the browser -- the value reaches CSS via a custom property, so a bad
+# value cannot break out of its declaration.
+check_css_length <-
+  function(
+    x,
+    ...,
+    allow_null = FALSE,
+    arg = caller_arg(x),
+    call = caller_env()
+  ) {
+    check_string(
+      x,
+      allow_empty = FALSE,
+      allow_null = allow_null,
+      arg = arg,
+      call = call
+    )
+
+    if (is.null(x)) {
+      return(invisible(NULL))
+    }
+
+    if (!nzchar(trimws(x))) {
+      abort(
+        sprintf("`%s` must not be a whitespace-only string.", arg),
+        call = call
+      )
+    }
+
+    if (grepl("[;{}]", x)) {
+      abort(
+        c(
+          sprintf("`%s` must be a CSS value, not a declaration.", arg),
+          i = sprintf('Did you mean "12rem" rather than "height: 12rem;"?')
+        ),
+        call = call
+      )
+    }
+
+    invisible(NULL)
+  }

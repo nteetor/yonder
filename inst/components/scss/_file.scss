@@ -15,8 +15,11 @@ bsides-file {
     align-items: center;
     justify-content: center;
     // Room to aim a drag at, without a fixed height that would clip a
-    // long prompt.
-    min-height: calc(#{$input-height} * 2);
+    // long prompt. The token is read here and deliberately declared
+    // nowhere -- input_file(height = ) sets it inline and a theme may set
+    // it globally; declaring a default on bsides-file would shadow an
+    // inherited theme value, so the default lives in the fallback.
+    min-height: var(--bsides-file-dropzone-height, calc(#{$input-height} * 2));
     padding: .75rem 1rem;
     text-align: center;
     cursor: pointer;

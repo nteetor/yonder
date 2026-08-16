@@ -76,3 +76,32 @@ test_that("update_file() validates its arguments", {
   )
   expect_error(update_file("test", "reset", session = session), "empty")
 })
+
+test_that("`height` sets the dropzone custom property inline", {
+  html <- format(input_file("test", height = "12rem"))
+
+  expect_match(html, "--bsides-file-dropzone-height:12rem;", fixed = TRUE)
+
+  # NULL adds no style attribute at all, so a theme token applies cleanly
+  expect_no_match(format(input_file("test")), "style=")
+
+  # merged with, not clobbering, an author's style passed through ...
+  html <- format(input_file("test", style = "color: red", height = "12rem"))
+
+  expect_match(
+    html,
+    'style="color: red; --bsides-file-dropzone-height:12rem;"',
+    fixed = TRUE
+  )
+})
+
+test_that("`height` is shape-checked", {
+  expect_error(input_file("test", height = ""), "height")
+  expect_error(input_file("test", height = "  "), "height")
+  expect_error(input_file("test", height = "height: 12rem;"), "declaration")
+  expect_error(input_file("test", height = 12), "height")
+
+  # any CSS length passes -- no unit allow-list
+  expect_silent(input_file("test", height = "clamp(6rem, 20vh, 16rem)"))
+  expect_silent(input_file("test", height = "100dvh"))
+})

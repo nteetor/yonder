@@ -24,6 +24,14 @@
 #' @param placeholder A character string. The prompt shown inside the drop
 #'   zone, defaults to `"Choose a file"`.
 #'
+#' @param height A character string, a CSS length setting the minimum
+#'   height of the drop zone, defaults to `NULL`, in which case the drop
+#'   zone is twice the height of a standard input. Any CSS length works:
+#'   `"12rem"`, `"200px"`, `"clamp(6rem, 20vh, 16rem)"`. A theme may set
+#'   the default for every file input through the
+#'   `--bsides-file-dropzone-height` CSS variable; `height` overrides the
+#'   theme for its input.
+#'
 #' @details
 #'
 #' ## Uploading
@@ -86,12 +94,14 @@ input_file <-
     select = c("one", "many"),
     accept = NULL,
     capture = NULL,
-    placeholder = NULL
+    placeholder = NULL,
+    height = NULL
   ) {
     check_string(id, allow_empty = FALSE)
     select <- arg_match(select)
     check_character(accept, allow_null = TRUE)
     check_string(placeholder, allow_null = TRUE)
+    check_css_length(height, allow_null = TRUE)
 
     if (non_null(capture)) {
       capture <- arg_match(capture, c("user", "environment"))
@@ -116,6 +126,9 @@ input_file <-
           !!!attrs
         )
       )
+
+    input <-
+      tag_style_add(input, `--bsides-file-dropzone-height` = height)
 
     input <-
       wrap_label(input, label, wrapper = "fieldset")

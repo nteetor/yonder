@@ -12,7 +12,8 @@ input_file(
   select = c("one", "many"),
   accept = NULL,
   capture = NULL,
-  placeholder = NULL
+  placeholder = NULL,
+  height = NULL
 )
 
 update_file(
@@ -50,6 +51,14 @@ front or rear camera instead of browsing existing files. Defaults to
 
 \item{placeholder}{A character string. The prompt shown inside the drop
 zone, defaults to \code{"Choose a file"}.}
+
+\item{height}{A character string, a CSS length setting the minimum
+height of the drop zone, defaults to \code{NULL}, in which case the drop
+zone is twice the height of a standard input. Any CSS length works:
+\code{"12rem"}, \code{"200px"}, \code{"clamp(6rem, 20vh, 16rem)"}. A theme may set
+the default for every file input through the
+\code{--bsides-file-dropzone-height} CSS variable; \code{height} overrides the
+theme for its input.}
 
 \item{reset}{If \code{TRUE}, clear the file list, progress, and any error,
 defaults to \code{NULL}. A batch in flight is cancelled. The server value
