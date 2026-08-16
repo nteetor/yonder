@@ -13,6 +13,7 @@ input_file(
   accept = NULL,
   capture = NULL,
   placeholder = NULL,
+  summary = NULL,
   height = NULL
 )
 
@@ -22,6 +23,7 @@ update_file(
   reset = NULL,
   accept = NULL,
   placeholder = NULL,
+  summary = NULL,
   enable = NULL,
   disable = NULL,
   session = get_current_session()
@@ -51,6 +53,16 @@ front or rear camera instead of browsing existing files. Defaults to
 
 \item{placeholder}{A character string. The prompt shown inside the drop
 zone, defaults to \code{"Choose a file"}.}
+
+\item{summary}{A character string, a template for the file list's
+summary line, defaults to \code{NULL}, in which case
+\code{"{files} · {size}"} applies. Tokens are replaced from upload
+state: \code{{files}} is the pluralized count ("3 files"), \code{{n}} the bare
+count, \code{{size}} the total size, \code{{done}} the files uploaded so far,
+\code{{failed}} the files that failed, and \code{{percent}} the batch progress
+as a whole number. Unknown tokens are left as-is. The summary stays
+visible while the file list is collapsed, so the state tokens can
+make it a compact status line, e.g. \code{"{done}/{n} uploaded"}.}
 
 \item{height}{A character string, a CSS length setting the minimum
 height of the drop zone, defaults to \code{NULL}, in which case the drop

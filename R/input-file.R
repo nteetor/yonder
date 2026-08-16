@@ -24,6 +24,16 @@
 #' @param placeholder A character string. The prompt shown inside the drop
 #'   zone, defaults to `"Choose a file"`.
 #'
+#' @param summary A character string, a template for the file list's
+#'   summary line, defaults to `NULL`, in which case
+#'   `"{files} · {size}"` applies. Tokens are replaced from upload
+#'   state: `{files}` is the pluralized count ("3 files"), `{n}` the bare
+#'   count, `{size}` the total size, `{done}` the files uploaded so far,
+#'   `{failed}` the files that failed, and `{percent}` the batch progress
+#'   as a whole number. Unknown tokens are left as-is. The summary stays
+#'   visible while the file list is collapsed, so the state tokens can
+#'   make it a compact status line, e.g. `"{done}/{n} uploaded"`.
+#'
 #' @param height A character string, a CSS length setting the minimum
 #'   height of the drop zone, defaults to `NULL`, in which case the drop
 #'   zone is twice the height of a standard input. Any CSS length works:
@@ -95,12 +105,14 @@ input_file <-
     accept = NULL,
     capture = NULL,
     placeholder = NULL,
+    summary = NULL,
     height = NULL
   ) {
     check_string(id, allow_empty = FALSE)
     select <- arg_match(select)
     check_character(accept, allow_null = TRUE)
     check_string(placeholder, allow_null = TRUE)
+    check_string(summary, allow_null = TRUE)
     check_css_length(height, allow_null = TRUE)
 
     if (non_null(capture)) {
@@ -119,6 +131,7 @@ input_file <-
           accept = if (non_null(accept)) paste0(accept, collapse = ","),
           capture = capture,
           placeholder = placeholder,
+          summary = summary,
           # A render-time mirror of the server's limit, letting the client
           # reject an oversize file before it costs a round trip. The
           # server enforces the option in force at upload time regardless.
@@ -161,6 +174,7 @@ update_file <-
     reset = NULL,
     accept = NULL,
     placeholder = NULL,
+    summary = NULL,
     enable = NULL,
     disable = NULL,
     session = get_current_session()
@@ -170,6 +184,7 @@ update_file <-
     check_bool(reset, allow_null = TRUE)
     check_character(accept, allow_null = TRUE)
     check_string(placeholder, allow_null = TRUE)
+    check_string(summary, allow_null = TRUE)
     check_bool(enable, allow_null = TRUE)
     check_bool(disable, allow_null = TRUE)
 
@@ -178,6 +193,7 @@ update_file <-
         reset = reset,
         accept = if (non_null(accept)) paste0(accept, collapse = ","),
         placeholder = placeholder,
+        summary = summary,
         enable = enable,
         disable = disable
       ))

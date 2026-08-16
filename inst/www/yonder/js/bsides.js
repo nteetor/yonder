@@ -1347,6 +1347,7 @@
       accept: { type: String, reflect: true },
       capture: { type: String, reflect: true },
       placeholder: { type: String },
+      summary: { type: String },
       disabled: { type: Boolean, reflect: true },
       maxSize: { type: Number, attribute: "data-max-size" },
       _items: { state: true },
@@ -1369,6 +1370,7 @@
       this.accept = "";
       this.capture = "";
       this.placeholder = "Choose a file";
+      this.summary = "{files} \xB7 {size}";
       this.disabled = false;
       this.maxSize = null;
       this._items = [];
@@ -1433,15 +1435,23 @@
       const perFile = this._items.length > 1;
       const count = this._items.length;
       const total = this._items.reduce((sum, item) => sum + item.file.size, 0);
+      const summaryText = interpolate(this.summary, {
+        n: String(count),
+        files: count === 1 ? "1 file" : `${count} files`,
+        size: formatSize(total),
+        done: String(this._items.filter((item) => item.status === "done").length),
+        failed: String(
+          this._items.filter((item) => item.status === "error").length
+        ),
+        percent: String(Math.round(this._batch * 100))
+      });
       return b2`
       <details
         class="file-disclosure"
         ?open=${this._listOpen}
         @toggle=${this.#onListToggle}
       >
-        <summary class="file-summary">
-          ${count === 1 ? "1 file" : `${count} files`} · ${formatSize(total)}
-        </summary>
+        <summary class="file-summary">${summaryText}</summary>
         <ul class="file-list" role="list">
           ${c4(
         this._items,
@@ -1509,6 +1519,9 @@
       }
       if (msg.placeholder !== void 0) {
         this.placeholder = msg.placeholder;
+      }
+      if (msg.summary !== void 0) {
+        this.summary = msg.summary;
       }
       if (msg.enable === true) {
         this.disabled = false;
@@ -1738,6 +1751,12 @@
       }
     }
   };
+  function interpolate(template, vars) {
+    return template.replace(
+      /\{([a-z_]+)\}/g,
+      (match, key) => key in vars ? vars[key] : match
+    );
+  }
   function readTransfer(transfer) {
     const files = [];
     const directories = [];

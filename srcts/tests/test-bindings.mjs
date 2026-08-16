@@ -1067,6 +1067,21 @@ for (const name of Object.keys(registered)) {
     el.querySelector('.file-summary').textContent)
   check('file: a new batch reopens the fold',
     el.querySelector('.file-disclosure').hasAttribute('open'))
+
+  // The summary line is a template; state tokens fill from the live
+  // batch (two files staged, none done, no progress yet).
+  const summaryText = () =>
+    el.querySelector('.file-summary').textContent.replace(/\s+/g, ' ').trim()
+  binding.receiveMessage(el, { summary: '{done}/{n} uploaded · {percent}%' })
+  await el.updateComplete
+  check('file: summary template with state tokens',
+    summaryText() === '0/2 uploaded · 0%', summaryText())
+  binding.receiveMessage(el, { summary: '{files} {wat}' })
+  await el.updateComplete
+  check('file: unknown summary token renders verbatim',
+    summaryText() === '2 files {wat}', summaryText())
+  binding.receiveMessage(el, { summary: '{files} · {size}' })
+  await el.updateComplete
   el.querySelector('.file-cancel').click()
   await el.updateComplete
   win.__postPlan = null

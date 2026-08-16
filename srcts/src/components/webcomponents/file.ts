@@ -13,6 +13,7 @@ interface FileUpdate {
   reset?: boolean;
   accept?: string;
   placeholder?: string;
+  summary?: string;
   enable?: boolean;
   disable?: boolean;
 }
@@ -39,6 +40,7 @@ class BsidesFile extends LitElement {
     accept: { type: String, reflect: true },
     capture: { type: String, reflect: true },
     placeholder: { type: String },
+    summary: { type: String },
     disabled: { type: Boolean, reflect: true },
     maxSize: { type: Number, attribute: 'data-max-size' },
     _items: { state: true },
@@ -54,6 +56,7 @@ class BsidesFile extends LitElement {
   declare accept: string;
   declare capture: string;
   declare placeholder: string;
+  declare summary: string;
   declare disabled: boolean;
   declare maxSize: number | null;
   declare _items: FileItem[];
@@ -78,6 +81,7 @@ class BsidesFile extends LitElement {
     this.accept = '';
     this.capture = '';
     this.placeholder = 'Choose a file';
+    this.summary = '{files} · {size}';
     this.disabled = false;
     this.maxSize = null;
     this._items = [];
@@ -151,15 +155,24 @@ class BsidesFile extends LitElement {
     const count = this._items.length;
     const total = this._items.reduce((sum, item) => sum + item.file.size, 0);
 
+    const summaryText = interpolate(this.summary, {
+      n: String(count),
+      files: count === 1 ? '1 file' : `${count} files`,
+      size: formatSize(total),
+      done: String(this._items.filter((item) => item.status === 'done').length),
+      failed: String(
+        this._items.filter((item) => item.status === 'error').length,
+      ),
+      percent: String(Math.round(this._batch * 100)),
+    });
+
     return html`
       <details
         class="file-disclosure"
         ?open=${this._listOpen}
         @toggle=${this.#onListToggle}
       >
-        <summary class="file-summary">
-          ${count === 1 ? '1 file' : `${count} files`} · ${formatSize(total)}
-        </summary>
+        <summary class="file-summary">${summaryText}</summary>
         <ul class="file-list" role="list">
           ${repeat(
             this._items,
@@ -238,6 +251,10 @@ class BsidesFile extends LitElement {
 
     if (msg.placeholder !== undefined) {
       this.placeholder = msg.placeholder;
+    }
+
+    if (msg.summary !== undefined) {
+      this.summary = msg.summary;
     }
 
     // Two one-way switches; when both arrive, disable wins.
@@ -527,6 +544,16 @@ class BsidesFile extends LitElement {
       }
     }
   }
+}
+
+// Fills {token} slots in the summary template from upload state. Unknown
+// tokens render verbatim: a typo like {sise} stays visible in the page
+// instead of vanishing silently. The result lands in a Lit text binding,
+// so no HTML surface exists regardless of the template.
+function interpolate(template: string, vars: Record<string, string>): string {
+  return template.replace(/\{([a-z_]+)\}/g, (match, key: string) =>
+    key in vars ? vars[key] : match,
+  );
 }
 
 // A dropped folder yields File objects that fail opaquely mid-POST;

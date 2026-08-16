@@ -64,6 +64,10 @@ test_that("update_file() sends only the arguments it is given", {
     session$sent[[2]]$message,
     list(accept = ".csv,.tsv", placeholder = "Drop a file", disable = TRUE)
   )
+
+  update_file("test", summary = "{files}", session = session)
+
+  expect_equal(session$sent[[3]]$message, list(summary = "{files}"))
 })
 
 test_that("update_file() validates its arguments", {
@@ -75,6 +79,18 @@ test_that("update_file() validates its arguments", {
     "placeholder"
   )
   expect_error(update_file("test", "reset", session = session), "empty")
+})
+
+test_that("`summary` renders as an attribute only when given", {
+  expect_match(
+    format(input_file("test", summary = "{done}/{n} uploaded")),
+    'summary="{done}/{n} uploaded"',
+    fixed = TRUE
+  )
+
+  expect_no_match(format(input_file("test")), "summary=")
+
+  expect_error(input_file("test", summary = 1), "summary")
 })
 
 test_that("`height` sets the dropzone custom property inline", {
