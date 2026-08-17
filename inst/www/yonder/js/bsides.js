@@ -99,12 +99,13 @@
   }
 
   // srcts/src/components/inputButton.ts
+  var clicks = /* @__PURE__ */ new WeakMap();
   var ButtonInputBinding = class extends NativeEventInputBinding {
     find(scope) {
       return findAll(scope, ".bsides-input-button");
     }
     getValue(el) {
-      return Number(el.dataset.bsidesClicks) || 0;
+      return clicks.get(el) ?? 0;
     }
     // Matches the input handler registered by the R side.
     getType(el) {
@@ -113,7 +114,7 @@
     }
     subscribe(el, callback) {
       this.listen(el, "click", () => {
-        el.dataset.bsidesClicks = String(this.getValue(el) + 1);
+        clicks.set(el, this.getValue(el) + 1);
         callback(false);
       });
     }
@@ -1165,12 +1166,13 @@
   registerBinding(FormInputBinding, "form");
 
   // srcts/src/components/inputLink.ts
+  var clicks2 = /* @__PURE__ */ new WeakMap();
   var LinkInputBinding = class extends NativeEventInputBinding {
     find(scope) {
       return findAll(scope, ".bsides-input-link");
     }
     getValue(el) {
-      return Number(el.dataset.bsidesClicks) || 0;
+      return clicks2.get(el) ?? 0;
     }
     // Matches the input handler registered by the R side.
     getType(el) {
@@ -1179,7 +1181,7 @@
     }
     subscribe(el, callback) {
       this.listen(el, "click", () => {
-        el.dataset.bsidesClicks = String(this.getValue(el) + 1);
+        clicks2.set(el, this.getValue(el) + 1);
         callback(false);
       });
     }
