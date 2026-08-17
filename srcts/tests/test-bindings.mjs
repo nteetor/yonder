@@ -76,7 +76,7 @@ function bind(name) {
   const binding = registered[name]
   if (!binding) throw new Error(`binding not registered: ${name}`)
 
-  const els = binding.find(doc.body).get()
+  const els = [...binding.find(doc.body)]
   const events = []
 
   for (const el of els) {
@@ -100,6 +100,37 @@ function check(label, cond, detail) {
 const eq = (a, b) => JSON.stringify(a) === JSON.stringify(b)
 const native = (el, type, Ctor = win.Event, init = {}) =>
   el.dispatchEvent(new Ctor(type, { bubbles: true, ...init }))
+
+// ---- find() scope contract ----
+// Shiny's BindScope is an element OR a jQuery object. renderContentAsync()
+// with `where != "replace"` (used by modal.ts), insertUI(), and insertTab()
+// all bind with the jQuery parent of the rendered node.
+for (const name of Object.keys(registered)) {
+  const binding = registered[name]
+  let fromElement
+  let fromJQuery
+
+  try {
+    fromElement = [...binding.find(doc.body)]
+  } catch (e) {
+    fromElement = e.message
+  }
+
+  try {
+    fromJQuery = [...binding.find(win.jQuery(doc.body))]
+  } catch (e) {
+    fromJQuery = e.message
+  }
+
+  check(
+    `${name}: find() accepts a jQuery scope`,
+    Array.isArray(fromJQuery) &&
+      Array.isArray(fromElement) &&
+      fromJQuery.length === fromElement.length &&
+      fromJQuery.every((el, i) => el === fromElement[i]),
+    { fromElement, fromJQuery }
+  )
+}
 
 // ---- button ----
 {

@@ -1,6 +1,10 @@
-import $ from 'jquery';
-
-import { InputBinding, registerBinding, hasDefinedProperty } from './_utils';
+import {
+  NativeEventInputBinding,
+  registerBinding,
+  announce,
+  findAll,
+  hasDefinedProperty,
+} from './_utils';
 
 type SelectHTMLElement = HTMLSelectElement;
 
@@ -10,9 +14,9 @@ type SelectReceiveMessageData = {
   disable?: string[];
 };
 
-class SelectInputBinding extends InputBinding {
+class SelectInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-select');
+    return findAll(scope, '.bsides-input-select');
   }
 
   override getValue(el: SelectHTMLElement): string {
@@ -27,13 +31,9 @@ class SelectInputBinding extends InputBinding {
     el: SelectHTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    $(el).on('change.bsidesSelectInputBinding', () => {
+    this.listen(el, 'change', () => {
       callback(false);
     });
-  }
-
-  override unsubscribe(el: SelectHTMLElement): void {
-    $(el).off('.bsidesSelectInputBinding');
   }
 
   override getState(el: SelectHTMLElement): { value: string } {
@@ -46,10 +46,8 @@ class SelectInputBinding extends InputBinding {
     el: SelectHTMLElement,
     data: SelectReceiveMessageData,
   ): void {
-    const $el = $(el);
-
     if (hasDefinedProperty(data, 'options')) {
-      $el.html(data.options!);
+      el.innerHTML = data.options!;
     }
 
     if (hasDefinedProperty(data, 'select')) {
@@ -57,16 +55,12 @@ class SelectInputBinding extends InputBinding {
     }
 
     if (hasDefinedProperty(data, 'disable')) {
-      const $options = $el.find<HTMLOptionElement>('option');
-
-      $options.prop('disabled', false);
-
-      $options
-        .filter((i, e) => data.disable!.includes(e.value))
-        .prop('disabled', true);
+      for (const option of el.options) {
+        option.disabled = data.disable!.includes(option.value);
+      }
     }
 
-    $el.trigger('change');
+    announce(el);
   }
 }
 

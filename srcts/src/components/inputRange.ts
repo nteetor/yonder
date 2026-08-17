@@ -1,32 +1,32 @@
-import $ from 'jquery';
-
-import { InputBinding, registerBinding, hasDefinedProperty } from './_utils';
+import {
+  NativeEventInputBinding,
+  registerBinding,
+  announce,
+  findAll,
+  hasDefinedProperty,
+} from './_utils';
 
 type RangeReceiveMessageData = {
   value?: number;
   disable?: boolean;
 };
 
-class RangeInputBinding extends InputBinding {
+class RangeInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-range');
+    return findAll(scope, '.bsides-input-range');
   }
 
   override getValue(el: HTMLElement): number {
-    return Number($(el).find('.form-range').val());
+    return Number(this.#rangeOf(el).value);
   }
 
   override subscribe(
     el: HTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    $(el).on('change.bsidesRangeInputBinding', () => {
+    this.listen(el, 'change', () => {
       callback(false);
     });
-  }
-
-  override unsubscribe(el: HTMLElement): void {
-    $(el).off('.bsidesRangeInputBinding');
   }
 
   override getState(el: HTMLElement): { value: number } {
@@ -39,18 +39,21 @@ class RangeInputBinding extends InputBinding {
     el: HTMLElement,
     data: RangeReceiveMessageData,
   ): void {
-    const $el = $(el);
-    const $value = $el.find('.form-range');
+    const range = this.#rangeOf(el);
 
     if (hasDefinedProperty(data, 'value')) {
-      $value.val(data.value!);
+      range.value = String(data.value!);
     }
 
     if (hasDefinedProperty(data, 'disable')) {
-      $value.prop('disabled', data.disable!);
+      range.disabled = data.disable!;
     }
 
-    $el.trigger('change');
+    announce(el);
+  }
+
+  #rangeOf(el: HTMLElement): HTMLInputElement {
+    return el.querySelector<HTMLInputElement>('.form-range')!;
   }
 }
 

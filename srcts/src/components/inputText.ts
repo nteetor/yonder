@@ -1,8 +1,12 @@
 // Modeled on Shiny's TextInputBinding (srcts/src/bindings/input/text.ts).
 
-import $ from 'jquery';
-
-import { InputBinding, registerBinding, hasDefinedProperty } from './_utils';
+import {
+  NativeEventInputBinding,
+  registerBinding,
+  announce,
+  findAll,
+  hasDefinedProperty,
+} from './_utils';
 
 type TextHTMLElement = HTMLInputElement;
 
@@ -11,9 +15,9 @@ type TextReceiveMessageData = {
   disable?: boolean;
 };
 
-class TextInputBinding extends InputBinding {
+class TextInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-text');
+    return findAll(scope, '.bsides-input-text');
   }
 
   override getValue(el: TextHTMLElement): TextHTMLElement['value'] {
@@ -28,21 +32,19 @@ class TextInputBinding extends InputBinding {
     el: TextHTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    const $el = $(el);
-
     // Rapid-fire events defer to the rate policy (debounce); committed
     // changes are sent immediately.
-    $el.on('keyup.bsidesTextInputBinding input.bsidesTextInputBinding', () => {
+    this.listen(el, 'keyup', () => {
       callback(true);
     });
 
-    $el.on('change.bsidesTextInputBinding', () => {
+    this.listen(el, 'input', () => {
+      callback(true);
+    });
+
+    this.listen(el, 'change', () => {
       callback(false);
     });
-  }
-
-  override unsubscribe(el: TextHTMLElement): void {
-    $(el).off('.bsidesTextInputBinding');
   }
 
   override getState(el: TextHTMLElement): { value: string } {
@@ -63,7 +65,7 @@ class TextInputBinding extends InputBinding {
       el.disabled = data.disable!;
     }
 
-    $(el).trigger('change');
+    announce(el);
   }
 
   override getRatePolicy(el: HTMLElement): {

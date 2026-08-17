@@ -1,47 +1,40 @@
-import $ from 'jquery';
-
-import { InputBinding, registerBinding, hasDefinedProperty } from './_utils';
+import {
+  NativeEventInputBinding,
+  registerBinding,
+  announce,
+  findAll,
+  hasDefinedProperty,
+} from './_utils';
 
 type ListGroupReceiveMessageData = {
   select?: string[];
   disable?: string[];
 };
 
-class ListGroupInputBinding extends InputBinding {
+class ListGroupInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-list-group');
+    return findAll(scope, '.bsides-input-list-group');
   }
 
   override getValue(el: HTMLElement): Array<string | null> {
-    return $(el)
-      .find('.list-group-item-action.active')
-      .map((i, e) => e.getAttribute('data-bsides-value'))
-      .get();
+    return [...el.querySelectorAll('.list-group-item-action.active')].map((e) =>
+      e.getAttribute('data-bsides-value'),
+    );
   }
 
   override subscribe(
     el: HTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    const $el = $(el);
-
-    $el.on(
-      'click.bsidesListGroupInputBinding',
-      '.list-group-item-action',
-      (event) => {
-        $(event.currentTarget).toggleClass('active');
-        callback(false);
-      },
-    );
-
-    // Server updates via receiveMessage() are announced with a change event.
-    $el.on('change.bsidesListGroupInputBinding', () => {
+    this.listenDelegated(el, 'click', '.list-group-item-action', (_, item) => {
+      item.classList.toggle('active');
       callback(false);
     });
-  }
 
-  override unsubscribe(el: HTMLElement): void {
-    $(el).off('.bsidesListGroupInputBinding');
+    // Server updates via receiveMessage() are announced with a change event.
+    this.listen(el, 'change', () => {
+      callback(false);
+    });
   }
 
   override getState(el: HTMLElement): { value: Array<string | null> } {
@@ -54,30 +47,32 @@ class ListGroupInputBinding extends InputBinding {
     el: HTMLElement,
     data: ListGroupReceiveMessageData,
   ): void {
-    const $el = $(el);
-    const $choices = $el.find('.list-group-item-action');
+    const choices = el.querySelectorAll<HTMLButtonElement>(
+      '.list-group-item-action',
+    );
 
     const valueOf = (e: HTMLElement) =>
       e.getAttribute('data-bsides-value') ?? '';
 
     if (hasDefinedProperty(data, 'select')) {
-      $choices.removeClass('active');
-
-      $choices
-        .filter((i, e) => data.select!.includes(valueOf(e)))
-        .addClass('active');
+      for (const choice of choices) {
+        choice.classList.toggle(
+          'active',
+          data.select!.includes(valueOf(choice)),
+        );
+      }
     }
 
     if (hasDefinedProperty(data, 'disable')) {
-      $choices.removeClass('disabled').prop('disabled', false);
+      for (const choice of choices) {
+        const disable = data.disable!.includes(valueOf(choice));
 
-      $choices
-        .filter((i, e) => data.disable!.includes(valueOf(e)))
-        .addClass('disabled')
-        .prop('disabled', true);
+        choice.classList.toggle('disabled', disable);
+        choice.disabled = disable;
+      }
     }
 
-    $el.trigger('change');
+    announce(el);
   }
 }
 

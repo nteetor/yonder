@@ -1,19 +1,20 @@
-import $ from 'jquery';
-
-import { InputBinding, registerBinding } from './_utils';
+import { NativeEventInputBinding, registerBinding, findAll } from './_utils';
 
 type LinkReceiveMessageData = {
   // update_link() does not drop NULLs, so label may arrive as null.
   label?: string | null;
 };
 
-class LinkInputBinding extends InputBinding {
+// Kept off the DOM, as jQuery's .data() store was.
+const clicks = new WeakMap<HTMLElement, number>();
+
+class LinkInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-link');
+    return findAll(scope, '.bsides-input-link');
   }
 
   override getValue(el: HTMLElement): number {
-    return Number($(el).data('bsides-clicks')) || 0;
+    return clicks.get(el) ?? 0;
   }
 
   // Matches the input handler registered by the R side.
@@ -26,15 +27,10 @@ class LinkInputBinding extends InputBinding {
     el: HTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    $(el).on('click.bsidesLinkInputBinding', () => {
-      const clicks = Number($(el).data('bsides-clicks')) || 0;
-      $(el).data('bsides-clicks', clicks + 1);
+    this.listen(el, 'click', () => {
+      clicks.set(el, this.getValue(el) + 1);
       callback(false);
     });
-  }
-
-  override unsubscribe(el: HTMLElement): void {
-    $(el).off('.bsidesLinkInputBinding');
   }
 
   override getState(el: HTMLElement): { value: number } {

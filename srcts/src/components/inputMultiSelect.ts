@@ -1,6 +1,4 @@
-import $ from 'jquery';
-
-import { NativeEventInputBinding, registerBinding } from './_utils';
+import { NativeEventInputBinding, findAll, registerBinding } from './_utils';
 import './webcomponents/multiSelect';
 import type {
   BsidesMultiSelect,
@@ -12,7 +10,7 @@ import type {
 // Listener cleanup is inherited from NativeEventInputBinding.
 class MultiSelectInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('bsides-multi-select');
+    return findAll(scope, 'bsides-multi-select');
   }
 
   override getValue(el: HTMLElement): string[] {

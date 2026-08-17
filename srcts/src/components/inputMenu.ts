@@ -1,6 +1,10 @@
-import $ from 'jquery';
-
-import { InputBinding, registerBinding, hasDefinedProperty } from './_utils';
+import {
+  NativeEventInputBinding,
+  registerBinding,
+  announce,
+  findAll,
+  hasDefinedProperty,
+} from './_utils';
 
 type MenuReceiveMessageData = {
   label?: string;
@@ -8,37 +12,30 @@ type MenuReceiveMessageData = {
   disable?: string[];
 };
 
-class MenuInputBinding extends InputBinding {
+const menuValues = new WeakMap<HTMLElement, string>();
+
+class MenuInputBinding extends NativeEventInputBinding {
   override find(scope: HTMLElement): JQuery<HTMLElement> {
-    return $(scope).find('.bsides-input-menu');
+    return findAll(scope, '.bsides-input-menu');
   }
 
   override getValue(el: HTMLElement): unknown {
-    return $(el).data('bsides-value');
+    return menuValues.get(el);
   }
 
   override subscribe(
     el: HTMLElement,
     callback: (allowDeferred: boolean) => void,
   ): void {
-    const $el = $(el);
-
-    $el.on('click.bsidesMenuInputBinding', '.dropdown-item', (event) => {
-      $el.data(
-        'bsides-value',
-        (event.currentTarget as HTMLButtonElement).value,
-      );
+    this.listenDelegated(el, 'click', '.dropdown-item', (_, item) => {
+      menuValues.set(el, (item as HTMLButtonElement).value);
       callback(false);
     });
 
     // Server updates via receiveMessage() are announced with a change event.
-    $el.on('change.bsidesMenuInputBinding', () => {
+    this.listen(el, 'change', () => {
       callback(false);
     });
-  }
-
-  override unsubscribe(el: HTMLElement): void {
-    $(el).off('.bsidesMenuInputBinding');
   }
 
   override getState(el: HTMLElement): { value: unknown } {
@@ -48,26 +45,28 @@ class MenuInputBinding extends InputBinding {
   }
 
   override receiveMessage(el: HTMLElement, data: MenuReceiveMessageData): void {
-    const $el = $(el);
-
     if (hasDefinedProperty(data, 'label')) {
-      $el.children('.dropdown-toggle').html(data.label!);
+      const toggle = el.querySelector(':scope > .dropdown-toggle');
+
+      if (toggle) {
+        toggle.innerHTML = data.label!;
+      }
     }
 
     if (hasDefinedProperty(data, 'disable')) {
-      const $choices = $el.find<HTMLButtonElement>('.dropdown-item');
+      const choices = el.querySelectorAll<HTMLButtonElement>('.dropdown-item');
 
-      $choices.prop('disabled', false).removeClass('disabled');
+      for (const choice of choices) {
+        const disable = data.disable!.includes(choice.value);
 
-      $choices
-        .filter((i, e) => data.disable!.includes(e.value))
-        .prop('disabled', true)
-        .addClass('disabled');
+        choice.disabled = disable;
+        choice.classList.toggle('disabled', disable);
+      }
     }
 
     if (hasDefinedProperty(data, 'select')) {
-      $el.data('bsides-value', data.select!);
-      $el.trigger('change');
+      menuValues.set(el, data.select!);
+      announce(el);
     }
   }
 }

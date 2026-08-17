@@ -9,18 +9,17 @@ const root = path.resolve(__dirname, '../..')
 const entry = path.join(root, 'srcts/src/index.ts')
 const outdir = path.join(root, 'inst/www/yonder/js')
 
-// jquery, bootstrap, and Shiny are loaded from separate script tags at
-// runtime; imports of these modules resolve to their globals instead of
-// being bundled.
+// bootstrap and Shiny are loaded from separate script tags at runtime;
+// imports of these modules resolve to their globals instead of being
+// bundled.
 const globals = {
-  jquery: 'window.jQuery',
   bootstrap: 'window.bootstrap'
 }
 
 const globalsPlugin = {
   name: 'globals',
   setup(build) {
-    build.onResolve({ filter: /^(jquery|bootstrap)$/ }, (args) => ({
+    build.onResolve({ filter: /^(bootstrap)$/ }, (args) => ({
       path: args.path,
       namespace: 'globals'
     }))

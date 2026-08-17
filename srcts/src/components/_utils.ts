@@ -2,6 +2,7 @@
 
 import type { InputBinding as InputBindingType } from 'rstudio-shiny/srcts/types/src/bindings/input';
 import type { ShinyClass } from 'rstudio-shiny/srcts/types/src';
+import type { BindScope } from 'rstudio-shiny/srcts/types/src/shiny/bind';
 
 const Shiny: ShinyClass | undefined = window.Shiny;
 
@@ -22,6 +23,31 @@ function registerBinding(
   if (Shiny) {
     Shiny.inputBindings.register(new inputBindingClass(), 'bsides.' + name);
   }
+}
+
+// Shiny binds with either an element or a jQuery object: renderContentAsync()
+// with `where != "replace"`, insertUI(), and insertTab() all pass the jQuery
+// parent of the rendered node. Shiny consumes the result via .length and
+// indexing only, so an array satisfies the declared JQuery return type.
+function findAll(scope: BindScope, selector: string): JQuery<HTMLElement> {
+  const roots =
+    typeof (scope as HTMLElement).querySelectorAll === 'function'
+      ? [scope as HTMLElement]
+      : Array.from(scope as ArrayLike<HTMLElement>);
+
+  const found = new Set<HTMLElement>();
+
+  for (const root of roots) {
+    for (const el of root.querySelectorAll<HTMLElement>(selector)) {
+      found.add(el);
+    }
+  }
+
+  return [...found] as unknown as JQuery<HTMLElement>;
+}
+
+function announce(el: HTMLElement): void {
+  el.dispatchEvent(new Event('change', { bubbles: true }));
 }
 
 // Base class for bindings that use native DOM events instead of jQuery.
@@ -46,6 +72,23 @@ abstract class NativeEventInputBinding extends InputBinding {
     }
 
     el.addEventListener(type, handler, { signal: controller.signal });
+  }
+
+  protected listenDelegated(
+    el: HTMLElement,
+    type: string,
+    selector: string,
+    handler: (event: Event, target: HTMLElement) => void,
+  ): void {
+    this.listen(el, type, (event) => {
+      const target = (event.target as HTMLElement | null)?.closest<HTMLElement>(
+        selector,
+      );
+
+      if (target && el.contains(target)) {
+        handler(event, target);
+      }
+    });
   }
 
   override unsubscribe(el: HTMLElement): void {
@@ -88,6 +131,8 @@ export {
   NativeEventInputBinding,
   registerBinding,
   addCustomMessageHandler,
+  announce,
+  findAll,
   hasDefinedProperty,
   Shiny,
 };
