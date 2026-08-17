@@ -13,6 +13,7 @@ import fs from 'node:fs'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { JSDOM } from 'jsdom'
+import esbuild from 'esbuild'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..')
 
@@ -21,7 +22,7 @@ const html = (name) => read(path.join('srcts/tests/html', `${name}.html`))
 const tick = (ms = 60) => new Promise((r) => setTimeout(r, ms))
 
 const body = [
-  'button', 'checkbox', 'checkbox-group', 'form', 'link', 'list-group',
+  'button', 'checkbox', 'checkbox-group', 'file', 'form', 'link', 'list-group',
   'menu', 'chip-group', 'chip-group-none', 'chip-group-select',
   'multi-select', 'multi-select-free', 'numeric', 'radio-group', 'range',
   'select', 'text-group', 'modal'
@@ -63,9 +64,111 @@ win.eval(`
   };
 `)
 
+// Upload scaffolding: a scripted shinyapp.makeRequest standing in for the
+// WebSocket RPC leg, and a stub XMLHttpRequest standing in for the POST
+// leg. Both record every call and are steered per test through
+// __requestPlan / __postPlan; the defaults answer uploadInit with a job
+// and complete each POST with a single full-size progress event.
+win.eval(`
+  window.__connected = true;
+  window.__requests = [];
+  window.__posts = [];
+  window.__requestPlan = null;
+  window.__postPlan = null;
+
+  window.Shiny.shinyapp = {
+    isConnected() { return window.__connected; },
+    makeRequest(method, args, onSuccess, onError) {
+      const call = { method, args };
+      window.__requests.push(call);
+      const plan = window.__requestPlan
+        ? window.__requestPlan(call, window.__requests.length - 1)
+        : null;
+      setTimeout(() => {
+        if (plan && plan.error) {
+          onError(plan.error);
+        } else if (plan && 'value' in plan) {
+          onSuccess(plan.value);
+        } else if (method === 'uploadInit') {
+          onSuccess({ jobId: 'job1', uploadUrl: '/session/tok/upload/job1?w=' });
+        } else {
+          onSuccess({});
+        }
+      }, 0);
+    }
+  };
+
+  window.__deferredPosts = [];
+
+  window.XMLHttpRequest = class StubXHR {
+    constructor() {
+      this.upload = {};
+      this.status = 0;
+      this.responseText = '';
+      this.aborted = false;
+    }
+    open(method, url) { this.method = method; this.url = url; }
+    setRequestHeader(name, value) {
+      this.headers = this.headers || {};
+      this.headers[name] = value;
+    }
+    send(body) {
+      const call = {
+        method: this.method,
+        url: this.url,
+        headers: this.headers,
+        name: body && body.name,
+        size: body && body.size
+      };
+      window.__posts.push(call);
+      const plan = (window.__postPlan
+        ? window.__postPlan(call, window.__posts.length - 1)
+        : null) || {};
+      if (plan.defer) {
+        window.__deferredPosts.push(this);
+        return;
+      }
+      setTimeout(() => {
+        if (this.aborted) return;
+        const loaded = plan.progress || [call.size];
+        for (const n of loaded) {
+          if (this.upload.onprogress) {
+            this.upload.onprogress({ lengthComputable: true, loaded: n });
+          }
+        }
+        this.status = plan.status || 200;
+        this.responseText = plan.responseText || '';
+        if (this.onload) this.onload();
+      }, 0);
+    }
+    abort() {
+      this.aborted = true;
+      if (this.onabort) this.onabort();
+    }
+  };
+`)
+
 win.eval(read('node_modules/jquery/dist/jquery.js'))
 win.eval(read('node_modules/bootstrap/dist/js/bootstrap.bundle.js'))
 win.eval(read('inst/www/yonder/js/bsides.js'))
+
+// The uploader and the validation helpers are internal to the bundle (an
+// IIFE exporting nothing), so bundle them a second time under global names
+// for direct unit tests. The footer is what publishes them: esbuild emits
+// "use strict", and a strict eval keeps its own var scope instead of
+// writing to the global object.
+const expose = (entry, name) => win.eval(esbuild.buildSync({
+  entryPoints: [path.join(root, entry)],
+  bundle: true,
+  format: 'iife',
+  globalName: name,
+  target: 'es2022',
+  footer: { js: `window.${name} = ${name}` },
+  write: false
+}).outputFiles[0].text)
+
+expose('srcts/src/components/upload.ts', '__upload')
+expose('srcts/src/components/fileValidate.ts', '__validate')
 
 const registered = win.__registered
 const handlers = win.__handlers
@@ -807,6 +910,519 @@ for (const name of Object.keys(registered)) {
   handlers['bsides:modalClose']({})
   await tick(400)
   check('modal: hidden after modalClose', binding.getValue(el) === 'hidden', binding.getValue(el))
+}
+
+// ---- file ----
+{
+  const { binding, els, events } = bind('bsides.file')
+  const el = doc.getElementById('upl')
+  const input = el.querySelector('.file-input')
+
+  win.__connected = true
+  win.__requests = []
+  win.__posts = []
+  win.__requestPlan = null
+  win.__postPlan = null
+  win.__deferredPosts = []
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+
+  check('file: found', els.includes(el))
+  // The server sets input$<id> at uploadEnd, so bind time is all the
+  // binding answers — the stock file input's null/"shiny.file" pair.
+  check('file: getValue is null', binding.getValue(el) === null)
+  check('file: getType', binding.getType(el) === 'shiny.file')
+
+  // R attributes reach the component's properties.
+  check('file: multiple from attribute', el.multiple === true)
+  check('file: accept from attribute', el.accept === '.csv,text/csv', el.accept)
+  check('file: max size from data attribute', el.maxSize === 5242880, el.maxSize)
+
+  await el.updateComplete
+
+  check('file: renders a real file input', input !== null)
+  check('file: inner input carries accept/multiple',
+    input.getAttribute('accept') === '.csv,text/csv' && input.multiple === true)
+  // Without this, Shiny's own file binding would claim the inner input.
+  check('file: inner input opts out of shiny binding',
+    input.hasAttribute('data-shiny-no-bind-input'))
+  check('file: no list before a selection', el.querySelector('.file-list') === null)
+
+  // A batch, driven through the picker path.
+  win.__postPlan = () => ({ progress: [5, 10] })
+  el.upload([file('a.csv', 10, 'text/csv')])
+  await el.updateComplete
+
+  check('file: busy while uploading', el.getAttribute('aria-busy') === 'true')
+  check('file: picker disabled while uploading', input.disabled === true)
+  check('file: row rendered', el.querySelectorAll('.file-item').length === 1)
+  check('file: row names the file',
+    el.querySelector('.file-item-name').textContent === 'a.csv')
+  check('file: row shows a formatted size',
+    el.querySelector('.file-item-size').textContent === '10 B',
+    el.querySelector('.file-item-size').textContent)
+  check('file: cancel offered while in flight', el.querySelector('.file-cancel') !== null)
+  check('file: cancel is a danger button',
+    el.querySelector('.file-cancel').className === 'btn btn-danger btn-sm file-cancel',
+    el.querySelector('.file-cancel').className)
+
+  await tick(30)
+  await el.updateComplete
+
+  check('file: uploaded through the protocol',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+  check('file: row marked done',
+    el.querySelector('.file-item').className === 'file-item done',
+    el.querySelector('.file-item').className)
+  check('file: batch controls gone', el.querySelector('.file-batch') === null)
+  check('file: no longer busy', el.hasAttribute('aria-busy') === false)
+  check('file: picker re-enabled', input.disabled === false)
+  check('file: completion announced',
+    el.querySelector('[aria-live]').textContent.trim() === 'a.csv uploaded',
+    el.querySelector('[aria-live]').textContent)
+  check('file: no value ever reported', events.length === 0, events)
+
+  // An init rejection (the oversize path) surfaces in the alert region.
+  win.__requestPlan = () => ({ error: 'Maximum upload size exceeded' })
+  el.upload([file('big.csv', 20)])
+  await tick(30)
+  await el.updateComplete
+
+  check('file: error rendered',
+    el.querySelector('.file-errors').textContent.trim() === 'Maximum upload size exceeded',
+    el.querySelector('.file-errors').textContent)
+  check('file: error row marked',
+    el.querySelector('.file-item').className === 'file-item error',
+    el.querySelector('.file-item').className)
+  win.__requestPlan = null
+
+  // Cancelling mid-batch abandons it: no uploadEnd, so the server never
+  // sets the value.
+  win.__requests = []
+  win.__postPlan = () => ({ defer: true })
+  el.upload([file('slow.csv', 10)])
+  await tick(30)
+  await el.updateComplete
+
+  el.querySelector('.file-cancel').click()
+  await tick(20)
+  await el.updateComplete
+
+  check('file: cancel skipped uploadEnd',
+    eq(win.__requests.map((r) => r.method), ['uploadInit']),
+    win.__requests.map((r) => r.method))
+  check('file: cancel announced',
+    el.querySelector('[aria-live]').textContent.trim() === 'Upload cancelled')
+  win.__postPlan = null
+
+  // One bar, not two: a single file's own progress is the batch progress,
+  // so only the batch bar renders. Several files each get their own.
+  win.__postPlan = () => ({ defer: true })
+  el.upload([file('solo.csv', 10, 'text/csv')])
+  await tick(20)
+  await el.updateComplete
+  check('file: single file has no per-file bar',
+    el.querySelectorAll('.file-item-progress').length === 0,
+    el.querySelectorAll('.file-item-progress').length)
+  // The list sits in an always-available disclosure, open by default,
+  // with a count-and-size summary line.
+  check('file: list wrapped in an open disclosure',
+    el.querySelector('.file-disclosure') !== null &&
+      el.querySelector('.file-disclosure').hasAttribute('open'))
+  check('file: summary counts one file',
+    el.querySelector('.file-summary').textContent.replace(/\s+/g, ' ').trim() === '1 file · 10 B',
+    el.querySelector('.file-summary').textContent)
+
+  // A user's fold survives re-renders: sync runs through the toggle
+  // handler, and progress updates must not reopen the list.
+  el.querySelector('.file-disclosure').open = false
+  el.querySelector('.file-disclosure').dispatchEvent(new win.Event('toggle'))
+  await el.updateComplete
+  win.__deferredPosts[0].upload.onprogress({ lengthComputable: true, loaded: 5 })
+  await el.updateComplete
+  check('file: fold survives a progress re-render',
+    el.querySelector('.file-disclosure').hasAttribute('open') === false)
+
+  // The batch row (bar + cancel) renders above the file list.
+  check('file: batch row precedes the list',
+    (el.querySelector('.file-batch').compareDocumentPosition(
+      el.querySelector('.file-list')) & win.Node.DOCUMENT_POSITION_FOLLOWING) !== 0)
+  check('file: single file still has a batch bar',
+    el.querySelectorAll('.file-batch-progress').length === 1)
+  el.querySelector('.file-cancel').click()
+  await el.updateComplete
+
+  el.upload([file('a.csv', 10, 'text/csv'), file('b.csv', 10, 'text/csv')])
+  await tick(20)
+  await el.updateComplete
+  check('file: several files each get a bar',
+    el.querySelectorAll('.file-item-progress').length === 2,
+    el.querySelectorAll('.file-item-progress').length)
+  check('file: several files still get a batch bar',
+    el.querySelectorAll('.file-batch-progress').length === 1)
+  check('file: summary counts several files',
+    el.querySelector('.file-summary').textContent.replace(/\s+/g, ' ').trim() === '2 files · 20 B',
+    el.querySelector('.file-summary').textContent)
+  check('file: a new batch reopens the fold',
+    el.querySelector('.file-disclosure').hasAttribute('open'))
+
+  // The summary line is a template; state tokens fill from the live
+  // batch (two files staged, none done, no progress yet).
+  const summaryText = () =>
+    el.querySelector('.file-summary').textContent.replace(/\s+/g, ' ').trim()
+  binding.receiveMessage(el, { summary: '{done}/{n} uploaded · {percent}%' })
+  await el.updateComplete
+  check('file: summary template with state tokens',
+    summaryText() === '0/2 uploaded · 0%', summaryText())
+  binding.receiveMessage(el, { summary: '{files} {wat}' })
+  await el.updateComplete
+  check('file: unknown summary token renders verbatim',
+    summaryText() === '2 files {wat}', summaryText())
+  binding.receiveMessage(el, { summary: '{files} · {size}' })
+  await el.updateComplete
+  el.querySelector('.file-cancel').click()
+  await el.updateComplete
+  win.__postPlan = null
+
+  // update_file() messages.
+  binding.receiveMessage(el, { accept: '.txt', placeholder: 'Drop a text file' })
+  await el.updateComplete
+  check('file: accept updated', input.getAttribute('accept') === '.txt', input.getAttribute('accept'))
+  check('file: placeholder updated',
+    el.querySelector('.file-prompt').textContent === 'Drop a text file',
+    el.querySelector('.file-prompt').textContent)
+
+  binding.receiveMessage(el, { disable: true })
+  await el.updateComplete
+  check('file: disabled', input.disabled === true && el.hasAttribute('disabled'))
+
+  binding.receiveMessage(el, { enable: true })
+  await el.updateComplete
+  check('file: enabled', input.disabled === false && el.hasAttribute('disabled') === false)
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+  check('file: reset clears the list', el.querySelector('.file-list') === null)
+  check('file: reset clears the error',
+    el.querySelector('.file-error') === null,
+    el.querySelector('.file-errors').textContent)
+
+  // Restore the fixture's accept for the drop cases below.
+  binding.receiveMessage(el, { accept: '.csv,text/csv' })
+  await el.updateComplete
+
+  // ---- drop, paste, pre-validation ----
+  //
+  // jsdom has no DragEvent and no DataTransfer, so drops carry a minimal
+  // stand-in: the items list (with webkitGetAsEntry for folder detection)
+  // the component actually reads.
+  const transfer = (entries) => ({
+    dropEffect: '',
+    files: entries.filter((e) => !e.directory).map((e) => e.file),
+    items: entries.map((e) => ({
+      kind: 'file',
+      getAsFile: () => e.file ?? null,
+      webkitGetAsEntry: () =>
+        e.directory ? { isDirectory: true, name: e.name } : { isDirectory: false }
+    }))
+  })
+
+  const fire = (type, prop, value) => {
+    const event = new win.Event(type, { bubbles: true, cancelable: true })
+    if (prop) Object.defineProperty(event, prop, { value })
+    el.querySelector('.file-dropzone').dispatchEvent(event)
+    return event
+  }
+
+  const errorText = () =>
+    [...el.querySelectorAll('.file-error')].map((n) => n.textContent)
+
+  const dropzone = () => el.querySelector('.file-dropzone')
+
+  // Drag-over state is entry-counted, so crossing a child does not clear it.
+  fire('dragenter', 'dataTransfer', transfer([]))
+  await el.updateComplete
+  check('file: dragover state on', dropzone().classList.contains('dragover'))
+  fire('dragenter', 'dataTransfer', transfer([]))
+  fire('dragleave')
+  await el.updateComplete
+  check('file: dragover survives a child leave', dropzone().classList.contains('dragover'))
+  fire('dragleave')
+  await el.updateComplete
+  check('file: dragover state off', dropzone().classList.contains('dragover') === false)
+
+  // dragover must be cancelled or the browser navigates to the file.
+  const dragover = fire('dragover', 'dataTransfer', transfer([]))
+  check('file: dragover is cancelled', dragover.defaultPrevented === true)
+
+  // A dropped file goes through the same path as a picked one.
+  win.__requests = []
+  win.__postPlan = null
+  fire('drop', 'dataTransfer', transfer([{ file: file('dropped.csv', 8, 'text/csv') }]))
+  await tick(30)
+  await el.updateComplete
+  check('file: dropped file uploaded',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+  check('file: dropped file listed',
+    el.querySelector('.file-item-name').textContent === 'dropped.csv')
+
+  // Drops bypass the picker's accept filtering, so the component redoes it.
+  win.__requests = []
+  fire('drop', 'dataTransfer', transfer([{ file: file('notes.txt', 8, 'text/plain') }]))
+  await tick(20)
+  await el.updateComplete
+  check('file: accept mismatch rejected',
+    eq(errorText(), ['notes.txt is not an accepted file type.']), errorText())
+  check('file: accept mismatch never uploads', win.__requests.length === 0, win.__requests)
+
+  // Oversize files fail here rather than costing a round trip.
+  el.maxSize = 10
+  fire('drop', 'dataTransfer', transfer([{ file: file('huge.csv', 12, 'text/csv') }]))
+  await tick(20)
+  await el.updateComplete
+  check('file: oversize rejected with the limit',
+    eq(errorText(), ['huge.csv is larger than the 10 B upload limit.']), errorText())
+  el.maxSize = 5242880
+
+  // A folder drops as a File that would fail opaquely mid-POST.
+  fire('drop', 'dataTransfer', transfer([{ directory: true, name: 'reports' }]))
+  await tick(20)
+  await el.updateComplete
+  check('file: folder rejected',
+    eq(errorText(), ['reports is a folder, and folders cannot be uploaded.']), errorText())
+
+  // Pasted files (screenshots) take the same route as drops.
+  win.__requests = []
+  fire('paste', 'clipboardData', { files: [file('pasted.csv', 6, 'text/csv')] })
+  await tick(30)
+  await el.updateComplete
+  check('file: pasted file uploaded',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+
+  // A single-file input given several: reject rather than silently keep one.
+  el.multiple = false
+  await el.updateComplete
+  win.__requests = []
+  fire('drop', 'dataTransfer', transfer([
+    { file: file('a.csv', 4, 'text/csv') },
+    { file: file('b.csv', 4, 'text/csv') }
+  ]))
+  await tick(20)
+  await el.updateComplete
+  check('file: multi-file drop on a single-file input rejected',
+    eq(errorText(), ['Only one file may be uploaded.']), errorText())
+  check('file: rejected batch never uploads', win.__requests.length === 0, win.__requests)
+  el.multiple = true
+
+  // Disabled inputs ignore drops entirely.
+  binding.receiveMessage(el, { disable: true })
+  await el.updateComplete
+  win.__requests = []
+  fire('drop', 'dataTransfer', transfer([{ file: file('late.csv', 4, 'text/csv') }]))
+  await tick(20)
+  check('file: disabled ignores drops', win.__requests.length === 0, win.__requests)
+  binding.receiveMessage(el, { enable: true })
+  await el.updateComplete
+}
+
+// ---- file validation (pure functions) ----
+{
+  const { isAccepted, validateFiles } = win.__validate
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+
+  check('accept: empty accepts anything', isAccepted(file('a.bin', 1), '') === true)
+  check('accept: extension token', isAccepted(file('a.CSV', 1), '.csv') === true)
+  check('accept: extension token mismatch', isAccepted(file('a.txt', 1), '.csv') === false)
+  check('accept: exact mime', isAccepted(file('a', 1, 'text/csv'), 'text/csv') === true)
+  check('accept: mime wildcard',
+    isAccepted(file('a.png', 1, 'image/png'), 'image/*') === true)
+  check('accept: mime wildcard mismatch',
+    isAccepted(file('a.txt', 1, 'text/plain'), 'image/*') === false)
+  check('accept: any token may match',
+    isAccepted(file('a.tsv', 1), '.csv, .tsv') === true)
+  // File.type is extension-sniffed and often blank (.parquet, .rds);
+  // nothing MIME-shaped can match, so an extension token has to carry it.
+  check('accept: blank type falls back to the extension',
+    isAccepted(file('a.parquet', 1, ''), '.parquet') === true)
+  check('accept: blank type cannot match a mime token',
+    isAccepted(file('a.parquet', 1, ''), 'application/octet-stream') === false)
+
+  const result = validateFiles(
+    [file('ok.csv', 10, 'text/csv'), file('big.csv', 50, 'text/csv'), file('n.txt', 1)],
+    { accept: '.csv', maxSize: 20 }
+  )
+  check('validate: keeps what passes',
+    eq(result.accepted.map((f) => f.name), ['ok.csv']),
+    result.accepted.map((f) => f.name))
+  check('validate: reports why each file was dropped',
+    eq(result.rejected, [
+      { name: 'big.csv', reason: { kind: 'size', limit: 20 } },
+      { name: 'n.txt', reason: { kind: 'accept' } }
+    ]), result.rejected)
+
+  check('validate: no limit means no size check',
+    validateFiles([file('big.csv', 50, 'text/csv')], { accept: '', maxSize: null })
+      .accepted.length === 1)
+}
+
+// ---- uploader (protocol module, no DOM) ----
+{
+  const { Uploader } = win.__upload
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+
+  // Fresh recorders and default plans for each scenario.
+  const reset = () => {
+    win.__connected = true
+    win.__requests = []
+    win.__posts = []
+    win.__requestPlan = null
+    win.__postPlan = null
+    win.__deferredPosts = []
+
+    const events = { progress: [], done: [], errors: [], finished: 0 }
+
+    return {
+      events,
+      callbacks: {
+        onProgress: ({ file: f, loaded, batch }) =>
+          events.progress.push([f && f.name, loaded, batch]),
+        onFileDone: (f) => events.done.push(f.name),
+        onError: (message) => events.errors.push(message),
+        onDone: () => { events.finished++ }
+      }
+    }
+  }
+
+  // Happy path: init payload, sequential POSTs, progress math, uploadEnd.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = (call, i) => (i === 0 ? { progress: [10] } : { progress: [15, 30] })
+
+    await new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10, 'text/csv'), file('b.csv', 30)],
+      ...callbacks
+    }).run()
+
+    check('uploader: two requests', win.__requests.length === 2, win.__requests.map((r) => r.method))
+    check('uploader: uploadInit payload', eq(win.__requests[0], {
+      method: 'uploadInit',
+      args: [[
+        { name: 'a.csv', size: 10, type: 'text/csv' },
+        { name: 'b.csv', size: 30, type: '' }
+      ]]
+    }), win.__requests[0])
+    check('uploader: uploadEnd payload', eq(win.__requests[1], {
+      method: 'uploadEnd',
+      args: ['job1', 'upload']
+    }), win.__requests[1])
+
+    check('uploader: one POST per file, in order',
+      eq(win.__posts.map((p) => p.name), ['a.csv', 'b.csv']), win.__posts.map((p) => p.name))
+    check('uploader: POSTs to the job url',
+      win.__posts.every((p) => p.method === 'POST' && p.url === '/session/tok/upload/job1?w='),
+      win.__posts)
+    check('uploader: octet-stream content type',
+      win.__posts.every((p) => p.headers['Content-Type'] === 'application/octet-stream'),
+      win.__posts.map((p) => p.headers))
+
+    // Batch fractions, not per-file: 10 of 40 bytes done when b.csv is at
+    // 15, so 25/40.
+    const fractions = events.progress.map(([, , batch]) => batch)
+    check('uploader: progress starts at 0', fractions[0] === 0, fractions)
+    check('uploader: progress is batch-relative',
+      fractions.includes(0.25) && fractions.includes(0.625) && fractions.includes(1),
+      fractions)
+    check('uploader: progress never decreases',
+      fractions.every((f, i) => i === 0 || f >= fractions[i - 1]), fractions)
+    check('uploader: per-file progress names the file and its bytes',
+      events.progress.some(([n, loaded]) => n === 'b.csv' && loaded === 15),
+      events.progress)
+
+    check('uploader: each file reported done', eq(events.done, ['a.csv', 'b.csv']), events.done)
+    check('uploader: batch done once', events.finished === 1, events.finished)
+    check('uploader: no errors', eq(events.errors, []), events.errors)
+  }
+
+  // uploadInit rejection (the oversize-batch path) never reaches the POSTs.
+  {
+    const { events, callbacks } = reset()
+    win.__requestPlan = () => ({ error: 'Maximum upload size exceeded' })
+
+    await new Uploader({ inputId: 'upload', files: [file('big.csv', 10)], ...callbacks }).run()
+
+    check('uploader: init error reported',
+      eq(events.errors, ['Maximum upload size exceeded']), events.errors)
+    check('uploader: init error skips POSTs', win.__posts.length === 0, win.__posts.length)
+    check('uploader: init error skips uploadEnd',
+      win.__requests.length === 1, win.__requests.map((r) => r.method))
+    check('uploader: init error is not done', events.finished === 0, events.finished)
+  }
+
+  // A non-2xx POST fails the batch: no further files, no uploadEnd.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = () => ({ status: 500, responseText: 'upload handler failed' })
+
+    await new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10), file('b.csv', 10)],
+      ...callbacks
+    }).run()
+
+    check('uploader: POST error reported',
+      eq(events.errors, ['upload handler failed']), events.errors)
+    check('uploader: POST error stops the batch', win.__posts.length === 1, win.__posts.length)
+    check('uploader: POST error skips uploadEnd',
+      eq(win.__requests.map((r) => r.method), ['uploadInit']), win.__requests.map((r) => r.method))
+  }
+
+  // Cancel mid-batch: the in-flight POST is aborted, uploadEnd never runs,
+  // so the server never sets the input value.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = () => ({ defer: true })
+
+    const uploader = new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10), file('b.csv', 10)],
+      ...callbacks
+    })
+    const running = uploader.run()
+
+    await tick(20)
+    check('uploader: first POST in flight', win.__deferredPosts.length === 1, win.__deferredPosts.length)
+
+    uploader.cancel()
+    await running
+
+    check('uploader: cancel aborted the request', win.__deferredPosts[0].aborted === true)
+    check('uploader: cancel skips uploadEnd',
+      eq(win.__requests.map((r) => r.method), ['uploadInit']), win.__requests.map((r) => r.method))
+    check('uploader: cancel skips remaining files', win.__posts.length === 1, win.__posts.length)
+    check('uploader: cancel is neither done nor error',
+      events.finished === 0 && events.errors.length === 0, events)
+  }
+
+  // No live connection: report it rather than issuing a dead uploadInit.
+  {
+    const { events, callbacks } = reset()
+    win.__connected = false
+
+    await new Uploader({ inputId: 'upload', files: [file('a.csv', 10)], ...callbacks }).run()
+
+    check('uploader: disconnected reports an error', events.errors.length === 1, events.errors)
+    check('uploader: disconnected makes no requests', win.__requests.length === 0, win.__requests)
+  }
+
+  reset()
 }
 
 console.log(`\n${checks} checks, ${failures.length} failures`)

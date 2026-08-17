@@ -6,15 +6,7 @@ Authors@R: c(
     person("Nathan", "Teetor", email = "nathanteetor@gmail.com",
            role = c("aut", "cre")),
     person(family = "The Bootstrap Authors", comment = "Bootstrap library",
-           role = "cph"),
-    person(family = "Twitter, Inc", comment = "Bootstrap library",
-           role = "cph"),
-    person(family = "JS Foundation", comment = "jQuery library",
-           role = "cph"),
-    person("Federico", "Zivolo", comment = "popper.js library",
-           role = c("ctb", "cph")),
-    person("Johann", "Servoire", comment = "bs-custom-file-input library",
-           role = c("ctb", "cph"))
+           role = "cph")
     )
 Description: Build 'shiny' applications with a brand new set of components and
     reactive inputs.
@@ -26,7 +18,7 @@ Config/roxygen2/version: 8.0.0
 Config/roxygen2/markdown: TRUE
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Config/testthat/start-first: multi-select-e2e, bindings-e2e
+Config/testthat/start-first: multi-select-e2e, file-e2e, bindings-e2e
 Depends:
     R (>= 4.1),
     shiny (>= 1.6.0)

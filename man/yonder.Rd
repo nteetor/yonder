@@ -55,10 +55,6 @@ Authors:
 Other contributors:
 \itemize{
   \item  The Bootstrap Authors (Bootstrap library) [copyright holder]
-  \item  Twitter, Inc (Bootstrap library) [copyright holder]
-  \item  JS Foundation (jQuery library) [copyright holder]
-  \item Federico Zivolo (popper.js library) [contributor, copyright holder]
-  \item Johann Servoire (bs-custom-file-input library) [contributor, copyright holder]
 }
 
 }

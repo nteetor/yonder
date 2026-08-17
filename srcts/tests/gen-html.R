@@ -5,7 +5,6 @@
 #
 # Output lands in srcts/tests/html/ (gitignored; regenerated every run).
 
-options(yonder.deps = FALSE)
 suppressMessages(pkgload::load_all(quiet = TRUE))
 
 out_dir <- file.path("srcts", "tests", "html")
@@ -21,6 +20,15 @@ render("checkbox", input_checkbox(id = "chk", choice = "Include"))
 render(
   "checkbox-group",
   input_checkbox_group(id = "chkgrp", choices = c("A", "B", "C"))
+)
+render(
+  "file",
+  input_file(
+    id = "upl",
+    label = "Upload data",
+    select = "many",
+    accept = c(".csv", "text/csv")
+  )
 )
 render(
   "form",

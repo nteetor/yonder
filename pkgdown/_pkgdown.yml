@@ -56,7 +56,8 @@ reference:
   - title: Inputs
     desc: Get information from the user with reactive inputs.
     contents:
-      - ends_with("Input")
+      - starts_with("input_")
+      - starts_with("update_")
   - title: Layout
     desc: Build user interfaces for devices of all sizes.
     contents:

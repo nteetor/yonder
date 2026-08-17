@@ -45,3 +45,38 @@ dispatch_key <- function(app, selector, key, value = NULL) {
   ))
   app$wait_for_idle()
 }
+
+# Set files on a real <input type="file"> the way a picker would.
+# shinytest2's own `$upload_file()` resolves the selector from the Shiny
+# input id, which for <bsides-file> is the custom element, not the input
+# inside it — so address the input by selector through CDP directly.
+upload_files <- function(app, selector, paths) {
+  session <- app$get_chromote_session()
+  document <- session$DOM$getDocument()
+  node <- session$DOM$querySelector(
+    nodeId = document$root$nodeId,
+    selector = selector
+  )
+
+  session$DOM$setFileInputFiles(
+    files = as.list(normalizePath(paths)),
+    nodeId = node$nodeId
+  )
+
+  app$wait_for_idle()
+}
+
+# Write `lines` to a file named `name` in a fresh temporary directory, so
+# uploads carry a predictable name as well as predictable contents. The
+# connection is binary: a text-mode writeLines() writes CRLF on Windows,
+# and the tests assert exact byte sizes.
+temp_upload <- function(name, lines, envir = parent.frame()) {
+  dir <- withr::local_tempdir(.local_envir = envir)
+  path <- file.path(dir, name)
+
+  con <- file(path, open = "wb")
+  writeLines(lines, con, sep = "\n")
+  close(con)
+
+  path
+}

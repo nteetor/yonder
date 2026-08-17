@@ -18,6 +18,11 @@
   one exception is `input_form()`, which still listens to Shiny's
   jQuery-only `shiny:inputchanged` event through the page's jQuery.)
 
+* Removed `fileInput()` in favor of the new `input_file()`. The two share
+  the server value contract but nothing else; there is no deprecation
+  shim. The bundled jQuery, Bootstrap 4, popper, and bs-custom-file-input
+  assets went with it, along with the `yonder.deps` option they served.
+
 * Removed `formGroup()` and `formRow()` in favor of the new `label`
   argument. Help text, previously `formGroup(help = )`, was dropped for now
   and will return in a later release.
@@ -40,6 +45,18 @@
   and `update_menu_input()` followed suit.
 
 ## New features
+
+* New `input_file()` and `update_file()`. Files upload as soon as they are
+  chosen and travel over HTTP rather than the WebSocket, so the app stays
+  responsive; the server value is the familiar data frame of `name`,
+  `size`, `type`, and `datapath`. Beyond `shiny::fileInput()` it adds
+  drag and drop, paste (screenshots included), a cancel control for a
+  batch in flight, per-file and batch progress, a collapsible file list
+  whose summary line is a small template (`"{done}/{n} uploaded"`), a
+  `height` argument for the drop zone, and client-side validation of
+  size, `accept`, and `multiple` — the checks a drop or a paste would
+  otherwise skip entirely. Bookmark restore and directory upload are not
+  supported.
 
 * New `update_numeric()`, the counterpart to `input_numeric()`. Update a
   numeric input's `value`, `min`, `max`, `step`, or disabled state from the

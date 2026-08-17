@@ -61,12 +61,12 @@ list. However, list group items may include highly variable content.
 }
 \seealso{
 Other inputs:
-\code{\link[=fileInput]{fileInput()}},
 \code{\link[=floating_label]{floating_label()}},
 \code{\link[=input_button]{input_button()}},
 \code{\link[=input_checkbox]{input_checkbox()}},
 \code{\link[=input_checkbox_group]{input_checkbox_group()}},
 \code{\link[=input_chip_group]{input_chip_group()}},
+\code{\link[=input_file]{input_file()}},
 \code{\link[=input_form]{input_form()}},
 \code{\link[=input_menu]{input_menu()}},
 \code{\link[=input_multi_select]{input_multi_select()}},
