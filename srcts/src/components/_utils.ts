@@ -2,6 +2,7 @@
 
 import type { InputBinding as InputBindingType } from 'rstudio-shiny/srcts/types/src/bindings/input';
 import type { ShinyClass } from 'rstudio-shiny/srcts/types/src';
+import type { BindScope } from 'rstudio-shiny/srcts/types/src/shiny/bind';
 
 const Shiny: ShinyClass | undefined = window.Shiny;
 
@@ -24,12 +25,25 @@ function registerBinding(
   }
 }
 
-// Shiny consumes find() results via .length and indexing only, so a
-// NodeList satisfies the declared JQuery return type.
-function findAll(scope: HTMLElement, selector: string): JQuery<HTMLElement> {
-  return scope.querySelectorAll<HTMLElement>(
-    selector,
-  ) as unknown as JQuery<HTMLElement>;
+// Shiny binds with either an element or a jQuery object: renderContentAsync()
+// with `where != "replace"`, insertUI(), and insertTab() all pass the jQuery
+// parent of the rendered node. Shiny consumes the result via .length and
+// indexing only, so an array satisfies the declared JQuery return type.
+function findAll(scope: BindScope, selector: string): JQuery<HTMLElement> {
+  const roots =
+    typeof (scope as HTMLElement).querySelectorAll === 'function'
+      ? [scope as HTMLElement]
+      : Array.from(scope as ArrayLike<HTMLElement>);
+
+  const found = new Set<HTMLElement>();
+
+  for (const root of roots) {
+    for (const el of root.querySelectorAll<HTMLElement>(selector)) {
+      found.add(el);
+    }
+  }
+
+  return [...found] as unknown as JQuery<HTMLElement>;
 }
 
 function announce(el: HTMLElement): void {

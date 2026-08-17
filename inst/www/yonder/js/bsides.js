@@ -52,9 +52,14 @@
     }
   }
   function findAll(scope, selector) {
-    return scope.querySelectorAll(
-      selector
-    );
+    const roots = typeof scope.querySelectorAll === "function" ? [scope] : Array.from(scope);
+    const found = /* @__PURE__ */ new Set();
+    for (const root of roots) {
+      for (const el of root.querySelectorAll(selector)) {
+        found.add(el);
+      }
+    }
+    return [...found];
   }
   function announce(el) {
     el.dispatchEvent(new Event("change", { bubbles: true }));
