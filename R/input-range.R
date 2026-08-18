@@ -50,10 +50,10 @@ input_range <-
           class = "form-range",
           id = control_id,
           type = "range",
-          step = step,
-          min = min,
-          max = max,
-          value = value
+          step = format_no_sci(step),
+          min = format_no_sci(min),
+          max = format_no_sci(max),
+          value = format_no_sci(value)
         ),
         ...
       )
@@ -81,7 +81,7 @@ update_range <-
   ) {
     check_string(id, allow_empty = FALSE)
     check_number_decimal(value, allow_null = TRUE)
-    check_number_decimal(disable, allow_null = TRUE)
+    check_bool(disable, allow_null = TRUE)
 
     msg <-
       drop_nulls(list(
