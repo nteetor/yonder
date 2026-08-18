@@ -81,7 +81,7 @@ update_range <-
   ) {
     check_string(id, allow_empty = FALSE)
     check_number_decimal(value, allow_null = TRUE)
-    check_number_decimal(disable, allow_null = TRUE)
+    check_bool(disable, allow_null = TRUE)
 
     msg <-
       drop_nulls(list(
