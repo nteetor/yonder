@@ -50,10 +50,10 @@ input_range <-
           class = "form-range",
           id = control_id,
           type = "range",
-          step = step,
-          min = min,
-          max = max,
-          value = value
+          step = format_no_sci(step),
+          min = format_no_sci(min),
+          max = format_no_sci(max),
+          value = format_no_sci(value)
         ),
         ...
       )

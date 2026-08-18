@@ -49,6 +49,28 @@ test_that("`value` defaults to `min`", {
   expect_match(html, 'value="20"', fixed = TRUE)
 })
 
+test_that("numbers render without scientific notation", {
+  html <- format(
+    input_range(id = "x", min = 1e-6, max = 1e6, value = 1e6, step = 1e-6)
+  )
+
+  expect_match(html, 'min="0.000001"', fixed = TRUE)
+  expect_match(html, 'max="1000000"', fixed = TRUE)
+  expect_match(html, 'value="1000000"', fixed = TRUE)
+  expect_match(html, 'step="0.000001"', fixed = TRUE)
+  expect_no_match(html, "e+", fixed = TRUE)
+  expect_no_match(html, "e-", fixed = TRUE)
+})
+
+test_that("scientific notation is avoided regardless of `scipen`", {
+  withr::local_options(scipen = -9)
+
+  html <- format(input_range(id = "x", min = 0, max = 1e6, value = 1e6))
+
+  expect_match(html, 'value="1000000"', fixed = TRUE)
+  expect_match(html, 'max="1000000"', fixed = TRUE)
+})
+
 test_that("`...` becomes attributes on the input", {
   html <- format(input_range(id = "x", `data-test` = "yes"))
 
