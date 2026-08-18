@@ -9,9 +9,19 @@ name: R-CMD-check.yaml
 
 permissions: read-all
 
+# A newer commit on a pull request supersedes whatever is still running for
+# it. Runs on `main` are left alone so every commit keeps its own result.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
   R-CMD-check:
     runs-on: ${{ matrix.config.os }}
+
+    # The slowest healthy leg runs well under 10 minutes. A job past this
+    # is wedged, and without a limit it holds its runner for 6 hours.
+    timeout-minutes: 45
 
     name: ${{ matrix.config.os }} (${{ matrix.config.r }})
 

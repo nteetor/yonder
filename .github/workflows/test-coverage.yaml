@@ -9,9 +9,18 @@ name: test-coverage.yaml
 
 permissions: read-all
 
+# A newer commit on a pull request supersedes whatever is still running for
+# it. Runs on `main` are left alone so every commit keeps its own result.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
   test-coverage:
     runs-on: ubuntu-latest
+
+    timeout-minutes: 30
+
     env:
       GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
       TESTTHAT_CPUS: 3
