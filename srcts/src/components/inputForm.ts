@@ -69,6 +69,15 @@ class FormInputBinding extends NativeEventInputBinding {
 
         formValues.set(el, (submit as HTMLButtonElement).value);
         callback(false);
+
+        // Announce the submit to nested components — a staged file
+        // input starts its batch here. Dispatched after the frozen
+        // values are replayed, so they are already on their way, and
+        // reached by the server-driven path too: receiveMessage() below
+        // clicks the matching button, which lands in this handler.
+        el.dispatchEvent(
+          new CustomEvent('bsides-form:submit', { bubbles: true }),
+        );
       },
     );
   }
@@ -90,6 +99,12 @@ class FormInputBinding extends NativeEventInputBinding {
 }
 
 registerBinding(FormInputBinding, 'form');
+
+declare global {
+  interface GlobalEventHandlersEventMap {
+    'bsides-form:submit': CustomEvent<void>;
+  }
+}
 
 export { FormInputBinding };
 export type { FormReceiveMessageData };

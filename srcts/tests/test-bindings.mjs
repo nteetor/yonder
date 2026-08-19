@@ -23,7 +23,7 @@ const tick = (ms = 60) => new Promise((r) => setTimeout(r, ms))
 
 const body = [
   'button', 'checkbox', 'checkbox-group', 'file', 'file-manual', 'form',
-  'link', 'list-group',
+  'form-file', 'link', 'list-group',
   'menu', 'chip-group', 'chip-group-none', 'chip-group-select',
   'multi-select', 'multi-select-free', 'numeric', 'radio-group', 'range',
   'select', 'text-group', 'modal'
@@ -1539,6 +1539,70 @@ for (const name of Object.keys(registered)) {
   await tick(20)
   check('manual: upload_start no-ops in auto mode',
     win.__requests.length === 0, win.__requests)
+}
+
+// ---- form + staged file: the batch starts on submit ----
+{
+  // Both bindings were subscribed by their own sections' bind() calls,
+  // #frmf included — find() sweeps the whole document. Re-binding here
+  // would double the form's click handler, so reach for the registry.
+  const formBinding = registered['bsides.form']
+  const binding = registered['bsides.file']
+  const form = doc.getElementById('frmf')
+  const el = doc.getElementById('frmupl')
+  const submit = form.querySelector('.bsides-input-form-submit')
+
+  win.__connected = true
+  win.__requests = []
+  win.__posts = []
+  win.__requestPlan = null
+  win.__postPlan = null
+  win.__deferredPosts = []
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+
+  // The submit is observable: the form dispatches bsides-form:submit
+  // after replaying the frozen values.
+  let submits = 0
+  form.addEventListener('bsides-form:submit', () => submits++)
+
+  // Submitting with nothing staged starts nothing.
+  submit.click()
+  await tick(20)
+  check('form-file: submit dispatches bsides-form:submit', submits === 1)
+  check('form-file: empty set submits no batch',
+    win.__requests.length === 0, win.__requests)
+
+  // A staged set uploads when the form submits.
+  el.upload([file('a.csv', 10, 'text/csv'), file('b.csv', 10, 'text/csv')])
+  await el.updateComplete
+  check('form-file: staging inside a form fires no requests',
+    win.__requests.length === 0, win.__requests)
+
+  submit.click()
+  await tick(30)
+  await el.updateComplete
+  check('form-file: submit starts the staged batch',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+  check('form-file: rows done after the submit-started batch',
+    [...el.querySelectorAll('.file-item')].every(
+      (row) => row.className === 'file-item done'),
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+
+  // The server-driven submit runs through the same handler.
+  el.upload([file('c.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__requests = []
+  formBinding.receiveMessage(form, { submit: 'send' })
+  await tick(30)
+  await el.updateComplete
+  check('form-file: receiveMessage submit also starts the batch',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+
+  void binding
 }
 
 // ---- file validation (pure functions) ----

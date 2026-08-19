@@ -147,8 +147,9 @@ enforced again by the server on every upload.
 submitted. An auto-mode file input is not held back: its value is set
 by the server when the upload finishes, not by a client-side input
 change, so it lands as soon as the upload does. Prefer
-\code{upload_mode = "manual"} inside a form — files stage until an
-explicit action starts the batch, keeping the value with the form's.
+\code{upload_mode = "manual"} inside a form — files stage while the form
+is filled in, and the batch starts when the form submits, so the
+value lands alongside the form's own (less the transfer time).
 }
 
 \subsection{Resetting}{

@@ -27,7 +27,13 @@ ui <-
       select = "many",
       upload_mode = "manual"
     ),
-    verbatimTextOutput("stg_info")
+    verbatimTextOutput("stg_info"),
+    input_form(
+      id = "frm",
+      input_file(id = "frm_upl", select = "many", upload_mode = "manual"),
+      form_submit_button(label = "Send", value = "send")
+    ),
+    verbatimTextOutput("frm_info")
   )
 
 server <-
@@ -69,6 +75,16 @@ server <-
       }
 
       paste(upload$name, upload$size, collapse = "; ")
+    })
+
+    output$frm_info <- renderText({
+      upload <- input$frm_upl
+
+      if (is.null(upload)) {
+        return("none")
+      }
+
+      paste(input$frm, paste(upload$name, collapse = "; "), sep = " / ")
     })
 
     # Fired from the tests with `trigger()`.

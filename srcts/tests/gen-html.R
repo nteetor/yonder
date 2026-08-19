@@ -40,6 +40,14 @@ render(
   )
 )
 render(
+  "form-file",
+  input_form(
+    id = "frmf",
+    input_file(id = "frmupl", select = "many", upload_mode = "manual"),
+    form_submit_button(label = "Send", value = "send")
+  )
+)
+render(
   "form",
   input_form(
     id = "frm",

@@ -1365,6 +1365,9 @@
     // dragenter/dragleave fire for every descendant a drag crosses, so the
     // hover state counts entries rather than trusting a single leave.
     #dragDepth = 0;
+    // The form ancestor being listened to for bsides-form:submit, held so
+    // disconnection can unhook exactly what connection hooked.
+    #form = null;
     constructor() {
       super();
       this.multiple = false;
@@ -1386,11 +1389,26 @@
     createRenderRoot() {
       return this;
     }
+    // A staged set inside input_form() uploads on the form's submit,
+    // landing the value alongside the replayed frozen values. The hook is
+    // the form binding's bsides-form:submit event; the guards in
+    // #onUpload() make this a no-op outside manual mode or with nothing
+    // staged.
+    connectedCallback() {
+      super.connectedCallback();
+      this.#form = this.closest("form");
+      this.#form?.addEventListener("bsides-form:submit", this.#onFormSubmit);
+    }
     disconnectedCallback() {
       super.disconnectedCallback();
+      this.#form?.removeEventListener("bsides-form:submit", this.#onFormSubmit);
+      this.#form = null;
       this.#uploader?.cancel();
       this.#uploader = null;
     }
+    #onFormSubmit = () => {
+      this.#onUpload();
+    };
     render() {
       return b2`
       <div
@@ -1997,6 +2015,9 @@
           }
           formValues.set(el, submit.value);
           callback(false);
+          el.dispatchEvent(
+            new CustomEvent("bsides-form:submit", { bubbles: true })
+          );
         }
       );
     }

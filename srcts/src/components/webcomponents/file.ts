@@ -81,6 +81,10 @@ class BsidesFile extends LitElement {
   // hover state counts entries rather than trusting a single leave.
   #dragDepth = 0;
 
+  // The form ancestor being listened to for bsides-form:submit, held so
+  // disconnection can unhook exactly what connection hooked.
+  #form: HTMLFormElement | null = null;
+
   constructor() {
     super();
     this.multiple = false;
@@ -104,11 +108,28 @@ class BsidesFile extends LitElement {
     return this;
   }
 
+  // A staged set inside input_form() uploads on the form's submit,
+  // landing the value alongside the replayed frozen values. The hook is
+  // the form binding's bsides-form:submit event; the guards in
+  // #onUpload() make this a no-op outside manual mode or with nothing
+  // staged.
+  override connectedCallback(): void {
+    super.connectedCallback();
+    this.#form = this.closest('form');
+    this.#form?.addEventListener('bsides-form:submit', this.#onFormSubmit);
+  }
+
   override disconnectedCallback(): void {
     super.disconnectedCallback();
+    this.#form?.removeEventListener('bsides-form:submit', this.#onFormSubmit);
+    this.#form = null;
     this.#uploader?.cancel();
     this.#uploader = null;
   }
+
+  #onFormSubmit = (): void => {
+    this.#onUpload();
+  };
 
   override render(): unknown {
     return html`

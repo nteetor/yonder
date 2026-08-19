@@ -78,6 +78,28 @@ test_that("a staged batch uploads on the button, or from the server", {
   expect_equal(app$get_value(output = "stg_info"), "s3.csv 2")
 })
 
+test_that("a staged set inside input_form() uploads on submit", {
+  skip_if_no_e2e()
+
+  app <- launch_file_app()
+  withr::defer(app$stop())
+
+  upload_files(app, "#frm_upl .file-input", temp_upload("f1.csv", "1"))
+  upload_files(app, "#frm_upl .file-input", temp_upload("f2.csv", "2"))
+
+  # Staged, not delivered — the form has not submitted.
+  expect_equal(app$get_value(output = "frm_info"), "none")
+
+  app$click(selector = "#frm .bsides-input-form-submit")
+  app$wait_for_idle()
+
+  # The submit value and the upload land together.
+  expect_equal(
+    app$get_value(output = "frm_info"),
+    "send / f1.csv; f2.csv"
+  )
+})
+
 test_that("several files upload as one batch", {
   skip_if_no_e2e()
 

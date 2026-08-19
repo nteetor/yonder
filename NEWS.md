@@ -65,7 +65,9 @@
   cancelled or failed batch returns to the staged set and retries whole,
   the file that failed marked in the list. New `file_upload_start()` and
   `file_upload_cancel()` drive a batch from the server, the twins of the
-  Upload and Cancel buttons.
+  Upload and Cancel buttons. Inside `input_form()` a staged batch starts
+  when the form submits, closing the gap that let an auto-mode file
+  input's value land ahead of the form's.
 
 * New `update_numeric()`, the counterpart to `input_numeric()`. Update a
   numeric input's `value`, `min`, `max`, `step`, or disabled state from the
