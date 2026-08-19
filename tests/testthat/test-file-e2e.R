@@ -42,6 +42,42 @@ test_that("a picked file uploads and lands in input$<id>", {
   expect_false(app$get_js("document.querySelector('#upl').hasAttribute('aria-busy')"))
 })
 
+test_that("a staged batch uploads on the button, or from the server", {
+  skip_if_no_e2e()
+
+  app <- launch_file_app()
+  withr::defer(app$stop())
+
+  # Two gestures accumulate; staging alone delivers nothing.
+  upload_files(app, "#stg .file-input", temp_upload("s1.csv", "1"))
+  upload_files(app, "#stg .file-input", temp_upload("s2.csv", "2"))
+
+  expect_equal(app$get_value(output = "stg_info"), "none")
+  expect_equal(
+    app$get_js("document.querySelectorAll('#stg .file-item').length"),
+    2
+  )
+  expect_false(
+    app$get_js("document.querySelector('#stg .file-upload').disabled")
+  )
+
+  # The Upload button starts the batch; the server sets the value.
+  app$click(selector = "#stg .file-upload")
+  app$wait_for_idle()
+
+  expect_equal(app$get_value(output = "stg_info"), "s1.csv 2; s2.csv 2")
+
+  # A fresh set staged after delivery, started from the server this
+  # time — file_upload_start() is the button's twin.
+  upload_files(app, "#stg .file-input", temp_upload("s3.csv", "3"))
+  expect_equal(app$get_value(output = "stg_info"), "s1.csv 2; s2.csv 2")
+
+  trigger(app, "do_start")
+  app$wait_for_idle()
+
+  expect_equal(app$get_value(output = "stg_info"), "s3.csv 2")
+})
+
 test_that("several files upload as one batch", {
   skip_if_no_e2e()
 

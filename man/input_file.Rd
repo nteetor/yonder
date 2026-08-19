@@ -3,6 +3,7 @@
 \name{input_file}
 \alias{input_file}
 \alias{update_file}
+\alias{reset_file}
 \title{File input}
 \usage{
 input_file(
@@ -21,7 +22,6 @@ input_file(
 update_file(
   id,
   ...,
-  reset = NULL,
   accept = NULL,
   placeholder = NULL,
   summary = NULL,
@@ -29,6 +29,8 @@ update_file(
   disable = NULL,
   session = get_current_session()
 )
+
+reset_file(id, ..., session = get_current_session())
 }
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
@@ -44,9 +46,11 @@ may be chosen, with \code{"many"} any number.}
 
 \item{upload_mode}{A character string. With \code{"auto"} (default) files
 upload as soon as they are chosen. With \code{"manual"} files accumulate
-in a staged set — each removable before flight — and an explicit
-action starts the batch: the input's Upload button, or
-\code{file_upload_start()} from the server.}
+in a staged set — each removable before flight, a same-named
+addition replacing its predecessor — and an explicit action starts
+the batch: the input's Upload button, or \code{\link[=file_upload_start]{file_upload_start()}} from
+the server. A cancelled or failed batch returns to the staged set,
+ready to retry whole.}
 
 \item{accept}{A character vector of file extensions (\code{".csv"}), MIME
 types (\code{"text/csv"}), or MIME wildcards (\code{"image/*"}) bounding what
@@ -85,10 +89,6 @@ the default for every file input through the
 \code{--bsides-file-dropzone-height} CSS variable; \code{height} overrides the
 theme for its input.}
 
-\item{reset}{If \code{TRUE}, clear the file list, progress, and any error,
-defaults to \code{NULL}. A batch in flight is cancelled. The server value
-is left as it is — the upload protocol has no way to unset it.}
-
 \item{enable}{If \code{TRUE}, enable the input, defaults to \code{NULL}.}
 
 \item{disable}{If \code{TRUE}, disable the input, defaults to \code{NULL}. When
@@ -100,8 +100,11 @@ both \code{enable} and \code{disable} are \code{TRUE}, \code{disable} wins.}
 A shiny tag object.
 }
 \description{
-Upload files to the server. Files upload as soon as they are chosen.
-A progress bar tracks the batch and a cancel control abandons it.
+Upload files to the server. By default files upload as soon as they
+are chosen; with \code{upload_mode = "manual"} they accumulate in a staged
+set, each removable, until the input's Upload button starts the
+batch. A progress bar tracks a batch in flight and a cancel control
+abandons it.
 }
 \details{
 \subsection{Uploading}{
@@ -141,8 +144,18 @@ enforced again by the server on every upload.
 \subsection{Inside a form}{
 
 \code{\link[=input_form]{input_form()}} holds an input's value back until the form is
-submitted. A file input is not held back: its value is set by the
-server when the upload finishes, not by a client-side input change.
+submitted. An auto-mode file input is not held back: its value is set
+by the server when the upload finishes, not by a client-side input
+change, so it lands as soon as the upload does. Prefer
+\code{upload_mode = "manual"} inside a form — files stage until an
+explicit action starts the batch, keeping the value with the form's.
+}
+
+\subsection{Resetting}{
+
+\code{\link[=reset_file]{reset_file()}} clears the file list, the progress, and any error; a
+batch in flight is cancelled. The server value is left as it is — the
+upload protocol has no way to unset it.
 }
 
 \subsection{Known limitations}{

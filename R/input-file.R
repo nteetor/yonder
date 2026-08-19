@@ -1,7 +1,10 @@
 #' File input
 #'
-#' Upload files to the server. Files upload as soon as they are chosen.
-#' A progress bar tracks the batch and a cancel control abandons it.
+#' Upload files to the server. By default files upload as soon as they
+#' are chosen; with `upload_mode = "manual"` they accumulate in a staged
+#' set, each removable, until the input's Upload button starts the
+#' batch. A progress bar tracks a batch in flight and a cancel control
+#' abandons it.
 #'
 #' @inheritParams input_checkbox
 #'
@@ -13,9 +16,11 @@
 #'
 #' @param upload_mode A character string. With `"auto"` (default) files
 #'   upload as soon as they are chosen. With `"manual"` files accumulate
-#'   in a staged set — each removable before flight — and an explicit
-#'   action starts the batch: the input's Upload button, or
-#'   `file_upload_start()` from the server.
+#'   in a staged set — each removable before flight, a same-named
+#'   addition replacing its predecessor — and an explicit action starts
+#'   the batch: the input's Upload button, or [file_upload_start()] from
+#'   the server. A cancelled or failed batch returns to the staged set,
+#'   ready to retry whole.
 #'
 #' @param accept A character vector of file extensions (`".csv"`), MIME
 #'   types (`"text/csv"`), or MIME wildcards (`"image/*"`) bounding what
@@ -90,8 +95,17 @@
 #' ## Inside a form
 #'
 #' [input_form()] holds an input's value back until the form is
-#' submitted. A file input is not held back: its value is set by the
-#' server when the upload finishes, not by a client-side input change.
+#' submitted. An auto-mode file input is not held back: its value is set
+#' by the server when the upload finishes, not by a client-side input
+#' change, so it lands as soon as the upload does. Prefer
+#' `upload_mode = "manual"` inside a form — files stage until an
+#' explicit action starts the batch, keeping the value with the form's.
+#'
+#' ## Resetting
+#'
+#' [reset_file()] clears the file list, the progress, and any error; a
+#' batch in flight is cancelled. The server value is left as it is — the
+#' upload protocol has no way to unset it.
 #'
 #' ## Known limitations
 #'
@@ -160,10 +174,6 @@ input_file <-
 
 #' @rdname input_file
 #'
-#' @param reset If `TRUE`, clear the file list, progress, and any error,
-#'   defaults to `NULL`. A batch in flight is cancelled. The server value
-#'   is left as it is — the upload protocol has no way to unset it.
-#'
 #' @param enable If `TRUE`, enable the input, defaults to `NULL`.
 #'
 #' @param disable If `TRUE`, disable the input, defaults to `NULL`. When
@@ -174,7 +184,6 @@ update_file <-
   function(
     id,
     ...,
-    reset = NULL,
     accept = NULL,
     placeholder = NULL,
     summary = NULL,
@@ -184,7 +193,6 @@ update_file <-
   ) {
     check_dots_empty()
     check_string(id, allow_empty = FALSE)
-    check_bool(reset, allow_null = TRUE)
     check_character(accept, allow_null = TRUE)
     check_string(placeholder, allow_null = TRUE)
     check_string(summary, allow_null = TRUE)
@@ -193,7 +201,6 @@ update_file <-
 
     msg <-
       drop_nulls(list(
-        reset = reset,
         accept = if (non_null(accept)) paste0(accept, collapse = ","),
         placeholder = placeholder,
         summary = summary,
@@ -202,6 +209,23 @@ update_file <-
       ))
 
     session$sendInputMessage(id, msg)
+  }
+
+#' @rdname input_file
+#'
+#' @export
+reset_file <-
+  function(
+    id,
+    ...,
+    session = get_current_session()
+  ) {
+    check_dots_empty()
+    check_string(id, allow_empty = FALSE)
+
+    session$sendInputMessage(id, list(reset = TRUE))
+
+    invisible(NULL)
   }
 
 #' File upload actions

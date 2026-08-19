@@ -77,10 +77,6 @@ test_that("file_upload_start()/file_upload_cancel() send their triggers", {
 test_that("update_file() sends only the arguments it is given", {
   session <- recording_session()
 
-  update_file("test", reset = TRUE, session = session)
-
-  expect_equal(session$sent[[1]], list(id = "test", message = list(reset = TRUE)))
-
   update_file(
     "test",
     accept = c(".csv", ".tsv"),
@@ -90,13 +86,30 @@ test_that("update_file() sends only the arguments it is given", {
   )
 
   expect_equal(
-    session$sent[[2]]$message,
-    list(accept = ".csv,.tsv", placeholder = "Drop a file", disable = TRUE)
+    session$sent[[1]],
+    list(
+      id = "test",
+      message = list(
+        accept = ".csv,.tsv",
+        placeholder = "Drop a file",
+        disable = TRUE
+      )
+    )
   )
 
   update_file("test", summary = "{files}", session = session)
 
-  expect_equal(session$sent[[3]]$message, list(summary = "{files}"))
+  expect_equal(session$sent[[2]]$message, list(summary = "{files}"))
+
+  expect_error(update_file("test", reset = TRUE, session = session), "\\.\\.\\.")
+})
+
+test_that("reset_file() sends the reset trigger", {
+  session <- recording_session()
+
+  reset_file("test", session = session)
+
+  expect_equal(session$sent[[1]], list(id = "test", message = list(reset = TRUE)))
 })
 
 test_that("update_file() validates its arguments", {

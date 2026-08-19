@@ -1,6 +1,6 @@
 # Demo app for input_file() / <bsides-file>.
 #
-# Four cards:
+# Five cards:
 #
 #   1. One file, any type: the default. Click the drop zone (or tab to it
 #      and press Enter) to browse. The value arrives as a one-row data
@@ -19,10 +19,16 @@
 #      through the upload, which app JavaScript can listen for. Upload
 #      something large enough to watch it tick.
 #
-#   4. Server updates: update_file() clears the list, swaps `accept` and
-#      the placeholder, and disables/enables the input. The value itself
-#      is never set from the server — the upload protocol writes it, and
-#      offers no way to unset it.
+#   4. Server updates: reset_file() clears the list, update_file() swaps
+#      `accept` and the placeholder and disables/enables the input. The
+#      value itself is never set from the server — the upload protocol
+#      writes it, and offers no way to unset it.
+#
+#   5. Staged upload: upload_mode = "manual". Files accumulate in the
+#      list — same-name additions replace, each row removable — and the
+#      batch starts from the Upload button, or from the server:
+#      file_upload_start() is the button's twin. Cancel mid-flight and
+#      the set returns, ready to retry.
 
 library(yonder)
 library(bslib)
@@ -94,6 +100,18 @@ shinyApp(
         input_button(id = "images", label = "Accept images instead"),
         input_button(id = "hint", label = "Change placeholder"),
         input_checkbox(id = "disable", choice = "Disable the .csv input")
+      ),
+      card(
+        card_header("Staged upload"),
+        input_file(
+          id = "staged",
+          label = "Batch of files",
+          select = "many",
+          upload_mode = "manual",
+          placeholder = "Stage files, then upload together"
+        ),
+        input_button(id = "start", label = "Start from the server"),
+        verbatimTextOutput("staged_value")
       )
     )
   ),
@@ -130,7 +148,7 @@ shinyApp(
     })
 
     observeEvent(input$reset, {
-      update_file("many", reset = TRUE)
+      reset_file("many")
     })
 
     observeEvent(input$images, {
@@ -147,6 +165,14 @@ shinyApp(
       } else {
         update_file("many", enable = TRUE)
       }
+    })
+
+    output$staged_value <- renderPrint({
+      input$staged
+    })
+
+    observeEvent(input$start, {
+      file_upload_start("staged")
     })
   }
 )

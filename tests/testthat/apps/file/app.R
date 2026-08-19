@@ -20,7 +20,14 @@ ui <-
       accept = ".csv"
     ),
     verbatimTextOutput("info"),
-    verbatimTextOutput("contents")
+    verbatimTextOutput("contents"),
+    input_file(
+      id = "stg",
+      label = "Staged upload",
+      select = "many",
+      upload_mode = "manual"
+    ),
+    verbatimTextOutput("stg_info")
   )
 
 server <-
@@ -54,10 +61,25 @@ server <-
       )
     })
 
+    output$stg_info <- renderText({
+      upload <- input$stg
+
+      if (is.null(upload)) {
+        return("none")
+      }
+
+      paste(upload$name, upload$size, collapse = "; ")
+    })
+
     # Fired from the tests with `trigger()`.
     observeEvent(
       input$do_reset,
-      update_file("upl", reset = TRUE),
+      reset_file("upl"),
+      ignoreInit = TRUE
+    )
+    observeEvent(
+      input$do_start,
+      file_upload_start("stg"),
       ignoreInit = TRUE
     )
     observeEvent(

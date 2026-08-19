@@ -46,17 +46,26 @@
 
 ## New features
 
-* New `input_file()` and `update_file()`. Files upload as soon as they are
-  chosen and travel over HTTP rather than the WebSocket, so the app stays
-  responsive; the server value is the familiar data frame of `name`,
-  `size`, `type`, and `datapath`. Beyond `shiny::fileInput()` it adds
-  drag and drop, paste (screenshots included), a cancel control for a
-  batch in flight, per-file and batch progress, a collapsible file list
-  whose summary line is a small template (`"{done}/{n} uploaded"`), a
-  `height` argument for the drop zone, and client-side validation of
-  size, `accept`, and `multiple` — the checks a drop or a paste would
+* New `input_file()`, `update_file()`, and `reset_file()`. By default
+  files upload as soon as they are chosen; uploads travel over HTTP
+  rather than the WebSocket, so the app stays responsive, and the server
+  value is the familiar data frame of `name`, `size`, `type`, and
+  `datapath`. Beyond `shiny::fileInput()` it adds drag and drop, paste
+  (screenshots included), a cancel control for a batch in flight,
+  per-file and batch progress, a collapsible file list whose summary
+  line is a small template (`"{done}/{n} uploaded"`), a `height`
+  argument for the drop zone, and client-side validation of size,
+  `accept`, and `multiple` — the checks a drop or a paste would
   otherwise skip entirely. Bookmark restore and directory upload are not
   supported.
+
+* `input_file(upload_mode = "manual")` stages files instead of uploading
+  them. Gestures accumulate a set — same-name additions replace, each
+  row removable — and the input's Upload button starts the batch. A
+  cancelled or failed batch returns to the staged set and retries whole,
+  the file that failed marked in the list. New `file_upload_start()` and
+  `file_upload_cancel()` drive a batch from the server, the twins of the
+  Upload and Cancel buttons.
 
 * New `update_numeric()`, the counterpart to `input_numeric()`. Update a
   numeric input's `value`, `min`, `max`, `step`, or disabled state from the
