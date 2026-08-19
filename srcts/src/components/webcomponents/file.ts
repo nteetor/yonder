@@ -39,6 +39,7 @@ class BsidesFile extends LitElement {
     multiple: { type: Boolean, reflect: true },
     accept: { type: String, reflect: true },
     capture: { type: String, reflect: true },
+    mode: { type: String, reflect: true },
     placeholder: { type: String },
     summary: { type: String },
     disabled: { type: Boolean, reflect: true },
@@ -55,6 +56,7 @@ class BsidesFile extends LitElement {
   declare multiple: boolean;
   declare accept: string;
   declare capture: string;
+  declare mode: string;
   declare placeholder: string;
   declare summary: string;
   declare disabled: boolean;
@@ -80,6 +82,7 @@ class BsidesFile extends LitElement {
     this.multiple = false;
     this.accept = '';
     this.capture = '';
+    this.mode = 'auto';
     this.placeholder = 'Choose a file';
     this.summary = '{files} · {size}';
     this.disabled = false;
@@ -182,6 +185,16 @@ class BsidesFile extends LitElement {
               <span class="file-item-name">${item.file.name}</span>
               <span class="file-item-size">${formatSize(item.file.size)}</span>
               ${
+                this.#removable(item)
+                  ? html`<button
+                      type="button"
+                      class="file-item-remove btn-close"
+                      aria-label="Remove ${item.file.name}"
+                      @click=${() => this.#onRemove(item)}
+                    ></button>`
+                  : nothing
+              }
+              ${
                 perFile
                   ? this.#renderProgress(
                       'file-item-progress',
@@ -198,26 +211,43 @@ class BsidesFile extends LitElement {
     `;
   }
 
-  // Batch progress and the cancel control, both meaningful only while a
-  // batch is in flight.
+  // Batch controls: progress and Cancel while a batch is in flight. In
+  // manual mode the row is permanent — the Upload button, disabled until
+  // something is staged, is the affordance that says a second action is
+  // coming. Auto mode at rest renders nothing, as before.
   #renderBatch(): unknown {
-    if (!this._uploading) {
+    if (this._uploading) {
+      return html`
+        <div class="file-batch">
+          ${this.#renderProgress(
+            'file-batch-progress',
+            this._batch,
+            'Upload progress',
+          )}
+          <button
+            type="button"
+            class="btn btn-danger btn-sm file-cancel"
+            @click=${this.#onCancel}
+          >
+            Cancel
+          </button>
+        </div>
+      `;
+    }
+
+    if (this.mode !== 'manual') {
       return nothing;
     }
 
     return html`
       <div class="file-batch">
-        ${this.#renderProgress(
-          'file-batch-progress',
-          this._batch,
-          'Upload progress',
-        )}
         <button
           type="button"
-          class="btn btn-danger btn-sm file-cancel"
-          @click=${this.#onCancel}
+          class="btn btn-primary btn-sm file-upload"
+          ?disabled=${this.disabled || this.#stagedFiles().length === 0}
+          @click=${this.#onUpload}
         >
-          Cancel
+          Upload
         </button>
       </div>
     `;
@@ -394,10 +424,12 @@ class BsidesFile extends LitElement {
     this.#announce('Upload cancelled');
   };
 
-  // Validates a set of files and uploads whatever survives, replacing any
-  // batch already in flight. Files arriving by drop or paste never passed
-  // the picker's own filtering, so `accept` and `multiple` are enforced
-  // here as well as by the picker.
+  // The single entry for every gesture (pick, drop, paste): validates a
+  // set of files and hands the survivors to the mode's terminal — started
+  // as a batch in auto mode, *staged without uploading* in manual mode,
+  // the name notwithstanding. Files arriving by drop or paste never
+  // passed the picker's own filtering, so `accept` and `multiple` are
+  // enforced here as well as by the picker.
   //
   // `rejected` carries checks the caller already made — dropped folders,
   // which only a DataTransfer can identify.
@@ -426,15 +458,142 @@ class BsidesFile extends LitElement {
     }
 
     this._errors = errors;
-    this.#start(validation.accepted);
+
+    if (this.mode === 'manual') {
+      this.#stage(validation.accepted);
+    } else {
+      this.#start(validation.accepted);
+    }
   }
 
-  // Reports a batch that never started.
+  // Reports a batch that never started. In manual mode the staged set
+  // survives: a rejected addition adds nothing, but the set being built
+  // is not the thing that failed.
   #reject(errors: string[]): void {
     this._errors = errors;
-    this._items = [];
+
+    if (this.mode !== 'manual') {
+      this._items = [];
+    }
+
     this.#announce(errors.join(' '));
   }
+
+  // Adds validated files to the staged set — upload()'s manual-mode
+  // terminal. A delivered batch's rows clear on the next addition: that
+  // batch's value was set at uploadEnd, and keeping its rows would
+  // conflate two batches in one list. A cancelled or failed batch
+  // delivered nothing, leaves no done rows, and so survives additions.
+  #stage(files: File[]): void {
+    let items = this._items.some((item) => item.status === 'done')
+      ? []
+      : this._items;
+
+    // select = "one": a new pick replaces the staged file. Multi-file
+    // gestures were already rejected whole by upload().
+    if (!this.multiple) {
+      items = [];
+    }
+
+    const added: string[] = [];
+    const replaced: string[] = [];
+
+    for (const file of files) {
+      const index = items.findIndex((item) => item.file.name === file.name);
+      const item = { file, status: 'pending' as const, progress: 0 };
+
+      if (index >= 0) {
+        // Same name replaces: re-exporting a corrected file is the
+        // common case; two same-named files in one batch almost never.
+        items = items.map((other, i) => (i === index ? item : other));
+        replaced.push(file.name);
+      } else {
+        items = [...items, item];
+        added.push(file.name);
+      }
+    }
+
+    this._items = items;
+    this._listOpen = true;
+
+    const count = this._items.length;
+    const staged = count === 1 ? '1 file staged' : `${count} files staged`;
+    const parts = [
+      added.length === 1 ? `${added[0]} added` : '',
+      added.length > 1 ? `${added.length} files added` : '',
+      replaced.length === 1 ? `${replaced[0]} replaced` : '',
+      replaced.length > 1 ? `${replaced.length} files replaced` : '',
+    ].filter(Boolean);
+
+    this.#announce(`${parts.join(', ')}, ${staged}`);
+  }
+
+  // The set a manual-mode batch would send: staged rows plus any
+  // carrying a failure mark from the last attempt — a retry re-sends
+  // everything.
+  #stagedFiles(): File[] {
+    return this._items
+      .filter((item) => item.status === 'pending' || item.status === 'error')
+      .map((item) => item.file);
+  }
+
+  // A row can be removed while the user can still act on it: staged
+  // (pending) or carrying a failure mark, with no batch in flight. A
+  // done row was delivered at uploadEnd; removing it would not unsend
+  // it.
+  #removable(item: FileItem): boolean {
+    return (
+      this.mode === 'manual' &&
+      !this._uploading &&
+      (item.status === 'pending' || item.status === 'error')
+    );
+  }
+
+  #onRemove(item: FileItem): void {
+    const index = this._items.indexOf(item);
+
+    this._items = this._items.filter((other) => other !== item);
+
+    // Removing the failed row is the other way out of a failure; it
+    // ends the failure's reporting the way a retry does.
+    if (item.status === 'error') {
+      this._errors = [];
+    }
+
+    this.#announce(`${item.file.name} removed`);
+
+    // The control under focus was just destroyed. Land on the control
+    // of the row that took this one's place, the previous row's when
+    // this one was last, or the (visually hidden, still focusable)
+    // picker once the list is empty — the Upload button is disabled at
+    // zero staged files and a disabled button takes no focus. Queried
+    // after the update: repeat() keys rows by File, so surviving rows
+    // keep their nodes and move.
+    void this.updateComplete.then(() => {
+      const controls = [
+        ...this.querySelectorAll<HTMLButtonElement>('.file-item-remove'),
+      ];
+      const target =
+        controls.at(index) ?? controls.at(index - 1) ?? this.#inputElement;
+
+      target?.focus();
+    });
+  }
+
+  // The Upload button, and the retry entry after a cancel or a failure.
+  // Never routes through upload(), so it clears the previous attempt's
+  // errors itself — the message must not outlive the attempt it
+  // reports.
+  #onUpload = (): void => {
+    const files = this.#stagedFiles();
+
+    if (files.length === 0 || this._uploading) {
+      return;
+    }
+
+    this._errors = [];
+    this.#start(files);
+  };
 
   #start(files: File[]): void {
     this.#uploader?.cancel();

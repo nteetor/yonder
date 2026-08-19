@@ -92,9 +92,15 @@ bsides-file {
 
   .file-item {
     display: grid;
-    // Name takes the slack; size and progress hold their own columns.
+    // Name takes the slack; size and progress hold their own columns. A
+    // removable row adds a third track for its control; :has() so other
+    // rows keep two and no phantom column gap.
     grid-template-columns: 1fr auto;
     gap: .125rem .5rem;
+
+    &:has(.file-item-remove) {
+      grid-template-columns: 1fr auto auto;
+    }
     align-items: center;
     padding: .375rem 0;
 
@@ -121,8 +127,14 @@ bsides-file {
   }
 
   .file-item-progress {
-    // Spans both columns, under the name and size.
+    // Spans the row, under the name and size.
     grid-column: 1 / -1;
+  }
+
+  // Appearance comes from Bootstrap's btn-close, sized as the chip's.
+  .file-item-remove {
+    padding: 0;
+    font-size: .75em;
   }
 
   .file-batch {
@@ -174,8 +186,9 @@ bsides-file {
     }
   }
 
-  // Appearance comes from Bootstrap's button classes on the element.
-  .file-cancel {
+  // Appearance comes from Bootstrap's button classes on the elements.
+  .file-cancel,
+  .file-upload {
     flex-shrink: 0;
   }
 

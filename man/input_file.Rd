@@ -10,6 +10,7 @@ input_file(
   ...,
   label = NULL,
   select = c("one", "many"),
+  upload_mode = c("auto", "manual"),
   accept = NULL,
   capture = NULL,
   placeholder = NULL,
@@ -40,6 +41,12 @@ the legend of the fieldset wrapping the input.}
 
 \item{select}{A character string. With \code{"one"} (default) a single file
 may be chosen, with \code{"many"} any number.}
+
+\item{upload_mode}{A character string. With \code{"auto"} (default) files
+upload as soon as they are chosen. With \code{"manual"} files accumulate
+in a staged set — each removable before flight — and an explicit
+action starts the batch: the input's Upload button, or
+\code{file_upload_start()} from the server.}
 
 \item{accept}{A character vector of file extensions (\code{".csv"}), MIME
 types (\code{"text/csv"}), or MIME wildcards (\code{"image/*"}) bounding what

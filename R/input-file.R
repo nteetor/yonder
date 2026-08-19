@@ -11,6 +11,12 @@
 #' @param select A character string. With `"one"` (default) a single file
 #'   may be chosen, with `"many"` any number.
 #'
+#' @param upload_mode A character string. With `"auto"` (default) files
+#'   upload as soon as they are chosen. With `"manual"` files accumulate
+#'   in a staged set — each removable before flight — and an explicit
+#'   action starts the batch: the input's Upload button, or
+#'   `file_upload_start()` from the server.
+#'
 #' @param accept A character vector of file extensions (`".csv"`), MIME
 #'   types (`"text/csv"`), or MIME wildcards (`"image/*"`) bounding what
 #'   may be chosen, defaults to `NULL`, in which case any file may be
@@ -107,6 +113,7 @@ input_file <-
     ...,
     label = NULL,
     select = c("one", "many"),
+    upload_mode = c("auto", "manual"),
     accept = NULL,
     capture = NULL,
     placeholder = NULL,
@@ -115,6 +122,7 @@ input_file <-
   ) {
     check_string(id, allow_empty = FALSE)
     select <- arg_match(select)
+    upload_mode <- arg_match(upload_mode)
     check_character(accept, allow_null = TRUE)
     check_string(placeholder, allow_null = TRUE)
     check_string(summary, allow_null = TRUE)
@@ -132,6 +140,7 @@ input_file <-
       list2(
         id = id,
         multiple = if (select == "many") NA,
+        mode = if (upload_mode == "manual") upload_mode,
         accept = if (non_null(accept)) paste0(accept, collapse = ","),
         capture = capture,
         placeholder = placeholder,

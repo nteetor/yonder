@@ -11,6 +11,16 @@ test_that("`select` chooses the multiple attribute", {
   expect_error(input_file("test", select = "all"), "select")
 })
 
+test_that("`upload_mode` chooses the mode attribute", {
+  expect_no_match(format(input_file("test")), "mode=")
+  expect_match(
+    format(input_file("test", upload_mode = "manual")),
+    'mode="manual"'
+  )
+
+  expect_error(input_file("test", upload_mode = "batch"), "upload_mode")
+})
+
 test_that("`accept` collapses to a comma-separated attribute", {
   expect_match(
     format(input_file("test", accept = c(".csv", "text/csv"))),
