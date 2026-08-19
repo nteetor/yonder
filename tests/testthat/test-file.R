@@ -74,6 +74,65 @@ test_that("file_upload_start()/file_upload_cancel() send their triggers", {
   expect_error(file_upload_cancel("test", 1, session = session), "\\.\\.\\.")
 })
 
+test_that("file upload readers are sugar over companion inputs", {
+  session <- new.env(parent = emptyenv())
+  session$input <- list(
+    test__bsides_status = "uploading",
+    test__bsides_progress = 0.4,
+    test__bsides_staged = data.frame(name = "a.csv", size = 10, type = ""),
+    test__bsides_error = "boom"
+  )
+
+  expect_equal(file_upload_status("test", session = session), "uploading")
+  expect_equal(file_upload_progress("test", session = session), 0.4)
+  expect_equal(
+    file_upload_staged("test", session = session),
+    data.frame(name = "a.csv", size = 10, type = "")
+  )
+  expect_equal(file_upload_error("test", session = session), "boom")
+
+  # Before the first push each reader is total, at its idle default.
+  expect_equal(file_upload_status("none", session = session), "idle")
+  expect_equal(file_upload_progress("none", session = session), 0)
+  expect_equal(nrow(file_upload_staged("none", session = session)), 0)
+  expect_null(file_upload_error("none", session = session))
+})
+
+test_that("readers resolve inside a module", {
+  module <- function(id) {
+    shiny::moduleServer(id, function(input, output, session) {})
+  }
+
+  shiny::testServer(module, args = list(id = "m"), {
+    session$setInputs(upl__bsides_status = "staged")
+
+    # The module's session proxy scopes the companion name the same way
+    # it scopes the input itself. (Passed explicitly: testServer's expr
+    # does not run under the proxy as default domain, though a module's
+    # own server code does — callModule wraps it in withReactiveDomain.)
+    expect_equal(file_upload_status("upl", session = session), "staged")
+  })
+})
+
+test_that("the staged input handler builds the data frame", {
+  handler <- function(value) {
+    shiny:::inputHandlers$get(file_staged_input_type)(value, NULL, "x")
+  }
+
+  expect_equal(nrow(handler(list())), 0)
+  expect_equal(
+    handler(list(
+      list(name = "a.csv", size = 10L, type = "text/csv"),
+      list(name = "b.bin", size = 2, type = NULL)
+    )),
+    data.frame(
+      name = c("a.csv", "b.bin"),
+      size = c(10, 2),
+      type = c("text/csv", "")
+    )
+  )
+})
+
 test_that("update_file() sends only the arguments it is given", {
   session <- recording_session()
 

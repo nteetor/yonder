@@ -1541,6 +1541,126 @@ for (const name of Object.keys(registered)) {
     win.__requests.length === 0, win.__requests)
 }
 
+// ---- file, state companions ----
+{
+  const { binding } = { binding: registered['bsides.file'] }
+  const el = doc.getElementById('uplm')
+
+  win.__connected = true
+  win.__requests = []
+  win.__posts = []
+  win.__requestPlan = null
+  win.__postPlan = null
+  win.__deferredPosts = []
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+
+  // A recorder for Shiny.setInputValue, which the component pushes its
+  // __bsides_* companions through.
+  const inputs = []
+  win.Shiny.setInputValue = (name, value) => inputs.push({ name, value })
+  // The staged companion's name carries its input-handler type suffix
+  // (`:bsides.file.staged`), so match on the name's head.
+  const named = (suffix) =>
+    inputs.filter((i) => i.name.split(':')[0] === `uplm__bsides_${suffix}`)
+  const last = (suffix) => named(suffix).at(-1)?.value
+  const count = (suffix) => named(suffix).length
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+  check('state: idle after reset', last('status') === 'idle', last('status'))
+  check('state: staged empty at idle', eq(last('staged'), []), last('staged'))
+  check('state: no error at idle', last('error') === null)
+
+  // One two-file gesture pushes the staged set once, whole.
+  const stagedBefore = count('staged')
+  el.upload([file('a.csv', 10, 'text/csv'), file('b.csv', 20, 'text/csv')])
+  await el.updateComplete
+  check('state: staged status once staged',
+    last('status') === 'staged', last('status'))
+  check('state: staged payload carries the set',
+    eq(last('staged'), [
+      { name: 'a.csv', size: 10, type: 'text/csv' },
+      { name: 'b.csv', size: 20, type: 'text/csv' },
+    ]),
+    last('staged'))
+  check('state: one gesture pushes the set once',
+    count('staged') === stagedBefore + 1,
+    count('staged') - stagedBefore)
+
+  // A removal is a set edit.
+  el.querySelector('.file-item-remove').click()
+  await el.updateComplete
+  await tick(0)
+  check('state: removal updates the staged payload',
+    eq(last('staged'), [{ name: 'b.csv', size: 20, type: 'text/csv' }]),
+    last('staged'))
+
+  // Flight: uploading, throttled progress, the final 1, then done.
+  win.__postPlan = () => ({ defer: true })
+  el.querySelector('.file-upload').click()
+  await tick(20)
+  await el.updateComplete
+  check('state: uploading in flight', last('status') === 'uploading')
+  check('state: staged empties in flight', eq(last('staged'), []))
+
+  win.__deferredPosts[0].upload.onprogress({
+    lengthComputable: true, loaded: 10,
+  })
+  await tick(200)
+  check('state: progress pushed after the throttle window',
+    last('progress') === 0.5, last('progress'))
+
+  const xhr = win.__deferredPosts.shift()
+  xhr.upload.onprogress({ lengthComputable: true, loaded: 20 })
+  xhr.status = 200
+  xhr.onload()
+  win.__postPlan = null
+  await tick(30)
+  await el.updateComplete
+  check('state: done after delivery', last('status') === 'done')
+  check('state: final progress is 1', last('progress') === 1)
+
+  // Cancel in manual mode is staged again, progress folded back to 0.
+  el.upload([file('c.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__postPlan = () => ({ defer: true })
+  el.querySelector('.file-upload').click()
+  await tick(20)
+  await el.updateComplete
+  el.querySelector('.file-cancel').click()
+  await el.updateComplete
+  win.__postPlan = null
+  win.__deferredPosts.length = 0
+  check('state: cancel lands back in staged',
+    last('status') === 'staged', last('status'))
+  check('state: cancel zeroes progress', last('progress') === 0)
+  check('state: cancel is not a failure', last('error') === null)
+
+  // Failure: status failed, the message pushed; a retry clears it.
+  win.__postPlan = () => ({ status: 500 })
+  el.querySelector('.file-upload').click()
+  await tick(30)
+  await el.updateComplete
+  win.__postPlan = null
+  check('state: failure reported', last('status') === 'failed')
+  check('state: failure message pushed',
+    typeof last('error') === 'string' && last('error').length > 0,
+    last('error'))
+
+  el.querySelector('.file-upload').click()
+  await tick(30)
+  await el.updateComplete
+  check('state: retry delivers and clears the error',
+    last('status') === 'done' && last('error') === null,
+    [last('status'), last('error')])
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+  delete win.Shiny.setInputValue
+}
+
 // ---- form + staged file: the batch starts on submit ----
 {
   // Both bindings were subscribed by their own sections' bind() calls,

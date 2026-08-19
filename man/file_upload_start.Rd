@@ -3,11 +3,23 @@
 \name{file_upload_start}
 \alias{file_upload_start}
 \alias{file_upload_cancel}
-\title{File upload actions}
+\alias{file_upload_status}
+\alias{file_upload_progress}
+\alias{file_upload_staged}
+\alias{file_upload_error}
+\title{File upload actions and state}
 \usage{
 file_upload_start(id, ..., session = get_current_session())
 
 file_upload_cancel(id, ..., session = get_current_session())
+
+file_upload_status(id, ..., session = get_current_session())
+
+file_upload_progress(id, ..., session = get_current_session())
+
+file_upload_staged(id, ..., session = get_current_session())
+
+file_upload_error(id, ..., session = get_current_session())
 }
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
@@ -18,17 +30,41 @@ element.}
 \item{session}{A shiny session object.}
 }
 \value{
-\code{NULL}, invisibly.
+The actions return \code{NULL}, invisibly; the readers as
+described above.
 }
 \description{
-Drive a file input's upload from the server, without touching the
-input's own controls. \code{file_upload_start()} starts the staged batch
-of an \code{upload_mode = "manual"} input — the server-side twin of its
-Upload button — and is a no-op when nothing is staged or a batch is
-already in flight. \code{file_upload_cancel()} abandons the batch in
-flight, landing where the Cancel button lands: in manual mode the
-rows return to the staged set, ready to retry; in auto mode they are
+Drive a file input's upload from the server, and read its upload
+state ahead of the value — \verb{input$<id>} is set once per batch, when
+an upload completes, and is \code{NULL} before the first; everything in
+between lives here.
+}
+\details{
+The actions: \code{file_upload_start()} starts the staged batch of an
+\code{upload_mode = "manual"} input — the server-side twin of its Upload
+button — and is a no-op when nothing is staged or a batch is already
+in flight. \code{file_upload_cancel()} abandons the batch in flight,
+landing where the Cancel button lands: in manual mode the rows
+return to the staged set, ready to retry; in auto mode they are
 marked failed. A no-op when nothing is in flight.
+
+The readers: \code{file_upload_status()} returns one of \code{"idle"} (no
+files), \code{"staged"} (a set awaits its upload), \code{"uploading"},
+\code{"done"} (the batch delivered), \code{"failed"} (the set is retained in
+manual mode, ready to retry), or \code{"cancelled"} (auto mode; in manual
+mode a cancel lands back in \code{"staged"}). \code{file_upload_progress()}
+returns the batch fraction in \verb{[0, 1]}. \code{file_upload_staged()}
+returns the staged set as a data frame of \code{name}, \code{size}, and \code{type}
+— the value's columns before there are paths — with zero rows when
+nothing is staged. \code{file_upload_error()} returns the last failure's
+message, or \code{NULL}.
+
+Each reader is a reactive read of a companion input pushed by the
+component, so an observer or reactive using one invalidates only
+when that facet changes. Use them to drive an app's own controls —
+enable a submit while \code{nrow(file_upload_staged(id)) > 0}, render a
+progress line from \code{file_upload_progress(id)} — including inside
+\code{\link[=input_form]{input_form()}}, whose input freeze does not hold them back.
 }
 \seealso{
 \code{\link[=input_file]{input_file()}}, \code{\link[=update_file]{update_file()}}

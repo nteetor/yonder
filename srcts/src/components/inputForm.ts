@@ -39,6 +39,10 @@ class FormInputBinding extends NativeEventInputBinding {
       .on('shiny:inputchanged.bsidesFormInputBinding', (event) => {
         const inputEvent = event as unknown as ShinyInputChangedEvent;
 
+        // Load-bearing: Shiny.setInputValue() pushes carry no element,
+        // and they must pass — the file input's __bsides_* state
+        // companions ride that path, staged-set state included, from
+        // file inputs nested in this very form.
         if (!inputEvent.el || inputEvent.priority === 'event') {
           return;
         }

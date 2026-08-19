@@ -85,6 +85,21 @@ class BsidesFile extends LitElement {
   // disconnection can unhook exactly what connection hooked.
   #form: HTMLFormElement | null = null;
 
+  // Status is not a pure function of the rows: after a manual-mode
+  // failure the rows read pending-plus-error, and so they do again once
+  // the user edits the set — but the first state is "failed" and the
+  // second "staged". These latches carry the difference. Cleared by any
+  // set edit, a new flight, or a reset.
+  #failed = false;
+  #failureMessage: string | null = null;
+  // Auto mode only: a cancelled batch is terminal there.
+  #cancelled = false;
+
+  // Trailing-edge throttle for the progress companion — progress events
+  // fire per XHR tick, far faster than the server wants them.
+  #progressPending = 0;
+  #progressTimer: number | null = null;
+
   constructor() {
     super();
     this.multiple = false;
@@ -461,6 +476,8 @@ class BsidesFile extends LitElement {
     this.#uploader?.cancel();
     this.#uploader = null;
     this._uploading = false;
+    this.#cancelled = this.mode !== 'manual';
+    this.#pushProgressFinal(0);
     this._items = this._items.map((item) => {
       if (this.mode === 'manual') {
         return { ...item, status: 'pending' as const, progress: 0 };
@@ -534,6 +551,9 @@ class BsidesFile extends LitElement {
   // conflate two batches in one list. A cancelled or failed batch
   // delivered nothing, leaves no done rows, and so survives additions.
   #stage(files: File[]): void {
+    this.#failed = false;
+    this.#failureMessage = null;
+
     let items = this._items.some((item) => item.status === 'done')
       ? []
       : this._items;
@@ -602,6 +622,8 @@ class BsidesFile extends LitElement {
     const index = this._items.indexOf(item);
 
     this._items = this._items.filter((other) => other !== item);
+    this.#failed = false;
+    this.#failureMessage = null;
 
     // Removing the failed row is the other way out of a failure; it
     // ends the failure's reporting the way a retry does.
@@ -647,6 +669,11 @@ class BsidesFile extends LitElement {
   #start(files: File[]): void {
     this.#uploader?.cancel();
 
+    this.#failed = false;
+    this.#failureMessage = null;
+    this.#cancelled = false;
+    this.#pushProgressFinal(0);
+
     this._batch = 0;
     this._uploading = true;
     this._listOpen = true;
@@ -683,6 +710,8 @@ class BsidesFile extends LitElement {
             detail: { file, loaded, batch },
           }),
         );
+
+        this.#pushProgress(batch);
       },
       onFileDone: (file) => {
         this.#updateItem(file, { status: 'done', progress: 1 });
@@ -696,6 +725,9 @@ class BsidesFile extends LitElement {
       onError: (message) => {
         this.#uploader = null;
         this._uploading = false;
+        this.#failed = true;
+        this.#failureMessage = message;
+        this.#pushProgressFinal(0);
         this._errors = [message];
         this._items = this._items.map((item) => {
           if (this.mode === 'manual') {
@@ -715,6 +747,7 @@ class BsidesFile extends LitElement {
         this.#uploader = null;
         this._uploading = false;
         this._batch = 1;
+        this.#pushProgressFinal(1);
         this.#announce(
           files.length === 1
             ? `${files[0].name} uploaded`
@@ -737,6 +770,10 @@ class BsidesFile extends LitElement {
   #reset(): void {
     this.#uploader?.cancel();
     this.#uploader = null;
+    this.#failed = false;
+    this.#failureMessage = null;
+    this.#cancelled = false;
+    this.#pushProgressFinal(0);
     this._items = [];
     this._listOpen = true;
     this._errors = [];
@@ -758,6 +795,12 @@ class BsidesFile extends LitElement {
   // Marks the whole component busy while bytes are in transit. Set on the
   // host, which render() cannot reach: this element renders into light DOM
   // and so owns its children, not its own attributes.
+  //
+  // Also the single choke point for the status/staged/error companion
+  // inputs: every state change lands here once per render, so the
+  // pushes cannot drift from what the user sees. Shiny's send-side
+  // dedupe drops repeats, and progress pushes separately (throttled)
+  // from onProgress.
   override updated(changed: Map<string, unknown>): void {
     if (changed.has('_uploading')) {
       if (this._uploading) {
@@ -766,6 +809,71 @@ class BsidesFile extends LitElement {
         this.removeAttribute('aria-busy');
       }
     }
+
+    this.#push('status', this.#status());
+    this.#push(
+      'staged:bsides.file.staged',
+      this.mode === 'manual'
+        ? this.#stagedFiles().map((file) => ({
+            name: file.name,
+            size: file.size,
+            type: file.type,
+          }))
+        : [],
+    );
+    this.#push('error', this.#failed ? this.#failureMessage : null);
+  }
+
+  #status(): string {
+    if (this._uploading) {
+      return 'uploading';
+    }
+
+    if (this.#cancelled) {
+      return 'cancelled';
+    }
+
+    if (this.#failed) {
+      return 'failed';
+    }
+
+    if (this._items.length === 0) {
+      return 'idle';
+    }
+
+    if (this._items.every((item) => item.status === 'done')) {
+      return 'done';
+    }
+
+    return 'staged';
+  }
+
+  #push(suffix: string, value: unknown): void {
+    if (this.id) {
+      window.Shiny?.setInputValue?.(`${this.id}__bsides_${suffix}`, value);
+    }
+  }
+
+  #pushProgress(fraction: number): void {
+    this.#progressPending = fraction;
+
+    if (this.#progressTimer === null) {
+      this.#progressTimer = window.setTimeout(() => {
+        this.#progressTimer = null;
+        this.#push('progress', this.#progressPending);
+      }, 150);
+    }
+  }
+
+  // A batch ended: the throttle stops waiting and the final value —
+  // 1 delivered, 0 abandoned — goes out immediately.
+  #pushProgressFinal(fraction: number): void {
+    if (this.#progressTimer !== null) {
+      window.clearTimeout(this.#progressTimer);
+      this.#progressTimer = null;
+    }
+
+    this.#push('progress', fraction);
   }
 }
 

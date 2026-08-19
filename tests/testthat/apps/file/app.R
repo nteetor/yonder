@@ -28,6 +28,7 @@ ui <-
       upload_mode = "manual"
     ),
     verbatimTextOutput("stg_info"),
+    verbatimTextOutput("stg_state"),
     input_form(
       id = "frm",
       input_file(id = "frm_upl", select = "many", upload_mode = "manual"),
@@ -64,6 +65,14 @@ server <-
           character(1)
         ),
         collapse = "; "
+      )
+    })
+
+    output$stg_state <- renderText({
+      paste(
+        file_upload_status("stg"),
+        nrow(file_upload_staged("stg")),
+        file_upload_progress("stg")
       )
     })
 

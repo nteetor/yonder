@@ -48,11 +48,15 @@ test_that("a staged batch uploads on the button, or from the server", {
   app <- launch_file_app()
   withr::defer(app$stop())
 
+  # Idle before anything is staged — the readers' totality defaults.
+  expect_equal(app$get_value(output = "stg_state"), "idle 0 0")
+
   # Two gestures accumulate; staging alone delivers nothing.
   upload_files(app, "#stg .file-input", temp_upload("s1.csv", "1"))
   upload_files(app, "#stg .file-input", temp_upload("s2.csv", "2"))
 
   expect_equal(app$get_value(output = "stg_info"), "none")
+  expect_equal(app$get_value(output = "stg_state"), "staged 2 0")
   expect_equal(
     app$get_js("document.querySelectorAll('#stg .file-item').length"),
     2
@@ -66,6 +70,7 @@ test_that("a staged batch uploads on the button, or from the server", {
   app$wait_for_idle()
 
   expect_equal(app$get_value(output = "stg_info"), "s1.csv 2; s2.csv 2")
+  expect_equal(app$get_value(output = "stg_state"), "done 0 1")
 
   # A fresh set staged after delivery, started from the server this
   # time — file_upload_start() is the button's twin.

@@ -69,6 +69,15 @@
   when the form submits, closing the gap that let an auto-mode file
   input's value land ahead of the form's.
 
+* New `file_upload_status()`, `file_upload_progress()`,
+  `file_upload_staged()`, and `file_upload_error()` read a file input's
+  upload state ahead of its value, which is only ever set as an upload
+  completes. Each is a reactive read of one companion input pushed by
+  the component — an observer of the batch fraction does not re-run as
+  the staged set is edited, and none of it touches `input$<id>`. Enable
+  a submit while `nrow(file_upload_staged(id)) > 0`, or render a live
+  progress line server-side.
+
 * New `update_numeric()`, the counterpart to `input_numeric()`. Update a
   numeric input's `value`, `min`, `max`, `step`, or disabled state from the
   server. The numeric input also gains its own binding, bringing it in line

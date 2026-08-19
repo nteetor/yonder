@@ -229,20 +229,43 @@ reset_file <-
     invisible(NULL)
   }
 
-#' File upload actions
+#' File upload actions and state
 #'
-#' Drive a file input's upload from the server, without touching the
-#' input's own controls. `file_upload_start()` starts the staged batch
-#' of an `upload_mode = "manual"` input — the server-side twin of its
-#' Upload button — and is a no-op when nothing is staged or a batch is
-#' already in flight. `file_upload_cancel()` abandons the batch in
-#' flight, landing where the Cancel button lands: in manual mode the
-#' rows return to the staged set, ready to retry; in auto mode they are
+#' Drive a file input's upload from the server, and read its upload
+#' state ahead of the value — `input$<id>` is set once per batch, when
+#' an upload completes, and is `NULL` before the first; everything in
+#' between lives here.
+#'
+#' The actions: `file_upload_start()` starts the staged batch of an
+#' `upload_mode = "manual"` input — the server-side twin of its Upload
+#' button — and is a no-op when nothing is staged or a batch is already
+#' in flight. `file_upload_cancel()` abandons the batch in flight,
+#' landing where the Cancel button lands: in manual mode the rows
+#' return to the staged set, ready to retry; in auto mode they are
 #' marked failed. A no-op when nothing is in flight.
+#'
+#' The readers: `file_upload_status()` returns one of `"idle"` (no
+#' files), `"staged"` (a set awaits its upload), `"uploading"`,
+#' `"done"` (the batch delivered), `"failed"` (the set is retained in
+#' manual mode, ready to retry), or `"cancelled"` (auto mode; in manual
+#' mode a cancel lands back in `"staged"`). `file_upload_progress()`
+#' returns the batch fraction in `[0, 1]`. `file_upload_staged()`
+#' returns the staged set as a data frame of `name`, `size`, and `type`
+#' — the value's columns before there are paths — with zero rows when
+#' nothing is staged. `file_upload_error()` returns the last failure's
+#' message, or `NULL`.
+#'
+#' Each reader is a reactive read of a companion input pushed by the
+#' component, so an observer or reactive using one invalidates only
+#' when that facet changes. Use them to drive an app's own controls —
+#' enable a submit while `nrow(file_upload_staged(id)) > 0`, render a
+#' progress line from `file_upload_progress(id)` — including inside
+#' [input_form()], whose input freeze does not hold them back.
 #'
 #' @inheritParams update_file
 #'
-#' @return `NULL`, invisibly.
+#' @return The actions return `NULL`, invisibly; the readers as
+#'   described above.
 #'
 #' @seealso [input_file()], [update_file()]
 #'
@@ -276,6 +299,100 @@ file_upload_cancel <-
     session$sendInputMessage(id, list(upload_cancel = TRUE))
 
     invisible(NULL)
+  }
+
+#' @rdname file_upload_start
+#'
+#' @export
+file_upload_status <-
+  function(
+    id,
+    ...,
+    session = get_current_session()
+  ) {
+    check_dots_empty()
+    check_string(id, allow_empty = FALSE)
+
+    session$input[[paste0(id, "__bsides_status")]] %||% "idle"
+  }
+
+#' @rdname file_upload_start
+#'
+#' @export
+file_upload_progress <-
+  function(
+    id,
+    ...,
+    session = get_current_session()
+  ) {
+    check_dots_empty()
+    check_string(id, allow_empty = FALSE)
+
+    session$input[[paste0(id, "__bsides_progress")]] %||% 0
+  }
+
+#' @rdname file_upload_start
+#'
+#' @export
+file_upload_staged <-
+  function(
+    id,
+    ...,
+    session = get_current_session()
+  ) {
+    check_dots_empty()
+    check_string(id, allow_empty = FALSE)
+
+    session$input[[paste0(id, "__bsides_staged")]] %||% file_staged_frame()
+  }
+
+#' @rdname file_upload_start
+#'
+#' @export
+file_upload_error <-
+  function(
+    id,
+    ...,
+    session = get_current_session()
+  ) {
+    check_dots_empty()
+    check_string(id, allow_empty = FALSE)
+
+    session$input[[paste0(id, "__bsides_error")]]
+  }
+
+file_staged_frame <-
+  function(
+    name = character(),
+    size = numeric(),
+    type = character()
+  ) {
+    data.frame(name = name, size = size, type = type, row.names = NULL)
+  }
+
+file_staged_input_type <- "bsides.file.staged"
+
+file_staged_input_register_handler <-
+  function() {
+    shiny::registerInputHandler(
+      file_staged_input_type,
+      function(
+        value,
+        session,
+        name
+      ) {
+        if (length(value) < 1) {
+          return(file_staged_frame())
+        }
+
+        file_staged_frame(
+          name = vapply(value, function(f) f$name, character(1)),
+          size = vapply(value, function(f) as.numeric(f$size), numeric(1)),
+          type = vapply(value, function(f) f$type %||% "", character(1))
+        )
+      },
+      force = TRUE
+    )
   }
 
 file_max_size <-
