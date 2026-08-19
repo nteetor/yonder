@@ -265,24 +265,30 @@ reset_file <-
 #' an upload completes, and is `NULL` before the first; everything in
 #' between lives here.
 #'
-#' The actions: `file_upload_start()` starts the staged batch of an
-#' `upload_mode = "manual"` input — the server-side twin of its Upload
-#' button — and is a no-op when nothing is staged or a batch is already
-#' in flight. `file_upload_cancel()` abandons the batch in flight,
-#' landing where the Cancel button lands: in manual mode the rows
-#' return to the staged set, ready to retry; in auto mode they are
-#' marked failed. A no-op when nothing is in flight.
+#' The actions:
 #'
-#' The readers: `file_upload_status()` returns one of `"idle"` (no
-#' files), `"staged"` (a set awaits its upload), `"uploading"`,
-#' `"done"` (the batch delivered), `"failed"` (the set is retained in
-#' manual mode, ready to retry), or `"cancelled"` (auto mode; in manual
-#' mode a cancel lands back in `"staged"`). `file_upload_progress()`
-#' returns the batch fraction in `[0, 1]`. `file_upload_staged()`
-#' returns the staged set as a data frame of `name`, `size`, and `type`
-#' — the value's columns before there are paths — with zero rows when
-#' nothing is staged. `file_upload_error()` returns the last failure's
-#' message, or `NULL`.
+#' * `file_upload_start()` starts the staged batch of an
+#'   `upload_mode = "manual"` input — the server-side twin of its
+#'   Upload button. A no-op when nothing is staged or a batch is
+#'   already in flight.
+#' * `file_upload_cancel()` abandons the batch in flight, landing where
+#'   the Cancel button lands: in manual mode the rows return to the
+#'   staged set, ready to retry; in auto mode they are marked failed. A
+#'   no-op when nothing is in flight.
+#'
+#' The readers:
+#'
+#' * `file_upload_status()` returns one of `"idle"` (no files),
+#'   `"staged"` (a set awaits its upload), `"uploading"`, `"done"` (the
+#'   batch delivered), `"failed"` (the set is retained in manual mode,
+#'   ready to retry), or `"cancelled"` (auto mode; in manual mode a
+#'   cancel lands back in `"staged"`).
+#' * `file_upload_progress()` returns the batch fraction in `[0, 1]`.
+#' * `file_upload_staged()` returns the staged set as a data frame of
+#'   `name`, `size`, and `type` — the value's columns before there are
+#'   paths — with zero rows when nothing is staged.
+#' * `file_upload_error()` returns the last failure's message, or
+#'   `NULL`.
 #'
 #' Each reader is a reactive read of a companion input pushed by the
 #' component, so an observer or reactive using one invalidates only

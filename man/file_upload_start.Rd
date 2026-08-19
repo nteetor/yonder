@@ -39,24 +39,32 @@ an upload completes, and is \code{NULL} before the first; everything in
 between lives here.
 }
 \details{
-The actions: \code{file_upload_start()} starts the staged batch of an
-\code{upload_mode = "manual"} input — the server-side twin of its Upload
-button — and is a no-op when nothing is staged or a batch is already
-in flight. \code{file_upload_cancel()} abandons the batch in flight,
-landing where the Cancel button lands: in manual mode the rows
-return to the staged set, ready to retry; in auto mode they are
-marked failed. A no-op when nothing is in flight.
+The actions:
+\itemize{
+\item \code{file_upload_start()} starts the staged batch of an
+\code{upload_mode = "manual"} input — the server-side twin of its
+Upload button. A no-op when nothing is staged or a batch is
+already in flight.
+\item \code{file_upload_cancel()} abandons the batch in flight, landing where
+the Cancel button lands: in manual mode the rows return to the
+staged set, ready to retry; in auto mode they are marked failed. A
+no-op when nothing is in flight.
+}
 
-The readers: \code{file_upload_status()} returns one of \code{"idle"} (no
-files), \code{"staged"} (a set awaits its upload), \code{"uploading"},
-\code{"done"} (the batch delivered), \code{"failed"} (the set is retained in
-manual mode, ready to retry), or \code{"cancelled"} (auto mode; in manual
-mode a cancel lands back in \code{"staged"}). \code{file_upload_progress()}
-returns the batch fraction in \verb{[0, 1]}. \code{file_upload_staged()}
-returns the staged set as a data frame of \code{name}, \code{size}, and \code{type}
-— the value's columns before there are paths — with zero rows when
-nothing is staged. \code{file_upload_error()} returns the last failure's
-message, or \code{NULL}.
+The readers:
+\itemize{
+\item \code{file_upload_status()} returns one of \code{"idle"} (no files),
+\code{"staged"} (a set awaits its upload), \code{"uploading"}, \code{"done"} (the
+batch delivered), \code{"failed"} (the set is retained in manual mode,
+ready to retry), or \code{"cancelled"} (auto mode; in manual mode a
+cancel lands back in \code{"staged"}).
+\item \code{file_upload_progress()} returns the batch fraction in \verb{[0, 1]}.
+\item \code{file_upload_staged()} returns the staged set as a data frame of
+\code{name}, \code{size}, and \code{type} — the value's columns before there are
+paths — with zero rows when nothing is staged.
+\item \code{file_upload_error()} returns the last failure's message, or
+\code{NULL}.
+}
 
 Each reader is a reactive read of a companion input pushed by the
 component, so an observer or reactive using one invalidates only
