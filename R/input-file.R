@@ -421,9 +421,9 @@ file_staged_input_register_handler <-
         }
 
         file_staged_frame(
-          name = vapply(value, function(f) f$name, character(1)),
-          size = vapply(value, function(f) as.numeric(f$size), numeric(1)),
-          type = vapply(value, function(f) f$type %||% "", character(1))
+          name = vapply(value, \(f) f$name, character(1)),
+          size = vapply(value, \(f) as.numeric(f$size), numeric(1)),
+          type = vapply(value, \(f) f$type %||% "", character(1))
         )
       },
       force = TRUE
