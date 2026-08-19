@@ -58,6 +58,8 @@ reference:
     contents:
       - starts_with("input_")
       - starts_with("update_")
+      - starts_with("file_upload_")
+      - reset_file
   - title: Layout
     desc: Build user interfaces for devices of all sizes.
     contents:

@@ -2,8 +2,6 @@
 % Please edit documentation in R/input-file.R
 \name{input_file}
 \alias{input_file}
-\alias{update_file}
-\alias{reset_file}
 \title{File input}
 \usage{
 input_file(
@@ -18,19 +16,6 @@ input_file(
   summary = NULL,
   height = NULL
 )
-
-update_file(
-  id,
-  ...,
-  accept = NULL,
-  placeholder = NULL,
-  summary = NULL,
-  enable = NULL,
-  disable = NULL,
-  session = get_current_session()
-)
-
-reset_file(id, ..., session = get_current_session())
 }
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
@@ -88,13 +73,6 @@ zone is twice the height of a standard input. Any CSS length works:
 the default for every file input through the
 \code{--bsides-file-dropzone-height} CSS variable; \code{height} overrides the
 theme for its input.}
-
-\item{enable}{If \code{TRUE}, enable the input, defaults to \code{NULL}.}
-
-\item{disable}{If \code{TRUE}, disable the input, defaults to \code{NULL}. When
-both \code{enable} and \code{disable} are \code{TRUE}, \code{disable} wins.}
-
-\item{session}{A shiny session object.}
 }
 \value{
 A shiny tag object.
@@ -152,13 +130,6 @@ is filled in, and the batch starts when the form submits, so the
 value lands alongside the form's own (less the transfer time).
 }
 
-\subsection{Resetting}{
-
-\code{\link[=reset_file]{reset_file()}} clears the file list, the progress, and any error; a
-batch in flight is cancelled. The server value is left as it is — the
-upload protocol has no way to unset it.
-}
-
 \subsection{Known limitations}{
 
 Bookmarking saves an uploaded file, but restoring a bookmark does not
@@ -168,7 +139,7 @@ would not survive.
 }
 }
 \seealso{
-\code{\link[=update_file]{update_file()}}
+\code{\link[=update_file]{update_file()}}, \code{\link[=reset_file]{reset_file()}}, \code{\link[=file_upload_start]{file_upload_start()}}
 
 Other inputs:
 \code{\link[=floating_label]{floating_label()}},

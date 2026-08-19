@@ -102,12 +102,6 @@
 #' is filled in, and the batch starts when the form submits, so the
 #' value lands alongside the form's own (less the transfer time).
 #'
-#' ## Resetting
-#'
-#' [reset_file()] clears the file list, the progress, and any error; a
-#' batch in flight is cancelled. The server value is left as it is — the
-#' upload protocol has no way to unset it.
-#'
 #' ## Known limitations
 #'
 #' Bookmarking saves an uploaded file, but restoring a bookmark does not
@@ -119,7 +113,7 @@
 #'
 #' @family inputs
 #'
-#' @seealso [update_file()]
+#' @seealso [update_file()], [reset_file()], [file_upload_start()]
 #'
 #' @export
 input_file <-
@@ -173,12 +167,37 @@ input_file <-
       s3_class_add("bsides_file")
   }
 
-#' @rdname input_file
+#' Update a file input
 #'
-#' @param enable If `TRUE`, enable the input, defaults to `NULL`.
+#' Update the properties of an [input_file()]: what it accepts, its
+#' prompt and summary line, and its enabled state. The value is never
+#' set from the server — the upload protocol writes it as a batch
+#' completes, and offers no way to set or unset it.
 #'
-#' @param disable If `TRUE`, disable the input, defaults to `NULL`. When
-#'   both `enable` and `disable` are `TRUE`, `disable` wins.
+#' @inheritParams input_file
+#'
+#' @param ... These dots are for future extensions and must be empty.
+#'
+#' @param accept A character vector. The new bound on what may be
+#'   chosen, as file extensions (`".csv"`), MIME types (`"text/csv"`),
+#'   or MIME wildcards (`"image/*"`).
+#'
+#' @param placeholder A character string. The new prompt shown inside
+#'   the drop zone.
+#'
+#' @param summary A character string. The new template for the file
+#'   list's summary line; see [input_file()] for the tokens.
+#'
+#' @param enable If `TRUE`, enable the input.
+#'
+#' @param disable If `TRUE`, disable the input. When both `enable` and
+#'   `disable` are `TRUE`, `disable` wins.
+#'
+#' @param session A shiny session object.
+#'
+#' @returns No return value, called for side effects.
+#'
+#' @seealso [input_file()], [reset_file()]
 #'
 #' @export
 update_file <-
@@ -212,7 +231,17 @@ update_file <-
     session$sendInputMessage(id, msg)
   }
 
-#' @rdname input_file
+#' Reset a file input
+#'
+#' Clear an [input_file()]'s file list, progress, and any error; a
+#' batch in flight is cancelled. The server value is left as it is —
+#' the upload protocol has no way to unset it.
+#'
+#' @inheritParams update_file
+#'
+#' @returns No return value, called for side effects.
+#'
+#' @seealso [input_file()], [update_file()]
 #'
 #' @export
 reset_file <-

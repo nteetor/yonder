@@ -24,8 +24,7 @@ file_upload_error(id, ..., session = get_current_session())
 \arguments{
 \item{id}{A character string. The id of the reactive input.}
 
-\item{...}{Optional named arguments specifying HTML attributes for the input
-element.}
+\item{...}{These dots are for future extensions and must be empty.}
 
 \item{session}{A shiny session object.}
 }
