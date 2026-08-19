@@ -204,6 +204,55 @@ update_file <-
     session$sendInputMessage(id, msg)
   }
 
+#' File upload actions
+#'
+#' Drive a file input's upload from the server, without touching the
+#' input's own controls. `file_upload_start()` starts the staged batch
+#' of an `upload_mode = "manual"` input — the server-side twin of its
+#' Upload button — and is a no-op when nothing is staged or a batch is
+#' already in flight. `file_upload_cancel()` abandons the batch in
+#' flight, landing where the Cancel button lands: in manual mode the
+#' rows return to the staged set, ready to retry; in auto mode they are
+#' marked failed. A no-op when nothing is in flight.
+#'
+#' @inheritParams update_file
+#'
+#' @return `NULL`, invisibly.
+#'
+#' @seealso [input_file()], [update_file()]
+#'
+#' @export
+file_upload_start <-
+  function(
+    id,
+    ...,
+    session = get_current_session()
+  ) {
+    check_dots_empty()
+    check_string(id, allow_empty = FALSE)
+
+    session$sendInputMessage(id, list(upload_start = TRUE))
+
+    invisible(NULL)
+  }
+
+#' @rdname file_upload_start
+#'
+#' @export
+file_upload_cancel <-
+  function(
+    id,
+    ...,
+    session = get_current_session()
+  ) {
+    check_dots_empty()
+    check_string(id, allow_empty = FALSE)
+
+    session$sendInputMessage(id, list(upload_cancel = TRUE))
+
+    invisible(NULL)
+  }
+
 file_max_size <-
   function() {
     getOption("shiny.maxRequestSize", 5 * 1024^2)

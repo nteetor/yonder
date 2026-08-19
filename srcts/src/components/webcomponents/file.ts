@@ -14,6 +14,10 @@ interface FileUpdate {
   accept?: string;
   placeholder?: string;
   summary?: string;
+  // Action triggers, sent by file_upload_start()/file_upload_cancel();
+  // snake_case mirrors those function names across the boundary.
+  upload_start?: boolean;
+  upload_cancel?: boolean;
   enable?: boolean;
   disable?: boolean;
 }
@@ -287,6 +291,14 @@ class BsidesFile extends LitElement {
       this.summary = msg.summary;
     }
 
+    if (msg.upload_start === true) {
+      this.#onUpload();
+    }
+
+    if (msg.upload_cancel === true) {
+      this.#onCancel();
+    }
+
     // Two one-way switches; when both arrive, disable wins.
     if (msg.enable === true) {
       this.disabled = false;
@@ -414,13 +426,29 @@ class BsidesFile extends LitElement {
     this._listOpen = (event.target as HTMLDetailsElement).open;
   };
 
+  // Abandons the batch in flight — the Cancel button and
+  // file_upload_cancel() alike, hence the guard. In manual mode every
+  // row returns to pending: nothing failed, the set is still staged,
+  // and the retry re-POSTs from the first byte, so progress goes back
+  // to 0 with the status. Auto mode marks non-done rows as failed, as
+  // before — it has no staged set to return to.
   #onCancel = (): void => {
+    if (!this._uploading) {
+      return;
+    }
+
     this.#uploader?.cancel();
     this.#uploader = null;
     this._uploading = false;
-    this._items = this._items.map((item) =>
-      item.status === 'done' ? item : { ...item, status: 'error' as const },
-    );
+    this._items = this._items.map((item) => {
+      if (this.mode === 'manual') {
+        return { ...item, status: 'pending' as const, progress: 0 };
+      }
+
+      return item.status === 'done'
+        ? item
+        : { ...item, status: 'error' as const };
+    });
     this.#announce('Upload cancelled');
   };
 
@@ -587,7 +615,7 @@ class BsidesFile extends LitElement {
   #onUpload = (): void => {
     const files = this.#stagedFiles();
 
-    if (files.length === 0 || this._uploading) {
+    if (this.mode !== 'manual' || files.length === 0 || this._uploading) {
       return;
     }
 
@@ -638,13 +666,28 @@ class BsidesFile extends LitElement {
       onFileDone: (file) => {
         this.#updateItem(file, { status: 'done', progress: 1 });
       },
+      // In manual mode a failure lands where a cancel lands: uploadEnd
+      // never ran, so nothing was delivered and the set is still the
+      // value. Only the row in flight when the batch died keeps an
+      // error mark — the one diagnostic the user gets, since the
+      // Uploader reports just a message. Auto mode keeps its terminal
+      // marking.
       onError: (message) => {
         this.#uploader = null;
         this._uploading = false;
         this._errors = [message];
-        this._items = this._items.map((item) =>
-          item.status === 'done' ? item : { ...item, status: 'error' as const },
-        );
+        this._items = this._items.map((item) => {
+          if (this.mode === 'manual') {
+            const status: ItemStatus =
+              item.status === 'uploading' ? 'error' : 'pending';
+
+            return { ...item, status, progress: 0 };
+          }
+
+          return item.status === 'done'
+            ? item
+            : { ...item, status: 'error' as const };
+        });
         this.#announce(message);
       },
       onDone: () => {

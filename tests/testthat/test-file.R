@@ -55,6 +55,25 @@ test_that("`label` renders as a fieldset legend", {
   expect_match(html, "Upload data</legend>")
 })
 
+test_that("file_upload_start()/file_upload_cancel() send their triggers", {
+  session <- recording_session()
+
+  file_upload_start("test", session = session)
+  file_upload_cancel("test", session = session)
+
+  expect_equal(
+    session$sent[[1]],
+    list(id = "test", message = list(upload_start = TRUE))
+  )
+  expect_equal(
+    session$sent[[2]],
+    list(id = "test", message = list(upload_cancel = TRUE))
+  )
+
+  expect_error(file_upload_start(1, session = session), "id")
+  expect_error(file_upload_cancel("test", 1, session = session), "\\.\\.\\.")
+})
+
 test_that("update_file() sends only the arguments it is given", {
   session <- recording_session()
 

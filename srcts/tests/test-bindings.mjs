@@ -1393,7 +1393,152 @@ for (const name of Object.keys(registered)) {
   check('manual: addition after delivery starts fresh',
     eq(names(), ['z.csv']), names())
 
-  void binding
+  // ---- cancel: rows return to pending, the retry is a fresh batch ----
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+  el.upload([file('p.csv', 10, 'text/csv'), file('q.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__requests = []
+  win.__posts = []
+  win.__postPlan = (call, i) => (i === 1 ? { defer: true } : null)
+  uploadButton().click()
+  await tick(30)
+  await el.updateComplete
+
+  // p.csv completed before the cancel; q.csv is in flight.
+  el.querySelector('.file-cancel').click()
+  await el.updateComplete
+  win.__postPlan = null
+  check('manual: cancel returns every row to pending',
+    [...el.querySelectorAll('.file-item')].every(
+      (row) => row.className === 'file-item pending'),
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+  check('manual: cancel skipped uploadEnd',
+    eq(win.__requests.map((r) => r.method), ['uploadInit']),
+    win.__requests.map((r) => r.method))
+  check('manual: upload button returns after cancel',
+    uploadButton() !== null && uploadButton().disabled === false)
+
+  // The retry runs a fresh uploadInit and re-POSTs every file, the one
+  // that completed before the cancel included.
+  uploadButton().click()
+  await tick(30)
+  await el.updateComplete
+  check('manual: retry issues a fresh uploadInit',
+    eq(win.__requests.map((r) => r.method),
+      ['uploadInit', 'uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+  check('manual: retry re-posts every file',
+    eq(win.__posts.map((post) => post.name),
+      ['p.csv', 'q.csv', 'p.csv', 'q.csv']),
+    win.__posts.map((post) => post.name))
+
+  // ---- failure: pending again, the failed row alone keeps the mark ----
+  el.upload([file('f.csv', 10, 'text/csv'), file('g.csv', 10, 'text/csv')])
+  await el.updateComplete
+  check('manual: addition after delivery starts fresh again',
+    eq(names(), ['f.csv', 'g.csv']), names())
+  win.__requests = []
+  win.__posts = []
+  win.__postPlan = (call, i) => (i === 1 ? { status: 500 } : null)
+  uploadButton().click()
+  await tick(30)
+  await el.updateComplete
+  win.__postPlan = null
+
+  check('manual: failure marks the failed row alone',
+    eq([...el.querySelectorAll('.file-item')].map((row) => row.className),
+      ['file-item pending', 'file-item error']),
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+  check('manual: failure message rendered',
+    el.querySelector('.file-error') !== null)
+  check('manual: upload button returns after failure',
+    uploadButton() !== null && uploadButton().disabled === false)
+  check('manual: failed row is removable', removes().length === 2)
+
+  // An addition after a failure appends — the set delivered nothing.
+  el.upload([file('h.csv', 5, 'text/csv')])
+  await el.updateComplete
+  check('manual: addition after failure appends',
+    eq(names(), ['f.csv', 'g.csv', 'h.csv']), names())
+
+  // A retry clears the previous attempt's message and resets marks.
+  uploadButton().click()
+  await tick(30)
+  await el.updateComplete
+  check('manual: retry clears the failure message',
+    el.querySelector('.file-error') === null,
+    el.querySelector('.file-errors').textContent)
+  check('manual: retry delivers',
+    [...el.querySelectorAll('.file-item')].every(
+      (row) => row.className === 'file-item done'),
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+
+  // Removing the failed row also ends the failure's reporting.
+  el.upload([file('i.csv', 10, 'text/csv'), file('j.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__posts = []
+  win.__postPlan = (call, i) => (i === 1 ? { status: 500 } : null)
+  uploadButton().click()
+  await tick(30)
+  await el.updateComplete
+  win.__postPlan = null
+  removes()[1].click()
+  await el.updateComplete
+  await tick(0)
+  check('manual: removing the failed row clears the message',
+    el.querySelector('.file-error') === null,
+    el.querySelector('.file-errors').textContent)
+  removes()[0].click()
+  await el.updateComplete
+  await tick(0)
+
+  // ---- the action triggers, over the message path ----
+  const postsBefore = win.__posts.length
+  binding.receiveMessage(el, { upload_start: true })
+  await tick(20)
+  check('manual: upload_start no-ops on an empty set',
+    win.__posts.length === postsBefore, win.__posts.length - postsBefore)
+
+  el.upload([file('m.csv', 10, 'text/csv')])
+  await el.updateComplete
+  binding.receiveMessage(el, { upload_cancel: true })
+  await el.updateComplete
+  check('manual: upload_cancel no-ops with nothing in flight',
+    el.querySelector('.file-item').className === 'file-item pending')
+
+  win.__requests = []
+  binding.receiveMessage(el, { upload_start: true })
+  await tick(30)
+  await el.updateComplete
+  check('manual: upload_start starts the staged batch',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+
+  win.__postPlan = () => ({ defer: true })
+  el.upload([file('n.csv', 10, 'text/csv')])
+  await el.updateComplete
+  binding.receiveMessage(el, { upload_start: true })
+  await tick(20)
+  await el.updateComplete
+  binding.receiveMessage(el, { upload_cancel: true })
+  await el.updateComplete
+  win.__postPlan = null
+  check('manual: upload_cancel abandons the flight',
+    el.querySelector('.file-item').className === 'file-item pending',
+    el.querySelector('.file-item').className)
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+
+  // upload_start is a manual-mode concept: the auto input ignores it.
+  const auto = doc.getElementById('upl')
+  binding.receiveMessage(auto, { reset: true })
+  await auto.updateComplete
+  win.__requests = []
+  binding.receiveMessage(auto, { upload_start: true })
+  await tick(20)
+  check('manual: upload_start no-ops in auto mode',
+    win.__requests.length === 0, win.__requests)
 }
 
 // ---- file validation (pure functions) ----
