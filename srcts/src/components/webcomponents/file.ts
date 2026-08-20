@@ -157,11 +157,6 @@ class BsidesFile extends LitElement {
         @drop=${this.#onDrop}
         @paste=${this.#onPaste}
       >
-        <!-- The real, focusable control, visually hidden by the SCSS so
-             native keyboard and screen reader behavior survive.
-             data-shiny-no-bind-input is required: Shiny's own file input
-             binding finds every input[type="file"] and would otherwise
-             attach its uploader, and its progress markup, to this one. -->
         <input
           type="file"
           class="file-input"
