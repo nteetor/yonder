@@ -34,7 +34,8 @@ ui <-
       input_file(id = "frm_upl", select = "many", upload_mode = "manual"),
       form_submit_button(label = "Send", value = "send")
     ),
-    verbatimTextOutput("frm_info")
+    verbatimTextOutput("frm_info"),
+    verbatimTextOutput("frm_observed")
   )
 
 server <-
@@ -85,6 +86,21 @@ server <-
 
       paste(upload$name, upload$size, collapse = "; ")
     })
+
+    # The natural thing an app author writes: react to the submit, read
+    # the file the form was carrying. Correct only because the form
+    # holds its own value until the staged upload lands.
+    frm_seen <- reactiveVal("observer has not run")
+
+    observeEvent(input$frm, {
+      upload <- input$frm_upl
+
+      frm_seen(
+        if (is.null(upload)) "NULL" else paste(upload$name, collapse = "; ")
+      )
+    })
+
+    output$frm_observed <- renderText(frm_seen())
 
     output$frm_info <- renderText({
       upload <- input$frm_upl

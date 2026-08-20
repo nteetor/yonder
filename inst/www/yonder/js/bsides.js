@@ -1368,6 +1368,13 @@
     // The form ancestor being listened to for bsides-form:submit, held so
     // disconnection can unhook exactly what connection hooked.
     #form = null;
+    // The batch in flight, as a promise a form can await. Uploader.run()
+    // resolves for every ending — completion, error, cancellation — so
+    // success is only distinguishable through the callbacks, which settle
+    // this instead. Held on the instance because it is created in
+    // #start(), settled from those callbacks, and read by #onFormSubmit().
+    #batchPromise = null;
+    #batchSettle = null;
     // Status is not a pure function of the rows: after a manual-mode
     // failure the rows read pending-plus-error, and so they do again once
     // the user edits the set — but the first state is "failed" and the
@@ -1419,9 +1426,33 @@
       this.#uploader?.cancel();
       this.#uploader = null;
     }
-    #onFormSubmit = () => {
+    #onFormSubmit = (event) => {
       this.#onUpload();
+      if (this.#batchPromise) {
+        event.detail.waitUntil(
+          this.#batchPromise
+        );
+      }
     };
+    #openBatch() {
+      this.#batchPromise = new Promise((resolve, reject) => {
+        this.#batchSettle = { resolve, reject };
+      });
+      void this.#batchPromise.catch(() => void 0);
+    }
+    #settleBatch(failure) {
+      const settle = this.#batchSettle;
+      this.#batchSettle = null;
+      this.#batchPromise = null;
+      if (!settle) {
+        return;
+      }
+      if (failure) {
+        settle.reject(failure);
+      } else {
+        settle.resolve();
+      }
+    }
     render() {
       return b2`
       <div
@@ -1686,6 +1717,7 @@
       }
       this.#uploader?.cancel();
       this.#uploader = null;
+      this.#settleBatch(new Error("Upload cancelled."));
       this._uploading = false;
       this.#cancelled = this.mode !== "manual";
       this.#pushProgressFinal(0);
@@ -1822,6 +1854,8 @@
     };
     #start(files) {
       this.#uploader?.cancel();
+      this.#settleBatch(new Error("Upload restarted."));
+      this.#openBatch();
       this.#failed = false;
       this.#failureMessage = null;
       this.#cancelled = false;
@@ -1867,6 +1901,7 @@
         // marking.
         onError: (message) => {
           this.#uploader = null;
+          this.#settleBatch(new Error(message));
           this._uploading = false;
           this.#failed = true;
           this.#failureMessage = message;
@@ -1883,6 +1918,7 @@
         },
         onDone: () => {
           this.#uploader = null;
+          this.#settleBatch();
           this._uploading = false;
           this._batch = 1;
           this.#pushProgressFinal(1);
@@ -1902,6 +1938,7 @@
     #reset() {
       this.#uploader?.cancel();
       this.#uploader = null;
+      this.#settleBatch(new Error("Upload reset."));
       this.#failed = false;
       this.#failureMessage = null;
       this.#cancelled = false;
@@ -2094,13 +2131,38 @@
         ".bsides-input-form-submit",
         (event, submit) => {
           event.preventDefault();
-          for (const [key, value] of inputValues.entries()) {
-            Shiny?.setInputValue?.(key, value, { priority: "event" });
-          }
-          formValues.set(el, submit.value);
-          callback(false);
+          const button = submit;
+          const blockers = [];
           el.dispatchEvent(
-            new CustomEvent("bsides-form:submit", { bubbles: true })
+            new CustomEvent("bsides-form:submit", {
+              bubbles: true,
+              detail: {
+                waitUntil: (blocker) => {
+                  blockers.push(blocker);
+                }
+              }
+            })
+          );
+          const send = () => {
+            for (const [key, value] of inputValues.entries()) {
+              Shiny?.setInputValue?.(key, value, { priority: "event" });
+            }
+            formValues.set(el, button.value);
+            callback(false);
+          };
+          if (blockers.length === 0) {
+            send();
+            return;
+          }
+          const release = holdSubmits(el, button);
+          void Promise.all(blockers).then(
+            () => {
+              release();
+              send();
+            },
+            () => {
+              release();
+            }
           );
         }
       );
@@ -2118,6 +2180,23 @@
       }
     }
   };
+  function holdSubmits(el, button) {
+    const held = [
+      ...el.querySelectorAll(".bsides-input-form-submit")
+    ].filter((other) => !other.disabled);
+    for (const other of held) {
+      other.disabled = true;
+    }
+    button.classList.add("pending");
+    button.setAttribute("aria-busy", "true");
+    return () => {
+      for (const other of held) {
+        other.disabled = false;
+      }
+      button.classList.remove("pending");
+      button.removeAttribute("aria-busy");
+    };
+  }
   registerBinding(FormInputBinding, "form");
 
   // srcts/src/components/inputLink.ts

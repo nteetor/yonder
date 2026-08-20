@@ -66,8 +66,10 @@
   the file that failed marked in the list. New `file_upload_start()` and
   `file_upload_cancel()` drive a batch from the server, the twins of the
   Upload and Cancel buttons. Inside `input_form()` a staged batch starts
-  when the form submits, closing the gap that let an auto-mode file
-  input's value land ahead of the form's.
+  when the form submits and the form withholds its own value until that
+  upload finishes, so `input$<id>` is already set when an observer keyed
+  on the submit runs. A failed or cancelled upload abandons the submit
+  and leaves the set staged to retry.
 
 * New `file_upload_status()`, `file_upload_progress()`,
   `file_upload_staged()`, and `file_upload_error()` read a file input's

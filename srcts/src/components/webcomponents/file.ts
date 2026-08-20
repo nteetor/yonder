@@ -3,6 +3,7 @@ import { ifDefined } from 'lit/directives/if-defined.js';
 import { repeat } from 'lit/directives/repeat.js';
 
 import { Uploader } from '../upload';
+import type { FormSubmitDetail } from '../inputForm';
 import { validateFiles } from '../fileValidate';
 import type { Rejection } from '../fileValidate';
 
@@ -85,6 +86,17 @@ class BsidesFile extends LitElement {
   // disconnection can unhook exactly what connection hooked.
   #form: HTMLFormElement | null = null;
 
+  // The batch in flight, as a promise a form can await. Uploader.run()
+  // resolves for every ending — completion, error, cancellation — so
+  // success is only distinguishable through the callbacks, which settle
+  // this instead. Held on the instance because it is created in
+  // #start(), settled from those callbacks, and read by #onFormSubmit().
+  #batchPromise: Promise<void> | null = null;
+  #batchSettle: {
+    resolve: () => void;
+    reject: (reason: Error) => void;
+  } | null = null;
+
   // Status is not a pure function of the rows: after a manual-mode
   // failure the rows read pending-plus-error, and so they do again once
   // the user edits the set — but the first state is "failed" and the
@@ -142,9 +154,47 @@ class BsidesFile extends LitElement {
     this.#uploader = null;
   }
 
-  #onFormSubmit = (): void => {
+  #onFormSubmit = (event: Event): void => {
+    // A no-op outside manual mode, with nothing staged, or with a batch
+    // already running — and that last case is the point: the batch in
+    // flight is handed back below rather than declined, so a submit
+    // arriving mid-upload waits for it instead of racing it.
     this.#onUpload();
+
+    if (this.#batchPromise) {
+      (event as CustomEvent<FormSubmitDetail>).detail.waitUntil(
+        this.#batchPromise,
+      );
+    }
   };
+
+  #openBatch(): void {
+    this.#batchPromise = new Promise<void>((resolve, reject) => {
+      this.#batchSettle = { resolve, reject };
+    });
+
+    // Nobody need be awaiting — an upload started from the component's
+    // own button has no form behind it. Mark the rejection handled so a
+    // failed batch is not also reported as an unhandled rejection.
+    void this.#batchPromise.catch(() => undefined);
+  }
+
+  #settleBatch(failure?: Error): void {
+    const settle = this.#batchSettle;
+
+    this.#batchSettle = null;
+    this.#batchPromise = null;
+
+    if (!settle) {
+      return;
+    }
+
+    if (failure) {
+      settle.reject(failure);
+    } else {
+      settle.resolve();
+    }
+  }
 
   override render(): unknown {
     return html`
@@ -470,6 +520,7 @@ class BsidesFile extends LitElement {
 
     this.#uploader?.cancel();
     this.#uploader = null;
+    this.#settleBatch(new Error('Upload cancelled.'));
     this._uploading = false;
     this.#cancelled = this.mode !== 'manual';
     this.#pushProgressFinal(0);
@@ -663,6 +714,8 @@ class BsidesFile extends LitElement {
 
   #start(files: File[]): void {
     this.#uploader?.cancel();
+    this.#settleBatch(new Error('Upload restarted.'));
+    this.#openBatch();
 
     this.#failed = false;
     this.#failureMessage = null;
@@ -719,6 +772,7 @@ class BsidesFile extends LitElement {
       // marking.
       onError: (message) => {
         this.#uploader = null;
+        this.#settleBatch(new Error(message));
         this._uploading = false;
         this.#failed = true;
         this.#failureMessage = message;
@@ -740,6 +794,7 @@ class BsidesFile extends LitElement {
       },
       onDone: () => {
         this.#uploader = null;
+        this.#settleBatch();
         this._uploading = false;
         this._batch = 1;
         this.#pushProgressFinal(1);
@@ -765,6 +820,7 @@ class BsidesFile extends LitElement {
   #reset(): void {
     this.#uploader?.cancel();
     this.#uploader = null;
+    this.#settleBatch(new Error('Upload reset.'));
     this.#failed = false;
     this.#failureMessage = null;
     this.#cancelled = false;

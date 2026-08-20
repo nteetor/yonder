@@ -103,6 +103,11 @@ test_that("a staged set inside input_form() uploads on submit", {
     app$get_value(output = "frm_info"),
     "send / f1.csv; f2.csv"
   )
+
+  # And in that order: an observer keyed on the submit sees the files,
+  # because the form withholds its own value until uploadEnd has run.
+  # Without the wait this reads "NULL" on a first submit.
+  expect_equal(app$get_value(output = "frm_observed"), "f1.csv; f2.csv")
 })
 
 test_that("several files upload as one batch", {

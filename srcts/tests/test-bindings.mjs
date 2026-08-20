@@ -1722,7 +1722,126 @@ for (const name of Object.keys(registered)) {
     eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
     win.__requests.map((r) => r.method))
 
-  void binding
+  // ---- the form waits for the upload before sending its value ----
+  //
+  // formValues is only set once a submit actually goes through, so the
+  // binding's value is a clean proxy for "has the form sent yet". The
+  // Draft button distinguishes these submits from the Send ones above.
+  const draft = form.querySelector('.bsides-input-form-submit[value="draft"]')
+  const formValue = () => formBinding.getValue(form)
+
+  el.upload([file('d.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__requests = []
+  win.__postPlan = () => ({ defer: true })
+  draft.click()
+  await tick(30)
+
+  check('form-file: upload started, form value withheld',
+    eq(win.__requests.map((r) => r.method), ['uploadInit']) &&
+      formValue() === 'send',
+    [win.__requests.map((r) => r.method), formValue()])
+  check('form-file: clicked submit is pending',
+    draft.classList.contains('pending') &&
+      draft.getAttribute('aria-busy') === 'true')
+  check('form-file: every submit disabled while pending',
+    draft.disabled === true && submit.disabled === true)
+
+  while (win.__deferredPosts.length > 0) {
+    const xhr = win.__deferredPosts.shift()
+    xhr.status = 200
+    xhr.onload()
+    await tick(10)
+  }
+  win.__postPlan = null
+  await tick(30)
+  await el.updateComplete
+
+  check('form-file: form value sent only after uploadEnd',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']) &&
+      formValue() === 'draft',
+    [win.__requests.map((r) => r.method), formValue()])
+  check('form-file: pending cleared, submits re-enabled',
+    draft.classList.contains('pending') === false &&
+      draft.hasAttribute('aria-busy') === false &&
+      draft.disabled === false && submit.disabled === false)
+
+  // ---- a submit arriving mid-flight waits for the running batch ----
+  el.upload([file('e.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__requests = []
+  win.__postPlan = () => ({ defer: true })
+  el.querySelector('.file-upload').click()
+  await tick(20)
+  await el.updateComplete
+
+  submit.click()
+  await tick(20)
+  check('form-file: mid-flight submit does not restart the batch',
+    eq(win.__requests.map((r) => r.method), ['uploadInit']),
+    win.__requests.map((r) => r.method))
+  check('form-file: mid-flight submit withholds the form value',
+    formValue() === 'draft', formValue())
+  check('form-file: mid-flight submit shows pending',
+    submit.classList.contains('pending'))
+
+  while (win.__deferredPosts.length > 0) {
+    const xhr = win.__deferredPosts.shift()
+    xhr.status = 200
+    xhr.onload()
+    await tick(10)
+  }
+  win.__postPlan = null
+  await tick(30)
+  await el.updateComplete
+  check('form-file: mid-flight submit sends once the batch lands',
+    formValue() === 'send', formValue())
+
+  // ---- a failed upload abandons the submit ----
+  el.upload([file('f.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__postPlan = () => ({ status: 500 })
+  draft.click()
+  await tick(40)
+  await el.updateComplete
+  win.__postPlan = null
+
+  check('form-file: failed upload leaves the form unsubmitted',
+    formValue() === 'send', formValue())
+  check('form-file: failed upload clears the pending state',
+    draft.classList.contains('pending') === false && draft.disabled === false)
+  check('form-file: failed upload keeps the set staged for a retry',
+    el.querySelectorAll('.file-item').length === 1)
+
+  // ---- a cancel during a form-started upload abandons it too ----
+  win.__postPlan = () => ({ defer: true })
+  draft.click()
+  await tick(20)
+  await el.updateComplete
+  el.querySelector('.file-cancel').click()
+  await tick(20)
+  await el.updateComplete
+  win.__postPlan = null
+  win.__deferredPosts.length = 0
+
+  check('form-file: cancelled upload leaves the form unsubmitted',
+    formValue() === 'send', formValue())
+  check('form-file: cancelled upload clears the pending state',
+    draft.classList.contains('pending') === false && draft.disabled === false)
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+
+  // ---- a form with no blockers submits synchronously ----
+  //
+  // No await between the click and the check: the common case must not
+  // defer a microtask just because one form in the package needs to.
+  const plainForm = doc.getElementById('frm')
+  const plainSubmit = plainForm.querySelector('.bsides-input-form-submit')
+  plainSubmit.click()
+  check('form-file: a form without blockers submits synchronously',
+    formBinding.getValue(plainForm) === 'go',
+    formBinding.getValue(plainForm))
 }
 
 // ---- file validation (pure functions) ----

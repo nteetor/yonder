@@ -124,10 +124,23 @@ enforced again by the server on every upload.
 \code{\link[=input_form]{input_form()}} holds an input's value back until the form is
 submitted. An auto-mode file input is not held back: its value is set
 by the server when the upload finishes, not by a client-side input
-change, so it lands as soon as the upload does. Prefer
-\code{upload_mode = "manual"} inside a form — files stage while the form
-is filled in, and the batch starts when the form submits, so the
-value lands alongside the form's own (less the transfer time).
+change, so it lands as soon as the upload does — before the form is
+submitted, not with it.
+
+\code{upload_mode = "manual"} is the answer inside a form. Files stage
+while the form is filled in, the batch starts when the form submits,
+and the form holds its own value back until that upload finishes. So
+an observer keyed on the submit sees the uploaded files:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{observeEvent(input$form_id, \{
+  files <- input$file_id
+\})
+}\if{html}{\out{</div>}}
+
+The submit button shows a pending state while it waits. If the upload
+fails, or the user cancels it, the form is not submitted at all —
+nothing is sent, the staged files are kept, and submitting again
+retries them.
 }
 
 \subsection{Known limitations}{

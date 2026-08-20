@@ -12340,6 +12340,24 @@ bsides-file[disabled] > .file-dropzone {
   background-color: var(--bs-secondary-bg);
 }
 
+.bsides-input-form-submit.pending::before {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.375em;
+  vertical-align: -0.125em;
+  content: "";
+  border: 0.15em solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: 0.75s linear infinite spinner-border;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bsides-input-form-submit.pending::before {
+    animation-duration: 1.5s;
+  }
+}
 bsides-multi-select {
   display: block;
   position: relative;

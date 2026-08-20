@@ -44,7 +44,8 @@ render(
   input_form(
     id = "frmf",
     input_file(id = "frmupl", select = "many", upload_mode = "manual"),
-    form_submit_button(label = "Send", value = "send")
+    form_submit_button(label = "Send", value = "send"),
+    form_submit_button(label = "Draft", value = "draft")
   )
 )
 render(
