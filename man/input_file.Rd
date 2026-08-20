@@ -137,10 +137,11 @@ an observer keyed on the submit sees the uploaded files:
 \})
 }\if{html}{\out{</div>}}
 
-The submit button shows a pending state while it waits. If the upload
-fails, or the user cancels it, the form is not submitted at all —
-nothing is sent, the staged files are kept, and submitting again
-retries them.
+The submit button shows a pending state while it waits; an app that
+wants its own indicator can read \code{\link[=file_upload_progress]{file_upload_progress()}}. If the
+upload fails, or the user cancels it, the form is not submitted at
+all — nothing is sent, the staged files are kept, and submitting
+again retries them.
 }
 
 \subsection{Known limitations}{

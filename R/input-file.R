@@ -111,10 +111,11 @@
 #' })
 #' ```
 #'
-#' The submit button shows a pending state while it waits. If the upload
-#' fails, or the user cancels it, the form is not submitted at all —
-#' nothing is sent, the staged files are kept, and submitting again
-#' retries them.
+#' The submit button shows a pending state while it waits; an app that
+#' wants its own indicator can read [file_upload_progress()]. If the
+#' upload fails, or the user cancels it, the form is not submitted at
+#' all — nothing is sent, the staged files are kept, and submitting
+#' again retries them.
 #'
 #' ## Known limitations
 #'
