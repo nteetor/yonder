@@ -1,6 +1,6 @@
 # Demo app for input_file() / <bsides-file>.
 #
-# Five cards:
+# Seven cards:
 #
 #   1. One file, any type: the default. Click the drop zone (or tab to it
 #      and press Enter) to browse. The value arrives as a one-row data
@@ -29,6 +29,18 @@
 #      batch starts from the Upload button, or from the server:
 #      file_upload_start() is the button's twin. Cancel mid-flight and
 #      the set returns, ready to retry.
+#
+#   6. Inside a form: a staged input in an input_form(). Type a note,
+#      stage a file, submit. The batch starts on submit and the form
+#      holds its own value until the upload finishes, so the observer
+#      keyed on the submit sees the note and the files together. Watch
+#      the submit button: it goes pending while the upload runs.
+#
+#   7. An abandoned submit: the same shape, but cancel the upload while
+#      it runs (stage something large enough to catch). The submit is
+#      abandoned rather than delayed — the counter does not move, the
+#      form's held values stay held, and the staged set survives, so
+#      submitting again retries the whole thing.
 
 library(yonder)
 library(bslib)
@@ -62,7 +74,7 @@ shinyApp(
     title = "input_file() demo",
     progress_listener,
     layout_columns(
-      col_widths = c(6, 6, 6, 6),
+      col_widths = 6,
       card(
         card_header("One file, any type"),
         input_file(
@@ -112,6 +124,37 @@ shinyApp(
         ),
         input_button(id = "start", label = "Start from the server"),
         verbatimTextOutput("staged_value")
+      ),
+      card(
+        card_header("Inside a form"),
+        input_form(
+          id = "note_form",
+          input_text(id = "note", label = "Note"),
+          input_file(
+            id = "note_upl",
+            label = "Attachments",
+            select = "many",
+            upload_mode = "manual",
+            placeholder = "Stage files, then submit the form"
+          ),
+          form_submit_button(label = "Send", value = "send")
+        ),
+        verbatimTextOutput("note_form_value")
+      ),
+      card(
+        card_header("An abandoned submit"),
+        input_form(
+          id = "abandon_form",
+          input_file(
+            id = "abandon_upl",
+            label = "Attachments",
+            select = "many",
+            upload_mode = "manual",
+            placeholder = "Stage something large, submit, then cancel"
+          ),
+          form_submit_button(label = "Send", value = "send")
+        ),
+        verbatimTextOutput("abandon_state")
       )
     )
   ),
@@ -173,6 +216,44 @@ shinyApp(
 
     observeEvent(input$start, {
       file_upload_start("staged")
+    })
+
+    # The natural thing to write, and correct here: the form withholds
+    # its own value until the staged upload finishes, so input$note_upl
+    # is already set by the time this runs. An auto-mode input in the
+    # same form would not be — its value lands whenever its upload does.
+    submitted <- reactiveVal("nothing submitted yet")
+
+    observeEvent(input$note_form, {
+      upload <- input$note_upl
+
+      submitted(list(
+        button = input$note_form,
+        note = input$note,
+        files = if (is.null(upload)) {
+          "none"
+        } else {
+          paste(upload$name, collapse = ", ")
+        }
+      ))
+    })
+
+    output$note_form_value <- renderPrint(submitted())
+
+    # Counts submits that actually went through. Cancelling the upload
+    # abandons the submit, so this does not move.
+    sent <- reactiveVal(0L)
+
+    observeEvent(input$abandon_form, {
+      sent(sent() + 1L)
+    })
+
+    output$abandon_state <- renderPrint({
+      list(
+        submits_completed = sent(),
+        upload_status = file_upload_status("abandon_upl"),
+        still_staged = file_upload_staged("abandon_upl")$name
+      )
     })
   }
 )
