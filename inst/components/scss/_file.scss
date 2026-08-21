@@ -209,7 +209,8 @@ bsides-file {
     display: block;
   }
 
-  &[disabled] > .file-dropzone {
+  &[disabled] > .file-dropzone,
+  > .file-dropzone.at-max {
     cursor: default;
     background-color: var(--bs-secondary-bg);
   }

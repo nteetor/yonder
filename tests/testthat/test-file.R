@@ -21,6 +21,17 @@ test_that("`upload_mode` chooses the mode attribute", {
   expect_error(input_file("test", upload_mode = "batch"), "upload_mode")
 })
 
+test_that("`upload_max` renders as the max attribute", {
+  expect_no_match(format(input_file("test")), " max=")
+
+  expect_match(
+    format(input_file("test", select = "many", upload_max = 3)),
+    'max="3"'
+  )
+
+  expect_error(input_file("test", upload_max = "three"), "upload_max")
+})
+
 test_that("`accept` collapses to a comma-separated attribute", {
   expect_match(
     format(input_file("test", accept = c(".csv", "text/csv"))),

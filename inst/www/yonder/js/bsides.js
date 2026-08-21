@@ -1350,6 +1350,7 @@
       placeholder: { type: String },
       summary: { type: String },
       disabled: { type: Boolean, reflect: true },
+      max: { type: Number },
       maxSize: { type: Number, attribute: "data-max-size" },
       _items: { state: true },
       _listOpen: { state: true },
@@ -1388,6 +1389,7 @@
       this.placeholder = "Choose a file";
       this.summary = "{files} \xB7 {size}";
       this.disabled = false;
+      this.max = null;
       this.maxSize = null;
       this._items = [];
       this._listOpen = true;
@@ -1451,7 +1453,7 @@
     render() {
       return b2`
       <div
-        class="file-dropzone${this._dragover ? " dragover" : ""}"
+        class="file-dropzone${this._dragover ? " dragover" : ""}${this.#atMax() ? " at-max" : ""}"
         @click=${this.#onDropzoneClick}
         @dragenter=${this.#onDragEnter}
         @dragover=${this.#onDragOver}
@@ -1465,11 +1467,11 @@
           ?multiple=${this.multiple}
           accept=${o5(this.accept || void 0)}
           capture=${o5(this.capture || void 0)}
-          ?disabled=${this.disabled || this.#uploading}
+          ?disabled=${this.disabled || this.#uploading || this.#atMax()}
           data-shiny-no-bind-input
           @change=${this.#onChange}
         />
-        <span class="file-prompt">${this.placeholder}</span>
+        <span class="file-prompt">${this.#promptText()}</span>
       </div>
       ${this.#renderBatch()} ${this.#renderList()}
       <p class="file-errors" role="alert">
@@ -1619,7 +1621,7 @@
     // input itself already open the picker; forwarding them would open it
     // twice.
     #onDropzoneClick = (event) => {
-      if (this.disabled || this.#uploading) {
+      if (this.disabled || this.#uploading || this.#atMax()) {
         return;
       }
       if (event.target !== this.#inputElement) {
@@ -1634,8 +1636,37 @@
         this.upload(files);
       }
     };
+    // Deliberately blind to the cap: a drop or paste at max must still
+    // reach upload(), where the gesture is rejected with a reason the
+    // user can read, rather than be dropped on the floor here.
     #acceptsFiles() {
       return !this.disabled && !this.#uploading;
+    }
+    // The staged set is full. Prevention, manual mode only — auto mode
+    // has no accumulating set, so its cap is the gesture check in
+    // upload(). Done rows do not count: delivered and undeletable, they
+    // are not part of the next batch, and counting them would leave a
+    // full set nothing but reset_file() could reopen.
+    #atMax() {
+      return this.mode === "manual" && this.max != null && this.#stagedFiles().length >= this.max;
+    }
+    #promptText() {
+      if (this.#atMax()) {
+        return `Limit of ${fileCount(this.max ?? 0)} reached \u2014 remove one to add more`;
+      }
+      return this.placeholder;
+    }
+    // The cap bounds what the next batch may contain. In manual mode the
+    // staged rows count and a same-named file replaces rather than adds;
+    // a single-file input replaces its whole set, so only the gesture
+    // counts there, as in auto mode.
+    #countExceeded(files, max) {
+      if (this.mode !== "manual" || !this.multiple) {
+        return files.length > max;
+      }
+      const staged = new Set(this.#stagedFiles().map((file) => file.name));
+      const additions = files.filter((file) => !staged.has(file.name)).length;
+      return staged.size + additions > max;
     }
     #onDragEnter = (event) => {
       if (!this.#acceptsFiles()) {
@@ -1750,6 +1781,16 @@
       });
       rejections.push(...validation.rejected);
       if (validation.accepted.length === 0) {
+        this.#reject(rejections);
+        return;
+      }
+      if (this.max != null && this.#countExceeded(validation.accepted, this.max)) {
+        rejections.push(
+          ...validation.accepted.map((file) => ({
+            name: file.name,
+            reason: { kind: "count", limit: this.max }
+          }))
+        );
         this.#reject(rejections);
         return;
       }
@@ -2068,7 +2109,12 @@
         return `${rejection.name} is a folder, and folders cannot be uploaded.`;
       case "multiple":
         return "Only one file may be uploaded.";
+      case "count":
+        return `At most ${fileCount(rejection.reason.limit)} may be uploaded.`;
     }
+  }
+  function fileCount(n4) {
+    return n4 === 1 ? "1 file" : `${n4} files`;
   }
   function formatSize(bytes) {
     const units = ["B", "kB", "MB", "GB", "TB"];

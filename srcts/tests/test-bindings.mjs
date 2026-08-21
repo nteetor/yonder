@@ -1554,6 +1554,108 @@ for (const name of Object.keys(registered)) {
     win.__requests.length === 0, win.__requests)
 }
 
+// ---- file, upload cap ----
+{
+  const binding = registered['bsides.file']
+  const el = doc.getElementById('uplm')
+
+  win.__connected = true
+  win.__requests = []
+  win.__posts = []
+  win.__requestPlan = null
+  win.__postPlan = null
+  win.__deferredPosts = []
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+  const names = () =>
+    [...el.querySelectorAll('.file-item-name')].map((n) => n.textContent)
+  const picker = () => el.querySelector('.file-input')
+  const dropzone = () => el.querySelector('.file-dropzone')
+  const prompt = () => el.querySelector('.file-prompt').textContent
+  const errorText = () =>
+    [...el.querySelectorAll('.file-error')].map((n) => n.textContent)
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+  el.max = 2
+  await el.updateComplete
+
+  el.upload([file('a.csv', 4, 'text/csv')])
+  await el.updateComplete
+  check('cap: below the cap the picker is live', picker().disabled === false)
+
+  // A gesture past the cap is rejected whole — quietly keeping a prefix
+  // of it would read as data loss.
+  el.upload([file('b.csv', 4, 'text/csv'), file('c.csv', 4, 'text/csv')])
+  await el.updateComplete
+  check('cap: an overfilling gesture is rejected whole',
+    eq(names(), ['a.csv']), names())
+  check('cap: the rejection is readable',
+    eq(errorText(), ['At most 2 files may be uploaded.']), errorText())
+
+  // At the cap the input stops accepting — prevention, with the prompt
+  // carrying the reason.
+  el.upload([file('b.csv', 4, 'text/csv')])
+  await el.updateComplete
+  check('cap: a full set disables the picker', picker().disabled === true)
+  check('cap: a full set marks the dropzone',
+    dropzone().classList.contains('at-max'))
+  check('cap: the prompt says why',
+    prompt() === 'Limit of 2 files reached — remove one to add more',
+    prompt())
+
+  // Drops bypass the picker, and a same-named drop replaces rather than
+  // adds, so it passes at the cap.
+  el.upload([file('b.csv', 9, 'text/csv')])
+  await el.updateComplete
+  check('cap: same-name replacement passes at the cap',
+    eq(names(), ['a.csv', 'b.csv']), names())
+  check('cap: replacement carries the new size',
+    [...el.querySelectorAll('.file-item-size')].at(-1).textContent === '9 B',
+    [...el.querySelectorAll('.file-item-size')].map((n) => n.textContent))
+
+  // Removal reopens the input.
+  el.querySelector('.file-item-remove').click()
+  await el.updateComplete
+  await tick(0)
+  check('cap: removal reopens the picker', picker().disabled === false)
+  check('cap: removal restores the prompt',
+    prompt() !== 'Limit of 2 files reached — remove one to add more',
+    prompt())
+
+  // Done rows do not count: a delivered batch is not part of the next
+  // one, so a full delivered set does not trap the input.
+  el.upload([file('d.csv', 4, 'text/csv')])
+  await el.updateComplete
+  el.querySelector('.file-upload').click()
+  await tick(30)
+  await el.updateComplete
+  check('cap: delivered rows do not count', picker().disabled === false,
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+
+  // Auto mode has no accumulating set; its cap bounds the gesture.
+  const auto = doc.getElementById('upl')
+  auto.max = 2
+  await auto.updateComplete
+  win.__requests = []
+  auto.upload([
+    file('x.csv', 4, 'text/csv'),
+    file('y.csv', 4, 'text/csv'),
+    file('z.csv', 4, 'text/csv'),
+  ])
+  await tick(20)
+  await auto.updateComplete
+  check('cap: auto mode rejects an oversized gesture whole',
+    win.__requests.length === 0, win.__requests)
+  auto.max = null
+  await auto.updateComplete
+
+  binding.receiveMessage(el, { reset: true })
+  el.max = null
+  await el.updateComplete
+}
+
 // ---- file, state companions ----
 {
   const { binding } = { binding: registered['bsides.file'] }

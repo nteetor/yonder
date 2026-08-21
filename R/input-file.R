@@ -22,6 +22,16 @@
 #'   the server. A cancelled or failed batch returns to the staged set,
 #'   ready to retry whole.
 #'
+#' @param upload_max A whole number bounding how many files one batch
+#'   may contain, defaults to `NULL`, no bound. In manual mode the
+#'   staged set counts toward the bound and the input stops accepting
+#'   files once full — remove a file to make room. Delivered rows do not
+#'   count: they are not part of the next batch. In auto mode, and for
+#'   drops and pastes that would overfill a staged set, a gesture
+#'   selecting too many files is rejected whole rather than trimmed —
+#'   quietly keeping part of a selection would read as data loss. With
+#'   `select = "one"` a single file is already the bound.
+#'
 #' @param accept A character vector of file extensions (`".csv"`), MIME
 #'   types (`"text/csv"`), or MIME wildcards (`"image/*"`) bounding what
 #'   may be chosen, defaults to `NULL`, in which case any file may be
@@ -138,6 +148,7 @@ input_file <-
     label = NULL,
     select = c("one", "many"),
     upload_mode = c("auto", "manual"),
+    upload_max = NULL,
     accept = NULL,
     capture = NULL,
     placeholder = NULL,
@@ -147,6 +158,7 @@ input_file <-
     check_string(id, allow_empty = FALSE)
     select <- arg_match(select)
     upload_mode <- arg_match(upload_mode)
+    check_number_whole(upload_max, allow_null = TRUE)
     check_character(accept, allow_null = TRUE)
     check_string(placeholder, allow_null = TRUE)
     check_string(summary, allow_null = TRUE)
@@ -165,6 +177,7 @@ input_file <-
         id = id,
         multiple = if (select == "many") NA,
         mode = if (upload_mode == "manual") upload_mode,
+        max = if (non_null(upload_max)) upload_max,
         accept = if (non_null(accept)) paste0(accept, collapse = ","),
         capture = capture,
         placeholder = placeholder,

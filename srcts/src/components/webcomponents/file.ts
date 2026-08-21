@@ -63,6 +63,7 @@ class BsidesFile extends LitElement {
     placeholder: { type: String },
     summary: { type: String },
     disabled: { type: Boolean, reflect: true },
+    max: { type: Number },
     maxSize: { type: Number, attribute: 'data-max-size' },
     _items: { state: true },
     _listOpen: { state: true },
@@ -80,6 +81,7 @@ class BsidesFile extends LitElement {
   declare placeholder: string;
   declare summary: string;
   declare disabled: boolean;
+  declare max: number | null;
   declare maxSize: number | null;
   declare _items: FileItem[];
   declare _listOpen: boolean;
@@ -126,6 +128,7 @@ class BsidesFile extends LitElement {
     this.placeholder = 'Choose a file';
     this.summary = '{files} · {size}';
     this.disabled = false;
+    this.max = null;
     this.maxSize = null;
     this._items = [];
     this._listOpen = true;
@@ -209,7 +212,9 @@ class BsidesFile extends LitElement {
   override render(): unknown {
     return html`
       <div
-        class="file-dropzone${this._dragover ? ' dragover' : ''}"
+        class="file-dropzone${this._dragover ? ' dragover' : ''}${
+          this.#atMax() ? ' at-max' : ''
+        }"
         @click=${this.#onDropzoneClick}
         @dragenter=${this.#onDragEnter}
         @dragover=${this.#onDragOver}
@@ -223,11 +228,11 @@ class BsidesFile extends LitElement {
           ?multiple=${this.multiple}
           accept=${ifDefined(this.accept || undefined)}
           capture=${ifDefined(this.capture || undefined)}
-          ?disabled=${this.disabled || this.#uploading}
+          ?disabled=${this.disabled || this.#uploading || this.#atMax()}
           data-shiny-no-bind-input
           @change=${this.#onChange}
         />
-        <span class="file-prompt">${this.placeholder}</span>
+        <span class="file-prompt">${this.#promptText()}</span>
       </div>
       ${this.#renderBatch()} ${this.#renderList()}
       <p class="file-errors" role="alert">
@@ -408,7 +413,7 @@ class BsidesFile extends LitElement {
   // input itself already open the picker; forwarding them would open it
   // twice.
   #onDropzoneClick = (event: Event): void => {
-    if (this.disabled || this.#uploading) {
+    if (this.disabled || this.#uploading || this.#atMax()) {
       return;
     }
 
@@ -430,8 +435,47 @@ class BsidesFile extends LitElement {
     }
   };
 
+  // Deliberately blind to the cap: a drop or paste at max must still
+  // reach upload(), where the gesture is rejected with a reason the
+  // user can read, rather than be dropped on the floor here.
   #acceptsFiles(): boolean {
     return !this.disabled && !this.#uploading;
+  }
+
+  // The staged set is full. Prevention, manual mode only — auto mode
+  // has no accumulating set, so its cap is the gesture check in
+  // upload(). Done rows do not count: delivered and undeletable, they
+  // are not part of the next batch, and counting them would leave a
+  // full set nothing but reset_file() could reopen.
+  #atMax(): boolean {
+    return (
+      this.mode === 'manual' &&
+      this.max != null &&
+      this.#stagedFiles().length >= this.max
+    );
+  }
+
+  #promptText(): string {
+    if (this.#atMax()) {
+      return `Limit of ${fileCount(this.max ?? 0)} reached — remove one to add more`;
+    }
+
+    return this.placeholder;
+  }
+
+  // The cap bounds what the next batch may contain. In manual mode the
+  // staged rows count and a same-named file replaces rather than adds;
+  // a single-file input replaces its whole set, so only the gesture
+  // counts there, as in auto mode.
+  #countExceeded(files: File[], max: number): boolean {
+    if (this.mode !== 'manual' || !this.multiple) {
+      return files.length > max;
+    }
+
+    const staged = new Set(this.#stagedFiles().map((file) => file.name));
+    const additions = files.filter((file) => !staged.has(file.name)).length;
+
+    return staged.size + additions > max;
   }
 
   #onDragEnter = (event: DragEvent): void => {
@@ -579,6 +623,24 @@ class BsidesFile extends LitElement {
     rejections.push(...validation.rejected);
 
     if (validation.accepted.length === 0) {
+      this.#reject(rejections);
+      return;
+    }
+
+    // Checked over the survivors, once, after the per-file rules: files
+    // rejected above never enter the set. Over the cap the whole
+    // gesture is rejected — quietly keeping a prefix of it would read
+    // as data loss.
+    if (
+      this.max != null &&
+      this.#countExceeded(validation.accepted, this.max)
+    ) {
+      rejections.push(
+        ...validation.accepted.map((file) => ({
+          name: file.name,
+          reason: { kind: 'count' as const, limit: this.max as number },
+        })),
+      );
       this.#reject(rejections);
       return;
     }
@@ -1018,7 +1080,13 @@ function rejectionMessage(rejection: Rejection): string {
       return `${rejection.name} is a folder, and folders cannot be uploaded.`;
     case 'multiple':
       return 'Only one file may be uploaded.';
+    case 'count':
+      return `At most ${fileCount(rejection.reason.limit)} may be uploaded.`;
   }
+}
+
+function fileCount(n: number): string {
+  return n === 1 ? '1 file' : `${n} files`;
 }
 
 // Binary steps under decimal labels, the convention shiny.maxRequestSize

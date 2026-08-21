@@ -69,7 +69,10 @@
   when the form submits and the form withholds its own value until that
   upload finishes, so `input$<id>` is already set when an observer keyed
   on the submit runs. A failed or cancelled upload abandons the submit
-  and leaves the set staged to retry.
+  and leaves the set staged to retry. `upload_max` caps how many files
+  one batch may contain: a full staged set stops accepting files until
+  one is removed, and a gesture selecting too many is rejected whole
+  rather than trimmed.
 
 * New `file_upload_status()`, `file_upload_progress()`,
   `file_upload_staged()`, and `file_upload_error()` read a file input's

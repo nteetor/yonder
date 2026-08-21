@@ -28,7 +28,9 @@
 #      list — same-name additions replace, each row removable — and the
 #      batch starts from the Upload button, or from the server:
 #      file_upload_start() is the button's twin. Cancel mid-flight and
-#      the set returns, ready to retry.
+#      the set returns, ready to retry. upload_max = 3 caps the set:
+#      once full the input stops accepting files until one is removed,
+#      and a drop that would overfill it is rejected whole.
 
 library(yonder)
 library(bslib)
@@ -108,6 +110,7 @@ shinyApp(
           label = "Batch of files",
           select = "many",
           upload_mode = "manual",
+          upload_max = 3,
           placeholder = "Stage files, then upload together"
         ),
         input_button(id = "start", label = "Start from the server"),

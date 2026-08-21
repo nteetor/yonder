@@ -12335,7 +12335,8 @@ bsides-file .file-errors:not(:has(.file-error)) {
 bsides-file .file-error {
   display: block;
 }
-bsides-file[disabled] > .file-dropzone {
+bsides-file[disabled] > .file-dropzone,
+bsides-file > .file-dropzone.at-max {
   cursor: default;
   background-color: var(--bs-secondary-bg);
 }
