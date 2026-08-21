@@ -69,8 +69,11 @@
   when the form submits and the form withholds its own value until that
   upload finishes, so `input$<id>` is already set when an observer keyed
   on the submit runs. A failed or cancelled upload abandons the submit
-  and leaves the set staged to retry. `upload_max` caps how many files
-  one batch may contain: a full staged set stops accepting files until
+  and leaves the set staged to retry. `upload_button = "none"` drops
+  the input's own Upload button for apps where the batch starts
+  elsewhere — a form's submit, or `file_upload_start()` — while the
+  cancel control still appears in flight. `upload_max` caps how many
+  files one batch may contain: a full staged set stops accepting files until
   one is removed, and a gesture selecting too many is rejected whole
   rather than trimmed.
 

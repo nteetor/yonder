@@ -1656,6 +1656,62 @@ for (const name of Object.keys(registered)) {
   await el.updateComplete
 }
 
+// ---- file, hidden upload button ----
+{
+  const binding = registered['bsides.file']
+  const el = doc.getElementById('uplm')
+
+  win.__connected = true
+  win.__requests = []
+  win.__posts = []
+  win.__requestPlan = null
+  win.__postPlan = null
+  win.__deferredPosts = []
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+  el.button = 'none'
+  await el.updateComplete
+
+  // At rest the batch row held only the Upload button, so nothing
+  // renders; the start paths are untouched.
+  check('button: no upload button at rest',
+    el.querySelector('.file-upload') === null)
+  check('button: no batch row at rest',
+    el.querySelector('.file-batch') === null)
+
+  el.upload([file('a.csv', 10, 'text/csv')])
+  await el.updateComplete
+  check('button: staging renders no button either',
+    el.querySelector('.file-upload') === null)
+
+  // In flight the row returns whole — a batch the user cannot cancel
+  // would be a regression, not a simplification.
+  win.__postPlan = () => ({ defer: true })
+  binding.receiveMessage(el, { upload_start: true })
+  await tick(20)
+  await el.updateComplete
+  check('button: upload_start still starts the batch',
+    win.__requests.map((r) => r.method).includes('uploadInit'),
+    win.__requests.map((r) => r.method))
+  check('button: cancel still renders in flight',
+    el.querySelector('.file-cancel') !== null)
+
+  el.querySelector('.file-cancel').click()
+  await el.updateComplete
+  win.__postPlan = null
+  win.__deferredPosts.length = 0
+
+  binding.receiveMessage(el, { reset: true })
+  el.button = 'show'
+  await el.updateComplete
+  check('button: show restores the button',
+    el.querySelector('.file-upload') !== null)
+}
+
 // ---- file, state companions ----
 {
   const { binding } = { binding: registered['bsides.file'] }

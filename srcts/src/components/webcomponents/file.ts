@@ -60,6 +60,7 @@ class BsidesFile extends LitElement {
     accept: { type: String, reflect: true },
     capture: { type: String, reflect: true },
     mode: { type: String, reflect: true },
+    button: { type: String, reflect: true },
     placeholder: { type: String },
     summary: { type: String },
     disabled: { type: Boolean, reflect: true },
@@ -78,6 +79,7 @@ class BsidesFile extends LitElement {
   declare accept: string;
   declare capture: string;
   declare mode: string;
+  declare button: string;
   declare placeholder: string;
   declare summary: string;
   declare disabled: boolean;
@@ -125,6 +127,7 @@ class BsidesFile extends LitElement {
     this.accept = '';
     this.capture = '';
     this.mode = 'auto';
+    this.button = 'show';
     this.placeholder = 'Choose a file';
     this.summary = '{files} · {size}';
     this.disabled = false;
@@ -335,7 +338,11 @@ class BsidesFile extends LitElement {
       `;
     }
 
-    if (this.mode !== 'manual') {
+    // At rest the row holds only the Upload button, so hiding the
+    // button leaves nothing to render — but only at rest: a batch the
+    // user cannot cancel would be a regression, so the in-flight row
+    // above is untouched.
+    if (this.mode !== 'manual' || this.button === 'none') {
       return nothing;
     }
 

@@ -1347,6 +1347,7 @@
       accept: { type: String, reflect: true },
       capture: { type: String, reflect: true },
       mode: { type: String, reflect: true },
+      button: { type: String, reflect: true },
       placeholder: { type: String },
       summary: { type: String },
       disabled: { type: Boolean, reflect: true },
@@ -1386,6 +1387,7 @@
       this.accept = "";
       this.capture = "";
       this.mode = "auto";
+      this.button = "show";
       this.placeholder = "Choose a file";
       this.summary = "{files} \xB7 {size}";
       this.disabled = false;
@@ -1557,7 +1559,7 @@
         </div>
       `;
       }
-      if (this.mode !== "manual") {
+      if (this.mode !== "manual" || this.button === "none") {
         return A;
       }
       return b2`

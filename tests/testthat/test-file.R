@@ -21,6 +21,20 @@ test_that("`upload_mode` chooses the mode attribute", {
   expect_error(input_file("test", upload_mode = "batch"), "upload_mode")
 })
 
+test_that("`upload_button` chooses the button attribute", {
+  expect_no_match(
+    format(input_file("test", upload_mode = "manual")),
+    "button="
+  )
+
+  expect_match(
+    format(input_file("test", upload_mode = "manual", upload_button = "none")),
+    'button="none"'
+  )
+
+  expect_error(input_file("test", upload_button = "hide"), "upload_button")
+})
+
 test_that("`upload_max` renders as the max attribute", {
   expect_no_match(format(input_file("test")), " max=")
 

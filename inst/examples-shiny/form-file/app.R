@@ -17,6 +17,12 @@
 # progress bar while the form waits on the batch, and
 # file_upload_error()'s condition when something goes wrong.
 #
+# upload_button = "none" drops the input's own Upload button: Send is
+# the batch's only trigger here, and a second button uploading without
+# submitting would sit right above it doing a subtler version of the
+# same thing. The cancel control still appears while a batch is in
+# flight.
+#
 # What to try:
 #
 #   1. Write a note, stage a file or two, and press Send. The batch
@@ -88,6 +94,7 @@ shinyApp(
           label = "Attachments",
           select = "many",
           upload_mode = "manual",
+          upload_button = "none",
           placeholder = "Stage files, then send the form"
         ),
         form_submit_button(label = "Send", value = "send")

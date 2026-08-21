@@ -22,6 +22,15 @@
 #'   the server. A cancelled or failed batch returns to the staged set,
 #'   ready to retry whole.
 #'
+#' @param upload_button A character string. With `"show"` (default) a
+#'   manual-mode input renders its own Upload button; with `"none"` it
+#'   does not, leaving the batch to an app-supplied trigger —
+#'   [file_upload_start()], or a surrounding [input_form()], whose
+#'   submit already starts it. With the button hidden and neither of
+#'   those in place, nothing visible starts the batch. The cancel
+#'   control still appears while a batch is in flight. Ignored in auto
+#'   mode, which has no Upload button.
+#'
 #' @param upload_max A whole number bounding how many files one batch
 #'   may contain, defaults to `NULL`, no bound. In manual mode the
 #'   staged set counts toward the bound and the input stops accepting
@@ -148,6 +157,7 @@ input_file <-
     label = NULL,
     select = c("one", "many"),
     upload_mode = c("auto", "manual"),
+    upload_button = c("show", "none"),
     upload_max = NULL,
     accept = NULL,
     capture = NULL,
@@ -158,6 +168,7 @@ input_file <-
     check_string(id, allow_empty = FALSE)
     select <- arg_match(select)
     upload_mode <- arg_match(upload_mode)
+    upload_button <- arg_match(upload_button)
     check_number_whole(upload_max, allow_null = TRUE)
     check_character(accept, allow_null = TRUE)
     check_string(placeholder, allow_null = TRUE)
@@ -177,6 +188,7 @@ input_file <-
         id = id,
         multiple = if (select == "many") NA,
         mode = if (upload_mode == "manual") upload_mode,
+        button = if (upload_button == "none") upload_button,
         max = if (non_null(upload_max)) upload_max,
         accept = if (non_null(accept)) paste0(accept, collapse = ","),
         capture = capture,

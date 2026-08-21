@@ -10,6 +10,7 @@ input_file(
   label = NULL,
   select = c("one", "many"),
   upload_mode = c("auto", "manual"),
+  upload_button = c("show", "none"),
   upload_max = NULL,
   accept = NULL,
   capture = NULL,
@@ -37,6 +38,15 @@ addition replacing its predecessor — and an explicit action starts
 the batch: the input's Upload button, or \code{\link[=file_upload_start]{file_upload_start()}} from
 the server. A cancelled or failed batch returns to the staged set,
 ready to retry whole.}
+
+\item{upload_button}{A character string. With \code{"show"} (default) a
+manual-mode input renders its own Upload button; with \code{"none"} it
+does not, leaving the batch to an app-supplied trigger —
+\code{\link[=file_upload_start]{file_upload_start()}}, or a surrounding \code{\link[=input_form]{input_form()}}, whose
+submit already starts it. With the button hidden and neither of
+those in place, nothing visible starts the batch. The cancel
+control still appears while a batch is in flight. Ignored in auto
+mode, which has no Upload button.}
 
 \item{upload_max}{A whole number bounding how many files one batch
 may contain, defaults to \code{NULL}, no bound. In manual mode the
