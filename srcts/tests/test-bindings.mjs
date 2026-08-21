@@ -22,7 +22,8 @@ const html = (name) => read(path.join('srcts/tests/html', `${name}.html`))
 const tick = (ms = 60) => new Promise((r) => setTimeout(r, ms))
 
 const body = [
-  'button', 'checkbox', 'checkbox-group', 'file', 'form', 'link', 'list-group',
+  'button', 'checkbox', 'checkbox-group', 'file', 'file-manual', 'form',
+  'form-file', 'link', 'list-group',
   'menu', 'chip-group', 'chip-group-none', 'chip-group-select',
   'multi-select', 'multi-select-free', 'numeric', 'radio-group', 'range',
   'select', 'text-group', 'modal'
@@ -1227,6 +1228,841 @@ for (const name of Object.keys(registered)) {
   check('file: disabled ignores drops', win.__requests.length === 0, win.__requests)
   binding.receiveMessage(el, { enable: true })
   await el.updateComplete
+}
+
+// ---- file, manual mode ----
+{
+  const { binding, els } = bind('bsides.file')
+  const el = doc.getElementById('uplm')
+
+  win.__connected = true
+  win.__requests = []
+  win.__posts = []
+  win.__requestPlan = null
+  win.__postPlan = null
+  win.__deferredPosts = []
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+  const names = () =>
+    [...el.querySelectorAll('.file-item-name')].map((n) => n.textContent)
+  const removes = () => el.querySelectorAll('.file-item-remove')
+  const live = () => el.querySelector('[aria-live]').textContent.trim()
+  const uploadButton = () => el.querySelector('.file-upload')
+
+  check('manual: found', els.includes(el))
+  check('manual: mode from attribute', el.mode === 'manual')
+
+  // The batch row is permanent in manual mode: the disabled Upload
+  // button is the affordance that a second action is coming.
+  check('manual: batch row at rest', uploadButton() !== null)
+  check('manual: upload disabled at zero staged',
+    uploadButton().disabled === true)
+
+  // Staging fires no requests — the selection is not yet the value.
+  el.upload([file('a.csv', 10, 'text/csv')])
+  await tick(20)
+  await el.updateComplete
+  check('manual: staging fires no requests',
+    win.__requests.length === 0, win.__requests)
+  check('manual: staged row is pending',
+    el.querySelector('.file-item').className === 'file-item pending',
+    el.querySelector('.file-item').className)
+  check('manual: upload enabled once staged',
+    uploadButton().disabled === false)
+  check('manual: staging announced',
+    live() === 'a.csv added, 1 file staged', live())
+
+  // Gestures accumulate rather than replace.
+  el.upload([file('b.csv', 20, 'text/csv')])
+  await el.updateComplete
+  check('manual: additions accumulate',
+    eq(names(), ['a.csv', 'b.csv']), names())
+
+  // A rejected addition reports, and leaves the set alone.
+  el.upload([], [{ name: 'stuff', reason: { kind: 'directory' } }])
+  await el.updateComplete
+  check('manual: rejection reported',
+    el.querySelector('.file-error') !== null)
+  check('manual: rejection leaves the set intact',
+    eq(names(), ['a.csv', 'b.csv']), names())
+
+  // Same name replaces in place.
+  el.upload([file('a.csv', 30, 'text/csv')])
+  await el.updateComplete
+  check('manual: same name replaces',
+    eq(names(), ['a.csv', 'b.csv']), names())
+  check('manual: replacement announced',
+    live() === 'a.csv replaced, 2 files staged', live())
+  check('manual: replacement carries the new size',
+    el.querySelector('.file-item-size').textContent === '30 B',
+    el.querySelector('.file-item-size').textContent)
+  check('manual: replacement leaves focus alone',
+    doc.activeElement !== removes()[0], doc.activeElement?.className)
+
+  // Removal: the row goes, focus lands on the replacing row's control.
+  check('manual: remove controls render', removes().length === 2)
+  removes()[0].click()
+  await el.updateComplete
+  await tick(0)
+  check('manual: row removed', eq(names(), ['b.csv']), names())
+  check('manual: removal announced', live() === 'a.csv removed', live())
+  check('manual: focus moves to the replacing row',
+    doc.activeElement === removes()[0], doc.activeElement?.className)
+
+  // Removing the last row lands on the previous row's control.
+  el.upload([file('c.csv', 5, 'text/csv')])
+  await el.updateComplete
+  removes()[1].click()
+  await el.updateComplete
+  await tick(0)
+  check('manual: last-row removal focuses the previous control',
+    doc.activeElement === removes()[0], doc.activeElement?.className)
+
+  // Emptying the list lands on the picker: the Upload button is
+  // disabled again and a disabled button takes no focus.
+  removes()[0].click()
+  await el.updateComplete
+  await tick(0)
+  check('manual: list gone once emptied',
+    el.querySelector('.file-list') === null)
+  check('manual: emptied list focuses the picker',
+    doc.activeElement === el.querySelector('.file-input'),
+    doc.activeElement?.className)
+  check('manual: upload disabled again at zero staged',
+    uploadButton().disabled === true)
+
+  // select = "one": a new pick replaces the staged file.
+  el.multiple = false
+  await el.updateComplete
+  el.upload([file('one.csv', 5, 'text/csv')])
+  el.upload([file('two.csv', 5, 'text/csv')])
+  await el.updateComplete
+  check('manual: select one keeps a single staged file',
+    eq(names(), ['two.csv']), names())
+  el.upload([file('one.csv', 5, 'text/csv'), file('two.csv', 5, 'text/csv')])
+  await el.updateComplete
+  check('manual: select one rejects a multi-file gesture whole',
+    eq(names(), ['two.csv']), names())
+  el.multiple = true
+  await el.updateComplete
+  removes()[0].click()
+  await el.updateComplete
+  await tick(0)
+
+  // The Upload button starts the batch; remove controls hide in flight.
+  el.upload([file('x.csv', 10, 'text/csv'), file('y.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__postPlan = () => ({ defer: true })
+  uploadButton().click()
+  await tick(20)
+  await el.updateComplete
+  check('manual: upload starts the protocol',
+    eq(win.__requests.map((r) => r.method), ['uploadInit']),
+    win.__requests.map((r) => r.method))
+  check('manual: remove controls hide in flight', removes().length === 0)
+  check('manual: cancel offered in flight',
+    el.querySelector('.file-cancel') !== null)
+
+  // Complete the POSTs; they are sequential, so drain until the second
+  // (created only once the first lands) has come and gone.
+  while (win.__deferredPosts.length > 0) {
+    const xhr = win.__deferredPosts.shift()
+    xhr.upload.onprogress({ lengthComputable: true, loaded: 10 })
+    xhr.status = 200
+    xhr.onload()
+    await tick(10)
+  }
+  win.__postPlan = null
+  await tick(20)
+  await el.updateComplete
+  check('manual: batch delivered',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+  check('manual: rows done',
+    [...el.querySelectorAll('.file-item')].every(
+      (row) => row.className === 'file-item done'),
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+  check('manual: upload disabled after delivery',
+    uploadButton().disabled === true)
+  check('manual: done rows are not removable', removes().length === 0)
+
+  // The next addition starts a fresh staged set.
+  el.upload([file('z.csv', 5, 'text/csv')])
+  await el.updateComplete
+  check('manual: addition after delivery starts fresh',
+    eq(names(), ['z.csv']), names())
+
+  // ---- cancel: rows return to pending, the retry is a fresh batch ----
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+  el.upload([file('p.csv', 10, 'text/csv'), file('q.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__requests = []
+  win.__posts = []
+  win.__postPlan = (call, i) => (i === 1 ? { defer: true } : null)
+  uploadButton().click()
+  await tick(30)
+  await el.updateComplete
+
+  // p.csv completed before the cancel; q.csv is in flight.
+  el.querySelector('.file-cancel').click()
+  await el.updateComplete
+  win.__postPlan = null
+  check('manual: cancel returns every row to pending',
+    [...el.querySelectorAll('.file-item')].every(
+      (row) => row.className === 'file-item pending'),
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+  check('manual: cancel skipped uploadEnd',
+    eq(win.__requests.map((r) => r.method), ['uploadInit']),
+    win.__requests.map((r) => r.method))
+  check('manual: upload button returns after cancel',
+    uploadButton() !== null && uploadButton().disabled === false)
+
+  // The retry runs a fresh uploadInit and re-POSTs every file, the one
+  // that completed before the cancel included.
+  uploadButton().click()
+  await tick(30)
+  await el.updateComplete
+  check('manual: retry issues a fresh uploadInit',
+    eq(win.__requests.map((r) => r.method),
+      ['uploadInit', 'uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+  check('manual: retry re-posts every file',
+    eq(win.__posts.map((post) => post.name),
+      ['p.csv', 'q.csv', 'p.csv', 'q.csv']),
+    win.__posts.map((post) => post.name))
+
+  // ---- failure: pending again, the failed row alone keeps the mark ----
+  el.upload([file('f.csv', 10, 'text/csv'), file('g.csv', 10, 'text/csv')])
+  await el.updateComplete
+  check('manual: addition after delivery starts fresh again',
+    eq(names(), ['f.csv', 'g.csv']), names())
+  win.__requests = []
+  win.__posts = []
+  win.__postPlan = (call, i) => (i === 1 ? { status: 500 } : null)
+  uploadButton().click()
+  await tick(30)
+  await el.updateComplete
+  win.__postPlan = null
+
+  check('manual: failure marks the failed row alone',
+    eq([...el.querySelectorAll('.file-item')].map((row) => row.className),
+      ['file-item pending', 'file-item error']),
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+  check('manual: failure message rendered',
+    el.querySelector('.file-error') !== null)
+  check('manual: upload button returns after failure',
+    uploadButton() !== null && uploadButton().disabled === false)
+  check('manual: failed row is removable', removes().length === 2)
+
+  // An addition after a failure appends — the set delivered nothing —
+  // and ends the failure's reporting: the message and the row marks
+  // clear together, so no red row outlives its explanation.
+  el.upload([file('h.csv', 5, 'text/csv')])
+  await el.updateComplete
+  check('manual: addition after failure appends',
+    eq(names(), ['f.csv', 'g.csv', 'h.csv']), names())
+  check('manual: addition after failure clears the row marks',
+    [...el.querySelectorAll('.file-item')].every(
+      (row) => row.className === 'file-item pending'),
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+  check('manual: addition after failure clears the message',
+    el.querySelector('.file-error') === null,
+    el.querySelector('.file-errors').textContent)
+
+  // A retry clears the previous attempt's message and resets marks.
+  uploadButton().click()
+  await tick(30)
+  await el.updateComplete
+  check('manual: retry clears the failure message',
+    el.querySelector('.file-error') === null,
+    el.querySelector('.file-errors').textContent)
+  check('manual: retry delivers',
+    [...el.querySelectorAll('.file-item')].every(
+      (row) => row.className === 'file-item done'),
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+
+  // Any set edit ends the failure's reporting: removing the pending
+  // row clears the message and the surviving row's mark alike.
+  el.upload([file('i.csv', 10, 'text/csv'), file('j.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__posts = []
+  win.__postPlan = (call, i) => (i === 1 ? { status: 500 } : null)
+  uploadButton().click()
+  await tick(30)
+  await el.updateComplete
+  win.__postPlan = null
+  removes()[0].click()
+  await el.updateComplete
+  await tick(0)
+  check('manual: removing a row clears the message',
+    el.querySelector('.file-error') === null,
+    el.querySelector('.file-errors').textContent)
+  check('manual: removing a row clears the surviving mark',
+    el.querySelector('.file-item').className === 'file-item pending',
+    el.querySelector('.file-item').className)
+  removes()[0].click()
+  await el.updateComplete
+  await tick(0)
+
+  // ---- the action triggers, over the message path ----
+  const postsBefore = win.__posts.length
+  binding.receiveMessage(el, { upload_start: true })
+  await tick(20)
+  check('manual: upload_start no-ops on an empty set',
+    win.__posts.length === postsBefore, win.__posts.length - postsBefore)
+
+  el.upload([file('m.csv', 10, 'text/csv')])
+  await el.updateComplete
+  binding.receiveMessage(el, { upload_cancel: true })
+  await el.updateComplete
+  check('manual: upload_cancel no-ops with nothing in flight',
+    el.querySelector('.file-item').className === 'file-item pending')
+
+  win.__requests = []
+  binding.receiveMessage(el, { upload_start: true })
+  await tick(30)
+  await el.updateComplete
+  check('manual: upload_start starts the staged batch',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+
+  win.__postPlan = () => ({ defer: true })
+  el.upload([file('n.csv', 10, 'text/csv')])
+  await el.updateComplete
+  binding.receiveMessage(el, { upload_start: true })
+  await tick(20)
+  await el.updateComplete
+  binding.receiveMessage(el, { upload_cancel: true })
+  await el.updateComplete
+  win.__postPlan = null
+  check('manual: upload_cancel abandons the flight',
+    el.querySelector('.file-item').className === 'file-item pending',
+    el.querySelector('.file-item').className)
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+
+  // upload_start is a manual-mode concept: the auto input ignores it.
+  const auto = doc.getElementById('upl')
+  binding.receiveMessage(auto, { reset: true })
+  await auto.updateComplete
+  win.__requests = []
+  binding.receiveMessage(auto, { upload_start: true })
+  await tick(20)
+  check('manual: upload_start no-ops in auto mode',
+    win.__requests.length === 0, win.__requests)
+}
+
+// ---- file, upload cap ----
+{
+  const binding = registered['bsides.file']
+  const el = doc.getElementById('uplm')
+
+  win.__connected = true
+  win.__requests = []
+  win.__posts = []
+  win.__requestPlan = null
+  win.__postPlan = null
+  win.__deferredPosts = []
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+  const names = () =>
+    [...el.querySelectorAll('.file-item-name')].map((n) => n.textContent)
+  const picker = () => el.querySelector('.file-input')
+  const dropzone = () => el.querySelector('.file-dropzone')
+  const prompt = () => el.querySelector('.file-prompt').textContent
+  const errorText = () =>
+    [...el.querySelectorAll('.file-error')].map((n) => n.textContent)
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+  el.max = 2
+  await el.updateComplete
+
+  el.upload([file('a.csv', 4, 'text/csv')])
+  await el.updateComplete
+  check('cap: below the cap the picker is live', picker().disabled === false)
+
+  // A gesture past the cap is rejected whole — quietly keeping a prefix
+  // of it would read as data loss.
+  el.upload([file('b.csv', 4, 'text/csv'), file('c.csv', 4, 'text/csv')])
+  await el.updateComplete
+  check('cap: an overfilling gesture is rejected whole',
+    eq(names(), ['a.csv']), names())
+  check('cap: the rejection is readable',
+    eq(errorText(), ['At most 2 files may be uploaded.']), errorText())
+
+  // At the cap the input stops accepting — prevention, with the prompt
+  // carrying the reason.
+  el.upload([file('b.csv', 4, 'text/csv')])
+  await el.updateComplete
+  check('cap: a full set disables the picker', picker().disabled === true)
+  check('cap: a full set marks the dropzone',
+    dropzone().classList.contains('at-max'))
+  check('cap: the prompt says why',
+    prompt() === 'Limit of 2 files reached — remove one to add more',
+    prompt())
+
+  // Drops bypass the picker, and a same-named drop replaces rather than
+  // adds, so it passes at the cap.
+  el.upload([file('b.csv', 9, 'text/csv')])
+  await el.updateComplete
+  check('cap: same-name replacement passes at the cap',
+    eq(names(), ['a.csv', 'b.csv']), names())
+  check('cap: replacement carries the new size',
+    [...el.querySelectorAll('.file-item-size')].at(-1).textContent === '9 B',
+    [...el.querySelectorAll('.file-item-size')].map((n) => n.textContent))
+
+  // Removal reopens the input.
+  el.querySelector('.file-item-remove').click()
+  await el.updateComplete
+  await tick(0)
+  check('cap: removal reopens the picker', picker().disabled === false)
+  check('cap: removal restores the prompt',
+    prompt() !== 'Limit of 2 files reached — remove one to add more',
+    prompt())
+
+  // Done rows do not count: a delivered batch is not part of the next
+  // one, so a full delivered set does not trap the input.
+  el.upload([file('d.csv', 4, 'text/csv')])
+  await el.updateComplete
+  el.querySelector('.file-upload').click()
+  await tick(30)
+  await el.updateComplete
+  check('cap: delivered rows do not count', picker().disabled === false,
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+
+  // Auto mode has no accumulating set; its cap bounds the gesture.
+  const auto = doc.getElementById('upl')
+  auto.max = 2
+  await auto.updateComplete
+  win.__requests = []
+  auto.upload([
+    file('x.csv', 4, 'text/csv'),
+    file('y.csv', 4, 'text/csv'),
+    file('z.csv', 4, 'text/csv'),
+  ])
+  await tick(20)
+  await auto.updateComplete
+  check('cap: auto mode rejects an oversized gesture whole',
+    win.__requests.length === 0, win.__requests)
+  auto.max = null
+  await auto.updateComplete
+
+  binding.receiveMessage(el, { reset: true })
+  el.max = null
+  await el.updateComplete
+}
+
+// ---- file, hidden upload button ----
+{
+  const binding = registered['bsides.file']
+  const el = doc.getElementById('uplm')
+
+  win.__connected = true
+  win.__requests = []
+  win.__posts = []
+  win.__requestPlan = null
+  win.__postPlan = null
+  win.__deferredPosts = []
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+  el.button = 'none'
+  await el.updateComplete
+
+  // At rest the batch row held only the Upload button, so nothing
+  // renders; the start paths are untouched.
+  check('button: no upload button at rest',
+    el.querySelector('.file-upload') === null)
+  check('button: no batch row at rest',
+    el.querySelector('.file-batch') === null)
+
+  el.upload([file('a.csv', 10, 'text/csv')])
+  await el.updateComplete
+  check('button: staging renders no button either',
+    el.querySelector('.file-upload') === null)
+
+  // In flight the row returns whole — a batch the user cannot cancel
+  // would be a regression, not a simplification.
+  win.__postPlan = () => ({ defer: true })
+  binding.receiveMessage(el, { upload_start: true })
+  await tick(20)
+  await el.updateComplete
+  check('button: upload_start still starts the batch',
+    win.__requests.map((r) => r.method).includes('uploadInit'),
+    win.__requests.map((r) => r.method))
+  check('button: cancel still renders in flight',
+    el.querySelector('.file-cancel') !== null)
+
+  el.querySelector('.file-cancel').click()
+  await el.updateComplete
+  win.__postPlan = null
+  win.__deferredPosts.length = 0
+
+  binding.receiveMessage(el, { reset: true })
+  el.button = 'show'
+  await el.updateComplete
+  check('button: show restores the button',
+    el.querySelector('.file-upload') !== null)
+}
+
+// ---- file, state companions ----
+{
+  const { binding } = { binding: registered['bsides.file'] }
+  const el = doc.getElementById('uplm')
+
+  win.__connected = true
+  win.__requests = []
+  win.__posts = []
+  win.__requestPlan = null
+  win.__postPlan = null
+  win.__deferredPosts = []
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+
+  // A recorder for Shiny.setInputValue, which the component pushes its
+  // __bsides_* companions through.
+  const inputs = []
+  win.Shiny.setInputValue = (name, value) => inputs.push({ name, value })
+  // The staged companion's name carries its input-handler type suffix
+  // (`:bsides.file.staged`), so match on the name's head.
+  const named = (suffix) =>
+    inputs.filter((i) => i.name.split(':')[0] === `uplm__bsides_${suffix}`)
+  const last = (suffix) => named(suffix).at(-1)?.value
+  const count = (suffix) => named(suffix).length
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+  check('state: idle after reset', last('status') === 'idle', last('status'))
+  check('state: staged empty at idle', eq(last('staged'), []), last('staged'))
+  check('state: no error at idle', last('error') === null)
+
+  // A rejection feeds the error companion structured records — kind,
+  // the rendered sentences, one row per file — and leaves the status
+  // alone: nothing was attempted.
+  el.upload([], [{ name: 'stuff', reason: { kind: 'directory' } }])
+  await el.updateComplete
+  check('state: rejection pushes a record',
+    eq(last('error'), {
+      kind: 'rejection',
+      messages: ['stuff is a folder, and folders cannot be uploaded.'],
+      files: [{ name: 'stuff', reason: 'directory', limit: null }],
+    }),
+    last('error'))
+  check('state: rejection leaves status alone',
+    last('status') === 'idle', last('status'))
+
+  // A reason with a limit carries it into the record.
+  el.maxSize = 5
+  el.upload([file('big.csv', 10, 'text/csv')])
+  await el.updateComplete
+  check('state: size rejection carries the limit',
+    eq(last('error').files, [{ name: 'big.csv', reason: 'size', limit: 5 }]),
+    last('error'))
+  el.maxSize = null
+
+  // A gesture-level rejection is recorded against every file in the
+  // gesture, under one sentence.
+  el.multiple = false
+  await el.updateComplete
+  el.upload([file('x.csv', 4, 'text/csv'), file('y.csv', 4, 'text/csv')])
+  await el.updateComplete
+  check('state: gesture-level rejection records every file',
+    eq(last('error').files.map((f) => f.name), ['x.csv', 'y.csv']) &&
+      last('error').messages.length === 1,
+    last('error'))
+  el.multiple = true
+  await el.updateComplete
+
+  // One two-file gesture pushes the staged set once, whole.
+  const stagedBefore = count('staged')
+  el.upload([file('a.csv', 10, 'text/csv'), file('b.csv', 20, 'text/csv')])
+  await el.updateComplete
+  check('state: staged status once staged',
+    last('status') === 'staged', last('status'))
+  check('state: staged payload carries the set',
+    eq(last('staged'), [
+      { name: 'a.csv', size: 10, type: 'text/csv' },
+      { name: 'b.csv', size: 20, type: 'text/csv' },
+    ]),
+    last('staged'))
+  check('state: one gesture pushes the set once',
+    count('staged') === stagedBefore + 1,
+    count('staged') - stagedBefore)
+  check('state: a set edit clears the error', last('error') === null)
+
+  // A removal is a set edit.
+  el.querySelector('.file-item-remove').click()
+  await el.updateComplete
+  await tick(0)
+  check('state: removal updates the staged payload',
+    eq(last('staged'), [{ name: 'b.csv', size: 20, type: 'text/csv' }]),
+    last('staged'))
+
+  // Flight: uploading, throttled progress, the final 1, then done.
+  win.__postPlan = () => ({ defer: true })
+  el.querySelector('.file-upload').click()
+  await tick(20)
+  await el.updateComplete
+  check('state: uploading in flight', last('status') === 'uploading')
+  check('state: staged empties in flight', eq(last('staged'), []))
+
+  win.__deferredPosts[0].upload.onprogress({
+    lengthComputable: true, loaded: 10,
+  })
+  await tick(200)
+  check('state: progress pushed after the throttle window',
+    last('progress') === 0.5, last('progress'))
+
+  const xhr = win.__deferredPosts.shift()
+  xhr.upload.onprogress({ lengthComputable: true, loaded: 20 })
+  xhr.status = 200
+  xhr.onload()
+  win.__postPlan = null
+  await tick(30)
+  await el.updateComplete
+  check('state: done after delivery', last('status') === 'done')
+  check('state: final progress is 1', last('progress') === 1)
+
+  // Cancel in manual mode is staged again, progress folded back to 0.
+  el.upload([file('c.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__postPlan = () => ({ defer: true })
+  el.querySelector('.file-upload').click()
+  await tick(20)
+  await el.updateComplete
+  el.querySelector('.file-cancel').click()
+  await el.updateComplete
+  win.__postPlan = null
+  win.__deferredPosts.length = 0
+  check('state: cancel lands back in staged',
+    last('status') === 'staged', last('status'))
+  check('state: cancel zeroes progress', last('progress') === 0)
+  check('state: cancel is not a failure', last('error') === null)
+
+  // Failure: status failed, the message pushed; a retry clears it.
+  win.__postPlan = () => ({ status: 500 })
+  el.querySelector('.file-upload').click()
+  await tick(30)
+  await el.updateComplete
+  win.__postPlan = null
+  check('state: failure reported', last('status') === 'failed')
+  check('state: failure record pushed',
+    last('error') !== null &&
+      last('error').kind === 'failure' &&
+      last('error').messages.length === 1 &&
+      eq(last('error').files, []),
+    last('error'))
+
+  // A set edit after a failure is "staged", not "failed" — the marks
+  // clear with the message.
+  el.upload([file('d.csv', 10, 'text/csv')])
+  await el.updateComplete
+  check('state: edit after failure lands in staged',
+    last('status') === 'staged', last('status'))
+  check('state: edit after failure clears the error',
+    last('error') === null)
+
+  el.querySelector('.file-upload').click()
+  await tick(30)
+  await el.updateComplete
+  check('state: retry delivers and clears the error',
+    last('status') === 'done' && last('error') === null,
+    [last('status'), last('error')])
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+  delete win.Shiny.setInputValue
+}
+
+// ---- form + staged file: the batch starts on submit ----
+{
+  // Both bindings were subscribed by their own sections' bind() calls,
+  // #frmf included — find() sweeps the whole document. Re-binding here
+  // would double the form's click handler, so reach for the registry.
+  const formBinding = registered['bsides.form']
+  const binding = registered['bsides.file']
+  const form = doc.getElementById('frmf')
+  const el = doc.getElementById('frmupl')
+  const submit = form.querySelector('.bsides-input-form-submit')
+
+  win.__connected = true
+  win.__requests = []
+  win.__posts = []
+  win.__requestPlan = null
+  win.__postPlan = null
+  win.__deferredPosts = []
+
+  const file = (name, bytes, type = '') =>
+    new win.File(['x'.repeat(bytes)], name, { type })
+
+  // The submit is observable: the form dispatches bsides-form:submit
+  // after replaying the frozen values.
+  let submits = 0
+  form.addEventListener('bsides-form:submit', () => submits++)
+
+  // Submitting with nothing staged starts nothing.
+  submit.click()
+  await tick(20)
+  check('form-file: submit dispatches bsides-form:submit', submits === 1)
+  check('form-file: empty set submits no batch',
+    win.__requests.length === 0, win.__requests)
+
+  // A staged set uploads when the form submits.
+  el.upload([file('a.csv', 10, 'text/csv'), file('b.csv', 10, 'text/csv')])
+  await el.updateComplete
+  check('form-file: staging inside a form fires no requests',
+    win.__requests.length === 0, win.__requests)
+
+  submit.click()
+  await tick(30)
+  await el.updateComplete
+  check('form-file: submit starts the staged batch',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+  check('form-file: rows done after the submit-started batch',
+    [...el.querySelectorAll('.file-item')].every(
+      (row) => row.className === 'file-item done'),
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+
+  // The server-driven submit runs through the same handler.
+  el.upload([file('c.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__requests = []
+  formBinding.receiveMessage(form, { submit: 'send' })
+  await tick(30)
+  await el.updateComplete
+  check('form-file: receiveMessage submit also starts the batch',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    win.__requests.map((r) => r.method))
+
+  // ---- the form waits for the upload before sending its value ----
+  //
+  // formValues is only set once a submit actually goes through, so the
+  // binding's value is a clean proxy for "has the form sent yet". The
+  // Draft button distinguishes these submits from the Send ones above.
+  const draft = form.querySelector('.bsides-input-form-submit[value="draft"]')
+  const formValue = () => formBinding.getValue(form)
+
+  el.upload([file('d.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__requests = []
+  win.__postPlan = () => ({ defer: true })
+  draft.click()
+  await tick(30)
+
+  check('form-file: upload started, form value withheld',
+    eq(win.__requests.map((r) => r.method), ['uploadInit']) &&
+      formValue() === 'send',
+    [win.__requests.map((r) => r.method), formValue()])
+  check('form-file: clicked submit is pending',
+    draft.classList.contains('pending') &&
+      draft.getAttribute('aria-busy') === 'true')
+  check('form-file: every submit disabled while pending',
+    draft.disabled === true && submit.disabled === true)
+
+  while (win.__deferredPosts.length > 0) {
+    const xhr = win.__deferredPosts.shift()
+    xhr.status = 200
+    xhr.onload()
+    await tick(10)
+  }
+  win.__postPlan = null
+  await tick(30)
+  await el.updateComplete
+
+  check('form-file: form value sent only after uploadEnd',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']) &&
+      formValue() === 'draft',
+    [win.__requests.map((r) => r.method), formValue()])
+  check('form-file: pending cleared, submits re-enabled',
+    draft.classList.contains('pending') === false &&
+      draft.hasAttribute('aria-busy') === false &&
+      draft.disabled === false && submit.disabled === false)
+
+  // ---- a submit arriving mid-flight waits for the running batch ----
+  el.upload([file('e.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__requests = []
+  win.__postPlan = () => ({ defer: true })
+  el.querySelector('.file-upload').click()
+  await tick(20)
+  await el.updateComplete
+
+  submit.click()
+  await tick(20)
+  check('form-file: mid-flight submit does not restart the batch',
+    eq(win.__requests.map((r) => r.method), ['uploadInit']),
+    win.__requests.map((r) => r.method))
+  check('form-file: mid-flight submit withholds the form value',
+    formValue() === 'draft', formValue())
+  check('form-file: mid-flight submit shows pending',
+    submit.classList.contains('pending'))
+
+  while (win.__deferredPosts.length > 0) {
+    const xhr = win.__deferredPosts.shift()
+    xhr.status = 200
+    xhr.onload()
+    await tick(10)
+  }
+  win.__postPlan = null
+  await tick(30)
+  await el.updateComplete
+  check('form-file: mid-flight submit sends once the batch lands',
+    formValue() === 'send', formValue())
+
+  // ---- a failed upload abandons the submit ----
+  el.upload([file('f.csv', 10, 'text/csv')])
+  await el.updateComplete
+  win.__postPlan = () => ({ status: 500 })
+  draft.click()
+  await tick(40)
+  await el.updateComplete
+  win.__postPlan = null
+
+  check('form-file: failed upload leaves the form unsubmitted',
+    formValue() === 'send', formValue())
+  check('form-file: failed upload clears the pending state',
+    draft.classList.contains('pending') === false && draft.disabled === false)
+  check('form-file: failed upload keeps the set staged for a retry',
+    el.querySelectorAll('.file-item').length === 1)
+
+  // ---- a cancel during a form-started upload abandons it too ----
+  win.__postPlan = () => ({ defer: true })
+  draft.click()
+  await tick(20)
+  await el.updateComplete
+  el.querySelector('.file-cancel').click()
+  await tick(20)
+  await el.updateComplete
+  win.__postPlan = null
+  win.__deferredPosts.length = 0
+
+  check('form-file: cancelled upload leaves the form unsubmitted',
+    formValue() === 'send', formValue())
+  check('form-file: cancelled upload clears the pending state',
+    draft.classList.contains('pending') === false && draft.disabled === false)
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+
+  // ---- a form with no blockers submits synchronously ----
+  //
+  // No await between the click and the check: the common case must not
+  // defer a microtask just because one form in the package needs to.
+  const plainForm = doc.getElementById('frm')
+  const plainSubmit = plainForm.querySelector('.bsides-input-form-submit')
+  plainSubmit.click()
+  check('form-file: a form without blockers submits synchronously',
+    formBinding.getValue(plainForm) === 'go',
+    formBinding.getValue(plainForm))
 }
 
 // ---- file validation (pure functions) ----

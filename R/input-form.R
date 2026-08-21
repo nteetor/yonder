@@ -11,6 +11,26 @@
 #' allows server logic to distinguish between different form submission types,
 #' think "login" versus "register".
 #'
+#' @details
+#'
+#' ## Submits that wait
+#'
+#' Usually a submit is immediate: the held values are released and the
+#' form's own value is set, in that order, as the button is clicked.
+#'
+#' A nested input may have work that must finish first, though — an
+#' [input_file()] with `upload_mode = "manual"` uploads its staged files
+#' at this point, and its value is set by the server when that upload
+#' ends. The submit then waits for it. Every submit button in the form
+#' is disabled and the clicked one shows a pending state, so a form that
+#' is waiting does not read as a form that is broken. The values go once
+#' the work finishes, which is what lets an observer keyed on the
+#' submit read the uploaded files.
+#'
+#' If that work fails, or the user cancels it, nothing is sent at all.
+#' The held values stay held, so submitting again retries with
+#' everything intact.
+#'
 #' @inheritParams input_checkbox_group
 #'
 #' @param ... Reactive inputs.

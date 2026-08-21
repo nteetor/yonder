@@ -31,6 +31,24 @@ render(
   )
 )
 render(
+  "file-manual",
+  input_file(
+    id = "uplm",
+    label = "Upload data",
+    select = "many",
+    upload_mode = "manual"
+  )
+)
+render(
+  "form-file",
+  input_form(
+    id = "frmf",
+    input_file(id = "frmupl", select = "many", upload_mode = "manual"),
+    form_submit_button(label = "Send", value = "send"),
+    form_submit_button(label = "Draft", value = "draft")
+  )
+)
+render(
   "form",
   input_form(
     id = "frm",
