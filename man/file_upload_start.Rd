@@ -67,15 +67,29 @@ paths — with zero rows when nothing is staged.
 object, or \code{NULL}. \code{conditionMessage()} is the headline; \verb{$files}
 is a data frame of \code{name}, \code{reason}, and \code{limit}, one row per
 rejected file, with zero rows when the failure names no file. The
-class says what happened: \code{bsides_file_rejection} means nothing
-was attempted — a dropped folder, an unaccepted type, an oversize
-file, a gesture past \code{upload_max} — and in manual mode the staged
-set is intact; \code{bsides_file_failure} means a batch started and
-died in transport. Both inherit from \code{bsides_file_error}. The
-\code{reason} codes (\code{"size"}, \code{"accept"}, \code{"directory"}, \code{"multiple"},
-\code{"count"}) are the stable surface — the message text is written
-for display and may be reworded. The reader returns to \code{NULL} on
-any edit of the staged set, a new batch, or \code{\link[=reset_file]{reset_file()}}.
+class says what happened:
+\itemize{
+\item \code{bsides_file_rejection} — nothing was attempted; in manual mode
+the staged set is intact.
+\item \code{bsides_file_failure} — a batch started and died in transport.
+\item \code{bsides_file_error} — the base class both inherit from, for
+code that does not care which.
+}
+
+The \code{reason} codes are the stable surface — the message text is
+written for display and may be reworded:
+\itemize{
+\item \code{"size"} — the file is over the per-file upload limit.
+\item \code{"accept"} — the file does not match \code{accept}.
+\item \code{"directory"} — a dropped folder, which cannot be uploaded.
+\item \code{"multiple"} — a multi-file gesture on a \code{select = "one"} input;
+recorded against every file in the gesture.
+\item \code{"count"} — a gesture past \code{upload_max}; likewise recorded
+against every file in the gesture.
+}
+
+The reader returns to \code{NULL} on any edit of the staged set, a new
+batch, or \code{\link[=reset_file]{reset_file()}}.
 }
 
 Each reader is a reactive read of a companion input pushed by the

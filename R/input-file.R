@@ -339,15 +339,27 @@ reset_file <-
 #'   object, or `NULL`. `conditionMessage()` is the headline; `$files`
 #'   is a data frame of `name`, `reason`, and `limit`, one row per
 #'   rejected file, with zero rows when the failure names no file. The
-#'   class says what happened: `bsides_file_rejection` means nothing
-#'   was attempted — a dropped folder, an unaccepted type, an oversize
-#'   file, a gesture past `upload_max` — and in manual mode the staged
-#'   set is intact; `bsides_file_failure` means a batch started and
-#'   died in transport. Both inherit from `bsides_file_error`. The
-#'   `reason` codes (`"size"`, `"accept"`, `"directory"`, `"multiple"`,
-#'   `"count"`) are the stable surface — the message text is written
-#'   for display and may be reworded. The reader returns to `NULL` on
-#'   any edit of the staged set, a new batch, or [reset_file()].
+#'   class says what happened:
+#'
+#'   * `bsides_file_rejection` — nothing was attempted; in manual mode
+#'     the staged set is intact.
+#'   * `bsides_file_failure` — a batch started and died in transport.
+#'   * `bsides_file_error` — the base class both inherit from, for
+#'     code that does not care which.
+#'
+#'   The `reason` codes are the stable surface — the message text is
+#'   written for display and may be reworded:
+#'
+#'   * `"size"` — the file is over the per-file upload limit.
+#'   * `"accept"` — the file does not match `accept`.
+#'   * `"directory"` — a dropped folder, which cannot be uploaded.
+#'   * `"multiple"` — a multi-file gesture on a `select = "one"` input;
+#'     recorded against every file in the gesture.
+#'   * `"count"` — a gesture past `upload_max`; likewise recorded
+#'     against every file in the gesture.
+#'
+#'   The reader returns to `NULL` on any edit of the staged set, a new
+#'   batch, or [reset_file()].
 #'
 #' Each reader is a reactive read of a companion input pushed by the
 #' component, so an observer or reactive using one invalidates only
