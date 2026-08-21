@@ -62,8 +62,17 @@ cancel lands back in \code{"staged"}).
 \item \code{file_upload_staged()} returns the staged set as a data frame of
 \code{name}, \code{size}, and \code{type} — the value's columns before there are
 paths — with zero rows when nothing is staged.
-\item \code{file_upload_error()} returns the last failure's message, or
-\code{NULL}.
+\item \code{file_upload_error()} returns the last failure as a condition
+object, or \code{NULL}. \code{conditionMessage()} is the headline; \verb{$files}
+is a data frame of \code{name}, \code{reason}, and \code{limit}, one row per
+rejected file, with zero rows when the failure names no file. The
+class says what happened: \code{bsides_file_rejection} means nothing
+was attempted and a staged set is intact — a dropped folder, an
+unaccepted type, an oversize file — where \code{bsides_file_failure}
+means a batch started and died in transport; both inherit from
+\code{bsides_file_error}. The \code{reason} codes (\code{"size"}, \code{"accept"},
+\code{"directory"}, \code{"multiple"}) are the stable surface — the message
+text is written for display and may be reworded.
 }
 
 Each reader is a reactive read of a companion input pushed by the

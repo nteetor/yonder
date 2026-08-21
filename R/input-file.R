@@ -302,8 +302,17 @@ reset_file <-
 #' * `file_upload_staged()` returns the staged set as a data frame of
 #'   `name`, `size`, and `type` — the value's columns before there are
 #'   paths — with zero rows when nothing is staged.
-#' * `file_upload_error()` returns the last failure's message, or
-#'   `NULL`.
+#' * `file_upload_error()` returns the last failure as a condition
+#'   object, or `NULL`. `conditionMessage()` is the headline; `$files`
+#'   is a data frame of `name`, `reason`, and `limit`, one row per
+#'   rejected file, with zero rows when the failure names no file. The
+#'   class says what happened: `bsides_file_rejection` means nothing
+#'   was attempted and a staged set is intact — a dropped folder, an
+#'   unaccepted type, an oversize file — where `bsides_file_failure`
+#'   means a batch started and died in transport; both inherit from
+#'   `bsides_file_error`. The `reason` codes (`"size"`, `"accept"`,
+#'   `"directory"`, `"multiple"`) are the stable surface — the message
+#'   text is written for display and may be reworded.
 #'
 #' Each reader is a reactive read of a companion input pushed by the
 #' component, so an observer or reactive using one invalidates only
@@ -442,6 +451,66 @@ file_staged_input_register_handler <-
         )
       },
       force = TRUE
+    )
+  }
+
+file_error_frame <-
+  function(
+    name = character(),
+    reason = character(),
+    limit = numeric()
+  ) {
+    data.frame(name = name, reason = reason, limit = limit, row.names = NULL)
+  }
+
+file_error_input_type <- "bsides.file.error"
+
+file_error_input_register_handler <-
+  function() {
+    shiny::registerInputHandler(
+      file_error_input_type,
+      function(
+        value,
+        session,
+        name
+      ) {
+        if (length(value) < 1) {
+          return(NULL)
+        }
+
+        file_error_condition(value)
+      },
+      force = TRUE
+    )
+  }
+
+# Builds the condition file_upload_error() returns from the payload the
+# component pushes: kind picks the class, the client-rendered sentences
+# become the message, the per-file records the `files` frame. Never
+# signalled, so `call` stays NULL — a fabricated condition carrying a
+# call prints as though an error had been raised somewhere real.
+file_error_condition <-
+  function(value) {
+    class <- switch(
+      value$kind,
+      rejection = "bsides_file_rejection",
+      failure = "bsides_file_failure"
+    )
+
+    files <- value$files %||% list()
+
+    error_cnd(
+      class = c(class, "bsides_file_error"),
+      message = paste(
+        vapply(value$messages, \(m) m, character(1)),
+        collapse = "\n"
+      ),
+      files = file_error_frame(
+        name = vapply(files, \(f) f$name, character(1)),
+        reason = vapply(files, \(f) f$reason, character(1)),
+        limit = vapply(files, \(f) as.numeric(f$limit %||% NA), numeric(1))
+      ),
+      call = NULL
     )
   }
 

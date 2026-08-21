@@ -1353,11 +1353,11 @@
       maxSize: { type: Number, attribute: "data-max-size" },
       _items: { state: true },
       _listOpen: { state: true },
-      _errors: { state: true },
+      _failure: { state: true },
       _dragover: { state: true },
       _announcement: { state: true },
       _batch: { state: true },
-      _uploading: { state: true }
+      _phase: { state: true }
     };
     // The batch in flight, if any. One at a time: a new selection cancels
     // and restarts, matching "the selection is the value" semantics.
@@ -1375,15 +1375,6 @@
     // #start(), settled from those callbacks, and read by #onFormSubmit().
     #batchPromise = null;
     #batchSettle = null;
-    // Status is not a pure function of the rows: after a manual-mode
-    // failure the rows read pending-plus-error, and so they do again once
-    // the user edits the set — but the first state is "failed" and the
-    // second "staged". These latches carry the difference. Cleared by any
-    // set edit, a new flight, or a reset.
-    #failed = false;
-    #failureMessage = null;
-    // Auto mode only: a cancelled batch is terminal there.
-    #cancelled = false;
     // Trailing-edge throttle for the progress companion — progress events
     // fire per XHR tick, far faster than the server wants them.
     #progressPending = 0;
@@ -1400,11 +1391,11 @@
       this.maxSize = null;
       this._items = [];
       this._listOpen = true;
-      this._errors = [];
+      this._failure = null;
       this._dragover = false;
       this._announcement = "";
       this._batch = 0;
-      this._uploading = false;
+      this._phase = "idle";
     }
     createRenderRoot() {
       return this;
@@ -1453,6 +1444,10 @@
         settle.resolve();
       }
     }
+    // Render guards and gesture checks need only the boolean.
+    get #uploading() {
+      return this._phase === "uploading";
+    }
     render() {
       return b2`
       <div
@@ -1470,7 +1465,7 @@
           ?multiple=${this.multiple}
           accept=${o5(this.accept || void 0)}
           capture=${o5(this.capture || void 0)}
-          ?disabled=${this.disabled || this._uploading}
+          ?disabled=${this.disabled || this.#uploading}
           data-shiny-no-bind-input
           @change=${this.#onChange}
         />
@@ -1478,7 +1473,7 @@
       </div>
       ${this.#renderBatch()} ${this.#renderList()}
       <p class="file-errors" role="alert">
-        ${this._errors.map(
+        ${this.#failureMessages().map(
         (message) => b2`<span class="file-error">${message}</span>`
       )}
       </p>
@@ -1542,7 +1537,7 @@
     // something is staged, is the affordance that says a second action is
     // coming. Auto mode at rest renders nothing, as before.
     #renderBatch() {
-      if (this._uploading) {
+      if (this.#uploading) {
         return b2`
         <div class="file-batch">
           ${this.#renderProgress(
@@ -1624,7 +1619,7 @@
     // input itself already open the picker; forwarding them would open it
     // twice.
     #onDropzoneClick = (event) => {
-      if (this.disabled || this._uploading) {
+      if (this.disabled || this.#uploading) {
         return;
       }
       if (event.target !== this.#inputElement) {
@@ -1640,7 +1635,7 @@
       }
     };
     #acceptsFiles() {
-      return !this.disabled && !this._uploading;
+      return !this.disabled && !this.#uploading;
     }
     #onDragEnter = (event) => {
       if (!this.#acceptsFiles()) {
@@ -1712,14 +1707,13 @@
     // to 0 with the status. Auto mode marks non-done rows as failed, as
     // before — it has no staged set to return to.
     #onCancel = () => {
-      if (!this._uploading) {
+      if (!this.#uploading) {
         return;
       }
       this.#uploader?.cancel();
       this.#uploader = null;
       this.#settleBatch(new Error("Upload cancelled."));
-      this._uploading = false;
-      this.#cancelled = this.mode !== "manual";
+      this._phase = this.mode === "manual" ? "staged" : "cancelled";
       this.#pushProgressFinal(0);
       this._items = this._items.map((item) => {
         if (this.mode === "manual") {
@@ -1739,39 +1733,44 @@
     // `rejected` carries checks the caller already made — dropped folders,
     // which only a DataTransfer can identify.
     upload(files, rejected = []) {
-      const errors = rejected.map((rejection) => rejectionMessage(rejection));
+      const rejections = [...rejected];
       if (!this.multiple && files.length > 1) {
-        errors.push("Only one file may be uploaded.");
-        this.#reject(errors);
+        rejections.push(
+          ...files.map((file) => ({
+            name: file.name,
+            reason: { kind: "multiple" }
+          }))
+        );
+        this.#reject(rejections);
         return;
       }
       const validation = validateFiles(files, {
         accept: this.accept,
         maxSize: this.maxSize
       });
-      errors.push(
-        ...validation.rejected.map((rejection) => rejectionMessage(rejection))
-      );
+      rejections.push(...validation.rejected);
       if (validation.accepted.length === 0) {
-        this.#reject(errors);
+        this.#reject(rejections);
         return;
       }
-      this._errors = errors;
       if (this.mode === "manual") {
         this.#stage(validation.accepted);
       } else {
         this.#start(validation.accepted);
       }
+      this._failure = rejections.length > 0 ? { kind: "rejection", rejections } : null;
     }
-    // Reports a batch that never started. In manual mode the staged set
-    // survives: a rejected addition adds nothing, but the set being built
-    // is not the thing that failed.
-    #reject(errors) {
-      this._errors = errors;
+    // Reports a gesture that staged or started nothing. In manual mode
+    // the staged set survives — the set being built is not the thing that
+    // failed — and the phase stays where it was: nothing was attempted,
+    // so "failed" would be a lie.
+    #reject(rejections) {
+      this._failure = { kind: "rejection", rejections };
       if (this.mode !== "manual") {
         this._items = [];
+        this._phase = "idle";
       }
-      this.#announce(errors.join(" "));
+      this.#announce(this.#failureMessages().join(" "));
     }
     // Adds validated files to the staged set — upload()'s manual-mode
     // terminal. A delivered batch's rows clear on the next addition: that
@@ -1779,9 +1778,11 @@
     // conflate two batches in one list. A cancelled or failed batch
     // delivered nothing, leaves no done rows, and so survives additions.
     #stage(files) {
-      this.#failed = false;
-      this.#failureMessage = null;
+      this._failure = null;
       let items = this._items.some((item) => item.status === "done") ? [] : this._items;
+      items = items.map(
+        (item) => item.status === "error" ? { ...item, status: "pending" } : item
+      );
       if (!this.multiple) {
         items = [];
       }
@@ -1800,6 +1801,7 @@
       }
       this._items = items;
       this._listOpen = true;
+      this._phase = "staged";
       const count = this._items.length;
       const staged = count === 1 ? "1 file staged" : `${count} files staged`;
       const parts = [
@@ -1821,16 +1823,15 @@
     // done row was delivered at uploadEnd; removing it would not unsend
     // it.
     #removable(item) {
-      return this.mode === "manual" && !this._uploading && (item.status === "pending" || item.status === "error");
+      return this.mode === "manual" && !this.#uploading && (item.status === "pending" || item.status === "error");
     }
     #onRemove(item) {
       const index = this._items.indexOf(item);
-      this._items = this._items.filter((other) => other !== item);
-      this.#failed = false;
-      this.#failureMessage = null;
-      if (item.status === "error") {
-        this._errors = [];
-      }
+      this._items = this._items.filter((other) => other !== item).map(
+        (other) => other.status === "error" ? { ...other, status: "pending" } : other
+      );
+      this._failure = null;
+      this._phase = this._items.length === 0 ? "idle" : "staged";
       this.#announce(`${item.file.name} removed`);
       void this.updateComplete.then(() => {
         const controls = [
@@ -1841,27 +1842,21 @@
       });
     }
     // The Upload button, and the retry entry after a cancel or a failure.
-    // Never routes through upload(), so it clears the previous attempt's
-    // errors itself — the message must not outlive the attempt it
-    // reports.
     #onUpload = () => {
       const files = this.#stagedFiles();
-      if (this.mode !== "manual" || files.length === 0 || this._uploading) {
+      if (this.mode !== "manual" || files.length === 0 || this.#uploading) {
         return;
       }
-      this._errors = [];
       this.#start(files);
     };
     #start(files) {
       this.#uploader?.cancel();
       this.#settleBatch(new Error("Upload restarted."));
       this.#openBatch();
-      this.#failed = false;
-      this.#failureMessage = null;
-      this.#cancelled = false;
+      this._failure = null;
       this.#pushProgressFinal(0);
       this._batch = 0;
-      this._uploading = true;
+      this._phase = "uploading";
       this._listOpen = true;
       this._items = files.map((file) => ({
         file,
@@ -1902,11 +1897,9 @@
         onError: (message) => {
           this.#uploader = null;
           this.#settleBatch(new Error(message));
-          this._uploading = false;
-          this.#failed = true;
-          this.#failureMessage = message;
+          this._phase = "failed";
+          this._failure = { kind: "failure", message };
           this.#pushProgressFinal(0);
-          this._errors = [message];
           this._items = this._items.map((item) => {
             if (this.mode === "manual") {
               const status = item.status === "uploading" ? "error" : "pending";
@@ -1919,7 +1912,7 @@
         onDone: () => {
           this.#uploader = null;
           this.#settleBatch();
-          this._uploading = false;
+          this._phase = "done";
           this._batch = 1;
           this.#pushProgressFinal(1);
           this.#announce(
@@ -1939,16 +1932,13 @@
       this.#uploader?.cancel();
       this.#uploader = null;
       this.#settleBatch(new Error("Upload reset."));
-      this.#failed = false;
-      this.#failureMessage = null;
-      this.#cancelled = false;
       this.#pushProgressFinal(0);
       this._items = [];
       this._listOpen = true;
-      this._errors = [];
+      this._failure = null;
       this._dragover = false;
       this._batch = 0;
-      this._uploading = false;
+      this._phase = "idle";
       const input = this.#inputElement;
       if (input) {
         input.value = "";
@@ -1967,14 +1957,14 @@
     // dedupe drops repeats, and progress pushes separately (throttled)
     // from onProgress.
     updated(changed) {
-      if (changed.has("_uploading")) {
-        if (this._uploading) {
+      if (changed.has("_phase")) {
+        if (this.#uploading) {
           this.setAttribute("aria-busy", "true");
         } else {
           this.removeAttribute("aria-busy");
         }
       }
-      this.#push("status", this.#status());
+      this.#push("status", this._phase);
       this.#push(
         "staged:bsides.file.staged",
         this.mode === "manual" ? this.#stagedFiles().map((file) => ({
@@ -1983,25 +1973,39 @@
           type: file.type
         })) : []
       );
-      this.#push("error", this.#failed ? this.#failureMessage : null);
+      this.#push("error:bsides.file.error", this.#failurePayload());
     }
-    #status() {
-      if (this._uploading) {
-        return "uploading";
+    // The rendered sentences — the .file-errors list and the condition's
+    // message, from one source. Gesture-level rejections repeat one
+    // sentence across their files; the display collapses the duplicates
+    // while the records stay per-file.
+    #failureMessages() {
+      if (this._failure === null) {
+        return [];
       }
-      if (this.#cancelled) {
-        return "cancelled";
+      if (this._failure.kind === "failure") {
+        return [this._failure.message];
       }
-      if (this.#failed) {
-        return "failed";
+      return [...new Set(this._failure.rejections.map(rejectionMessage))];
+    }
+    // The error companion's payload, turned into a condition object by
+    // the bsides.file.error input handler: kind picks the condition's
+    // class, messages its message, files its per-file record frame —
+    // empty when the failure names no file.
+    #failurePayload() {
+      if (this._failure === null) {
+        return null;
       }
-      if (this._items.length === 0) {
-        return "idle";
-      }
-      if (this._items.every((item) => item.status === "done")) {
-        return "done";
-      }
-      return "staged";
+      const files = this._failure.kind === "rejection" ? this._failure.rejections.map((rejection) => ({
+        name: rejection.name,
+        reason: rejection.reason.kind,
+        limit: "limit" in rejection.reason ? rejection.reason.limit : null
+      })) : [];
+      return {
+        kind: this._failure.kind,
+        messages: this.#failureMessages(),
+        files
+      };
     }
     #push(suffix, value) {
       if (this.id) {
@@ -2062,6 +2066,8 @@
         return `${rejection.name} is not an accepted file type.`;
       case "directory":
         return `${rejection.name} is a folder, and folders cannot be uploaded.`;
+      case "multiple":
+        return "Only one file may be uploaded.";
     }
   }
   function formatSize(bytes) {

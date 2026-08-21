@@ -1456,11 +1456,20 @@ for (const name of Object.keys(registered)) {
     uploadButton() !== null && uploadButton().disabled === false)
   check('manual: failed row is removable', removes().length === 2)
 
-  // An addition after a failure appends — the set delivered nothing.
+  // An addition after a failure appends — the set delivered nothing —
+  // and ends the failure's reporting: the message and the row marks
+  // clear together, so no red row outlives its explanation.
   el.upload([file('h.csv', 5, 'text/csv')])
   await el.updateComplete
   check('manual: addition after failure appends',
     eq(names(), ['f.csv', 'g.csv', 'h.csv']), names())
+  check('manual: addition after failure clears the row marks',
+    [...el.querySelectorAll('.file-item')].every(
+      (row) => row.className === 'file-item pending'),
+    [...el.querySelectorAll('.file-item')].map((row) => row.className))
+  check('manual: addition after failure clears the message',
+    el.querySelector('.file-error') === null,
+    el.querySelector('.file-errors').textContent)
 
   // A retry clears the previous attempt's message and resets marks.
   uploadButton().click()
@@ -1474,7 +1483,8 @@ for (const name of Object.keys(registered)) {
       (row) => row.className === 'file-item done'),
     [...el.querySelectorAll('.file-item')].map((row) => row.className))
 
-  // Removing the failed row also ends the failure's reporting.
+  // Any set edit ends the failure's reporting: removing the pending
+  // row clears the message and the surviving row's mark alike.
   el.upload([file('i.csv', 10, 'text/csv'), file('j.csv', 10, 'text/csv')])
   await el.updateComplete
   win.__posts = []
@@ -1483,12 +1493,15 @@ for (const name of Object.keys(registered)) {
   await tick(30)
   await el.updateComplete
   win.__postPlan = null
-  removes()[1].click()
+  removes()[0].click()
   await el.updateComplete
   await tick(0)
-  check('manual: removing the failed row clears the message',
+  check('manual: removing a row clears the message',
     el.querySelector('.file-error') === null,
     el.querySelector('.file-errors').textContent)
+  check('manual: removing a row clears the surviving mark',
+    el.querySelector('.file-item').className === 'file-item pending',
+    el.querySelector('.file-item').className)
   removes()[0].click()
   await el.updateComplete
   await tick(0)
@@ -1573,6 +1586,43 @@ for (const name of Object.keys(registered)) {
   check('state: staged empty at idle', eq(last('staged'), []), last('staged'))
   check('state: no error at idle', last('error') === null)
 
+  // A rejection feeds the error companion structured records — kind,
+  // the rendered sentences, one row per file — and leaves the status
+  // alone: nothing was attempted.
+  el.upload([], [{ name: 'stuff', reason: { kind: 'directory' } }])
+  await el.updateComplete
+  check('state: rejection pushes a record',
+    eq(last('error'), {
+      kind: 'rejection',
+      messages: ['stuff is a folder, and folders cannot be uploaded.'],
+      files: [{ name: 'stuff', reason: 'directory', limit: null }],
+    }),
+    last('error'))
+  check('state: rejection leaves status alone',
+    last('status') === 'idle', last('status'))
+
+  // A reason with a limit carries it into the record.
+  el.maxSize = 5
+  el.upload([file('big.csv', 10, 'text/csv')])
+  await el.updateComplete
+  check('state: size rejection carries the limit',
+    eq(last('error').files, [{ name: 'big.csv', reason: 'size', limit: 5 }]),
+    last('error'))
+  el.maxSize = null
+
+  // A gesture-level rejection is recorded against every file in the
+  // gesture, under one sentence.
+  el.multiple = false
+  await el.updateComplete
+  el.upload([file('x.csv', 4, 'text/csv'), file('y.csv', 4, 'text/csv')])
+  await el.updateComplete
+  check('state: gesture-level rejection records every file',
+    eq(last('error').files.map((f) => f.name), ['x.csv', 'y.csv']) &&
+      last('error').messages.length === 1,
+    last('error'))
+  el.multiple = true
+  await el.updateComplete
+
   // One two-file gesture pushes the staged set once, whole.
   const stagedBefore = count('staged')
   el.upload([file('a.csv', 10, 'text/csv'), file('b.csv', 20, 'text/csv')])
@@ -1588,6 +1638,7 @@ for (const name of Object.keys(registered)) {
   check('state: one gesture pushes the set once',
     count('staged') === stagedBefore + 1,
     count('staged') - stagedBefore)
+  check('state: a set edit clears the error', last('error') === null)
 
   // A removal is a set edit.
   el.querySelector('.file-item-remove').click()
@@ -1645,9 +1696,21 @@ for (const name of Object.keys(registered)) {
   await el.updateComplete
   win.__postPlan = null
   check('state: failure reported', last('status') === 'failed')
-  check('state: failure message pushed',
-    typeof last('error') === 'string' && last('error').length > 0,
+  check('state: failure record pushed',
+    last('error') !== null &&
+      last('error').kind === 'failure' &&
+      last('error').messages.length === 1 &&
+      eq(last('error').files, []),
     last('error'))
+
+  // A set edit after a failure is "staged", not "failed" — the marks
+  // clear with the message.
+  el.upload([file('d.csv', 10, 'text/csv')])
+  await el.updateComplete
+  check('state: edit after failure lands in staged',
+    last('status') === 'staged', last('status'))
+  check('state: edit after failure clears the error',
+    last('error') === null)
 
   el.querySelector('.file-upload').click()
   await tick(30)

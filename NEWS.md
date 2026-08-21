@@ -78,7 +78,12 @@
   the component — an observer of the batch fraction does not re-run as
   the staged set is edited, and none of it touches `input$<id>`. Enable
   a submit while `nrow(file_upload_staged(id)) > 0`, or render a live
-  progress line server-side.
+  progress line server-side. `file_upload_error()` returns a condition
+  object covering validation rejections as well as transport failures:
+  `conditionMessage()` for the headline, `$files` for a per-file frame
+  of `name`, `reason`, and `limit`, and the class — `bsides_file_rejection`
+  or `bsides_file_failure`, both inheriting `bsides_file_error` — to
+  tell whether a staged set survived.
 
 * New `update_numeric()`, the counterpart to `input_numeric()`. Update a
   numeric input's `value`, `min`, `max`, `step`, or disabled state from the

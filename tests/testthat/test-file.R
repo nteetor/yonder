@@ -80,7 +80,7 @@ test_that("file upload readers are sugar over companion inputs", {
     test__bsides_status = "uploading",
     test__bsides_progress = 0.4,
     test__bsides_staged = data.frame(name = "a.csv", size = 10, type = ""),
-    test__bsides_error = "boom"
+    test__bsides_error = error_cnd("bsides_file_failure", message = "boom")
   )
 
   expect_equal(file_upload_status("test", session = session), "uploading")
@@ -89,7 +89,10 @@ test_that("file upload readers are sugar over companion inputs", {
     file_upload_staged("test", session = session),
     data.frame(name = "a.csv", size = 10, type = "")
   )
-  expect_equal(file_upload_error("test", session = session), "boom")
+  expect_equal(
+    conditionMessage(file_upload_error("test", session = session)),
+    "boom"
+  )
 
   # Before the first push each reader is total, at its idle default.
   expect_equal(file_upload_status("none", session = session), "idle")
@@ -131,6 +134,61 @@ test_that("the staged input handler builds the data frame", {
       type = c("text/csv", "")
     )
   )
+})
+
+test_that("the error input handler builds the condition", {
+  handler <- function(value) {
+    shiny:::inputHandlers$get(file_error_input_type)(value, NULL, "x")
+  }
+
+  expect_null(handler(NULL))
+
+  rejection <- handler(list(
+    kind = "rejection",
+    messages = list(
+      "a.csv is larger than the 5 MB upload limit.",
+      "b.txt is not an accepted file type."
+    ),
+    files = list(
+      list(name = "a.csv", reason = "size", limit = 5242880),
+      list(name = "b.txt", reason = "accept", limit = NULL)
+    )
+  ))
+
+  expect_s3_class(
+    rejection,
+    c("bsides_file_rejection", "bsides_file_error", "error", "condition")
+  )
+  expect_equal(
+    conditionMessage(rejection),
+    paste(
+      "a.csv is larger than the 5 MB upload limit.",
+      "b.txt is not an accepted file type.",
+      sep = "\n"
+    )
+  )
+  expect_equal(
+    rejection$files,
+    data.frame(
+      name = c("a.csv", "b.txt"),
+      reason = c("size", "accept"),
+      limit = c(5242880, NA)
+    )
+  )
+  expect_null(conditionCall(rejection))
+
+  failure <- handler(list(
+    kind = "failure",
+    messages = list("Maximum upload size exceeded"),
+    files = list()
+  ))
+
+  expect_s3_class(
+    failure,
+    c("bsides_file_failure", "bsides_file_error", "error", "condition")
+  )
+  expect_equal(conditionMessage(failure), "Maximum upload size exceeded")
+  expect_equal(nrow(failure$files), 0)
 })
 
 test_that("update_file() sends only the arguments it is given", {

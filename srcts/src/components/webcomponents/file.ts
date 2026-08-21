@@ -32,6 +32,21 @@ interface FileItem {
   progress: number;
 }
 
+// The status companion's vocabulary, held outright rather than derived:
+// the current set ("idle"/"staged") and the last batch's outcome
+// ("done", "failed", "cancelled") are orthogonal, and the rows alone
+// cannot answer the second — whatever happened next overwrote them.
+// Assigned at every transition.
+type Phase = 'idle' | 'staged' | 'uploading' | 'done' | 'failed' | 'cancelled';
+
+// What the .file-errors list and the error companion report, from one
+// source so the two cannot drift. Rejections carry the per-file records
+// validation produced; a transport failure has only the Uploader's
+// message.
+type Failure =
+  | { kind: 'rejection'; rejections: Rejection[] }
+  | { kind: 'failure'; message: string };
+
 // The file input element. It owns the picker, the list of selected files,
 // and the upload lifecycle; the binding beside it (inputFile.ts) only
 // relays server messages.
@@ -51,11 +66,11 @@ class BsidesFile extends LitElement {
     maxSize: { type: Number, attribute: 'data-max-size' },
     _items: { state: true },
     _listOpen: { state: true },
-    _errors: { state: true },
+    _failure: { state: true },
     _dragover: { state: true },
     _announcement: { state: true },
     _batch: { state: true },
-    _uploading: { state: true },
+    _phase: { state: true },
   };
 
   declare multiple: boolean;
@@ -68,11 +83,11 @@ class BsidesFile extends LitElement {
   declare maxSize: number | null;
   declare _items: FileItem[];
   declare _listOpen: boolean;
-  declare _errors: string[];
+  declare _failure: Failure | null;
   declare _dragover: boolean;
   declare _announcement: string;
   declare _batch: number;
-  declare _uploading: boolean;
+  declare _phase: Phase;
 
   // The batch in flight, if any. One at a time: a new selection cancels
   // and restarts, matching "the selection is the value" semantics.
@@ -97,16 +112,6 @@ class BsidesFile extends LitElement {
     reject: (reason: Error) => void;
   } | null = null;
 
-  // Status is not a pure function of the rows: after a manual-mode
-  // failure the rows read pending-plus-error, and so they do again once
-  // the user edits the set — but the first state is "failed" and the
-  // second "staged". These latches carry the difference. Cleared by any
-  // set edit, a new flight, or a reset.
-  #failed = false;
-  #failureMessage: string | null = null;
-  // Auto mode only: a cancelled batch is terminal there.
-  #cancelled = false;
-
   // Trailing-edge throttle for the progress companion — progress events
   // fire per XHR tick, far faster than the server wants them.
   #progressPending = 0;
@@ -124,11 +129,11 @@ class BsidesFile extends LitElement {
     this.maxSize = null;
     this._items = [];
     this._listOpen = true;
-    this._errors = [];
+    this._failure = null;
     this._dragover = false;
     this._announcement = '';
     this._batch = 0;
-    this._uploading = false;
+    this._phase = 'idle';
   }
 
   override createRenderRoot(): this {
@@ -196,6 +201,11 @@ class BsidesFile extends LitElement {
     }
   }
 
+  // Render guards and gesture checks need only the boolean.
+  get #uploading(): boolean {
+    return this._phase === 'uploading';
+  }
+
   override render(): unknown {
     return html`
       <div
@@ -213,7 +223,7 @@ class BsidesFile extends LitElement {
           ?multiple=${this.multiple}
           accept=${ifDefined(this.accept || undefined)}
           capture=${ifDefined(this.capture || undefined)}
-          ?disabled=${this.disabled || this._uploading}
+          ?disabled=${this.disabled || this.#uploading}
           data-shiny-no-bind-input
           @change=${this.#onChange}
         />
@@ -221,7 +231,7 @@ class BsidesFile extends LitElement {
       </div>
       ${this.#renderBatch()} ${this.#renderList()}
       <p class="file-errors" role="alert">
-        ${this._errors.map(
+        ${this.#failureMessages().map(
           (message) => html`<span class="file-error">${message}</span>`,
         )}
       </p>
@@ -301,7 +311,7 @@ class BsidesFile extends LitElement {
   // something is staged, is the affordance that says a second action is
   // coming. Auto mode at rest renders nothing, as before.
   #renderBatch(): unknown {
-    if (this._uploading) {
+    if (this.#uploading) {
       return html`
         <div class="file-batch">
           ${this.#renderProgress(
@@ -398,7 +408,7 @@ class BsidesFile extends LitElement {
   // input itself already open the picker; forwarding them would open it
   // twice.
   #onDropzoneClick = (event: Event): void => {
-    if (this.disabled || this._uploading) {
+    if (this.disabled || this.#uploading) {
       return;
     }
 
@@ -421,7 +431,7 @@ class BsidesFile extends LitElement {
   };
 
   #acceptsFiles(): boolean {
-    return !this.disabled && !this._uploading;
+    return !this.disabled && !this.#uploading;
   }
 
   #onDragEnter = (event: DragEvent): void => {
@@ -514,15 +524,14 @@ class BsidesFile extends LitElement {
   // to 0 with the status. Auto mode marks non-done rows as failed, as
   // before — it has no staged set to return to.
   #onCancel = (): void => {
-    if (!this._uploading) {
+    if (!this.#uploading) {
       return;
     }
 
     this.#uploader?.cancel();
     this.#uploader = null;
     this.#settleBatch(new Error('Upload cancelled.'));
-    this._uploading = false;
-    this.#cancelled = this.mode !== 'manual';
+    this._phase = this.mode === 'manual' ? 'staged' : 'cancelled';
     this.#pushProgressFinal(0);
     this._items = this._items.map((item) => {
       if (this.mode === 'manual') {
@@ -546,12 +555,19 @@ class BsidesFile extends LitElement {
   // `rejected` carries checks the caller already made — dropped folders,
   // which only a DataTransfer can identify.
   upload(files: File[], rejected: Rejection[] = []): void {
-    const errors = rejected.map((rejection) => rejectionMessage(rejection));
+    const rejections = [...rejected];
 
-    // Silently keeping the first file would read as data loss.
+    // Silently keeping the first file would read as data loss. A
+    // gesture-level rule, recorded against every file in the gesture so
+    // the failure record stays per-file.
     if (!this.multiple && files.length > 1) {
-      errors.push('Only one file may be uploaded.');
-      this.#reject(errors);
+      rejections.push(
+        ...files.map((file) => ({
+          name: file.name,
+          reason: { kind: 'multiple' as const },
+        })),
+      );
+      this.#reject(rejections);
       return;
     }
 
@@ -560,35 +576,38 @@ class BsidesFile extends LitElement {
       maxSize: this.maxSize,
     });
 
-    errors.push(
-      ...validation.rejected.map((rejection) => rejectionMessage(rejection)),
-    );
+    rejections.push(...validation.rejected);
 
     if (validation.accepted.length === 0) {
-      this.#reject(errors);
+      this.#reject(rejections);
       return;
     }
-
-    this._errors = errors;
 
     if (this.mode === 'manual') {
       this.#stage(validation.accepted);
     } else {
       this.#start(validation.accepted);
     }
+
+    // After the terminals: they clear the previous failure, and a
+    // partially-rejected gesture's own records must outlive that.
+    this._failure =
+      rejections.length > 0 ? { kind: 'rejection', rejections } : null;
   }
 
-  // Reports a batch that never started. In manual mode the staged set
-  // survives: a rejected addition adds nothing, but the set being built
-  // is not the thing that failed.
-  #reject(errors: string[]): void {
-    this._errors = errors;
+  // Reports a gesture that staged or started nothing. In manual mode
+  // the staged set survives — the set being built is not the thing that
+  // failed — and the phase stays where it was: nothing was attempted,
+  // so "failed" would be a lie.
+  #reject(rejections: Rejection[]): void {
+    this._failure = { kind: 'rejection', rejections };
 
     if (this.mode !== 'manual') {
       this._items = [];
+      this._phase = 'idle';
     }
 
-    this.#announce(errors.join(' '));
+    this.#announce(this.#failureMessages().join(' '));
   }
 
   // Adds validated files to the staged set — upload()'s manual-mode
@@ -597,12 +616,18 @@ class BsidesFile extends LitElement {
   // conflate two batches in one list. A cancelled or failed batch
   // delivered nothing, leaves no done rows, and so survives additions.
   #stage(files: File[]): void {
-    this.#failed = false;
-    this.#failureMessage = null;
+    this._failure = null;
 
     let items = this._items.some((item) => item.status === 'done')
       ? []
       : this._items;
+
+    // A set edit ends the last failure's reporting, the error marks on
+    // surviving rows included — a mark outliving its message would be a
+    // red row with nothing left to explain it.
+    items = items.map((item) =>
+      item.status === 'error' ? { ...item, status: 'pending' as const } : item,
+    );
 
     // select = "one": a new pick replaces the staged file. Multi-file
     // gestures were already rejected whole by upload().
@@ -630,6 +655,7 @@ class BsidesFile extends LitElement {
 
     this._items = items;
     this._listOpen = true;
+    this._phase = 'staged';
 
     const count = this._items.length;
     const staged = count === 1 ? '1 file staged' : `${count} files staged`;
@@ -659,7 +685,7 @@ class BsidesFile extends LitElement {
   #removable(item: FileItem): boolean {
     return (
       this.mode === 'manual' &&
-      !this._uploading &&
+      !this.#uploading &&
       (item.status === 'pending' || item.status === 'error')
     );
   }
@@ -667,15 +693,17 @@ class BsidesFile extends LitElement {
   #onRemove(item: FileItem): void {
     const index = this._items.indexOf(item);
 
-    this._items = this._items.filter((other) => other !== item);
-    this.#failed = false;
-    this.#failureMessage = null;
-
-    // Removing the failed row is the other way out of a failure; it
-    // ends the failure's reporting the way a retry does.
-    if (item.status === 'error') {
-      this._errors = [];
-    }
+    // A set edit ends the last failure's reporting — the message, and
+    // the marks on the rows that remain.
+    this._items = this._items
+      .filter((other) => other !== item)
+      .map((other) =>
+        other.status === 'error'
+          ? { ...other, status: 'pending' as const }
+          : other,
+      );
+    this._failure = null;
+    this._phase = this._items.length === 0 ? 'idle' : 'staged';
 
     this.#announce(`${item.file.name} removed`);
 
@@ -698,17 +726,13 @@ class BsidesFile extends LitElement {
   }
 
   // The Upload button, and the retry entry after a cancel or a failure.
-  // Never routes through upload(), so it clears the previous attempt's
-  // errors itself — the message must not outlive the attempt it
-  // reports.
   #onUpload = (): void => {
     const files = this.#stagedFiles();
 
-    if (this.mode !== 'manual' || files.length === 0 || this._uploading) {
+    if (this.mode !== 'manual' || files.length === 0 || this.#uploading) {
       return;
     }
 
-    this._errors = [];
     this.#start(files);
   };
 
@@ -717,13 +741,13 @@ class BsidesFile extends LitElement {
     this.#settleBatch(new Error('Upload restarted.'));
     this.#openBatch();
 
-    this.#failed = false;
-    this.#failureMessage = null;
-    this.#cancelled = false;
+    // A new flight ends the previous attempt's reporting — the message
+    // must not outlive the attempt it reports.
+    this._failure = null;
     this.#pushProgressFinal(0);
 
     this._batch = 0;
-    this._uploading = true;
+    this._phase = 'uploading';
     this._listOpen = true;
     this._items = files.map((file) => ({
       file,
@@ -773,11 +797,9 @@ class BsidesFile extends LitElement {
       onError: (message) => {
         this.#uploader = null;
         this.#settleBatch(new Error(message));
-        this._uploading = false;
-        this.#failed = true;
-        this.#failureMessage = message;
+        this._phase = 'failed';
+        this._failure = { kind: 'failure', message };
         this.#pushProgressFinal(0);
-        this._errors = [message];
         this._items = this._items.map((item) => {
           if (this.mode === 'manual') {
             const status: ItemStatus =
@@ -795,7 +817,7 @@ class BsidesFile extends LitElement {
       onDone: () => {
         this.#uploader = null;
         this.#settleBatch();
-        this._uploading = false;
+        this._phase = 'done';
         this._batch = 1;
         this.#pushProgressFinal(1);
         this.#announce(
@@ -821,16 +843,13 @@ class BsidesFile extends LitElement {
     this.#uploader?.cancel();
     this.#uploader = null;
     this.#settleBatch(new Error('Upload reset.'));
-    this.#failed = false;
-    this.#failureMessage = null;
-    this.#cancelled = false;
     this.#pushProgressFinal(0);
     this._items = [];
     this._listOpen = true;
-    this._errors = [];
+    this._failure = null;
     this._dragover = false;
     this._batch = 0;
-    this._uploading = false;
+    this._phase = 'idle';
 
     const input = this.#inputElement;
 
@@ -853,15 +872,15 @@ class BsidesFile extends LitElement {
   // dedupe drops repeats, and progress pushes separately (throttled)
   // from onProgress.
   override updated(changed: Map<string, unknown>): void {
-    if (changed.has('_uploading')) {
-      if (this._uploading) {
+    if (changed.has('_phase')) {
+      if (this.#uploading) {
         this.setAttribute('aria-busy', 'true');
       } else {
         this.removeAttribute('aria-busy');
       }
     }
 
-    this.#push('status', this.#status());
+    this.#push('status', this._phase);
     this.#push(
       'staged:bsides.file.staged',
       this.mode === 'manual'
@@ -872,31 +891,48 @@ class BsidesFile extends LitElement {
           }))
         : [],
     );
-    this.#push('error', this.#failed ? this.#failureMessage : null);
+    this.#push('error:bsides.file.error', this.#failurePayload());
   }
 
-  #status(): string {
-    if (this._uploading) {
-      return 'uploading';
+  // The rendered sentences — the .file-errors list and the condition's
+  // message, from one source. Gesture-level rejections repeat one
+  // sentence across their files; the display collapses the duplicates
+  // while the records stay per-file.
+  #failureMessages(): string[] {
+    if (this._failure === null) {
+      return [];
     }
 
-    if (this.#cancelled) {
-      return 'cancelled';
+    if (this._failure.kind === 'failure') {
+      return [this._failure.message];
     }
 
-    if (this.#failed) {
-      return 'failed';
+    return [...new Set(this._failure.rejections.map(rejectionMessage))];
+  }
+
+  // The error companion's payload, turned into a condition object by
+  // the bsides.file.error input handler: kind picks the condition's
+  // class, messages its message, files its per-file record frame —
+  // empty when the failure names no file.
+  #failurePayload(): unknown {
+    if (this._failure === null) {
+      return null;
     }
 
-    if (this._items.length === 0) {
-      return 'idle';
-    }
+    const files =
+      this._failure.kind === 'rejection'
+        ? this._failure.rejections.map((rejection) => ({
+            name: rejection.name,
+            reason: rejection.reason.kind,
+            limit: 'limit' in rejection.reason ? rejection.reason.limit : null,
+          }))
+        : [];
 
-    if (this._items.every((item) => item.status === 'done')) {
-      return 'done';
-    }
-
-    return 'staged';
+    return {
+      kind: this._failure.kind,
+      messages: this.#failureMessages(),
+      files,
+    };
   }
 
   #push(suffix: string, value: unknown): void {
@@ -980,6 +1016,8 @@ function rejectionMessage(rejection: Rejection): string {
       return `${rejection.name} is not an accepted file type.`;
     case 'directory':
       return `${rejection.name} is a folder, and folders cannot be uploaded.`;
+    case 'multiple':
+      return 'Only one file may be uploaded.';
   }
 }
 
