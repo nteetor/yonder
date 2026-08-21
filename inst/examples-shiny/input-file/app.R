@@ -31,6 +31,13 @@
 #      the set returns, ready to retry. upload_max = 3 caps the set:
 #      once full the input stops accepting files until one is removed,
 #      and a drop that would overfill it is rejected whole.
+#
+#      The card renders the file_upload_*() readers live rather than
+#      printing them: the status string as a badge, the staged set with
+#      sizes, a progress bar while a batch is in flight, the delivered
+#      value, and — drop a folder, or a fourth file — the condition
+#      from file_upload_error(): its class, its message, and the
+#      per-file reason codes underneath.
 
 library(yonder)
 library(bslib)
@@ -58,6 +65,20 @@ progress_listener <-
        });
      });"
   ))
+
+# Binary steps under decimal labels, matching the file input's own size
+# formatting.
+format_size <- function(bytes) {
+  units <- c("B", "kB", "MB", "GB", "TB")
+  unit <- 1
+
+  while (bytes >= 1024 && unit < length(units)) {
+    bytes <- bytes / 1024
+    unit <- unit + 1
+  }
+
+  paste(if (unit == 1) bytes else round(bytes, 1), units[unit])
+}
 
 shinyApp(
   ui = page_fluid(
@@ -114,7 +135,7 @@ shinyApp(
           placeholder = "Stage files, then upload together"
         ),
         input_button(id = "start", label = "Start from the server"),
-        verbatimTextOutput("staged_value")
+        uiOutput("staged_state")
       )
     )
   ),
@@ -170,8 +191,107 @@ shinyApp(
       }
     })
 
-    output$staged_value <- renderPrint({
-      input$staged
+    # The readers rendered live, each shown as itself: the badge is the
+    # literal status string, the reasons are the condition's stable
+    # codes. Reading four readers here means this re-renders whenever
+    # any facet changes, progress ticks included — fine for a demo, and
+    # the liveness is the point.
+    output$staged_state <- renderUI({
+      status <- file_upload_status("staged")
+      staged <- file_upload_staged("staged")
+      err <- file_upload_error("staged")
+      delivered <- input$staged
+
+      appearance <- c(
+        idle = "secondary",
+        staged = "info",
+        uploading = "primary",
+        done = "success",
+        failed = "danger",
+        cancelled = "warning"
+      )
+
+      header <- div(
+        class = "d-flex align-items-center gap-2",
+        span(
+          class = paste0("badge text-bg-", appearance[[status]]),
+          status
+        ),
+        span(
+          class = "small text-body-secondary",
+          sprintf("%d of 3 staged", nrow(staged))
+        )
+      )
+
+      bar <- if (status == "uploading") {
+        percent <- round(file_upload_progress("staged") * 100)
+        div(
+          class = "progress",
+          style = "height: 0.5rem",
+          div(class = "progress-bar", style = sprintf("width: %d%%", percent))
+        )
+      }
+
+      rows <- if (nrow(staged) > 0) {
+        tags$ul(
+          class = "list-group list-group-flush small",
+          lapply(seq_len(nrow(staged)), function(i) {
+            tags$li(
+              class = "list-group-item d-flex justify-content-between px-0",
+              span(staged$name[i]),
+              span(class = "text-body-secondary", format_size(staged$size[i]))
+            )
+          })
+        )
+      }
+
+      # The condition at both depths: conditionMessage() as the
+      # headline, $files as the per-file detail. The reason codes are
+      # the stable surface; the message text is display copy.
+      alert <- if (!is.null(err)) {
+        rejection <- inherits(err, "bsides_file_rejection")
+
+        div(
+          class = "alert alert-danger small mb-0",
+          div(
+            strong(if (rejection) "Rejected" else "Upload failed"),
+            lapply(strsplit(conditionMessage(err), "\n")[[1]], div)
+          ),
+          if (nrow(err$files) > 0) {
+            tags$table(
+              class = "table table-sm table-borderless small mb-0 mt-2",
+              tags$tbody(
+                lapply(seq_len(nrow(err$files)), function(i) {
+                  limit <- err$files$limit[i]
+
+                  tags$tr(
+                    tags$td(err$files$name[i]),
+                    tags$td(tags$code(err$files$reason[i])),
+                    tags$td(
+                      if (is.na(limit)) {
+                        ""
+                      } else if (err$files$reason[i] == "size") {
+                        format_size(limit)
+                      } else {
+                        limit
+                      }
+                    )
+                  )
+                })
+              )
+            )
+          }
+        )
+      }
+
+      sent <- if (!is.null(delivered)) {
+        div(
+          class = "small text-success",
+          sprintf("Delivered: %s", paste(delivered$name, collapse = ", "))
+        )
+      }
+
+      div(class = "d-flex flex-column gap-2", header, bar, rows, alert, sent)
     })
 
     observeEvent(input$start, {
