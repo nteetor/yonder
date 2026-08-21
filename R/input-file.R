@@ -2,9 +2,9 @@
 #'
 #' Upload files to the server. By default files upload as soon as they
 #' are chosen; with `upload_mode = "manual"` they accumulate in a staged
-#' set, each removable, until the input's Upload button starts the
-#' batch. A progress bar tracks a batch in flight and a cancel control
-#' abandons it.
+#' set, each removable, until an explicit action starts the batch. A
+#' progress bar tracks a batch in flight and a cancel control abandons
+#' it.
 #'
 #' @inheritParams input_checkbox
 #'
@@ -18,9 +18,10 @@
 #'   upload as soon as they are chosen. With `"manual"` files accumulate
 #'   in a staged set — each removable before flight, a same-named
 #'   addition replacing its predecessor — and an explicit action starts
-#'   the batch: the input's Upload button, or [file_upload_start()] from
-#'   the server. A cancelled or failed batch returns to the staged set,
-#'   ready to retry whole.
+#'   the batch: the input's Upload button, a surrounding
+#'   [input_form()]'s submit, or [file_upload_start()] from the server.
+#'   A cancelled or failed batch returns to the staged set, ready to
+#'   retry whole.
 #'
 #' @param upload_button A character string. With `"show"` (default) a
 #'   manual-mode input renders its own Upload button; with `"none"` it
@@ -32,14 +33,18 @@
 #'   mode, which has no Upload button.
 #'
 #' @param upload_max A whole number bounding how many files one batch
-#'   may contain, defaults to `NULL`, no bound. In manual mode the
-#'   staged set counts toward the bound and the input stops accepting
-#'   files once full — remove a file to make room. Delivered rows do not
-#'   count: they are not part of the next batch. In auto mode, and for
-#'   drops and pastes that would overfill a staged set, a gesture
-#'   selecting too many files is rejected whole rather than trimmed —
-#'   quietly keeping part of a selection would read as data loss. With
-#'   `select = "one"` a single file is already the bound.
+#'   may contain, defaults to `NULL`, no bound.
+#'
+#'   In manual mode, the staged set counts toward the bound and the input stops
+#'   accepting files once full — remove a file to make room. Delivered rows do
+#'   not count: they are not part of the next batch. A file with the same name
+#'   as a staged one replaces it rather than adding, so a replacing drop passes
+#'   even at the bound.
+#'
+#'   In auto mode, and for drops and pastes that would overfill a staged set, a
+#'   gesture selecting too many files is rejected whole rather than trimmed —
+#'   quietly keeping part of a selection would read as data loss. With `select =
+#'   "one"` a single file is already the bound.
 #'
 #' @param accept A character vector of file extensions (`".csv"`), MIME
 #'   types (`"text/csv"`), or MIME wildcards (`"image/*"`) bounding what
@@ -210,9 +215,11 @@ input_file <-
 #' Update a file input
 #'
 #' Update the properties of an [input_file()]: what it accepts, its
-#' prompt and summary line, and its enabled state. The value is never
-#' set from the server — the upload protocol writes it as a batch
-#' completes, and offers no way to set or unset it.
+#' prompt and summary line, and its enabled state. The upload arguments
+#' (`upload_mode`, `upload_button`, `upload_max`) are fixed at render
+#' time and cannot be updated. The value is never set from the server —
+#' the upload protocol writes it as a batch completes, and offers no
+#' way to set or unset it.
 #'
 #' @inheritParams input_file
 #'
@@ -313,8 +320,9 @@ reset_file <-
 #'   already in flight.
 #' * `file_upload_cancel()` abandons the batch in flight, landing where
 #'   the Cancel button lands: in manual mode the rows return to the
-#'   staged set, ready to retry; in auto mode they are marked failed. A
-#'   no-op when nothing is in flight.
+#'   staged set, ready to retry; in auto mode the cancel is terminal —
+#'   unfinished rows keep a failure mark and the status reads
+#'   `"cancelled"`. A no-op when nothing is in flight.
 #'
 #' The readers:
 #'
@@ -332,12 +340,14 @@ reset_file <-
 #'   is a data frame of `name`, `reason`, and `limit`, one row per
 #'   rejected file, with zero rows when the failure names no file. The
 #'   class says what happened: `bsides_file_rejection` means nothing
-#'   was attempted and a staged set is intact — a dropped folder, an
-#'   unaccepted type, an oversize file — where `bsides_file_failure`
-#'   means a batch started and died in transport; both inherit from
-#'   `bsides_file_error`. The `reason` codes (`"size"`, `"accept"`,
-#'   `"directory"`, `"multiple"`) are the stable surface — the message
-#'   text is written for display and may be reworded.
+#'   was attempted — a dropped folder, an unaccepted type, an oversize
+#'   file, a gesture past `upload_max` — and in manual mode the staged
+#'   set is intact; `bsides_file_failure` means a batch started and
+#'   died in transport. Both inherit from `bsides_file_error`. The
+#'   `reason` codes (`"size"`, `"accept"`, `"directory"`, `"multiple"`,
+#'   `"count"`) are the stable surface — the message text is written
+#'   for display and may be reworded. The reader returns to `NULL` on
+#'   any edit of the staged set, a new batch, or [reset_file()].
 #'
 #' Each reader is a reactive read of a companion input pushed by the
 #' component, so an observer or reactive using one invalidates only

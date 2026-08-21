@@ -42,9 +42,11 @@ No return value, called for side effects.
 }
 \description{
 Update the properties of an \code{\link[=input_file]{input_file()}}: what it accepts, its
-prompt and summary line, and its enabled state. The value is never
-set from the server — the upload protocol writes it as a batch
-completes, and offers no way to set or unset it.
+prompt and summary line, and its enabled state. The upload arguments
+(\code{upload_mode}, \code{upload_button}, \code{upload_max}) are fixed at render
+time and cannot be updated. The value is never set from the server —
+the upload protocol writes it as a batch completes, and offers no
+way to set or unset it.
 }
 \seealso{
 \code{\link[=input_file]{input_file()}}, \code{\link[=reset_file]{reset_file()}}

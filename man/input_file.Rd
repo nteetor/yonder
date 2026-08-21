@@ -35,9 +35,10 @@ may be chosen, with \code{"many"} any number.}
 upload as soon as they are chosen. With \code{"manual"} files accumulate
 in a staged set — each removable before flight, a same-named
 addition replacing its predecessor — and an explicit action starts
-the batch: the input's Upload button, or \code{\link[=file_upload_start]{file_upload_start()}} from
-the server. A cancelled or failed batch returns to the staged set,
-ready to retry whole.}
+the batch: the input's Upload button, a surrounding
+\code{\link[=input_form]{input_form()}}'s submit, or \code{\link[=file_upload_start]{file_upload_start()}} from the server.
+A cancelled or failed batch returns to the staged set, ready to
+retry whole.}
 
 \item{upload_button}{A character string. With \code{"show"} (default) a
 manual-mode input renders its own Upload button; with \code{"none"} it
@@ -49,14 +50,17 @@ control still appears while a batch is in flight. Ignored in auto
 mode, which has no Upload button.}
 
 \item{upload_max}{A whole number bounding how many files one batch
-may contain, defaults to \code{NULL}, no bound. In manual mode the
-staged set counts toward the bound and the input stops accepting
-files once full — remove a file to make room. Delivered rows do not
-count: they are not part of the next batch. In auto mode, and for
-drops and pastes that would overfill a staged set, a gesture
-selecting too many files is rejected whole rather than trimmed —
-quietly keeping part of a selection would read as data loss. With
-\code{select = "one"} a single file is already the bound.}
+may contain, defaults to \code{NULL}, no bound.
+
+In manual mode, the staged set counts toward the bound and the input stops
+accepting files once full — remove a file to make room. Delivered rows do
+not count: they are not part of the next batch. A file with the same name
+as a staged one replaces it rather than adding, so a replacing drop passes
+even at the bound.
+
+In auto mode, and for drops and pastes that would overfill a staged set, a
+gesture selecting too many files is rejected whole rather than trimmed —
+quietly keeping part of a selection would read as data loss. With \code{select = "one"} a single file is already the bound.}
 
 \item{accept}{A character vector of file extensions (\code{".csv"}), MIME
 types (\code{"text/csv"}), or MIME wildcards (\code{"image/*"}) bounding what
@@ -101,9 +105,9 @@ A shiny tag object.
 \description{
 Upload files to the server. By default files upload as soon as they
 are chosen; with \code{upload_mode = "manual"} they accumulate in a staged
-set, each removable, until the input's Upload button starts the
-batch. A progress bar tracks a batch in flight and a cancel control
-abandons it.
+set, each removable, until an explicit action starts the batch. A
+progress bar tracks a batch in flight and a cancel control abandons
+it.
 }
 \details{
 \subsection{Uploading}{

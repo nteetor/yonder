@@ -47,8 +47,9 @@ Upload button. A no-op when nothing is staged or a batch is
 already in flight.
 \item \code{file_upload_cancel()} abandons the batch in flight, landing where
 the Cancel button lands: in manual mode the rows return to the
-staged set, ready to retry; in auto mode they are marked failed. A
-no-op when nothing is in flight.
+staged set, ready to retry; in auto mode the cancel is terminal —
+unfinished rows keep a failure mark and the status reads
+\code{"cancelled"}. A no-op when nothing is in flight.
 }
 
 The readers:
@@ -67,12 +68,14 @@ object, or \code{NULL}. \code{conditionMessage()} is the headline; \verb{$files}
 is a data frame of \code{name}, \code{reason}, and \code{limit}, one row per
 rejected file, with zero rows when the failure names no file. The
 class says what happened: \code{bsides_file_rejection} means nothing
-was attempted and a staged set is intact — a dropped folder, an
-unaccepted type, an oversize file — where \code{bsides_file_failure}
-means a batch started and died in transport; both inherit from
-\code{bsides_file_error}. The \code{reason} codes (\code{"size"}, \code{"accept"},
-\code{"directory"}, \code{"multiple"}) are the stable surface — the message
-text is written for display and may be reworded.
+was attempted — a dropped folder, an unaccepted type, an oversize
+file, a gesture past \code{upload_max} — and in manual mode the staged
+set is intact; \code{bsides_file_failure} means a batch started and
+died in transport. Both inherit from \code{bsides_file_error}. The
+\code{reason} codes (\code{"size"}, \code{"accept"}, \code{"directory"}, \code{"multiple"},
+\code{"count"}) are the stable surface — the message text is written
+for display and may be reworded. The reader returns to \code{NULL} on
+any edit of the staged set, a new batch, or \code{\link[=reset_file]{reset_file()}}.
 }
 
 Each reader is a reactive read of a companion input pushed by the
