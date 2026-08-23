@@ -46,17 +46,50 @@
 
 ## New features
 
-* New `input_file()` and `update_file()`. Files upload as soon as they are
-  chosen and travel over HTTP rather than the WebSocket, so the app stays
-  responsive; the server value is the familiar data frame of `name`,
-  `size`, `type`, and `datapath`. Beyond `shiny::fileInput()` it adds
-  drag and drop, paste (screenshots included), a cancel control for a
-  batch in flight, per-file and batch progress, a collapsible file list
-  whose summary line is a small template (`"{done}/{n} uploaded"`), a
-  `height` argument for the drop zone, and client-side validation of
-  size, `accept`, and `multiple` — the checks a drop or a paste would
+* New `input_file()`, `update_file()`, and `reset_file()`. By default
+  files upload as soon as they are chosen; uploads travel over HTTP
+  rather than the WebSocket, so the app stays responsive, and the server
+  value is the familiar data frame of `name`, `size`, `type`, and
+  `datapath`. Beyond `shiny::fileInput()` it adds drag and drop, paste
+  (screenshots included), a cancel control for a batch in flight,
+  per-file and batch progress, a collapsible file list whose summary
+  line is a small template (`"{done}/{n} uploaded"`), a `height`
+  argument for the drop zone, and client-side validation of size,
+  `accept`, and `multiple` — the checks a drop or a paste would
   otherwise skip entirely. Bookmark restore and directory upload are not
   supported.
+
+* `input_file(upload_mode = "manual")` stages files instead of uploading
+  them. Gestures accumulate a set — same-name additions replace, each
+  row removable — and the input's Upload button starts the batch. A
+  cancelled or failed batch returns to the staged set and retries whole,
+  the file that failed marked in the list. New `file_upload_start()` and
+  `file_upload_cancel()` drive a batch from the server, the twins of the
+  Upload and Cancel buttons. Inside `input_form()` a staged batch starts
+  when the form submits and the form withholds its own value until that
+  upload finishes, so `input$<id>` is already set when an observer keyed
+  on the submit runs. A failed or cancelled upload abandons the submit
+  and leaves the set staged to retry. `upload_button = "none"` drops
+  the input's own Upload button for apps where the batch starts
+  elsewhere — a form's submit, or `file_upload_start()` — while the
+  cancel control still appears in flight. `upload_max` caps how many
+  files one batch may contain: a full staged set stops accepting files until
+  one is removed, and a gesture selecting too many is rejected whole
+  rather than trimmed.
+
+* New `file_upload_status()`, `file_upload_progress()`,
+  `file_upload_staged()`, and `file_upload_error()` read a file input's
+  upload state ahead of its value, which is only ever set as an upload
+  completes. Each is a reactive read of one companion input pushed by
+  the component — an observer of the batch fraction does not re-run as
+  the staged set is edited, and none of it touches `input$<id>`. Enable
+  a submit while `nrow(file_upload_staged(id)) > 0`, or render a live
+  progress line server-side. `file_upload_error()` returns a condition
+  object covering validation rejections as well as transport failures:
+  `conditionMessage()` for the headline, `$files` for a per-file frame
+  of `name`, `reason`, and `limit`, and the class — `bsides_file_rejection`
+  or `bsides_file_failure`, both inheriting `bsides_file_error` — to
+  tell whether a staged set survived.
 
 * New `update_numeric()`, the counterpart to `input_numeric()`. Update a
   numeric input's `value`, `min`, `max`, `step`, or disabled state from the

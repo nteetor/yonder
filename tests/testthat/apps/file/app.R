@@ -20,7 +20,22 @@ ui <-
       accept = ".csv"
     ),
     verbatimTextOutput("info"),
-    verbatimTextOutput("contents")
+    verbatimTextOutput("contents"),
+    input_file(
+      id = "stg",
+      label = "Staged upload",
+      select = "many",
+      upload_mode = "manual"
+    ),
+    verbatimTextOutput("stg_info"),
+    verbatimTextOutput("stg_state"),
+    input_form(
+      id = "frm",
+      input_file(id = "frm_upl", select = "many", upload_mode = "manual"),
+      form_submit_button(label = "Send", value = "send")
+    ),
+    verbatimTextOutput("frm_info"),
+    verbatimTextOutput("frm_observed")
   )
 
 server <-
@@ -54,10 +69,58 @@ server <-
       )
     })
 
+    output$stg_state <- renderText({
+      paste(
+        file_upload_status("stg"),
+        nrow(file_upload_staged("stg")),
+        file_upload_progress("stg")
+      )
+    })
+
+    output$stg_info <- renderText({
+      upload <- input$stg
+
+      if (is.null(upload)) {
+        return("none")
+      }
+
+      paste(upload$name, upload$size, collapse = "; ")
+    })
+
+    # The natural thing an app author writes: react to the submit, read
+    # the file the form was carrying. Correct only because the form
+    # holds its own value until the staged upload lands.
+    frm_seen <- reactiveVal("observer has not run")
+
+    observeEvent(input$frm, {
+      upload <- input$frm_upl
+
+      frm_seen(
+        if (is.null(upload)) "NULL" else paste(upload$name, collapse = "; ")
+      )
+    })
+
+    output$frm_observed <- renderText(frm_seen())
+
+    output$frm_info <- renderText({
+      upload <- input$frm_upl
+
+      if (is.null(upload)) {
+        return("none")
+      }
+
+      paste(input$frm, paste(upload$name, collapse = "; "), sep = " / ")
+    })
+
     # Fired from the tests with `trigger()`.
     observeEvent(
       input$do_reset,
-      update_file("upl", reset = TRUE),
+      reset_file("upl"),
+      ignoreInit = TRUE
+    )
+    observeEvent(
+      input$do_start,
+      file_upload_start("stg"),
       ignoreInit = TRUE
     )
     observeEvent(

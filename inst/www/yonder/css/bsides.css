@@ -12251,6 +12251,11 @@ bsides-file .file-item {
   display: grid;
   grid-template-columns: 1fr auto;
   gap: 0.125rem 0.5rem;
+}
+bsides-file .file-item:has(.file-item-remove) {
+  grid-template-columns: 1fr auto auto;
+}
+bsides-file .file-item {
   align-items: center;
   padding: 0.375rem 0;
 }
@@ -12269,6 +12274,10 @@ bsides-file .file-item-size {
 }
 bsides-file .file-item-progress {
   grid-column: 1/-1;
+}
+bsides-file .file-item-remove {
+  padding: 0;
+  font-size: 0.75em;
 }
 bsides-file .file-batch {
   display: flex;
@@ -12311,7 +12320,8 @@ bsides-file .file-item.error {
 bsides-file .file-item.error .file-item-progress::before {
   background-color: var(--bs-danger);
 }
-bsides-file .file-cancel {
+bsides-file .file-cancel,
+bsides-file .file-upload {
   flex-shrink: 0;
 }
 bsides-file .file-errors {
@@ -12325,11 +12335,30 @@ bsides-file .file-errors:not(:has(.file-error)) {
 bsides-file .file-error {
   display: block;
 }
-bsides-file[disabled] > .file-dropzone {
+bsides-file[disabled] > .file-dropzone,
+bsides-file > .file-dropzone.at-max {
   cursor: default;
   background-color: var(--bs-secondary-bg);
 }
 
+.bsides-input-form-submit.pending::before {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: 0.375em;
+  vertical-align: -0.125em;
+  content: "";
+  border: 0.15em solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: 0.75s linear infinite spinner-border;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .bsides-input-form-submit.pending::before {
+    animation-duration: 1.5s;
+  }
+}
 bsides-multi-select {
   display: block;
   position: relative;

@@ -1,0 +1,24 @@
+// The submit button while the form waits on a blocker — a staged file
+// input finishing its upload. Bootstrap's spinner-border keyframes
+// without its markup: the button keeps its own label and gains a spinner
+// ahead of it, so the label stays readable and the width barely moves.
+.bsides-input-form-submit.pending::before {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  margin-right: .375em;
+  vertical-align: -.125em;
+  content: '';
+  border: .15em solid currentcolor;
+  border-right-color: transparent;
+  border-radius: 50%;
+  animation: .75s linear infinite spinner-border;
+}
+
+// Bootstrap slows its spinners rather than stopping them: a still ring
+// would read as a decoration instead of a wait.
+@media (prefers-reduced-motion: reduce) {
+  .bsides-input-form-submit.pending::before {
+    animation-duration: 1.5s;
+  }
+}

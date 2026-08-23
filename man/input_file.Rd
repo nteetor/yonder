@@ -2,7 +2,6 @@
 % Please edit documentation in R/input-file.R
 \name{input_file}
 \alias{input_file}
-\alias{update_file}
 \title{File input}
 \usage{
 input_file(
@@ -10,23 +9,14 @@ input_file(
   ...,
   label = NULL,
   select = c("one", "many"),
+  upload_mode = c("auto", "manual"),
+  upload_button = c("show", "none"),
+  upload_max = NULL,
   accept = NULL,
   capture = NULL,
   placeholder = NULL,
   summary = NULL,
   height = NULL
-)
-
-update_file(
-  id,
-  ...,
-  reset = NULL,
-  accept = NULL,
-  placeholder = NULL,
-  summary = NULL,
-  enable = NULL,
-  disable = NULL,
-  session = get_current_session()
 )
 }
 \arguments{
@@ -40,6 +30,37 @@ the legend of the fieldset wrapping the input.}
 
 \item{select}{A character string. With \code{"one"} (default) a single file
 may be chosen, with \code{"many"} any number.}
+
+\item{upload_mode}{A character string. With \code{"auto"} (default) files
+upload as soon as they are chosen. With \code{"manual"} files accumulate
+in a staged set — each removable before flight, a same-named
+addition replacing its predecessor — and an explicit action starts
+the batch: the input's Upload button, a surrounding
+\code{\link[=input_form]{input_form()}}'s submit, or \code{\link[=file_upload_start]{file_upload_start()}} from the server.
+A cancelled or failed batch returns to the staged set, ready to
+retry whole.}
+
+\item{upload_button}{A character string. With \code{"show"} (default) a
+manual-mode input renders its own Upload button; with \code{"none"} it
+does not, leaving the batch to an app-supplied trigger —
+\code{\link[=file_upload_start]{file_upload_start()}}, or a surrounding \code{\link[=input_form]{input_form()}}, whose
+submit already starts it. With the button hidden and neither of
+those in place, nothing visible starts the batch. The cancel
+control still appears while a batch is in flight. Ignored in auto
+mode, which has no Upload button.}
+
+\item{upload_max}{A whole number bounding how many files one batch
+may contain, defaults to \code{NULL}, no bound.
+
+In manual mode, the staged set counts toward the bound and the input stops
+accepting files once full — remove a file to make room. Delivered rows do
+not count: they are not part of the next batch. A file with the same name
+as a staged one replaces it rather than adding, so a replacing drop passes
+even at the bound.
+
+In auto mode, and for drops and pastes that would overfill a staged set, a
+gesture selecting too many files is rejected whole rather than trimmed —
+quietly keeping part of a selection would read as data loss. With \code{select = "one"} a single file is already the bound.}
 
 \item{accept}{A character vector of file extensions (\code{".csv"}), MIME
 types (\code{"text/csv"}), or MIME wildcards (\code{"image/*"}) bounding what
@@ -77,24 +98,16 @@ zone is twice the height of a standard input. Any CSS length works:
 the default for every file input through the
 \code{--bsides-file-dropzone-height} CSS variable; \code{height} overrides the
 theme for its input.}
-
-\item{reset}{If \code{TRUE}, clear the file list, progress, and any error,
-defaults to \code{NULL}. A batch in flight is cancelled. The server value
-is left as it is — the upload protocol has no way to unset it.}
-
-\item{enable}{If \code{TRUE}, enable the input, defaults to \code{NULL}.}
-
-\item{disable}{If \code{TRUE}, disable the input, defaults to \code{NULL}. When
-both \code{enable} and \code{disable} are \code{TRUE}, \code{disable} wins.}
-
-\item{session}{A shiny session object.}
 }
 \value{
 A shiny tag object.
 }
 \description{
-Upload files to the server. Files upload as soon as they are chosen.
-A progress bar tracks the batch and a cancel control abandons it.
+Upload files to the server. By default files upload as soon as they
+are chosen; with \code{upload_mode = "manual"} they accumulate in a staged
+set, each removable, until an explicit action starts the batch. A
+progress bar tracks a batch in flight and a cancel control abandons
+it.
 }
 \details{
 \subsection{Uploading}{
@@ -134,8 +147,26 @@ enforced again by the server on every upload.
 \subsection{Inside a form}{
 
 \code{\link[=input_form]{input_form()}} holds an input's value back until the form is
-submitted. A file input is not held back: its value is set by the
-server when the upload finishes, not by a client-side input change.
+submitted. An auto-mode file input is not held back: its value is set
+by the server when the upload finishes, not by a client-side input
+change, so it lands as soon as the upload does — before the form is
+submitted, not with it.
+
+\code{upload_mode = "manual"} is the answer inside a form. Files stage
+while the form is filled in, the batch starts when the form submits,
+and the form holds its own value back until that upload finishes. So
+an observer keyed on the submit sees the uploaded files:
+
+\if{html}{\out{<div class="sourceCode r">}}\preformatted{observeEvent(input$form_id, \{
+  files <- input$file_id
+\})
+}\if{html}{\out{</div>}}
+
+The submit button shows a pending state while it waits; an app that
+wants its own indicator can read \code{\link[=file_upload_progress]{file_upload_progress()}}. If the
+upload fails, or the user cancels it, the form is not submitted at
+all — nothing is sent, the staged files are kept, and submitting
+again retries them.
 }
 
 \subsection{Known limitations}{
@@ -147,7 +178,7 @@ would not survive.
 }
 }
 \seealso{
-\code{\link[=update_file]{update_file()}}
+\code{\link[=update_file]{update_file()}}, \code{\link[=reset_file]{reset_file()}}, \code{\link[=file_upload_start]{file_upload_start()}}
 
 Other inputs:
 \code{\link[=floating_label]{floating_label()}},

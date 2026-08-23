@@ -6,8 +6,16 @@
 //
 // Pure functions over File metadata, so they are testable without a DOM.
 
+// 'multiple' and 'count' are gesture-level — a multi-file gesture on a
+// single-file input, a gesture past the file-count cap — recorded by
+// the component against every file in the gesture so the failure
+// record stays per-file.
 type RejectReason =
-  { kind: 'size'; limit: number } | { kind: 'accept' } | { kind: 'directory' };
+  | { kind: 'size'; limit: number }
+  | { kind: 'accept' }
+  | { kind: 'directory' }
+  | { kind: 'multiple' }
+  | { kind: 'count'; limit: number };
 
 interface Rejection {
   name: string;

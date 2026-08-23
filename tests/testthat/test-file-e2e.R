@@ -42,6 +42,74 @@ test_that("a picked file uploads and lands in input$<id>", {
   expect_false(app$get_js("document.querySelector('#upl').hasAttribute('aria-busy')"))
 })
 
+test_that("a staged batch uploads on the button, or from the server", {
+  skip_if_no_e2e()
+
+  app <- launch_file_app()
+  withr::defer(app$stop())
+
+  # Idle before anything is staged — the readers' totality defaults.
+  expect_equal(app$get_value(output = "stg_state"), "idle 0 0")
+
+  # Two gestures accumulate; staging alone delivers nothing.
+  upload_files(app, "#stg .file-input", temp_upload("s1.csv", "1"))
+  upload_files(app, "#stg .file-input", temp_upload("s2.csv", "2"))
+
+  expect_equal(app$get_value(output = "stg_info"), "none")
+  expect_equal(app$get_value(output = "stg_state"), "staged 2 0")
+  expect_equal(
+    app$get_js("document.querySelectorAll('#stg .file-item').length"),
+    2
+  )
+  expect_false(
+    app$get_js("document.querySelector('#stg .file-upload').disabled")
+  )
+
+  # The Upload button starts the batch; the server sets the value.
+  app$click(selector = "#stg .file-upload")
+  app$wait_for_idle()
+
+  expect_equal(app$get_value(output = "stg_info"), "s1.csv 2; s2.csv 2")
+  expect_equal(app$get_value(output = "stg_state"), "done 0 1")
+
+  # A fresh set staged after delivery, started from the server this
+  # time — file_upload_start() is the button's twin.
+  upload_files(app, "#stg .file-input", temp_upload("s3.csv", "3"))
+  expect_equal(app$get_value(output = "stg_info"), "s1.csv 2; s2.csv 2")
+
+  trigger(app, "do_start")
+  app$wait_for_idle()
+
+  expect_equal(app$get_value(output = "stg_info"), "s3.csv 2")
+})
+
+test_that("a staged set inside input_form() uploads on submit", {
+  skip_if_no_e2e()
+
+  app <- launch_file_app()
+  withr::defer(app$stop())
+
+  upload_files(app, "#frm_upl .file-input", temp_upload("f1.csv", "1"))
+  upload_files(app, "#frm_upl .file-input", temp_upload("f2.csv", "2"))
+
+  # Staged, not delivered — the form has not submitted.
+  expect_equal(app$get_value(output = "frm_info"), "none")
+
+  app$click(selector = "#frm .bsides-input-form-submit")
+  app$wait_for_idle()
+
+  # The submit value and the upload land together.
+  expect_equal(
+    app$get_value(output = "frm_info"),
+    "send / f1.csv; f2.csv"
+  )
+
+  # And in that order: an observer keyed on the submit sees the files,
+  # because the form withholds its own value until uploadEnd has run.
+  # Without the wait this reads "NULL" on a first submit.
+  expect_equal(app$get_value(output = "frm_observed"), "f1.csv; f2.csv")
+})
+
 test_that("several files upload as one batch", {
   skip_if_no_e2e()
 
