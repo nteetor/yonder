@@ -1,0 +1,7 @@
+{
+  "database": "dolt",
+  "backend": "dolt",
+  "dolt_mode": "embedded",
+  "dolt_database": "yonder",
+  "project_id": "f78e164d-2c75-4bd0-a275-33e79d8a4a9c"
+}
