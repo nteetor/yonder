@@ -29,9 +29,12 @@
 ^codecov\.yml$
 ^\.vscode$
 ^\.claude$
+^\.beads$
+^openspec$
 ^plan.*\.md$
 ^research.*\.md$
 ^AGENTS.md$
+^CLAUDE\.md$
 ^BSLIB\.md$
 ^CONTRIBUTING\.md$
 ^bin$

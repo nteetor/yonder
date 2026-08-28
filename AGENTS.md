@@ -21,25 +21,6 @@
 
 ## Code design and style
 
-- When defining top-level functions, use the following format. The `function`
-  keyword is on its own line, required arguments are placed ahead of `...`,
-  optional arguments are placed after `...`.
-  ```r
-  function_name <-
-    function(
-      argument_required,
-      ...,
-      argument_optional = c("value1", "value2"),
-      argument_ignored_by_default = NULL
-    ) {
-      
-    }
-  ```
-
-- When defining optional function arguments avoid boolean values and prefer
-  character values. The argument name combined with the possible value describes
-  the argument's effect. 
-
 - Wrap lines at width 80. Fill comments and roxygen text out to column 80
   before breaking — don't wrap early.
 
