@@ -42,6 +42,9 @@
     }
   });
 
+  // srcts/src/components/collapse.ts
+  var import_bootstrap = __toESM(require_bootstrap());
+
   // srcts/src/components/_utils.ts
   var Shiny = window.Shiny;
   var InputBinding = Shiny ? Shiny.InputBinding : class {
@@ -97,6 +100,87 @@
   function hasDefinedProperty(obj, prop) {
     return Object.prototype.hasOwnProperty.call(obj, prop) && obj[prop] !== void 0;
   }
+
+  // srcts/src/components/collapse.ts
+  function instance(el) {
+    return import_bootstrap.Collapse.getOrCreateInstance(el, { toggle: false });
+  }
+  function triggersFor(panel) {
+    const triggers = document.querySelectorAll(
+      '[data-bs-toggle="collapse"]'
+    );
+    return [...triggers].filter((trigger) => {
+      const selector = trigger.getAttribute("data-bs-target") ?? trigger.getAttribute("href");
+      if (!selector) {
+        return false;
+      }
+      try {
+        return panel.matches(selector);
+      } catch {
+        return false;
+      }
+    });
+  }
+  function syncTriggers(panel) {
+    const open = panel.classList.contains("show");
+    for (const trigger of triggersFor(panel)) {
+      trigger.setAttribute("aria-expanded", String(open));
+      trigger.classList.toggle("collapsed", !open);
+    }
+  }
+  var CollapseInputBinding = class extends NativeEventInputBinding {
+    find(scope) {
+      return findAll(scope, ".bsides-collapse");
+    }
+    // Shiny calls this once per bind, before the first getValue(). Syncing here
+    // also corrects the initial state: collapse_panel_button() hardcodes
+    // aria-expanded="false", so a panel created with state = "open" ships a
+    // trigger that contradicts it.
+    initialize(el) {
+      syncTriggers(el);
+    }
+    // Bootstrap removes .show at the start of a hide and adds it at the end of
+    // a show, so this reads "closed" for the whole of both transitions. Every
+    // caller — bind, and the shown/hidden handlers — reads at a resting state.
+    // Consulting .collapsing instead would report mid-transition states the
+    // spec does not report.
+    getValue(el) {
+      return el.classList.contains("show") ? "open" : "closed";
+    }
+    subscribe(el, callback) {
+      this.listen(el, "shown.bs.collapse", () => {
+        syncTriggers(el);
+        callback(false);
+      });
+      this.listen(el, "hidden.bs.collapse", () => {
+        syncTriggers(el);
+        callback(false);
+      });
+    }
+    getState(el) {
+      return {
+        value: this.getValue(el)
+      };
+    }
+    receiveMessage(el, data) {
+      switch (data.method) {
+        case "open":
+          instance(el).show();
+          break;
+        case "close":
+          instance(el).hide();
+          break;
+        case "toggle":
+          instance(el).toggle();
+          break;
+      }
+    }
+    unsubscribe(el) {
+      super.unsubscribe(el);
+      import_bootstrap.Collapse.getInstance(el)?.dispose();
+    }
+  };
+  registerBinding(CollapseInputBinding, "collapse");
 
   // srcts/src/components/inputButton.ts
   var clicks = /* @__PURE__ */ new WeakMap();
@@ -3318,8 +3402,8 @@
   registerBinding(TextGroupInputBinding, "textgroup");
 
   // srcts/src/components/modal.ts
-  var import_bootstrap = __toESM(require_bootstrap());
-  var Modal = class _Modal extends import_bootstrap.Modal {
+  var import_bootstrap2 = __toESM(require_bootstrap());
+  var Modal = class _Modal extends import_bootstrap2.Modal {
     isShown() {
       return this._isShown;
     }

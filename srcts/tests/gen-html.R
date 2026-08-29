@@ -22,6 +22,20 @@ render(
   input_checkbox_group(id = "chkgrp", choices = c("A", "B", "C"))
 )
 render(
+  "collapse",
+  htmltools::tagList(
+    collapse_panel("cpl", "Panel body"),
+    collapse_panel_button("cpl", "Toggle")
+  )
+)
+render(
+  "collapse-open",
+  htmltools::tagList(
+    collapse_panel("cplo", "Panel body", state = "open"),
+    collapse_panel_button("cplo", "Toggle")
+  )
+)
+render(
   "file",
   input_file(
     id = "upl",
