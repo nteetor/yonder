@@ -46,6 +46,13 @@
 
 ## New features
 
+* New `collapse_panel()` and `collapse_panel_button()` wrap Bootstrap's
+  collapse; `open_collapse_panel()`, `close_collapse_panel()`, and
+  `toggle_collapse_panel()` drive a panel from the server. Server-side
+  functions across the package are verb-first (`update_*()`,
+  `open_*()`), following bslib's convention for its post-2023
+  components (`toggle_sidebar()`, `show_offcanvas()`).
+
 * New `input_file()`, `update_file()`, and `reset_file()`. By default
   files upload as soon as they are chosen; uploads travel over HTTP
   rather than the WebSocket, so the app stays responsive, and the server

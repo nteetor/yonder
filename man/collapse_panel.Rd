@@ -33,7 +33,7 @@ A \link[htmltools:tag]{htmltools::tag} object.
 }
 \description{
 Create collapsible containers to hide and show content. Open and close a
-panel with \code{collapse_panel_toggle()}.
+panel with \code{toggle_collapse_panel()}.
 }
 \examples{
 
