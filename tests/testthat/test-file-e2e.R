@@ -23,7 +23,7 @@ test_that("a picked file uploads and lands in input$<id>", {
   path <- temp_upload("small.csv", "a,b")
   upload_files(app, input_sel, path)
 
-  # The server sets the value itself at uploadEnd: name, size, type, and a
+  # The completed batch delivers the value: name, size, type, and a
   # readable datapath.
   expect_equal(app$get_value(output = "info"), "small.csv 4 text/csv")
   expect_equal(app$get_value(output = "contents"), "a,b")
@@ -293,5 +293,7 @@ test_that("cancelling a batch mid-flight delivers no value", {
   # on the staged set, ready to retry.
   expect_equal(app$get_value(output = "stg_info"), "none")
   expect_equal(app$get_value(output = "stg_state"), "staged 1 0")
-  expect_true(app$get_js("document.querySelector('#stg .file-cancel') === null"))
+  expect_true(app$get_js(
+    "document.querySelector('#stg .file-cancel') === null"
+  ))
 })

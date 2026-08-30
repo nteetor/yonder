@@ -218,8 +218,8 @@ input_file <-
 #' prompt and summary line, and its enabled state. The upload arguments
 #' (`upload_mode`, `upload_button`, `upload_max`) are fixed at render
 #' time and cannot be updated. The value is never set from the server —
-#' the upload protocol writes it as a batch completes, and offers no
-#' way to set or unset it.
+#' only a completed batch delivers one, and there is no way to set or
+#' unset it.
 #'
 #' @inheritParams input_file
 #'

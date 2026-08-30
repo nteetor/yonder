@@ -20,12 +20,13 @@
 #'
 #' A nested input may have work that must finish first, though — an
 #' [input_file()] with `upload_mode = "manual"` uploads its staged files
-#' at this point, and its value is set by the server when that upload
-#' ends. The submit then waits for it. Every submit button in the form
+#' at this point, and its value arrives when that upload ends rather than
+#' when the button is clicked, so it is not among the values the form is
+#' holding. The submit then waits for it. Every submit button in the form
 #' is disabled and the clicked one shows a pending state, so a form that
 #' is waiting does not read as a form that is broken. The values go once
-#' the work finishes, which is what lets an observer keyed on the
-#' submit read the uploaded files.
+#' the work finishes, which is what lets an observer keyed on the submit
+#' read the uploaded files.
 #'
 #' If that work fails, or the user cancels it, nothing is sent at all.
 #' The held values stay held, so submitting again retries with
