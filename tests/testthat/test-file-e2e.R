@@ -39,7 +39,9 @@ test_that("a picked file uploads and lands in input$<id>", {
     )
   )
   expect_true(app$get_js("document.querySelector('#upl .file-batch') === null"))
-  expect_false(app$get_js("document.querySelector('#upl').hasAttribute('aria-busy')"))
+  expect_false(app$get_js(
+    "document.querySelector('#upl').hasAttribute('aria-busy')"
+  ))
 })
 
 test_that("a staged batch uploads on the button, or from the server", {
@@ -119,11 +121,58 @@ test_that("several files upload as one batch", {
   paths <- c(temp_upload("one.csv", "1"), temp_upload("two.csv", "2"))
   upload_files(app, input_sel, paths)
 
-  expect_equal(app$get_value(output = "info"), "one.csv 2 text/csv; two.csv 2 text/csv")
+  expect_equal(
+    app$get_value(output = "info"),
+    "one.csv 2 text/csv; two.csv 2 text/csv"
+  )
   expect_equal(app$get_value(output = "contents"), "1; 2")
   expect_equal(
     app$get_js("document.querySelectorAll('#upl .file-item').length"),
     2
+  )
+})
+
+test_that("a batch past the concurrency limit keeps declared order", {
+  skip_if_no_e2e()
+
+  app <- launch_file_app()
+  withr::defer(app$stop())
+
+  # More files than the uploader runs at once, so the last few are queued
+  # behind the pool and their jobs finish well after the first few. Each
+  # file's content differs from its neighbours', so a row holding the
+  # wrong datapath shows up as a mismatch rather than as a coincidence.
+  digits <- as.character(1:6)
+
+  # temp_upload() ties each temp dir to its caller's frame; from inside a
+  # lambda that frame is gone before the upload starts.
+  frame <- environment()
+  paths <- vapply(
+    digits,
+    \(d) temp_upload(paste0("c", d, ".csv"), d, envir = frame),
+    character(1)
+  )
+
+  upload_files(app, input_sel, unname(paths))
+
+  expect_equal(
+    app$get_value(output = "info"),
+    paste0(paste0("c", digits, ".csv 2 text/csv"), collapse = "; ")
+  )
+  expect_equal(
+    app$get_value(output = "contents"),
+    paste0(digits, collapse = "; ")
+  )
+  # One upload job per file would otherwise name every file 0.csv; the
+  # batch handler renames by position, so basename() still distinguishes
+  # a same-extension batch.
+  expect_equal(
+    app$get_value(output = "paths"),
+    paste0(paste0(seq_along(digits) - 1L, ".csv"), collapse = "; ")
+  )
+  expect_equal(
+    app$get_js("document.querySelectorAll('#upl .file-item').length"),
+    6
   )
 })
 
@@ -190,8 +239,59 @@ test_that("update_file() resets the list and toggles the input", {
   expect_equal(app$get_value(output = "info"), "small.csv 4 text/csv")
 
   trigger(app, "do_disable")
-  expect_true(app$get_js(paste0("document.querySelector('", input_sel, "').disabled")))
+  expect_true(app$get_js(paste0(
+    "document.querySelector('",
+    input_sel,
+    "').disabled"
+  )))
 
   trigger(app, "do_enable")
-  expect_false(app$get_js(paste0("document.querySelector('", input_sel, "').disabled")))
+  expect_false(app$get_js(paste0(
+    "document.querySelector('",
+    input_sel,
+    "').disabled"
+  )))
+})
+
+test_that("cancelling a batch mid-flight delivers no value", {
+  skip_if_no_e2e()
+
+  app <- launch_file_app()
+  withr::defer(app$stop())
+
+  # A window to cancel in, built rather than hoped for: the app lifts its
+  # size limit, the browser's upload pipe is narrowed to 20 KB/s, and the
+  # file is big enough that 200 KB takes ten seconds to push.
+  trigger(app, "do_relax")
+  throttle_upload(app, 20 * 1024)
+
+  upload_files(
+    app,
+    "#stg .file-input",
+    temp_upload_bytes("slow.csv", 200 * 1024)
+  )
+  app$run_js("document.querySelector('#stg .file-upload').click();")
+
+  # Wait for the batch bar to move rather than for the batch to start:
+  # the Cancel button is rendered the instant the flight opens, when no
+  # byte has gone anywhere yet. A reported percentage is bytes on the
+  # wire, and reads from the DOM, so no round trip can age it.
+  percent <- "Number(document.querySelector(
+    '#stg .file-batch-progress'
+  ).getAttribute('aria-valuenow'))"
+
+  app$wait_for_js(paste(percent, "> 0"), timeout = 15 * 1000)
+
+  # Mid-transfer, not finished: the ten seconds this file needs at
+  # 20 KB/s is the margin that keeps that true every run.
+  expect_lt(app$get_js(percent), 100)
+
+  app$run_js("document.querySelector('#stg .file-cancel').click();")
+  app$wait_for_idle()
+
+  # Nothing is delivered for an aborted batch, and manual mode lands back
+  # on the staged set, ready to retry.
+  expect_equal(app$get_value(output = "stg_info"), "none")
+  expect_equal(app$get_value(output = "stg_state"), "staged 1 0")
+  expect_true(app$get_js("document.querySelector('#stg .file-cancel') === null"))
 })

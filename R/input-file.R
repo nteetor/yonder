@@ -501,6 +501,102 @@ file_staged_input_register_handler <-
     )
   }
 
+file_batch_input_type <- "bsides.file.batch"
+
+# Mirrors `slotId()` in srcts/src/components/upload.ts: each file's
+# `uploadEnd` finishes its job into `<id>__bsides_slot_<position>`, 1-based
+# by declared position. Derived here rather than read off the payload so
+# the batch's membership and order are the server's to decide.
+file_batch_slot_id <-
+  function(name, index) {
+    paste0(name, "__bsides_slot_", index)
+  }
+
+# Shiny's FileUploadOperation names each file by its index within its
+# upload job, so one job per file writes every file as `0.<ext>`. App code
+# keyed on `basename(datapath)` — the common `file.copy()` pattern — would
+# collapse a same-extension batch onto one name. Renaming by batch
+# position restores the `0.csv`, `1.csv`, ... basenames a single-job upload
+# produced. Every job owns a private directory, so the targets cannot
+# collide across files. A file that will not move keeps its datapath: a
+# shared basename beats a value pointing at nothing.
+file_batch_rename_datapath <-
+  function(frame) {
+    from <- frame$datapath
+    to <- vapply(
+      seq_along(from),
+      \(i) {
+        file.path(
+          dirname(from[[i]]),
+          sub("^[0-9]+", i - 1L, basename(from[[i]]))
+        )
+      },
+      character(1)
+    )
+
+    movable <- from != to & file.exists(from) & !file.exists(to)
+    from[movable] <- ifelse(
+      file.rename(from[movable], to[movable]),
+      to[movable],
+      from[movable]
+    )
+
+    frame$datapath <- from
+
+    frame
+  }
+
+# Assembles a completed batch's value from the per-slot companion inputs
+# that the client's per-file `uploadEnd` calls filled. The payload carries
+# only a count, so nothing the client sends is dereferenced. Slot inputs
+# are always set before it arrives — the client sends it only once every
+# `uploadEnd` has resolved, and the socket delivers in order — so a missing
+# slot means a restored bookmark, not a race, and yields NULL rather than
+# an error.
+file_batch_input_register_handler <-
+  function() {
+    shiny::registerInputHandler(
+      file_batch_input_type,
+      function(
+        value,
+        session,
+        name
+      ) {
+        # A payload that is not an object at all still has to degrade to
+        # NULL: `$` on an atomic vector errors, and this runs inside input
+        # dispatch where an error takes the session down.
+        n <- if (is.list(value)) value$n
+
+        if (!rlang::is_scalar_integerish(n) || is.na(n) || n < 1) {
+          return(NULL)
+        }
+
+        slot <- function(index) {
+          shiny::isolate(session$input[[file_batch_slot_id(name, index)]])
+        }
+
+        # Every slot must be set, so testing the last one first settles a
+        # bookmark restore, and bounds the work an implausible `n` can ask
+        # for, before allocating anything of that size.
+        if (is.null(slot(n))) {
+          return(NULL)
+        }
+
+        frames <- lapply(seq_len(n), slot)
+
+        if (any(vapply(frames, is.null, logical(1)))) {
+          return(NULL)
+        }
+
+        frame <- do.call(rbind, frames)
+        row.names(frame) <- NULL
+
+        file_batch_rename_datapath(frame)
+      },
+      force = TRUE
+    )
+  }
+
 file_error_frame <-
   function(
     name = character(),

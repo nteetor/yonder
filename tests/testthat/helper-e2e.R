@@ -66,6 +66,23 @@ upload_files <- function(app, selector, paths) {
   app$wait_for_idle()
 }
 
+# Throttle what the browser can push, so an upload stays measurably in
+# flight instead of completing within one round trip of localhost. CDP
+# network emulation applies to the POST body like any other request; the
+# download direction is left alone so the WebSocket still answers
+# promptly.
+throttle_upload <- function(app, bytes_per_second) {
+  session <- app$get_chromote_session()
+
+  session$Network$enable()
+  session$Network$emulateNetworkConditions(
+    offline = FALSE,
+    latency = 0,
+    downloadThroughput = -1,
+    uploadThroughput = bytes_per_second
+  )
+}
+
 # Write `lines` to a file named `name` in a fresh temporary directory, so
 # uploads carry a predictable name as well as predictable contents. The
 # connection is binary: a text-mode writeLines() writes CRLF on Windows,
@@ -76,6 +93,18 @@ temp_upload <- function(name, lines, envir = parent.frame()) {
 
   con <- file(path, open = "wb")
   writeLines(lines, con, sep = "\n")
+  close(con)
+
+  path
+}
+
+# A file of exactly `bytes` bytes, for uploads timed rather than read.
+temp_upload_bytes <- function(name, bytes, envir = parent.frame()) {
+  dir <- withr::local_tempdir(.local_envir = envir)
+  path <- file.path(dir, name)
+
+  con <- file(path, open = "wb")
+  writeBin(raw(bytes), con)
   close(con)
 
   path

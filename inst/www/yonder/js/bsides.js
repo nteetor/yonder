@@ -1118,15 +1118,29 @@
   var o5 = (o6) => o6 ?? A;
 
   // srcts/src/components/upload.ts
+  var UPLOAD_CONCURRENCY = 4;
+  function slotId(inputId, index) {
+    return `${inputId}__bsides_slot_${index + 1}`;
+  }
+  var FileError = class extends Error {
+    file;
+    constructor(file, cause) {
+      super(messageOf(cause));
+      this.file = file;
+    }
+  };
+  function fileOf(error) {
+    return error instanceof FileError ? error.file : void 0;
+  }
   var Uploader = class {
     #inputId;
     #files;
     #callbacks;
     #totalBytes;
-    #doneBytes = 0;
+    #loaded;
     #shinyapp = null;
-    #xhr = null;
-    #cancelled = false;
+    #inflight = /* @__PURE__ */ new Set();
+    #aborted = false;
     #finished = false;
     constructor(options) {
       const { inputId, files, ...callbacks } = options;
@@ -1134,6 +1148,13 @@
       this.#files = files;
       this.#callbacks = callbacks;
       this.#totalBytes = files.reduce((total, file) => total + file.size, 0);
+      this.#loaded = files.map(() => 0);
+    }
+    // The batch payload carries this, not the slot names: the server
+    // derives `<id>__bsides_slot_<i>` itself rather than dereferencing
+    // strings off the wire.
+    get count() {
+      return this.#files.length;
     }
     // Runs the whole batch. Resolves once the batch has ended for any
     // reason — completion, error, or cancellation; callers observe which
@@ -1150,66 +1171,83 @@
         return;
       }
       this.#progress(null, 0, 0);
-      let job;
+      let jobs;
       try {
-        job = await this.#uploadInit();
+        jobs = await Promise.all(
+          this.#files.map((file) => this.#uploadInit(file))
+        );
       } catch (error) {
-        this.#fail(messageOf(error));
+        this.#fail(messageOf(error), fileOf(error));
         return;
       }
-      if (this.#isCancelled()) {
+      if (this.#isStopped()) {
         return;
       }
-      for (const file of this.#files) {
-        this.#progress(file, 0, this.#fraction(this.#doneBytes));
-        try {
-          await this.#post(job.uploadUrl, file);
-        } catch (error) {
-          this.#fail(messageOf(error));
-          return;
-        }
-        if (this.#isCancelled()) {
-          return;
-        }
-        this.#doneBytes += file.size;
-        this.#callbacks.onFileDone?.(file);
-      }
-      try {
-        await this.#uploadEnd(job.jobId);
-      } catch (error) {
-        this.#fail(messageOf(error));
-        return;
-      }
-      if (this.#isCancelled()) {
+      await this.#transferAll(jobs);
+      if (this.#isStopped()) {
         return;
       }
       this.#progress(null, 0, 1);
       this.#finish();
     }
-    // Abandons the batch: the in-flight POST is aborted and `uploadEnd`
-    // never runs, so the server never sets input$<id>. The session cleans up
-    // the orphaned upload operation and its temp files.
+    // Un-ended jobs are orphaned server-side; the session cleans them and
+    // their temp files up.
     cancel() {
       if (this.#finished) {
         return;
       }
-      this.#cancelled = true;
       this.#finished = true;
-      this.#xhr?.abort();
-      this.#xhr = null;
+      this.#stop();
     }
-    #uploadInit() {
-      const info = this.#files.map((file) => ({
-        name: file.name,
-        size: file.size,
-        type: file.type
-      }));
-      return this.#request("uploadInit", [info]);
+    async #transferAll(jobs) {
+      let next = 0;
+      const worker = async () => {
+        for (; ; ) {
+          const index = next++;
+          if (index >= this.#files.length || this.#isStopped()) {
+            return;
+          }
+          try {
+            await this.#transfer(jobs[index], this.#files[index], index);
+          } catch (error) {
+            this.#fail(messageOf(error), fileOf(error));
+            return;
+          }
+        }
+      };
+      const workers = Math.min(UPLOAD_CONCURRENCY, this.#files.length);
+      await Promise.all(Array.from({ length: workers }, () => worker()));
     }
-    #uploadEnd(jobId) {
-      return this.#request("uploadEnd", [jobId, this.#inputId]);
+    // No barrier between files: a small file's job closes while a large one
+    // is still on the wire.
+    async #transfer(job, file, index) {
+      this.#progress(file, this.#loaded[index], this.#fraction());
+      try {
+        await this.#post(job.uploadUrl, file, index);
+        if (this.#isStopped()) {
+          return;
+        }
+        await this.#uploadEnd(job.jobId, slotId(this.#inputId, index));
+      } catch (error) {
+        throw new FileError(file, error);
+      }
+      if (this.#isStopped()) {
+        return;
+      }
+      this.#loaded[index] = file.size;
+      this.#callbacks.onFileDone?.(file);
+      this.#progress(null, 0, this.#fraction());
     }
-    // Only reachable after run() has resolved and stored the connected app.
+    #uploadInit(file) {
+      const info = [{ name: file.name, size: file.size, type: file.type }];
+      return this.#request("uploadInit", [info]).catch((error) => {
+        throw new FileError(file, error);
+      });
+    }
+    #uploadEnd(jobId, slot) {
+      return this.#request("uploadEnd", [jobId, slot]);
+    }
+    // Only reachable after run() has stored the connected app.
     #request(method, args) {
       const shinyapp = this.#shinyapp;
       if (!shinyapp) {
@@ -1225,23 +1263,20 @@
         );
       });
     }
-    #post(url, file) {
+    #post(url, file, index) {
       return new Promise((resolve, reject) => {
         const xhr = new XMLHttpRequest();
-        this.#xhr = xhr;
+        this.#inflight.add(xhr);
         xhr.open("POST", url, true);
         xhr.setRequestHeader("Content-Type", "application/octet-stream");
         xhr.upload.onprogress = (event) => {
           if (event.lengthComputable) {
-            this.#progress(
-              file,
-              event.loaded,
-              this.#fraction(this.#doneBytes + event.loaded)
-            );
+            this.#loaded[index] = Math.max(this.#loaded[index], event.loaded);
+            this.#progress(file, this.#loaded[index], this.#fraction());
           }
         };
         xhr.onload = () => {
-          this.#xhr = null;
+          this.#inflight.delete(xhr);
           if (xhr.status >= 200 && xhr.status < 300) {
             resolve();
           } else {
@@ -1251,38 +1286,60 @@
           }
         };
         xhr.onerror = () => {
-          this.#xhr = null;
+          this.#inflight.delete(xhr);
           reject(new Error("Upload failed."));
         };
         xhr.onabort = () => {
-          this.#xhr = null;
+          this.#inflight.delete(xhr);
           resolve();
         };
         xhr.send(file);
       });
     }
-    // Read through a call, not the field: cancel() runs between the awaits
-    // in run(), which control-flow narrowing of a plain field read cannot
-    // account for.
-    #isCancelled() {
-      return this.#cancelled;
+    // No `uploadEnd` runs for a stopped file, so its slot stays empty, and
+    // without a full set the caller sends no batch payload — which is what
+    // keeps a dead batch from delivering a partial value.
+    #stop() {
+      this.#aborted = true;
+      const requests = [...this.#inflight];
+      this.#inflight.clear();
+      for (const xhr of requests) {
+        xhr.abort();
+      }
     }
-    #fraction(bytes) {
-      return this.#totalBytes > 0 ? bytes / this.#totalBytes : 0;
+    // Read through a call, not the field: a cancel or a sibling's failure
+    // lands between the awaits in the transfer chains, which control-flow
+    // narrowing of a plain field read cannot account for.
+    #isStopped() {
+      return this.#aborted;
+    }
+    // The batch fraction. Monotone by construction rather than by clamping
+    // here: every counter it sums is held at its own high-water mark, and a
+    // sum of counters that never fall cannot fall either.
+    #fraction() {
+      if (this.#totalBytes <= 0) {
+        return 0;
+      }
+      const sent = this.#loaded.reduce((total, bytes) => total + bytes, 0);
+      return sent / this.#totalBytes;
     }
     #progress(file, loaded, batch) {
+      if (this.#isStopped()) {
+        return;
+      }
       this.#callbacks.onProgress?.({
         file,
         loaded,
         batch: Math.min(Math.max(batch, 0), 1)
       });
     }
-    #fail(message) {
+    #fail(message, file) {
       if (this.#finished) {
         return;
       }
       this.#finished = true;
-      this.#callbacks.onError?.(message);
+      this.#stop();
+      this.#callbacks.onError?.(message, file);
     }
     #finish() {
       if (this.#finished) {
@@ -1429,6 +1486,23 @@
         );
       }
     };
+    // Shiny's client drops a setInputValue whose value repeats the last one
+    // sent under that name; without this the same set uploaded twice in a
+    // row would deliver only once.
+    #batchSeq = 0;
+    // R's `bsides.file.batch` handler rebuilds the slot names from `n` and
+    // rbinds those inputs in position order, so input$<id> is set once, in
+    // declared order.
+    #pushBatch(n4) {
+      if (!this.id || n4 === 0) {
+        return;
+      }
+      this.#batchSeq += 1;
+      window.Shiny?.setInputValue?.(`${this.id}:bsides.file.batch`, {
+        seq: this.#batchSeq,
+        n: n4
+      });
+    }
     #openBatch() {
       this.#batchPromise = new Promise((resolve, reject) => {
         this.#batchSettle = { resolve, reject };
@@ -1931,13 +2005,12 @@
         onFileDone: (file) => {
           this.#updateItem(file, { status: "done", progress: 1 });
         },
-        // In manual mode a failure lands where a cancel lands: uploadEnd
-        // never ran, so nothing was delivered and the set is still the
-        // value. Only the row in flight when the batch died keeps an
-        // error mark — the one diagnostic the user gets, since the
-        // Uploader reports just a message. Auto mode keeps its terminal
-        // marking.
-        onError: (message) => {
+        // In manual mode a failure lands where a cancel lands: no payload
+        // was sent, so the set is still the value. The failed file's
+        // siblings were aborted, not at fault, so only it keeps a mark;
+        // a batch-level failure names no file and marks no row. Auto mode
+        // keeps its terminal marking.
+        onError: (message, failed) => {
           this.#uploader = null;
           this.#settleBatch(new Error(message));
           this._phase = "failed";
@@ -1945,7 +2018,7 @@
           this.#pushProgressFinal(0);
           this._items = this._items.map((item) => {
             if (this.mode === "manual") {
-              const status = item.status === "uploading" ? "error" : "pending";
+              const status = item.file === failed ? "error" : "pending";
               return { ...item, status, progress: 0 };
             }
             return item.status === "done" ? item : { ...item, status: "error" };
@@ -1954,6 +2027,7 @@
         },
         onDone: () => {
           this.#uploader = null;
+          this.#pushBatch(uploader.count);
           this.#settleBatch();
           this._phase = "done";
           this._batch = 1;

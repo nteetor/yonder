@@ -161,6 +161,175 @@ test_that("the staged input handler builds the data frame", {
   )
 })
 
+# One file's `uploadEnd` result: the one-row frame Shiny sets a slot
+# input to.
+file_slot_frame <- function(name, datapath) {
+  data.frame(
+    name = name,
+    size = 10,
+    type = "text/csv",
+    datapath = datapath
+  )
+}
+
+test_that("a batch payload lands on the input as one combined frame", {
+  server <- function(input, output, session) {}
+
+  # The server's own path for a `<id>:<type>` send: dispatch to the
+  # registered handler, then strip the suffix so the result lands on
+  # `input$<id>`. testServer's setInputs sets raw values, so the dispatch
+  # has to be driven explicitly.
+  send <- function(session, payload) {
+    values <- shiny:::applyInputHandlers(
+      list(`upl:bsides.file.batch` = payload),
+      session
+    )
+    do.call(session$setInputs, values)
+  }
+
+  shiny::testServer(server, {
+    session$setInputs(
+      upl__bsides_slot_1 = file_slot_frame("a.csv", "/tmp/0.csv"),
+      upl__bsides_slot_2 = file_slot_frame("b.csv", "/tmp/1.csv")
+    )
+
+    send(session, list(seq = 1, n = 2))
+
+    expect_equal(
+      input$upl,
+      data.frame(
+        name = c("a.csv", "b.csv"),
+        size = c(10, 10),
+        type = c("text/csv", "text/csv"),
+        datapath = c("/tmp/0.csv", "/tmp/1.csv")
+      )
+    )
+
+    # A slot the session never received yields NULL, not an error.
+    send(session, list(seq = 2, n = 9))
+
+    expect_null(input$upl)
+  })
+})
+
+test_that("the batch input handler assembles the slot inputs in order", {
+  handler <- function(value, input) {
+    shiny:::inputHandlers$get(file_batch_input_type)(
+      value,
+      list(input = input),
+      "upl"
+    )
+  }
+
+  input <- list(
+    upl__bsides_slot_1 = file_slot_frame("a.csv", "/tmp/0.csv"),
+    upl__bsides_slot_2 = file_slot_frame("b.csv", "/tmp/1.csv")
+  )
+
+  # The count decides the rows: slot position, never anything the client
+  # names.
+  expect_equal(
+    handler(list(seq = 1, n = 2), input),
+    data.frame(
+      name = c("a.csv", "b.csv"),
+      size = c(10, 10),
+      type = c("text/csv", "text/csv"),
+      datapath = c("/tmp/0.csv", "/tmp/1.csv")
+    )
+  )
+
+  expect_equal(nrow(handler(list(seq = 1, n = 1), input)), 1L)
+
+  # A slot the session never received — a restored bookmark — is not an
+  # error.
+  expect_null(handler(list(seq = 1, n = 3), input))
+})
+
+test_that("the batch input handler rejects a payload it cannot count", {
+  handler <- function(value, input = list()) {
+    shiny:::inputHandlers$get(file_batch_input_type)(
+      value,
+      list(input = input),
+      "upl"
+    )
+  }
+
+  input <- list(upl__bsides_slot_1 = file_slot_frame("a.csv", "/tmp/0.csv"))
+
+  # Nothing here reaches `session$input`, so a hostile payload degrades to
+  # NULL instead of erroring inside input dispatch.
+  expect_null(handler(list(seq = 1)))
+  expect_null(handler("upl__bsides_slot_1", input))
+  expect_null(handler(list(seq = 1, n = 0), input))
+  expect_null(handler(list(seq = 1, n = -1), input))
+  expect_null(handler(list(seq = 1, n = 1.5), input))
+  expect_null(handler(list(seq = 1, n = "1"), input))
+  expect_null(handler(list(seq = 1, n = c(1, 2)), input))
+  expect_null(handler(list(seq = 1, n = NA_real_), input))
+  expect_null(handler(list(seq = 1, n = list(1)), input))
+
+  # An arbitrary session input cannot be named into the value.
+  expect_null(
+    handler(list(seq = 1, n = 1, slots = list("secret")), list(secret = 1))
+  )
+})
+
+test_that("the batch input handler renames datapaths by batch position", {
+  handler <- function(value, input) {
+    shiny:::inputHandlers$get(file_batch_input_type)(
+      value,
+      list(input = input),
+      "upl"
+    )
+  }
+
+  # One private directory per file, each holding `0.<ext>`, is what one
+  # upload job per file leaves behind.
+  root <- withr::local_tempdir()
+  paths <- vapply(
+    c("jobA", "jobB", "jobC"),
+    \(job) {
+      dir.create(file.path(root, job))
+      path <- file.path(root, job, "0.csv")
+      writeLines(job, path)
+      path
+    },
+    character(1),
+    USE.NAMES = FALSE
+  )
+
+  input <- list(
+    upl__bsides_slot_1 = file_slot_frame("a.csv", paths[[1]]),
+    upl__bsides_slot_2 = file_slot_frame("b.csv", paths[[2]]),
+    upl__bsides_slot_3 = file_slot_frame("c.csv", paths[[3]])
+  )
+
+  frame <- handler(list(seq = 1, n = 3), input)
+
+  expect_equal(basename(frame$datapath), c("0.csv", "1.csv", "2.csv"))
+  expect_true(all(file.exists(frame$datapath)))
+  expect_equal(
+    vapply(frame$datapath, \(p) readLines(p), character(1), USE.NAMES = FALSE),
+    c("jobA", "jobB", "jobC")
+  )
+
+  # Each file keeps its own directory, so renaming cannot move one file
+  # onto another.
+  expect_equal(dirname(frame$datapath), dirname(paths))
+
+  # A datapath that is already gone is left alone rather than dropped.
+  unlink(frame$datapath[[3]])
+  again <- handler(
+    list(seq = 2, n = 3),
+    utils::modifyList(
+      input,
+      list(upl__bsides_slot_3 = file_slot_frame("c.csv", frame$datapath[[3]]))
+    )
+  )
+
+  expect_equal(again$datapath[[3]], frame$datapath[[3]])
+})
+
 test_that("the error input handler builds the condition", {
   handler <- function(value) {
     shiny:::inputHandlers$get(file_error_input_type)(value, NULL, "x")
@@ -243,7 +412,10 @@ test_that("update_file() sends only the arguments it is given", {
 
   expect_equal(session$sent[[2]]$message, list(summary = "{files}"))
 
-  expect_error(update_file("test", reset = TRUE, session = session), "\\.\\.\\.")
+  expect_error(
+    update_file("test", reset = TRUE, session = session),
+    "\\.\\.\\."
+  )
 })
 
 test_that("reset_file() sends the reset trigger", {
@@ -251,7 +423,10 @@ test_that("reset_file() sends the reset trigger", {
 
   reset_file("test", session = session)
 
-  expect_equal(session$sent[[1]], list(id = "test", message = list(reset = TRUE)))
+  expect_equal(
+    session$sent[[1]],
+    list(id = "test", message = list(reset = TRUE))
+  )
 })
 
 test_that("update_file() validates its arguments", {

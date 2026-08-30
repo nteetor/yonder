@@ -8,8 +8,8 @@ import { validateFiles } from '../fileValidate';
 import type { Rejection } from '../fileValidate';
 
 // Message shape sent by update_file() on the R side. The value itself is
-// never among these: the server sets input$<id> at uploadEnd, so there is
-// nothing for the client to set.
+// never among these: input$<id> holds a completed batch, which only a
+// finished upload can produce, so there is nothing for a message to set.
 interface FileUpdate {
   reset?: boolean;
   accept?: string;
@@ -51,9 +51,10 @@ type Failure =
 // and the upload lifecycle; the binding beside it (inputFile.ts) only
 // relays server messages.
 //
-// Uploads do not travel through the input value. Shiny's protocol ends
-// with the server writing input$<id> itself, so this element never
-// reports a value and never needs to.
+// The element reports a value once per completed batch, and only then:
+// a batch payload naming the file count, which R's `bsides.file.batch`
+// handler turns into input$<id> by assembling the per-slot inputs each
+// file's uploadEnd filled. Nothing else the element does sets a value.
 class BsidesFile extends LitElement {
   static override properties = {
     multiple: { type: Boolean, reflect: true },
@@ -178,6 +179,27 @@ class BsidesFile extends LitElement {
       );
     }
   };
+
+  // Shiny's client drops a setInputValue whose value repeats the last one
+  // sent under that name; without this the same set uploaded twice in a
+  // row would deliver only once.
+  #batchSeq = 0;
+
+  // R's `bsides.file.batch` handler rebuilds the slot names from `n` and
+  // rbinds those inputs in position order, so input$<id> is set once, in
+  // declared order.
+  #pushBatch(n: number): void {
+    if (!this.id || n === 0) {
+      return;
+    }
+
+    this.#batchSeq += 1;
+
+    window.Shiny?.setInputValue?.(`${this.id}:bsides.file.batch`, {
+      seq: this.#batchSeq,
+      n,
+    });
+  }
 
   #openBatch(): void {
     this.#batchPromise = new Promise<void>((resolve, reject) => {
@@ -857,13 +879,12 @@ class BsidesFile extends LitElement {
       onFileDone: (file) => {
         this.#updateItem(file, { status: 'done', progress: 1 });
       },
-      // In manual mode a failure lands where a cancel lands: uploadEnd
-      // never ran, so nothing was delivered and the set is still the
-      // value. Only the row in flight when the batch died keeps an
-      // error mark — the one diagnostic the user gets, since the
-      // Uploader reports just a message. Auto mode keeps its terminal
-      // marking.
-      onError: (message) => {
+      // In manual mode a failure lands where a cancel lands: no payload
+      // was sent, so the set is still the value. The failed file's
+      // siblings were aborted, not at fault, so only it keeps a mark;
+      // a batch-level failure names no file and marks no row. Auto mode
+      // keeps its terminal marking.
+      onError: (message, failed) => {
         this.#uploader = null;
         this.#settleBatch(new Error(message));
         this._phase = 'failed';
@@ -872,7 +893,7 @@ class BsidesFile extends LitElement {
         this._items = this._items.map((item) => {
           if (this.mode === 'manual') {
             const status: ItemStatus =
-              item.status === 'uploading' ? 'error' : 'pending';
+              item.file === failed ? 'error' : 'pending';
 
             return { ...item, status, progress: 0 };
           }
@@ -885,6 +906,10 @@ class BsidesFile extends LitElement {
       },
       onDone: () => {
         this.#uploader = null;
+        // Before the batch settles: a form awaiting it sends its own
+        // value the moment it does, and both ride the same in-order
+        // channel.
+        this.#pushBatch(uploader.count);
         this.#settleBatch();
         this._phase = 'done';
         this._batch = 1;

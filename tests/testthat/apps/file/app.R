@@ -21,6 +21,7 @@ ui <-
     ),
     verbatimTextOutput("info"),
     verbatimTextOutput("contents"),
+    verbatimTextOutput("paths"),
     input_file(
       id = "stg",
       label = "Staged upload",
@@ -67,6 +68,18 @@ server <-
         ),
         collapse = "; "
       )
+    })
+
+    # Basenames only: app code keyed on basename(datapath) is the pattern a
+    # batch of same-extension files could collapse.
+    output$paths <- renderText({
+      upload <- input$upl
+
+      if (is.null(upload)) {
+        return("none")
+      }
+
+      paste(basename(upload$datapath), collapse = "; ")
     })
 
     output$stg_state <- renderText({
@@ -131,6 +144,14 @@ server <-
     observeEvent(
       input$do_enable,
       update_file("upl", enable = TRUE),
+      ignoreInit = TRUE
+    )
+    # Lifts the 100-byte limit for the one test that needs a file big
+    # enough to still be on the wire when it cancels. Per app process, and
+    # every test launches its own.
+    observeEvent(
+      input$do_relax,
+      options(shiny.maxRequestSize = 5e6),
       ignoreInit = TRUE
     )
   }
