@@ -69,13 +69,16 @@ win.eval(`
 // WebSocket RPC leg, and a stub XMLHttpRequest standing in for the POST
 // leg. Both record every call and are steered per test through
 // __requestPlan / __postPlan; the defaults answer uploadInit with a job
-// and complete each POST with a single full-size progress event.
+// and complete each POST with a single full-size progress event. Either
+// plan can park its call — on __deferredRequests or __deferredPosts —
+// for the test to settle when it chooses.
 win.eval(`
   window.__connected = true;
   window.__requests = [];
   window.__posts = [];
   window.__requestPlan = null;
   window.__postPlan = null;
+  window.__deferredRequests = [];
 
   window.Shiny.shinyapp = {
     isConnected() { return window.__connected; },
@@ -91,6 +94,14 @@ win.eval(`
       // Shiny's client never rejects a pending request when the socket
       // drops; a hung plan reproduces that, settling neither way.
       if (plan && plan.hang) {
+        return;
+      }
+      // A deferred request is parked for the test to settle by hand,
+      // standing in for a server slow to answer. Held open across the
+      // awaits the caller makes, so a test can inspect what ran while it
+      // was outstanding.
+      if (plan && plan.defer) {
+        window.__deferredRequests.push({ method, args, onSuccess, onError });
         return;
       }
       setTimeout(() => {
@@ -936,6 +947,7 @@ for (const name of Object.keys(registered)) {
   win.__requestPlan = null
   win.__postPlan = null
   win.__deferredPosts = []
+  win.__deferredRequests = []
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -1252,6 +1264,7 @@ for (const name of Object.keys(registered)) {
   win.__requestPlan = null
   win.__postPlan = null
   win.__deferredPosts = []
+  win.__deferredRequests = []
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -1658,6 +1671,7 @@ for (const name of Object.keys(registered)) {
   win.__requestPlan = null
   win.__postPlan = null
   win.__deferredPosts = []
+  win.__deferredRequests = []
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -1760,6 +1774,7 @@ for (const name of Object.keys(registered)) {
   win.__requestPlan = null
   win.__postPlan = null
   win.__deferredPosts = []
+  win.__deferredRequests = []
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -1816,6 +1831,7 @@ for (const name of Object.keys(registered)) {
   win.__requestPlan = null
   win.__postPlan = null
   win.__deferredPosts = []
+  win.__deferredRequests = []
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -1992,6 +2008,7 @@ for (const name of Object.keys(registered)) {
   win.__requestPlan = null
   win.__postPlan = null
   win.__deferredPosts = []
+  win.__deferredRequests = []
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -2202,7 +2219,7 @@ for (const name of Object.keys(registered)) {
 
 // ---- uploader (protocol module, no DOM) ----
 {
-  const { Uploader } = win.__upload
+  const { Uploader, UPLOAD_CONCURRENCY } = win.__upload
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -2215,6 +2232,7 @@ for (const name of Object.keys(registered)) {
     win.__requestPlan = null
     win.__postPlan = null
     win.__deferredPosts = []
+    win.__deferredRequests = []
 
     const events = { progress: [], done: [], errors: [], errorFiles: [], finished: 0 }
 
@@ -2490,6 +2508,160 @@ for (const name of Object.keys(registered)) {
     check('uploader: bounded batch completes', events.finished === 1, events)
     check('uploader: every file reported done once',
       events.done.length === 6 && new Set(events.done).size === 6, events.done)
+  }
+
+  // The slot belongs to the POST, not to the job close. Every close is
+  // held open here, so a chain that awaited its own close would park
+  // every worker and the queued file would never start — which is what
+  // makes this the check that the split actually happened. Holding one
+  // close would prove nothing: the other workers would drain the queue.
+  {
+    const { events, callbacks } = reset()
+    win.__requestPlan = (call) => (call.method === 'uploadEnd' ? { defer: true } : null)
+
+    const names = Array.from(
+      { length: UPLOAD_CONCURRENCY + 1 }, (_, i) => `f${i + 1}.csv`)
+
+    // Never awaited: run() cannot settle while the closes are parked.
+    void new Uploader({
+      inputId: 'upload',
+      files: names.map((n) => file(n, 10)),
+      ...callbacks
+    }).run()
+    await tick(20)
+
+    check('uploader: a landed file frees its slot before its job closes',
+      eq(win.__posts.map((p) => p.name), names), win.__posts.map((p) => p.name))
+    check('uploader: every job close is outstanding',
+      win.__deferredRequests.length === names.length,
+      win.__deferredRequests.length)
+    check('uploader: no row is done while its close is outstanding',
+      eq(events.done, []), events.done)
+
+    // Every close but the last: the batch is still not delivered.
+    while (win.__deferredRequests.length > 1) {
+      win.__deferredRequests.shift().onSuccess({})
+    }
+    await tick(20)
+
+    check('uploader: delivery waits for the last job to close',
+      events.finished === 0 && events.done.length === names.length - 1,
+      { finished: events.finished, done: events.done })
+
+    win.__deferredRequests.shift().onSuccess({})
+    await tick(20)
+
+    check('uploader: the last close delivers the batch once',
+      events.finished === 1 && events.done.length === names.length,
+      { finished: events.finished, done: events.done })
+    check('uploader: one close per file',
+      win.__requests.filter((r) => r.method === 'uploadEnd').length === names.length,
+      win.__requests.map((r) => r.method))
+  }
+
+  // A close that fails after every file's bytes have landed fails the
+  // batch, and is reported from its own chain: its siblings' closes are
+  // still outstanding, and a report joined behind them would never come.
+  {
+    const { events, callbacks } = reset()
+    win.__requestPlan = (call) => (call.method === 'uploadEnd' ? { defer: true } : null)
+
+    const names = ['a.csv', 'b.csv', 'c.csv']
+
+    void new Uploader({
+      inputId: 'upload',
+      files: names.map((n) => file(n, 10)),
+      ...callbacks
+    }).run()
+    await tick(20)
+
+    check('uploader: close-failure starts with every POST landed',
+      win.__posts.length === 3 && win.__deferredRequests.length === 3,
+      { posts: win.__posts.length, closes: win.__deferredRequests.length })
+
+    const second = win.__deferredRequests.find(
+      (r) => r.args[1] === 'upload__bsides_slot_2')
+
+    second.onError('could not finish upload')
+    await tick(20)
+
+    check('uploader: a failed close fails the batch at once',
+      eq(events.errors, ['could not finish upload']), events.errors)
+    check('uploader: a failed close names its own file',
+      eq(events.errorFiles, ['b.csv']), events.errorFiles)
+    check('uploader: a failed close delivers no value',
+      events.finished === 0, events.finished)
+  }
+
+  // Cancel after the bytes have landed. The closes cannot be recalled —
+  // Shiny has no abort for a request — so they settle into a dead batch,
+  // which must deliver nothing and mark no row. The slots they set are
+  // overwritten by the next batch's, which the wire delivers in order.
+  {
+    const { events, callbacks } = reset()
+    win.__requestPlan = (call) => (call.method === 'uploadEnd' ? { defer: true } : null)
+
+    const uploader = new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10), file('b.csv', 10)],
+      ...callbacks
+    })
+
+    void uploader.run()
+    await tick(20)
+
+    check('uploader: cancel-with-closes starts with both closes outstanding',
+      win.__posts.length === 2 && win.__deferredRequests.length === 2,
+      { posts: win.__posts.length, closes: win.__deferredRequests.length })
+
+    uploader.cancel()
+
+    for (const request of win.__deferredRequests.splice(0)) {
+      request.onSuccess({})
+    }
+    await tick(20)
+
+    check('uploader: a cancelled batch delivers nothing though its jobs closed',
+      events.finished === 0 && events.errors.length === 0, events)
+    check('uploader: a cancelled batch marks no row done as its closes land',
+      eq(events.done, []), events.done)
+
+    // The retry is a fresh batch over the same slots.
+    const retry = reset()
+
+    await new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10), file('b.csv', 10)],
+      ...retry.callbacks
+    }).run()
+
+    check('uploader: a batch after a cancel with closes outstanding delivers',
+      retry.events.finished === 1 && retry.events.done.length === 2,
+      retry.events)
+  }
+
+  // A file whose bytes have landed reads complete while its job closes.
+  // The counter is settled at the file's size — its last progress event
+  // may never have arrived — and reported under the file's own name, so
+  // the row is not left short of 100% for as long as the close takes.
+  {
+    const { events, callbacks } = reset()
+    win.__requestPlan = (call) => (call.method === 'uploadEnd' ? { defer: true } : null)
+    win.__postPlan = () => ({ progress: [6] })
+
+    void new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10)],
+      ...callbacks
+    }).run()
+    await tick(20)
+
+    const named = events.progress.filter(([name]) => name === 'a.csv')
+
+    check('uploader: a landed file reports its full size while its job closes',
+      eq(named.at(-1), ['a.csv', 10, 1]), named)
+    check('uploader: a landed file is not done until its job closes',
+      eq(events.done, []), events.done)
   }
 
   // Atomic failure: a file failing while others are in flight aborts them

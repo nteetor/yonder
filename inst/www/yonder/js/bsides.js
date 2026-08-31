@@ -1140,6 +1140,7 @@
     #loaded;
     #shinyapp = null;
     #inflight = /* @__PURE__ */ new Set();
+    #closes = [];
     #aborted = false;
     #finished = false;
     constructor(options) {
@@ -1187,6 +1188,10 @@
       if (this.#isStopped()) {
         return;
       }
+      await Promise.all(this.#closes);
+      if (this.#isStopped()) {
+        return;
+      }
       this.#progress(null, 0, 1);
       this.#finish();
     }
@@ -1218,16 +1223,15 @@
       const workers = Math.min(UPLOAD_CONCURRENCY, this.#files.length);
       await Promise.all(Array.from({ length: workers }, () => worker()));
     }
-    // No barrier between files: a small file's job closes while a large one
-    // is still on the wire.
+    // Holds the pool slot for the POST alone. The job close is started
+    // here and left to settle on its own, so the worker takes the next
+    // queued file while the server is still closing this one's job — the
+    // close is answered on R's single thread, which during a batch is also
+    // ingesting every other in-flight body.
     async #transfer(job, file, index) {
       this.#progress(file, this.#loaded[index], this.#fraction());
       try {
         await this.#post(job.uploadUrl, file, index);
-        if (this.#isStopped()) {
-          return;
-        }
-        await this.#uploadEnd(job.jobId, slotId(this.#inputId, index));
       } catch (error) {
         throw new FileError(file, error);
       }
@@ -1235,8 +1239,24 @@
         return;
       }
       this.#loaded[index] = file.size;
+      this.#progress(file, this.#loaded[index], this.#fraction());
+      this.#closes.push(this.#close(job.jobId, file, index));
+    }
+    // A file's job close, detached from the slot its POST held. Reports
+    // its own failure instead of rejecting: these are joined with
+    // `Promise.all`, where a rejection would be held behind any sibling
+    // close that never settles.
+    async #close(jobId, file, index) {
+      try {
+        await this.#uploadEnd(jobId, slotId(this.#inputId, index));
+      } catch (error) {
+        this.#fail(messageOf(error), file);
+        return;
+      }
+      if (this.#isStopped()) {
+        return;
+      }
       this.#callbacks.onFileDone?.(file);
-      this.#progress(null, 0, this.#fraction());
     }
     #uploadInit(file) {
       const info = [{ name: file.name, size: file.size, type: file.type }];
@@ -1296,9 +1316,11 @@
         xhr.send(file);
       });
     }
-    // No `uploadEnd` runs for a stopped file, so its slot stays empty, and
-    // without a full set the caller sends no batch payload — which is what
-    // keeps a dead batch from delivering a partial value.
+    // Clears the wire only. Job closes already in flight cannot be
+    // recalled — Shiny has no abort for a request — so a stopped batch can
+    // still set every slot it declared. What keeps it from delivering is
+    // run()'s stopped check before it finishes: no payload is sent, so
+    // nothing reads them.
     #stop() {
       this.#aborted = true;
       const requests = [...this.#inflight];

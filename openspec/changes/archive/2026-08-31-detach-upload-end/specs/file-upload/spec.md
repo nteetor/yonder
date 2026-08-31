@@ -27,10 +27,10 @@ configures it.
 
 #### Scenario: A queued file starts when a predecessor's bytes land
 
-- **WHEN** a batch holds more files than the concurrency limit and the
-  server is slow to close finished jobs
-- **THEN** the next queued file's transfer starts as soon as an in-flight
-  transfer's bytes have landed, before the server has closed that job
+- **WHEN** a batch holds more files than the concurrency limit
+- **THEN** the first queued file's transfer starts as soon as an
+  in-flight transfer's bytes have landed — before the server has closed
+  any job in the batch, whatever the link speed or file sizes
 
 ### Requirement: Batch value is delivered once, in declared order
 
@@ -95,6 +95,58 @@ gesture.
 
 - **WHEN** the server rejects closing a file's job after all transfers
   have completed
-- **THEN** the batch fails, that file is the one reported as failed, no
-  value reaches `input$<id>`, and the failure is reported without waiting
-  on any other job close that has not settled
+- **THEN** the batch fails, the failure names that file (in manual mode
+  only its row carries the mark), no value reaches `input$<id>`, and the
+  failure is reported without waiting on any other job close that has
+  not settled
+
+### Requirement: Cancel aborts the whole batch
+
+Cancelling an uploading batch SHALL abort every in-flight transfer,
+start no queued ones, and deliver no value. Job closes already issued
+when the cancel arrives are not recalled: they complete server-side
+without delivering a value and SHALL NOT disturb a later batch on the
+same input. Existing mode semantics are unchanged: manual mode lands
+back on the staged set; auto mode's cancel is terminal.
+
+#### Scenario: Cancel with several transfers in flight
+
+- **WHEN** the user cancels while multiple files are mid-transfer
+- **THEN** all in-flight requests are aborted, no queued transfer starts,
+  and `input$<id>` is never set for that batch
+
+#### Scenario: Cancel with job closes outstanding
+
+- **WHEN** the user cancels after every file's bytes have landed but
+  before the server has closed every job
+- **THEN** `input$<id>` is never set for that batch, no row of it is
+  marked done after the cancel, and a batch started afterwards on the
+  same input delivers its own files exactly once
+
+### Requirement: Progress reporting survives interleaving
+
+Per-file progress SHALL continue to report each file's own fraction, and
+the batch fraction SHALL be the monotone ratio of bytes sent (across all
+in-flight and completed files) to total batch bytes. The
+`bsides-file:progress` event and the `file_upload_progress()` reader keep
+their existing shapes and ranges.
+
+#### Scenario: Aggregate progress with concurrent transfers
+
+- **WHEN** multiple files report progress interleaved
+- **THEN** the batch fraction never decreases, reaches 1 when the last
+  file's bytes have landed, and the final fileless checkpoint reporting
+  1 comes only once the batch completes
+
+#### Scenario: Per-file rows track their own file
+
+- **WHEN** two files are mid-transfer at once
+- **THEN** each file's list row reflects that file's own progress, not a
+  blend
+
+#### Scenario: A landed file reads complete while its job closes
+
+- **WHEN** a file's bytes have landed but the server has not yet closed
+  its job
+- **THEN** that file's row reports its full size as sent and is still
+  uploading, until the close marks it done

@@ -12,11 +12,15 @@ import type { UploadInitValue } from 'rstudio-shiny/srcts/types/src/file/filePro
 //   2. One HTTP POST per file to its own job's url, carrying the raw
 //      bytes as application/octet-stream, at most UPLOAD_CONCURRENCY in
 //      flight at a time.
-//   3. `uploadEnd(jobId, slotId)` per file as its POST lands, where
-//      slotId names a per-position companion input. The server sets that
-//      slot to the file's one-row data frame; the caller then sends the
-//      batch payload — a file count — that R's `bsides.file.batch`
-//      handler assembles into input$<id>, once, in declared order.
+//   3. `uploadEnd(jobId, slotId)` per file as its POST lands, detached
+//      from the pool slot: the slot frees on the bytes landing and the
+//      close runs on its own, so a queued file starts while the server
+//      is still closing its predecessor's job. slotId names a
+//      per-position companion input, which the server sets to the
+//      file's one-row data frame. Once every close has resolved the
+//      caller sends the batch payload — a file count — that R's
+//      `bsides.file.batch` handler assembles into input$<id>, once, in
+//      declared order.
 //
 // One job per file is forced by the server side: FileUploadOperation
 // binds declared metadata to POSTs by arrival order and keeps a single
@@ -59,9 +63,13 @@ interface UploaderOptions extends UploaderCallbacks {
 }
 
 // The companion input a file's job is finished into. Indexed by declared
-// position, 1-based: batches never overlap for one input, so positions
-// are safe to reuse. `file_batch_slot_id()` in R/input-file.R rebuilds
-// these same names from the batch's file count — keep the two in step.
+// position, 1-based. Positions stay safe to reuse even though batches
+// can overlap — a retry starts while the previous batch's closes are
+// still outstanding: every message rides the one socket in send order
+// and R answers on one thread, so a batch's slot is set after its
+// predecessor's and before its own payload, which follows its own
+// closes. `file_batch_slot_id()` in R/input-file.R rebuilds these same
+// names from the batch's file count — keep the two in step.
 function slotId(inputId: string, index: number): string {
   return `${inputId}__bsides_slot_${index + 1}`;
 }
@@ -90,6 +98,7 @@ class Uploader {
   #loaded: number[];
   #shinyapp: ShinyApp | null = null;
   #inflight = new Set<XMLHttpRequest>();
+  #closes: Promise<void>[] = [];
   #aborted = false;
   #finished = false;
 
@@ -147,11 +156,22 @@ class Uploader {
       return;
     }
 
-    // Workers report their own failures, so this settles only when every
-    // transfer chain has. A stopped batch may leave it pending — a
-    // sibling's `uploadEnd` outliving the socket — which is harmless:
-    // onError has already fired, and run()'s promise is fired as void.
+    // Every POST landed, or the batch stopped. Workers report their own
+    // failures rather than rejecting here.
     await this.#transferAll(jobs);
+
+    if (this.#isStopped()) {
+      return;
+    }
+
+    // Then every job closed. This is the wait that can leave run()
+    // pending forever — Shiny's client never rejects a request on a
+    // dropped socket — which is why nothing awaits run() and why a
+    // stopped batch returns above rather than reaching here. Delivery
+    // sits after it because R's `bsides.file.batch` handler reads the
+    // slots these calls set and treats a missing one as a restored
+    // bookmark rather than a race.
+    await Promise.all(this.#closes);
 
     if (this.#isStopped()) {
       return;
@@ -204,8 +224,11 @@ class Uploader {
     await Promise.all(Array.from({ length: workers }, () => worker()));
   }
 
-  // No barrier between files: a small file's job closes while a large one
-  // is still on the wire.
+  // Holds the pool slot for the POST alone. The job close is started
+  // here and left to settle on its own, so the worker takes the next
+  // queued file while the server is still closing this one's job — the
+  // close is answered on R's single thread, which during a batch is also
+  // ingesting every other in-flight body.
   async #transfer(
     job: UploadInitValue,
     file: File,
@@ -215,12 +238,6 @@ class Uploader {
 
     try {
       await this.#post(job.uploadUrl, file, index);
-
-      if (this.#isStopped()) {
-        return;
-      }
-
-      await this.#uploadEnd(job.jobId, slotId(this.#inputId, index));
     } catch (error) {
       throw new FileError(file, error);
     }
@@ -230,11 +247,36 @@ class Uploader {
     }
 
     // Settle the file's byte count in case its last progress event never
-    // arrived, then report the batch alone: a checkpoint naming the file
-    // would put its row back under way after it has been marked done.
+    // arrived, and report it under the file's own name: the row is not
+    // done yet — its close has not returned — so without this it would
+    // sit short of 100% for as long as the server takes.
     this.#loaded[index] = file.size;
+    this.#progress(file, this.#loaded[index], this.#fraction());
+
+    this.#closes.push(this.#close(job.jobId, file, index));
+  }
+
+  // A file's job close, detached from the slot its POST held. Reports
+  // its own failure instead of rejecting: these are joined with
+  // `Promise.all`, where a rejection would be held behind any sibling
+  // close that never settles.
+  async #close(jobId: string, file: File, index: number): Promise<void> {
+    try {
+      await this.#uploadEnd(jobId, slotId(this.#inputId, index));
+    } catch (error) {
+      this.#fail(messageOf(error), file);
+
+      return;
+    }
+
+    // The batch can die while a close is in flight, and now routinely
+    // does: a row the component has just returned to pending or marked
+    // error must not flip to done behind it.
+    if (this.#isStopped()) {
+      return;
+    }
+
     this.#callbacks.onFileDone?.(file);
-    this.#progress(null, 0, this.#fraction());
   }
 
   #uploadInit(file: File): Promise<UploadInitValue> {
@@ -315,9 +357,11 @@ class Uploader {
     });
   }
 
-  // No `uploadEnd` runs for a stopped file, so its slot stays empty, and
-  // without a full set the caller sends no batch payload — which is what
-  // keeps a dead batch from delivering a partial value.
+  // Clears the wire only. Job closes already in flight cannot be
+  // recalled — Shiny has no abort for a request — so a stopped batch can
+  // still set every slot it declared. What keeps it from delivering is
+  // run()'s stopped check before it finishes: no payload is sent, so
+  // nothing reads them.
   #stop(): void {
     this.#aborted = true;
 

@@ -30,7 +30,11 @@ own e2e coverage.
 - Failure and cancel contracts are unchanged: a job close that fails
   after its bytes landed still fails the whole batch, and a cancel with
   job closes outstanding delivers no value. A file's row is marked done
-  when its job closes, as now — not when its bytes land.
+  when its job closes, as now — not when its bytes land; when its bytes
+  land the row reads 100% and still uploading.
+- Batches on one input can now overlap on the wire — a retry can start
+  while the previous batch's job closes are still queued on R. Slot
+  reuse stays safe by socket ordering; the design states the argument.
 - No public R API, no markup attribute, no wire-protocol change. The
   concurrency limit stays internal.
 
@@ -43,21 +47,33 @@ None.
 ### Modified Capabilities
 
 - `file-upload`: the concurrency requirement gains the point at which a
-  slot frees (bytes landed, not job closed); the value-delivery and
-  failure requirements each gain a scenario for the window between the
-  last bytes landing and the last job closing.
+  slot frees (bytes landed, not job closed); the value-delivery, failure
+  and cancel requirements each gain a scenario for the window between the
+  last bytes landing and the last job closing; the progress requirement
+  pins that the batch fraction reaches 1 when the last byte lands and
+  that a landed file reads complete while its job closes.
 
 ## Impact
 
 - `srcts/src/components/upload.ts` — the per-file transfer chain splits
   at the POST: slot release, a detached `uploadEnd` per file collected
   for a join before the deliver phase, failure reporting from the
-  detached chain. The header comment and the "No barrier between files"
-  comment above `#transfer` describe behavior the code did not have;
-  both are rewritten.
+  detached chain. Four comments describe behavior the code will no longer
+  have and are rewritten: the header, the "No barrier between files"
+  comment above `#transfer`, the `slotId` comment ("batches never overlap
+  for one input"), and the `#stop()` comment ("its slot stays empty").
 - `srcts/tests/test-bindings.mjs` — the scripted `makeRequest` gains a
-  deferrable plan, so a test can hold a job close open, assert that the
-  queue advanced past it, then release it and assert delivery.
+  deferrable plan. Tests hold every job close open to show the queue
+  advancing past the limit (holding one would not: the other workers
+  drain the queue under the current code), that delivery waits for the
+  last close, that a close failure reports at once, and that a cancel
+  with closes outstanding delivers nothing and leaves the next batch
+  intact.
+- `tests/testthat/test-file-e2e.R` — one test on the existing
+  shinytest2/chromote layer pins the guarantee end to end as an ordering
+  assertion: a queued file's POST is issued before any job in the batch
+  has closed. Deterministic on any link, so it replaces the hand-run
+  timing probe as the acceptance.
 - `srcts/src/components/webcomponents/file.ts`, `R/input-file.R` — no
   change expected; the callbacks' shape and the batch payload's timing
   relative to the last `uploadEnd` are preserved. Listed because both

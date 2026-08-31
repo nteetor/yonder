@@ -132,6 +132,56 @@ test_that("several files upload as one batch", {
   )
 })
 
+test_that("a queued file starts before any job in the batch closes", {
+  skip_if_no_e2e()
+
+  app <- launch_file_app()
+  withr::defer(app$stop())
+
+  record_upload_timings(app)
+
+  # One file more than the uploader runs at once, so the last one is
+  # queued. Its POST is issued a microtask after the bytes that freed the
+  # slot land, while the close of that file still owes a socket round
+  # trip — so the queued POST cannot be the later of the two. A slot held
+  # across its close inverts that: the queued POST could only follow an
+  # answer. The assertion is the order, which holds at any link speed and
+  # any file size; the interval is what varies by machine.
+  digits <- as.character(1:5)
+
+  # temp_upload() ties each temp dir to its caller's frame; from inside a
+  # lambda that frame is gone before the upload starts.
+  frame <- environment()
+  paths <- vapply(
+    digits,
+    \(d) temp_upload(paste0("q", d, ".csv"), d, envir = frame),
+    character(1)
+  )
+
+  upload_files(app, input_sel, unname(paths))
+
+  expect_equal(
+    app$get_value(output = "contents"),
+    paste0(digits, collapse = "; ")
+  )
+
+  timings <- app$get_js(
+    "({
+      posts: window.__timings.posts.length,
+      ends: window.__timings.ends.length,
+      lastPost: Math.max(...window.__timings.posts.map((p) => p.issued)),
+      firstAnswer: Math.min(...window.__timings.ends.map((e) => e.answered))
+    })"
+  )
+
+  # Every file posted and every job closed, or the order below compares
+  # something other than the whole batch.
+  expect_equal(timings$posts, length(digits))
+  expect_equal(timings$ends, length(digits))
+
+  expect_lt(timings$lastPost, timings$firstAnswer)
+})
+
 test_that("a batch past the concurrency limit keeps declared order", {
   skip_if_no_e2e()
 
