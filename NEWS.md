@@ -56,8 +56,12 @@
   line is a small template (`"{done}/{n} uploaded"`), a `height`
   argument for the drop zone, and client-side validation of size,
   `accept`, and `multiple` — the checks a drop or a paste would
-  otherwise skip entirely. Bookmark restore and directory upload are not
-  supported.
+  otherwise skip entirely. A batch's files upload concurrently, several
+  at a time, and `input$<id>` is still set once per batch, in the order
+  the files were chosen; the `bsides-file:progress` DOM event interleaves
+  checkpoints from the files in flight, so a listener tracks each file's
+  own figure and reads the batch fraction for the whole. Bookmark restore
+  and directory upload are not supported.
 
 * `input_file(upload_mode = "manual")` stages files instead of uploading
   them. Gestures accumulate a set — same-name additions replace, each

@@ -1,24 +1,43 @@
 import type { ShinyApp } from 'rstudio-shiny/srcts/types/src/shiny/shinyapp';
 import type { UploadInitValue } from 'rstudio-shiny/srcts/types/src/file/fileProcessor';
 
-// One run of Shiny's three-leg upload protocol, jQuery-free and free of
-// any DOM assumptions:
+// One run of Shiny's upload protocol for a batch of files, jQuery-free
+// and free of any DOM assumptions. One upload job per file, so POSTs can
+// overlap:
 //
-//   1. `uploadInit` over the WebSocket announces [{name, size, type}, ...];
-//      the server validates sizes against `shiny.maxRequestSize` and
-//      answers {jobId, uploadUrl}.
-//   2. One HTTP POST per file, sequentially, carrying the raw bytes as
-//      application/octet-stream.
-//   3. `uploadEnd` with [jobId, inputId]. The server finalizes the temp
-//      files and sets input$<inputId> itself — no client-side value.
+//   1. `uploadInit([{name, size, type}])` once per file, all of them
+//      issued and answered before any bytes move; the server validates
+//      each size against `shiny.maxRequestSize` and answers
+//      {jobId, uploadUrl}.
+//   2. One HTTP POST per file to its own job's url, carrying the raw
+//      bytes as application/octet-stream, at most UPLOAD_CONCURRENCY in
+//      flight at a time.
+//   3. `uploadEnd(jobId, slotId)` per file as its POST lands, detached
+//      from the pool slot: the slot frees on the bytes landing and the
+//      close runs on its own, so a queued file starts while the server
+//      is still closing its predecessor's job. slotId names a
+//      per-position companion input, which the server sets to the
+//      file's one-row data frame. Once every close has resolved the
+//      caller sends the batch payload — a file count — that R's
+//      `bsides.file.batch` handler assembles into input$<id>, once, in
+//      declared order.
+//
+// One job per file is forced by the server side: FileUploadOperation
+// binds declared metadata to POSTs by arrival order and keeps a single
+// file handle open, so concurrent POSTs into one job would scramble
+// name/content attribution.
 //
 // XHR, not fetch: upload progress events on fetch still require duplex
 // request streams (Chromium-only); xhr.upload.onprogress is the portable
 // mechanism, and xhr.abort() gives cancellation for free.
 
-// A progress checkpoint. Files upload one at a time, so `batch` is the
-// only aggregate the caller needs; `loaded` is reported alongside it so a
-// per-file bar does not have to reconstruct it from the batch fraction.
+// Dropzone defaults to 2, Uppy to 5. Small-file batches are latency-
+// bound, so the exact value matters less than it not being 1.
+const UPLOAD_CONCURRENCY = 4;
+
+// A progress checkpoint. Files upload concurrently, so checkpoints from
+// different files interleave: `loaded` is this file's own bytes, and
+// `batch` the aggregate across every file, which never decreases.
 interface UploadProgress {
   // The file being sent, or null at batch checkpoints (start, finish).
   file: File | null;
@@ -31,7 +50,10 @@ interface UploadProgress {
 interface UploaderCallbacks {
   onProgress?: (progress: UploadProgress) => void;
   onFileDone?: (file: File) => void;
-  onError?: (message: string) => void;
+  // `file` is the one whose transfer failed, when the failure belongs to
+  // a single file rather than the batch — its siblings were aborted, not
+  // at fault, so only this one has earned a mark.
+  onError?: (message: string, file?: File) => void;
   onDone?: () => void;
 }
 
@@ -40,15 +62,44 @@ interface UploaderOptions extends UploaderCallbacks {
   files: File[];
 }
 
+// The companion input a file's job is finished into. Indexed by declared
+// position, 1-based. Positions stay safe to reuse even though batches
+// can overlap — a retry starts while the previous batch's closes are
+// still outstanding: every message rides the one socket in send order
+// and R answers on one thread, so a batch's slot is set after its
+// predecessor's and before its own payload, which follows its own
+// closes. `file_batch_slot_id()` in R/input-file.R rebuilds these same
+// names from the batch's file count — keep the two in step.
+function slotId(inputId: string, index: number): string {
+  return `${inputId}__bsides_slot_${index + 1}`;
+}
+
+// Names the file a rejection belongs to, so a batch dying with several
+// transfers in flight can still say which one failed.
+class FileError extends Error {
+  file: File;
+
+  constructor(file: File, cause: unknown) {
+    super(messageOf(cause));
+
+    this.file = file;
+  }
+}
+
+function fileOf(error: unknown): File | undefined {
+  return error instanceof FileError ? error.file : undefined;
+}
+
 class Uploader {
   #inputId: string;
   #files: File[];
   #callbacks: UploaderCallbacks;
   #totalBytes: number;
-  #doneBytes = 0;
+  #loaded: number[];
   #shinyapp: ShinyApp | null = null;
-  #xhr: XMLHttpRequest | null = null;
-  #cancelled = false;
+  #inflight = new Set<XMLHttpRequest>();
+  #closes: Promise<void>[] = [];
+  #aborted = false;
   #finished = false;
 
   constructor(options: UploaderOptions) {
@@ -58,6 +109,14 @@ class Uploader {
     this.#files = files;
     this.#callbacks = callbacks;
     this.#totalBytes = files.reduce((total, file) => total + file.size, 0);
+    this.#loaded = files.map(() => 0);
+  }
+
+  // The batch payload carries this, not the slot names: the server
+  // derives `<id>__bsides_slot_<i>` itself rather than dereferencing
+  // strings off the wire.
+  get count(): number {
+    return this.#files.length;
   }
 
   // Runs the whole batch. Resolves once the batch has ended for any
@@ -80,45 +139,41 @@ class Uploader {
 
     this.#progress(null, 0, 0);
 
-    let job: UploadInitValue;
+    let jobs: UploadInitValue[];
 
+    // Every init before any POST: `shiny.maxRequestSize` is enforced here,
+    // so an oversize file anywhere fails the batch with nothing sent.
     try {
-      job = await this.#uploadInit();
+      jobs = await Promise.all(
+        this.#files.map((file) => this.#uploadInit(file)),
+      );
     } catch (error) {
-      this.#fail(messageOf(error));
+      this.#fail(messageOf(error), fileOf(error));
       return;
     }
 
-    if (this.#isCancelled()) {
+    if (this.#isStopped()) {
       return;
     }
 
-    for (const file of this.#files) {
-      this.#progress(file, 0, this.#fraction(this.#doneBytes));
+    // Every POST landed, or the batch stopped. Workers report their own
+    // failures rather than rejecting here.
+    await this.#transferAll(jobs);
 
-      try {
-        await this.#post(job.uploadUrl, file);
-      } catch (error) {
-        this.#fail(messageOf(error));
-        return;
-      }
-
-      if (this.#isCancelled()) {
-        return;
-      }
-
-      this.#doneBytes += file.size;
-      this.#callbacks.onFileDone?.(file);
-    }
-
-    try {
-      await this.#uploadEnd(job.jobId);
-    } catch (error) {
-      this.#fail(messageOf(error));
+    if (this.#isStopped()) {
       return;
     }
 
-    if (this.#isCancelled()) {
+    // Then every job closed. This is the wait that can leave run()
+    // pending forever — Shiny's client never rejects a request on a
+    // dropped socket — which is why nothing awaits run() and why a
+    // stopped batch returns above rather than reaching here. Delivery
+    // sits after it because R's `bsides.file.batch` handler reads the
+    // slots these calls set and treats a missing one as a restored
+    // bookmark rather than a race.
+    await Promise.all(this.#closes);
+
+    if (this.#isStopped()) {
       return;
     }
 
@@ -126,35 +181,117 @@ class Uploader {
     this.#finish();
   }
 
-  // Abandons the batch: the in-flight POST is aborted and `uploadEnd`
-  // never runs, so the server never sets input$<id>. The session cleans up
-  // the orphaned upload operation and its temp files.
+  // Un-ended jobs are orphaned server-side; the session cleans them and
+  // their temp files up.
   cancel(): void {
     if (this.#finished) {
       return;
     }
 
-    this.#cancelled = true;
     this.#finished = true;
-    this.#xhr?.abort();
-    this.#xhr = null;
+    this.#stop();
   }
 
-  #uploadInit(): Promise<UploadInitValue> {
-    const info = this.#files.map((file) => ({
-      name: file.name,
-      size: file.size,
-      type: file.type,
-    }));
+  async #transferAll(jobs: UploadInitValue[]): Promise<void> {
+    let next = 0;
 
-    return this.#request('uploadInit', [info]) as Promise<UploadInitValue>;
+    const worker = async (): Promise<void> => {
+      for (;;) {
+        const index = next++;
+
+        if (index >= this.#files.length || this.#isStopped()) {
+          return;
+        }
+
+        try {
+          await this.#transfer(jobs[index], this.#files[index], index);
+        } catch (error) {
+          // Reported here rather than by rejecting the worker: a caller
+          // awaiting every worker would hold the failure behind a sibling
+          // that never settles — Shiny's client leaves an `uploadEnd`
+          // request pending forever on a dropped socket rather than
+          // rejecting it. #fail is idempotent, so the sibling rejections
+          // that follow the abort are absorbed.
+          this.#fail(messageOf(error), fileOf(error));
+
+          return;
+        }
+      }
+    };
+
+    const workers = Math.min(UPLOAD_CONCURRENCY, this.#files.length);
+
+    await Promise.all(Array.from({ length: workers }, () => worker()));
   }
 
-  #uploadEnd(jobId: string): Promise<unknown> {
-    return this.#request('uploadEnd', [jobId, this.#inputId]);
+  // Holds the pool slot for the POST alone. The job close is started
+  // here and left to settle on its own, so the worker takes the next
+  // queued file while the server is still closing this one's job — the
+  // close is answered on R's single thread, which during a batch is also
+  // ingesting every other in-flight body.
+  async #transfer(
+    job: UploadInitValue,
+    file: File,
+    index: number,
+  ): Promise<void> {
+    this.#progress(file, this.#loaded[index], this.#fraction());
+
+    try {
+      await this.#post(job.uploadUrl, file, index);
+    } catch (error) {
+      throw new FileError(file, error);
+    }
+
+    if (this.#isStopped()) {
+      return;
+    }
+
+    // Settle the file's byte count in case its last progress event never
+    // arrived, and report it under the file's own name: the row is not
+    // done yet — its close has not returned — so without this it would
+    // sit short of 100% for as long as the server takes.
+    this.#loaded[index] = file.size;
+    this.#progress(file, this.#loaded[index], this.#fraction());
+
+    this.#closes.push(this.#close(job.jobId, file, index));
   }
 
-  // Only reachable after run() has resolved and stored the connected app.
+  // A file's job close, detached from the slot its POST held. Reports
+  // its own failure instead of rejecting: these are joined with
+  // `Promise.all`, where a rejection would be held behind any sibling
+  // close that never settles.
+  async #close(jobId: string, file: File, index: number): Promise<void> {
+    try {
+      await this.#uploadEnd(jobId, slotId(this.#inputId, index));
+    } catch (error) {
+      this.#fail(messageOf(error), file);
+
+      return;
+    }
+
+    // The batch can die while a close is in flight, and now routinely
+    // does: a row the component has just returned to pending or marked
+    // error must not flip to done behind it.
+    if (this.#isStopped()) {
+      return;
+    }
+
+    this.#callbacks.onFileDone?.(file);
+  }
+
+  #uploadInit(file: File): Promise<UploadInitValue> {
+    const info = [{ name: file.name, size: file.size, type: file.type }];
+
+    return this.#request('uploadInit', [info]).catch((error: unknown) => {
+      throw new FileError(file, error);
+    }) as Promise<UploadInitValue>;
+  }
+
+  #uploadEnd(jobId: string, slot: string): Promise<unknown> {
+    return this.#request('uploadEnd', [jobId, slot]);
+  }
+
+  // Only reachable after run() has stored the connected app.
   #request(method: string, args: unknown[]): Promise<unknown> {
     const shinyapp = this.#shinyapp;
 
@@ -173,27 +310,27 @@ class Uploader {
     });
   }
 
-  #post(url: string, file: File): Promise<void> {
+  #post(url: string, file: File, index: number): Promise<void> {
     return new Promise((resolve, reject) => {
       const xhr = new XMLHttpRequest();
 
-      this.#xhr = xhr;
+      this.#inflight.add(xhr);
 
       xhr.open('POST', url, true);
       xhr.setRequestHeader('Content-Type', 'application/octet-stream');
 
       xhr.upload.onprogress = (event) => {
         if (event.lengthComputable) {
-          this.#progress(
-            file,
-            event.loaded,
-            this.#fraction(this.#doneBytes + event.loaded),
-          );
+          // Held at its high-water mark: a transfer that restarts its
+          // progress sequence reports fewer bytes than it last did, and
+          // neither this file's bar nor the batch's may walk backwards.
+          this.#loaded[index] = Math.max(this.#loaded[index], event.loaded);
+          this.#progress(file, this.#loaded[index], this.#fraction());
         }
       };
 
       xhr.onload = () => {
-        this.#xhr = null;
+        this.#inflight.delete(xhr);
 
         if (xhr.status >= 200 && xhr.status < 300) {
           resolve();
@@ -205,14 +342,14 @@ class Uploader {
       };
 
       xhr.onerror = () => {
-        this.#xhr = null;
+        this.#inflight.delete(xhr);
         reject(new Error('Upload failed.'));
       };
 
-      // cancel() aborts the request. Resolving unwinds run(), whose
-      // post-await cancellation check stops the batch without an error.
+      // cancel() aborts the request. Resolving unwinds the chain, whose
+      // post-await cancellation check stops it without an error.
       xhr.onabort = () => {
-        this.#xhr = null;
+        this.#inflight.delete(xhr);
         resolve();
       };
 
@@ -220,18 +357,51 @@ class Uploader {
     });
   }
 
-  // Read through a call, not the field: cancel() runs between the awaits
-  // in run(), which control-flow narrowing of a plain field read cannot
-  // account for.
-  #isCancelled(): boolean {
-    return this.#cancelled;
+  // Clears the wire only. Job closes already in flight cannot be
+  // recalled — Shiny has no abort for a request — so a stopped batch can
+  // still set every slot it declared. What keeps it from delivering is
+  // run()'s stopped check before it finishes: no payload is sent, so
+  // nothing reads them.
+  #stop(): void {
+    this.#aborted = true;
+
+    const requests = [...this.#inflight];
+
+    this.#inflight.clear();
+
+    for (const xhr of requests) {
+      xhr.abort();
+    }
   }
 
-  #fraction(bytes: number): number {
-    return this.#totalBytes > 0 ? bytes / this.#totalBytes : 0;
+  // Read through a call, not the field: a cancel or a sibling's failure
+  // lands between the awaits in the transfer chains, which control-flow
+  // narrowing of a plain field read cannot account for.
+  #isStopped(): boolean {
+    return this.#aborted;
+  }
+
+  // The batch fraction. Monotone by construction rather than by clamping
+  // here: every counter it sums is held at its own high-water mark, and a
+  // sum of counters that never fall cannot fall either.
+  #fraction(): number {
+    if (this.#totalBytes <= 0) {
+      return 0;
+    }
+
+    const sent = this.#loaded.reduce((total, bytes) => total + bytes, 0);
+
+    return sent / this.#totalBytes;
   }
 
   #progress(file: File | null, loaded: number, batch: number): void {
+    // A batch that has stopped reports nothing further: an aborted POST
+    // can still deliver a queued progress event, and the caller must not
+    // see the dead batch move.
+    if (this.#isStopped()) {
+      return;
+    }
+
     this.#callbacks.onProgress?.({
       file,
       loaded,
@@ -239,13 +409,14 @@ class Uploader {
     });
   }
 
-  #fail(message: string): void {
+  #fail(message: string, file?: File): void {
     if (this.#finished) {
       return;
     }
 
     this.#finished = true;
-    this.#callbacks.onError?.(message);
+    this.#stop();
+    this.#callbacks.onError?.(message, file);
   }
 
   #finish(): void {
@@ -266,5 +437,5 @@ function messageOf(error: unknown): string {
   return typeof error === 'string' && error ? error : 'Upload failed.';
 }
 
-export { Uploader };
+export { Uploader, UPLOAD_CONCURRENCY };
 export type { UploadProgress, UploaderCallbacks, UploaderOptions };

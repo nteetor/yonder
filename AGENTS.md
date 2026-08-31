@@ -100,3 +100,10 @@ This protocol applies when ending a Beads implementation workflow. It is subordi
 - Do not commit or push without clear authority from the active profile or the current user request.
 - If a required sync or push is blocked, stop and report the exact command and error.
 <!-- END BEADS INTEGRATION -->
+
+## OpenSpec
+
+Changes here use the `soroban` schema. Implement them with `soroban-apply`
+and archive them with `soroban-archive` — including when `/opsx:apply` or
+`/opsx:archive` is invoked. When unsure of a change's schema, check
+`schemaName` in `openspec status --change <name> --json` before choosing.

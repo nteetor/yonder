@@ -69,13 +69,16 @@ win.eval(`
 // WebSocket RPC leg, and a stub XMLHttpRequest standing in for the POST
 // leg. Both record every call and are steered per test through
 // __requestPlan / __postPlan; the defaults answer uploadInit with a job
-// and complete each POST with a single full-size progress event.
+// and complete each POST with a single full-size progress event. Either
+// plan can park its call — on __deferredRequests or __deferredPosts —
+// for the test to settle when it chooses.
 win.eval(`
   window.__connected = true;
   window.__requests = [];
   window.__posts = [];
   window.__requestPlan = null;
   window.__postPlan = null;
+  window.__deferredRequests = [];
 
   window.Shiny.shinyapp = {
     isConnected() { return window.__connected; },
@@ -85,13 +88,32 @@ win.eval(`
       const plan = window.__requestPlan
         ? window.__requestPlan(call, window.__requests.length - 1)
         : null;
+      // One job per file: each uploadInit gets its own id and url, so a
+      // POST can be traced back to the file it was declared for.
+      const ordinal = window.__requests.filter((r) => r.method === method).length;
+      // Shiny's client never rejects a pending request when the socket
+      // drops; a hung plan reproduces that, settling neither way.
+      if (plan && plan.hang) {
+        return;
+      }
+      // A deferred request is parked for the test to settle by hand,
+      // standing in for a server slow to answer. Held open across the
+      // awaits the caller makes, so a test can inspect what ran while it
+      // was outstanding.
+      if (plan && plan.defer) {
+        window.__deferredRequests.push({ method, args, onSuccess, onError });
+        return;
+      }
       setTimeout(() => {
         if (plan && plan.error) {
           onError(plan.error);
         } else if (plan && 'value' in plan) {
           onSuccess(plan.value);
         } else if (method === 'uploadInit') {
-          onSuccess({ jobId: 'job1', uploadUrl: '/session/tok/upload/job1?w=' });
+          onSuccess({
+            jobId: 'job' + ordinal,
+            uploadUrl: '/session/tok/upload/job' + ordinal + '?w='
+          });
         } else {
           onSuccess({});
         }
@@ -925,6 +947,7 @@ for (const name of Object.keys(registered)) {
   win.__requestPlan = null
   win.__postPlan = null
   win.__deferredPosts = []
+  win.__deferredRequests = []
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -1241,6 +1264,7 @@ for (const name of Object.keys(registered)) {
   win.__requestPlan = null
   win.__postPlan = null
   win.__deferredPosts = []
+  win.__deferredRequests = []
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -1357,8 +1381,8 @@ for (const name of Object.keys(registered)) {
   uploadButton().click()
   await tick(20)
   await el.updateComplete
-  check('manual: upload starts the protocol',
-    eq(win.__requests.map((r) => r.method), ['uploadInit']),
+  check('manual: upload starts one job per staged file',
+    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadInit']),
     win.__requests.map((r) => r.method))
   check('manual: remove controls hide in flight', removes().length === 0)
   check('manual: cancel offered in flight',
@@ -1377,12 +1401,26 @@ for (const name of Object.keys(registered)) {
   await tick(20)
   await el.updateComplete
   check('manual: batch delivered',
-    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    eq(win.__requests.map((r) => r.method),
+      ['uploadInit', 'uploadInit', 'uploadEnd', 'uploadEnd']),
     win.__requests.map((r) => r.method))
   check('manual: rows done',
     [...el.querySelectorAll('.file-item')].every(
       (row) => row.className === 'file-item done'),
     [...el.querySelectorAll('.file-item')].map((row) => row.className))
+  // The value itself: one payload carrying the file count, from which R's
+  // batch handler rebuilds the slot names the per-file uploadEnd calls
+  // filled and rbinds them in position order.
+  const batches = () => win.__setInputValues
+    .filter((v) => v.name === 'uplm:bsides.file.batch')
+    .map((v) => v.value)
+
+  check('manual: one batch payload per delivery', batches().length === 1, batches())
+  check('manual: batch payload counts the files and names no slots',
+    batches()[0].n === 2 && batches()[0].slots === undefined,
+    batches()[0])
+  check('manual: batch payload carries a seq', batches()[0].seq === 1, batches()[0])
+
   check('manual: upload disabled after delivery',
     uploadButton().disabled === true)
   check('manual: done rows are not removable', removes().length === 0)
@@ -1413,9 +1451,14 @@ for (const name of Object.keys(registered)) {
     [...el.querySelectorAll('.file-item')].every(
       (row) => row.className === 'file-item pending'),
     [...el.querySelectorAll('.file-item')].map((row) => row.className))
-  check('manual: cancel skipped uploadEnd',
-    eq(win.__requests.map((r) => r.method), ['uploadInit']),
+  check('manual: cancel leaves the in-flight file unfinished',
+    eq(win.__requests.map((r) => r.method),
+      ['uploadInit', 'uploadInit', 'uploadEnd']),
     win.__requests.map((r) => r.method))
+  check('manual: cancel finished only the file that landed',
+    eq(win.__requests.filter((r) => r.method === 'uploadEnd').map((r) => r.args),
+      [['job1', 'uplm__bsides_slot_1']]),
+    win.__requests.filter((r) => r.method === 'uploadEnd').map((r) => r.args))
   check('manual: upload button returns after cancel',
     uploadButton() !== null && uploadButton().disabled === false)
 
@@ -1424,9 +1467,10 @@ for (const name of Object.keys(registered)) {
   uploadButton().click()
   await tick(30)
   await el.updateComplete
-  check('manual: retry issues a fresh uploadInit',
+  check('manual: retry issues a fresh job per file',
     eq(win.__requests.map((r) => r.method),
-      ['uploadInit', 'uploadInit', 'uploadEnd']),
+      ['uploadInit', 'uploadInit', 'uploadEnd',
+       'uploadInit', 'uploadInit', 'uploadEnd', 'uploadEnd']),
     win.__requests.map((r) => r.method))
   check('manual: retry re-posts every file',
     eq(win.__posts.map((post) => post.name),
@@ -1543,6 +1587,68 @@ for (const name of Object.keys(registered)) {
   binding.receiveMessage(el, { reset: true })
   await el.updateComplete
 
+  // The same set uploaded twice in a row delivers twice: the payloads are
+  // identical but for `seq`, which is what keeps Shiny's client from
+  // dropping the second send as a repeat of the first.
+  const twice = []
+  for (const round of [1, 2]) {
+    const before = win.__setInputValues.length
+    el.upload([file('same.csv', 10, 'text/csv')])
+    await el.updateComplete
+    uploadButton().click()
+    await tick(30)
+    await el.updateComplete
+    twice.push(...win.__setInputValues
+      .slice(before)
+      .filter((v) => v.name === 'uplm:bsides.file.batch')
+      .map((v) => v.value))
+    check(`manual: identical batch ${round} delivered`, twice.length === round, twice)
+    binding.receiveMessage(el, { reset: true })
+    await el.updateComplete
+  }
+
+  check('manual: identical batches send the same count',
+    twice[0].n === twice[1].n && twice[0].n === 1, twice.map((b) => b.n))
+  check('manual: identical batches are distinguished by seq',
+    twice[1].seq === twice[0].seq + 1, twice.map((b) => b.seq))
+
+  // A batch that dies delivers nothing: no payload, so R's handler never
+  // runs and input$<id> keeps whatever it last held.
+  for (const [label, kill] of [
+    ['failure', async () => {
+      win.__postPlan = () => ({ status: 500 })
+      uploadButton().click()
+      await tick(30)
+      win.__postPlan = null
+    }],
+    ['cancel', async () => {
+      win.__postPlan = () => ({ defer: true })
+      uploadButton().click()
+      await tick(20)
+      await el.updateComplete
+      el.querySelector('.file-cancel').click()
+      await tick(20)
+      win.__postPlan = null
+    }]
+  ]) {
+    binding.receiveMessage(el, { reset: true })
+    await el.updateComplete
+    el.upload([file('doomed.csv', 10, 'text/csv'), file('other.csv', 10, 'text/csv')])
+    await el.updateComplete
+
+    const before = win.__setInputValues.length
+    await kill()
+    await el.updateComplete
+
+    check(`manual: ${label} sends no batch payload`,
+      win.__setInputValues.slice(before)
+        .every((v) => v.name !== 'uplm:bsides.file.batch'),
+      win.__setInputValues.slice(before).map((v) => v.name))
+  }
+
+  binding.receiveMessage(el, { reset: true })
+  await el.updateComplete
+
   // upload_start is a manual-mode concept: the auto input ignores it.
   const auto = doc.getElementById('upl')
   binding.receiveMessage(auto, { reset: true })
@@ -1565,6 +1671,7 @@ for (const name of Object.keys(registered)) {
   win.__requestPlan = null
   win.__postPlan = null
   win.__deferredPosts = []
+  win.__deferredRequests = []
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -1667,6 +1774,7 @@ for (const name of Object.keys(registered)) {
   win.__requestPlan = null
   win.__postPlan = null
   win.__deferredPosts = []
+  win.__deferredRequests = []
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -1723,6 +1831,7 @@ for (const name of Object.keys(registered)) {
   win.__requestPlan = null
   win.__postPlan = null
   win.__deferredPosts = []
+  win.__deferredRequests = []
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -1899,6 +2008,7 @@ for (const name of Object.keys(registered)) {
   win.__requestPlan = null
   win.__postPlan = null
   win.__deferredPosts = []
+  win.__deferredRequests = []
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -1925,7 +2035,8 @@ for (const name of Object.keys(registered)) {
   await tick(30)
   await el.updateComplete
   check('form-file: submit starts the staged batch',
-    eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+    eq(win.__requests.map((r) => r.method),
+      ['uploadInit', 'uploadInit', 'uploadEnd', 'uploadEnd']),
     win.__requests.map((r) => r.method))
   check('form-file: rows done after the submit-started batch',
     [...el.querySelectorAll('.file-item')].every(
@@ -2108,7 +2219,7 @@ for (const name of Object.keys(registered)) {
 
 // ---- uploader (protocol module, no DOM) ----
 {
-  const { Uploader } = win.__upload
+  const { Uploader, UPLOAD_CONCURRENCY } = win.__upload
 
   const file = (name, bytes, type = '') =>
     new win.File(['x'.repeat(bytes)], name, { type })
@@ -2121,8 +2232,9 @@ for (const name of Object.keys(registered)) {
     win.__requestPlan = null
     win.__postPlan = null
     win.__deferredPosts = []
+    win.__deferredRequests = []
 
-    const events = { progress: [], done: [], errors: [], finished: 0 }
+    const events = { progress: [], done: [], errors: [], errorFiles: [], finished: 0 }
 
     return {
       events,
@@ -2130,13 +2242,17 @@ for (const name of Object.keys(registered)) {
         onProgress: ({ file: f, loaded, batch }) =>
           events.progress.push([f && f.name, loaded, batch]),
         onFileDone: (f) => events.done.push(f.name),
-        onError: (message) => events.errors.push(message),
+        onError: (message, f) => {
+          events.errors.push(message)
+          events.errorFiles.push(f && f.name)
+        },
         onDone: () => { events.finished++ }
       }
     }
   }
 
-  // Happy path: init payload, sequential POSTs, progress math, uploadEnd.
+  // Happy path: per-file init payloads, overlapping POSTs, progress math,
+  // per-file uploadEnd into the position's slot.
   {
     const { events, callbacks } = reset()
     win.__postPlan = (call, i) => (i === 0 ? { progress: [10] } : { progress: [15, 30] })
@@ -2147,24 +2263,33 @@ for (const name of Object.keys(registered)) {
       ...callbacks
     }).run()
 
-    check('uploader: two requests', win.__requests.length === 2, win.__requests.map((r) => r.method))
-    check('uploader: uploadInit payload', eq(win.__requests[0], {
-      method: 'uploadInit',
-      args: [[
-        { name: 'a.csv', size: 10, type: 'text/csv' },
-        { name: 'b.csv', size: 30, type: '' }
-      ]]
-    }), win.__requests[0])
-    check('uploader: uploadEnd payload', eq(win.__requests[1], {
-      method: 'uploadEnd',
-      args: ['job1', 'upload']
-    }), win.__requests[1])
+    check('uploader: one init and one end per file',
+      eq(win.__requests.map((r) => r.method),
+         ['uploadInit', 'uploadInit', 'uploadEnd', 'uploadEnd']),
+      win.__requests.map((r) => r.method))
+    check('uploader: uploadInit declares one file per job', eq(
+      win.__requests.filter((r) => r.method === 'uploadInit').map((r) => r.args),
+      [
+        [[{ name: 'a.csv', size: 10, type: 'text/csv' }]],
+        [[{ name: 'b.csv', size: 30, type: '' }]]
+      ]
+    ), win.__requests.filter((r) => r.method === 'uploadInit').map((r) => r.args))
+    check('uploader: uploadEnd finishes each job into its position slot', eq(
+      win.__requests.filter((r) => r.method === 'uploadEnd').map((r) => r.args),
+      [
+        ['job1', 'upload__bsides_slot_1'],
+        ['job2', 'upload__bsides_slot_2']
+      ]
+    ), win.__requests.filter((r) => r.method === 'uploadEnd').map((r) => r.args))
 
-    check('uploader: one POST per file, in order',
+    check('uploader: one POST per file, in declared order',
       eq(win.__posts.map((p) => p.name), ['a.csv', 'b.csv']), win.__posts.map((p) => p.name))
-    check('uploader: POSTs to the job url',
-      win.__posts.every((p) => p.method === 'POST' && p.url === '/session/tok/upload/job1?w='),
-      win.__posts)
+    check('uploader: each POST goes to its own job url',
+      eq(win.__posts.map((p) => p.url),
+         ['/session/tok/upload/job1?w=', '/session/tok/upload/job2?w=']),
+      win.__posts.map((p) => p.url))
+    check('uploader: POSTs are POSTs',
+      win.__posts.every((p) => p.method === 'POST'), win.__posts)
     check('uploader: octet-stream content type',
       win.__posts.every((p) => p.headers['Content-Type'] === 'application/octet-stream'),
       win.__posts.map((p) => p.headers))
@@ -2213,11 +2338,12 @@ for (const name of Object.keys(registered)) {
       ...callbacks
     }).run()
 
-    check('uploader: POST error reported',
+    check('uploader: POST error reported once',
       eq(events.errors, ['upload handler failed']), events.errors)
-    check('uploader: POST error stops the batch', win.__posts.length === 1, win.__posts.length)
     check('uploader: POST error skips uploadEnd',
-      eq(win.__requests.map((r) => r.method), ['uploadInit']), win.__requests.map((r) => r.method))
+      win.__requests.every((r) => r.method === 'uploadInit'),
+      win.__requests.map((r) => r.method))
+    check('uploader: POST error is not done', events.finished === 0, events.finished)
   }
 
   // Cancel mid-batch: the in-flight POST is aborted, uploadEnd never runs,
@@ -2234,16 +2360,54 @@ for (const name of Object.keys(registered)) {
     const running = uploader.run()
 
     await tick(20)
-    check('uploader: first POST in flight', win.__deferredPosts.length === 1, win.__deferredPosts.length)
+    check('uploader: both POSTs in flight', win.__deferredPosts.length === 2, win.__deferredPosts.length)
 
     uploader.cancel()
     await running
 
-    check('uploader: cancel aborted the request', win.__deferredPosts[0].aborted === true)
+    check('uploader: cancel aborted every in-flight request',
+      win.__deferredPosts.every((x) => x.aborted === true),
+      win.__deferredPosts.map((x) => x.aborted))
     check('uploader: cancel skips uploadEnd',
-      eq(win.__requests.map((r) => r.method), ['uploadInit']), win.__requests.map((r) => r.method))
-    check('uploader: cancel skips remaining files', win.__posts.length === 1, win.__posts.length)
+      win.__requests.every((r) => r.method === 'uploadInit'),
+      win.__requests.map((r) => r.method))
     check('uploader: cancel is neither done nor error',
+      events.finished === 0 && events.errors.length === 0, events)
+  }
+
+  // Cancel with the pool full: the queue is dropped as well as the wire
+  // cleared, so the files that never got a slot never get one.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = () => ({ defer: true })
+
+    const names = ['a', 'b', 'c', 'd', 'e', 'f']
+    const uploader = new Uploader({
+      inputId: 'upload',
+      files: names.map((n) => file(`${n}.csv`, 10)),
+      ...callbacks
+    })
+    const running = uploader.run()
+
+    await tick(20)
+    check('uploader: queue-drop starts with the pool full',
+      win.__posts.length === 4 && win.__deferredPosts.length === 4,
+      { posts: win.__posts.length, inflight: win.__deferredPosts.length })
+
+    uploader.cancel()
+    await running
+    await tick(20)
+
+    check('uploader: cancel aborts the full pool',
+      win.__deferredPosts.every((x) => x.aborted === true),
+      win.__deferredPosts.map((x) => x.aborted))
+    check('uploader: cancel never starts a queued file',
+      eq(win.__posts.map((p) => p.name), ['a.csv', 'b.csv', 'c.csv', 'd.csv']),
+      win.__posts.map((p) => p.name))
+    check('uploader: cancel with a queue finishes no job',
+      win.__requests.every((r) => r.method === 'uploadInit'),
+      win.__requests.map((r) => r.method))
+    check('uploader: cancel with a queue is neither done nor error',
       events.finished === 0 && events.errors.length === 0, events)
   }
 
@@ -2256,6 +2420,434 @@ for (const name of Object.keys(registered)) {
 
     check('uploader: disconnected reports an error', events.errors.length === 1, events.errors)
     check('uploader: disconnected makes no requests', win.__requests.length === 0, win.__requests)
+  }
+
+
+  // Completing out of declared order does not disturb which slot a file's
+  // content lands in: the slot is its declared position, not its finish
+  // rank, and that is the order R's batch handler rbinds them in.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = () => ({ defer: true })
+
+    const uploader = new Uploader({
+      inputId: 'upload',
+      files: [file('first.csv', 10), file('second.csv', 10)],
+      ...callbacks
+    })
+    const running = uploader.run()
+    await tick(20)
+
+    check('uploader: count is the batch size',
+      uploader.count === 2, uploader.count)
+
+    // Finish the second file first.
+    const byUrl = (job) => win.__deferredPosts.find((x) => x.url.includes(job))
+    for (const job of ['job2', 'job1']) {
+      const xhr = byUrl(job)
+      xhr.upload.onprogress({ lengthComputable: true, loaded: 10 })
+      xhr.status = 200
+      xhr.onload()
+      await tick(10)
+    }
+    await running
+
+    check('uploader: out-of-order completion finishes in completion order',
+      eq(win.__requests.filter((r) => r.method === 'uploadEnd').map((r) => r.args),
+        [['job2', 'upload__bsides_slot_2'], ['job1', 'upload__bsides_slot_1']]),
+      win.__requests.filter((r) => r.method === 'uploadEnd').map((r) => r.args))
+    check('uploader: each file finished into its declared slot',
+      eq(win.__posts.map((p) => p.name), ['first.csv', 'second.csv']) &&
+        win.__posts[0].url.includes('job1') && win.__posts[1].url.includes('job2'),
+      win.__posts.map((p) => [p.name, p.url]))
+    check('uploader: out-of-order batch still completes once',
+      events.finished === 1 && events.errors.length === 0, events)
+  }
+
+  // The pool holds the line at UPLOAD_CONCURRENCY, and frees a slot as
+  // each file lands.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = () => ({ defer: true })
+
+    const names = ['a', 'b', 'c', 'd', 'e', 'f']
+    const uploader = new Uploader({
+      inputId: 'upload',
+      files: names.map((n) => file(`${n}.csv`, 10)),
+      ...callbacks
+    })
+    const running = uploader.run()
+    await tick(20)
+
+    check('uploader: init runs for every file before any POST',
+      win.__requests.length === 6 && win.__posts.length === 4,
+      { requests: win.__requests.length, posts: win.__posts.length })
+    check('uploader: at most UPLOAD_CONCURRENCY in flight',
+      win.__deferredPosts.length === 4, win.__deferredPosts.length)
+
+    // Landing one file lets exactly one queued file start.
+    const land = async () => {
+      const xhr = win.__deferredPosts.shift()
+      xhr.status = 200
+      xhr.upload.onprogress({ lengthComputable: true, loaded: 10 })
+      xhr.onload()
+      await tick(10)
+    }
+
+    await land()
+    check('uploader: a landed file frees exactly one slot',
+      win.__posts.length === 5 && win.__deferredPosts.length === 4,
+      { posts: win.__posts.length, inflight: win.__deferredPosts.length })
+
+    while (win.__deferredPosts.length > 0) await land()
+    await running
+
+    check('uploader: every file uploaded exactly once',
+      eq(win.__posts.map((p) => p.name).sort(), names.map((n) => `${n}.csv`).sort()),
+      win.__posts.map((p) => p.name))
+    check('uploader: bounded batch completes', events.finished === 1, events)
+    check('uploader: every file reported done once',
+      events.done.length === 6 && new Set(events.done).size === 6, events.done)
+  }
+
+  // The slot belongs to the POST, not to the job close. Every close is
+  // held open here, so a chain that awaited its own close would park
+  // every worker and the queued file would never start — which is what
+  // makes this the check that the split actually happened. Holding one
+  // close would prove nothing: the other workers would drain the queue.
+  {
+    const { events, callbacks } = reset()
+    win.__requestPlan = (call) => (call.method === 'uploadEnd' ? { defer: true } : null)
+
+    const names = Array.from(
+      { length: UPLOAD_CONCURRENCY + 1 }, (_, i) => `f${i + 1}.csv`)
+
+    // Never awaited: run() cannot settle while the closes are parked.
+    void new Uploader({
+      inputId: 'upload',
+      files: names.map((n) => file(n, 10)),
+      ...callbacks
+    }).run()
+    await tick(20)
+
+    check('uploader: a landed file frees its slot before its job closes',
+      eq(win.__posts.map((p) => p.name), names), win.__posts.map((p) => p.name))
+    check('uploader: every job close is outstanding',
+      win.__deferredRequests.length === names.length,
+      win.__deferredRequests.length)
+    check('uploader: no row is done while its close is outstanding',
+      eq(events.done, []), events.done)
+
+    // Every close but the last: the batch is still not delivered.
+    while (win.__deferredRequests.length > 1) {
+      win.__deferredRequests.shift().onSuccess({})
+    }
+    await tick(20)
+
+    check('uploader: delivery waits for the last job to close',
+      events.finished === 0 && events.done.length === names.length - 1,
+      { finished: events.finished, done: events.done })
+
+    win.__deferredRequests.shift().onSuccess({})
+    await tick(20)
+
+    check('uploader: the last close delivers the batch once',
+      events.finished === 1 && events.done.length === names.length,
+      { finished: events.finished, done: events.done })
+    check('uploader: one close per file',
+      win.__requests.filter((r) => r.method === 'uploadEnd').length === names.length,
+      win.__requests.map((r) => r.method))
+  }
+
+  // A close that fails after every file's bytes have landed fails the
+  // batch, and is reported from its own chain: its siblings' closes are
+  // still outstanding, and a report joined behind them would never come.
+  {
+    const { events, callbacks } = reset()
+    win.__requestPlan = (call) => (call.method === 'uploadEnd' ? { defer: true } : null)
+
+    const names = ['a.csv', 'b.csv', 'c.csv']
+
+    void new Uploader({
+      inputId: 'upload',
+      files: names.map((n) => file(n, 10)),
+      ...callbacks
+    }).run()
+    await tick(20)
+
+    check('uploader: close-failure starts with every POST landed',
+      win.__posts.length === 3 && win.__deferredRequests.length === 3,
+      { posts: win.__posts.length, closes: win.__deferredRequests.length })
+
+    const second = win.__deferredRequests.find(
+      (r) => r.args[1] === 'upload__bsides_slot_2')
+
+    second.onError('could not finish upload')
+    await tick(20)
+
+    check('uploader: a failed close fails the batch at once',
+      eq(events.errors, ['could not finish upload']), events.errors)
+    check('uploader: a failed close names its own file',
+      eq(events.errorFiles, ['b.csv']), events.errorFiles)
+    check('uploader: a failed close delivers no value',
+      events.finished === 0, events.finished)
+  }
+
+  // Cancel after the bytes have landed. The closes cannot be recalled —
+  // Shiny has no abort for a request — so they settle into a dead batch,
+  // which must deliver nothing and mark no row. The slots they set are
+  // overwritten by the next batch's, which the wire delivers in order.
+  {
+    const { events, callbacks } = reset()
+    win.__requestPlan = (call) => (call.method === 'uploadEnd' ? { defer: true } : null)
+
+    const uploader = new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10), file('b.csv', 10)],
+      ...callbacks
+    })
+
+    void uploader.run()
+    await tick(20)
+
+    check('uploader: cancel-with-closes starts with both closes outstanding',
+      win.__posts.length === 2 && win.__deferredRequests.length === 2,
+      { posts: win.__posts.length, closes: win.__deferredRequests.length })
+
+    uploader.cancel()
+
+    for (const request of win.__deferredRequests.splice(0)) {
+      request.onSuccess({})
+    }
+    await tick(20)
+
+    check('uploader: a cancelled batch delivers nothing though its jobs closed',
+      events.finished === 0 && events.errors.length === 0, events)
+    check('uploader: a cancelled batch marks no row done as its closes land',
+      eq(events.done, []), events.done)
+
+    // The retry is a fresh batch over the same slots.
+    const retry = reset()
+
+    await new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10), file('b.csv', 10)],
+      ...retry.callbacks
+    }).run()
+
+    check('uploader: a batch after a cancel with closes outstanding delivers',
+      retry.events.finished === 1 && retry.events.done.length === 2,
+      retry.events)
+  }
+
+  // A file whose bytes have landed reads complete while its job closes.
+  // The counter is settled at the file's size — its last progress event
+  // may never have arrived — and reported under the file's own name, so
+  // the row is not left short of 100% for as long as the close takes.
+  {
+    const { events, callbacks } = reset()
+    win.__requestPlan = (call) => (call.method === 'uploadEnd' ? { defer: true } : null)
+    win.__postPlan = () => ({ progress: [6] })
+
+    void new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10)],
+      ...callbacks
+    }).run()
+    await tick(20)
+
+    const named = events.progress.filter(([name]) => name === 'a.csv')
+
+    check('uploader: a landed file reports its full size while its job closes',
+      eq(named.at(-1), ['a.csv', 10, 1]), named)
+    check('uploader: a landed file is not done until its job closes',
+      eq(events.done, []), events.done)
+  }
+
+  // Atomic failure: a file failing while others are in flight aborts them
+  // and never starts the queued one.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = (call, i) =>
+      (i === 0 ? { status: 500, responseText: 'disk full' } : { defer: true })
+
+    await new Uploader({
+      inputId: 'upload',
+      files: ['a', 'b', 'c', 'd', 'e'].map((n) => file(`${n}.csv`, 10)),
+      ...callbacks
+    }).run()
+
+    check('uploader: failure reported once', eq(events.errors, ['disk full']), events.errors)
+    check('uploader: failure aborts the files in flight',
+      win.__deferredPosts.every((x) => x.aborted === true),
+      win.__deferredPosts.map((x) => x.aborted))
+    check('uploader: failure never starts the queued file',
+      win.__posts.length === 4, win.__posts.map((p) => p.name))
+    check('uploader: failure finishes no job',
+      win.__requests.every((r) => r.method === 'uploadInit'),
+      win.__requests.map((r) => r.method))
+    check('uploader: failure is not done', events.finished === 0, events.finished)
+  }
+
+  // A failure is reported as it happens, not once every transfer chain has
+  // settled: a sibling waiting on `uploadEnd` over a dropped socket waits
+  // forever, and holding the report behind it would strand the batch in
+  // 'uploading' with no error ever raised.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = (call) => (call.name === 'a.csv' ? { defer: true } : {})
+    win.__requestPlan = (call) => (call.method === 'uploadEnd' ? { hang: true } : null)
+
+    const uploader = new Uploader({
+      inputId: 'upload',
+      files: [file('a.csv', 10), file('b.csv', 10)],
+      ...callbacks
+    })
+
+    // Deliberately not awaited: run() cannot settle while b.csv's
+    // uploadEnd hangs, which is the condition under test. file.ts fires it
+    // as `void uploader.run()` for the same reason.
+    void uploader.run()
+    await tick(20)
+
+    check('uploader: sibling reached a hung uploadEnd',
+      win.__requests.filter((r) => r.method === 'uploadEnd').length === 1,
+      win.__requests.map((r) => r.method))
+
+    const [posted] = win.__deferredPosts
+    posted.status = 500
+    posted.responseText = 'upload handler failed'
+    posted.onload()
+    await tick(20)
+
+    check('uploader: POST failure reported despite a hung sibling',
+      eq(events.errors, ['upload handler failed']), events.errors)
+    check('uploader: hung batch marks the file that actually failed',
+      eq(events.errorFiles, ['a.csv']), events.errorFiles)
+    check('uploader: hung batch is not done', events.finished === 0, events.finished)
+  }
+
+  // Progress from two files interleaves without the batch fraction ever
+  // walking backwards.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = () => ({ defer: true })
+
+    const running = new Uploader({
+      inputId: 'upload',
+      files: [file('big.csv', 100), file('small.csv', 100)],
+      ...callbacks
+    }).run()
+    await tick(20)
+
+    const [one, two] = win.__deferredPosts
+    for (const [xhr, loaded] of [[one, 20], [two, 30], [one, 60], [two, 90], [one, 100]]) {
+      xhr.upload.onprogress({ lengthComputable: true, loaded })
+    }
+    for (const xhr of [one, two]) {
+      xhr.status = 200
+      xhr.onload()
+      await tick(10)
+    }
+    await running
+
+    const fractions = events.progress.map(([, , batch]) => batch)
+    check('uploader: interleaved progress never decreases',
+      fractions.every((f, i) => i === 0 || f >= fractions[i - 1]), fractions)
+    check('uploader: interleaved progress reaches exactly 1',
+      fractions[fractions.length - 1] === 1, fractions)
+    check('uploader: each checkpoint carries its own file\'s bytes',
+      events.progress.some(([n, loaded]) => n === 'big.csv' && loaded === 60) &&
+        events.progress.some(([n, loaded]) => n === 'small.csv' && loaded === 90),
+      events.progress)
+    check('uploader: both files done', eq(events.done.sort(), ['big.csv', 'small.csv']),
+      events.done)
+  }
+
+  // A transfer that restarts its progress sequence reports fewer bytes
+  // than it last did. The batch bar holds where it was rather than
+  // rewinding.
+  {
+    const { events, callbacks } = reset()
+    win.__postPlan = () => ({ defer: true })
+
+    const running = new Uploader({
+      inputId: 'upload',
+      files: [file('one.csv', 100), file('two.csv', 100)],
+      ...callbacks
+    }).run()
+    await tick(20)
+
+    const [one, two] = win.__deferredPosts
+    one.upload.onprogress({ lengthComputable: true, loaded: 60 })
+    two.upload.onprogress({ lengthComputable: true, loaded: 40 })
+
+    const before = events.progress[events.progress.length - 1][2]
+
+    // one.csv starts over: 60 bytes of credit evaporate.
+    one.upload.onprogress({ lengthComputable: true, loaded: 10 })
+
+    const after = events.progress[events.progress.length - 1][2]
+
+    check('uploader: a restarted transfer does not rewind the batch',
+      after >= before, { before, after })
+
+    // The file's own row holds too: the counter behind both bars is the
+    // one that is kept monotone.
+    const rewound = events.progress
+      .filter(([name]) => name === 'one.csv')
+      .map(([, loaded]) => loaded)
+
+    check('uploader: a restarted transfer does not rewind its own row',
+      rewound.every((n, i) => i === 0 || n >= rewound[i - 1]), rewound)
+
+    for (const xhr of [one, two]) {
+      xhr.upload.onprogress({ lengthComputable: true, loaded: 100 })
+      xhr.status = 200
+      xhr.onload()
+      await tick(10)
+    }
+    await running
+
+    const fractions = events.progress.map(([, , batch]) => batch)
+    check('uploader: restarted transfer still ends at 1',
+      fractions[fractions.length - 1] === 1 && events.finished === 1, fractions)
+  }
+
+  // An empty batch is done without touching the wire.
+  {
+    const { events, callbacks } = reset()
+
+    await new Uploader({ inputId: 'upload', files: [], ...callbacks }).run()
+
+    check('uploader: empty batch is done', events.finished === 1, events)
+    check('uploader: empty batch makes no requests',
+      win.__requests.length === 0 && win.__posts.length === 0,
+      { requests: win.__requests.length, posts: win.__posts.length })
+    check('uploader: empty batch reports no error', eq(events.errors, []), events.errors)
+  }
+
+  // A batch of one is the degenerate case of the pool: a single job,
+  // a single POST, and slot 1 — no concurrency machinery observable.
+  {
+    const { events, callbacks } = reset()
+
+    await new Uploader({
+      inputId: 'upload',
+      files: [file('only.csv', 10)],
+      ...callbacks
+    }).run()
+
+    check('uploader: single file runs one job',
+      eq(win.__requests.map((r) => r.method), ['uploadInit', 'uploadEnd']),
+      win.__requests.map((r) => r.method))
+    check('uploader: single file finishes into slot 1',
+      eq(win.__requests[1].args, ['job1', 'upload__bsides_slot_1']),
+      win.__requests[1].args)
+    check('uploader: single file posts once',
+      eq(win.__posts.map((p) => p.name), ['only.csv']), win.__posts.map((p) => p.name))
+    check('uploader: single file done once',
+      events.finished === 1 && eq(events.done, ['only.csv']), events)
   }
 
   reset()

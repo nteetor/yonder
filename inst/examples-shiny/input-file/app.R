@@ -8,21 +8,33 @@
 #
 #   2. Many files, .csv only: `select = "many"` with an `accept` filter,
 #      and a templated summary line ("{done}/{n} uploaded") that stays
-#      live while the file list is collapsed.
+#      live while the file list is collapsed. A batch's files upload
+#      several at a time, so the rows finish interleaved and in no
+#      particular order — the value still arrives in the order they were
+#      listed.
 #      Drop a folder, drop a .txt, or drop something over the size limit
 #      and the rejection is reported inline without a round trip — the
 #      picker's own filtering does not apply to drops. Pasting works the
 #      same way, screenshots included. While a batch is in flight the
-#      Cancel control abandons it, and the server never sets the value.
+#      Cancel control abandons it, and no value is delivered.
 #
 #   3. Progress: the component emits a `bsides-file:progress` DOM event
-#      through the upload, which app JavaScript can listen for. Upload
-#      something large enough to watch it tick.
+#      through the upload, which app JavaScript can listen for. Drop
+#      several large files at once to watch the concurrency: a group of
+#      them climbs together rather than one after another, and the batch
+#      figure is their total.
+#
+#      Concurrency is bounded, so a batch bigger than the limit uploads
+#      in groups: a file joins the list when its transfer starts, and
+#      the ones still queued appear as slots free up. The limit is
+#      internal and deliberately not configurable. Use large files —
+#      a handful of small ones finishes inside a single tick, with
+#      nothing to see.
 #
 #   4. Server updates: reset_file() clears the list, update_file() swaps
 #      `accept` and the placeholder and disables/enables the input. The
-#      value itself is never set from the server — the upload protocol
-#      writes it, and offers no way to unset it.
+#      value itself is never set from the server — only a completed
+#      batch delivers one, and there is no way to unset it.
 #
 #   5. Staged upload: upload_mode = "manual". Files accumulate in the
 #      list — same-name additions replace, each row removable — and the
@@ -51,17 +63,38 @@ options(shiny.maxRequestSize = 50 * 1024^2)
 # server as an input value. The event bubbles from every file input on
 # the page, so a page with several must filter by the event's target --
 # here, only the Progress card's input.
+#
+# Checkpoints from different files interleave, because the files are on
+# the wire together. One event is therefore one file's news, not the
+# batch's: keep each file's own figure and report the whole set, or the
+# reader sees a single number jumping between files.
+#
+# A file enters the map when it first reports, which is when its
+# transfer starts — so a batch past the concurrency limit fills the map
+# in groups rather than all at once. The event carries no batch roster
+# to seed it from, and inventing one from the component's markup would
+# tie the listener to internals it has no business knowing.
 progress_listener <-
   htmltools::tags$script(htmltools::HTML(
-    "document.addEventListener('bsides-file:progress', (event) => {
+    "let percents = {};
+
+     document.addEventListener('bsides-file:progress', (event) => {
        if (event.target.id !== 'big') return;
 
-       const { file, batch } = event.detail;
+       const { file, loaded, batch } = event.detail;
+
+       // A batch opens with a fileless checkpoint at zero.
+       if (!file && batch === 0) percents = {};
+
+       if (file) {
+         percents[file.name] =
+           file.size > 0 ? Math.round((loaded / file.size) * 100) : 100;
+       }
 
        Shiny.setInputValue('progress', {
          input: event.target.id,
-         file: file ? file.name : null,
-         percent: Math.round(batch * 100)
+         batch: Math.round(batch * 100),
+         files: percents
        });
      });"
   ))
@@ -112,8 +145,9 @@ shinyApp(
         card_header("Progress"),
         input_file(
           id = "big",
-          label = "Something large",
-          placeholder = "Drop a big file to watch the bar"
+          label = "Something large, or several",
+          select = "many",
+          placeholder = "Drop a few big files to watch them climb together"
         ),
         verbatimTextOutput("progress_value")
       ),
@@ -167,8 +201,25 @@ shinyApp(
       )
     })
 
+    # The batch figure over the per-file ones it is the total of. The
+    # figures move together, which is the concurrency made visible, and
+    # the batch never walks backwards. The list is headed "started" on
+    # purpose: it holds the files that have reported, so a batch past
+    # the concurrency limit shows a group at a time rather than the
+    # whole set — the queued ones are missing, not stalled at zero.
     output$progress_value <- renderPrint({
-      input$progress
+      progress <- input$progress
+
+      if (is.null(progress)) {
+        return(invisible(NULL))
+      }
+
+      cat(sprintf("batch: %d%%\n", progress$batch))
+      cat(sprintf("started (%d):\n", length(progress$files)))
+
+      for (name in names(progress$files)) {
+        cat(sprintf("  %s: %d%%\n", name, progress$files[[name]]))
+      }
     })
 
     observeEvent(input$reset, {

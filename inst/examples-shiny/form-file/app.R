@@ -2,8 +2,9 @@
 # from an input_form() holding a manual-mode input_file().
 #
 # A form holds its inputs' values back until it is submitted. A file
-# input is the awkward case, because its value is set by the server when
-# an upload finishes rather than by a client-side change — so an
+# input is the awkward case, because a batch's value is delivered when
+# the upload completes rather than when the user touches anything, and
+# that delivery is not one of the values the form is holding — so an
 # auto-mode input delivers whenever its upload happens to land, and a
 # form cannot hold that back. Staging is the answer: nothing uploads
 # until the form is submitted, and the form waits for the upload before
@@ -30,10 +31,12 @@
 #      the sent list whole. The composer then clears — update_text()
 #      and reset_file() from the same observer.
 #
-#   2. Stage something large, press Send, then press Cancel while the
-#      bar runs. The submit is abandoned rather than delayed: nothing
-#      lands in the sent list, the note stays in the box, and the files
-#      stay staged — Send again retries the whole submission.
+#   2. Stage a few large files, press Send, then press Cancel while the
+#      bar runs. The bar is the batch's total, across files that are on
+#      the wire together, and Cancel abandons all of them at once. The
+#      submit is abandoned rather than delayed: nothing lands in the
+#      sent list, the note stays in the box, and the files stay staged —
+#      Send again retries the whole submission.
 #
 #   3. Drop a folder, or a file over the size limit. The rejection
 #      renders from file_upload_error()'s condition, and the staged set

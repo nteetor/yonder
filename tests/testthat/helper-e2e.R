@@ -66,6 +66,80 @@ upload_files <- function(app, selector, paths) {
   app$wait_for_idle()
 }
 
+# Throttle what the browser can push, so an upload stays measurably in
+# flight instead of completing within one round trip of localhost. CDP
+# network emulation applies to the POST body like any other request; the
+# download direction is left alone so the WebSocket still answers
+# promptly.
+throttle_upload <- function(app, bytes_per_second) {
+  session <- app$get_chromote_session()
+
+  session$Network$enable()
+  session$Network$emulateNetworkConditions(
+    offline = FALSE,
+    latency = 0,
+    downloadThroughput = -1,
+    uploadThroughput = bytes_per_second
+  )
+}
+
+# Record when each upload POST is issued and when each `uploadEnd` is
+# answered, so a test can assert the order of the two rather than the
+# interval between them. Install before the upload starts.
+#
+# The app's own `makeRequest` is wrapped, not the prototype's: the
+# uploader reads `Shiny.shinyapp` once in run() and calls through that
+# instance, so an own property shadowing the prototype is what it sees.
+# POSTs are recognised by url — every upload job's url carries `/upload/`
+# — because they share XMLHttpRequest with nothing else the page does.
+record_upload_timings <-
+  function(app) {
+    app$run_js(
+      "(() => {
+        window.__timings = { posts: [], ends: [] };
+
+        const shinyapp = Shiny.shinyapp;
+        const makeRequest = shinyapp.makeRequest.bind(shinyapp);
+
+        shinyapp.makeRequest = function (method, args, ok, fail, blobs) {
+          if (method !== 'uploadEnd') {
+            return makeRequest(method, args, ok, fail, blobs);
+          }
+
+          const end = { issued: performance.now(), answered: null };
+
+          window.__timings.ends.push(end);
+
+          return makeRequest(
+            method,
+            args,
+            (value) => { end.answered = performance.now(); ok(value); },
+            (error) => { end.answered = performance.now(); fail(error); },
+            blobs
+          );
+        };
+
+        const open = XMLHttpRequest.prototype.open;
+        const send = XMLHttpRequest.prototype.send;
+
+        XMLHttpRequest.prototype.open = function (method, url, ...rest) {
+          this.__url = url;
+          return open.call(this, method, url, ...rest);
+        };
+
+        XMLHttpRequest.prototype.send = function (body) {
+          if (String(this.__url).includes('/upload/')) {
+            window.__timings.posts.push({ issued: performance.now() });
+          }
+
+          return send.call(this, body);
+        };
+      })();"
+    )
+
+    invisible(app)
+  }
+
 # Write `lines` to a file named `name` in a fresh temporary directory, so
 # uploads carry a predictable name as well as predictable contents. The
 # connection is binary: a text-mode writeLines() writes CRLF on Windows,
@@ -76,6 +150,18 @@ temp_upload <- function(name, lines, envir = parent.frame()) {
 
   con <- file(path, open = "wb")
   writeLines(lines, con, sep = "\n")
+  close(con)
+
+  path
+}
+
+# A file of exactly `bytes` bytes, for uploads timed rather than read.
+temp_upload_bytes <- function(name, bytes, envir = parent.frame()) {
+  dir <- withr::local_tempdir(.local_envir = envir)
+  path <- file.path(dir, name)
+
+  con <- file(path, open = "wb")
+  writeBin(raw(bytes), con)
   close(con)
 
   path

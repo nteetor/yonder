@@ -31,6 +31,7 @@ register_input_handlers <-
     button_input_register_handler()
     checkbox_group_input_register_handler()
     chip_group_input_register_handler()
+    file_batch_input_register_handler()
     file_error_input_register_handler()
     file_staged_input_register_handler()
     link_input_register_handler()
