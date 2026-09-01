@@ -1,7 +1,7 @@
 #' Collapsible panes
 #'
 #' Create collapsible containers to hide and show content. Open and close a
-#' panel with `collapse_panel_toggle()`.
+#' panel with `toggle_collapse_panel()`.
 #'
 #' @inheritParams badge
 #'
@@ -86,10 +86,10 @@ collapse_panel_button <-
 #'
 #' @inheritParams update_checkbox
 #'
-#' @describeIn collapse_panel_open Open a collapse panel.
+#' @describeIn open_collapse_panel Open a collapse panel.
 #'
 #' @export
-collapse_panel_open <-
+open_collapse_panel <-
   function(
     id,
     session = get_current_session()
@@ -104,10 +104,10 @@ collapse_panel_open <-
     session$sendInputMessage(id, msg)
   }
 
-#' @describeIn collapse_panel_open Close a collapse panel.
+#' @describeIn open_collapse_panel Close a collapse panel.
 #'
 #' @export
-collapse_panel_close <-
+close_collapse_panel <-
   function(
     id,
     session = get_current_session()
@@ -122,10 +122,10 @@ collapse_panel_close <-
     session$sendInputMessage(id, msg)
   }
 
-#' @describeIn collapse_panel_open Toggle a collapse panel open or closed.
+#' @describeIn open_collapse_panel Toggle a collapse panel open or closed.
 #'
 #' @export
-collapse_panel_toggle <-
+toggle_collapse_panel <-
   function(
     id,
     session = get_current_session()

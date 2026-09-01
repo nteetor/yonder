@@ -26,7 +26,7 @@ const body = [
   'form-file', 'link', 'list-group',
   'menu', 'chip-group', 'chip-group-none', 'chip-group-select',
   'multi-select', 'multi-select-free', 'numeric', 'radio-group', 'range',
-  'select', 'text-group', 'modal'
+  'select', 'text-group', 'modal', 'collapse', 'collapse-open'
 ].map((n) => `<section data-component="${n}">${html(n)}</section>`).join('\n')
 
 const dom = new JSDOM(
@@ -933,6 +933,161 @@ for (const name of Object.keys(registered)) {
   handlers['bsides:modalClose']({})
   await tick(400)
   check('modal: hidden after modalClose', binding.getValue(el) === 'hidden', binding.getValue(el))
+}
+
+// ---- collapse ----
+// The "message received during a transition" scenario is deliberately
+// uncovered: jsdom reports no CSS transition duration, so Bootstrap fires
+// shown/hidden synchronously and there is no transition window to send into.
+// A test here would pass without exercising the guard it claims to test.
+{
+  const section = doc.querySelector('[data-component="collapse"]')
+
+  // collapse_panel_button() only ever renders a button with data-bs-target.
+  // The other trigger shapes Bootstrap accepts are constructed here: a second
+  // trigger on one panel, an anchor carrying its target in href, and an
+  // anchor whose href is a URL — a valid href and an invalid selector, which
+  // matches() throws on.
+  section.insertAdjacentHTML('beforeend', `
+    <button id="cpl-two" type="button" data-bs-toggle="collapse" data-bs-target="#cpl" aria-expanded="false">Two</button>
+    <a id="cpl-anchor" data-bs-toggle="collapse" href="#cpl" aria-expanded="false">Anchor</a>
+    <a id="cpl-external" data-bs-toggle="collapse" href="https://example.com">External</a>`)
+
+  let threw = null
+  let bound
+  try {
+    bound = bind('bsides.collapse')
+  } catch (e) {
+    threw = e.message
+  }
+  check('collapse: an invalid href trigger does not throw at bind', threw === null, threw)
+
+  const { binding, els, events } = bound
+  const closed = doc.getElementById('cpl')
+  const open = doc.getElementById('cplo')
+  const one = section.querySelector('button[data-bs-target="#cpl"]')
+  const two = doc.getElementById('cpl-two')
+  const anchor = doc.getElementById('cpl-anchor')
+  const external = doc.getElementById('cpl-external')
+  const openTrigger = doc.querySelector('[data-bs-target="#cplo"]')
+
+  const synced = (t, state) =>
+    t.getAttribute('aria-expanded') === String(state) &&
+    t.classList.contains('collapsed') === !state
+
+  check('collapse: found both panels', els.includes(closed) && els.includes(open))
+
+  // Initial value, both states.
+  check('collapse: closed panel reports closed', binding.getValue(closed) === 'closed', binding.getValue(closed))
+  check('collapse: open panel reports open', binding.getValue(open) === 'open', binding.getValue(open))
+  check('collapse: getState wraps getValue', eq(binding.getState(open), { value: 'open' }), binding.getState(open))
+
+  // Trigger sync at bind time. collapse_panel_button() hardcodes
+  // aria-expanded="false", so the open panel's trigger arrives contradicting
+  // its panel and initialize() has to correct it.
+  check('collapse: open panel trigger corrected at bind', synced(openTrigger, true),
+    openTrigger.outerHTML)
+  check('collapse: closed panel triggers agree at bind',
+    [one, two, anchor].every((t) => synced(t, false)), [one, two, anchor].map((t) => t.outerHTML))
+  check('collapse: invalid href trigger left alone', external.getAttribute('aria-expanded') === null,
+    external.outerHTML)
+
+  // User interaction: Bootstrap's data-api owns the click, and the binding
+  // reports the state it settles in.
+  native(one, 'click', win.MouseEvent)
+  await tick(100)
+  check('collapse: click opens the panel', binding.getValue(closed) === 'open', binding.getValue(closed))
+  check('collapse: click reports open', events.some((e) => e.id === 'cpl' && e.value === 'open'), events)
+  check('collapse: every trigger reflects the click', [one, two, anchor].every((t) => synced(t, true)),
+    [one, two, anchor].map((t) => t.outerHTML))
+
+  native(one, 'click', win.MouseEvent)
+  await tick(100)
+  check('collapse: click closes the panel', binding.getValue(closed) === 'closed', binding.getValue(closed))
+
+  // Server messages.
+  binding.receiveMessage(closed, { method: 'open' })
+  await tick(100)
+  check('collapse: open message expands', binding.getValue(closed) === 'open', binding.getValue(closed))
+  check('collapse: open message syncs every trigger', [one, two, anchor].every((t) => synced(t, true)),
+    [one, two, anchor].map((t) => t.outerHTML))
+
+  let before = events.length
+  binding.receiveMessage(closed, { method: 'open' })
+  await tick(100)
+  check('collapse: open on an open panel reports nothing', events.length === before, events.length - before)
+
+  binding.receiveMessage(closed, { method: 'close' })
+  await tick(100)
+  check('collapse: close message collapses', binding.getValue(closed) === 'closed', binding.getValue(closed))
+  check('collapse: close message syncs every trigger', [one, two, anchor].every((t) => synced(t, false)),
+    [one, two, anchor].map((t) => t.outerHTML))
+
+  before = events.length
+  binding.receiveMessage(closed, { method: 'close' })
+  await tick(100)
+  check('collapse: close on a closed panel reports nothing', events.length === before, events.length - before)
+
+  binding.receiveMessage(closed, { method: 'toggle' })
+  await tick(100)
+  check('collapse: toggle opens a closed panel', binding.getValue(closed) === 'open', binding.getValue(closed))
+
+  binding.receiveMessage(closed, { method: 'toggle' })
+  await tick(100)
+  check('collapse: toggle closes an open panel', binding.getValue(closed) === 'closed', binding.getValue(closed))
+
+  before = events.length
+  binding.receiveMessage(closed, { method: 'sideways' })
+  binding.receiveMessage(closed, {})
+  await tick(100)
+  check('collapse: an unrecognized method leaves the panel closed',
+    binding.getValue(closed) === 'closed', binding.getValue(closed))
+  check('collapse: an unrecognized method reports nothing', events.length === before, events.length - before)
+
+  // A trigger rendered after the panel was bound is invisible to Bootstrap's
+  // instance, which captured its trigger list at construction. The binding
+  // queries the document on every state change, so it picks this one up.
+  section.insertAdjacentHTML('beforeend',
+    '<button id="cpl-late" type="button" data-bs-toggle="collapse" data-bs-target="#cpl" aria-expanded="false">Late</button>')
+  const late = doc.getElementById('cpl-late')
+
+  binding.receiveMessage(closed, { method: 'open' })
+  await tick(100)
+  check('collapse: a trigger added after bind reflects the next change', synced(late, true), late.outerHTML)
+
+  // unsubscribe detaches the listeners and disposes the Bootstrap instance,
+  // so a removed panel leaves nothing behind.
+  check('collapse: instance exists before unsubscribe', win.bootstrap.Collapse.getInstance(closed) !== null)
+  binding.unsubscribe(closed)
+  check('collapse: unsubscribe disposes the instance',
+    win.bootstrap.Collapse.getInstance(closed) === null, String(win.bootstrap.Collapse.getInstance(closed)))
+
+  before = events.length
+  binding.receiveMessage(closed, { method: 'close' })
+  await tick(100)
+  check('collapse: unsubscribed panel is silent', events.length === before, events.length - before)
+
+  // Re-render with the same id: the new panel reports its own state and
+  // responds to messages, with nothing carried over from the removed one.
+  closed.remove()
+  const holder = doc.createElement('div')
+  holder.innerHTML = html('collapse-open').replace(/cplo/g, 'cpl')
+  section.appendChild(holder)
+
+  const revived = holder.querySelector('.bsides-collapse')
+  binding.initialize(revived)
+  binding.subscribe(revived, (deferred) => {
+    events.push({ id: binding.getId(revived), deferred, value: binding.getValue(revived) })
+  })
+
+  check('collapse: a re-rendered panel reports its own initial state',
+    binding.getValue(revived) === 'open', binding.getValue(revived))
+
+  binding.receiveMessage(revived, { method: 'close' })
+  await tick(100)
+  check('collapse: a re-rendered panel responds to messages',
+    binding.getValue(revived) === 'closed', binding.getValue(revived))
+  check('collapse: a re-rendered panel syncs its triggers', synced(late, false), late.outerHTML)
 }
 
 // ---- file ----

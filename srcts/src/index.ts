@@ -1,6 +1,7 @@
 // Each component registers its bindings and message handlers at module
 // scope, like bslib's srcts/src/components/index.ts.
 
+import './components/collapse';
 import './components/inputButton';
 import './components/inputCheckbox';
 import './components/inputCheckboxGroup';
