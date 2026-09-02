@@ -15,7 +15,7 @@ interface FileUpdate {
   accept?: string;
   placeholder?: string;
   summary?: string;
-  // Action triggers, sent by file_upload_start()/file_upload_cancel();
+  // Action triggers, sent by start_file_upload()/cancel_file_upload();
   // snake_case mirrors those function names across the boundary.
   upload_start?: boolean;
   upload_cancel?: boolean;
@@ -591,7 +591,7 @@ class BsidesFile extends LitElement {
   };
 
   // Abandons the batch in flight — the Cancel button and
-  // file_upload_cancel() alike, hence the guard. In manual mode every
+  // cancel_file_upload() alike, hence the guard. In manual mode every
   // row returns to pending: nothing failed, the set is still staged,
   // and the retry re-POSTs from the first byte, so progress goes back
   // to 0 with the status. Auto mode marks non-done rows as failed, as

@@ -75,7 +75,7 @@ test_that("a staged batch uploads on the button, or from the server", {
   expect_equal(app$get_value(output = "stg_state"), "done 0 1")
 
   # A fresh set staged after delivery, started from the server this
-  # time — file_upload_start() is the button's twin.
+  # time — start_file_upload() is the button's twin.
   upload_files(app, "#stg .file-input", temp_upload("s3.csv", "3"))
   expect_equal(app$get_value(output = "stg_info"), "s1.csv 2; s2.csv 2")
 

@@ -133,7 +133,7 @@ server <-
     )
     observeEvent(
       input$do_start,
-      file_upload_start("stg"),
+      start_file_upload("stg"),
       ignoreInit = TRUE
     )
     observeEvent(

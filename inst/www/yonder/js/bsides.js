@@ -1914,7 +1914,7 @@
       this._listOpen = event.target.open;
     };
     // Abandons the batch in flight — the Cancel button and
-    // file_upload_cancel() alike, hence the guard. In manual mode every
+    // cancel_file_upload() alike, hence the guard. In manual mode every
     // row returns to pending: nothing failed, the set is still staged,
     // and the retry re-POSTs from the first byte, so progress goes back
     // to 0 with the status. Auto mode marks non-done rows as failed, as

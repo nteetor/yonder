@@ -2,7 +2,7 @@
 % Please edit documentation in R/input-menu.R
 \name{input_menu}
 \alias{input_menu}
-\alias{update_menu_input}
+\alias{update_menu}
 \title{Menu inputs}
 \usage{
 input_menu(
@@ -17,7 +17,7 @@ input_menu(
   close = c("auto", "inside", "outside", "manual")
 )
 
-update_menu_input(
+update_menu(
   id,
   label = NULL,
   choices = NULL,

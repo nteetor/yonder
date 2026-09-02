@@ -42,7 +42,19 @@
   `appearance` is `"buttons"`.
 * Renamed the `text` argument of `input_button()` and `input_menu()` to
   `label`, matching shiny's `actionButton()` and bslib. `update_button()`
-  and `update_menu_input()` followed suit.
+  and `update_menu()` followed suit.
+
+* Server-side actions are verb-first and UI constructors noun-first, as
+  the `collapse_panel()` entry below describes. Renamed `modal_show()` and
+  `modal_hide()` to `show_modal()` and `hide_modal()`,
+  `file_upload_start()` and `file_upload_cancel()` to
+  `start_file_upload()` and `cancel_file_upload()`, `update_menu_input()`
+  to `update_menu()`, `modal_toggle()` to `modal_button()`,
+  `modal_close()` to `modal_close_icon()`, `modal_dismiss()` to
+  `modal_close_button()`, and `alert_button()` to `alert_close_icon()`.
+  `modal_close_button()`'s `text` argument is now `label`, and all three
+  close constructors pass `...` on as attributes of the button element.
+  There are no deprecation shims.
 
 ## New features
 
@@ -74,15 +86,15 @@
   them. Gestures accumulate a set — same-name additions replace, each
   row removable — and the input's Upload button starts the batch. A
   cancelled or failed batch returns to the staged set and retries whole,
-  the file that failed marked in the list. New `file_upload_start()` and
-  `file_upload_cancel()` drive a batch from the server, the twins of the
+  the file that failed marked in the list. New `start_file_upload()` and
+  `cancel_file_upload()` drive a batch from the server, the twins of the
   Upload and Cancel buttons. Inside `input_form()` a staged batch starts
   when the form submits and the form withholds its own value until that
   upload finishes, so `input$<id>` is already set when an observer keyed
   on the submit runs. A failed or cancelled upload abandons the submit
   and leaves the set staged to retry. `upload_button = "none"` drops
   the input's own Upload button for apps where the batch starts
-  elsewhere — a form's submit, or `file_upload_start()` — while the
+  elsewhere — a form's submit, or `start_file_upload()` — while the
   cancel control still appears in flight. `upload_max` caps how many
   files one batch may contain: a full staged set stops accepting files until
   one is removed, and a gesture selecting too many is rejected whole

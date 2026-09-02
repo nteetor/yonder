@@ -10,7 +10,8 @@
 #' @param dismiss The method for removing the alert. One of `"animate"`,
 #' `"instant"`, or `"none"`.
 #'
-#' @param dismiss_button The dismiss button element. A [htmltools::tag] object.
+#' @param dismiss_button The dismiss button element. A [htmltools::tag] object,
+#'   defaults to [alert_close_icon()].
 #'
 #' @param container An [htmltools::tag] function.
 #'
@@ -41,7 +42,7 @@ alert <-
     ...,
     type = NULL,
     dismiss = c("animate", "instant", "none"),
-    dismiss_button = alert_button()
+    dismiss_button = alert_close_icon()
   ) {
     if (!is.null(type)) {
       type <-
@@ -100,12 +101,15 @@ alert_heading <-
 
 #' @rdname alert
 #' @export
-alert_button <-
-  function() {
+alert_close_icon <-
+  function(
+    ...
+  ) {
     tags$button(
       type = "button",
       class = "btn-close",
       `data-bs-dismiss` = "alert",
-      `aria-label` = "Close"
+      `aria-label` = "Close",
+      ...
     )
   }

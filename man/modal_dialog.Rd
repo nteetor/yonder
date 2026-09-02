@@ -2,7 +2,7 @@
 % Please edit documentation in R/modal.R
 \name{modal_dialog}
 \alias{modal_dialog}
-\alias{modal_toggle}
+\alias{modal_button}
 \title{Modal dialogs}
 \usage{
 modal_dialog(
@@ -15,7 +15,7 @@ modal_dialog(
   wrapper = modal_body
 )
 
-modal_toggle(id, text, ...)
+modal_button(id, text, ...)
 }
 \arguments{
 \item{id}{A string. The id of a modal. Use \verb{input$<id>} to query the state of
@@ -51,7 +51,7 @@ behind them. Modals may include inputs, buttons, or simply text.
 \itemize{
 \item \code{modal_dialog()}: Construct a modal.
 
-\item \code{modal_toggle()}: Open a modal.
+\item \code{modal_button()}: A button that opens a modal.
 
 }}
 \examples{
