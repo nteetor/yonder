@@ -36,14 +36,14 @@ upload as soon as they are chosen. With \code{"manual"} files accumulate
 in a staged set — each removable before flight, a same-named
 addition replacing its predecessor — and an explicit action starts
 the batch: the input's Upload button, a surrounding
-\code{\link[=input_form]{input_form()}}'s submit, or \code{\link[=file_upload_start]{file_upload_start()}} from the server.
+\code{\link[=input_form]{input_form()}}'s submit, or \code{\link[=start_file_upload]{start_file_upload()}} from the server.
 A cancelled or failed batch returns to the staged set, ready to
 retry whole.}
 
 \item{upload_button}{A character string. With \code{"show"} (default) a
 manual-mode input renders its own Upload button; with \code{"none"} it
 does not, leaving the batch to an app-supplied trigger —
-\code{\link[=file_upload_start]{file_upload_start()}}, or a surrounding \code{\link[=input_form]{input_form()}}, whose
+\code{\link[=start_file_upload]{start_file_upload()}}, or a surrounding \code{\link[=input_form]{input_form()}}, whose
 submit already starts it. With the button hidden and neither of
 those in place, nothing visible starts the batch. The cancel
 control still appears while a batch is in flight. Ignored in auto
@@ -178,7 +178,7 @@ would not survive.
 }
 }
 \seealso{
-\code{\link[=update_file]{update_file()}}, \code{\link[=reset_file]{reset_file()}}, \code{\link[=file_upload_start]{file_upload_start()}}
+\code{\link[=update_file]{update_file()}}, \code{\link[=reset_file]{reset_file()}}, \code{\link[=start_file_upload]{start_file_upload()}}
 
 Other inputs:
 \code{\link[=floating_label]{floating_label()}},

@@ -102,10 +102,10 @@ modal_dialog <-
     component
   }
 
-#' @describeIn modal_dialog Open a modal.
+#' @describeIn modal_dialog A button that opens a modal.
 #'
 #' @export
-modal_toggle <-
+modal_button <-
   function(
     id,
     text,
@@ -161,9 +161,9 @@ as_modal_items <-
 #'   values are passed as HTML attributes to the parent element.
 #'
 #' @param close A button tag element used to close the modal, defaults to
-#'   [modal_close()] for headers and [modal_dismiss()] for footers.
+#'   [modal_close_icon()] for headers and [modal_close_button()] for footers.
 #'
-#' @param text A string. The content of the dismiss button.
+#' @param label A string. The text of the close button.
 #'
 #' @describeIn modal_body The main content of a modal.
 #'
@@ -199,7 +199,7 @@ modal_title <-
 modal_header <-
   function(
     ...,
-    close = modal_close()
+    close = modal_close_icon()
   ) {
     as_modal_item(
       tags$div(
@@ -210,17 +210,20 @@ modal_header <-
     )
   }
 
-#' @describeIn modal_body A button without text used to close a modal dialog,
+#' @describeIn modal_body An icon-only button used to close a modal dialog,
 #'   typically found in the modal header.
 #'
 #' @export
-modal_close <-
-  function() {
+modal_close_icon <-
+  function(
+    ...
+  ) {
     tags$button(
       type = "button",
       class = "btn-close align-self-auto",
       `data-bs-dismiss` = "modal",
-      `aria-label` = "Close"
+      `aria-label` = "Close",
+      ...
     )
   }
 
@@ -230,7 +233,7 @@ modal_close <-
 modal_footer <-
   function(
     ...,
-    close = modal_dismiss()
+    close = modal_close_button()
   ) {
     as_modal_item(
       tags$div(
@@ -242,20 +245,21 @@ modal_footer <-
   }
 
 #' @describeIn modal_body A button with text used to close a modal dialog,
-#'   typically found the modal footer.
+#'   typically found in the modal footer.
 #'
 #' @export
-modal_dismiss <-
+modal_close_button <-
   function(
     ...,
-    text = "Close"
+    label = "Close"
   ) {
     tags$button(
       type = "button",
       class = "btn btn-primary",
       `data-bs-dismiss` = "modal",
-      `aria-label` = text,
-      text
+      `aria-label` = label,
+      ...,
+      label
     )
   }
 
@@ -269,7 +273,7 @@ modal_dismiss <-
 #' @inheritParams update_checkbox
 #'
 #' @export
-modal_show <-
+show_modal <-
   function(
     modal,
     session = get_current_session()
@@ -287,10 +291,10 @@ modal_show <-
     session$sendCustomMessage("bsides:modalShow", msg)
   }
 
-#' @rdname modal_show
+#' @rdname show_modal
 #'
 #' @export
-modal_hide <-
+hide_modal <-
   function(
     session = get_current_session()
   ) {

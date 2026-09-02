@@ -156,7 +156,7 @@ shinyApp(
           )
         ),
         input_link(id = "more", label = "Tell me more"),
-        modal_toggle(id = "detail", text = "Open modal"),
+        modal_button(id = "detail", text = "Open modal"),
         collapse_panel_button(target = "extras", text = "More controls"),
         collapse_panel(
           id = "extras",

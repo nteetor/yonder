@@ -74,7 +74,7 @@ input_menu <-
 
 #' @rdname input_menu
 #' @export
-update_menu_input <-
+update_menu <-
   function(
     id,
     label = NULL,

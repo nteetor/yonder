@@ -4,31 +4,31 @@
 \alias{modal_body}
 \alias{modal_title}
 \alias{modal_header}
-\alias{modal_close}
+\alias{modal_close_icon}
 \alias{modal_footer}
-\alias{modal_dismiss}
+\alias{modal_close_button}
 \title{Modal items}
 \usage{
 modal_body(...)
 
 modal_title(...)
 
-modal_header(..., close = modal_close())
+modal_header(..., close = modal_close_icon())
 
-modal_close()
+modal_close_icon(...)
 
-modal_footer(..., close = modal_dismiss())
+modal_footer(..., close = modal_close_button())
 
-modal_dismiss(..., text = "Close")
+modal_close_button(..., label = "Close")
 }
 \arguments{
 \item{...}{Any number of child elements passed to the parent element. Named
 values are passed as HTML attributes to the parent element.}
 
 \item{close}{A button tag element used to close the modal, defaults to
-\code{\link[=modal_close]{modal_close()}} for headers and \code{\link[=modal_dismiss]{modal_dismiss()}} for footers.}
+\code{\link[=modal_close_icon]{modal_close_icon()}} for headers and \code{\link[=modal_close_button]{modal_close_button()}} for footers.}
 
-\item{text}{A string. The content of the dismiss button.}
+\item{label}{A string. The text of the close button.}
 }
 \description{
 Components of a modal dialog.
@@ -41,12 +41,12 @@ Components of a modal dialog.
 
 \item \code{modal_header()}: Add a header to a modal dialog.
 
-\item \code{modal_close()}: A button without text used to close a modal dialog,
+\item \code{modal_close_icon()}: An icon-only button used to close a modal dialog,
 typically found in the modal header.
 
 \item \code{modal_footer()}: Add a footer to a modal dialog.
 
-\item \code{modal_dismiss()}: A button with text used to close a modal dialog,
-typically found the modal footer.
+\item \code{modal_close_button()}: A button with text used to close a modal dialog,
+typically found in the modal footer.
 
 }}

@@ -482,7 +482,7 @@ shinyApp(
   ),
   function(input, output, session) {
     observeEvent(input$click, {
-      modal_show(modal_dialog(
+      show_modal(modal_dialog(
         id = "test",
         "Hello, world"
       ))
@@ -516,11 +516,11 @@ shinyApp(
   ),
   function(input, output) {
     observeEvent(input$show1, {
-      modal_show("modal1")
+      show_modal("modal1")
     })
 
     observeEvent(input$show2, {
-      modal_show("modal2")
+      show_modal("modal2")
     })
   }
 )

@@ -19,14 +19,14 @@
 #'   in a staged set — each removable before flight, a same-named
 #'   addition replacing its predecessor — and an explicit action starts
 #'   the batch: the input's Upload button, a surrounding
-#'   [input_form()]'s submit, or [file_upload_start()] from the server.
+#'   [input_form()]'s submit, or [start_file_upload()] from the server.
 #'   A cancelled or failed batch returns to the staged set, ready to
 #'   retry whole.
 #'
 #' @param upload_button A character string. With `"show"` (default) a
 #'   manual-mode input renders its own Upload button; with `"none"` it
 #'   does not, leaving the batch to an app-supplied trigger —
-#'   [file_upload_start()], or a surrounding [input_form()], whose
+#'   [start_file_upload()], or a surrounding [input_form()], whose
 #'   submit already starts it. With the button hidden and neither of
 #'   those in place, nothing visible starts the batch. The cancel
 #'   control still appears while a batch is in flight. Ignored in auto
@@ -152,7 +152,7 @@
 #'
 #' @family inputs
 #'
-#' @seealso [update_file()], [reset_file()], [file_upload_start()]
+#' @seealso [update_file()], [reset_file()], [start_file_upload()]
 #'
 #' @export
 input_file <-
@@ -314,11 +314,11 @@ reset_file <-
 #'
 #' The actions:
 #'
-#' * `file_upload_start()` starts the staged batch of an
+#' * `start_file_upload()` starts the staged batch of an
 #'   `upload_mode = "manual"` input — the server-side twin of its
 #'   Upload button. A no-op when nothing is staged or a batch is
 #'   already in flight.
-#' * `file_upload_cancel()` abandons the batch in flight, landing where
+#' * `cancel_file_upload()` abandons the batch in flight, landing where
 #'   the Cancel button lands: in manual mode the rows return to the
 #'   staged set, ready to retry; in auto mode the cancel is terminal —
 #'   unfinished rows keep a failure mark and the status reads
@@ -375,39 +375,7 @@ reset_file <-
 #'
 #' @seealso [input_file()], [update_file()]
 #'
-#' @export
-file_upload_start <-
-  function(
-    id,
-    ...,
-    session = get_current_session()
-  ) {
-    check_dots_empty()
-    check_string(id, allow_empty = FALSE)
-
-    session$sendInputMessage(id, list(upload_start = TRUE))
-
-    invisible(NULL)
-  }
-
-#' @rdname file_upload_start
-#'
-#' @export
-file_upload_cancel <-
-  function(
-    id,
-    ...,
-    session = get_current_session()
-  ) {
-    check_dots_empty()
-    check_string(id, allow_empty = FALSE)
-
-    session$sendInputMessage(id, list(upload_cancel = TRUE))
-
-    invisible(NULL)
-  }
-
-#' @rdname file_upload_start
+#' @name file_upload
 #'
 #' @export
 file_upload_status <-
@@ -422,7 +390,7 @@ file_upload_status <-
     session$input[[paste0(id, "__bsides_status")]] %||% "idle"
   }
 
-#' @rdname file_upload_start
+#' @rdname file_upload
 #'
 #' @export
 file_upload_progress <-
@@ -437,7 +405,7 @@ file_upload_progress <-
     session$input[[paste0(id, "__bsides_progress")]] %||% 0
   }
 
-#' @rdname file_upload_start
+#' @rdname file_upload
 #'
 #' @export
 file_upload_staged <-
@@ -452,7 +420,7 @@ file_upload_staged <-
     session$input[[paste0(id, "__bsides_staged")]] %||% file_staged_frame()
   }
 
-#' @rdname file_upload_start
+#' @rdname file_upload
 #'
 #' @export
 file_upload_error <-
@@ -465,6 +433,40 @@ file_upload_error <-
     check_string(id, allow_empty = FALSE)
 
     session$input[[paste0(id, "__bsides_error")]]
+  }
+
+#' @rdname file_upload
+#'
+#' @export
+start_file_upload <-
+  function(
+    id,
+    ...,
+    session = get_current_session()
+  ) {
+    check_dots_empty()
+    check_string(id, allow_empty = FALSE)
+
+    session$sendInputMessage(id, list(upload_start = TRUE))
+
+    invisible(NULL)
+  }
+
+#' @rdname file_upload
+#'
+#' @export
+cancel_file_upload <-
+  function(
+    id,
+    ...,
+    session = get_current_session()
+  ) {
+    check_dots_empty()
+    check_string(id, allow_empty = FALSE)
+
+    session$sendInputMessage(id, list(upload_cancel = TRUE))
+
+    invisible(NULL)
   }
 
 file_staged_frame <-

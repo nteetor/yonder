@@ -58,10 +58,10 @@ shinyApp(
     )
     trigger(
       "do_update_menu",
-      \() update_menu_input("mnu", label = "Picked", select = "Two")
+      \() update_menu("mnu", label = "Picked", select = "Two")
     )
     trigger("do_submit_form", \() submit_form("frm", "go"))
-    trigger("do_show_modal", \() modal_show("mdl"))
-    trigger("do_hide_modal", \() modal_hide())
+    trigger("do_show_modal", \() show_modal("mdl"))
+    trigger("do_hide_modal", \() hide_modal())
   }
 )

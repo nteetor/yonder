@@ -3,19 +3,19 @@
 \name{alert}
 \alias{alert}
 \alias{alert_heading}
-\alias{alert_button}
+\alias{alert_close_icon}
 \title{Alerts}
 \usage{
 alert(
   ...,
   type = NULL,
   dismiss = c("animate", "instant", "none"),
-  dismiss_button = alert_button()
+  dismiss_button = alert_close_icon()
 )
 
 alert_heading(..., container = htmltools::h5)
 
-alert_button()
+alert_close_icon(...)
 }
 \arguments{
 \item{...}{Components to include. Named arguments are passed as HTML
@@ -26,7 +26,8 @@ attributes to the parent element.}
 \item{dismiss}{The method for removing the alert. One of \code{"animate"},
 \code{"instant"}, or \code{"none"}.}
 
-\item{dismiss_button}{The dismiss button element. A \link[htmltools:tag]{htmltools::tag} object.}
+\item{dismiss_button}{The dismiss button element. A \link[htmltools:tag]{htmltools::tag} object,
+defaults to \code{\link[=alert_close_icon]{alert_close_icon()}}.}
 
 \item{container}{An \link[htmltools:tag]{htmltools::tag} function.}
 }

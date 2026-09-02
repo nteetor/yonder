@@ -39,7 +39,7 @@
 #   5. Staged upload: upload_mode = "manual". Files accumulate in the
 #      list — same-name additions replace, each row removable — and the
 #      batch starts from the Upload button, or from the server:
-#      file_upload_start() is the button's twin. Cancel mid-flight and
+#      start_file_upload() is the button's twin. Cancel mid-flight and
 #      the set returns, ready to retry. upload_max = 3 caps the set:
 #      once full the input stops accepting files until one is removed,
 #      and a drop that would overfill it is rejected whole.
@@ -346,7 +346,7 @@ shinyApp(
     })
 
     observeEvent(input$start, {
-      file_upload_start("staged")
+      start_file_upload("staged")
     })
   }
 )
